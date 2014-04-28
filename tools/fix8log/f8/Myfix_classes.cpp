@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-// *** f8c generated file: DO NOT EDIT! Created: 2014-04-05 01:38:19 ***
+// *** f8c generated file: DO NOT EDIT! Created: 2014-04-27 23:02:33 ***
 //-------------------------------------------------------------------------------------------------
 /*
 
@@ -48,8 +48,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
-#if defined MAGIC_NUM && MAGIC_NUM > 16781312L
-#error Myfix_classes.cpp version 1.1.0 is out of date. Please regenerate with f8c.
+#if defined MAGIC_NUM && MAGIC_NUM > 16785408L
+#error Myfix_classes.cpp version 1.2.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_classes.cpp
@@ -66,9 +66,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <algorithm>
 #include <cerrno>
 #include <string.h>
-#if defined HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 // f8 includes
 #include <fix8/f8includes.hpp>
 #include "Myfix_types.hpp"
@@ -82,7 +79,7 @@ namespace {
 
 //-------------------------------------------------------------------------------------------------
 
-const char *cn[] = // Component names
+const char *cn[] // Component names
 {
    "",
    "AffectedOrdGrp", // 1
@@ -288,127 +285,127 @@ const char *cn[] = // Component names
 } // namespace
 
 //-------------------------------------------------------------------------------------------------
-const TEX::Myfix_BaseMsgEntry::Pair msgpairs[] =
+const TEX::Myfix_BaseMsgEntry::Pair msgpairs[] 
 {
-   { "0", { Minst(Type2Type<TEX::Heartbeat>()), "Heartbeat", 0 } },
-   { "1", { Minst(Type2Type<TEX::TestRequest>()), "TestRequest", 0 } },
-   { "2", { Minst(Type2Type<TEX::ResendRequest>()), "ResendRequest", 0 } },
-   { "3", { Minst(Type2Type<TEX::Reject>()), "Reject", 0 } },
-   { "4", { Minst(Type2Type<TEX::SequenceReset>()), "SequenceReset", 0 } },
-   { "5", { Minst(Type2Type<TEX::Logout>()), "Logout", 0 } },
-   { "6", { Minst(Type2Type<TEX::IOI>()), "IOI", 0 } },
-   { "7", { Minst(Type2Type<TEX::Advertisement>()), "Advertisement", 0 } },
-   { "8", { Minst(Type2Type<TEX::ExecutionReport>()), "ExecutionReport", 0 } },
-   { "9", { Minst(Type2Type<TEX::OrderCancelReject>()), "OrderCancelReject", 0 } },
-   { "A", { Minst(Type2Type<TEX::Logon>()), "Logon", 0 } },
-   { "AA", { Minst(Type2Type<TEX::DerivativeSecurityList>()), "DerivativeSecurityList", 0 } },
-   { "AB", { Minst(Type2Type<TEX::NewOrderMultileg>()), "NewOrderMultileg", 0 } },
-   { "AC", { Minst(Type2Type<TEX::MultilegOrderCancelReplace>()), "MultilegOrderCancelReplace", 0 } },
-   { "AD", { Minst(Type2Type<TEX::TradeCaptureReportRequest>()), "TradeCaptureReportRequest", 0 } },
-   { "AE", { Minst(Type2Type<TEX::TradeCaptureReport>()), "TradeCaptureReport", 0 } },
-   { "AF", { Minst(Type2Type<TEX::OrderMassStatusRequest>()), "OrderMassStatusRequest", 0 } },
-   { "AG", { Minst(Type2Type<TEX::QuoteRequestReject>()), "QuoteRequestReject", 0 } },
-   { "AH", { Minst(Type2Type<TEX::RFQRequest>()), "RFQRequest", 0 } },
-   { "AI", { Minst(Type2Type<TEX::QuoteStatusReport>()), "QuoteStatusReport", 0 } },
-   { "AJ", { Minst(Type2Type<TEX::QuoteResponse>()), "QuoteResponse", 0 } },
-   { "AK", { Minst(Type2Type<TEX::Confirmation>()), "Confirmation", 0 } },
-   { "AL", { Minst(Type2Type<TEX::PositionMaintenanceRequest>()), "PositionMaintenanceRequest", 0 } },
-   { "AM", { Minst(Type2Type<TEX::PositionMaintenanceReport>()), "PositionMaintenanceReport", 0 } },
-   { "AN", { Minst(Type2Type<TEX::RequestForPositions>()), "RequestForPositions", 0 } },
-   { "AO", { Minst(Type2Type<TEX::RequestForPositionsAck>()), "RequestForPositionsAck", 0 } },
-   { "AP", { Minst(Type2Type<TEX::PositionReport>()), "PositionReport", 0 } },
-   { "AQ", { Minst(Type2Type<TEX::TradeCaptureReportRequestAck>()), "TradeCaptureReportRequestAck", 0 } },
-   { "AR", { Minst(Type2Type<TEX::TradeCaptureReportAck>()), "TradeCaptureReportAck", 0 } },
-   { "AS", { Minst(Type2Type<TEX::AllocationReport>()), "AllocationReport", 0 } },
-   { "AT", { Minst(Type2Type<TEX::AllocationReportAck>()), "AllocationReportAck", 0 } },
-   { "AU", { Minst(Type2Type<TEX::ConfirmationAck>()), "ConfirmationAck", 0 } },
-   { "AV", { Minst(Type2Type<TEX::SettlementInstructionRequest>()), "SettlementInstructionRequest", 0 } },
-   { "AW", { Minst(Type2Type<TEX::AssignmentReport>()), "AssignmentReport", 0 } },
-   { "AX", { Minst(Type2Type<TEX::CollateralRequest>()), "CollateralRequest", 0 } },
-   { "AY", { Minst(Type2Type<TEX::CollateralAssignment>()), "CollateralAssignment", 0 } },
-   { "AZ", { Minst(Type2Type<TEX::CollateralResponse>()), "CollateralResponse", 0 } },
-   { "B", { Minst(Type2Type<TEX::News>()), "News", 0 } },
-   { "BA", { Minst(Type2Type<TEX::CollateralReport>()), "CollateralReport", 0 } },
-   { "BB", { Minst(Type2Type<TEX::CollateralInquiry>()), "CollateralInquiry", 0 } },
-   { "BC", { Minst(Type2Type<TEX::NetworkCounterpartySystemStatusRequest>()), "NetworkCounterpartySystemStatusRequest", 0 } },
-   { "BD", { Minst(Type2Type<TEX::NetworkCounterpartySystemStatusResponse>()), "NetworkCounterpartySystemStatusResponse", 0 } },
-   { "BE", { Minst(Type2Type<TEX::UserRequest>()), "UserRequest", 0 } },
-   { "BF", { Minst(Type2Type<TEX::UserResponse>()), "UserResponse", 0 } },
-   { "BG", { Minst(Type2Type<TEX::CollateralInquiryAck>()), "CollateralInquiryAck", 0 } },
-   { "BH", { Minst(Type2Type<TEX::ConfirmationRequest>()), "ConfirmationRequest", 0 } },
-   { "BI", { Minst(Type2Type<TEX::TradingSessionListRequest>()), "TradingSessionListRequest", 0 } },
-   { "BJ", { Minst(Type2Type<TEX::TradingSessionList>()), "TradingSessionList", 0 } },
-   { "BK", { Minst(Type2Type<TEX::SecurityListUpdateReport>()), "SecurityListUpdateReport", 0 } },
-   { "BL", { Minst(Type2Type<TEX::AdjustedPositionReport>()), "AdjustedPositionReport", 0 } },
-   { "BM", { Minst(Type2Type<TEX::AllocationInstructionAlert>()), "AllocationInstructionAlert", 0 } },
-   { "BN", { Minst(Type2Type<TEX::ExecutionAcknowledgement>()), "ExecutionAcknowledgement", 0 } },
-   { "BO", { Minst(Type2Type<TEX::ContraryIntentionReport>()), "ContraryIntentionReport", 0 } },
-   { "BP", { Minst(Type2Type<TEX::SecurityDefinitionUpdateReport>()), "SecurityDefinitionUpdateReport", 0 } },
-   { "BQ", { Minst(Type2Type<TEX::SettlementObligationReport>()), "SettlementObligationReport", 0 } },
-   { "BR", { Minst(Type2Type<TEX::DerivativeSecurityListUpdateReport>()), "DerivativeSecurityListUpdateReport", 0 } },
-   { "BS", { Minst(Type2Type<TEX::TradingSessionListUpdateReport>()), "TradingSessionListUpdateReport", 0 } },
-   { "BT", { Minst(Type2Type<TEX::MarketDefinitionRequest>()), "MarketDefinitionRequest", 0 } },
-   { "BU", { Minst(Type2Type<TEX::MarketDefinition>()), "MarketDefinition", 0 } },
-   { "BV", { Minst(Type2Type<TEX::MarketDefinitionUpdateReport>()), "MarketDefinitionUpdateReport", 0 } },
-   { "BW", { Minst(Type2Type<TEX::ApplicationMessageRequest>()), "ApplicationMessageRequest", 0 } },
-   { "BX", { Minst(Type2Type<TEX::ApplicationMessageRequestAck>()), "ApplicationMessageRequestAck", 0 } },
-   { "BY", { Minst(Type2Type<TEX::ApplicationMessageReport>()), "ApplicationMessageReport", 0 } },
-   { "BZ", { Minst(Type2Type<TEX::OrderMassActionReport>()), "OrderMassActionReport", 0 } },
-   { "C", { Minst(Type2Type<TEX::Email>()), "Email", 0 } },
-   { "CA", { Minst(Type2Type<TEX::OrderMassActionRequest>()), "OrderMassActionRequest", 0 } },
-   { "CB", { Minst(Type2Type<TEX::UserNotification>()), "UserNotification", 0 } },
-   { "CC", { Minst(Type2Type<TEX::StreamAssignmentRequest>()), "StreamAssignmentRequest", 0 } },
-   { "CD", { Minst(Type2Type<TEX::StreamAssignmentReport>()), "StreamAssignmentReport", 0 } },
-   { "CE", { Minst(Type2Type<TEX::StreamAssignmentReportACK>()), "StreamAssignmentReportACK", 0 } },
-   { "CF", { Minst(Type2Type<TEX::PartyDetailsListRequest>()), "PartyDetailsListRequest", 0 } },
-   { "CG", { Minst(Type2Type<TEX::PartyDetailsListReport>()), "PartyDetailsListReport", 0 } },
-   { "D", { Minst(Type2Type<TEX::NewOrderSingle>()), "NewOrderSingle", 0 } },
-   { "E", { Minst(Type2Type<TEX::NewOrderList>()), "NewOrderList", 0 } },
-   { "F", { Minst(Type2Type<TEX::OrderCancelRequest>()), "OrderCancelRequest", 0 } },
-   { "G", { Minst(Type2Type<TEX::OrderCancelReplaceRequest>()), "OrderCancelReplaceRequest", 0 } },
-   { "H", { Minst(Type2Type<TEX::OrderStatusRequest>()), "OrderStatusRequest", 0 } },
-   { "J", { Minst(Type2Type<TEX::AllocationInstruction>()), "AllocationInstruction", 0 } },
-   { "K", { Minst(Type2Type<TEX::ListCancelRequest>()), "ListCancelRequest", 0 } },
-   { "L", { Minst(Type2Type<TEX::ListExecute>()), "ListExecute", 0 } },
-   { "M", { Minst(Type2Type<TEX::ListStatusRequest>()), "ListStatusRequest", 0 } },
-   { "N", { Minst(Type2Type<TEX::ListStatus>()), "ListStatus", 0 } },
-   { "P", { Minst(Type2Type<TEX::AllocationInstructionAck>()), "AllocationInstructionAck", 0 } },
-   { "Q", { Minst(Type2Type<TEX::DontKnowTrade>()), "DontKnowTrade", 0 } },
-   { "R", { Minst(Type2Type<TEX::QuoteRequest>()), "QuoteRequest", 0 } },
-   { "S", { Minst(Type2Type<TEX::Quote>()), "Quote", 0 } },
-   { "T", { Minst(Type2Type<TEX::SettlementInstructions>()), "SettlementInstructions", 0 } },
-   { "V", { Minst(Type2Type<TEX::MarketDataRequest>()), "MarketDataRequest", 0 } },
-   { "W", { Minst(Type2Type<TEX::MarketDataSnapshotFullRefresh>()), "MarketDataSnapshotFullRefresh", 0 } },
-   { "X", { Minst(Type2Type<TEX::MarketDataIncrementalRefresh>()), "MarketDataIncrementalRefresh", 0 } },
-   { "Y", { Minst(Type2Type<TEX::MarketDataRequestReject>()), "MarketDataRequestReject", 0 } },
-   { "Z", { Minst(Type2Type<TEX::QuoteCancel>()), "QuoteCancel", 0 } },
-   { "a", { Minst(Type2Type<TEX::QuoteStatusRequest>()), "QuoteStatusRequest", 0 } },
-   { "b", { Minst(Type2Type<TEX::MassQuoteAcknowledgement>()), "MassQuoteAcknowledgement", 0 } },
-   { "c", { Minst(Type2Type<TEX::SecurityDefinitionRequest>()), "SecurityDefinitionRequest", 0 } },
-   { "d", { Minst(Type2Type<TEX::SecurityDefinition>()), "SecurityDefinition", 0 } },
-   { "e", { Minst(Type2Type<TEX::SecurityStatusRequest>()), "SecurityStatusRequest", 0 } },
-   { "f", { Minst(Type2Type<TEX::SecurityStatus>()), "SecurityStatus", 0 } },
-   { "g", { Minst(Type2Type<TEX::TradingSessionStatusRequest>()), "TradingSessionStatusRequest", 0 } },
-   { "h", { Minst(Type2Type<TEX::TradingSessionStatus>()), "TradingSessionStatus", 0 } },
-   { "header", { Minst(Type2Types<TEX::header, bool>()), "header", 0 } },
-   { "i", { Minst(Type2Type<TEX::MassQuote>()), "MassQuote", 0 } },
-   { "j", { Minst(Type2Type<TEX::BusinessMessageReject>()), "BusinessMessageReject", 0 } },
-   { "k", { Minst(Type2Type<TEX::BidRequest>()), "BidRequest", 0 } },
-   { "l", { Minst(Type2Type<TEX::BidResponse>()), "BidResponse", 0 } },
-   { "m", { Minst(Type2Type<TEX::ListStrikePrice>()), "ListStrikePrice", 0 } },
-   { "o", { Minst(Type2Type<TEX::RegistrationInstructions>()), "RegistrationInstructions", 0 } },
-   { "p", { Minst(Type2Type<TEX::RegistrationInstructionsResponse>()), "RegistrationInstructionsResponse", 0 } },
-   { "q", { Minst(Type2Type<TEX::OrderMassCancelRequest>()), "OrderMassCancelRequest", 0 } },
-   { "r", { Minst(Type2Type<TEX::OrderMassCancelReport>()), "OrderMassCancelReport", 0 } },
-   { "s", { Minst(Type2Type<TEX::NewOrderCross>()), "NewOrderCross", 0 } },
-   { "t", { Minst(Type2Type<TEX::CrossOrderCancelReplaceRequest>()), "CrossOrderCancelReplaceRequest", 0 } },
-   { "trailer", { Minst(Type2Types<TEX::trailer, bool>()), "trailer", 0 } },
-   { "u", { Minst(Type2Type<TEX::CrossOrderCancelRequest>()), "CrossOrderCancelRequest", 0 } },
-   { "v", { Minst(Type2Type<TEX::SecurityTypeRequest>()), "SecurityTypeRequest", 0 } },
-   { "w", { Minst(Type2Type<TEX::SecurityTypes>()), "SecurityTypes", 0 } },
-   { "x", { Minst(Type2Type<TEX::SecurityListRequest>()), "SecurityListRequest", 0 } },
-   { "y", { Minst(Type2Type<TEX::SecurityList>()), "SecurityList", 0 } },
-   { "z", { Minst(Type2Type<TEX::DerivativeSecurityListRequest>()), "DerivativeSecurityListRequest", 0 } }
+   { "0", { Minst(Type2Type<TEX::Heartbeat>()), "Heartbeat" } },
+   { "1", { Minst(Type2Type<TEX::TestRequest>()), "TestRequest" } },
+   { "2", { Minst(Type2Type<TEX::ResendRequest>()), "ResendRequest" } },
+   { "3", { Minst(Type2Type<TEX::Reject>()), "Reject" } },
+   { "4", { Minst(Type2Type<TEX::SequenceReset>()), "SequenceReset" } },
+   { "5", { Minst(Type2Type<TEX::Logout>()), "Logout" } },
+   { "6", { Minst(Type2Type<TEX::IOI>()), "IOI" } },
+   { "7", { Minst(Type2Type<TEX::Advertisement>()), "Advertisement" } },
+   { "8", { Minst(Type2Type<TEX::ExecutionReport>()), "ExecutionReport" } },
+   { "9", { Minst(Type2Type<TEX::OrderCancelReject>()), "OrderCancelReject" } },
+   { "A", { Minst(Type2Type<TEX::Logon>()), "Logon" } },
+   { "AA", { Minst(Type2Type<TEX::DerivativeSecurityList>()), "DerivativeSecurityList" } },
+   { "AB", { Minst(Type2Type<TEX::NewOrderMultileg>()), "NewOrderMultileg" } },
+   { "AC", { Minst(Type2Type<TEX::MultilegOrderCancelReplace>()), "MultilegOrderCancelReplace" } },
+   { "AD", { Minst(Type2Type<TEX::TradeCaptureReportRequest>()), "TradeCaptureReportRequest" } },
+   { "AE", { Minst(Type2Type<TEX::TradeCaptureReport>()), "TradeCaptureReport" } },
+   { "AF", { Minst(Type2Type<TEX::OrderMassStatusRequest>()), "OrderMassStatusRequest" } },
+   { "AG", { Minst(Type2Type<TEX::QuoteRequestReject>()), "QuoteRequestReject" } },
+   { "AH", { Minst(Type2Type<TEX::RFQRequest>()), "RFQRequest" } },
+   { "AI", { Minst(Type2Type<TEX::QuoteStatusReport>()), "QuoteStatusReport" } },
+   { "AJ", { Minst(Type2Type<TEX::QuoteResponse>()), "QuoteResponse" } },
+   { "AK", { Minst(Type2Type<TEX::Confirmation>()), "Confirmation" } },
+   { "AL", { Minst(Type2Type<TEX::PositionMaintenanceRequest>()), "PositionMaintenanceRequest" } },
+   { "AM", { Minst(Type2Type<TEX::PositionMaintenanceReport>()), "PositionMaintenanceReport" } },
+   { "AN", { Minst(Type2Type<TEX::RequestForPositions>()), "RequestForPositions" } },
+   { "AO", { Minst(Type2Type<TEX::RequestForPositionsAck>()), "RequestForPositionsAck" } },
+   { "AP", { Minst(Type2Type<TEX::PositionReport>()), "PositionReport" } },
+   { "AQ", { Minst(Type2Type<TEX::TradeCaptureReportRequestAck>()), "TradeCaptureReportRequestAck" } },
+   { "AR", { Minst(Type2Type<TEX::TradeCaptureReportAck>()), "TradeCaptureReportAck" } },
+   { "AS", { Minst(Type2Type<TEX::AllocationReport>()), "AllocationReport" } },
+   { "AT", { Minst(Type2Type<TEX::AllocationReportAck>()), "AllocationReportAck" } },
+   { "AU", { Minst(Type2Type<TEX::ConfirmationAck>()), "ConfirmationAck" } },
+   { "AV", { Minst(Type2Type<TEX::SettlementInstructionRequest>()), "SettlementInstructionRequest" } },
+   { "AW", { Minst(Type2Type<TEX::AssignmentReport>()), "AssignmentReport" } },
+   { "AX", { Minst(Type2Type<TEX::CollateralRequest>()), "CollateralRequest" } },
+   { "AY", { Minst(Type2Type<TEX::CollateralAssignment>()), "CollateralAssignment" } },
+   { "AZ", { Minst(Type2Type<TEX::CollateralResponse>()), "CollateralResponse" } },
+   { "B", { Minst(Type2Type<TEX::News>()), "News" } },
+   { "BA", { Minst(Type2Type<TEX::CollateralReport>()), "CollateralReport" } },
+   { "BB", { Minst(Type2Type<TEX::CollateralInquiry>()), "CollateralInquiry" } },
+   { "BC", { Minst(Type2Type<TEX::NetworkCounterpartySystemStatusRequest>()), "NetworkCounterpartySystemStatusRequest" } },
+   { "BD", { Minst(Type2Type<TEX::NetworkCounterpartySystemStatusResponse>()), "NetworkCounterpartySystemStatusResponse" } },
+   { "BE", { Minst(Type2Type<TEX::UserRequest>()), "UserRequest" } },
+   { "BF", { Minst(Type2Type<TEX::UserResponse>()), "UserResponse" } },
+   { "BG", { Minst(Type2Type<TEX::CollateralInquiryAck>()), "CollateralInquiryAck" } },
+   { "BH", { Minst(Type2Type<TEX::ConfirmationRequest>()), "ConfirmationRequest" } },
+   { "BI", { Minst(Type2Type<TEX::TradingSessionListRequest>()), "TradingSessionListRequest" } },
+   { "BJ", { Minst(Type2Type<TEX::TradingSessionList>()), "TradingSessionList" } },
+   { "BK", { Minst(Type2Type<TEX::SecurityListUpdateReport>()), "SecurityListUpdateReport" } },
+   { "BL", { Minst(Type2Type<TEX::AdjustedPositionReport>()), "AdjustedPositionReport" } },
+   { "BM", { Minst(Type2Type<TEX::AllocationInstructionAlert>()), "AllocationInstructionAlert" } },
+   { "BN", { Minst(Type2Type<TEX::ExecutionAcknowledgement>()), "ExecutionAcknowledgement" } },
+   { "BO", { Minst(Type2Type<TEX::ContraryIntentionReport>()), "ContraryIntentionReport" } },
+   { "BP", { Minst(Type2Type<TEX::SecurityDefinitionUpdateReport>()), "SecurityDefinitionUpdateReport" } },
+   { "BQ", { Minst(Type2Type<TEX::SettlementObligationReport>()), "SettlementObligationReport" } },
+   { "BR", { Minst(Type2Type<TEX::DerivativeSecurityListUpdateReport>()), "DerivativeSecurityListUpdateReport" } },
+   { "BS", { Minst(Type2Type<TEX::TradingSessionListUpdateReport>()), "TradingSessionListUpdateReport" } },
+   { "BT", { Minst(Type2Type<TEX::MarketDefinitionRequest>()), "MarketDefinitionRequest" } },
+   { "BU", { Minst(Type2Type<TEX::MarketDefinition>()), "MarketDefinition" } },
+   { "BV", { Minst(Type2Type<TEX::MarketDefinitionUpdateReport>()), "MarketDefinitionUpdateReport" } },
+   { "BW", { Minst(Type2Type<TEX::ApplicationMessageRequest>()), "ApplicationMessageRequest" } },
+   { "BX", { Minst(Type2Type<TEX::ApplicationMessageRequestAck>()), "ApplicationMessageRequestAck" } },
+   { "BY", { Minst(Type2Type<TEX::ApplicationMessageReport>()), "ApplicationMessageReport" } },
+   { "BZ", { Minst(Type2Type<TEX::OrderMassActionReport>()), "OrderMassActionReport" } },
+   { "C", { Minst(Type2Type<TEX::Email>()), "Email" } },
+   { "CA", { Minst(Type2Type<TEX::OrderMassActionRequest>()), "OrderMassActionRequest" } },
+   { "CB", { Minst(Type2Type<TEX::UserNotification>()), "UserNotification" } },
+   { "CC", { Minst(Type2Type<TEX::StreamAssignmentRequest>()), "StreamAssignmentRequest" } },
+   { "CD", { Minst(Type2Type<TEX::StreamAssignmentReport>()), "StreamAssignmentReport" } },
+   { "CE", { Minst(Type2Type<TEX::StreamAssignmentReportACK>()), "StreamAssignmentReportACK" } },
+   { "CF", { Minst(Type2Type<TEX::PartyDetailsListRequest>()), "PartyDetailsListRequest" } },
+   { "CG", { Minst(Type2Type<TEX::PartyDetailsListReport>()), "PartyDetailsListReport" } },
+   { "D", { Minst(Type2Type<TEX::NewOrderSingle>()), "NewOrderSingle" } },
+   { "E", { Minst(Type2Type<TEX::NewOrderList>()), "NewOrderList" } },
+   { "F", { Minst(Type2Type<TEX::OrderCancelRequest>()), "OrderCancelRequest" } },
+   { "G", { Minst(Type2Type<TEX::OrderCancelReplaceRequest>()), "OrderCancelReplaceRequest" } },
+   { "H", { Minst(Type2Type<TEX::OrderStatusRequest>()), "OrderStatusRequest" } },
+   { "J", { Minst(Type2Type<TEX::AllocationInstruction>()), "AllocationInstruction" } },
+   { "K", { Minst(Type2Type<TEX::ListCancelRequest>()), "ListCancelRequest" } },
+   { "L", { Minst(Type2Type<TEX::ListExecute>()), "ListExecute" } },
+   { "M", { Minst(Type2Type<TEX::ListStatusRequest>()), "ListStatusRequest" } },
+   { "N", { Minst(Type2Type<TEX::ListStatus>()), "ListStatus" } },
+   { "P", { Minst(Type2Type<TEX::AllocationInstructionAck>()), "AllocationInstructionAck" } },
+   { "Q", { Minst(Type2Type<TEX::DontKnowTrade>()), "DontKnowTrade" } },
+   { "R", { Minst(Type2Type<TEX::QuoteRequest>()), "QuoteRequest" } },
+   { "S", { Minst(Type2Type<TEX::Quote>()), "Quote" } },
+   { "T", { Minst(Type2Type<TEX::SettlementInstructions>()), "SettlementInstructions" } },
+   { "V", { Minst(Type2Type<TEX::MarketDataRequest>()), "MarketDataRequest" } },
+   { "W", { Minst(Type2Type<TEX::MarketDataSnapshotFullRefresh>()), "MarketDataSnapshotFullRefresh" } },
+   { "X", { Minst(Type2Type<TEX::MarketDataIncrementalRefresh>()), "MarketDataIncrementalRefresh" } },
+   { "Y", { Minst(Type2Type<TEX::MarketDataRequestReject>()), "MarketDataRequestReject" } },
+   { "Z", { Minst(Type2Type<TEX::QuoteCancel>()), "QuoteCancel" } },
+   { "a", { Minst(Type2Type<TEX::QuoteStatusRequest>()), "QuoteStatusRequest" } },
+   { "b", { Minst(Type2Type<TEX::MassQuoteAcknowledgement>()), "MassQuoteAcknowledgement" } },
+   { "c", { Minst(Type2Type<TEX::SecurityDefinitionRequest>()), "SecurityDefinitionRequest" } },
+   { "d", { Minst(Type2Type<TEX::SecurityDefinition>()), "SecurityDefinition" } },
+   { "e", { Minst(Type2Type<TEX::SecurityStatusRequest>()), "SecurityStatusRequest" } },
+   { "f", { Minst(Type2Type<TEX::SecurityStatus>()), "SecurityStatus" } },
+   { "g", { Minst(Type2Type<TEX::TradingSessionStatusRequest>()), "TradingSessionStatusRequest" } },
+   { "h", { Minst(Type2Type<TEX::TradingSessionStatus>()), "TradingSessionStatus" } },
+   { "header", { Minst(Type2Types<TEX::header, bool>()), "header" } },
+   { "i", { Minst(Type2Type<TEX::MassQuote>()), "MassQuote" } },
+   { "j", { Minst(Type2Type<TEX::BusinessMessageReject>()), "BusinessMessageReject" } },
+   { "k", { Minst(Type2Type<TEX::BidRequest>()), "BidRequest" } },
+   { "l", { Minst(Type2Type<TEX::BidResponse>()), "BidResponse" } },
+   { "m", { Minst(Type2Type<TEX::ListStrikePrice>()), "ListStrikePrice" } },
+   { "o", { Minst(Type2Type<TEX::RegistrationInstructions>()), "RegistrationInstructions" } },
+   { "p", { Minst(Type2Type<TEX::RegistrationInstructionsResponse>()), "RegistrationInstructionsResponse" } },
+   { "q", { Minst(Type2Type<TEX::OrderMassCancelRequest>()), "OrderMassCancelRequest" } },
+   { "r", { Minst(Type2Type<TEX::OrderMassCancelReport>()), "OrderMassCancelReport" } },
+   { "s", { Minst(Type2Type<TEX::NewOrderCross>()), "NewOrderCross" } },
+   { "t", { Minst(Type2Type<TEX::CrossOrderCancelReplaceRequest>()), "CrossOrderCancelReplaceRequest" } },
+   { "trailer", { Minst(Type2Types<TEX::trailer, bool>()), "trailer" } },
+   { "u", { Minst(Type2Type<TEX::CrossOrderCancelRequest>()), "CrossOrderCancelRequest" } },
+   { "v", { Minst(Type2Type<TEX::SecurityTypeRequest>()), "SecurityTypeRequest" } },
+   { "w", { Minst(Type2Type<TEX::SecurityTypes>()), "SecurityTypes" } },
+   { "x", { Minst(Type2Type<TEX::SecurityListRequest>()), "SecurityListRequest" } },
+   { "y", { Minst(Type2Type<TEX::SecurityList>()), "SecurityList" } },
+   { "z", { Minst(Type2Type<TEX::DerivativeSecurityListRequest>()), "DerivativeSecurityListRequest" } }
 }; // 119
 
 extern const Myfix_BaseEntry::Pair fldpairs[];
@@ -416,9 +413,9 @@ extern const Myfix_BaseEntry::Pair fldpairs[];
 /// Compiler generated metadata object, accessed through this function
 const F8MetaCntx& ctx() // avoid SIOF
 {
-   static const BaseMsgEntry nvbme = { Minst(Type2Type<void *>()) };
+   static const BaseMsgEntry nvbme { Minst(Type2Type<void *>()) };
    static const Myfix_BaseMsgEntry bme(msgpairs, 119, nvbme);
-   static const BaseEntry nvbe = { Inst(Type2Type<void *>()) };
+   static const BaseEntry nvbe { Inst(Type2Type<void *>()) };
    static const Myfix_BaseEntry be(fldpairs, 1562, nvbe);
    static const F8MetaCntx _ctx(1100, bme, be, cn, "FIXT.1.1");
    return _ctx;

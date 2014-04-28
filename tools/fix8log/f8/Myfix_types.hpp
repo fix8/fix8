@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-// *** f8c generated file: DO NOT EDIT! Created: 2014-04-05 01:38:20 ***
+// *** f8c generated file: DO NOT EDIT! Created: 2014-04-27 23:02:33 ***
 //-------------------------------------------------------------------------------------------------
 /*
 
@@ -48,8 +48,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
-#if defined MAGIC_NUM && MAGIC_NUM > 16781312L
-#error Myfix_types.hpp version 1.1.0 is out of date. Please regenerate with f8c.
+#if defined MAGIC_NUM && MAGIC_NUM > 16785408L
+#error Myfix_types.hpp version 1.2.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_types.hpp
@@ -61,40 +61,40 @@ namespace FIX8 {
 namespace TEX {
 
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1> Account;
+using Account = Field<f8String, 1>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 2> AdvId;
+using AdvId = Field<f8String, 2>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 3> AdvRefID;
+using AdvRefID = Field<f8String, 3>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 4> AdvSide;
+using AdvSide = Field<char, 4>;
 const char AdvSide_BUY('B');
 const char AdvSide_SELL('S');
 const char AdvSide_TRADE('T');
 const char AdvSide_CROSS('X');
 const size_t AdvSide_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 5> AdvTransType;
+using AdvTransType = Field<f8String, 5>;
 const f8String AdvTransType_CANCEL("C");
 const f8String AdvTransType_NEW("N");
 const f8String AdvTransType_REPLACE("R");
 const size_t AdvTransType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 6> AvgPx;
+using AvgPx = Field<price, 6>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 7> BeginSeqNo;
+using BeginSeqNo = Field<SeqNum, 7>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 8> BeginString;
+using BeginString = Field<f8String, 8>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 9> BodyLength;
+using BodyLength = Field<Length, 9>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 10> CheckSum;
+using CheckSum = Field<f8String, 10>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 11> ClOrdID;
+using ClOrdID = Field<f8String, 11>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 12> Commission;
+using Commission = Field<Amt, 12>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 13> CommType;
+using CommType = Field<char, 13>;
 const char CommType_PER_UNIT('1');
 const char CommType_PERCENT('2');
 const char CommType_ABSOLUTE('3');
@@ -103,15 +103,15 @@ const char CommType_PERCENTAGE_WAIVED_5('5');
 const char CommType_POINTS_PER_BOND_OR_CONTRACT('6');
 const size_t CommType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 14> CumQty;
+using CumQty = Field<Qty, 14>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 15> Currency;
+using Currency = Field<currency, 15>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 16> EndSeqNo;
+using EndSeqNo = Field<SeqNum, 16>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 17> ExecID;
+using ExecID = Field<f8String, 17>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 18> ExecInst;
+using ExecInst = Field<MultipleCharValue, 18>;
 const f8String ExecInst_STAY_ON_OFFER_SIDE("0");
 const f8String ExecInst_NOT_HELD("1");
 const f8String ExecInst_WORK("2");
@@ -170,15 +170,15 @@ const f8String ExecInst_EXECUTE_AS_DURATION_NEUTRAL("s");
 const f8String ExecInst_EXECUTE_AS_FX_NEUTRAL("t");
 const size_t ExecInst_realm_els(56);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 19> ExecRefID;
+using ExecRefID = Field<f8String, 19>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 21> HandlInst;
+using HandlInst = Field<char, 21>;
 const char HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION('1');
 const char HandlInst_AUTOMATED_EXECUTION_ORDER_PUBLIC_BROKER_INTERVENTION_OK('2');
 const char HandlInst_MANUAL_ORDER_BEST_EXECUTION('3');
 const size_t HandlInst_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 22> SecurityIDSource;
+using SecurityIDSource = Field<f8String, 22>;
 const f8String SecurityIDSource_CUSIP("1");
 const f8String SecurityIDSource_SEDOL("2");
 const f8String SecurityIDSource_QUIK("3");
@@ -203,17 +203,17 @@ const f8String SecurityIDSource_LETTER_OF_CREDIT("L");
 const f8String SecurityIDSource_MARKETPLACE_ASSIGNED_IDENTIFIER("M");
 const size_t SecurityIDSource_realm_els(22);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 23> IOIID;
+using IOIID = Field<f8String, 23>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 25> IOIQltyInd;
+using IOIQltyInd = Field<char, 25>;
 const char IOIQltyInd_HIGH('H');
 const char IOIQltyInd_LOW('L');
 const char IOIQltyInd_MEDIUM('M');
 const size_t IOIQltyInd_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 26> IOIRefID;
+using IOIRefID = Field<f8String, 26>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 27> IOIQty;
+using IOIQty = Field<f8String, 27>;
 const f8String IOIQty_1000000000("0");
 const f8String IOIQty_LARGE("L");
 const f8String IOIQty_MEDIUM("M");
@@ -221,30 +221,30 @@ const f8String IOIQty_SMALL("S");
 const f8String IOIQty_UNDISCLOSED_QUANTITY("U");
 const size_t IOIQty_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 28> IOITransType;
+using IOITransType = Field<char, 28>;
 const char IOITransType_CANCEL('C');
 const char IOITransType_NEW('N');
 const char IOITransType_REPLACE('R');
 const size_t IOITransType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 29> LastCapacity;
+using LastCapacity = Field<char, 29>;
 const char LastCapacity_AGENT('1');
 const char LastCapacity_CROSS_AS_AGENT('2');
 const char LastCapacity_CROSS_AS_PRINCIPAL('3');
 const char LastCapacity_PRINCIPAL('4');
 const size_t LastCapacity_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 30> LastMkt;
+using LastMkt = Field<Exchange, 30>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 31> LastPx;
+using LastPx = Field<price, 31>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 32> LastQty;
+using LastQty = Field<Qty, 32>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 33> NoLinesOfText;
+using NoLinesOfText = Field<NumInGroup, 33>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 34> MsgSeqNum;
+using MsgSeqNum = Field<SeqNum, 34>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 35> MsgType;
+using MsgType = Field<f8String, 35>;
 const f8String MsgType_HEARTBEAT("0");
 const f8String MsgType_TESTREQUEST("1");
 const f8String MsgType_RESENDREQUEST("2");
@@ -365,13 +365,13 @@ const f8String MsgType_SECURITYLIST("y");
 const f8String MsgType_DERIVATIVESECURITYLISTREQUEST("z");
 const size_t MsgType_realm_els(118);
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 36> NewSeqNo;
+using NewSeqNo = Field<SeqNum, 36>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 37> OrderID;
+using OrderID = Field<f8String, 37>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 38> OrderQty;
+using OrderQty = Field<Qty, 38>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 39> OrdStatus;
+using OrdStatus = Field<char, 39>;
 const char OrdStatus_NEW('0');
 const char OrdStatus_PARTIALLY_FILLED('1');
 const char OrdStatus_FILLED('2');
@@ -389,7 +389,7 @@ const char OrdStatus_ACCEPTED_FOR_BIDDING('D');
 const char OrdStatus_PENDING_REPLACE('E');
 const size_t OrdStatus_realm_els(15);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 40> OrdType;
+using OrdType = Field<char, 40>;
 const char OrdType_MARKET('1');
 const char OrdType_LIMIT('2');
 const char OrdType_STOP('3');
@@ -416,27 +416,27 @@ const char OrdType_PEGGED('P');
 const char OrdType_COUNTER_ORDER_SELECTION('Q');
 const size_t OrdType_realm_els(24);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 41> OrigClOrdID;
+using OrigClOrdID = Field<f8String, 41>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 42> OrigTime;
+using OrigTime = Field<UTCTimestamp, 42>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 43> PossDupFlag;
+using PossDupFlag = Field<Boolean, 43>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 44> Price;
+using Price = Field<price, 44>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 45> RefSeqNum;
+using RefSeqNum = Field<SeqNum, 45>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 48> SecurityID;
+using SecurityID = Field<f8String, 48>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 49> SenderCompID;
+using SenderCompID = Field<f8String, 49>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 50> SenderSubID;
+using SenderSubID = Field<f8String, 50>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 52> SendingTime;
+using SendingTime = Field<UTCTimestamp, 52>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 53> Quantity;
+using Quantity = Field<Qty, 53>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 54> Side;
+using Side = Field<char, 54>;
 const char Side_BUY('1');
 const char Side_SELL('2');
 const char Side_BUY_MINUS('3');
@@ -455,15 +455,15 @@ const char Side_LEND('F');
 const char Side_BORROW('G');
 const size_t Side_realm_els(16);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 55> Symbol;
+using Symbol = Field<f8String, 55>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 56> TargetCompID;
+using TargetCompID = Field<f8String, 56>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 57> TargetSubID;
+using TargetSubID = Field<f8String, 57>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 58> Text;
+using Text = Field<f8String, 58>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 59> TimeInForce;
+using TimeInForce = Field<char, 59>;
 const char TimeInForce_DAY('0');
 const char TimeInForce_GOOD_TILL_CANCEL('1');
 const char TimeInForce_AT_THE_OPENING('2');
@@ -476,17 +476,17 @@ const char TimeInForce_GOOD_THROUGH_CROSSING('8');
 const char TimeInForce_AT_CROSSING('9');
 const size_t TimeInForce_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 60> TransactTime;
+using TransactTime = Field<UTCTimestamp, 60>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 61> Urgency;
+using Urgency = Field<char, 61>;
 const char Urgency_NORMAL('0');
 const char Urgency_FLASH('1');
 const char Urgency_BACKGROUND('2');
 const size_t Urgency_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 62> ValidUntilTime;
+using ValidUntilTime = Field<UTCTimestamp, 62>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 63> SettlType;
+using SettlType = Field<f8String, 63>;
 const f8String SettlType_REGULAR("0");
 const f8String SettlType_CASH("1");
 const f8String SettlType_NEXT_DAY("2");
@@ -501,24 +501,24 @@ const f8String SettlType_BROKEN_DATE("B");
 const f8String SettlType_FX_SPOT_NEXT_SETTLEMENT("C");
 const size_t SettlType_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 64> SettlDate;
+using SettlDate = Field<LocalMktDate, 64>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 65> SymbolSfx;
+using SymbolSfx = Field<f8String, 65>;
 const f8String SymbolSfx_EUCP_WITH_LUMP_SUM_INTEREST_RATHER_THAN_DISCOUNT_PRICE("CD");
 const f8String SymbolSfx_WHEN_ISSUED_FOR_A_SECURITY_TO_BE_REISSUED_UNDER_AN_OLD_CUSIP_OR_ISIN("WI");
 const size_t SymbolSfx_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 66> ListID;
+using ListID = Field<f8String, 66>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 67> ListSeqNo;
+using ListSeqNo = Field<int, 67>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 68> TotNoOrders;
+using TotNoOrders = Field<int, 68>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 69> ListExecInst;
+using ListExecInst = Field<f8String, 69>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 70> AllocID;
+using AllocID = Field<f8String, 70>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 71> AllocTransType;
+using AllocTransType = Field<char, 71>;
 const char AllocTransType_NEW('0');
 const char AllocTransType_REPLACE('1');
 const char AllocTransType_CANCEL('2');
@@ -528,15 +528,15 @@ const char AllocTransType_CALCULATED_WITHOUT_PRELIMINARY('5');
 const char AllocTransType_REVERSAL('6');
 const size_t AllocTransType_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 72> RefAllocID;
+using RefAllocID = Field<f8String, 72>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 73> NoOrders;
+using NoOrders = Field<NumInGroup, 73>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 74> AvgPxPrecision;
+using AvgPxPrecision = Field<int, 74>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 75> TradeDate;
+using TradeDate = Field<LocalMktDate, 75>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 77> PositionEffect;
+using PositionEffect = Field<char, 77>;
 const char PositionEffect_CLOSE('C');
 const char PositionEffect_DEFAULT('D');
 const char PositionEffect_FIFO('F');
@@ -545,13 +545,13 @@ const char PositionEffect_OPEN('O');
 const char PositionEffect_ROLLED('R');
 const size_t PositionEffect_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 78> NoAllocs;
+using NoAllocs = Field<NumInGroup, 78>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 79> AllocAccount;
+using AllocAccount = Field<f8String, 79>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 80> AllocQty;
+using AllocQty = Field<Qty, 80>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 81> ProcessCode;
+using ProcessCode = Field<char, 81>;
 const char ProcessCode_REGULAR('0');
 const char ProcessCode_SOFT_DOLLAR('1');
 const char ProcessCode_STEP_IN('2');
@@ -561,15 +561,15 @@ const char ProcessCode_SOFT_DOLLAR_STEP_OUT('5');
 const char ProcessCode_PLAN_SPONSOR('6');
 const size_t ProcessCode_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 82> NoRpts;
+using NoRpts = Field<int, 82>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 83> RptSeq;
+using RptSeq = Field<int, 83>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 84> CxlQty;
+using CxlQty = Field<Qty, 84>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 85> NoDlvyInst;
+using NoDlvyInst = Field<NumInGroup, 85>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 87> AllocStatus;
+using AllocStatus = Field<int, 87>;
 const int AllocStatus_ACCEPTED(0);
 const int AllocStatus_BLOCK_LEVEL_REJECT(1);
 const int AllocStatus_ACCOUNT_LEVEL_REJECT(2);
@@ -580,7 +580,7 @@ const int AllocStatus_ALLOCATION_PENDING(6);
 const int AllocStatus_REVERSED(7);
 const size_t AllocStatus_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 88> AllocRejCode;
+using AllocRejCode = Field<int, 88>;
 const int AllocRejCode_UNKNOWN_ACCOUNT(0);
 const int AllocRejCode_INCORRECT_QUANTITY(1);
 const int AllocRejCode_INCORRECT_AVERAGEG_PRICE(2);
@@ -598,27 +598,27 @@ const int AllocRejCode_WAREHOUSE_REQUEST_REJECTED(13);
 const int AllocRejCode_OTHER_99(99);
 const size_t AllocRejCode_realm_els(15);
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 89> Signature;
+using Signature = Field<data, 89>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 90> SecureDataLen;
+using SecureDataLen = Field<Length, 90>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 91> SecureData;
+using SecureData = Field<data, 91>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 93> SignatureLength;
+using SignatureLength = Field<Length, 93>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 94> EmailType;
+using EmailType = Field<char, 94>;
 const char EmailType_NEW('0');
 const char EmailType_REPLY('1');
 const char EmailType_ADMIN_REPLY('2');
 const size_t EmailType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 95> RawDataLength;
+using RawDataLength = Field<Length, 95>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 96> RawData;
+using RawData = Field<data, 96>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 97> PossResend;
+using PossResend = Field<Boolean, 97>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 98> EncryptMethod;
+using EncryptMethod = Field<int, 98>;
 const int EncryptMethod_NONE_OTHER(0);
 const int EncryptMethod_PKCS(1);
 const int EncryptMethod_DES(2);
@@ -628,11 +628,11 @@ const int EncryptMethod_PGP_DES_MD5(5);
 const int EncryptMethod_PEM_DES_MD5(6);
 const size_t EncryptMethod_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 99> StopPx;
+using StopPx = Field<price, 99>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 100> ExDestination;
+using ExDestination = Field<Exchange, 100>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 102> CxlRejReason;
+using CxlRejReason = Field<int, 102>;
 const int CxlRejReason_TOO_LATE_TO_CANCEL(0);
 const int CxlRejReason_UNKNOWN_ORDER(1);
 const int CxlRejReason_BROKER(2);
@@ -646,7 +646,7 @@ const int CxlRejReason_INVALID_PRICE_INCREMENT(18);
 const int CxlRejReason_OTHER(99);
 const size_t CxlRejReason_realm_els(11);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 103> OrdRejReason;
+using OrdRejReason = Field<int, 103>;
 const int OrdRejReason_BROKER(0);
 const int OrdRejReason_UNKNOWN_SYMBOL(1);
 const int OrdRejReason_EXCHANGE_CLOSED(2);
@@ -668,7 +668,7 @@ const int OrdRejReason_INVALID_PRICE_INCREMENT(18);
 const int OrdRejReason_OTHER(99);
 const size_t OrdRejReason_realm_els(19);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 104> IOIQualifier;
+using IOIQualifier = Field<char, 104>;
 const char IOIQualifier_ALL_OR_NONE('A');
 const char IOIQualifier_MARKET_ON_CLOSE('B');
 const char IOIQualifier_AT_THE_CLOSE('C');
@@ -689,54 +689,54 @@ const char IOIQualifier_AT_THE_MIDPOINT('Y');
 const char IOIQualifier_PRE_OPEN('Z');
 const size_t IOIQualifier_realm_els(18);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 106> Issuer;
+using Issuer = Field<f8String, 106>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 107> SecurityDesc;
+using SecurityDesc = Field<f8String, 107>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 108> HeartBtInt;
+using HeartBtInt = Field<int, 108>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 110> MinQty;
+using MinQty = Field<Qty, 110>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 111> MaxFloor;
+using MaxFloor = Field<Qty, 111>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 112> TestReqID;
+using TestReqID = Field<f8String, 112>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 113> ReportToExch;
+using ReportToExch = Field<Boolean, 113>;
 const char ReportToExch_NO('N');
 const char ReportToExch_YES('Y');
 const size_t ReportToExch_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 114> LocateReqd;
+using LocateReqd = Field<Boolean, 114>;
 const char LocateReqd_NO('N');
 const char LocateReqd_YES('Y');
 const size_t LocateReqd_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 115> OnBehalfOfCompID;
+using OnBehalfOfCompID = Field<f8String, 115>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 116> OnBehalfOfSubID;
+using OnBehalfOfSubID = Field<f8String, 116>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 117> QuoteID;
+using QuoteID = Field<f8String, 117>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 118> NetMoney;
+using NetMoney = Field<Amt, 118>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 119> SettlCurrAmt;
+using SettlCurrAmt = Field<Amt, 119>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 120> SettlCurrency;
+using SettlCurrency = Field<currency, 120>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 121> ForexReq;
+using ForexReq = Field<Boolean, 121>;
 const char ForexReq_NO('N');
 const char ForexReq_YES('Y');
 const size_t ForexReq_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 122> OrigSendingTime;
+using OrigSendingTime = Field<UTCTimestamp, 122>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 123> GapFillFlag;
+using GapFillFlag = Field<Boolean, 123>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 124> NoExecs;
+using NoExecs = Field<NumInGroup, 124>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 126> ExpireTime;
+using ExpireTime = Field<UTCTimestamp, 126>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 127> DKReason;
+using DKReason = Field<char, 127>;
 const char DKReason_UNKNOWN_SYMBOL('A');
 const char DKReason_WRONG_SIDE('B');
 const char DKReason_QUANTITY_EXCEEDS_ORDER('C');
@@ -746,32 +746,32 @@ const char DKReason_CALCULATION_DIFFERENCE('F');
 const char DKReason_OTHER('Z');
 const size_t DKReason_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 128> DeliverToCompID;
+using DeliverToCompID = Field<f8String, 128>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 129> DeliverToSubID;
+using DeliverToSubID = Field<f8String, 129>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 130> IOINaturalFlag;
+using IOINaturalFlag = Field<Boolean, 130>;
 const char IOINaturalFlag_NO('N');
 const char IOINaturalFlag_YES('Y');
 const size_t IOINaturalFlag_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 131> QuoteReqID;
+using QuoteReqID = Field<f8String, 131>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 132> BidPx;
+using BidPx = Field<price, 132>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 133> OfferPx;
+using OfferPx = Field<price, 133>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 134> BidSize;
+using BidSize = Field<Qty, 134>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 135> OfferSize;
+using OfferSize = Field<Qty, 135>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 136> NoMiscFees;
+using NoMiscFees = Field<NumInGroup, 136>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 137> MiscFeeAmt;
+using MiscFeeAmt = Field<Amt, 137>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 138> MiscFeeCurr;
+using MiscFeeCurr = Field<currency, 138>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 139> MiscFeeType;
+using MiscFeeType = Field<f8String, 139>;
 const f8String MiscFeeType_REGULATORY("1");
 const f8String MiscFeeType_PER_TRANSACTION("10");
 const f8String MiscFeeType_CONVERSION("11");
@@ -788,27 +788,27 @@ const f8String MiscFeeType_MARKUP("8");
 const f8String MiscFeeType_CONSUMPTION_TAX("9");
 const size_t MiscFeeType_realm_els(14);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 140> PrevClosePx;
+using PrevClosePx = Field<price, 140>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 141> ResetSeqNumFlag;
+using ResetSeqNumFlag = Field<Boolean, 141>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 142> SenderLocationID;
+using SenderLocationID = Field<f8String, 142>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 143> TargetLocationID;
+using TargetLocationID = Field<f8String, 143>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 144> OnBehalfOfLocationID;
+using OnBehalfOfLocationID = Field<f8String, 144>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 145> DeliverToLocationID;
+using DeliverToLocationID = Field<f8String, 145>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 146> NoRelatedSym;
+using NoRelatedSym = Field<NumInGroup, 146>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 147> Subject;
+using Subject = Field<f8String, 147>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 148> Headline;
+using Headline = Field<f8String, 148>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 149> URLLink;
+using URLLink = Field<f8String, 149>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 150> ExecType;
+using ExecType = Field<char, 150>;
 const char ExecType_NEW('0');
 const char ExecType_DONE_FOR_DAY('3');
 const char ExecType_CANCELED('4');
@@ -831,28 +831,28 @@ const char ExecType_TRADE_HAS_BEEN_RELEASED_TO_CLEARING('K');
 const char ExecType_TRIGGERED_OR_ACTIVATED_BY_SYSTEM('L');
 const size_t ExecType_realm_els(20);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 151> LeavesQty;
+using LeavesQty = Field<Qty, 151>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 152> CashOrderQty;
+using CashOrderQty = Field<Qty, 152>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 153> AllocAvgPx;
+using AllocAvgPx = Field<price, 153>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 154> AllocNetMoney;
+using AllocNetMoney = Field<Amt, 154>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 155> SettlCurrFxRate;
+using SettlCurrFxRate = Field<double, 155>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 156> SettlCurrFxRateCalc;
+using SettlCurrFxRateCalc = Field<char, 156>;
 const char SettlCurrFxRateCalc_DIVIDE('D');
 const char SettlCurrFxRateCalc_MULTIPLY('M');
 const size_t SettlCurrFxRateCalc_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 157> NumDaysInterest;
+using NumDaysInterest = Field<int, 157>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 158> AccruedInterestRate;
+using AccruedInterestRate = Field<Percentage, 158>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 159> AccruedInterestAmt;
+using AccruedInterestAmt = Field<Amt, 159>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 160> SettlInstMode;
+using SettlInstMode = Field<char, 160>;
 const char SettlInstMode_DEFAULT('0');
 const char SettlInstMode_STANDING_INSTRUCTIONS_PROVIDED('1');
 const char SettlInstMode_SPECIFIC_ALLOCATION_ACCOUNT_OVERRIDING('2');
@@ -861,26 +861,26 @@ const char SettlInstMode_SPECIFIC_ORDER_FOR_A_SINGLE_ACCOUNT('4');
 const char SettlInstMode_REQUEST_REJECT('5');
 const size_t SettlInstMode_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 161> AllocText;
+using AllocText = Field<f8String, 161>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 162> SettlInstID;
+using SettlInstID = Field<f8String, 162>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 163> SettlInstTransType;
+using SettlInstTransType = Field<char, 163>;
 const char SettlInstTransType_CANCEL('C');
 const char SettlInstTransType_NEW('N');
 const char SettlInstTransType_REPLACE('R');
 const char SettlInstTransType_RESTATE('T');
 const size_t SettlInstTransType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 164> EmailThreadID;
+using EmailThreadID = Field<f8String, 164>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 165> SettlInstSource;
+using SettlInstSource = Field<char, 165>;
 const char SettlInstSource_BROKERS_INSTRUCTIONS('1');
 const char SettlInstSource_INSTITUTIONS_INSTRUCTIONS('2');
 const char SettlInstSource_INVESTOR('3');
 const size_t SettlInstSource_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 167> SecurityType;
+using SecurityType = Field<f8String, 167>;
 const f8String SecurityType_WILDCARD_ENTRY_FOR_USE_ON_SECURITY_DEFINITION_REQUEST("?");
 const f8String SecurityType_ASSET_BACKED_SECURITIES("ABS");
 const f8String SecurityType_AMENDED_RESTATED("AMENDED");
@@ -1001,9 +1001,9 @@ const f8String SecurityType_YANKEE_CORPORATE_BOND("YANK");
 const f8String SecurityType_YANKEE_CERTIFICATE_OF_DEPOSIT("YCD");
 const size_t SecurityType_realm_els(118);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 168> EffectiveTime;
+using EffectiveTime = Field<UTCTimestamp, 168>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 169> StandInstDbType;
+using StandInstDbType = Field<int, 169>;
 const int StandInstDbType_OTHER(0);
 const int StandInstDbType_DTC_SID(1);
 const int StandInstDbType_THOMSON_ALERT(2);
@@ -1011,99 +1011,99 @@ const int StandInstDbType_A_GLOBAL_CUSTODIAN(3);
 const int StandInstDbType_ACCOUNTNET(4);
 const size_t StandInstDbType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 170> StandInstDbName;
+using StandInstDbName = Field<f8String, 170>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 171> StandInstDbID;
+using StandInstDbID = Field<f8String, 171>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 172> SettlDeliveryType;
+using SettlDeliveryType = Field<int, 172>;
 const int SettlDeliveryType_VERSUS_PAYMENT_DELIVER(0);
 const int SettlDeliveryType_FREE_DELIVER(1);
 const int SettlDeliveryType_TRI_PARTY(2);
 const int SettlDeliveryType_HOLD_IN_CUSTODY(3);
 const size_t SettlDeliveryType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 188> BidSpotRate;
+using BidSpotRate = Field<price, 188>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 189> BidForwardPoints;
+using BidForwardPoints = Field<PriceOffset, 189>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 190> OfferSpotRate;
+using OfferSpotRate = Field<price, 190>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 191> OfferForwardPoints;
+using OfferForwardPoints = Field<PriceOffset, 191>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 192> OrderQty2;
+using OrderQty2 = Field<Qty, 192>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 193> SettlDate2;
+using SettlDate2 = Field<LocalMktDate, 193>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 194> LastSpotRate;
+using LastSpotRate = Field<price, 194>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 195> LastForwardPoints;
+using LastForwardPoints = Field<PriceOffset, 195>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 196> AllocLinkID;
+using AllocLinkID = Field<f8String, 196>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 197> AllocLinkType;
+using AllocLinkType = Field<int, 197>;
 const int AllocLinkType_FX_NETTING(0);
 const int AllocLinkType_FX_SWAP(1);
 const size_t AllocLinkType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 198> SecondaryOrderID;
+using SecondaryOrderID = Field<f8String, 198>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 199> NoIOIQualifiers;
+using NoIOIQualifiers = Field<NumInGroup, 199>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 200> MaturityMonthYear;
+using MaturityMonthYear = Field<MonthYear, 200>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 201> PutOrCall;
+using PutOrCall = Field<int, 201>;
 const int PutOrCall_PUT(0);
 const int PutOrCall_CALL(1);
 const size_t PutOrCall_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 202> StrikePrice;
+using StrikePrice = Field<price, 202>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 203> CoveredOrUncovered;
+using CoveredOrUncovered = Field<int, 203>;
 const int CoveredOrUncovered_COVERED(0);
 const int CoveredOrUncovered_UNCOVERED(1);
 const size_t CoveredOrUncovered_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 206> OptAttribute;
+using OptAttribute = Field<char, 206>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 207> SecurityExchange;
+using SecurityExchange = Field<Exchange, 207>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 208> NotifyBrokerOfCredit;
+using NotifyBrokerOfCredit = Field<Boolean, 208>;
 const char NotifyBrokerOfCredit_NO('N');
 const char NotifyBrokerOfCredit_YES('Y');
 const size_t NotifyBrokerOfCredit_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 209> AllocHandlInst;
+using AllocHandlInst = Field<int, 209>;
 const int AllocHandlInst_MATCH(1);
 const int AllocHandlInst_FORWARD(2);
 const int AllocHandlInst_FORWARD_AND_MATCH(3);
 const size_t AllocHandlInst_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 210> MaxShow;
+using MaxShow = Field<Qty, 210>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 211> PegOffsetValue;
+using PegOffsetValue = Field<double, 211>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 212> XmlDataLen;
+using XmlDataLen = Field<Length, 212>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 213> XmlData;
+using XmlData = Field<data, 213>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 214> SettlInstRefID;
+using SettlInstRefID = Field<f8String, 214>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 215> NoRoutingIDs;
+using NoRoutingIDs = Field<NumInGroup, 215>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 216> RoutingType;
+using RoutingType = Field<int, 216>;
 const int RoutingType_TARGET_FIRM(1);
 const int RoutingType_TARGET_LIST(2);
 const int RoutingType_BLOCK_FIRM(3);
 const int RoutingType_BLOCK_LIST(4);
 const size_t RoutingType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 217> RoutingID;
+using RoutingID = Field<f8String, 217>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 218> Spread;
+using Spread = Field<PriceOffset, 218>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 220> BenchmarkCurveCurrency;
+using BenchmarkCurveCurrency = Field<currency, 220>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 221> BenchmarkCurveName;
+using BenchmarkCurveName = Field<f8String, 221>;
 const f8String BenchmarkCurveName_EONIA("EONIA");
 const f8String BenchmarkCurveName_EUREPO("EUREPO");
 const f8String BenchmarkCurveName_EURIBOR("Euribor");
@@ -1118,29 +1118,29 @@ const f8String BenchmarkCurveName_SWAP("SWAP");
 const f8String BenchmarkCurveName_TREASURY("Treasury");
 const size_t BenchmarkCurveName_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 222> BenchmarkCurvePoint;
+using BenchmarkCurvePoint = Field<f8String, 222>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 223> CouponRate;
+using CouponRate = Field<Percentage, 223>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 224> CouponPaymentDate;
+using CouponPaymentDate = Field<LocalMktDate, 224>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 225> IssueDate;
+using IssueDate = Field<LocalMktDate, 225>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 226> RepurchaseTerm;
+using RepurchaseTerm = Field<int, 226>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 227> RepurchaseRate;
+using RepurchaseRate = Field<Percentage, 227>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 228> Factor;
+using Factor = Field<double, 228>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 229> TradeOriginationDate;
+using TradeOriginationDate = Field<LocalMktDate, 229>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 230> ExDate;
+using ExDate = Field<LocalMktDate, 230>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 231> ContractMultiplier;
+using ContractMultiplier = Field<double, 231>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 232> NoStipulations;
+using NoStipulations = Field<NumInGroup, 232>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 233> StipulationType;
+using StipulationType = Field<f8String, 233>;
 const f8String StipulationType_ABSOLUTE_PREPAYMENT_SPEED("ABS");
 const f8String StipulationType_ALTERNATIVE_MINIMUM_TAX("AMT");
 const f8String StipulationType_AUTO_REINVESTMENT_AT_RATE_OR_BETTER("AUTOREINV");
@@ -1223,9 +1223,9 @@ const f8String StipulationType_YIELD_RANGE("YIELD");
 const f8String StipulationType_YIELD_TO_MATURITY("YTM");
 const size_t StipulationType_realm_els(80);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 234> StipulationValue;
+using StipulationValue = Field<f8String, 234>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 235> YieldType;
+using YieldType = Field<f8String, 235>;
 const f8String YieldType_AFTER_TAX_YIELD("AFTERTAX");
 const f8String YieldType_ANNUAL_YIELD("ANNUAL");
 const f8String YieldType_YIELD_AT_ISSUE("ATISSUE");
@@ -1262,84 +1262,84 @@ const f8String YieldType_YIELD_VALUE_OF_1_32("VALUE1_32");
 const f8String YieldType_YIELD_TO_WORST("WORST");
 const size_t YieldType_realm_els(34);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 236> Yield;
+using Yield = Field<Percentage, 236>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 237> TotalTakedown;
+using TotalTakedown = Field<Amt, 237>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 238> Concession;
+using Concession = Field<Amt, 238>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 239> RepoCollateralSecurityType;
+using RepoCollateralSecurityType = Field<int, 239>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 240> RedemptionDate;
+using RedemptionDate = Field<LocalMktDate, 240>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 241> UnderlyingCouponPaymentDate;
+using UnderlyingCouponPaymentDate = Field<LocalMktDate, 241>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 242> UnderlyingIssueDate;
+using UnderlyingIssueDate = Field<LocalMktDate, 242>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 243> UnderlyingRepoCollateralSecurityType;
+using UnderlyingRepoCollateralSecurityType = Field<int, 243>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 244> UnderlyingRepurchaseTerm;
+using UnderlyingRepurchaseTerm = Field<int, 244>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 245> UnderlyingRepurchaseRate;
+using UnderlyingRepurchaseRate = Field<Percentage, 245>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 246> UnderlyingFactor;
+using UnderlyingFactor = Field<double, 246>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 247> UnderlyingRedemptionDate;
+using UnderlyingRedemptionDate = Field<LocalMktDate, 247>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 248> LegCouponPaymentDate;
+using LegCouponPaymentDate = Field<LocalMktDate, 248>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 249> LegIssueDate;
+using LegIssueDate = Field<LocalMktDate, 249>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 250> LegRepoCollateralSecurityType;
+using LegRepoCollateralSecurityType = Field<int, 250>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 251> LegRepurchaseTerm;
+using LegRepurchaseTerm = Field<int, 251>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 252> LegRepurchaseRate;
+using LegRepurchaseRate = Field<Percentage, 252>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 253> LegFactor;
+using LegFactor = Field<double, 253>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 254> LegRedemptionDate;
+using LegRedemptionDate = Field<LocalMktDate, 254>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 255> CreditRating;
+using CreditRating = Field<f8String, 255>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 256> UnderlyingCreditRating;
+using UnderlyingCreditRating = Field<f8String, 256>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 257> LegCreditRating;
+using LegCreditRating = Field<f8String, 257>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 258> TradedFlatSwitch;
+using TradedFlatSwitch = Field<Boolean, 258>;
 const char TradedFlatSwitch_NO('N');
 const char TradedFlatSwitch_YES('Y');
 const size_t TradedFlatSwitch_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 259> BasisFeatureDate;
+using BasisFeatureDate = Field<LocalMktDate, 259>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 260> BasisFeaturePrice;
+using BasisFeaturePrice = Field<price, 260>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 262> MDReqID;
+using MDReqID = Field<f8String, 262>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 263> SubscriptionRequestType;
+using SubscriptionRequestType = Field<char, 263>;
 const char SubscriptionRequestType_SNAPSHOT('0');
 const char SubscriptionRequestType_SNAPSHOT_PLUS_UPDATES('1');
 const char SubscriptionRequestType_DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST('2');
 const size_t SubscriptionRequestType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 264> MarketDepth;
+using MarketDepth = Field<int, 264>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 265> MDUpdateType;
+using MDUpdateType = Field<int, 265>;
 const int MDUpdateType_FULL_REFRESH(0);
 const int MDUpdateType_INCREMENTAL_REFRESH(1);
 const size_t MDUpdateType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 266> AggregatedBook;
+using AggregatedBook = Field<Boolean, 266>;
 const char AggregatedBook_NO('N');
 const char AggregatedBook_YES('Y');
 const size_t AggregatedBook_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 267> NoMDEntryTypes;
+using NoMDEntryTypes = Field<NumInGroup, 267>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 268> NoMDEntries;
+using NoMDEntries = Field<NumInGroup, 268>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 269> MDEntryType;
+using MDEntryType = Field<char, 269>;
 const char MDEntryType_BID('0');
 const char MDEntryType_OFFER('1');
 const char MDEntryType_TRADE('2');
@@ -1378,24 +1378,24 @@ const char MDEntryType_RECOVERY_RATE_FOR_LONG('Z');
 const char MDEntryType_RECOVERY_RATE_FOR_SHORT('a');
 const size_t MDEntryType_realm_els(36);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 270> MDEntryPx;
+using MDEntryPx = Field<price, 270>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 271> MDEntrySize;
+using MDEntrySize = Field<Qty, 271>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCDateOnly, 272> MDEntryDate;
+using MDEntryDate = Field<UTCDateOnly, 272>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimeOnly, 273> MDEntryTime;
+using MDEntryTime = Field<UTCTimeOnly, 273>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 274> TickDirection;
+using TickDirection = Field<char, 274>;
 const char TickDirection_PLUS_TICK('0');
 const char TickDirection_ZERO_PLUS_TICK('1');
 const char TickDirection_MINUS_TICK('2');
 const char TickDirection_ZERO_MINUS_TICK('3');
 const size_t TickDirection_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 275> MDMkt;
+using MDMkt = Field<Exchange, 275>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleStringValue, 276> QuoteCondition;
+using QuoteCondition = Field<MultipleStringValue, 276>;
 const f8String QuoteCondition_RESERVED_SAM("0");
 const f8String QuoteCondition_NO_ACTIVE_SAM("1");
 const f8String QuoteCondition_RESTRICTED("2");
@@ -1458,7 +1458,7 @@ const f8String QuoteCondition_SURVEILLANCE_SAM("y");
 const f8String QuoteCondition_SUSPENDED_SAM("z");
 const size_t QuoteCondition_realm_els(60);
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleStringValue, 277> TradeCondition;
+using TradeCondition = Field<MultipleStringValue, 277>;
 const f8String TradeCondition_CANCEL("0");
 const f8String TradeCondition_IMPLIED_TRADE("1");
 const f8String TradeCondition_MARKETPLACE_ENTERED_TRADE("2");
@@ -1538,9 +1538,9 @@ const f8String TradeCondition_ADJUSTED("y");
 const f8String TradeCondition_ADJUSTED_ETH("z");
 const size_t TradeCondition_realm_els(77);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 278> MDEntryID;
+using MDEntryID = Field<f8String, 278>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 279> MDUpdateAction;
+using MDUpdateAction = Field<char, 279>;
 const char MDUpdateAction_NEW('0');
 const char MDUpdateAction_CHANGE('1');
 const char MDUpdateAction_DELETE('2');
@@ -1549,9 +1549,9 @@ const char MDUpdateAction_DELETE_FROM('4');
 const char MDUpdateAction_OVERLAY('5');
 const size_t MDUpdateAction_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 280> MDEntryRefID;
+using MDEntryRefID = Field<f8String, 280>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 281> MDReqRejReason;
+using MDReqRejReason = Field<char, 281>;
 const char MDReqRejReason_UNKNOWN_SYMBOL('0');
 const char MDReqRejReason_DUPLICATE_MDREQID('1');
 const char MDReqRejReason_INSUFFICIENT_BANDWIDTH('2');
@@ -1568,18 +1568,18 @@ const char MDReqRejReason_UNSUPPORTED_MDIMPLICITDELETE('C');
 const char MDReqRejReason_INSUFFICIENT_CREDIT('D');
 const size_t MDReqRejReason_realm_els(14);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 282> MDEntryOriginator;
+using MDEntryOriginator = Field<f8String, 282>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 283> LocationID;
+using LocationID = Field<f8String, 283>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 284> DeskID;
+using DeskID = Field<f8String, 284>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 285> DeleteReason;
+using DeleteReason = Field<char, 285>;
 const char DeleteReason_CANCELLATION('0');
 const char DeleteReason_ERROR('1');
 const size_t DeleteReason_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 286> OpenCloseSettlFlag;
+using OpenCloseSettlFlag = Field<MultipleCharValue, 286>;
 const f8String OpenCloseSettlFlag_DAILY_OPEN("0");
 const f8String OpenCloseSettlFlag_SESSION_OPEN("1");
 const f8String OpenCloseSettlFlag_DELIVERY_SETTLEMENT_ENTRY("2");
@@ -1588,21 +1588,21 @@ const f8String OpenCloseSettlFlag_ENTRY_FROM_PREVIOUS_BUSINESS_DAY("4");
 const f8String OpenCloseSettlFlag_THEORETICAL_PRICE_VALUE("5");
 const size_t OpenCloseSettlFlag_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 287> SellerDays;
+using SellerDays = Field<int, 287>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 288> MDEntryBuyer;
+using MDEntryBuyer = Field<f8String, 288>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 289> MDEntrySeller;
+using MDEntrySeller = Field<f8String, 289>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 290> MDEntryPositionNo;
+using MDEntryPositionNo = Field<int, 290>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 291> FinancialStatus;
+using FinancialStatus = Field<MultipleCharValue, 291>;
 const f8String FinancialStatus_BANKRUPT("1");
 const f8String FinancialStatus_PENDING_DELISTING("2");
 const f8String FinancialStatus_RESTRICTED("3");
 const size_t FinancialStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 292> CorporateAction;
+using CorporateAction = Field<MultipleCharValue, 292>;
 const f8String CorporateAction_EX_DIVIDEND("A");
 const f8String CorporateAction_EX_DISTRIBUTION("B");
 const f8String CorporateAction_EX_RIGHTS("C");
@@ -1628,15 +1628,15 @@ const f8String CorporateAction_LEAP_ROLLOVER("V");
 const f8String CorporateAction_SUCCESSION_EVENT("W");
 const size_t CorporateAction_realm_els(23);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 293> DefBidSize;
+using DefBidSize = Field<Qty, 293>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 294> DefOfferSize;
+using DefOfferSize = Field<Qty, 294>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 295> NoQuoteEntries;
+using NoQuoteEntries = Field<NumInGroup, 295>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 296> NoQuoteSets;
+using NoQuoteSets = Field<NumInGroup, 296>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 297> QuoteStatus;
+using QuoteStatus = Field<int, 297>;
 const int QuoteStatus_ACCEPTED(0);
 const int QuoteStatus_CANCEL_FOR_SYMBOL(1);
 const int QuoteStatus_CANCELED_FOR_SECURITY_TYPE(2);
@@ -1660,7 +1660,7 @@ const int QuoteStatus_PENDING_END_TRADE(19);
 const int QuoteStatus_TOO_LATE_TO_END(20);
 const size_t QuoteStatus_realm_els(21);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 298> QuoteCancelType;
+using QuoteCancelType = Field<int, 298>;
 const int QuoteCancelType_CANCEL_FOR_ONE_OR_MORE_SECURITIES(1);
 const int QuoteCancelType_CANCEL_FOR_SECURITY_TYPE(2);
 const int QuoteCancelType_CANCEL_FOR_UNDERLYING_SECURITY(3);
@@ -1671,9 +1671,9 @@ const int QuoteCancelType_CANCEL_FOR_SECURITY_ISSUER(7);
 const int QuoteCancelType_CANCEL_FOR_ISSUER_OF_UNDERLYING_SECURITY(8);
 const size_t QuoteCancelType_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 299> QuoteEntryID;
+using QuoteEntryID = Field<f8String, 299>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 300> QuoteRejectReason;
+using QuoteRejectReason = Field<int, 300>;
 const int QuoteRejectReason_UNKNOWN_SYMBOL(1);
 const int QuoteRejectReason_EXCHANGE(2);
 const int QuoteRejectReason_QUOTE_REQUEST_EXCEEDS_LIMIT(3);
@@ -1690,51 +1690,51 @@ const int QuoteRejectReason_INVALID_OR_UNKNOWN_ISSUER_OF_UNDERLYING_SECURITY(13)
 const int QuoteRejectReason_OTHER(99);
 const size_t QuoteRejectReason_realm_els(14);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 301> QuoteResponseLevel;
+using QuoteResponseLevel = Field<int, 301>;
 const int QuoteResponseLevel_NO_ACKNOWLEDGEMENT(0);
 const int QuoteResponseLevel_ACKNOWLEDGE_ONLY_NEGATIVE_OR_ERRONEOUS_QUOTES(1);
 const int QuoteResponseLevel_ACKNOWLEDGE_EACH_QUOTE_MESSAGE(2);
 const int QuoteResponseLevel_SUMMARY_ACKNOWLEDGEMENT(3);
 const size_t QuoteResponseLevel_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 302> QuoteSetID;
+using QuoteSetID = Field<f8String, 302>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 303> QuoteRequestType;
+using QuoteRequestType = Field<int, 303>;
 const int QuoteRequestType_MANUAL(1);
 const int QuoteRequestType_AUTOMATIC(2);
 const size_t QuoteRequestType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 304> TotNoQuoteEntries;
+using TotNoQuoteEntries = Field<int, 304>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 305> UnderlyingSecurityIDSource;
+using UnderlyingSecurityIDSource = Field<f8String, 305>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 306> UnderlyingIssuer;
+using UnderlyingIssuer = Field<f8String, 306>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 307> UnderlyingSecurityDesc;
+using UnderlyingSecurityDesc = Field<f8String, 307>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 308> UnderlyingSecurityExchange;
+using UnderlyingSecurityExchange = Field<Exchange, 308>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 309> UnderlyingSecurityID;
+using UnderlyingSecurityID = Field<f8String, 309>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 310> UnderlyingSecurityType;
+using UnderlyingSecurityType = Field<f8String, 310>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 311> UnderlyingSymbol;
+using UnderlyingSymbol = Field<f8String, 311>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 312> UnderlyingSymbolSfx;
+using UnderlyingSymbolSfx = Field<f8String, 312>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 313> UnderlyingMaturityMonthYear;
+using UnderlyingMaturityMonthYear = Field<MonthYear, 313>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 315> UnderlyingPutOrCall;
+using UnderlyingPutOrCall = Field<int, 315>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 316> UnderlyingStrikePrice;
+using UnderlyingStrikePrice = Field<price, 316>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 317> UnderlyingOptAttribute;
+using UnderlyingOptAttribute = Field<char, 317>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 318> UnderlyingCurrency;
+using UnderlyingCurrency = Field<currency, 318>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 320> SecurityReqID;
+using SecurityReqID = Field<f8String, 320>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 321> SecurityRequestType;
+using SecurityRequestType = Field<int, 321>;
 const int SecurityRequestType_REQUEST_SECURITY_IDENTITY_AND_SPECIFICATIONS(0);
 const int SecurityRequestType_REQUEST_SECURITY_IDENTITY_FOR_THE_SPECIFICATIONS_PROVIDED(1);
 const int SecurityRequestType_REQUEST_LIST_SECURITY_TYPES(2);
@@ -1747,9 +1747,9 @@ const int SecurityRequestType_ALL_SECURITIES(8);
 const int SecurityRequestType_MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID(9);
 const size_t SecurityRequestType_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 322> SecurityResponseID;
+using SecurityResponseID = Field<f8String, 322>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 323> SecurityResponseType;
+using SecurityResponseType = Field<int, 323>;
 const int SecurityResponseType_ACCEPT_SECURITY_PROPOSAL_AS_IS(1);
 const int SecurityResponseType_ACCEPT_SECURITY_PROPOSAL_WITH_REVISIONS_AS_INDICATED_IN_THE_MESSAGE(2);
 const int SecurityResponseType_LIST_OF_SECURITY_TYPES_RETURNED_PER_REQUEST(3);
@@ -1758,14 +1758,14 @@ const int SecurityResponseType_REJECT_SECURITY_PROPOSAL(5);
 const int SecurityResponseType_CANNOT_MATCH_SELECTION_CRITERIA(6);
 const size_t SecurityResponseType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 324> SecurityStatusReqID;
+using SecurityStatusReqID = Field<f8String, 324>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 325> UnsolicitedIndicator;
+using UnsolicitedIndicator = Field<Boolean, 325>;
 const char UnsolicitedIndicator_NO('N');
 const char UnsolicitedIndicator_YES('Y');
 const size_t UnsolicitedIndicator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 326> SecurityTradingStatus;
+using SecurityTradingStatus = Field<int, 326>;
 const int SecurityTradingStatus_OPENING_DELAY(1);
 const int SecurityTradingStatus_TRADING_HALT(2);
 const int SecurityTradingStatus_RESUME(3);
@@ -1794,7 +1794,7 @@ const int SecurityTradingStatus_CROSS(25);
 const int SecurityTradingStatus_POST_CLOSE(26);
 const size_t SecurityTradingStatus_realm_els(26);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 327> HaltReasonInt;
+using HaltReasonInt = Field<int, 327>;
 const int HaltReasonInt_NEWS_DISSEMINATION(0);
 const int HaltReasonInt_ORDER_INFLUX(1);
 const int HaltReasonInt_ORDER_IMBALANCE(2);
@@ -1803,33 +1803,33 @@ const int HaltReasonInt_NEWS_PENDING(4);
 const int HaltReasonInt_EQUIPMENT_CHANGEOVER(5);
 const size_t HaltReasonInt_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 328> InViewOfCommon;
+using InViewOfCommon = Field<Boolean, 328>;
 const char InViewOfCommon_NO('N');
 const char InViewOfCommon_YES('Y');
 const size_t InViewOfCommon_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 329> DueToRelated;
+using DueToRelated = Field<Boolean, 329>;
 const char DueToRelated_NO('N');
 const char DueToRelated_YES('Y');
 const size_t DueToRelated_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 330> BuyVolume;
+using BuyVolume = Field<Qty, 330>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 331> SellVolume;
+using SellVolume = Field<Qty, 331>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 332> HighPx;
+using HighPx = Field<price, 332>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 333> LowPx;
+using LowPx = Field<price, 333>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 334> Adjustment;
+using Adjustment = Field<int, 334>;
 const int Adjustment_CANCEL(1);
 const int Adjustment_ERROR(2);
 const int Adjustment_CORRECTION(3);
 const size_t Adjustment_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 335> TradSesReqID;
+using TradSesReqID = Field<f8String, 335>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 336> TradingSessionID;
+using TradingSessionID = Field<f8String, 336>;
 const f8String TradingSessionID_DAY("1");
 const f8String TradingSessionID_HALFDAY("2");
 const f8String TradingSessionID_MORNING("3");
@@ -1838,21 +1838,21 @@ const f8String TradingSessionID_EVENING("5");
 const f8String TradingSessionID_AFTER_HOURS("6");
 const size_t TradingSessionID_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 337> ContraTrader;
+using ContraTrader = Field<f8String, 337>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 338> TradSesMethod;
+using TradSesMethod = Field<int, 338>;
 const int TradSesMethod_ELECTRONIC(1);
 const int TradSesMethod_OPEN_OUTCRY(2);
 const int TradSesMethod_TWO_PARTY(3);
 const size_t TradSesMethod_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 339> TradSesMode;
+using TradSesMode = Field<int, 339>;
 const int TradSesMode_TESTING(1);
 const int TradSesMode_SIMULATED(2);
 const int TradSesMode_PRODUCTION(3);
 const size_t TradSesMode_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 340> TradSesStatus;
+using TradSesStatus = Field<int, 340>;
 const int TradSesStatus_UNKNOWN(0);
 const int TradSesStatus_HALTED(1);
 const int TradSesStatus_OPEN(2);
@@ -1862,74 +1862,74 @@ const int TradSesStatus_PRE_CLOSE(5);
 const int TradSesStatus_REQUEST_REJECTED(6);
 const size_t TradSesStatus_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 341> TradSesStartTime;
+using TradSesStartTime = Field<UTCTimestamp, 341>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 342> TradSesOpenTime;
+using TradSesOpenTime = Field<UTCTimestamp, 342>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 343> TradSesPreCloseTime;
+using TradSesPreCloseTime = Field<UTCTimestamp, 343>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 344> TradSesCloseTime;
+using TradSesCloseTime = Field<UTCTimestamp, 344>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 345> TradSesEndTime;
+using TradSesEndTime = Field<UTCTimestamp, 345>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 346> NumberOfOrders;
+using NumberOfOrders = Field<int, 346>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 347> MessageEncoding;
+using MessageEncoding = Field<f8String, 347>;
 const f8String MessageEncoding_EUC_JP("EUC-JP");
 const f8String MessageEncoding_ISO_2022_JP("ISO-2022-JP");
 const f8String MessageEncoding_SHIFT_JIS("SHIFT_JIS");
 const f8String MessageEncoding_UTF_8("UTF-8");
 const size_t MessageEncoding_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 348> EncodedIssuerLen;
+using EncodedIssuerLen = Field<Length, 348>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 349> EncodedIssuer;
+using EncodedIssuer = Field<data, 349>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 350> EncodedSecurityDescLen;
+using EncodedSecurityDescLen = Field<Length, 350>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 351> EncodedSecurityDesc;
+using EncodedSecurityDesc = Field<data, 351>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 352> EncodedListExecInstLen;
+using EncodedListExecInstLen = Field<Length, 352>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 353> EncodedListExecInst;
+using EncodedListExecInst = Field<data, 353>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 354> EncodedTextLen;
+using EncodedTextLen = Field<Length, 354>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 355> EncodedText;
+using EncodedText = Field<data, 355>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 356> EncodedSubjectLen;
+using EncodedSubjectLen = Field<Length, 356>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 357> EncodedSubject;
+using EncodedSubject = Field<data, 357>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 358> EncodedHeadlineLen;
+using EncodedHeadlineLen = Field<Length, 358>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 359> EncodedHeadline;
+using EncodedHeadline = Field<data, 359>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 360> EncodedAllocTextLen;
+using EncodedAllocTextLen = Field<Length, 360>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 361> EncodedAllocText;
+using EncodedAllocText = Field<data, 361>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 362> EncodedUnderlyingIssuerLen;
+using EncodedUnderlyingIssuerLen = Field<Length, 362>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 363> EncodedUnderlyingIssuer;
+using EncodedUnderlyingIssuer = Field<data, 363>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 364> EncodedUnderlyingSecurityDescLen;
+using EncodedUnderlyingSecurityDescLen = Field<Length, 364>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 365> EncodedUnderlyingSecurityDesc;
+using EncodedUnderlyingSecurityDesc = Field<data, 365>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 366> AllocPrice;
+using AllocPrice = Field<price, 366>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 367> QuoteSetValidUntilTime;
+using QuoteSetValidUntilTime = Field<UTCTimestamp, 367>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 368> QuoteEntryRejectReason;
+using QuoteEntryRejectReason = Field<int, 368>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 369> LastMsgSeqNumProcessed;
+using LastMsgSeqNumProcessed = Field<SeqNum, 369>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 371> RefTagID;
+using RefTagID = Field<int, 371>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 372> RefMsgType;
+using RefMsgType = Field<f8String, 372>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 373> SessionRejectReason;
+using SessionRejectReason = Field<int, 373>;
 const int SessionRejectReason_INVALID_TAG_NUMBER(0);
 const int SessionRejectReason_REQUIRED_TAG_MISSING(1);
 const int SessionRejectReason_TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE(2);
@@ -1951,21 +1951,21 @@ const int SessionRejectReason_NON_DATA_VALUE_INCLUDES_FIELD_DELIMITER(17);
 const int SessionRejectReason_OTHER(99);
 const size_t SessionRejectReason_realm_els(19);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 374> BidRequestTransType;
+using BidRequestTransType = Field<char, 374>;
 const char BidRequestTransType_CANCEL('C');
 const char BidRequestTransType_NO('N');
 const size_t BidRequestTransType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 375> ContraBroker;
+using ContraBroker = Field<f8String, 375>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 376> ComplianceID;
+using ComplianceID = Field<f8String, 376>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 377> SolicitedFlag;
+using SolicitedFlag = Field<Boolean, 377>;
 const char SolicitedFlag_NO('N');
 const char SolicitedFlag_YES('Y');
 const size_t SolicitedFlag_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 378> ExecRestatementReason;
+using ExecRestatementReason = Field<int, 378>;
 const int ExecRestatementReason_GT_CORPORATE_ACTION(0);
 const int ExecRestatementReason_GT_RENEWAL(1);
 const int ExecRestatementReason_VERBAL_CHANGE(2);
@@ -1981,9 +1981,9 @@ const int ExecRestatementReason_PEG_REFRESH(11);
 const int ExecRestatementReason_OTHER(99);
 const size_t ExecRestatementReason_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 379> BusinessRejectRefID;
+using BusinessRejectRefID = Field<f8String, 379>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 380> BusinessRejectReason;
+using BusinessRejectReason = Field<int, 380>;
 const int BusinessRejectReason_OTHER(0);
 const int BusinessRejectReason_UNKNOWN_ID(1);
 const int BusinessRejectReason_UNKNOWN_SECURITY(2);
@@ -1995,24 +1995,24 @@ const int BusinessRejectReason_DELIVERTO_FIRM_NOT_AVAILABLE_AT_THIS_TIME(7);
 const int BusinessRejectReason_INVALID_PRICE_INCREMENT(18);
 const size_t BusinessRejectReason_realm_els(9);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 381> GrossTradeAmt;
+using GrossTradeAmt = Field<Amt, 381>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 382> NoContraBrokers;
+using NoContraBrokers = Field<NumInGroup, 382>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 383> MaxMessageSize;
+using MaxMessageSize = Field<Length, 383>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 384> NoMsgTypes;
+using NoMsgTypes = Field<NumInGroup, 384>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 385> MsgDirection;
+using MsgDirection = Field<char, 385>;
 const char MsgDirection_RECEIVE('R');
 const char MsgDirection_SEND('S');
 const size_t MsgDirection_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 386> NoTradingSessions;
+using NoTradingSessions = Field<NumInGroup, 386>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 387> TotalVolumeTraded;
+using TotalVolumeTraded = Field<Qty, 387>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 388> DiscretionInst;
+using DiscretionInst = Field<char, 388>;
 const char DiscretionInst_RELATED_TO_DISPLAYED_PRICE('0');
 const char DiscretionInst_RELATED_TO_MARKET_PRICE('1');
 const char DiscretionInst_RELATED_TO_PRIMARY_PRICE('2');
@@ -2023,98 +2023,98 @@ const char DiscretionInst_RELATED_TO_VWAP('6');
 const char DiscretionInst_AVERAGE_PRICE_GUARANTEE('7');
 const size_t DiscretionInst_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 389> DiscretionOffsetValue;
+using DiscretionOffsetValue = Field<double, 389>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 390> BidID;
+using BidID = Field<f8String, 390>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 391> ClientBidID;
+using ClientBidID = Field<f8String, 391>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 392> ListName;
+using ListName = Field<f8String, 392>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 393> TotNoRelatedSym;
+using TotNoRelatedSym = Field<int, 393>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 394> BidType;
+using BidType = Field<int, 394>;
 const int BidType_NON_DISCLOSED_STYLE(1);
 const int BidType_DISCLOSED_SYTLE(2);
 const int BidType_NO_BIDDING_PROCESS(3);
 const size_t BidType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 395> NumTickets;
+using NumTickets = Field<int, 395>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 396> SideValue1;
+using SideValue1 = Field<Amt, 396>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 397> SideValue2;
+using SideValue2 = Field<Amt, 397>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 398> NoBidDescriptors;
+using NoBidDescriptors = Field<NumInGroup, 398>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 399> BidDescriptorType;
+using BidDescriptorType = Field<int, 399>;
 const int BidDescriptorType_SECTOR(1);
 const int BidDescriptorType_COUNTRY(2);
 const int BidDescriptorType_INDEX(3);
 const size_t BidDescriptorType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 400> BidDescriptor;
+using BidDescriptor = Field<f8String, 400>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 401> SideValueInd;
+using SideValueInd = Field<int, 401>;
 const int SideValueInd_SIDE_VALUE_1(1);
 const int SideValueInd_SIDE_VALUE_2(2);
 const size_t SideValueInd_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 402> LiquidityPctLow;
+using LiquidityPctLow = Field<Percentage, 402>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 403> LiquidityPctHigh;
+using LiquidityPctHigh = Field<Percentage, 403>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 404> LiquidityValue;
+using LiquidityValue = Field<Amt, 404>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 405> EFPTrackingError;
+using EFPTrackingError = Field<Percentage, 405>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 406> FairValue;
+using FairValue = Field<Amt, 406>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 407> OutsideIndexPct;
+using OutsideIndexPct = Field<Percentage, 407>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 408> ValueOfFutures;
+using ValueOfFutures = Field<Amt, 408>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 409> LiquidityIndType;
+using LiquidityIndType = Field<int, 409>;
 const int LiquidityIndType_5_DAY_MOVING_AVERAGE(1);
 const int LiquidityIndType_20_DAY_MOVING_AVERAGE(2);
 const int LiquidityIndType_NORMAL_MARKET_SIZE(3);
 const int LiquidityIndType_OTHER(4);
 const size_t LiquidityIndType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 410> WtAverageLiquidity;
+using WtAverageLiquidity = Field<Percentage, 410>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 411> ExchangeForPhysical;
+using ExchangeForPhysical = Field<Boolean, 411>;
 const char ExchangeForPhysical_NO('N');
 const char ExchangeForPhysical_YES('Y');
 const size_t ExchangeForPhysical_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 412> OutMainCntryUIndex;
+using OutMainCntryUIndex = Field<Amt, 412>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 413> CrossPercent;
+using CrossPercent = Field<Percentage, 413>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 414> ProgRptReqs;
+using ProgRptReqs = Field<int, 414>;
 const int ProgRptReqs_BUY_SIDE_EXPLICITLY_REQUESTS_STATUS_USING_STATUE_REQUEST(1);
 const int ProgRptReqs_SELL_SIDE_PERIODICALLY_SENDS_STATUS_USING_LIST_STATUS_PERIOD_OPTIONALLY_SPECIFIED_IN_PROGRESSPERIOD(2);
 const int ProgRptReqs_REAL_TIME_EXECUTION_REPORTS(3);
 const size_t ProgRptReqs_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 415> ProgPeriodInterval;
+using ProgPeriodInterval = Field<int, 415>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 416> IncTaxInd;
+using IncTaxInd = Field<int, 416>;
 const int IncTaxInd_NET(1);
 const int IncTaxInd_GROSS(2);
 const size_t IncTaxInd_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 417> NumBidders;
+using NumBidders = Field<int, 417>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 418> BidTradeType;
+using BidTradeType = Field<char, 418>;
 const char BidTradeType_AGENCY('A');
 const char BidTradeType_VWAP_GUARANTEE('G');
 const char BidTradeType_GUARANTEED_CLOSE('J');
 const char BidTradeType_RISK_TRADE('R');
 const size_t BidTradeType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 419> BasisPxType;
+using BasisPxType = Field<char, 419>;
 const char BasisPxType_CLOSING_PRICE_AT_MORNINGN_SESSION('2');
 const char BasisPxType_CLOSING_PRICE('3');
 const char BasisPxType_CURRENT_PRICE('4');
@@ -2130,13 +2130,13 @@ const char BasisPxType_OPEN('D');
 const char BasisPxType_OTHERS('Z');
 const size_t BasisPxType_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 420> NoBidComponents;
+using NoBidComponents = Field<NumInGroup, 420>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<country, 421> Country;
+using Country = Field<country, 421>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 422> TotNoStrikes;
+using TotNoStrikes = Field<int, 422>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 423> PriceType;
+using PriceType = Field<int, 423>;
 const int PriceType_PERCENTAGE(1);
 const int PriceType_PER_UNIT(2);
 const int PriceType_FIXED_AMOUNT(3);
@@ -2157,21 +2157,21 @@ const int PriceType_PRODUCT_TICKS_IN_SIXTY_FORTHS(18);
 const int PriceType_PRODUCT_TICKS_IN_ONE_TWENTY_EIGHTS(19);
 const size_t PriceType_realm_els(18);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 424> DayOrderQty;
+using DayOrderQty = Field<Qty, 424>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 425> DayCumQty;
+using DayCumQty = Field<Qty, 425>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 426> DayAvgPx;
+using DayAvgPx = Field<price, 426>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 427> GTBookingInst;
+using GTBookingInst = Field<int, 427>;
 const int GTBookingInst_BOOK_OUT_ALL_TRADES_ON_DAY_OF_EXECUTION(0);
 const int GTBookingInst_ACCUMULATE_EXECTUIONS_UNTIL_FORDER_IS_FILLED_OR_EXPIRES(1);
 const int GTBookingInst_ACCUMULATE_UNTIL_VERBALLLY_NOTIFIED_OTHERWISE(2);
 const size_t GTBookingInst_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 428> NoStrikes;
+using NoStrikes = Field<NumInGroup, 428>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 429> ListStatusType;
+using ListStatusType = Field<int, 429>;
 const int ListStatusType_ACK(1);
 const int ListStatusType_RESPONSE(2);
 const int ListStatusType_TIMED(3);
@@ -2180,12 +2180,12 @@ const int ListStatusType_ALL_DONE(5);
 const int ListStatusType_ALERT(6);
 const size_t ListStatusType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 430> NetGrossInd;
+using NetGrossInd = Field<int, 430>;
 const int NetGrossInd_NET(1);
 const int NetGrossInd_GROSS(2);
 const size_t NetGrossInd_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 431> ListOrderStatus;
+using ListOrderStatus = Field<int, 431>;
 const int ListOrderStatus_IN_BIDDING_PROCESS(1);
 const int ListOrderStatus_RECEIVED_FOR_EXECUTION(2);
 const int ListOrderStatus_EXECUTING(3);
@@ -2195,9 +2195,9 @@ const int ListOrderStatus_ALL_DONE(6);
 const int ListOrderStatus_REJECT(7);
 const size_t ListOrderStatus_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 432> ExpireDate;
+using ExpireDate = Field<LocalMktDate, 432>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 433> ListExecInstType;
+using ListExecInstType = Field<char, 433>;
 const char ListExecInstType_IMMEDIATE('1');
 const char ListExecInstType_WAIT_FOR_EXECUT_INSTRUCTION('2');
 const char ListExecInstType_EXCHANGE_SWITCH_CIV_ORDER_3('3');
@@ -2205,36 +2205,36 @@ const char ListExecInstType_EXCHANGE_SWITCH_CIV_ORDER_4('4');
 const char ListExecInstType_EXCHANGE_SWITCH_CIV_ORDER_5('5');
 const size_t ListExecInstType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 434> CxlRejResponseTo;
+using CxlRejResponseTo = Field<char, 434>;
 const char CxlRejResponseTo_ORDER_CANCEL_REQUEST('1');
 const char CxlRejResponseTo_ORDER_CANCEL_REPLACE_REQUEST('2');
 const size_t CxlRejResponseTo_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 435> UnderlyingCouponRate;
+using UnderlyingCouponRate = Field<Percentage, 435>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 436> UnderlyingContractMultiplier;
+using UnderlyingContractMultiplier = Field<double, 436>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 437> ContraTradeQty;
+using ContraTradeQty = Field<Qty, 437>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 438> ContraTradeTime;
+using ContraTradeTime = Field<UTCTimestamp, 438>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 441> LiquidityNumSecurities;
+using LiquidityNumSecurities = Field<int, 441>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 442> MultiLegReportingType;
+using MultiLegReportingType = Field<char, 442>;
 const char MultiLegReportingType_SINGLE_SECURITY('1');
 const char MultiLegReportingType_INDIVIDUAL_LEG_OF_A_MULTI_LEG_SECURITY('2');
 const char MultiLegReportingType_MULTI_LEG_SECURITY('3');
 const size_t MultiLegReportingType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 443> StrikeTime;
+using StrikeTime = Field<UTCTimestamp, 443>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 444> ListStatusText;
+using ListStatusText = Field<f8String, 444>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 445> EncodedListStatusTextLen;
+using EncodedListStatusTextLen = Field<Length, 445>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 446> EncodedListStatusText;
+using EncodedListStatusText = Field<data, 446>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 447> PartyIDSource;
+using PartyIDSource = Field<char, 447>;
 const char PartyIDSource_KOREAN_INVESTOR_ID('1');
 const char PartyIDSource_TAIWANESE_QUALIFIED_FOREIGN_INVESTOR_ID_QFII_FID('2');
 const char PartyIDSource_TAIWANESE_TRADING_ACCT('3');
@@ -2255,11 +2255,11 @@ const char PartyIDSource_CSD_PARTICIPANT_MEMBER_CODE('H');
 const char PartyIDSource_DIRECTED_BROKER_THREE_CHARACTER_ACRONYM_AS_DEFINED_IN_ISITC_ETC_BEST_PRACTICE_GUIDELINES_DOCUMENT('I');
 const size_t PartyIDSource_realm_els(18);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 448> PartyID;
+using PartyID = Field<f8String, 448>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 451> NetChgPrevDay;
+using NetChgPrevDay = Field<PriceOffset, 451>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 452> PartyRole;
+using PartyRole = Field<int, 452>;
 const int PartyRole_EXECUTING_FIRM(1);
 const int PartyRole_BROKER_OF_CREDIT(2);
 const int PartyRole_CLIENT_ID(3);
@@ -2346,21 +2346,21 @@ const int PartyRole_ACCEPTABLE_SETTLING_COUNTERPARTY(84);
 const int PartyRole_UNACCEPTABLE_SETTLING_COUNTERPARTY(85);
 const size_t PartyRole_realm_els(84);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 453> NoPartyIDs;
+using NoPartyIDs = Field<NumInGroup, 453>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 454> NoSecurityAltID;
+using NoSecurityAltID = Field<NumInGroup, 454>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 455> SecurityAltID;
+using SecurityAltID = Field<f8String, 455>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 456> SecurityAltIDSource;
+using SecurityAltIDSource = Field<f8String, 456>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 457> NoUnderlyingSecurityAltID;
+using NoUnderlyingSecurityAltID = Field<NumInGroup, 457>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 458> UnderlyingSecurityAltID;
+using UnderlyingSecurityAltID = Field<f8String, 458>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 459> UnderlyingSecurityAltIDSource;
+using UnderlyingSecurityAltIDSource = Field<f8String, 459>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 460> Product;
+using Product = Field<int, 460>;
 const int Product_AGENCY(1);
 const int Product_COMMODITY(2);
 const int Product_CORPORATE(3);
@@ -2376,41 +2376,41 @@ const int Product_OTHER(12);
 const int Product_FINANCING(13);
 const size_t Product_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 461> CFICode;
+using CFICode = Field<f8String, 461>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 462> UnderlyingProduct;
+using UnderlyingProduct = Field<int, 462>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 463> UnderlyingCFICode;
+using UnderlyingCFICode = Field<f8String, 463>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 464> TestMessageIndicator;
+using TestMessageIndicator = Field<Boolean, 464>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 466> BookingRefID;
+using BookingRefID = Field<f8String, 466>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 467> IndividualAllocID;
+using IndividualAllocID = Field<f8String, 467>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 468> RoundingDirection;
+using RoundingDirection = Field<char, 468>;
 const char RoundingDirection_ROUND_TO_NEAREST('0');
 const char RoundingDirection_ROUND_DOWN('1');
 const char RoundingDirection_ROUND_UP('2');
 const size_t RoundingDirection_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 469> RoundingModulus;
+using RoundingModulus = Field<double, 469>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<country, 470> CountryOfIssue;
+using CountryOfIssue = Field<country, 470>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 471> StateOrProvinceOfIssue;
+using StateOrProvinceOfIssue = Field<f8String, 471>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 472> LocaleOfIssue;
+using LocaleOfIssue = Field<f8String, 472>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 473> NoRegistDtls;
+using NoRegistDtls = Field<NumInGroup, 473>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 474> MailingDtls;
+using MailingDtls = Field<f8String, 474>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<country, 475> InvestorCountryOfResidence;
+using InvestorCountryOfResidence = Field<country, 475>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 476> PaymentRef;
+using PaymentRef = Field<f8String, 476>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 477> DistribPaymentMethod;
+using DistribPaymentMethod = Field<int, 477>;
 const int DistribPaymentMethod_CREST(1);
 const int DistribPaymentMethod_NSCC(2);
 const int DistribPaymentMethod_EUROCLEAR(3);
@@ -2425,18 +2425,18 @@ const int DistribPaymentMethod_HIGH_VALUE_CLEARING_SYSTEM_HVACS(11);
 const int DistribPaymentMethod_REINVEST_IN_FUND(12);
 const size_t DistribPaymentMethod_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 478> CashDistribCurr;
+using CashDistribCurr = Field<currency, 478>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 479> CommCurrency;
+using CommCurrency = Field<currency, 479>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 480> CancellationRights;
+using CancellationRights = Field<char, 480>;
 const char CancellationRights_NO_M('M');
 const char CancellationRights_NO_N('N');
 const char CancellationRights_NO_O('O');
 const char CancellationRights_YES('Y');
 const size_t CancellationRights_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 481> MoneyLaunderingStatus;
+using MoneyLaunderingStatus = Field<char, 481>;
 const char MoneyLaunderingStatus_EXEMPT_1('1');
 const char MoneyLaunderingStatus_EXEMPT_2('2');
 const char MoneyLaunderingStatus_EXEMPT_3('3');
@@ -2444,11 +2444,11 @@ const char MoneyLaunderingStatus_NOT_CHECKED('N');
 const char MoneyLaunderingStatus_PASSED('Y');
 const size_t MoneyLaunderingStatus_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 482> MailingInst;
+using MailingInst = Field<f8String, 482>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 483> TransBkdTime;
+using TransBkdTime = Field<UTCTimestamp, 483>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 484> ExecPriceType;
+using ExecPriceType = Field<char, 484>;
 const char ExecPriceType_BID_PRICE('B');
 const char ExecPriceType_CREATION_PRICE('C');
 const char ExecPriceType_CREATION_PRICE_PLUS_ADJUSTMENT_PERCENT('D');
@@ -2459,11 +2459,11 @@ const char ExecPriceType_OFFER_PRICE_MINUS_ADJUSTMENT_AMOUNT('Q');
 const char ExecPriceType_SINGLE_PRICE('S');
 const size_t ExecPriceType_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 485> ExecPriceAdjustment;
+using ExecPriceAdjustment = Field<double, 485>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 486> DateOfBirth;
+using DateOfBirth = Field<LocalMktDate, 486>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 487> TradeReportTransType;
+using TradeReportTransType = Field<int, 487>;
 const int TradeReportTransType_NEW(0);
 const int TradeReportTransType_CANCEL(1);
 const int TradeReportTransType_REPLACE(2);
@@ -2472,15 +2472,15 @@ const int TradeReportTransType_REVERSE(4);
 const int TradeReportTransType_CANCEL_DUE_TO_BACK_OUT_OF_TRADE(5);
 const size_t TradeReportTransType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 488> CardHolderName;
+using CardHolderName = Field<f8String, 488>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 489> CardNumber;
+using CardNumber = Field<f8String, 489>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 490> CardExpDate;
+using CardExpDate = Field<LocalMktDate, 490>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 491> CardIssNum;
+using CardIssNum = Field<f8String, 491>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 492> PaymentMethod;
+using PaymentMethod = Field<int, 492>;
 const int PaymentMethod_CREST(1);
 const int PaymentMethod_NSCC(2);
 const int PaymentMethod_EUROCLEAR(3);
@@ -2498,11 +2498,11 @@ const int PaymentMethod_BPAY(14);
 const int PaymentMethod_HIGH_VALUE_CLEARING_SYSTEM(15);
 const size_t PaymentMethod_realm_els(15);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 493> RegistAcctType;
+using RegistAcctType = Field<f8String, 493>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 494> Designation;
+using Designation = Field<f8String, 494>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 495> TaxAdvantageType;
+using TaxAdvantageType = Field<int, 495>;
 const int TaxAdvantageType_NONE_NOT_APPLICABLE(0);
 const int TaxAdvantageType_MAXI_ISA(1);
 const int TaxAdvantageType_TESSA(2);
@@ -2536,37 +2536,37 @@ const int TaxAdvantageType_EDUCATION_IRA_29(29);
 const int TaxAdvantageType_OTHER(999);
 const size_t TaxAdvantageType_realm_els(31);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 496> RegistRejReasonText;
+using RegistRejReasonText = Field<f8String, 496>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 497> FundRenewWaiv;
+using FundRenewWaiv = Field<char, 497>;
 const char FundRenewWaiv_NO('N');
 const char FundRenewWaiv_YES('Y');
 const size_t FundRenewWaiv_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 498> CashDistribAgentName;
+using CashDistribAgentName = Field<f8String, 498>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 499> CashDistribAgentCode;
+using CashDistribAgentCode = Field<f8String, 499>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 500> CashDistribAgentAcctNumber;
+using CashDistribAgentAcctNumber = Field<f8String, 500>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 501> CashDistribPayRef;
+using CashDistribPayRef = Field<f8String, 501>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 502> CashDistribAgentAcctName;
+using CashDistribAgentAcctName = Field<f8String, 502>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 503> CardStartDate;
+using CardStartDate = Field<LocalMktDate, 503>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 504> PaymentDate;
+using PaymentDate = Field<LocalMktDate, 504>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 505> PaymentRemitterID;
+using PaymentRemitterID = Field<f8String, 505>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 506> RegistStatus;
+using RegistStatus = Field<char, 506>;
 const char RegistStatus_ACCEPTED('A');
 const char RegistStatus_HELD('H');
 const char RegistStatus_REMINDER('N');
 const char RegistStatus_REJECTED('R');
 const size_t RegistStatus_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 507> RegistRejReasonCode;
+using RegistRejReasonCode = Field<int, 507>;
 const int RegistRejReasonCode_INVALID_UNACCEPTABLE_ACCOUNT_TYPE(1);
 const int RegistRejReasonCode_INVALID_UNACCEPTABLE_TAX_EXEMPT_TYPE(2);
 const int RegistRejReasonCode_INVALID_UNACCEPTABLE_OWNERSHIP_TYPE(3);
@@ -2588,37 +2588,37 @@ const int RegistRejReasonCode_INVALID_UNACCEPTABLE_CASH_DISTRIB_AGENT_ACCT_NUM(1
 const int RegistRejReasonCode_OTHER(99);
 const size_t RegistRejReasonCode_realm_els(19);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 508> RegistRefID;
+using RegistRefID = Field<f8String, 508>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 509> RegistDtls;
+using RegistDtls = Field<f8String, 509>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 510> NoDistribInsts;
+using NoDistribInsts = Field<NumInGroup, 510>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 511> RegistEmail;
+using RegistEmail = Field<f8String, 511>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 512> DistribPercentage;
+using DistribPercentage = Field<Percentage, 512>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 513> RegistID;
+using RegistID = Field<f8String, 513>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 514> RegistTransType;
+using RegistTransType = Field<char, 514>;
 const char RegistTransType_NEW('0');
 const char RegistTransType_REPLACE('1');
 const char RegistTransType_CANCEL('2');
 const size_t RegistTransType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 515> ExecValuationPoint;
+using ExecValuationPoint = Field<UTCTimestamp, 515>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 516> OrderPercent;
+using OrderPercent = Field<Percentage, 516>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 517> OwnershipType;
+using OwnershipType = Field<char, 517>;
 const char OwnershipType_JOINT_TRUSTEES('2');
 const char OwnershipType_JOINT_INVESTORS('J');
 const char OwnershipType_TENANTS_IN_COMMON('T');
 const size_t OwnershipType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 518> NoContAmts;
+using NoContAmts = Field<NumInGroup, 518>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 519> ContAmtType;
+using ContAmtType = Field<int, 519>;
 const int ContAmtType_COMMISSION_AMOUNT(1);
 const int ContAmtType_COMMISSION_PERCENT(2);
 const int ContAmtType_INITIAL_CHARGE_AMOUNT(3);
@@ -2636,11 +2636,11 @@ const int ContAmtType_FUND_BASED_RENEWAL_COMMISSION_AMOUNT_14(14);
 const int ContAmtType_NET_SETTLEMENT_AMOUNT(15);
 const size_t ContAmtType_realm_els(15);
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 520> ContAmtValue;
+using ContAmtValue = Field<double, 520>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 521> ContAmtCurr;
+using ContAmtCurr = Field<currency, 521>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 522> OwnerType;
+using OwnerType = Field<int, 522>;
 const int OwnerType_INDIVIDUAL_INVESTOR(1);
 const int OwnerType_PUBLIC_COMPANY(2);
 const int OwnerType_PRIVATE_COMPANY(3);
@@ -2656,17 +2656,17 @@ const int OwnerType_CORPORATE_BODY(12);
 const int OwnerType_NOMINEE(13);
 const size_t OwnerType_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 523> PartySubID;
+using PartySubID = Field<f8String, 523>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 524> NestedPartyID;
+using NestedPartyID = Field<f8String, 524>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 525> NestedPartyIDSource;
+using NestedPartyIDSource = Field<char, 525>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 526> SecondaryClOrdID;
+using SecondaryClOrdID = Field<f8String, 526>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 527> SecondaryExecID;
+using SecondaryExecID = Field<f8String, 527>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 528> OrderCapacity;
+using OrderCapacity = Field<char, 528>;
 const char OrderCapacity_AGENCY('A');
 const char OrderCapacity_PROPRIETARY('G');
 const char OrderCapacity_INDIVIDUAL('I');
@@ -2675,7 +2675,7 @@ const char OrderCapacity_RISKLESS_PRINCIPAL('R');
 const char OrderCapacity_AGENT_FOR_OTHER_MEMBER('W');
 const size_t OrderCapacity_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 529> OrderRestrictions;
+using OrderRestrictions = Field<MultipleCharValue, 529>;
 const f8String OrderRestrictions_PROGRAM_TRADE("1");
 const f8String OrderRestrictions_INDEX_ARBITRAGE("2");
 const f8String OrderRestrictions_NON_INDEX_ARBITRAGE("3");
@@ -2693,7 +2693,7 @@ const f8String OrderRestrictions_ALGORITHMIC("E");
 const f8String OrderRestrictions_CROSS("F");
 const size_t OrderRestrictions_realm_els(15);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 530> MassCancelRequestType;
+using MassCancelRequestType = Field<char, 530>;
 const char MassCancelRequestType_CANCEL_ORDERS_FOR_A_SECURITY('1');
 const char MassCancelRequestType_CANCEL_ORDERS_FOR_AN_UNDERLYING_SECURITY('2');
 const char MassCancelRequestType_CANCEL_ORDERS_FOR_A_PRODUCT('3');
@@ -2708,7 +2708,7 @@ const char MassCancelRequestType_CANCEL_FOR_SECURITY_ISSUER('B');
 const char MassCancelRequestType_CANCEL_FOR_ISSUER_OF_UNDERLYING_SECURITY('C');
 const size_t MassCancelRequestType_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 531> MassCancelResponse;
+using MassCancelResponse = Field<char, 531>;
 const char MassCancelResponse_CANCEL_REQUEST_REJECTED('0');
 const char MassCancelResponse_CANCEL_ORDERS_FOR_A_SECURITY('1');
 const char MassCancelResponse_CANCEL_ORDERS_FOR_AN_UNDERLYING_SECURITY('2');
@@ -2724,7 +2724,7 @@ const char MassCancelResponse_CANCEL_ORDERS_FOR_A_SECURITIES_ISSUER('B');
 const char MassCancelResponse_CANCEL_ORDERS_FOR_ISSUER_OF_UNDERLYING_SECURITY('C');
 const size_t MassCancelResponse_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 532> MassCancelRejectReason;
+using MassCancelRejectReason = Field<int, 532>;
 const int MassCancelRejectReason_MASS_CANCEL_NOT_SUPPORTED(0);
 const int MassCancelRejectReason_INVALID_OR_UNKNOWN_SECURITY(1);
 const int MassCancelRejectReason_INVALID_OR_UNKOWN_UNDERLYING_SECURITY(2);
@@ -2740,87 +2740,87 @@ const int MassCancelRejectReason_INVALID_OR_UNKNOWN_ISSUER_OF_UNDERLYING_SECURIT
 const int MassCancelRejectReason_OTHER(99);
 const size_t MassCancelRejectReason_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 533> TotalAffectedOrders;
+using TotalAffectedOrders = Field<int, 533>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 534> NoAffectedOrders;
+using NoAffectedOrders = Field<NumInGroup, 534>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 535> AffectedOrderID;
+using AffectedOrderID = Field<f8String, 535>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 536> AffectedSecondaryOrderID;
+using AffectedSecondaryOrderID = Field<f8String, 536>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 537> QuoteType;
+using QuoteType = Field<int, 537>;
 const int QuoteType_INDICATIVE(0);
 const int QuoteType_TRADEABLE(1);
 const int QuoteType_RESTRICTED_TRADEABLE(2);
 const int QuoteType_COUNTER(3);
 const size_t QuoteType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 538> NestedPartyRole;
+using NestedPartyRole = Field<int, 538>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 539> NoNestedPartyIDs;
+using NoNestedPartyIDs = Field<NumInGroup, 539>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 540> TotalAccruedInterestAmt;
+using TotalAccruedInterestAmt = Field<Amt, 540>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 541> MaturityDate;
+using MaturityDate = Field<LocalMktDate, 541>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 542> UnderlyingMaturityDate;
+using UnderlyingMaturityDate = Field<LocalMktDate, 542>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 543> InstrRegistry;
+using InstrRegistry = Field<f8String, 543>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 544> CashMargin;
+using CashMargin = Field<char, 544>;
 const char CashMargin_CASH('1');
 const char CashMargin_MARGIN_OPEN('2');
 const char CashMargin_MARGIN_CLOSE('3');
 const size_t CashMargin_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 545> NestedPartySubID;
+using NestedPartySubID = Field<f8String, 545>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 546> Scope;
+using Scope = Field<MultipleCharValue, 546>;
 const f8String Scope_LOCAL_MARKET("1");
 const f8String Scope_NATIONAL("2");
 const f8String Scope_GLOBAL("3");
 const size_t Scope_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 547> MDImplicitDelete;
+using MDImplicitDelete = Field<Boolean, 547>;
 const char MDImplicitDelete_NO('N');
 const char MDImplicitDelete_YES('Y');
 const size_t MDImplicitDelete_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 548> CrossID;
+using CrossID = Field<f8String, 548>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 549> CrossType;
+using CrossType = Field<int, 549>;
 const int CrossType_CROSS_AON(1);
 const int CrossType_CROSS_IOC(2);
 const int CrossType_CROSS_ONE_SIDE(3);
 const int CrossType_CROSS_SAME_PRICE(4);
 const size_t CrossType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 550> CrossPrioritization;
+using CrossPrioritization = Field<int, 550>;
 const int CrossPrioritization_NONE(0);
 const int CrossPrioritization_BUY_SIDE_IS_PRIORITIZED(1);
 const int CrossPrioritization_SELL_SIDE_IS_PRIORITIZED(2);
 const size_t CrossPrioritization_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 551> OrigCrossID;
+using OrigCrossID = Field<f8String, 551>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 552> NoSides;
+using NoSides = Field<NumInGroup, 552>;
 const int NoSides_ONE_SIDE(1);
 const int NoSides_BOTH_SIDES(2);
 const size_t NoSides_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 553> Username;
+using Username = Field<f8String, 553>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 554> Password;
+using Password = Field<f8String, 554>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 555> NoLegs;
+using NoLegs = Field<NumInGroup, 555>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 556> LegCurrency;
+using LegCurrency = Field<currency, 556>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 557> TotNoSecurityTypes;
+using TotNoSecurityTypes = Field<int, 557>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 558> NoSecurityTypes;
+using NoSecurityTypes = Field<NumInGroup, 558>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 559> SecurityListRequestType;
+using SecurityListRequestType = Field<int, 559>;
 const int SecurityListRequestType_SYMBOL(0);
 const int SecurityListRequestType_SECURITYTYPE_AND_OR_CFICODE(1);
 const int SecurityListRequestType_PRODUCT(2);
@@ -2829,7 +2829,7 @@ const int SecurityListRequestType_ALL_SECURITIES(4);
 const int SecurityListRequestType_MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID(5);
 const size_t SecurityListRequestType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 560> SecurityRequestResult;
+using SecurityRequestResult = Field<int, 560>;
 const int SecurityRequestResult_VALID_REQUEST(0);
 const int SecurityRequestResult_INVALID_OR_UNSUPPORTED_REQUEST(1);
 const int SecurityRequestResult_NO_INSTRUMENTS_FOUND_THAT_MATCH_SELECTION_CRITERIA(2);
@@ -2838,30 +2838,30 @@ const int SecurityRequestResult_INSTRUMENT_DATA_TEMPORARILY_UNAVAILABLE(4);
 const int SecurityRequestResult_REQUEST_FOR_INSTRUMENT_DATA_NOT_SUPPORTED(5);
 const size_t SecurityRequestResult_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 561> RoundLot;
+using RoundLot = Field<Qty, 561>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 562> MinTradeVol;
+using MinTradeVol = Field<Qty, 562>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 563> MultiLegRptTypeReq;
+using MultiLegRptTypeReq = Field<int, 563>;
 const int MultiLegRptTypeReq_REPORT_BY_MULITLEG_SECURITY_ONLY(0);
 const int MultiLegRptTypeReq_REPORT_BY_MULTILEG_SECURITY_AND_BY_INSTRUMENT_LEGS_BELONGING_TO_THE_MULTILEG_SECURITY(1);
 const int MultiLegRptTypeReq_REPORT_BY_INSTRUMENT_LEGS_BELONGING_TO_THE_MULTILEG_SECURITY_ONLY(2);
 const size_t MultiLegRptTypeReq_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 564> LegPositionEffect;
+using LegPositionEffect = Field<char, 564>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 565> LegCoveredOrUncovered;
+using LegCoveredOrUncovered = Field<int, 565>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 566> LegPrice;
+using LegPrice = Field<price, 566>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 567> TradSesStatusRejReason;
+using TradSesStatusRejReason = Field<int, 567>;
 const int TradSesStatusRejReason_UNKNOWN_OR_INVALID_TRADINGSESSIONID(1);
 const int TradSesStatusRejReason_OTHER(99);
 const size_t TradSesStatusRejReason_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 568> TradeRequestID;
+using TradeRequestID = Field<f8String, 568>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 569> TradeRequestType;
+using TradeRequestType = Field<int, 569>;
 const int TradeRequestType_ALL_TRADES(0);
 const int TradeRequestType_MATCHED_TRADES_MATCHING_CRITERIA_PROVIDED_ON_REQUEST(1);
 const int TradeRequestType_UNMATCHED_TRADES_THAT_MATCH_CRITERIA(2);
@@ -2869,22 +2869,22 @@ const int TradeRequestType_UNREPORTED_TRADES_THAT_MATCH_CRITERIA(3);
 const int TradeRequestType_ADVISORIES_THAT_MATCH_CRITERIA(4);
 const size_t TradeRequestType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 570> PreviouslyReported;
+using PreviouslyReported = Field<Boolean, 570>;
 const char PreviouslyReported_NO('N');
 const char PreviouslyReported_YES('Y');
 const size_t PreviouslyReported_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 571> TradeReportID;
+using TradeReportID = Field<f8String, 571>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 572> TradeReportRefID;
+using TradeReportRefID = Field<f8String, 572>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 573> MatchStatus;
+using MatchStatus = Field<char, 573>;
 const char MatchStatus_COMPARED_MATCHED_OR_AFFIRMED('0');
 const char MatchStatus_UNCOMPARED_UNMATCHED_OR_UNAFFIRMED('1');
 const char MatchStatus_ADVISORY_OR_ALERT('2');
 const size_t MatchStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 574> MatchType;
+using MatchType = Field<f8String, 574>;
 const f8String MatchType_ONE_PARTY_TRADE_REPORT("1");
 const f8String MatchType_TWO_PARTY_TRADE_REPORT("2");
 const f8String MatchType_CONFIRMED_TRADE_REPORT("3");
@@ -2913,14 +2913,14 @@ const f8String MatchType_SUMMARIZED_MATCH_USING_A4_EXACT_MATCH_CRITERIA_EXCEPT_Q
 const f8String MatchType_SUMMARIZED_MATCH_USING_A5_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED("S5");
 const size_t MatchType_realm_els(26);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 575> OddLot;
+using OddLot = Field<Boolean, 575>;
 const char OddLot_NO('N');
 const char OddLot_YES('Y');
 const size_t OddLot_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 576> NoClearingInstructions;
+using NoClearingInstructions = Field<NumInGroup, 576>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 577> ClearingInstruction;
+using ClearingInstruction = Field<int, 577>;
 const int ClearingInstruction_PROCESS_NORMALLY(0);
 const int ClearingInstruction_EXCLUDE_FROM_ALL_NETTING(1);
 const int ClearingInstruction_BILATERAL_NETTING_ONLY(2);
@@ -2937,13 +2937,13 @@ const int ClearingInstruction_CUSTOMER_TRADE(12);
 const int ClearingInstruction_SELF_CLEARING(13);
 const size_t ClearingInstruction_realm_els(14);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 578> TradeInputSource;
+using TradeInputSource = Field<f8String, 578>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 579> TradeInputDevice;
+using TradeInputDevice = Field<f8String, 579>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 580> NoDates;
+using NoDates = Field<int, 580>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 581> AccountType;
+using AccountType = Field<int, 581>;
 const int AccountType_ACCOUNT_IS_CARRIED_ON_CUSTOMER_SIDE_OF_THE_BOOKS(1);
 const int AccountType_ACCOUNT_IS_CARRIED_ON_NON_CUSTOMER_SIDE_OF_BOOKS(2);
 const int AccountType_HOUSE_TRADER(3);
@@ -2953,18 +2953,18 @@ const int AccountType_ACCOUNT_IS_HOUSE_TRADER_AND_IS_CROSS_MARGINED(7);
 const int AccountType_JOINT_BACK_OFFICE_ACCOUNT(8);
 const size_t AccountType_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 582> CustOrderCapacity;
+using CustOrderCapacity = Field<int, 582>;
 const int CustOrderCapacity_MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT(1);
 const int CustOrderCapacity_CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT(2);
 const int CustOrderCapacity_MEMBER_TRADING_FOR_ANOTHER_MEMBER(3);
 const int CustOrderCapacity_ALL_OTHER(4);
 const size_t CustOrderCapacity_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 583> ClOrdLinkID;
+using ClOrdLinkID = Field<f8String, 583>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 584> MassStatusReqID;
+using MassStatusReqID = Field<f8String, 584>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 585> MassStatusReqType;
+using MassStatusReqType = Field<int, 585>;
 const int MassStatusReqType_STATUS_FOR_ORDERS_FOR_A_SECURITY(1);
 const int MassStatusReqType_STATUS_FOR_ORDERS_FOR_AN_UNDERLYING_SECURITY(2);
 const int MassStatusReqType_STATUS_FOR_ORDERS_FOR_A_PRODUCT(3);
@@ -2977,96 +2977,96 @@ const int MassStatusReqType_STATUS_FOR_SECURITY_ISSUER(9);
 const int MassStatusReqType_STATUS_FOR_ISSUER_OF_UNDERLYING_SECURITY(10);
 const size_t MassStatusReqType_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 586> OrigOrdModTime;
+using OrigOrdModTime = Field<UTCTimestamp, 586>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 587> LegSettlType;
+using LegSettlType = Field<char, 587>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 588> LegSettlDate;
+using LegSettlDate = Field<LocalMktDate, 588>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 589> DayBookingInst;
+using DayBookingInst = Field<char, 589>;
 const char DayBookingInst_CAN_TRIGGER_BOOKING_WITHOUT_REFERENCE_TO_THE_ORDER_INITIATOR('0');
 const char DayBookingInst_SPEAK_WITH_ORDER_INITIATOR_BEFORE_BOOKING('1');
 const char DayBookingInst_ACCUMULATE('2');
 const size_t DayBookingInst_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 590> BookingUnit;
+using BookingUnit = Field<char, 590>;
 const char BookingUnit_EACH_PARTIAL_EXECUTION_IS_A_BOOKABLE_UNIT('0');
 const char BookingUnit_AGGREGATE_PARTIAL_EXECUTIONS_ON_THIS_ORDER_AND_BOOK_ONE_TRADE_PER_ORDER('1');
 const char BookingUnit_AGGREGATE_EXECUTIONS_FOR_THIS_SYMBOL_SIDE_AND_SETTLEMENT_DATE('2');
 const size_t BookingUnit_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 591> PreallocMethod;
+using PreallocMethod = Field<char, 591>;
 const char PreallocMethod_PRO_RATA('0');
 const char PreallocMethod_DO_NOT_PRO_RATA('1');
 const size_t PreallocMethod_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<country, 592> UnderlyingCountryOfIssue;
+using UnderlyingCountryOfIssue = Field<country, 592>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 593> UnderlyingStateOrProvinceOfIssue;
+using UnderlyingStateOrProvinceOfIssue = Field<f8String, 593>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 594> UnderlyingLocaleOfIssue;
+using UnderlyingLocaleOfIssue = Field<f8String, 594>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 595> UnderlyingInstrRegistry;
+using UnderlyingInstrRegistry = Field<f8String, 595>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<country, 596> LegCountryOfIssue;
+using LegCountryOfIssue = Field<country, 596>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 597> LegStateOrProvinceOfIssue;
+using LegStateOrProvinceOfIssue = Field<f8String, 597>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 598> LegLocaleOfIssue;
+using LegLocaleOfIssue = Field<f8String, 598>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 599> LegInstrRegistry;
+using LegInstrRegistry = Field<f8String, 599>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 600> LegSymbol;
+using LegSymbol = Field<f8String, 600>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 601> LegSymbolSfx;
+using LegSymbolSfx = Field<f8String, 601>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 602> LegSecurityID;
+using LegSecurityID = Field<f8String, 602>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 603> LegSecurityIDSource;
+using LegSecurityIDSource = Field<f8String, 603>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 604> NoLegSecurityAltID;
+using NoLegSecurityAltID = Field<f8String, 604>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 605> LegSecurityAltID;
+using LegSecurityAltID = Field<f8String, 605>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 606> LegSecurityAltIDSource;
+using LegSecurityAltIDSource = Field<f8String, 606>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 607> LegProduct;
+using LegProduct = Field<int, 607>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 608> LegCFICode;
+using LegCFICode = Field<f8String, 608>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 609> LegSecurityType;
+using LegSecurityType = Field<f8String, 609>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 610> LegMaturityMonthYear;
+using LegMaturityMonthYear = Field<MonthYear, 610>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 611> LegMaturityDate;
+using LegMaturityDate = Field<LocalMktDate, 611>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 612> LegStrikePrice;
+using LegStrikePrice = Field<price, 612>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 613> LegOptAttribute;
+using LegOptAttribute = Field<char, 613>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 614> LegContractMultiplier;
+using LegContractMultiplier = Field<double, 614>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 615> LegCouponRate;
+using LegCouponRate = Field<Percentage, 615>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 616> LegSecurityExchange;
+using LegSecurityExchange = Field<Exchange, 616>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 617> LegIssuer;
+using LegIssuer = Field<f8String, 617>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 618> EncodedLegIssuerLen;
+using EncodedLegIssuerLen = Field<Length, 618>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 619> EncodedLegIssuer;
+using EncodedLegIssuer = Field<data, 619>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 620> LegSecurityDesc;
+using LegSecurityDesc = Field<f8String, 620>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 621> EncodedLegSecurityDescLen;
+using EncodedLegSecurityDescLen = Field<Length, 621>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 622> EncodedLegSecurityDesc;
+using EncodedLegSecurityDesc = Field<data, 622>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 623> LegRatioQty;
+using LegRatioQty = Field<double, 623>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 624> LegSide;
+using LegSide = Field<char, 624>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 625> TradingSessionSubID;
+using TradingSessionSubID = Field<f8String, 625>;
 const f8String TradingSessionSubID_PRE_TRADING("1");
 const f8String TradingSessionSubID_OPENING_OR_OPENING_AUCTION("2");
 const f8String TradingSessionSubID_3("3");
@@ -3076,7 +3076,7 @@ const f8String TradingSessionSubID_INTRADAY_AUCTION("6");
 const f8String TradingSessionSubID_QUIESCENT("7");
 const size_t TradingSessionSubID_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 626> AllocType;
+using AllocType = Field<int, 626>;
 const int AllocType_CALCULATED(1);
 const int AllocType_PRELIMINARY(2);
 const int AllocType_SELLSIDE_CALCULATED_USING_PRELIMINARY(3);
@@ -3093,23 +3093,23 @@ const int AllocType_COMPLETE_GROUP(13);
 const int AllocType_REVERSAL_PENDING(14);
 const size_t AllocType_realm_els(14);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 627> NoHops;
+using NoHops = Field<NumInGroup, 627>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 628> HopCompID;
+using HopCompID = Field<f8String, 628>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 629> HopSendingTime;
+using HopSendingTime = Field<UTCTimestamp, 629>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 630> HopRefID;
+using HopRefID = Field<SeqNum, 630>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 631> MidPx;
+using MidPx = Field<price, 631>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 632> BidYield;
+using BidYield = Field<Percentage, 632>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 633> MidYield;
+using MidYield = Field<Percentage, 633>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 634> OfferYield;
+using OfferYield = Field<Percentage, 634>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 635> ClearingFeeIndicator;
+using ClearingFeeIndicator = Field<f8String, 635>;
 const f8String ClearingFeeIndicator_1ST_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT("1");
 const f8String ClearingFeeIndicator_2ND_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT("2");
 const f8String ClearingFeeIndicator_3RD_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT("3");
@@ -3126,58 +3126,58 @@ const f8String ClearingFeeIndicator_LESSEE_106F_EMPLOYEES("L");
 const f8String ClearingFeeIndicator_ALL_OTHER_OWNERSHIP_TYPES("M");
 const size_t ClearingFeeIndicator_realm_els(14);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 636> WorkingIndicator;
+using WorkingIndicator = Field<Boolean, 636>;
 const char WorkingIndicator_NO('N');
 const char WorkingIndicator_YES('Y');
 const size_t WorkingIndicator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 637> LegLastPx;
+using LegLastPx = Field<price, 637>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 638> PriorityIndicator;
+using PriorityIndicator = Field<int, 638>;
 const int PriorityIndicator_PRIORITY_UNCHANGED(0);
 const int PriorityIndicator_LOST_PRIORITY_AS_RESULT_OF_ORDER_CHANGE(1);
 const size_t PriorityIndicator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 639> PriceImprovement;
+using PriceImprovement = Field<PriceOffset, 639>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 640> Price2;
+using Price2 = Field<price, 640>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 641> LastForwardPoints2;
+using LastForwardPoints2 = Field<PriceOffset, 641>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 642> BidForwardPoints2;
+using BidForwardPoints2 = Field<PriceOffset, 642>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 643> OfferForwardPoints2;
+using OfferForwardPoints2 = Field<PriceOffset, 643>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 644> RFQReqID;
+using RFQReqID = Field<f8String, 644>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 645> MktBidPx;
+using MktBidPx = Field<price, 645>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 646> MktOfferPx;
+using MktOfferPx = Field<price, 646>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 647> MinBidSize;
+using MinBidSize = Field<Qty, 647>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 648> MinOfferSize;
+using MinOfferSize = Field<Qty, 648>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 649> QuoteStatusReqID;
+using QuoteStatusReqID = Field<f8String, 649>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 650> LegalConfirm;
+using LegalConfirm = Field<Boolean, 650>;
 const char LegalConfirm_NO('N');
 const char LegalConfirm_YES('Y');
 const size_t LegalConfirm_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 651> UnderlyingLastPx;
+using UnderlyingLastPx = Field<price, 651>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 652> UnderlyingLastQty;
+using UnderlyingLastQty = Field<Qty, 652>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 654> LegRefID;
+using LegRefID = Field<f8String, 654>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 655> ContraLegRefID;
+using ContraLegRefID = Field<f8String, 655>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 656> SettlCurrBidFxRate;
+using SettlCurrBidFxRate = Field<double, 656>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 657> SettlCurrOfferFxRate;
+using SettlCurrOfferFxRate = Field<double, 657>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 658> QuoteRequestRejectReason;
+using QuoteRequestRejectReason = Field<int, 658>;
 const int QuoteRequestRejectReason_UNKNOWN_SYMBOL(1);
 const int QuoteRequestRejectReason_EXCHANGE(2);
 const int QuoteRequestRejectReason_QUOTE_REQUEST_EXCEEDS_LIMIT(3);
@@ -3192,9 +3192,9 @@ const int QuoteRequestRejectReason_INSUFFICIENT_CREDIT(11);
 const int QuoteRequestRejectReason_OTHER(99);
 const size_t QuoteRequestRejectReason_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 659> SideComplianceID;
+using SideComplianceID = Field<f8String, 659>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 660> AcctIDSource;
+using AcctIDSource = Field<int, 660>;
 const int AcctIDSource_BIC(1);
 const int AcctIDSource_SID_CODE(2);
 const int AcctIDSource_TFM(3);
@@ -3203,15 +3203,15 @@ const int AcctIDSource_DTCC_CODE(5);
 const int AcctIDSource_OTHER(99);
 const size_t AcctIDSource_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 661> AllocAcctIDSource;
+using AllocAcctIDSource = Field<int, 661>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 662> BenchmarkPrice;
+using BenchmarkPrice = Field<price, 662>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 663> BenchmarkPriceType;
+using BenchmarkPriceType = Field<int, 663>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 664> ConfirmID;
+using ConfirmID = Field<f8String, 664>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 665> ConfirmStatus;
+using ConfirmStatus = Field<int, 665>;
 const int ConfirmStatus_RECEIVED(1);
 const int ConfirmStatus_MISMATCHED_ACCOUNT(2);
 const int ConfirmStatus_MISSING_SETTLEMENT_INSTRUCTIONS(3);
@@ -3219,71 +3219,71 @@ const int ConfirmStatus_CONFIRMED(4);
 const int ConfirmStatus_REQUEST_REJECTED(5);
 const size_t ConfirmStatus_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 666> ConfirmTransType;
+using ConfirmTransType = Field<int, 666>;
 const int ConfirmTransType_NEW(0);
 const int ConfirmTransType_REPLACE(1);
 const int ConfirmTransType_CANCEL(2);
 const size_t ConfirmTransType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 667> ContractSettlMonth;
+using ContractSettlMonth = Field<MonthYear, 667>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 668> DeliveryForm;
+using DeliveryForm = Field<int, 668>;
 const int DeliveryForm_BOOK_ENTRY(1);
 const int DeliveryForm_BEARER(2);
 const size_t DeliveryForm_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 669> LastParPx;
+using LastParPx = Field<price, 669>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 670> NoLegAllocs;
+using NoLegAllocs = Field<NumInGroup, 670>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 671> LegAllocAccount;
+using LegAllocAccount = Field<f8String, 671>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 672> LegIndividualAllocID;
+using LegIndividualAllocID = Field<f8String, 672>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 673> LegAllocQty;
+using LegAllocQty = Field<Qty, 673>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 674> LegAllocAcctIDSource;
+using LegAllocAcctIDSource = Field<f8String, 674>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 675> LegSettlCurrency;
+using LegSettlCurrency = Field<currency, 675>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 676> LegBenchmarkCurveCurrency;
+using LegBenchmarkCurveCurrency = Field<currency, 676>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 677> LegBenchmarkCurveName;
+using LegBenchmarkCurveName = Field<f8String, 677>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 678> LegBenchmarkCurvePoint;
+using LegBenchmarkCurvePoint = Field<f8String, 678>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 679> LegBenchmarkPrice;
+using LegBenchmarkPrice = Field<price, 679>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 680> LegBenchmarkPriceType;
+using LegBenchmarkPriceType = Field<int, 680>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 681> LegBidPx;
+using LegBidPx = Field<price, 681>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 682> LegIOIQty;
+using LegIOIQty = Field<f8String, 682>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 683> NoLegStipulations;
+using NoLegStipulations = Field<NumInGroup, 683>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 684> LegOfferPx;
+using LegOfferPx = Field<price, 684>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 685> LegOrderQty;
+using LegOrderQty = Field<Qty, 685>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 686> LegPriceType;
+using LegPriceType = Field<int, 686>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 687> LegQty;
+using LegQty = Field<Qty, 687>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 688> LegStipulationType;
+using LegStipulationType = Field<f8String, 688>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 689> LegStipulationValue;
+using LegStipulationValue = Field<f8String, 689>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 690> LegSwapType;
+using LegSwapType = Field<int, 690>;
 const int LegSwapType_PAR_FOR_PAR(1);
 const int LegSwapType_MODIFIED_DURATION(2);
 const int LegSwapType_RISK(4);
 const int LegSwapType_PROCEEDS(5);
 const size_t LegSwapType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 691> Pool;
+using Pool = Field<f8String, 691>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 692> QuotePriceType;
+using QuotePriceType = Field<int, 692>;
 const int QuotePriceType_PERCENT(1);
 const int QuotePriceType_PER_SHARE(2);
 const int QuotePriceType_FIXED_AMOUNT(3);
@@ -3296,9 +3296,9 @@ const int QuotePriceType_YIELD_SPREAD(9);
 const int QuotePriceType_YIELD(10);
 const size_t QuotePriceType_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 693> QuoteRespID;
+using QuoteRespID = Field<f8String, 693>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 694> QuoteRespType;
+using QuoteRespType = Field<int, 694>;
 const int QuoteRespType_HIT_LIFT(1);
 const int QuoteRespType_COUNTER(2);
 const int QuoteRespType_EXPIRED(3);
@@ -3309,23 +3309,23 @@ const int QuoteRespType_END_TRADE(7);
 const int QuoteRespType_TIMED_OUT(8);
 const size_t QuoteRespType_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 695> QuoteQualifier;
+using QuoteQualifier = Field<char, 695>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 696> YieldRedemptionDate;
+using YieldRedemptionDate = Field<LocalMktDate, 696>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 697> YieldRedemptionPrice;
+using YieldRedemptionPrice = Field<price, 697>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 698> YieldRedemptionPriceType;
+using YieldRedemptionPriceType = Field<int, 698>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 699> BenchmarkSecurityID;
+using BenchmarkSecurityID = Field<f8String, 699>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 700> ReversalIndicator;
+using ReversalIndicator = Field<Boolean, 700>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 701> YieldCalcDate;
+using YieldCalcDate = Field<LocalMktDate, 701>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 702> NoPositions;
+using NoPositions = Field<NumInGroup, 702>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 703> PosType;
+using PosType = Field<f8String, 703>;
 const f8String PosType_ALLOCATION_TRADE_QTY("ALC");
 const f8String PosType_OPTION_ASSIGNMENT("AS");
 const f8String PosType_AS_OF_TRADE_QTY("ASF");
@@ -3355,17 +3355,17 @@ const f8String PosType_TRANSACTION_FROM_EXERCISE("TX");
 const f8String PosType_CROSS_MARGIN_QTY("XM");
 const size_t PosType_realm_els(27);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 704> LongQty;
+using LongQty = Field<Qty, 704>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 705> ShortQty;
+using ShortQty = Field<Qty, 705>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 706> PosQtyStatus;
+using PosQtyStatus = Field<int, 706>;
 const int PosQtyStatus_SUBMITTED(0);
 const int PosQtyStatus_ACCEPTED(1);
 const int PosQtyStatus_REJECTED(2);
 const size_t PosQtyStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 707> PosAmtType;
+using PosAmtType = Field<f8String, 707>;
 const f8String PosAmtType_ACCRUED_COUPON_AMOUNT("ACPN");
 const f8String PosAmtType_TOTAL_BANKED_AMOUNT("BANK");
 const f8String PosAmtType_CASH_AMOUNT("CASH");
@@ -3386,9 +3386,9 @@ const f8String PosAmtType_TRADE_VARIATION_AMOUNT("TVAR");
 const f8String PosAmtType_VALUE_ADJUSTED_AMOUNT("VADJ");
 const size_t PosAmtType_realm_els(18);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 708> PosAmt;
+using PosAmt = Field<Amt, 708>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 709> PosTransType;
+using PosTransType = Field<int, 709>;
 const int PosTransType_EXERCISE(1);
 const int PosTransType_DO_NOT_EXERCISE(2);
 const int PosTransType_POSITION_ADJUSTMENT(3);
@@ -3397,46 +3397,46 @@ const int PosTransType_PLEDGE(5);
 const int PosTransType_LARGE_TRADER_SUBMISSION(6);
 const size_t PosTransType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 710> PosReqID;
+using PosReqID = Field<f8String, 710>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 711> NoUnderlyings;
+using NoUnderlyings = Field<NumInGroup, 711>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 712> PosMaintAction;
+using PosMaintAction = Field<int, 712>;
 const int PosMaintAction_NEW(1);
 const int PosMaintAction_REPLACE(2);
 const int PosMaintAction_CANCEL(3);
 const int PosMaintAction_REVERSE(4);
 const size_t PosMaintAction_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 713> OrigPosReqRefID;
+using OrigPosReqRefID = Field<f8String, 713>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 714> PosMaintRptRefID;
+using PosMaintRptRefID = Field<f8String, 714>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 715> ClearingBusinessDate;
+using ClearingBusinessDate = Field<LocalMktDate, 715>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 716> SettlSessID;
+using SettlSessID = Field<f8String, 716>;
 const f8String SettlSessID_END_OF_DAY("EOD");
 const f8String SettlSessID_ELECTRONIC_TRADING_HOURS("ETH");
 const f8String SettlSessID_INTRADAY("ITD");
 const f8String SettlSessID_REGULAR_TRADING_HOURS("RTH");
 const size_t SettlSessID_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 717> SettlSessSubID;
+using SettlSessSubID = Field<f8String, 717>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 718> AdjustmentType;
+using AdjustmentType = Field<int, 718>;
 const int AdjustmentType_PROCESS_REQUEST_AS_MARGIN_DISPOSITION(0);
 const int AdjustmentType_DELTA_PLUS(1);
 const int AdjustmentType_DELTA_MINUS(2);
 const int AdjustmentType_FINAL(3);
 const size_t AdjustmentType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 719> ContraryInstructionIndicator;
+using ContraryInstructionIndicator = Field<Boolean, 719>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 720> PriorSpreadIndicator;
+using PriorSpreadIndicator = Field<Boolean, 720>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 721> PosMaintRptID;
+using PosMaintRptID = Field<f8String, 721>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 722> PosMaintStatus;
+using PosMaintStatus = Field<int, 722>;
 const int PosMaintStatus_ACCEPTED(0);
 const int PosMaintStatus_ACCEPTED_WITH_WARNINGS(1);
 const int PosMaintStatus_REJECTED(2);
@@ -3444,13 +3444,13 @@ const int PosMaintStatus_COMPLETED(3);
 const int PosMaintStatus_COMPLETED_WITH_WARNINGS(4);
 const size_t PosMaintStatus_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 723> PosMaintResult;
+using PosMaintResult = Field<int, 723>;
 const int PosMaintResult_SUCCESSFUL_COMPLETION(0);
 const int PosMaintResult_REJECTED(1);
 const int PosMaintResult_OTHER(99);
 const size_t PosMaintResult_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 724> PosReqType;
+using PosReqType = Field<int, 724>;
 const int PosReqType_POSITIONS(0);
 const int PosReqType_TRADES(1);
 const int PosReqType_EXERCISES(2);
@@ -3460,16 +3460,16 @@ const int PosReqType_BACKOUT_MESSAGE(5);
 const int PosReqType_DELTA_POSITIONS(6);
 const size_t PosReqType_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 725> ResponseTransportType;
+using ResponseTransportType = Field<int, 725>;
 const int ResponseTransportType_INBAND(0);
 const int ResponseTransportType_OUT_OF_BAND(1);
 const size_t ResponseTransportType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 726> ResponseDestination;
+using ResponseDestination = Field<f8String, 726>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 727> TotalNumPosReports;
+using TotalNumPosReports = Field<int, 727>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 728> PosReqResult;
+using PosReqResult = Field<int, 728>;
 const int PosReqResult_VALID_REQUEST(0);
 const int PosReqResult_INVALID_OR_UNSUPPORTED_REQUEST(1);
 const int PosReqResult_NO_POSITIONS_FOUND_THAT_MATCH_CRITERIA(2);
@@ -3478,60 +3478,60 @@ const int PosReqResult_REQUEST_FOR_POSITION_NOT_SUPPORTED(4);
 const int PosReqResult_OTHER(99);
 const size_t PosReqResult_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 729> PosReqStatus;
+using PosReqStatus = Field<int, 729>;
 const int PosReqStatus_COMPLETED(0);
 const int PosReqStatus_COMPLETED_WITH_WARNINGS(1);
 const int PosReqStatus_REJECTED(2);
 const size_t PosReqStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 730> SettlPrice;
+using SettlPrice = Field<price, 730>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 731> SettlPriceType;
+using SettlPriceType = Field<int, 731>;
 const int SettlPriceType_FINAL(1);
 const int SettlPriceType_THEORETICAL(2);
 const size_t SettlPriceType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 732> UnderlyingSettlPrice;
+using UnderlyingSettlPrice = Field<price, 732>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 733> UnderlyingSettlPriceType;
+using UnderlyingSettlPriceType = Field<int, 733>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 734> PriorSettlPrice;
+using PriorSettlPrice = Field<price, 734>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 735> NoQuoteQualifiers;
+using NoQuoteQualifiers = Field<NumInGroup, 735>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 736> AllocSettlCurrency;
+using AllocSettlCurrency = Field<currency, 736>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 737> AllocSettlCurrAmt;
+using AllocSettlCurrAmt = Field<Amt, 737>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 738> InterestAtMaturity;
+using InterestAtMaturity = Field<Amt, 738>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 739> LegDatedDate;
+using LegDatedDate = Field<LocalMktDate, 739>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 740> LegPool;
+using LegPool = Field<f8String, 740>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 741> AllocInterestAtMaturity;
+using AllocInterestAtMaturity = Field<Amt, 741>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 742> AllocAccruedInterestAmt;
+using AllocAccruedInterestAmt = Field<Amt, 742>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 743> DeliveryDate;
+using DeliveryDate = Field<LocalMktDate, 743>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 744> AssignmentMethod;
+using AssignmentMethod = Field<char, 744>;
 const char AssignmentMethod_PRO_RATA('P');
 const char AssignmentMethod_RANDOM('R');
 const size_t AssignmentMethod_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 745> AssignmentUnit;
+using AssignmentUnit = Field<Qty, 745>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 746> OpenInterest;
+using OpenInterest = Field<Amt, 746>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 747> ExerciseMethod;
+using ExerciseMethod = Field<char, 747>;
 const char ExerciseMethod_AUTOMATIC('A');
 const char ExerciseMethod_MANUAL('M');
 const size_t ExerciseMethod_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 748> TotNumTradeReports;
+using TotNumTradeReports = Field<int, 748>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 749> TradeRequestResult;
+using TradeRequestResult = Field<int, 749>;
 const int TradeRequestResult_SUCCESSFUL(0);
 const int TradeRequestResult_INVALID_OR_UNKNOWN_INSTRUMENT(1);
 const int TradeRequestResult_INVALID_TYPE_OF_TRADE_REQUESTED(2);
@@ -3543,13 +3543,13 @@ const int TradeRequestResult_NOT_AUTHORIZED(9);
 const int TradeRequestResult_OTHER(99);
 const size_t TradeRequestResult_realm_els(9);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 750> TradeRequestStatus;
+using TradeRequestStatus = Field<int, 750>;
 const int TradeRequestStatus_ACCEPTED(0);
 const int TradeRequestStatus_COMPLETED(1);
 const int TradeRequestStatus_REJECTED(2);
 const size_t TradeRequestStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 751> TradeReportRejectReason;
+using TradeReportRejectReason = Field<int, 751>;
 const int TradeReportRejectReason_SUCCESSFUL(0);
 const int TradeReportRejectReason_INVALID_PARTY_ONFORMATION(1);
 const int TradeReportRejectReason_UNKNOWN_INSTRUMENT(2);
@@ -3558,47 +3558,47 @@ const int TradeReportRejectReason_INVALID_TRADE_TYPE(4);
 const int TradeReportRejectReason_OTHER(99);
 const size_t TradeReportRejectReason_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 752> SideMultiLegReportingType;
+using SideMultiLegReportingType = Field<int, 752>;
 const int SideMultiLegReportingType_SINGLE_SECURITY(1);
 const int SideMultiLegReportingType_INDIVIDUAL_LEG_OF_A_MULTILEG_SECURITY(2);
 const int SideMultiLegReportingType_MULTILEG_SECURITY(3);
 const size_t SideMultiLegReportingType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 753> NoPosAmt;
+using NoPosAmt = Field<NumInGroup, 753>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 754> AutoAcceptIndicator;
+using AutoAcceptIndicator = Field<Boolean, 754>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 755> AllocReportID;
+using AllocReportID = Field<f8String, 755>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 756> NoNested2PartyIDs;
+using NoNested2PartyIDs = Field<NumInGroup, 756>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 757> Nested2PartyID;
+using Nested2PartyID = Field<f8String, 757>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 758> Nested2PartyIDSource;
+using Nested2PartyIDSource = Field<char, 758>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 759> Nested2PartyRole;
+using Nested2PartyRole = Field<int, 759>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 760> Nested2PartySubID;
+using Nested2PartySubID = Field<f8String, 760>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 761> BenchmarkSecurityIDSource;
+using BenchmarkSecurityIDSource = Field<f8String, 761>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 762> SecuritySubType;
+using SecuritySubType = Field<f8String, 762>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 763> UnderlyingSecuritySubType;
+using UnderlyingSecuritySubType = Field<f8String, 763>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 764> LegSecuritySubType;
+using LegSecuritySubType = Field<f8String, 764>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 765> AllowableOneSidednessPct;
+using AllowableOneSidednessPct = Field<Percentage, 765>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 766> AllowableOneSidednessValue;
+using AllowableOneSidednessValue = Field<Amt, 766>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 767> AllowableOneSidednessCurr;
+using AllowableOneSidednessCurr = Field<currency, 767>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 768> NoTrdRegTimestamps;
+using NoTrdRegTimestamps = Field<NumInGroup, 768>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 769> TrdRegTimestamp;
+using TrdRegTimestamp = Field<UTCTimestamp, 769>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 770> TrdRegTimestampType;
+using TrdRegTimestampType = Field<int, 770>;
 const int TrdRegTimestampType_EXECUTION_TIME(1);
 const int TrdRegTimestampType_TIME_IN(2);
 const int TrdRegTimestampType_TIME_OUT(3);
@@ -3608,37 +3608,37 @@ const int TrdRegTimestampType_DESK_RECEIPT(6);
 const int TrdRegTimestampType_SUBMISSION_TO_CLEARING(7);
 const size_t TrdRegTimestampType_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 771> TrdRegTimestampOrigin;
+using TrdRegTimestampOrigin = Field<f8String, 771>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 772> ConfirmRefID;
+using ConfirmRefID = Field<f8String, 772>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 773> ConfirmType;
+using ConfirmType = Field<int, 773>;
 const int ConfirmType_STATUS(1);
 const int ConfirmType_CONFIRMATION(2);
 const int ConfirmType_CONFIRMATION_REQUEST_REJECTED(3);
 const size_t ConfirmType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 774> ConfirmRejReason;
+using ConfirmRejReason = Field<int, 774>;
 const int ConfirmRejReason_MISMATCHED_ACCOUNT(1);
 const int ConfirmRejReason_MISSING_SETTLEMENT_INSTRUCTIONS(2);
 const int ConfirmRejReason_OTHER(99);
 const size_t ConfirmRejReason_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 775> BookingType;
+using BookingType = Field<int, 775>;
 const int BookingType_REGULAR_BOOKING(0);
 const int BookingType_CFD(1);
 const int BookingType_TOTAL_RETURN_SWAP(2);
 const size_t BookingType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 776> IndividualAllocRejCode;
+using IndividualAllocRejCode = Field<int, 776>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 777> SettlInstMsgID;
+using SettlInstMsgID = Field<f8String, 777>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 778> NoSettlInst;
+using NoSettlInst = Field<NumInGroup, 778>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 779> LastUpdateTime;
+using LastUpdateTime = Field<UTCTimestamp, 779>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 780> AllocSettlInstType;
+using AllocSettlInstType = Field<int, 780>;
 const int AllocSettlInstType_USE_DEFAULT_INSTRUCTIONS(0);
 const int AllocSettlInstType_DERIVE_FROM_PARAMETERS_PROVIDED(1);
 const int AllocSettlInstType_FULL_DETAILS_PROVIDED(2);
@@ -3646,46 +3646,46 @@ const int AllocSettlInstType_SSI_DB_IDS_PROVIDED(3);
 const int AllocSettlInstType_PHONE_FOR_INSTRUCTIONS(4);
 const size_t AllocSettlInstType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 781> NoSettlPartyIDs;
+using NoSettlPartyIDs = Field<NumInGroup, 781>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 782> SettlPartyID;
+using SettlPartyID = Field<f8String, 782>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 783> SettlPartyIDSource;
+using SettlPartyIDSource = Field<char, 783>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 784> SettlPartyRole;
+using SettlPartyRole = Field<int, 784>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 785> SettlPartySubID;
+using SettlPartySubID = Field<f8String, 785>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 786> SettlPartySubIDType;
+using SettlPartySubIDType = Field<int, 786>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 787> DlvyInstType;
+using DlvyInstType = Field<char, 787>;
 const char DlvyInstType_CASH('C');
 const char DlvyInstType_SECURITIES('S');
 const size_t DlvyInstType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 788> TerminationType;
+using TerminationType = Field<int, 788>;
 const int TerminationType_OVERNIGHT(1);
 const int TerminationType_TERM(2);
 const int TerminationType_FLEXIBLE(3);
 const int TerminationType_OPEN(4);
 const size_t TerminationType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 789> NextExpectedMsgSeqNum;
+using NextExpectedMsgSeqNum = Field<SeqNum, 789>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 790> OrdStatusReqID;
+using OrdStatusReqID = Field<f8String, 790>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 791> SettlInstReqID;
+using SettlInstReqID = Field<f8String, 791>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 792> SettlInstReqRejCode;
+using SettlInstReqRejCode = Field<int, 792>;
 const int SettlInstReqRejCode_UNABLE_TO_PROCESS_REQUEST(0);
 const int SettlInstReqRejCode_UNKNOWN_ACCOUNT(1);
 const int SettlInstReqRejCode_NO_MATCHING_SETTLEMENT_INSTRUCTIONS_FOUND(2);
 const int SettlInstReqRejCode_OTHER(99);
 const size_t SettlInstReqRejCode_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 793> SecondaryAllocID;
+using SecondaryAllocID = Field<f8String, 793>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 794> AllocReportType;
+using AllocReportType = Field<int, 794>;
 const int AllocReportType_PRELIMINARY_REQUEST_TO_INTERMEDIARY(2);
 const int AllocReportType_SELLSIDE_CALCULATED_USING_PRELIMINARY(3);
 const int AllocReportType_SELLSIDE_CALCULATED_WITHOUT_PRELIMINARY(4);
@@ -3698,17 +3698,17 @@ const int AllocReportType_COMPLETE(12);
 const int AllocReportType_REVERSE_PENDING(14);
 const size_t AllocReportType_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 795> AllocReportRefID;
+using AllocReportRefID = Field<f8String, 795>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 796> AllocCancReplaceReason;
+using AllocCancReplaceReason = Field<int, 796>;
 const int AllocCancReplaceReason_ORIGINAL_DETAILS_INCOMPLETE_INCORRECT(1);
 const int AllocCancReplaceReason_CHANGE_IN_UNDERLYING_ORDER_DETAILS(2);
 const int AllocCancReplaceReason_OTHER(99);
 const size_t AllocCancReplaceReason_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 797> CopyMsgIndicator;
+using CopyMsgIndicator = Field<Boolean, 797>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 798> AllocAccountType;
+using AllocAccountType = Field<int, 798>;
 const int AllocAccountType_ACCOUNT_IS_CARRIED_PN_CUSTOMER_SIDE_OF_BOOKS(1);
 const int AllocAccountType_ACCOUNT_IS_CARRIED_ON_NON_CUSTOMER_SIDE_OF_BOOKS(2);
 const int AllocAccountType_HOUSE_TRADER(3);
@@ -3718,15 +3718,15 @@ const int AllocAccountType_ACCOUNT_IS_HOUSE_TRADER_AND_IS_CROSS_MARGINED(7);
 const int AllocAccountType_JOINT_BACK_OFFICE_ACCOUNT(8);
 const size_t AllocAccountType_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 799> OrderAvgPx;
+using OrderAvgPx = Field<price, 799>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 800> OrderBookingQty;
+using OrderBookingQty = Field<Qty, 800>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 801> NoSettlPartySubIDs;
+using NoSettlPartySubIDs = Field<NumInGroup, 801>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 802> NoPartySubIDs;
+using NoPartySubIDs = Field<NumInGroup, 802>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 803> PartySubIDType;
+using PartySubIDType = Field<int, 803>;
 const int PartySubIDType_FIRM(1);
 const int PartySubIDType_PERSON(2);
 const int PartySubIDType_SYSTEM(3);
@@ -3762,15 +3762,15 @@ const int PartySubIDType_EXECUTION_VENUE(32);
 const int PartySubIDType_CURRENCY_DELIVERY_IDENTIFIER(33);
 const size_t PartySubIDType_realm_els(33);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 804> NoNestedPartySubIDs;
+using NoNestedPartySubIDs = Field<NumInGroup, 804>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 805> NestedPartySubIDType;
+using NestedPartySubIDType = Field<int, 805>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 806> NoNested2PartySubIDs;
+using NoNested2PartySubIDs = Field<NumInGroup, 806>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 807> Nested2PartySubIDType;
+using Nested2PartySubIDType = Field<int, 807>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 808> AllocIntermedReqType;
+using AllocIntermedReqType = Field<int, 808>;
 const int AllocIntermedReqType_PENDING_ACCEPT(1);
 const int AllocIntermedReqType_PENDING_RELEASE(2);
 const int AllocIntermedReqType_PENDING_REVERSAL(3);
@@ -3779,53 +3779,53 @@ const int AllocIntermedReqType_BLOCK_LEVEL_REJECT(5);
 const int AllocIntermedReqType_ACCOUNT_LEVEL_REJECT(6);
 const size_t AllocIntermedReqType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 810> UnderlyingPx;
+using UnderlyingPx = Field<price, 810>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 811> PriceDelta;
+using PriceDelta = Field<double, 811>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 812> ApplQueueMax;
+using ApplQueueMax = Field<int, 812>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 813> ApplQueueDepth;
+using ApplQueueDepth = Field<int, 813>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 814> ApplQueueResolution;
+using ApplQueueResolution = Field<int, 814>;
 const int ApplQueueResolution_NO_ACTION_TAKEN(0);
 const int ApplQueueResolution_QUEUE_FLUSHED(1);
 const int ApplQueueResolution_OVERLAY_LAST(2);
 const int ApplQueueResolution_END_SESSION(3);
 const size_t ApplQueueResolution_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 815> ApplQueueAction;
+using ApplQueueAction = Field<int, 815>;
 const int ApplQueueAction_NO_ACTION_TAKEN(0);
 const int ApplQueueAction_QUEUE_FLUSHED(1);
 const int ApplQueueAction_OVERLAY_LAST(2);
 const int ApplQueueAction_END_SESSION(3);
 const size_t ApplQueueAction_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 816> NoAltMDSource;
+using NoAltMDSource = Field<NumInGroup, 816>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 817> AltMDSourceID;
+using AltMDSourceID = Field<f8String, 817>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 818> SecondaryTradeReportID;
+using SecondaryTradeReportID = Field<f8String, 818>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 819> AvgPxIndicator;
+using AvgPxIndicator = Field<int, 819>;
 const int AvgPxIndicator_NO_AVERAGE_PRICING(0);
 const int AvgPxIndicator_TRADE_IS_PART_OF_AN_AVERAGE_PRICE_GROUP_IDENTIFIED_BY_THE_TRADELINKID(1);
 const int AvgPxIndicator_LAST_TRADE_IS_THE_AVERAGE_PRICE_GROUP_IDENTIFIED_BY_THE_TRADELINKID(2);
 const size_t AvgPxIndicator_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 820> TradeLinkID;
+using TradeLinkID = Field<f8String, 820>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 821> OrderInputDevice;
+using OrderInputDevice = Field<f8String, 821>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 822> UnderlyingTradingSessionID;
+using UnderlyingTradingSessionID = Field<f8String, 822>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 823> UnderlyingTradingSessionSubID;
+using UnderlyingTradingSessionSubID = Field<f8String, 823>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 824> TradeLegRefID;
+using TradeLegRefID = Field<f8String, 824>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 825> ExchangeRule;
+using ExchangeRule = Field<f8String, 825>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 826> TradeAllocIndicator;
+using TradeAllocIndicator = Field<int, 826>;
 const int TradeAllocIndicator_ALLOCATION_NOT_REQUIRED(0);
 const int TradeAllocIndicator_ALLOCATION_REQUIRED(1);
 const int TradeAllocIndicator_USE_ALLOCATION_PROVIDED_WITH_THE_TRADE(2);
@@ -3834,13 +3834,13 @@ const int TradeAllocIndicator_ALLOCATION_FROM_EXECUTOR(4);
 const int TradeAllocIndicator_ALLOCATION_TO_CLAIM_ACCOUNT(5);
 const size_t TradeAllocIndicator_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 827> ExpirationCycle;
+using ExpirationCycle = Field<int, 827>;
 const int ExpirationCycle_EXPIRE_ON_TRADING_SESSION_CLOSE(0);
 const int ExpirationCycle_EXPIRE_ON_TRADING_SESSION_OPEN(1);
 const int ExpirationCycle_TRADING_ELIGIBILITY_EXPIRATION_SPECIFIED_IN_THE_DATE_AND_TIME_FIELDS_EVENTDATE(2);
 const size_t ExpirationCycle_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 828> TrdType;
+using TrdType = Field<int, 828>;
 const int TrdType_REGULAR_TRADE(0);
 const int TrdType_BLOCK_TRADE_1(1);
 const int TrdType_EFP(2);
@@ -3898,7 +3898,7 @@ const int TrdType_OTC(54);
 const int TrdType_EXCHANGE_BASIS_FACILITY(55);
 const size_t TrdType_realm_els(55);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 829> TrdSubType;
+using TrdSubType = Field<int, 829>;
 const int TrdSubType_CMTA(0);
 const int TrdSubType_INTERNAL_TRANSFER_OR_ADJUSTMENT(1);
 const int TrdSubType_EXTERNAL_TRANSFER_OR_TRANSFER_OF_ACCOUNT(2);
@@ -3939,103 +3939,103 @@ const int TrdSubType_INTERIM_PROTECTED_TRADE(38);
 const int TrdSubType_LARGE_IN_SCALE(39);
 const size_t TrdSubType_realm_els(38);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 830> TransferReason;
+using TransferReason = Field<f8String, 830>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 832> TotNumAssignmentReports;
+using TotNumAssignmentReports = Field<int, 832>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 833> AsgnRptID;
+using AsgnRptID = Field<f8String, 833>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 834> ThresholdAmount;
+using ThresholdAmount = Field<PriceOffset, 834>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 835> PegMoveType;
+using PegMoveType = Field<int, 835>;
 const int PegMoveType_FLOATING(0);
 const int PegMoveType_FIXED(1);
 const size_t PegMoveType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 836> PegOffsetType;
+using PegOffsetType = Field<int, 836>;
 const int PegOffsetType_PRICE(0);
 const int PegOffsetType_BASIS_POINTS(1);
 const int PegOffsetType_TICKS(2);
 const int PegOffsetType_PRICE_TIER(3);
 const size_t PegOffsetType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 837> PegLimitType;
+using PegLimitType = Field<int, 837>;
 const int PegLimitType_OR_BETTER(0);
 const int PegLimitType_STRICT(1);
 const int PegLimitType_OR_WORSE(2);
 const size_t PegLimitType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 838> PegRoundDirection;
+using PegRoundDirection = Field<int, 838>;
 const int PegRoundDirection_MORE_AGGRESSIVE(1);
 const int PegRoundDirection_MORE_PASSIVE(2);
 const size_t PegRoundDirection_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 839> PeggedPrice;
+using PeggedPrice = Field<price, 839>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 840> PegScope;
+using PegScope = Field<int, 840>;
 const int PegScope_LOCAL(1);
 const int PegScope_NATIONAL(2);
 const int PegScope_GLOBAL(3);
 const int PegScope_NATIONAL_EXCLUDING_LOCAL(4);
 const size_t PegScope_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 841> DiscretionMoveType;
+using DiscretionMoveType = Field<int, 841>;
 const int DiscretionMoveType_FLOATING(0);
 const int DiscretionMoveType_FIXED(1);
 const size_t DiscretionMoveType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 842> DiscretionOffsetType;
+using DiscretionOffsetType = Field<int, 842>;
 const int DiscretionOffsetType_PRICE(0);
 const int DiscretionOffsetType_BASIS_POINTS(1);
 const int DiscretionOffsetType_TICKS(2);
 const int DiscretionOffsetType_PRICE_TIER(3);
 const size_t DiscretionOffsetType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 843> DiscretionLimitType;
+using DiscretionLimitType = Field<int, 843>;
 const int DiscretionLimitType_OR_BETTER(0);
 const int DiscretionLimitType_STRICT(1);
 const int DiscretionLimitType_OR_WORSE(2);
 const size_t DiscretionLimitType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 844> DiscretionRoundDirection;
+using DiscretionRoundDirection = Field<int, 844>;
 const int DiscretionRoundDirection_MORE_AGGRESSIVE(1);
 const int DiscretionRoundDirection_MORE_PASSIVE(2);
 const size_t DiscretionRoundDirection_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 845> DiscretionPrice;
+using DiscretionPrice = Field<price, 845>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 846> DiscretionScope;
+using DiscretionScope = Field<int, 846>;
 const int DiscretionScope_LOCAL(1);
 const int DiscretionScope_NATIONAL(2);
 const int DiscretionScope_GLOBAL(3);
 const int DiscretionScope_NATIONAL_EXCLUDING_LOCAL(4);
 const size_t DiscretionScope_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 847> TargetStrategy;
+using TargetStrategy = Field<int, 847>;
 const int TargetStrategy_VWAP(1);
 const int TargetStrategy_PARTICIPATE(2);
 const int TargetStrategy_MININIZE_MARKET_IMPACT(3);
 const size_t TargetStrategy_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 848> TargetStrategyParameters;
+using TargetStrategyParameters = Field<f8String, 848>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 849> ParticipationRate;
+using ParticipationRate = Field<Percentage, 849>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 850> TargetStrategyPerformance;
+using TargetStrategyPerformance = Field<double, 850>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 851> LastLiquidityInd;
+using LastLiquidityInd = Field<int, 851>;
 const int LastLiquidityInd_ADDED_LIQUIDITY(1);
 const int LastLiquidityInd_REMOVED_LIQUIDITY(2);
 const int LastLiquidityInd_LIQUIDITY_ROUTED_OUT(3);
 const int LastLiquidityInd_AUCTION(4);
 const size_t LastLiquidityInd_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 852> PublishTrdIndicator;
+using PublishTrdIndicator = Field<Boolean, 852>;
 const char PublishTrdIndicator_NO('N');
 const char PublishTrdIndicator_YES('Y');
 const size_t PublishTrdIndicator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 853> ShortSaleReason;
+using ShortSaleReason = Field<int, 853>;
 const int ShortSaleReason_DEALER_SOLD_SHORT(0);
 const int ShortSaleReason_DEALER_SOLD_SHORT_EXEMPT(1);
 const int ShortSaleReason_SELLING_CUSTOMER_SOLD_SHORT(2);
@@ -4044,15 +4044,15 @@ const int ShortSaleReason_QUALIFIED_SERVICE_REPRESENTATIVE(4);
 const int ShortSaleReason_QSR_OR_AGU_CONTRA_SIDE_SOLD_SHORT_EXEMPT(5);
 const size_t ShortSaleReason_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 854> QtyType;
+using QtyType = Field<int, 854>;
 const int QtyType_UNITS(0);
 const int QtyType_CONTRACTS(1);
 const int QtyType_UNITS_OF_MEASURE_PER_TIME_UNIT(2);
 const size_t QtyType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 855> SecondaryTrdType;
+using SecondaryTrdType = Field<int, 855>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 856> TradeReportType;
+using TradeReportType = Field<int, 856>;
 const int TradeReportType_SUBMIT(0);
 const int TradeReportType_ALLEGED_1(1);
 const int TradeReportType_ACCEPT(2);
@@ -4071,26 +4071,26 @@ const int TradeReportType_ALLEGED_TRADE_REPORT_CANCEL(14);
 const int TradeReportType_ALLEGED_15(15);
 const size_t TradeReportType_realm_els(16);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 857> AllocNoOrdersType;
+using AllocNoOrdersType = Field<int, 857>;
 const int AllocNoOrdersType_NOT_SPECIFIED(0);
 const int AllocNoOrdersType_EXPLICIT_LIST_PROVIDED(1);
 const size_t AllocNoOrdersType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 858> SharedCommission;
+using SharedCommission = Field<Amt, 858>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 859> ConfirmReqID;
+using ConfirmReqID = Field<f8String, 859>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 860> AvgParPx;
+using AvgParPx = Field<price, 860>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 861> ReportedPx;
+using ReportedPx = Field<price, 861>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 862> NoCapacities;
+using NoCapacities = Field<NumInGroup, 862>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 863> OrderCapacityQty;
+using OrderCapacityQty = Field<Qty, 863>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 864> NoEvents;
+using NoEvents = Field<NumInGroup, 864>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 865> EventType;
+using EventType = Field<int, 865>;
 const int EventType_PUT(1);
 const int EventType_CALL(2);
 const int EventType_TENDER(3);
@@ -4113,17 +4113,17 @@ const int EventType_POSITION_REMOVAL_DATE(19);
 const int EventType_OTHER(99);
 const size_t EventType_realm_els(20);
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 866> EventDate;
+using EventDate = Field<LocalMktDate, 866>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 867> EventPx;
+using EventPx = Field<price, 867>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 868> EventText;
+using EventText = Field<f8String, 868>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 869> PctAtRisk;
+using PctAtRisk = Field<Percentage, 869>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 870> NoInstrAttrib;
+using NoInstrAttrib = Field<NumInGroup, 870>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 871> InstrAttribType;
+using InstrAttribType = Field<int, 871>;
 const int InstrAttribType_FLAT(1);
 const int InstrAttribType_ZERO_COUPON(2);
 const int InstrAttribType_INTEREST_BEARING(3);
@@ -4156,64 +4156,64 @@ const int InstrAttribType_TRADEABLE_INDICATOR(29);
 const int InstrAttribType_TEXT_SUPPLY_THE_TEXT_OF_THE_ATTRIBUTE_OR_DISCLAIMER_IN_THE_INSTRATTRIBVALUE(99);
 const size_t InstrAttribType_realm_els(30);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 872> InstrAttribValue;
+using InstrAttribValue = Field<f8String, 872>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 873> DatedDate;
+using DatedDate = Field<LocalMktDate, 873>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 874> InterestAccrualDate;
+using InterestAccrualDate = Field<LocalMktDate, 874>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 875> CPProgram;
+using CPProgram = Field<int, 875>;
 const int CPProgram_3(1);
 const int CPProgram_4(2);
 const int CPProgram_OTHER(99);
 const size_t CPProgram_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 876> CPRegType;
+using CPRegType = Field<f8String, 876>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 877> UnderlyingCPProgram;
+using UnderlyingCPProgram = Field<f8String, 877>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 878> UnderlyingCPRegType;
+using UnderlyingCPRegType = Field<f8String, 878>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 879> UnderlyingQty;
+using UnderlyingQty = Field<Qty, 879>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 880> TrdMatchID;
+using TrdMatchID = Field<f8String, 880>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 881> SecondaryTradeReportRefID;
+using SecondaryTradeReportRefID = Field<f8String, 881>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 882> UnderlyingDirtyPrice;
+using UnderlyingDirtyPrice = Field<price, 882>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 883> UnderlyingEndPrice;
+using UnderlyingEndPrice = Field<price, 883>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 884> UnderlyingStartValue;
+using UnderlyingStartValue = Field<Amt, 884>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 885> UnderlyingCurrentValue;
+using UnderlyingCurrentValue = Field<Amt, 885>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 886> UnderlyingEndValue;
+using UnderlyingEndValue = Field<Amt, 886>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 887> NoUnderlyingStips;
+using NoUnderlyingStips = Field<NumInGroup, 887>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 888> UnderlyingStipType;
+using UnderlyingStipType = Field<f8String, 888>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 889> UnderlyingStipValue;
+using UnderlyingStipValue = Field<f8String, 889>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 890> MaturityNetMoney;
+using MaturityNetMoney = Field<Amt, 890>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 891> MiscFeeBasis;
+using MiscFeeBasis = Field<int, 891>;
 const int MiscFeeBasis_ABSOLUTE(0);
 const int MiscFeeBasis_PER_UNIT(1);
 const int MiscFeeBasis_PERCENTAGE(2);
 const size_t MiscFeeBasis_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 892> TotNoAllocs;
+using TotNoAllocs = Field<int, 892>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 893> LastFragment;
+using LastFragment = Field<Boolean, 893>;
 const char LastFragment_NO('N');
 const char LastFragment_YES('Y');
 const size_t LastFragment_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 894> CollReqID;
+using CollReqID = Field<f8String, 894>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 895> CollAsgnReason;
+using CollAsgnReason = Field<int, 895>;
 const int CollAsgnReason_INITIAL(0);
 const int CollAsgnReason_SCHEDULED(1);
 const int CollAsgnReason_TIME_WARNING(2);
@@ -4224,7 +4224,7 @@ const int CollAsgnReason_EVENT_OF_DEFAULT(6);
 const int CollAsgnReason_ADVERSE_TAX_EVENT(7);
 const size_t CollAsgnReason_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 896> CollInquiryQualifier;
+using CollInquiryQualifier = Field<int, 896>;
 const int CollInquiryQualifier_TRADE_DATE(0);
 const int CollInquiryQualifier_GC_INSTRUMENT(1);
 const int CollInquiryQualifier_COLLATERAL_INSTRUMENT(2);
@@ -4235,19 +4235,19 @@ const int CollInquiryQualifier_FULLY_ASSIGNED(6);
 const int CollInquiryQualifier_OUTSTANDING_TRADES(7);
 const size_t CollInquiryQualifier_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 897> NoTrades;
+using NoTrades = Field<NumInGroup, 897>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 898> MarginRatio;
+using MarginRatio = Field<Percentage, 898>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 899> MarginExcess;
+using MarginExcess = Field<Amt, 899>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 900> TotalNetValue;
+using TotalNetValue = Field<Amt, 900>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 901> CashOutstanding;
+using CashOutstanding = Field<Amt, 901>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 902> CollAsgnID;
+using CollAsgnID = Field<f8String, 902>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 903> CollAsgnTransType;
+using CollAsgnTransType = Field<int, 903>;
 const int CollAsgnTransType_NEW(0);
 const int CollAsgnTransType_REPLACE(1);
 const int CollAsgnTransType_CANCEL(2);
@@ -4255,16 +4255,16 @@ const int CollAsgnTransType_RELEASE(3);
 const int CollAsgnTransType_REVERSE(4);
 const size_t CollAsgnTransType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 904> CollRespID;
+using CollRespID = Field<f8String, 904>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 905> CollAsgnRespType;
+using CollAsgnRespType = Field<int, 905>;
 const int CollAsgnRespType_RECEIVED(0);
 const int CollAsgnRespType_ACCEPTED(1);
 const int CollAsgnRespType_DECLINED(2);
 const int CollAsgnRespType_REJECTED(3);
 const size_t CollAsgnRespType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 906> CollAsgnRejectReason;
+using CollAsgnRejectReason = Field<int, 906>;
 const int CollAsgnRejectReason_UNKNOWN_DEAL(0);
 const int CollAsgnRejectReason_UNKNOWN_OR_INVALID_INSTRUMENT(1);
 const int CollAsgnRejectReason_UNAUTHORIZED_TRANSACTION(2);
@@ -4274,13 +4274,13 @@ const int CollAsgnRejectReason_EXCESSIVE_SUBSTITUTION(5);
 const int CollAsgnRejectReason_OTHER(99);
 const size_t CollAsgnRejectReason_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 907> CollAsgnRefID;
+using CollAsgnRefID = Field<f8String, 907>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 908> CollRptID;
+using CollRptID = Field<f8String, 908>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 909> CollInquiryID;
+using CollInquiryID = Field<f8String, 909>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 910> CollStatus;
+using CollStatus = Field<int, 910>;
 const int CollStatus_UNASSIGNED(0);
 const int CollStatus_PARTIALLY_ASSIGNED(1);
 const int CollStatus_ASSIGNMENT_PROPOSED(2);
@@ -4288,50 +4288,50 @@ const int CollStatus_ASSIGNED(3);
 const int CollStatus_CHALLENGED(4);
 const size_t CollStatus_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 911> TotNumReports;
+using TotNumReports = Field<int, 911>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 912> LastRptRequested;
+using LastRptRequested = Field<Boolean, 912>;
 const char LastRptRequested_NO('N');
 const char LastRptRequested_YES('Y');
 const size_t LastRptRequested_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 913> AgreementDesc;
+using AgreementDesc = Field<f8String, 913>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 914> AgreementID;
+using AgreementID = Field<f8String, 914>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 915> AgreementDate;
+using AgreementDate = Field<LocalMktDate, 915>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 916> StartDate;
+using StartDate = Field<LocalMktDate, 916>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 917> EndDate;
+using EndDate = Field<LocalMktDate, 917>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 918> AgreementCurrency;
+using AgreementCurrency = Field<currency, 918>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 919> DeliveryType;
+using DeliveryType = Field<int, 919>;
 const int DeliveryType_VERSUS_PAYMENT_DELIVER(0);
 const int DeliveryType_FREE_DELIVER(1);
 const int DeliveryType_TRI_PARTY(2);
 const int DeliveryType_HOLD_IN_CUSTODY(3);
 const size_t DeliveryType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 920> EndAccruedInterestAmt;
+using EndAccruedInterestAmt = Field<Amt, 920>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 921> StartCash;
+using StartCash = Field<Amt, 921>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 922> EndCash;
+using EndCash = Field<Amt, 922>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 923> UserRequestID;
+using UserRequestID = Field<f8String, 923>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 924> UserRequestType;
+using UserRequestType = Field<int, 924>;
 const int UserRequestType_LOG_ON_USER(1);
 const int UserRequestType_LOG_OFF_USER(2);
 const int UserRequestType_CHANGE_PASSWORD_FOR_USER(3);
 const int UserRequestType_REQUEST_INDIVIDUAL_USER_STATUS(4);
 const size_t UserRequestType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 925> NewPassword;
+using NewPassword = Field<f8String, 925>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 926> UserStatus;
+using UserStatus = Field<int, 926>;
 const int UserStatus_LOGGED_IN(1);
 const int UserStatus_NOT_LOGGED_IN(2);
 const int UserStatus_USER_NOT_RECOGNISED(3);
@@ -4342,68 +4342,68 @@ const int UserStatus_FORCED_USER_LOGOUT_BY_EXCHANGE(7);
 const int UserStatus_SESSION_SHUTDOWN_WARNING(8);
 const size_t UserStatus_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 927> UserStatusText;
+using UserStatusText = Field<f8String, 927>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 928> StatusValue;
+using StatusValue = Field<int, 928>;
 const int StatusValue_CONNECTED(1);
 const int StatusValue_NOT_CONNECTED_2(2);
 const int StatusValue_NOT_CONNECTED_3(3);
 const int StatusValue_IN_PROCESS(4);
 const size_t StatusValue_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 929> StatusText;
+using StatusText = Field<f8String, 929>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 930> RefCompID;
+using RefCompID = Field<f8String, 930>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 931> RefSubID;
+using RefSubID = Field<f8String, 931>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 932> NetworkResponseID;
+using NetworkResponseID = Field<f8String, 932>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 933> NetworkRequestID;
+using NetworkRequestID = Field<f8String, 933>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 934> LastNetworkResponseID;
+using LastNetworkResponseID = Field<f8String, 934>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 935> NetworkRequestType;
+using NetworkRequestType = Field<int, 935>;
 const int NetworkRequestType_SNAPSHOT(1);
 const int NetworkRequestType_SUBSCRIBE(2);
 const int NetworkRequestType_STOP_SUBSCRIBING(4);
 const int NetworkRequestType_LEVEL_OF_DETAIL_THEN_NOCOMPIDS_BECOMES_REQUIRED(8);
 const size_t NetworkRequestType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 936> NoCompIDs;
+using NoCompIDs = Field<NumInGroup, 936>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 937> NetworkStatusResponseType;
+using NetworkStatusResponseType = Field<int, 937>;
 const int NetworkStatusResponseType_FULL(1);
 const int NetworkStatusResponseType_INCREMENTAL_UPDATE(2);
 const size_t NetworkStatusResponseType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 938> NoCollInquiryQualifier;
+using NoCollInquiryQualifier = Field<NumInGroup, 938>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 939> TrdRptStatus;
+using TrdRptStatus = Field<int, 939>;
 const int TrdRptStatus_ACCEPTED(0);
 const int TrdRptStatus_REJECTED(1);
 const int TrdRptStatus_ACCEPTED_WITH_ERRORS(3);
 const size_t TrdRptStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 940> AffirmStatus;
+using AffirmStatus = Field<int, 940>;
 const int AffirmStatus_RECEIVED(1);
 const int AffirmStatus_CONFIRM_REJECTED_IE_NOT_AFFIRMED(2);
 const int AffirmStatus_AFFIRMED(3);
 const size_t AffirmStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 941> UnderlyingStrikeCurrency;
+using UnderlyingStrikeCurrency = Field<currency, 941>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 942> LegStrikeCurrency;
+using LegStrikeCurrency = Field<currency, 942>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 943> TimeBracket;
+using TimeBracket = Field<f8String, 943>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 944> CollAction;
+using CollAction = Field<int, 944>;
 const int CollAction_RETAIN(0);
 const int CollAction_ADD(1);
 const int CollAction_REMOVE(2);
 const size_t CollAction_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 945> CollInquiryStatus;
+using CollInquiryStatus = Field<int, 945>;
 const int CollInquiryStatus_ACCEPTED(0);
 const int CollInquiryStatus_ACCEPTED_WITH_WARNINGS(1);
 const int CollInquiryStatus_COMPLETED(2);
@@ -4411,7 +4411,7 @@ const int CollInquiryStatus_COMPLETED_WITH_WARNINGS(3);
 const int CollInquiryStatus_REJECTED(4);
 const size_t CollInquiryStatus_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 946> CollInquiryResult;
+using CollInquiryResult = Field<int, 946>;
 const int CollInquiryResult_SUCCESSFUL(0);
 const int CollInquiryResult_INVALID_OR_UNKNOWN_INSTRUMENT(1);
 const int CollInquiryResult_INVALID_OR_UNKNOWN_COLLATERAL_TYPE(2);
@@ -4425,31 +4425,31 @@ const int CollInquiryResult_UNAUTHORIZED_FOR_COLLATERAL_INQUIRY(9);
 const int CollInquiryResult_OTHER(99);
 const size_t CollInquiryResult_realm_els(11);
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 947> StrikeCurrency;
+using StrikeCurrency = Field<currency, 947>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 948> NoNested3PartyIDs;
+using NoNested3PartyIDs = Field<NumInGroup, 948>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 949> Nested3PartyID;
+using Nested3PartyID = Field<f8String, 949>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 950> Nested3PartyIDSource;
+using Nested3PartyIDSource = Field<char, 950>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 951> Nested3PartyRole;
+using Nested3PartyRole = Field<int, 951>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 952> NoNested3PartySubIDs;
+using NoNested3PartySubIDs = Field<NumInGroup, 952>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 953> Nested3PartySubID;
+using Nested3PartySubID = Field<f8String, 953>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 954> Nested3PartySubIDType;
+using Nested3PartySubIDType = Field<int, 954>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 955> LegContractSettlMonth;
+using LegContractSettlMonth = Field<MonthYear, 955>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 956> LegInterestAccrualDate;
+using LegInterestAccrualDate = Field<LocalMktDate, 956>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 957> NoStrategyParameters;
+using NoStrategyParameters = Field<NumInGroup, 957>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 958> StrategyParameterName;
+using StrategyParameterName = Field<f8String, 958>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 959> StrategyParameterType;
+using StrategyParameterType = Field<int, 959>;
 const int StrategyParameterType_INT(1);
 const int StrategyParameterType_LENGTH(2);
 const int StrategyParameterType_NUMINGROUP(3);
@@ -4481,65 +4481,65 @@ const int StrategyParameterType_TZTIMESTAMP(28);
 const int StrategyParameterType_TENOR(29);
 const size_t StrategyParameterType_realm_els(29);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 960> StrategyParameterValue;
+using StrategyParameterValue = Field<f8String, 960>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 961> HostCrossID;
+using HostCrossID = Field<f8String, 961>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 962> SideTimeInForce;
+using SideTimeInForce = Field<UTCTimestamp, 962>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 963> MDReportID;
+using MDReportID = Field<int, 963>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 964> SecurityReportID;
+using SecurityReportID = Field<int, 964>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 965> SecurityStatusID;
+using SecurityStatusID = Field<f8String, 965>;
 const f8String SecurityStatusID_ACTIVE("1");
 const f8String SecurityStatusID_INACTIVE("2");
 const size_t SecurityStatusID_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 966> SettleOnOpenFlag;
+using SettleOnOpenFlag = Field<f8String, 966>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 967> StrikeMultiplier;
+using StrikeMultiplier = Field<double, 967>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 968> StrikeValue;
+using StrikeValue = Field<double, 968>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 969> MinPriceIncrement;
+using MinPriceIncrement = Field<double, 969>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 970> PositionLimit;
+using PositionLimit = Field<int, 970>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 971> NTPositionLimit;
+using NTPositionLimit = Field<int, 971>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 972> UnderlyingAllocationPercent;
+using UnderlyingAllocationPercent = Field<Percentage, 972>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 973> UnderlyingCashAmount;
+using UnderlyingCashAmount = Field<Amt, 973>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 974> UnderlyingCashType;
+using UnderlyingCashType = Field<f8String, 974>;
 const f8String UnderlyingCashType_DIFF("DIFF");
 const f8String UnderlyingCashType_FIXED("FIXED");
 const size_t UnderlyingCashType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 975> UnderlyingSettlementType;
+using UnderlyingSettlementType = Field<int, 975>;
 const int UnderlyingSettlementType_T_PLUS_1(2);
 const int UnderlyingSettlementType_T_PLUS_3(4);
 const int UnderlyingSettlementType_T_PLUS_4(5);
 const size_t UnderlyingSettlementType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 976> QuantityDate;
+using QuantityDate = Field<LocalMktDate, 976>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 977> ContIntRptID;
+using ContIntRptID = Field<f8String, 977>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 978> LateIndicator;
+using LateIndicator = Field<Boolean, 978>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 979> InputSource;
+using InputSource = Field<f8String, 979>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 980> SecurityUpdateAction;
+using SecurityUpdateAction = Field<char, 980>;
 const char SecurityUpdateAction_ADD('A');
 const char SecurityUpdateAction_DELETE('D');
 const char SecurityUpdateAction_MODIFY('M');
 const size_t SecurityUpdateAction_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 981> NoExpiration;
+using NoExpiration = Field<NumInGroup, 981>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 982> ExpirationQtyType;
+using ExpirationQtyType = Field<int, 982>;
 const int ExpirationQtyType_AUTO_EXERCISE(1);
 const int ExpirationQtyType_NON_AUTO_EXERCISE(2);
 const int ExpirationQtyType_FINAL_WILL_BE_EXERCISED(3);
@@ -4547,34 +4547,34 @@ const int ExpirationQtyType_CONTRARY_INTENTION(4);
 const int ExpirationQtyType_DIFFERENCE(5);
 const size_t ExpirationQtyType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 983> ExpQty;
+using ExpQty = Field<Qty, 983>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 984> NoUnderlyingAmounts;
+using NoUnderlyingAmounts = Field<NumInGroup, 984>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 985> UnderlyingPayAmount;
+using UnderlyingPayAmount = Field<Amt, 985>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 986> UnderlyingCollectAmount;
+using UnderlyingCollectAmount = Field<Amt, 986>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 987> UnderlyingSettlementDate;
+using UnderlyingSettlementDate = Field<LocalMktDate, 987>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 988> UnderlyingSettlementStatus;
+using UnderlyingSettlementStatus = Field<f8String, 988>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 989> SecondaryIndividualAllocID;
+using SecondaryIndividualAllocID = Field<f8String, 989>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 990> LegReportID;
+using LegReportID = Field<f8String, 990>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 991> RndPx;
+using RndPx = Field<price, 991>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 992> IndividualAllocType;
+using IndividualAllocType = Field<int, 992>;
 const int IndividualAllocType_SUB_ALLOCATE(1);
 const int IndividualAllocType_THIRD_PARTY_ALLOCATION(2);
 const size_t IndividualAllocType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 993> AllocCustomerCapacity;
+using AllocCustomerCapacity = Field<f8String, 993>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 994> TierCode;
+using TierCode = Field<f8String, 994>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 996> UnitOfMeasure;
+using UnitOfMeasure = Field<f8String, 996>;
 const f8String UnitOfMeasure_ALLOWANCES("Alw");
 const f8String UnitOfMeasure_BARRELS("Bbl");
 const f8String UnitOfMeasure_BILLION_CUBIC_FEET("Bcf");
@@ -4590,7 +4590,7 @@ const f8String UnitOfMeasure_METRIC_TONS("t");
 const f8String UnitOfMeasure_TONS("tn");
 const size_t UnitOfMeasure_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 997> TimeUnit;
+using TimeUnit = Field<f8String, 997>;
 const f8String TimeUnit_DAY("D");
 const f8String TimeUnit_HOUR("H");
 const f8String TimeUnit_MINUTE("Min");
@@ -4600,84 +4600,84 @@ const f8String TimeUnit_WEEK("Wk");
 const f8String TimeUnit_YEAR("Yr");
 const size_t TimeUnit_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 998> UnderlyingUnitOfMeasure;
+using UnderlyingUnitOfMeasure = Field<f8String, 998>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 999> LegUnitOfMeasure;
+using LegUnitOfMeasure = Field<f8String, 999>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1000> UnderlyingTimeUnit;
+using UnderlyingTimeUnit = Field<f8String, 1000>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1001> LegTimeUnit;
+using LegTimeUnit = Field<f8String, 1001>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1002> AllocMethod;
+using AllocMethod = Field<int, 1002>;
 const int AllocMethod_AUTOMATIC(1);
 const int AllocMethod_GUARANTOR(2);
 const int AllocMethod_MANUAL(3);
 const size_t AllocMethod_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1003> TradeID;
+using TradeID = Field<f8String, 1003>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1005> SideTradeReportID;
+using SideTradeReportID = Field<f8String, 1005>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1006> SideFillStationCd;
+using SideFillStationCd = Field<f8String, 1006>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1007> SideReasonCd;
+using SideReasonCd = Field<f8String, 1007>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1008> SideTrdSubTyp;
+using SideTrdSubTyp = Field<int, 1008>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1009> SideLastQty;
+using SideLastQty = Field<int, 1009>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1011> MessageEventSource;
+using MessageEventSource = Field<f8String, 1011>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 1012> SideTrdRegTimestamp;
+using SideTrdRegTimestamp = Field<UTCTimestamp, 1012>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1013> SideTrdRegTimestampType;
+using SideTrdRegTimestampType = Field<int, 1013>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1014> SideTrdRegTimestampSrc;
+using SideTrdRegTimestampSrc = Field<f8String, 1014>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1015> AsOfIndicator;
+using AsOfIndicator = Field<char, 1015>;
 const char AsOfIndicator_FALSE('0');
 const char AsOfIndicator_TRUE('1');
 const size_t AsOfIndicator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1016> NoSideTrdRegTS;
+using NoSideTrdRegTS = Field<NumInGroup, 1016>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1017> LegOptionRatio;
+using LegOptionRatio = Field<double, 1017>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1018> NoInstrumentParties;
+using NoInstrumentParties = Field<NumInGroup, 1018>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1019> InstrumentPartyID;
+using InstrumentPartyID = Field<f8String, 1019>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1020> TradeVolume;
+using TradeVolume = Field<Qty, 1020>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1021> MDBookType;
+using MDBookType = Field<int, 1021>;
 const int MDBookType_TOP_OF_BOOK(1);
 const int MDBookType_PRICE_DEPTH(2);
 const int MDBookType_ORDER_DEPTH(3);
 const size_t MDBookType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1022> MDFeedType;
+using MDFeedType = Field<f8String, 1022>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1023> MDPriceLevel;
+using MDPriceLevel = Field<int, 1023>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1024> MDOriginType;
+using MDOriginType = Field<int, 1024>;
 const int MDOriginType_BOOK(0);
 const int MDOriginType_OFF_BOOK(1);
 const int MDOriginType_CROSS(2);
 const size_t MDOriginType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1025> FirstPx;
+using FirstPx = Field<price, 1025>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1026> MDEntrySpotRate;
+using MDEntrySpotRate = Field<double, 1026>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1027> MDEntryForwardPoints;
+using MDEntryForwardPoints = Field<PriceOffset, 1027>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1028> ManualOrderIndicator;
+using ManualOrderIndicator = Field<Boolean, 1028>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1029> CustDirectedOrder;
+using CustDirectedOrder = Field<Boolean, 1029>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1030> ReceivedDeptID;
+using ReceivedDeptID = Field<f8String, 1030>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleStringValue, 1031> CustOrderHandlingInst;
+using CustOrderHandlingInst = Field<MultipleStringValue, 1031>;
 const f8String CustOrderHandlingInst_ADD_ON_ORDER("ADD");
 const f8String CustOrderHandlingInst_ALL_OR_NONE("AON");
 const f8String CustOrderHandlingInst_CASH_NOT_HELD("CNH");
@@ -4704,11 +4704,11 @@ const f8String CustOrderHandlingInst_TRAILING_STOP("TS");
 const f8String CustOrderHandlingInst_WORK("WRK");
 const size_t CustOrderHandlingInst_realm_els(24);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1032> OrderHandlingInstSource;
+using OrderHandlingInstSource = Field<int, 1032>;
 const int OrderHandlingInstSource_NASD_OATS(1);
 const size_t OrderHandlingInstSource_realm_els(1);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1033> DeskType;
+using DeskType = Field<f8String, 1033>;
 const f8String DeskType_AGENCY("A");
 const f8String DeskType_ARBITRAGE("AR");
 const f8String DeskType_DERIVATIVES("D");
@@ -4722,11 +4722,11 @@ const f8String DeskType_SALES("S");
 const f8String DeskType_TRADING("T");
 const size_t DeskType_realm_els(11);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1034> DeskTypeSource;
+using DeskTypeSource = Field<int, 1034>;
 const int DeskTypeSource_NASD_OATS(1);
 const size_t DeskTypeSource_realm_els(1);
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleStringValue, 1035> DeskOrderHandlingInst;
+using DeskOrderHandlingInst = Field<MultipleStringValue, 1035>;
 const f8String DeskOrderHandlingInst_ADD_ON_ORDER("ADD");
 const f8String DeskOrderHandlingInst_ALL_OR_NONE("AON");
 const f8String DeskOrderHandlingInst_CASH_NOT_HELD("CNH");
@@ -4753,97 +4753,97 @@ const f8String DeskOrderHandlingInst_TRAILING_STOP("TS");
 const f8String DeskOrderHandlingInst_WORK("WRK");
 const size_t DeskOrderHandlingInst_realm_els(24);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1036> ExecAckStatus;
+using ExecAckStatus = Field<char, 1036>;
 const char ExecAckStatus_RECEIVED_NOT_YET_PROCESSED('0');
 const char ExecAckStatus_ACCEPTED('1');
 const char ExecAckStatus_DONT_KNOW('2');
 const size_t ExecAckStatus_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1037> UnderlyingDeliveryAmount;
+using UnderlyingDeliveryAmount = Field<Amt, 1037>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1038> UnderlyingCapValue;
+using UnderlyingCapValue = Field<Amt, 1038>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1039> UnderlyingSettlMethod;
+using UnderlyingSettlMethod = Field<f8String, 1039>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1040> SecondaryTradeID;
+using SecondaryTradeID = Field<f8String, 1040>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1041> FirmTradeID;
+using FirmTradeID = Field<f8String, 1041>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1042> SecondaryFirmTradeID;
+using SecondaryFirmTradeID = Field<f8String, 1042>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1043> CollApplType;
+using CollApplType = Field<int, 1043>;
 const int CollApplType_SPECIFIC_DEPOSIT(0);
 const int CollApplType_GENERAL(1);
 const size_t CollApplType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1044> UnderlyingAdjustedQuantity;
+using UnderlyingAdjustedQuantity = Field<Qty, 1044>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1045> UnderlyingFXRate;
+using UnderlyingFXRate = Field<double, 1045>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1046> UnderlyingFXRateCalc;
+using UnderlyingFXRateCalc = Field<char, 1046>;
 const char UnderlyingFXRateCalc_DIVIDE('D');
 const char UnderlyingFXRateCalc_MULTIPLY('M');
 const size_t UnderlyingFXRateCalc_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1047> AllocPositionEffect;
+using AllocPositionEffect = Field<char, 1047>;
 const char AllocPositionEffect_CLOSE('C');
 const char AllocPositionEffect_FIFO('F');
 const char AllocPositionEffect_OPEN('O');
 const char AllocPositionEffect_ROLLED('R');
 const size_t AllocPositionEffect_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1048> DealingCapacity;
+using DealingCapacity = Field<char, 1048>;
 const char DealingCapacity_AGENT('A');
 const char DealingCapacity_PRINCIPAL('P');
 const char DealingCapacity_RISKLESS_PRINCIPAL('R');
 const size_t DealingCapacity_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1049> InstrmtAssignmentMethod;
+using InstrmtAssignmentMethod = Field<char, 1049>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1050> InstrumentPartyIDSource;
+using InstrumentPartyIDSource = Field<char, 1050>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1051> InstrumentPartyRole;
+using InstrumentPartyRole = Field<int, 1051>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1052> NoInstrumentPartySubIDs;
+using NoInstrumentPartySubIDs = Field<NumInGroup, 1052>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1053> InstrumentPartySubID;
+using InstrumentPartySubID = Field<f8String, 1053>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1054> InstrumentPartySubIDType;
+using InstrumentPartySubIDType = Field<int, 1054>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1055> PositionCurrency;
+using PositionCurrency = Field<f8String, 1055>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1056> CalculatedCcyLastQty;
+using CalculatedCcyLastQty = Field<Qty, 1056>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1057> AggressorIndicator;
+using AggressorIndicator = Field<Boolean, 1057>;
 const char AggressorIndicator_NO('N');
 const char AggressorIndicator_YES('Y');
 const size_t AggressorIndicator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1058> NoUndlyInstrumentParties;
+using NoUndlyInstrumentParties = Field<NumInGroup, 1058>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1059> UnderlyingInstrumentPartyID;
+using UnderlyingInstrumentPartyID = Field<f8String, 1059>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1060> UnderlyingInstrumentPartyIDSource;
+using UnderlyingInstrumentPartyIDSource = Field<char, 1060>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1061> UnderlyingInstrumentPartyRole;
+using UnderlyingInstrumentPartyRole = Field<int, 1061>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1062> NoUndlyInstrumentPartySubIDs;
+using NoUndlyInstrumentPartySubIDs = Field<NumInGroup, 1062>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1063> UnderlyingInstrumentPartySubID;
+using UnderlyingInstrumentPartySubID = Field<f8String, 1063>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1064> UnderlyingInstrumentPartySubIDType;
+using UnderlyingInstrumentPartySubIDType = Field<int, 1064>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1065> BidSwapPoints;
+using BidSwapPoints = Field<PriceOffset, 1065>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1066> OfferSwapPoints;
+using OfferSwapPoints = Field<PriceOffset, 1066>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1067> LegBidForwardPoints;
+using LegBidForwardPoints = Field<PriceOffset, 1067>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1068> LegOfferForwardPoints;
+using LegOfferForwardPoints = Field<PriceOffset, 1068>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1069> SwapPoints;
+using SwapPoints = Field<PriceOffset, 1069>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1070> MDQuoteType;
+using MDQuoteType = Field<int, 1070>;
 const int MDQuoteType_INDICATIVE(0);
 const int MDQuoteType_TRADEABLE(1);
 const int MDQuoteType_RESTRICTED_TRADEABLE(2);
@@ -4851,21 +4851,21 @@ const int MDQuoteType_COUNTER(3);
 const int MDQuoteType_INDICATIVE_AND_TRADEABLE(4);
 const size_t MDQuoteType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1071> LastSwapPoints;
+using LastSwapPoints = Field<PriceOffset, 1071>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1072> SideGrossTradeAmt;
+using SideGrossTradeAmt = Field<Amt, 1072>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<PriceOffset, 1073> LegLastForwardPoints;
+using LegLastForwardPoints = Field<PriceOffset, 1073>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1074> LegCalculatedCcyLastQty;
+using LegCalculatedCcyLastQty = Field<Qty, 1074>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1075> LegGrossTradeAmt;
+using LegGrossTradeAmt = Field<Amt, 1075>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1079> MaturityTime;
+using MaturityTime = Field<TZTimeOnly, 1079>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1080> RefOrderID;
+using RefOrderID = Field<f8String, 1080>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1081> RefOrderIDSource;
+using RefOrderIDSource = Field<char, 1081>;
 const char RefOrderIDSource_SECONDARYORDERID('0');
 const char RefOrderIDSource_ORDERID('1');
 const char RefOrderIDSource_MDENTRYID('2');
@@ -4873,49 +4873,49 @@ const char RefOrderIDSource_QUOTEENTRYID('3');
 const char RefOrderIDSource_ORIGINAL_ORDER_ID('4');
 const size_t RefOrderIDSource_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1082> SecondaryDisplayQty;
+using SecondaryDisplayQty = Field<Qty, 1082>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1083> DisplayWhen;
+using DisplayWhen = Field<char, 1083>;
 const char DisplayWhen_IMMEDIATE('1');
 const char DisplayWhen_EXHAUST('2');
 const size_t DisplayWhen_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1084> DisplayMethod;
+using DisplayMethod = Field<char, 1084>;
 const char DisplayMethod_INITIAL('1');
 const char DisplayMethod_NEW('2');
 const char DisplayMethod_RANDOM('3');
 const char DisplayMethod_UNDISCLOSED('4');
 const size_t DisplayMethod_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1085> DisplayLowQty;
+using DisplayLowQty = Field<Qty, 1085>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1086> DisplayHighQty;
+using DisplayHighQty = Field<Qty, 1086>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1087> DisplayMinIncr;
+using DisplayMinIncr = Field<Qty, 1087>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1088> RefreshQty;
+using RefreshQty = Field<Qty, 1088>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1089> MatchIncrement;
+using MatchIncrement = Field<Qty, 1089>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1090> MaxPriceLevels;
+using MaxPriceLevels = Field<int, 1090>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1091> PreTradeAnonymity;
+using PreTradeAnonymity = Field<Boolean, 1091>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1092> PriceProtectionScope;
+using PriceProtectionScope = Field<char, 1092>;
 const char PriceProtectionScope_NONE('0');
 const char PriceProtectionScope_LOCAL('1');
 const char PriceProtectionScope_NATIONAL('2');
 const char PriceProtectionScope_GLOBAL('3');
 const size_t PriceProtectionScope_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1093> LotType;
+using LotType = Field<char, 1093>;
 const char LotType_ODD_LOT('1');
 const char LotType_ROUND_LOT('2');
 const char LotType_BLOCK_LOT('3');
 const char LotType_ROUND_LOT_BASED_UPON_UNITOFMEASURE('4');
 const size_t LotType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1094> PegPriceType;
+using PegPriceType = Field<int, 1094>;
 const int PegPriceType_LAST_PEG(1);
 const int PegPriceType_MID_PRICE_PEG(2);
 const int PegPriceType_OPENING_PEG(3);
@@ -4926,40 +4926,40 @@ const int PegPriceType_TRAILING_STOP_PEG(8);
 const int PegPriceType_PEG_TO_LIMIT_PRICE(9);
 const size_t PegPriceType_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1095> PeggedRefPrice;
+using PeggedRefPrice = Field<price, 1095>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1096> PegSecurityIDSource;
+using PegSecurityIDSource = Field<f8String, 1096>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1097> PegSecurityID;
+using PegSecurityID = Field<f8String, 1097>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1098> PegSymbol;
+using PegSymbol = Field<f8String, 1098>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1099> PegSecurityDesc;
+using PegSecurityDesc = Field<f8String, 1099>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1100> TriggerType;
+using TriggerType = Field<char, 1100>;
 const char TriggerType_PARTIAL_EXECUTION('1');
 const char TriggerType_SPECIFIED_TRADING_SESSION('2');
 const char TriggerType_NEXT_AUCTION('3');
 const char TriggerType_PRICE_MOVEMENT('4');
 const size_t TriggerType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1101> TriggerAction;
+using TriggerAction = Field<char, 1101>;
 const char TriggerAction_ACTIVATE('1');
 const char TriggerAction_MODIFY('2');
 const char TriggerAction_CANCEL('3');
 const size_t TriggerAction_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1102> TriggerPrice;
+using TriggerPrice = Field<price, 1102>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1103> TriggerSymbol;
+using TriggerSymbol = Field<f8String, 1103>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1104> TriggerSecurityID;
+using TriggerSecurityID = Field<f8String, 1104>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1105> TriggerSecurityIDSource;
+using TriggerSecurityIDSource = Field<f8String, 1105>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1106> TriggerSecurityDesc;
+using TriggerSecurityDesc = Field<f8String, 1106>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1107> TriggerPriceType;
+using TriggerPriceType = Field<char, 1107>;
 const char TriggerPriceType_BEST_OFFER('1');
 const char TriggerPriceType_LAST_TRADE('2');
 const char TriggerPriceType_BEST_BID('3');
@@ -4968,32 +4968,32 @@ const char TriggerPriceType_BEST_OFFER_OR_LAST_TRADE('5');
 const char TriggerPriceType_BEST_MID('6');
 const size_t TriggerPriceType_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1108> TriggerPriceTypeScope;
+using TriggerPriceTypeScope = Field<char, 1108>;
 const char TriggerPriceTypeScope_NONE('0');
 const char TriggerPriceTypeScope_LOCAL('1');
 const char TriggerPriceTypeScope_NATIONAL('2');
 const char TriggerPriceTypeScope_GLOBAL('3');
 const size_t TriggerPriceTypeScope_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1109> TriggerPriceDirection;
+using TriggerPriceDirection = Field<char, 1109>;
 const char TriggerPriceDirection_TRIGGER_IF_THE_PRICE_OF_THE_SPECIFIED_TYPE_GOES_DOWN_TO_OR_THROUGH_THE_SPECIFIED_TRIGGER_PRICE('D');
 const char TriggerPriceDirection_TRIGGER_IF_THE_PRICE_OF_THE_SPECIFIED_TYPE_GOES_UP_TO_OR_THROUGH_THE_SPECIFIED_TRIGGER_PRICE('U');
 const size_t TriggerPriceDirection_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1110> TriggerNewPrice;
+using TriggerNewPrice = Field<price, 1110>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1111> TriggerOrderType;
+using TriggerOrderType = Field<char, 1111>;
 const char TriggerOrderType_MARKET('1');
 const char TriggerOrderType_LIMIT('2');
 const size_t TriggerOrderType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1112> TriggerNewQty;
+using TriggerNewQty = Field<Qty, 1112>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1113> TriggerTradingSessionID;
+using TriggerTradingSessionID = Field<f8String, 1113>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1114> TriggerTradingSessionSubID;
+using TriggerTradingSessionSubID = Field<f8String, 1114>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1115> OrderCategory;
+using OrderCategory = Field<char, 1115>;
 const char OrderCategory_ORDER('1');
 const char OrderCategory_QUOTE('2');
 const char OrderCategory_PRIVATELY_NEGOTIATED_TRADE('3');
@@ -5005,21 +5005,21 @@ const char OrderCategory_CROSS_ORDER('8');
 const char OrderCategory_STREAMING_PRICE('9');
 const size_t OrderCategory_realm_els(9);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1116> NoRootPartyIDs;
+using NoRootPartyIDs = Field<NumInGroup, 1116>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1117> RootPartyID;
+using RootPartyID = Field<f8String, 1117>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1118> RootPartyIDSource;
+using RootPartyIDSource = Field<char, 1118>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1119> RootPartyRole;
+using RootPartyRole = Field<int, 1119>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1120> NoRootPartySubIDs;
+using NoRootPartySubIDs = Field<NumInGroup, 1120>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1121> RootPartySubID;
+using RootPartySubID = Field<f8String, 1121>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1122> RootPartySubIDType;
+using RootPartySubIDType = Field<int, 1122>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1123> TradeHandlingInstr;
+using TradeHandlingInstr = Field<char, 1123>;
 const char TradeHandlingInstr_TRADE_CONFIRMATION('0');
 const char TradeHandlingInstr_TWO_PARTY_REPORT('1');
 const char TradeHandlingInstr_ONE_PARTY_REPORT_FOR_MATCHING('2');
@@ -5028,15 +5028,15 @@ const char TradeHandlingInstr_AUTOMATED_FLOOR_ORDER_ROUTING('4');
 const char TradeHandlingInstr_TWO_PARTY_REPORT_FOR_CLAIM('5');
 const size_t TradeHandlingInstr_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1124> OrigTradeHandlingInstr;
+using OrigTradeHandlingInstr = Field<char, 1124>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 1125> OrigTradeDate;
+using OrigTradeDate = Field<LocalMktDate, 1125>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1126> OrigTradeID;
+using OrigTradeID = Field<f8String, 1126>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1127> OrigSecondaryTradeID;
+using OrigSecondaryTradeID = Field<f8String, 1127>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1128> ApplVerID;
+using ApplVerID = Field<f8String, 1128>;
 const f8String ApplVerID_FIX27("0");
 const f8String ApplVerID_FIX30("1");
 const f8String ApplVerID_FIX40("2");
@@ -5049,15 +5049,15 @@ const f8String ApplVerID_FIX50SP1("8");
 const f8String ApplVerID_FIX50SP2("9");
 const size_t ApplVerID_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1129> CstmApplVerID;
+using CstmApplVerID = Field<f8String, 1129>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1130> RefApplVerID;
+using RefApplVerID = Field<f8String, 1130>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1131> RefCstmApplVerID;
+using RefCstmApplVerID = Field<f8String, 1131>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimestamp, 1132> TZTransactTime;
+using TZTransactTime = Field<TZTimestamp, 1132>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1133> ExDestinationIDSource;
+using ExDestinationIDSource = Field<char, 1133>;
 const char ExDestinationIDSource_BIC('B');
 const char ExDestinationIDSource_GENERALLY_ACCEPTED_MARKET_PARTICIPANT_IDENTIFIER('C');
 const char ExDestinationIDSource_PROPRIETARY('D');
@@ -5065,13 +5065,13 @@ const char ExDestinationIDSource_ISO_COUNTRY_CODE('E');
 const char ExDestinationIDSource_MIC('G');
 const size_t ExDestinationIDSource_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1134> ReportedPxDiff;
+using ReportedPxDiff = Field<Boolean, 1134>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1135> RptSys;
+using RptSys = Field<f8String, 1135>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1136> AllocClearingFeeIndicator;
+using AllocClearingFeeIndicator = Field<f8String, 1136>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1137> DefaultApplVerID;
+using DefaultApplVerID = Field<f8String, 1137>;
 const f8String DefaultApplVerID_FIX27("0");
 const f8String DefaultApplVerID_FIX30("1");
 const f8String DefaultApplVerID_FIX40("2");
@@ -5084,80 +5084,80 @@ const f8String DefaultApplVerID_FIX50SP1("8");
 const f8String DefaultApplVerID_FIX50SP2("9");
 const size_t DefaultApplVerID_realm_els(10);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1138> DisplayQty;
+using DisplayQty = Field<Qty, 1138>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1139> ExchangeSpecialInstructions;
+using ExchangeSpecialInstructions = Field<f8String, 1139>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1140> MaxTradeVol;
+using MaxTradeVol = Field<Qty, 1140>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1141> NoMDFeedTypes;
+using NoMDFeedTypes = Field<NumInGroup, 1141>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1142> MatchAlgorithm;
+using MatchAlgorithm = Field<f8String, 1142>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1143> MaxPriceVariation;
+using MaxPriceVariation = Field<double, 1143>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1144> ImpliedMarketIndicator;
+using ImpliedMarketIndicator = Field<int, 1144>;
 const int ImpliedMarketIndicator_NOT_IMPLIED(0);
 const int ImpliedMarketIndicator_IMPLIED_IN(1);
 const int ImpliedMarketIndicator_IMPLIED_OUT(2);
 const int ImpliedMarketIndicator_BOTH_IMPLIED_IN_AND_IMPLIED_OUT(3);
 const size_t ImpliedMarketIndicator_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 1145> EventTime;
+using EventTime = Field<UTCTimestamp, 1145>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1146> MinPriceIncrementAmount;
+using MinPriceIncrementAmount = Field<Amt, 1146>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1147> UnitOfMeasureQty;
+using UnitOfMeasureQty = Field<Qty, 1147>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1148> LowLimitPrice;
+using LowLimitPrice = Field<price, 1148>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1149> HighLimitPrice;
+using HighLimitPrice = Field<price, 1149>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1150> TradingReferencePrice;
+using TradingReferencePrice = Field<price, 1150>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1151> SecurityGroup;
+using SecurityGroup = Field<f8String, 1151>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1152> LegNumber;
+using LegNumber = Field<int, 1152>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1153> SettlementCycleNo;
+using SettlementCycleNo = Field<int, 1153>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1154> SideCurrency;
+using SideCurrency = Field<currency, 1154>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1155> SideSettlCurrency;
+using SideSettlCurrency = Field<currency, 1155>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1157> CcyAmt;
+using CcyAmt = Field<Amt, 1157>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1158> NoSettlDetails;
+using NoSettlDetails = Field<NumInGroup, 1158>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1159> SettlObligMode;
+using SettlObligMode = Field<int, 1159>;
 const int SettlObligMode_PRELIMINARY(1);
 const int SettlObligMode_FINAL(2);
 const size_t SettlObligMode_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1160> SettlObligMsgID;
+using SettlObligMsgID = Field<f8String, 1160>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1161> SettlObligID;
+using SettlObligID = Field<f8String, 1161>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1162> SettlObligTransType;
+using SettlObligTransType = Field<char, 1162>;
 const char SettlObligTransType_CANCEL('C');
 const char SettlObligTransType_NEW('N');
 const char SettlObligTransType_REPLACE('R');
 const char SettlObligTransType_RESTATE('T');
 const size_t SettlObligTransType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1163> SettlObligRefID;
+using SettlObligRefID = Field<f8String, 1163>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1164> SettlObligSource;
+using SettlObligSource = Field<char, 1164>;
 const char SettlObligSource_INSTRUCTIONS_OF_BROKER('1');
 const char SettlObligSource_INSTRUCTIONS_FOR_INSTITUTION('2');
 const char SettlObligSource_INVESTOR('3');
 const size_t SettlObligSource_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1165> NoSettlOblig;
+using NoSettlOblig = Field<NumInGroup, 1165>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1166> QuoteMsgID;
+using QuoteMsgID = Field<f8String, 1166>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1167> QuoteEntryStatus;
+using QuoteEntryStatus = Field<int, 1167>;
 const int QuoteEntryStatus_ACCEPTED(0);
 const int QuoteEntryStatus_REJECTED(5);
 const int QuoteEntryStatus_REMOVED_FROM_MARKET(6);
@@ -5169,24 +5169,24 @@ const int QuoteEntryStatus_CANCELED_DUE_TO_CROSS_MARKET(15);
 const int QuoteEntryStatus_ACTIVE(16);
 const size_t QuoteEntryStatus_realm_els(9);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1168> TotNoCxldQuotes;
+using TotNoCxldQuotes = Field<int, 1168>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1169> TotNoAccQuotes;
+using TotNoAccQuotes = Field<int, 1169>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1170> TotNoRejQuotes;
+using TotNoRejQuotes = Field<int, 1170>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1171> PrivateQuote;
+using PrivateQuote = Field<Boolean, 1171>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1172> RespondentType;
+using RespondentType = Field<int, 1172>;
 const int RespondentType_ALL_MARKET_PARTICIPANTS(1);
 const int RespondentType_SPECIFIED_MARKET_PARTICIPANTS(2);
 const int RespondentType_ALL_MARKET_MAKERS(3);
 const int RespondentType_PRIMARY_MARKET_MAKER(4);
 const size_t RespondentType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1173> MDSubBookType;
+using MDSubBookType = Field<int, 1173>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1174> SecurityTradingEvent;
+using SecurityTradingEvent = Field<int, 1174>;
 const int SecurityTradingEvent_ORDER_IMBALANCE_AUCTION_IS_EXTENDED(1);
 const int SecurityTradingEvent_TRADING_RESUMES(2);
 const int SecurityTradingEvent_PRICE_VOLATILITY_INTERRUPTION(3);
@@ -5197,70 +5197,70 @@ const int SecurityTradingEvent_CHANGE_OF_BOOK_TYPE(7);
 const int SecurityTradingEvent_CHANGE_OF_MARKET_DEPTH(8);
 const size_t SecurityTradingEvent_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1175> NoStatsIndicators;
+using NoStatsIndicators = Field<NumInGroup, 1175>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1176> StatsType;
+using StatsType = Field<int, 1176>;
 const int StatsType_EXCHANGE_LAST(1);
 const int StatsType_HIGH(2);
 const int StatsType_AVERAGE_PRICE(3);
 const int StatsType_TURNOVER(4);
 const size_t StatsType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1177> NoOfSecSizes;
+using NoOfSecSizes = Field<NumInGroup, 1177>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1178> MDSecSizeType;
+using MDSecSizeType = Field<int, 1178>;
 const int MDSecSizeType_CUSTOMER(1);
 const size_t MDSecSizeType_realm_els(1);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1179> MDSecSize;
+using MDSecSize = Field<Qty, 1179>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1180> ApplID;
+using ApplID = Field<f8String, 1180>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 1181> ApplSeqNum;
+using ApplSeqNum = Field<SeqNum, 1181>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 1182> ApplBegSeqNum;
+using ApplBegSeqNum = Field<SeqNum, 1182>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 1183> ApplEndSeqNum;
+using ApplEndSeqNum = Field<SeqNum, 1183>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1184> SecurityXMLLen;
+using SecurityXMLLen = Field<Length, 1184>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<XMLData, 1185> SecurityXML;
+using SecurityXML = Field<XMLData, 1185>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1186> SecurityXMLSchema;
+using SecurityXMLSchema = Field<f8String, 1186>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1187> RefreshIndicator;
+using RefreshIndicator = Field<Boolean, 1187>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1188> Volatility;
+using Volatility = Field<double, 1188>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1189> TimeToExpiration;
+using TimeToExpiration = Field<double, 1189>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1190> RiskFreeRate;
+using RiskFreeRate = Field<double, 1190>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1191> PriceUnitOfMeasure;
+using PriceUnitOfMeasure = Field<f8String, 1191>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1192> PriceUnitOfMeasureQty;
+using PriceUnitOfMeasureQty = Field<Qty, 1192>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1193> SettlMethod;
+using SettlMethod = Field<char, 1193>;
 const char SettlMethod_CASH_SETTLEMENT_REQUIRED('C');
 const char SettlMethod_PHYSICAL_SETTLEMENT_REQUIRED('P');
 const size_t SettlMethod_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1194> ExerciseStyle;
+using ExerciseStyle = Field<int, 1194>;
 const int ExerciseStyle_EUROPEAN(0);
 const int ExerciseStyle_AMERICAN(1);
 const int ExerciseStyle_BERMUDA(2);
 const size_t ExerciseStyle_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1195> OptPayoutAmount;
+using OptPayoutAmount = Field<Amt, 1195>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1196> PriceQuoteMethod;
+using PriceQuoteMethod = Field<f8String, 1196>;
 const f8String PriceQuoteMethod_INTEREST_RATE_INDEX("INT");
 const f8String PriceQuoteMethod_INDEX("INX");
 const f8String PriceQuoteMethod_PERCENT_OF_PAR("PCTPAR");
 const f8String PriceQuoteMethod_STANDARD("STD");
 const size_t PriceQuoteMethod_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1197> ValuationMethod;
+using ValuationMethod = Field<f8String, 1197>;
 const f8String ValuationMethod_CDS_STYLE_COLLATERALIZATION_OF_MARKET_TO_MARKET_AND_COUPON("CDS");
 const f8String ValuationMethod_CDS_IN_DELIVERY("CDSD");
 const f8String ValuationMethod_PREMIUM_STYLE("EQTY");
@@ -5268,32 +5268,32 @@ const f8String ValuationMethod_FUTURES_STYLE_MARK_TO_MARKET("FUT");
 const f8String ValuationMethod_FUTURES_STYLE_WITH_AN_ATTACHED_CASH_ADJUSTMENT("FUTDA");
 const size_t ValuationMethod_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1198> ListMethod;
+using ListMethod = Field<int, 1198>;
 const int ListMethod_PRE_LISTED_ONLY(0);
 const int ListMethod_USER_REQUESTED(1);
 const size_t ListMethod_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1199> CapPrice;
+using CapPrice = Field<price, 1199>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1200> FloorPrice;
+using FloorPrice = Field<price, 1200>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1201> NoStrikeRules;
+using NoStrikeRules = Field<NumInGroup, 1201>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1202> StartStrikePxRange;
+using StartStrikePxRange = Field<price, 1202>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1203> EndStrikePxRange;
+using EndStrikePxRange = Field<price, 1203>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1204> StrikeIncrement;
+using StrikeIncrement = Field<double, 1204>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1205> NoTickRules;
+using NoTickRules = Field<NumInGroup, 1205>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1206> StartTickPriceRange;
+using StartTickPriceRange = Field<price, 1206>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1207> EndTickPriceRange;
+using EndTickPriceRange = Field<price, 1207>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1208> TickIncrement;
+using TickIncrement = Field<price, 1208>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1209> TickRuleType;
+using TickRuleType = Field<int, 1209>;
 const int TickRuleType_REGULAR(0);
 const int TickRuleType_VARIABLE(1);
 const int TickRuleType_FIXED(2);
@@ -5301,288 +5301,288 @@ const int TickRuleType_TRADED_AS_A_SPREAD_LEG(3);
 const int TickRuleType_SETTLED_AS_A_SPREAD_LEG(4);
 const size_t TickRuleType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1210> NestedInstrAttribType;
+using NestedInstrAttribType = Field<int, 1210>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1211> NestedInstrAttribValue;
+using NestedInstrAttribValue = Field<f8String, 1211>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1212> LegMaturityTime;
+using LegMaturityTime = Field<TZTimeOnly, 1212>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1213> UnderlyingMaturityTime;
+using UnderlyingMaturityTime = Field<TZTimeOnly, 1213>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1214> DerivativeSymbol;
+using DerivativeSymbol = Field<f8String, 1214>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1215> DerivativeSymbolSfx;
+using DerivativeSymbolSfx = Field<f8String, 1215>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1216> DerivativeSecurityID;
+using DerivativeSecurityID = Field<f8String, 1216>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1217> DerivativeSecurityIDSource;
+using DerivativeSecurityIDSource = Field<f8String, 1217>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1218> NoDerivativeSecurityAltID;
+using NoDerivativeSecurityAltID = Field<NumInGroup, 1218>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1219> DerivativeSecurityAltID;
+using DerivativeSecurityAltID = Field<f8String, 1219>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1220> DerivativeSecurityAltIDSource;
+using DerivativeSecurityAltIDSource = Field<f8String, 1220>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1221> SecondaryLowLimitPrice;
+using SecondaryLowLimitPrice = Field<price, 1221>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1222> MaturityRuleID;
+using MaturityRuleID = Field<f8String, 1222>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1223> StrikeRuleID;
+using StrikeRuleID = Field<f8String, 1223>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1224> LegUnitOfMeasureQty;
+using LegUnitOfMeasureQty = Field<Qty, 1224>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1225> DerivativeOptPayAmount;
+using DerivativeOptPayAmount = Field<Amt, 1225>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1226> EndMaturityMonthYear;
+using EndMaturityMonthYear = Field<MonthYear, 1226>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1227> ProductComplex;
+using ProductComplex = Field<f8String, 1227>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1228> DerivativeProductComplex;
+using DerivativeProductComplex = Field<f8String, 1228>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1229> MaturityMonthYearIncrement;
+using MaturityMonthYearIncrement = Field<int, 1229>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1230> SecondaryHighLimitPrice;
+using SecondaryHighLimitPrice = Field<price, 1230>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1231> MinLotSize;
+using MinLotSize = Field<Qty, 1231>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1232> NoExecInstRules;
+using NoExecInstRules = Field<NumInGroup, 1232>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1234> NoLotTypeRules;
+using NoLotTypeRules = Field<NumInGroup, 1234>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1235> NoMatchRules;
+using NoMatchRules = Field<NumInGroup, 1235>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1236> NoMaturityRules;
+using NoMaturityRules = Field<NumInGroup, 1236>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1237> NoOrdTypeRules;
+using NoOrdTypeRules = Field<NumInGroup, 1237>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1239> NoTimeInForceRules;
+using NoTimeInForceRules = Field<NumInGroup, 1239>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1240> SecondaryTradingReferencePrice;
+using SecondaryTradingReferencePrice = Field<price, 1240>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1241> StartMaturityMonthYear;
+using StartMaturityMonthYear = Field<MonthYear, 1241>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1242> FlexProductEligibilityIndicator;
+using FlexProductEligibilityIndicator = Field<Boolean, 1242>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1243> DerivFlexProductEligibilityIndicator;
+using DerivFlexProductEligibilityIndicator = Field<Boolean, 1243>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1244> FlexibleIndicator;
+using FlexibleIndicator = Field<Boolean, 1244>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1245> TradingCurrency;
+using TradingCurrency = Field<currency, 1245>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1246> DerivativeProduct;
+using DerivativeProduct = Field<int, 1246>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1247> DerivativeSecurityGroup;
+using DerivativeSecurityGroup = Field<f8String, 1247>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1248> DerivativeCFICode;
+using DerivativeCFICode = Field<f8String, 1248>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1249> DerivativeSecurityType;
+using DerivativeSecurityType = Field<f8String, 1249>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1250> DerivativeSecuritySubType;
+using DerivativeSecuritySubType = Field<f8String, 1250>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1251> DerivativeMaturityMonthYear;
+using DerivativeMaturityMonthYear = Field<MonthYear, 1251>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 1252> DerivativeMaturityDate;
+using DerivativeMaturityDate = Field<LocalMktDate, 1252>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1253> DerivativeMaturityTime;
+using DerivativeMaturityTime = Field<TZTimeOnly, 1253>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1254> DerivativeSettleOnOpenFlag;
+using DerivativeSettleOnOpenFlag = Field<f8String, 1254>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1255> DerivativeInstrmtAssignmentMethod;
+using DerivativeInstrmtAssignmentMethod = Field<char, 1255>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1256> DerivativeSecurityStatus;
+using DerivativeSecurityStatus = Field<f8String, 1256>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1257> DerivativeInstrRegistry;
+using DerivativeInstrRegistry = Field<f8String, 1257>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<country, 1258> DerivativeCountryOfIssue;
+using DerivativeCountryOfIssue = Field<country, 1258>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1259> DerivativeStateOrProvinceOfIssue;
+using DerivativeStateOrProvinceOfIssue = Field<f8String, 1259>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1260> DerivativeLocaleOfIssue;
+using DerivativeLocaleOfIssue = Field<f8String, 1260>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1261> DerivativeStrikePrice;
+using DerivativeStrikePrice = Field<price, 1261>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1262> DerivativeStrikeCurrency;
+using DerivativeStrikeCurrency = Field<currency, 1262>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1263> DerivativeStrikeMultiplier;
+using DerivativeStrikeMultiplier = Field<double, 1263>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1264> DerivativeStrikeValue;
+using DerivativeStrikeValue = Field<double, 1264>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1265> DerivativeOptAttribute;
+using DerivativeOptAttribute = Field<char, 1265>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1266> DerivativeContractMultiplier;
+using DerivativeContractMultiplier = Field<double, 1266>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1267> DerivativeMinPriceIncrement;
+using DerivativeMinPriceIncrement = Field<double, 1267>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1268> DerivativeMinPriceIncrementAmount;
+using DerivativeMinPriceIncrementAmount = Field<Amt, 1268>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1269> DerivativeUnitOfMeasure;
+using DerivativeUnitOfMeasure = Field<f8String, 1269>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1270> DerivativeUnitOfMeasureQty;
+using DerivativeUnitOfMeasureQty = Field<Qty, 1270>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1271> DerivativeTimeUnit;
+using DerivativeTimeUnit = Field<f8String, 1271>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 1272> DerivativeSecurityExchange;
+using DerivativeSecurityExchange = Field<Exchange, 1272>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1273> DerivativePositionLimit;
+using DerivativePositionLimit = Field<int, 1273>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1274> DerivativeNTPositionLimit;
+using DerivativeNTPositionLimit = Field<int, 1274>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1275> DerivativeIssuer;
+using DerivativeIssuer = Field<f8String, 1275>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 1276> DerivativeIssueDate;
+using DerivativeIssueDate = Field<LocalMktDate, 1276>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1277> DerivativeEncodedIssuerLen;
+using DerivativeEncodedIssuerLen = Field<Length, 1277>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1278> DerivativeEncodedIssuer;
+using DerivativeEncodedIssuer = Field<data, 1278>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1279> DerivativeSecurityDesc;
+using DerivativeSecurityDesc = Field<f8String, 1279>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1280> DerivativeEncodedSecurityDescLen;
+using DerivativeEncodedSecurityDescLen = Field<Length, 1280>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1281> DerivativeEncodedSecurityDesc;
+using DerivativeEncodedSecurityDesc = Field<data, 1281>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1282> DerivativeSecurityXMLLen;
+using DerivativeSecurityXMLLen = Field<Length, 1282>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1283> DerivativeSecurityXML;
+using DerivativeSecurityXML = Field<data, 1283>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1284> DerivativeSecurityXMLSchema;
+using DerivativeSecurityXMLSchema = Field<f8String, 1284>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1285> DerivativeContractSettlMonth;
+using DerivativeContractSettlMonth = Field<MonthYear, 1285>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1286> NoDerivativeEvents;
+using NoDerivativeEvents = Field<NumInGroup, 1286>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1287> DerivativeEventType;
+using DerivativeEventType = Field<int, 1287>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 1288> DerivativeEventDate;
+using DerivativeEventDate = Field<LocalMktDate, 1288>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 1289> DerivativeEventTime;
+using DerivativeEventTime = Field<UTCTimestamp, 1289>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1290> DerivativeEventPx;
+using DerivativeEventPx = Field<price, 1290>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1291> DerivativeEventText;
+using DerivativeEventText = Field<f8String, 1291>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1292> NoDerivativeInstrumentParties;
+using NoDerivativeInstrumentParties = Field<NumInGroup, 1292>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1293> DerivativeInstrumentPartyID;
+using DerivativeInstrumentPartyID = Field<f8String, 1293>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1294> DerivativeInstrumentPartyIDSource;
+using DerivativeInstrumentPartyIDSource = Field<f8String, 1294>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1295> DerivativeInstrumentPartyRole;
+using DerivativeInstrumentPartyRole = Field<int, 1295>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1296> NoDerivativeInstrumentPartySubIDs;
+using NoDerivativeInstrumentPartySubIDs = Field<NumInGroup, 1296>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1297> DerivativeInstrumentPartySubID;
+using DerivativeInstrumentPartySubID = Field<f8String, 1297>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1298> DerivativeInstrumentPartySubIDType;
+using DerivativeInstrumentPartySubIDType = Field<int, 1298>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1299> DerivativeExerciseStyle;
+using DerivativeExerciseStyle = Field<char, 1299>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1300> MarketSegmentID;
+using MarketSegmentID = Field<f8String, 1300>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 1301> MarketID;
+using MarketID = Field<Exchange, 1301>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1302> MaturityMonthYearIncrementUnits;
+using MaturityMonthYearIncrementUnits = Field<int, 1302>;
 const int MaturityMonthYearIncrementUnits_MONTHS(0);
 const int MaturityMonthYearIncrementUnits_DAYS(1);
 const int MaturityMonthYearIncrementUnits_WEEKS(2);
 const int MaturityMonthYearIncrementUnits_YEARS(3);
 const size_t MaturityMonthYearIncrementUnits_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1303> MaturityMonthYearFormat;
+using MaturityMonthYearFormat = Field<int, 1303>;
 const int MaturityMonthYearFormat_YEARMONTH_ONLY(0);
 const int MaturityMonthYearFormat_YEARMONTHDAY(1);
 const int MaturityMonthYearFormat_YEARMONTHWEEK(2);
 const size_t MaturityMonthYearFormat_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1304> StrikeExerciseStyle;
+using StrikeExerciseStyle = Field<int, 1304>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1305> SecondaryPriceLimitType;
+using SecondaryPriceLimitType = Field<int, 1305>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1306> PriceLimitType;
+using PriceLimitType = Field<int, 1306>;
 const int PriceLimitType_PRICE(0);
 const int PriceLimitType_TICKS(1);
 const int PriceLimitType_PERCENTAGE(2);
 const size_t PriceLimitType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1308> ExecInstValue;
+using ExecInstValue = Field<char, 1308>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1309> NoTradingSessionRules;
+using NoTradingSessionRules = Field<NumInGroup, 1309>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1310> NoMarketSegments;
+using NoMarketSegments = Field<NumInGroup, 1310>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1311> NoDerivativeInstrAttrib;
+using NoDerivativeInstrAttrib = Field<NumInGroup, 1311>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1312> NoNestedInstrAttrib;
+using NoNestedInstrAttrib = Field<NumInGroup, 1312>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1313> DerivativeInstrAttribType;
+using DerivativeInstrAttribType = Field<int, 1313>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1314> DerivativeInstrAttribValue;
+using DerivativeInstrAttribValue = Field<f8String, 1314>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1315> DerivativePriceUnitOfMeasure;
+using DerivativePriceUnitOfMeasure = Field<f8String, 1315>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1316> DerivativePriceUnitOfMeasureQty;
+using DerivativePriceUnitOfMeasureQty = Field<Qty, 1316>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1317> DerivativeSettlMethod;
+using DerivativeSettlMethod = Field<char, 1317>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1318> DerivativePriceQuoteMethod;
+using DerivativePriceQuoteMethod = Field<f8String, 1318>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1319> DerivativeValuationMethod;
+using DerivativeValuationMethod = Field<f8String, 1319>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1320> DerivativeListMethod;
+using DerivativeListMethod = Field<int, 1320>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1321> DerivativeCapPrice;
+using DerivativeCapPrice = Field<price, 1321>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1322> DerivativeFloorPrice;
+using DerivativeFloorPrice = Field<price, 1322>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1323> DerivativePutOrCall;
+using DerivativePutOrCall = Field<int, 1323>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1324> ListUpdateAction;
+using ListUpdateAction = Field<char, 1324>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1325> ParentMktSegmID;
+using ParentMktSegmID = Field<f8String, 1325>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1326> TradingSessionDesc;
+using TradingSessionDesc = Field<f8String, 1326>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1327> TradSesUpdateAction;
+using TradSesUpdateAction = Field<char, 1327>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1328> RejectText;
+using RejectText = Field<f8String, 1328>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1329> FeeMultiplier;
+using FeeMultiplier = Field<double, 1329>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1330> UnderlyingLegSymbol;
+using UnderlyingLegSymbol = Field<f8String, 1330>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1331> UnderlyingLegSymbolSfx;
+using UnderlyingLegSymbolSfx = Field<f8String, 1331>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1332> UnderlyingLegSecurityID;
+using UnderlyingLegSecurityID = Field<f8String, 1332>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1333> UnderlyingLegSecurityIDSource;
+using UnderlyingLegSecurityIDSource = Field<f8String, 1333>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1334> NoUnderlyingLegSecurityAltID;
+using NoUnderlyingLegSecurityAltID = Field<NumInGroup, 1334>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1335> UnderlyingLegSecurityAltID;
+using UnderlyingLegSecurityAltID = Field<f8String, 1335>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1336> UnderlyingLegSecurityAltIDSource;
+using UnderlyingLegSecurityAltIDSource = Field<f8String, 1336>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1337> UnderlyingLegSecurityType;
+using UnderlyingLegSecurityType = Field<f8String, 1337>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1338> UnderlyingLegSecuritySubType;
+using UnderlyingLegSecuritySubType = Field<f8String, 1338>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1339> UnderlyingLegMaturityMonthYear;
+using UnderlyingLegMaturityMonthYear = Field<MonthYear, 1339>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1340> UnderlyingLegStrikePrice;
+using UnderlyingLegStrikePrice = Field<price, 1340>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1341> UnderlyingLegSecurityExchange;
+using UnderlyingLegSecurityExchange = Field<f8String, 1341>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1342> NoOfLegUnderlyings;
+using NoOfLegUnderlyings = Field<NumInGroup, 1342>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1343> UnderlyingLegPutOrCall;
+using UnderlyingLegPutOrCall = Field<int, 1343>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1344> UnderlyingLegCFICode;
+using UnderlyingLegCFICode = Field<f8String, 1344>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<LocalMktDate, 1345> UnderlyingLegMaturityDate;
+using UnderlyingLegMaturityDate = Field<LocalMktDate, 1345>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1346> ApplReqID;
+using ApplReqID = Field<f8String, 1346>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1347> ApplReqType;
+using ApplReqType = Field<int, 1347>;
 const int ApplReqType_RETRANSMISSION_OF_APPLICATION_MESSAGES_FOR_THE_SPECIFIED_APPLICATIONS(0);
 const int ApplReqType_SUBSCRIPTION_TO_THE_SPECIFIED_APPLICATIONS(1);
 const int ApplReqType_REQUEST_FOR_THE_LAST_APPLLASTSEQNUM_PUBLISHED_FOR_THE_SPECIFIED_APPLICATIONS(2);
@@ -5592,72 +5592,72 @@ const int ApplReqType_CANCEL_RETRANSMISSION(5);
 const int ApplReqType_CANCEL_RETRANSMISSION_AND_UNSUBSCRIBE_TO_THE_SPECIFIED_APPLICATIONS(6);
 const size_t ApplReqType_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1348> ApplResponseType;
+using ApplResponseType = Field<int, 1348>;
 const int ApplResponseType_REQUEST_SUCCESSFULLY_PROCESSED(0);
 const int ApplResponseType_APPLICATION_DOES_NOT_EXIST(1);
 const int ApplResponseType_MESSAGES_NOT_AVAILABLE(2);
 const size_t ApplResponseType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1349> ApplTotalMessageCount;
+using ApplTotalMessageCount = Field<int, 1349>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 1350> ApplLastSeqNum;
+using ApplLastSeqNum = Field<SeqNum, 1350>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1351> NoApplIDs;
+using NoApplIDs = Field<NumInGroup, 1351>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1352> ApplResendFlag;
+using ApplResendFlag = Field<Boolean, 1352>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1353> ApplResponseID;
+using ApplResponseID = Field<f8String, 1353>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1354> ApplResponseError;
+using ApplResponseError = Field<int, 1354>;
 const int ApplResponseError_APPLICATION_DOES_NOT_EXIST(0);
 const int ApplResponseError_MESSAGES_REQUESTED_ARE_NOT_AVAILABLE(1);
 const int ApplResponseError_USER_NOT_AUTHORIZED_FOR_APPLICATION(2);
 const size_t ApplResponseError_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1355> RefApplID;
+using RefApplID = Field<f8String, 1355>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1356> ApplReportID;
+using ApplReportID = Field<f8String, 1356>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 1357> RefApplLastSeqNum;
+using RefApplLastSeqNum = Field<SeqNum, 1357>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1358> LegPutOrCall;
+using LegPutOrCall = Field<int, 1358>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1361> TotNoFills;
+using TotNoFills = Field<int, 1361>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1362> NoFills;
+using NoFills = Field<NumInGroup, 1362>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1363> FillExecID;
+using FillExecID = Field<f8String, 1363>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1364> FillPx;
+using FillPx = Field<price, 1364>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1365> FillQty;
+using FillQty = Field<Qty, 1365>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1366> LegAllocID;
+using LegAllocID = Field<f8String, 1366>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1367> LegAllocSettlCurrency;
+using LegAllocSettlCurrency = Field<currency, 1367>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1368> TradSesEvent;
+using TradSesEvent = Field<int, 1368>;
 const int TradSesEvent_TRADING_RESUMES(0);
 const int TradSesEvent_CHANGE_OF_TRADING_SESSION(1);
 const int TradSesEvent_CHANGE_OF_TRADING_SUBSESSION(2);
 const int TradSesEvent_CHANGE_OF_TRADING_STATUS(3);
 const size_t TradSesEvent_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1369> MassActionReportID;
+using MassActionReportID = Field<f8String, 1369>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1370> NoNotAffectedOrders;
+using NoNotAffectedOrders = Field<NumInGroup, 1370>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1371> NotAffectedOrderID;
+using NotAffectedOrderID = Field<f8String, 1371>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1372> NotAffOrigClOrdID;
+using NotAffOrigClOrdID = Field<f8String, 1372>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1373> MassActionType;
+using MassActionType = Field<int, 1373>;
 const int MassActionType_SUSPEND_ORDERS(1);
 const int MassActionType_RELEASE_ORDERS_FROM_SUSPENSION(2);
 const int MassActionType_CANCEL_ORDERS(3);
 const size_t MassActionType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1374> MassActionScope;
+using MassActionScope = Field<int, 1374>;
 const int MassActionScope_ALL_ORDERS_FOR_A_SECURITY(1);
 const int MassActionScope_ALL_ORDERS_FOR_AN_UNDERLYING_SECURITY(2);
 const int MassActionScope_ALL_ORDERS_FOR_A_PRODUCT(3);
@@ -5672,12 +5672,12 @@ const int MassActionScope_CANCEL_FOR_SECURITY_ISSUER(11);
 const int MassActionScope_CANCEL_FOR_ISSUER_OF_UNDERLYING_SECURITY(12);
 const size_t MassActionScope_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1375> MassActionResponse;
+using MassActionResponse = Field<int, 1375>;
 const int MassActionResponse_REJECTED(0);
 const int MassActionResponse_ACCEPTED(1);
 const size_t MassActionResponse_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1376> MassActionRejectReason;
+using MassActionRejectReason = Field<int, 1376>;
 const int MassActionRejectReason_MASS_ACTION_NOT_SUPPORTED(0);
 const int MassActionRejectReason_INVALID_OR_UNKNOWN_SECURITY(1);
 const int MassActionRejectReason_INVALID_OR_UNKNOWN_UNDERLYING_SECURITY(2);
@@ -5693,13 +5693,13 @@ const int MassActionRejectReason_INVALID_OR_UNKNOWN_ISSUER_OF_UNDERLYING_SECURIT
 const int MassActionRejectReason_OTHER(99);
 const size_t MassActionRejectReason_realm_els(13);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1377> MultilegModel;
+using MultilegModel = Field<int, 1377>;
 const int MultilegModel_PREDEFINED_MULTILEG_SECURITY(0);
 const int MultilegModel_USER_DEFINED_MULTLEG_SECURITY(1);
 const int MultilegModel_USER_DEFINED_NON_SECURITIZED_MULTILEG(2);
 const size_t MultilegModel_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1378> MultilegPriceMethod;
+using MultilegPriceMethod = Field<int, 1378>;
 const int MultilegPriceMethod_NET_PRICE(0);
 const int MultilegPriceMethod_REVERSED_NET_PRICE(1);
 const int MultilegPriceMethod_YIELD_DIFFERENCE(2);
@@ -5708,26 +5708,26 @@ const int MultilegPriceMethod_CONTRACT_WEIGHTED_AVERAGE_PRICE(4);
 const int MultilegPriceMethod_MULTIPLIED_PRICE(5);
 const size_t MultilegPriceMethod_realm_els(6);
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1379> LegVolatility;
+using LegVolatility = Field<double, 1379>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1380> DividendYield;
+using DividendYield = Field<Percentage, 1380>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1381> LegDividendYield;
+using LegDividendYield = Field<Percentage, 1381>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1382> CurrencyRatio;
+using CurrencyRatio = Field<double, 1382>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1383> LegCurrencyRatio;
+using LegCurrencyRatio = Field<double, 1383>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MultipleCharValue, 1384> LegExecInst;
+using LegExecInst = Field<MultipleCharValue, 1384>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1385> ContingencyType;
+using ContingencyType = Field<int, 1385>;
 const int ContingencyType_ONE_CANCELS_THE_OTHER(1);
 const int ContingencyType_ONE_TRIGGERS_THE_OTHER(2);
 const int ContingencyType_ONE_UPDATES_THE_OTHER_3(3);
 const int ContingencyType_ONE_UPDATES_THE_OTHER_4(4);
 const size_t ContingencyType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1386> ListRejectReason;
+using ListRejectReason = Field<int, 1386>;
 const int ListRejectReason_BROKER(0);
 const int ListRejectReason_EXCHANGE_CLOSED(2);
 const int ListRejectReason_TOO_LATE_TO_ENTER(4);
@@ -5737,96 +5737,96 @@ const int ListRejectReason_UNSUPPORTED_ORDER_CHARACTERISTIC(11);
 const int ListRejectReason_OTHER(99);
 const size_t ListRejectReason_realm_els(7);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1387> NoTrdRepIndicators;
+using NoTrdRepIndicators = Field<NumInGroup, 1387>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1388> TrdRepPartyRole;
+using TrdRepPartyRole = Field<int, 1388>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1389> TrdRepIndicator;
+using TrdRepIndicator = Field<Boolean, 1389>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1390> TradePublishIndicator;
+using TradePublishIndicator = Field<int, 1390>;
 const int TradePublishIndicator_DO_NOT_PUBLISH_TRADE(0);
 const int TradePublishIndicator_PUBLISH_TRADE(1);
 const int TradePublishIndicator_DEFERRED_PUBLICATION(2);
 const size_t TradePublishIndicator_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1391> UnderlyingLegOptAttribute;
+using UnderlyingLegOptAttribute = Field<char, 1391>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1392> UnderlyingLegSecurityDesc;
+using UnderlyingLegSecurityDesc = Field<f8String, 1392>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1393> MarketReqID;
+using MarketReqID = Field<f8String, 1393>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1394> MarketReportID;
+using MarketReportID = Field<f8String, 1394>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1395> MarketUpdateAction;
+using MarketUpdateAction = Field<char, 1395>;
 const char MarketUpdateAction_ADD('A');
 const char MarketUpdateAction_DELETE('D');
 const char MarketUpdateAction_MODIFY('M');
 const size_t MarketUpdateAction_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1396> MarketSegmentDesc;
+using MarketSegmentDesc = Field<f8String, 1396>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1397> EncodedMktSegmDescLen;
+using EncodedMktSegmDescLen = Field<Length, 1397>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1398> EncodedMktSegmDesc;
+using EncodedMktSegmDesc = Field<data, 1398>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<SeqNum, 1399> ApplNewSeqNum;
+using ApplNewSeqNum = Field<SeqNum, 1399>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1400> EncryptedPasswordMethod;
+using EncryptedPasswordMethod = Field<int, 1400>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1401> EncryptedPasswordLen;
+using EncryptedPasswordLen = Field<Length, 1401>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1402> EncryptedPassword;
+using EncryptedPassword = Field<data, 1402>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1403> EncryptedNewPasswordLen;
+using EncryptedNewPasswordLen = Field<Length, 1403>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1404> EncryptedNewPassword;
+using EncryptedNewPassword = Field<data, 1404>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1405> UnderlyingLegMaturityTime;
+using UnderlyingLegMaturityTime = Field<TZTimeOnly, 1405>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1406> RefApplExtID;
+using RefApplExtID = Field<int, 1406>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1411> Nested4PartySubIDType;
+using Nested4PartySubIDType = Field<int, 1411>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1412> Nested4PartySubID;
+using Nested4PartySubID = Field<f8String, 1412>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1413> NoNested4PartySubIDs;
+using NoNested4PartySubIDs = Field<NumInGroup, 1413>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1414> NoNested4PartyIDs;
+using NoNested4PartyIDs = Field<NumInGroup, 1414>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1415> Nested4PartyID;
+using Nested4PartyID = Field<f8String, 1415>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1416> Nested4PartyIDSource;
+using Nested4PartyIDSource = Field<char, 1416>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1417> Nested4PartyRole;
+using Nested4PartyRole = Field<int, 1417>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1418> LegLastQty;
+using LegLastQty = Field<Qty, 1418>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1419> UnderlyingExerciseStyle;
+using UnderlyingExerciseStyle = Field<int, 1419>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1420> LegExerciseStyle;
+using LegExerciseStyle = Field<int, 1420>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1421> LegPriceUnitOfMeasure;
+using LegPriceUnitOfMeasure = Field<f8String, 1421>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1422> LegPriceUnitOfMeasureQty;
+using LegPriceUnitOfMeasureQty = Field<Qty, 1422>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1423> UnderlyingUnitOfMeasureQty;
+using UnderlyingUnitOfMeasureQty = Field<Qty, 1423>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1424> UnderlyingPriceUnitOfMeasure;
+using UnderlyingPriceUnitOfMeasure = Field<f8String, 1424>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Qty, 1425> UnderlyingPriceUnitOfMeasureQty;
+using UnderlyingPriceUnitOfMeasureQty = Field<Qty, 1425>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1426> ApplReportType;
+using ApplReportType = Field<int, 1426>;
 const int ApplReportType_RESET_APPLSEQNUM_TO_NEW_VALUE_SPECIFIED_IN_APPLNEWSEQNUM(0);
 const int ApplReportType_REPORTS_THAT_THE_LAST_MESSAGE_HAS_BEEN_SENT_FOR_THE_APPLIDS_REFER_TO_REFAPPLLASTSEQNUM(1);
 const int ApplReportType_HEARTBEAT_MESSAGE_INDICATING_THAT_APPLICATION_IDENTIFIED_BY_REFAPPLID(2);
 const int ApplReportType_APPLICATION_MESSAGE_RE_SEND_COMPLETED(3);
 const size_t ApplReportType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1427> SideExecID;
+using SideExecID = Field<f8String, 1427>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1428> OrderDelay;
+using OrderDelay = Field<int, 1428>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1429> OrderDelayUnit;
+using OrderDelayUnit = Field<int, 1429>;
 const int OrderDelayUnit_SECONDS(0);
 const int OrderDelayUnit_TENTHS_OF_A_SECOND(1);
 const int OrderDelayUnit_HUNDREDTHS_OF_A_SECOND(2);
@@ -5841,45 +5841,45 @@ const int OrderDelayUnit_MONTHS(14);
 const int OrderDelayUnit_YEARS(15);
 const size_t OrderDelayUnit_realm_els(12);
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1430> VenueType;
+using VenueType = Field<char, 1430>;
 const char VenueType_ELECTRONIC('E');
 const char VenueType_PIT('P');
 const char VenueType_EX_PIT('X');
 const size_t VenueType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1431> RefOrdIDReason;
+using RefOrdIDReason = Field<int, 1431>;
 const int RefOrdIDReason_GTC_FROM_PREVIOUS_DAY(0);
 const int RefOrdIDReason_PARTIAL_FILL_REMAINING(1);
 const int RefOrdIDReason_ORDER_CHANGED(2);
 const size_t RefOrdIDReason_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1432> OrigCustOrderCapacity;
+using OrigCustOrderCapacity = Field<int, 1432>;
 const int OrigCustOrderCapacity_MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT(1);
 const int OrigCustOrderCapacity_CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT(2);
 const int OrigCustOrderCapacity_MEMBER_TRADING_FOR_ANOTHER_MEMBER(3);
 const int OrigCustOrderCapacity_ALL_OTHER(4);
 const size_t OrigCustOrderCapacity_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1433> RefApplReqID;
+using RefApplReqID = Field<f8String, 1433>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1434> ModelType;
+using ModelType = Field<int, 1434>;
 const int ModelType_UTILITY_PROVIDED_STANDARD_MODEL(0);
 const int ModelType_PROPRIETARY(1);
 const size_t ModelType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1435> ContractMultiplierUnit;
+using ContractMultiplierUnit = Field<int, 1435>;
 const int ContractMultiplierUnit_SHARES(0);
 const int ContractMultiplierUnit_HOURS(1);
 const int ContractMultiplierUnit_DAYS(2);
 const size_t ContractMultiplierUnit_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1436> LegContractMultiplierUnit;
+using LegContractMultiplierUnit = Field<int, 1436>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1437> UnderlyingContractMultiplierUnit;
+using UnderlyingContractMultiplierUnit = Field<int, 1437>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1438> DerivativeContractMultiplierUnit;
+using DerivativeContractMultiplierUnit = Field<int, 1438>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1439> FlowScheduleType;
+using FlowScheduleType = Field<int, 1439>;
 const int FlowScheduleType_NERC_EASTERN_OFF_PEAK(0);
 const int FlowScheduleType_NERC_WESTERN_OFF_PEAK(1);
 const int FlowScheduleType_NERC_CALENDAR_ALL_DAYS_IN_MONTH(2);
@@ -5887,99 +5887,99 @@ const int FlowScheduleType_NERC_EASTERN_PEAK(3);
 const int FlowScheduleType_NERC_WESTERN_PEAK(4);
 const size_t FlowScheduleType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1440> LegFlowScheduleType;
+using LegFlowScheduleType = Field<int, 1440>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1441> UnderlyingFlowScheduleType;
+using UnderlyingFlowScheduleType = Field<int, 1441>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1442> DerivativeFlowScheduleType;
+using DerivativeFlowScheduleType = Field<int, 1442>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1443> FillLiquidityInd;
+using FillLiquidityInd = Field<int, 1443>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1444> SideLiquidityInd;
+using SideLiquidityInd = Field<int, 1444>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1445> NoRateSources;
+using NoRateSources = Field<NumInGroup, 1445>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1446> RateSource;
+using RateSource = Field<int, 1446>;
 const int RateSource_BLOOMBERG(0);
 const int RateSource_REUTERS(1);
 const int RateSource_TELERATE(2);
 const int RateSource_OTHER(99);
 const size_t RateSource_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1447> RateSourceType;
+using RateSourceType = Field<int, 1447>;
 const int RateSourceType_PRIMARY(0);
 const int RateSourceType_SECONDARY(1);
 const size_t RateSourceType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1448> ReferencePage;
+using ReferencePage = Field<f8String, 1448>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1449> RestructuringType;
+using RestructuringType = Field<f8String, 1449>;
 const f8String RestructuringType_FULL_RESTRUCTURING("FR");
 const f8String RestructuringType_MODIFIED_MOD_RESTRUCTURING("MM");
 const f8String RestructuringType_MODIFIED_RESTRUCTURING("MR");
 const f8String RestructuringType_NO_RESTRUCTURING_SPECIFIED("XR");
 const size_t RestructuringType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1450> Seniority;
+using Seniority = Field<f8String, 1450>;
 const f8String Seniority_SUBORDINATED("SB");
 const f8String Seniority_SENIOR_SECURED("SD");
 const f8String Seniority_SENIOR("SR");
 const size_t Seniority_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1451> NotionalPercentageOutstanding;
+using NotionalPercentageOutstanding = Field<Percentage, 1451>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1452> OriginalNotionalPercentageOutstanding;
+using OriginalNotionalPercentageOutstanding = Field<Percentage, 1452>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1453> UnderlyingRestructuringType;
+using UnderlyingRestructuringType = Field<f8String, 1453>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1454> UnderlyingSeniority;
+using UnderlyingSeniority = Field<f8String, 1454>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1455> UnderlyingNotionalPercentageOutstanding;
+using UnderlyingNotionalPercentageOutstanding = Field<Percentage, 1455>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1456> UnderlyingOriginalNotionalPercentageOutstanding;
+using UnderlyingOriginalNotionalPercentageOutstanding = Field<Percentage, 1456>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1457> AttachmentPoint;
+using AttachmentPoint = Field<Percentage, 1457>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1458> DetachmentPoint;
+using DetachmentPoint = Field<Percentage, 1458>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1459> UnderlyingAttachmentPoint;
+using UnderlyingAttachmentPoint = Field<Percentage, 1459>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1460> UnderlyingDetachmentPoint;
+using UnderlyingDetachmentPoint = Field<Percentage, 1460>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1461> NoTargetPartyIDs;
+using NoTargetPartyIDs = Field<NumInGroup, 1461>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1462> TargetPartyID;
+using TargetPartyID = Field<f8String, 1462>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1463> TargetPartyIDSource;
+using TargetPartyIDSource = Field<char, 1463>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1464> TargetPartyRole;
+using TargetPartyRole = Field<int, 1464>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1465> SecurityListID;
+using SecurityListID = Field<f8String, 1465>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1466> SecurityListRefID;
+using SecurityListRefID = Field<f8String, 1466>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1467> SecurityListDesc;
+using SecurityListDesc = Field<f8String, 1467>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1468> EncodedSecurityListDescLen;
+using EncodedSecurityListDescLen = Field<Length, 1468>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1469> EncodedSecurityListDesc;
+using EncodedSecurityListDesc = Field<data, 1469>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1470> SecurityListType;
+using SecurityListType = Field<int, 1470>;
 const int SecurityListType_INDUSTRY_CLASSIFICATION(1);
 const int SecurityListType_TRADING_LIST(2);
 const int SecurityListType_MARKET(3);
 const int SecurityListType_NEWSPAPER_LIST(4);
 const size_t SecurityListType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1471> SecurityListTypeSource;
+using SecurityListTypeSource = Field<int, 1471>;
 const int SecurityListTypeSource_ICB(1);
 const int SecurityListTypeSource_NAICS(2);
 const int SecurityListTypeSource_GICS(3);
 const size_t SecurityListTypeSource_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1472> NewsID;
+using NewsID = Field<f8String, 1472>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1473> NewsCategory;
+using NewsCategory = Field<int, 1473>;
 const int NewsCategory_COMPANY_NEWS(0);
 const int NewsCategory_MARKETPLACE_NEWS(1);
 const int NewsCategory_FINANCIAL_MARKET_NEWS(2);
@@ -5987,26 +5987,26 @@ const int NewsCategory_TECHNICAL_NEWS(3);
 const int NewsCategory_OTHER_NEWS(99);
 const size_t NewsCategory_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Language, 1474> LanguageCode;
+using LanguageCode = Field<Language, 1474>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1475> NoNewsRefIDs;
+using NoNewsRefIDs = Field<NumInGroup, 1475>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1476> NewsRefID;
+using NewsRefID = Field<f8String, 1476>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1477> NewsRefType;
+using NewsRefType = Field<int, 1477>;
 const int NewsRefType_REPLACEMENT(0);
 const int NewsRefType_OTHER_LANGUAGE(1);
 const int NewsRefType_COMPLIMENTARY(2);
 const size_t NewsRefType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1478> StrikePriceDeterminationMethod;
+using StrikePriceDeterminationMethod = Field<int, 1478>;
 const int StrikePriceDeterminationMethod_FIXED_STRIKE(1);
 const int StrikePriceDeterminationMethod_STRIKE_SET_AT_EXPIRATION_TO_UNDERLYING_OR_OTHER_VALUE(2);
 const int StrikePriceDeterminationMethod_STRIKE_SET_TO_AVERAGE_OF_UNDERLYING_SETTLEMENT_PRICE_ACROSS_THE_LIFE_OF_THE_OPTION(3);
 const int StrikePriceDeterminationMethod_STRIKE_SET_TO_OPTIMAL_VALUE(4);
 const size_t StrikePriceDeterminationMethod_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1479> StrikePriceBoundaryMethod;
+using StrikePriceBoundaryMethod = Field<int, 1479>;
 const int StrikePriceBoundaryMethod_LESS_THAN_UNDERLYING_PRICE_IS_IN_THE_MONEY(1);
 const int StrikePriceBoundaryMethod_LESS_THAN_OR_EQUAL_TO_THE_UNDERLYING_PRICE_IS_IN_THE_MONEY(2);
 const int StrikePriceBoundaryMethod_EQUAL_TO_THE_UNDERLYING_PRICE_IS_IN_THE_MONEY(3);
@@ -6014,24 +6014,24 @@ const int StrikePriceBoundaryMethod_GREATER_THAN_OR_EQUAL_TO_UNDERLYING_PRICE_IS
 const int StrikePriceBoundaryMethod_GREATER_THAN_UNDERLYING_IS_IN_THE_MONEY(5);
 const size_t StrikePriceBoundaryMethod_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1480> StrikePriceBoundaryPrecision;
+using StrikePriceBoundaryPrecision = Field<Percentage, 1480>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1481> UnderlyingPriceDeterminationMethod;
+using UnderlyingPriceDeterminationMethod = Field<int, 1481>;
 const int UnderlyingPriceDeterminationMethod_REGULAR(1);
 const int UnderlyingPriceDeterminationMethod_SPECIAL_REFERENCE(2);
 const int UnderlyingPriceDeterminationMethod_OPTIMAL_VALUE(3);
 const int UnderlyingPriceDeterminationMethod_AVERAGE_VALUE(4);
 const size_t UnderlyingPriceDeterminationMethod_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1482> OptPayoutType;
+using OptPayoutType = Field<int, 1482>;
 const int OptPayoutType_VANILLA(1);
 const int OptPayoutType_CAPPED(2);
 const int OptPayoutType_BINARY(3);
 const size_t OptPayoutType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1483> NoComplexEvents;
+using NoComplexEvents = Field<NumInGroup, 1483>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1484> ComplexEventType;
+using ComplexEventType = Field<int, 1484>;
 const int ComplexEventType_CAPPED(1);
 const int ComplexEventType_TRIGGER(2);
 const int ComplexEventType_KNOCK_IN_UP(3);
@@ -6043,11 +6043,11 @@ const int ComplexEventType_RESET_BARRIER(8);
 const int ComplexEventType_ROLLING_BARRIER(9);
 const size_t ComplexEventType_realm_els(9);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1485> ComplexOptPayoutAmount;
+using ComplexOptPayoutAmount = Field<Amt, 1485>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<price, 1486> ComplexEventPrice;
+using ComplexEventPrice = Field<price, 1486>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1487> ComplexEventPriceBoundaryMethod;
+using ComplexEventPriceBoundaryMethod = Field<int, 1487>;
 const int ComplexEventPriceBoundaryMethod_LESS_THAN_COMPLEXEVENTPRICE(1);
 const int ComplexEventPriceBoundaryMethod_LESS_THAN_OR_EQUAL_TO_COMPLEXEVENTPRICE(2);
 const int ComplexEventPriceBoundaryMethod_EQUAL_TO_COMPLEXEVENTPRICE(3);
@@ -6055,45 +6055,45 @@ const int ComplexEventPriceBoundaryMethod_GREATER_THAN_OR_EQUAL_TO_COMPLEXEVENTP
 const int ComplexEventPriceBoundaryMethod_GREATER_THAN_COMPLEXEVENTPRICE(5);
 const size_t ComplexEventPriceBoundaryMethod_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1488> ComplexEventPriceBoundaryPrecision;
+using ComplexEventPriceBoundaryPrecision = Field<Percentage, 1488>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1489> ComplexEventPriceTimeType;
+using ComplexEventPriceTimeType = Field<int, 1489>;
 const int ComplexEventPriceTimeType_EXPIRATION(1);
 const int ComplexEventPriceTimeType_IMMEDIATE(2);
 const int ComplexEventPriceTimeType_SPECIFIED_DATE_TIME(3);
 const size_t ComplexEventPriceTimeType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1490> ComplexEventCondition;
+using ComplexEventCondition = Field<int, 1490>;
 const int ComplexEventCondition_AND(1);
 const int ComplexEventCondition_OR(2);
 const size_t ComplexEventCondition_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1491> NoComplexEventDates;
+using NoComplexEventDates = Field<NumInGroup, 1491>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 1492> ComplexEventStartDate;
+using ComplexEventStartDate = Field<UTCTimestamp, 1492>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 1493> ComplexEventEndDate;
+using ComplexEventEndDate = Field<UTCTimestamp, 1493>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1494> NoComplexEventTimes;
+using NoComplexEventTimes = Field<NumInGroup, 1494>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimeOnly, 1495> ComplexEventStartTime;
+using ComplexEventStartTime = Field<UTCTimeOnly, 1495>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimeOnly, 1496> ComplexEventEndTime;
+using ComplexEventEndTime = Field<UTCTimeOnly, 1496>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1497> StreamAsgnReqID;
+using StreamAsgnReqID = Field<f8String, 1497>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1498> StreamAsgnReqType;
+using StreamAsgnReqType = Field<int, 1498>;
 const int StreamAsgnReqType_STREAM_ASSIGNMENT_FOR_NEW_CUSTOMER(1);
 const int StreamAsgnReqType_STREAM_ASSIGNMENT_FOR_EXISTING_CUSTOMER(2);
 const size_t StreamAsgnReqType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1499> NoAsgnReqs;
+using NoAsgnReqs = Field<NumInGroup, 1499>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1500> MDStreamID;
+using MDStreamID = Field<f8String, 1500>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1501> StreamAsgnRptID;
+using StreamAsgnRptID = Field<f8String, 1501>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1502> StreamAsgnRejReason;
+using StreamAsgnRejReason = Field<int, 1502>;
 const int StreamAsgnRejReason_UNKNOWN_CLIENT(0);
 const int StreamAsgnRejReason_EXCEEDS_MAXIMUM_SIZE(1);
 const int StreamAsgnRejReason_UNKNOWN_OR_INVALID_CURRENCY_PAIR(2);
@@ -6101,31 +6101,31 @@ const int StreamAsgnRejReason_NO_AVAILABLE_STREAM(3);
 const int StreamAsgnRejReason_OTHER(99);
 const size_t StreamAsgnRejReason_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1503> StreamAsgnAckType;
+using StreamAsgnAckType = Field<int, 1503>;
 const int StreamAsgnAckType_ASSIGNMENT_ACCEPTED(0);
 const int StreamAsgnAckType_ASSIGNMENT_REJECTED(1);
 const size_t StreamAsgnAckType_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<UTCTimestamp, 1504> RelSymTransactTime;
+using RelSymTransactTime = Field<UTCTimestamp, 1504>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1505> PartyDetailsListRequestID;
+using PartyDetailsListRequestID = Field<f8String, 1505>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1506> NoPartyListResponseTypes;
+using NoPartyListResponseTypes = Field<NumInGroup, 1506>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1507> PartyListResponseType;
+using PartyListResponseType = Field<int, 1507>;
 const int PartyListResponseType_RETURN_ALL_AVAILABLE_INFORMATION_ON_PARTIES_AND_RELATED_PARTIES(0);
 const int PartyListResponseType_RETURN_ONLY_PARTY_INFORMATION(1);
 const int PartyListResponseType_INCLUDE_INFORMATION_ON_RELATED_PARTIES(2);
 const int PartyListResponseType_INCLUDE_RISK_LIMIT_INFORMATION(3);
 const size_t PartyListResponseType_realm_els(4);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1508> NoRequestedPartyRoles;
+using NoRequestedPartyRoles = Field<NumInGroup, 1508>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1509> RequestedPartyRole;
+using RequestedPartyRole = Field<int, 1509>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1510> PartyDetailsListReportID;
+using PartyDetailsListReportID = Field<f8String, 1510>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1511> PartyDetailsRequestResult;
+using PartyDetailsRequestResult = Field<int, 1511>;
 const int PartyDetailsRequestResult_VALID_REQUEST(0);
 const int PartyDetailsRequestResult_INVALID_OR_UNSUPPORTED_REQUEST(1);
 const int PartyDetailsRequestResult_NO_PARTIES_OR_PARTY_DETAILS_FOUND_THAT_MATCH_SELECTION_CRITERIA(2);
@@ -6136,13 +6136,13 @@ const int PartyDetailsRequestResult_REQUEST_FOR_PARTIES_DATA_NOT_SUPPORTED(6);
 const int PartyDetailsRequestResult_OTHER(99);
 const size_t PartyDetailsRequestResult_realm_els(8);
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1512> TotNoPartyList;
+using TotNoPartyList = Field<int, 1512>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1513> NoPartyList;
+using NoPartyList = Field<NumInGroup, 1513>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1514> NoPartyRelationships;
+using NoPartyRelationships = Field<NumInGroup, 1514>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1515> PartyRelationship;
+using PartyRelationship = Field<int, 1515>;
 const int PartyRelationship_IS_ALSO(0);
 const int PartyRelationship_CLEARS_FOR(1);
 const int PartyRelationship_CLEARS_THROUGH(2);
@@ -6182,35 +6182,35 @@ const int PartyRelationship_BENEFICIAL_OWNER_OF(35);
 const int PartyRelationship_OWNED_BY_36(36);
 const size_t PartyRelationship_realm_els(37);
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1516> NoPartyAltIDs;
+using NoPartyAltIDs = Field<NumInGroup, 1516>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1517> PartyAltID;
+using PartyAltID = Field<f8String, 1517>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1518> PartyAltIDSource;
+using PartyAltIDSource = Field<char, 1518>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1519> NoPartyAltSubIDs;
+using NoPartyAltSubIDs = Field<NumInGroup, 1519>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1520> PartyAltSubID;
+using PartyAltSubID = Field<f8String, 1520>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1521> PartyAltSubIDType;
+using PartyAltSubIDType = Field<int, 1521>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1522> NoContextPartyIDs;
+using NoContextPartyIDs = Field<NumInGroup, 1522>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1523> ContextPartyID;
+using ContextPartyID = Field<f8String, 1523>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1524> ContextPartyIDSource;
+using ContextPartyIDSource = Field<char, 1524>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1525> ContextPartyRole;
+using ContextPartyRole = Field<int, 1525>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1526> NoContextPartySubIDs;
+using NoContextPartySubIDs = Field<NumInGroup, 1526>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1527> ContextPartySubID;
+using ContextPartySubID = Field<f8String, 1527>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1528> ContextPartySubIDType;
+using ContextPartySubIDType = Field<int, 1528>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1529> NoRiskLimits;
+using NoRiskLimits = Field<NumInGroup, 1529>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1530> RiskLimitType;
+using RiskLimitType = Field<int, 1530>;
 const int RiskLimitType_GROSS_LIMIT(1);
 const int RiskLimitType_NET_LIMIT(2);
 const int RiskLimitType_EXPOSURE(3);
@@ -6218,196 +6218,196 @@ const int RiskLimitType_LONG_LIMIT(4);
 const int RiskLimitType_SHORT_LIMIT(5);
 const size_t RiskLimitType_realm_els(5);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1531> RiskLimitAmount;
+using RiskLimitAmount = Field<Amt, 1531>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1532> RiskLimitCurrency;
+using RiskLimitCurrency = Field<currency, 1532>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1533> RiskLimitPlatform;
+using RiskLimitPlatform = Field<f8String, 1533>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1534> NoRiskInstruments;
+using NoRiskInstruments = Field<NumInGroup, 1534>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1535> RiskInstrumentOperator;
+using RiskInstrumentOperator = Field<int, 1535>;
 const int RiskInstrumentOperator_INCLUDE(1);
 const int RiskInstrumentOperator_EXCLUDE(2);
 const size_t RiskInstrumentOperator_realm_els(2);
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1536> RiskSymbol;
+using RiskSymbol = Field<f8String, 1536>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1537> RiskSymbolSfx;
+using RiskSymbolSfx = Field<f8String, 1537>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1538> RiskSecurityID;
+using RiskSecurityID = Field<f8String, 1538>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1539> RiskSecurityIDSource;
+using RiskSecurityIDSource = Field<f8String, 1539>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1540> NoRiskSecurityAltID;
+using NoRiskSecurityAltID = Field<NumInGroup, 1540>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1541> RiskSecurityAltID;
+using RiskSecurityAltID = Field<f8String, 1541>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1542> RiskSecurityAltIDSource;
+using RiskSecurityAltIDSource = Field<f8String, 1542>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1543> RiskProduct;
+using RiskProduct = Field<int, 1543>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1544> RiskProductComplex;
+using RiskProductComplex = Field<f8String, 1544>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1545> RiskSecurityGroup;
+using RiskSecurityGroup = Field<f8String, 1545>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1546> RiskCFICode;
+using RiskCFICode = Field<f8String, 1546>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1547> RiskSecurityType;
+using RiskSecurityType = Field<f8String, 1547>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1548> RiskSecuritySubType;
+using RiskSecuritySubType = Field<f8String, 1548>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1549> RiskMaturityMonthYear;
+using RiskMaturityMonthYear = Field<MonthYear, 1549>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1550> RiskMaturityTime;
+using RiskMaturityTime = Field<TZTimeOnly, 1550>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1551> RiskRestructuringType;
+using RiskRestructuringType = Field<f8String, 1551>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1552> RiskSeniority;
+using RiskSeniority = Field<f8String, 1552>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1553> RiskPutOrCall;
+using RiskPutOrCall = Field<int, 1553>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1554> RiskFlexibleIndicator;
+using RiskFlexibleIndicator = Field<Boolean, 1554>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1555> RiskCouponRate;
+using RiskCouponRate = Field<Percentage, 1555>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1556> RiskSecurityDesc;
+using RiskSecurityDesc = Field<f8String, 1556>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1557> RiskInstrumentSettlType;
+using RiskInstrumentSettlType = Field<f8String, 1557>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1558> RiskInstrumentMultiplier;
+using RiskInstrumentMultiplier = Field<double, 1558>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1559> NoRiskWarningLevels;
+using NoRiskWarningLevels = Field<NumInGroup, 1559>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1560> RiskWarningLevelPercent;
+using RiskWarningLevelPercent = Field<Percentage, 1560>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1561> RiskWarningLevelName;
+using RiskWarningLevelName = Field<f8String, 1561>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1562> NoRelatedPartyIDs;
+using NoRelatedPartyIDs = Field<NumInGroup, 1562>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1563> RelatedPartyID;
+using RelatedPartyID = Field<f8String, 1563>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1564> RelatedPartyIDSource;
+using RelatedPartyIDSource = Field<char, 1564>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1565> RelatedPartyRole;
+using RelatedPartyRole = Field<int, 1565>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1566> NoRelatedPartySubIDs;
+using NoRelatedPartySubIDs = Field<NumInGroup, 1566>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1567> RelatedPartySubID;
+using RelatedPartySubID = Field<f8String, 1567>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1568> RelatedPartySubIDType;
+using RelatedPartySubIDType = Field<int, 1568>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1569> NoRelatedPartyAltIDs;
+using NoRelatedPartyAltIDs = Field<NumInGroup, 1569>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1570> RelatedPartyAltID;
+using RelatedPartyAltID = Field<f8String, 1570>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1571> RelatedPartyAltIDSource;
+using RelatedPartyAltIDSource = Field<char, 1571>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1572> NoRelatedPartyAltSubIDs;
+using NoRelatedPartyAltSubIDs = Field<NumInGroup, 1572>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1573> RelatedPartyAltSubID;
+using RelatedPartyAltSubID = Field<f8String, 1573>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1574> RelatedPartyAltSubIDType;
+using RelatedPartyAltSubIDType = Field<int, 1574>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1575> NoRelatedContextPartyIDs;
+using NoRelatedContextPartyIDs = Field<NumInGroup, 1575>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1576> RelatedContextPartyID;
+using RelatedContextPartyID = Field<f8String, 1576>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<char, 1577> RelatedContextPartyIDSource;
+using RelatedContextPartyIDSource = Field<char, 1577>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1578> RelatedContextPartyRole;
+using RelatedContextPartyRole = Field<int, 1578>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1579> NoRelatedContextPartySubIDs;
+using NoRelatedContextPartySubIDs = Field<NumInGroup, 1579>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1580> RelatedContextPartySubID;
+using RelatedContextPartySubID = Field<f8String, 1580>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1581> RelatedContextPartySubIDType;
+using RelatedContextPartySubIDType = Field<int, 1581>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1582> NoRelationshipRiskLimits;
+using NoRelationshipRiskLimits = Field<NumInGroup, 1582>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1583> RelationshipRiskLimitType;
+using RelationshipRiskLimitType = Field<int, 1583>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Amt, 1584> RelationshipRiskLimitAmount;
+using RelationshipRiskLimitAmount = Field<Amt, 1584>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<currency, 1585> RelationshipRiskLimitCurrency;
+using RelationshipRiskLimitCurrency = Field<currency, 1585>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1586> RelationshipRiskLimitPlatform;
+using RelationshipRiskLimitPlatform = Field<f8String, 1586>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1587> NoRelationshipRiskInstruments;
+using NoRelationshipRiskInstruments = Field<NumInGroup, 1587>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1588> RelationshipRiskInstrumentOperator;
+using RelationshipRiskInstrumentOperator = Field<int, 1588>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1589> RelationshipRiskSymbol;
+using RelationshipRiskSymbol = Field<f8String, 1589>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1590> RelationshipRiskSymbolSfx;
+using RelationshipRiskSymbolSfx = Field<f8String, 1590>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1591> RelationshipRiskSecurityID;
+using RelationshipRiskSecurityID = Field<f8String, 1591>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1592> RelationshipRiskSecurityIDSource;
+using RelationshipRiskSecurityIDSource = Field<f8String, 1592>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1593> NoRelationshipRiskSecurityAltID;
+using NoRelationshipRiskSecurityAltID = Field<NumInGroup, 1593>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1594> RelationshipRiskSecurityAltID;
+using RelationshipRiskSecurityAltID = Field<f8String, 1594>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1595> RelationshipRiskSecurityAltIDSource;
+using RelationshipRiskSecurityAltIDSource = Field<f8String, 1595>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1596> RelationshipRiskProduct;
+using RelationshipRiskProduct = Field<int, 1596>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1597> RelationshipRiskProductComplex;
+using RelationshipRiskProductComplex = Field<f8String, 1597>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1598> RelationshipRiskSecurityGroup;
+using RelationshipRiskSecurityGroup = Field<f8String, 1598>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1599> RelationshipRiskCFICode;
+using RelationshipRiskCFICode = Field<f8String, 1599>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1600> RelationshipRiskSecurityType;
+using RelationshipRiskSecurityType = Field<f8String, 1600>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1601> RelationshipRiskSecuritySubType;
+using RelationshipRiskSecuritySubType = Field<f8String, 1601>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<MonthYear, 1602> RelationshipRiskMaturityMonthYear;
+using RelationshipRiskMaturityMonthYear = Field<MonthYear, 1602>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<TZTimeOnly, 1603> RelationshipRiskMaturityTime;
+using RelationshipRiskMaturityTime = Field<TZTimeOnly, 1603>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1604> RelationshipRiskRestructuringType;
+using RelationshipRiskRestructuringType = Field<f8String, 1604>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1605> RelationshipRiskSeniority;
+using RelationshipRiskSeniority = Field<f8String, 1605>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1606> RelationshipRiskPutOrCall;
+using RelationshipRiskPutOrCall = Field<int, 1606>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Boolean, 1607> RelationshipRiskFlexibleIndicator;
+using RelationshipRiskFlexibleIndicator = Field<Boolean, 1607>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1608> RelationshipRiskCouponRate;
+using RelationshipRiskCouponRate = Field<Percentage, 1608>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 1609> RelationshipRiskSecurityExchange;
+using RelationshipRiskSecurityExchange = Field<Exchange, 1609>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1610> RelationshipRiskSecurityDesc;
+using RelationshipRiskSecurityDesc = Field<f8String, 1610>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1611> RelationshipRiskInstrumentSettlType;
+using RelationshipRiskInstrumentSettlType = Field<f8String, 1611>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<double, 1612> RelationshipRiskInstrumentMultiplier;
+using RelationshipRiskInstrumentMultiplier = Field<double, 1612>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<NumInGroup, 1613> NoRelationshipRiskWarningLevels;
+using NoRelationshipRiskWarningLevels = Field<NumInGroup, 1613>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Percentage, 1614> RelationshipRiskWarningLevelPercent;
+using RelationshipRiskWarningLevelPercent = Field<Percentage, 1614>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<f8String, 1615> RelationshipRiskWarningLevelName;
+using RelationshipRiskWarningLevelName = Field<f8String, 1615>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Exchange, 1616> RiskSecurityExchange;
+using RiskSecurityExchange = Field<Exchange, 1616>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<int, 1617> StreamAsgnType;
+using StreamAsgnType = Field<int, 1617>;
 const int StreamAsgnType_ASSIGNMENT(1);
 const int StreamAsgnType_REJECTED(2);
 const int StreamAsgnType_TERMINATE_UNASSIGN(3);
 const size_t StreamAsgnType_realm_els(3);
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1618> RelationshipRiskEncodedSecurityDescLen;
+using RelationshipRiskEncodedSecurityDescLen = Field<Length, 1618>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1619> RelationshipRiskEncodedSecurityDesc;
+using RelationshipRiskEncodedSecurityDesc = Field<data, 1619>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<Length, 1620> RiskEncodedSecurityDescLen;
+using RiskEncodedSecurityDescLen = Field<Length, 1620>;
 //-------------------------------------------------------------------------------------------------
-typedef Field<data, 1621> RiskEncodedSecurityDesc;
+using RiskEncodedSecurityDesc = Field<data, 1621>;
 //-------------------------------------------------------------------------------------------------
-typedef FieldTable Myfix_BaseEntry;
+using Myfix_BaseEntry = FieldTable;
 
 } // namespace TEX
 } // namespace FIX8

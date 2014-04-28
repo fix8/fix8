@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-// *** f8c generated file: DO NOT EDIT! Created: 2014-04-05 01:38:19 ***
+// *** f8c generated file: DO NOT EDIT! Created: 2014-04-27 23:02:33 ***
 //-------------------------------------------------------------------------------------------------
 /*
 
@@ -48,8 +48,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
-#if defined MAGIC_NUM && MAGIC_NUM > 16781312L
-#error Myfix_router.hpp version 1.1.0 is out of date. Please regenerate with f8c.
+#if defined MAGIC_NUM && MAGIC_NUM > 16785408L
+#error Myfix_router.hpp version 1.2.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_router.hpp

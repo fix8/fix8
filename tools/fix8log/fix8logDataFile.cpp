@@ -94,7 +94,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         try {
             ba = dataFile.readLine();
             ba.truncate(ba.size()-1); // strip eol charactor
-            scoped_ptr<Message> msg(Message::factory(TEX::ctx(),ba.data()));
+            std::unique_ptr <Message> msg(Message::factory(TEX::ctx(),ba.data()));
             msg->Header()->get(snum);
             const Presence& pre(msg->get_fp().get_presence());
             MessageFieldList *mlf = new MessageFieldList();

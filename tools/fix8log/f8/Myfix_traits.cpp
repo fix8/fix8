@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-// *** f8c generated file: DO NOT EDIT! Created: 2014-04-05 01:38:19 ***
+// *** f8c generated file: DO NOT EDIT! Created: 2014-04-27 23:02:33 ***
 //-------------------------------------------------------------------------------------------------
 /*
 
@@ -48,8 +48,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
-#if defined MAGIC_NUM && MAGIC_NUM > 16781312L
-#error Myfix_traits.cpp version 1.1.0 is out of date. Please regenerate with f8c.
+#if defined MAGIC_NUM && MAGIC_NUM > 16785408L
+#error Myfix_traits.cpp version 1.2.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_traits.cpp
@@ -66,9 +66,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <algorithm>
 #include <cerrno>
 #include <string.h>
-#if defined HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 // f8 includes
 #include <fix8/f8includes.hpp>
 #include "Myfix_types.hpp"
@@ -82,912 +79,830 @@ namespace TEX {
 // Common group traits
 namespace {
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLinesOfTextV1_traits[] = // refs:2
+const FieldTrait NoLinesOfTextV1_traits[] // refs:2
 {
-   FieldTrait(  58,15,  1,  0,0x05), FieldTrait( 354, 2,  2,  0,0x04), FieldTrait( 355,28,  3,  0,0x04)
+   {  58,15,  1,  0,0x05}, { 354, 2,  2,  0,0x04}, { 355,28,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoLinesOfTextV1_ftha(NoLinesOfTextV1_traits, 3);
 const MsgType NoLinesOfTextV1_msgtype("NoLinesOfTextV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoOrdersV1_traits[] = // refs:5
+const FieldTrait NoOrdersV1_traits[] // refs:5
 {
-   FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  37,15,  2,  0,0x04), FieldTrait(  38,10,  7,  0,0x04),
-   FieldTrait(  66,15,  5,  0,0x04), FieldTrait( 198,15,  3,  0,0x04), FieldTrait( 526,15,  4,  0,0x04),
-   FieldTrait( 756, 1,  6, 81,0x1c), FieldTrait( 799,11,  8,  0,0x04), FieldTrait( 800,10,  9,  0,0x04)
+   {  11,15,  1,  0,0x04}, {  37,15,  2,  0,0x04}, {  38,10,  7,  0,0x04}, {  66,15,  5,  0,0x04},
+   { 198,15,  3,  0,0x04}, { 526,15,  4,  0,0x04}, { 756, 1,  6, 81,0x1c}, { 799,11,  8,  0,0x04},
+   { 800,10,  9,  0,0x04}
 };
 const FieldTrait_Hash_Array NoOrdersV1_ftha(NoOrdersV1_traits, 9);
 const MsgType NoOrdersV1_msgtype("NoOrdersV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoAllocsV1_traits[] = // refs:6
+const FieldTrait NoAllocsV1_traits[] // refs:6
 {
-   FieldTrait(  79,15,  1,  0,0x04), FieldTrait(  80,10,  6,  0,0x04), FieldTrait( 467,15,  4,  0,0x04),
-   FieldTrait( 539, 1,  5, 80,0x1c), FieldTrait( 661, 1,  2,  0,0x04), FieldTrait( 736,19,  3,  0,0x04)
+   {  79,15,  1,  0,0x04}, {  80,10,  6,  0,0x04}, { 467,15,  4,  0,0x04}, { 539, 1,  5, 80,0x1c},
+   { 661, 1,  2,  0,0x04}, { 736,19,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoAllocsV1_ftha(NoAllocsV1_traits, 6);
 const MsgType NoAllocsV1_msgtype("NoAllocsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoAllocsV2_traits[] = // refs:3
+const FieldTrait NoAllocsV2_traits[] // refs:3
 {
-   FieldTrait(  12,13, 14, 16,0x14), FieldTrait(  13, 7, 15, 16,0x14), FieldTrait(  79,15,  1,  0,0x04),
-   FieldTrait(  80,10,  5,  0,0x04), FieldTrait(  81, 7,  7,  0,0x04), FieldTrait(  85, 1, 35, 37,0x1c),
-   FieldTrait( 119,13, 20,  0,0x04), FieldTrait( 120,19, 22,  0,0x04), FieldTrait( 136, 1, 28, 77,0x1c),
-   FieldTrait( 153,11, 18,  0,0x04), FieldTrait( 154,13, 19,  0,0x04), FieldTrait( 155, 9, 24,  0,0x04),
-   FieldTrait( 156, 7, 25,  0,0x04), FieldTrait( 161,15, 11,  0,0x04), FieldTrait( 169, 1, 32,153,0x14),
-   FieldTrait( 170,15, 33,153,0x14), FieldTrait( 171,15, 34,153,0x14), FieldTrait( 172, 1, 31,153,0x14),
-   FieldTrait( 208, 8,  9,  0,0x04), FieldTrait( 209, 1, 10,  0,0x04), FieldTrait( 360, 2, 12,  0,0x04),
-   FieldTrait( 361,28, 13,  0,0x04), FieldTrait( 366,11,  4,  0,0x04), FieldTrait( 467,15,  6,  0,0x04),
-   FieldTrait( 479,19, 16, 16,0x14), FieldTrait( 497, 7, 17, 16,0x14), FieldTrait( 539, 1,  8, 80,0x1c),
-   FieldTrait( 573, 7,  3,  0,0x04), FieldTrait( 576, 1, 29, 14,0x1c), FieldTrait( 635,15, 41,  0,0x04),
-   FieldTrait( 661, 1,  2,  0,0x04), FieldTrait( 736,19, 23,  0,0x04), FieldTrait( 737,13, 21,  0,0x04),
-   FieldTrait( 741,13, 27,  0,0x04), FieldTrait( 742,13, 26,  0,0x04), FieldTrait( 780, 1, 30,  0,0x04),
-   FieldTrait( 989,15, 36,  0,0x04), FieldTrait( 992, 1, 39,  0,0x04), FieldTrait( 993,15, 38,  0,0x04),
-   FieldTrait(1002, 1, 37,  0,0x04), FieldTrait(1047, 7, 40,  0,0x04)
+   {  12,13, 14, 16,0x14}, {  13, 7, 15, 16,0x14}, {  79,15,  1,  0,0x04}, {  80,10,  5,  0,0x04},
+   {  81, 7,  7,  0,0x04}, {  85, 1, 35, 37,0x1c}, { 119,13, 20,  0,0x04}, { 120,19, 22,  0,0x04},
+   { 136, 1, 28, 77,0x1c}, { 153,11, 18,  0,0x04}, { 154,13, 19,  0,0x04}, { 155, 9, 24,  0,0x04},
+   { 156, 7, 25,  0,0x04}, { 161,15, 11,  0,0x04}, { 169, 1, 32,153,0x14}, { 170,15, 33,153,0x14},
+   { 171,15, 34,153,0x14}, { 172, 1, 31,153,0x14}, { 208, 8,  9,  0,0x04}, { 209, 1, 10,  0,0x04},
+   { 360, 2, 12,  0,0x04}, { 361,28, 13,  0,0x04}, { 366,11,  4,  0,0x04}, { 467,15,  6,  0,0x04},
+   { 479,19, 16, 16,0x14}, { 497, 7, 17, 16,0x14}, { 539, 1,  8, 80,0x1c}, { 573, 7,  3,  0,0x04},
+   { 576, 1, 29, 14,0x1c}, { 635,15, 41,  0,0x04}, { 661, 1,  2,  0,0x04}, { 736,19, 23,  0,0x04},
+   { 737,13, 21,  0,0x04}, { 741,13, 27,  0,0x04}, { 742,13, 26,  0,0x04}, { 780, 1, 30,  0,0x04},
+   { 989,15, 36,  0,0x04}, { 992, 1, 39,  0,0x04}, { 993,15, 38,  0,0x04}, {1002, 1, 37,  0,0x04},
+   {1047, 7, 40,  0,0x04}
 };
 const FieldTrait_Hash_Array NoAllocsV2_ftha(NoAllocsV2_traits, 41);
 const MsgType NoAllocsV2_msgtype("NoAllocsV2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoAllocsV3_traits[] = // refs:2
+const FieldTrait NoAllocsV3_traits[] // refs:2
 {
-   FieldTrait(  79,15,  1,  0,0x04), FieldTrait(  80,10, 12,  0,0x04), FieldTrait( 161,15,  6,  0,0x04),
-   FieldTrait( 360, 2,  7,  0,0x04), FieldTrait( 361,28,  8,  0,0x04), FieldTrait( 366,11,  3,  0,0x04),
-   FieldTrait( 467,15,  4,  0,0x04), FieldTrait( 539, 1, 13, 80,0x1c), FieldTrait( 661, 1,  2,  0,0x04),
-   FieldTrait( 776, 1,  5,  0,0x04), FieldTrait( 989,15,  9,  0,0x04), FieldTrait( 992, 1, 11,  0,0x04),
-   FieldTrait( 993,15, 10,  0,0x04), FieldTrait(1047, 7, 14,  0,0x04)
+   {  79,15,  1,  0,0x04}, {  80,10, 12,  0,0x04}, { 161,15,  6,  0,0x04}, { 360, 2,  7,  0,0x04},
+   { 361,28,  8,  0,0x04}, { 366,11,  3,  0,0x04}, { 467,15,  4,  0,0x04}, { 539, 1, 13, 80,0x1c},
+   { 661, 1,  2,  0,0x04}, { 776, 1,  5,  0,0x04}, { 989,15,  9,  0,0x04}, { 992, 1, 11,  0,0x04},
+   { 993,15, 10,  0,0x04}, {1047, 7, 14,  0,0x04}
 };
 const FieldTrait_Hash_Array NoAllocsV3_ftha(NoAllocsV3_traits, 14);
 const MsgType NoAllocsV3_msgtype("NoAllocsV3");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoAllocsV4_traits[] = // refs:2
+const FieldTrait NoAllocsV4_traits[] // refs:2
 {
-   FieldTrait(  79,15,  1,  0,0x04), FieldTrait(  80,10,  6,  0,0x04), FieldTrait( 467,15,  4,  0,0x04),
-   FieldTrait( 661, 1,  2,  0,0x04), FieldTrait( 736,19,  3,  0,0x04), FieldTrait( 756, 1,  5, 81,0x1c),
-   FieldTrait( 989,15,  9,  0,0x04), FieldTrait( 993,15,  7,  0,0x04), FieldTrait(1002, 1,  8,  0,0x04),
-   FieldTrait(1136,15, 10,  0,0x04)
+   {  79,15,  1,  0,0x04}, {  80,10,  6,  0,0x04}, { 467,15,  4,  0,0x04}, { 661, 1,  2,  0,0x04},
+   { 736,19,  3,  0,0x04}, { 756, 1,  5, 81,0x1c}, { 989,15,  9,  0,0x04}, { 993,15,  7,  0,0x04},
+   {1002, 1,  8,  0,0x04}, {1136,15, 10,  0,0x04}
 };
 const FieldTrait_Hash_Array NoAllocsV4_ftha(NoAllocsV4_traits, 10);
 const MsgType NoAllocsV4_msgtype("NoAllocsV4");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoAllocsV5_traits[] = // refs:2
+const FieldTrait NoAllocsV5_traits[] // refs:2
 {
-   FieldTrait(  79,15,  1,  0,0x04), FieldTrait(  80,10,  6,  0,0x04), FieldTrait( 467,15,  4,  0,0x04),
-   FieldTrait( 661, 1,  2,  0,0x04), FieldTrait( 736,19,  3,  0,0x04), FieldTrait( 948, 1,  5, 82,0x1c)
+   {  79,15,  1,  0,0x04}, {  80,10,  6,  0,0x04}, { 467,15,  4,  0,0x04}, { 661, 1,  2,  0,0x04},
+   { 736,19,  3,  0,0x04}, { 948, 1,  5, 82,0x1c}
 };
 const FieldTrait_Hash_Array NoAllocsV5_ftha(NoAllocsV5_traits, 6);
 const MsgType NoAllocsV5_msgtype("NoAllocsV5");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoDlvyInstV1_traits[] = // refs:8
+const FieldTrait NoDlvyInstV1_traits[] // refs:8
 {
-   FieldTrait( 165, 7,  1,  0,0x04), FieldTrait( 781, 1,  3,155,0x1c), FieldTrait( 787, 7,  2,  0,0x04)
+   { 165, 7,  1,  0,0x04}, { 781, 1,  3,155,0x1c}, { 787, 7,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoDlvyInstV1_ftha(NoDlvyInstV1_traits, 3);
 const MsgType NoDlvyInstV1_msgtype("NoDlvyInstV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoExecsV1_traits[] = // refs:6
+const FieldTrait NoExecsV1_traits[] // refs:6
 {
-   FieldTrait(  17,15,  1,  0,0x04)
+   {  17,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoExecsV1_ftha(NoExecsV1_traits, 1);
 const MsgType NoExecsV1_msgtype("NoExecsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoExecsV2_traits[] = // refs:3
+const FieldTrait NoExecsV2_traits[] // refs:3
 {
-   FieldTrait(  17,15,  2,  0,0x04), FieldTrait(  29, 7,  6,  0,0x04), FieldTrait(  31,11,  4,  0,0x04),
-   FieldTrait(  32,10,  1,  0,0x04), FieldTrait( 527,15,  3,  0,0x04), FieldTrait( 669,11,  5,  0,0x04),
-   FieldTrait(1003,15,  7,  0,0x04), FieldTrait(1041,15,  8,  0,0x04)
+   {  17,15,  2,  0,0x04}, {  29, 7,  6,  0,0x04}, {  31,11,  4,  0,0x04}, {  32,10,  1,  0,0x04},
+   { 527,15,  3,  0,0x04}, { 669,11,  5,  0,0x04}, {1003,15,  7,  0,0x04}, {1041,15,  8,  0,0x04}
 };
 const FieldTrait_Hash_Array NoExecsV2_ftha(NoExecsV2_traits, 8);
 const MsgType NoExecsV2_msgtype("NoExecsV2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoMiscFeesV1_traits[] = // refs:11
+const FieldTrait NoMiscFeesV1_traits[] // refs:11
 {
-   FieldTrait( 137,13,  1,  0,0x04), FieldTrait( 138,19,  2,  0,0x04), FieldTrait( 139,15,  3,  0,0x04),
-   FieldTrait( 891, 1,  4,  0,0x04)
+   { 137,13,  1,  0,0x04}, { 138,19,  2,  0,0x04}, { 139,15,  3,  0,0x04}, { 891, 1,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array NoMiscFeesV1_ftha(NoMiscFeesV1_traits, 4);
 const MsgType NoMiscFeesV1_msgtype("NoMiscFeesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoRelatedSymV9_traits[] = // refs:3
+const FieldTrait NoRelatedSymV9_traits[] // refs:3
 {
-   FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14),
-   FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14),
-   FieldTrait( 202,11, 24, 54,0x14), FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14),
-   FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 454, 1,  5,142,0x1c),
-   FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14),
-   FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 691,15, 36, 54,0x14),
-   FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 873,25, 41, 54,0x14),
-   FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14),
-   FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14), FieldTrait( 966,15, 44, 54,0x14),
-   FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14), FieldTrait( 969, 9, 48, 54,0x14),
-   FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14), FieldTrait( 996,15, 52, 54,0x14),
-   FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c), FieldTrait(1049, 7, 45, 54,0x14),
-   FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1146,13, 56, 54,0x14), FieldTrait(1147,10, 57, 54,0x14),
-   FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14), FieldTrait(1185,29, 59,150,0x14),
-   FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14), FieldTrait(1192,10, 63, 54,0x14),
-   FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14), FieldTrait(1195,13, 66, 54,0x14),
-   FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14), FieldTrait(1198, 1, 68, 54,0x14),
-   FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14), FieldTrait(1227,15, 61, 54,0x14),
-   FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14), FieldTrait(1435, 1, 75, 54,0x14),
-   FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14), FieldTrait(1450,15, 78, 54,0x14),
-   FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14), FieldTrait(1457,14, 81, 54,0x14),
-   FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14), FieldTrait(1479, 1, 84, 54,0x14),
-   FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14), FieldTrait(1482, 1, 87, 54,0x14),
-   FieldTrait(1483, 1, 88, 21,0x1c)
+   {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14}, {  65,15,  2, 54,0x14},
+   { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14}, { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14},
+   { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14}, { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14},
+   { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14}, { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14},
+   { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14}, { 231, 9, 27, 54,0x14}, { 239, 1, 14, 54,0x14},
+   { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14},
+   { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 667,21, 37, 54,0x14}, { 691,15, 36, 54,0x14},
+   { 762,15,  9, 54,0x14}, { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14},
+   { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14},
+   { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14},
+   { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14},
+   {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14},
+   {1147,10, 57, 54,0x14}, {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14},
+   {1186,15, 60,150,0x14}, {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14},
+   {1194, 1, 65, 54,0x14}, {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14},
+   {1198, 1, 68, 54,0x14}, {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14},
+   {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14},
+   {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14},
+   {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14},
+   {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}
 };
 const FieldTrait_Hash_Array NoRelatedSymV9_ftha(NoRelatedSymV9_traits, 88);
 const MsgType NoRelatedSymV9_msgtype("NoRelatedSymV9");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoRoutingIDsV1_traits[] = // refs:5
+const FieldTrait NoRoutingIDsV1_traits[] // refs:5
 {
-   FieldTrait( 216, 1,  1,  0,0x04), FieldTrait( 217,15,  2,  0,0x04)
+   { 216, 1,  1,  0,0x04}, { 217,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoRoutingIDsV1_ftha(NoRoutingIDsV1_traits, 2);
 const MsgType NoRoutingIDsV1_msgtype("NoRoutingIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoStipulationsV1_traits[] = // refs:27
+const FieldTrait NoStipulationsV1_traits[] // refs:27
 {
-   FieldTrait( 233,15,  1,  0,0x04), FieldTrait( 234,15,  2,  0,0x04)
+   { 233,15,  1,  0,0x04}, { 234,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoStipulationsV1_ftha(NoStipulationsV1_traits, 2);
 const MsgType NoStipulationsV1_msgtype("NoStipulationsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTradingSessionsV1_traits[] = // refs:11
+const FieldTrait NoTradingSessionsV1_traits[] // refs:11
 {
-   FieldTrait( 336,15,  1,  0,0x04), FieldTrait( 625,15,  2,  0,0x04)
+   { 336,15,  1,  0,0x04}, { 625,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTradingSessionsV1_ftha(NoTradingSessionsV1_traits, 2);
 const MsgType NoTradingSessionsV1_msgtype("NoTradingSessionsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTradingSessionsV2_traits[] = // refs:2
+const FieldTrait NoTradingSessionsV2_traits[] // refs:2
 {
-   FieldTrait(  58,15, 15,  0,0x04), FieldTrait(  60,22, 26,  0,0x04), FieldTrait( 207,20,  3,  0,0x04),
-   FieldTrait( 325, 8,  6,  0,0x04), FieldTrait( 336,15,  1,  0,0x05), FieldTrait( 338, 1,  4,  0,0x04),
-   FieldTrait( 339, 1,  5,  0,0x04), FieldTrait( 340, 1,  7,  0,0x05), FieldTrait( 341,22,  9,  0,0x04),
-   FieldTrait( 342,22, 10,  0,0x04), FieldTrait( 343,22, 11,  0,0x04), FieldTrait( 344,22, 12,  0,0x04),
-   FieldTrait( 345,22, 13,  0,0x04), FieldTrait( 354, 2, 16,  0,0x04), FieldTrait( 355,28, 17,  0,0x04),
-   FieldTrait( 387,10, 14,  0,0x04), FieldTrait( 567, 1,  8,  0,0x04), FieldTrait( 625,15,  2,  0,0x04),
-   FieldTrait(1141, 1, 25, 73,0x1c), FieldTrait(1232, 1, 23, 41,0x1c), FieldTrait(1235, 1, 24, 75,0x1c),
-   FieldTrait(1237, 1, 21, 92,0x1c), FieldTrait(1239, 1, 22,171,0x1c), FieldTrait(1300,15, 19,  0,0x04),
-   FieldTrait(1301,20, 18,  0,0x04), FieldTrait(1326,15, 20,  0,0x04), FieldTrait(1327, 7, 27,  0,0x04)
+   {  58,15, 15,  0,0x04}, {  60,22, 26,  0,0x04}, { 207,20,  3,  0,0x04}, { 325, 8,  6,  0,0x04},
+   { 336,15,  1,  0,0x05}, { 338, 1,  4,  0,0x04}, { 339, 1,  5,  0,0x04}, { 340, 1,  7,  0,0x05},
+   { 341,22,  9,  0,0x04}, { 342,22, 10,  0,0x04}, { 343,22, 11,  0,0x04}, { 344,22, 12,  0,0x04},
+   { 345,22, 13,  0,0x04}, { 354, 2, 16,  0,0x04}, { 355,28, 17,  0,0x04}, { 387,10, 14,  0,0x04},
+   { 567, 1,  8,  0,0x04}, { 625,15,  2,  0,0x04}, {1141, 1, 25, 73,0x1c}, {1232, 1, 23, 41,0x1c},
+   {1235, 1, 24, 75,0x1c}, {1237, 1, 21, 92,0x1c}, {1239, 1, 22,171,0x1c}, {1300,15, 19,  0,0x04},
+   {1301,20, 18,  0,0x04}, {1326,15, 20,  0,0x04}, {1327, 7, 27,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTradingSessionsV2_ftha(NoTradingSessionsV2_traits, 27);
 const MsgType NoTradingSessionsV2_msgtype("NoTradingSessionsV2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoPartyIDsV1_traits[] = // refs:65
+const FieldTrait NoPartyIDsV1_traits[] // refs:65
 {
-   FieldTrait( 447, 7,  2,  0,0x04), FieldTrait( 448,15,  1,  0,0x04), FieldTrait( 452, 1,  3,  0,0x04),
-   FieldTrait( 802, 1,  4,107,0x1c)
+   { 447, 7,  2,  0,0x04}, { 448,15,  1,  0,0x04}, { 452, 1,  3,  0,0x04}, { 802, 1,  4,107,0x1c}
 };
 const FieldTrait_Hash_Array NoPartyIDsV1_ftha(NoPartyIDsV1_traits, 4);
 const MsgType NoPartyIDsV1_msgtype("NoPartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoSecurityAltIDV1_traits[] = // refs:72
+const FieldTrait NoSecurityAltIDV1_traits[] // refs:72
 {
-   FieldTrait( 455,15,  1,  0,0x04), FieldTrait( 456,15,  2,  0,0x04)
+   { 455,15,  1,  0,0x04}, { 456,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoSecurityAltIDV1_ftha(NoSecurityAltIDV1_traits, 2);
 const MsgType NoSecurityAltIDV1_msgtype("NoSecurityAltIDV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUnderlyingSecurityAltIDV1_traits[] = // refs:68
+const FieldTrait NoUnderlyingSecurityAltIDV1_traits[] // refs:68
 {
-   FieldTrait( 458,15,  1,  0,0x04), FieldTrait( 459,15,  2,  0,0x04)
+   { 458,15,  1,  0,0x04}, { 459,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoUnderlyingSecurityAltIDV1_ftha(NoUnderlyingSecurityAltIDV1_traits, 2);
 const MsgType NoUnderlyingSecurityAltIDV1_msgtype("NoUnderlyingSecurityAltIDV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoContAmtsV1_traits[] = // refs:3
+const FieldTrait NoContAmtsV1_traits[] // refs:3
 {
-   FieldTrait( 519, 1,  1,  0,0x04), FieldTrait( 520, 9,  2,  0,0x04), FieldTrait( 521,19,  3,  0,0x04)
+   { 519, 1,  1,  0,0x04}, { 520, 9,  2,  0,0x04}, { 521,19,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoContAmtsV1_ftha(NoContAmtsV1_traits, 3);
 const MsgType NoContAmtsV1_msgtype("NoContAmtsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoAffectedOrdersV1_traits[] = // refs:2
+const FieldTrait NoAffectedOrdersV1_traits[] // refs:2
 {
-   FieldTrait(  41,15,  1,  0,0x04), FieldTrait( 535,15,  2,  0,0x04), FieldTrait( 536,15,  3,  0,0x04)
+   {  41,15,  1,  0,0x04}, { 535,15,  2,  0,0x04}, { 536,15,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoAffectedOrdersV1_ftha(NoAffectedOrdersV1_traits, 3);
 const MsgType NoAffectedOrdersV1_msgtype("NoAffectedOrdersV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNestedPartyIDsV1_traits[] = // refs:28
+const FieldTrait NoNestedPartyIDsV1_traits[] // refs:28
 {
-   FieldTrait( 524,15,  1,  0,0x04), FieldTrait( 525, 7,  2,  0,0x04), FieldTrait( 538, 1,  3,  0,0x04),
-   FieldTrait( 804, 1,  4, 89,0x1c)
+   { 524,15,  1,  0,0x04}, { 525, 7,  2,  0,0x04}, { 538, 1,  3,  0,0x04}, { 804, 1,  4, 89,0x1c}
 };
 const FieldTrait_Hash_Array NoNestedPartyIDsV1_ftha(NoNestedPartyIDsV1_traits, 4);
 const MsgType NoNestedPartyIDsV1_msgtype("NoNestedPartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoSidesV2_traits[] = // refs:2
+const FieldTrait NoSidesV2_traits[] // refs:2
 {
-   FieldTrait(   1,15,  8,  0,0x04), FieldTrait(  11,15,  2,  0,0x05), FieldTrait(  12,13, 22, 16,0x14),
-   FieldTrait(  13, 7, 23, 16,0x14), FieldTrait(  38,10, 17, 93,0x14), FieldTrait(  41,15, 43,  0,0x04),
-   FieldTrait(  54, 7,  1,  0,0x05), FieldTrait(  58,15, 32,  0,0x04), FieldTrait(  70,15, 14,  0,0x04),
-   FieldTrait(  75,25,  7,  0,0x04), FieldTrait(  77, 7, 35,  0,0x04), FieldTrait(  78, 1, 15,104,0x1c),
-   FieldTrait( 120,19, 30,  0,0x04), FieldTrait( 121, 8, 29,  0,0x04), FieldTrait( 152,10, 18, 93,0x14),
-   FieldTrait( 203, 1, 36,  0,0x04), FieldTrait( 229,25,  6,  0,0x04), FieldTrait( 354, 2, 33,  0,0x04),
-   FieldTrait( 355,28, 34,  0,0x04), FieldTrait( 377, 8, 39,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c),
-   FieldTrait( 468, 7, 20, 93,0x14), FieldTrait( 469, 9, 21, 93,0x14), FieldTrait( 479,19, 24, 16,0x14),
-   FieldTrait( 497, 7, 25, 16,0x14), FieldTrait( 516,14, 19, 93,0x14), FieldTrait( 526,15,  3,  0,0x04),
-   FieldTrait( 528, 7, 26,  0,0x04), FieldTrait( 529,16, 27,  0,0x04), FieldTrait( 544, 7, 37,  0,0x04),
-   FieldTrait( 581, 1, 10,  0,0x04), FieldTrait( 582, 1, 28,  0,0x04), FieldTrait( 583,15,  4,  0,0x04),
-   FieldTrait( 589, 7, 11,  0,0x04), FieldTrait( 590, 7, 12,  0,0x04), FieldTrait( 591, 7, 13,  0,0x04),
-   FieldTrait( 635,15, 38,  0,0x04), FieldTrait( 659,15, 40,  0,0x04), FieldTrait( 660, 1,  9,  0,0x04),
-   FieldTrait( 775, 1, 31,  0,0x04), FieldTrait( 854, 1, 16,  0,0x04), FieldTrait( 962,22, 41,  0,0x04),
-   FieldTrait(1091, 8, 42,  0,0x04)
+   {   1,15,  8,  0,0x04}, {  11,15,  2,  0,0x05}, {  12,13, 22, 16,0x14}, {  13, 7, 23, 16,0x14},
+   {  38,10, 17, 93,0x14}, {  41,15, 43,  0,0x04}, {  54, 7,  1,  0,0x05}, {  58,15, 32,  0,0x04},
+   {  70,15, 14,  0,0x04}, {  75,25,  7,  0,0x04}, {  77, 7, 35,  0,0x04}, {  78, 1, 15,104,0x1c},
+   { 120,19, 30,  0,0x04}, { 121, 8, 29,  0,0x04}, { 152,10, 18, 93,0x14}, { 203, 1, 36,  0,0x04},
+   { 229,25,  6,  0,0x04}, { 354, 2, 33,  0,0x04}, { 355,28, 34,  0,0x04}, { 377, 8, 39,  0,0x04},
+   { 453, 1,  5, 94,0x1c}, { 468, 7, 20, 93,0x14}, { 469, 9, 21, 93,0x14}, { 479,19, 24, 16,0x14},
+   { 497, 7, 25, 16,0x14}, { 516,14, 19, 93,0x14}, { 526,15,  3,  0,0x04}, { 528, 7, 26,  0,0x04},
+   { 529,16, 27,  0,0x04}, { 544, 7, 37,  0,0x04}, { 581, 1, 10,  0,0x04}, { 582, 1, 28,  0,0x04},
+   { 583,15,  4,  0,0x04}, { 589, 7, 11,  0,0x04}, { 590, 7, 12,  0,0x04}, { 591, 7, 13,  0,0x04},
+   { 635,15, 38,  0,0x04}, { 659,15, 40,  0,0x04}, { 660, 1,  9,  0,0x04}, { 775, 1, 31,  0,0x04},
+   { 854, 1, 16,  0,0x04}, { 962,22, 41,  0,0x04}, {1091, 8, 42,  0,0x04}
 };
 const FieldTrait_Hash_Array NoSidesV2_ftha(NoSidesV2_traits, 43);
 const MsgType NoSidesV2_msgtype("NoSidesV2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegsV1_traits[] = // refs:2
+const FieldTrait NoLegsV1_traits[] // refs:2
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 539, 1, 60, 80,0x1c),
-   FieldTrait( 556,19, 38, 56,0x14), FieldTrait( 564, 7, 58,  0,0x04), FieldTrait( 565, 1, 59,  0,0x04),
-   FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 587, 7, 62,  0,0x04), FieldTrait( 588,25, 63,  0,0x04),
-   FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14), FieldTrait( 598,15, 22, 56,0x14),
-   FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14), FieldTrait( 601,15,  2, 56,0x14),
-   FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14), FieldTrait( 604, 1,  5, 64,0x1c),
-   FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14), FieldTrait( 609,15,  8, 56,0x14),
-   FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14), FieldTrait( 612,11, 24, 56,0x14),
-   FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14), FieldTrait( 615,14, 28, 56,0x14),
-   FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14), FieldTrait( 618, 2, 31, 56,0x14),
-   FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14), FieldTrait( 621, 2, 34, 56,0x14),
-   FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14), FieldTrait( 624, 7, 37, 56,0x14),
-   FieldTrait( 637,11, 64,  0,0x04), FieldTrait( 654,15, 61,  0,0x04), FieldTrait( 675,19, 66,  0,0x04),
-   FieldTrait( 683, 1, 57, 65,0x1c), FieldTrait( 687,10, 55,  0,0x04), FieldTrait( 690, 1, 56,  0,0x04),
-   FieldTrait( 739,25, 40, 56,0x14), FieldTrait( 740,15, 39, 56,0x14), FieldTrait( 764,15,  9, 56,0x14),
-   FieldTrait( 942,19, 25, 56,0x14), FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14),
-   FieldTrait( 990,15, 65,  0,0x04), FieldTrait( 999,15, 43, 56,0x14), FieldTrait(1001,15, 44, 56,0x14),
-   FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1073,12, 67,  0,0x04), FieldTrait(1074,10, 68,  0,0x04),
-   FieldTrait(1075,13, 69,  0,0x04), FieldTrait(1152, 1, 70,  0,0x04), FieldTrait(1212,26, 47, 56,0x14),
-   FieldTrait(1224,10, 50, 56,0x14), FieldTrait(1342, 1, 71,172,0x1c), FieldTrait(1358, 1, 48, 56,0x14),
-   FieldTrait(1379, 9, 72,  0,0x04), FieldTrait(1381,14, 73,  0,0x04), FieldTrait(1383, 9, 74,  0,0x04),
-   FieldTrait(1384,16, 75,  0,0x04), FieldTrait(1418,10, 76,  0,0x04), FieldTrait(1420, 1, 49, 56,0x14),
-   FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14), FieldTrait(1436, 1, 53, 56,0x14),
-   FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 539, 1, 60, 80,0x1c}, { 556,19, 38, 56,0x14}, { 564, 7, 58,  0,0x04}, { 565, 1, 59,  0,0x04},
+   { 566,11, 46, 56,0x14}, { 587, 7, 62,  0,0x04}, { 588,25, 63,  0,0x04}, { 596,18, 20, 56,0x14},
+   { 597,15, 21, 56,0x14}, { 598,15, 22, 56,0x14}, { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14},
+   { 601,15,  2, 56,0x14}, { 602,15,  3, 56,0x14}, { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c},
+   { 607, 1,  6, 56,0x14}, { 608,15,  7, 56,0x14}, { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14},
+   { 611,25, 11, 56,0x14}, { 612,11, 24, 56,0x14}, { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14},
+   { 615,14, 28, 56,0x14}, { 616,20, 29, 56,0x14}, { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14},
+   { 619,28, 32, 56,0x14}, { 620,15, 33, 56,0x14}, { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14},
+   { 623, 9, 36, 56,0x14}, { 624, 7, 37, 56,0x14}, { 637,11, 64,  0,0x04}, { 654,15, 61,  0,0x04},
+   { 675,19, 66,  0,0x04}, { 683, 1, 57, 65,0x1c}, { 687,10, 55,  0,0x04}, { 690, 1, 56,  0,0x04},
+   { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14}, { 942,19, 25, 56,0x14},
+   { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14}, { 990,15, 65,  0,0x04}, { 999,15, 43, 56,0x14},
+   {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1073,12, 67,  0,0x04}, {1074,10, 68,  0,0x04},
+   {1075,13, 69,  0,0x04}, {1152, 1, 70,  0,0x04}, {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14},
+   {1342, 1, 71,172,0x1c}, {1358, 1, 48, 56,0x14}, {1379, 9, 72,  0,0x04}, {1381,14, 73,  0,0x04},
+   {1383, 9, 74,  0,0x04}, {1384,16, 75,  0,0x04}, {1418,10, 76,  0,0x04}, {1420, 1, 49, 56,0x14},
+   {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array NoLegsV1_ftha(NoLegsV1_traits, 76);
 const MsgType NoLegsV1_msgtype("NoLegsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegsV2_traits[] = // refs:2
+const FieldTrait NoLegsV2_traits[] // refs:2
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 539, 1, 60, 80,0x1c),
-   FieldTrait( 556,19, 38, 56,0x14), FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 587, 7, 57,  0,0x04),
-   FieldTrait( 588,25, 58,  0,0x04), FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14),
-   FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14),
-   FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14),
-   FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14),
-   FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14),
-   FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14),
-   FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14),
-   FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14),
-   FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14),
-   FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 654,15, 67,  0,0x04), FieldTrait( 676,19, 61, 59,0x14),
-   FieldTrait( 677,15, 62, 59,0x14), FieldTrait( 678,15, 63, 59,0x14), FieldTrait( 679,11, 64, 59,0x14),
-   FieldTrait( 680, 1, 65, 59,0x14), FieldTrait( 683, 1, 59, 65,0x1c), FieldTrait( 685,10, 66,  0,0x04),
-   FieldTrait( 687,10, 55,  0,0x04), FieldTrait( 690, 1, 56,  0,0x04), FieldTrait( 739,25, 40, 56,0x14),
-   FieldTrait( 740,15, 39, 56,0x14), FieldTrait( 764,15,  9, 56,0x14), FieldTrait( 942,19, 25, 56,0x14),
-   FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14), FieldTrait( 999,15, 43, 56,0x14),
-   FieldTrait(1001,15, 44, 56,0x14), FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1212,26, 47, 56,0x14),
-   FieldTrait(1224,10, 50, 56,0x14), FieldTrait(1358, 1, 48, 56,0x14), FieldTrait(1420, 1, 49, 56,0x14),
-   FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14), FieldTrait(1436, 1, 53, 56,0x14),
-   FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 539, 1, 60, 80,0x1c}, { 556,19, 38, 56,0x14}, { 566,11, 46, 56,0x14}, { 587, 7, 57,  0,0x04},
+   { 588,25, 58,  0,0x04}, { 596,18, 20, 56,0x14}, { 597,15, 21, 56,0x14}, { 598,15, 22, 56,0x14},
+   { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14}, { 601,15,  2, 56,0x14}, { 602,15,  3, 56,0x14},
+   { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c}, { 607, 1,  6, 56,0x14}, { 608,15,  7, 56,0x14},
+   { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14}, { 611,25, 11, 56,0x14}, { 612,11, 24, 56,0x14},
+   { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14}, { 615,14, 28, 56,0x14}, { 616,20, 29, 56,0x14},
+   { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14}, { 619,28, 32, 56,0x14}, { 620,15, 33, 56,0x14},
+   { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14}, { 623, 9, 36, 56,0x14}, { 624, 7, 37, 56,0x14},
+   { 654,15, 67,  0,0x04}, { 676,19, 61, 59,0x14}, { 677,15, 62, 59,0x14}, { 678,15, 63, 59,0x14},
+   { 679,11, 64, 59,0x14}, { 680, 1, 65, 59,0x14}, { 683, 1, 59, 65,0x1c}, { 685,10, 66,  0,0x04},
+   { 687,10, 55,  0,0x04}, { 690, 1, 56,  0,0x04}, { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14},
+   { 764,15,  9, 56,0x14}, { 942,19, 25, 56,0x14}, { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14},
+   { 999,15, 43, 56,0x14}, {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1212,26, 47, 56,0x14},
+   {1224,10, 50, 56,0x14}, {1358, 1, 48, 56,0x14}, {1420, 1, 49, 56,0x14}, {1421,15, 51, 56,0x14},
+   {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array NoLegsV2_ftha(NoLegsV2_traits, 67);
 const MsgType NoLegsV2_msgtype("NoLegsV2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegsV4_traits[] = // refs:2
+const FieldTrait NoLegsV4_traits[] // refs:2
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 556,19, 38, 56,0x14),
-   FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 587, 7, 56,  0,0x04), FieldTrait( 596,18, 20, 56,0x14),
-   FieldTrait( 597,15, 21, 56,0x14), FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14),
-   FieldTrait( 600,15,  1, 56,0x14), FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14),
-   FieldTrait( 603,15,  4, 56,0x14), FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14),
-   FieldTrait( 608,15,  7, 56,0x14), FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14),
-   FieldTrait( 611,25, 11, 56,0x14), FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14),
-   FieldTrait( 614, 9, 27, 56,0x14), FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14),
-   FieldTrait( 617,15, 30, 56,0x14), FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14),
-   FieldTrait( 620,15, 33, 56,0x14), FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14),
-   FieldTrait( 623, 9, 36, 56,0x14), FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 676,19, 58, 59,0x14),
-   FieldTrait( 677,15, 59, 59,0x14), FieldTrait( 678,15, 60, 59,0x14), FieldTrait( 679,11, 61, 59,0x14),
-   FieldTrait( 680, 1, 62, 59,0x14), FieldTrait( 683, 1, 57, 65,0x1c), FieldTrait( 690, 1, 55,  0,0x04),
-   FieldTrait( 739,25, 40, 56,0x14), FieldTrait( 740,15, 39, 56,0x14), FieldTrait( 764,15,  9, 56,0x14),
-   FieldTrait( 942,19, 25, 56,0x14), FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14),
-   FieldTrait( 999,15, 43, 56,0x14), FieldTrait(1001,15, 44, 56,0x14), FieldTrait(1017, 9, 45, 56,0x14),
-   FieldTrait(1212,26, 47, 56,0x14), FieldTrait(1224,10, 50, 56,0x14), FieldTrait(1358, 1, 48, 56,0x14),
-   FieldTrait(1420, 1, 49, 56,0x14), FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14),
-   FieldTrait(1436, 1, 53, 56,0x14), FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 556,19, 38, 56,0x14}, { 566,11, 46, 56,0x14}, { 587, 7, 56,  0,0x04}, { 596,18, 20, 56,0x14},
+   { 597,15, 21, 56,0x14}, { 598,15, 22, 56,0x14}, { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14},
+   { 601,15,  2, 56,0x14}, { 602,15,  3, 56,0x14}, { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c},
+   { 607, 1,  6, 56,0x14}, { 608,15,  7, 56,0x14}, { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14},
+   { 611,25, 11, 56,0x14}, { 612,11, 24, 56,0x14}, { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14},
+   { 615,14, 28, 56,0x14}, { 616,20, 29, 56,0x14}, { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14},
+   { 619,28, 32, 56,0x14}, { 620,15, 33, 56,0x14}, { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14},
+   { 623, 9, 36, 56,0x14}, { 624, 7, 37, 56,0x14}, { 676,19, 58, 59,0x14}, { 677,15, 59, 59,0x14},
+   { 678,15, 60, 59,0x14}, { 679,11, 61, 59,0x14}, { 680, 1, 62, 59,0x14}, { 683, 1, 57, 65,0x1c},
+   { 690, 1, 55,  0,0x04}, { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14},
+   { 942,19, 25, 56,0x14}, { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14}, { 999,15, 43, 56,0x14},
+   {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14},
+   {1358, 1, 48, 56,0x14}, {1420, 1, 49, 56,0x14}, {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14},
+   {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array NoLegsV4_ftha(NoLegsV4_traits, 62);
 const MsgType NoLegsV4_msgtype("NoLegsV4");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegsV5_traits[] = // refs:2
+const FieldTrait NoLegsV5_traits[] // refs:2
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 539, 1, 61, 80,0x1c),
-   FieldTrait( 556,19, 38, 56,0x14), FieldTrait( 564, 7, 59,  0,0x04), FieldTrait( 565, 1, 60,  0,0x04),
-   FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 587, 7, 63,  0,0x04), FieldTrait( 588,25, 64,  0,0x04),
-   FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14), FieldTrait( 598,15, 22, 56,0x14),
-   FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14), FieldTrait( 601,15,  2, 56,0x14),
-   FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14), FieldTrait( 604, 1,  5, 64,0x1c),
-   FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14), FieldTrait( 609,15,  8, 56,0x14),
-   FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14), FieldTrait( 612,11, 24, 56,0x14),
-   FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14), FieldTrait( 615,14, 28, 56,0x14),
-   FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14), FieldTrait( 618, 2, 31, 56,0x14),
-   FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14), FieldTrait( 621, 2, 34, 56,0x14),
-   FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14), FieldTrait( 624, 7, 37, 56,0x14),
-   FieldTrait( 654,15, 62,  0,0x04), FieldTrait( 670, 1, 58, 61,0x1c), FieldTrait( 675,19, 71,  0,0x04),
-   FieldTrait( 683, 1, 57, 65,0x1c), FieldTrait( 685,10, 65,  0,0x04), FieldTrait( 687,10, 55,  0,0x04),
-   FieldTrait( 690, 1, 56,  0,0x04), FieldTrait( 739,25, 40, 56,0x14), FieldTrait( 740,15, 39, 56,0x14),
-   FieldTrait( 764,15,  9, 56,0x14), FieldTrait( 942,19, 25, 56,0x14), FieldTrait( 955,21, 41, 56,0x14),
-   FieldTrait( 956,25, 42, 56,0x14), FieldTrait( 999,15, 43, 56,0x14), FieldTrait(1001,15, 44, 56,0x14),
-   FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1212,26, 47, 56,0x14), FieldTrait(1224,10, 50, 56,0x14),
-   FieldTrait(1358, 1, 48, 56,0x14), FieldTrait(1366,15, 66,  0,0x04), FieldTrait(1379, 9, 67,  0,0x04),
-   FieldTrait(1381,14, 68,  0,0x04), FieldTrait(1383, 9, 69,  0,0x04), FieldTrait(1384,16, 70,  0,0x04),
-   FieldTrait(1420, 1, 49, 56,0x14), FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14),
-   FieldTrait(1436, 1, 53, 56,0x14), FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 539, 1, 61, 80,0x1c}, { 556,19, 38, 56,0x14}, { 564, 7, 59,  0,0x04}, { 565, 1, 60,  0,0x04},
+   { 566,11, 46, 56,0x14}, { 587, 7, 63,  0,0x04}, { 588,25, 64,  0,0x04}, { 596,18, 20, 56,0x14},
+   { 597,15, 21, 56,0x14}, { 598,15, 22, 56,0x14}, { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14},
+   { 601,15,  2, 56,0x14}, { 602,15,  3, 56,0x14}, { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c},
+   { 607, 1,  6, 56,0x14}, { 608,15,  7, 56,0x14}, { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14},
+   { 611,25, 11, 56,0x14}, { 612,11, 24, 56,0x14}, { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14},
+   { 615,14, 28, 56,0x14}, { 616,20, 29, 56,0x14}, { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14},
+   { 619,28, 32, 56,0x14}, { 620,15, 33, 56,0x14}, { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14},
+   { 623, 9, 36, 56,0x14}, { 624, 7, 37, 56,0x14}, { 654,15, 62,  0,0x04}, { 670, 1, 58, 61,0x1c},
+   { 675,19, 71,  0,0x04}, { 683, 1, 57, 65,0x1c}, { 685,10, 65,  0,0x04}, { 687,10, 55,  0,0x04},
+   { 690, 1, 56,  0,0x04}, { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14},
+   { 942,19, 25, 56,0x14}, { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14}, { 999,15, 43, 56,0x14},
+   {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14},
+   {1358, 1, 48, 56,0x14}, {1366,15, 66,  0,0x04}, {1379, 9, 67,  0,0x04}, {1381,14, 68,  0,0x04},
+   {1383, 9, 69,  0,0x04}, {1384,16, 70,  0,0x04}, {1420, 1, 49, 56,0x14}, {1421,15, 51, 56,0x14},
+   {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array NoLegsV5_ftha(NoLegsV5_traits, 71);
 const MsgType NoLegsV5_msgtype("NoLegsV5");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegsV6_traits[] = // refs:2
+const FieldTrait NoLegsV6_traits[] // refs:2
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 539, 1, 60, 80,0x1c),
-   FieldTrait( 556,19, 38, 56,0x14), FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 587, 7, 57,  0,0x04),
-   FieldTrait( 588,25, 58,  0,0x04), FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14),
-   FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14),
-   FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14),
-   FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14),
-   FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14),
-   FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14),
-   FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14),
-   FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14),
-   FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14),
-   FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 654,15, 70,  0,0x04), FieldTrait( 676,19, 64, 59,0x14),
-   FieldTrait( 677,15, 65, 59,0x14), FieldTrait( 678,15, 66, 59,0x14), FieldTrait( 679,11, 67, 59,0x14),
-   FieldTrait( 680, 1, 68, 59,0x14), FieldTrait( 681,11, 62,  0,0x04), FieldTrait( 683, 1, 59, 65,0x1c),
-   FieldTrait( 684,11, 63,  0,0x04), FieldTrait( 685,10, 69,  0,0x04), FieldTrait( 686, 1, 61,  0,0x04),
-   FieldTrait( 687,10, 55,  0,0x04), FieldTrait( 690, 1, 56,  0,0x04), FieldTrait( 739,25, 40, 56,0x14),
-   FieldTrait( 740,15, 39, 56,0x14), FieldTrait( 764,15,  9, 56,0x14), FieldTrait( 942,19, 25, 56,0x14),
-   FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14), FieldTrait( 999,15, 43, 56,0x14),
-   FieldTrait(1001,15, 44, 56,0x14), FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1067,12, 71,  0,0x04),
-   FieldTrait(1068,12, 72,  0,0x04), FieldTrait(1212,26, 47, 56,0x14), FieldTrait(1224,10, 50, 56,0x14),
-   FieldTrait(1358, 1, 48, 56,0x14), FieldTrait(1420, 1, 49, 56,0x14), FieldTrait(1421,15, 51, 56,0x14),
-   FieldTrait(1422,10, 52, 56,0x14), FieldTrait(1436, 1, 53, 56,0x14), FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 539, 1, 60, 80,0x1c}, { 556,19, 38, 56,0x14}, { 566,11, 46, 56,0x14}, { 587, 7, 57,  0,0x04},
+   { 588,25, 58,  0,0x04}, { 596,18, 20, 56,0x14}, { 597,15, 21, 56,0x14}, { 598,15, 22, 56,0x14},
+   { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14}, { 601,15,  2, 56,0x14}, { 602,15,  3, 56,0x14},
+   { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c}, { 607, 1,  6, 56,0x14}, { 608,15,  7, 56,0x14},
+   { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14}, { 611,25, 11, 56,0x14}, { 612,11, 24, 56,0x14},
+   { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14}, { 615,14, 28, 56,0x14}, { 616,20, 29, 56,0x14},
+   { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14}, { 619,28, 32, 56,0x14}, { 620,15, 33, 56,0x14},
+   { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14}, { 623, 9, 36, 56,0x14}, { 624, 7, 37, 56,0x14},
+   { 654,15, 70,  0,0x04}, { 676,19, 64, 59,0x14}, { 677,15, 65, 59,0x14}, { 678,15, 66, 59,0x14},
+   { 679,11, 67, 59,0x14}, { 680, 1, 68, 59,0x14}, { 681,11, 62,  0,0x04}, { 683, 1, 59, 65,0x1c},
+   { 684,11, 63,  0,0x04}, { 685,10, 69,  0,0x04}, { 686, 1, 61,  0,0x04}, { 687,10, 55,  0,0x04},
+   { 690, 1, 56,  0,0x04}, { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14},
+   { 942,19, 25, 56,0x14}, { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14}, { 999,15, 43, 56,0x14},
+   {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1067,12, 71,  0,0x04}, {1068,12, 72,  0,0x04},
+   {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14}, {1358, 1, 48, 56,0x14}, {1420, 1, 49, 56,0x14},
+   {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array NoLegsV6_ftha(NoLegsV6_traits, 72);
 const MsgType NoLegsV6_msgtype("NoLegsV6");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegsV7_traits[] = // refs:42
+const FieldTrait NoLegsV7_traits[] // refs:42
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 556,19, 38, 56,0x14),
-   FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14),
-   FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14),
-   FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14),
-   FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14),
-   FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14),
-   FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14),
-   FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14),
-   FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14),
-   FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14),
-   FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 739,25, 40, 56,0x14), FieldTrait( 740,15, 39, 56,0x14),
-   FieldTrait( 764,15,  9, 56,0x14), FieldTrait( 942,19, 25, 56,0x14), FieldTrait( 955,21, 41, 56,0x14),
-   FieldTrait( 956,25, 42, 56,0x14), FieldTrait( 999,15, 43, 56,0x14), FieldTrait(1001,15, 44, 56,0x14),
-   FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1212,26, 47, 56,0x14), FieldTrait(1224,10, 50, 56,0x14),
-   FieldTrait(1358, 1, 48, 56,0x14), FieldTrait(1420, 1, 49, 56,0x14), FieldTrait(1421,15, 51, 56,0x14),
-   FieldTrait(1422,10, 52, 56,0x14), FieldTrait(1436, 1, 53, 56,0x14), FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 556,19, 38, 56,0x14}, { 566,11, 46, 56,0x14}, { 596,18, 20, 56,0x14}, { 597,15, 21, 56,0x14},
+   { 598,15, 22, 56,0x14}, { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14}, { 601,15,  2, 56,0x14},
+   { 602,15,  3, 56,0x14}, { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c}, { 607, 1,  6, 56,0x14},
+   { 608,15,  7, 56,0x14}, { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14}, { 611,25, 11, 56,0x14},
+   { 612,11, 24, 56,0x14}, { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14}, { 615,14, 28, 56,0x14},
+   { 616,20, 29, 56,0x14}, { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14}, { 619,28, 32, 56,0x14},
+   { 620,15, 33, 56,0x14}, { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14}, { 623, 9, 36, 56,0x14},
+   { 624, 7, 37, 56,0x14}, { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14},
+   { 942,19, 25, 56,0x14}, { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14}, { 999,15, 43, 56,0x14},
+   {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14},
+   {1358, 1, 48, 56,0x14}, {1420, 1, 49, 56,0x14}, {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14},
+   {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array NoLegsV7_ftha(NoLegsV7_traits, 54);
 const MsgType NoLegsV7_msgtype("NoLegsV7");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoClearingInstructionsV1_traits[] = // refs:5
+const FieldTrait NoClearingInstructionsV1_traits[] // refs:5
 {
-   FieldTrait( 577, 1,  1,  0,0x04)
+   { 577, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoClearingInstructionsV1_ftha(NoClearingInstructionsV1_traits, 1);
 const MsgType NoClearingInstructionsV1_msgtype("NoClearingInstructionsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegSecurityAltIDV1_traits[] = // refs:55
+const FieldTrait NoLegSecurityAltIDV1_traits[] // refs:55
 {
-   FieldTrait( 605,15,  1,  0,0x04), FieldTrait( 606,15,  2,  0,0x04)
+   { 605,15,  1,  0,0x04}, { 606,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoLegSecurityAltIDV1_ftha(NoLegSecurityAltIDV1_traits, 2);
 const MsgType NoLegSecurityAltIDV1_msgtype("NoLegSecurityAltIDV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegAllocsV1_traits[] = // refs:3
+const FieldTrait NoLegAllocsV1_traits[] // refs:3
 {
-   FieldTrait( 671,15,  1,  0,0x04), FieldTrait( 672,15,  2,  0,0x04), FieldTrait( 673,10,  3,  0,0x04),
-   FieldTrait( 674,15,  4,  0,0x04), FieldTrait( 756, 1,  6, 81,0x1c), FieldTrait(1367,19,  5,  0,0x04)
+   { 671,15,  1,  0,0x04}, { 672,15,  2,  0,0x04}, { 673,10,  3,  0,0x04}, { 674,15,  4,  0,0x04},
+   { 756, 1,  6, 81,0x1c}, {1367,19,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array NoLegAllocsV1_ftha(NoLegAllocsV1_traits, 6);
 const MsgType NoLegAllocsV1_msgtype("NoLegAllocsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLegStipulationsV1_traits[] = // refs:13
+const FieldTrait NoLegStipulationsV1_traits[] // refs:13
 {
-   FieldTrait( 688,15,  1,  0,0x04), FieldTrait( 689,15,  2,  0,0x04)
+   { 688,15,  1,  0,0x04}, { 689,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoLegStipulationsV1_ftha(NoLegStipulationsV1_traits, 2);
 const MsgType NoLegStipulationsV1_msgtype("NoLegStipulationsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoPositionsV1_traits[] = // refs:5
+const FieldTrait NoPositionsV1_traits[] // refs:5
 {
-   FieldTrait( 539, 1,  5, 80,0x1c), FieldTrait( 703,15,  1,  0,0x04), FieldTrait( 704,10,  2,  0,0x04),
-   FieldTrait( 705,10,  3,  0,0x04), FieldTrait( 706, 1,  4,  0,0x04), FieldTrait( 976,25,  6,  0,0x04)
+   { 539, 1,  5, 80,0x1c}, { 703,15,  1,  0,0x04}, { 704,10,  2,  0,0x04}, { 705,10,  3,  0,0x04},
+   { 706, 1,  4,  0,0x04}, { 976,25,  6,  0,0x04}
 };
 const FieldTrait_Hash_Array NoPositionsV1_ftha(NoPositionsV1_traits, 6);
 const MsgType NoPositionsV1_msgtype("NoPositionsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUnderlyingsV2_traits[] = // refs:54
+const FieldTrait NoUnderlyingsV2_traits[] // refs:54
 {
-   FieldTrait( 241,25, 12,191,0x14), FieldTrait( 242,25, 13,191,0x14), FieldTrait( 243, 1, 14,191,0x14),
-   FieldTrait( 244, 1, 15,191,0x14), FieldTrait( 245,14, 16,191,0x14), FieldTrait( 246, 9, 17,191,0x14),
-   FieldTrait( 247,25, 23,191,0x14), FieldTrait( 256,15, 18,191,0x14), FieldTrait( 305,15,  4,191,0x14),
-   FieldTrait( 306,15, 30,191,0x14), FieldTrait( 307,15, 33,191,0x14), FieldTrait( 308,20, 29,191,0x14),
-   FieldTrait( 309,15,  3,191,0x14), FieldTrait( 310,15,  8,191,0x14), FieldTrait( 311,15,  1,191,0x14),
-   FieldTrait( 312,15,  2,191,0x14), FieldTrait( 313,21, 10,191,0x14), FieldTrait( 315, 1, 60,191,0x14),
-   FieldTrait( 316,11, 24,191,0x14), FieldTrait( 317, 7, 26,191,0x14), FieldTrait( 318,19, 38,191,0x14),
-   FieldTrait( 362, 2, 31,191,0x14), FieldTrait( 363,28, 32,191,0x14), FieldTrait( 364, 2, 34,191,0x14),
-   FieldTrait( 365,28, 35,191,0x14), FieldTrait( 435,14, 28,191,0x14), FieldTrait( 436, 9, 27,191,0x14),
-   FieldTrait( 457, 1,  5,189,0x1c), FieldTrait( 462, 1,  6,191,0x14), FieldTrait( 463,15,  7,191,0x14),
-   FieldTrait( 542,25, 11,191,0x14), FieldTrait( 592,18, 20,191,0x14), FieldTrait( 593,15, 21,191,0x14),
-   FieldTrait( 594,15, 22,191,0x14), FieldTrait( 595,15, 19,191,0x14), FieldTrait( 763,15,  9,191,0x14),
-   FieldTrait( 810,11, 40,191,0x14), FieldTrait( 877,15, 36,191,0x14), FieldTrait( 878,15, 37,191,0x14),
-   FieldTrait( 879,10, 39,191,0x14), FieldTrait( 882,11, 41,191,0x14), FieldTrait( 883,11, 42,191,0x14),
-   FieldTrait( 884,13, 43,191,0x14), FieldTrait( 885,13, 44,191,0x14), FieldTrait( 886,13, 45,191,0x14),
-   FieldTrait( 887, 1, 46,194,0x1c), FieldTrait( 941,19, 25,191,0x14), FieldTrait( 972,14, 47,191,0x14),
-   FieldTrait( 973,13, 49,191,0x14), FieldTrait( 974,15, 50,191,0x14), FieldTrait( 975, 1, 48,191,0x14),
-   FieldTrait( 998,15, 51,191,0x14), FieldTrait(1000,15, 52,191,0x14), FieldTrait(1038,13, 53,191,0x14),
-   FieldTrait(1039,15, 55,191,0x14), FieldTrait(1044,10, 56,191,0x14), FieldTrait(1045, 9, 57,191,0x14),
-   FieldTrait(1046, 7, 58,191,0x14), FieldTrait(1058, 1, 54,195,0x1c), FieldTrait(1213,26, 59,191,0x14),
-   FieldTrait(1419, 1, 61,191,0x14), FieldTrait(1423,10, 62,191,0x14), FieldTrait(1424,15, 63,191,0x14),
-   FieldTrait(1425,10, 64,191,0x14), FieldTrait(1437, 1, 65,191,0x14), FieldTrait(1441, 1, 66,191,0x14),
-   FieldTrait(1453,15, 67,191,0x14), FieldTrait(1454,15, 68,191,0x14), FieldTrait(1455,14, 69,191,0x14),
-   FieldTrait(1456,14, 70,191,0x14), FieldTrait(1459,14, 71,191,0x14), FieldTrait(1460,14, 72,191,0x14)
+   { 241,25, 12,191,0x14}, { 242,25, 13,191,0x14}, { 243, 1, 14,191,0x14}, { 244, 1, 15,191,0x14},
+   { 245,14, 16,191,0x14}, { 246, 9, 17,191,0x14}, { 247,25, 23,191,0x14}, { 256,15, 18,191,0x14},
+   { 305,15,  4,191,0x14}, { 306,15, 30,191,0x14}, { 307,15, 33,191,0x14}, { 308,20, 29,191,0x14},
+   { 309,15,  3,191,0x14}, { 310,15,  8,191,0x14}, { 311,15,  1,191,0x14}, { 312,15,  2,191,0x14},
+   { 313,21, 10,191,0x14}, { 315, 1, 60,191,0x14}, { 316,11, 24,191,0x14}, { 317, 7, 26,191,0x14},
+   { 318,19, 38,191,0x14}, { 362, 2, 31,191,0x14}, { 363,28, 32,191,0x14}, { 364, 2, 34,191,0x14},
+   { 365,28, 35,191,0x14}, { 435,14, 28,191,0x14}, { 436, 9, 27,191,0x14}, { 457, 1,  5,189,0x1c},
+   { 462, 1,  6,191,0x14}, { 463,15,  7,191,0x14}, { 542,25, 11,191,0x14}, { 592,18, 20,191,0x14},
+   { 593,15, 21,191,0x14}, { 594,15, 22,191,0x14}, { 595,15, 19,191,0x14}, { 763,15,  9,191,0x14},
+   { 810,11, 40,191,0x14}, { 877,15, 36,191,0x14}, { 878,15, 37,191,0x14}, { 879,10, 39,191,0x14},
+   { 882,11, 41,191,0x14}, { 883,11, 42,191,0x14}, { 884,13, 43,191,0x14}, { 885,13, 44,191,0x14},
+   { 886,13, 45,191,0x14}, { 887, 1, 46,194,0x1c}, { 941,19, 25,191,0x14}, { 972,14, 47,191,0x14},
+   { 973,13, 49,191,0x14}, { 974,15, 50,191,0x14}, { 975, 1, 48,191,0x14}, { 998,15, 51,191,0x14},
+   {1000,15, 52,191,0x14}, {1038,13, 53,191,0x14}, {1039,15, 55,191,0x14}, {1044,10, 56,191,0x14},
+   {1045, 9, 57,191,0x14}, {1046, 7, 58,191,0x14}, {1058, 1, 54,195,0x1c}, {1213,26, 59,191,0x14},
+   {1419, 1, 61,191,0x14}, {1423,10, 62,191,0x14}, {1424,15, 63,191,0x14}, {1425,10, 64,191,0x14},
+   {1437, 1, 65,191,0x14}, {1441, 1, 66,191,0x14}, {1453,15, 67,191,0x14}, {1454,15, 68,191,0x14},
+   {1455,14, 69,191,0x14}, {1456,14, 70,191,0x14}, {1459,14, 71,191,0x14}, {1460,14, 72,191,0x14}
 };
 const FieldTrait_Hash_Array NoUnderlyingsV2_ftha(NoUnderlyingsV2_traits, 72);
 const MsgType NoUnderlyingsV2_msgtype("NoUnderlyingsV2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUnderlyingsV3_traits[] = // refs:3
+const FieldTrait NoUnderlyingsV3_traits[] // refs:3
 {
-   FieldTrait( 241,25, 12,191,0x14), FieldTrait( 242,25, 13,191,0x14), FieldTrait( 243, 1, 14,191,0x14),
-   FieldTrait( 244, 1, 15,191,0x14), FieldTrait( 245,14, 16,191,0x14), FieldTrait( 246, 9, 17,191,0x14),
-   FieldTrait( 247,25, 23,191,0x14), FieldTrait( 256,15, 18,191,0x14), FieldTrait( 305,15,  4,191,0x14),
-   FieldTrait( 306,15, 30,191,0x14), FieldTrait( 307,15, 33,191,0x14), FieldTrait( 308,20, 29,191,0x14),
-   FieldTrait( 309,15,  3,191,0x14), FieldTrait( 310,15,  8,191,0x14), FieldTrait( 311,15,  1,191,0x14),
-   FieldTrait( 312,15,  2,191,0x14), FieldTrait( 313,21, 10,191,0x14), FieldTrait( 315, 1, 60,191,0x14),
-   FieldTrait( 316,11, 24,191,0x14), FieldTrait( 317, 7, 26,191,0x14), FieldTrait( 318,19, 38,191,0x14),
-   FieldTrait( 362, 2, 31,191,0x14), FieldTrait( 363,28, 32,191,0x14), FieldTrait( 364, 2, 34,191,0x14),
-   FieldTrait( 365,28, 35,191,0x14), FieldTrait( 435,14, 28,191,0x14), FieldTrait( 436, 9, 27,191,0x14),
-   FieldTrait( 457, 1,  5,189,0x1c), FieldTrait( 462, 1,  6,191,0x14), FieldTrait( 463,15,  7,191,0x14),
-   FieldTrait( 542,25, 11,191,0x14), FieldTrait( 592,18, 20,191,0x14), FieldTrait( 593,15, 21,191,0x14),
-   FieldTrait( 594,15, 22,191,0x14), FieldTrait( 595,15, 19,191,0x14), FieldTrait( 763,15,  9,191,0x14),
-   FieldTrait( 810,11, 40,191,0x14), FieldTrait( 877,15, 36,191,0x14), FieldTrait( 878,15, 37,191,0x14),
-   FieldTrait( 879,10, 39,191,0x14), FieldTrait( 882,11, 41,191,0x14), FieldTrait( 883,11, 42,191,0x14),
-   FieldTrait( 884,13, 43,191,0x14), FieldTrait( 885,13, 44,191,0x14), FieldTrait( 886,13, 45,191,0x14),
-   FieldTrait( 887, 1, 46,194,0x1c), FieldTrait( 941,19, 25,191,0x14), FieldTrait( 944, 1, 73,  0,0x04),
-   FieldTrait( 972,14, 47,191,0x14), FieldTrait( 973,13, 49,191,0x14), FieldTrait( 974,15, 50,191,0x14),
-   FieldTrait( 975, 1, 48,191,0x14), FieldTrait( 998,15, 51,191,0x14), FieldTrait(1000,15, 52,191,0x14),
-   FieldTrait(1038,13, 53,191,0x14), FieldTrait(1039,15, 55,191,0x14), FieldTrait(1044,10, 56,191,0x14),
-   FieldTrait(1045, 9, 57,191,0x14), FieldTrait(1046, 7, 58,191,0x14), FieldTrait(1058, 1, 54,195,0x1c),
-   FieldTrait(1213,26, 59,191,0x14), FieldTrait(1419, 1, 61,191,0x14), FieldTrait(1423,10, 62,191,0x14),
-   FieldTrait(1424,15, 63,191,0x14), FieldTrait(1425,10, 64,191,0x14), FieldTrait(1437, 1, 65,191,0x14),
-   FieldTrait(1441, 1, 66,191,0x14), FieldTrait(1453,15, 67,191,0x14), FieldTrait(1454,15, 68,191,0x14),
-   FieldTrait(1455,14, 69,191,0x14), FieldTrait(1456,14, 70,191,0x14), FieldTrait(1459,14, 71,191,0x14),
-   FieldTrait(1460,14, 72,191,0x14)
+   { 241,25, 12,191,0x14}, { 242,25, 13,191,0x14}, { 243, 1, 14,191,0x14}, { 244, 1, 15,191,0x14},
+   { 245,14, 16,191,0x14}, { 246, 9, 17,191,0x14}, { 247,25, 23,191,0x14}, { 256,15, 18,191,0x14},
+   { 305,15,  4,191,0x14}, { 306,15, 30,191,0x14}, { 307,15, 33,191,0x14}, { 308,20, 29,191,0x14},
+   { 309,15,  3,191,0x14}, { 310,15,  8,191,0x14}, { 311,15,  1,191,0x14}, { 312,15,  2,191,0x14},
+   { 313,21, 10,191,0x14}, { 315, 1, 60,191,0x14}, { 316,11, 24,191,0x14}, { 317, 7, 26,191,0x14},
+   { 318,19, 38,191,0x14}, { 362, 2, 31,191,0x14}, { 363,28, 32,191,0x14}, { 364, 2, 34,191,0x14},
+   { 365,28, 35,191,0x14}, { 435,14, 28,191,0x14}, { 436, 9, 27,191,0x14}, { 457, 1,  5,189,0x1c},
+   { 462, 1,  6,191,0x14}, { 463,15,  7,191,0x14}, { 542,25, 11,191,0x14}, { 592,18, 20,191,0x14},
+   { 593,15, 21,191,0x14}, { 594,15, 22,191,0x14}, { 595,15, 19,191,0x14}, { 763,15,  9,191,0x14},
+   { 810,11, 40,191,0x14}, { 877,15, 36,191,0x14}, { 878,15, 37,191,0x14}, { 879,10, 39,191,0x14},
+   { 882,11, 41,191,0x14}, { 883,11, 42,191,0x14}, { 884,13, 43,191,0x14}, { 885,13, 44,191,0x14},
+   { 886,13, 45,191,0x14}, { 887, 1, 46,194,0x1c}, { 941,19, 25,191,0x14}, { 944, 1, 73,  0,0x04},
+   { 972,14, 47,191,0x14}, { 973,13, 49,191,0x14}, { 974,15, 50,191,0x14}, { 975, 1, 48,191,0x14},
+   { 998,15, 51,191,0x14}, {1000,15, 52,191,0x14}, {1038,13, 53,191,0x14}, {1039,15, 55,191,0x14},
+   {1044,10, 56,191,0x14}, {1045, 9, 57,191,0x14}, {1046, 7, 58,191,0x14}, {1058, 1, 54,195,0x1c},
+   {1213,26, 59,191,0x14}, {1419, 1, 61,191,0x14}, {1423,10, 62,191,0x14}, {1424,15, 63,191,0x14},
+   {1425,10, 64,191,0x14}, {1437, 1, 65,191,0x14}, {1441, 1, 66,191,0x14}, {1453,15, 67,191,0x14},
+   {1454,15, 68,191,0x14}, {1455,14, 69,191,0x14}, {1456,14, 70,191,0x14}, {1459,14, 71,191,0x14},
+   {1460,14, 72,191,0x14}
 };
 const FieldTrait_Hash_Array NoUnderlyingsV3_ftha(NoUnderlyingsV3_traits, 73);
 const MsgType NoUnderlyingsV3_msgtype("NoUnderlyingsV3");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoQuoteQualifiersV1_traits[] = // refs:5
+const FieldTrait NoQuoteQualifiersV1_traits[] // refs:5
 {
-   FieldTrait( 695, 7,  1,  0,0x04)
+   { 695, 7,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoQuoteQualifiersV1_ftha(NoQuoteQualifiersV1_traits, 1);
 const MsgType NoQuoteQualifiersV1_msgtype("NoQuoteQualifiersV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoPosAmtV1_traits[] = // refs:9
+const FieldTrait NoPosAmtV1_traits[] // refs:9
 {
-   FieldTrait( 707,15,  1,  0,0x04), FieldTrait( 708,13,  2,  0,0x04), FieldTrait(1055,15,  3,  0,0x04)
+   { 707,15,  1,  0,0x04}, { 708,13,  2,  0,0x04}, {1055,15,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoPosAmtV1_ftha(NoPosAmtV1_traits, 3);
 const MsgType NoPosAmtV1_msgtype("NoPosAmtV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNested2PartyIDsV1_traits[] = // refs:10
+const FieldTrait NoNested2PartyIDsV1_traits[] // refs:10
 {
-   FieldTrait( 757,15,  1,  0,0x04), FieldTrait( 758, 7,  2,  0,0x04), FieldTrait( 759, 1,  3,  0,0x04),
-   FieldTrait( 806, 1,  4, 86,0x1c)
+   { 757,15,  1,  0,0x04}, { 758, 7,  2,  0,0x04}, { 759, 1,  3,  0,0x04}, { 806, 1,  4, 86,0x1c}
 };
 const FieldTrait_Hash_Array NoNested2PartyIDsV1_ftha(NoNested2PartyIDsV1_traits, 4);
 const MsgType NoNested2PartyIDsV1_msgtype("NoNested2PartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTrdRegTimestampsV1_traits[] = // refs:11
+const FieldTrait NoTrdRegTimestampsV1_traits[] // refs:11
 {
-   FieldTrait( 769,22,  1,  0,0x04), FieldTrait( 770, 1,  2,  0,0x04), FieldTrait( 771,15,  3,  0,0x04),
-   FieldTrait(1033,15,  4,  0,0x04), FieldTrait(1034, 1,  5,  0,0x04), FieldTrait(1035,17,  6,  0,0x04)
+   { 769,22,  1,  0,0x04}, { 770, 1,  2,  0,0x04}, { 771,15,  3,  0,0x04}, {1033,15,  4,  0,0x04},
+   {1034, 1,  5,  0,0x04}, {1035,17,  6,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTrdRegTimestampsV1_ftha(NoTrdRegTimestampsV1_traits, 6);
 const MsgType NoTrdRegTimestampsV1_msgtype("NoTrdRegTimestampsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoSettlPartyIDsV1_traits[] = // refs:11
+const FieldTrait NoSettlPartyIDsV1_traits[] // refs:11
 {
-   FieldTrait( 782,15,  1,  0,0x04), FieldTrait( 783, 7,  2,  0,0x04), FieldTrait( 784, 1,  3,  0,0x04),
-   FieldTrait( 801, 1,  4,156,0x1c)
+   { 782,15,  1,  0,0x04}, { 783, 7,  2,  0,0x04}, { 784, 1,  3,  0,0x04}, { 801, 1,  4,156,0x1c}
 };
 const FieldTrait_Hash_Array NoSettlPartyIDsV1_ftha(NoSettlPartyIDsV1_traits, 4);
 const MsgType NoSettlPartyIDsV1_msgtype("NoSettlPartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoSettlPartySubIDsV1_traits[] = // refs:11
+const FieldTrait NoSettlPartySubIDsV1_traits[] // refs:11
 {
-   FieldTrait( 785,15,  1,  0,0x04), FieldTrait( 786, 1,  2,  0,0x04)
+   { 785,15,  1,  0,0x04}, { 786, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoSettlPartySubIDsV1_ftha(NoSettlPartySubIDsV1_traits, 2);
 const MsgType NoSettlPartySubIDsV1_msgtype("NoSettlPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoPartySubIDsV1_traits[] = // refs:66
+const FieldTrait NoPartySubIDsV1_traits[] // refs:66
 {
-   FieldTrait( 523,15,  1,  0,0x04), FieldTrait( 803, 1,  2,  0,0x04)
+   { 523,15,  1,  0,0x04}, { 803, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoPartySubIDsV1_ftha(NoPartySubIDsV1_traits, 2);
 const MsgType NoPartySubIDsV1_msgtype("NoPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNestedPartySubIDsV1_traits[] = // refs:28
+const FieldTrait NoNestedPartySubIDsV1_traits[] // refs:28
 {
-   FieldTrait( 545,15,  1,  0,0x04), FieldTrait( 805, 1,  2,  0,0x04)
+   { 545,15,  1,  0,0x04}, { 805, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoNestedPartySubIDsV1_ftha(NoNestedPartySubIDsV1_traits, 2);
 const MsgType NoNestedPartySubIDsV1_msgtype("NoNestedPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNested2PartySubIDsV1_traits[] = // refs:10
+const FieldTrait NoNested2PartySubIDsV1_traits[] // refs:10
 {
-   FieldTrait( 760,15,  1,  0,0x04), FieldTrait( 807, 1,  2,  0,0x04)
+   { 760,15,  1,  0,0x04}, { 807, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoNested2PartySubIDsV1_ftha(NoNested2PartySubIDsV1_traits, 2);
 const MsgType NoNested2PartySubIDsV1_msgtype("NoNested2PartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoEventsV1_traits[] = // refs:72
+const FieldTrait NoEventsV1_traits[] // refs:72
 {
-   FieldTrait( 865, 1,  1,  0,0x04), FieldTrait( 866,25,  2,  0,0x04), FieldTrait( 867,11,  3,  0,0x04),
-   FieldTrait( 868,15,  4,  0,0x04), FieldTrait(1145,22,  5,  0,0x04)
+   { 865, 1,  1,  0,0x04}, { 866,25,  2,  0,0x04}, { 867,11,  3,  0,0x04}, { 868,15,  4,  0,0x04},
+   {1145,22,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array NoEventsV1_ftha(NoEventsV1_traits, 5);
 const MsgType NoEventsV1_msgtype("NoEventsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoInstrAttribV1_traits[] = // refs:15
+const FieldTrait NoInstrAttribV1_traits[] // refs:15
 {
-   FieldTrait( 871, 1,  1,  0,0x04), FieldTrait( 872,15,  2,  0,0x04)
+   { 871, 1,  1,  0,0x04}, { 872,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoInstrAttribV1_ftha(NoInstrAttribV1_traits, 2);
 const MsgType NoInstrAttribV1_msgtype("NoInstrAttribV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUnderlyingStipsV1_traits[] = // refs:68
+const FieldTrait NoUnderlyingStipsV1_traits[] // refs:68
 {
-   FieldTrait( 888,15,  1,  0,0x04), FieldTrait( 889,15,  2,  0,0x04)
+   { 888,15,  1,  0,0x04}, { 889,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoUnderlyingStipsV1_ftha(NoUnderlyingStipsV1_traits, 2);
 const MsgType NoUnderlyingStipsV1_msgtype("NoUnderlyingStipsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTradesV1_traits[] = // refs:6
+const FieldTrait NoTradesV1_traits[] // refs:6
 {
-   FieldTrait( 571,15,  1,  0,0x04), FieldTrait( 818,15,  2,  0,0x04)
+   { 571,15,  1,  0,0x04}, { 818,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTradesV1_ftha(NoTradesV1_traits, 2);
 const MsgType NoTradesV1_msgtype("NoTradesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoCollInquiryQualifierV1_traits[] = // refs:2
+const FieldTrait NoCollInquiryQualifierV1_traits[] // refs:2
 {
-   FieldTrait( 896, 1,  1,  0,0x04)
+   { 896, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoCollInquiryQualifierV1_ftha(NoCollInquiryQualifierV1_traits, 1);
 const MsgType NoCollInquiryQualifierV1_msgtype("NoCollInquiryQualifierV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNested3PartyIDsV1_traits[] = // refs:3
+const FieldTrait NoNested3PartyIDsV1_traits[] // refs:3
 {
-   FieldTrait( 949,15,  1,  0,0x04), FieldTrait( 950, 7,  2,  0,0x04), FieldTrait( 951, 1,  3,  0,0x04),
-   FieldTrait( 952, 1,  4, 87,0x1c)
+   { 949,15,  1,  0,0x04}, { 950, 7,  2,  0,0x04}, { 951, 1,  3,  0,0x04}, { 952, 1,  4, 87,0x1c}
 };
 const FieldTrait_Hash_Array NoNested3PartyIDsV1_ftha(NoNested3PartyIDsV1_traits, 4);
 const MsgType NoNested3PartyIDsV1_msgtype("NoNested3PartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNested3PartySubIDsV1_traits[] = // refs:3
+const FieldTrait NoNested3PartySubIDsV1_traits[] // refs:3
 {
-   FieldTrait( 953,15,  1,  0,0x04), FieldTrait( 954, 1,  2,  0,0x04)
+   { 953,15,  1,  0,0x04}, { 954, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoNested3PartySubIDsV1_ftha(NoNested3PartySubIDsV1_traits, 2);
 const MsgType NoNested3PartySubIDsV1_msgtype("NoNested3PartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoStrategyParametersV1_traits[] = // refs:8
+const FieldTrait NoStrategyParametersV1_traits[] // refs:8
 {
-   FieldTrait( 958,15,  1,  0,0x04), FieldTrait( 959, 1,  2,  0,0x04), FieldTrait( 960,15,  3,  0,0x04)
+   { 958,15,  1,  0,0x04}, { 959, 1,  2,  0,0x04}, { 960,15,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoStrategyParametersV1_ftha(NoStrategyParametersV1_traits, 3);
 const MsgType NoStrategyParametersV1_msgtype("NoStrategyParametersV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoSideTrdRegTSV1_traits[] = // refs:2
+const FieldTrait NoSideTrdRegTSV1_traits[] // refs:2
 {
-   FieldTrait(1012,22,  1,  0,0x04), FieldTrait(1013, 1,  2,  0,0x04), FieldTrait(1014,15,  3,  0,0x04)
+   {1012,22,  1,  0,0x04}, {1013, 1,  2,  0,0x04}, {1014,15,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoSideTrdRegTSV1_ftha(NoSideTrdRegTSV1_traits, 3);
 const MsgType NoSideTrdRegTSV1_msgtype("NoSideTrdRegTSV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoInstrumentPartiesV1_traits[] = // refs:72
+const FieldTrait NoInstrumentPartiesV1_traits[] // refs:72
 {
-   FieldTrait(1019,15,  1,  0,0x04), FieldTrait(1050, 7,  2,  0,0x04), FieldTrait(1051, 1,  3,  0,0x04),
-   FieldTrait(1052, 1,  4, 58,0x1c)
+   {1019,15,  1,  0,0x04}, {1050, 7,  2,  0,0x04}, {1051, 1,  3,  0,0x04}, {1052, 1,  4, 58,0x1c}
 };
 const FieldTrait_Hash_Array NoInstrumentPartiesV1_ftha(NoInstrumentPartiesV1_traits, 4);
 const MsgType NoInstrumentPartiesV1_msgtype("NoInstrumentPartiesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoInstrumentPartySubIDsV1_traits[] = // refs:72
+const FieldTrait NoInstrumentPartySubIDsV1_traits[] // refs:72
 {
-   FieldTrait(1053,15,  1,  0,0x04), FieldTrait(1054, 1,  2,  0,0x04)
+   {1053,15,  1,  0,0x04}, {1054, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoInstrumentPartySubIDsV1_ftha(NoInstrumentPartySubIDsV1_traits, 2);
 const MsgType NoInstrumentPartySubIDsV1_msgtype("NoInstrumentPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUndlyInstrumentPartiesV1_traits[] = // refs:68
+const FieldTrait NoUndlyInstrumentPartiesV1_traits[] // refs:68
 {
-   FieldTrait(1059,15,  1,  0,0x04), FieldTrait(1060, 7,  2,  0,0x04), FieldTrait(1061, 1,  3,  0,0x04),
-   FieldTrait(1062, 1,  4,196,0x1c)
+   {1059,15,  1,  0,0x04}, {1060, 7,  2,  0,0x04}, {1061, 1,  3,  0,0x04}, {1062, 1,  4,196,0x1c}
 };
 const FieldTrait_Hash_Array NoUndlyInstrumentPartiesV1_ftha(NoUndlyInstrumentPartiesV1_traits, 4);
 const MsgType NoUndlyInstrumentPartiesV1_msgtype("NoUndlyInstrumentPartiesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUndlyInstrumentPartySubIDsV1_traits[] = // refs:68
+const FieldTrait NoUndlyInstrumentPartySubIDsV1_traits[] // refs:68
 {
-   FieldTrait(1063,15,  1,  0,0x04), FieldTrait(1064, 1,  2,  0,0x04)
+   {1063,15,  1,  0,0x04}, {1064, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoUndlyInstrumentPartySubIDsV1_ftha(NoUndlyInstrumentPartySubIDsV1_traits, 2);
 const MsgType NoUndlyInstrumentPartySubIDsV1_msgtype("NoUndlyInstrumentPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoRootPartyIDsV1_traits[] = // refs:8
+const FieldTrait NoRootPartyIDsV1_traits[] // refs:8
 {
-   FieldTrait(1117,15,  1,  0,0x04), FieldTrait(1118, 7,  2,  0,0x04), FieldTrait(1119, 1,  3,  0,0x04),
-   FieldTrait(1120, 1,  4,140,0x1c)
+   {1117,15,  1,  0,0x04}, {1118, 7,  2,  0,0x04}, {1119, 1,  3,  0,0x04}, {1120, 1,  4,140,0x1c}
 };
 const FieldTrait_Hash_Array NoRootPartyIDsV1_ftha(NoRootPartyIDsV1_traits, 4);
 const MsgType NoRootPartyIDsV1_msgtype("NoRootPartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoRootPartySubIDsV1_traits[] = // refs:8
+const FieldTrait NoRootPartySubIDsV1_traits[] // refs:8
 {
-   FieldTrait(1121,15,  1,  0,0x04), FieldTrait(1122, 1,  2,  0,0x04)
+   {1121,15,  1,  0,0x04}, {1122, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoRootPartySubIDsV1_ftha(NoRootPartySubIDsV1_traits, 2);
 const MsgType NoRootPartySubIDsV1_msgtype("NoRootPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoMDFeedTypesV1_traits[] = // refs:8
+const FieldTrait NoMDFeedTypesV1_traits[] // refs:8
 {
-   FieldTrait( 264, 1,  2,  0,0x04), FieldTrait(1021, 1,  3,  0,0x04), FieldTrait(1022,15,  1,  0,0x04)
+   { 264, 1,  2,  0,0x04}, {1021, 1,  3,  0,0x04}, {1022,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoMDFeedTypesV1_ftha(NoMDFeedTypesV1_traits, 3);
 const MsgType NoMDFeedTypesV1_msgtype("NoMDFeedTypesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoSettlDetailsV1_traits[] = // refs:3
+const FieldTrait NoSettlDetailsV1_traits[] // refs:3
 {
-   FieldTrait( 781, 1,  2,155,0x1c), FieldTrait(1164, 7,  1,  0,0x04)
+   { 781, 1,  2,155,0x1c}, {1164, 7,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoSettlDetailsV1_ftha(NoSettlDetailsV1_traits, 2);
 const MsgType NoSettlDetailsV1_msgtype("NoSettlDetailsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoOfSecSizesV1_traits[] = // refs:2
+const FieldTrait NoOfSecSizesV1_traits[] // refs:2
 {
-   FieldTrait(1178, 1,  1,  0,0x04), FieldTrait(1179,10,  2,  0,0x04)
+   {1178, 1,  1,  0,0x04}, {1179,10,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoOfSecSizesV1_ftha(NoOfSecSizesV1_traits, 2);
 const MsgType NoOfSecSizesV1_msgtype("NoOfSecSizesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoStrikeRulesV1_traits[] = // refs:6
+const FieldTrait NoStrikeRulesV1_traits[] // refs:6
 {
-   FieldTrait(1202,11,  2,  0,0x04), FieldTrait(1203,11,  3,  0,0x04), FieldTrait(1204, 9,  4,  0,0x04),
-   FieldTrait(1223,15,  1,  0,0x04), FieldTrait(1236, 1,  6, 76,0x1c), FieldTrait(1304, 1,  5,  0,0x04)
+   {1202,11,  2,  0,0x04}, {1203,11,  3,  0,0x04}, {1204, 9,  4,  0,0x04}, {1223,15,  1,  0,0x04},
+   {1236, 1,  6, 76,0x1c}, {1304, 1,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array NoStrikeRulesV1_ftha(NoStrikeRulesV1_traits, 6);
 const MsgType NoStrikeRulesV1_msgtype("NoStrikeRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTickRulesV1_traits[] = // refs:8
+const FieldTrait NoTickRulesV1_traits[] // refs:8
 {
-   FieldTrait(1206,11,  1,  0,0x04), FieldTrait(1207,11,  2,  0,0x04), FieldTrait(1208,11,  3,  0,0x04),
-   FieldTrait(1209, 1,  4,  0,0x04)
+   {1206,11,  1,  0,0x04}, {1207,11,  2,  0,0x04}, {1208,11,  3,  0,0x04}, {1209, 1,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTickRulesV1_ftha(NoTickRulesV1_traits, 4);
 const MsgType NoTickRulesV1_msgtype("NoTickRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoDerivativeSecurityAltIDV1_traits[] = // refs:3
+const FieldTrait NoDerivativeSecurityAltIDV1_traits[] // refs:3
 {
-   FieldTrait(1219,15,  1,  0,0x04), FieldTrait(1220,15,  2,  0,0x04)
+   {1219,15,  1,  0,0x04}, {1220,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoDerivativeSecurityAltIDV1_ftha(NoDerivativeSecurityAltIDV1_traits, 2);
 const MsgType NoDerivativeSecurityAltIDV1_msgtype("NoDerivativeSecurityAltIDV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoExecInstRulesV1_traits[] = // refs:10
+const FieldTrait NoExecInstRulesV1_traits[] // refs:10
 {
-   FieldTrait(1308, 7,  1,  0,0x04)
+   {1308, 7,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoExecInstRulesV1_ftha(NoExecInstRulesV1_traits, 1);
 const MsgType NoExecInstRulesV1_msgtype("NoExecInstRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoLotTypeRulesV1_traits[] = // refs:8
+const FieldTrait NoLotTypeRulesV1_traits[] // refs:8
 {
-   FieldTrait(1093, 7,  1,  0,0x04), FieldTrait(1231,10,  2,  0,0x04)
+   {1093, 7,  1,  0,0x04}, {1231,10,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoLotTypeRulesV1_ftha(NoLotTypeRulesV1_traits, 2);
 const MsgType NoLotTypeRulesV1_msgtype("NoLotTypeRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoMatchRulesV1_traits[] = // refs:8
+const FieldTrait NoMatchRulesV1_traits[] // refs:8
 {
-   FieldTrait( 574,15,  2,  0,0x04), FieldTrait(1142,15,  1,  0,0x04)
+   { 574,15,  2,  0,0x04}, {1142,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoMatchRulesV1_ftha(NoMatchRulesV1_traits, 2);
 const MsgType NoMatchRulesV1_msgtype("NoMatchRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoMaturityRulesV1_traits[] = // refs:6
+const FieldTrait NoMaturityRulesV1_traits[] // refs:6
 {
-   FieldTrait(1222,15,  1,  0,0x04), FieldTrait(1226,21,  5,  0,0x04), FieldTrait(1229, 1,  6,  0,0x04),
-   FieldTrait(1241,21,  4,  0,0x04), FieldTrait(1302, 1,  3,  0,0x04), FieldTrait(1303, 1,  2,  0,0x04)
+   {1222,15,  1,  0,0x04}, {1226,21,  5,  0,0x04}, {1229, 1,  6,  0,0x04}, {1241,21,  4,  0,0x04},
+   {1302, 1,  3,  0,0x04}, {1303, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoMaturityRulesV1_ftha(NoMaturityRulesV1_traits, 6);
 const MsgType NoMaturityRulesV1_msgtype("NoMaturityRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoOrdTypeRulesV1_traits[] = // refs:10
+const FieldTrait NoOrdTypeRulesV1_traits[] // refs:10
 {
-   FieldTrait(  40, 7,  1,  0,0x04)
+   {  40, 7,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoOrdTypeRulesV1_ftha(NoOrdTypeRulesV1_traits, 1);
 const MsgType NoOrdTypeRulesV1_msgtype("NoOrdTypeRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTimeInForceRulesV1_traits[] = // refs:10
+const FieldTrait NoTimeInForceRulesV1_traits[] // refs:10
 {
-   FieldTrait(  59, 7,  1,  0,0x04)
+   {  59, 7,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTimeInForceRulesV1_ftha(NoTimeInForceRulesV1_traits, 1);
 const MsgType NoTimeInForceRulesV1_msgtype("NoTimeInForceRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoDerivativeEventsV1_traits[] = // refs:3
+const FieldTrait NoDerivativeEventsV1_traits[] // refs:3
 {
-   FieldTrait(1287, 1,  1,  0,0x04), FieldTrait(1288,25,  2,  0,0x04), FieldTrait(1289,22,  3,  0,0x04),
-   FieldTrait(1290,11,  4,  0,0x04), FieldTrait(1291,15,  5,  0,0x04)
+   {1287, 1,  1,  0,0x04}, {1288,25,  2,  0,0x04}, {1289,22,  3,  0,0x04}, {1290,11,  4,  0,0x04},
+   {1291,15,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array NoDerivativeEventsV1_ftha(NoDerivativeEventsV1_traits, 5);
 const MsgType NoDerivativeEventsV1_msgtype("NoDerivativeEventsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoDerivativeInstrumentPartiesV1_traits[] = // refs:3
+const FieldTrait NoDerivativeInstrumentPartiesV1_traits[] // refs:3
 {
-   FieldTrait(1293,15,  1,  0,0x04), FieldTrait(1294,15,  2,  0,0x04), FieldTrait(1295, 1,  3,  0,0x04),
-   FieldTrait(1296, 1,  4, 31,0x1c)
+   {1293,15,  1,  0,0x04}, {1294,15,  2,  0,0x04}, {1295, 1,  3,  0,0x04}, {1296, 1,  4, 31,0x1c}
 };
 const FieldTrait_Hash_Array NoDerivativeInstrumentPartiesV1_ftha(NoDerivativeInstrumentPartiesV1_traits, 4);
 const MsgType NoDerivativeInstrumentPartiesV1_msgtype("NoDerivativeInstrumentPartiesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoDerivativeInstrumentPartySubIDsV1_traits[] = // refs:3
+const FieldTrait NoDerivativeInstrumentPartySubIDsV1_traits[] // refs:3
 {
-   FieldTrait(1297,15,  1,  0,0x04), FieldTrait(1298, 1,  2,  0,0x04)
+   {1297,15,  1,  0,0x04}, {1298, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoDerivativeInstrumentPartySubIDsV1_ftha(NoDerivativeInstrumentPartySubIDsV1_traits, 2);
 const MsgType NoDerivativeInstrumentPartySubIDsV1_msgtype("NoDerivativeInstrumentPartySubIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTradingSessionRulesV1_traits[] = // refs:6
+const FieldTrait NoTradingSessionRulesV1_traits[] // refs:6
 {
-   FieldTrait( 336,15,  1,  0,0x04), FieldTrait( 625,15,  2,  0,0x04), FieldTrait(1141, 1,  7, 73,0x1c),
-   FieldTrait(1232, 1,  5, 41,0x1c), FieldTrait(1235, 1,  6, 75,0x1c), FieldTrait(1237, 1,  3, 92,0x1c),
-   FieldTrait(1239, 1,  4,171,0x1c)
+   { 336,15,  1,  0,0x04}, { 625,15,  2,  0,0x04}, {1141, 1,  7, 73,0x1c}, {1232, 1,  5, 41,0x1c},
+   {1235, 1,  6, 75,0x1c}, {1237, 1,  3, 92,0x1c}, {1239, 1,  4,171,0x1c}
 };
 const FieldTrait_Hash_Array NoTradingSessionRulesV1_ftha(NoTradingSessionRulesV1_traits, 7);
 const MsgType NoTradingSessionRulesV1_msgtype("NoTradingSessionRulesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoMarketSegmentsV1_traits[] = // refs:4
+const FieldTrait NoMarketSegmentsV1_traits[] // refs:4
 {
-   FieldTrait( 423, 1, 18, 10,0x14), FieldTrait( 561,10, 15, 10,0x14), FieldTrait( 562,10, 10, 10,0x14),
-   FieldTrait( 827, 1,  9, 10,0x14), FieldTrait(1140,10, 11, 10,0x14), FieldTrait(1143, 9, 12, 10,0x14),
-   FieldTrait(1144, 1, 13, 10,0x14), FieldTrait(1148,11,  6,106,0x14), FieldTrait(1149,11,  7,106,0x14),
-   FieldTrait(1150,11,  8,106,0x14), FieldTrait(1201, 1, 21,164,0x1c), FieldTrait(1205, 1,  3,170,0x1c),
-   FieldTrait(1234, 1,  4, 68,0x1c), FieldTrait(1245,19, 14, 10,0x14), FieldTrait(1300,15,  2,  0,0x04),
-   FieldTrait(1301,20,  1,  0,0x04), FieldTrait(1306, 1,  5,106,0x14), FieldTrait(1309, 1, 19,175,0x1c),
-   FieldTrait(1312, 1, 20, 79,0x1c), FieldTrait(1377, 1, 16, 10,0x14), FieldTrait(1378, 1, 17, 10,0x14)
+   { 423, 1, 18, 10,0x14}, { 561,10, 15, 10,0x14}, { 562,10, 10, 10,0x14}, { 827, 1,  9, 10,0x14},
+   {1140,10, 11, 10,0x14}, {1143, 9, 12, 10,0x14}, {1144, 1, 13, 10,0x14}, {1148,11,  6,106,0x14},
+   {1149,11,  7,106,0x14}, {1150,11,  8,106,0x14}, {1201, 1, 21,164,0x1c}, {1205, 1,  3,170,0x1c},
+   {1234, 1,  4, 68,0x1c}, {1245,19, 14, 10,0x14}, {1300,15,  2,  0,0x04}, {1301,20,  1,  0,0x04},
+   {1306, 1,  5,106,0x14}, {1309, 1, 19,175,0x1c}, {1312, 1, 20, 79,0x1c}, {1377, 1, 16, 10,0x14},
+   {1378, 1, 17, 10,0x14}
 };
 const FieldTrait_Hash_Array NoMarketSegmentsV1_ftha(NoMarketSegmentsV1_traits, 21);
 const MsgType NoMarketSegmentsV1_msgtype("NoMarketSegmentsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoDerivativeInstrAttribV1_traits[] = // refs:2
+const FieldTrait NoDerivativeInstrAttribV1_traits[] // refs:2
 {
-   FieldTrait(1313, 1,  1,  0,0x04), FieldTrait(1314,15,  2,  0,0x04)
+   {1313, 1,  1,  0,0x04}, {1314,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoDerivativeInstrAttribV1_ftha(NoDerivativeInstrAttribV1_traits, 2);
 const MsgType NoDerivativeInstrAttribV1_msgtype("NoDerivativeInstrAttribV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNestedInstrAttribV1_traits[] = // refs:6
+const FieldTrait NoNestedInstrAttribV1_traits[] // refs:6
 {
-   FieldTrait(1210, 1,  1,  0,0x04), FieldTrait(1211,15,  2,  0,0x04)
+   {1210, 1,  1,  0,0x04}, {1211,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoNestedInstrAttribV1_ftha(NoNestedInstrAttribV1_traits, 2);
 const MsgType NoNestedInstrAttribV1_msgtype("NoNestedInstrAttribV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoUnderlyingLegSecurityAltIDV1_traits[] = // refs:2
+const FieldTrait NoUnderlyingLegSecurityAltIDV1_traits[] // refs:2
 {
-   FieldTrait(1335,15,  1,  0,0x04), FieldTrait(1336,15,  2,  0,0x04)
+   {1335,15,  1,  0,0x04}, {1336,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoUnderlyingLegSecurityAltIDV1_ftha(NoUnderlyingLegSecurityAltIDV1_traits, 2);
 const MsgType NoUnderlyingLegSecurityAltIDV1_msgtype("NoUnderlyingLegSecurityAltIDV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoOfLegUnderlyingsV1_traits[] = // refs:2
+const FieldTrait NoOfLegUnderlyingsV1_traits[] // refs:2
 {
-   FieldTrait(1330,15,  1,192,0x14), FieldTrait(1331,15,  2,192,0x14), FieldTrait(1332,15,  3,192,0x14),
-   FieldTrait(1333,15,  4,192,0x14), FieldTrait(1334, 1,  5,193,0x1c), FieldTrait(1337,15,  7,192,0x14),
-   FieldTrait(1338,15,  8,192,0x14), FieldTrait(1339,21,  9,192,0x14), FieldTrait(1340,11, 12,192,0x14),
-   FieldTrait(1341,15, 15,192,0x14), FieldTrait(1343, 1, 14,192,0x14), FieldTrait(1344,15,  6,192,0x14),
-   FieldTrait(1345,25, 10,192,0x14), FieldTrait(1391, 7, 13,192,0x14), FieldTrait(1392,15, 16,192,0x14),
-   FieldTrait(1405,26, 11,192,0x14)
+   {1330,15,  1,192,0x14}, {1331,15,  2,192,0x14}, {1332,15,  3,192,0x14}, {1333,15,  4,192,0x14},
+   {1334, 1,  5,193,0x1c}, {1337,15,  7,192,0x14}, {1338,15,  8,192,0x14}, {1339,21,  9,192,0x14},
+   {1340,11, 12,192,0x14}, {1341,15, 15,192,0x14}, {1343, 1, 14,192,0x14}, {1344,15,  6,192,0x14},
+   {1345,25, 10,192,0x14}, {1391, 7, 13,192,0x14}, {1392,15, 16,192,0x14}, {1405,26, 11,192,0x14}
 };
 const FieldTrait_Hash_Array NoOfLegUnderlyingsV1_ftha(NoOfLegUnderlyingsV1_traits, 16);
 const MsgType NoOfLegUnderlyingsV1_msgtype("NoOfLegUnderlyingsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoNotAffectedOrdersV1_traits[] = // refs:2
+const FieldTrait NoNotAffectedOrdersV1_traits[] // refs:2
 {
-   FieldTrait(1371,15,  2,  0,0x04), FieldTrait(1372,15,  1,  0,0x04)
+   {1371,15,  2,  0,0x04}, {1372,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoNotAffectedOrdersV1_ftha(NoNotAffectedOrdersV1_traits, 2);
 const MsgType NoNotAffectedOrdersV1_msgtype("NoNotAffectedOrdersV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTrdRepIndicatorsV1_traits[] = // refs:2
+const FieldTrait NoTrdRepIndicatorsV1_traits[] // refs:2
 {
-   FieldTrait(1388, 1,  1,  0,0x04), FieldTrait(1389, 8,  2,  0,0x04)
+   {1388, 1,  1,  0,0x04}, {1389, 8,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTrdRepIndicatorsV1_ftha(NoTrdRepIndicatorsV1_traits, 2);
 const MsgType NoTrdRepIndicatorsV1_msgtype("NoTrdRepIndicatorsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoRateSourcesV1_traits[] = // refs:7
+const FieldTrait NoRateSourcesV1_traits[] // refs:7
 {
-   FieldTrait(1446, 1,  1,  0,0x04), FieldTrait(1447, 1,  2,  0,0x04), FieldTrait(1448,15,  3,  0,0x04)
+   {1446, 1,  1,  0,0x04}, {1447, 1,  2,  0,0x04}, {1448,15,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoRateSourcesV1_ftha(NoRateSourcesV1_traits, 3);
 const MsgType NoRateSourcesV1_msgtype("NoRateSourcesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoTargetPartyIDsV1_traits[] = // refs:9
+const FieldTrait NoTargetPartyIDsV1_traits[] // refs:9
 {
-   FieldTrait(1462,15,  1,  0,0x04), FieldTrait(1463, 7,  2,  0,0x04), FieldTrait(1464, 1,  3,  0,0x04)
+   {1462,15,  1,  0,0x04}, {1463, 7,  2,  0,0x04}, {1464, 1,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array NoTargetPartyIDsV1_ftha(NoTargetPartyIDsV1_traits, 3);
 const MsgType NoTargetPartyIDsV1_msgtype("NoTargetPartyIDsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoComplexEventsV1_traits[] = // refs:72
+const FieldTrait NoComplexEventsV1_traits[] // refs:72
 {
-   FieldTrait(1484, 1,  1,  0,0x04), FieldTrait(1485,13,  2,  0,0x04), FieldTrait(1486,11,  3,  0,0x04),
-   FieldTrait(1487, 1,  4,  0,0x04), FieldTrait(1488,14,  5,  0,0x04), FieldTrait(1489, 1,  6,  0,0x04),
-   FieldTrait(1490, 1,  7,  0,0x04), FieldTrait(1491, 1,  8, 19,0x1c)
+   {1484, 1,  1,  0,0x04}, {1485,13,  2,  0,0x04}, {1486,11,  3,  0,0x04}, {1487, 1,  4,  0,0x04},
+   {1488,14,  5,  0,0x04}, {1489, 1,  6,  0,0x04}, {1490, 1,  7,  0,0x04}, {1491, 1,  8, 19,0x1c}
 };
 const FieldTrait_Hash_Array NoComplexEventsV1_ftha(NoComplexEventsV1_traits, 8);
 const MsgType NoComplexEventsV1_msgtype("NoComplexEventsV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoComplexEventDatesV1_traits[] = // refs:72
+const FieldTrait NoComplexEventDatesV1_traits[] // refs:72
 {
-   FieldTrait(1492,22,  1,  0,0x04), FieldTrait(1493,22,  2,  0,0x04), FieldTrait(1494, 1,  3, 20,0x1c)
+   {1492,22,  1,  0,0x04}, {1493,22,  2,  0,0x04}, {1494, 1,  3, 20,0x1c}
 };
 const FieldTrait_Hash_Array NoComplexEventDatesV1_ftha(NoComplexEventDatesV1_traits, 3);
 const MsgType NoComplexEventDatesV1_msgtype("NoComplexEventDatesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoComplexEventTimesV1_traits[] = // refs:72
+const FieldTrait NoComplexEventTimesV1_traits[] // refs:72
 {
-   FieldTrait(1495,23,  1,  0,0x04), FieldTrait(1496,23,  2,  0,0x04)
+   {1495,23,  1,  0,0x04}, {1496,23,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array NoComplexEventTimesV1_ftha(NoComplexEventTimesV1_traits, 2);
 const MsgType NoComplexEventTimesV1_msgtype("NoComplexEventTimesV1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NoPartyRelationshipsV1_traits[] = // refs:2
+const FieldTrait NoPartyRelationshipsV1_traits[] // refs:2
 {
-   FieldTrait(1515, 1,  1,  0,0x04)
+   {1515, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NoPartyRelationshipsV1_ftha(NoPartyRelationshipsV1_traits, 1);
 const MsgType NoPartyRelationshipsV1_msgtype("NoPartyRelationshipsV1");
@@ -996,107 +911,94 @@ const MsgType NoPartyRelationshipsV1_msgtype("NoPartyRelationshipsV1");
 //-------------------------------------------------------------------------------------------------
 // Message traits
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Heartbeat::_traits[] =
+const FieldTrait Heartbeat::_traits[]
 {
-   FieldTrait( 112,15,  1,  0,0x04)
+   { 112,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array Heartbeat::_ftha(Heartbeat::_traits, 1);
 const MsgType Heartbeat::_msgtype("0");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TestRequest::_traits[] =
+const FieldTrait TestRequest::_traits[]
 {
-   FieldTrait( 112,15,  1,  0,0x04)
+   { 112,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array TestRequest::_ftha(TestRequest::_traits, 1);
 const MsgType TestRequest::_msgtype("1");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ResendRequest::_traits[] =
+const FieldTrait ResendRequest::_traits[]
 {
-   FieldTrait(   7, 4,  1,  0,0x04), FieldTrait(  16, 4,  2,  0,0x04)
+   {   7, 4,  1,  0,0x04}, {  16, 4,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array ResendRequest::_ftha(ResendRequest::_traits, 2);
 const MsgType ResendRequest::_msgtype("2");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Reject::_traits[] =
+const FieldTrait Reject::_traits[]
 {
-   FieldTrait(  45, 4,  1,  0,0x04), FieldTrait(  58,15,  5,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04),
-   FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 371, 1,  2,  0,0x04), FieldTrait( 372,15,  3,  0,0x04),
-   FieldTrait( 373, 1,  4,  0,0x04)
+   {  45, 4,  1,  0,0x04}, {  58,15,  5,  0,0x04}, { 354, 2,  6,  0,0x04}, { 355,28,  7,  0,0x04},
+   { 371, 1,  2,  0,0x04}, { 372,15,  3,  0,0x04}, { 373, 1,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array Reject::_ftha(Reject::_traits, 7);
 const MsgType Reject::_msgtype("3");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SequenceReset::_traits[] =
+const FieldTrait SequenceReset::_traits[]
 {
-   FieldTrait(  36, 4,  2,  0,0x04), FieldTrait( 123, 8,  1,  0,0x04)
+   {  36, 4,  2,  0,0x04}, { 123, 8,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array SequenceReset::_ftha(SequenceReset::_traits, 2);
 const MsgType SequenceReset::_msgtype("4");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Logout::_traits[] =
+const FieldTrait Logout::_traits[]
 {
-   FieldTrait(  58,15,  1,  0,0x04), FieldTrait( 354, 2,  2,  0,0x04), FieldTrait( 355,28,  3,  0,0x04)
+   {  58,15,  1,  0,0x04}, { 354, 2,  2,  0,0x04}, { 355,28,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array Logout::_ftha(Logout::_traits, 3);
 const MsgType Logout::_msgtype("5");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait IOI::_traits[] =
+const FieldTrait IOI::_traits[]
 {
-   FieldTrait(  15,19,110,  0,0x04), FieldTrait(  22,15,  7, 54,0x14), FieldTrait(  23,15,  1,  0,0x04),
-   FieldTrait(  25, 7,116,  0,0x04), FieldTrait(  26,15,  3,  0,0x04), FieldTrait(  27,15,109,  0,0x04),
-   FieldTrait(  28, 7,  2,  0,0x04), FieldTrait(  38,10,104, 93,0x14), FieldTrait(  44,11,114,  0,0x04),
-   FieldTrait(  48,15,  6, 54,0x14), FieldTrait(  54, 7,102,  0,0x04), FieldTrait(  55,15,  4, 54,0x14),
-   FieldTrait(  58,15,119,  0,0x04), FieldTrait(  60,22,122,  0,0x04), FieldTrait(  62,22,115,  0,0x04),
-   FieldTrait(  65,15,  5, 54,0x14), FieldTrait( 106,15, 33, 54,0x14), FieldTrait( 107,15, 36, 54,0x14),
-   FieldTrait( 130, 8,117,  0,0x04), FieldTrait( 149,15,123,  0,0x04), FieldTrait( 152,10,105, 93,0x14),
-   FieldTrait( 167,15, 11, 54,0x14), FieldTrait( 199, 1,118, 46,0x1c), FieldTrait( 200,21, 13, 54,0x14),
-   FieldTrait( 201, 1, 74, 54,0x14), FieldTrait( 202,11, 27, 54,0x14), FieldTrait( 206, 7, 29, 54,0x14),
-   FieldTrait( 207,20, 32, 54,0x14), FieldTrait( 215, 1,124,141,0x1c), FieldTrait( 218,12,125,160,0x14),
-   FieldTrait( 220,19,126,160,0x14), FieldTrait( 221,15,127,160,0x14), FieldTrait( 222,15,128,160,0x14),
-   FieldTrait( 223,14, 31, 54,0x14), FieldTrait( 224,25, 15, 54,0x14), FieldTrait( 225,25, 16, 54,0x14),
-   FieldTrait( 226, 1, 18, 54,0x14), FieldTrait( 227,14, 19, 54,0x14), FieldTrait( 228, 9, 20, 54,0x14),
-   FieldTrait( 231, 9, 30, 54,0x14), FieldTrait( 232, 1,111,162,0x1c), FieldTrait( 235,15,133,198,0x14),
-   FieldTrait( 236,14,134,198,0x14), FieldTrait( 239, 1, 17, 54,0x14), FieldTrait( 240,25, 26, 54,0x14),
-   FieldTrait( 255,15, 21, 54,0x14), FieldTrait( 348, 2, 34, 54,0x14), FieldTrait( 349,28, 35, 54,0x14),
-   FieldTrait( 350, 2, 37, 54,0x14), FieldTrait( 351,28, 38, 54,0x14), FieldTrait( 354, 2,120,  0,0x04),
-   FieldTrait( 355,28,121,  0,0x04), FieldTrait( 423, 1,113,  0,0x04), FieldTrait( 453, 1,139, 94,0x1c),
-   FieldTrait( 454, 1,  8,142,0x1c), FieldTrait( 460, 1,  9, 54,0x14), FieldTrait( 461,15, 10, 54,0x14),
-   FieldTrait( 468, 7,107, 93,0x14), FieldTrait( 469, 9,108, 93,0x14), FieldTrait( 470,18, 23, 54,0x14),
-   FieldTrait( 471,15, 24, 54,0x14), FieldTrait( 472,15, 25, 54,0x14), FieldTrait( 516,14,106, 93,0x14),
-   FieldTrait( 541,25, 14, 54,0x14), FieldTrait( 543,15, 22, 54,0x14), FieldTrait( 555, 1,112, 50,0x1c),
-   FieldTrait( 662,11,129,160,0x14), FieldTrait( 663, 1,130,160,0x14), FieldTrait( 667,21, 40, 54,0x14),
-   FieldTrait( 691,15, 39, 54,0x14), FieldTrait( 696,25,136,198,0x14), FieldTrait( 697,11,137,198,0x14),
-   FieldTrait( 698, 1,138,198,0x14), FieldTrait( 699,15,131,160,0x14), FieldTrait( 701,25,135,198,0x14),
-   FieldTrait( 711, 1,101,188,0x1c), FieldTrait( 761,15,132,160,0x14), FieldTrait( 762,15, 12, 54,0x14),
-   FieldTrait( 788, 1, 96, 44,0x14), FieldTrait( 854, 1,103,  0,0x04), FieldTrait( 864, 1, 43, 38,0x1c),
-   FieldTrait( 873,25, 44, 54,0x14), FieldTrait( 874,25, 45, 54,0x14), FieldTrait( 875, 1, 41, 54,0x14),
-   FieldTrait( 876,15, 42, 54,0x14), FieldTrait( 898,14,100, 44,0x14), FieldTrait( 913,15, 92, 44,0x14),
-   FieldTrait( 914,15, 93, 44,0x14), FieldTrait( 915,25, 94, 44,0x14), FieldTrait( 916,25, 97, 44,0x14),
-   FieldTrait( 917,25, 98, 44,0x14), FieldTrait( 918,19, 95, 44,0x14), FieldTrait( 919, 1, 99, 44,0x14),
-   FieldTrait( 947,19, 28, 54,0x14), FieldTrait( 965,15, 46, 54,0x14), FieldTrait( 966,15, 47, 54,0x14),
-   FieldTrait( 967, 9, 49, 54,0x14), FieldTrait( 968, 9, 50, 54,0x14), FieldTrait( 969, 9, 51, 54,0x14),
-   FieldTrait( 970, 1, 52, 54,0x14), FieldTrait( 971, 1, 53, 54,0x14), FieldTrait( 996,15, 55, 54,0x14),
-   FieldTrait( 997,15, 56, 54,0x14), FieldTrait(1018, 1, 54, 57,0x1c), FieldTrait(1049, 7, 48, 54,0x14),
-   FieldTrait(1079,26, 57, 54,0x14), FieldTrait(1146,13, 59, 54,0x14), FieldTrait(1147,10, 60, 54,0x14),
-   FieldTrait(1151,15, 58, 54,0x14), FieldTrait(1180,15,140,  8,0x14), FieldTrait(1181, 4,141,  8,0x14),
-   FieldTrait(1184, 2, 61,150,0x14), FieldTrait(1185,29, 62,150,0x14), FieldTrait(1186,15, 63,150,0x14),
-   FieldTrait(1191,15, 65, 54,0x14), FieldTrait(1192,10, 66, 54,0x14), FieldTrait(1193, 7, 67, 54,0x14),
-   FieldTrait(1194, 1, 68, 54,0x14), FieldTrait(1195,13, 69, 54,0x14), FieldTrait(1196,15, 70, 54,0x14),
-   FieldTrait(1197,15, 77, 54,0x14), FieldTrait(1198, 1, 71, 54,0x14), FieldTrait(1199,11, 72, 54,0x14),
-   FieldTrait(1200,11, 73, 54,0x14), FieldTrait(1227,15, 64, 54,0x14), FieldTrait(1242, 8, 76, 54,0x14),
-   FieldTrait(1244, 8, 75, 54,0x14), FieldTrait(1350, 4,142,  8,0x14), FieldTrait(1352, 8,143,  8,0x14),
-   FieldTrait(1435, 1, 78, 54,0x14), FieldTrait(1439, 1, 79, 54,0x14), FieldTrait(1449,15, 80, 54,0x14),
-   FieldTrait(1450,15, 81, 54,0x14), FieldTrait(1451,14, 82, 54,0x14), FieldTrait(1452,14, 83, 54,0x14),
-   FieldTrait(1457,14, 84, 54,0x14), FieldTrait(1458,14, 85, 54,0x14), FieldTrait(1478, 1, 86, 54,0x14),
-   FieldTrait(1479, 1, 87, 54,0x14), FieldTrait(1480,14, 88, 54,0x14), FieldTrait(1481, 1, 89, 54,0x14),
-   FieldTrait(1482, 1, 90, 54,0x14), FieldTrait(1483, 1, 91, 21,0x1c)
+   {  15,19,110,  0,0x04}, {  22,15,  7, 54,0x14}, {  23,15,  1,  0,0x04}, {  25, 7,116,  0,0x04},
+   {  26,15,  3,  0,0x04}, {  27,15,109,  0,0x04}, {  28, 7,  2,  0,0x04}, {  38,10,104, 93,0x14},
+   {  44,11,114,  0,0x04}, {  48,15,  6, 54,0x14}, {  54, 7,102,  0,0x04}, {  55,15,  4, 54,0x14},
+   {  58,15,119,  0,0x04}, {  60,22,122,  0,0x04}, {  62,22,115,  0,0x04}, {  65,15,  5, 54,0x14},
+   { 106,15, 33, 54,0x14}, { 107,15, 36, 54,0x14}, { 130, 8,117,  0,0x04}, { 149,15,123,  0,0x04},
+   { 152,10,105, 93,0x14}, { 167,15, 11, 54,0x14}, { 199, 1,118, 46,0x1c}, { 200,21, 13, 54,0x14},
+   { 201, 1, 74, 54,0x14}, { 202,11, 27, 54,0x14}, { 206, 7, 29, 54,0x14}, { 207,20, 32, 54,0x14},
+   { 215, 1,124,141,0x1c}, { 218,12,125,160,0x14}, { 220,19,126,160,0x14}, { 221,15,127,160,0x14},
+   { 222,15,128,160,0x14}, { 223,14, 31, 54,0x14}, { 224,25, 15, 54,0x14}, { 225,25, 16, 54,0x14},
+   { 226, 1, 18, 54,0x14}, { 227,14, 19, 54,0x14}, { 228, 9, 20, 54,0x14}, { 231, 9, 30, 54,0x14},
+   { 232, 1,111,162,0x1c}, { 235,15,133,198,0x14}, { 236,14,134,198,0x14}, { 239, 1, 17, 54,0x14},
+   { 240,25, 26, 54,0x14}, { 255,15, 21, 54,0x14}, { 348, 2, 34, 54,0x14}, { 349,28, 35, 54,0x14},
+   { 350, 2, 37, 54,0x14}, { 351,28, 38, 54,0x14}, { 354, 2,120,  0,0x04}, { 355,28,121,  0,0x04},
+   { 423, 1,113,  0,0x04}, { 453, 1,139, 94,0x1c}, { 454, 1,  8,142,0x1c}, { 460, 1,  9, 54,0x14},
+   { 461,15, 10, 54,0x14}, { 468, 7,107, 93,0x14}, { 469, 9,108, 93,0x14}, { 470,18, 23, 54,0x14},
+   { 471,15, 24, 54,0x14}, { 472,15, 25, 54,0x14}, { 516,14,106, 93,0x14}, { 541,25, 14, 54,0x14},
+   { 543,15, 22, 54,0x14}, { 555, 1,112, 50,0x1c}, { 662,11,129,160,0x14}, { 663, 1,130,160,0x14},
+   { 667,21, 40, 54,0x14}, { 691,15, 39, 54,0x14}, { 696,25,136,198,0x14}, { 697,11,137,198,0x14},
+   { 698, 1,138,198,0x14}, { 699,15,131,160,0x14}, { 701,25,135,198,0x14}, { 711, 1,101,188,0x1c},
+   { 761,15,132,160,0x14}, { 762,15, 12, 54,0x14}, { 788, 1, 96, 44,0x14}, { 854, 1,103,  0,0x04},
+   { 864, 1, 43, 38,0x1c}, { 873,25, 44, 54,0x14}, { 874,25, 45, 54,0x14}, { 875, 1, 41, 54,0x14},
+   { 876,15, 42, 54,0x14}, { 898,14,100, 44,0x14}, { 913,15, 92, 44,0x14}, { 914,15, 93, 44,0x14},
+   { 915,25, 94, 44,0x14}, { 916,25, 97, 44,0x14}, { 917,25, 98, 44,0x14}, { 918,19, 95, 44,0x14},
+   { 919, 1, 99, 44,0x14}, { 947,19, 28, 54,0x14}, { 965,15, 46, 54,0x14}, { 966,15, 47, 54,0x14},
+   { 967, 9, 49, 54,0x14}, { 968, 9, 50, 54,0x14}, { 969, 9, 51, 54,0x14}, { 970, 1, 52, 54,0x14},
+   { 971, 1, 53, 54,0x14}, { 996,15, 55, 54,0x14}, { 997,15, 56, 54,0x14}, {1018, 1, 54, 57,0x1c},
+   {1049, 7, 48, 54,0x14}, {1079,26, 57, 54,0x14}, {1146,13, 59, 54,0x14}, {1147,10, 60, 54,0x14},
+   {1151,15, 58, 54,0x14}, {1180,15,140,  8,0x14}, {1181, 4,141,  8,0x14}, {1184, 2, 61,150,0x14},
+   {1185,29, 62,150,0x14}, {1186,15, 63,150,0x14}, {1191,15, 65, 54,0x14}, {1192,10, 66, 54,0x14},
+   {1193, 7, 67, 54,0x14}, {1194, 1, 68, 54,0x14}, {1195,13, 69, 54,0x14}, {1196,15, 70, 54,0x14},
+   {1197,15, 77, 54,0x14}, {1198, 1, 71, 54,0x14}, {1199,11, 72, 54,0x14}, {1200,11, 73, 54,0x14},
+   {1227,15, 64, 54,0x14}, {1242, 8, 76, 54,0x14}, {1244, 8, 75, 54,0x14}, {1350, 4,142,  8,0x14},
+   {1352, 8,143,  8,0x14}, {1435, 1, 78, 54,0x14}, {1439, 1, 79, 54,0x14}, {1449,15, 80, 54,0x14},
+   {1450,15, 81, 54,0x14}, {1451,14, 82, 54,0x14}, {1452,14, 83, 54,0x14}, {1457,14, 84, 54,0x14},
+   {1458,14, 85, 54,0x14}, {1478, 1, 86, 54,0x14}, {1479, 1, 87, 54,0x14}, {1480,14, 88, 54,0x14},
+   {1481, 1, 89, 54,0x14}, {1482, 1, 90, 54,0x14}, {1483, 1, 91, 21,0x1c}
 };
 const FieldTrait_Hash_Array IOI::_ftha(IOI::_traits, 143);
 const MsgType IOI::_msgtype("6");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait IOI::NoIOIQualifiers::_traits[] =
+const FieldTrait IOI::NoIOIQualifiers::_traits[]
 {
-   FieldTrait( 104, 7,  1,  0,0x04)
+   { 104, 7,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    IOI::NoIOIQualifiers::_ftha(IOI::NoIOIQualifiers::_traits, 1);
@@ -1122,27 +1024,22 @@ const FieldTrait *IOI::NoSecurityAltID::_traits(NoSecurityAltIDV1_traits);
 const FieldTrait_Hash_Array& IOI::NoSecurityAltID::_ftha(NoSecurityAltIDV1_ftha);
 const MsgType& IOI::NoSecurityAltID::_msgtype(NoSecurityAltIDV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait IOI::NoLegs::_traits[] =
+const FieldTrait IOI::NoLegs::_traits[]
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 556,19, 38, 56,0x14),
-   FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14),
-   FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14),
-   FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14),
-   FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14),
-   FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14),
-   FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14),
-   FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14),
-   FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14),
-   FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14),
-   FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 682,15, 55,  0,0x04), FieldTrait( 683, 1, 56, 65,0x1c),
-   FieldTrait( 739,25, 40, 56,0x14), FieldTrait( 740,15, 39, 56,0x14), FieldTrait( 764,15,  9, 56,0x14),
-   FieldTrait( 942,19, 25, 56,0x14), FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14),
-   FieldTrait( 999,15, 43, 56,0x14), FieldTrait(1001,15, 44, 56,0x14), FieldTrait(1017, 9, 45, 56,0x14),
-   FieldTrait(1212,26, 47, 56,0x14), FieldTrait(1224,10, 50, 56,0x14), FieldTrait(1358, 1, 48, 56,0x14),
-   FieldTrait(1420, 1, 49, 56,0x14), FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14),
-   FieldTrait(1436, 1, 53, 56,0x14), FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 556,19, 38, 56,0x14}, { 566,11, 46, 56,0x14}, { 596,18, 20, 56,0x14}, { 597,15, 21, 56,0x14},
+   { 598,15, 22, 56,0x14}, { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14}, { 601,15,  2, 56,0x14},
+   { 602,15,  3, 56,0x14}, { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c}, { 607, 1,  6, 56,0x14},
+   { 608,15,  7, 56,0x14}, { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14}, { 611,25, 11, 56,0x14},
+   { 612,11, 24, 56,0x14}, { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14}, { 615,14, 28, 56,0x14},
+   { 616,20, 29, 56,0x14}, { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14}, { 619,28, 32, 56,0x14},
+   { 620,15, 33, 56,0x14}, { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14}, { 623, 9, 36, 56,0x14},
+   { 624, 7, 37, 56,0x14}, { 682,15, 55,  0,0x04}, { 683, 1, 56, 65,0x1c}, { 739,25, 40, 56,0x14},
+   { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14}, { 942,19, 25, 56,0x14}, { 955,21, 41, 56,0x14},
+   { 956,25, 42, 56,0x14}, { 999,15, 43, 56,0x14}, {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14},
+   {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14}, {1358, 1, 48, 56,0x14}, {1420, 1, 49, 56,0x14},
+   {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array 
    IOI::NoLegs::_ftha(IOI::NoLegs::_traits, 56);
@@ -1200,44 +1097,35 @@ const FieldTrait *IOI::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes
 const FieldTrait_Hash_Array& IOI::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& IOI::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Advertisement::_traits[] =
+const FieldTrait Advertisement::_traits[]
 {
-   FieldTrait(   2,15,  1,  0,0x04), FieldTrait(   3,15,  3,  0,0x04), FieldTrait(   4, 7, 94,  0,0x04),
-   FieldTrait(   5,15,  2,  0,0x04), FieldTrait(  15,19, 98,  0,0x04), FieldTrait(  22,15,  7, 54,0x14),
-   FieldTrait(  30,20,105,  0,0x04), FieldTrait(  44,11, 97,  0,0x04), FieldTrait(  48,15,  6, 54,0x14),
-   FieldTrait(  53,10, 95,  0,0x04), FieldTrait(  55,15,  4, 54,0x14), FieldTrait(  58,15,101,  0,0x04),
-   FieldTrait(  60,22,100,  0,0x04), FieldTrait(  65,15,  5, 54,0x14), FieldTrait(  75,25, 99,  0,0x04),
-   FieldTrait( 106,15, 33, 54,0x14), FieldTrait( 107,15, 36, 54,0x14), FieldTrait( 149,15,104,  0,0x04),
-   FieldTrait( 167,15, 11, 54,0x14), FieldTrait( 200,21, 13, 54,0x14), FieldTrait( 201, 1, 74, 54,0x14),
-   FieldTrait( 202,11, 27, 54,0x14), FieldTrait( 206, 7, 29, 54,0x14), FieldTrait( 207,20, 32, 54,0x14),
-   FieldTrait( 223,14, 31, 54,0x14), FieldTrait( 224,25, 15, 54,0x14), FieldTrait( 225,25, 16, 54,0x14),
-   FieldTrait( 226, 1, 18, 54,0x14), FieldTrait( 227,14, 19, 54,0x14), FieldTrait( 228, 9, 20, 54,0x14),
-   FieldTrait( 231, 9, 30, 54,0x14), FieldTrait( 239, 1, 17, 54,0x14), FieldTrait( 240,25, 26, 54,0x14),
-   FieldTrait( 255,15, 21, 54,0x14), FieldTrait( 336,15,106,  0,0x04), FieldTrait( 348, 2, 34, 54,0x14),
-   FieldTrait( 349,28, 35, 54,0x14), FieldTrait( 350, 2, 37, 54,0x14), FieldTrait( 351,28, 38, 54,0x14),
-   FieldTrait( 354, 2,102,  0,0x04), FieldTrait( 355,28,103,  0,0x04), FieldTrait( 454, 1,  8,142,0x1c),
-   FieldTrait( 460, 1,  9, 54,0x14), FieldTrait( 461,15, 10, 54,0x14), FieldTrait( 470,18, 23, 54,0x14),
-   FieldTrait( 471,15, 24, 54,0x14), FieldTrait( 472,15, 25, 54,0x14), FieldTrait( 541,25, 14, 54,0x14),
-   FieldTrait( 543,15, 22, 54,0x14), FieldTrait( 555, 1, 92, 49,0x1c), FieldTrait( 625,15,107,  0,0x04),
-   FieldTrait( 667,21, 40, 54,0x14), FieldTrait( 691,15, 39, 54,0x14), FieldTrait( 711, 1, 93,188,0x1c),
-   FieldTrait( 762,15, 12, 54,0x14), FieldTrait( 854, 1, 96,  0,0x04), FieldTrait( 864, 1, 43, 38,0x1c),
-   FieldTrait( 873,25, 44, 54,0x14), FieldTrait( 874,25, 45, 54,0x14), FieldTrait( 875, 1, 41, 54,0x14),
-   FieldTrait( 876,15, 42, 54,0x14), FieldTrait( 947,19, 28, 54,0x14), FieldTrait( 965,15, 46, 54,0x14),
-   FieldTrait( 966,15, 47, 54,0x14), FieldTrait( 967, 9, 49, 54,0x14), FieldTrait( 968, 9, 50, 54,0x14),
-   FieldTrait( 969, 9, 51, 54,0x14), FieldTrait( 970, 1, 52, 54,0x14), FieldTrait( 971, 1, 53, 54,0x14),
-   FieldTrait( 996,15, 55, 54,0x14), FieldTrait( 997,15, 56, 54,0x14), FieldTrait(1018, 1, 54, 57,0x1c),
-   FieldTrait(1049, 7, 48, 54,0x14), FieldTrait(1079,26, 57, 54,0x14), FieldTrait(1146,13, 59, 54,0x14),
-   FieldTrait(1147,10, 60, 54,0x14), FieldTrait(1151,15, 58, 54,0x14), FieldTrait(1184, 2, 61,150,0x14),
-   FieldTrait(1185,29, 62,150,0x14), FieldTrait(1186,15, 63,150,0x14), FieldTrait(1191,15, 65, 54,0x14),
-   FieldTrait(1192,10, 66, 54,0x14), FieldTrait(1193, 7, 67, 54,0x14), FieldTrait(1194, 1, 68, 54,0x14),
-   FieldTrait(1195,13, 69, 54,0x14), FieldTrait(1196,15, 70, 54,0x14), FieldTrait(1197,15, 77, 54,0x14),
-   FieldTrait(1198, 1, 71, 54,0x14), FieldTrait(1199,11, 72, 54,0x14), FieldTrait(1200,11, 73, 54,0x14),
-   FieldTrait(1227,15, 64, 54,0x14), FieldTrait(1242, 8, 76, 54,0x14), FieldTrait(1244, 8, 75, 54,0x14),
-   FieldTrait(1435, 1, 78, 54,0x14), FieldTrait(1439, 1, 79, 54,0x14), FieldTrait(1449,15, 80, 54,0x14),
-   FieldTrait(1450,15, 81, 54,0x14), FieldTrait(1451,14, 82, 54,0x14), FieldTrait(1452,14, 83, 54,0x14),
-   FieldTrait(1457,14, 84, 54,0x14), FieldTrait(1458,14, 85, 54,0x14), FieldTrait(1478, 1, 86, 54,0x14),
-   FieldTrait(1479, 1, 87, 54,0x14), FieldTrait(1480,14, 88, 54,0x14), FieldTrait(1481, 1, 89, 54,0x14),
-   FieldTrait(1482, 1, 90, 54,0x14), FieldTrait(1483, 1, 91, 21,0x1c)
+   {   2,15,  1,  0,0x04}, {   3,15,  3,  0,0x04}, {   4, 7, 94,  0,0x04}, {   5,15,  2,  0,0x04},
+   {  15,19, 98,  0,0x04}, {  22,15,  7, 54,0x14}, {  30,20,105,  0,0x04}, {  44,11, 97,  0,0x04},
+   {  48,15,  6, 54,0x14}, {  53,10, 95,  0,0x04}, {  55,15,  4, 54,0x14}, {  58,15,101,  0,0x04},
+   {  60,22,100,  0,0x04}, {  65,15,  5, 54,0x14}, {  75,25, 99,  0,0x04}, { 106,15, 33, 54,0x14},
+   { 107,15, 36, 54,0x14}, { 149,15,104,  0,0x04}, { 167,15, 11, 54,0x14}, { 200,21, 13, 54,0x14},
+   { 201, 1, 74, 54,0x14}, { 202,11, 27, 54,0x14}, { 206, 7, 29, 54,0x14}, { 207,20, 32, 54,0x14},
+   { 223,14, 31, 54,0x14}, { 224,25, 15, 54,0x14}, { 225,25, 16, 54,0x14}, { 226, 1, 18, 54,0x14},
+   { 227,14, 19, 54,0x14}, { 228, 9, 20, 54,0x14}, { 231, 9, 30, 54,0x14}, { 239, 1, 17, 54,0x14},
+   { 240,25, 26, 54,0x14}, { 255,15, 21, 54,0x14}, { 336,15,106,  0,0x04}, { 348, 2, 34, 54,0x14},
+   { 349,28, 35, 54,0x14}, { 350, 2, 37, 54,0x14}, { 351,28, 38, 54,0x14}, { 354, 2,102,  0,0x04},
+   { 355,28,103,  0,0x04}, { 454, 1,  8,142,0x1c}, { 460, 1,  9, 54,0x14}, { 461,15, 10, 54,0x14},
+   { 470,18, 23, 54,0x14}, { 471,15, 24, 54,0x14}, { 472,15, 25, 54,0x14}, { 541,25, 14, 54,0x14},
+   { 543,15, 22, 54,0x14}, { 555, 1, 92, 49,0x1c}, { 625,15,107,  0,0x04}, { 667,21, 40, 54,0x14},
+   { 691,15, 39, 54,0x14}, { 711, 1, 93,188,0x1c}, { 762,15, 12, 54,0x14}, { 854, 1, 96,  0,0x04},
+   { 864, 1, 43, 38,0x1c}, { 873,25, 44, 54,0x14}, { 874,25, 45, 54,0x14}, { 875, 1, 41, 54,0x14},
+   { 876,15, 42, 54,0x14}, { 947,19, 28, 54,0x14}, { 965,15, 46, 54,0x14}, { 966,15, 47, 54,0x14},
+   { 967, 9, 49, 54,0x14}, { 968, 9, 50, 54,0x14}, { 969, 9, 51, 54,0x14}, { 970, 1, 52, 54,0x14},
+   { 971, 1, 53, 54,0x14}, { 996,15, 55, 54,0x14}, { 997,15, 56, 54,0x14}, {1018, 1, 54, 57,0x1c},
+   {1049, 7, 48, 54,0x14}, {1079,26, 57, 54,0x14}, {1146,13, 59, 54,0x14}, {1147,10, 60, 54,0x14},
+   {1151,15, 58, 54,0x14}, {1184, 2, 61,150,0x14}, {1185,29, 62,150,0x14}, {1186,15, 63,150,0x14},
+   {1191,15, 65, 54,0x14}, {1192,10, 66, 54,0x14}, {1193, 7, 67, 54,0x14}, {1194, 1, 68, 54,0x14},
+   {1195,13, 69, 54,0x14}, {1196,15, 70, 54,0x14}, {1197,15, 77, 54,0x14}, {1198, 1, 71, 54,0x14},
+   {1199,11, 72, 54,0x14}, {1200,11, 73, 54,0x14}, {1227,15, 64, 54,0x14}, {1242, 8, 76, 54,0x14},
+   {1244, 8, 75, 54,0x14}, {1435, 1, 78, 54,0x14}, {1439, 1, 79, 54,0x14}, {1449,15, 80, 54,0x14},
+   {1450,15, 81, 54,0x14}, {1451,14, 82, 54,0x14}, {1452,14, 83, 54,0x14}, {1457,14, 84, 54,0x14},
+   {1458,14, 85, 54,0x14}, {1478, 1, 86, 54,0x14}, {1479, 1, 87, 54,0x14}, {1480,14, 88, 54,0x14},
+   {1481, 1, 89, 54,0x14}, {1482, 1, 90, 54,0x14}, {1483, 1, 91, 21,0x1c}
 };
 const FieldTrait_Hash_Array Advertisement::_ftha(Advertisement::_traits, 107);
 const MsgType Advertisement::_msgtype("7");
@@ -1298,117 +1186,90 @@ const FieldTrait *Advertisement::NoComplexEvents::NoComplexEventDates::NoComplex
 const FieldTrait_Hash_Array& Advertisement::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& Advertisement::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionReport::_traits[] =
+const FieldTrait ExecutionReport::_traits[]
 {
-   FieldTrait(   1,15, 27,  0,0x04), FieldTrait(   6,11,196,  0,0x04), FieldTrait(  11,15,  5,  0,0x04),
-   FieldTrait(  12,13,204, 16,0x14), FieldTrait(  13, 7,205, 16,0x14), FieldTrait(  14,10,195,  0,0x04),
-   FieldTrait(  15,19,171,  0,0x04), FieldTrait(  17,15, 20,  0,0x04), FieldTrait(  18,16,178,  0,0x04),
-   FieldTrait(  19,15, 21,  0,0x04), FieldTrait(  21, 7,241,  0,0x04), FieldTrait(  22,15, 40, 54,0x14),
-   FieldTrait(  29, 7,193,  0,0x04), FieldTrait(  30,20,189,  0,0x04), FieldTrait(  31,11,184,  0,0x04),
-   FieldTrait(  32,10,182,  0,0x04), FieldTrait(  37,15,  1,  0,0x04), FieldTrait(  38,10,138, 93,0x14),
-   FieldTrait(  39, 7, 23,  0,0x04), FieldTrait(  40, 7,143,  0,0x04), FieldTrait(  41,15,  6,  0,0x04),
-   FieldTrait(  44,11,145,  0,0x04), FieldTrait(  48,15, 39, 54,0x14), FieldTrait(  54, 7,135,  0,0x04),
-   FieldTrait(  55,15, 37, 54,0x14), FieldTrait(  58,15,247,  0,0x04), FieldTrait(  59, 7,174,  0,0x04),
-   FieldTrait(  60,22,202,  0,0x04), FieldTrait(  63,15, 33,  0,0x04), FieldTrait(  64,25, 34,  0,0x04),
-   FieldTrait(  65,15, 38, 54,0x14), FieldTrait(  66,15, 16,  0,0x04), FieldTrait(  70,15,316,  0,0x04),
-   FieldTrait(  75,25,201,  0,0x04), FieldTrait(  77, 7,244,  0,0x04), FieldTrait(  78, 1,317,104,0x1c),
-   FieldTrait(  99,11,146,  0,0x04), FieldTrait( 103, 1, 25,  0,0x04), FieldTrait( 106,15, 66, 54,0x14),
-   FieldTrait( 107,15, 69, 54,0x14), FieldTrait( 110,10,242,  0,0x04), FieldTrait( 111,10,243,  0,0x04),
-   FieldTrait( 113, 8,203,  0,0x04), FieldTrait( 118,13,236,  0,0x04), FieldTrait( 119,13,237,  0,0x04),
-   FieldTrait( 120,19,238,  0,0x04), FieldTrait( 126,22,177,  0,0x04), FieldTrait( 136, 1,268, 77,0x1c),
-   FieldTrait( 150, 7, 22,  0,0x04), FieldTrait( 151,10,194,  0,0x04), FieldTrait( 152,10,139, 93,0x14),
-   FieldTrait( 155, 9,239,  0,0x04), FieldTrait( 156, 7,240,  0,0x04), FieldTrait( 157, 1,223,  0,0x04),
-   FieldTrait( 158,14,225,  0,0x04), FieldTrait( 159,13,226,  0,0x04), FieldTrait( 167,15, 44, 54,0x14),
-   FieldTrait( 168,22,175,  0,0x04), FieldTrait( 192,10,251,  0,0x04), FieldTrait( 193,25,250,  0,0x04),
-   FieldTrait( 194,11,187,  0,0x04), FieldTrait( 195,12,188,  0,0x04), FieldTrait( 198,15,  2,  0,0x04),
-   FieldTrait( 200,21, 46, 54,0x14), FieldTrait( 201, 1,107, 54,0x14), FieldTrait( 202,11, 60, 54,0x14),
-   FieldTrait( 206, 7, 62, 54,0x14), FieldTrait( 207,20, 65, 54,0x14), FieldTrait( 210,10,245,  0,0x04),
-   FieldTrait( 211, 9,147,100,0x14), FieldTrait( 218,12,208,160,0x14), FieldTrait( 220,19,209,160,0x14),
-   FieldTrait( 221,15,210,160,0x14), FieldTrait( 222,15,211,160,0x14), FieldTrait( 223,14, 64, 54,0x14),
-   FieldTrait( 224,25, 48, 54,0x14), FieldTrait( 225,25, 49, 54,0x14), FieldTrait( 226, 1, 51, 54,0x14),
-   FieldTrait( 227,14, 52, 54,0x14), FieldTrait( 228, 9, 53, 54,0x14), FieldTrait( 229,25, 14,  0,0x04),
-   FieldTrait( 230,25,224,  0,0x04), FieldTrait( 231, 9, 63, 54,0x14), FieldTrait( 232, 1,136,162,0x1c),
-   FieldTrait( 235,15,216,198,0x14), FieldTrait( 236,14,217,198,0x14), FieldTrait( 237,13,235,  0,0x04),
-   FieldTrait( 238,13,234,  0,0x04), FieldTrait( 239, 1, 50, 54,0x14), FieldTrait( 240,25, 59, 54,0x14),
-   FieldTrait( 255,15, 54, 54,0x14), FieldTrait( 258, 8,231,  0,0x04), FieldTrait( 259,25,232,  0,0x04),
-   FieldTrait( 260,11,233,  0,0x04), FieldTrait( 336,15,190,  0,0x04), FieldTrait( 348, 2, 67, 54,0x14),
-   FieldTrait( 349,28, 68, 54,0x14), FieldTrait( 350, 2, 70, 54,0x14), FieldTrait( 351,28, 71, 54,0x14),
-   FieldTrait( 354, 2,248,  0,0x04), FieldTrait( 355,28,249,  0,0x04), FieldTrait( 376,15,172,  0,0x04),
-   FieldTrait( 377, 8,173,  0,0x04), FieldTrait( 378, 1, 26,  0,0x04), FieldTrait( 381,13,222,  0,0x04),
-   FieldTrait( 382, 1, 15, 25,0x1c), FieldTrait( 388, 7,158, 35,0x14), FieldTrait( 389, 9,159, 35,0x14),
-   FieldTrait( 423, 1,144,  0,0x04), FieldTrait( 424,10,197,  0,0x04), FieldTrait( 425,10,198,  0,0x04),
-   FieldTrait( 426,11,199,  0,0x04), FieldTrait( 427, 1,200,  0,0x04), FieldTrait( 432,25,176,  0,0x04),
-   FieldTrait( 442, 7,253,  0,0x04), FieldTrait( 453, 1, 13, 94,0x1c), FieldTrait( 454, 1, 41,142,0x1c),
-   FieldTrait( 460, 1, 42, 54,0x14), FieldTrait( 461,15, 43, 54,0x14), FieldTrait( 468, 7,141, 93,0x14),
-   FieldTrait( 469, 9,142, 93,0x14), FieldTrait( 470,18, 56, 54,0x14), FieldTrait( 471,15, 57, 54,0x14),
-   FieldTrait( 472,15, 58, 54,0x14), FieldTrait( 479,19,206, 16,0x14), FieldTrait( 480, 7,254,  0,0x04),
-   FieldTrait( 481, 7,255,  0,0x04), FieldTrait( 483,22,258,  0,0x04), FieldTrait( 484, 7,260,  0,0x04),
-   FieldTrait( 485, 9,261,  0,0x04), FieldTrait( 494,15,257,  0,0x04), FieldTrait( 497, 7,207, 16,0x14),
-   FieldTrait( 513,15,256,  0,0x04), FieldTrait( 515,22,259,  0,0x04), FieldTrait( 516,14,140, 93,0x14),
-   FieldTrait( 518, 1,265, 22,0x1c), FieldTrait( 526,15,  3,  0,0x04), FieldTrait( 527,15,  4,  0,0x04),
-   FieldTrait( 528, 7,179,  0,0x04), FieldTrait( 529,16,180,  0,0x04), FieldTrait( 541,25, 47, 54,0x14),
-   FieldTrait( 543,15, 55, 54,0x14), FieldTrait( 544, 7, 35,  0,0x04), FieldTrait( 548,15, 17,  0,0x04),
-   FieldTrait( 549, 1, 19,  0,0x04), FieldTrait( 551,15, 18,  0,0x04), FieldTrait( 555, 1,266, 48,0x1c),
-   FieldTrait( 574,15,280,  0,0x04), FieldTrait( 581, 1, 29,  0,0x04), FieldTrait( 582, 1,181,  0,0x04),
-   FieldTrait( 583,15,  7,  0,0x04), FieldTrait( 584,15, 10,  0,0x04), FieldTrait( 589, 7, 30,  0,0x04),
-   FieldTrait( 590, 7, 31,  0,0x04), FieldTrait( 591, 7, 32,  0,0x04), FieldTrait( 625,15,191,  0,0x04),
-   FieldTrait( 635,15, 36,  0,0x04), FieldTrait( 636, 8, 24,  0,0x04), FieldTrait( 638, 1,262,  0,0x04),
-   FieldTrait( 639,12,263,  0,0x04), FieldTrait( 641,12,252,  0,0x04), FieldTrait( 651,11,185,  0,0x04),
-   FieldTrait( 652,10,183,  0,0x04), FieldTrait( 660, 1, 28,  0,0x04), FieldTrait( 662,11,212,160,0x14),
-   FieldTrait( 663, 1,213,160,0x14), FieldTrait( 667,21, 73, 54,0x14), FieldTrait( 669,11,186,  0,0x04),
-   FieldTrait( 691,15, 72, 54,0x14), FieldTrait( 693,15,  8,  0,0x04), FieldTrait( 696,25,219,198,0x14),
-   FieldTrait( 697,11,220,198,0x14), FieldTrait( 698, 1,221,198,0x14), FieldTrait( 699,15,214,160,0x14),
-   FieldTrait( 701,25,218,198,0x14), FieldTrait( 711, 1,134,188,0x1c), FieldTrait( 738,13,227,  0,0x04),
-   FieldTrait( 761,15,215,160,0x14), FieldTrait( 762,15, 45, 54,0x14), FieldTrait( 768, 1,276,182,0x1c),
-   FieldTrait( 775, 1,246,  0,0x04), FieldTrait( 788, 1,129, 44,0x14), FieldTrait( 790,15,  9,  0,0x04),
-   FieldTrait( 797, 8,267,  0,0x04), FieldTrait( 811, 9,314,  0,0x04), FieldTrait( 835, 1,148,100,0x14),
-   FieldTrait( 836, 1,149,100,0x14), FieldTrait( 837, 1,150,100,0x14), FieldTrait( 838, 1,151,100,0x14),
-   FieldTrait( 839,11,165,  0,0x04), FieldTrait( 840, 1,152,100,0x14), FieldTrait( 841, 1,160, 35,0x14),
-   FieldTrait( 842, 1,161, 35,0x14), FieldTrait( 843, 1,162, 35,0x14), FieldTrait( 844, 1,163, 35,0x14),
-   FieldTrait( 845,11,166,  0,0x04), FieldTrait( 846, 1,164, 35,0x14), FieldTrait( 847, 1,167,  0,0x04),
-   FieldTrait( 848,15,168,  0,0x04), FieldTrait( 849,14,169,  0,0x04), FieldTrait( 850, 9,170,  0,0x04),
-   FieldTrait( 851, 1,264,  0,0x04), FieldTrait( 854, 1,137,  0,0x04), FieldTrait( 864, 1, 76, 38,0x1c),
-   FieldTrait( 873,25, 77, 54,0x14), FieldTrait( 874,25, 78, 54,0x14), FieldTrait( 875, 1, 74, 54,0x14),
-   FieldTrait( 876,15, 75, 54,0x14), FieldTrait( 880,15,315,  0,0x04), FieldTrait( 893, 8,319,  0,0x04),
-   FieldTrait( 898,14,133, 44,0x14), FieldTrait( 911, 1, 11,  0,0x04), FieldTrait( 912, 8, 12,  0,0x04),
-   FieldTrait( 913,15,125, 44,0x14), FieldTrait( 914,15,126, 44,0x14), FieldTrait( 915,25,127, 44,0x14),
-   FieldTrait( 916,25,130, 44,0x14), FieldTrait( 917,25,131, 44,0x14), FieldTrait( 918,19,128, 44,0x14),
-   FieldTrait( 919, 1,132, 44,0x14), FieldTrait( 920,13,228,  0,0x04), FieldTrait( 921,13,229,  0,0x04),
-   FieldTrait( 922,13,230,  0,0x04), FieldTrait( 943,15,192,  0,0x04), FieldTrait( 947,19, 61, 54,0x14),
-   FieldTrait( 957, 1,269,163,0x1c), FieldTrait( 961,15,270,  0,0x04), FieldTrait( 965,15, 79, 54,0x14),
-   FieldTrait( 966,15, 80, 54,0x14), FieldTrait( 967, 9, 82, 54,0x14), FieldTrait( 968, 9, 83, 54,0x14),
-   FieldTrait( 969, 9, 84, 54,0x14), FieldTrait( 970, 1, 85, 54,0x14), FieldTrait( 971, 1, 86, 54,0x14),
-   FieldTrait( 996,15, 88, 54,0x14), FieldTrait( 997,15, 89, 54,0x14), FieldTrait(1018, 1, 87, 57,0x1c),
-   FieldTrait(1028, 8,271,  0,0x04), FieldTrait(1029, 8,272,  0,0x04), FieldTrait(1030,15,273,  0,0x04),
-   FieldTrait(1031,17,274,  0,0x04), FieldTrait(1032, 1,275,  0,0x04), FieldTrait(1049, 7, 81, 54,0x14),
-   FieldTrait(1056,10,278,  0,0x04), FieldTrait(1057, 8,277,  0,0x04), FieldTrait(1071,12,279,  0,0x04),
-   FieldTrait(1079,26, 90, 54,0x14), FieldTrait(1082,10,303, 36,0x14), FieldTrait(1083, 7,304, 36,0x14),
-   FieldTrait(1084, 7,305, 36,0x14), FieldTrait(1085,10,306, 36,0x14), FieldTrait(1086,10,307, 36,0x14),
-   FieldTrait(1087,10,308, 36,0x14), FieldTrait(1088,10,309, 36,0x14), FieldTrait(1089,10,301,  0,0x04),
-   FieldTrait(1090, 1,302,  0,0x04), FieldTrait(1091, 8,300,  0,0x04), FieldTrait(1092, 7,283,  0,0x04),
-   FieldTrait(1093, 7,282,  0,0x04), FieldTrait(1094, 1,153,100,0x14), FieldTrait(1095,11,299,  0,0x04),
-   FieldTrait(1096,15,154,100,0x14), FieldTrait(1097,15,155,100,0x14), FieldTrait(1098,15,156,100,0x14),
-   FieldTrait(1099,15,157,100,0x14), FieldTrait(1100, 7,284,186,0x14), FieldTrait(1101, 7,285,186,0x14),
-   FieldTrait(1102,11,286,186,0x14), FieldTrait(1103,15,287,186,0x14), FieldTrait(1104,15,288,186,0x14),
-   FieldTrait(1105,15,289,186,0x14), FieldTrait(1106,15,290,186,0x14), FieldTrait(1107, 7,291,186,0x14),
-   FieldTrait(1108, 7,292,186,0x14), FieldTrait(1109, 7,293,186,0x14), FieldTrait(1110,11,294,186,0x14),
-   FieldTrait(1111, 7,295,186,0x14), FieldTrait(1112,10,296,186,0x14), FieldTrait(1113,15,297,186,0x14),
-   FieldTrait(1114,15,298,186,0x14), FieldTrait(1115, 7,281,  0,0x04), FieldTrait(1138,10,310, 36,0x14),
-   FieldTrait(1146,13, 92, 54,0x14), FieldTrait(1147,10, 93, 54,0x14), FieldTrait(1151,15, 91, 54,0x14),
-   FieldTrait(1180,15,322,  8,0x14), FieldTrait(1181, 4,323,  8,0x14), FieldTrait(1184, 2, 94,150,0x14),
-   FieldTrait(1185,29, 95,150,0x14), FieldTrait(1186,15, 96,150,0x14), FieldTrait(1188, 9,311,  0,0x04),
-   FieldTrait(1189, 9,312,  0,0x04), FieldTrait(1190, 9,313,  0,0x04), FieldTrait(1191,15, 98, 54,0x14),
-   FieldTrait(1192,10, 99, 54,0x14), FieldTrait(1193, 7,100, 54,0x14), FieldTrait(1194, 1,101, 54,0x14),
-   FieldTrait(1195,13,102, 54,0x14), FieldTrait(1196,15,103, 54,0x14), FieldTrait(1197,15,110, 54,0x14),
-   FieldTrait(1198, 1,104, 54,0x14), FieldTrait(1199,11,105, 54,0x14), FieldTrait(1200,11,106, 54,0x14),
-   FieldTrait(1227,15, 97, 54,0x14), FieldTrait(1242, 8,109, 54,0x14), FieldTrait(1244, 8,108, 54,0x14),
-   FieldTrait(1350, 4,324,  8,0x14), FieldTrait(1352, 8,325,  8,0x14), FieldTrait(1361, 1,318,  0,0x04),
-   FieldTrait(1362, 1,320, 43,0x1c), FieldTrait(1380,14,321,  0,0x04), FieldTrait(1435, 1,111, 54,0x14),
-   FieldTrait(1439, 1,112, 54,0x14), FieldTrait(1445, 1,326,118,0x1c), FieldTrait(1449,15,113, 54,0x14),
-   FieldTrait(1450,15,114, 54,0x14), FieldTrait(1451,14,115, 54,0x14), FieldTrait(1452,14,116, 54,0x14),
-   FieldTrait(1457,14,117, 54,0x14), FieldTrait(1458,14,118, 54,0x14), FieldTrait(1478, 1,119, 54,0x14),
-   FieldTrait(1479, 1,120, 54,0x14), FieldTrait(1480,14,121, 54,0x14), FieldTrait(1481, 1,122, 54,0x14),
-   FieldTrait(1482, 1,123, 54,0x14), FieldTrait(1483, 1,124, 21,0x1c)
+   {   1,15, 27,  0,0x04}, {   6,11,196,  0,0x04}, {  11,15,  5,  0,0x04}, {  12,13,204, 16,0x14},
+   {  13, 7,205, 16,0x14}, {  14,10,195,  0,0x04}, {  15,19,171,  0,0x04}, {  17,15, 20,  0,0x04},
+   {  18,16,178,  0,0x04}, {  19,15, 21,  0,0x04}, {  21, 7,241,  0,0x04}, {  22,15, 40, 54,0x14},
+   {  29, 7,193,  0,0x04}, {  30,20,189,  0,0x04}, {  31,11,184,  0,0x04}, {  32,10,182,  0,0x04},
+   {  37,15,  1,  0,0x04}, {  38,10,138, 93,0x14}, {  39, 7, 23,  0,0x04}, {  40, 7,143,  0,0x04},
+   {  41,15,  6,  0,0x04}, {  44,11,145,  0,0x04}, {  48,15, 39, 54,0x14}, {  54, 7,135,  0,0x04},
+   {  55,15, 37, 54,0x14}, {  58,15,247,  0,0x04}, {  59, 7,174,  0,0x04}, {  60,22,202,  0,0x04},
+   {  63,15, 33,  0,0x04}, {  64,25, 34,  0,0x04}, {  65,15, 38, 54,0x14}, {  66,15, 16,  0,0x04},
+   {  70,15,316,  0,0x04}, {  75,25,201,  0,0x04}, {  77, 7,244,  0,0x04}, {  78, 1,317,104,0x1c},
+   {  99,11,146,  0,0x04}, { 103, 1, 25,  0,0x04}, { 106,15, 66, 54,0x14}, { 107,15, 69, 54,0x14},
+   { 110,10,242,  0,0x04}, { 111,10,243,  0,0x04}, { 113, 8,203,  0,0x04}, { 118,13,236,  0,0x04},
+   { 119,13,237,  0,0x04}, { 120,19,238,  0,0x04}, { 126,22,177,  0,0x04}, { 136, 1,268, 77,0x1c},
+   { 150, 7, 22,  0,0x04}, { 151,10,194,  0,0x04}, { 152,10,139, 93,0x14}, { 155, 9,239,  0,0x04},
+   { 156, 7,240,  0,0x04}, { 157, 1,223,  0,0x04}, { 158,14,225,  0,0x04}, { 159,13,226,  0,0x04},
+   { 167,15, 44, 54,0x14}, { 168,22,175,  0,0x04}, { 192,10,251,  0,0x04}, { 193,25,250,  0,0x04},
+   { 194,11,187,  0,0x04}, { 195,12,188,  0,0x04}, { 198,15,  2,  0,0x04}, { 200,21, 46, 54,0x14},
+   { 201, 1,107, 54,0x14}, { 202,11, 60, 54,0x14}, { 206, 7, 62, 54,0x14}, { 207,20, 65, 54,0x14},
+   { 210,10,245,  0,0x04}, { 211, 9,147,100,0x14}, { 218,12,208,160,0x14}, { 220,19,209,160,0x14},
+   { 221,15,210,160,0x14}, { 222,15,211,160,0x14}, { 223,14, 64, 54,0x14}, { 224,25, 48, 54,0x14},
+   { 225,25, 49, 54,0x14}, { 226, 1, 51, 54,0x14}, { 227,14, 52, 54,0x14}, { 228, 9, 53, 54,0x14},
+   { 229,25, 14,  0,0x04}, { 230,25,224,  0,0x04}, { 231, 9, 63, 54,0x14}, { 232, 1,136,162,0x1c},
+   { 235,15,216,198,0x14}, { 236,14,217,198,0x14}, { 237,13,235,  0,0x04}, { 238,13,234,  0,0x04},
+   { 239, 1, 50, 54,0x14}, { 240,25, 59, 54,0x14}, { 255,15, 54, 54,0x14}, { 258, 8,231,  0,0x04},
+   { 259,25,232,  0,0x04}, { 260,11,233,  0,0x04}, { 336,15,190,  0,0x04}, { 348, 2, 67, 54,0x14},
+   { 349,28, 68, 54,0x14}, { 350, 2, 70, 54,0x14}, { 351,28, 71, 54,0x14}, { 354, 2,248,  0,0x04},
+   { 355,28,249,  0,0x04}, { 376,15,172,  0,0x04}, { 377, 8,173,  0,0x04}, { 378, 1, 26,  0,0x04},
+   { 381,13,222,  0,0x04}, { 382, 1, 15, 25,0x1c}, { 388, 7,158, 35,0x14}, { 389, 9,159, 35,0x14},
+   { 423, 1,144,  0,0x04}, { 424,10,197,  0,0x04}, { 425,10,198,  0,0x04}, { 426,11,199,  0,0x04},
+   { 427, 1,200,  0,0x04}, { 432,25,176,  0,0x04}, { 442, 7,253,  0,0x04}, { 453, 1, 13, 94,0x1c},
+   { 454, 1, 41,142,0x1c}, { 460, 1, 42, 54,0x14}, { 461,15, 43, 54,0x14}, { 468, 7,141, 93,0x14},
+   { 469, 9,142, 93,0x14}, { 470,18, 56, 54,0x14}, { 471,15, 57, 54,0x14}, { 472,15, 58, 54,0x14},
+   { 479,19,206, 16,0x14}, { 480, 7,254,  0,0x04}, { 481, 7,255,  0,0x04}, { 483,22,258,  0,0x04},
+   { 484, 7,260,  0,0x04}, { 485, 9,261,  0,0x04}, { 494,15,257,  0,0x04}, { 497, 7,207, 16,0x14},
+   { 513,15,256,  0,0x04}, { 515,22,259,  0,0x04}, { 516,14,140, 93,0x14}, { 518, 1,265, 22,0x1c},
+   { 526,15,  3,  0,0x04}, { 527,15,  4,  0,0x04}, { 528, 7,179,  0,0x04}, { 529,16,180,  0,0x04},
+   { 541,25, 47, 54,0x14}, { 543,15, 55, 54,0x14}, { 544, 7, 35,  0,0x04}, { 548,15, 17,  0,0x04},
+   { 549, 1, 19,  0,0x04}, { 551,15, 18,  0,0x04}, { 555, 1,266, 48,0x1c}, { 574,15,280,  0,0x04},
+   { 581, 1, 29,  0,0x04}, { 582, 1,181,  0,0x04}, { 583,15,  7,  0,0x04}, { 584,15, 10,  0,0x04},
+   { 589, 7, 30,  0,0x04}, { 590, 7, 31,  0,0x04}, { 591, 7, 32,  0,0x04}, { 625,15,191,  0,0x04},
+   { 635,15, 36,  0,0x04}, { 636, 8, 24,  0,0x04}, { 638, 1,262,  0,0x04}, { 639,12,263,  0,0x04},
+   { 641,12,252,  0,0x04}, { 651,11,185,  0,0x04}, { 652,10,183,  0,0x04}, { 660, 1, 28,  0,0x04},
+   { 662,11,212,160,0x14}, { 663, 1,213,160,0x14}, { 667,21, 73, 54,0x14}, { 669,11,186,  0,0x04},
+   { 691,15, 72, 54,0x14}, { 693,15,  8,  0,0x04}, { 696,25,219,198,0x14}, { 697,11,220,198,0x14},
+   { 698, 1,221,198,0x14}, { 699,15,214,160,0x14}, { 701,25,218,198,0x14}, { 711, 1,134,188,0x1c},
+   { 738,13,227,  0,0x04}, { 761,15,215,160,0x14}, { 762,15, 45, 54,0x14}, { 768, 1,276,182,0x1c},
+   { 775, 1,246,  0,0x04}, { 788, 1,129, 44,0x14}, { 790,15,  9,  0,0x04}, { 797, 8,267,  0,0x04},
+   { 811, 9,314,  0,0x04}, { 835, 1,148,100,0x14}, { 836, 1,149,100,0x14}, { 837, 1,150,100,0x14},
+   { 838, 1,151,100,0x14}, { 839,11,165,  0,0x04}, { 840, 1,152,100,0x14}, { 841, 1,160, 35,0x14},
+   { 842, 1,161, 35,0x14}, { 843, 1,162, 35,0x14}, { 844, 1,163, 35,0x14}, { 845,11,166,  0,0x04},
+   { 846, 1,164, 35,0x14}, { 847, 1,167,  0,0x04}, { 848,15,168,  0,0x04}, { 849,14,169,  0,0x04},
+   { 850, 9,170,  0,0x04}, { 851, 1,264,  0,0x04}, { 854, 1,137,  0,0x04}, { 864, 1, 76, 38,0x1c},
+   { 873,25, 77, 54,0x14}, { 874,25, 78, 54,0x14}, { 875, 1, 74, 54,0x14}, { 876,15, 75, 54,0x14},
+   { 880,15,315,  0,0x04}, { 893, 8,319,  0,0x04}, { 898,14,133, 44,0x14}, { 911, 1, 11,  0,0x04},
+   { 912, 8, 12,  0,0x04}, { 913,15,125, 44,0x14}, { 914,15,126, 44,0x14}, { 915,25,127, 44,0x14},
+   { 916,25,130, 44,0x14}, { 917,25,131, 44,0x14}, { 918,19,128, 44,0x14}, { 919, 1,132, 44,0x14},
+   { 920,13,228,  0,0x04}, { 921,13,229,  0,0x04}, { 922,13,230,  0,0x04}, { 943,15,192,  0,0x04},
+   { 947,19, 61, 54,0x14}, { 957, 1,269,163,0x1c}, { 961,15,270,  0,0x04}, { 965,15, 79, 54,0x14},
+   { 966,15, 80, 54,0x14}, { 967, 9, 82, 54,0x14}, { 968, 9, 83, 54,0x14}, { 969, 9, 84, 54,0x14},
+   { 970, 1, 85, 54,0x14}, { 971, 1, 86, 54,0x14}, { 996,15, 88, 54,0x14}, { 997,15, 89, 54,0x14},
+   {1018, 1, 87, 57,0x1c}, {1028, 8,271,  0,0x04}, {1029, 8,272,  0,0x04}, {1030,15,273,  0,0x04},
+   {1031,17,274,  0,0x04}, {1032, 1,275,  0,0x04}, {1049, 7, 81, 54,0x14}, {1056,10,278,  0,0x04},
+   {1057, 8,277,  0,0x04}, {1071,12,279,  0,0x04}, {1079,26, 90, 54,0x14}, {1082,10,303, 36,0x14},
+   {1083, 7,304, 36,0x14}, {1084, 7,305, 36,0x14}, {1085,10,306, 36,0x14}, {1086,10,307, 36,0x14},
+   {1087,10,308, 36,0x14}, {1088,10,309, 36,0x14}, {1089,10,301,  0,0x04}, {1090, 1,302,  0,0x04},
+   {1091, 8,300,  0,0x04}, {1092, 7,283,  0,0x04}, {1093, 7,282,  0,0x04}, {1094, 1,153,100,0x14},
+   {1095,11,299,  0,0x04}, {1096,15,154,100,0x14}, {1097,15,155,100,0x14}, {1098,15,156,100,0x14},
+   {1099,15,157,100,0x14}, {1100, 7,284,186,0x14}, {1101, 7,285,186,0x14}, {1102,11,286,186,0x14},
+   {1103,15,287,186,0x14}, {1104,15,288,186,0x14}, {1105,15,289,186,0x14}, {1106,15,290,186,0x14},
+   {1107, 7,291,186,0x14}, {1108, 7,292,186,0x14}, {1109, 7,293,186,0x14}, {1110,11,294,186,0x14},
+   {1111, 7,295,186,0x14}, {1112,10,296,186,0x14}, {1113,15,297,186,0x14}, {1114,15,298,186,0x14},
+   {1115, 7,281,  0,0x04}, {1138,10,310, 36,0x14}, {1146,13, 92, 54,0x14}, {1147,10, 93, 54,0x14},
+   {1151,15, 91, 54,0x14}, {1180,15,322,  8,0x14}, {1181, 4,323,  8,0x14}, {1184, 2, 94,150,0x14},
+   {1185,29, 95,150,0x14}, {1186,15, 96,150,0x14}, {1188, 9,311,  0,0x04}, {1189, 9,312,  0,0x04},
+   {1190, 9,313,  0,0x04}, {1191,15, 98, 54,0x14}, {1192,10, 99, 54,0x14}, {1193, 7,100, 54,0x14},
+   {1194, 1,101, 54,0x14}, {1195,13,102, 54,0x14}, {1196,15,103, 54,0x14}, {1197,15,110, 54,0x14},
+   {1198, 1,104, 54,0x14}, {1199,11,105, 54,0x14}, {1200,11,106, 54,0x14}, {1227,15, 97, 54,0x14},
+   {1242, 8,109, 54,0x14}, {1244, 8,108, 54,0x14}, {1350, 4,324,  8,0x14}, {1352, 8,325,  8,0x14},
+   {1361, 1,318,  0,0x04}, {1362, 1,320, 43,0x1c}, {1380,14,321,  0,0x04}, {1435, 1,111, 54,0x14},
+   {1439, 1,112, 54,0x14}, {1445, 1,326,118,0x1c}, {1449,15,113, 54,0x14}, {1450,15,114, 54,0x14},
+   {1451,14,115, 54,0x14}, {1452,14,116, 54,0x14}, {1457,14,117, 54,0x14}, {1458,14,118, 54,0x14},
+   {1478, 1,119, 54,0x14}, {1479, 1,120, 54,0x14}, {1480,14,121, 54,0x14}, {1481, 1,122, 54,0x14},
+   {1482, 1,123, 54,0x14}, {1483, 1,124, 21,0x1c}
 };
 const FieldTrait_Hash_Array ExecutionReport::_ftha(ExecutionReport::_traits, 326);
 const MsgType ExecutionReport::_msgtype("8");
@@ -1433,10 +1294,10 @@ const FieldTrait *ExecutionReport::NoStipulations::_traits(NoStipulationsV1_trai
 const FieldTrait_Hash_Array& ExecutionReport::NoStipulations::_ftha(NoStipulationsV1_ftha);
 const MsgType& ExecutionReport::NoStipulations::_msgtype(NoStipulationsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionReport::NoContraBrokers::_traits[] =
+const FieldTrait ExecutionReport::NoContraBrokers::_traits[]
 {
-   FieldTrait( 337,15,  2,  0,0x04), FieldTrait( 375,15,  1,  0,0x04), FieldTrait( 437,10,  3,  0,0x04),
-   FieldTrait( 438,22,  4,  0,0x04), FieldTrait( 655,15,  5,  0,0x04)
+   { 337,15,  2,  0,0x04}, { 375,15,  1,  0,0x04}, { 437,10,  3,  0,0x04}, { 438,22,  4,  0,0x04},
+   { 655,15,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ExecutionReport::NoContraBrokers::_ftha(ExecutionReport::NoContraBrokers::_traits, 5);
@@ -1458,34 +1319,27 @@ const FieldTrait *ExecutionReport::NoContAmts::_traits(NoContAmtsV1_traits);
 const FieldTrait_Hash_Array& ExecutionReport::NoContAmts::_ftha(NoContAmtsV1_ftha);
 const MsgType& ExecutionReport::NoContAmts::_msgtype(NoContAmtsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionReport::NoLegs::_traits[] =
+const FieldTrait ExecutionReport::NoLegs::_traits[]
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 556,19, 38, 56,0x14),
-   FieldTrait( 564, 7, 58,  0,0x04), FieldTrait( 565, 1, 59,  0,0x04), FieldTrait( 566,11, 46, 56,0x14),
-   FieldTrait( 587, 7, 61,  0,0x04), FieldTrait( 588,25, 62,  0,0x04), FieldTrait( 596,18, 20, 56,0x14),
-   FieldTrait( 597,15, 21, 56,0x14), FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14),
-   FieldTrait( 600,15,  1, 56,0x14), FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14),
-   FieldTrait( 603,15,  4, 56,0x14), FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14),
-   FieldTrait( 608,15,  7, 56,0x14), FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14),
-   FieldTrait( 611,25, 11, 56,0x14), FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14),
-   FieldTrait( 614, 9, 27, 56,0x14), FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14),
-   FieldTrait( 617,15, 30, 56,0x14), FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14),
-   FieldTrait( 620,15, 33, 56,0x14), FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14),
-   FieldTrait( 623, 9, 36, 56,0x14), FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 637,11, 63,  0,0x04),
-   FieldTrait( 654,15, 60,  0,0x04), FieldTrait( 670, 1, 71, 61,0x1c), FieldTrait( 675,19, 65,  0,0x04),
-   FieldTrait( 683, 1, 57, 65,0x1c), FieldTrait( 685,10, 64,  0,0x04), FieldTrait( 687,10, 55,  0,0x04),
-   FieldTrait( 690, 1, 56,  0,0x04), FieldTrait( 739,25, 40, 56,0x14), FieldTrait( 740,15, 39, 56,0x14),
-   FieldTrait( 764,15,  9, 56,0x14), FieldTrait( 942,19, 25, 56,0x14), FieldTrait( 948, 1, 69, 82,0x1c),
-   FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14), FieldTrait( 999,15, 43, 56,0x14),
-   FieldTrait(1001,15, 44, 56,0x14), FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1073,12, 66,  0,0x04),
-   FieldTrait(1074,10, 67,  0,0x04), FieldTrait(1075,13, 68,  0,0x04), FieldTrait(1212,26, 47, 56,0x14),
-   FieldTrait(1224,10, 50, 56,0x14), FieldTrait(1358, 1, 48, 56,0x14), FieldTrait(1366,15, 70,  0,0x04),
-   FieldTrait(1379, 9, 72,  0,0x04), FieldTrait(1381,14, 73,  0,0x04), FieldTrait(1383, 9, 74,  0,0x04),
-   FieldTrait(1384,16, 75,  0,0x04), FieldTrait(1418,10, 76,  0,0x04), FieldTrait(1420, 1, 49, 56,0x14),
-   FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14), FieldTrait(1436, 1, 53, 56,0x14),
-   FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 556,19, 38, 56,0x14}, { 564, 7, 58,  0,0x04}, { 565, 1, 59,  0,0x04}, { 566,11, 46, 56,0x14},
+   { 587, 7, 61,  0,0x04}, { 588,25, 62,  0,0x04}, { 596,18, 20, 56,0x14}, { 597,15, 21, 56,0x14},
+   { 598,15, 22, 56,0x14}, { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14}, { 601,15,  2, 56,0x14},
+   { 602,15,  3, 56,0x14}, { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c}, { 607, 1,  6, 56,0x14},
+   { 608,15,  7, 56,0x14}, { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14}, { 611,25, 11, 56,0x14},
+   { 612,11, 24, 56,0x14}, { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14}, { 615,14, 28, 56,0x14},
+   { 616,20, 29, 56,0x14}, { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14}, { 619,28, 32, 56,0x14},
+   { 620,15, 33, 56,0x14}, { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14}, { 623, 9, 36, 56,0x14},
+   { 624, 7, 37, 56,0x14}, { 637,11, 63,  0,0x04}, { 654,15, 60,  0,0x04}, { 670, 1, 71, 61,0x1c},
+   { 675,19, 65,  0,0x04}, { 683, 1, 57, 65,0x1c}, { 685,10, 64,  0,0x04}, { 687,10, 55,  0,0x04},
+   { 690, 1, 56,  0,0x04}, { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14},
+   { 942,19, 25, 56,0x14}, { 948, 1, 69, 82,0x1c}, { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14},
+   { 999,15, 43, 56,0x14}, {1001,15, 44, 56,0x14}, {1017, 9, 45, 56,0x14}, {1073,12, 66,  0,0x04},
+   {1074,10, 67,  0,0x04}, {1075,13, 68,  0,0x04}, {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14},
+   {1358, 1, 48, 56,0x14}, {1366,15, 70,  0,0x04}, {1379, 9, 72,  0,0x04}, {1381,14, 73,  0,0x04},
+   {1383, 9, 74,  0,0x04}, {1384,16, 75,  0,0x04}, {1418,10, 76,  0,0x04}, {1420, 1, 49, 56,0x14},
+   {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14}, {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array 
    ExecutionReport::NoLegs::_ftha(ExecutionReport::NoLegs::_traits, 76);
@@ -1559,27 +1413,26 @@ const FieldTrait *ExecutionReport::NoInstrumentParties::NoInstrumentPartySubIDs:
 const FieldTrait_Hash_Array& ExecutionReport::NoInstrumentParties::NoInstrumentPartySubIDs::_ftha(NoInstrumentPartySubIDsV1_ftha);
 const MsgType& ExecutionReport::NoInstrumentParties::NoInstrumentPartySubIDs::_msgtype(NoInstrumentPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionReport::NoFills::_traits[] =
+const FieldTrait ExecutionReport::NoFills::_traits[]
 {
-   FieldTrait(1363,15,  1,  0,0x04), FieldTrait(1364,11,  2,  0,0x04), FieldTrait(1365,10,  3,  0,0x04),
-   FieldTrait(1414, 1,  4, 83,0x1c), FieldTrait(1443, 1,  5,  0,0x04)
+   {1363,15,  1,  0,0x04}, {1364,11,  2,  0,0x04}, {1365,10,  3,  0,0x04}, {1414, 1,  4, 83,0x1c},
+   {1443, 1,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ExecutionReport::NoFills::_ftha(ExecutionReport::NoFills::_traits, 5);
 const MsgType ExecutionReport::NoFills::_msgtype("NoFills");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionReport::NoFills::NoNested4PartyIDs::_traits[] =
+const FieldTrait ExecutionReport::NoFills::NoNested4PartyIDs::_traits[]
 {
-   FieldTrait(1413, 1,  4, 88,0x1c), FieldTrait(1415,15,  1,  0,0x04), FieldTrait(1416, 7,  2,  0,0x04),
-   FieldTrait(1417, 1,  3,  0,0x04)
+   {1413, 1,  4, 88,0x1c}, {1415,15,  1,  0,0x04}, {1416, 7,  2,  0,0x04}, {1417, 1,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ExecutionReport::NoFills::NoNested4PartyIDs::_ftha(ExecutionReport::NoFills::NoNested4PartyIDs::_traits, 4);
 const MsgType ExecutionReport::NoFills::NoNested4PartyIDs::_msgtype("NoNested4PartyIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionReport::NoFills::NoNested4PartyIDs::NoNested4PartySubIDs::_traits[] =
+const FieldTrait ExecutionReport::NoFills::NoNested4PartyIDs::NoNested4PartySubIDs::_traits[]
 {
-   FieldTrait(1411, 1,  2,  0,0x04), FieldTrait(1412,15,  1,  0,0x04)
+   {1411, 1,  2,  0,0x04}, {1412,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ExecutionReport::NoFills::NoNested4PartyIDs::NoNested4PartySubIDs::_ftha(ExecutionReport::NoFills::NoNested4PartyIDs::NoNested4PartySubIDs::_traits, 2);
@@ -1601,130 +1454,107 @@ const FieldTrait *ExecutionReport::NoComplexEvents::NoComplexEventDates::NoCompl
 const FieldTrait_Hash_Array& ExecutionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& ExecutionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderCancelReject::_traits[] =
+const FieldTrait OrderCancelReject::_traits[]
 {
-   FieldTrait(   1,15, 11,  0,0x04), FieldTrait(  11,15,  4,  0,0x04), FieldTrait(  37,15,  1,  0,0x04),
-   FieldTrait(  39, 7,  7,  0,0x04), FieldTrait(  41,15,  6,  0,0x04), FieldTrait(  58,15, 19,  0,0x04),
-   FieldTrait(  60,22, 16,  0,0x04), FieldTrait(  66,15, 10,  0,0x04), FieldTrait(  75,25, 15,  0,0x04),
-   FieldTrait( 102, 1, 18,  0,0x04), FieldTrait( 198,15,  2,  0,0x04), FieldTrait( 229,25, 14,  0,0x04),
-   FieldTrait( 354, 2, 20,  0,0x04), FieldTrait( 355,28, 21,  0,0x04), FieldTrait( 434, 7, 17,  0,0x04),
-   FieldTrait( 526,15,  3,  0,0x04), FieldTrait( 581, 1, 13,  0,0x04), FieldTrait( 583,15,  5,  0,0x04),
-   FieldTrait( 586,22,  9,  0,0x04), FieldTrait( 636, 8,  8,  0,0x04), FieldTrait( 660, 1, 12,  0,0x04)
+   {   1,15, 11,  0,0x04}, {  11,15,  4,  0,0x04}, {  37,15,  1,  0,0x04}, {  39, 7,  7,  0,0x04},
+   {  41,15,  6,  0,0x04}, {  58,15, 19,  0,0x04}, {  60,22, 16,  0,0x04}, {  66,15, 10,  0,0x04},
+   {  75,25, 15,  0,0x04}, { 102, 1, 18,  0,0x04}, { 198,15,  2,  0,0x04}, { 229,25, 14,  0,0x04},
+   { 354, 2, 20,  0,0x04}, { 355,28, 21,  0,0x04}, { 434, 7, 17,  0,0x04}, { 526,15,  3,  0,0x04},
+   { 581, 1, 13,  0,0x04}, { 583,15,  5,  0,0x04}, { 586,22,  9,  0,0x04}, { 636, 8,  8,  0,0x04},
+   { 660, 1, 12,  0,0x04}
 };
 const FieldTrait_Hash_Array OrderCancelReject::_ftha(OrderCancelReject::_traits, 21);
 const MsgType OrderCancelReject::_msgtype("9");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Logon::_traits[] =
+const FieldTrait Logon::_traits[]
 {
-   FieldTrait(  95, 2,  3,  0,0x04), FieldTrait(  96,28,  4,  0,0x04), FieldTrait(  98, 1,  1,  0,0x04),
-   FieldTrait( 108, 1,  2,  0,0x04), FieldTrait( 141, 8,  5,  0,0x04), FieldTrait( 383, 2,  7,  0,0x04),
-   FieldTrait( 384, 1, 12, 78,0x1c), FieldTrait( 464, 8,  8,  0,0x04), FieldTrait( 553,15,  9,  0,0x04),
-   FieldTrait( 554,15, 10,  0,0x04), FieldTrait( 789, 4,  6,  0,0x04), FieldTrait(1137,15, 11,  0,0x04)
+   {  95, 2,  3,  0,0x04}, {  96,28,  4,  0,0x04}, {  98, 1,  1,  0,0x04}, { 108, 1,  2,  0,0x04},
+   { 141, 8,  5,  0,0x04}, { 383, 2,  7,  0,0x04}, { 384, 1, 12, 78,0x1c}, { 464, 8,  8,  0,0x04},
+   { 553,15,  9,  0,0x04}, { 554,15, 10,  0,0x04}, { 789, 4,  6,  0,0x04}, {1137,15, 11,  0,0x04}
 };
 const FieldTrait_Hash_Array Logon::_ftha(Logon::_traits, 12);
 const MsgType Logon::_msgtype("A");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Logon::NoMsgTypes::_traits[] =
+const FieldTrait Logon::NoMsgTypes::_traits[]
 {
-   FieldTrait( 372,15,  1,  0,0x04), FieldTrait( 385, 7,  2,  0,0x04), FieldTrait(1130,15,  3,  0,0x04),
-   FieldTrait(1131,15,  4,  0,0x04)
+   { 372,15,  1,  0,0x04}, { 385, 7,  2,  0,0x04}, {1130,15,  3,  0,0x04}, {1131,15,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    Logon::NoMsgTypes::_ftha(Logon::NoMsgTypes::_traits, 4);
 const MsgType Logon::NoMsgTypes::_msgtype("NoMsgTypes");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait DerivativeSecurityList::_traits[] =
+const FieldTrait DerivativeSecurityList::_traits[]
 {
-   FieldTrait(  60,22,149,  0,0x04), FieldTrait( 146, 1, 78,119,0x1c), FieldTrait( 241,25, 15,191,0x14),
-   FieldTrait( 242,25, 16,191,0x14), FieldTrait( 243, 1, 17,191,0x14), FieldTrait( 244, 1, 18,191,0x14),
-   FieldTrait( 245,14, 19,191,0x14), FieldTrait( 246, 9, 20,191,0x14), FieldTrait( 247,25, 26,191,0x14),
-   FieldTrait( 256,15, 21,191,0x14), FieldTrait( 305,15,  7,191,0x14), FieldTrait( 306,15, 33,191,0x14),
-   FieldTrait( 307,15, 36,191,0x14), FieldTrait( 308,20, 32,191,0x14), FieldTrait( 309,15,  6,191,0x14),
-   FieldTrait( 310,15, 11,191,0x14), FieldTrait( 311,15,  4,191,0x14), FieldTrait( 312,15,  5,191,0x14),
-   FieldTrait( 313,21, 13,191,0x14), FieldTrait( 315, 1, 63,191,0x14), FieldTrait( 316,11, 27,191,0x14),
-   FieldTrait( 317, 7, 29,191,0x14), FieldTrait( 318,19, 41,191,0x14), FieldTrait( 320,15,  1,  0,0x04),
-   FieldTrait( 322,15,  2,  0,0x04), FieldTrait( 362, 2, 34,191,0x14), FieldTrait( 363,28, 35,191,0x14),
-   FieldTrait( 364, 2, 37,191,0x14), FieldTrait( 365,28, 38,191,0x14), FieldTrait( 393, 1, 76,  0,0x04),
-   FieldTrait( 435,14, 31,191,0x14), FieldTrait( 436, 9, 30,191,0x14), FieldTrait( 457, 1,  8,189,0x1c),
-   FieldTrait( 462, 1,  9,191,0x14), FieldTrait( 463,15, 10,191,0x14), FieldTrait( 542,25, 14,191,0x14),
-   FieldTrait( 560, 1,  3,  0,0x04), FieldTrait( 592,18, 23,191,0x14), FieldTrait( 593,15, 24,191,0x14),
-   FieldTrait( 594,15, 25,191,0x14), FieldTrait( 595,15, 22,191,0x14), FieldTrait( 715,25,148,  0,0x04),
-   FieldTrait( 763,15, 12,191,0x14), FieldTrait( 810,11, 43,191,0x14), FieldTrait( 877,15, 39,191,0x14),
-   FieldTrait( 878,15, 40,191,0x14), FieldTrait( 879,10, 42,191,0x14), FieldTrait( 882,11, 44,191,0x14),
-   FieldTrait( 883,11, 45,191,0x14), FieldTrait( 884,13, 46,191,0x14), FieldTrait( 885,13, 47,191,0x14),
-   FieldTrait( 886,13, 48,191,0x14), FieldTrait( 887, 1, 49,194,0x1c), FieldTrait( 893, 8, 77,  0,0x04),
-   FieldTrait( 941,19, 28,191,0x14), FieldTrait( 964, 1,147,  0,0x04), FieldTrait( 972,14, 50,191,0x14),
-   FieldTrait( 973,13, 52,191,0x14), FieldTrait( 974,15, 53,191,0x14), FieldTrait( 975, 1, 51,191,0x14),
-   FieldTrait( 998,15, 54,191,0x14), FieldTrait(1000,15, 55,191,0x14), FieldTrait(1038,13, 56,191,0x14),
-   FieldTrait(1039,15, 58,191,0x14), FieldTrait(1044,10, 59,191,0x14), FieldTrait(1045, 9, 60,191,0x14),
-   FieldTrait(1046, 7, 61,191,0x14), FieldTrait(1058, 1, 57,195,0x1c), FieldTrait(1180,15,143,  8,0x14),
-   FieldTrait(1181, 4,144,  8,0x14), FieldTrait(1213,26, 62,191,0x14), FieldTrait(1214,15, 79, 28,0x14),
-   FieldTrait(1215,15, 80, 28,0x14), FieldTrait(1216,15, 81, 28,0x14), FieldTrait(1217,15, 82, 28,0x14),
-   FieldTrait(1218, 1, 83, 32,0x1c), FieldTrait(1225,13,115, 28,0x14), FieldTrait(1228,15, 85, 28,0x14),
-   FieldTrait(1243, 8, 86, 28,0x14), FieldTrait(1246, 1, 84, 28,0x14), FieldTrait(1247,15, 87, 28,0x14),
-   FieldTrait(1248,15, 88, 28,0x14), FieldTrait(1249,15, 89, 28,0x14), FieldTrait(1250,15, 90, 28,0x14),
-   FieldTrait(1251,21, 91, 28,0x14), FieldTrait(1252,25, 92, 28,0x14), FieldTrait(1253,26, 93, 28,0x14),
-   FieldTrait(1254,15, 94, 28,0x14), FieldTrait(1255, 7, 95, 28,0x14), FieldTrait(1256,15, 96, 28,0x14),
-   FieldTrait(1257,15, 98, 28,0x14), FieldTrait(1258,18, 99, 28,0x14), FieldTrait(1259,15,100, 28,0x14),
-   FieldTrait(1260,15,102, 28,0x14), FieldTrait(1261,11,101, 28,0x14), FieldTrait(1262,19,103, 28,0x14),
-   FieldTrait(1263, 9,104, 28,0x14), FieldTrait(1264, 9,105, 28,0x14), FieldTrait(1265, 7,106, 28,0x14),
-   FieldTrait(1266, 9,107, 28,0x14), FieldTrait(1267, 9,108, 28,0x14), FieldTrait(1268,13,109, 28,0x14),
-   FieldTrait(1269,15,110, 28,0x14), FieldTrait(1270,10,111, 28,0x14), FieldTrait(1271,15,116, 28,0x14),
-   FieldTrait(1272,20,117, 28,0x14), FieldTrait(1273, 1,118, 28,0x14), FieldTrait(1274, 1,119, 28,0x14),
-   FieldTrait(1275,15,120, 28,0x14), FieldTrait(1276,25, 97, 28,0x14), FieldTrait(1277, 2,121, 28,0x14),
-   FieldTrait(1278,28,122, 28,0x14), FieldTrait(1279,15,123, 28,0x14), FieldTrait(1280, 2,124, 28,0x14),
-   FieldTrait(1281,28,125, 28,0x14), FieldTrait(1282, 2,136, 34,0x14), FieldTrait(1283,28,137, 34,0x14),
-   FieldTrait(1284,15,138, 34,0x14), FieldTrait(1285,21,126, 28,0x14), FieldTrait(1286, 1,127, 27,0x1c),
-   FieldTrait(1292, 1,128, 30,0x1c), FieldTrait(1299, 7,114, 28,0x14), FieldTrait(1310, 1,142, 74,0x1c),
-   FieldTrait(1311, 1,141, 29,0x1c), FieldTrait(1315,15,112, 28,0x14), FieldTrait(1316,10,113, 28,0x14),
-   FieldTrait(1317, 7,129, 28,0x14), FieldTrait(1318,15,130, 28,0x14), FieldTrait(1319,15,131, 28,0x14),
-   FieldTrait(1320, 1,132, 28,0x14), FieldTrait(1321,11,133, 28,0x14), FieldTrait(1322,11,134, 28,0x14),
-   FieldTrait(1323, 1,135, 28,0x14), FieldTrait(1350, 4,145,  8,0x14), FieldTrait(1352, 8,146,  8,0x14),
-   FieldTrait(1419, 1, 64,191,0x14), FieldTrait(1423,10, 65,191,0x14), FieldTrait(1424,15, 66,191,0x14),
-   FieldTrait(1425,10, 67,191,0x14), FieldTrait(1437, 1, 68,191,0x14), FieldTrait(1438, 1,139, 28,0x14),
-   FieldTrait(1441, 1, 69,191,0x14), FieldTrait(1442, 1,140, 28,0x14), FieldTrait(1453,15, 70,191,0x14),
-   FieldTrait(1454,15, 71,191,0x14), FieldTrait(1455,14, 72,191,0x14), FieldTrait(1456,14, 73,191,0x14),
-   FieldTrait(1459,14, 74,191,0x14), FieldTrait(1460,14, 75,191,0x14)
+   {  60,22,149,  0,0x04}, { 146, 1, 78,119,0x1c}, { 241,25, 15,191,0x14}, { 242,25, 16,191,0x14},
+   { 243, 1, 17,191,0x14}, { 244, 1, 18,191,0x14}, { 245,14, 19,191,0x14}, { 246, 9, 20,191,0x14},
+   { 247,25, 26,191,0x14}, { 256,15, 21,191,0x14}, { 305,15,  7,191,0x14}, { 306,15, 33,191,0x14},
+   { 307,15, 36,191,0x14}, { 308,20, 32,191,0x14}, { 309,15,  6,191,0x14}, { 310,15, 11,191,0x14},
+   { 311,15,  4,191,0x14}, { 312,15,  5,191,0x14}, { 313,21, 13,191,0x14}, { 315, 1, 63,191,0x14},
+   { 316,11, 27,191,0x14}, { 317, 7, 29,191,0x14}, { 318,19, 41,191,0x14}, { 320,15,  1,  0,0x04},
+   { 322,15,  2,  0,0x04}, { 362, 2, 34,191,0x14}, { 363,28, 35,191,0x14}, { 364, 2, 37,191,0x14},
+   { 365,28, 38,191,0x14}, { 393, 1, 76,  0,0x04}, { 435,14, 31,191,0x14}, { 436, 9, 30,191,0x14},
+   { 457, 1,  8,189,0x1c}, { 462, 1,  9,191,0x14}, { 463,15, 10,191,0x14}, { 542,25, 14,191,0x14},
+   { 560, 1,  3,  0,0x04}, { 592,18, 23,191,0x14}, { 593,15, 24,191,0x14}, { 594,15, 25,191,0x14},
+   { 595,15, 22,191,0x14}, { 715,25,148,  0,0x04}, { 763,15, 12,191,0x14}, { 810,11, 43,191,0x14},
+   { 877,15, 39,191,0x14}, { 878,15, 40,191,0x14}, { 879,10, 42,191,0x14}, { 882,11, 44,191,0x14},
+   { 883,11, 45,191,0x14}, { 884,13, 46,191,0x14}, { 885,13, 47,191,0x14}, { 886,13, 48,191,0x14},
+   { 887, 1, 49,194,0x1c}, { 893, 8, 77,  0,0x04}, { 941,19, 28,191,0x14}, { 964, 1,147,  0,0x04},
+   { 972,14, 50,191,0x14}, { 973,13, 52,191,0x14}, { 974,15, 53,191,0x14}, { 975, 1, 51,191,0x14},
+   { 998,15, 54,191,0x14}, {1000,15, 55,191,0x14}, {1038,13, 56,191,0x14}, {1039,15, 58,191,0x14},
+   {1044,10, 59,191,0x14}, {1045, 9, 60,191,0x14}, {1046, 7, 61,191,0x14}, {1058, 1, 57,195,0x1c},
+   {1180,15,143,  8,0x14}, {1181, 4,144,  8,0x14}, {1213,26, 62,191,0x14}, {1214,15, 79, 28,0x14},
+   {1215,15, 80, 28,0x14}, {1216,15, 81, 28,0x14}, {1217,15, 82, 28,0x14}, {1218, 1, 83, 32,0x1c},
+   {1225,13,115, 28,0x14}, {1228,15, 85, 28,0x14}, {1243, 8, 86, 28,0x14}, {1246, 1, 84, 28,0x14},
+   {1247,15, 87, 28,0x14}, {1248,15, 88, 28,0x14}, {1249,15, 89, 28,0x14}, {1250,15, 90, 28,0x14},
+   {1251,21, 91, 28,0x14}, {1252,25, 92, 28,0x14}, {1253,26, 93, 28,0x14}, {1254,15, 94, 28,0x14},
+   {1255, 7, 95, 28,0x14}, {1256,15, 96, 28,0x14}, {1257,15, 98, 28,0x14}, {1258,18, 99, 28,0x14},
+   {1259,15,100, 28,0x14}, {1260,15,102, 28,0x14}, {1261,11,101, 28,0x14}, {1262,19,103, 28,0x14},
+   {1263, 9,104, 28,0x14}, {1264, 9,105, 28,0x14}, {1265, 7,106, 28,0x14}, {1266, 9,107, 28,0x14},
+   {1267, 9,108, 28,0x14}, {1268,13,109, 28,0x14}, {1269,15,110, 28,0x14}, {1270,10,111, 28,0x14},
+   {1271,15,116, 28,0x14}, {1272,20,117, 28,0x14}, {1273, 1,118, 28,0x14}, {1274, 1,119, 28,0x14},
+   {1275,15,120, 28,0x14}, {1276,25, 97, 28,0x14}, {1277, 2,121, 28,0x14}, {1278,28,122, 28,0x14},
+   {1279,15,123, 28,0x14}, {1280, 2,124, 28,0x14}, {1281,28,125, 28,0x14}, {1282, 2,136, 34,0x14},
+   {1283,28,137, 34,0x14}, {1284,15,138, 34,0x14}, {1285,21,126, 28,0x14}, {1286, 1,127, 27,0x1c},
+   {1292, 1,128, 30,0x1c}, {1299, 7,114, 28,0x14}, {1310, 1,142, 74,0x1c}, {1311, 1,141, 29,0x1c},
+   {1315,15,112, 28,0x14}, {1316,10,113, 28,0x14}, {1317, 7,129, 28,0x14}, {1318,15,130, 28,0x14},
+   {1319,15,131, 28,0x14}, {1320, 1,132, 28,0x14}, {1321,11,133, 28,0x14}, {1322,11,134, 28,0x14},
+   {1323, 1,135, 28,0x14}, {1350, 4,145,  8,0x14}, {1352, 8,146,  8,0x14}, {1419, 1, 64,191,0x14},
+   {1423,10, 65,191,0x14}, {1424,15, 66,191,0x14}, {1425,10, 67,191,0x14}, {1437, 1, 68,191,0x14},
+   {1438, 1,139, 28,0x14}, {1441, 1, 69,191,0x14}, {1442, 1,140, 28,0x14}, {1453,15, 70,191,0x14},
+   {1454,15, 71,191,0x14}, {1455,14, 72,191,0x14}, {1456,14, 73,191,0x14}, {1459,14, 74,191,0x14},
+   {1460,14, 75,191,0x14}
 };
 const FieldTrait_Hash_Array DerivativeSecurityList::_ftha(DerivativeSecurityList::_traits, 149);
 const MsgType DerivativeSecurityList::_msgtype("AA");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait DerivativeSecurityList::NoRelatedSym::_traits[] =
+const FieldTrait DerivativeSecurityList::NoRelatedSym::_traits[]
 {
-   FieldTrait(  15,19, 89,  0,0x04), FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14),
-   FieldTrait(  55,15,  1, 54,0x14), FieldTrait(  58,15, 94,  0,0x04), FieldTrait(  65,15,  2, 54,0x14),
-   FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 167,15,  8, 54,0x14),
-   FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14),
-   FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 223,14, 28, 54,0x14),
-   FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14), FieldTrait( 226, 1, 15, 54,0x14),
-   FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14), FieldTrait( 231, 9, 27, 54,0x14),
-   FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14), FieldTrait( 255,15, 18, 54,0x14),
-   FieldTrait( 292,16,101,  0,0x04), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 354, 2, 95,  0,0x04),
-   FieldTrait( 355,28, 96,  0,0x04), FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14),
-   FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14),
-   FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 541,25, 11, 54,0x14), FieldTrait( 543,15, 19, 54,0x14),
-   FieldTrait( 555, 1, 93, 49,0x1c), FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 668, 1, 90, 55,0x14),
-   FieldTrait( 691,15, 36, 54,0x14), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 864, 1, 40, 38,0x1c),
-   FieldTrait( 869,14, 91, 55,0x14), FieldTrait( 870, 1, 92,  9,0x1c), FieldTrait( 873,25, 41, 54,0x14),
-   FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14),
-   FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14), FieldTrait( 966,15, 44, 54,0x14),
-   FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14), FieldTrait( 969, 9, 48, 54,0x14),
-   FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14), FieldTrait( 996,15, 52, 54,0x14),
-   FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c), FieldTrait(1049, 7, 45, 54,0x14),
-   FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1146,13, 56, 54,0x14), FieldTrait(1147,10, 57, 54,0x14),
-   FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14), FieldTrait(1185,29, 59,150,0x14),
-   FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14), FieldTrait(1192,10, 63, 54,0x14),
-   FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14), FieldTrait(1195,13, 66, 54,0x14),
-   FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14), FieldTrait(1198, 1, 68, 54,0x14),
-   FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14), FieldTrait(1221,11, 98,148,0x14),
-   FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1230,11, 99,148,0x14), FieldTrait(1240,11,100,148,0x14),
-   FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14), FieldTrait(1305, 1, 97,148,0x14),
-   FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14),
-   FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14),
-   FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14),
-   FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14),
-   FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c), FieldTrait(1504,22,102,  0,0x04)
+   {  15,19, 89,  0,0x04}, {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14},
+   {  58,15, 94,  0,0x04}, {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14},
+   { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14},
+   { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14},
+   { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14},
+   { 231, 9, 27, 54,0x14}, { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14},
+   { 292,16,101,  0,0x04}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14},
+   { 351,28, 35, 54,0x14}, { 354, 2, 95,  0,0x04}, { 355,28, 96,  0,0x04}, { 454, 1,  5,142,0x1c},
+   { 460, 1,  6, 54,0x14}, { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14},
+   { 472,15, 22, 54,0x14}, { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1, 93, 49,0x1c},
+   { 667,21, 37, 54,0x14}, { 668, 1, 90, 55,0x14}, { 691,15, 36, 54,0x14}, { 762,15,  9, 54,0x14},
+   { 864, 1, 40, 38,0x1c}, { 869,14, 91, 55,0x14}, { 870, 1, 92,  9,0x1c}, { 873,25, 41, 54,0x14},
+   { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14}, { 947,19, 25, 54,0x14},
+   { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14},
+   { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14},
+   { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14},
+   {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14}, {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14},
+   {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14}, {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14},
+   {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14}, {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14},
+   {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14}, {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14},
+   {1221,11, 98,148,0x14}, {1227,15, 61, 54,0x14}, {1230,11, 99,148,0x14}, {1240,11,100,148,0x14},
+   {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14}, {1305, 1, 97,148,0x14}, {1435, 1, 75, 54,0x14},
+   {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14},
+   {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14},
+   {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14},
+   {1483, 1, 88, 21,0x1c}, {1504,22,102,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    DerivativeSecurityList::NoRelatedSym::_ftha(DerivativeSecurityList::NoRelatedSym::_traits, 102);
@@ -1854,80 +1684,62 @@ const FieldTrait *DerivativeSecurityList::NoDerivativeInstrAttrib::_traits(NoDer
 const FieldTrait_Hash_Array& DerivativeSecurityList::NoDerivativeInstrAttrib::_ftha(NoDerivativeInstrAttribV1_ftha);
 const MsgType& DerivativeSecurityList::NoDerivativeInstrAttrib::_msgtype(NoDerivativeInstrAttribV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NewOrderMultileg::_traits[] =
+const FieldTrait NewOrderMultileg::_traits[]
 {
-   FieldTrait(   1,15,  7,  0,0x04), FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  12,13,140, 16,0x14),
-   FieldTrait(  13, 7,141, 16,0x14), FieldTrait(  15,19,130,  0,0x04), FieldTrait(  18,16, 20,  0,0x04),
-   FieldTrait(  21, 7, 19,  0,0x04), FieldTrait(  22,15, 30, 54,0x14), FieldTrait(  23,15,133,  0,0x04),
-   FieldTrait(  38,10,121, 93,0x14), FieldTrait(  40, 7,126,  0,0x04), FieldTrait(  44,11,128,  0,0x04),
-   FieldTrait(  48,15, 29, 54,0x14), FieldTrait(  54, 7, 26,  0,0x04), FieldTrait(  55,15, 27, 54,0x14),
-   FieldTrait(  58,15,150,  0,0x04), FieldTrait(  59, 7,135,  0,0x04), FieldTrait(  60,22,119,  0,0x04),
-   FieldTrait(  63,15, 15,  0,0x04), FieldTrait(  64,25, 16,  0,0x04), FieldTrait(  65,15, 28, 54,0x14),
-   FieldTrait(  70,15, 13,  0,0x04), FieldTrait(  75,25,  6,  0,0x04), FieldTrait(  77, 7,153,  0,0x04),
-   FieldTrait(  78, 1, 14,105,0x1c), FieldTrait(  81, 7, 25,  0,0x04), FieldTrait(  99,11,129,  0,0x04),
-   FieldTrait( 100,20, 23,  0,0x04), FieldTrait( 106,15, 56, 54,0x14), FieldTrait( 107,15, 59, 54,0x14),
-   FieldTrait( 110,10, 21,  0,0x04), FieldTrait( 111,10, 22,  0,0x04), FieldTrait( 114, 8,118,  0,0x04),
-   FieldTrait( 117,15,134,  0,0x04), FieldTrait( 120,19,148,  0,0x04), FieldTrait( 121, 8,147,  0,0x04),
-   FieldTrait( 126,22,138,  0,0x04), FieldTrait( 140,11,116,  0,0x04), FieldTrait( 152,10,122, 93,0x14),
-   FieldTrait( 167,15, 34, 54,0x14), FieldTrait( 168,22,136,  0,0x04), FieldTrait( 200,21, 36, 54,0x14),
-   FieldTrait( 201, 1, 97, 54,0x14), FieldTrait( 202,11, 50, 54,0x14), FieldTrait( 203, 1,154,  0,0x04),
-   FieldTrait( 206, 7, 52, 54,0x14), FieldTrait( 207,20, 55, 54,0x14), FieldTrait( 210,10,155,  0,0x04),
-   FieldTrait( 211, 9,156,100,0x14), FieldTrait( 223,14, 54, 54,0x14), FieldTrait( 224,25, 38, 54,0x14),
-   FieldTrait( 225,25, 39, 54,0x14), FieldTrait( 226, 1, 41, 54,0x14), FieldTrait( 227,14, 42, 54,0x14),
-   FieldTrait( 228, 9, 43, 54,0x14), FieldTrait( 229,25,  5,  0,0x04), FieldTrait( 231, 9, 53, 54,0x14),
-   FieldTrait( 239, 1, 40, 54,0x14), FieldTrait( 240,25, 49, 54,0x14), FieldTrait( 255,15, 44, 54,0x14),
-   FieldTrait( 348, 2, 57, 54,0x14), FieldTrait( 349,28, 58, 54,0x14), FieldTrait( 350, 2, 60, 54,0x14),
-   FieldTrait( 351,28, 61, 54,0x14), FieldTrait( 354, 2,151,  0,0x04), FieldTrait( 355,28,152,  0,0x04),
-   FieldTrait( 376,15,131,  0,0x04), FieldTrait( 377, 8,132,  0,0x04), FieldTrait( 386, 1, 24,185,0x1c),
-   FieldTrait( 388, 7,167, 35,0x14), FieldTrait( 389, 9,168, 35,0x14), FieldTrait( 423, 1,127,  0,0x04),
-   FieldTrait( 427, 1,139,  0,0x04), FieldTrait( 432,25,137,  0,0x04), FieldTrait( 453, 1,  4, 94,0x1c),
-   FieldTrait( 454, 1, 31,142,0x1c), FieldTrait( 460, 1, 32, 54,0x14), FieldTrait( 461,15, 33, 54,0x14),
-   FieldTrait( 468, 7,124, 93,0x14), FieldTrait( 469, 9,125, 93,0x14), FieldTrait( 470,18, 46, 54,0x14),
-   FieldTrait( 471,15, 47, 54,0x14), FieldTrait( 472,15, 48, 54,0x14), FieldTrait( 479,19,142, 16,0x14),
-   FieldTrait( 480, 7,177,  0,0x04), FieldTrait( 481, 7,178,  0,0x04), FieldTrait( 494,15,180,  0,0x04),
-   FieldTrait( 497, 7,143, 16,0x14), FieldTrait( 513,15,179,  0,0x04), FieldTrait( 516,14,123, 93,0x14),
-   FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 528, 7,144,  0,0x04), FieldTrait( 529,16,145,  0,0x04),
-   FieldTrait( 541,25, 37, 54,0x14), FieldTrait( 543,15, 45, 54,0x14), FieldTrait( 544, 7, 17,  0,0x04),
-   FieldTrait( 555, 1,117, 60,0x1c), FieldTrait( 563, 1,181,  0,0x04), FieldTrait( 581, 1,  9,  0,0x04),
-   FieldTrait( 582, 1,146,  0,0x04), FieldTrait( 583,15,  3,  0,0x04), FieldTrait( 589, 7, 10,  0,0x04),
-   FieldTrait( 590, 7, 11,  0,0x04), FieldTrait( 591, 7, 12,  0,0x04), FieldTrait( 635,15, 18,  0,0x04),
-   FieldTrait( 660, 1,  8,  0,0x04), FieldTrait( 667,21, 63, 54,0x14), FieldTrait( 691,15, 62, 54,0x14),
-   FieldTrait( 711, 1,115,188,0x1c), FieldTrait( 762,15, 35, 54,0x14), FieldTrait( 775, 1,149,  0,0x04),
-   FieldTrait( 835, 1,157,100,0x14), FieldTrait( 836, 1,158,100,0x14), FieldTrait( 837, 1,159,100,0x14),
-   FieldTrait( 838, 1,160,100,0x14), FieldTrait( 840, 1,161,100,0x14), FieldTrait( 841, 1,169, 35,0x14),
-   FieldTrait( 842, 1,170, 35,0x14), FieldTrait( 843, 1,171, 35,0x14), FieldTrait( 844, 1,172, 35,0x14),
-   FieldTrait( 846, 1,173, 35,0x14), FieldTrait( 847, 1,174,  0,0x04), FieldTrait( 848,15,175,  0,0x04),
-   FieldTrait( 849,14,176,  0,0x04), FieldTrait( 854, 1,120,  0,0x04), FieldTrait( 864, 1, 66, 38,0x1c),
-   FieldTrait( 873,25, 67, 54,0x14), FieldTrait( 874,25, 68, 54,0x14), FieldTrait( 875, 1, 64, 54,0x14),
-   FieldTrait( 876,15, 65, 54,0x14), FieldTrait( 947,19, 51, 54,0x14), FieldTrait( 957, 1,182,163,0x1c),
-   FieldTrait( 965,15, 69, 54,0x14), FieldTrait( 966,15, 70, 54,0x14), FieldTrait( 967, 9, 72, 54,0x14),
-   FieldTrait( 968, 9, 73, 54,0x14), FieldTrait( 969, 9, 74, 54,0x14), FieldTrait( 970, 1, 75, 54,0x14),
-   FieldTrait( 971, 1, 76, 54,0x14), FieldTrait( 996,15, 78, 54,0x14), FieldTrait( 997,15, 79, 54,0x14),
-   FieldTrait(1018, 1, 77, 57,0x1c), FieldTrait(1049, 7, 71, 54,0x14), FieldTrait(1069,12,183,  0,0x04),
-   FieldTrait(1079,26, 80, 54,0x14), FieldTrait(1080,15,210,  0,0x04), FieldTrait(1081, 7,211,  0,0x04),
-   FieldTrait(1082,10,186, 36,0x14), FieldTrait(1083, 7,187, 36,0x14), FieldTrait(1084, 7,188, 36,0x14),
-   FieldTrait(1085,10,189, 36,0x14), FieldTrait(1086,10,190, 36,0x14), FieldTrait(1087,10,191, 36,0x14),
-   FieldTrait(1088,10,192, 36,0x14), FieldTrait(1089,10,184,  0,0x04), FieldTrait(1090, 1,185,  0,0x04),
-   FieldTrait(1091, 8,212,  0,0x04), FieldTrait(1092, 7,194,  0,0x04), FieldTrait(1094, 1,162,100,0x14),
-   FieldTrait(1096,15,163,100,0x14), FieldTrait(1097,15,164,100,0x14), FieldTrait(1098,15,165,100,0x14),
-   FieldTrait(1099,15,166,100,0x14), FieldTrait(1100, 7,195,186,0x14), FieldTrait(1101, 7,196,186,0x14),
-   FieldTrait(1102,11,197,186,0x14), FieldTrait(1103,15,198,186,0x14), FieldTrait(1104,15,199,186,0x14),
-   FieldTrait(1105,15,200,186,0x14), FieldTrait(1106,15,201,186,0x14), FieldTrait(1107, 7,202,186,0x14),
-   FieldTrait(1108, 7,203,186,0x14), FieldTrait(1109, 7,204,186,0x14), FieldTrait(1110,11,205,186,0x14),
-   FieldTrait(1111, 7,206,186,0x14), FieldTrait(1112,10,207,186,0x14), FieldTrait(1113,15,208,186,0x14),
-   FieldTrait(1114,15,209,186,0x14), FieldTrait(1133, 7,213,  0,0x04), FieldTrait(1138,10,193, 36,0x14),
-   FieldTrait(1146,13, 82, 54,0x14), FieldTrait(1147,10, 83, 54,0x14), FieldTrait(1151,15, 81, 54,0x14),
-   FieldTrait(1184, 2, 84,150,0x14), FieldTrait(1185,29, 85,150,0x14), FieldTrait(1186,15, 86,150,0x14),
-   FieldTrait(1190, 9,216,  0,0x04), FieldTrait(1191,15, 88, 54,0x14), FieldTrait(1192,10, 89, 54,0x14),
-   FieldTrait(1193, 7, 90, 54,0x14), FieldTrait(1194, 1, 91, 54,0x14), FieldTrait(1195,13, 92, 54,0x14),
-   FieldTrait(1196,15, 93, 54,0x14), FieldTrait(1197,15,100, 54,0x14), FieldTrait(1198, 1, 94, 54,0x14),
-   FieldTrait(1199,11, 95, 54,0x14), FieldTrait(1200,11, 96, 54,0x14), FieldTrait(1227,15, 87, 54,0x14),
-   FieldTrait(1242, 8, 99, 54,0x14), FieldTrait(1244, 8, 98, 54,0x14), FieldTrait(1377, 1,214,  0,0x04),
-   FieldTrait(1378, 1,215,  0,0x04), FieldTrait(1435, 1,101, 54,0x14), FieldTrait(1439, 1,102, 54,0x14),
-   FieldTrait(1449,15,103, 54,0x14), FieldTrait(1450,15,104, 54,0x14), FieldTrait(1451,14,105, 54,0x14),
-   FieldTrait(1452,14,106, 54,0x14), FieldTrait(1457,14,107, 54,0x14), FieldTrait(1458,14,108, 54,0x14),
-   FieldTrait(1478, 1,109, 54,0x14), FieldTrait(1479, 1,110, 54,0x14), FieldTrait(1480,14,111, 54,0x14),
-   FieldTrait(1481, 1,112, 54,0x14), FieldTrait(1482, 1,113, 54,0x14), FieldTrait(1483, 1,114, 21,0x1c)
+   {   1,15,  7,  0,0x04}, {  11,15,  1,  0,0x04}, {  12,13,140, 16,0x14}, {  13, 7,141, 16,0x14},
+   {  15,19,130,  0,0x04}, {  18,16, 20,  0,0x04}, {  21, 7, 19,  0,0x04}, {  22,15, 30, 54,0x14},
+   {  23,15,133,  0,0x04}, {  38,10,121, 93,0x14}, {  40, 7,126,  0,0x04}, {  44,11,128,  0,0x04},
+   {  48,15, 29, 54,0x14}, {  54, 7, 26,  0,0x04}, {  55,15, 27, 54,0x14}, {  58,15,150,  0,0x04},
+   {  59, 7,135,  0,0x04}, {  60,22,119,  0,0x04}, {  63,15, 15,  0,0x04}, {  64,25, 16,  0,0x04},
+   {  65,15, 28, 54,0x14}, {  70,15, 13,  0,0x04}, {  75,25,  6,  0,0x04}, {  77, 7,153,  0,0x04},
+   {  78, 1, 14,105,0x1c}, {  81, 7, 25,  0,0x04}, {  99,11,129,  0,0x04}, { 100,20, 23,  0,0x04},
+   { 106,15, 56, 54,0x14}, { 107,15, 59, 54,0x14}, { 110,10, 21,  0,0x04}, { 111,10, 22,  0,0x04},
+   { 114, 8,118,  0,0x04}, { 117,15,134,  0,0x04}, { 120,19,148,  0,0x04}, { 121, 8,147,  0,0x04},
+   { 126,22,138,  0,0x04}, { 140,11,116,  0,0x04}, { 152,10,122, 93,0x14}, { 167,15, 34, 54,0x14},
+   { 168,22,136,  0,0x04}, { 200,21, 36, 54,0x14}, { 201, 1, 97, 54,0x14}, { 202,11, 50, 54,0x14},
+   { 203, 1,154,  0,0x04}, { 206, 7, 52, 54,0x14}, { 207,20, 55, 54,0x14}, { 210,10,155,  0,0x04},
+   { 211, 9,156,100,0x14}, { 223,14, 54, 54,0x14}, { 224,25, 38, 54,0x14}, { 225,25, 39, 54,0x14},
+   { 226, 1, 41, 54,0x14}, { 227,14, 42, 54,0x14}, { 228, 9, 43, 54,0x14}, { 229,25,  5,  0,0x04},
+   { 231, 9, 53, 54,0x14}, { 239, 1, 40, 54,0x14}, { 240,25, 49, 54,0x14}, { 255,15, 44, 54,0x14},
+   { 348, 2, 57, 54,0x14}, { 349,28, 58, 54,0x14}, { 350, 2, 60, 54,0x14}, { 351,28, 61, 54,0x14},
+   { 354, 2,151,  0,0x04}, { 355,28,152,  0,0x04}, { 376,15,131,  0,0x04}, { 377, 8,132,  0,0x04},
+   { 386, 1, 24,185,0x1c}, { 388, 7,167, 35,0x14}, { 389, 9,168, 35,0x14}, { 423, 1,127,  0,0x04},
+   { 427, 1,139,  0,0x04}, { 432,25,137,  0,0x04}, { 453, 1,  4, 94,0x1c}, { 454, 1, 31,142,0x1c},
+   { 460, 1, 32, 54,0x14}, { 461,15, 33, 54,0x14}, { 468, 7,124, 93,0x14}, { 469, 9,125, 93,0x14},
+   { 470,18, 46, 54,0x14}, { 471,15, 47, 54,0x14}, { 472,15, 48, 54,0x14}, { 479,19,142, 16,0x14},
+   { 480, 7,177,  0,0x04}, { 481, 7,178,  0,0x04}, { 494,15,180,  0,0x04}, { 497, 7,143, 16,0x14},
+   { 513,15,179,  0,0x04}, { 516,14,123, 93,0x14}, { 526,15,  2,  0,0x04}, { 528, 7,144,  0,0x04},
+   { 529,16,145,  0,0x04}, { 541,25, 37, 54,0x14}, { 543,15, 45, 54,0x14}, { 544, 7, 17,  0,0x04},
+   { 555, 1,117, 60,0x1c}, { 563, 1,181,  0,0x04}, { 581, 1,  9,  0,0x04}, { 582, 1,146,  0,0x04},
+   { 583,15,  3,  0,0x04}, { 589, 7, 10,  0,0x04}, { 590, 7, 11,  0,0x04}, { 591, 7, 12,  0,0x04},
+   { 635,15, 18,  0,0x04}, { 660, 1,  8,  0,0x04}, { 667,21, 63, 54,0x14}, { 691,15, 62, 54,0x14},
+   { 711, 1,115,188,0x1c}, { 762,15, 35, 54,0x14}, { 775, 1,149,  0,0x04}, { 835, 1,157,100,0x14},
+   { 836, 1,158,100,0x14}, { 837, 1,159,100,0x14}, { 838, 1,160,100,0x14}, { 840, 1,161,100,0x14},
+   { 841, 1,169, 35,0x14}, { 842, 1,170, 35,0x14}, { 843, 1,171, 35,0x14}, { 844, 1,172, 35,0x14},
+   { 846, 1,173, 35,0x14}, { 847, 1,174,  0,0x04}, { 848,15,175,  0,0x04}, { 849,14,176,  0,0x04},
+   { 854, 1,120,  0,0x04}, { 864, 1, 66, 38,0x1c}, { 873,25, 67, 54,0x14}, { 874,25, 68, 54,0x14},
+   { 875, 1, 64, 54,0x14}, { 876,15, 65, 54,0x14}, { 947,19, 51, 54,0x14}, { 957, 1,182,163,0x1c},
+   { 965,15, 69, 54,0x14}, { 966,15, 70, 54,0x14}, { 967, 9, 72, 54,0x14}, { 968, 9, 73, 54,0x14},
+   { 969, 9, 74, 54,0x14}, { 970, 1, 75, 54,0x14}, { 971, 1, 76, 54,0x14}, { 996,15, 78, 54,0x14},
+   { 997,15, 79, 54,0x14}, {1018, 1, 77, 57,0x1c}, {1049, 7, 71, 54,0x14}, {1069,12,183,  0,0x04},
+   {1079,26, 80, 54,0x14}, {1080,15,210,  0,0x04}, {1081, 7,211,  0,0x04}, {1082,10,186, 36,0x14},
+   {1083, 7,187, 36,0x14}, {1084, 7,188, 36,0x14}, {1085,10,189, 36,0x14}, {1086,10,190, 36,0x14},
+   {1087,10,191, 36,0x14}, {1088,10,192, 36,0x14}, {1089,10,184,  0,0x04}, {1090, 1,185,  0,0x04},
+   {1091, 8,212,  0,0x04}, {1092, 7,194,  0,0x04}, {1094, 1,162,100,0x14}, {1096,15,163,100,0x14},
+   {1097,15,164,100,0x14}, {1098,15,165,100,0x14}, {1099,15,166,100,0x14}, {1100, 7,195,186,0x14},
+   {1101, 7,196,186,0x14}, {1102,11,197,186,0x14}, {1103,15,198,186,0x14}, {1104,15,199,186,0x14},
+   {1105,15,200,186,0x14}, {1106,15,201,186,0x14}, {1107, 7,202,186,0x14}, {1108, 7,203,186,0x14},
+   {1109, 7,204,186,0x14}, {1110,11,205,186,0x14}, {1111, 7,206,186,0x14}, {1112,10,207,186,0x14},
+   {1113,15,208,186,0x14}, {1114,15,209,186,0x14}, {1133, 7,213,  0,0x04}, {1138,10,193, 36,0x14},
+   {1146,13, 82, 54,0x14}, {1147,10, 83, 54,0x14}, {1151,15, 81, 54,0x14}, {1184, 2, 84,150,0x14},
+   {1185,29, 85,150,0x14}, {1186,15, 86,150,0x14}, {1190, 9,216,  0,0x04}, {1191,15, 88, 54,0x14},
+   {1192,10, 89, 54,0x14}, {1193, 7, 90, 54,0x14}, {1194, 1, 91, 54,0x14}, {1195,13, 92, 54,0x14},
+   {1196,15, 93, 54,0x14}, {1197,15,100, 54,0x14}, {1198, 1, 94, 54,0x14}, {1199,11, 95, 54,0x14},
+   {1200,11, 96, 54,0x14}, {1227,15, 87, 54,0x14}, {1242, 8, 99, 54,0x14}, {1244, 8, 98, 54,0x14},
+   {1377, 1,214,  0,0x04}, {1378, 1,215,  0,0x04}, {1435, 1,101, 54,0x14}, {1439, 1,102, 54,0x14},
+   {1449,15,103, 54,0x14}, {1450,15,104, 54,0x14}, {1451,14,105, 54,0x14}, {1452,14,106, 54,0x14},
+   {1457,14,107, 54,0x14}, {1458,14,108, 54,0x14}, {1478, 1,109, 54,0x14}, {1479, 1,110, 54,0x14},
+   {1480,14,111, 54,0x14}, {1481, 1,112, 54,0x14}, {1482, 1,113, 54,0x14}, {1483, 1,114, 21,0x1c}
 };
 const FieldTrait_Hash_Array NewOrderMultileg::_ftha(NewOrderMultileg::_traits, 216);
 const MsgType NewOrderMultileg::_msgtype("AB");
@@ -2040,81 +1852,63 @@ const FieldTrait *NewOrderMultileg::NoComplexEvents::NoComplexEventDates::NoComp
 const FieldTrait_Hash_Array& NewOrderMultileg::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& NewOrderMultileg::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MultilegOrderCancelReplace::_traits[] =
+const FieldTrait MultilegOrderCancelReplace::_traits[]
 {
-   FieldTrait(   1,15, 10,  0,0x04), FieldTrait(  11,15,  3,  0,0x04), FieldTrait(  12,13,143, 16,0x14),
-   FieldTrait(  13, 7,144, 16,0x14), FieldTrait(  15,19,133,  0,0x04), FieldTrait(  18,16, 23,  0,0x04),
-   FieldTrait(  21, 7, 22,  0,0x04), FieldTrait(  22,15, 33, 54,0x14), FieldTrait(  23,15,136,  0,0x04),
-   FieldTrait(  37,15,  1,  0,0x04), FieldTrait(  38,10,124, 93,0x14), FieldTrait(  40, 7,129,  0,0x04),
-   FieldTrait(  41,15,  2,  0,0x04), FieldTrait(  44,11,131,  0,0x04), FieldTrait(  48,15, 32, 54,0x14),
-   FieldTrait(  54, 7, 29,  0,0x04), FieldTrait(  55,15, 30, 54,0x14), FieldTrait(  58,15,153,  0,0x04),
-   FieldTrait(  59, 7,138,  0,0x04), FieldTrait(  60,22,122,  0,0x04), FieldTrait(  63,15, 18,  0,0x04),
-   FieldTrait(  64,25, 19,  0,0x04), FieldTrait(  65,15, 31, 54,0x14), FieldTrait(  70,15, 16,  0,0x04),
-   FieldTrait(  75,25,  9,  0,0x04), FieldTrait(  77, 7,156,  0,0x04), FieldTrait(  78, 1, 17,105,0x1c),
-   FieldTrait(  81, 7, 28,  0,0x04), FieldTrait(  99,11,132,  0,0x04), FieldTrait( 100,20, 26,  0,0x04),
-   FieldTrait( 106,15, 59, 54,0x14), FieldTrait( 107,15, 62, 54,0x14), FieldTrait( 110,10, 24,  0,0x04),
-   FieldTrait( 111,10, 25,  0,0x04), FieldTrait( 114, 8,121,  0,0x04), FieldTrait( 117,15,137,  0,0x04),
-   FieldTrait( 120,19,151,  0,0x04), FieldTrait( 121, 8,150,  0,0x04), FieldTrait( 126,22,141,  0,0x04),
-   FieldTrait( 140,11,119,  0,0x04), FieldTrait( 152,10,125, 93,0x14), FieldTrait( 167,15, 37, 54,0x14),
-   FieldTrait( 168,22,139,  0,0x04), FieldTrait( 200,21, 39, 54,0x14), FieldTrait( 201, 1,100, 54,0x14),
-   FieldTrait( 202,11, 53, 54,0x14), FieldTrait( 203, 1,157,  0,0x04), FieldTrait( 206, 7, 55, 54,0x14),
-   FieldTrait( 207,20, 58, 54,0x14), FieldTrait( 210,10,158,  0,0x04), FieldTrait( 211, 9,159,100,0x14),
-   FieldTrait( 223,14, 57, 54,0x14), FieldTrait( 224,25, 41, 54,0x14), FieldTrait( 225,25, 42, 54,0x14),
-   FieldTrait( 226, 1, 44, 54,0x14), FieldTrait( 227,14, 45, 54,0x14), FieldTrait( 228, 9, 46, 54,0x14),
-   FieldTrait( 229,25,  8,  0,0x04), FieldTrait( 231, 9, 56, 54,0x14), FieldTrait( 239, 1, 43, 54,0x14),
-   FieldTrait( 240,25, 52, 54,0x14), FieldTrait( 255,15, 47, 54,0x14), FieldTrait( 348, 2, 60, 54,0x14),
-   FieldTrait( 349,28, 61, 54,0x14), FieldTrait( 350, 2, 63, 54,0x14), FieldTrait( 351,28, 64, 54,0x14),
-   FieldTrait( 354, 2,154,  0,0x04), FieldTrait( 355,28,155,  0,0x04), FieldTrait( 376,15,134,  0,0x04),
-   FieldTrait( 377, 8,135,  0,0x04), FieldTrait( 386, 1, 27,185,0x1c), FieldTrait( 388, 7,170, 35,0x14),
-   FieldTrait( 389, 9,171, 35,0x14), FieldTrait( 423, 1,130,  0,0x04), FieldTrait( 427, 1,142,  0,0x04),
-   FieldTrait( 432,25,140,  0,0x04), FieldTrait( 453, 1,  7, 94,0x1c), FieldTrait( 454, 1, 34,142,0x1c),
-   FieldTrait( 460, 1, 35, 54,0x14), FieldTrait( 461,15, 36, 54,0x14), FieldTrait( 468, 7,127, 93,0x14),
-   FieldTrait( 469, 9,128, 93,0x14), FieldTrait( 470,18, 49, 54,0x14), FieldTrait( 471,15, 50, 54,0x14),
-   FieldTrait( 472,15, 51, 54,0x14), FieldTrait( 479,19,145, 16,0x14), FieldTrait( 480, 7,180,  0,0x04),
-   FieldTrait( 481, 7,181,  0,0x04), FieldTrait( 494,15,183,  0,0x04), FieldTrait( 497, 7,146, 16,0x14),
-   FieldTrait( 513,15,182,  0,0x04), FieldTrait( 516,14,126, 93,0x14), FieldTrait( 526,15,  4,  0,0x04),
-   FieldTrait( 528, 7,147,  0,0x04), FieldTrait( 529,16,148,  0,0x04), FieldTrait( 541,25, 40, 54,0x14),
-   FieldTrait( 543,15, 48, 54,0x14), FieldTrait( 544, 7, 20,  0,0x04), FieldTrait( 555, 1,120, 60,0x1c),
-   FieldTrait( 563, 1,184,  0,0x04), FieldTrait( 581, 1, 12,  0,0x04), FieldTrait( 582, 1,149,  0,0x04),
-   FieldTrait( 583,15,  5,  0,0x04), FieldTrait( 586,22,  6,  0,0x04), FieldTrait( 589, 7, 13,  0,0x04),
-   FieldTrait( 590, 7, 14,  0,0x04), FieldTrait( 591, 7, 15,  0,0x04), FieldTrait( 635,15, 21,  0,0x04),
-   FieldTrait( 660, 1, 11,  0,0x04), FieldTrait( 667,21, 66, 54,0x14), FieldTrait( 691,15, 65, 54,0x14),
-   FieldTrait( 711, 1,118,188,0x1c), FieldTrait( 762,15, 38, 54,0x14), FieldTrait( 775, 1,152,  0,0x04),
-   FieldTrait( 835, 1,160,100,0x14), FieldTrait( 836, 1,161,100,0x14), FieldTrait( 837, 1,162,100,0x14),
-   FieldTrait( 838, 1,163,100,0x14), FieldTrait( 840, 1,164,100,0x14), FieldTrait( 841, 1,172, 35,0x14),
-   FieldTrait( 842, 1,173, 35,0x14), FieldTrait( 843, 1,174, 35,0x14), FieldTrait( 844, 1,175, 35,0x14),
-   FieldTrait( 846, 1,176, 35,0x14), FieldTrait( 847, 1,177,  0,0x04), FieldTrait( 848,15,178,  0,0x04),
-   FieldTrait( 849,14,179,  0,0x04), FieldTrait( 854, 1,123,  0,0x04), FieldTrait( 864, 1, 69, 38,0x1c),
-   FieldTrait( 873,25, 70, 54,0x14), FieldTrait( 874,25, 71, 54,0x14), FieldTrait( 875, 1, 67, 54,0x14),
-   FieldTrait( 876,15, 68, 54,0x14), FieldTrait( 947,19, 54, 54,0x14), FieldTrait( 957, 1,185,163,0x1c),
-   FieldTrait( 965,15, 72, 54,0x14), FieldTrait( 966,15, 73, 54,0x14), FieldTrait( 967, 9, 75, 54,0x14),
-   FieldTrait( 968, 9, 76, 54,0x14), FieldTrait( 969, 9, 77, 54,0x14), FieldTrait( 970, 1, 78, 54,0x14),
-   FieldTrait( 971, 1, 79, 54,0x14), FieldTrait( 996,15, 81, 54,0x14), FieldTrait( 997,15, 82, 54,0x14),
-   FieldTrait(1018, 1, 80, 57,0x1c), FieldTrait(1049, 7, 74, 54,0x14), FieldTrait(1069,12,214,  0,0x04),
-   FieldTrait(1079,26, 83, 54,0x14), FieldTrait(1082,10,188, 36,0x14), FieldTrait(1083, 7,189, 36,0x14),
-   FieldTrait(1084, 7,190, 36,0x14), FieldTrait(1085,10,191, 36,0x14), FieldTrait(1086,10,192, 36,0x14),
-   FieldTrait(1087,10,193, 36,0x14), FieldTrait(1088,10,194, 36,0x14), FieldTrait(1089,10,186,  0,0x04),
-   FieldTrait(1090, 1,187,  0,0x04), FieldTrait(1091, 8,212,  0,0x04), FieldTrait(1092, 7,196,  0,0x04),
-   FieldTrait(1094, 1,165,100,0x14), FieldTrait(1096,15,166,100,0x14), FieldTrait(1097,15,167,100,0x14),
-   FieldTrait(1098,15,168,100,0x14), FieldTrait(1099,15,169,100,0x14), FieldTrait(1100, 7,197,186,0x14),
-   FieldTrait(1101, 7,198,186,0x14), FieldTrait(1102,11,199,186,0x14), FieldTrait(1103,15,200,186,0x14),
-   FieldTrait(1104,15,201,186,0x14), FieldTrait(1105,15,202,186,0x14), FieldTrait(1106,15,203,186,0x14),
-   FieldTrait(1107, 7,204,186,0x14), FieldTrait(1108, 7,205,186,0x14), FieldTrait(1109, 7,206,186,0x14),
-   FieldTrait(1110,11,207,186,0x14), FieldTrait(1111, 7,208,186,0x14), FieldTrait(1112,10,209,186,0x14),
-   FieldTrait(1113,15,210,186,0x14), FieldTrait(1114,15,211,186,0x14), FieldTrait(1133, 7,213,  0,0x04),
-   FieldTrait(1138,10,195, 36,0x14), FieldTrait(1146,13, 85, 54,0x14), FieldTrait(1147,10, 86, 54,0x14),
-   FieldTrait(1151,15, 84, 54,0x14), FieldTrait(1184, 2, 87,150,0x14), FieldTrait(1185,29, 88,150,0x14),
-   FieldTrait(1186,15, 89,150,0x14), FieldTrait(1190, 9,217,  0,0x04), FieldTrait(1191,15, 91, 54,0x14),
-   FieldTrait(1192,10, 92, 54,0x14), FieldTrait(1193, 7, 93, 54,0x14), FieldTrait(1194, 1, 94, 54,0x14),
-   FieldTrait(1195,13, 95, 54,0x14), FieldTrait(1196,15, 96, 54,0x14), FieldTrait(1197,15,103, 54,0x14),
-   FieldTrait(1198, 1, 97, 54,0x14), FieldTrait(1199,11, 98, 54,0x14), FieldTrait(1200,11, 99, 54,0x14),
-   FieldTrait(1227,15, 90, 54,0x14), FieldTrait(1242, 8,102, 54,0x14), FieldTrait(1244, 8,101, 54,0x14),
-   FieldTrait(1377, 1,215,  0,0x04), FieldTrait(1378, 1,216,  0,0x04), FieldTrait(1435, 1,104, 54,0x14),
-   FieldTrait(1439, 1,105, 54,0x14), FieldTrait(1449,15,106, 54,0x14), FieldTrait(1450,15,107, 54,0x14),
-   FieldTrait(1451,14,108, 54,0x14), FieldTrait(1452,14,109, 54,0x14), FieldTrait(1457,14,110, 54,0x14),
-   FieldTrait(1458,14,111, 54,0x14), FieldTrait(1478, 1,112, 54,0x14), FieldTrait(1479, 1,113, 54,0x14),
-   FieldTrait(1480,14,114, 54,0x14), FieldTrait(1481, 1,115, 54,0x14), FieldTrait(1482, 1,116, 54,0x14),
-   FieldTrait(1483, 1,117, 21,0x1c)
+   {   1,15, 10,  0,0x04}, {  11,15,  3,  0,0x04}, {  12,13,143, 16,0x14}, {  13, 7,144, 16,0x14},
+   {  15,19,133,  0,0x04}, {  18,16, 23,  0,0x04}, {  21, 7, 22,  0,0x04}, {  22,15, 33, 54,0x14},
+   {  23,15,136,  0,0x04}, {  37,15,  1,  0,0x04}, {  38,10,124, 93,0x14}, {  40, 7,129,  0,0x04},
+   {  41,15,  2,  0,0x04}, {  44,11,131,  0,0x04}, {  48,15, 32, 54,0x14}, {  54, 7, 29,  0,0x04},
+   {  55,15, 30, 54,0x14}, {  58,15,153,  0,0x04}, {  59, 7,138,  0,0x04}, {  60,22,122,  0,0x04},
+   {  63,15, 18,  0,0x04}, {  64,25, 19,  0,0x04}, {  65,15, 31, 54,0x14}, {  70,15, 16,  0,0x04},
+   {  75,25,  9,  0,0x04}, {  77, 7,156,  0,0x04}, {  78, 1, 17,105,0x1c}, {  81, 7, 28,  0,0x04},
+   {  99,11,132,  0,0x04}, { 100,20, 26,  0,0x04}, { 106,15, 59, 54,0x14}, { 107,15, 62, 54,0x14},
+   { 110,10, 24,  0,0x04}, { 111,10, 25,  0,0x04}, { 114, 8,121,  0,0x04}, { 117,15,137,  0,0x04},
+   { 120,19,151,  0,0x04}, { 121, 8,150,  0,0x04}, { 126,22,141,  0,0x04}, { 140,11,119,  0,0x04},
+   { 152,10,125, 93,0x14}, { 167,15, 37, 54,0x14}, { 168,22,139,  0,0x04}, { 200,21, 39, 54,0x14},
+   { 201, 1,100, 54,0x14}, { 202,11, 53, 54,0x14}, { 203, 1,157,  0,0x04}, { 206, 7, 55, 54,0x14},
+   { 207,20, 58, 54,0x14}, { 210,10,158,  0,0x04}, { 211, 9,159,100,0x14}, { 223,14, 57, 54,0x14},
+   { 224,25, 41, 54,0x14}, { 225,25, 42, 54,0x14}, { 226, 1, 44, 54,0x14}, { 227,14, 45, 54,0x14},
+   { 228, 9, 46, 54,0x14}, { 229,25,  8,  0,0x04}, { 231, 9, 56, 54,0x14}, { 239, 1, 43, 54,0x14},
+   { 240,25, 52, 54,0x14}, { 255,15, 47, 54,0x14}, { 348, 2, 60, 54,0x14}, { 349,28, 61, 54,0x14},
+   { 350, 2, 63, 54,0x14}, { 351,28, 64, 54,0x14}, { 354, 2,154,  0,0x04}, { 355,28,155,  0,0x04},
+   { 376,15,134,  0,0x04}, { 377, 8,135,  0,0x04}, { 386, 1, 27,185,0x1c}, { 388, 7,170, 35,0x14},
+   { 389, 9,171, 35,0x14}, { 423, 1,130,  0,0x04}, { 427, 1,142,  0,0x04}, { 432,25,140,  0,0x04},
+   { 453, 1,  7, 94,0x1c}, { 454, 1, 34,142,0x1c}, { 460, 1, 35, 54,0x14}, { 461,15, 36, 54,0x14},
+   { 468, 7,127, 93,0x14}, { 469, 9,128, 93,0x14}, { 470,18, 49, 54,0x14}, { 471,15, 50, 54,0x14},
+   { 472,15, 51, 54,0x14}, { 479,19,145, 16,0x14}, { 480, 7,180,  0,0x04}, { 481, 7,181,  0,0x04},
+   { 494,15,183,  0,0x04}, { 497, 7,146, 16,0x14}, { 513,15,182,  0,0x04}, { 516,14,126, 93,0x14},
+   { 526,15,  4,  0,0x04}, { 528, 7,147,  0,0x04}, { 529,16,148,  0,0x04}, { 541,25, 40, 54,0x14},
+   { 543,15, 48, 54,0x14}, { 544, 7, 20,  0,0x04}, { 555, 1,120, 60,0x1c}, { 563, 1,184,  0,0x04},
+   { 581, 1, 12,  0,0x04}, { 582, 1,149,  0,0x04}, { 583,15,  5,  0,0x04}, { 586,22,  6,  0,0x04},
+   { 589, 7, 13,  0,0x04}, { 590, 7, 14,  0,0x04}, { 591, 7, 15,  0,0x04}, { 635,15, 21,  0,0x04},
+   { 660, 1, 11,  0,0x04}, { 667,21, 66, 54,0x14}, { 691,15, 65, 54,0x14}, { 711, 1,118,188,0x1c},
+   { 762,15, 38, 54,0x14}, { 775, 1,152,  0,0x04}, { 835, 1,160,100,0x14}, { 836, 1,161,100,0x14},
+   { 837, 1,162,100,0x14}, { 838, 1,163,100,0x14}, { 840, 1,164,100,0x14}, { 841, 1,172, 35,0x14},
+   { 842, 1,173, 35,0x14}, { 843, 1,174, 35,0x14}, { 844, 1,175, 35,0x14}, { 846, 1,176, 35,0x14},
+   { 847, 1,177,  0,0x04}, { 848,15,178,  0,0x04}, { 849,14,179,  0,0x04}, { 854, 1,123,  0,0x04},
+   { 864, 1, 69, 38,0x1c}, { 873,25, 70, 54,0x14}, { 874,25, 71, 54,0x14}, { 875, 1, 67, 54,0x14},
+   { 876,15, 68, 54,0x14}, { 947,19, 54, 54,0x14}, { 957, 1,185,163,0x1c}, { 965,15, 72, 54,0x14},
+   { 966,15, 73, 54,0x14}, { 967, 9, 75, 54,0x14}, { 968, 9, 76, 54,0x14}, { 969, 9, 77, 54,0x14},
+   { 970, 1, 78, 54,0x14}, { 971, 1, 79, 54,0x14}, { 996,15, 81, 54,0x14}, { 997,15, 82, 54,0x14},
+   {1018, 1, 80, 57,0x1c}, {1049, 7, 74, 54,0x14}, {1069,12,214,  0,0x04}, {1079,26, 83, 54,0x14},
+   {1082,10,188, 36,0x14}, {1083, 7,189, 36,0x14}, {1084, 7,190, 36,0x14}, {1085,10,191, 36,0x14},
+   {1086,10,192, 36,0x14}, {1087,10,193, 36,0x14}, {1088,10,194, 36,0x14}, {1089,10,186,  0,0x04},
+   {1090, 1,187,  0,0x04}, {1091, 8,212,  0,0x04}, {1092, 7,196,  0,0x04}, {1094, 1,165,100,0x14},
+   {1096,15,166,100,0x14}, {1097,15,167,100,0x14}, {1098,15,168,100,0x14}, {1099,15,169,100,0x14},
+   {1100, 7,197,186,0x14}, {1101, 7,198,186,0x14}, {1102,11,199,186,0x14}, {1103,15,200,186,0x14},
+   {1104,15,201,186,0x14}, {1105,15,202,186,0x14}, {1106,15,203,186,0x14}, {1107, 7,204,186,0x14},
+   {1108, 7,205,186,0x14}, {1109, 7,206,186,0x14}, {1110,11,207,186,0x14}, {1111, 7,208,186,0x14},
+   {1112,10,209,186,0x14}, {1113,15,210,186,0x14}, {1114,15,211,186,0x14}, {1133, 7,213,  0,0x04},
+   {1138,10,195, 36,0x14}, {1146,13, 85, 54,0x14}, {1147,10, 86, 54,0x14}, {1151,15, 84, 54,0x14},
+   {1184, 2, 87,150,0x14}, {1185,29, 88,150,0x14}, {1186,15, 89,150,0x14}, {1190, 9,217,  0,0x04},
+   {1191,15, 91, 54,0x14}, {1192,10, 92, 54,0x14}, {1193, 7, 93, 54,0x14}, {1194, 1, 94, 54,0x14},
+   {1195,13, 95, 54,0x14}, {1196,15, 96, 54,0x14}, {1197,15,103, 54,0x14}, {1198, 1, 97, 54,0x14},
+   {1199,11, 98, 54,0x14}, {1200,11, 99, 54,0x14}, {1227,15, 90, 54,0x14}, {1242, 8,102, 54,0x14},
+   {1244, 8,101, 54,0x14}, {1377, 1,215,  0,0x04}, {1378, 1,216,  0,0x04}, {1435, 1,104, 54,0x14},
+   {1439, 1,105, 54,0x14}, {1449,15,106, 54,0x14}, {1450,15,107, 54,0x14}, {1451,14,108, 54,0x14},
+   {1452,14,109, 54,0x14}, {1457,14,110, 54,0x14}, {1458,14,111, 54,0x14}, {1478, 1,112, 54,0x14},
+   {1479, 1,113, 54,0x14}, {1480,14,114, 54,0x14}, {1481, 1,115, 54,0x14}, {1482, 1,116, 54,0x14},
+   {1483, 1,117, 21,0x1c}
 };
 const FieldTrait_Hash_Array MultilegOrderCancelReplace::_ftha(MultilegOrderCancelReplace::_traits, 217);
 const MsgType MultilegOrderCancelReplace::_msgtype("AC");
@@ -2227,55 +2021,43 @@ const FieldTrait *MultilegOrderCancelReplace::NoComplexEvents::NoComplexEventDat
 const FieldTrait_Hash_Array& MultilegOrderCancelReplace::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& MultilegOrderCancelReplace::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReportRequest::_traits[] =
+const FieldTrait TradeCaptureReportRequest::_traits[]
 {
-   FieldTrait(  11,15,  9,  0,0x04), FieldTrait(  17,15,  6,  0,0x04), FieldTrait(  22,15, 21, 54,0x14),
-   FieldTrait(  37,15,  8,  0,0x04), FieldTrait(  48,15, 20, 54,0x14), FieldTrait(  54, 7,125,  0,0x04),
-   FieldTrait(  55,15, 18, 54,0x14), FieldTrait(  58,15,131,  0,0x04), FieldTrait(  65,15, 19, 54,0x14),
-   FieldTrait( 106,15, 47, 54,0x14), FieldTrait( 107,15, 50, 54,0x14), FieldTrait( 150, 7,  7,  0,0x04),
-   FieldTrait( 167,15, 25, 54,0x14), FieldTrait( 200,21, 27, 54,0x14), FieldTrait( 201, 1, 88, 54,0x14),
-   FieldTrait( 202,11, 41, 54,0x14), FieldTrait( 206, 7, 43, 54,0x14), FieldTrait( 207,20, 46, 54,0x14),
-   FieldTrait( 223,14, 45, 54,0x14), FieldTrait( 224,25, 29, 54,0x14), FieldTrait( 225,25, 30, 54,0x14),
-   FieldTrait( 226, 1, 32, 54,0x14), FieldTrait( 227,14, 33, 54,0x14), FieldTrait( 228, 9, 34, 54,0x14),
-   FieldTrait( 231, 9, 44, 54,0x14), FieldTrait( 239, 1, 31, 54,0x14), FieldTrait( 240,25, 40, 54,0x14),
-   FieldTrait( 255,15, 35, 54,0x14), FieldTrait( 263, 7,  3,  0,0x04), FieldTrait( 336,15,122,  0,0x04),
-   FieldTrait( 348, 2, 48, 54,0x14), FieldTrait( 349,28, 49, 54,0x14), FieldTrait( 350, 2, 51, 54,0x14),
-   FieldTrait( 351,28, 52, 54,0x14), FieldTrait( 354, 2,132,  0,0x04), FieldTrait( 355,28,133,  0,0x04),
-   FieldTrait( 442, 7,126,  0,0x04), FieldTrait( 453, 1, 17, 94,0x1c), FieldTrait( 454, 1, 22,142,0x1c),
-   FieldTrait( 460, 1, 23, 54,0x14), FieldTrait( 461,15, 24, 54,0x14), FieldTrait( 470,18, 37, 54,0x14),
-   FieldTrait( 471,15, 38, 54,0x14), FieldTrait( 472,15, 39, 54,0x14), FieldTrait( 541,25, 28, 54,0x14),
-   FieldTrait( 543,15, 36, 54,0x14), FieldTrait( 555, 1,119, 49,0x1c), FieldTrait( 568,15,  1,  0,0x04),
-   FieldTrait( 569, 1,  2,  0,0x04), FieldTrait( 571,15,  4,  0,0x04), FieldTrait( 573, 7, 10,  0,0x04),
-   FieldTrait( 578,15,127,  0,0x04), FieldTrait( 579,15,128,  0,0x04), FieldTrait( 580, 1,120,177,0x1c),
-   FieldTrait( 625,15,123,  0,0x04), FieldTrait( 667,21, 54, 54,0x14), FieldTrait( 668, 1,106, 55,0x14),
-   FieldTrait( 691,15, 53, 54,0x14), FieldTrait( 711, 1,118,188,0x1c), FieldTrait( 715,25,121,  0,0x04),
-   FieldTrait( 725, 1,129,  0,0x04), FieldTrait( 726,15,130,  0,0x04), FieldTrait( 762,15, 26, 54,0x14),
-   FieldTrait( 788, 1,113, 44,0x14), FieldTrait( 818,15,  5,  0,0x04), FieldTrait( 820,15, 15,  0,0x04),
-   FieldTrait( 828, 1, 11,  0,0x04), FieldTrait( 829, 1, 12,  0,0x04), FieldTrait( 830,15, 13,  0,0x04),
-   FieldTrait( 855, 1, 14,  0,0x04), FieldTrait( 864, 1, 57, 38,0x1c), FieldTrait( 869,14,107, 55,0x14),
-   FieldTrait( 870, 1,108,  9,0x1c), FieldTrait( 873,25, 58, 54,0x14), FieldTrait( 874,25, 59, 54,0x14),
-   FieldTrait( 875, 1, 55, 54,0x14), FieldTrait( 876,15, 56, 54,0x14), FieldTrait( 880,15, 16,  0,0x04),
-   FieldTrait( 898,14,117, 44,0x14), FieldTrait( 913,15,109, 44,0x14), FieldTrait( 914,15,110, 44,0x14),
-   FieldTrait( 915,25,111, 44,0x14), FieldTrait( 916,25,114, 44,0x14), FieldTrait( 917,25,115, 44,0x14),
-   FieldTrait( 918,19,112, 44,0x14), FieldTrait( 919, 1,116, 44,0x14), FieldTrait( 943,15,124,  0,0x04),
-   FieldTrait( 947,19, 42, 54,0x14), FieldTrait( 965,15, 60, 54,0x14), FieldTrait( 966,15, 61, 54,0x14),
-   FieldTrait( 967, 9, 63, 54,0x14), FieldTrait( 968, 9, 64, 54,0x14), FieldTrait( 969, 9, 65, 54,0x14),
-   FieldTrait( 970, 1, 66, 54,0x14), FieldTrait( 971, 1, 67, 54,0x14), FieldTrait( 996,15, 69, 54,0x14),
-   FieldTrait( 997,15, 70, 54,0x14), FieldTrait(1003,15,135,  0,0x04), FieldTrait(1011,15,134,  0,0x04),
-   FieldTrait(1018, 1, 68, 57,0x1c), FieldTrait(1040,15,136,  0,0x04), FieldTrait(1041,15,137,  0,0x04),
-   FieldTrait(1042,15,138,  0,0x04), FieldTrait(1049, 7, 62, 54,0x14), FieldTrait(1079,26, 71, 54,0x14),
-   FieldTrait(1123, 7,139,  0,0x04), FieldTrait(1146,13, 73, 54,0x14), FieldTrait(1147,10, 74, 54,0x14),
-   FieldTrait(1151,15, 72, 54,0x14), FieldTrait(1184, 2, 75,150,0x14), FieldTrait(1185,29, 76,150,0x14),
-   FieldTrait(1186,15, 77,150,0x14), FieldTrait(1191,15, 79, 54,0x14), FieldTrait(1192,10, 80, 54,0x14),
-   FieldTrait(1193, 7, 81, 54,0x14), FieldTrait(1194, 1, 82, 54,0x14), FieldTrait(1195,13, 83, 54,0x14),
-   FieldTrait(1196,15, 84, 54,0x14), FieldTrait(1197,15, 91, 54,0x14), FieldTrait(1198, 1, 85, 54,0x14),
-   FieldTrait(1199,11, 86, 54,0x14), FieldTrait(1200,11, 87, 54,0x14), FieldTrait(1227,15, 78, 54,0x14),
-   FieldTrait(1242, 8, 90, 54,0x14), FieldTrait(1244, 8, 89, 54,0x14), FieldTrait(1435, 1, 92, 54,0x14),
-   FieldTrait(1439, 1, 93, 54,0x14), FieldTrait(1449,15, 94, 54,0x14), FieldTrait(1450,15, 95, 54,0x14),
-   FieldTrait(1451,14, 96, 54,0x14), FieldTrait(1452,14, 97, 54,0x14), FieldTrait(1457,14, 98, 54,0x14),
-   FieldTrait(1458,14, 99, 54,0x14), FieldTrait(1478, 1,100, 54,0x14), FieldTrait(1479, 1,101, 54,0x14),
-   FieldTrait(1480,14,102, 54,0x14), FieldTrait(1481, 1,103, 54,0x14), FieldTrait(1482, 1,104, 54,0x14),
-   FieldTrait(1483, 1,105, 21,0x1c)
+   {  11,15,  9,  0,0x04}, {  17,15,  6,  0,0x04}, {  22,15, 21, 54,0x14}, {  37,15,  8,  0,0x04},
+   {  48,15, 20, 54,0x14}, {  54, 7,125,  0,0x04}, {  55,15, 18, 54,0x14}, {  58,15,131,  0,0x04},
+   {  65,15, 19, 54,0x14}, { 106,15, 47, 54,0x14}, { 107,15, 50, 54,0x14}, { 150, 7,  7,  0,0x04},
+   { 167,15, 25, 54,0x14}, { 200,21, 27, 54,0x14}, { 201, 1, 88, 54,0x14}, { 202,11, 41, 54,0x14},
+   { 206, 7, 43, 54,0x14}, { 207,20, 46, 54,0x14}, { 223,14, 45, 54,0x14}, { 224,25, 29, 54,0x14},
+   { 225,25, 30, 54,0x14}, { 226, 1, 32, 54,0x14}, { 227,14, 33, 54,0x14}, { 228, 9, 34, 54,0x14},
+   { 231, 9, 44, 54,0x14}, { 239, 1, 31, 54,0x14}, { 240,25, 40, 54,0x14}, { 255,15, 35, 54,0x14},
+   { 263, 7,  3,  0,0x04}, { 336,15,122,  0,0x04}, { 348, 2, 48, 54,0x14}, { 349,28, 49, 54,0x14},
+   { 350, 2, 51, 54,0x14}, { 351,28, 52, 54,0x14}, { 354, 2,132,  0,0x04}, { 355,28,133,  0,0x04},
+   { 442, 7,126,  0,0x04}, { 453, 1, 17, 94,0x1c}, { 454, 1, 22,142,0x1c}, { 460, 1, 23, 54,0x14},
+   { 461,15, 24, 54,0x14}, { 470,18, 37, 54,0x14}, { 471,15, 38, 54,0x14}, { 472,15, 39, 54,0x14},
+   { 541,25, 28, 54,0x14}, { 543,15, 36, 54,0x14}, { 555, 1,119, 49,0x1c}, { 568,15,  1,  0,0x04},
+   { 569, 1,  2,  0,0x04}, { 571,15,  4,  0,0x04}, { 573, 7, 10,  0,0x04}, { 578,15,127,  0,0x04},
+   { 579,15,128,  0,0x04}, { 580, 1,120,177,0x1c}, { 625,15,123,  0,0x04}, { 667,21, 54, 54,0x14},
+   { 668, 1,106, 55,0x14}, { 691,15, 53, 54,0x14}, { 711, 1,118,188,0x1c}, { 715,25,121,  0,0x04},
+   { 725, 1,129,  0,0x04}, { 726,15,130,  0,0x04}, { 762,15, 26, 54,0x14}, { 788, 1,113, 44,0x14},
+   { 818,15,  5,  0,0x04}, { 820,15, 15,  0,0x04}, { 828, 1, 11,  0,0x04}, { 829, 1, 12,  0,0x04},
+   { 830,15, 13,  0,0x04}, { 855, 1, 14,  0,0x04}, { 864, 1, 57, 38,0x1c}, { 869,14,107, 55,0x14},
+   { 870, 1,108,  9,0x1c}, { 873,25, 58, 54,0x14}, { 874,25, 59, 54,0x14}, { 875, 1, 55, 54,0x14},
+   { 876,15, 56, 54,0x14}, { 880,15, 16,  0,0x04}, { 898,14,117, 44,0x14}, { 913,15,109, 44,0x14},
+   { 914,15,110, 44,0x14}, { 915,25,111, 44,0x14}, { 916,25,114, 44,0x14}, { 917,25,115, 44,0x14},
+   { 918,19,112, 44,0x14}, { 919, 1,116, 44,0x14}, { 943,15,124,  0,0x04}, { 947,19, 42, 54,0x14},
+   { 965,15, 60, 54,0x14}, { 966,15, 61, 54,0x14}, { 967, 9, 63, 54,0x14}, { 968, 9, 64, 54,0x14},
+   { 969, 9, 65, 54,0x14}, { 970, 1, 66, 54,0x14}, { 971, 1, 67, 54,0x14}, { 996,15, 69, 54,0x14},
+   { 997,15, 70, 54,0x14}, {1003,15,135,  0,0x04}, {1011,15,134,  0,0x04}, {1018, 1, 68, 57,0x1c},
+   {1040,15,136,  0,0x04}, {1041,15,137,  0,0x04}, {1042,15,138,  0,0x04}, {1049, 7, 62, 54,0x14},
+   {1079,26, 71, 54,0x14}, {1123, 7,139,  0,0x04}, {1146,13, 73, 54,0x14}, {1147,10, 74, 54,0x14},
+   {1151,15, 72, 54,0x14}, {1184, 2, 75,150,0x14}, {1185,29, 76,150,0x14}, {1186,15, 77,150,0x14},
+   {1191,15, 79, 54,0x14}, {1192,10, 80, 54,0x14}, {1193, 7, 81, 54,0x14}, {1194, 1, 82, 54,0x14},
+   {1195,13, 83, 54,0x14}, {1196,15, 84, 54,0x14}, {1197,15, 91, 54,0x14}, {1198, 1, 85, 54,0x14},
+   {1199,11, 86, 54,0x14}, {1200,11, 87, 54,0x14}, {1227,15, 78, 54,0x14}, {1242, 8, 90, 54,0x14},
+   {1244, 8, 89, 54,0x14}, {1435, 1, 92, 54,0x14}, {1439, 1, 93, 54,0x14}, {1449,15, 94, 54,0x14},
+   {1450,15, 95, 54,0x14}, {1451,14, 96, 54,0x14}, {1452,14, 97, 54,0x14}, {1457,14, 98, 54,0x14},
+   {1458,14, 99, 54,0x14}, {1478, 1,100, 54,0x14}, {1479, 1,101, 54,0x14}, {1480,14,102, 54,0x14},
+   {1481, 1,103, 54,0x14}, {1482, 1,104, 54,0x14}, {1483, 1,105, 21,0x1c}
 };
 const FieldTrait_Hash_Array TradeCaptureReportRequest::_ftha(TradeCaptureReportRequest::_traits, 139);
 const MsgType TradeCaptureReportRequest::_msgtype("AD");
@@ -2300,9 +2082,9 @@ const FieldTrait *TradeCaptureReportRequest::NoLegs::NoLegSecurityAltID::_traits
 const FieldTrait_Hash_Array& TradeCaptureReportRequest::NoLegs::NoLegSecurityAltID::_ftha(NoLegSecurityAltIDV1_ftha);
 const MsgType& TradeCaptureReportRequest::NoLegs::NoLegSecurityAltID::_msgtype(NoLegSecurityAltIDV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReportRequest::NoDates::_traits[] =
+const FieldTrait TradeCaptureReportRequest::NoDates::_traits[]
 {
-   FieldTrait(  60,22,  2,  0,0x04), FieldTrait(  75,25,  1,  0,0x04), FieldTrait( 779,22,  3,  0,0x04)
+   {  60,22,  2,  0,0x04}, {  75,25,  1,  0,0x04}, { 779,22,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    TradeCaptureReportRequest::NoDates::_ftha(TradeCaptureReportRequest::NoDates::_traits, 3);
@@ -2356,76 +2138,59 @@ const FieldTrait *TradeCaptureReportRequest::NoComplexEvents::NoComplexEventDate
 const FieldTrait_Hash_Array& TradeCaptureReportRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& TradeCaptureReportRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReport::_traits[] =
+const FieldTrait TradeCaptureReport::_traits[]
 {
-   FieldTrait(   6,11,139,  0,0x04), FieldTrait(  15,19,187,  0,0x04), FieldTrait(  17,15, 19,  0,0x04),
-   FieldTrait(  22,15, 27, 54,0x14), FieldTrait(  30,20,136,  0,0x04), FieldTrait(  31,11,132,  0,0x04),
-   FieldTrait(  32,10,131,  0,0x04), FieldTrait(  48,15, 26, 54,0x14), FieldTrait(  55,15, 24, 54,0x14),
-   FieldTrait(  60,22,153,  0,0x04), FieldTrait(  63,15,155,  0,0x04), FieldTrait(  64,25,156,  0,0x04),
-   FieldTrait(  65,15, 25, 54,0x14), FieldTrait(  75,25,137,  0,0x04), FieldTrait( 106,15, 53, 54,0x14),
-   FieldTrait( 107,15, 56, 54,0x14), FieldTrait( 120,19,188,  0,0x04), FieldTrait( 150, 7,  9,  0,0x04),
-   FieldTrait( 167,15, 31, 54,0x14), FieldTrait( 194,11,134,  0,0x04), FieldTrait( 195,12,135,  0,0x04),
-   FieldTrait( 200,21, 33, 54,0x14), FieldTrait( 201, 1, 94, 54,0x14), FieldTrait( 202,11, 47, 54,0x14),
-   FieldTrait( 206, 7, 49, 54,0x14), FieldTrait( 207,20, 52, 54,0x14), FieldTrait( 218,12,140,160,0x14),
-   FieldTrait( 220,19,141,160,0x14), FieldTrait( 221,15,142,160,0x14), FieldTrait( 222,15,143,160,0x14),
-   FieldTrait( 223,14, 51, 54,0x14), FieldTrait( 224,25, 35, 54,0x14), FieldTrait( 225,25, 36, 54,0x14),
-   FieldTrait( 226, 1, 38, 54,0x14), FieldTrait( 227,14, 39, 54,0x14), FieldTrait( 228, 9, 40, 54,0x14),
-   FieldTrait( 231, 9, 50, 54,0x14), FieldTrait( 235,15,122,198,0x14), FieldTrait( 236,14,123,198,0x14),
-   FieldTrait( 239, 1, 37, 54,0x14), FieldTrait( 240,25, 46, 54,0x14), FieldTrait( 255,15, 41, 54,0x14),
-   FieldTrait( 263, 7, 13,  0,0x04), FieldTrait( 325, 8, 12,  0,0x04), FieldTrait( 348, 2, 54, 54,0x14),
-   FieldTrait( 349,28, 55, 54,0x14), FieldTrait( 350, 2, 57, 54,0x14), FieldTrait( 351,28, 58, 54,0x14),
-   FieldTrait( 378, 1, 21,  0,0x04), FieldTrait( 381,13,178,  0,0x04), FieldTrait( 423, 1, 23,  0,0x04),
-   FieldTrait( 442, 7,150,  0,0x04), FieldTrait( 454, 1, 28,142,0x1c), FieldTrait( 460, 1, 29, 54,0x14),
-   FieldTrait( 461,15, 30, 54,0x14), FieldTrait( 470,18, 43, 54,0x14), FieldTrait( 471,15, 44, 54,0x14),
-   FieldTrait( 472,15, 45, 54,0x14), FieldTrait( 487, 1,  2,  0,0x04), FieldTrait( 527,15, 20,  0,0x04),
-   FieldTrait( 541,25, 34, 54,0x14), FieldTrait( 543,15, 42, 54,0x14), FieldTrait( 552, 1,159,179,0x1c),
-   FieldTrait( 555, 1,152,181,0x1c), FieldTrait( 568,15,  4,  0,0x04), FieldTrait( 570, 8, 22,  0,0x04),
-   FieldTrait( 571,15,  1,  0,0x04), FieldTrait( 572,15, 14,  0,0x04), FieldTrait( 573, 7,157,  0,0x04),
-   FieldTrait( 574,15,158,  0,0x04), FieldTrait( 662,11,144,160,0x14), FieldTrait( 663, 1,145,160,0x14),
-   FieldTrait( 667,21, 60, 54,0x14), FieldTrait( 669,11,133,  0,0x04), FieldTrait( 691,15, 59, 54,0x14),
-   FieldTrait( 696,25,125,198,0x14), FieldTrait( 697,11,126,198,0x14), FieldTrait( 698, 1,127,198,0x14),
-   FieldTrait( 699,15,146,160,0x14), FieldTrait( 701,25,124,198,0x14), FieldTrait( 711, 1,128,188,0x1c),
-   FieldTrait( 715,25,138,  0,0x04), FieldTrait( 716,15,165,  0,0x04), FieldTrait( 717,15,166,  0,0x04),
-   FieldTrait( 748, 1, 10,  0,0x04), FieldTrait( 753, 1,149,102,0x1c), FieldTrait( 761,15,147,160,0x14),
-   FieldTrait( 762,15, 32, 54,0x14), FieldTrait( 768, 1,154,182,0x1c), FieldTrait( 779,22,169,  0,0x04),
-   FieldTrait( 788, 1,116, 44,0x14), FieldTrait( 797, 8,160,  0,0x04), FieldTrait( 818,15, 16,  0,0x04),
-   FieldTrait( 819, 1,148,  0,0x04), FieldTrait( 820,15, 17,  0,0x04), FieldTrait( 822,15,129,  0,0x04),
-   FieldTrait( 823,15,130,  0,0x04), FieldTrait( 824,15,151,  0,0x04), FieldTrait( 828, 1,  5,  0,0x04),
-   FieldTrait( 829, 1,  6,  0,0x04), FieldTrait( 830,15,  8,  0,0x04), FieldTrait( 852, 8,161,  0,0x04),
-   FieldTrait( 853, 1,162,  0,0x04), FieldTrait( 854, 1,121,  0,0x04), FieldTrait( 855, 1,  7,  0,0x04),
-   FieldTrait( 856, 1,  3,  0,0x04), FieldTrait( 864, 1, 63, 38,0x1c), FieldTrait( 873,25, 64, 54,0x14),
-   FieldTrait( 874,25, 65, 54,0x14), FieldTrait( 875, 1, 61, 54,0x14), FieldTrait( 876,15, 62, 54,0x14),
-   FieldTrait( 880,15, 18,  0,0x04), FieldTrait( 881,15, 15,  0,0x04), FieldTrait( 898,14,120, 44,0x14),
-   FieldTrait( 912, 8, 11,  0,0x04), FieldTrait( 913,15,112, 44,0x14), FieldTrait( 914,15,113, 44,0x14),
-   FieldTrait( 915,25,114, 44,0x14), FieldTrait( 916,25,117, 44,0x14), FieldTrait( 917,25,118, 44,0x14),
-   FieldTrait( 918,19,115, 44,0x14), FieldTrait( 919, 1,119, 44,0x14), FieldTrait( 939, 1,163,  0,0x04),
-   FieldTrait( 947,19, 48, 54,0x14), FieldTrait( 965,15, 66, 54,0x14), FieldTrait( 966,15, 67, 54,0x14),
-   FieldTrait( 967, 9, 69, 54,0x14), FieldTrait( 968, 9, 70, 54,0x14), FieldTrait( 969, 9, 71, 54,0x14),
-   FieldTrait( 970, 1, 72, 54,0x14), FieldTrait( 971, 1, 73, 54,0x14), FieldTrait( 987,25,177,  0,0x04),
-   FieldTrait( 991,11,170,  0,0x04), FieldTrait( 994,15,167,  0,0x04), FieldTrait( 996,15, 75, 54,0x14),
-   FieldTrait( 997,15, 76, 54,0x14), FieldTrait(1003,15,171,  0,0x04), FieldTrait(1011,15,168,  0,0x04),
-   FieldTrait(1015, 7,164,  0,0x04), FieldTrait(1018, 1, 74, 57,0x1c), FieldTrait(1040,15,172,  0,0x04),
-   FieldTrait(1041,15,173,  0,0x04), FieldTrait(1042,15,174,  0,0x04), FieldTrait(1049, 7, 68, 54,0x14),
-   FieldTrait(1056,10,175,  0,0x04), FieldTrait(1071,12,176,  0,0x04), FieldTrait(1079,26, 77, 54,0x14),
-   FieldTrait(1116, 1,179,139,0x1c), FieldTrait(1123, 7,180,  0,0x04), FieldTrait(1124, 7,181,  0,0x04),
-   FieldTrait(1125,25,182,  0,0x04), FieldTrait(1126,15,183,  0,0x04), FieldTrait(1127,15,184,  0,0x04),
-   FieldTrait(1132,27,185,  0,0x04), FieldTrait(1134, 8,186,  0,0x04), FieldTrait(1146,13, 79, 54,0x14),
-   FieldTrait(1147,10, 80, 54,0x14), FieldTrait(1151,15, 78, 54,0x14), FieldTrait(1180,15,197,  8,0x14),
-   FieldTrait(1181, 4,198,  8,0x14), FieldTrait(1184, 2, 81,150,0x14), FieldTrait(1185,29, 82,150,0x14),
-   FieldTrait(1186,15, 83,150,0x14), FieldTrait(1188, 9,191,  0,0x04), FieldTrait(1190, 9,193,  0,0x04),
-   FieldTrait(1191,15, 85, 54,0x14), FieldTrait(1192,10, 86, 54,0x14), FieldTrait(1193, 7, 87, 54,0x14),
-   FieldTrait(1194, 1, 88, 54,0x14), FieldTrait(1195,13, 89, 54,0x14), FieldTrait(1196,15, 90, 54,0x14),
-   FieldTrait(1197,15, 97, 54,0x14), FieldTrait(1198, 1, 91, 54,0x14), FieldTrait(1199,11, 92, 54,0x14),
-   FieldTrait(1200,11, 93, 54,0x14), FieldTrait(1227,15, 84, 54,0x14), FieldTrait(1242, 8, 96, 54,0x14),
-   FieldTrait(1244, 8, 95, 54,0x14), FieldTrait(1300,15,202,  0,0x04), FieldTrait(1301,20,203,  0,0x04),
-   FieldTrait(1328,15,189,  0,0x04), FieldTrait(1329, 9,190,  0,0x04), FieldTrait(1350, 4,199,  8,0x14),
-   FieldTrait(1352, 8,200,  8,0x14), FieldTrait(1380,14,192,  0,0x04), FieldTrait(1382, 9,194,  0,0x04),
-   FieldTrait(1387, 1,195,183,0x1c), FieldTrait(1390, 1,196,  0,0x04), FieldTrait(1430, 7,201,  0,0x04),
-   FieldTrait(1435, 1, 98, 54,0x14), FieldTrait(1439, 1, 99, 54,0x14), FieldTrait(1449,15,100, 54,0x14),
-   FieldTrait(1450,15,101, 54,0x14), FieldTrait(1451,14,102, 54,0x14), FieldTrait(1452,14,103, 54,0x14),
-   FieldTrait(1457,14,104, 54,0x14), FieldTrait(1458,14,105, 54,0x14), FieldTrait(1478, 1,106, 54,0x14),
-   FieldTrait(1479, 1,107, 54,0x14), FieldTrait(1480,14,108, 54,0x14), FieldTrait(1481, 1,109, 54,0x14),
-   FieldTrait(1482, 1,110, 54,0x14), FieldTrait(1483, 1,111, 21,0x1c)
+   {   6,11,139,  0,0x04}, {  15,19,187,  0,0x04}, {  17,15, 19,  0,0x04}, {  22,15, 27, 54,0x14},
+   {  30,20,136,  0,0x04}, {  31,11,132,  0,0x04}, {  32,10,131,  0,0x04}, {  48,15, 26, 54,0x14},
+   {  55,15, 24, 54,0x14}, {  60,22,153,  0,0x04}, {  63,15,155,  0,0x04}, {  64,25,156,  0,0x04},
+   {  65,15, 25, 54,0x14}, {  75,25,137,  0,0x04}, { 106,15, 53, 54,0x14}, { 107,15, 56, 54,0x14},
+   { 120,19,188,  0,0x04}, { 150, 7,  9,  0,0x04}, { 167,15, 31, 54,0x14}, { 194,11,134,  0,0x04},
+   { 195,12,135,  0,0x04}, { 200,21, 33, 54,0x14}, { 201, 1, 94, 54,0x14}, { 202,11, 47, 54,0x14},
+   { 206, 7, 49, 54,0x14}, { 207,20, 52, 54,0x14}, { 218,12,140,160,0x14}, { 220,19,141,160,0x14},
+   { 221,15,142,160,0x14}, { 222,15,143,160,0x14}, { 223,14, 51, 54,0x14}, { 224,25, 35, 54,0x14},
+   { 225,25, 36, 54,0x14}, { 226, 1, 38, 54,0x14}, { 227,14, 39, 54,0x14}, { 228, 9, 40, 54,0x14},
+   { 231, 9, 50, 54,0x14}, { 235,15,122,198,0x14}, { 236,14,123,198,0x14}, { 239, 1, 37, 54,0x14},
+   { 240,25, 46, 54,0x14}, { 255,15, 41, 54,0x14}, { 263, 7, 13,  0,0x04}, { 325, 8, 12,  0,0x04},
+   { 348, 2, 54, 54,0x14}, { 349,28, 55, 54,0x14}, { 350, 2, 57, 54,0x14}, { 351,28, 58, 54,0x14},
+   { 378, 1, 21,  0,0x04}, { 381,13,178,  0,0x04}, { 423, 1, 23,  0,0x04}, { 442, 7,150,  0,0x04},
+   { 454, 1, 28,142,0x1c}, { 460, 1, 29, 54,0x14}, { 461,15, 30, 54,0x14}, { 470,18, 43, 54,0x14},
+   { 471,15, 44, 54,0x14}, { 472,15, 45, 54,0x14}, { 487, 1,  2,  0,0x04}, { 527,15, 20,  0,0x04},
+   { 541,25, 34, 54,0x14}, { 543,15, 42, 54,0x14}, { 552, 1,159,179,0x1c}, { 555, 1,152,181,0x1c},
+   { 568,15,  4,  0,0x04}, { 570, 8, 22,  0,0x04}, { 571,15,  1,  0,0x04}, { 572,15, 14,  0,0x04},
+   { 573, 7,157,  0,0x04}, { 574,15,158,  0,0x04}, { 662,11,144,160,0x14}, { 663, 1,145,160,0x14},
+   { 667,21, 60, 54,0x14}, { 669,11,133,  0,0x04}, { 691,15, 59, 54,0x14}, { 696,25,125,198,0x14},
+   { 697,11,126,198,0x14}, { 698, 1,127,198,0x14}, { 699,15,146,160,0x14}, { 701,25,124,198,0x14},
+   { 711, 1,128,188,0x1c}, { 715,25,138,  0,0x04}, { 716,15,165,  0,0x04}, { 717,15,166,  0,0x04},
+   { 748, 1, 10,  0,0x04}, { 753, 1,149,102,0x1c}, { 761,15,147,160,0x14}, { 762,15, 32, 54,0x14},
+   { 768, 1,154,182,0x1c}, { 779,22,169,  0,0x04}, { 788, 1,116, 44,0x14}, { 797, 8,160,  0,0x04},
+   { 818,15, 16,  0,0x04}, { 819, 1,148,  0,0x04}, { 820,15, 17,  0,0x04}, { 822,15,129,  0,0x04},
+   { 823,15,130,  0,0x04}, { 824,15,151,  0,0x04}, { 828, 1,  5,  0,0x04}, { 829, 1,  6,  0,0x04},
+   { 830,15,  8,  0,0x04}, { 852, 8,161,  0,0x04}, { 853, 1,162,  0,0x04}, { 854, 1,121,  0,0x04},
+   { 855, 1,  7,  0,0x04}, { 856, 1,  3,  0,0x04}, { 864, 1, 63, 38,0x1c}, { 873,25, 64, 54,0x14},
+   { 874,25, 65, 54,0x14}, { 875, 1, 61, 54,0x14}, { 876,15, 62, 54,0x14}, { 880,15, 18,  0,0x04},
+   { 881,15, 15,  0,0x04}, { 898,14,120, 44,0x14}, { 912, 8, 11,  0,0x04}, { 913,15,112, 44,0x14},
+   { 914,15,113, 44,0x14}, { 915,25,114, 44,0x14}, { 916,25,117, 44,0x14}, { 917,25,118, 44,0x14},
+   { 918,19,115, 44,0x14}, { 919, 1,119, 44,0x14}, { 939, 1,163,  0,0x04}, { 947,19, 48, 54,0x14},
+   { 965,15, 66, 54,0x14}, { 966,15, 67, 54,0x14}, { 967, 9, 69, 54,0x14}, { 968, 9, 70, 54,0x14},
+   { 969, 9, 71, 54,0x14}, { 970, 1, 72, 54,0x14}, { 971, 1, 73, 54,0x14}, { 987,25,177,  0,0x04},
+   { 991,11,170,  0,0x04}, { 994,15,167,  0,0x04}, { 996,15, 75, 54,0x14}, { 997,15, 76, 54,0x14},
+   {1003,15,171,  0,0x04}, {1011,15,168,  0,0x04}, {1015, 7,164,  0,0x04}, {1018, 1, 74, 57,0x1c},
+   {1040,15,172,  0,0x04}, {1041,15,173,  0,0x04}, {1042,15,174,  0,0x04}, {1049, 7, 68, 54,0x14},
+   {1056,10,175,  0,0x04}, {1071,12,176,  0,0x04}, {1079,26, 77, 54,0x14}, {1116, 1,179,139,0x1c},
+   {1123, 7,180,  0,0x04}, {1124, 7,181,  0,0x04}, {1125,25,182,  0,0x04}, {1126,15,183,  0,0x04},
+   {1127,15,184,  0,0x04}, {1132,27,185,  0,0x04}, {1134, 8,186,  0,0x04}, {1146,13, 79, 54,0x14},
+   {1147,10, 80, 54,0x14}, {1151,15, 78, 54,0x14}, {1180,15,197,  8,0x14}, {1181, 4,198,  8,0x14},
+   {1184, 2, 81,150,0x14}, {1185,29, 82,150,0x14}, {1186,15, 83,150,0x14}, {1188, 9,191,  0,0x04},
+   {1190, 9,193,  0,0x04}, {1191,15, 85, 54,0x14}, {1192,10, 86, 54,0x14}, {1193, 7, 87, 54,0x14},
+   {1194, 1, 88, 54,0x14}, {1195,13, 89, 54,0x14}, {1196,15, 90, 54,0x14}, {1197,15, 97, 54,0x14},
+   {1198, 1, 91, 54,0x14}, {1199,11, 92, 54,0x14}, {1200,11, 93, 54,0x14}, {1227,15, 84, 54,0x14},
+   {1242, 8, 96, 54,0x14}, {1244, 8, 95, 54,0x14}, {1300,15,202,  0,0x04}, {1301,20,203,  0,0x04},
+   {1328,15,189,  0,0x04}, {1329, 9,190,  0,0x04}, {1350, 4,199,  8,0x14}, {1352, 8,200,  8,0x14},
+   {1380,14,192,  0,0x04}, {1382, 9,194,  0,0x04}, {1387, 1,195,183,0x1c}, {1390, 1,196,  0,0x04},
+   {1430, 7,201,  0,0x04}, {1435, 1, 98, 54,0x14}, {1439, 1, 99, 54,0x14}, {1449,15,100, 54,0x14},
+   {1450,15,101, 54,0x14}, {1451,14,102, 54,0x14}, {1452,14,103, 54,0x14}, {1457,14,104, 54,0x14},
+   {1458,14,105, 54,0x14}, {1478, 1,106, 54,0x14}, {1479, 1,107, 54,0x14}, {1480,14,108, 54,0x14},
+   {1481, 1,109, 54,0x14}, {1482, 1,110, 54,0x14}, {1483, 1,111, 21,0x1c}
 };
 const FieldTrait_Hash_Array TradeCaptureReport::_ftha(TradeCaptureReport::_traits, 203);
 const MsgType TradeCaptureReport::_msgtype("AE");
@@ -2434,43 +2199,34 @@ const FieldTrait *TradeCaptureReport::NoSecurityAltID::_traits(NoSecurityAltIDV1
 const FieldTrait_Hash_Array& TradeCaptureReport::NoSecurityAltID::_ftha(NoSecurityAltIDV1_ftha);
 const MsgType& TradeCaptureReport::NoSecurityAltID::_msgtype(NoSecurityAltIDV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReport::NoSides::_traits[] =
+const FieldTrait TradeCaptureReport::NoSides::_traits[]
 {
-   FieldTrait(   1,15,  3,  0,0x04), FieldTrait(  11,15, 65,173,0x14), FieldTrait(  12,13, 17, 16,0x14),
-   FieldTrait(  13, 7, 18, 16,0x14), FieldTrait(  14,10, 82,173,0x14), FieldTrait(  18,16, 74,173,0x14),
-   FieldTrait(  37,15, 63,173,0x14), FieldTrait(  38,10, 76, 93,0x14), FieldTrait(  39, 7, 75,173,0x14),
-   FieldTrait(  40, 7, 71,173,0x14), FieldTrait(  44,11, 72,173,0x14), FieldTrait(  54, 7,  1,  0,0x05),
-   FieldTrait(  58,15, 36,  0,0x04), FieldTrait(  59, 7, 83,173,0x14), FieldTrait(  66,15, 67,173,0x14),
-   FieldTrait(  70,15, 46,  0,0x04), FieldTrait(  77, 7, 35,  0,0x04), FieldTrait(  78, 1, 47,176,0x1c),
-   FieldTrait(  81, 7,  6,  0,0x04), FieldTrait(  83, 1, 52,  0,0x04), FieldTrait(  99,11, 73,173,0x14),
-   FieldTrait( 118,13, 31,  0,0x04), FieldTrait( 119,13, 32,  0,0x04), FieldTrait( 126,22, 84,173,0x14),
-   FieldTrait( 136, 1, 42, 77,0x1c), FieldTrait( 151,10, 81,173,0x14), FieldTrait( 152,10, 77, 93,0x14),
-   FieldTrait( 155, 9, 33,  0,0x04), FieldTrait( 156, 7, 34,  0,0x04), FieldTrait( 157, 1, 21,  0,0x04),
-   FieldTrait( 158,14, 23,  0,0x04), FieldTrait( 159,13, 24,  0,0x04), FieldTrait( 198,15, 64,173,0x14),
-   FieldTrait( 230,25, 22,  0,0x04), FieldTrait( 232, 1, 41,162,0x1c), FieldTrait( 237,13, 30,  0,0x04),
-   FieldTrait( 238,13, 29,  0,0x04), FieldTrait( 336,15, 14,  0,0x04), FieldTrait( 354, 2, 37,  0,0x04),
-   FieldTrait( 355,28, 38,  0,0x04), FieldTrait( 376,15, 11,  0,0x04), FieldTrait( 377, 8, 12,  0,0x04),
-   FieldTrait( 430, 1, 58,  0,0x04), FieldTrait( 453, 1,  2, 94,0x1c), FieldTrait( 468, 7, 79, 93,0x14),
-   FieldTrait( 469, 9, 80, 93,0x14), FieldTrait( 479,19, 19, 16,0x14), FieldTrait( 483,22, 98,173,0x14),
-   FieldTrait( 497, 7, 20, 16,0x14), FieldTrait( 516,14, 78, 93,0x14), FieldTrait( 518, 1, 40, 22,0x1c),
-   FieldTrait( 526,15, 66,173,0x14), FieldTrait( 528, 7, 93,173,0x14), FieldTrait( 529,16, 94,173,0x14),
-   FieldTrait( 575, 8,  7,  0,0x04), FieldTrait( 576, 1,  8, 14,0x1c), FieldTrait( 578,15,  9,  0,0x04),
-   FieldTrait( 579,15, 10,  0,0x04), FieldTrait( 581, 1,  5,  0,0x04), FieldTrait( 582, 1, 13,  0,0x04),
-   FieldTrait( 586,22, 99,173,0x14), FieldTrait( 591, 7, 45,  0,0x04), FieldTrait( 625,15, 15,  0,0x04),
-   FieldTrait( 660, 1,  4,  0,0x04), FieldTrait( 738,13, 25,  0,0x04), FieldTrait( 752, 1, 39,  0,0x04),
-   FieldTrait( 775, 1,100,173,0x14), FieldTrait( 821,15, 96,173,0x14), FieldTrait( 825,15, 43,  0,0x04),
-   FieldTrait( 826, 1, 44,  0,0x04), FieldTrait( 920,13, 26,  0,0x04), FieldTrait( 921,13, 27,  0,0x04),
-   FieldTrait( 922,13, 28,  0,0x04), FieldTrait( 943,15, 16,  0,0x04), FieldTrait(1005,15, 49,  0,0x04),
-   FieldTrait(1006,15, 50,  0,0x04), FieldTrait(1007,15, 51,  0,0x04), FieldTrait(1008, 1, 53,  0,0x04),
-   FieldTrait(1009, 1, 48,  0,0x04), FieldTrait(1016, 1, 54,159,0x1c), FieldTrait(1057, 8, 56,  0,0x04),
-   FieldTrait(1072,13, 55,  0,0x04), FieldTrait(1080,15, 68,173,0x14), FieldTrait(1081, 7, 69,173,0x14),
-   FieldTrait(1082,10, 85, 36,0x14), FieldTrait(1083, 7, 86, 36,0x14), FieldTrait(1084, 7, 87, 36,0x14),
-   FieldTrait(1085,10, 88, 36,0x14), FieldTrait(1086,10, 89, 36,0x14), FieldTrait(1087,10, 90, 36,0x14),
-   FieldTrait(1088,10, 91, 36,0x14), FieldTrait(1093, 7, 97,173,0x14), FieldTrait(1115, 7, 62,  0,0x04),
-   FieldTrait(1138,10, 92, 36,0x14), FieldTrait(1139,15, 57,  0,0x04), FieldTrait(1154,19, 59,  0,0x04),
-   FieldTrait(1155,19, 60,  0,0x04), FieldTrait(1158, 1, 61,151,0x1c), FieldTrait(1427,15,101,  0,0x04),
-   FieldTrait(1428, 1,102,  0,0x04), FieldTrait(1429, 1,103,  0,0x04), FieldTrait(1431, 1, 70,173,0x14),
-   FieldTrait(1432, 1, 95,173,0x14), FieldTrait(1444, 1,104,  0,0x04)
+   {   1,15,  3,  0,0x04}, {  11,15, 65,173,0x14}, {  12,13, 17, 16,0x14}, {  13, 7, 18, 16,0x14},
+   {  14,10, 82,173,0x14}, {  18,16, 74,173,0x14}, {  37,15, 63,173,0x14}, {  38,10, 76, 93,0x14},
+   {  39, 7, 75,173,0x14}, {  40, 7, 71,173,0x14}, {  44,11, 72,173,0x14}, {  54, 7,  1,  0,0x05},
+   {  58,15, 36,  0,0x04}, {  59, 7, 83,173,0x14}, {  66,15, 67,173,0x14}, {  70,15, 46,  0,0x04},
+   {  77, 7, 35,  0,0x04}, {  78, 1, 47,176,0x1c}, {  81, 7,  6,  0,0x04}, {  83, 1, 52,  0,0x04},
+   {  99,11, 73,173,0x14}, { 118,13, 31,  0,0x04}, { 119,13, 32,  0,0x04}, { 126,22, 84,173,0x14},
+   { 136, 1, 42, 77,0x1c}, { 151,10, 81,173,0x14}, { 152,10, 77, 93,0x14}, { 155, 9, 33,  0,0x04},
+   { 156, 7, 34,  0,0x04}, { 157, 1, 21,  0,0x04}, { 158,14, 23,  0,0x04}, { 159,13, 24,  0,0x04},
+   { 198,15, 64,173,0x14}, { 230,25, 22,  0,0x04}, { 232, 1, 41,162,0x1c}, { 237,13, 30,  0,0x04},
+   { 238,13, 29,  0,0x04}, { 336,15, 14,  0,0x04}, { 354, 2, 37,  0,0x04}, { 355,28, 38,  0,0x04},
+   { 376,15, 11,  0,0x04}, { 377, 8, 12,  0,0x04}, { 430, 1, 58,  0,0x04}, { 453, 1,  2, 94,0x1c},
+   { 468, 7, 79, 93,0x14}, { 469, 9, 80, 93,0x14}, { 479,19, 19, 16,0x14}, { 483,22, 98,173,0x14},
+   { 497, 7, 20, 16,0x14}, { 516,14, 78, 93,0x14}, { 518, 1, 40, 22,0x1c}, { 526,15, 66,173,0x14},
+   { 528, 7, 93,173,0x14}, { 529,16, 94,173,0x14}, { 575, 8,  7,  0,0x04}, { 576, 1,  8, 14,0x1c},
+   { 578,15,  9,  0,0x04}, { 579,15, 10,  0,0x04}, { 581, 1,  5,  0,0x04}, { 582, 1, 13,  0,0x04},
+   { 586,22, 99,173,0x14}, { 591, 7, 45,  0,0x04}, { 625,15, 15,  0,0x04}, { 660, 1,  4,  0,0x04},
+   { 738,13, 25,  0,0x04}, { 752, 1, 39,  0,0x04}, { 775, 1,100,173,0x14}, { 821,15, 96,173,0x14},
+   { 825,15, 43,  0,0x04}, { 826, 1, 44,  0,0x04}, { 920,13, 26,  0,0x04}, { 921,13, 27,  0,0x04},
+   { 922,13, 28,  0,0x04}, { 943,15, 16,  0,0x04}, {1005,15, 49,  0,0x04}, {1006,15, 50,  0,0x04},
+   {1007,15, 51,  0,0x04}, {1008, 1, 53,  0,0x04}, {1009, 1, 48,  0,0x04}, {1016, 1, 54,159,0x1c},
+   {1057, 8, 56,  0,0x04}, {1072,13, 55,  0,0x04}, {1080,15, 68,173,0x14}, {1081, 7, 69,173,0x14},
+   {1082,10, 85, 36,0x14}, {1083, 7, 86, 36,0x14}, {1084, 7, 87, 36,0x14}, {1085,10, 88, 36,0x14},
+   {1086,10, 89, 36,0x14}, {1087,10, 90, 36,0x14}, {1088,10, 91, 36,0x14}, {1093, 7, 97,173,0x14},
+   {1115, 7, 62,  0,0x04}, {1138,10, 92, 36,0x14}, {1139,15, 57,  0,0x04}, {1154,19, 59,  0,0x04},
+   {1155,19, 60,  0,0x04}, {1158, 1, 61,151,0x1c}, {1427,15,101,  0,0x04}, {1428, 1,102,  0,0x04},
+   {1429, 1,103,  0,0x04}, {1431, 1, 70,173,0x14}, {1432, 1, 95,173,0x14}, {1444, 1,104,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    TradeCaptureReport::NoSides::_ftha(TradeCaptureReport::NoSides::_traits, 104);
@@ -2620,65 +2376,51 @@ const FieldTrait *TradeCaptureReport::NoComplexEvents::NoComplexEventDates::NoCo
 const FieldTrait_Hash_Array& TradeCaptureReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& TradeCaptureReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderMassStatusRequest::_traits[] =
+const FieldTrait OrderMassStatusRequest::_traits[]
 {
-   FieldTrait(   1,15,  4,  0,0x04), FieldTrait(  22,15, 11, 54,0x14), FieldTrait(  48,15, 10, 54,0x14),
-   FieldTrait(  54, 7,168,  0,0x04), FieldTrait(  55,15,  8, 54,0x14), FieldTrait(  65,15,  9, 54,0x14),
-   FieldTrait( 106,15, 37, 54,0x14), FieldTrait( 107,15, 40, 54,0x14), FieldTrait( 167,15, 15, 54,0x14),
-   FieldTrait( 200,21, 17, 54,0x14), FieldTrait( 201, 1, 78, 54,0x14), FieldTrait( 202,11, 31, 54,0x14),
-   FieldTrait( 206, 7, 33, 54,0x14), FieldTrait( 207,20, 36, 54,0x14), FieldTrait( 223,14, 35, 54,0x14),
-   FieldTrait( 224,25, 19, 54,0x14), FieldTrait( 225,25, 20, 54,0x14), FieldTrait( 226, 1, 22, 54,0x14),
-   FieldTrait( 227,14, 23, 54,0x14), FieldTrait( 228, 9, 24, 54,0x14), FieldTrait( 231, 9, 34, 54,0x14),
-   FieldTrait( 239, 1, 21, 54,0x14), FieldTrait( 240,25, 30, 54,0x14), FieldTrait( 241,25,107,191,0x14),
-   FieldTrait( 242,25,108,191,0x14), FieldTrait( 243, 1,109,191,0x14), FieldTrait( 244, 1,110,191,0x14),
-   FieldTrait( 245,14,111,191,0x14), FieldTrait( 246, 9,112,191,0x14), FieldTrait( 247,25,118,191,0x14),
-   FieldTrait( 255,15, 25, 54,0x14), FieldTrait( 256,15,113,191,0x14), FieldTrait( 305,15, 99,191,0x14),
-   FieldTrait( 306,15,125,191,0x14), FieldTrait( 307,15,128,191,0x14), FieldTrait( 308,20,124,191,0x14),
-   FieldTrait( 309,15, 98,191,0x14), FieldTrait( 310,15,103,191,0x14), FieldTrait( 311,15, 96,191,0x14),
-   FieldTrait( 312,15, 97,191,0x14), FieldTrait( 313,21,105,191,0x14), FieldTrait( 315, 1,155,191,0x14),
-   FieldTrait( 316,11,119,191,0x14), FieldTrait( 317, 7,121,191,0x14), FieldTrait( 318,19,133,191,0x14),
-   FieldTrait( 336,15,  6,  0,0x04), FieldTrait( 348, 2, 38, 54,0x14), FieldTrait( 349,28, 39, 54,0x14),
-   FieldTrait( 350, 2, 41, 54,0x14), FieldTrait( 351,28, 42, 54,0x14), FieldTrait( 362, 2,126,191,0x14),
-   FieldTrait( 363,28,127,191,0x14), FieldTrait( 364, 2,129,191,0x14), FieldTrait( 365,28,130,191,0x14),
-   FieldTrait( 435,14,123,191,0x14), FieldTrait( 436, 9,122,191,0x14), FieldTrait( 453, 1,  3, 94,0x1c),
-   FieldTrait( 454, 1, 12,142,0x1c), FieldTrait( 457, 1,100,189,0x1c), FieldTrait( 460, 1, 13, 54,0x14),
-   FieldTrait( 461,15, 14, 54,0x14), FieldTrait( 462, 1,101,191,0x14), FieldTrait( 463,15,102,191,0x14),
-   FieldTrait( 470,18, 27, 54,0x14), FieldTrait( 471,15, 28, 54,0x14), FieldTrait( 472,15, 29, 54,0x14),
-   FieldTrait( 541,25, 18, 54,0x14), FieldTrait( 542,25,106,191,0x14), FieldTrait( 543,15, 26, 54,0x14),
-   FieldTrait( 584,15,  1,  0,0x04), FieldTrait( 585, 1,  2,  0,0x04), FieldTrait( 592,18,115,191,0x14),
-   FieldTrait( 593,15,116,191,0x14), FieldTrait( 594,15,117,191,0x14), FieldTrait( 595,15,114,191,0x14),
-   FieldTrait( 625,15,  7,  0,0x04), FieldTrait( 660, 1,  5,  0,0x04), FieldTrait( 667,21, 44, 54,0x14),
-   FieldTrait( 691,15, 43, 54,0x14), FieldTrait( 762,15, 16, 54,0x14), FieldTrait( 763,15,104,191,0x14),
-   FieldTrait( 810,11,135,191,0x14), FieldTrait( 864, 1, 47, 38,0x1c), FieldTrait( 873,25, 48, 54,0x14),
-   FieldTrait( 874,25, 49, 54,0x14), FieldTrait( 875, 1, 45, 54,0x14), FieldTrait( 876,15, 46, 54,0x14),
-   FieldTrait( 877,15,131,191,0x14), FieldTrait( 878,15,132,191,0x14), FieldTrait( 879,10,134,191,0x14),
-   FieldTrait( 882,11,136,191,0x14), FieldTrait( 883,11,137,191,0x14), FieldTrait( 884,13,138,191,0x14),
-   FieldTrait( 885,13,139,191,0x14), FieldTrait( 886,13,140,191,0x14), FieldTrait( 887, 1,141,194,0x1c),
-   FieldTrait( 941,19,120,191,0x14), FieldTrait( 947,19, 32, 54,0x14), FieldTrait( 965,15, 50, 54,0x14),
-   FieldTrait( 966,15, 51, 54,0x14), FieldTrait( 967, 9, 53, 54,0x14), FieldTrait( 968, 9, 54, 54,0x14),
-   FieldTrait( 969, 9, 55, 54,0x14), FieldTrait( 970, 1, 56, 54,0x14), FieldTrait( 971, 1, 57, 54,0x14),
-   FieldTrait( 972,14,142,191,0x14), FieldTrait( 973,13,144,191,0x14), FieldTrait( 974,15,145,191,0x14),
-   FieldTrait( 975, 1,143,191,0x14), FieldTrait( 996,15, 59, 54,0x14), FieldTrait( 997,15, 60, 54,0x14),
-   FieldTrait( 998,15,146,191,0x14), FieldTrait(1000,15,147,191,0x14), FieldTrait(1018, 1, 58, 57,0x1c),
-   FieldTrait(1038,13,148,191,0x14), FieldTrait(1039,15,150,191,0x14), FieldTrait(1044,10,151,191,0x14),
-   FieldTrait(1045, 9,152,191,0x14), FieldTrait(1046, 7,153,191,0x14), FieldTrait(1049, 7, 52, 54,0x14),
-   FieldTrait(1058, 1,149,195,0x1c), FieldTrait(1079,26, 61, 54,0x14), FieldTrait(1146,13, 63, 54,0x14),
-   FieldTrait(1147,10, 64, 54,0x14), FieldTrait(1151,15, 62, 54,0x14), FieldTrait(1184, 2, 65,150,0x14),
-   FieldTrait(1185,29, 66,150,0x14), FieldTrait(1186,15, 67,150,0x14), FieldTrait(1191,15, 69, 54,0x14),
-   FieldTrait(1192,10, 70, 54,0x14), FieldTrait(1193, 7, 71, 54,0x14), FieldTrait(1194, 1, 72, 54,0x14),
-   FieldTrait(1195,13, 73, 54,0x14), FieldTrait(1196,15, 74, 54,0x14), FieldTrait(1197,15, 81, 54,0x14),
-   FieldTrait(1198, 1, 75, 54,0x14), FieldTrait(1199,11, 76, 54,0x14), FieldTrait(1200,11, 77, 54,0x14),
-   FieldTrait(1213,26,154,191,0x14), FieldTrait(1227,15, 68, 54,0x14), FieldTrait(1242, 8, 80, 54,0x14),
-   FieldTrait(1244, 8, 79, 54,0x14), FieldTrait(1419, 1,156,191,0x14), FieldTrait(1423,10,157,191,0x14),
-   FieldTrait(1424,15,158,191,0x14), FieldTrait(1425,10,159,191,0x14), FieldTrait(1435, 1, 82, 54,0x14),
-   FieldTrait(1437, 1,160,191,0x14), FieldTrait(1439, 1, 83, 54,0x14), FieldTrait(1441, 1,161,191,0x14),
-   FieldTrait(1449,15, 84, 54,0x14), FieldTrait(1450,15, 85, 54,0x14), FieldTrait(1451,14, 86, 54,0x14),
-   FieldTrait(1452,14, 87, 54,0x14), FieldTrait(1453,15,162,191,0x14), FieldTrait(1454,15,163,191,0x14),
-   FieldTrait(1455,14,164,191,0x14), FieldTrait(1456,14,165,191,0x14), FieldTrait(1457,14, 88, 54,0x14),
-   FieldTrait(1458,14, 89, 54,0x14), FieldTrait(1459,14,166,191,0x14), FieldTrait(1460,14,167,191,0x14),
-   FieldTrait(1461, 1,169,169,0x1c), FieldTrait(1478, 1, 90, 54,0x14), FieldTrait(1479, 1, 91, 54,0x14),
-   FieldTrait(1480,14, 92, 54,0x14), FieldTrait(1481, 1, 93, 54,0x14), FieldTrait(1482, 1, 94, 54,0x14),
-   FieldTrait(1483, 1, 95, 21,0x1c)
+   {   1,15,  4,  0,0x04}, {  22,15, 11, 54,0x14}, {  48,15, 10, 54,0x14}, {  54, 7,168,  0,0x04},
+   {  55,15,  8, 54,0x14}, {  65,15,  9, 54,0x14}, { 106,15, 37, 54,0x14}, { 107,15, 40, 54,0x14},
+   { 167,15, 15, 54,0x14}, { 200,21, 17, 54,0x14}, { 201, 1, 78, 54,0x14}, { 202,11, 31, 54,0x14},
+   { 206, 7, 33, 54,0x14}, { 207,20, 36, 54,0x14}, { 223,14, 35, 54,0x14}, { 224,25, 19, 54,0x14},
+   { 225,25, 20, 54,0x14}, { 226, 1, 22, 54,0x14}, { 227,14, 23, 54,0x14}, { 228, 9, 24, 54,0x14},
+   { 231, 9, 34, 54,0x14}, { 239, 1, 21, 54,0x14}, { 240,25, 30, 54,0x14}, { 241,25,107,191,0x14},
+   { 242,25,108,191,0x14}, { 243, 1,109,191,0x14}, { 244, 1,110,191,0x14}, { 245,14,111,191,0x14},
+   { 246, 9,112,191,0x14}, { 247,25,118,191,0x14}, { 255,15, 25, 54,0x14}, { 256,15,113,191,0x14},
+   { 305,15, 99,191,0x14}, { 306,15,125,191,0x14}, { 307,15,128,191,0x14}, { 308,20,124,191,0x14},
+   { 309,15, 98,191,0x14}, { 310,15,103,191,0x14}, { 311,15, 96,191,0x14}, { 312,15, 97,191,0x14},
+   { 313,21,105,191,0x14}, { 315, 1,155,191,0x14}, { 316,11,119,191,0x14}, { 317, 7,121,191,0x14},
+   { 318,19,133,191,0x14}, { 336,15,  6,  0,0x04}, { 348, 2, 38, 54,0x14}, { 349,28, 39, 54,0x14},
+   { 350, 2, 41, 54,0x14}, { 351,28, 42, 54,0x14}, { 362, 2,126,191,0x14}, { 363,28,127,191,0x14},
+   { 364, 2,129,191,0x14}, { 365,28,130,191,0x14}, { 435,14,123,191,0x14}, { 436, 9,122,191,0x14},
+   { 453, 1,  3, 94,0x1c}, { 454, 1, 12,142,0x1c}, { 457, 1,100,189,0x1c}, { 460, 1, 13, 54,0x14},
+   { 461,15, 14, 54,0x14}, { 462, 1,101,191,0x14}, { 463,15,102,191,0x14}, { 470,18, 27, 54,0x14},
+   { 471,15, 28, 54,0x14}, { 472,15, 29, 54,0x14}, { 541,25, 18, 54,0x14}, { 542,25,106,191,0x14},
+   { 543,15, 26, 54,0x14}, { 584,15,  1,  0,0x04}, { 585, 1,  2,  0,0x04}, { 592,18,115,191,0x14},
+   { 593,15,116,191,0x14}, { 594,15,117,191,0x14}, { 595,15,114,191,0x14}, { 625,15,  7,  0,0x04},
+   { 660, 1,  5,  0,0x04}, { 667,21, 44, 54,0x14}, { 691,15, 43, 54,0x14}, { 762,15, 16, 54,0x14},
+   { 763,15,104,191,0x14}, { 810,11,135,191,0x14}, { 864, 1, 47, 38,0x1c}, { 873,25, 48, 54,0x14},
+   { 874,25, 49, 54,0x14}, { 875, 1, 45, 54,0x14}, { 876,15, 46, 54,0x14}, { 877,15,131,191,0x14},
+   { 878,15,132,191,0x14}, { 879,10,134,191,0x14}, { 882,11,136,191,0x14}, { 883,11,137,191,0x14},
+   { 884,13,138,191,0x14}, { 885,13,139,191,0x14}, { 886,13,140,191,0x14}, { 887, 1,141,194,0x1c},
+   { 941,19,120,191,0x14}, { 947,19, 32, 54,0x14}, { 965,15, 50, 54,0x14}, { 966,15, 51, 54,0x14},
+   { 967, 9, 53, 54,0x14}, { 968, 9, 54, 54,0x14}, { 969, 9, 55, 54,0x14}, { 970, 1, 56, 54,0x14},
+   { 971, 1, 57, 54,0x14}, { 972,14,142,191,0x14}, { 973,13,144,191,0x14}, { 974,15,145,191,0x14},
+   { 975, 1,143,191,0x14}, { 996,15, 59, 54,0x14}, { 997,15, 60, 54,0x14}, { 998,15,146,191,0x14},
+   {1000,15,147,191,0x14}, {1018, 1, 58, 57,0x1c}, {1038,13,148,191,0x14}, {1039,15,150,191,0x14},
+   {1044,10,151,191,0x14}, {1045, 9,152,191,0x14}, {1046, 7,153,191,0x14}, {1049, 7, 52, 54,0x14},
+   {1058, 1,149,195,0x1c}, {1079,26, 61, 54,0x14}, {1146,13, 63, 54,0x14}, {1147,10, 64, 54,0x14},
+   {1151,15, 62, 54,0x14}, {1184, 2, 65,150,0x14}, {1185,29, 66,150,0x14}, {1186,15, 67,150,0x14},
+   {1191,15, 69, 54,0x14}, {1192,10, 70, 54,0x14}, {1193, 7, 71, 54,0x14}, {1194, 1, 72, 54,0x14},
+   {1195,13, 73, 54,0x14}, {1196,15, 74, 54,0x14}, {1197,15, 81, 54,0x14}, {1198, 1, 75, 54,0x14},
+   {1199,11, 76, 54,0x14}, {1200,11, 77, 54,0x14}, {1213,26,154,191,0x14}, {1227,15, 68, 54,0x14},
+   {1242, 8, 80, 54,0x14}, {1244, 8, 79, 54,0x14}, {1419, 1,156,191,0x14}, {1423,10,157,191,0x14},
+   {1424,15,158,191,0x14}, {1425,10,159,191,0x14}, {1435, 1, 82, 54,0x14}, {1437, 1,160,191,0x14},
+   {1439, 1, 83, 54,0x14}, {1441, 1,161,191,0x14}, {1449,15, 84, 54,0x14}, {1450,15, 85, 54,0x14},
+   {1451,14, 86, 54,0x14}, {1452,14, 87, 54,0x14}, {1453,15,162,191,0x14}, {1454,15,163,191,0x14},
+   {1455,14,164,191,0x14}, {1456,14,165,191,0x14}, {1457,14, 88, 54,0x14}, {1458,14, 89, 54,0x14},
+   {1459,14,166,191,0x14}, {1460,14,167,191,0x14}, {1461, 1,169,169,0x1c}, {1478, 1, 90, 54,0x14},
+   {1479, 1, 91, 54,0x14}, {1480,14, 92, 54,0x14}, {1481, 1, 93, 54,0x14}, {1482, 1, 94, 54,0x14},
+   {1483, 1, 95, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderMassStatusRequest::_ftha(OrderMassStatusRequest::_traits, 169);
 const MsgType OrderMassStatusRequest::_msgtype("AF");
@@ -2739,66 +2481,53 @@ const FieldTrait *OrderMassStatusRequest::NoComplexEvents::NoComplexEventDates::
 const FieldTrait_Hash_Array& OrderMassStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderMassStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteRequestReject::_traits[] =
+const FieldTrait QuoteRequestReject::_traits[]
 {
-   FieldTrait(  58,15,  5,  0,0x04), FieldTrait( 131,15,  1,  0,0x04), FieldTrait( 146, 1,  4,114,0x1c),
-   FieldTrait( 354, 2,  6,  0,0x04), FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 644,15,  2,  0,0x04),
-   FieldTrait( 658, 1,  3,  0,0x04), FieldTrait(1091, 8, 11,  0,0x04), FieldTrait(1116, 1,  8,139,0x1c),
-   FieldTrait(1171, 8,  9,  0,0x04), FieldTrait(1172, 1, 10,  0,0x04)
+   {  58,15,  5,  0,0x04}, { 131,15,  1,  0,0x04}, { 146, 1,  4,114,0x1c}, { 354, 2,  6,  0,0x04},
+   { 355,28,  7,  0,0x04}, { 644,15,  2,  0,0x04}, { 658, 1,  3,  0,0x04}, {1091, 8, 11,  0,0x04},
+   {1116, 1,  8,139,0x1c}, {1171, 8,  9,  0,0x04}, {1172, 1, 10,  0,0x04}
 };
 const FieldTrait_Hash_Array QuoteRequestReject::_ftha(QuoteRequestReject::_traits, 11);
 const MsgType QuoteRequestReject::_msgtype("AG");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteRequestReject::NoRelatedSym::_traits[] =
+const FieldTrait QuoteRequestReject::NoRelatedSym::_traits[]
 {
-   FieldTrait(   1,15,118,  0,0x04), FieldTrait(  15,19,116,  0,0x04), FieldTrait(  22,15,  4, 54,0x14),
-   FieldTrait(  38,10,107, 93,0x14), FieldTrait(  40, 7,124,  0,0x04), FieldTrait(  44,11,136,  0,0x04),
-   FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  54, 7,105,  0,0x04), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  60,22,126,  0,0x04), FieldTrait(  63,15,112,  0,0x04), FieldTrait(  64,25,113,  0,0x04),
-   FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14),
-   FieldTrait( 126,22,125,  0,0x04), FieldTrait( 140,11, 99,  0,0x04), FieldTrait( 152,10,108, 93,0x14),
-   FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 192,10,115,  0,0x04), FieldTrait( 193,25,114,  0,0x04),
-   FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14),
-   FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 218,12,127,160,0x14),
-   FieldTrait( 220,19,128,160,0x14), FieldTrait( 221,15,129,160,0x14), FieldTrait( 222,15,130,160,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 229,25,104,  0,0x04), FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 232, 1,117,162,0x1c),
-   FieldTrait( 235,15,138,198,0x14), FieldTrait( 236,14,139,198,0x14), FieldTrait( 239, 1, 14, 54,0x14),
-   FieldTrait( 240,25, 23, 54,0x14), FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 303, 1,100,  0,0x04),
-   FieldTrait( 336,15,102,  0,0x04), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 423, 1,135,  0,0x04),
-   FieldTrait( 453, 1,144, 94,0x1c), FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14),
-   FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 468, 7,110, 93,0x14), FieldTrait( 469, 9,111, 93,0x14),
-   FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14),
-   FieldTrait( 516,14,109, 93,0x14), FieldTrait( 537, 1,101,  0,0x04), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 555, 1,121,113,0x1c), FieldTrait( 581, 1,120,  0,0x04),
-   FieldTrait( 625,15,103,  0,0x04), FieldTrait( 640,11,137,  0,0x04), FieldTrait( 660, 1,119,  0,0x04),
-   FieldTrait( 662,11,131,160,0x14), FieldTrait( 663, 1,132,160,0x14), FieldTrait( 667,21, 37, 54,0x14),
-   FieldTrait( 691,15, 36, 54,0x14), FieldTrait( 692, 1,123,  0,0x04), FieldTrait( 696,25,141,198,0x14),
-   FieldTrait( 697,11,142,198,0x14), FieldTrait( 698, 1,143,198,0x14), FieldTrait( 699,15,133,160,0x14),
-   FieldTrait( 701,25,140,198,0x14), FieldTrait( 711, 1, 98,188,0x1c), FieldTrait( 735, 1,122,111,0x1c),
-   FieldTrait( 761,15,134,160,0x14), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 788, 1, 93, 44,0x14),
-   FieldTrait( 854, 1,106,  0,0x04), FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 873,25, 41, 54,0x14),
-   FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14),
-   FieldTrait( 898,14, 97, 44,0x14), FieldTrait( 913,15, 89, 44,0x14), FieldTrait( 914,15, 90, 44,0x14),
-   FieldTrait( 915,25, 91, 44,0x14), FieldTrait( 916,25, 94, 44,0x14), FieldTrait( 917,25, 95, 44,0x14),
-   FieldTrait( 918,19, 92, 44,0x14), FieldTrait( 919, 1, 96, 44,0x14), FieldTrait( 947,19, 25, 54,0x14),
-   FieldTrait( 965,15, 43, 54,0x14), FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14),
-   FieldTrait( 968, 9, 47, 54,0x14), FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14),
-   FieldTrait( 971, 1, 50, 54,0x14), FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14),
-   FieldTrait(1018, 1, 51, 57,0x1c), FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14),
-   FieldTrait(1146,13, 56, 54,0x14), FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14),
-   FieldTrait(1184, 2, 58,150,0x14), FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14),
-   FieldTrait(1191,15, 62, 54,0x14), FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14),
-   FieldTrait(1194, 1, 65, 54,0x14), FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14),
-   FieldTrait(1197,15, 74, 54,0x14), FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14),
-   FieldTrait(1200,11, 70, 54,0x14), FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14),
-   FieldTrait(1244, 8, 72, 54,0x14), FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14),
-   FieldTrait(1449,15, 77, 54,0x14), FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14),
-   FieldTrait(1452,14, 80, 54,0x14), FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14),
-   FieldTrait(1478, 1, 83, 54,0x14), FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14),
-   FieldTrait(1481, 1, 86, 54,0x14), FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c)
+   {   1,15,118,  0,0x04}, {  15,19,116,  0,0x04}, {  22,15,  4, 54,0x14}, {  38,10,107, 93,0x14},
+   {  40, 7,124,  0,0x04}, {  44,11,136,  0,0x04}, {  48,15,  3, 54,0x14}, {  54, 7,105,  0,0x04},
+   {  55,15,  1, 54,0x14}, {  60,22,126,  0,0x04}, {  63,15,112,  0,0x04}, {  64,25,113,  0,0x04},
+   {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14}, { 126,22,125,  0,0x04},
+   { 140,11, 99,  0,0x04}, { 152,10,108, 93,0x14}, { 167,15,  8, 54,0x14}, { 192,10,115,  0,0x04},
+   { 193,25,114,  0,0x04}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14},
+   { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 218,12,127,160,0x14}, { 220,19,128,160,0x14},
+   { 221,15,129,160,0x14}, { 222,15,130,160,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14},
+   { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14},
+   { 229,25,104,  0,0x04}, { 231, 9, 27, 54,0x14}, { 232, 1,117,162,0x1c}, { 235,15,138,198,0x14},
+   { 236,14,139,198,0x14}, { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14},
+   { 303, 1,100,  0,0x04}, { 336,15,102,  0,0x04}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14},
+   { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14}, { 423, 1,135,  0,0x04}, { 453, 1,144, 94,0x1c},
+   { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14}, { 461,15,  7, 54,0x14}, { 468, 7,110, 93,0x14},
+   { 469, 9,111, 93,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 516,14,109, 93,0x14}, { 537, 1,101,  0,0x04}, { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14},
+   { 555, 1,121,113,0x1c}, { 581, 1,120,  0,0x04}, { 625,15,103,  0,0x04}, { 640,11,137,  0,0x04},
+   { 660, 1,119,  0,0x04}, { 662,11,131,160,0x14}, { 663, 1,132,160,0x14}, { 667,21, 37, 54,0x14},
+   { 691,15, 36, 54,0x14}, { 692, 1,123,  0,0x04}, { 696,25,141,198,0x14}, { 697,11,142,198,0x14},
+   { 698, 1,143,198,0x14}, { 699,15,133,160,0x14}, { 701,25,140,198,0x14}, { 711, 1, 98,188,0x1c},
+   { 735, 1,122,111,0x1c}, { 761,15,134,160,0x14}, { 762,15,  9, 54,0x14}, { 788, 1, 93, 44,0x14},
+   { 854, 1,106,  0,0x04}, { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14},
+   { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14}, { 898,14, 97, 44,0x14}, { 913,15, 89, 44,0x14},
+   { 914,15, 90, 44,0x14}, { 915,25, 91, 44,0x14}, { 916,25, 94, 44,0x14}, { 917,25, 95, 44,0x14},
+   { 918,19, 92, 44,0x14}, { 919, 1, 96, 44,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14},
+   { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14},
+   { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14},
+   {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14},
+   {1147,10, 57, 54,0x14}, {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14},
+   {1186,15, 60,150,0x14}, {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14},
+   {1194, 1, 65, 54,0x14}, {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14},
+   {1198, 1, 68, 54,0x14}, {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14},
+   {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14},
+   {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14},
+   {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14},
+   {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    QuoteRequestReject::NoRelatedSym::_ftha(QuoteRequestReject::NoRelatedSym::_traits, 144);
@@ -2896,48 +2625,40 @@ const FieldTrait *QuoteRequestReject::NoRootPartyIDs::NoRootPartySubIDs::_traits
 const FieldTrait_Hash_Array& QuoteRequestReject::NoRootPartyIDs::NoRootPartySubIDs::_ftha(NoRootPartySubIDsV1_ftha);
 const MsgType& QuoteRequestReject::NoRootPartyIDs::NoRootPartySubIDs::_msgtype(NoRootPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RFQRequest::_traits[] =
+const FieldTrait RFQRequest::_traits[]
 {
-   FieldTrait( 146, 1,  2,117,0x1c), FieldTrait( 263, 7,  3,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c),
-   FieldTrait( 644,15,  1,  0,0x04), FieldTrait(1171, 8,  4,  0,0x04)
+   { 146, 1,  2,117,0x1c}, { 263, 7,  3,  0,0x04}, { 453, 1,  5, 94,0x1c}, { 644,15,  1,  0,0x04},
+   {1171, 8,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array RFQRequest::_ftha(RFQRequest::_traits, 5);
 const MsgType RFQRequest::_msgtype("AH");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RFQRequest::NoRelatedSym::_traits[] =
+const FieldTrait RFQRequest::NoRelatedSym::_traits[]
 {
-   FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14),
-   FieldTrait( 140,11, 91,  0,0x04), FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 200,21, 10, 54,0x14),
-   FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14), FieldTrait( 206, 7, 26, 54,0x14),
-   FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14),
-   FieldTrait( 225,25, 13, 54,0x14), FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14),
-   FieldTrait( 228, 9, 17, 54,0x14), FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 239, 1, 14, 54,0x14),
-   FieldTrait( 240,25, 23, 54,0x14), FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 303, 1, 92,  0,0x04),
-   FieldTrait( 336,15, 94,  0,0x04), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 454, 1,  5,142,0x1c),
-   FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14),
-   FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 537, 1, 93,  0,0x04),
-   FieldTrait( 541,25, 11, 54,0x14), FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 555, 1, 90, 49,0x1c),
-   FieldTrait( 625,15, 95,  0,0x04), FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 691,15, 36, 54,0x14),
-   FieldTrait( 711, 1, 89,188,0x1c), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 864, 1, 40, 38,0x1c),
-   FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14),
-   FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14),
-   FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14),
-   FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14),
-   FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c),
-   FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1146,13, 56, 54,0x14),
-   FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14),
-   FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14),
-   FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14),
-   FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14),
-   FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14),
-   FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14),
-   FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14),
-   FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14),
-   FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14),
-   FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14),
-   FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c)
+   {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14}, {  65,15,  2, 54,0x14},
+   { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14}, { 140,11, 91,  0,0x04}, { 167,15,  8, 54,0x14},
+   { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14}, { 206, 7, 26, 54,0x14},
+   { 207,20, 29, 54,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14}, { 225,25, 13, 54,0x14},
+   { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14}, { 231, 9, 27, 54,0x14},
+   { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 303, 1, 92,  0,0x04},
+   { 336,15, 94,  0,0x04}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14},
+   { 351,28, 35, 54,0x14}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14}, { 461,15,  7, 54,0x14},
+   { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14}, { 537, 1, 93,  0,0x04},
+   { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1, 90, 49,0x1c}, { 625,15, 95,  0,0x04},
+   { 667,21, 37, 54,0x14}, { 691,15, 36, 54,0x14}, { 711, 1, 89,188,0x1c}, { 762,15,  9, 54,0x14},
+   { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14},
+   { 876,15, 39, 54,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14},
+   { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14},
+   { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c},
+   {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14},
+   {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14},
+   {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14},
+   {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14},
+   {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14}, {1242, 8, 73, 54,0x14},
+   {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14},
+   {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14},
+   {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14},
+   {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    RFQRequest::NoRelatedSym::_ftha(RFQRequest::NoRelatedSym::_traits, 95);
@@ -3007,69 +2728,54 @@ const FieldTrait *RFQRequest::NoPartyIDs::NoPartySubIDs::_traits(NoPartySubIDsV1
 const FieldTrait_Hash_Array& RFQRequest::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& RFQRequest::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteStatusReport::_traits[] =
+const FieldTrait QuoteStatusReport::_traits[]
 {
-   FieldTrait(   1,15,119,  0,0x04), FieldTrait(  12,13,166,  0,0x04), FieldTrait(  13, 7,165,  0,0x04),
-   FieldTrait(  15,19,117,  0,0x04), FieldTrait(  22,15, 12, 54,0x14), FieldTrait(  38,10,108, 93,0x14),
-   FieldTrait(  40, 7,159,  0,0x04), FieldTrait(  44,11,125,  0,0x04), FieldTrait(  48,15, 11, 54,0x14),
-   FieldTrait(  54, 7,107,  0,0x04), FieldTrait(  55,15,  9, 54,0x14), FieldTrait(  58,15,170,  0,0x04),
-   FieldTrait(  60,22,158,  0,0x04), FieldTrait(  62,22,149,  0,0x04), FieldTrait(  63,15,113,  0,0x04),
-   FieldTrait(  64,25,114,  0,0x04), FieldTrait(  65,15, 10, 54,0x14), FieldTrait( 100,20,168,  0,0x04),
-   FieldTrait( 106,15, 38, 54,0x14), FieldTrait( 107,15, 41, 54,0x14), FieldTrait( 110,10,177,  0,0x04),
-   FieldTrait( 117,15,  3,  0,0x04), FieldTrait( 126,22,124,  0,0x04), FieldTrait( 131,15,  2,  0,0x04),
-   FieldTrait( 132,11,141,  0,0x04), FieldTrait( 133,11,142,  0,0x04), FieldTrait( 134,10,146,  0,0x04),
-   FieldTrait( 135,10,148,  0,0x04), FieldTrait( 152,10,109, 93,0x14), FieldTrait( 156, 7,164,  0,0x04),
-   FieldTrait( 167,15, 16, 54,0x14), FieldTrait( 188,11,150,  0,0x04), FieldTrait( 189,12,152,  0,0x04),
-   FieldTrait( 190,11,151,  0,0x04), FieldTrait( 191,12,153,  0,0x04), FieldTrait( 192,10,116,  0,0x04),
-   FieldTrait( 193,25,115,  0,0x04), FieldTrait( 200,21, 18, 54,0x14), FieldTrait( 201, 1, 79, 54,0x14),
-   FieldTrait( 202,11, 32, 54,0x14), FieldTrait( 206, 7, 34, 54,0x14), FieldTrait( 207,20, 37, 54,0x14),
-   FieldTrait( 218,12,127,160,0x14), FieldTrait( 220,19,128,160,0x14), FieldTrait( 221,15,129,160,0x14),
-   FieldTrait( 222,15,130,160,0x14), FieldTrait( 223,14, 36, 54,0x14), FieldTrait( 224,25, 20, 54,0x14),
-   FieldTrait( 225,25, 21, 54,0x14), FieldTrait( 226, 1, 23, 54,0x14), FieldTrait( 227,14, 24, 54,0x14),
-   FieldTrait( 228, 9, 25, 54,0x14), FieldTrait( 231, 9, 35, 54,0x14), FieldTrait( 232, 1,118,162,0x1c),
-   FieldTrait( 235,15,135,198,0x14), FieldTrait( 236,14,136,198,0x14), FieldTrait( 239, 1, 22, 54,0x14),
-   FieldTrait( 240,25, 31, 54,0x14), FieldTrait( 255,15, 26, 54,0x14), FieldTrait( 297, 1,169,  0,0x04),
-   FieldTrait( 298, 1,174,  0,0x04), FieldTrait( 300, 1,176,  0,0x04), FieldTrait( 336,15,  7,  0,0x04),
-   FieldTrait( 348, 2, 39, 54,0x14), FieldTrait( 349,28, 40, 54,0x14), FieldTrait( 350, 2, 42, 54,0x14),
-   FieldTrait( 351,28, 43, 54,0x14), FieldTrait( 354, 2,171,  0,0x04), FieldTrait( 355,28,172,  0,0x04),
-   FieldTrait( 423, 1,126,  0,0x04), FieldTrait( 453, 1,  6, 94,0x1c), FieldTrait( 454, 1, 13,142,0x1c),
-   FieldTrait( 460, 1, 14, 54,0x14), FieldTrait( 461,15, 15, 54,0x14), FieldTrait( 468, 7,111, 93,0x14),
-   FieldTrait( 469, 9,112, 93,0x14), FieldTrait( 470,18, 28, 54,0x14), FieldTrait( 471,15, 29, 54,0x14),
-   FieldTrait( 472,15, 30, 54,0x14), FieldTrait( 516,14,110, 93,0x14), FieldTrait( 528, 7,179,  0,0x04),
-   FieldTrait( 529,16,180,  0,0x04), FieldTrait( 537, 1,  5,  0,0x04), FieldTrait( 541,25, 19, 54,0x14),
-   FieldTrait( 543,15, 27, 54,0x14), FieldTrait( 555, 1,122, 63,0x1c), FieldTrait( 581, 1,121,  0,0x04),
-   FieldTrait( 582, 1,167,  0,0x04), FieldTrait( 625,15,  8,  0,0x04), FieldTrait( 631,11,154,  0,0x04),
-   FieldTrait( 632,14,155,  0,0x04), FieldTrait( 633,14,156,  0,0x04), FieldTrait( 634,14,157,  0,0x04),
-   FieldTrait( 642,12,160,  0,0x04), FieldTrait( 643,12,161,  0,0x04), FieldTrait( 645,11,143,  0,0x04),
-   FieldTrait( 646,11,144,  0,0x04), FieldTrait( 647,10,145,  0,0x04), FieldTrait( 648,10,147,  0,0x04),
-   FieldTrait( 649,15,  1,  0,0x04), FieldTrait( 656, 9,162,  0,0x04), FieldTrait( 657, 9,163,  0,0x04),
-   FieldTrait( 660, 1,120,  0,0x04), FieldTrait( 662,11,131,160,0x14), FieldTrait( 663, 1,132,160,0x14),
-   FieldTrait( 667,21, 45, 54,0x14), FieldTrait( 691,15, 44, 54,0x14), FieldTrait( 693,15,  4,  0,0x04),
-   FieldTrait( 696,25,138,198,0x14), FieldTrait( 697,11,139,198,0x14), FieldTrait( 698, 1,140,198,0x14),
-   FieldTrait( 699,15,133,160,0x14), FieldTrait( 701,25,137,198,0x14), FieldTrait( 711, 1,106,188,0x1c),
-   FieldTrait( 735, 1,123,111,0x1c), FieldTrait( 761,15,134,160,0x14), FieldTrait( 762,15, 17, 54,0x14),
-   FieldTrait( 775, 1,178,  0,0x04), FieldTrait( 788, 1,101, 44,0x14), FieldTrait( 864, 1, 48, 38,0x1c),
-   FieldTrait( 873,25, 49, 54,0x14), FieldTrait( 874,25, 50, 54,0x14), FieldTrait( 875, 1, 46, 54,0x14),
-   FieldTrait( 876,15, 47, 54,0x14), FieldTrait( 898,14,105, 44,0x14), FieldTrait( 913,15, 97, 44,0x14),
-   FieldTrait( 914,15, 98, 44,0x14), FieldTrait( 915,25, 99, 44,0x14), FieldTrait( 916,25,102, 44,0x14),
-   FieldTrait( 917,25,103, 44,0x14), FieldTrait( 918,19,100, 44,0x14), FieldTrait( 919, 1,104, 44,0x14),
-   FieldTrait( 947,19, 33, 54,0x14), FieldTrait( 965,15, 51, 54,0x14), FieldTrait( 966,15, 52, 54,0x14),
-   FieldTrait( 967, 9, 54, 54,0x14), FieldTrait( 968, 9, 55, 54,0x14), FieldTrait( 969, 9, 56, 54,0x14),
-   FieldTrait( 970, 1, 57, 54,0x14), FieldTrait( 971, 1, 58, 54,0x14), FieldTrait( 996,15, 60, 54,0x14),
-   FieldTrait( 997,15, 61, 54,0x14), FieldTrait(1018, 1, 59, 57,0x1c), FieldTrait(1049, 7, 53, 54,0x14),
-   FieldTrait(1079,26, 62, 54,0x14), FieldTrait(1133, 7,173,  0,0x04), FieldTrait(1146,13, 64, 54,0x14),
-   FieldTrait(1147,10, 65, 54,0x14), FieldTrait(1151,15, 63, 54,0x14), FieldTrait(1166,15,175,  0,0x04),
-   FieldTrait(1184, 2, 66,150,0x14), FieldTrait(1185,29, 67,150,0x14), FieldTrait(1186,15, 68,150,0x14),
-   FieldTrait(1191,15, 70, 54,0x14), FieldTrait(1192,10, 71, 54,0x14), FieldTrait(1193, 7, 72, 54,0x14),
-   FieldTrait(1194, 1, 73, 54,0x14), FieldTrait(1195,13, 74, 54,0x14), FieldTrait(1196,15, 75, 54,0x14),
-   FieldTrait(1197,15, 82, 54,0x14), FieldTrait(1198, 1, 76, 54,0x14), FieldTrait(1199,11, 77, 54,0x14),
-   FieldTrait(1200,11, 78, 54,0x14), FieldTrait(1227,15, 69, 54,0x14), FieldTrait(1242, 8, 81, 54,0x14),
-   FieldTrait(1244, 8, 80, 54,0x14), FieldTrait(1435, 1, 83, 54,0x14), FieldTrait(1439, 1, 84, 54,0x14),
-   FieldTrait(1449,15, 85, 54,0x14), FieldTrait(1450,15, 86, 54,0x14), FieldTrait(1451,14, 87, 54,0x14),
-   FieldTrait(1452,14, 88, 54,0x14), FieldTrait(1457,14, 89, 54,0x14), FieldTrait(1458,14, 90, 54,0x14),
-   FieldTrait(1461, 1,181,169,0x1c), FieldTrait(1478, 1, 91, 54,0x14), FieldTrait(1479, 1, 92, 54,0x14),
-   FieldTrait(1480,14, 93, 54,0x14), FieldTrait(1481, 1, 94, 54,0x14), FieldTrait(1482, 1, 95, 54,0x14),
-   FieldTrait(1483, 1, 96, 21,0x1c)
+   {   1,15,119,  0,0x04}, {  12,13,166,  0,0x04}, {  13, 7,165,  0,0x04}, {  15,19,117,  0,0x04},
+   {  22,15, 12, 54,0x14}, {  38,10,108, 93,0x14}, {  40, 7,159,  0,0x04}, {  44,11,125,  0,0x04},
+   {  48,15, 11, 54,0x14}, {  54, 7,107,  0,0x04}, {  55,15,  9, 54,0x14}, {  58,15,170,  0,0x04},
+   {  60,22,158,  0,0x04}, {  62,22,149,  0,0x04}, {  63,15,113,  0,0x04}, {  64,25,114,  0,0x04},
+   {  65,15, 10, 54,0x14}, { 100,20,168,  0,0x04}, { 106,15, 38, 54,0x14}, { 107,15, 41, 54,0x14},
+   { 110,10,177,  0,0x04}, { 117,15,  3,  0,0x04}, { 126,22,124,  0,0x04}, { 131,15,  2,  0,0x04},
+   { 132,11,141,  0,0x04}, { 133,11,142,  0,0x04}, { 134,10,146,  0,0x04}, { 135,10,148,  0,0x04},
+   { 152,10,109, 93,0x14}, { 156, 7,164,  0,0x04}, { 167,15, 16, 54,0x14}, { 188,11,150,  0,0x04},
+   { 189,12,152,  0,0x04}, { 190,11,151,  0,0x04}, { 191,12,153,  0,0x04}, { 192,10,116,  0,0x04},
+   { 193,25,115,  0,0x04}, { 200,21, 18, 54,0x14}, { 201, 1, 79, 54,0x14}, { 202,11, 32, 54,0x14},
+   { 206, 7, 34, 54,0x14}, { 207,20, 37, 54,0x14}, { 218,12,127,160,0x14}, { 220,19,128,160,0x14},
+   { 221,15,129,160,0x14}, { 222,15,130,160,0x14}, { 223,14, 36, 54,0x14}, { 224,25, 20, 54,0x14},
+   { 225,25, 21, 54,0x14}, { 226, 1, 23, 54,0x14}, { 227,14, 24, 54,0x14}, { 228, 9, 25, 54,0x14},
+   { 231, 9, 35, 54,0x14}, { 232, 1,118,162,0x1c}, { 235,15,135,198,0x14}, { 236,14,136,198,0x14},
+   { 239, 1, 22, 54,0x14}, { 240,25, 31, 54,0x14}, { 255,15, 26, 54,0x14}, { 297, 1,169,  0,0x04},
+   { 298, 1,174,  0,0x04}, { 300, 1,176,  0,0x04}, { 336,15,  7,  0,0x04}, { 348, 2, 39, 54,0x14},
+   { 349,28, 40, 54,0x14}, { 350, 2, 42, 54,0x14}, { 351,28, 43, 54,0x14}, { 354, 2,171,  0,0x04},
+   { 355,28,172,  0,0x04}, { 423, 1,126,  0,0x04}, { 453, 1,  6, 94,0x1c}, { 454, 1, 13,142,0x1c},
+   { 460, 1, 14, 54,0x14}, { 461,15, 15, 54,0x14}, { 468, 7,111, 93,0x14}, { 469, 9,112, 93,0x14},
+   { 470,18, 28, 54,0x14}, { 471,15, 29, 54,0x14}, { 472,15, 30, 54,0x14}, { 516,14,110, 93,0x14},
+   { 528, 7,179,  0,0x04}, { 529,16,180,  0,0x04}, { 537, 1,  5,  0,0x04}, { 541,25, 19, 54,0x14},
+   { 543,15, 27, 54,0x14}, { 555, 1,122, 63,0x1c}, { 581, 1,121,  0,0x04}, { 582, 1,167,  0,0x04},
+   { 625,15,  8,  0,0x04}, { 631,11,154,  0,0x04}, { 632,14,155,  0,0x04}, { 633,14,156,  0,0x04},
+   { 634,14,157,  0,0x04}, { 642,12,160,  0,0x04}, { 643,12,161,  0,0x04}, { 645,11,143,  0,0x04},
+   { 646,11,144,  0,0x04}, { 647,10,145,  0,0x04}, { 648,10,147,  0,0x04}, { 649,15,  1,  0,0x04},
+   { 656, 9,162,  0,0x04}, { 657, 9,163,  0,0x04}, { 660, 1,120,  0,0x04}, { 662,11,131,160,0x14},
+   { 663, 1,132,160,0x14}, { 667,21, 45, 54,0x14}, { 691,15, 44, 54,0x14}, { 693,15,  4,  0,0x04},
+   { 696,25,138,198,0x14}, { 697,11,139,198,0x14}, { 698, 1,140,198,0x14}, { 699,15,133,160,0x14},
+   { 701,25,137,198,0x14}, { 711, 1,106,188,0x1c}, { 735, 1,123,111,0x1c}, { 761,15,134,160,0x14},
+   { 762,15, 17, 54,0x14}, { 775, 1,178,  0,0x04}, { 788, 1,101, 44,0x14}, { 864, 1, 48, 38,0x1c},
+   { 873,25, 49, 54,0x14}, { 874,25, 50, 54,0x14}, { 875, 1, 46, 54,0x14}, { 876,15, 47, 54,0x14},
+   { 898,14,105, 44,0x14}, { 913,15, 97, 44,0x14}, { 914,15, 98, 44,0x14}, { 915,25, 99, 44,0x14},
+   { 916,25,102, 44,0x14}, { 917,25,103, 44,0x14}, { 918,19,100, 44,0x14}, { 919, 1,104, 44,0x14},
+   { 947,19, 33, 54,0x14}, { 965,15, 51, 54,0x14}, { 966,15, 52, 54,0x14}, { 967, 9, 54, 54,0x14},
+   { 968, 9, 55, 54,0x14}, { 969, 9, 56, 54,0x14}, { 970, 1, 57, 54,0x14}, { 971, 1, 58, 54,0x14},
+   { 996,15, 60, 54,0x14}, { 997,15, 61, 54,0x14}, {1018, 1, 59, 57,0x1c}, {1049, 7, 53, 54,0x14},
+   {1079,26, 62, 54,0x14}, {1133, 7,173,  0,0x04}, {1146,13, 64, 54,0x14}, {1147,10, 65, 54,0x14},
+   {1151,15, 63, 54,0x14}, {1166,15,175,  0,0x04}, {1184, 2, 66,150,0x14}, {1185,29, 67,150,0x14},
+   {1186,15, 68,150,0x14}, {1191,15, 70, 54,0x14}, {1192,10, 71, 54,0x14}, {1193, 7, 72, 54,0x14},
+   {1194, 1, 73, 54,0x14}, {1195,13, 74, 54,0x14}, {1196,15, 75, 54,0x14}, {1197,15, 82, 54,0x14},
+   {1198, 1, 76, 54,0x14}, {1199,11, 77, 54,0x14}, {1200,11, 78, 54,0x14}, {1227,15, 69, 54,0x14},
+   {1242, 8, 81, 54,0x14}, {1244, 8, 80, 54,0x14}, {1435, 1, 83, 54,0x14}, {1439, 1, 84, 54,0x14},
+   {1449,15, 85, 54,0x14}, {1450,15, 86, 54,0x14}, {1451,14, 87, 54,0x14}, {1452,14, 88, 54,0x14},
+   {1457,14, 89, 54,0x14}, {1458,14, 90, 54,0x14}, {1461, 1,181,169,0x1c}, {1478, 1, 91, 54,0x14},
+   {1479, 1, 92, 54,0x14}, {1480,14, 93, 54,0x14}, {1481, 1, 94, 54,0x14}, {1482, 1, 95, 54,0x14},
+   {1483, 1, 96, 21,0x1c}
 };
 const FieldTrait_Hash_Array QuoteStatusReport::_ftha(QuoteStatusReport::_traits, 181);
 const MsgType QuoteStatusReport::_msgtype("AI");
@@ -3090,29 +2796,24 @@ const FieldTrait *QuoteStatusReport::NoSecurityAltID::_traits(NoSecurityAltIDV1_
 const FieldTrait_Hash_Array& QuoteStatusReport::NoSecurityAltID::_ftha(NoSecurityAltIDV1_ftha);
 const MsgType& QuoteStatusReport::NoSecurityAltID::_msgtype(NoSecurityAltIDV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteStatusReport::NoLegs::_traits[] =
+const FieldTrait QuoteStatusReport::NoLegs::_traits[]
 {
-   FieldTrait( 248,25, 12, 56,0x14), FieldTrait( 249,25, 13, 56,0x14), FieldTrait( 250, 1, 14, 56,0x14),
-   FieldTrait( 251, 1, 15, 56,0x14), FieldTrait( 252,14, 16, 56,0x14), FieldTrait( 253, 9, 17, 56,0x14),
-   FieldTrait( 254,25, 23, 56,0x14), FieldTrait( 257,15, 18, 56,0x14), FieldTrait( 539, 1, 60, 80,0x1c),
-   FieldTrait( 556,19, 38, 56,0x14), FieldTrait( 566,11, 46, 56,0x14), FieldTrait( 587, 7, 57,  0,0x04),
-   FieldTrait( 588,25, 58,  0,0x04), FieldTrait( 596,18, 20, 56,0x14), FieldTrait( 597,15, 21, 56,0x14),
-   FieldTrait( 598,15, 22, 56,0x14), FieldTrait( 599,15, 19, 56,0x14), FieldTrait( 600,15,  1, 56,0x14),
-   FieldTrait( 601,15,  2, 56,0x14), FieldTrait( 602,15,  3, 56,0x14), FieldTrait( 603,15,  4, 56,0x14),
-   FieldTrait( 604, 1,  5, 64,0x1c), FieldTrait( 607, 1,  6, 56,0x14), FieldTrait( 608,15,  7, 56,0x14),
-   FieldTrait( 609,15,  8, 56,0x14), FieldTrait( 610,21, 10, 56,0x14), FieldTrait( 611,25, 11, 56,0x14),
-   FieldTrait( 612,11, 24, 56,0x14), FieldTrait( 613, 7, 26, 56,0x14), FieldTrait( 614, 9, 27, 56,0x14),
-   FieldTrait( 615,14, 28, 56,0x14), FieldTrait( 616,20, 29, 56,0x14), FieldTrait( 617,15, 30, 56,0x14),
-   FieldTrait( 618, 2, 31, 56,0x14), FieldTrait( 619,28, 32, 56,0x14), FieldTrait( 620,15, 33, 56,0x14),
-   FieldTrait( 621, 2, 34, 56,0x14), FieldTrait( 622,28, 35, 56,0x14), FieldTrait( 623, 9, 36, 56,0x14),
-   FieldTrait( 624, 7, 37, 56,0x14), FieldTrait( 683, 1, 59, 65,0x1c), FieldTrait( 685,10, 61,  0,0x04),
-   FieldTrait( 687,10, 55,  0,0x04), FieldTrait( 690, 1, 56,  0,0x04), FieldTrait( 739,25, 40, 56,0x14),
-   FieldTrait( 740,15, 39, 56,0x14), FieldTrait( 764,15,  9, 56,0x14), FieldTrait( 942,19, 25, 56,0x14),
-   FieldTrait( 955,21, 41, 56,0x14), FieldTrait( 956,25, 42, 56,0x14), FieldTrait( 999,15, 43, 56,0x14),
-   FieldTrait(1001,15, 44, 56,0x14), FieldTrait(1017, 9, 45, 56,0x14), FieldTrait(1212,26, 47, 56,0x14),
-   FieldTrait(1224,10, 50, 56,0x14), FieldTrait(1358, 1, 48, 56,0x14), FieldTrait(1420, 1, 49, 56,0x14),
-   FieldTrait(1421,15, 51, 56,0x14), FieldTrait(1422,10, 52, 56,0x14), FieldTrait(1436, 1, 53, 56,0x14),
-   FieldTrait(1440, 1, 54, 56,0x14)
+   { 248,25, 12, 56,0x14}, { 249,25, 13, 56,0x14}, { 250, 1, 14, 56,0x14}, { 251, 1, 15, 56,0x14},
+   { 252,14, 16, 56,0x14}, { 253, 9, 17, 56,0x14}, { 254,25, 23, 56,0x14}, { 257,15, 18, 56,0x14},
+   { 539, 1, 60, 80,0x1c}, { 556,19, 38, 56,0x14}, { 566,11, 46, 56,0x14}, { 587, 7, 57,  0,0x04},
+   { 588,25, 58,  0,0x04}, { 596,18, 20, 56,0x14}, { 597,15, 21, 56,0x14}, { 598,15, 22, 56,0x14},
+   { 599,15, 19, 56,0x14}, { 600,15,  1, 56,0x14}, { 601,15,  2, 56,0x14}, { 602,15,  3, 56,0x14},
+   { 603,15,  4, 56,0x14}, { 604, 1,  5, 64,0x1c}, { 607, 1,  6, 56,0x14}, { 608,15,  7, 56,0x14},
+   { 609,15,  8, 56,0x14}, { 610,21, 10, 56,0x14}, { 611,25, 11, 56,0x14}, { 612,11, 24, 56,0x14},
+   { 613, 7, 26, 56,0x14}, { 614, 9, 27, 56,0x14}, { 615,14, 28, 56,0x14}, { 616,20, 29, 56,0x14},
+   { 617,15, 30, 56,0x14}, { 618, 2, 31, 56,0x14}, { 619,28, 32, 56,0x14}, { 620,15, 33, 56,0x14},
+   { 621, 2, 34, 56,0x14}, { 622,28, 35, 56,0x14}, { 623, 9, 36, 56,0x14}, { 624, 7, 37, 56,0x14},
+   { 683, 1, 59, 65,0x1c}, { 685,10, 61,  0,0x04}, { 687,10, 55,  0,0x04}, { 690, 1, 56,  0,0x04},
+   { 739,25, 40, 56,0x14}, { 740,15, 39, 56,0x14}, { 764,15,  9, 56,0x14}, { 942,19, 25, 56,0x14},
+   { 955,21, 41, 56,0x14}, { 956,25, 42, 56,0x14}, { 999,15, 43, 56,0x14}, {1001,15, 44, 56,0x14},
+   {1017, 9, 45, 56,0x14}, {1212,26, 47, 56,0x14}, {1224,10, 50, 56,0x14}, {1358, 1, 48, 56,0x14},
+   {1420, 1, 49, 56,0x14}, {1421,15, 51, 56,0x14}, {1422,10, 52, 56,0x14}, {1436, 1, 53, 56,0x14},
+   {1440, 1, 54, 56,0x14}
 };
 const FieldTrait_Hash_Array 
    QuoteStatusReport::NoLegs::_ftha(QuoteStatusReport::NoLegs::_traits, 61);
@@ -3186,67 +2887,53 @@ const FieldTrait *QuoteStatusReport::NoComplexEvents::NoComplexEventDates::NoCom
 const FieldTrait_Hash_Array& QuoteStatusReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& QuoteStatusReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteResponse::_traits[] =
+const FieldTrait QuoteResponse::_traits[]
 {
-   FieldTrait(   1,15,122,  0,0x04), FieldTrait(  11,15,  4,  0,0x04), FieldTrait(  12,13,150,  0,0x04),
-   FieldTrait(  13, 7,151,  0,0x04), FieldTrait(  15,19,120,  0,0x04), FieldTrait(  22,15, 15, 54,0x14),
-   FieldTrait(  23,15,  6,  0,0x04), FieldTrait(  38,10,111, 93,0x14), FieldTrait(  40, 7,144,  0,0x04),
-   FieldTrait(  44,11,157,  0,0x04), FieldTrait(  48,15, 14, 54,0x14), FieldTrait(  54, 7,110,  0,0x04),
-   FieldTrait(  55,15, 12, 54,0x14), FieldTrait(  58,15,154,  0,0x04), FieldTrait(  60,22,143,  0,0x04),
-   FieldTrait(  62,22,134,  0,0x04), FieldTrait(  63,15,116,  0,0x04), FieldTrait(  64,25,117,  0,0x04),
-   FieldTrait(  65,15, 13, 54,0x14), FieldTrait( 100,20,153,  0,0x04), FieldTrait( 106,15, 41, 54,0x14),
-   FieldTrait( 107,15, 44, 54,0x14), FieldTrait( 110,10,176,  0,0x04), FieldTrait( 117,15,  2,  0,0x04),
-   FieldTrait( 132,11,126,  0,0x04), FieldTrait( 133,11,127,  0,0x04), FieldTrait( 134,10,131,  0,0x04),
-   FieldTrait( 135,10,133,  0,0x04), FieldTrait( 152,10,112, 93,0x14), FieldTrait( 156, 7,149,  0,0x04),
-   FieldTrait( 167,15, 19, 54,0x14), FieldTrait( 188,11,135,  0,0x04), FieldTrait( 189,12,137,  0,0x04),
-   FieldTrait( 190,11,136,  0,0x04), FieldTrait( 191,12,138,  0,0x04), FieldTrait( 192,10,119,  0,0x04),
-   FieldTrait( 193,25,118,  0,0x04), FieldTrait( 200,21, 21, 54,0x14), FieldTrait( 201, 1, 82, 54,0x14),
-   FieldTrait( 202,11, 35, 54,0x14), FieldTrait( 206, 7, 37, 54,0x14), FieldTrait( 207,20, 40, 54,0x14),
-   FieldTrait( 218,12,159,160,0x14), FieldTrait( 220,19,160,160,0x14), FieldTrait( 221,15,161,160,0x14),
-   FieldTrait( 222,15,162,160,0x14), FieldTrait( 223,14, 39, 54,0x14), FieldTrait( 224,25, 23, 54,0x14),
-   FieldTrait( 225,25, 24, 54,0x14), FieldTrait( 226, 1, 26, 54,0x14), FieldTrait( 227,14, 27, 54,0x14),
-   FieldTrait( 228, 9, 28, 54,0x14), FieldTrait( 231, 9, 38, 54,0x14), FieldTrait( 232, 1,121,162,0x1c),
-   FieldTrait( 235,15,167,198,0x14), FieldTrait( 236,14,168,198,0x14), FieldTrait( 239, 1, 25, 54,0x14),
-   FieldTrait( 240,25, 34, 54,0x14), FieldTrait( 255,15, 29, 54,0x14), FieldTrait( 336,15, 10,  0,0x04),
-   FieldTrait( 348, 2, 42, 54,0x14), FieldTrait( 349,28, 43, 54,0x14), FieldTrait( 350, 2, 45, 54,0x14),
-   FieldTrait( 351,28, 46, 54,0x14), FieldTrait( 354, 2,155,  0,0x04), FieldTrait( 355,28,156,  0,0x04),
-   FieldTrait( 423, 1,158,  0,0x04), FieldTrait( 453, 1,  9, 94,0x1c), FieldTrait( 454, 1, 16,142,0x1c),
-   FieldTrait( 460, 1, 17, 54,0x14), FieldTrait( 461,15, 18, 54,0x14), FieldTrait( 468, 7,114, 93,0x14),
-   FieldTrait( 469, 9,115, 93,0x14), FieldTrait( 470,18, 31, 54,0x14), FieldTrait( 471,15, 32, 54,0x14),
-   FieldTrait( 472,15, 33, 54,0x14), FieldTrait( 516,14,113, 93,0x14), FieldTrait( 528, 7,  5,  0,0x04),
-   FieldTrait( 529,16,177,  0,0x04), FieldTrait( 537, 1,  7,  0,0x04), FieldTrait( 541,25, 22, 54,0x14),
-   FieldTrait( 543,15, 30, 54,0x14), FieldTrait( 555, 1,125, 62,0x1c), FieldTrait( 581, 1,124,  0,0x04),
-   FieldTrait( 582, 1,152,  0,0x04), FieldTrait( 625,15, 11,  0,0x04), FieldTrait( 631,11,139,  0,0x04),
-   FieldTrait( 632,14,140,  0,0x04), FieldTrait( 633,14,141,  0,0x04), FieldTrait( 634,14,142,  0,0x04),
-   FieldTrait( 642,12,145,  0,0x04), FieldTrait( 643,12,146,  0,0x04), FieldTrait( 645,11,128,  0,0x04),
-   FieldTrait( 646,11,129,  0,0x04), FieldTrait( 647,10,130,  0,0x04), FieldTrait( 648,10,132,  0,0x04),
-   FieldTrait( 656, 9,147,  0,0x04), FieldTrait( 657, 9,148,  0,0x04), FieldTrait( 660, 1,123,  0,0x04),
-   FieldTrait( 662,11,163,160,0x14), FieldTrait( 663, 1,164,160,0x14), FieldTrait( 667,21, 48, 54,0x14),
-   FieldTrait( 691,15, 47, 54,0x14), FieldTrait( 693,15,  1,  0,0x04), FieldTrait( 694, 1,  3,  0,0x04),
-   FieldTrait( 696,25,170,198,0x14), FieldTrait( 697,11,171,198,0x14), FieldTrait( 698, 1,172,198,0x14),
-   FieldTrait( 699,15,165,160,0x14), FieldTrait( 701,25,169,198,0x14), FieldTrait( 711, 1,109,188,0x1c),
-   FieldTrait( 735, 1,  8,111,0x1c), FieldTrait( 761,15,166,160,0x14), FieldTrait( 762,15, 20, 54,0x14),
-   FieldTrait( 788, 1,104, 44,0x14), FieldTrait( 864, 1, 51, 38,0x1c), FieldTrait( 873,25, 52, 54,0x14),
-   FieldTrait( 874,25, 53, 54,0x14), FieldTrait( 875, 1, 49, 54,0x14), FieldTrait( 876,15, 50, 54,0x14),
-   FieldTrait( 898,14,108, 44,0x14), FieldTrait( 913,15,100, 44,0x14), FieldTrait( 914,15,101, 44,0x14),
-   FieldTrait( 915,25,102, 44,0x14), FieldTrait( 916,25,105, 44,0x14), FieldTrait( 917,25,106, 44,0x14),
-   FieldTrait( 918,19,103, 44,0x14), FieldTrait( 919, 1,107, 44,0x14), FieldTrait( 947,19, 36, 54,0x14),
-   FieldTrait( 965,15, 54, 54,0x14), FieldTrait( 966,15, 55, 54,0x14), FieldTrait( 967, 9, 57, 54,0x14),
-   FieldTrait( 968, 9, 58, 54,0x14), FieldTrait( 969, 9, 59, 54,0x14), FieldTrait( 970, 1, 60, 54,0x14),
-   FieldTrait( 971, 1, 61, 54,0x14), FieldTrait( 996,15, 63, 54,0x14), FieldTrait( 997,15, 64, 54,0x14),
-   FieldTrait(1018, 1, 62, 57,0x1c), FieldTrait(1049, 7, 56, 54,0x14), FieldTrait(1079,26, 65, 54,0x14),
-   FieldTrait(1091, 8,175,  0,0x04), FieldTrait(1133, 7,173,  0,0x04), FieldTrait(1146,13, 67, 54,0x14),
-   FieldTrait(1147,10, 68, 54,0x14), FieldTrait(1151,15, 66, 54,0x14), FieldTrait(1166,15,174,  0,0x04),
-   FieldTrait(1184, 2, 69,150,0x14), FieldTrait(1185,29, 70,150,0x14), FieldTrait(1186,15, 71,150,0x14),
-   FieldTrait(1191,15, 73, 54,0x14), FieldTrait(1192,10, 74, 54,0x14), FieldTrait(1193, 7, 75, 54,0x14),
-   FieldTrait(1194, 1, 76, 54,0x14), FieldTrait(1195,13, 77, 54,0x14), FieldTrait(1196,15, 78, 54,0x14),
-   FieldTrait(1197,15, 85, 54,0x14), FieldTrait(1198, 1, 79, 54,0x14), FieldTrait(1199,11, 80, 54,0x14),
-   FieldTrait(1200,11, 81, 54,0x14), FieldTrait(1227,15, 72, 54,0x14), FieldTrait(1242, 8, 84, 54,0x14),
-   FieldTrait(1244, 8, 83, 54,0x14), FieldTrait(1435, 1, 86, 54,0x14), FieldTrait(1439, 1, 87, 54,0x14),
-   FieldTrait(1449,15, 88, 54,0x14), FieldTrait(1450,15, 89, 54,0x14), FieldTrait(1451,14, 90, 54,0x14),
-   FieldTrait(1452,14, 91, 54,0x14), FieldTrait(1457,14, 92, 54,0x14), FieldTrait(1458,14, 93, 54,0x14),
-   FieldTrait(1478, 1, 94, 54,0x14), FieldTrait(1479, 1, 95, 54,0x14), FieldTrait(1480,14, 96, 54,0x14),
-   FieldTrait(1481, 1, 97, 54,0x14), FieldTrait(1482, 1, 98, 54,0x14), FieldTrait(1483, 1, 99, 21,0x1c)
+   {   1,15,122,  0,0x04}, {  11,15,  4,  0,0x04}, {  12,13,150,  0,0x04}, {  13, 7,151,  0,0x04},
+   {  15,19,120,  0,0x04}, {  22,15, 15, 54,0x14}, {  23,15,  6,  0,0x04}, {  38,10,111, 93,0x14},
+   {  40, 7,144,  0,0x04}, {  44,11,157,  0,0x04}, {  48,15, 14, 54,0x14}, {  54, 7,110,  0,0x04},
+   {  55,15, 12, 54,0x14}, {  58,15,154,  0,0x04}, {  60,22,143,  0,0x04}, {  62,22,134,  0,0x04},
+   {  63,15,116,  0,0x04}, {  64,25,117,  0,0x04}, {  65,15, 13, 54,0x14}, { 100,20,153,  0,0x04},
+   { 106,15, 41, 54,0x14}, { 107,15, 44, 54,0x14}, { 110,10,176,  0,0x04}, { 117,15,  2,  0,0x04},
+   { 132,11,126,  0,0x04}, { 133,11,127,  0,0x04}, { 134,10,131,  0,0x04}, { 135,10,133,  0,0x04},
+   { 152,10,112, 93,0x14}, { 156, 7,149,  0,0x04}, { 167,15, 19, 54,0x14}, { 188,11,135,  0,0x04},
+   { 189,12,137,  0,0x04}, { 190,11,136,  0,0x04}, { 191,12,138,  0,0x04}, { 192,10,119,  0,0x04},
+   { 193,25,118,  0,0x04}, { 200,21, 21, 54,0x14}, { 201, 1, 82, 54,0x14}, { 202,11, 35, 54,0x14},
+   { 206, 7, 37, 54,0x14}, { 207,20, 40, 54,0x14}, { 218,12,159,160,0x14}, { 220,19,160,160,0x14},
+   { 221,15,161,160,0x14}, { 222,15,162,160,0x14}, { 223,14, 39, 54,0x14}, { 224,25, 23, 54,0x14},
+   { 225,25, 24, 54,0x14}, { 226, 1, 26, 54,0x14}, { 227,14, 27, 54,0x14}, { 228, 9, 28, 54,0x14},
+   { 231, 9, 38, 54,0x14}, { 232, 1,121,162,0x1c}, { 235,15,167,198,0x14}, { 236,14,168,198,0x14},
+   { 239, 1, 25, 54,0x14}, { 240,25, 34, 54,0x14}, { 255,15, 29, 54,0x14}, { 336,15, 10,  0,0x04},
+   { 348, 2, 42, 54,0x14}, { 349,28, 43, 54,0x14}, { 350, 2, 45, 54,0x14}, { 351,28, 46, 54,0x14},
+   { 354, 2,155,  0,0x04}, { 355,28,156,  0,0x04}, { 423, 1,158,  0,0x04}, { 453, 1,  9, 94,0x1c},
+   { 454, 1, 16,142,0x1c}, { 460, 1, 17, 54,0x14}, { 461,15, 18, 54,0x14}, { 468, 7,114, 93,0x14},
+   { 469, 9,115, 93,0x14}, { 470,18, 31, 54,0x14}, { 471,15, 32, 54,0x14}, { 472,15, 33, 54,0x14},
+   { 516,14,113, 93,0x14}, { 528, 7,  5,  0,0x04}, { 529,16,177,  0,0x04}, { 537, 1,  7,  0,0x04},
+   { 541,25, 22, 54,0x14}, { 543,15, 30, 54,0x14}, { 555, 1,125, 62,0x1c}, { 581, 1,124,  0,0x04},
+   { 582, 1,152,  0,0x04}, { 625,15, 11,  0,0x04}, { 631,11,139,  0,0x04}, { 632,14,140,  0,0x04},
+   { 633,14,141,  0,0x04}, { 634,14,142,  0,0x04}, { 642,12,145,  0,0x04}, { 643,12,146,  0,0x04},
+   { 645,11,128,  0,0x04}, { 646,11,129,  0,0x04}, { 647,10,130,  0,0x04}, { 648,10,132,  0,0x04},
+   { 656, 9,147,  0,0x04}, { 657, 9,148,  0,0x04}, { 660, 1,123,  0,0x04}, { 662,11,163,160,0x14},
+   { 663, 1,164,160,0x14}, { 667,21, 48, 54,0x14}, { 691,15, 47, 54,0x14}, { 693,15,  1,  0,0x04},
+   { 694, 1,  3,  0,0x04}, { 696,25,170,198,0x14}, { 697,11,171,198,0x14}, { 698, 1,172,198,0x14},
+   { 699,15,165,160,0x14}, { 701,25,169,198,0x14}, { 711, 1,109,188,0x1c}, { 735, 1,  8,111,0x1c},
+   { 761,15,166,160,0x14}, { 762,15, 20, 54,0x14}, { 788, 1,104, 44,0x14}, { 864, 1, 51, 38,0x1c},
+   { 873,25, 52, 54,0x14}, { 874,25, 53, 54,0x14}, { 875, 1, 49, 54,0x14}, { 876,15, 50, 54,0x14},
+   { 898,14,108, 44,0x14}, { 913,15,100, 44,0x14}, { 914,15,101, 44,0x14}, { 915,25,102, 44,0x14},
+   { 916,25,105, 44,0x14}, { 917,25,106, 44,0x14}, { 918,19,103, 44,0x14}, { 919, 1,107, 44,0x14},
+   { 947,19, 36, 54,0x14}, { 965,15, 54, 54,0x14}, { 966,15, 55, 54,0x14}, { 967, 9, 57, 54,0x14},
+   { 968, 9, 58, 54,0x14}, { 969, 9, 59, 54,0x14}, { 970, 1, 60, 54,0x14}, { 971, 1, 61, 54,0x14},
+   { 996,15, 63, 54,0x14}, { 997,15, 64, 54,0x14}, {1018, 1, 62, 57,0x1c}, {1049, 7, 56, 54,0x14},
+   {1079,26, 65, 54,0x14}, {1091, 8,175,  0,0x04}, {1133, 7,173,  0,0x04}, {1146,13, 67, 54,0x14},
+   {1147,10, 68, 54,0x14}, {1151,15, 66, 54,0x14}, {1166,15,174,  0,0x04}, {1184, 2, 69,150,0x14},
+   {1185,29, 70,150,0x14}, {1186,15, 71,150,0x14}, {1191,15, 73, 54,0x14}, {1192,10, 74, 54,0x14},
+   {1193, 7, 75, 54,0x14}, {1194, 1, 76, 54,0x14}, {1195,13, 77, 54,0x14}, {1196,15, 78, 54,0x14},
+   {1197,15, 85, 54,0x14}, {1198, 1, 79, 54,0x14}, {1199,11, 80, 54,0x14}, {1200,11, 81, 54,0x14},
+   {1227,15, 72, 54,0x14}, {1242, 8, 84, 54,0x14}, {1244, 8, 83, 54,0x14}, {1435, 1, 86, 54,0x14},
+   {1439, 1, 87, 54,0x14}, {1449,15, 88, 54,0x14}, {1450,15, 89, 54,0x14}, {1451,14, 90, 54,0x14},
+   {1452,14, 91, 54,0x14}, {1457,14, 92, 54,0x14}, {1458,14, 93, 54,0x14}, {1478, 1, 94, 54,0x14},
+   {1479, 1, 95, 54,0x14}, {1480,14, 96, 54,0x14}, {1481, 1, 97, 54,0x14}, {1482, 1, 98, 54,0x14},
+   {1483, 1, 99, 21,0x1c}
 };
 const FieldTrait_Hash_Array QuoteResponse::_ftha(QuoteResponse::_traits, 177);
 const MsgType QuoteResponse::_msgtype("AJ");
@@ -3335,69 +3022,54 @@ const FieldTrait *QuoteResponse::NoComplexEvents::NoComplexEventDates::NoComplex
 const FieldTrait_Hash_Array& QuoteResponse::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& QuoteResponse::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Confirmation::_traits[] =
+const FieldTrait Confirmation::_traits[]
 {
-   FieldTrait(   6,11,134,  0,0x04), FieldTrait(  12,13,175, 16,0x14), FieldTrait(  13, 7,176, 16,0x14),
-   FieldTrait(  15,19,128,  0,0x04), FieldTrait(  22,15, 20, 54,0x14), FieldTrait(  30,20,129,  0,0x04),
-   FieldTrait(  48,15, 19, 54,0x14), FieldTrait(  54, 7,127,  0,0x04), FieldTrait(  55,15, 17, 54,0x14),
-   FieldTrait(  58,15,147,  0,0x04), FieldTrait(  60,22, 14,  0,0x04), FieldTrait(  63,15,168,  0,0x04),
-   FieldTrait(  64,25,169,  0,0x04), FieldTrait(  65,15, 18, 54,0x14), FieldTrait(  70,15, 11,  0,0x04),
-   FieldTrait(  73, 1, 10, 90,0x1c), FieldTrait(  74, 1,135,  0,0x04), FieldTrait(  75,25, 15,  0,0x04),
-   FieldTrait(  79,15,131,  0,0x04), FieldTrait(  80,10,125,  0,0x04), FieldTrait(  81, 7,150,  0,0x04),
-   FieldTrait(  85, 1,174, 37,0x1c), FieldTrait( 106,15, 46, 54,0x14), FieldTrait( 107,15, 49, 54,0x14),
-   FieldTrait( 118,13,162,  0,0x04), FieldTrait( 119,13,164,  0,0x04), FieldTrait( 120,19,165,  0,0x04),
-   FieldTrait( 136, 1,181, 77,0x1c), FieldTrait( 155, 9,166,  0,0x04), FieldTrait( 156, 7,167,  0,0x04),
-   FieldTrait( 157, 1,152,  0,0x04), FieldTrait( 158,14,154,  0,0x04), FieldTrait( 159,13,155,  0,0x04),
-   FieldTrait( 167,15, 24, 54,0x14), FieldTrait( 169, 1,171,153,0x14), FieldTrait( 170,15,172,153,0x14),
-   FieldTrait( 171,15,173,153,0x14), FieldTrait( 172, 1,170,153,0x14), FieldTrait( 200,21, 26, 54,0x14),
-   FieldTrait( 201, 1, 87, 54,0x14), FieldTrait( 202,11, 40, 54,0x14), FieldTrait( 206, 7, 42, 54,0x14),
-   FieldTrait( 207,20, 45, 54,0x14), FieldTrait( 218,12,138,160,0x14), FieldTrait( 220,19,139,160,0x14),
-   FieldTrait( 221,15,140,160,0x14), FieldTrait( 222,15,141,160,0x14), FieldTrait( 223,14, 44, 54,0x14),
-   FieldTrait( 224,25, 28, 54,0x14), FieldTrait( 225,25, 29, 54,0x14), FieldTrait( 226, 1, 31, 54,0x14),
-   FieldTrait( 227,14, 32, 54,0x14), FieldTrait( 228, 9, 33, 54,0x14), FieldTrait( 230,25,153,  0,0x04),
-   FieldTrait( 231, 9, 43, 54,0x14), FieldTrait( 232, 1,180,162,0x1c), FieldTrait( 235,15,119,198,0x14),
-   FieldTrait( 236,14,120,198,0x14), FieldTrait( 237,13,161,  0,0x04), FieldTrait( 238,13,160,  0,0x04),
-   FieldTrait( 239, 1, 30, 54,0x14), FieldTrait( 240,25, 39, 54,0x14), FieldTrait( 255,15, 34, 54,0x14),
-   FieldTrait( 348, 2, 47, 54,0x14), FieldTrait( 349,28, 48, 54,0x14), FieldTrait( 350, 2, 50, 54,0x14),
-   FieldTrait( 351,28, 51, 54,0x14), FieldTrait( 354, 2,148,  0,0x04), FieldTrait( 355,28,149,  0,0x04),
-   FieldTrait( 381,13,151,  0,0x04), FieldTrait( 423, 1,136,  0,0x04), FieldTrait( 453, 1,  9, 94,0x1c),
-   FieldTrait( 454, 1, 21,142,0x1c), FieldTrait( 460, 1, 22, 54,0x14), FieldTrait( 461,15, 23, 54,0x14),
-   FieldTrait( 467,15, 13,  0,0x04), FieldTrait( 470,18, 36, 54,0x14), FieldTrait( 471,15, 37, 54,0x14),
-   FieldTrait( 472,15, 38, 54,0x14), FieldTrait( 479,19,177, 16,0x14), FieldTrait( 497, 7,178, 16,0x14),
-   FieldTrait( 541,25, 27, 54,0x14), FieldTrait( 543,15, 35, 54,0x14), FieldTrait( 555, 1,118, 49,0x1c),
-   FieldTrait( 650, 8,  7,  0,0x04), FieldTrait( 661, 1,132,  0,0x04), FieldTrait( 662,11,142,160,0x14),
-   FieldTrait( 663, 1,143,160,0x14), FieldTrait( 664,15,  1,  0,0x04), FieldTrait( 665, 1,  8,  0,0x04),
-   FieldTrait( 666, 1,  4,  0,0x04), FieldTrait( 667,21, 53, 54,0x14), FieldTrait( 668, 1,105, 55,0x14),
-   FieldTrait( 691,15, 52, 54,0x14), FieldTrait( 696,25,122,198,0x14), FieldTrait( 697,11,123,198,0x14),
-   FieldTrait( 698, 1,124,198,0x14), FieldTrait( 699,15,144,160,0x14), FieldTrait( 701,25,121,198,0x14),
-   FieldTrait( 711, 1,117,188,0x1c), FieldTrait( 738,13,156,  0,0x04), FieldTrait( 761,15,145,160,0x14),
-   FieldTrait( 762,15, 25, 54,0x14), FieldTrait( 768, 1, 16,182,0x1c), FieldTrait( 772,15,  2,  0,0x04),
-   FieldTrait( 773, 1,  5,  0,0x04), FieldTrait( 788, 1,112, 44,0x14), FieldTrait( 793,15, 12,  0,0x04),
-   FieldTrait( 797, 8,  6,  0,0x04), FieldTrait( 798, 1,133,  0,0x04), FieldTrait( 854, 1,126,  0,0x04),
-   FieldTrait( 858,13,179,  0,0x04), FieldTrait( 859,15,  3,  0,0x04), FieldTrait( 860,11,137,  0,0x04),
-   FieldTrait( 861,11,146,  0,0x04), FieldTrait( 862, 1,130, 26,0x1c), FieldTrait( 864, 1, 56, 38,0x1c),
-   FieldTrait( 869,14,106, 55,0x14), FieldTrait( 870, 1,107,  9,0x1c), FieldTrait( 873,25, 57, 54,0x14),
-   FieldTrait( 874,25, 58, 54,0x14), FieldTrait( 875, 1, 54, 54,0x14), FieldTrait( 876,15, 55, 54,0x14),
-   FieldTrait( 890,13,163,  0,0x04), FieldTrait( 898,14,116, 44,0x14), FieldTrait( 913,15,108, 44,0x14),
-   FieldTrait( 914,15,109, 44,0x14), FieldTrait( 915,25,110, 44,0x14), FieldTrait( 916,25,113, 44,0x14),
-   FieldTrait( 917,25,114, 44,0x14), FieldTrait( 918,19,111, 44,0x14), FieldTrait( 919, 1,115, 44,0x14),
-   FieldTrait( 920,13,157,  0,0x04), FieldTrait( 921,13,158,  0,0x04), FieldTrait( 922,13,159,  0,0x04),
-   FieldTrait( 947,19, 41, 54,0x14), FieldTrait( 965,15, 59, 54,0x14), FieldTrait( 966,15, 60, 54,0x14),
-   FieldTrait( 967, 9, 62, 54,0x14), FieldTrait( 968, 9, 63, 54,0x14), FieldTrait( 969, 9, 64, 54,0x14),
-   FieldTrait( 970, 1, 65, 54,0x14), FieldTrait( 971, 1, 66, 54,0x14), FieldTrait( 996,15, 68, 54,0x14),
-   FieldTrait( 997,15, 69, 54,0x14), FieldTrait(1018, 1, 67, 57,0x1c), FieldTrait(1049, 7, 61, 54,0x14),
-   FieldTrait(1079,26, 70, 54,0x14), FieldTrait(1146,13, 72, 54,0x14), FieldTrait(1147,10, 73, 54,0x14),
-   FieldTrait(1151,15, 71, 54,0x14), FieldTrait(1184, 2, 74,150,0x14), FieldTrait(1185,29, 75,150,0x14),
-   FieldTrait(1186,15, 76,150,0x14), FieldTrait(1191,15, 78, 54,0x14), FieldTrait(1192,10, 79, 54,0x14),
-   FieldTrait(1193, 7, 80, 54,0x14), FieldTrait(1194, 1, 81, 54,0x14), FieldTrait(1195,13, 82, 54,0x14),
-   FieldTrait(1196,15, 83, 54,0x14), FieldTrait(1197,15, 90, 54,0x14), FieldTrait(1198, 1, 84, 54,0x14),
-   FieldTrait(1199,11, 85, 54,0x14), FieldTrait(1200,11, 86, 54,0x14), FieldTrait(1227,15, 77, 54,0x14),
-   FieldTrait(1242, 8, 89, 54,0x14), FieldTrait(1244, 8, 88, 54,0x14), FieldTrait(1435, 1, 91, 54,0x14),
-   FieldTrait(1439, 1, 92, 54,0x14), FieldTrait(1449,15, 93, 54,0x14), FieldTrait(1450,15, 94, 54,0x14),
-   FieldTrait(1451,14, 95, 54,0x14), FieldTrait(1452,14, 96, 54,0x14), FieldTrait(1457,14, 97, 54,0x14),
-   FieldTrait(1458,14, 98, 54,0x14), FieldTrait(1478, 1, 99, 54,0x14), FieldTrait(1479, 1,100, 54,0x14),
-   FieldTrait(1480,14,101, 54,0x14), FieldTrait(1481, 1,102, 54,0x14), FieldTrait(1482, 1,103, 54,0x14),
-   FieldTrait(1483, 1,104, 21,0x1c)
+   {   6,11,134,  0,0x04}, {  12,13,175, 16,0x14}, {  13, 7,176, 16,0x14}, {  15,19,128,  0,0x04},
+   {  22,15, 20, 54,0x14}, {  30,20,129,  0,0x04}, {  48,15, 19, 54,0x14}, {  54, 7,127,  0,0x04},
+   {  55,15, 17, 54,0x14}, {  58,15,147,  0,0x04}, {  60,22, 14,  0,0x04}, {  63,15,168,  0,0x04},
+   {  64,25,169,  0,0x04}, {  65,15, 18, 54,0x14}, {  70,15, 11,  0,0x04}, {  73, 1, 10, 90,0x1c},
+   {  74, 1,135,  0,0x04}, {  75,25, 15,  0,0x04}, {  79,15,131,  0,0x04}, {  80,10,125,  0,0x04},
+   {  81, 7,150,  0,0x04}, {  85, 1,174, 37,0x1c}, { 106,15, 46, 54,0x14}, { 107,15, 49, 54,0x14},
+   { 118,13,162,  0,0x04}, { 119,13,164,  0,0x04}, { 120,19,165,  0,0x04}, { 136, 1,181, 77,0x1c},
+   { 155, 9,166,  0,0x04}, { 156, 7,167,  0,0x04}, { 157, 1,152,  0,0x04}, { 158,14,154,  0,0x04},
+   { 159,13,155,  0,0x04}, { 167,15, 24, 54,0x14}, { 169, 1,171,153,0x14}, { 170,15,172,153,0x14},
+   { 171,15,173,153,0x14}, { 172, 1,170,153,0x14}, { 200,21, 26, 54,0x14}, { 201, 1, 87, 54,0x14},
+   { 202,11, 40, 54,0x14}, { 206, 7, 42, 54,0x14}, { 207,20, 45, 54,0x14}, { 218,12,138,160,0x14},
+   { 220,19,139,160,0x14}, { 221,15,140,160,0x14}, { 222,15,141,160,0x14}, { 223,14, 44, 54,0x14},
+   { 224,25, 28, 54,0x14}, { 225,25, 29, 54,0x14}, { 226, 1, 31, 54,0x14}, { 227,14, 32, 54,0x14},
+   { 228, 9, 33, 54,0x14}, { 230,25,153,  0,0x04}, { 231, 9, 43, 54,0x14}, { 232, 1,180,162,0x1c},
+   { 235,15,119,198,0x14}, { 236,14,120,198,0x14}, { 237,13,161,  0,0x04}, { 238,13,160,  0,0x04},
+   { 239, 1, 30, 54,0x14}, { 240,25, 39, 54,0x14}, { 255,15, 34, 54,0x14}, { 348, 2, 47, 54,0x14},
+   { 349,28, 48, 54,0x14}, { 350, 2, 50, 54,0x14}, { 351,28, 51, 54,0x14}, { 354, 2,148,  0,0x04},
+   { 355,28,149,  0,0x04}, { 381,13,151,  0,0x04}, { 423, 1,136,  0,0x04}, { 453, 1,  9, 94,0x1c},
+   { 454, 1, 21,142,0x1c}, { 460, 1, 22, 54,0x14}, { 461,15, 23, 54,0x14}, { 467,15, 13,  0,0x04},
+   { 470,18, 36, 54,0x14}, { 471,15, 37, 54,0x14}, { 472,15, 38, 54,0x14}, { 479,19,177, 16,0x14},
+   { 497, 7,178, 16,0x14}, { 541,25, 27, 54,0x14}, { 543,15, 35, 54,0x14}, { 555, 1,118, 49,0x1c},
+   { 650, 8,  7,  0,0x04}, { 661, 1,132,  0,0x04}, { 662,11,142,160,0x14}, { 663, 1,143,160,0x14},
+   { 664,15,  1,  0,0x04}, { 665, 1,  8,  0,0x04}, { 666, 1,  4,  0,0x04}, { 667,21, 53, 54,0x14},
+   { 668, 1,105, 55,0x14}, { 691,15, 52, 54,0x14}, { 696,25,122,198,0x14}, { 697,11,123,198,0x14},
+   { 698, 1,124,198,0x14}, { 699,15,144,160,0x14}, { 701,25,121,198,0x14}, { 711, 1,117,188,0x1c},
+   { 738,13,156,  0,0x04}, { 761,15,145,160,0x14}, { 762,15, 25, 54,0x14}, { 768, 1, 16,182,0x1c},
+   { 772,15,  2,  0,0x04}, { 773, 1,  5,  0,0x04}, { 788, 1,112, 44,0x14}, { 793,15, 12,  0,0x04},
+   { 797, 8,  6,  0,0x04}, { 798, 1,133,  0,0x04}, { 854, 1,126,  0,0x04}, { 858,13,179,  0,0x04},
+   { 859,15,  3,  0,0x04}, { 860,11,137,  0,0x04}, { 861,11,146,  0,0x04}, { 862, 1,130, 26,0x1c},
+   { 864, 1, 56, 38,0x1c}, { 869,14,106, 55,0x14}, { 870, 1,107,  9,0x1c}, { 873,25, 57, 54,0x14},
+   { 874,25, 58, 54,0x14}, { 875, 1, 54, 54,0x14}, { 876,15, 55, 54,0x14}, { 890,13,163,  0,0x04},
+   { 898,14,116, 44,0x14}, { 913,15,108, 44,0x14}, { 914,15,109, 44,0x14}, { 915,25,110, 44,0x14},
+   { 916,25,113, 44,0x14}, { 917,25,114, 44,0x14}, { 918,19,111, 44,0x14}, { 919, 1,115, 44,0x14},
+   { 920,13,157,  0,0x04}, { 921,13,158,  0,0x04}, { 922,13,159,  0,0x04}, { 947,19, 41, 54,0x14},
+   { 965,15, 59, 54,0x14}, { 966,15, 60, 54,0x14}, { 967, 9, 62, 54,0x14}, { 968, 9, 63, 54,0x14},
+   { 969, 9, 64, 54,0x14}, { 970, 1, 65, 54,0x14}, { 971, 1, 66, 54,0x14}, { 996,15, 68, 54,0x14},
+   { 997,15, 69, 54,0x14}, {1018, 1, 67, 57,0x1c}, {1049, 7, 61, 54,0x14}, {1079,26, 70, 54,0x14},
+   {1146,13, 72, 54,0x14}, {1147,10, 73, 54,0x14}, {1151,15, 71, 54,0x14}, {1184, 2, 74,150,0x14},
+   {1185,29, 75,150,0x14}, {1186,15, 76,150,0x14}, {1191,15, 78, 54,0x14}, {1192,10, 79, 54,0x14},
+   {1193, 7, 80, 54,0x14}, {1194, 1, 81, 54,0x14}, {1195,13, 82, 54,0x14}, {1196,15, 83, 54,0x14},
+   {1197,15, 90, 54,0x14}, {1198, 1, 84, 54,0x14}, {1199,11, 85, 54,0x14}, {1200,11, 86, 54,0x14},
+   {1227,15, 77, 54,0x14}, {1242, 8, 89, 54,0x14}, {1244, 8, 88, 54,0x14}, {1435, 1, 91, 54,0x14},
+   {1439, 1, 92, 54,0x14}, {1449,15, 93, 54,0x14}, {1450,15, 94, 54,0x14}, {1451,14, 95, 54,0x14},
+   {1452,14, 96, 54,0x14}, {1457,14, 97, 54,0x14}, {1458,14, 98, 54,0x14}, {1478, 1, 99, 54,0x14},
+   {1479, 1,100, 54,0x14}, {1480,14,101, 54,0x14}, {1481, 1,102, 54,0x14}, {1482, 1,103, 54,0x14},
+   {1483, 1,104, 21,0x1c}
 };
 const FieldTrait_Hash_Array Confirmation::_ftha(Confirmation::_traits, 181);
 const MsgType Confirmation::_msgtype("AK");
@@ -3478,9 +3150,9 @@ const FieldTrait *Confirmation::NoTrdRegTimestamps::_traits(NoTrdRegTimestampsV1
 const FieldTrait_Hash_Array& Confirmation::NoTrdRegTimestamps::_ftha(NoTrdRegTimestampsV1_ftha);
 const MsgType& Confirmation::NoTrdRegTimestamps::_msgtype(NoTrdRegTimestampsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Confirmation::NoCapacities::_traits[] =
+const FieldTrait Confirmation::NoCapacities::_traits[]
 {
-   FieldTrait( 528, 7,  1,  0,0x05), FieldTrait( 529,16,  2,  0,0x04), FieldTrait( 863,10,  3,  0,0x05)
+   { 528, 7,  1,  0,0x05}, { 529,16,  2,  0,0x04}, { 863,10,  3,  0,0x05}
 };
 const FieldTrait_Hash_Array 
    Confirmation::NoCapacities::_ftha(Confirmation::NoCapacities::_traits, 3);
@@ -3514,47 +3186,37 @@ const FieldTrait *Confirmation::NoComplexEvents::NoComplexEventDates::NoComplexE
 const FieldTrait_Hash_Array& Confirmation::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& Confirmation::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PositionMaintenanceRequest::_traits[] =
+const FieldTrait PositionMaintenanceRequest::_traits[]
 {
-   FieldTrait(   1,15, 10,  0,0x04), FieldTrait(  15,19,101,  0,0x04), FieldTrait(  22,15, 16, 54,0x14),
-   FieldTrait(  48,15, 15, 54,0x14), FieldTrait(  55,15, 13, 54,0x14), FieldTrait(  58,15,111,  0,0x04),
-   FieldTrait(  60,22,105,  0,0x04), FieldTrait(  65,15, 14, 54,0x14), FieldTrait( 106,15, 42, 54,0x14),
-   FieldTrait( 107,15, 45, 54,0x14), FieldTrait( 120,19,115,  0,0x04), FieldTrait( 167,15, 20, 54,0x14),
-   FieldTrait( 200,21, 22, 54,0x14), FieldTrait( 201, 1, 83, 54,0x14), FieldTrait( 202,11, 36, 54,0x14),
-   FieldTrait( 206, 7, 38, 54,0x14), FieldTrait( 207,20, 41, 54,0x14), FieldTrait( 223,14, 40, 54,0x14),
-   FieldTrait( 224,25, 24, 54,0x14), FieldTrait( 225,25, 25, 54,0x14), FieldTrait( 226, 1, 27, 54,0x14),
-   FieldTrait( 227,14, 28, 54,0x14), FieldTrait( 228, 9, 29, 54,0x14), FieldTrait( 231, 9, 39, 54,0x14),
-   FieldTrait( 239, 1, 26, 54,0x14), FieldTrait( 240,25, 35, 54,0x14), FieldTrait( 255,15, 30, 54,0x14),
-   FieldTrait( 348, 2, 43, 54,0x14), FieldTrait( 349,28, 44, 54,0x14), FieldTrait( 350, 2, 46, 54,0x14),
-   FieldTrait( 351,28, 47, 54,0x14), FieldTrait( 354, 2,112,  0,0x04), FieldTrait( 355,28,113,  0,0x04),
-   FieldTrait( 386, 1,104,185,0x1c), FieldTrait( 453, 1,  9, 94,0x1c), FieldTrait( 454, 1, 17,142,0x1c),
-   FieldTrait( 460, 1, 18, 54,0x14), FieldTrait( 461,15, 19, 54,0x14), FieldTrait( 470,18, 32, 54,0x14),
-   FieldTrait( 471,15, 33, 54,0x14), FieldTrait( 472,15, 34, 54,0x14), FieldTrait( 541,25, 23, 54,0x14),
-   FieldTrait( 543,15, 31, 54,0x14), FieldTrait( 555, 1,102, 49,0x1c), FieldTrait( 581, 1, 12,  0,0x04),
-   FieldTrait( 660, 1, 11,  0,0x04), FieldTrait( 667,21, 49, 54,0x14), FieldTrait( 691,15, 48, 54,0x14),
-   FieldTrait( 702, 1,106,103,0x1c), FieldTrait( 709, 1,  2,  0,0x04), FieldTrait( 710,15,  1,  0,0x04),
-   FieldTrait( 711, 1,103,188,0x1c), FieldTrait( 712, 1,  3,  0,0x04), FieldTrait( 713,15,  4,  0,0x04),
-   FieldTrait( 714,15,  5,  0,0x04), FieldTrait( 715,25,  6,  0,0x04), FieldTrait( 716,15,  7,  0,0x04),
-   FieldTrait( 717,15,  8,  0,0x04), FieldTrait( 718, 1,107,  0,0x04), FieldTrait( 719, 8,108,  0,0x04),
-   FieldTrait( 720, 8,109,  0,0x04), FieldTrait( 753, 1,114,102,0x1c), FieldTrait( 762,15, 21, 54,0x14),
-   FieldTrait( 834,12,110,  0,0x04), FieldTrait( 864, 1, 52, 38,0x1c), FieldTrait( 873,25, 53, 54,0x14),
-   FieldTrait( 874,25, 54, 54,0x14), FieldTrait( 875, 1, 50, 54,0x14), FieldTrait( 876,15, 51, 54,0x14),
-   FieldTrait( 947,19, 37, 54,0x14), FieldTrait( 965,15, 55, 54,0x14), FieldTrait( 966,15, 56, 54,0x14),
-   FieldTrait( 967, 9, 58, 54,0x14), FieldTrait( 968, 9, 59, 54,0x14), FieldTrait( 969, 9, 60, 54,0x14),
-   FieldTrait( 970, 1, 61, 54,0x14), FieldTrait( 971, 1, 62, 54,0x14), FieldTrait( 996,15, 64, 54,0x14),
-   FieldTrait( 997,15, 65, 54,0x14), FieldTrait(1018, 1, 63, 57,0x1c), FieldTrait(1049, 7, 57, 54,0x14),
-   FieldTrait(1079,26, 66, 54,0x14), FieldTrait(1146,13, 68, 54,0x14), FieldTrait(1147,10, 69, 54,0x14),
-   FieldTrait(1151,15, 67, 54,0x14), FieldTrait(1184, 2, 70,150,0x14), FieldTrait(1185,29, 71,150,0x14),
-   FieldTrait(1186,15, 72,150,0x14), FieldTrait(1191,15, 74, 54,0x14), FieldTrait(1192,10, 75, 54,0x14),
-   FieldTrait(1193, 7, 76, 54,0x14), FieldTrait(1194, 1, 77, 54,0x14), FieldTrait(1195,13, 78, 54,0x14),
-   FieldTrait(1196,15, 79, 54,0x14), FieldTrait(1197,15, 86, 54,0x14), FieldTrait(1198, 1, 80, 54,0x14),
-   FieldTrait(1199,11, 81, 54,0x14), FieldTrait(1200,11, 82, 54,0x14), FieldTrait(1227,15, 73, 54,0x14),
-   FieldTrait(1242, 8, 85, 54,0x14), FieldTrait(1244, 8, 84, 54,0x14), FieldTrait(1435, 1, 87, 54,0x14),
-   FieldTrait(1439, 1, 88, 54,0x14), FieldTrait(1449,15, 89, 54,0x14), FieldTrait(1450,15, 90, 54,0x14),
-   FieldTrait(1451,14, 91, 54,0x14), FieldTrait(1452,14, 92, 54,0x14), FieldTrait(1457,14, 93, 54,0x14),
-   FieldTrait(1458,14, 94, 54,0x14), FieldTrait(1478, 1, 95, 54,0x14), FieldTrait(1479, 1, 96, 54,0x14),
-   FieldTrait(1480,14, 97, 54,0x14), FieldTrait(1481, 1, 98, 54,0x14), FieldTrait(1482, 1, 99, 54,0x14),
-   FieldTrait(1483, 1,100, 21,0x1c)
+   {   1,15, 10,  0,0x04}, {  15,19,101,  0,0x04}, {  22,15, 16, 54,0x14}, {  48,15, 15, 54,0x14},
+   {  55,15, 13, 54,0x14}, {  58,15,111,  0,0x04}, {  60,22,105,  0,0x04}, {  65,15, 14, 54,0x14},
+   { 106,15, 42, 54,0x14}, { 107,15, 45, 54,0x14}, { 120,19,115,  0,0x04}, { 167,15, 20, 54,0x14},
+   { 200,21, 22, 54,0x14}, { 201, 1, 83, 54,0x14}, { 202,11, 36, 54,0x14}, { 206, 7, 38, 54,0x14},
+   { 207,20, 41, 54,0x14}, { 223,14, 40, 54,0x14}, { 224,25, 24, 54,0x14}, { 225,25, 25, 54,0x14},
+   { 226, 1, 27, 54,0x14}, { 227,14, 28, 54,0x14}, { 228, 9, 29, 54,0x14}, { 231, 9, 39, 54,0x14},
+   { 239, 1, 26, 54,0x14}, { 240,25, 35, 54,0x14}, { 255,15, 30, 54,0x14}, { 348, 2, 43, 54,0x14},
+   { 349,28, 44, 54,0x14}, { 350, 2, 46, 54,0x14}, { 351,28, 47, 54,0x14}, { 354, 2,112,  0,0x04},
+   { 355,28,113,  0,0x04}, { 386, 1,104,185,0x1c}, { 453, 1,  9, 94,0x1c}, { 454, 1, 17,142,0x1c},
+   { 460, 1, 18, 54,0x14}, { 461,15, 19, 54,0x14}, { 470,18, 32, 54,0x14}, { 471,15, 33, 54,0x14},
+   { 472,15, 34, 54,0x14}, { 541,25, 23, 54,0x14}, { 543,15, 31, 54,0x14}, { 555, 1,102, 49,0x1c},
+   { 581, 1, 12,  0,0x04}, { 660, 1, 11,  0,0x04}, { 667,21, 49, 54,0x14}, { 691,15, 48, 54,0x14},
+   { 702, 1,106,103,0x1c}, { 709, 1,  2,  0,0x04}, { 710,15,  1,  0,0x04}, { 711, 1,103,188,0x1c},
+   { 712, 1,  3,  0,0x04}, { 713,15,  4,  0,0x04}, { 714,15,  5,  0,0x04}, { 715,25,  6,  0,0x04},
+   { 716,15,  7,  0,0x04}, { 717,15,  8,  0,0x04}, { 718, 1,107,  0,0x04}, { 719, 8,108,  0,0x04},
+   { 720, 8,109,  0,0x04}, { 753, 1,114,102,0x1c}, { 762,15, 21, 54,0x14}, { 834,12,110,  0,0x04},
+   { 864, 1, 52, 38,0x1c}, { 873,25, 53, 54,0x14}, { 874,25, 54, 54,0x14}, { 875, 1, 50, 54,0x14},
+   { 876,15, 51, 54,0x14}, { 947,19, 37, 54,0x14}, { 965,15, 55, 54,0x14}, { 966,15, 56, 54,0x14},
+   { 967, 9, 58, 54,0x14}, { 968, 9, 59, 54,0x14}, { 969, 9, 60, 54,0x14}, { 970, 1, 61, 54,0x14},
+   { 971, 1, 62, 54,0x14}, { 996,15, 64, 54,0x14}, { 997,15, 65, 54,0x14}, {1018, 1, 63, 57,0x1c},
+   {1049, 7, 57, 54,0x14}, {1079,26, 66, 54,0x14}, {1146,13, 68, 54,0x14}, {1147,10, 69, 54,0x14},
+   {1151,15, 67, 54,0x14}, {1184, 2, 70,150,0x14}, {1185,29, 71,150,0x14}, {1186,15, 72,150,0x14},
+   {1191,15, 74, 54,0x14}, {1192,10, 75, 54,0x14}, {1193, 7, 76, 54,0x14}, {1194, 1, 77, 54,0x14},
+   {1195,13, 78, 54,0x14}, {1196,15, 79, 54,0x14}, {1197,15, 86, 54,0x14}, {1198, 1, 80, 54,0x14},
+   {1199,11, 81, 54,0x14}, {1200,11, 82, 54,0x14}, {1227,15, 73, 54,0x14}, {1242, 8, 85, 54,0x14},
+   {1244, 8, 84, 54,0x14}, {1435, 1, 87, 54,0x14}, {1439, 1, 88, 54,0x14}, {1449,15, 89, 54,0x14},
+   {1450,15, 90, 54,0x14}, {1451,14, 91, 54,0x14}, {1452,14, 92, 54,0x14}, {1457,14, 93, 54,0x14},
+   {1458,14, 94, 54,0x14}, {1478, 1, 95, 54,0x14}, {1479, 1, 96, 54,0x14}, {1480,14, 97, 54,0x14},
+   {1481, 1, 98, 54,0x14}, {1482, 1, 99, 54,0x14}, {1483, 1,100, 21,0x1c}
 };
 const FieldTrait_Hash_Array PositionMaintenanceRequest::_ftha(PositionMaintenanceRequest::_traits, 115);
 const MsgType PositionMaintenanceRequest::_msgtype("AL");
@@ -3643,48 +3305,38 @@ const FieldTrait *PositionMaintenanceRequest::NoComplexEvents::NoComplexEventDat
 const FieldTrait_Hash_Array& PositionMaintenanceRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& PositionMaintenanceRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PositionMaintenanceReport::_traits[] =
+const FieldTrait PositionMaintenanceReport::_traits[]
 {
-   FieldTrait(   1,15, 12,  0,0x04), FieldTrait(  15,19,103,  0,0x04), FieldTrait(  22,15, 18, 54,0x14),
-   FieldTrait(  48,15, 17, 54,0x14), FieldTrait(  55,15, 15, 54,0x14), FieldTrait(  58,15,112,  0,0x04),
-   FieldTrait(  60,22,107,  0,0x04), FieldTrait(  65,15, 16, 54,0x14), FieldTrait( 106,15, 44, 54,0x14),
-   FieldTrait( 107,15, 47, 54,0x14), FieldTrait( 120,19,115,  0,0x04), FieldTrait( 167,15, 22, 54,0x14),
-   FieldTrait( 200,21, 24, 54,0x14), FieldTrait( 201, 1, 85, 54,0x14), FieldTrait( 202,11, 38, 54,0x14),
-   FieldTrait( 206, 7, 40, 54,0x14), FieldTrait( 207,20, 43, 54,0x14), FieldTrait( 223,14, 42, 54,0x14),
-   FieldTrait( 224,25, 26, 54,0x14), FieldTrait( 225,25, 27, 54,0x14), FieldTrait( 226, 1, 29, 54,0x14),
-   FieldTrait( 227,14, 30, 54,0x14), FieldTrait( 228, 9, 31, 54,0x14), FieldTrait( 231, 9, 41, 54,0x14),
-   FieldTrait( 239, 1, 28, 54,0x14), FieldTrait( 240,25, 37, 54,0x14), FieldTrait( 255,15, 32, 54,0x14),
-   FieldTrait( 348, 2, 45, 54,0x14), FieldTrait( 349,28, 46, 54,0x14), FieldTrait( 350, 2, 48, 54,0x14),
-   FieldTrait( 351,28, 49, 54,0x14), FieldTrait( 354, 2,113,  0,0x04), FieldTrait( 355,28,114,  0,0x04),
-   FieldTrait( 386, 1,106,185,0x1c), FieldTrait( 453, 1, 11, 94,0x1c), FieldTrait( 454, 1, 19,142,0x1c),
-   FieldTrait( 460, 1, 20, 54,0x14), FieldTrait( 461,15, 21, 54,0x14), FieldTrait( 470,18, 34, 54,0x14),
-   FieldTrait( 471,15, 35, 54,0x14), FieldTrait( 472,15, 36, 54,0x14), FieldTrait( 541,25, 25, 54,0x14),
-   FieldTrait( 543,15, 33, 54,0x14), FieldTrait( 555, 1,104, 49,0x1c), FieldTrait( 581, 1, 14,  0,0x04),
-   FieldTrait( 660, 1, 13,  0,0x04), FieldTrait( 667,21, 51, 54,0x14), FieldTrait( 691,15, 50, 54,0x14),
-   FieldTrait( 702, 1,108,103,0x1c), FieldTrait( 709, 1,  2,  0,0x04), FieldTrait( 710,15,  3,  0,0x04),
-   FieldTrait( 711, 1,105,188,0x1c), FieldTrait( 712, 1,  4,  0,0x04), FieldTrait( 713,15,  5,  0,0x04),
-   FieldTrait( 714,15,118,  0,0x04), FieldTrait( 715,25,  8,  0,0x04), FieldTrait( 716,15,  9,  0,0x04),
-   FieldTrait( 717,15, 10,  0,0x04), FieldTrait( 718, 1,110,  0,0x04), FieldTrait( 719, 8,116,  0,0x04),
-   FieldTrait( 720, 8,117,  0,0x04), FieldTrait( 721,15,  1,  0,0x04), FieldTrait( 722, 1,  6,  0,0x04),
-   FieldTrait( 723, 1,  7,  0,0x04), FieldTrait( 753, 1,109,102,0x1c), FieldTrait( 762,15, 23, 54,0x14),
-   FieldTrait( 834,12,111,  0,0x04), FieldTrait( 864, 1, 54, 38,0x1c), FieldTrait( 873,25, 55, 54,0x14),
-   FieldTrait( 874,25, 56, 54,0x14), FieldTrait( 875, 1, 52, 54,0x14), FieldTrait( 876,15, 53, 54,0x14),
-   FieldTrait( 947,19, 39, 54,0x14), FieldTrait( 965,15, 57, 54,0x14), FieldTrait( 966,15, 58, 54,0x14),
-   FieldTrait( 967, 9, 60, 54,0x14), FieldTrait( 968, 9, 61, 54,0x14), FieldTrait( 969, 9, 62, 54,0x14),
-   FieldTrait( 970, 1, 63, 54,0x14), FieldTrait( 971, 1, 64, 54,0x14), FieldTrait( 996,15, 66, 54,0x14),
-   FieldTrait( 997,15, 67, 54,0x14), FieldTrait(1018, 1, 65, 57,0x1c), FieldTrait(1049, 7, 59, 54,0x14),
-   FieldTrait(1079,26, 68, 54,0x14), FieldTrait(1146,13, 70, 54,0x14), FieldTrait(1147,10, 71, 54,0x14),
-   FieldTrait(1151,15, 69, 54,0x14), FieldTrait(1184, 2, 72,150,0x14), FieldTrait(1185,29, 73,150,0x14),
-   FieldTrait(1186,15, 74,150,0x14), FieldTrait(1191,15, 76, 54,0x14), FieldTrait(1192,10, 77, 54,0x14),
-   FieldTrait(1193, 7, 78, 54,0x14), FieldTrait(1194, 1, 79, 54,0x14), FieldTrait(1195,13, 80, 54,0x14),
-   FieldTrait(1196,15, 81, 54,0x14), FieldTrait(1197,15, 88, 54,0x14), FieldTrait(1198, 1, 82, 54,0x14),
-   FieldTrait(1199,11, 83, 54,0x14), FieldTrait(1200,11, 84, 54,0x14), FieldTrait(1227,15, 75, 54,0x14),
-   FieldTrait(1242, 8, 87, 54,0x14), FieldTrait(1244, 8, 86, 54,0x14), FieldTrait(1435, 1, 89, 54,0x14),
-   FieldTrait(1439, 1, 90, 54,0x14), FieldTrait(1449,15, 91, 54,0x14), FieldTrait(1450,15, 92, 54,0x14),
-   FieldTrait(1451,14, 93, 54,0x14), FieldTrait(1452,14, 94, 54,0x14), FieldTrait(1457,14, 95, 54,0x14),
-   FieldTrait(1458,14, 96, 54,0x14), FieldTrait(1478, 1, 97, 54,0x14), FieldTrait(1479, 1, 98, 54,0x14),
-   FieldTrait(1480,14, 99, 54,0x14), FieldTrait(1481, 1,100, 54,0x14), FieldTrait(1482, 1,101, 54,0x14),
-   FieldTrait(1483, 1,102, 21,0x1c)
+   {   1,15, 12,  0,0x04}, {  15,19,103,  0,0x04}, {  22,15, 18, 54,0x14}, {  48,15, 17, 54,0x14},
+   {  55,15, 15, 54,0x14}, {  58,15,112,  0,0x04}, {  60,22,107,  0,0x04}, {  65,15, 16, 54,0x14},
+   { 106,15, 44, 54,0x14}, { 107,15, 47, 54,0x14}, { 120,19,115,  0,0x04}, { 167,15, 22, 54,0x14},
+   { 200,21, 24, 54,0x14}, { 201, 1, 85, 54,0x14}, { 202,11, 38, 54,0x14}, { 206, 7, 40, 54,0x14},
+   { 207,20, 43, 54,0x14}, { 223,14, 42, 54,0x14}, { 224,25, 26, 54,0x14}, { 225,25, 27, 54,0x14},
+   { 226, 1, 29, 54,0x14}, { 227,14, 30, 54,0x14}, { 228, 9, 31, 54,0x14}, { 231, 9, 41, 54,0x14},
+   { 239, 1, 28, 54,0x14}, { 240,25, 37, 54,0x14}, { 255,15, 32, 54,0x14}, { 348, 2, 45, 54,0x14},
+   { 349,28, 46, 54,0x14}, { 350, 2, 48, 54,0x14}, { 351,28, 49, 54,0x14}, { 354, 2,113,  0,0x04},
+   { 355,28,114,  0,0x04}, { 386, 1,106,185,0x1c}, { 453, 1, 11, 94,0x1c}, { 454, 1, 19,142,0x1c},
+   { 460, 1, 20, 54,0x14}, { 461,15, 21, 54,0x14}, { 470,18, 34, 54,0x14}, { 471,15, 35, 54,0x14},
+   { 472,15, 36, 54,0x14}, { 541,25, 25, 54,0x14}, { 543,15, 33, 54,0x14}, { 555, 1,104, 49,0x1c},
+   { 581, 1, 14,  0,0x04}, { 660, 1, 13,  0,0x04}, { 667,21, 51, 54,0x14}, { 691,15, 50, 54,0x14},
+   { 702, 1,108,103,0x1c}, { 709, 1,  2,  0,0x04}, { 710,15,  3,  0,0x04}, { 711, 1,105,188,0x1c},
+   { 712, 1,  4,  0,0x04}, { 713,15,  5,  0,0x04}, { 714,15,118,  0,0x04}, { 715,25,  8,  0,0x04},
+   { 716,15,  9,  0,0x04}, { 717,15, 10,  0,0x04}, { 718, 1,110,  0,0x04}, { 719, 8,116,  0,0x04},
+   { 720, 8,117,  0,0x04}, { 721,15,  1,  0,0x04}, { 722, 1,  6,  0,0x04}, { 723, 1,  7,  0,0x04},
+   { 753, 1,109,102,0x1c}, { 762,15, 23, 54,0x14}, { 834,12,111,  0,0x04}, { 864, 1, 54, 38,0x1c},
+   { 873,25, 55, 54,0x14}, { 874,25, 56, 54,0x14}, { 875, 1, 52, 54,0x14}, { 876,15, 53, 54,0x14},
+   { 947,19, 39, 54,0x14}, { 965,15, 57, 54,0x14}, { 966,15, 58, 54,0x14}, { 967, 9, 60, 54,0x14},
+   { 968, 9, 61, 54,0x14}, { 969, 9, 62, 54,0x14}, { 970, 1, 63, 54,0x14}, { 971, 1, 64, 54,0x14},
+   { 996,15, 66, 54,0x14}, { 997,15, 67, 54,0x14}, {1018, 1, 65, 57,0x1c}, {1049, 7, 59, 54,0x14},
+   {1079,26, 68, 54,0x14}, {1146,13, 70, 54,0x14}, {1147,10, 71, 54,0x14}, {1151,15, 69, 54,0x14},
+   {1184, 2, 72,150,0x14}, {1185,29, 73,150,0x14}, {1186,15, 74,150,0x14}, {1191,15, 76, 54,0x14},
+   {1192,10, 77, 54,0x14}, {1193, 7, 78, 54,0x14}, {1194, 1, 79, 54,0x14}, {1195,13, 80, 54,0x14},
+   {1196,15, 81, 54,0x14}, {1197,15, 88, 54,0x14}, {1198, 1, 82, 54,0x14}, {1199,11, 83, 54,0x14},
+   {1200,11, 84, 54,0x14}, {1227,15, 75, 54,0x14}, {1242, 8, 87, 54,0x14}, {1244, 8, 86, 54,0x14},
+   {1435, 1, 89, 54,0x14}, {1439, 1, 90, 54,0x14}, {1449,15, 91, 54,0x14}, {1450,15, 92, 54,0x14},
+   {1451,14, 93, 54,0x14}, {1452,14, 94, 54,0x14}, {1457,14, 95, 54,0x14}, {1458,14, 96, 54,0x14},
+   {1478, 1, 97, 54,0x14}, {1479, 1, 98, 54,0x14}, {1480,14, 99, 54,0x14}, {1481, 1,100, 54,0x14},
+   {1482, 1,101, 54,0x14}, {1483, 1,102, 21,0x1c}
 };
 const FieldTrait_Hash_Array PositionMaintenanceReport::_ftha(PositionMaintenanceReport::_traits, 118);
 const MsgType PositionMaintenanceReport::_msgtype("AM");
@@ -3773,45 +3425,36 @@ const FieldTrait *PositionMaintenanceReport::NoComplexEvents::NoComplexEventDate
 const FieldTrait_Hash_Array& PositionMaintenanceReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& PositionMaintenanceReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RequestForPositions::_traits[] =
+const FieldTrait RequestForPositions::_traits[]
 {
-   FieldTrait(   1,15,  6,  0,0x04), FieldTrait(  15,19, 97,  0,0x04), FieldTrait(  22,15, 12, 54,0x14),
-   FieldTrait(  48,15, 11, 54,0x14), FieldTrait(  55,15,  9, 54,0x14), FieldTrait(  58,15,107,  0,0x04),
-   FieldTrait(  60,22,104,  0,0x04), FieldTrait(  65,15, 10, 54,0x14), FieldTrait( 106,15, 38, 54,0x14),
-   FieldTrait( 107,15, 41, 54,0x14), FieldTrait( 120,19,110,  0,0x04), FieldTrait( 167,15, 16, 54,0x14),
-   FieldTrait( 200,21, 18, 54,0x14), FieldTrait( 201, 1, 79, 54,0x14), FieldTrait( 202,11, 32, 54,0x14),
-   FieldTrait( 206, 7, 34, 54,0x14), FieldTrait( 207,20, 37, 54,0x14), FieldTrait( 223,14, 36, 54,0x14),
-   FieldTrait( 224,25, 20, 54,0x14), FieldTrait( 225,25, 21, 54,0x14), FieldTrait( 226, 1, 23, 54,0x14),
-   FieldTrait( 227,14, 24, 54,0x14), FieldTrait( 228, 9, 25, 54,0x14), FieldTrait( 231, 9, 35, 54,0x14),
-   FieldTrait( 239, 1, 22, 54,0x14), FieldTrait( 240,25, 31, 54,0x14), FieldTrait( 255,15, 26, 54,0x14),
-   FieldTrait( 263, 7,  4,  0,0x04), FieldTrait( 348, 2, 39, 54,0x14), FieldTrait( 349,28, 40, 54,0x14),
-   FieldTrait( 350, 2, 42, 54,0x14), FieldTrait( 351,28, 43, 54,0x14), FieldTrait( 354, 2,108,  0,0x04),
-   FieldTrait( 355,28,109,  0,0x04), FieldTrait( 386, 1,103,185,0x1c), FieldTrait( 453, 1,  5, 94,0x1c),
-   FieldTrait( 454, 1, 13,142,0x1c), FieldTrait( 460, 1, 14, 54,0x14), FieldTrait( 461,15, 15, 54,0x14),
-   FieldTrait( 470,18, 28, 54,0x14), FieldTrait( 471,15, 29, 54,0x14), FieldTrait( 472,15, 30, 54,0x14),
-   FieldTrait( 541,25, 19, 54,0x14), FieldTrait( 543,15, 27, 54,0x14), FieldTrait( 555, 1, 98, 49,0x1c),
-   FieldTrait( 573, 7,  3,  0,0x04), FieldTrait( 581, 1,  8,  0,0x04), FieldTrait( 660, 1,  7,  0,0x04),
-   FieldTrait( 667,21, 45, 54,0x14), FieldTrait( 691,15, 44, 54,0x14), FieldTrait( 710,15,  1,  0,0x04),
-   FieldTrait( 711, 1, 99,188,0x1c), FieldTrait( 715,25,100,  0,0x04), FieldTrait( 716,15,101,  0,0x04),
-   FieldTrait( 717,15,102,  0,0x04), FieldTrait( 724, 1,  2,  0,0x04), FieldTrait( 725, 1,105,  0,0x04),
-   FieldTrait( 726,15,106,  0,0x04), FieldTrait( 762,15, 17, 54,0x14), FieldTrait( 864, 1, 48, 38,0x1c),
-   FieldTrait( 873,25, 49, 54,0x14), FieldTrait( 874,25, 50, 54,0x14), FieldTrait( 875, 1, 46, 54,0x14),
-   FieldTrait( 876,15, 47, 54,0x14), FieldTrait( 947,19, 33, 54,0x14), FieldTrait( 965,15, 51, 54,0x14),
-   FieldTrait( 966,15, 52, 54,0x14), FieldTrait( 967, 9, 54, 54,0x14), FieldTrait( 968, 9, 55, 54,0x14),
-   FieldTrait( 969, 9, 56, 54,0x14), FieldTrait( 970, 1, 57, 54,0x14), FieldTrait( 971, 1, 58, 54,0x14),
-   FieldTrait( 996,15, 60, 54,0x14), FieldTrait( 997,15, 61, 54,0x14), FieldTrait(1018, 1, 59, 57,0x1c),
-   FieldTrait(1049, 7, 53, 54,0x14), FieldTrait(1079,26, 62, 54,0x14), FieldTrait(1146,13, 64, 54,0x14),
-   FieldTrait(1147,10, 65, 54,0x14), FieldTrait(1151,15, 63, 54,0x14), FieldTrait(1184, 2, 66,150,0x14),
-   FieldTrait(1185,29, 67,150,0x14), FieldTrait(1186,15, 68,150,0x14), FieldTrait(1191,15, 70, 54,0x14),
-   FieldTrait(1192,10, 71, 54,0x14), FieldTrait(1193, 7, 72, 54,0x14), FieldTrait(1194, 1, 73, 54,0x14),
-   FieldTrait(1195,13, 74, 54,0x14), FieldTrait(1196,15, 75, 54,0x14), FieldTrait(1197,15, 82, 54,0x14),
-   FieldTrait(1198, 1, 76, 54,0x14), FieldTrait(1199,11, 77, 54,0x14), FieldTrait(1200,11, 78, 54,0x14),
-   FieldTrait(1227,15, 69, 54,0x14), FieldTrait(1242, 8, 81, 54,0x14), FieldTrait(1244, 8, 80, 54,0x14),
-   FieldTrait(1435, 1, 83, 54,0x14), FieldTrait(1439, 1, 84, 54,0x14), FieldTrait(1449,15, 85, 54,0x14),
-   FieldTrait(1450,15, 86, 54,0x14), FieldTrait(1451,14, 87, 54,0x14), FieldTrait(1452,14, 88, 54,0x14),
-   FieldTrait(1457,14, 89, 54,0x14), FieldTrait(1458,14, 90, 54,0x14), FieldTrait(1478, 1, 91, 54,0x14),
-   FieldTrait(1479, 1, 92, 54,0x14), FieldTrait(1480,14, 93, 54,0x14), FieldTrait(1481, 1, 94, 54,0x14),
-   FieldTrait(1482, 1, 95, 54,0x14), FieldTrait(1483, 1, 96, 21,0x1c)
+   {   1,15,  6,  0,0x04}, {  15,19, 97,  0,0x04}, {  22,15, 12, 54,0x14}, {  48,15, 11, 54,0x14},
+   {  55,15,  9, 54,0x14}, {  58,15,107,  0,0x04}, {  60,22,104,  0,0x04}, {  65,15, 10, 54,0x14},
+   { 106,15, 38, 54,0x14}, { 107,15, 41, 54,0x14}, { 120,19,110,  0,0x04}, { 167,15, 16, 54,0x14},
+   { 200,21, 18, 54,0x14}, { 201, 1, 79, 54,0x14}, { 202,11, 32, 54,0x14}, { 206, 7, 34, 54,0x14},
+   { 207,20, 37, 54,0x14}, { 223,14, 36, 54,0x14}, { 224,25, 20, 54,0x14}, { 225,25, 21, 54,0x14},
+   { 226, 1, 23, 54,0x14}, { 227,14, 24, 54,0x14}, { 228, 9, 25, 54,0x14}, { 231, 9, 35, 54,0x14},
+   { 239, 1, 22, 54,0x14}, { 240,25, 31, 54,0x14}, { 255,15, 26, 54,0x14}, { 263, 7,  4,  0,0x04},
+   { 348, 2, 39, 54,0x14}, { 349,28, 40, 54,0x14}, { 350, 2, 42, 54,0x14}, { 351,28, 43, 54,0x14},
+   { 354, 2,108,  0,0x04}, { 355,28,109,  0,0x04}, { 386, 1,103,185,0x1c}, { 453, 1,  5, 94,0x1c},
+   { 454, 1, 13,142,0x1c}, { 460, 1, 14, 54,0x14}, { 461,15, 15, 54,0x14}, { 470,18, 28, 54,0x14},
+   { 471,15, 29, 54,0x14}, { 472,15, 30, 54,0x14}, { 541,25, 19, 54,0x14}, { 543,15, 27, 54,0x14},
+   { 555, 1, 98, 49,0x1c}, { 573, 7,  3,  0,0x04}, { 581, 1,  8,  0,0x04}, { 660, 1,  7,  0,0x04},
+   { 667,21, 45, 54,0x14}, { 691,15, 44, 54,0x14}, { 710,15,  1,  0,0x04}, { 711, 1, 99,188,0x1c},
+   { 715,25,100,  0,0x04}, { 716,15,101,  0,0x04}, { 717,15,102,  0,0x04}, { 724, 1,  2,  0,0x04},
+   { 725, 1,105,  0,0x04}, { 726,15,106,  0,0x04}, { 762,15, 17, 54,0x14}, { 864, 1, 48, 38,0x1c},
+   { 873,25, 49, 54,0x14}, { 874,25, 50, 54,0x14}, { 875, 1, 46, 54,0x14}, { 876,15, 47, 54,0x14},
+   { 947,19, 33, 54,0x14}, { 965,15, 51, 54,0x14}, { 966,15, 52, 54,0x14}, { 967, 9, 54, 54,0x14},
+   { 968, 9, 55, 54,0x14}, { 969, 9, 56, 54,0x14}, { 970, 1, 57, 54,0x14}, { 971, 1, 58, 54,0x14},
+   { 996,15, 60, 54,0x14}, { 997,15, 61, 54,0x14}, {1018, 1, 59, 57,0x1c}, {1049, 7, 53, 54,0x14},
+   {1079,26, 62, 54,0x14}, {1146,13, 64, 54,0x14}, {1147,10, 65, 54,0x14}, {1151,15, 63, 54,0x14},
+   {1184, 2, 66,150,0x14}, {1185,29, 67,150,0x14}, {1186,15, 68,150,0x14}, {1191,15, 70, 54,0x14},
+   {1192,10, 71, 54,0x14}, {1193, 7, 72, 54,0x14}, {1194, 1, 73, 54,0x14}, {1195,13, 74, 54,0x14},
+   {1196,15, 75, 54,0x14}, {1197,15, 82, 54,0x14}, {1198, 1, 76, 54,0x14}, {1199,11, 77, 54,0x14},
+   {1200,11, 78, 54,0x14}, {1227,15, 69, 54,0x14}, {1242, 8, 81, 54,0x14}, {1244, 8, 80, 54,0x14},
+   {1435, 1, 83, 54,0x14}, {1439, 1, 84, 54,0x14}, {1449,15, 85, 54,0x14}, {1450,15, 86, 54,0x14},
+   {1451,14, 87, 54,0x14}, {1452,14, 88, 54,0x14}, {1457,14, 89, 54,0x14}, {1458,14, 90, 54,0x14},
+   {1478, 1, 91, 54,0x14}, {1479, 1, 92, 54,0x14}, {1480,14, 93, 54,0x14}, {1481, 1, 94, 54,0x14},
+   {1482, 1, 95, 54,0x14}, {1483, 1, 96, 21,0x1c}
 };
 const FieldTrait_Hash_Array RequestForPositions::_ftha(RequestForPositions::_traits, 110);
 const MsgType RequestForPositions::_msgtype("AN");
@@ -3884,46 +3527,37 @@ const FieldTrait *RequestForPositions::NoComplexEvents::NoComplexEventDates::NoC
 const FieldTrait_Hash_Array& RequestForPositions::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& RequestForPositions::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RequestForPositionsAck::_traits[] =
+const FieldTrait RequestForPositionsAck::_traits[]
 {
-   FieldTrait(   1,15,  8,  0,0x04), FieldTrait(  15,19, 99,  0,0x04), FieldTrait(  22,15, 14, 54,0x14),
-   FieldTrait(  48,15, 13, 54,0x14), FieldTrait(  55,15, 11, 54,0x14), FieldTrait(  58,15,104,  0,0x04),
-   FieldTrait(  65,15, 12, 54,0x14), FieldTrait( 106,15, 40, 54,0x14), FieldTrait( 107,15, 43, 54,0x14),
-   FieldTrait( 120,19,113,  0,0x04), FieldTrait( 167,15, 18, 54,0x14), FieldTrait( 200,21, 20, 54,0x14),
-   FieldTrait( 201, 1, 81, 54,0x14), FieldTrait( 202,11, 34, 54,0x14), FieldTrait( 206, 7, 36, 54,0x14),
-   FieldTrait( 207,20, 39, 54,0x14), FieldTrait( 223,14, 38, 54,0x14), FieldTrait( 224,25, 22, 54,0x14),
-   FieldTrait( 225,25, 23, 54,0x14), FieldTrait( 226, 1, 25, 54,0x14), FieldTrait( 227,14, 26, 54,0x14),
-   FieldTrait( 228, 9, 27, 54,0x14), FieldTrait( 231, 9, 37, 54,0x14), FieldTrait( 239, 1, 24, 54,0x14),
-   FieldTrait( 240,25, 33, 54,0x14), FieldTrait( 255,15, 28, 54,0x14), FieldTrait( 263, 7,110,  0,0x04),
-   FieldTrait( 325, 8,  4,  0,0x04), FieldTrait( 348, 2, 41, 54,0x14), FieldTrait( 349,28, 42, 54,0x14),
-   FieldTrait( 350, 2, 44, 54,0x14), FieldTrait( 351,28, 45, 54,0x14), FieldTrait( 354, 2,105,  0,0x04),
-   FieldTrait( 355,28,106,  0,0x04), FieldTrait( 453, 1,  7, 94,0x1c), FieldTrait( 454, 1, 15,142,0x1c),
-   FieldTrait( 460, 1, 16, 54,0x14), FieldTrait( 461,15, 17, 54,0x14), FieldTrait( 470,18, 30, 54,0x14),
-   FieldTrait( 471,15, 31, 54,0x14), FieldTrait( 472,15, 32, 54,0x14), FieldTrait( 541,25, 21, 54,0x14),
-   FieldTrait( 543,15, 29, 54,0x14), FieldTrait( 555, 1,100, 49,0x1c), FieldTrait( 573, 7,108,  0,0x04),
-   FieldTrait( 581, 1, 10,  0,0x04), FieldTrait( 660, 1,  9,  0,0x04), FieldTrait( 667,21, 47, 54,0x14),
-   FieldTrait( 691,15, 46, 54,0x14), FieldTrait( 710,15,  2,  0,0x04), FieldTrait( 711, 1,101,188,0x1c),
-   FieldTrait( 715,25,109,  0,0x04), FieldTrait( 716,15,111,  0,0x04), FieldTrait( 717,15,112,  0,0x04),
-   FieldTrait( 721,15,  1,  0,0x04), FieldTrait( 724, 1,107,  0,0x04), FieldTrait( 725, 1,102,  0,0x04),
-   FieldTrait( 726,15,103,  0,0x04), FieldTrait( 727, 1,  3,  0,0x04), FieldTrait( 728, 1,  5,  0,0x04),
-   FieldTrait( 729, 1,  6,  0,0x04), FieldTrait( 762,15, 19, 54,0x14), FieldTrait( 864, 1, 50, 38,0x1c),
-   FieldTrait( 873,25, 51, 54,0x14), FieldTrait( 874,25, 52, 54,0x14), FieldTrait( 875, 1, 48, 54,0x14),
-   FieldTrait( 876,15, 49, 54,0x14), FieldTrait( 947,19, 35, 54,0x14), FieldTrait( 965,15, 53, 54,0x14),
-   FieldTrait( 966,15, 54, 54,0x14), FieldTrait( 967, 9, 56, 54,0x14), FieldTrait( 968, 9, 57, 54,0x14),
-   FieldTrait( 969, 9, 58, 54,0x14), FieldTrait( 970, 1, 59, 54,0x14), FieldTrait( 971, 1, 60, 54,0x14),
-   FieldTrait( 996,15, 62, 54,0x14), FieldTrait( 997,15, 63, 54,0x14), FieldTrait(1018, 1, 61, 57,0x1c),
-   FieldTrait(1049, 7, 55, 54,0x14), FieldTrait(1079,26, 64, 54,0x14), FieldTrait(1146,13, 66, 54,0x14),
-   FieldTrait(1147,10, 67, 54,0x14), FieldTrait(1151,15, 65, 54,0x14), FieldTrait(1184, 2, 68,150,0x14),
-   FieldTrait(1185,29, 69,150,0x14), FieldTrait(1186,15, 70,150,0x14), FieldTrait(1191,15, 72, 54,0x14),
-   FieldTrait(1192,10, 73, 54,0x14), FieldTrait(1193, 7, 74, 54,0x14), FieldTrait(1194, 1, 75, 54,0x14),
-   FieldTrait(1195,13, 76, 54,0x14), FieldTrait(1196,15, 77, 54,0x14), FieldTrait(1197,15, 84, 54,0x14),
-   FieldTrait(1198, 1, 78, 54,0x14), FieldTrait(1199,11, 79, 54,0x14), FieldTrait(1200,11, 80, 54,0x14),
-   FieldTrait(1227,15, 71, 54,0x14), FieldTrait(1242, 8, 83, 54,0x14), FieldTrait(1244, 8, 82, 54,0x14),
-   FieldTrait(1435, 1, 85, 54,0x14), FieldTrait(1439, 1, 86, 54,0x14), FieldTrait(1449,15, 87, 54,0x14),
-   FieldTrait(1450,15, 88, 54,0x14), FieldTrait(1451,14, 89, 54,0x14), FieldTrait(1452,14, 90, 54,0x14),
-   FieldTrait(1457,14, 91, 54,0x14), FieldTrait(1458,14, 92, 54,0x14), FieldTrait(1478, 1, 93, 54,0x14),
-   FieldTrait(1479, 1, 94, 54,0x14), FieldTrait(1480,14, 95, 54,0x14), FieldTrait(1481, 1, 96, 54,0x14),
-   FieldTrait(1482, 1, 97, 54,0x14), FieldTrait(1483, 1, 98, 21,0x1c)
+   {   1,15,  8,  0,0x04}, {  15,19, 99,  0,0x04}, {  22,15, 14, 54,0x14}, {  48,15, 13, 54,0x14},
+   {  55,15, 11, 54,0x14}, {  58,15,104,  0,0x04}, {  65,15, 12, 54,0x14}, { 106,15, 40, 54,0x14},
+   { 107,15, 43, 54,0x14}, { 120,19,113,  0,0x04}, { 167,15, 18, 54,0x14}, { 200,21, 20, 54,0x14},
+   { 201, 1, 81, 54,0x14}, { 202,11, 34, 54,0x14}, { 206, 7, 36, 54,0x14}, { 207,20, 39, 54,0x14},
+   { 223,14, 38, 54,0x14}, { 224,25, 22, 54,0x14}, { 225,25, 23, 54,0x14}, { 226, 1, 25, 54,0x14},
+   { 227,14, 26, 54,0x14}, { 228, 9, 27, 54,0x14}, { 231, 9, 37, 54,0x14}, { 239, 1, 24, 54,0x14},
+   { 240,25, 33, 54,0x14}, { 255,15, 28, 54,0x14}, { 263, 7,110,  0,0x04}, { 325, 8,  4,  0,0x04},
+   { 348, 2, 41, 54,0x14}, { 349,28, 42, 54,0x14}, { 350, 2, 44, 54,0x14}, { 351,28, 45, 54,0x14},
+   { 354, 2,105,  0,0x04}, { 355,28,106,  0,0x04}, { 453, 1,  7, 94,0x1c}, { 454, 1, 15,142,0x1c},
+   { 460, 1, 16, 54,0x14}, { 461,15, 17, 54,0x14}, { 470,18, 30, 54,0x14}, { 471,15, 31, 54,0x14},
+   { 472,15, 32, 54,0x14}, { 541,25, 21, 54,0x14}, { 543,15, 29, 54,0x14}, { 555, 1,100, 49,0x1c},
+   { 573, 7,108,  0,0x04}, { 581, 1, 10,  0,0x04}, { 660, 1,  9,  0,0x04}, { 667,21, 47, 54,0x14},
+   { 691,15, 46, 54,0x14}, { 710,15,  2,  0,0x04}, { 711, 1,101,188,0x1c}, { 715,25,109,  0,0x04},
+   { 716,15,111,  0,0x04}, { 717,15,112,  0,0x04}, { 721,15,  1,  0,0x04}, { 724, 1,107,  0,0x04},
+   { 725, 1,102,  0,0x04}, { 726,15,103,  0,0x04}, { 727, 1,  3,  0,0x04}, { 728, 1,  5,  0,0x04},
+   { 729, 1,  6,  0,0x04}, { 762,15, 19, 54,0x14}, { 864, 1, 50, 38,0x1c}, { 873,25, 51, 54,0x14},
+   { 874,25, 52, 54,0x14}, { 875, 1, 48, 54,0x14}, { 876,15, 49, 54,0x14}, { 947,19, 35, 54,0x14},
+   { 965,15, 53, 54,0x14}, { 966,15, 54, 54,0x14}, { 967, 9, 56, 54,0x14}, { 968, 9, 57, 54,0x14},
+   { 969, 9, 58, 54,0x14}, { 970, 1, 59, 54,0x14}, { 971, 1, 60, 54,0x14}, { 996,15, 62, 54,0x14},
+   { 997,15, 63, 54,0x14}, {1018, 1, 61, 57,0x1c}, {1049, 7, 55, 54,0x14}, {1079,26, 64, 54,0x14},
+   {1146,13, 66, 54,0x14}, {1147,10, 67, 54,0x14}, {1151,15, 65, 54,0x14}, {1184, 2, 68,150,0x14},
+   {1185,29, 69,150,0x14}, {1186,15, 70,150,0x14}, {1191,15, 72, 54,0x14}, {1192,10, 73, 54,0x14},
+   {1193, 7, 74, 54,0x14}, {1194, 1, 75, 54,0x14}, {1195,13, 76, 54,0x14}, {1196,15, 77, 54,0x14},
+   {1197,15, 84, 54,0x14}, {1198, 1, 78, 54,0x14}, {1199,11, 79, 54,0x14}, {1200,11, 80, 54,0x14},
+   {1227,15, 71, 54,0x14}, {1242, 8, 83, 54,0x14}, {1244, 8, 82, 54,0x14}, {1435, 1, 85, 54,0x14},
+   {1439, 1, 86, 54,0x14}, {1449,15, 87, 54,0x14}, {1450,15, 88, 54,0x14}, {1451,14, 89, 54,0x14},
+   {1452,14, 90, 54,0x14}, {1457,14, 91, 54,0x14}, {1458,14, 92, 54,0x14}, {1478, 1, 93, 54,0x14},
+   {1479, 1, 94, 54,0x14}, {1480,14, 95, 54,0x14}, {1481, 1, 96, 54,0x14}, {1482, 1, 97, 54,0x14},
+   {1483, 1, 98, 21,0x1c}
 };
 const FieldTrait_Hash_Array RequestForPositionsAck::_ftha(RequestForPositionsAck::_traits, 113);
 const MsgType RequestForPositionsAck::_msgtype("AO");
@@ -3992,50 +3626,40 @@ const FieldTrait *RequestForPositionsAck::NoComplexEvents::NoComplexEventDates::
 const FieldTrait_Hash_Array& RequestForPositionsAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& RequestForPositionsAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PositionReport::_traits[] =
+const FieldTrait PositionReport::_traits[]
 {
-   FieldTrait(   1,15, 12,  0,0x04), FieldTrait(  15,19,103,  0,0x04), FieldTrait(  22,15, 18, 54,0x14),
-   FieldTrait(  48,15, 17, 54,0x14), FieldTrait(  55,15, 15, 54,0x14), FieldTrait(  58,15,113,  0,0x04),
-   FieldTrait(  65,15, 16, 54,0x14), FieldTrait( 106,15, 44, 54,0x14), FieldTrait( 107,15, 47, 54,0x14),
-   FieldTrait( 120,19,118,  0,0x04), FieldTrait( 167,15, 22, 54,0x14), FieldTrait( 200,21, 24, 54,0x14),
-   FieldTrait( 201, 1, 85, 54,0x14), FieldTrait( 202,11, 38, 54,0x14), FieldTrait( 206, 7, 40, 54,0x14),
-   FieldTrait( 207,20, 43, 54,0x14), FieldTrait( 223,14, 42, 54,0x14), FieldTrait( 224,25, 26, 54,0x14),
-   FieldTrait( 225,25, 27, 54,0x14), FieldTrait( 226, 1, 29, 54,0x14), FieldTrait( 227,14, 30, 54,0x14),
-   FieldTrait( 228, 9, 31, 54,0x14), FieldTrait( 231, 9, 41, 54,0x14), FieldTrait( 239, 1, 28, 54,0x14),
-   FieldTrait( 240,25, 37, 54,0x14), FieldTrait( 255,15, 32, 54,0x14), FieldTrait( 263, 7,  4,  0,0x04),
-   FieldTrait( 325, 8,  6,  0,0x04), FieldTrait( 348, 2, 45, 54,0x14), FieldTrait( 349,28, 46, 54,0x14),
-   FieldTrait( 350, 2, 48, 54,0x14), FieldTrait( 351,28, 49, 54,0x14), FieldTrait( 354, 2,114,  0,0x04),
-   FieldTrait( 355,28,115,  0,0x04), FieldTrait( 423, 1,117,  0,0x04), FieldTrait( 453, 1, 11, 94,0x1c),
-   FieldTrait( 454, 1, 19,142,0x1c), FieldTrait( 460, 1, 20, 54,0x14), FieldTrait( 461,15, 21, 54,0x14),
-   FieldTrait( 470,18, 34, 54,0x14), FieldTrait( 471,15, 35, 54,0x14), FieldTrait( 472,15, 36, 54,0x14),
-   FieldTrait( 506, 7,111,  0,0x04), FieldTrait( 541,25, 25, 54,0x14), FieldTrait( 543,15, 33, 54,0x14),
-   FieldTrait( 555, 1,107, 49,0x1c), FieldTrait( 573, 7,116,  0,0x04), FieldTrait( 581, 1, 14,  0,0x04),
-   FieldTrait( 660, 1, 13,  0,0x04), FieldTrait( 667,21, 51, 54,0x14), FieldTrait( 691,15, 50, 54,0x14),
-   FieldTrait( 702, 1,109,103,0x1c), FieldTrait( 710,15,  2,  0,0x04), FieldTrait( 711, 1,108,101,0x1c),
-   FieldTrait( 715,25,  8,  0,0x04), FieldTrait( 716,15,  9,  0,0x04), FieldTrait( 717,15, 10,  0,0x04),
-   FieldTrait( 721,15,  1,  0,0x04), FieldTrait( 724, 1,  3,  0,0x04), FieldTrait( 727, 1,  5,  0,0x04),
-   FieldTrait( 728, 1,  7,  0,0x04), FieldTrait( 730,11,104,  0,0x04), FieldTrait( 731, 1,105,  0,0x04),
-   FieldTrait( 734,11,106,  0,0x04), FieldTrait( 743,25,112,  0,0x04), FieldTrait( 753, 1,110,102,0x1c),
-   FieldTrait( 762,15, 23, 54,0x14), FieldTrait( 811, 9,125,  0,0x04), FieldTrait( 864, 1, 54, 38,0x1c),
-   FieldTrait( 873,25, 55, 54,0x14), FieldTrait( 874,25, 56, 54,0x14), FieldTrait( 875, 1, 52, 54,0x14),
-   FieldTrait( 876,15, 53, 54,0x14), FieldTrait( 947,19, 39, 54,0x14), FieldTrait( 965,15, 57, 54,0x14),
-   FieldTrait( 966,15, 58, 54,0x14), FieldTrait( 967, 9, 60, 54,0x14), FieldTrait( 968, 9, 61, 54,0x14),
-   FieldTrait( 969, 9, 62, 54,0x14), FieldTrait( 970, 1, 63, 54,0x14), FieldTrait( 971, 1, 64, 54,0x14),
-   FieldTrait( 996,15, 66, 54,0x14), FieldTrait( 997,15, 67, 54,0x14), FieldTrait(1011,15,119,  0,0x04),
-   FieldTrait(1018, 1, 65, 57,0x1c), FieldTrait(1049, 7, 59, 54,0x14), FieldTrait(1079,26, 68, 54,0x14),
-   FieldTrait(1146,13, 70, 54,0x14), FieldTrait(1147,10, 71, 54,0x14), FieldTrait(1151,15, 69, 54,0x14),
-   FieldTrait(1180,15,120,  8,0x14), FieldTrait(1181, 4,121,  8,0x14), FieldTrait(1184, 2, 72,150,0x14),
-   FieldTrait(1185,29, 73,150,0x14), FieldTrait(1186,15, 74,150,0x14), FieldTrait(1191,15, 76, 54,0x14),
-   FieldTrait(1192,10, 77, 54,0x14), FieldTrait(1193, 7, 78, 54,0x14), FieldTrait(1194, 1, 79, 54,0x14),
-   FieldTrait(1195,13, 80, 54,0x14), FieldTrait(1196,15, 81, 54,0x14), FieldTrait(1197,15, 88, 54,0x14),
-   FieldTrait(1198, 1, 82, 54,0x14), FieldTrait(1199,11, 83, 54,0x14), FieldTrait(1200,11, 84, 54,0x14),
-   FieldTrait(1227,15, 75, 54,0x14), FieldTrait(1242, 8, 87, 54,0x14), FieldTrait(1244, 8, 86, 54,0x14),
-   FieldTrait(1350, 4,122,  8,0x14), FieldTrait(1352, 8,123,  8,0x14), FieldTrait(1434, 1,124,  0,0x04),
-   FieldTrait(1435, 1, 89, 54,0x14), FieldTrait(1439, 1, 90, 54,0x14), FieldTrait(1449,15, 91, 54,0x14),
-   FieldTrait(1450,15, 92, 54,0x14), FieldTrait(1451,14, 93, 54,0x14), FieldTrait(1452,14, 94, 54,0x14),
-   FieldTrait(1457,14, 95, 54,0x14), FieldTrait(1458,14, 96, 54,0x14), FieldTrait(1478, 1, 97, 54,0x14),
-   FieldTrait(1479, 1, 98, 54,0x14), FieldTrait(1480,14, 99, 54,0x14), FieldTrait(1481, 1,100, 54,0x14),
-   FieldTrait(1482, 1,101, 54,0x14), FieldTrait(1483, 1,102, 21,0x1c)
+   {   1,15, 12,  0,0x04}, {  15,19,103,  0,0x04}, {  22,15, 18, 54,0x14}, {  48,15, 17, 54,0x14},
+   {  55,15, 15, 54,0x14}, {  58,15,113,  0,0x04}, {  65,15, 16, 54,0x14}, { 106,15, 44, 54,0x14},
+   { 107,15, 47, 54,0x14}, { 120,19,118,  0,0x04}, { 167,15, 22, 54,0x14}, { 200,21, 24, 54,0x14},
+   { 201, 1, 85, 54,0x14}, { 202,11, 38, 54,0x14}, { 206, 7, 40, 54,0x14}, { 207,20, 43, 54,0x14},
+   { 223,14, 42, 54,0x14}, { 224,25, 26, 54,0x14}, { 225,25, 27, 54,0x14}, { 226, 1, 29, 54,0x14},
+   { 227,14, 30, 54,0x14}, { 228, 9, 31, 54,0x14}, { 231, 9, 41, 54,0x14}, { 239, 1, 28, 54,0x14},
+   { 240,25, 37, 54,0x14}, { 255,15, 32, 54,0x14}, { 263, 7,  4,  0,0x04}, { 325, 8,  6,  0,0x04},
+   { 348, 2, 45, 54,0x14}, { 349,28, 46, 54,0x14}, { 350, 2, 48, 54,0x14}, { 351,28, 49, 54,0x14},
+   { 354, 2,114,  0,0x04}, { 355,28,115,  0,0x04}, { 423, 1,117,  0,0x04}, { 453, 1, 11, 94,0x1c},
+   { 454, 1, 19,142,0x1c}, { 460, 1, 20, 54,0x14}, { 461,15, 21, 54,0x14}, { 470,18, 34, 54,0x14},
+   { 471,15, 35, 54,0x14}, { 472,15, 36, 54,0x14}, { 506, 7,111,  0,0x04}, { 541,25, 25, 54,0x14},
+   { 543,15, 33, 54,0x14}, { 555, 1,107, 49,0x1c}, { 573, 7,116,  0,0x04}, { 581, 1, 14,  0,0x04},
+   { 660, 1, 13,  0,0x04}, { 667,21, 51, 54,0x14}, { 691,15, 50, 54,0x14}, { 702, 1,109,103,0x1c},
+   { 710,15,  2,  0,0x04}, { 711, 1,108,101,0x1c}, { 715,25,  8,  0,0x04}, { 716,15,  9,  0,0x04},
+   { 717,15, 10,  0,0x04}, { 721,15,  1,  0,0x04}, { 724, 1,  3,  0,0x04}, { 727, 1,  5,  0,0x04},
+   { 728, 1,  7,  0,0x04}, { 730,11,104,  0,0x04}, { 731, 1,105,  0,0x04}, { 734,11,106,  0,0x04},
+   { 743,25,112,  0,0x04}, { 753, 1,110,102,0x1c}, { 762,15, 23, 54,0x14}, { 811, 9,125,  0,0x04},
+   { 864, 1, 54, 38,0x1c}, { 873,25, 55, 54,0x14}, { 874,25, 56, 54,0x14}, { 875, 1, 52, 54,0x14},
+   { 876,15, 53, 54,0x14}, { 947,19, 39, 54,0x14}, { 965,15, 57, 54,0x14}, { 966,15, 58, 54,0x14},
+   { 967, 9, 60, 54,0x14}, { 968, 9, 61, 54,0x14}, { 969, 9, 62, 54,0x14}, { 970, 1, 63, 54,0x14},
+   { 971, 1, 64, 54,0x14}, { 996,15, 66, 54,0x14}, { 997,15, 67, 54,0x14}, {1011,15,119,  0,0x04},
+   {1018, 1, 65, 57,0x1c}, {1049, 7, 59, 54,0x14}, {1079,26, 68, 54,0x14}, {1146,13, 70, 54,0x14},
+   {1147,10, 71, 54,0x14}, {1151,15, 69, 54,0x14}, {1180,15,120,  8,0x14}, {1181, 4,121,  8,0x14},
+   {1184, 2, 72,150,0x14}, {1185,29, 73,150,0x14}, {1186,15, 74,150,0x14}, {1191,15, 76, 54,0x14},
+   {1192,10, 77, 54,0x14}, {1193, 7, 78, 54,0x14}, {1194, 1, 79, 54,0x14}, {1195,13, 80, 54,0x14},
+   {1196,15, 81, 54,0x14}, {1197,15, 88, 54,0x14}, {1198, 1, 82, 54,0x14}, {1199,11, 83, 54,0x14},
+   {1200,11, 84, 54,0x14}, {1227,15, 75, 54,0x14}, {1242, 8, 87, 54,0x14}, {1244, 8, 86, 54,0x14},
+   {1350, 4,122,  8,0x14}, {1352, 8,123,  8,0x14}, {1434, 1,124,  0,0x04}, {1435, 1, 89, 54,0x14},
+   {1439, 1, 90, 54,0x14}, {1449,15, 91, 54,0x14}, {1450,15, 92, 54,0x14}, {1451,14, 93, 54,0x14},
+   {1452,14, 94, 54,0x14}, {1457,14, 95, 54,0x14}, {1458,14, 96, 54,0x14}, {1478, 1, 97, 54,0x14},
+   {1479, 1, 98, 54,0x14}, {1480,14, 99, 54,0x14}, {1481, 1,100, 54,0x14}, {1482, 1,101, 54,0x14},
+   {1483, 1,102, 21,0x1c}
 };
 const FieldTrait_Hash_Array PositionReport::_ftha(PositionReport::_traits, 125);
 const MsgType PositionReport::_msgtype("AP");
@@ -4072,34 +3696,27 @@ const FieldTrait *PositionReport::NoPositions::NoNestedPartyIDs::NoNestedPartySu
 const FieldTrait_Hash_Array& PositionReport::NoPositions::NoNestedPartyIDs::NoNestedPartySubIDs::_ftha(NoNestedPartySubIDsV1_ftha);
 const MsgType& PositionReport::NoPositions::NoNestedPartyIDs::NoNestedPartySubIDs::_msgtype(NoNestedPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PositionReport::NoUnderlyings::_traits[] =
+const FieldTrait PositionReport::NoUnderlyings::_traits[]
 {
-   FieldTrait( 241,25, 12,191,0x14), FieldTrait( 242,25, 13,191,0x14), FieldTrait( 243, 1, 14,191,0x14),
-   FieldTrait( 244, 1, 15,191,0x14), FieldTrait( 245,14, 16,191,0x14), FieldTrait( 246, 9, 17,191,0x14),
-   FieldTrait( 247,25, 23,191,0x14), FieldTrait( 256,15, 18,191,0x14), FieldTrait( 305,15,  4,191,0x14),
-   FieldTrait( 306,15, 30,191,0x14), FieldTrait( 307,15, 33,191,0x14), FieldTrait( 308,20, 29,191,0x14),
-   FieldTrait( 309,15,  3,191,0x14), FieldTrait( 310,15,  8,191,0x14), FieldTrait( 311,15,  1,191,0x14),
-   FieldTrait( 312,15,  2,191,0x14), FieldTrait( 313,21, 10,191,0x14), FieldTrait( 315, 1, 60,191,0x14),
-   FieldTrait( 316,11, 24,191,0x14), FieldTrait( 317, 7, 26,191,0x14), FieldTrait( 318,19, 38,191,0x14),
-   FieldTrait( 362, 2, 31,191,0x14), FieldTrait( 363,28, 32,191,0x14), FieldTrait( 364, 2, 34,191,0x14),
-   FieldTrait( 365,28, 35,191,0x14), FieldTrait( 435,14, 28,191,0x14), FieldTrait( 436, 9, 27,191,0x14),
-   FieldTrait( 457, 1,  5,189,0x1c), FieldTrait( 462, 1,  6,191,0x14), FieldTrait( 463,15,  7,191,0x14),
-   FieldTrait( 542,25, 11,191,0x14), FieldTrait( 592,18, 20,191,0x14), FieldTrait( 593,15, 21,191,0x14),
-   FieldTrait( 594,15, 22,191,0x14), FieldTrait( 595,15, 19,191,0x14), FieldTrait( 732,11, 73,  0,0x04),
-   FieldTrait( 733, 1, 74,  0,0x04), FieldTrait( 763,15,  9,191,0x14), FieldTrait( 810,11, 40,191,0x14),
-   FieldTrait( 877,15, 36,191,0x14), FieldTrait( 878,15, 37,191,0x14), FieldTrait( 879,10, 39,191,0x14),
-   FieldTrait( 882,11, 41,191,0x14), FieldTrait( 883,11, 42,191,0x14), FieldTrait( 884,13, 43,191,0x14),
-   FieldTrait( 885,13, 44,191,0x14), FieldTrait( 886,13, 45,191,0x14), FieldTrait( 887, 1, 46,194,0x1c),
-   FieldTrait( 941,19, 25,191,0x14), FieldTrait( 972,14, 47,191,0x14), FieldTrait( 973,13, 49,191,0x14),
-   FieldTrait( 974,15, 50,191,0x14), FieldTrait( 975, 1, 48,191,0x14), FieldTrait( 984, 1, 75,190,0x1c),
-   FieldTrait( 998,15, 51,191,0x14), FieldTrait(1000,15, 52,191,0x14), FieldTrait(1037,13, 76,  0,0x04),
-   FieldTrait(1038,13, 53,191,0x14), FieldTrait(1039,15, 55,191,0x14), FieldTrait(1044,10, 56,191,0x14),
-   FieldTrait(1045, 9, 57,191,0x14), FieldTrait(1046, 7, 58,191,0x14), FieldTrait(1058, 1, 54,195,0x1c),
-   FieldTrait(1213,26, 59,191,0x14), FieldTrait(1419, 1, 61,191,0x14), FieldTrait(1423,10, 62,191,0x14),
-   FieldTrait(1424,15, 63,191,0x14), FieldTrait(1425,10, 64,191,0x14), FieldTrait(1437, 1, 65,191,0x14),
-   FieldTrait(1441, 1, 66,191,0x14), FieldTrait(1453,15, 67,191,0x14), FieldTrait(1454,15, 68,191,0x14),
-   FieldTrait(1455,14, 69,191,0x14), FieldTrait(1456,14, 70,191,0x14), FieldTrait(1459,14, 71,191,0x14),
-   FieldTrait(1460,14, 72,191,0x14)
+   { 241,25, 12,191,0x14}, { 242,25, 13,191,0x14}, { 243, 1, 14,191,0x14}, { 244, 1, 15,191,0x14},
+   { 245,14, 16,191,0x14}, { 246, 9, 17,191,0x14}, { 247,25, 23,191,0x14}, { 256,15, 18,191,0x14},
+   { 305,15,  4,191,0x14}, { 306,15, 30,191,0x14}, { 307,15, 33,191,0x14}, { 308,20, 29,191,0x14},
+   { 309,15,  3,191,0x14}, { 310,15,  8,191,0x14}, { 311,15,  1,191,0x14}, { 312,15,  2,191,0x14},
+   { 313,21, 10,191,0x14}, { 315, 1, 60,191,0x14}, { 316,11, 24,191,0x14}, { 317, 7, 26,191,0x14},
+   { 318,19, 38,191,0x14}, { 362, 2, 31,191,0x14}, { 363,28, 32,191,0x14}, { 364, 2, 34,191,0x14},
+   { 365,28, 35,191,0x14}, { 435,14, 28,191,0x14}, { 436, 9, 27,191,0x14}, { 457, 1,  5,189,0x1c},
+   { 462, 1,  6,191,0x14}, { 463,15,  7,191,0x14}, { 542,25, 11,191,0x14}, { 592,18, 20,191,0x14},
+   { 593,15, 21,191,0x14}, { 594,15, 22,191,0x14}, { 595,15, 19,191,0x14}, { 732,11, 73,  0,0x04},
+   { 733, 1, 74,  0,0x04}, { 763,15,  9,191,0x14}, { 810,11, 40,191,0x14}, { 877,15, 36,191,0x14},
+   { 878,15, 37,191,0x14}, { 879,10, 39,191,0x14}, { 882,11, 41,191,0x14}, { 883,11, 42,191,0x14},
+   { 884,13, 43,191,0x14}, { 885,13, 44,191,0x14}, { 886,13, 45,191,0x14}, { 887, 1, 46,194,0x1c},
+   { 941,19, 25,191,0x14}, { 972,14, 47,191,0x14}, { 973,13, 49,191,0x14}, { 974,15, 50,191,0x14},
+   { 975, 1, 48,191,0x14}, { 984, 1, 75,190,0x1c}, { 998,15, 51,191,0x14}, {1000,15, 52,191,0x14},
+   {1037,13, 76,  0,0x04}, {1038,13, 53,191,0x14}, {1039,15, 55,191,0x14}, {1044,10, 56,191,0x14},
+   {1045, 9, 57,191,0x14}, {1046, 7, 58,191,0x14}, {1058, 1, 54,195,0x1c}, {1213,26, 59,191,0x14},
+   {1419, 1, 61,191,0x14}, {1423,10, 62,191,0x14}, {1424,15, 63,191,0x14}, {1425,10, 64,191,0x14},
+   {1437, 1, 65,191,0x14}, {1441, 1, 66,191,0x14}, {1453,15, 67,191,0x14}, {1454,15, 68,191,0x14},
+   {1455,14, 69,191,0x14}, {1456,14, 70,191,0x14}, {1459,14, 71,191,0x14}, {1460,14, 72,191,0x14}
 };
 const FieldTrait_Hash_Array 
    PositionReport::NoUnderlyings::_ftha(PositionReport::NoUnderlyings::_traits, 76);
@@ -4113,10 +3730,9 @@ const FieldTrait *PositionReport::NoUnderlyings::NoUnderlyingStips::_traits(NoUn
 const FieldTrait_Hash_Array& PositionReport::NoUnderlyings::NoUnderlyingStips::_ftha(NoUnderlyingStipsV1_ftha);
 const MsgType& PositionReport::NoUnderlyings::NoUnderlyingStips::_msgtype(NoUnderlyingStipsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PositionReport::NoUnderlyings::NoUnderlyingAmounts::_traits[] =
+const FieldTrait PositionReport::NoUnderlyings::NoUnderlyingAmounts::_traits[]
 {
-   FieldTrait( 985,13,  1,  0,0x04), FieldTrait( 986,13,  2,  0,0x04), FieldTrait( 987,25,  3,  0,0x04),
-   FieldTrait( 988,15,  4,  0,0x04)
+   { 985,13,  1,  0,0x04}, { 986,13,  2,  0,0x04}, { 987,25,  3,  0,0x04}, { 988,15,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PositionReport::NoUnderlyings::NoUnderlyingAmounts::_ftha(PositionReport::NoUnderlyings::NoUnderlyingAmounts::_traits, 4);
@@ -4158,44 +3774,35 @@ const FieldTrait *PositionReport::NoComplexEvents::NoComplexEventDates::NoComple
 const FieldTrait_Hash_Array& PositionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& PositionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReportRequestAck::_traits[] =
+const FieldTrait TradeCaptureReportRequestAck::_traits[]
 {
-   FieldTrait(  22,15, 10, 54,0x14), FieldTrait(  48,15,  9, 54,0x14), FieldTrait(  55,15,  7, 54,0x14),
-   FieldTrait(  58,15,100,  0,0x04), FieldTrait(  65,15,  8, 54,0x14), FieldTrait( 106,15, 36, 54,0x14),
-   FieldTrait( 107,15, 39, 54,0x14), FieldTrait( 167,15, 14, 54,0x14), FieldTrait( 200,21, 16, 54,0x14),
-   FieldTrait( 201, 1, 77, 54,0x14), FieldTrait( 202,11, 30, 54,0x14), FieldTrait( 206, 7, 32, 54,0x14),
-   FieldTrait( 207,20, 35, 54,0x14), FieldTrait( 223,14, 34, 54,0x14), FieldTrait( 224,25, 18, 54,0x14),
-   FieldTrait( 225,25, 19, 54,0x14), FieldTrait( 226, 1, 21, 54,0x14), FieldTrait( 227,14, 22, 54,0x14),
-   FieldTrait( 228, 9, 23, 54,0x14), FieldTrait( 231, 9, 33, 54,0x14), FieldTrait( 239, 1, 20, 54,0x14),
-   FieldTrait( 240,25, 29, 54,0x14), FieldTrait( 255,15, 24, 54,0x14), FieldTrait( 263, 7,  3,  0,0x04),
-   FieldTrait( 348, 2, 37, 54,0x14), FieldTrait( 349,28, 38, 54,0x14), FieldTrait( 350, 2, 40, 54,0x14),
-   FieldTrait( 351,28, 41, 54,0x14), FieldTrait( 354, 2,101,  0,0x04), FieldTrait( 355,28,102,  0,0x04),
-   FieldTrait( 442, 7, 97,  0,0x04), FieldTrait( 454, 1, 11,142,0x1c), FieldTrait( 460, 1, 12, 54,0x14),
-   FieldTrait( 461,15, 13, 54,0x14), FieldTrait( 470,18, 26, 54,0x14), FieldTrait( 471,15, 27, 54,0x14),
-   FieldTrait( 472,15, 28, 54,0x14), FieldTrait( 541,25, 17, 54,0x14), FieldTrait( 543,15, 25, 54,0x14),
-   FieldTrait( 555, 1, 96, 49,0x1c), FieldTrait( 568,15,  1,  0,0x04), FieldTrait( 569, 1,  2,  0,0x04),
-   FieldTrait( 667,21, 43, 54,0x14), FieldTrait( 691,15, 42, 54,0x14), FieldTrait( 711, 1, 95,188,0x1c),
-   FieldTrait( 725, 1, 98,  0,0x04), FieldTrait( 726,15, 99,  0,0x04), FieldTrait( 748, 1,  4,  0,0x04),
-   FieldTrait( 749, 1,  5,  0,0x04), FieldTrait( 750, 1,  6,  0,0x04), FieldTrait( 762,15, 15, 54,0x14),
-   FieldTrait( 864, 1, 46, 38,0x1c), FieldTrait( 873,25, 47, 54,0x14), FieldTrait( 874,25, 48, 54,0x14),
-   FieldTrait( 875, 1, 44, 54,0x14), FieldTrait( 876,15, 45, 54,0x14), FieldTrait( 947,19, 31, 54,0x14),
-   FieldTrait( 965,15, 49, 54,0x14), FieldTrait( 966,15, 50, 54,0x14), FieldTrait( 967, 9, 52, 54,0x14),
-   FieldTrait( 968, 9, 53, 54,0x14), FieldTrait( 969, 9, 54, 54,0x14), FieldTrait( 970, 1, 55, 54,0x14),
-   FieldTrait( 971, 1, 56, 54,0x14), FieldTrait( 996,15, 58, 54,0x14), FieldTrait( 997,15, 59, 54,0x14),
-   FieldTrait(1003,15,104,  0,0x04), FieldTrait(1011,15,103,  0,0x04), FieldTrait(1018, 1, 57, 57,0x1c),
-   FieldTrait(1040,15,105,  0,0x04), FieldTrait(1041,15,106,  0,0x04), FieldTrait(1042,15,107,  0,0x04),
-   FieldTrait(1049, 7, 51, 54,0x14), FieldTrait(1079,26, 60, 54,0x14), FieldTrait(1146,13, 62, 54,0x14),
-   FieldTrait(1147,10, 63, 54,0x14), FieldTrait(1151,15, 61, 54,0x14), FieldTrait(1184, 2, 64,150,0x14),
-   FieldTrait(1185,29, 65,150,0x14), FieldTrait(1186,15, 66,150,0x14), FieldTrait(1191,15, 68, 54,0x14),
-   FieldTrait(1192,10, 69, 54,0x14), FieldTrait(1193, 7, 70, 54,0x14), FieldTrait(1194, 1, 71, 54,0x14),
-   FieldTrait(1195,13, 72, 54,0x14), FieldTrait(1196,15, 73, 54,0x14), FieldTrait(1197,15, 80, 54,0x14),
-   FieldTrait(1198, 1, 74, 54,0x14), FieldTrait(1199,11, 75, 54,0x14), FieldTrait(1200,11, 76, 54,0x14),
-   FieldTrait(1227,15, 67, 54,0x14), FieldTrait(1242, 8, 79, 54,0x14), FieldTrait(1244, 8, 78, 54,0x14),
-   FieldTrait(1435, 1, 81, 54,0x14), FieldTrait(1439, 1, 82, 54,0x14), FieldTrait(1449,15, 83, 54,0x14),
-   FieldTrait(1450,15, 84, 54,0x14), FieldTrait(1451,14, 85, 54,0x14), FieldTrait(1452,14, 86, 54,0x14),
-   FieldTrait(1457,14, 87, 54,0x14), FieldTrait(1458,14, 88, 54,0x14), FieldTrait(1478, 1, 89, 54,0x14),
-   FieldTrait(1479, 1, 90, 54,0x14), FieldTrait(1480,14, 91, 54,0x14), FieldTrait(1481, 1, 92, 54,0x14),
-   FieldTrait(1482, 1, 93, 54,0x14), FieldTrait(1483, 1, 94, 21,0x1c)
+   {  22,15, 10, 54,0x14}, {  48,15,  9, 54,0x14}, {  55,15,  7, 54,0x14}, {  58,15,100,  0,0x04},
+   {  65,15,  8, 54,0x14}, { 106,15, 36, 54,0x14}, { 107,15, 39, 54,0x14}, { 167,15, 14, 54,0x14},
+   { 200,21, 16, 54,0x14}, { 201, 1, 77, 54,0x14}, { 202,11, 30, 54,0x14}, { 206, 7, 32, 54,0x14},
+   { 207,20, 35, 54,0x14}, { 223,14, 34, 54,0x14}, { 224,25, 18, 54,0x14}, { 225,25, 19, 54,0x14},
+   { 226, 1, 21, 54,0x14}, { 227,14, 22, 54,0x14}, { 228, 9, 23, 54,0x14}, { 231, 9, 33, 54,0x14},
+   { 239, 1, 20, 54,0x14}, { 240,25, 29, 54,0x14}, { 255,15, 24, 54,0x14}, { 263, 7,  3,  0,0x04},
+   { 348, 2, 37, 54,0x14}, { 349,28, 38, 54,0x14}, { 350, 2, 40, 54,0x14}, { 351,28, 41, 54,0x14},
+   { 354, 2,101,  0,0x04}, { 355,28,102,  0,0x04}, { 442, 7, 97,  0,0x04}, { 454, 1, 11,142,0x1c},
+   { 460, 1, 12, 54,0x14}, { 461,15, 13, 54,0x14}, { 470,18, 26, 54,0x14}, { 471,15, 27, 54,0x14},
+   { 472,15, 28, 54,0x14}, { 541,25, 17, 54,0x14}, { 543,15, 25, 54,0x14}, { 555, 1, 96, 49,0x1c},
+   { 568,15,  1,  0,0x04}, { 569, 1,  2,  0,0x04}, { 667,21, 43, 54,0x14}, { 691,15, 42, 54,0x14},
+   { 711, 1, 95,188,0x1c}, { 725, 1, 98,  0,0x04}, { 726,15, 99,  0,0x04}, { 748, 1,  4,  0,0x04},
+   { 749, 1,  5,  0,0x04}, { 750, 1,  6,  0,0x04}, { 762,15, 15, 54,0x14}, { 864, 1, 46, 38,0x1c},
+   { 873,25, 47, 54,0x14}, { 874,25, 48, 54,0x14}, { 875, 1, 44, 54,0x14}, { 876,15, 45, 54,0x14},
+   { 947,19, 31, 54,0x14}, { 965,15, 49, 54,0x14}, { 966,15, 50, 54,0x14}, { 967, 9, 52, 54,0x14},
+   { 968, 9, 53, 54,0x14}, { 969, 9, 54, 54,0x14}, { 970, 1, 55, 54,0x14}, { 971, 1, 56, 54,0x14},
+   { 996,15, 58, 54,0x14}, { 997,15, 59, 54,0x14}, {1003,15,104,  0,0x04}, {1011,15,103,  0,0x04},
+   {1018, 1, 57, 57,0x1c}, {1040,15,105,  0,0x04}, {1041,15,106,  0,0x04}, {1042,15,107,  0,0x04},
+   {1049, 7, 51, 54,0x14}, {1079,26, 60, 54,0x14}, {1146,13, 62, 54,0x14}, {1147,10, 63, 54,0x14},
+   {1151,15, 61, 54,0x14}, {1184, 2, 64,150,0x14}, {1185,29, 65,150,0x14}, {1186,15, 66,150,0x14},
+   {1191,15, 68, 54,0x14}, {1192,10, 69, 54,0x14}, {1193, 7, 70, 54,0x14}, {1194, 1, 71, 54,0x14},
+   {1195,13, 72, 54,0x14}, {1196,15, 73, 54,0x14}, {1197,15, 80, 54,0x14}, {1198, 1, 74, 54,0x14},
+   {1199,11, 75, 54,0x14}, {1200,11, 76, 54,0x14}, {1227,15, 67, 54,0x14}, {1242, 8, 79, 54,0x14},
+   {1244, 8, 78, 54,0x14}, {1435, 1, 81, 54,0x14}, {1439, 1, 82, 54,0x14}, {1449,15, 83, 54,0x14},
+   {1450,15, 84, 54,0x14}, {1451,14, 85, 54,0x14}, {1452,14, 86, 54,0x14}, {1457,14, 87, 54,0x14},
+   {1458,14, 88, 54,0x14}, {1478, 1, 89, 54,0x14}, {1479, 1, 90, 54,0x14}, {1480,14, 91, 54,0x14},
+   {1481, 1, 92, 54,0x14}, {1482, 1, 93, 54,0x14}, {1483, 1, 94, 21,0x1c}
 };
 const FieldTrait_Hash_Array TradeCaptureReportRequestAck::_ftha(TradeCaptureReportRequestAck::_traits, 107);
 const MsgType TradeCaptureReportRequestAck::_msgtype("AQ");
@@ -4256,66 +3863,51 @@ const FieldTrait *TradeCaptureReportRequestAck::NoComplexEvents::NoComplexEventD
 const FieldTrait_Hash_Array& TradeCaptureReportRequestAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& TradeCaptureReportRequestAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReportAck::_traits[] =
+const FieldTrait TradeCaptureReportAck::_traits[]
 {
-   FieldTrait(   6,11,130,  0,0x04), FieldTrait(  15,19,165,  0,0x04), FieldTrait(  17,15, 17,  0,0x04),
-   FieldTrait(  22,15, 22, 54,0x14), FieldTrait(  30,20,127,  0,0x04), FieldTrait(  31,11,123,  0,0x04),
-   FieldTrait(  32,10,122,  0,0x04), FieldTrait(  48,15, 21, 54,0x14), FieldTrait(  55,15, 19, 54,0x14),
-   FieldTrait(  58,15,111,  0,0x04), FieldTrait(  60,22,107,  0,0x04), FieldTrait(  63,15,134,  0,0x04),
-   FieldTrait(  64,25,140,  0,0x04), FieldTrait(  65,15, 20, 54,0x14), FieldTrait(  75,25,128,  0,0x04),
-   FieldTrait( 106,15, 48, 54,0x14), FieldTrait( 107,15, 51, 54,0x14), FieldTrait( 120,19,166,  0,0x04),
-   FieldTrait( 150, 7,  8,  0,0x04), FieldTrait( 167,15, 26, 54,0x14), FieldTrait( 194,11,125,  0,0x04),
-   FieldTrait( 195,12,126,  0,0x04), FieldTrait( 200,21, 28, 54,0x14), FieldTrait( 201, 1, 89, 54,0x14),
-   FieldTrait( 202,11, 42, 54,0x14), FieldTrait( 206, 7, 44, 54,0x14), FieldTrait( 207,20, 47, 54,0x14),
-   FieldTrait( 223,14, 46, 54,0x14), FieldTrait( 224,25, 30, 54,0x14), FieldTrait( 225,25, 31, 54,0x14),
-   FieldTrait( 226, 1, 33, 54,0x14), FieldTrait( 227,14, 34, 54,0x14), FieldTrait( 228, 9, 35, 54,0x14),
-   FieldTrait( 231, 9, 45, 54,0x14), FieldTrait( 239, 1, 32, 54,0x14), FieldTrait( 240,25, 41, 54,0x14),
-   FieldTrait( 255,15, 36, 54,0x14), FieldTrait( 263, 7, 14,  0,0x04), FieldTrait( 348, 2, 49, 54,0x14),
-   FieldTrait( 349,28, 50, 54,0x14), FieldTrait( 350, 2, 52, 54,0x14), FieldTrait( 351,28, 53, 54,0x14),
-   FieldTrait( 354, 2,112,  0,0x04), FieldTrait( 355,28,113,  0,0x04), FieldTrait( 378, 1,116,  0,0x04),
-   FieldTrait( 381,13,156,  0,0x04), FieldTrait( 423, 1,118,  0,0x04), FieldTrait( 442, 7,132,  0,0x04),
-   FieldTrait( 454, 1, 23,142,0x1c), FieldTrait( 460, 1, 24, 54,0x14), FieldTrait( 461,15, 25, 54,0x14),
-   FieldTrait( 470,18, 38, 54,0x14), FieldTrait( 471,15, 39, 54,0x14), FieldTrait( 472,15, 40, 54,0x14),
-   FieldTrait( 487, 1,  2,  0,0x04), FieldTrait( 527,15, 18,  0,0x04), FieldTrait( 541,25, 29, 54,0x14),
-   FieldTrait( 543,15, 37, 54,0x14), FieldTrait( 552, 1,148,178,0x1c), FieldTrait( 555, 1,114,181,0x1c),
-   FieldTrait( 570, 8,117,  0,0x04), FieldTrait( 571,15,  1,  0,0x04), FieldTrait( 572,15,  9,  0,0x04),
-   FieldTrait( 573, 7,135,  0,0x04), FieldTrait( 574,15,136,  0,0x04), FieldTrait( 635,15,115,  0,0x04),
-   FieldTrait( 667,21, 55, 54,0x14), FieldTrait( 669,11,124,  0,0x04), FieldTrait( 691,15, 54, 54,0x14),
-   FieldTrait( 711, 1,163,188,0x1c), FieldTrait( 715,25,129,  0,0x04), FieldTrait( 716,15,141,  0,0x04),
-   FieldTrait( 717,15,142,  0,0x04), FieldTrait( 725, 1,109,  0,0x04), FieldTrait( 726,15,110,  0,0x04),
-   FieldTrait( 751, 1, 12,  0,0x04), FieldTrait( 753, 1,143,102,0x1c), FieldTrait( 762,15, 27, 54,0x14),
-   FieldTrait( 768, 1,108,182,0x1c), FieldTrait( 779,22,146,  0,0x04), FieldTrait( 797, 8,137,  0,0x04),
-   FieldTrait( 818,15, 13,  0,0x04), FieldTrait( 819, 1,131,  0,0x04), FieldTrait( 820,15, 15,  0,0x04),
-   FieldTrait( 822,15,119,  0,0x04), FieldTrait( 823,15,121,  0,0x04), FieldTrait( 824,15,133,  0,0x04),
-   FieldTrait( 828, 1,  4,  0,0x04), FieldTrait( 829, 1,  5,  0,0x04), FieldTrait( 830,15,  7,  0,0x04),
-   FieldTrait( 852, 8,138,  0,0x04), FieldTrait( 853, 1,139,  0,0x04), FieldTrait( 854, 1,120,  0,0x04),
-   FieldTrait( 855, 1,  6,  0,0x04), FieldTrait( 856, 1,  3,  0,0x04), FieldTrait( 864, 1, 58, 38,0x1c),
-   FieldTrait( 873,25, 59, 54,0x14), FieldTrait( 874,25, 60, 54,0x14), FieldTrait( 875, 1, 56, 54,0x14),
-   FieldTrait( 876,15, 57, 54,0x14), FieldTrait( 880,15, 16,  0,0x04), FieldTrait( 881,15, 10,  0,0x04),
-   FieldTrait( 939, 1, 11,  0,0x04), FieldTrait( 947,19, 43, 54,0x14), FieldTrait( 965,15, 61, 54,0x14),
-   FieldTrait( 966,15, 62, 54,0x14), FieldTrait( 967, 9, 64, 54,0x14), FieldTrait( 968, 9, 65, 54,0x14),
-   FieldTrait( 969, 9, 66, 54,0x14), FieldTrait( 970, 1, 67, 54,0x14), FieldTrait( 971, 1, 68, 54,0x14),
-   FieldTrait( 991,11,147,  0,0x04), FieldTrait( 994,15,144,  0,0x04), FieldTrait( 996,15, 70, 54,0x14),
-   FieldTrait( 997,15, 71, 54,0x14), FieldTrait(1003,15,150,  0,0x04), FieldTrait(1011,15,145,  0,0x04),
-   FieldTrait(1015, 7,149,  0,0x04), FieldTrait(1018, 1, 69, 57,0x1c), FieldTrait(1040,15,151,  0,0x04),
-   FieldTrait(1041,15,152,  0,0x04), FieldTrait(1042,15,153,  0,0x04), FieldTrait(1049, 7, 63, 54,0x14),
-   FieldTrait(1056,10,154,  0,0x04), FieldTrait(1071,12,155,  0,0x04), FieldTrait(1079,26, 72, 54,0x14),
-   FieldTrait(1116, 1,157,139,0x1c), FieldTrait(1123, 7,158,  0,0x04), FieldTrait(1124, 7,159,  0,0x04),
-   FieldTrait(1125,25,160,  0,0x04), FieldTrait(1126,15,161,  0,0x04), FieldTrait(1127,15,162,  0,0x04),
-   FieldTrait(1135,15,164,  0,0x04), FieldTrait(1146,13, 74, 54,0x14), FieldTrait(1147,10, 75, 54,0x14),
-   FieldTrait(1151,15, 73, 54,0x14), FieldTrait(1184, 2, 76,150,0x14), FieldTrait(1185,29, 77,150,0x14),
-   FieldTrait(1186,15, 78,150,0x14), FieldTrait(1191,15, 80, 54,0x14), FieldTrait(1192,10, 81, 54,0x14),
-   FieldTrait(1193, 7, 82, 54,0x14), FieldTrait(1194, 1, 83, 54,0x14), FieldTrait(1195,13, 84, 54,0x14),
-   FieldTrait(1196,15, 85, 54,0x14), FieldTrait(1197,15, 92, 54,0x14), FieldTrait(1198, 1, 86, 54,0x14),
-   FieldTrait(1199,11, 87, 54,0x14), FieldTrait(1200,11, 88, 54,0x14), FieldTrait(1227,15, 79, 54,0x14),
-   FieldTrait(1242, 8, 91, 54,0x14), FieldTrait(1244, 8, 90, 54,0x14), FieldTrait(1300,15,171,  0,0x04),
-   FieldTrait(1301,20,172,  0,0x04), FieldTrait(1329, 9,167,  0,0x04), FieldTrait(1387, 1,168,183,0x1c),
-   FieldTrait(1390, 1,169,  0,0x04), FieldTrait(1430, 7,170,  0,0x04), FieldTrait(1435, 1, 93, 54,0x14),
-   FieldTrait(1439, 1, 94, 54,0x14), FieldTrait(1449,15, 95, 54,0x14), FieldTrait(1450,15, 96, 54,0x14),
-   FieldTrait(1451,14, 97, 54,0x14), FieldTrait(1452,14, 98, 54,0x14), FieldTrait(1457,14, 99, 54,0x14),
-   FieldTrait(1458,14,100, 54,0x14), FieldTrait(1478, 1,101, 54,0x14), FieldTrait(1479, 1,102, 54,0x14),
-   FieldTrait(1480,14,103, 54,0x14), FieldTrait(1481, 1,104, 54,0x14), FieldTrait(1482, 1,105, 54,0x14),
-   FieldTrait(1483, 1,106, 21,0x1c)
+   {   6,11,130,  0,0x04}, {  15,19,165,  0,0x04}, {  17,15, 17,  0,0x04}, {  22,15, 22, 54,0x14},
+   {  30,20,127,  0,0x04}, {  31,11,123,  0,0x04}, {  32,10,122,  0,0x04}, {  48,15, 21, 54,0x14},
+   {  55,15, 19, 54,0x14}, {  58,15,111,  0,0x04}, {  60,22,107,  0,0x04}, {  63,15,134,  0,0x04},
+   {  64,25,140,  0,0x04}, {  65,15, 20, 54,0x14}, {  75,25,128,  0,0x04}, { 106,15, 48, 54,0x14},
+   { 107,15, 51, 54,0x14}, { 120,19,166,  0,0x04}, { 150, 7,  8,  0,0x04}, { 167,15, 26, 54,0x14},
+   { 194,11,125,  0,0x04}, { 195,12,126,  0,0x04}, { 200,21, 28, 54,0x14}, { 201, 1, 89, 54,0x14},
+   { 202,11, 42, 54,0x14}, { 206, 7, 44, 54,0x14}, { 207,20, 47, 54,0x14}, { 223,14, 46, 54,0x14},
+   { 224,25, 30, 54,0x14}, { 225,25, 31, 54,0x14}, { 226, 1, 33, 54,0x14}, { 227,14, 34, 54,0x14},
+   { 228, 9, 35, 54,0x14}, { 231, 9, 45, 54,0x14}, { 239, 1, 32, 54,0x14}, { 240,25, 41, 54,0x14},
+   { 255,15, 36, 54,0x14}, { 263, 7, 14,  0,0x04}, { 348, 2, 49, 54,0x14}, { 349,28, 50, 54,0x14},
+   { 350, 2, 52, 54,0x14}, { 351,28, 53, 54,0x14}, { 354, 2,112,  0,0x04}, { 355,28,113,  0,0x04},
+   { 378, 1,116,  0,0x04}, { 381,13,156,  0,0x04}, { 423, 1,118,  0,0x04}, { 442, 7,132,  0,0x04},
+   { 454, 1, 23,142,0x1c}, { 460, 1, 24, 54,0x14}, { 461,15, 25, 54,0x14}, { 470,18, 38, 54,0x14},
+   { 471,15, 39, 54,0x14}, { 472,15, 40, 54,0x14}, { 487, 1,  2,  0,0x04}, { 527,15, 18,  0,0x04},
+   { 541,25, 29, 54,0x14}, { 543,15, 37, 54,0x14}, { 552, 1,148,178,0x1c}, { 555, 1,114,181,0x1c},
+   { 570, 8,117,  0,0x04}, { 571,15,  1,  0,0x04}, { 572,15,  9,  0,0x04}, { 573, 7,135,  0,0x04},
+   { 574,15,136,  0,0x04}, { 635,15,115,  0,0x04}, { 667,21, 55, 54,0x14}, { 669,11,124,  0,0x04},
+   { 691,15, 54, 54,0x14}, { 711, 1,163,188,0x1c}, { 715,25,129,  0,0x04}, { 716,15,141,  0,0x04},
+   { 717,15,142,  0,0x04}, { 725, 1,109,  0,0x04}, { 726,15,110,  0,0x04}, { 751, 1, 12,  0,0x04},
+   { 753, 1,143,102,0x1c}, { 762,15, 27, 54,0x14}, { 768, 1,108,182,0x1c}, { 779,22,146,  0,0x04},
+   { 797, 8,137,  0,0x04}, { 818,15, 13,  0,0x04}, { 819, 1,131,  0,0x04}, { 820,15, 15,  0,0x04},
+   { 822,15,119,  0,0x04}, { 823,15,121,  0,0x04}, { 824,15,133,  0,0x04}, { 828, 1,  4,  0,0x04},
+   { 829, 1,  5,  0,0x04}, { 830,15,  7,  0,0x04}, { 852, 8,138,  0,0x04}, { 853, 1,139,  0,0x04},
+   { 854, 1,120,  0,0x04}, { 855, 1,  6,  0,0x04}, { 856, 1,  3,  0,0x04}, { 864, 1, 58, 38,0x1c},
+   { 873,25, 59, 54,0x14}, { 874,25, 60, 54,0x14}, { 875, 1, 56, 54,0x14}, { 876,15, 57, 54,0x14},
+   { 880,15, 16,  0,0x04}, { 881,15, 10,  0,0x04}, { 939, 1, 11,  0,0x04}, { 947,19, 43, 54,0x14},
+   { 965,15, 61, 54,0x14}, { 966,15, 62, 54,0x14}, { 967, 9, 64, 54,0x14}, { 968, 9, 65, 54,0x14},
+   { 969, 9, 66, 54,0x14}, { 970, 1, 67, 54,0x14}, { 971, 1, 68, 54,0x14}, { 991,11,147,  0,0x04},
+   { 994,15,144,  0,0x04}, { 996,15, 70, 54,0x14}, { 997,15, 71, 54,0x14}, {1003,15,150,  0,0x04},
+   {1011,15,145,  0,0x04}, {1015, 7,149,  0,0x04}, {1018, 1, 69, 57,0x1c}, {1040,15,151,  0,0x04},
+   {1041,15,152,  0,0x04}, {1042,15,153,  0,0x04}, {1049, 7, 63, 54,0x14}, {1056,10,154,  0,0x04},
+   {1071,12,155,  0,0x04}, {1079,26, 72, 54,0x14}, {1116, 1,157,139,0x1c}, {1123, 7,158,  0,0x04},
+   {1124, 7,159,  0,0x04}, {1125,25,160,  0,0x04}, {1126,15,161,  0,0x04}, {1127,15,162,  0,0x04},
+   {1135,15,164,  0,0x04}, {1146,13, 74, 54,0x14}, {1147,10, 75, 54,0x14}, {1151,15, 73, 54,0x14},
+   {1184, 2, 76,150,0x14}, {1185,29, 77,150,0x14}, {1186,15, 78,150,0x14}, {1191,15, 80, 54,0x14},
+   {1192,10, 81, 54,0x14}, {1193, 7, 82, 54,0x14}, {1194, 1, 83, 54,0x14}, {1195,13, 84, 54,0x14},
+   {1196,15, 85, 54,0x14}, {1197,15, 92, 54,0x14}, {1198, 1, 86, 54,0x14}, {1199,11, 87, 54,0x14},
+   {1200,11, 88, 54,0x14}, {1227,15, 79, 54,0x14}, {1242, 8, 91, 54,0x14}, {1244, 8, 90, 54,0x14},
+   {1300,15,171,  0,0x04}, {1301,20,172,  0,0x04}, {1329, 9,167,  0,0x04}, {1387, 1,168,183,0x1c},
+   {1390, 1,169,  0,0x04}, {1430, 7,170,  0,0x04}, {1435, 1, 93, 54,0x14}, {1439, 1, 94, 54,0x14},
+   {1449,15, 95, 54,0x14}, {1450,15, 96, 54,0x14}, {1451,14, 97, 54,0x14}, {1452,14, 98, 54,0x14},
+   {1457,14, 99, 54,0x14}, {1458,14,100, 54,0x14}, {1478, 1,101, 54,0x14}, {1479, 1,102, 54,0x14},
+   {1480,14,103, 54,0x14}, {1481, 1,104, 54,0x14}, {1482, 1,105, 54,0x14}, {1483, 1,106, 21,0x1c}
 };
 const FieldTrait_Hash_Array TradeCaptureReportAck::_ftha(TradeCaptureReportAck::_traits, 172);
 const MsgType TradeCaptureReportAck::_msgtype("AR");
@@ -4324,41 +3916,33 @@ const FieldTrait *TradeCaptureReportAck::NoSecurityAltID::_traits(NoSecurityAltI
 const FieldTrait_Hash_Array& TradeCaptureReportAck::NoSecurityAltID::_ftha(NoSecurityAltIDV1_ftha);
 const MsgType& TradeCaptureReportAck::NoSecurityAltID::_msgtype(NoSecurityAltIDV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradeCaptureReportAck::NoSides::_traits[] =
+const FieldTrait TradeCaptureReportAck::NoSides::_traits[]
 {
-   FieldTrait(   1,15,  3,  0,0x04), FieldTrait(  11,15, 64,173,0x14), FieldTrait(  12,13, 17, 16,0x14),
-   FieldTrait(  13, 7, 18, 16,0x14), FieldTrait(  14,10, 81,173,0x14), FieldTrait(  18,16, 73,173,0x14),
-   FieldTrait(  37,15, 62,173,0x14), FieldTrait(  38,10, 75, 93,0x14), FieldTrait(  39, 7, 74,173,0x14),
-   FieldTrait(  40, 7, 70,173,0x14), FieldTrait(  44,11, 71,173,0x14), FieldTrait(  54, 7,  1,  0,0x04),
-   FieldTrait(  59, 7, 82,173,0x14), FieldTrait(  66,15, 66,173,0x14), FieldTrait(  70,15, 43,  0,0x04),
-   FieldTrait(  77, 7, 35,  0,0x04), FieldTrait(  78, 1, 44,176,0x1c), FieldTrait(  81, 7,  6,  0,0x04),
-   FieldTrait(  83, 1, 51,  0,0x04), FieldTrait(  99,11, 72,173,0x14), FieldTrait( 118,13, 31,  0,0x04),
-   FieldTrait( 119,13, 32,  0,0x04), FieldTrait( 126,22, 83,173,0x14), FieldTrait( 136, 1, 39, 77,0x1c),
-   FieldTrait( 151,10, 80,173,0x14), FieldTrait( 152,10, 76, 93,0x14), FieldTrait( 155, 9, 33,  0,0x04),
-   FieldTrait( 156, 7, 34,  0,0x04), FieldTrait( 157, 1, 21,  0,0x04), FieldTrait( 158,14, 23,  0,0x04),
-   FieldTrait( 159,13, 24,  0,0x04), FieldTrait( 198,15, 63,173,0x14), FieldTrait( 230,25, 22,  0,0x04),
-   FieldTrait( 232, 1, 38,162,0x1c), FieldTrait( 237,13, 30,  0,0x04), FieldTrait( 238,13, 29,  0,0x04),
-   FieldTrait( 336,15, 14,  0,0x04), FieldTrait( 376,15, 11,  0,0x04), FieldTrait( 377, 8, 12,  0,0x04),
-   FieldTrait( 430, 1, 54,  0,0x04), FieldTrait( 453, 1,  2, 94,0x1c), FieldTrait( 468, 7, 78, 93,0x14),
-   FieldTrait( 469, 9, 79, 93,0x14), FieldTrait( 479,19, 19, 16,0x14), FieldTrait( 483,22, 97,173,0x14),
-   FieldTrait( 497, 7, 20, 16,0x14), FieldTrait( 516,14, 77, 93,0x14), FieldTrait( 518, 1, 37, 22,0x1c),
-   FieldTrait( 526,15, 65,173,0x14), FieldTrait( 528, 7, 92,173,0x14), FieldTrait( 529,16, 93,173,0x14),
-   FieldTrait( 575, 8,  7,  0,0x04), FieldTrait( 576, 1,  8, 14,0x1c), FieldTrait( 578,15,  9,  0,0x04),
-   FieldTrait( 579,15, 10,  0,0x04), FieldTrait( 581, 1,  5,  0,0x04), FieldTrait( 582, 1, 13,  0,0x04),
-   FieldTrait( 586,22, 98,173,0x14), FieldTrait( 591, 7, 42,  0,0x04), FieldTrait( 625,15, 15,  0,0x04),
-   FieldTrait( 660, 1,  4,  0,0x04), FieldTrait( 738,13, 25,  0,0x04), FieldTrait( 752, 1, 36,  0,0x04),
-   FieldTrait( 775, 1, 99,173,0x14), FieldTrait( 821,15, 95,173,0x14), FieldTrait( 825,15, 40,  0,0x04),
-   FieldTrait( 826, 1, 41,  0,0x04), FieldTrait( 920,13, 26,  0,0x04), FieldTrait( 921,13, 27,  0,0x04),
-   FieldTrait( 922,13, 28,  0,0x04), FieldTrait( 943,15, 16,  0,0x04), FieldTrait(1005,15, 48,  0,0x04),
-   FieldTrait(1006,15, 49,  0,0x04), FieldTrait(1007,15, 50,  0,0x04), FieldTrait(1008, 1, 52,  0,0x04),
-   FieldTrait(1009, 1, 47,  0,0x04), FieldTrait(1016, 1, 53,159,0x1c), FieldTrait(1057, 8, 46,  0,0x04),
-   FieldTrait(1072,13, 45,  0,0x04), FieldTrait(1080,15, 67,173,0x14), FieldTrait(1081, 7, 68,173,0x14),
-   FieldTrait(1082,10, 84, 36,0x14), FieldTrait(1083, 7, 85, 36,0x14), FieldTrait(1084, 7, 86, 36,0x14),
-   FieldTrait(1085,10, 87, 36,0x14), FieldTrait(1086,10, 88, 36,0x14), FieldTrait(1087,10, 89, 36,0x14),
-   FieldTrait(1088,10, 90, 36,0x14), FieldTrait(1093, 7, 96,173,0x14), FieldTrait(1115, 7, 61,  0,0x04),
-   FieldTrait(1138,10, 91, 36,0x14), FieldTrait(1154,19, 55,  0,0x04), FieldTrait(1155,19, 56,  0,0x04),
-   FieldTrait(1158, 1, 57,151,0x1c), FieldTrait(1427,15, 58,  0,0x04), FieldTrait(1428, 1, 59,  0,0x04),
-   FieldTrait(1429, 1, 60,  0,0x04), FieldTrait(1431, 1, 69,173,0x14), FieldTrait(1432, 1, 94,173,0x14)
+   {   1,15,  3,  0,0x04}, {  11,15, 64,173,0x14}, {  12,13, 17, 16,0x14}, {  13, 7, 18, 16,0x14},
+   {  14,10, 81,173,0x14}, {  18,16, 73,173,0x14}, {  37,15, 62,173,0x14}, {  38,10, 75, 93,0x14},
+   {  39, 7, 74,173,0x14}, {  40, 7, 70,173,0x14}, {  44,11, 71,173,0x14}, {  54, 7,  1,  0,0x04},
+   {  59, 7, 82,173,0x14}, {  66,15, 66,173,0x14}, {  70,15, 43,  0,0x04}, {  77, 7, 35,  0,0x04},
+   {  78, 1, 44,176,0x1c}, {  81, 7,  6,  0,0x04}, {  83, 1, 51,  0,0x04}, {  99,11, 72,173,0x14},
+   { 118,13, 31,  0,0x04}, { 119,13, 32,  0,0x04}, { 126,22, 83,173,0x14}, { 136, 1, 39, 77,0x1c},
+   { 151,10, 80,173,0x14}, { 152,10, 76, 93,0x14}, { 155, 9, 33,  0,0x04}, { 156, 7, 34,  0,0x04},
+   { 157, 1, 21,  0,0x04}, { 158,14, 23,  0,0x04}, { 159,13, 24,  0,0x04}, { 198,15, 63,173,0x14},
+   { 230,25, 22,  0,0x04}, { 232, 1, 38,162,0x1c}, { 237,13, 30,  0,0x04}, { 238,13, 29,  0,0x04},
+   { 336,15, 14,  0,0x04}, { 376,15, 11,  0,0x04}, { 377, 8, 12,  0,0x04}, { 430, 1, 54,  0,0x04},
+   { 453, 1,  2, 94,0x1c}, { 468, 7, 78, 93,0x14}, { 469, 9, 79, 93,0x14}, { 479,19, 19, 16,0x14},
+   { 483,22, 97,173,0x14}, { 497, 7, 20, 16,0x14}, { 516,14, 77, 93,0x14}, { 518, 1, 37, 22,0x1c},
+   { 526,15, 65,173,0x14}, { 528, 7, 92,173,0x14}, { 529,16, 93,173,0x14}, { 575, 8,  7,  0,0x04},
+   { 576, 1,  8, 14,0x1c}, { 578,15,  9,  0,0x04}, { 579,15, 10,  0,0x04}, { 581, 1,  5,  0,0x04},
+   { 582, 1, 13,  0,0x04}, { 586,22, 98,173,0x14}, { 591, 7, 42,  0,0x04}, { 625,15, 15,  0,0x04},
+   { 660, 1,  4,  0,0x04}, { 738,13, 25,  0,0x04}, { 752, 1, 36,  0,0x04}, { 775, 1, 99,173,0x14},
+   { 821,15, 95,173,0x14}, { 825,15, 40,  0,0x04}, { 826, 1, 41,  0,0x04}, { 920,13, 26,  0,0x04},
+   { 921,13, 27,  0,0x04}, { 922,13, 28,  0,0x04}, { 943,15, 16,  0,0x04}, {1005,15, 48,  0,0x04},
+   {1006,15, 49,  0,0x04}, {1007,15, 50,  0,0x04}, {1008, 1, 52,  0,0x04}, {1009, 1, 47,  0,0x04},
+   {1016, 1, 53,159,0x1c}, {1057, 8, 46,  0,0x04}, {1072,13, 45,  0,0x04}, {1080,15, 67,173,0x14},
+   {1081, 7, 68,173,0x14}, {1082,10, 84, 36,0x14}, {1083, 7, 85, 36,0x14}, {1084, 7, 86, 36,0x14},
+   {1085,10, 87, 36,0x14}, {1086,10, 88, 36,0x14}, {1087,10, 89, 36,0x14}, {1088,10, 90, 36,0x14},
+   {1093, 7, 96,173,0x14}, {1115, 7, 61,  0,0x04}, {1138,10, 91, 36,0x14}, {1154,19, 55,  0,0x04},
+   {1155,19, 56,  0,0x04}, {1158, 1, 57,151,0x1c}, {1427,15, 58,  0,0x04}, {1428, 1, 59,  0,0x04},
+   {1429, 1, 60,  0,0x04}, {1431, 1, 69,173,0x14}, {1432, 1, 94,173,0x14}
 };
 const FieldTrait_Hash_Array 
    TradeCaptureReportAck::NoSides::_ftha(TradeCaptureReportAck::NoSides::_traits, 99);
@@ -4508,71 +4092,55 @@ const FieldTrait *TradeCaptureReportAck::NoComplexEvents::NoComplexEventDates::N
 const FieldTrait_Hash_Array& TradeCaptureReportAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& TradeCaptureReportAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AllocationReport::_traits[] =
+const FieldTrait AllocationReport::_traits[]
 {
-   FieldTrait(   6,11,131,  0,0x04), FieldTrait(  15,19,141,  0,0x04), FieldTrait(  22,15, 25, 54,0x14),
-   FieldTrait(  30,20,126,  0,0x04), FieldTrait(  48,15, 24, 54,0x14), FieldTrait(  53,10,124,  0,0x04),
-   FieldTrait(  54, 7, 21,  0,0x04), FieldTrait(  55,15, 22, 54,0x14), FieldTrait(  58,15,155,  0,0x04),
-   FieldTrait(  60,22,145,  0,0x04), FieldTrait(  63,15,146,  0,0x04), FieldTrait(  64,25,147,  0,0x04),
-   FieldTrait(  65,15, 23, 54,0x14), FieldTrait(  70,15,  2,  0,0x04), FieldTrait(  71, 7,  3,  0,0x04),
-   FieldTrait(  72,15, 10,  0,0x04), FieldTrait(  73, 1, 16, 90,0x1c), FieldTrait(  74, 1,142,  0,0x04),
-   FieldTrait(  75,25,144,  0,0x04), FieldTrait(  77, 7,153,  0,0x04), FieldTrait(  78, 1,176,  3,0x1c),
-   FieldTrait(  87, 1,  8,  0,0x04), FieldTrait(  88, 1,  9,  0,0x04), FieldTrait( 106,15, 51, 54,0x14),
-   FieldTrait( 107,15, 54, 54,0x14), FieldTrait( 118,13,152,  0,0x04), FieldTrait( 124, 1, 17, 39,0x1c),
-   FieldTrait( 157, 1,158,  0,0x04), FieldTrait( 158,14,159,  0,0x04), FieldTrait( 159,13,160,  0,0x04),
-   FieldTrait( 167,15, 29, 54,0x14), FieldTrait( 196,15, 12,  0,0x04), FieldTrait( 197, 1, 13,  0,0x04),
-   FieldTrait( 200,21, 31, 54,0x14), FieldTrait( 201, 1, 92, 54,0x14), FieldTrait( 202,11, 45, 54,0x14),
-   FieldTrait( 206, 7, 47, 54,0x14), FieldTrait( 207,20, 50, 54,0x14), FieldTrait( 218,12,133,160,0x14),
-   FieldTrait( 220,19,134,160,0x14), FieldTrait( 221,15,135,160,0x14), FieldTrait( 222,15,136,160,0x14),
-   FieldTrait( 223,14, 49, 54,0x14), FieldTrait( 224,25, 33, 54,0x14), FieldTrait( 225,25, 34, 54,0x14),
-   FieldTrait( 226, 1, 36, 54,0x14), FieldTrait( 227,14, 37, 54,0x14), FieldTrait( 228, 9, 38, 54,0x14),
-   FieldTrait( 229,25,127,  0,0x04), FieldTrait( 231, 9, 48, 54,0x14), FieldTrait( 232, 1,167,162,0x1c),
-   FieldTrait( 235,15,168,198,0x14), FieldTrait( 236,14,169,198,0x14), FieldTrait( 237,13,151,  0,0x04),
-   FieldTrait( 238,13,150,  0,0x04), FieldTrait( 239, 1, 35, 54,0x14), FieldTrait( 240,25, 44, 54,0x14),
-   FieldTrait( 255,15, 39, 54,0x14), FieldTrait( 336,15,128,  0,0x04), FieldTrait( 348, 2, 52, 54,0x14),
-   FieldTrait( 349,28, 53, 54,0x14), FieldTrait( 350, 2, 55, 54,0x14), FieldTrait( 351,28, 56, 54,0x14),
-   FieldTrait( 354, 2,156,  0,0x04), FieldTrait( 355,28,157,  0,0x04), FieldTrait( 381,13,149,  0,0x04),
-   FieldTrait( 423, 1,130,  0,0x04), FieldTrait( 442, 7,180,  0,0x04), FieldTrait( 453, 1,143, 94,0x1c),
-   FieldTrait( 454, 1, 26,142,0x1c), FieldTrait( 460, 1, 27, 54,0x14), FieldTrait( 461,15, 28, 54,0x14),
-   FieldTrait( 466,15, 14,  0,0x04), FieldTrait( 470,18, 41, 54,0x14), FieldTrait( 471,15, 42, 54,0x14),
-   FieldTrait( 472,15, 43, 54,0x14), FieldTrait( 540,13,161,  0,0x04), FieldTrait( 541,25, 32, 54,0x14),
-   FieldTrait( 543,15, 40, 54,0x14), FieldTrait( 555, 1,123, 49,0x1c), FieldTrait( 570, 8, 18,  0,0x04),
-   FieldTrait( 574,15, 20,  0,0x04), FieldTrait( 578,15,182,  0,0x04), FieldTrait( 579,15,185,  0,0x04),
-   FieldTrait( 582, 1,181,  0,0x04), FieldTrait( 625,15,129,  0,0x04), FieldTrait( 650, 8,166,  0,0x04),
-   FieldTrait( 662,11,137,160,0x14), FieldTrait( 663, 1,138,160,0x14), FieldTrait( 667,21, 58, 54,0x14),
-   FieldTrait( 668, 1,110, 55,0x14), FieldTrait( 691,15, 57, 54,0x14), FieldTrait( 696,25,171,198,0x14),
-   FieldTrait( 697,11,172,198,0x14), FieldTrait( 698, 1,173,198,0x14), FieldTrait( 699,15,139,160,0x14),
-   FieldTrait( 700, 8, 19,  0,0x04), FieldTrait( 701,25,170,198,0x14), FieldTrait( 711, 1,122,188,0x1c),
-   FieldTrait( 715,25,177,  0,0x04), FieldTrait( 738,13,162,  0,0x04), FieldTrait( 753, 1,187,102,0x1c),
-   FieldTrait( 754, 8,154,  0,0x04), FieldTrait( 755,15,  1,  0,0x04), FieldTrait( 761,15,140,160,0x14),
-   FieldTrait( 762,15, 30, 54,0x14), FieldTrait( 775, 1,148,  0,0x04), FieldTrait( 788, 1,117, 44,0x14),
-   FieldTrait( 793,15,  6,  0,0x04), FieldTrait( 794, 1,  7,  0,0x04), FieldTrait( 795,15,  4,  0,0x04),
-   FieldTrait( 796, 1,  5,  0,0x04), FieldTrait( 808, 1, 11,  0,0x04), FieldTrait( 819, 1,186,  0,0x04),
-   FieldTrait( 828, 1,178,  0,0x04), FieldTrait( 829, 1,179,  0,0x04), FieldTrait( 854, 1,125,  0,0x04),
-   FieldTrait( 857, 1, 15,  0,0x04), FieldTrait( 860,11,132,  0,0x04), FieldTrait( 864, 1, 61, 38,0x1c),
-   FieldTrait( 869,14,111, 55,0x14), FieldTrait( 870, 1,112,  9,0x1c), FieldTrait( 873,25, 62, 54,0x14),
-   FieldTrait( 874,25, 63, 54,0x14), FieldTrait( 875, 1, 59, 54,0x14), FieldTrait( 876,15, 60, 54,0x14),
-   FieldTrait( 892, 1,174,  0,0x04), FieldTrait( 893, 8,175,  0,0x04), FieldTrait( 898,14,121, 44,0x14),
-   FieldTrait( 913,15,113, 44,0x14), FieldTrait( 914,15,114, 44,0x14), FieldTrait( 915,25,115, 44,0x14),
-   FieldTrait( 916,25,118, 44,0x14), FieldTrait( 917,25,119, 44,0x14), FieldTrait( 918,19,116, 44,0x14),
-   FieldTrait( 919, 1,120, 44,0x14), FieldTrait( 920,13,163,  0,0x04), FieldTrait( 921,13,164,  0,0x04),
-   FieldTrait( 922,13,165,  0,0x04), FieldTrait( 947,19, 46, 54,0x14), FieldTrait( 965,15, 64, 54,0x14),
-   FieldTrait( 966,15, 65, 54,0x14), FieldTrait( 967, 9, 67, 54,0x14), FieldTrait( 968, 9, 68, 54,0x14),
-   FieldTrait( 969, 9, 69, 54,0x14), FieldTrait( 970, 1, 70, 54,0x14), FieldTrait( 971, 1, 71, 54,0x14),
-   FieldTrait( 991,11,183,  0,0x04), FieldTrait( 996,15, 73, 54,0x14), FieldTrait( 997,15, 74, 54,0x14),
-   FieldTrait(1011,15,184,  0,0x04), FieldTrait(1018, 1, 72, 57,0x1c), FieldTrait(1049, 7, 66, 54,0x14),
-   FieldTrait(1079,26, 75, 54,0x14), FieldTrait(1146,13, 77, 54,0x14), FieldTrait(1147,10, 78, 54,0x14),
-   FieldTrait(1151,15, 76, 54,0x14), FieldTrait(1184, 2, 79,150,0x14), FieldTrait(1185,29, 80,150,0x14),
-   FieldTrait(1186,15, 81,150,0x14), FieldTrait(1191,15, 83, 54,0x14), FieldTrait(1192,10, 84, 54,0x14),
-   FieldTrait(1193, 7, 85, 54,0x14), FieldTrait(1194, 1, 86, 54,0x14), FieldTrait(1195,13, 87, 54,0x14),
-   FieldTrait(1196,15, 88, 54,0x14), FieldTrait(1197,15, 95, 54,0x14), FieldTrait(1198, 1, 89, 54,0x14),
-   FieldTrait(1199,11, 90, 54,0x14), FieldTrait(1200,11, 91, 54,0x14), FieldTrait(1227,15, 82, 54,0x14),
-   FieldTrait(1242, 8, 94, 54,0x14), FieldTrait(1244, 8, 93, 54,0x14), FieldTrait(1435, 1, 96, 54,0x14),
-   FieldTrait(1439, 1, 97, 54,0x14), FieldTrait(1445, 1,188,118,0x1c), FieldTrait(1449,15, 98, 54,0x14),
-   FieldTrait(1450,15, 99, 54,0x14), FieldTrait(1451,14,100, 54,0x14), FieldTrait(1452,14,101, 54,0x14),
-   FieldTrait(1457,14,102, 54,0x14), FieldTrait(1458,14,103, 54,0x14), FieldTrait(1478, 1,104, 54,0x14),
-   FieldTrait(1479, 1,105, 54,0x14), FieldTrait(1480,14,106, 54,0x14), FieldTrait(1481, 1,107, 54,0x14),
-   FieldTrait(1482, 1,108, 54,0x14), FieldTrait(1483, 1,109, 21,0x1c)
+   {   6,11,131,  0,0x04}, {  15,19,141,  0,0x04}, {  22,15, 25, 54,0x14}, {  30,20,126,  0,0x04},
+   {  48,15, 24, 54,0x14}, {  53,10,124,  0,0x04}, {  54, 7, 21,  0,0x04}, {  55,15, 22, 54,0x14},
+   {  58,15,155,  0,0x04}, {  60,22,145,  0,0x04}, {  63,15,146,  0,0x04}, {  64,25,147,  0,0x04},
+   {  65,15, 23, 54,0x14}, {  70,15,  2,  0,0x04}, {  71, 7,  3,  0,0x04}, {  72,15, 10,  0,0x04},
+   {  73, 1, 16, 90,0x1c}, {  74, 1,142,  0,0x04}, {  75,25,144,  0,0x04}, {  77, 7,153,  0,0x04},
+   {  78, 1,176,  3,0x1c}, {  87, 1,  8,  0,0x04}, {  88, 1,  9,  0,0x04}, { 106,15, 51, 54,0x14},
+   { 107,15, 54, 54,0x14}, { 118,13,152,  0,0x04}, { 124, 1, 17, 39,0x1c}, { 157, 1,158,  0,0x04},
+   { 158,14,159,  0,0x04}, { 159,13,160,  0,0x04}, { 167,15, 29, 54,0x14}, { 196,15, 12,  0,0x04},
+   { 197, 1, 13,  0,0x04}, { 200,21, 31, 54,0x14}, { 201, 1, 92, 54,0x14}, { 202,11, 45, 54,0x14},
+   { 206, 7, 47, 54,0x14}, { 207,20, 50, 54,0x14}, { 218,12,133,160,0x14}, { 220,19,134,160,0x14},
+   { 221,15,135,160,0x14}, { 222,15,136,160,0x14}, { 223,14, 49, 54,0x14}, { 224,25, 33, 54,0x14},
+   { 225,25, 34, 54,0x14}, { 226, 1, 36, 54,0x14}, { 227,14, 37, 54,0x14}, { 228, 9, 38, 54,0x14},
+   { 229,25,127,  0,0x04}, { 231, 9, 48, 54,0x14}, { 232, 1,167,162,0x1c}, { 235,15,168,198,0x14},
+   { 236,14,169,198,0x14}, { 237,13,151,  0,0x04}, { 238,13,150,  0,0x04}, { 239, 1, 35, 54,0x14},
+   { 240,25, 44, 54,0x14}, { 255,15, 39, 54,0x14}, { 336,15,128,  0,0x04}, { 348, 2, 52, 54,0x14},
+   { 349,28, 53, 54,0x14}, { 350, 2, 55, 54,0x14}, { 351,28, 56, 54,0x14}, { 354, 2,156,  0,0x04},
+   { 355,28,157,  0,0x04}, { 381,13,149,  0,0x04}, { 423, 1,130,  0,0x04}, { 442, 7,180,  0,0x04},
+   { 453, 1,143, 94,0x1c}, { 454, 1, 26,142,0x1c}, { 460, 1, 27, 54,0x14}, { 461,15, 28, 54,0x14},
+   { 466,15, 14,  0,0x04}, { 470,18, 41, 54,0x14}, { 471,15, 42, 54,0x14}, { 472,15, 43, 54,0x14},
+   { 540,13,161,  0,0x04}, { 541,25, 32, 54,0x14}, { 543,15, 40, 54,0x14}, { 555, 1,123, 49,0x1c},
+   { 570, 8, 18,  0,0x04}, { 574,15, 20,  0,0x04}, { 578,15,182,  0,0x04}, { 579,15,185,  0,0x04},
+   { 582, 1,181,  0,0x04}, { 625,15,129,  0,0x04}, { 650, 8,166,  0,0x04}, { 662,11,137,160,0x14},
+   { 663, 1,138,160,0x14}, { 667,21, 58, 54,0x14}, { 668, 1,110, 55,0x14}, { 691,15, 57, 54,0x14},
+   { 696,25,171,198,0x14}, { 697,11,172,198,0x14}, { 698, 1,173,198,0x14}, { 699,15,139,160,0x14},
+   { 700, 8, 19,  0,0x04}, { 701,25,170,198,0x14}, { 711, 1,122,188,0x1c}, { 715,25,177,  0,0x04},
+   { 738,13,162,  0,0x04}, { 753, 1,187,102,0x1c}, { 754, 8,154,  0,0x04}, { 755,15,  1,  0,0x04},
+   { 761,15,140,160,0x14}, { 762,15, 30, 54,0x14}, { 775, 1,148,  0,0x04}, { 788, 1,117, 44,0x14},
+   { 793,15,  6,  0,0x04}, { 794, 1,  7,  0,0x04}, { 795,15,  4,  0,0x04}, { 796, 1,  5,  0,0x04},
+   { 808, 1, 11,  0,0x04}, { 819, 1,186,  0,0x04}, { 828, 1,178,  0,0x04}, { 829, 1,179,  0,0x04},
+   { 854, 1,125,  0,0x04}, { 857, 1, 15,  0,0x04}, { 860,11,132,  0,0x04}, { 864, 1, 61, 38,0x1c},
+   { 869,14,111, 55,0x14}, { 870, 1,112,  9,0x1c}, { 873,25, 62, 54,0x14}, { 874,25, 63, 54,0x14},
+   { 875, 1, 59, 54,0x14}, { 876,15, 60, 54,0x14}, { 892, 1,174,  0,0x04}, { 893, 8,175,  0,0x04},
+   { 898,14,121, 44,0x14}, { 913,15,113, 44,0x14}, { 914,15,114, 44,0x14}, { 915,25,115, 44,0x14},
+   { 916,25,118, 44,0x14}, { 917,25,119, 44,0x14}, { 918,19,116, 44,0x14}, { 919, 1,120, 44,0x14},
+   { 920,13,163,  0,0x04}, { 921,13,164,  0,0x04}, { 922,13,165,  0,0x04}, { 947,19, 46, 54,0x14},
+   { 965,15, 64, 54,0x14}, { 966,15, 65, 54,0x14}, { 967, 9, 67, 54,0x14}, { 968, 9, 68, 54,0x14},
+   { 969, 9, 69, 54,0x14}, { 970, 1, 70, 54,0x14}, { 971, 1, 71, 54,0x14}, { 991,11,183,  0,0x04},
+   { 996,15, 73, 54,0x14}, { 997,15, 74, 54,0x14}, {1011,15,184,  0,0x04}, {1018, 1, 72, 57,0x1c},
+   {1049, 7, 66, 54,0x14}, {1079,26, 75, 54,0x14}, {1146,13, 77, 54,0x14}, {1147,10, 78, 54,0x14},
+   {1151,15, 76, 54,0x14}, {1184, 2, 79,150,0x14}, {1185,29, 80,150,0x14}, {1186,15, 81,150,0x14},
+   {1191,15, 83, 54,0x14}, {1192,10, 84, 54,0x14}, {1193, 7, 85, 54,0x14}, {1194, 1, 86, 54,0x14},
+   {1195,13, 87, 54,0x14}, {1196,15, 88, 54,0x14}, {1197,15, 95, 54,0x14}, {1198, 1, 89, 54,0x14},
+   {1199,11, 90, 54,0x14}, {1200,11, 91, 54,0x14}, {1227,15, 82, 54,0x14}, {1242, 8, 94, 54,0x14},
+   {1244, 8, 93, 54,0x14}, {1435, 1, 96, 54,0x14}, {1439, 1, 97, 54,0x14}, {1445, 1,188,118,0x1c},
+   {1449,15, 98, 54,0x14}, {1450,15, 99, 54,0x14}, {1451,14,100, 54,0x14}, {1452,14,101, 54,0x14},
+   {1457,14,102, 54,0x14}, {1458,14,103, 54,0x14}, {1478, 1,104, 54,0x14}, {1479, 1,105, 54,0x14},
+   {1480,14,106, 54,0x14}, {1481, 1,107, 54,0x14}, {1482, 1,108, 54,0x14}, {1483, 1,109, 21,0x1c}
 };
 const FieldTrait_Hash_Array AllocationReport::_ftha(AllocationReport::_traits, 188);
 const MsgType AllocationReport::_msgtype("AS");
@@ -4705,15 +4273,14 @@ const FieldTrait *AllocationReport::NoComplexEvents::NoComplexEventDates::NoComp
 const FieldTrait_Hash_Array& AllocationReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& AllocationReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AllocationReportAck::_traits[] =
+const FieldTrait AllocationReportAck::_traits[]
 {
-   FieldTrait(  53,10, 20,  0,0x04), FieldTrait(  58,15, 14,  0,0x04), FieldTrait(  60,22,  6,  0,0x04),
-   FieldTrait(  70,15,  2,  0,0x04), FieldTrait(  71, 7, 21,  0,0x04), FieldTrait(  75,25,  5,  0,0x04),
-   FieldTrait(  78, 1, 17,  2,0x1c), FieldTrait(  87, 1,  7,  0,0x04), FieldTrait(  88, 1,  8,  0,0x04),
-   FieldTrait( 167,15, 13,  0,0x04), FieldTrait( 354, 2, 15,  0,0x04), FieldTrait( 355,28, 16,  0,0x04),
-   FieldTrait( 453, 1,  3, 94,0x1c), FieldTrait( 460, 1, 12,  0,0x04), FieldTrait( 573, 7, 11,  0,0x04),
-   FieldTrait( 715,25, 18,  0,0x04), FieldTrait( 755,15,  1,  0,0x04), FieldTrait( 793,15,  4,  0,0x04),
-   FieldTrait( 794, 1,  9,  0,0x04), FieldTrait( 808, 1, 10,  0,0x04), FieldTrait( 819, 1, 19,  0,0x04)
+   {  53,10, 20,  0,0x04}, {  58,15, 14,  0,0x04}, {  60,22,  6,  0,0x04}, {  70,15,  2,  0,0x04},
+   {  71, 7, 21,  0,0x04}, {  75,25,  5,  0,0x04}, {  78, 1, 17,  2,0x1c}, {  87, 1,  7,  0,0x04},
+   {  88, 1,  8,  0,0x04}, { 167,15, 13,  0,0x04}, { 354, 2, 15,  0,0x04}, { 355,28, 16,  0,0x04},
+   { 453, 1,  3, 94,0x1c}, { 460, 1, 12,  0,0x04}, { 573, 7, 11,  0,0x04}, { 715,25, 18,  0,0x04},
+   { 755,15,  1,  0,0x04}, { 793,15,  4,  0,0x04}, { 794, 1,  9,  0,0x04}, { 808, 1, 10,  0,0x04},
+   { 819, 1, 19,  0,0x04}
 };
 const FieldTrait_Hash_Array AllocationReportAck::_ftha(AllocationReportAck::_traits, 21);
 const MsgType AllocationReportAck::_msgtype("AT");
@@ -4738,23 +4305,21 @@ const FieldTrait *AllocationReportAck::NoPartyIDs::NoPartySubIDs::_traits(NoPart
 const FieldTrait_Hash_Array& AllocationReportAck::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& AllocationReportAck::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ConfirmationAck::_traits[] =
+const FieldTrait ConfirmationAck::_traits[]
 {
-   FieldTrait(  58,15,  7,  0,0x04), FieldTrait(  60,22,  3,  0,0x04), FieldTrait(  75,25,  2,  0,0x04),
-   FieldTrait( 354, 2,  8,  0,0x04), FieldTrait( 355,28,  9,  0,0x04), FieldTrait( 573, 7,  6,  0,0x04),
-   FieldTrait( 664,15,  1,  0,0x04), FieldTrait( 774, 1,  5,  0,0x04), FieldTrait( 940, 1,  4,  0,0x04)
+   {  58,15,  7,  0,0x04}, {  60,22,  3,  0,0x04}, {  75,25,  2,  0,0x04}, { 354, 2,  8,  0,0x04},
+   { 355,28,  9,  0,0x04}, { 573, 7,  6,  0,0x04}, { 664,15,  1,  0,0x04}, { 774, 1,  5,  0,0x04},
+   { 940, 1,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array ConfirmationAck::_ftha(ConfirmationAck::_traits, 9);
 const MsgType ConfirmationAck::_msgtype("AU");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SettlementInstructionRequest::_traits[] =
+const FieldTrait SettlementInstructionRequest::_traits[]
 {
-   FieldTrait(  54, 7,  6,  0,0x04), FieldTrait(  60,22,  2,  0,0x04), FieldTrait(  79,15,  4,  0,0x04),
-   FieldTrait( 120,19, 16,  0,0x04), FieldTrait( 126,22, 11,  0,0x04), FieldTrait( 167,15,  8,  0,0x04),
-   FieldTrait( 168,22, 10,  0,0x04), FieldTrait( 169, 1, 13,  0,0x04), FieldTrait( 170,15, 14,  0,0x04),
-   FieldTrait( 171,15, 15,  0,0x04), FieldTrait( 453, 1,  3, 94,0x1c), FieldTrait( 460, 1,  7,  0,0x04),
-   FieldTrait( 461,15,  9,  0,0x04), FieldTrait( 661, 1,  5,  0,0x04), FieldTrait( 779,22, 12,  0,0x04),
-   FieldTrait( 791,15,  1,  0,0x04)
+   {  54, 7,  6,  0,0x04}, {  60,22,  2,  0,0x04}, {  79,15,  4,  0,0x04}, { 120,19, 16,  0,0x04},
+   { 126,22, 11,  0,0x04}, { 167,15,  8,  0,0x04}, { 168,22, 10,  0,0x04}, { 169, 1, 13,  0,0x04},
+   { 170,15, 14,  0,0x04}, { 171,15, 15,  0,0x04}, { 453, 1,  3, 94,0x1c}, { 460, 1,  7,  0,0x04},
+   { 461,15,  9,  0,0x04}, { 661, 1,  5,  0,0x04}, { 779,22, 12,  0,0x04}, { 791,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array SettlementInstructionRequest::_ftha(SettlementInstructionRequest::_traits, 16);
 const MsgType SettlementInstructionRequest::_msgtype("AV");
@@ -4767,48 +4332,38 @@ const FieldTrait *SettlementInstructionRequest::NoPartyIDs::NoPartySubIDs::_trai
 const FieldTrait_Hash_Array& SettlementInstructionRequest::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& SettlementInstructionRequest::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AssignmentReport::_traits[] =
+const FieldTrait AssignmentReport::_traits[]
 {
-   FieldTrait(   1,15,  5,  0,0x04), FieldTrait(  15,19, 95,  0,0x04), FieldTrait(  22,15, 10, 54,0x14),
-   FieldTrait(  48,15,  9, 54,0x14), FieldTrait(  55,15,  7, 54,0x14), FieldTrait(  58,15,112,  0,0x04),
-   FieldTrait(  65,15,  8, 54,0x14), FieldTrait( 106,15, 36, 54,0x14), FieldTrait( 107,15, 39, 54,0x14),
-   FieldTrait( 167,15, 14, 54,0x14), FieldTrait( 200,21, 16, 54,0x14), FieldTrait( 201, 1, 77, 54,0x14),
-   FieldTrait( 202,11, 30, 54,0x14), FieldTrait( 206, 7, 32, 54,0x14), FieldTrait( 207,20, 35, 54,0x14),
-   FieldTrait( 223,14, 34, 54,0x14), FieldTrait( 224,25, 18, 54,0x14), FieldTrait( 225,25, 19, 54,0x14),
-   FieldTrait( 226, 1, 21, 54,0x14), FieldTrait( 227,14, 22, 54,0x14), FieldTrait( 228, 9, 23, 54,0x14),
-   FieldTrait( 231, 9, 33, 54,0x14), FieldTrait( 239, 1, 20, 54,0x14), FieldTrait( 240,25, 29, 54,0x14),
-   FieldTrait( 255,15, 24, 54,0x14), FieldTrait( 348, 2, 37, 54,0x14), FieldTrait( 349,28, 38, 54,0x14),
-   FieldTrait( 350, 2, 40, 54,0x14), FieldTrait( 351,28, 41, 54,0x14), FieldTrait( 354, 2,113,  0,0x04),
-   FieldTrait( 355,28,114,  0,0x04), FieldTrait( 432,25,104,  0,0x04), FieldTrait( 453, 1,  4, 94,0x1c),
-   FieldTrait( 454, 1, 11,142,0x1c), FieldTrait( 460, 1, 12, 54,0x14), FieldTrait( 461,15, 13, 54,0x14),
-   FieldTrait( 470,18, 26, 54,0x14), FieldTrait( 471,15, 27, 54,0x14), FieldTrait( 472,15, 28, 54,0x14),
-   FieldTrait( 541,25, 17, 54,0x14), FieldTrait( 543,15, 25, 54,0x14), FieldTrait( 555, 1, 96, 49,0x1c),
-   FieldTrait( 581, 1,  6,  0,0x04), FieldTrait( 667,21, 43, 54,0x14), FieldTrait( 691,15, 42, 54,0x14),
-   FieldTrait( 702, 1, 98,103,0x1c), FieldTrait( 710,15,120,  0,0x04), FieldTrait( 711, 1, 97,188,0x1c),
-   FieldTrait( 715,25,111,  0,0x04), FieldTrait( 716,15,109,  0,0x04), FieldTrait( 717,15,110,  0,0x04),
-   FieldTrait( 730,11,101,  0,0x04), FieldTrait( 731, 1,102,  0,0x04), FieldTrait( 732,11,103,  0,0x04),
-   FieldTrait( 734,11,115,  0,0x04), FieldTrait( 744, 7,105,  0,0x04), FieldTrait( 745,10,106,  0,0x04),
-   FieldTrait( 746,13,107,  0,0x04), FieldTrait( 747, 7,108,  0,0x04), FieldTrait( 753, 1, 99,102,0x1c),
-   FieldTrait( 762,15, 15, 54,0x14), FieldTrait( 832, 1,  2,  0,0x04), FieldTrait( 833,15,  1,  0,0x04),
-   FieldTrait( 834,12,100,  0,0x04), FieldTrait( 864, 1, 46, 38,0x1c), FieldTrait( 873,25, 47, 54,0x14),
-   FieldTrait( 874,25, 48, 54,0x14), FieldTrait( 875, 1, 44, 54,0x14), FieldTrait( 876,15, 45, 54,0x14),
-   FieldTrait( 912, 8,  3,  0,0x04), FieldTrait( 947,19, 31, 54,0x14), FieldTrait( 965,15, 49, 54,0x14),
-   FieldTrait( 966,15, 50, 54,0x14), FieldTrait( 967, 9, 52, 54,0x14), FieldTrait( 968, 9, 53, 54,0x14),
-   FieldTrait( 969, 9, 54, 54,0x14), FieldTrait( 970, 1, 55, 54,0x14), FieldTrait( 971, 1, 56, 54,0x14),
-   FieldTrait( 996,15, 58, 54,0x14), FieldTrait( 997,15, 59, 54,0x14), FieldTrait(1018, 1, 57, 57,0x1c),
-   FieldTrait(1049, 7, 51, 54,0x14), FieldTrait(1079,26, 60, 54,0x14), FieldTrait(1146,13, 62, 54,0x14),
-   FieldTrait(1147,10, 63, 54,0x14), FieldTrait(1151,15, 61, 54,0x14), FieldTrait(1180,15,116,  8,0x14),
-   FieldTrait(1181, 4,117,  8,0x14), FieldTrait(1184, 2, 64,150,0x14), FieldTrait(1185,29, 65,150,0x14),
-   FieldTrait(1186,15, 66,150,0x14), FieldTrait(1191,15, 68, 54,0x14), FieldTrait(1192,10, 69, 54,0x14),
-   FieldTrait(1193, 7, 70, 54,0x14), FieldTrait(1194, 1, 71, 54,0x14), FieldTrait(1195,13, 72, 54,0x14),
-   FieldTrait(1196,15, 73, 54,0x14), FieldTrait(1197,15, 80, 54,0x14), FieldTrait(1198, 1, 74, 54,0x14),
-   FieldTrait(1199,11, 75, 54,0x14), FieldTrait(1200,11, 76, 54,0x14), FieldTrait(1227,15, 67, 54,0x14),
-   FieldTrait(1242, 8, 79, 54,0x14), FieldTrait(1244, 8, 78, 54,0x14), FieldTrait(1350, 4,118,  8,0x14),
-   FieldTrait(1352, 8,119,  8,0x14), FieldTrait(1435, 1, 81, 54,0x14), FieldTrait(1439, 1, 82, 54,0x14),
-   FieldTrait(1449,15, 83, 54,0x14), FieldTrait(1450,15, 84, 54,0x14), FieldTrait(1451,14, 85, 54,0x14),
-   FieldTrait(1452,14, 86, 54,0x14), FieldTrait(1457,14, 87, 54,0x14), FieldTrait(1458,14, 88, 54,0x14),
-   FieldTrait(1478, 1, 89, 54,0x14), FieldTrait(1479, 1, 90, 54,0x14), FieldTrait(1480,14, 91, 54,0x14),
-   FieldTrait(1481, 1, 92, 54,0x14), FieldTrait(1482, 1, 93, 54,0x14), FieldTrait(1483, 1, 94, 21,0x1c)
+   {   1,15,  5,  0,0x04}, {  15,19, 95,  0,0x04}, {  22,15, 10, 54,0x14}, {  48,15,  9, 54,0x14},
+   {  55,15,  7, 54,0x14}, {  58,15,112,  0,0x04}, {  65,15,  8, 54,0x14}, { 106,15, 36, 54,0x14},
+   { 107,15, 39, 54,0x14}, { 167,15, 14, 54,0x14}, { 200,21, 16, 54,0x14}, { 201, 1, 77, 54,0x14},
+   { 202,11, 30, 54,0x14}, { 206, 7, 32, 54,0x14}, { 207,20, 35, 54,0x14}, { 223,14, 34, 54,0x14},
+   { 224,25, 18, 54,0x14}, { 225,25, 19, 54,0x14}, { 226, 1, 21, 54,0x14}, { 227,14, 22, 54,0x14},
+   { 228, 9, 23, 54,0x14}, { 231, 9, 33, 54,0x14}, { 239, 1, 20, 54,0x14}, { 240,25, 29, 54,0x14},
+   { 255,15, 24, 54,0x14}, { 348, 2, 37, 54,0x14}, { 349,28, 38, 54,0x14}, { 350, 2, 40, 54,0x14},
+   { 351,28, 41, 54,0x14}, { 354, 2,113,  0,0x04}, { 355,28,114,  0,0x04}, { 432,25,104,  0,0x04},
+   { 453, 1,  4, 94,0x1c}, { 454, 1, 11,142,0x1c}, { 460, 1, 12, 54,0x14}, { 461,15, 13, 54,0x14},
+   { 470,18, 26, 54,0x14}, { 471,15, 27, 54,0x14}, { 472,15, 28, 54,0x14}, { 541,25, 17, 54,0x14},
+   { 543,15, 25, 54,0x14}, { 555, 1, 96, 49,0x1c}, { 581, 1,  6,  0,0x04}, { 667,21, 43, 54,0x14},
+   { 691,15, 42, 54,0x14}, { 702, 1, 98,103,0x1c}, { 710,15,120,  0,0x04}, { 711, 1, 97,188,0x1c},
+   { 715,25,111,  0,0x04}, { 716,15,109,  0,0x04}, { 717,15,110,  0,0x04}, { 730,11,101,  0,0x04},
+   { 731, 1,102,  0,0x04}, { 732,11,103,  0,0x04}, { 734,11,115,  0,0x04}, { 744, 7,105,  0,0x04},
+   { 745,10,106,  0,0x04}, { 746,13,107,  0,0x04}, { 747, 7,108,  0,0x04}, { 753, 1, 99,102,0x1c},
+   { 762,15, 15, 54,0x14}, { 832, 1,  2,  0,0x04}, { 833,15,  1,  0,0x04}, { 834,12,100,  0,0x04},
+   { 864, 1, 46, 38,0x1c}, { 873,25, 47, 54,0x14}, { 874,25, 48, 54,0x14}, { 875, 1, 44, 54,0x14},
+   { 876,15, 45, 54,0x14}, { 912, 8,  3,  0,0x04}, { 947,19, 31, 54,0x14}, { 965,15, 49, 54,0x14},
+   { 966,15, 50, 54,0x14}, { 967, 9, 52, 54,0x14}, { 968, 9, 53, 54,0x14}, { 969, 9, 54, 54,0x14},
+   { 970, 1, 55, 54,0x14}, { 971, 1, 56, 54,0x14}, { 996,15, 58, 54,0x14}, { 997,15, 59, 54,0x14},
+   {1018, 1, 57, 57,0x1c}, {1049, 7, 51, 54,0x14}, {1079,26, 60, 54,0x14}, {1146,13, 62, 54,0x14},
+   {1147,10, 63, 54,0x14}, {1151,15, 61, 54,0x14}, {1180,15,116,  8,0x14}, {1181, 4,117,  8,0x14},
+   {1184, 2, 64,150,0x14}, {1185,29, 65,150,0x14}, {1186,15, 66,150,0x14}, {1191,15, 68, 54,0x14},
+   {1192,10, 69, 54,0x14}, {1193, 7, 70, 54,0x14}, {1194, 1, 71, 54,0x14}, {1195,13, 72, 54,0x14},
+   {1196,15, 73, 54,0x14}, {1197,15, 80, 54,0x14}, {1198, 1, 74, 54,0x14}, {1199,11, 75, 54,0x14},
+   {1200,11, 76, 54,0x14}, {1227,15, 67, 54,0x14}, {1242, 8, 79, 54,0x14}, {1244, 8, 78, 54,0x14},
+   {1350, 4,118,  8,0x14}, {1352, 8,119,  8,0x14}, {1435, 1, 81, 54,0x14}, {1439, 1, 82, 54,0x14},
+   {1449,15, 83, 54,0x14}, {1450,15, 84, 54,0x14}, {1451,14, 85, 54,0x14}, {1452,14, 86, 54,0x14},
+   {1457,14, 87, 54,0x14}, {1458,14, 88, 54,0x14}, {1478, 1, 89, 54,0x14}, {1479, 1, 90, 54,0x14},
+   {1480,14, 91, 54,0x14}, {1481, 1, 92, 54,0x14}, {1482, 1, 93, 54,0x14}, {1483, 1, 94, 21,0x1c}
 };
 const FieldTrait_Hash_Array AssignmentReport::_ftha(AssignmentReport::_traits, 120);
 const MsgType AssignmentReport::_msgtype("AW");
@@ -4893,57 +4448,45 @@ const FieldTrait *AssignmentReport::NoComplexEvents::NoComplexEventDates::NoComp
 const FieldTrait_Hash_Array& AssignmentReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& AssignmentReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CollateralRequest::_traits[] =
+const FieldTrait CollateralRequest::_traits[]
 {
-   FieldTrait(   1,15,  6,  0,0x04), FieldTrait(  11,15,  8,  0,0x04), FieldTrait(  15,19,114,  0,0x04),
-   FieldTrait(  22,15, 17, 54,0x14), FieldTrait(  37,15,  9,  0,0x04), FieldTrait(  44,11,123,  0,0x04),
-   FieldTrait(  48,15, 16, 54,0x14), FieldTrait(  53,10,112,  0,0x04), FieldTrait(  54, 7,121,  0,0x04),
-   FieldTrait(  55,15, 14, 54,0x14), FieldTrait(  58,15,143,  0,0x04), FieldTrait(  60,22,  3,  0,0x04),
-   FieldTrait(  64,25,111,  0,0x04), FieldTrait(  65,15, 15, 54,0x14), FieldTrait( 106,15, 43, 54,0x14),
-   FieldTrait( 107,15, 46, 54,0x14), FieldTrait( 124, 1, 12, 40,0x1c), FieldTrait( 126,22,  4,  0,0x04),
-   FieldTrait( 136, 1,122, 77,0x1c), FieldTrait( 159,13,125,  0,0x04), FieldTrait( 167,15, 21, 54,0x14),
-   FieldTrait( 198,15, 10,  0,0x04), FieldTrait( 200,21, 23, 54,0x14), FieldTrait( 201, 1, 84, 54,0x14),
-   FieldTrait( 202,11, 37, 54,0x14), FieldTrait( 206, 7, 39, 54,0x14), FieldTrait( 207,20, 42, 54,0x14),
-   FieldTrait( 218,12,129,160,0x14), FieldTrait( 220,19,130,160,0x14), FieldTrait( 221,15,131,160,0x14),
-   FieldTrait( 222,15,132,160,0x14), FieldTrait( 223,14, 41, 54,0x14), FieldTrait( 224,25, 25, 54,0x14),
-   FieldTrait( 225,25, 26, 54,0x14), FieldTrait( 226, 1, 28, 54,0x14), FieldTrait( 227,14, 29, 54,0x14),
-   FieldTrait( 228, 9, 30, 54,0x14), FieldTrait( 231, 9, 40, 54,0x14), FieldTrait( 232, 1,137,162,0x1c),
-   FieldTrait( 239, 1, 27, 54,0x14), FieldTrait( 240,25, 36, 54,0x14), FieldTrait( 255,15, 31, 54,0x14),
-   FieldTrait( 336,15,138,  0,0x04), FieldTrait( 348, 2, 44, 54,0x14), FieldTrait( 349,28, 45, 54,0x14),
-   FieldTrait( 350, 2, 47, 54,0x14), FieldTrait( 351,28, 48, 54,0x14), FieldTrait( 354, 2,144,  0,0x04),
-   FieldTrait( 355,28,145,  0,0x04), FieldTrait( 423, 1,124,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c),
-   FieldTrait( 454, 1, 18,142,0x1c), FieldTrait( 460, 1, 19, 54,0x14), FieldTrait( 461,15, 20, 54,0x14),
-   FieldTrait( 470,18, 33, 54,0x14), FieldTrait( 471,15, 34, 54,0x14), FieldTrait( 472,15, 35, 54,0x14),
-   FieldTrait( 526,15, 11,  0,0x04), FieldTrait( 541,25, 24, 54,0x14), FieldTrait( 543,15, 32, 54,0x14),
-   FieldTrait( 555, 1,115, 49,0x1c), FieldTrait( 581, 1,  7,  0,0x04), FieldTrait( 625,15,139,  0,0x04),
-   FieldTrait( 662,11,133,160,0x14), FieldTrait( 663, 1,134,160,0x14), FieldTrait( 667,21, 50, 54,0x14),
-   FieldTrait( 691,15, 49, 54,0x14), FieldTrait( 699,15,135,160,0x14), FieldTrait( 711, 1,116,187,0x1c),
-   FieldTrait( 715,25,142,  0,0x04), FieldTrait( 716,15,140,  0,0x04), FieldTrait( 717,15,141,  0,0x04),
-   FieldTrait( 761,15,136,160,0x14), FieldTrait( 762,15, 22, 54,0x14), FieldTrait( 768, 1,120,182,0x1c),
-   FieldTrait( 788, 1,106, 44,0x14), FieldTrait( 854, 1,113,  0,0x04), FieldTrait( 864, 1, 53, 38,0x1c),
-   FieldTrait( 873,25, 54, 54,0x14), FieldTrait( 874,25, 55, 54,0x14), FieldTrait( 875, 1, 51, 54,0x14),
-   FieldTrait( 876,15, 52, 54,0x14), FieldTrait( 894,15,  1,  0,0x04), FieldTrait( 895, 1,  2,  0,0x04),
-   FieldTrait( 897, 1, 13,180,0x1c), FieldTrait( 898,14,110, 44,0x14), FieldTrait( 899,13,117,  0,0x04),
-   FieldTrait( 900,13,118,  0,0x04), FieldTrait( 901,13,119,  0,0x04), FieldTrait( 913,15,102, 44,0x14),
-   FieldTrait( 914,15,103, 44,0x14), FieldTrait( 915,25,104, 44,0x14), FieldTrait( 916,25,107, 44,0x14),
-   FieldTrait( 917,25,108, 44,0x14), FieldTrait( 918,19,105, 44,0x14), FieldTrait( 919, 1,109, 44,0x14),
-   FieldTrait( 920,13,126,  0,0x04), FieldTrait( 921,13,127,  0,0x04), FieldTrait( 922,13,128,  0,0x04),
-   FieldTrait( 947,19, 38, 54,0x14), FieldTrait( 965,15, 56, 54,0x14), FieldTrait( 966,15, 57, 54,0x14),
-   FieldTrait( 967, 9, 59, 54,0x14), FieldTrait( 968, 9, 60, 54,0x14), FieldTrait( 969, 9, 61, 54,0x14),
-   FieldTrait( 970, 1, 62, 54,0x14), FieldTrait( 971, 1, 63, 54,0x14), FieldTrait( 996,15, 65, 54,0x14),
-   FieldTrait( 997,15, 66, 54,0x14), FieldTrait(1018, 1, 64, 57,0x1c), FieldTrait(1049, 7, 58, 54,0x14),
-   FieldTrait(1079,26, 67, 54,0x14), FieldTrait(1146,13, 69, 54,0x14), FieldTrait(1147,10, 70, 54,0x14),
-   FieldTrait(1151,15, 68, 54,0x14), FieldTrait(1184, 2, 71,150,0x14), FieldTrait(1185,29, 72,150,0x14),
-   FieldTrait(1186,15, 73,150,0x14), FieldTrait(1191,15, 75, 54,0x14), FieldTrait(1192,10, 76, 54,0x14),
-   FieldTrait(1193, 7, 77, 54,0x14), FieldTrait(1194, 1, 78, 54,0x14), FieldTrait(1195,13, 79, 54,0x14),
-   FieldTrait(1196,15, 80, 54,0x14), FieldTrait(1197,15, 87, 54,0x14), FieldTrait(1198, 1, 81, 54,0x14),
-   FieldTrait(1199,11, 82, 54,0x14), FieldTrait(1200,11, 83, 54,0x14), FieldTrait(1227,15, 74, 54,0x14),
-   FieldTrait(1242, 8, 86, 54,0x14), FieldTrait(1244, 8, 85, 54,0x14), FieldTrait(1435, 1, 88, 54,0x14),
-   FieldTrait(1439, 1, 89, 54,0x14), FieldTrait(1449,15, 90, 54,0x14), FieldTrait(1450,15, 91, 54,0x14),
-   FieldTrait(1451,14, 92, 54,0x14), FieldTrait(1452,14, 93, 54,0x14), FieldTrait(1457,14, 94, 54,0x14),
-   FieldTrait(1458,14, 95, 54,0x14), FieldTrait(1478, 1, 96, 54,0x14), FieldTrait(1479, 1, 97, 54,0x14),
-   FieldTrait(1480,14, 98, 54,0x14), FieldTrait(1481, 1, 99, 54,0x14), FieldTrait(1482, 1,100, 54,0x14),
-   FieldTrait(1483, 1,101, 21,0x1c)
+   {   1,15,  6,  0,0x04}, {  11,15,  8,  0,0x04}, {  15,19,114,  0,0x04}, {  22,15, 17, 54,0x14},
+   {  37,15,  9,  0,0x04}, {  44,11,123,  0,0x04}, {  48,15, 16, 54,0x14}, {  53,10,112,  0,0x04},
+   {  54, 7,121,  0,0x04}, {  55,15, 14, 54,0x14}, {  58,15,143,  0,0x04}, {  60,22,  3,  0,0x04},
+   {  64,25,111,  0,0x04}, {  65,15, 15, 54,0x14}, { 106,15, 43, 54,0x14}, { 107,15, 46, 54,0x14},
+   { 124, 1, 12, 40,0x1c}, { 126,22,  4,  0,0x04}, { 136, 1,122, 77,0x1c}, { 159,13,125,  0,0x04},
+   { 167,15, 21, 54,0x14}, { 198,15, 10,  0,0x04}, { 200,21, 23, 54,0x14}, { 201, 1, 84, 54,0x14},
+   { 202,11, 37, 54,0x14}, { 206, 7, 39, 54,0x14}, { 207,20, 42, 54,0x14}, { 218,12,129,160,0x14},
+   { 220,19,130,160,0x14}, { 221,15,131,160,0x14}, { 222,15,132,160,0x14}, { 223,14, 41, 54,0x14},
+   { 224,25, 25, 54,0x14}, { 225,25, 26, 54,0x14}, { 226, 1, 28, 54,0x14}, { 227,14, 29, 54,0x14},
+   { 228, 9, 30, 54,0x14}, { 231, 9, 40, 54,0x14}, { 232, 1,137,162,0x1c}, { 239, 1, 27, 54,0x14},
+   { 240,25, 36, 54,0x14}, { 255,15, 31, 54,0x14}, { 336,15,138,  0,0x04}, { 348, 2, 44, 54,0x14},
+   { 349,28, 45, 54,0x14}, { 350, 2, 47, 54,0x14}, { 351,28, 48, 54,0x14}, { 354, 2,144,  0,0x04},
+   { 355,28,145,  0,0x04}, { 423, 1,124,  0,0x04}, { 453, 1,  5, 94,0x1c}, { 454, 1, 18,142,0x1c},
+   { 460, 1, 19, 54,0x14}, { 461,15, 20, 54,0x14}, { 470,18, 33, 54,0x14}, { 471,15, 34, 54,0x14},
+   { 472,15, 35, 54,0x14}, { 526,15, 11,  0,0x04}, { 541,25, 24, 54,0x14}, { 543,15, 32, 54,0x14},
+   { 555, 1,115, 49,0x1c}, { 581, 1,  7,  0,0x04}, { 625,15,139,  0,0x04}, { 662,11,133,160,0x14},
+   { 663, 1,134,160,0x14}, { 667,21, 50, 54,0x14}, { 691,15, 49, 54,0x14}, { 699,15,135,160,0x14},
+   { 711, 1,116,187,0x1c}, { 715,25,142,  0,0x04}, { 716,15,140,  0,0x04}, { 717,15,141,  0,0x04},
+   { 761,15,136,160,0x14}, { 762,15, 22, 54,0x14}, { 768, 1,120,182,0x1c}, { 788, 1,106, 44,0x14},
+   { 854, 1,113,  0,0x04}, { 864, 1, 53, 38,0x1c}, { 873,25, 54, 54,0x14}, { 874,25, 55, 54,0x14},
+   { 875, 1, 51, 54,0x14}, { 876,15, 52, 54,0x14}, { 894,15,  1,  0,0x04}, { 895, 1,  2,  0,0x04},
+   { 897, 1, 13,180,0x1c}, { 898,14,110, 44,0x14}, { 899,13,117,  0,0x04}, { 900,13,118,  0,0x04},
+   { 901,13,119,  0,0x04}, { 913,15,102, 44,0x14}, { 914,15,103, 44,0x14}, { 915,25,104, 44,0x14},
+   { 916,25,107, 44,0x14}, { 917,25,108, 44,0x14}, { 918,19,105, 44,0x14}, { 919, 1,109, 44,0x14},
+   { 920,13,126,  0,0x04}, { 921,13,127,  0,0x04}, { 922,13,128,  0,0x04}, { 947,19, 38, 54,0x14},
+   { 965,15, 56, 54,0x14}, { 966,15, 57, 54,0x14}, { 967, 9, 59, 54,0x14}, { 968, 9, 60, 54,0x14},
+   { 969, 9, 61, 54,0x14}, { 970, 1, 62, 54,0x14}, { 971, 1, 63, 54,0x14}, { 996,15, 65, 54,0x14},
+   { 997,15, 66, 54,0x14}, {1018, 1, 64, 57,0x1c}, {1049, 7, 58, 54,0x14}, {1079,26, 67, 54,0x14},
+   {1146,13, 69, 54,0x14}, {1147,10, 70, 54,0x14}, {1151,15, 68, 54,0x14}, {1184, 2, 71,150,0x14},
+   {1185,29, 72,150,0x14}, {1186,15, 73,150,0x14}, {1191,15, 75, 54,0x14}, {1192,10, 76, 54,0x14},
+   {1193, 7, 77, 54,0x14}, {1194, 1, 78, 54,0x14}, {1195,13, 79, 54,0x14}, {1196,15, 80, 54,0x14},
+   {1197,15, 87, 54,0x14}, {1198, 1, 81, 54,0x14}, {1199,11, 82, 54,0x14}, {1200,11, 83, 54,0x14},
+   {1227,15, 74, 54,0x14}, {1242, 8, 86, 54,0x14}, {1244, 8, 85, 54,0x14}, {1435, 1, 88, 54,0x14},
+   {1439, 1, 89, 54,0x14}, {1449,15, 90, 54,0x14}, {1450,15, 91, 54,0x14}, {1451,14, 92, 54,0x14},
+   {1452,14, 93, 54,0x14}, {1457,14, 94, 54,0x14}, {1458,14, 95, 54,0x14}, {1478, 1, 96, 54,0x14},
+   {1479, 1, 97, 54,0x14}, {1480,14, 98, 54,0x14}, {1481, 1, 99, 54,0x14}, {1482, 1,100, 54,0x14},
+   {1483, 1,101, 21,0x1c}
 };
 const FieldTrait_Hash_Array CollateralRequest::_ftha(CollateralRequest::_traits, 145);
 const MsgType CollateralRequest::_msgtype("AX");
@@ -5032,59 +4575,47 @@ const FieldTrait *CollateralRequest::NoComplexEvents::NoComplexEventDates::NoCom
 const FieldTrait_Hash_Array& CollateralRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CollateralRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CollateralAssignment::_traits[] =
+const FieldTrait CollateralAssignment::_traits[]
 {
-   FieldTrait(   1,15,  9,  0,0x04), FieldTrait(  11,15, 11,  0,0x04), FieldTrait(  15,19,117,  0,0x04),
-   FieldTrait(  22,15, 20, 54,0x14), FieldTrait(  37,15, 12,  0,0x04), FieldTrait(  44,11,126,  0,0x04),
-   FieldTrait(  48,15, 19, 54,0x14), FieldTrait(  53,10,115,  0,0x04), FieldTrait(  54, 7,124,  0,0x04),
-   FieldTrait(  55,15, 17, 54,0x14), FieldTrait(  58,15,151,  0,0x04), FieldTrait(  60,22,  6,  0,0x04),
-   FieldTrait(  64,25,114,  0,0x04), FieldTrait(  65,15, 18, 54,0x14), FieldTrait(  85, 1,145, 37,0x1c),
-   FieldTrait( 106,15, 46, 54,0x14), FieldTrait( 107,15, 49, 54,0x14), FieldTrait( 124, 1, 15, 40,0x1c),
-   FieldTrait( 126,22,  7,  0,0x04), FieldTrait( 136, 1,125, 77,0x1c), FieldTrait( 159,13,128,  0,0x04),
-   FieldTrait( 167,15, 24, 54,0x14), FieldTrait( 169, 1,142,153,0x14), FieldTrait( 170,15,143,153,0x14),
-   FieldTrait( 171,15,144,153,0x14), FieldTrait( 172, 1,141,153,0x14), FieldTrait( 198,15, 13,  0,0x04),
-   FieldTrait( 200,21, 26, 54,0x14), FieldTrait( 201, 1, 87, 54,0x14), FieldTrait( 202,11, 40, 54,0x14),
-   FieldTrait( 206, 7, 42, 54,0x14), FieldTrait( 207,20, 45, 54,0x14), FieldTrait( 218,12,132,160,0x14),
-   FieldTrait( 220,19,133,160,0x14), FieldTrait( 221,15,134,160,0x14), FieldTrait( 222,15,135,160,0x14),
-   FieldTrait( 223,14, 44, 54,0x14), FieldTrait( 224,25, 28, 54,0x14), FieldTrait( 225,25, 29, 54,0x14),
-   FieldTrait( 226, 1, 31, 54,0x14), FieldTrait( 227,14, 32, 54,0x14), FieldTrait( 228, 9, 33, 54,0x14),
-   FieldTrait( 231, 9, 43, 54,0x14), FieldTrait( 232, 1,140,162,0x1c), FieldTrait( 239, 1, 30, 54,0x14),
-   FieldTrait( 240,25, 39, 54,0x14), FieldTrait( 255,15, 34, 54,0x14), FieldTrait( 336,15,146,  0,0x04),
-   FieldTrait( 348, 2, 47, 54,0x14), FieldTrait( 349,28, 48, 54,0x14), FieldTrait( 350, 2, 50, 54,0x14),
-   FieldTrait( 351,28, 51, 54,0x14), FieldTrait( 354, 2,152,  0,0x04), FieldTrait( 355,28,153,  0,0x04),
-   FieldTrait( 423, 1,127,  0,0x04), FieldTrait( 453, 1,  8, 94,0x1c), FieldTrait( 454, 1, 21,142,0x1c),
-   FieldTrait( 460, 1, 22, 54,0x14), FieldTrait( 461,15, 23, 54,0x14), FieldTrait( 470,18, 36, 54,0x14),
-   FieldTrait( 471,15, 37, 54,0x14), FieldTrait( 472,15, 38, 54,0x14), FieldTrait( 526,15, 14,  0,0x04),
-   FieldTrait( 541,25, 27, 54,0x14), FieldTrait( 543,15, 35, 54,0x14), FieldTrait( 555, 1,118, 49,0x1c),
-   FieldTrait( 581, 1, 10,  0,0x04), FieldTrait( 625,15,147,  0,0x04), FieldTrait( 662,11,136,160,0x14),
-   FieldTrait( 663, 1,137,160,0x14), FieldTrait( 667,21, 53, 54,0x14), FieldTrait( 691,15, 52, 54,0x14),
-   FieldTrait( 699,15,138,160,0x14), FieldTrait( 711, 1,119,187,0x1c), FieldTrait( 715,25,150,  0,0x04),
-   FieldTrait( 716,15,148,  0,0x04), FieldTrait( 717,15,149,  0,0x04), FieldTrait( 761,15,139,160,0x14),
-   FieldTrait( 762,15, 25, 54,0x14), FieldTrait( 768, 1,123,182,0x1c), FieldTrait( 788, 1,109, 44,0x14),
-   FieldTrait( 854, 1,116,  0,0x04), FieldTrait( 864, 1, 56, 38,0x1c), FieldTrait( 873,25, 57, 54,0x14),
-   FieldTrait( 874,25, 58, 54,0x14), FieldTrait( 875, 1, 54, 54,0x14), FieldTrait( 876,15, 55, 54,0x14),
-   FieldTrait( 894,15,  2,  0,0x04), FieldTrait( 895, 1,  3,  0,0x04), FieldTrait( 897, 1, 16,180,0x1c),
-   FieldTrait( 898,14,113, 44,0x14), FieldTrait( 899,13,120,  0,0x04), FieldTrait( 900,13,121,  0,0x04),
-   FieldTrait( 901,13,122,  0,0x04), FieldTrait( 902,15,  1,  0,0x04), FieldTrait( 903, 1,  4,  0,0x04),
-   FieldTrait( 907,15,  5,  0,0x04), FieldTrait( 913,15,105, 44,0x14), FieldTrait( 914,15,106, 44,0x14),
-   FieldTrait( 915,25,107, 44,0x14), FieldTrait( 916,25,110, 44,0x14), FieldTrait( 917,25,111, 44,0x14),
-   FieldTrait( 918,19,108, 44,0x14), FieldTrait( 919, 1,112, 44,0x14), FieldTrait( 920,13,129,  0,0x04),
-   FieldTrait( 921,13,130,  0,0x04), FieldTrait( 922,13,131,  0,0x04), FieldTrait( 947,19, 41, 54,0x14),
-   FieldTrait( 965,15, 59, 54,0x14), FieldTrait( 966,15, 60, 54,0x14), FieldTrait( 967, 9, 62, 54,0x14),
-   FieldTrait( 968, 9, 63, 54,0x14), FieldTrait( 969, 9, 64, 54,0x14), FieldTrait( 970, 1, 65, 54,0x14),
-   FieldTrait( 971, 1, 66, 54,0x14), FieldTrait( 996,15, 68, 54,0x14), FieldTrait( 997,15, 69, 54,0x14),
-   FieldTrait(1018, 1, 67, 57,0x1c), FieldTrait(1049, 7, 61, 54,0x14), FieldTrait(1079,26, 70, 54,0x14),
-   FieldTrait(1146,13, 72, 54,0x14), FieldTrait(1147,10, 73, 54,0x14), FieldTrait(1151,15, 71, 54,0x14),
-   FieldTrait(1184, 2, 74,150,0x14), FieldTrait(1185,29, 75,150,0x14), FieldTrait(1186,15, 76,150,0x14),
-   FieldTrait(1191,15, 78, 54,0x14), FieldTrait(1192,10, 79, 54,0x14), FieldTrait(1193, 7, 80, 54,0x14),
-   FieldTrait(1194, 1, 81, 54,0x14), FieldTrait(1195,13, 82, 54,0x14), FieldTrait(1196,15, 83, 54,0x14),
-   FieldTrait(1197,15, 90, 54,0x14), FieldTrait(1198, 1, 84, 54,0x14), FieldTrait(1199,11, 85, 54,0x14),
-   FieldTrait(1200,11, 86, 54,0x14), FieldTrait(1227,15, 77, 54,0x14), FieldTrait(1242, 8, 89, 54,0x14),
-   FieldTrait(1244, 8, 88, 54,0x14), FieldTrait(1435, 1, 91, 54,0x14), FieldTrait(1439, 1, 92, 54,0x14),
-   FieldTrait(1449,15, 93, 54,0x14), FieldTrait(1450,15, 94, 54,0x14), FieldTrait(1451,14, 95, 54,0x14),
-   FieldTrait(1452,14, 96, 54,0x14), FieldTrait(1457,14, 97, 54,0x14), FieldTrait(1458,14, 98, 54,0x14),
-   FieldTrait(1478, 1, 99, 54,0x14), FieldTrait(1479, 1,100, 54,0x14), FieldTrait(1480,14,101, 54,0x14),
-   FieldTrait(1481, 1,102, 54,0x14), FieldTrait(1482, 1,103, 54,0x14), FieldTrait(1483, 1,104, 21,0x1c)
+   {   1,15,  9,  0,0x04}, {  11,15, 11,  0,0x04}, {  15,19,117,  0,0x04}, {  22,15, 20, 54,0x14},
+   {  37,15, 12,  0,0x04}, {  44,11,126,  0,0x04}, {  48,15, 19, 54,0x14}, {  53,10,115,  0,0x04},
+   {  54, 7,124,  0,0x04}, {  55,15, 17, 54,0x14}, {  58,15,151,  0,0x04}, {  60,22,  6,  0,0x04},
+   {  64,25,114,  0,0x04}, {  65,15, 18, 54,0x14}, {  85, 1,145, 37,0x1c}, { 106,15, 46, 54,0x14},
+   { 107,15, 49, 54,0x14}, { 124, 1, 15, 40,0x1c}, { 126,22,  7,  0,0x04}, { 136, 1,125, 77,0x1c},
+   { 159,13,128,  0,0x04}, { 167,15, 24, 54,0x14}, { 169, 1,142,153,0x14}, { 170,15,143,153,0x14},
+   { 171,15,144,153,0x14}, { 172, 1,141,153,0x14}, { 198,15, 13,  0,0x04}, { 200,21, 26, 54,0x14},
+   { 201, 1, 87, 54,0x14}, { 202,11, 40, 54,0x14}, { 206, 7, 42, 54,0x14}, { 207,20, 45, 54,0x14},
+   { 218,12,132,160,0x14}, { 220,19,133,160,0x14}, { 221,15,134,160,0x14}, { 222,15,135,160,0x14},
+   { 223,14, 44, 54,0x14}, { 224,25, 28, 54,0x14}, { 225,25, 29, 54,0x14}, { 226, 1, 31, 54,0x14},
+   { 227,14, 32, 54,0x14}, { 228, 9, 33, 54,0x14}, { 231, 9, 43, 54,0x14}, { 232, 1,140,162,0x1c},
+   { 239, 1, 30, 54,0x14}, { 240,25, 39, 54,0x14}, { 255,15, 34, 54,0x14}, { 336,15,146,  0,0x04},
+   { 348, 2, 47, 54,0x14}, { 349,28, 48, 54,0x14}, { 350, 2, 50, 54,0x14}, { 351,28, 51, 54,0x14},
+   { 354, 2,152,  0,0x04}, { 355,28,153,  0,0x04}, { 423, 1,127,  0,0x04}, { 453, 1,  8, 94,0x1c},
+   { 454, 1, 21,142,0x1c}, { 460, 1, 22, 54,0x14}, { 461,15, 23, 54,0x14}, { 470,18, 36, 54,0x14},
+   { 471,15, 37, 54,0x14}, { 472,15, 38, 54,0x14}, { 526,15, 14,  0,0x04}, { 541,25, 27, 54,0x14},
+   { 543,15, 35, 54,0x14}, { 555, 1,118, 49,0x1c}, { 581, 1, 10,  0,0x04}, { 625,15,147,  0,0x04},
+   { 662,11,136,160,0x14}, { 663, 1,137,160,0x14}, { 667,21, 53, 54,0x14}, { 691,15, 52, 54,0x14},
+   { 699,15,138,160,0x14}, { 711, 1,119,187,0x1c}, { 715,25,150,  0,0x04}, { 716,15,148,  0,0x04},
+   { 717,15,149,  0,0x04}, { 761,15,139,160,0x14}, { 762,15, 25, 54,0x14}, { 768, 1,123,182,0x1c},
+   { 788, 1,109, 44,0x14}, { 854, 1,116,  0,0x04}, { 864, 1, 56, 38,0x1c}, { 873,25, 57, 54,0x14},
+   { 874,25, 58, 54,0x14}, { 875, 1, 54, 54,0x14}, { 876,15, 55, 54,0x14}, { 894,15,  2,  0,0x04},
+   { 895, 1,  3,  0,0x04}, { 897, 1, 16,180,0x1c}, { 898,14,113, 44,0x14}, { 899,13,120,  0,0x04},
+   { 900,13,121,  0,0x04}, { 901,13,122,  0,0x04}, { 902,15,  1,  0,0x04}, { 903, 1,  4,  0,0x04},
+   { 907,15,  5,  0,0x04}, { 913,15,105, 44,0x14}, { 914,15,106, 44,0x14}, { 915,25,107, 44,0x14},
+   { 916,25,110, 44,0x14}, { 917,25,111, 44,0x14}, { 918,19,108, 44,0x14}, { 919, 1,112, 44,0x14},
+   { 920,13,129,  0,0x04}, { 921,13,130,  0,0x04}, { 922,13,131,  0,0x04}, { 947,19, 41, 54,0x14},
+   { 965,15, 59, 54,0x14}, { 966,15, 60, 54,0x14}, { 967, 9, 62, 54,0x14}, { 968, 9, 63, 54,0x14},
+   { 969, 9, 64, 54,0x14}, { 970, 1, 65, 54,0x14}, { 971, 1, 66, 54,0x14}, { 996,15, 68, 54,0x14},
+   { 997,15, 69, 54,0x14}, {1018, 1, 67, 57,0x1c}, {1049, 7, 61, 54,0x14}, {1079,26, 70, 54,0x14},
+   {1146,13, 72, 54,0x14}, {1147,10, 73, 54,0x14}, {1151,15, 71, 54,0x14}, {1184, 2, 74,150,0x14},
+   {1185,29, 75,150,0x14}, {1186,15, 76,150,0x14}, {1191,15, 78, 54,0x14}, {1192,10, 79, 54,0x14},
+   {1193, 7, 80, 54,0x14}, {1194, 1, 81, 54,0x14}, {1195,13, 82, 54,0x14}, {1196,15, 83, 54,0x14},
+   {1197,15, 90, 54,0x14}, {1198, 1, 84, 54,0x14}, {1199,11, 85, 54,0x14}, {1200,11, 86, 54,0x14},
+   {1227,15, 77, 54,0x14}, {1242, 8, 89, 54,0x14}, {1244, 8, 88, 54,0x14}, {1435, 1, 91, 54,0x14},
+   {1439, 1, 92, 54,0x14}, {1449,15, 93, 54,0x14}, {1450,15, 94, 54,0x14}, {1451,14, 95, 54,0x14},
+   {1452,14, 96, 54,0x14}, {1457,14, 97, 54,0x14}, {1458,14, 98, 54,0x14}, {1478, 1, 99, 54,0x14},
+   {1479, 1,100, 54,0x14}, {1480,14,101, 54,0x14}, {1481, 1,102, 54,0x14}, {1482, 1,103, 54,0x14},
+   {1483, 1,104, 21,0x1c}
 };
 const FieldTrait_Hash_Array CollateralAssignment::_ftha(CollateralAssignment::_traits, 153);
 const MsgType CollateralAssignment::_msgtype("AY");
@@ -5185,57 +4716,45 @@ const FieldTrait *CollateralAssignment::NoComplexEvents::NoComplexEventDates::No
 const FieldTrait_Hash_Array& CollateralAssignment::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CollateralAssignment::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CollateralResponse::_traits[] =
+const FieldTrait CollateralResponse::_traits[]
 {
-   FieldTrait(   1,15, 10,  0,0x04), FieldTrait(  11,15, 12,  0,0x04), FieldTrait(  15,19,118,  0,0x04),
-   FieldTrait(  22,15, 21, 54,0x14), FieldTrait(  37,15, 13,  0,0x04), FieldTrait(  44,11,127,  0,0x04),
-   FieldTrait(  48,15, 20, 54,0x14), FieldTrait(  53,10,116,  0,0x04), FieldTrait(  54, 7,125,  0,0x04),
-   FieldTrait(  55,15, 18, 54,0x14), FieldTrait(  58,15,142,  0,0x04), FieldTrait(  60,22,  8,  0,0x04),
-   FieldTrait(  64,25,115,  0,0x04), FieldTrait(  65,15, 19, 54,0x14), FieldTrait( 106,15, 47, 54,0x14),
-   FieldTrait( 107,15, 50, 54,0x14), FieldTrait( 124, 1, 16, 40,0x1c), FieldTrait( 136, 1,126, 77,0x1c),
-   FieldTrait( 159,13,129,  0,0x04), FieldTrait( 167,15, 25, 54,0x14), FieldTrait( 198,15, 14,  0,0x04),
-   FieldTrait( 200,21, 27, 54,0x14), FieldTrait( 201, 1, 88, 54,0x14), FieldTrait( 202,11, 41, 54,0x14),
-   FieldTrait( 206, 7, 43, 54,0x14), FieldTrait( 207,20, 46, 54,0x14), FieldTrait( 218,12,133,160,0x14),
-   FieldTrait( 220,19,134,160,0x14), FieldTrait( 221,15,135,160,0x14), FieldTrait( 222,15,136,160,0x14),
-   FieldTrait( 223,14, 45, 54,0x14), FieldTrait( 224,25, 29, 54,0x14), FieldTrait( 225,25, 30, 54,0x14),
-   FieldTrait( 226, 1, 32, 54,0x14), FieldTrait( 227,14, 33, 54,0x14), FieldTrait( 228, 9, 34, 54,0x14),
-   FieldTrait( 231, 9, 44, 54,0x14), FieldTrait( 232, 1,141,162,0x1c), FieldTrait( 239, 1, 31, 54,0x14),
-   FieldTrait( 240,25, 40, 54,0x14), FieldTrait( 255,15, 35, 54,0x14), FieldTrait( 291,16,146,  0,0x04),
-   FieldTrait( 348, 2, 48, 54,0x14), FieldTrait( 349,28, 49, 54,0x14), FieldTrait( 350, 2, 51, 54,0x14),
-   FieldTrait( 351,28, 52, 54,0x14), FieldTrait( 354, 2,143,  0,0x04), FieldTrait( 355,28,144,  0,0x04),
-   FieldTrait( 423, 1,128,  0,0x04), FieldTrait( 453, 1,  9, 94,0x1c), FieldTrait( 454, 1, 22,142,0x1c),
-   FieldTrait( 460, 1, 23, 54,0x14), FieldTrait( 461,15, 24, 54,0x14), FieldTrait( 470,18, 37, 54,0x14),
-   FieldTrait( 471,15, 38, 54,0x14), FieldTrait( 472,15, 39, 54,0x14), FieldTrait( 526,15, 15,  0,0x04),
-   FieldTrait( 541,25, 28, 54,0x14), FieldTrait( 543,15, 36, 54,0x14), FieldTrait( 555, 1,119, 49,0x1c),
-   FieldTrait( 581, 1, 11,  0,0x04), FieldTrait( 662,11,137,160,0x14), FieldTrait( 663, 1,138,160,0x14),
-   FieldTrait( 667,21, 54, 54,0x14), FieldTrait( 691,15, 53, 54,0x14), FieldTrait( 699,15,139,160,0x14),
-   FieldTrait( 711, 1,120,187,0x1c), FieldTrait( 715,25,147,  0,0x04), FieldTrait( 761,15,140,160,0x14),
-   FieldTrait( 762,15, 26, 54,0x14), FieldTrait( 768, 1,124,182,0x1c), FieldTrait( 788, 1,110, 44,0x14),
-   FieldTrait( 854, 1,117,  0,0x04), FieldTrait( 864, 1, 57, 38,0x1c), FieldTrait( 873,25, 58, 54,0x14),
-   FieldTrait( 874,25, 59, 54,0x14), FieldTrait( 875, 1, 55, 54,0x14), FieldTrait( 876,15, 56, 54,0x14),
-   FieldTrait( 894,15,  3,  0,0x04), FieldTrait( 895, 1,  4,  0,0x04), FieldTrait( 897, 1, 17,180,0x1c),
-   FieldTrait( 898,14,114, 44,0x14), FieldTrait( 899,13,121,  0,0x04), FieldTrait( 900,13,122,  0,0x04),
-   FieldTrait( 901,13,123,  0,0x04), FieldTrait( 902,15,  2,  0,0x04), FieldTrait( 903, 1,  5,  0,0x04),
-   FieldTrait( 904,15,  1,  0,0x04), FieldTrait( 905, 1,  6,  0,0x04), FieldTrait( 906, 1,  7,  0,0x04),
-   FieldTrait( 913,15,106, 44,0x14), FieldTrait( 914,15,107, 44,0x14), FieldTrait( 915,25,108, 44,0x14),
-   FieldTrait( 916,25,111, 44,0x14), FieldTrait( 917,25,112, 44,0x14), FieldTrait( 918,19,109, 44,0x14),
-   FieldTrait( 919, 1,113, 44,0x14), FieldTrait( 920,13,130,  0,0x04), FieldTrait( 921,13,131,  0,0x04),
-   FieldTrait( 922,13,132,  0,0x04), FieldTrait( 947,19, 42, 54,0x14), FieldTrait( 965,15, 60, 54,0x14),
-   FieldTrait( 966,15, 61, 54,0x14), FieldTrait( 967, 9, 63, 54,0x14), FieldTrait( 968, 9, 64, 54,0x14),
-   FieldTrait( 969, 9, 65, 54,0x14), FieldTrait( 970, 1, 66, 54,0x14), FieldTrait( 971, 1, 67, 54,0x14),
-   FieldTrait( 996,15, 69, 54,0x14), FieldTrait( 997,15, 70, 54,0x14), FieldTrait(1018, 1, 68, 57,0x1c),
-   FieldTrait(1043, 1,145,  0,0x04), FieldTrait(1049, 7, 62, 54,0x14), FieldTrait(1079,26, 71, 54,0x14),
-   FieldTrait(1146,13, 73, 54,0x14), FieldTrait(1147,10, 74, 54,0x14), FieldTrait(1151,15, 72, 54,0x14),
-   FieldTrait(1184, 2, 75,150,0x14), FieldTrait(1185,29, 76,150,0x14), FieldTrait(1186,15, 77,150,0x14),
-   FieldTrait(1191,15, 79, 54,0x14), FieldTrait(1192,10, 80, 54,0x14), FieldTrait(1193, 7, 81, 54,0x14),
-   FieldTrait(1194, 1, 82, 54,0x14), FieldTrait(1195,13, 83, 54,0x14), FieldTrait(1196,15, 84, 54,0x14),
-   FieldTrait(1197,15, 91, 54,0x14), FieldTrait(1198, 1, 85, 54,0x14), FieldTrait(1199,11, 86, 54,0x14),
-   FieldTrait(1200,11, 87, 54,0x14), FieldTrait(1227,15, 78, 54,0x14), FieldTrait(1242, 8, 90, 54,0x14),
-   FieldTrait(1244, 8, 89, 54,0x14), FieldTrait(1435, 1, 92, 54,0x14), FieldTrait(1439, 1, 93, 54,0x14),
-   FieldTrait(1449,15, 94, 54,0x14), FieldTrait(1450,15, 95, 54,0x14), FieldTrait(1451,14, 96, 54,0x14),
-   FieldTrait(1452,14, 97, 54,0x14), FieldTrait(1457,14, 98, 54,0x14), FieldTrait(1458,14, 99, 54,0x14),
-   FieldTrait(1478, 1,100, 54,0x14), FieldTrait(1479, 1,101, 54,0x14), FieldTrait(1480,14,102, 54,0x14),
-   FieldTrait(1481, 1,103, 54,0x14), FieldTrait(1482, 1,104, 54,0x14), FieldTrait(1483, 1,105, 21,0x1c)
+   {   1,15, 10,  0,0x04}, {  11,15, 12,  0,0x04}, {  15,19,118,  0,0x04}, {  22,15, 21, 54,0x14},
+   {  37,15, 13,  0,0x04}, {  44,11,127,  0,0x04}, {  48,15, 20, 54,0x14}, {  53,10,116,  0,0x04},
+   {  54, 7,125,  0,0x04}, {  55,15, 18, 54,0x14}, {  58,15,142,  0,0x04}, {  60,22,  8,  0,0x04},
+   {  64,25,115,  0,0x04}, {  65,15, 19, 54,0x14}, { 106,15, 47, 54,0x14}, { 107,15, 50, 54,0x14},
+   { 124, 1, 16, 40,0x1c}, { 136, 1,126, 77,0x1c}, { 159,13,129,  0,0x04}, { 167,15, 25, 54,0x14},
+   { 198,15, 14,  0,0x04}, { 200,21, 27, 54,0x14}, { 201, 1, 88, 54,0x14}, { 202,11, 41, 54,0x14},
+   { 206, 7, 43, 54,0x14}, { 207,20, 46, 54,0x14}, { 218,12,133,160,0x14}, { 220,19,134,160,0x14},
+   { 221,15,135,160,0x14}, { 222,15,136,160,0x14}, { 223,14, 45, 54,0x14}, { 224,25, 29, 54,0x14},
+   { 225,25, 30, 54,0x14}, { 226, 1, 32, 54,0x14}, { 227,14, 33, 54,0x14}, { 228, 9, 34, 54,0x14},
+   { 231, 9, 44, 54,0x14}, { 232, 1,141,162,0x1c}, { 239, 1, 31, 54,0x14}, { 240,25, 40, 54,0x14},
+   { 255,15, 35, 54,0x14}, { 291,16,146,  0,0x04}, { 348, 2, 48, 54,0x14}, { 349,28, 49, 54,0x14},
+   { 350, 2, 51, 54,0x14}, { 351,28, 52, 54,0x14}, { 354, 2,143,  0,0x04}, { 355,28,144,  0,0x04},
+   { 423, 1,128,  0,0x04}, { 453, 1,  9, 94,0x1c}, { 454, 1, 22,142,0x1c}, { 460, 1, 23, 54,0x14},
+   { 461,15, 24, 54,0x14}, { 470,18, 37, 54,0x14}, { 471,15, 38, 54,0x14}, { 472,15, 39, 54,0x14},
+   { 526,15, 15,  0,0x04}, { 541,25, 28, 54,0x14}, { 543,15, 36, 54,0x14}, { 555, 1,119, 49,0x1c},
+   { 581, 1, 11,  0,0x04}, { 662,11,137,160,0x14}, { 663, 1,138,160,0x14}, { 667,21, 54, 54,0x14},
+   { 691,15, 53, 54,0x14}, { 699,15,139,160,0x14}, { 711, 1,120,187,0x1c}, { 715,25,147,  0,0x04},
+   { 761,15,140,160,0x14}, { 762,15, 26, 54,0x14}, { 768, 1,124,182,0x1c}, { 788, 1,110, 44,0x14},
+   { 854, 1,117,  0,0x04}, { 864, 1, 57, 38,0x1c}, { 873,25, 58, 54,0x14}, { 874,25, 59, 54,0x14},
+   { 875, 1, 55, 54,0x14}, { 876,15, 56, 54,0x14}, { 894,15,  3,  0,0x04}, { 895, 1,  4,  0,0x04},
+   { 897, 1, 17,180,0x1c}, { 898,14,114, 44,0x14}, { 899,13,121,  0,0x04}, { 900,13,122,  0,0x04},
+   { 901,13,123,  0,0x04}, { 902,15,  2,  0,0x04}, { 903, 1,  5,  0,0x04}, { 904,15,  1,  0,0x04},
+   { 905, 1,  6,  0,0x04}, { 906, 1,  7,  0,0x04}, { 913,15,106, 44,0x14}, { 914,15,107, 44,0x14},
+   { 915,25,108, 44,0x14}, { 916,25,111, 44,0x14}, { 917,25,112, 44,0x14}, { 918,19,109, 44,0x14},
+   { 919, 1,113, 44,0x14}, { 920,13,130,  0,0x04}, { 921,13,131,  0,0x04}, { 922,13,132,  0,0x04},
+   { 947,19, 42, 54,0x14}, { 965,15, 60, 54,0x14}, { 966,15, 61, 54,0x14}, { 967, 9, 63, 54,0x14},
+   { 968, 9, 64, 54,0x14}, { 969, 9, 65, 54,0x14}, { 970, 1, 66, 54,0x14}, { 971, 1, 67, 54,0x14},
+   { 996,15, 69, 54,0x14}, { 997,15, 70, 54,0x14}, {1018, 1, 68, 57,0x1c}, {1043, 1,145,  0,0x04},
+   {1049, 7, 62, 54,0x14}, {1079,26, 71, 54,0x14}, {1146,13, 73, 54,0x14}, {1147,10, 74, 54,0x14},
+   {1151,15, 72, 54,0x14}, {1184, 2, 75,150,0x14}, {1185,29, 76,150,0x14}, {1186,15, 77,150,0x14},
+   {1191,15, 79, 54,0x14}, {1192,10, 80, 54,0x14}, {1193, 7, 81, 54,0x14}, {1194, 1, 82, 54,0x14},
+   {1195,13, 83, 54,0x14}, {1196,15, 84, 54,0x14}, {1197,15, 91, 54,0x14}, {1198, 1, 85, 54,0x14},
+   {1199,11, 86, 54,0x14}, {1200,11, 87, 54,0x14}, {1227,15, 78, 54,0x14}, {1242, 8, 90, 54,0x14},
+   {1244, 8, 89, 54,0x14}, {1435, 1, 92, 54,0x14}, {1439, 1, 93, 54,0x14}, {1449,15, 94, 54,0x14},
+   {1450,15, 95, 54,0x14}, {1451,14, 96, 54,0x14}, {1452,14, 97, 54,0x14}, {1457,14, 98, 54,0x14},
+   {1458,14, 99, 54,0x14}, {1478, 1,100, 54,0x14}, {1479, 1,101, 54,0x14}, {1480,14,102, 54,0x14},
+   {1481, 1,103, 54,0x14}, {1482, 1,104, 54,0x14}, {1483, 1,105, 21,0x1c}
 };
 const FieldTrait_Hash_Array CollateralResponse::_ftha(CollateralResponse::_traits, 147);
 const MsgType CollateralResponse::_msgtype("AZ");
@@ -5324,16 +4843,14 @@ const FieldTrait *CollateralResponse::NoComplexEvents::NoComplexEventDates::NoCo
 const FieldTrait_Hash_Array& CollateralResponse::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CollateralResponse::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait News::_traits[] =
+const FieldTrait News::_traits[]
 {
-   FieldTrait(  33, 1, 10, 66,0x1c), FieldTrait(  42,22,  1,  0,0x04), FieldTrait(  61, 7,  2,  0,0x04),
-   FieldTrait(  95, 2, 12,  0,0x04), FieldTrait(  96,28, 13,  0,0x04), FieldTrait( 146, 1,  7, 47,0x1c),
-   FieldTrait( 148,15,  3,  0,0x04), FieldTrait( 149,15, 11,  0,0x04), FieldTrait( 215, 1,  6,141,0x1c),
-   FieldTrait( 358, 2,  4,  0,0x04), FieldTrait( 359,28,  5,  0,0x04), FieldTrait( 555, 1,  8, 49,0x1c),
-   FieldTrait( 711, 1,  9,188,0x1c), FieldTrait(1180,15, 14,  8,0x14), FieldTrait(1181, 4, 15,  8,0x14),
-   FieldTrait(1300,15, 23,  0,0x04), FieldTrait(1301,20, 22,  0,0x04), FieldTrait(1350, 4, 16,  8,0x14),
-   FieldTrait(1352, 8, 17,  8,0x14), FieldTrait(1472,15, 18,  0,0x04), FieldTrait(1473, 1, 20,  0,0x04),
-   FieldTrait(1474,35, 21,  0,0x04), FieldTrait(1475, 1, 19, 84,0x1c)
+   {  33, 1, 10, 66,0x1c}, {  42,22,  1,  0,0x04}, {  61, 7,  2,  0,0x04}, {  95, 2, 12,  0,0x04},
+   {  96,28, 13,  0,0x04}, { 146, 1,  7, 47,0x1c}, { 148,15,  3,  0,0x04}, { 149,15, 11,  0,0x04},
+   { 215, 1,  6,141,0x1c}, { 358, 2,  4,  0,0x04}, { 359,28,  5,  0,0x04}, { 555, 1,  8, 49,0x1c},
+   { 711, 1,  9,188,0x1c}, {1180,15, 14,  8,0x14}, {1181, 4, 15,  8,0x14}, {1300,15, 23,  0,0x04},
+   {1301,20, 22,  0,0x04}, {1350, 4, 16,  8,0x14}, {1352, 8, 17,  8,0x14}, {1472,15, 18,  0,0x04},
+   {1473, 1, 20,  0,0x04}, {1474,35, 21,  0,0x04}, {1475, 1, 19, 84,0x1c}
 };
 const FieldTrait_Hash_Array News::_ftha(News::_traits, 23);
 const MsgType News::_msgtype("B");
@@ -5406,68 +4923,55 @@ const FieldTrait *News::NoUnderlyings::NoUndlyInstrumentParties::NoUndlyInstrume
 const FieldTrait_Hash_Array& News::NoUnderlyings::NoUndlyInstrumentParties::NoUndlyInstrumentPartySubIDs::_ftha(NoUndlyInstrumentPartySubIDsV1_ftha);
 const MsgType& News::NoUnderlyings::NoUndlyInstrumentParties::NoUndlyInstrumentPartySubIDs::_msgtype(NoUndlyInstrumentPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait News::NoNewsRefIDs::_traits[] =
+const FieldTrait News::NoNewsRefIDs::_traits[]
 {
-   FieldTrait(1476,15,  1,  0,0x04), FieldTrait(1477, 1,  2,  0,0x04)
+   {1476,15,  1,  0,0x04}, {1477, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    News::NoNewsRefIDs::_ftha(News::NoNewsRefIDs::_traits, 2);
 const MsgType News::NoNewsRefIDs::_msgtype("NoNewsRefIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CollateralReport::_traits[] =
+const FieldTrait CollateralReport::_traits[]
 {
-   FieldTrait(   1,15,  7,  0,0x04), FieldTrait(  11,15,  9,  0,0x04), FieldTrait(  15,19,115,  0,0x04),
-   FieldTrait(  22,15, 18, 54,0x14), FieldTrait(  37,15, 10,  0,0x04), FieldTrait(  44,11,124,  0,0x04),
-   FieldTrait(  48,15, 17, 54,0x14), FieldTrait(  53,10,113,  0,0x04), FieldTrait(  54, 7,122,  0,0x04),
-   FieldTrait(  55,15, 15, 54,0x14), FieldTrait(  58,15,149,  0,0x04), FieldTrait(  60,22,152,  0,0x04),
-   FieldTrait(  64,25,112,  0,0x04), FieldTrait(  65,15, 16, 54,0x14), FieldTrait(  85, 1,143, 37,0x1c),
-   FieldTrait( 106,15, 44, 54,0x14), FieldTrait( 107,15, 47, 54,0x14), FieldTrait( 124, 1, 13, 40,0x1c),
-   FieldTrait( 136, 1,123, 77,0x1c), FieldTrait( 159,13,126,  0,0x04), FieldTrait( 167,15, 22, 54,0x14),
-   FieldTrait( 169, 1,140,153,0x14), FieldTrait( 170,15,141,153,0x14), FieldTrait( 171,15,142,153,0x14),
-   FieldTrait( 172, 1,139,153,0x14), FieldTrait( 198,15, 11,  0,0x04), FieldTrait( 200,21, 24, 54,0x14),
-   FieldTrait( 201, 1, 85, 54,0x14), FieldTrait( 202,11, 38, 54,0x14), FieldTrait( 206, 7, 40, 54,0x14),
-   FieldTrait( 207,20, 43, 54,0x14), FieldTrait( 218,12,130,160,0x14), FieldTrait( 220,19,131,160,0x14),
-   FieldTrait( 221,15,132,160,0x14), FieldTrait( 222,15,133,160,0x14), FieldTrait( 223,14, 42, 54,0x14),
-   FieldTrait( 224,25, 26, 54,0x14), FieldTrait( 225,25, 27, 54,0x14), FieldTrait( 226, 1, 29, 54,0x14),
-   FieldTrait( 227,14, 30, 54,0x14), FieldTrait( 228, 9, 31, 54,0x14), FieldTrait( 231, 9, 41, 54,0x14),
-   FieldTrait( 232, 1,138,162,0x1c), FieldTrait( 239, 1, 28, 54,0x14), FieldTrait( 240,25, 37, 54,0x14),
-   FieldTrait( 255,15, 32, 54,0x14), FieldTrait( 291,16,154,  0,0x04), FieldTrait( 336,15,144,  0,0x04),
-   FieldTrait( 348, 2, 45, 54,0x14), FieldTrait( 349,28, 46, 54,0x14), FieldTrait( 350, 2, 48, 54,0x14),
-   FieldTrait( 351,28, 49, 54,0x14), FieldTrait( 354, 2,150,  0,0x04), FieldTrait( 355,28,151,  0,0x04),
-   FieldTrait( 423, 1,125,  0,0x04), FieldTrait( 453, 1,  6, 94,0x1c), FieldTrait( 454, 1, 19,142,0x1c),
-   FieldTrait( 460, 1, 20, 54,0x14), FieldTrait( 461,15, 21, 54,0x14), FieldTrait( 470,18, 34, 54,0x14),
-   FieldTrait( 471,15, 35, 54,0x14), FieldTrait( 472,15, 36, 54,0x14), FieldTrait( 526,15, 12,  0,0x04),
-   FieldTrait( 541,25, 25, 54,0x14), FieldTrait( 543,15, 33, 54,0x14), FieldTrait( 555, 1,116, 49,0x1c),
-   FieldTrait( 581, 1,  8,  0,0x04), FieldTrait( 625,15,145,  0,0x04), FieldTrait( 662,11,134,160,0x14),
-   FieldTrait( 663, 1,135,160,0x14), FieldTrait( 667,21, 51, 54,0x14), FieldTrait( 691,15, 50, 54,0x14),
-   FieldTrait( 699,15,136,160,0x14), FieldTrait( 711, 1,117,188,0x1c), FieldTrait( 715,25,148,  0,0x04),
-   FieldTrait( 716,15,146,  0,0x04), FieldTrait( 717,15,147,  0,0x04), FieldTrait( 761,15,137,160,0x14),
-   FieldTrait( 762,15, 23, 54,0x14), FieldTrait( 768, 1,121,182,0x1c), FieldTrait( 788, 1,107, 44,0x14),
-   FieldTrait( 854, 1,114,  0,0x04), FieldTrait( 864, 1, 54, 38,0x1c), FieldTrait( 873,25, 55, 54,0x14),
-   FieldTrait( 874,25, 56, 54,0x14), FieldTrait( 875, 1, 52, 54,0x14), FieldTrait( 876,15, 53, 54,0x14),
-   FieldTrait( 897, 1, 14,180,0x1c), FieldTrait( 898,14,111, 44,0x14), FieldTrait( 899,13,118,  0,0x04),
-   FieldTrait( 900,13,119,  0,0x04), FieldTrait( 901,13,120,  0,0x04), FieldTrait( 908,15,  1,  0,0x04),
-   FieldTrait( 909,15,  2,  0,0x04), FieldTrait( 910, 1,  3,  0,0x04), FieldTrait( 911, 1,  4,  0,0x04),
-   FieldTrait( 912, 8,  5,  0,0x04), FieldTrait( 913,15,103, 44,0x14), FieldTrait( 914,15,104, 44,0x14),
-   FieldTrait( 915,25,105, 44,0x14), FieldTrait( 916,25,108, 44,0x14), FieldTrait( 917,25,109, 44,0x14),
-   FieldTrait( 918,19,106, 44,0x14), FieldTrait( 919, 1,110, 44,0x14), FieldTrait( 920,13,127,  0,0x04),
-   FieldTrait( 921,13,128,  0,0x04), FieldTrait( 922,13,129,  0,0x04), FieldTrait( 947,19, 39, 54,0x14),
-   FieldTrait( 965,15, 57, 54,0x14), FieldTrait( 966,15, 58, 54,0x14), FieldTrait( 967, 9, 60, 54,0x14),
-   FieldTrait( 968, 9, 61, 54,0x14), FieldTrait( 969, 9, 62, 54,0x14), FieldTrait( 970, 1, 63, 54,0x14),
-   FieldTrait( 971, 1, 64, 54,0x14), FieldTrait( 996,15, 66, 54,0x14), FieldTrait( 997,15, 67, 54,0x14),
-   FieldTrait(1018, 1, 65, 57,0x1c), FieldTrait(1043, 1,153,  0,0x04), FieldTrait(1049, 7, 59, 54,0x14),
-   FieldTrait(1079,26, 68, 54,0x14), FieldTrait(1146,13, 70, 54,0x14), FieldTrait(1147,10, 71, 54,0x14),
-   FieldTrait(1151,15, 69, 54,0x14), FieldTrait(1184, 2, 72,150,0x14), FieldTrait(1185,29, 73,150,0x14),
-   FieldTrait(1186,15, 74,150,0x14), FieldTrait(1191,15, 76, 54,0x14), FieldTrait(1192,10, 77, 54,0x14),
-   FieldTrait(1193, 7, 78, 54,0x14), FieldTrait(1194, 1, 79, 54,0x14), FieldTrait(1195,13, 80, 54,0x14),
-   FieldTrait(1196,15, 81, 54,0x14), FieldTrait(1197,15, 88, 54,0x14), FieldTrait(1198, 1, 82, 54,0x14),
-   FieldTrait(1199,11, 83, 54,0x14), FieldTrait(1200,11, 84, 54,0x14), FieldTrait(1227,15, 75, 54,0x14),
-   FieldTrait(1242, 8, 87, 54,0x14), FieldTrait(1244, 8, 86, 54,0x14), FieldTrait(1435, 1, 89, 54,0x14),
-   FieldTrait(1439, 1, 90, 54,0x14), FieldTrait(1449,15, 91, 54,0x14), FieldTrait(1450,15, 92, 54,0x14),
-   FieldTrait(1451,14, 93, 54,0x14), FieldTrait(1452,14, 94, 54,0x14), FieldTrait(1457,14, 95, 54,0x14),
-   FieldTrait(1458,14, 96, 54,0x14), FieldTrait(1478, 1, 97, 54,0x14), FieldTrait(1479, 1, 98, 54,0x14),
-   FieldTrait(1480,14, 99, 54,0x14), FieldTrait(1481, 1,100, 54,0x14), FieldTrait(1482, 1,101, 54,0x14),
-   FieldTrait(1483, 1,102, 21,0x1c)
+   {   1,15,  7,  0,0x04}, {  11,15,  9,  0,0x04}, {  15,19,115,  0,0x04}, {  22,15, 18, 54,0x14},
+   {  37,15, 10,  0,0x04}, {  44,11,124,  0,0x04}, {  48,15, 17, 54,0x14}, {  53,10,113,  0,0x04},
+   {  54, 7,122,  0,0x04}, {  55,15, 15, 54,0x14}, {  58,15,149,  0,0x04}, {  60,22,152,  0,0x04},
+   {  64,25,112,  0,0x04}, {  65,15, 16, 54,0x14}, {  85, 1,143, 37,0x1c}, { 106,15, 44, 54,0x14},
+   { 107,15, 47, 54,0x14}, { 124, 1, 13, 40,0x1c}, { 136, 1,123, 77,0x1c}, { 159,13,126,  0,0x04},
+   { 167,15, 22, 54,0x14}, { 169, 1,140,153,0x14}, { 170,15,141,153,0x14}, { 171,15,142,153,0x14},
+   { 172, 1,139,153,0x14}, { 198,15, 11,  0,0x04}, { 200,21, 24, 54,0x14}, { 201, 1, 85, 54,0x14},
+   { 202,11, 38, 54,0x14}, { 206, 7, 40, 54,0x14}, { 207,20, 43, 54,0x14}, { 218,12,130,160,0x14},
+   { 220,19,131,160,0x14}, { 221,15,132,160,0x14}, { 222,15,133,160,0x14}, { 223,14, 42, 54,0x14},
+   { 224,25, 26, 54,0x14}, { 225,25, 27, 54,0x14}, { 226, 1, 29, 54,0x14}, { 227,14, 30, 54,0x14},
+   { 228, 9, 31, 54,0x14}, { 231, 9, 41, 54,0x14}, { 232, 1,138,162,0x1c}, { 239, 1, 28, 54,0x14},
+   { 240,25, 37, 54,0x14}, { 255,15, 32, 54,0x14}, { 291,16,154,  0,0x04}, { 336,15,144,  0,0x04},
+   { 348, 2, 45, 54,0x14}, { 349,28, 46, 54,0x14}, { 350, 2, 48, 54,0x14}, { 351,28, 49, 54,0x14},
+   { 354, 2,150,  0,0x04}, { 355,28,151,  0,0x04}, { 423, 1,125,  0,0x04}, { 453, 1,  6, 94,0x1c},
+   { 454, 1, 19,142,0x1c}, { 460, 1, 20, 54,0x14}, { 461,15, 21, 54,0x14}, { 470,18, 34, 54,0x14},
+   { 471,15, 35, 54,0x14}, { 472,15, 36, 54,0x14}, { 526,15, 12,  0,0x04}, { 541,25, 25, 54,0x14},
+   { 543,15, 33, 54,0x14}, { 555, 1,116, 49,0x1c}, { 581, 1,  8,  0,0x04}, { 625,15,145,  0,0x04},
+   { 662,11,134,160,0x14}, { 663, 1,135,160,0x14}, { 667,21, 51, 54,0x14}, { 691,15, 50, 54,0x14},
+   { 699,15,136,160,0x14}, { 711, 1,117,188,0x1c}, { 715,25,148,  0,0x04}, { 716,15,146,  0,0x04},
+   { 717,15,147,  0,0x04}, { 761,15,137,160,0x14}, { 762,15, 23, 54,0x14}, { 768, 1,121,182,0x1c},
+   { 788, 1,107, 44,0x14}, { 854, 1,114,  0,0x04}, { 864, 1, 54, 38,0x1c}, { 873,25, 55, 54,0x14},
+   { 874,25, 56, 54,0x14}, { 875, 1, 52, 54,0x14}, { 876,15, 53, 54,0x14}, { 897, 1, 14,180,0x1c},
+   { 898,14,111, 44,0x14}, { 899,13,118,  0,0x04}, { 900,13,119,  0,0x04}, { 901,13,120,  0,0x04},
+   { 908,15,  1,  0,0x04}, { 909,15,  2,  0,0x04}, { 910, 1,  3,  0,0x04}, { 911, 1,  4,  0,0x04},
+   { 912, 8,  5,  0,0x04}, { 913,15,103, 44,0x14}, { 914,15,104, 44,0x14}, { 915,25,105, 44,0x14},
+   { 916,25,108, 44,0x14}, { 917,25,109, 44,0x14}, { 918,19,106, 44,0x14}, { 919, 1,110, 44,0x14},
+   { 920,13,127,  0,0x04}, { 921,13,128,  0,0x04}, { 922,13,129,  0,0x04}, { 947,19, 39, 54,0x14},
+   { 965,15, 57, 54,0x14}, { 966,15, 58, 54,0x14}, { 967, 9, 60, 54,0x14}, { 968, 9, 61, 54,0x14},
+   { 969, 9, 62, 54,0x14}, { 970, 1, 63, 54,0x14}, { 971, 1, 64, 54,0x14}, { 996,15, 66, 54,0x14},
+   { 997,15, 67, 54,0x14}, {1018, 1, 65, 57,0x1c}, {1043, 1,153,  0,0x04}, {1049, 7, 59, 54,0x14},
+   {1079,26, 68, 54,0x14}, {1146,13, 70, 54,0x14}, {1147,10, 71, 54,0x14}, {1151,15, 69, 54,0x14},
+   {1184, 2, 72,150,0x14}, {1185,29, 73,150,0x14}, {1186,15, 74,150,0x14}, {1191,15, 76, 54,0x14},
+   {1192,10, 77, 54,0x14}, {1193, 7, 78, 54,0x14}, {1194, 1, 79, 54,0x14}, {1195,13, 80, 54,0x14},
+   {1196,15, 81, 54,0x14}, {1197,15, 88, 54,0x14}, {1198, 1, 82, 54,0x14}, {1199,11, 83, 54,0x14},
+   {1200,11, 84, 54,0x14}, {1227,15, 75, 54,0x14}, {1242, 8, 87, 54,0x14}, {1244, 8, 86, 54,0x14},
+   {1435, 1, 89, 54,0x14}, {1439, 1, 90, 54,0x14}, {1449,15, 91, 54,0x14}, {1450,15, 92, 54,0x14},
+   {1451,14, 93, 54,0x14}, {1452,14, 94, 54,0x14}, {1457,14, 95, 54,0x14}, {1458,14, 96, 54,0x14},
+   {1478, 1, 97, 54,0x14}, {1479, 1, 98, 54,0x14}, {1480,14, 99, 54,0x14}, {1481, 1,100, 54,0x14},
+   {1482, 1,101, 54,0x14}, {1483, 1,102, 21,0x1c}
 };
 const FieldTrait_Hash_Array CollateralReport::_ftha(CollateralReport::_traits, 154);
 const MsgType CollateralReport::_msgtype("BA");
@@ -5568,58 +5072,46 @@ const FieldTrait *CollateralReport::NoComplexEvents::NoComplexEventDates::NoComp
 const FieldTrait_Hash_Array& CollateralReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CollateralReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CollateralInquiry::_traits[] =
+const FieldTrait CollateralInquiry::_traits[]
 {
-   FieldTrait(   1,15,  7,  0,0x04), FieldTrait(  11,15,  9,  0,0x04), FieldTrait(  15,19,115,  0,0x04),
-   FieldTrait(  22,15, 18, 54,0x14), FieldTrait(  37,15, 10,  0,0x04), FieldTrait(  44,11,123,  0,0x04),
-   FieldTrait(  48,15, 17, 54,0x14), FieldTrait(  53,10,113,  0,0x04), FieldTrait(  54, 7,122,  0,0x04),
-   FieldTrait(  55,15, 15, 54,0x14), FieldTrait(  58,15,148,  0,0x04), FieldTrait(  64,25,112,  0,0x04),
-   FieldTrait(  65,15, 16, 54,0x14), FieldTrait(  85, 1,142, 37,0x1c), FieldTrait( 106,15, 44, 54,0x14),
-   FieldTrait( 107,15, 47, 54,0x14), FieldTrait( 124, 1, 13, 40,0x1c), FieldTrait( 159,13,125,  0,0x04),
-   FieldTrait( 167,15, 22, 54,0x14), FieldTrait( 169, 1,139,153,0x14), FieldTrait( 170,15,140,153,0x14),
-   FieldTrait( 171,15,141,153,0x14), FieldTrait( 172, 1,138,153,0x14), FieldTrait( 198,15, 11,  0,0x04),
-   FieldTrait( 200,21, 24, 54,0x14), FieldTrait( 201, 1, 85, 54,0x14), FieldTrait( 202,11, 38, 54,0x14),
-   FieldTrait( 206, 7, 40, 54,0x14), FieldTrait( 207,20, 43, 54,0x14), FieldTrait( 218,12,129,160,0x14),
-   FieldTrait( 220,19,130,160,0x14), FieldTrait( 221,15,131,160,0x14), FieldTrait( 222,15,132,160,0x14),
-   FieldTrait( 223,14, 42, 54,0x14), FieldTrait( 224,25, 26, 54,0x14), FieldTrait( 225,25, 27, 54,0x14),
-   FieldTrait( 226, 1, 29, 54,0x14), FieldTrait( 227,14, 30, 54,0x14), FieldTrait( 228, 9, 31, 54,0x14),
-   FieldTrait( 231, 9, 41, 54,0x14), FieldTrait( 232, 1,137,162,0x1c), FieldTrait( 239, 1, 28, 54,0x14),
-   FieldTrait( 240,25, 37, 54,0x14), FieldTrait( 255,15, 32, 54,0x14), FieldTrait( 263, 7,  3,  0,0x04),
-   FieldTrait( 336,15,143,  0,0x04), FieldTrait( 348, 2, 45, 54,0x14), FieldTrait( 349,28, 46, 54,0x14),
-   FieldTrait( 350, 2, 48, 54,0x14), FieldTrait( 351,28, 49, 54,0x14), FieldTrait( 354, 2,149,  0,0x04),
-   FieldTrait( 355,28,150,  0,0x04), FieldTrait( 423, 1,124,  0,0x04), FieldTrait( 453, 1,  6, 94,0x1c),
-   FieldTrait( 454, 1, 19,142,0x1c), FieldTrait( 460, 1, 20, 54,0x14), FieldTrait( 461,15, 21, 54,0x14),
-   FieldTrait( 470,18, 34, 54,0x14), FieldTrait( 471,15, 35, 54,0x14), FieldTrait( 472,15, 36, 54,0x14),
-   FieldTrait( 526,15, 12,  0,0x04), FieldTrait( 541,25, 25, 54,0x14), FieldTrait( 543,15, 33, 54,0x14),
-   FieldTrait( 555, 1,116, 49,0x1c), FieldTrait( 581, 1,  8,  0,0x04), FieldTrait( 625,15,144,  0,0x04),
-   FieldTrait( 662,11,133,160,0x14), FieldTrait( 663, 1,134,160,0x14), FieldTrait( 667,21, 51, 54,0x14),
-   FieldTrait( 691,15, 50, 54,0x14), FieldTrait( 699,15,135,160,0x14), FieldTrait( 711, 1,117,188,0x1c),
-   FieldTrait( 715,25,147,  0,0x04), FieldTrait( 716,15,145,  0,0x04), FieldTrait( 717,15,146,  0,0x04),
-   FieldTrait( 725, 1,  4,  0,0x04), FieldTrait( 726,15,  5,  0,0x04), FieldTrait( 761,15,136,160,0x14),
-   FieldTrait( 762,15, 23, 54,0x14), FieldTrait( 768, 1,121,182,0x1c), FieldTrait( 788, 1,107, 44,0x14),
-   FieldTrait( 854, 1,114,  0,0x04), FieldTrait( 864, 1, 54, 38,0x1c), FieldTrait( 873,25, 55, 54,0x14),
-   FieldTrait( 874,25, 56, 54,0x14), FieldTrait( 875, 1, 52, 54,0x14), FieldTrait( 876,15, 53, 54,0x14),
-   FieldTrait( 897, 1, 14,180,0x1c), FieldTrait( 898,14,111, 44,0x14), FieldTrait( 899,13,118,  0,0x04),
-   FieldTrait( 900,13,119,  0,0x04), FieldTrait( 901,13,120,  0,0x04), FieldTrait( 909,15,  1,  0,0x04),
-   FieldTrait( 913,15,103, 44,0x14), FieldTrait( 914,15,104, 44,0x14), FieldTrait( 915,25,105, 44,0x14),
-   FieldTrait( 916,25,108, 44,0x14), FieldTrait( 917,25,109, 44,0x14), FieldTrait( 918,19,106, 44,0x14),
-   FieldTrait( 919, 1,110, 44,0x14), FieldTrait( 920,13,126,  0,0x04), FieldTrait( 921,13,127,  0,0x04),
-   FieldTrait( 922,13,128,  0,0x04), FieldTrait( 938, 1,  2, 15,0x1c), FieldTrait( 947,19, 39, 54,0x14),
-   FieldTrait( 965,15, 57, 54,0x14), FieldTrait( 966,15, 58, 54,0x14), FieldTrait( 967, 9, 60, 54,0x14),
-   FieldTrait( 968, 9, 61, 54,0x14), FieldTrait( 969, 9, 62, 54,0x14), FieldTrait( 970, 1, 63, 54,0x14),
-   FieldTrait( 971, 1, 64, 54,0x14), FieldTrait( 996,15, 66, 54,0x14), FieldTrait( 997,15, 67, 54,0x14),
-   FieldTrait(1018, 1, 65, 57,0x1c), FieldTrait(1049, 7, 59, 54,0x14), FieldTrait(1079,26, 68, 54,0x14),
-   FieldTrait(1146,13, 70, 54,0x14), FieldTrait(1147,10, 71, 54,0x14), FieldTrait(1151,15, 69, 54,0x14),
-   FieldTrait(1184, 2, 72,150,0x14), FieldTrait(1185,29, 73,150,0x14), FieldTrait(1186,15, 74,150,0x14),
-   FieldTrait(1191,15, 76, 54,0x14), FieldTrait(1192,10, 77, 54,0x14), FieldTrait(1193, 7, 78, 54,0x14),
-   FieldTrait(1194, 1, 79, 54,0x14), FieldTrait(1195,13, 80, 54,0x14), FieldTrait(1196,15, 81, 54,0x14),
-   FieldTrait(1197,15, 88, 54,0x14), FieldTrait(1198, 1, 82, 54,0x14), FieldTrait(1199,11, 83, 54,0x14),
-   FieldTrait(1200,11, 84, 54,0x14), FieldTrait(1227,15, 75, 54,0x14), FieldTrait(1242, 8, 87, 54,0x14),
-   FieldTrait(1244, 8, 86, 54,0x14), FieldTrait(1435, 1, 89, 54,0x14), FieldTrait(1439, 1, 90, 54,0x14),
-   FieldTrait(1449,15, 91, 54,0x14), FieldTrait(1450,15, 92, 54,0x14), FieldTrait(1451,14, 93, 54,0x14),
-   FieldTrait(1452,14, 94, 54,0x14), FieldTrait(1457,14, 95, 54,0x14), FieldTrait(1458,14, 96, 54,0x14),
-   FieldTrait(1478, 1, 97, 54,0x14), FieldTrait(1479, 1, 98, 54,0x14), FieldTrait(1480,14, 99, 54,0x14),
-   FieldTrait(1481, 1,100, 54,0x14), FieldTrait(1482, 1,101, 54,0x14), FieldTrait(1483, 1,102, 21,0x1c)
+   {   1,15,  7,  0,0x04}, {  11,15,  9,  0,0x04}, {  15,19,115,  0,0x04}, {  22,15, 18, 54,0x14},
+   {  37,15, 10,  0,0x04}, {  44,11,123,  0,0x04}, {  48,15, 17, 54,0x14}, {  53,10,113,  0,0x04},
+   {  54, 7,122,  0,0x04}, {  55,15, 15, 54,0x14}, {  58,15,148,  0,0x04}, {  64,25,112,  0,0x04},
+   {  65,15, 16, 54,0x14}, {  85, 1,142, 37,0x1c}, { 106,15, 44, 54,0x14}, { 107,15, 47, 54,0x14},
+   { 124, 1, 13, 40,0x1c}, { 159,13,125,  0,0x04}, { 167,15, 22, 54,0x14}, { 169, 1,139,153,0x14},
+   { 170,15,140,153,0x14}, { 171,15,141,153,0x14}, { 172, 1,138,153,0x14}, { 198,15, 11,  0,0x04},
+   { 200,21, 24, 54,0x14}, { 201, 1, 85, 54,0x14}, { 202,11, 38, 54,0x14}, { 206, 7, 40, 54,0x14},
+   { 207,20, 43, 54,0x14}, { 218,12,129,160,0x14}, { 220,19,130,160,0x14}, { 221,15,131,160,0x14},
+   { 222,15,132,160,0x14}, { 223,14, 42, 54,0x14}, { 224,25, 26, 54,0x14}, { 225,25, 27, 54,0x14},
+   { 226, 1, 29, 54,0x14}, { 227,14, 30, 54,0x14}, { 228, 9, 31, 54,0x14}, { 231, 9, 41, 54,0x14},
+   { 232, 1,137,162,0x1c}, { 239, 1, 28, 54,0x14}, { 240,25, 37, 54,0x14}, { 255,15, 32, 54,0x14},
+   { 263, 7,  3,  0,0x04}, { 336,15,143,  0,0x04}, { 348, 2, 45, 54,0x14}, { 349,28, 46, 54,0x14},
+   { 350, 2, 48, 54,0x14}, { 351,28, 49, 54,0x14}, { 354, 2,149,  0,0x04}, { 355,28,150,  0,0x04},
+   { 423, 1,124,  0,0x04}, { 453, 1,  6, 94,0x1c}, { 454, 1, 19,142,0x1c}, { 460, 1, 20, 54,0x14},
+   { 461,15, 21, 54,0x14}, { 470,18, 34, 54,0x14}, { 471,15, 35, 54,0x14}, { 472,15, 36, 54,0x14},
+   { 526,15, 12,  0,0x04}, { 541,25, 25, 54,0x14}, { 543,15, 33, 54,0x14}, { 555, 1,116, 49,0x1c},
+   { 581, 1,  8,  0,0x04}, { 625,15,144,  0,0x04}, { 662,11,133,160,0x14}, { 663, 1,134,160,0x14},
+   { 667,21, 51, 54,0x14}, { 691,15, 50, 54,0x14}, { 699,15,135,160,0x14}, { 711, 1,117,188,0x1c},
+   { 715,25,147,  0,0x04}, { 716,15,145,  0,0x04}, { 717,15,146,  0,0x04}, { 725, 1,  4,  0,0x04},
+   { 726,15,  5,  0,0x04}, { 761,15,136,160,0x14}, { 762,15, 23, 54,0x14}, { 768, 1,121,182,0x1c},
+   { 788, 1,107, 44,0x14}, { 854, 1,114,  0,0x04}, { 864, 1, 54, 38,0x1c}, { 873,25, 55, 54,0x14},
+   { 874,25, 56, 54,0x14}, { 875, 1, 52, 54,0x14}, { 876,15, 53, 54,0x14}, { 897, 1, 14,180,0x1c},
+   { 898,14,111, 44,0x14}, { 899,13,118,  0,0x04}, { 900,13,119,  0,0x04}, { 901,13,120,  0,0x04},
+   { 909,15,  1,  0,0x04}, { 913,15,103, 44,0x14}, { 914,15,104, 44,0x14}, { 915,25,105, 44,0x14},
+   { 916,25,108, 44,0x14}, { 917,25,109, 44,0x14}, { 918,19,106, 44,0x14}, { 919, 1,110, 44,0x14},
+   { 920,13,126,  0,0x04}, { 921,13,127,  0,0x04}, { 922,13,128,  0,0x04}, { 938, 1,  2, 15,0x1c},
+   { 947,19, 39, 54,0x14}, { 965,15, 57, 54,0x14}, { 966,15, 58, 54,0x14}, { 967, 9, 60, 54,0x14},
+   { 968, 9, 61, 54,0x14}, { 969, 9, 62, 54,0x14}, { 970, 1, 63, 54,0x14}, { 971, 1, 64, 54,0x14},
+   { 996,15, 66, 54,0x14}, { 997,15, 67, 54,0x14}, {1018, 1, 65, 57,0x1c}, {1049, 7, 59, 54,0x14},
+   {1079,26, 68, 54,0x14}, {1146,13, 70, 54,0x14}, {1147,10, 71, 54,0x14}, {1151,15, 69, 54,0x14},
+   {1184, 2, 72,150,0x14}, {1185,29, 73,150,0x14}, {1186,15, 74,150,0x14}, {1191,15, 76, 54,0x14},
+   {1192,10, 77, 54,0x14}, {1193, 7, 78, 54,0x14}, {1194, 1, 79, 54,0x14}, {1195,13, 80, 54,0x14},
+   {1196,15, 81, 54,0x14}, {1197,15, 88, 54,0x14}, {1198, 1, 82, 54,0x14}, {1199,11, 83, 54,0x14},
+   {1200,11, 84, 54,0x14}, {1227,15, 75, 54,0x14}, {1242, 8, 87, 54,0x14}, {1244, 8, 86, 54,0x14},
+   {1435, 1, 89, 54,0x14}, {1439, 1, 90, 54,0x14}, {1449,15, 91, 54,0x14}, {1450,15, 92, 54,0x14},
+   {1451,14, 93, 54,0x14}, {1452,14, 94, 54,0x14}, {1457,14, 95, 54,0x14}, {1458,14, 96, 54,0x14},
+   {1478, 1, 97, 54,0x14}, {1479, 1, 98, 54,0x14}, {1480,14, 99, 54,0x14}, {1481, 1,100, 54,0x14},
+   {1482, 1,101, 54,0x14}, {1483, 1,102, 21,0x1c}
 };
 const FieldTrait_Hash_Array CollateralInquiry::_ftha(CollateralInquiry::_traits, 150);
 const MsgType CollateralInquiry::_msgtype("BB");
@@ -5720,102 +5212,88 @@ const FieldTrait *CollateralInquiry::NoComplexEvents::NoComplexEventDates::NoCom
 const FieldTrait_Hash_Array& CollateralInquiry::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CollateralInquiry::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NetworkCounterpartySystemStatusRequest::_traits[] =
+const FieldTrait NetworkCounterpartySystemStatusRequest::_traits[]
 {
-   FieldTrait( 933,15,  2,  0,0x04), FieldTrait( 935, 1,  1,  0,0x04), FieldTrait( 936, 1,  3, 17,0x1c)
+   { 933,15,  2,  0,0x04}, { 935, 1,  1,  0,0x04}, { 936, 1,  3, 17,0x1c}
 };
 const FieldTrait_Hash_Array NetworkCounterpartySystemStatusRequest::_ftha(NetworkCounterpartySystemStatusRequest::_traits, 3);
 const MsgType NetworkCounterpartySystemStatusRequest::_msgtype("BC");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NetworkCounterpartySystemStatusRequest::NoCompIDs::_traits[] =
+const FieldTrait NetworkCounterpartySystemStatusRequest::NoCompIDs::_traits[]
 {
-   FieldTrait( 283,15,  3,  0,0x04), FieldTrait( 284,15,  4,  0,0x04), FieldTrait( 930,15,  1,  0,0x04),
-   FieldTrait( 931,15,  2,  0,0x04)
+   { 283,15,  3,  0,0x04}, { 284,15,  4,  0,0x04}, { 930,15,  1,  0,0x04}, { 931,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    NetworkCounterpartySystemStatusRequest::NoCompIDs::_ftha(NetworkCounterpartySystemStatusRequest::NoCompIDs::_traits, 4);
 const MsgType NetworkCounterpartySystemStatusRequest::NoCompIDs::_msgtype("NoCompIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NetworkCounterpartySystemStatusResponse::_traits[] =
+const FieldTrait NetworkCounterpartySystemStatusResponse::_traits[]
 {
-   FieldTrait( 932,15,  3,  0,0x04), FieldTrait( 933,15,  2,  0,0x04), FieldTrait( 934,15,  4,  0,0x04),
-   FieldTrait( 936, 1,  5, 18,0x1c), FieldTrait( 937, 1,  1,  0,0x04)
+   { 932,15,  3,  0,0x04}, { 933,15,  2,  0,0x04}, { 934,15,  4,  0,0x04}, { 936, 1,  5, 18,0x1c},
+   { 937, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array NetworkCounterpartySystemStatusResponse::_ftha(NetworkCounterpartySystemStatusResponse::_traits, 5);
 const MsgType NetworkCounterpartySystemStatusResponse::_msgtype("BD");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NetworkCounterpartySystemStatusResponse::NoCompIDs::_traits[] =
+const FieldTrait NetworkCounterpartySystemStatusResponse::NoCompIDs::_traits[]
 {
-   FieldTrait( 283,15,  3,  0,0x04), FieldTrait( 284,15,  4,  0,0x04), FieldTrait( 928, 1,  5,  0,0x05),
-   FieldTrait( 929,15,  6,  0,0x04), FieldTrait( 930,15,  1,  0,0x05), FieldTrait( 931,15,  2,  0,0x04)
+   { 283,15,  3,  0,0x04}, { 284,15,  4,  0,0x04}, { 928, 1,  5,  0,0x05}, { 929,15,  6,  0,0x04},
+   { 930,15,  1,  0,0x05}, { 931,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    NetworkCounterpartySystemStatusResponse::NoCompIDs::_ftha(NetworkCounterpartySystemStatusResponse::NoCompIDs::_traits, 6);
 const MsgType NetworkCounterpartySystemStatusResponse::NoCompIDs::_msgtype("NoCompIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait UserRequest::_traits[] =
+const FieldTrait UserRequest::_traits[]
 {
-   FieldTrait(  95, 2,  6,  0,0x04), FieldTrait(  96,28,  7,  0,0x04), FieldTrait( 553,15,  3,  0,0x04),
-   FieldTrait( 554,15,  4,  0,0x04), FieldTrait( 923,15,  1,  0,0x04), FieldTrait( 924, 1,  2,  0,0x04),
-   FieldTrait( 925,15,  5,  0,0x04), FieldTrait(1400, 1,  8,  0,0x04), FieldTrait(1401, 2,  9,  0,0x04),
-   FieldTrait(1402,28, 10,  0,0x04), FieldTrait(1403, 2, 11,  0,0x04), FieldTrait(1404,28, 12,  0,0x04)
+   {  95, 2,  6,  0,0x04}, {  96,28,  7,  0,0x04}, { 553,15,  3,  0,0x04}, { 554,15,  4,  0,0x04},
+   { 923,15,  1,  0,0x04}, { 924, 1,  2,  0,0x04}, { 925,15,  5,  0,0x04}, {1400, 1,  8,  0,0x04},
+   {1401, 2,  9,  0,0x04}, {1402,28, 10,  0,0x04}, {1403, 2, 11,  0,0x04}, {1404,28, 12,  0,0x04}
 };
 const FieldTrait_Hash_Array UserRequest::_ftha(UserRequest::_traits, 12);
 const MsgType UserRequest::_msgtype("BE");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait UserResponse::_traits[] =
+const FieldTrait UserResponse::_traits[]
 {
-   FieldTrait( 553,15,  2,  0,0x04), FieldTrait( 923,15,  1,  0,0x04), FieldTrait( 926, 1,  3,  0,0x04),
-   FieldTrait( 927,15,  4,  0,0x04)
+   { 553,15,  2,  0,0x04}, { 923,15,  1,  0,0x04}, { 926, 1,  3,  0,0x04}, { 927,15,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array UserResponse::_ftha(UserResponse::_traits, 4);
 const MsgType UserResponse::_msgtype("BF");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CollateralInquiryAck::_traits[] =
+const FieldTrait CollateralInquiryAck::_traits[]
 {
-   FieldTrait(   1,15,  7,  0,0x04), FieldTrait(  11,15,  9,  0,0x04), FieldTrait(  15,19,115,  0,0x04),
-   FieldTrait(  22,15, 18, 54,0x14), FieldTrait(  37,15, 10,  0,0x04), FieldTrait(  48,15, 17, 54,0x14),
-   FieldTrait(  53,10,113,  0,0x04), FieldTrait(  55,15, 15, 54,0x14), FieldTrait(  58,15,125,  0,0x04),
-   FieldTrait(  64,25,112,  0,0x04), FieldTrait(  65,15, 16, 54,0x14), FieldTrait( 106,15, 44, 54,0x14),
-   FieldTrait( 107,15, 47, 54,0x14), FieldTrait( 124, 1, 13, 40,0x1c), FieldTrait( 167,15, 22, 54,0x14),
-   FieldTrait( 198,15, 11,  0,0x04), FieldTrait( 200,21, 24, 54,0x14), FieldTrait( 201, 1, 85, 54,0x14),
-   FieldTrait( 202,11, 38, 54,0x14), FieldTrait( 206, 7, 40, 54,0x14), FieldTrait( 207,20, 43, 54,0x14),
-   FieldTrait( 223,14, 42, 54,0x14), FieldTrait( 224,25, 26, 54,0x14), FieldTrait( 225,25, 27, 54,0x14),
-   FieldTrait( 226, 1, 29, 54,0x14), FieldTrait( 227,14, 30, 54,0x14), FieldTrait( 228, 9, 31, 54,0x14),
-   FieldTrait( 231, 9, 41, 54,0x14), FieldTrait( 239, 1, 28, 54,0x14), FieldTrait( 240,25, 37, 54,0x14),
-   FieldTrait( 255,15, 32, 54,0x14), FieldTrait( 336,15,118,  0,0x04), FieldTrait( 348, 2, 45, 54,0x14),
-   FieldTrait( 349,28, 46, 54,0x14), FieldTrait( 350, 2, 48, 54,0x14), FieldTrait( 351,28, 49, 54,0x14),
-   FieldTrait( 354, 2,126,  0,0x04), FieldTrait( 355,28,127,  0,0x04), FieldTrait( 453, 1,  6, 94,0x1c),
-   FieldTrait( 454, 1, 19,142,0x1c), FieldTrait( 460, 1, 20, 54,0x14), FieldTrait( 461,15, 21, 54,0x14),
-   FieldTrait( 470,18, 34, 54,0x14), FieldTrait( 471,15, 35, 54,0x14), FieldTrait( 472,15, 36, 54,0x14),
-   FieldTrait( 526,15, 12,  0,0x04), FieldTrait( 541,25, 25, 54,0x14), FieldTrait( 543,15, 33, 54,0x14),
-   FieldTrait( 555, 1,116, 49,0x1c), FieldTrait( 581, 1,  8,  0,0x04), FieldTrait( 625,15,119,  0,0x04),
-   FieldTrait( 667,21, 51, 54,0x14), FieldTrait( 691,15, 50, 54,0x14), FieldTrait( 711, 1,117,188,0x1c),
-   FieldTrait( 715,25,122,  0,0x04), FieldTrait( 716,15,120,  0,0x04), FieldTrait( 717,15,121,  0,0x04),
-   FieldTrait( 725, 1,123,  0,0x04), FieldTrait( 726,15,124,  0,0x04), FieldTrait( 762,15, 23, 54,0x14),
-   FieldTrait( 788, 1,107, 44,0x14), FieldTrait( 854, 1,114,  0,0x04), FieldTrait( 864, 1, 54, 38,0x1c),
-   FieldTrait( 873,25, 55, 54,0x14), FieldTrait( 874,25, 56, 54,0x14), FieldTrait( 875, 1, 52, 54,0x14),
-   FieldTrait( 876,15, 53, 54,0x14), FieldTrait( 897, 1, 14,180,0x1c), FieldTrait( 898,14,111, 44,0x14),
-   FieldTrait( 909,15,  1,  0,0x04), FieldTrait( 911, 1,  5,  0,0x04), FieldTrait( 913,15,103, 44,0x14),
-   FieldTrait( 914,15,104, 44,0x14), FieldTrait( 915,25,105, 44,0x14), FieldTrait( 916,25,108, 44,0x14),
-   FieldTrait( 917,25,109, 44,0x14), FieldTrait( 918,19,106, 44,0x14), FieldTrait( 919, 1,110, 44,0x14),
-   FieldTrait( 938, 1,  4, 15,0x1c), FieldTrait( 945, 1,  2,  0,0x04), FieldTrait( 946, 1,  3,  0,0x04),
-   FieldTrait( 947,19, 39, 54,0x14), FieldTrait( 965,15, 57, 54,0x14), FieldTrait( 966,15, 58, 54,0x14),
-   FieldTrait( 967, 9, 60, 54,0x14), FieldTrait( 968, 9, 61, 54,0x14), FieldTrait( 969, 9, 62, 54,0x14),
-   FieldTrait( 970, 1, 63, 54,0x14), FieldTrait( 971, 1, 64, 54,0x14), FieldTrait( 996,15, 66, 54,0x14),
-   FieldTrait( 997,15, 67, 54,0x14), FieldTrait(1018, 1, 65, 57,0x1c), FieldTrait(1049, 7, 59, 54,0x14),
-   FieldTrait(1079,26, 68, 54,0x14), FieldTrait(1146,13, 70, 54,0x14), FieldTrait(1147,10, 71, 54,0x14),
-   FieldTrait(1151,15, 69, 54,0x14), FieldTrait(1184, 2, 72,150,0x14), FieldTrait(1185,29, 73,150,0x14),
-   FieldTrait(1186,15, 74,150,0x14), FieldTrait(1191,15, 76, 54,0x14), FieldTrait(1192,10, 77, 54,0x14),
-   FieldTrait(1193, 7, 78, 54,0x14), FieldTrait(1194, 1, 79, 54,0x14), FieldTrait(1195,13, 80, 54,0x14),
-   FieldTrait(1196,15, 81, 54,0x14), FieldTrait(1197,15, 88, 54,0x14), FieldTrait(1198, 1, 82, 54,0x14),
-   FieldTrait(1199,11, 83, 54,0x14), FieldTrait(1200,11, 84, 54,0x14), FieldTrait(1227,15, 75, 54,0x14),
-   FieldTrait(1242, 8, 87, 54,0x14), FieldTrait(1244, 8, 86, 54,0x14), FieldTrait(1435, 1, 89, 54,0x14),
-   FieldTrait(1439, 1, 90, 54,0x14), FieldTrait(1449,15, 91, 54,0x14), FieldTrait(1450,15, 92, 54,0x14),
-   FieldTrait(1451,14, 93, 54,0x14), FieldTrait(1452,14, 94, 54,0x14), FieldTrait(1457,14, 95, 54,0x14),
-   FieldTrait(1458,14, 96, 54,0x14), FieldTrait(1478, 1, 97, 54,0x14), FieldTrait(1479, 1, 98, 54,0x14),
-   FieldTrait(1480,14, 99, 54,0x14), FieldTrait(1481, 1,100, 54,0x14), FieldTrait(1482, 1,101, 54,0x14),
-   FieldTrait(1483, 1,102, 21,0x1c)
+   {   1,15,  7,  0,0x04}, {  11,15,  9,  0,0x04}, {  15,19,115,  0,0x04}, {  22,15, 18, 54,0x14},
+   {  37,15, 10,  0,0x04}, {  48,15, 17, 54,0x14}, {  53,10,113,  0,0x04}, {  55,15, 15, 54,0x14},
+   {  58,15,125,  0,0x04}, {  64,25,112,  0,0x04}, {  65,15, 16, 54,0x14}, { 106,15, 44, 54,0x14},
+   { 107,15, 47, 54,0x14}, { 124, 1, 13, 40,0x1c}, { 167,15, 22, 54,0x14}, { 198,15, 11,  0,0x04},
+   { 200,21, 24, 54,0x14}, { 201, 1, 85, 54,0x14}, { 202,11, 38, 54,0x14}, { 206, 7, 40, 54,0x14},
+   { 207,20, 43, 54,0x14}, { 223,14, 42, 54,0x14}, { 224,25, 26, 54,0x14}, { 225,25, 27, 54,0x14},
+   { 226, 1, 29, 54,0x14}, { 227,14, 30, 54,0x14}, { 228, 9, 31, 54,0x14}, { 231, 9, 41, 54,0x14},
+   { 239, 1, 28, 54,0x14}, { 240,25, 37, 54,0x14}, { 255,15, 32, 54,0x14}, { 336,15,118,  0,0x04},
+   { 348, 2, 45, 54,0x14}, { 349,28, 46, 54,0x14}, { 350, 2, 48, 54,0x14}, { 351,28, 49, 54,0x14},
+   { 354, 2,126,  0,0x04}, { 355,28,127,  0,0x04}, { 453, 1,  6, 94,0x1c}, { 454, 1, 19,142,0x1c},
+   { 460, 1, 20, 54,0x14}, { 461,15, 21, 54,0x14}, { 470,18, 34, 54,0x14}, { 471,15, 35, 54,0x14},
+   { 472,15, 36, 54,0x14}, { 526,15, 12,  0,0x04}, { 541,25, 25, 54,0x14}, { 543,15, 33, 54,0x14},
+   { 555, 1,116, 49,0x1c}, { 581, 1,  8,  0,0x04}, { 625,15,119,  0,0x04}, { 667,21, 51, 54,0x14},
+   { 691,15, 50, 54,0x14}, { 711, 1,117,188,0x1c}, { 715,25,122,  0,0x04}, { 716,15,120,  0,0x04},
+   { 717,15,121,  0,0x04}, { 725, 1,123,  0,0x04}, { 726,15,124,  0,0x04}, { 762,15, 23, 54,0x14},
+   { 788, 1,107, 44,0x14}, { 854, 1,114,  0,0x04}, { 864, 1, 54, 38,0x1c}, { 873,25, 55, 54,0x14},
+   { 874,25, 56, 54,0x14}, { 875, 1, 52, 54,0x14}, { 876,15, 53, 54,0x14}, { 897, 1, 14,180,0x1c},
+   { 898,14,111, 44,0x14}, { 909,15,  1,  0,0x04}, { 911, 1,  5,  0,0x04}, { 913,15,103, 44,0x14},
+   { 914,15,104, 44,0x14}, { 915,25,105, 44,0x14}, { 916,25,108, 44,0x14}, { 917,25,109, 44,0x14},
+   { 918,19,106, 44,0x14}, { 919, 1,110, 44,0x14}, { 938, 1,  4, 15,0x1c}, { 945, 1,  2,  0,0x04},
+   { 946, 1,  3,  0,0x04}, { 947,19, 39, 54,0x14}, { 965,15, 57, 54,0x14}, { 966,15, 58, 54,0x14},
+   { 967, 9, 60, 54,0x14}, { 968, 9, 61, 54,0x14}, { 969, 9, 62, 54,0x14}, { 970, 1, 63, 54,0x14},
+   { 971, 1, 64, 54,0x14}, { 996,15, 66, 54,0x14}, { 997,15, 67, 54,0x14}, {1018, 1, 65, 57,0x1c},
+   {1049, 7, 59, 54,0x14}, {1079,26, 68, 54,0x14}, {1146,13, 70, 54,0x14}, {1147,10, 71, 54,0x14},
+   {1151,15, 69, 54,0x14}, {1184, 2, 72,150,0x14}, {1185,29, 73,150,0x14}, {1186,15, 74,150,0x14},
+   {1191,15, 76, 54,0x14}, {1192,10, 77, 54,0x14}, {1193, 7, 78, 54,0x14}, {1194, 1, 79, 54,0x14},
+   {1195,13, 80, 54,0x14}, {1196,15, 81, 54,0x14}, {1197,15, 88, 54,0x14}, {1198, 1, 82, 54,0x14},
+   {1199,11, 83, 54,0x14}, {1200,11, 84, 54,0x14}, {1227,15, 75, 54,0x14}, {1242, 8, 87, 54,0x14},
+   {1244, 8, 86, 54,0x14}, {1435, 1, 89, 54,0x14}, {1439, 1, 90, 54,0x14}, {1449,15, 91, 54,0x14},
+   {1450,15, 92, 54,0x14}, {1451,14, 93, 54,0x14}, {1452,14, 94, 54,0x14}, {1457,14, 95, 54,0x14},
+   {1458,14, 96, 54,0x14}, {1478, 1, 97, 54,0x14}, {1479, 1, 98, 54,0x14}, {1480,14, 99, 54,0x14},
+   {1481, 1,100, 54,0x14}, {1482, 1,101, 54,0x14}, {1483, 1,102, 21,0x1c}
 };
 const FieldTrait_Hash_Array CollateralInquiryAck::_ftha(CollateralInquiryAck::_traits, 127);
 const MsgType CollateralInquiryAck::_msgtype("BG");
@@ -5896,13 +5374,12 @@ const FieldTrait *CollateralInquiryAck::NoComplexEvents::NoComplexEventDates::No
 const FieldTrait_Hash_Array& CollateralInquiryAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CollateralInquiryAck::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ConfirmationRequest::_traits[] =
+const FieldTrait ConfirmationRequest::_traits[]
 {
-   FieldTrait(  58,15, 11,  0,0x04), FieldTrait(  60,22,  7,  0,0x04), FieldTrait(  70,15,  4,  0,0x04),
-   FieldTrait(  73, 1,  3, 90,0x1c), FieldTrait(  79,15,  8,  0,0x04), FieldTrait( 354, 2, 12,  0,0x04),
-   FieldTrait( 355,28, 13,  0,0x04), FieldTrait( 467,15,  6,  0,0x04), FieldTrait( 661, 1,  9,  0,0x04),
-   FieldTrait( 773, 1,  2,  0,0x04), FieldTrait( 793,15,  5,  0,0x04), FieldTrait( 798, 1, 10,  0,0x04),
-   FieldTrait( 859,15,  1,  0,0x04)
+   {  58,15, 11,  0,0x04}, {  60,22,  7,  0,0x04}, {  70,15,  4,  0,0x04}, {  73, 1,  3, 90,0x1c},
+   {  79,15,  8,  0,0x04}, { 354, 2, 12,  0,0x04}, { 355,28, 13,  0,0x04}, { 467,15,  6,  0,0x04},
+   { 661, 1,  9,  0,0x04}, { 773, 1,  2,  0,0x04}, { 793,15,  5,  0,0x04}, { 798, 1, 10,  0,0x04},
+   { 859,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array ConfirmationRequest::_ftha(ConfirmationRequest::_traits, 13);
 const MsgType ConfirmationRequest::_msgtype("BH");
@@ -5919,19 +5396,19 @@ const FieldTrait *ConfirmationRequest::NoOrders::NoNested2PartyIDs::NoNested2Par
 const FieldTrait_Hash_Array& ConfirmationRequest::NoOrders::NoNested2PartyIDs::NoNested2PartySubIDs::_ftha(NoNested2PartySubIDsV1_ftha);
 const MsgType& ConfirmationRequest::NoOrders::NoNested2PartyIDs::NoNested2PartySubIDs::_msgtype(NoNested2PartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradingSessionListRequest::_traits[] =
+const FieldTrait TradingSessionListRequest::_traits[]
 {
-   FieldTrait( 207,20,  4,  0,0x04), FieldTrait( 263, 7,  7,  0,0x04), FieldTrait( 335,15,  1,  0,0x04),
-   FieldTrait( 336,15,  2,  0,0x04), FieldTrait( 338, 1,  5,  0,0x04), FieldTrait( 339, 1,  6,  0,0x04),
-   FieldTrait( 625,15,  3,  0,0x04), FieldTrait(1300,15,  9,  0,0x04), FieldTrait(1301,20,  8,  0,0x04)
+   { 207,20,  4,  0,0x04}, { 263, 7,  7,  0,0x04}, { 335,15,  1,  0,0x04}, { 336,15,  2,  0,0x04},
+   { 338, 1,  5,  0,0x04}, { 339, 1,  6,  0,0x04}, { 625,15,  3,  0,0x04}, {1300,15,  9,  0,0x04},
+   {1301,20,  8,  0,0x04}
 };
 const FieldTrait_Hash_Array TradingSessionListRequest::_ftha(TradingSessionListRequest::_traits, 9);
 const MsgType TradingSessionListRequest::_msgtype("BI");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradingSessionList::_traits[] =
+const FieldTrait TradingSessionList::_traits[]
 {
-   FieldTrait( 335,15,  1,  0,0x04), FieldTrait( 386, 1,  2,184,0x1c), FieldTrait(1180,15,  3,  8,0x14),
-   FieldTrait(1181, 4,  4,  8,0x14), FieldTrait(1350, 4,  5,  8,0x14), FieldTrait(1352, 8,  6,  8,0x14)
+   { 335,15,  1,  0,0x04}, { 386, 1,  2,184,0x1c}, {1180,15,  3,  8,0x14}, {1181, 4,  4,  8,0x14},
+   {1350, 4,  5,  8,0x14}, {1352, 8,  6,  8,0x14}
 };
 const FieldTrait_Hash_Array TradingSessionList::_ftha(TradingSessionList::_traits, 6);
 const MsgType TradingSessionList::_msgtype("BJ");
@@ -5960,70 +5437,56 @@ const FieldTrait *TradingSessionList::NoTradingSessions::NoTimeInForceRules::_tr
 const FieldTrait_Hash_Array& TradingSessionList::NoTradingSessions::NoTimeInForceRules::_ftha(NoTimeInForceRulesV1_ftha);
 const MsgType& TradingSessionList::NoTradingSessions::NoTimeInForceRules::_msgtype(NoTimeInForceRulesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityListUpdateReport::_traits[] =
+const FieldTrait SecurityListUpdateReport::_traits[]
 {
-   FieldTrait(  60,22, 24,  0,0x04), FieldTrait( 146, 1, 10,144,0x1c), FieldTrait( 292,16,  8,  0,0x04),
-   FieldTrait( 320,15,  2,  0,0x04), FieldTrait( 322,15,  3,  0,0x04), FieldTrait( 393, 1,  5,  0,0x04),
-   FieldTrait( 560, 1,  4,  0,0x04), FieldTrait( 715,25,  6,  0,0x04), FieldTrait( 893, 8,  9,  0,0x04),
-   FieldTrait( 964, 1,  1,  0,0x04), FieldTrait( 980, 7,  7,  0,0x04), FieldTrait(1180,15, 13,  8,0x14),
-   FieldTrait(1181, 4, 14,  8,0x14), FieldTrait(1300,15, 12,  0,0x04), FieldTrait(1301,20, 11,  0,0x04),
-   FieldTrait(1350, 4, 15,  8,0x14), FieldTrait(1352, 8, 16,  8,0x14), FieldTrait(1465,15, 17,  0,0x04),
-   FieldTrait(1466,15, 18,  0,0x04), FieldTrait(1467,15, 19,  0,0x04), FieldTrait(1468, 2, 20,  0,0x04),
-   FieldTrait(1469,28, 21,  0,0x04), FieldTrait(1470, 1, 22,  0,0x04), FieldTrait(1471, 1, 23,  0,0x04)
+   {  60,22, 24,  0,0x04}, { 146, 1, 10,144,0x1c}, { 292,16,  8,  0,0x04}, { 320,15,  2,  0,0x04},
+   { 322,15,  3,  0,0x04}, { 393, 1,  5,  0,0x04}, { 560, 1,  4,  0,0x04}, { 715,25,  6,  0,0x04},
+   { 893, 8,  9,  0,0x04}, { 964, 1,  1,  0,0x04}, { 980, 7,  7,  0,0x04}, {1180,15, 13,  8,0x14},
+   {1181, 4, 14,  8,0x14}, {1300,15, 12,  0,0x04}, {1301,20, 11,  0,0x04}, {1350, 4, 15,  8,0x14},
+   {1352, 8, 16,  8,0x14}, {1465,15, 17,  0,0x04}, {1466,15, 18,  0,0x04}, {1467,15, 19,  0,0x04},
+   {1468, 2, 20,  0,0x04}, {1469,28, 21,  0,0x04}, {1470, 1, 22,  0,0x04}, {1471, 1, 23,  0,0x04}
 };
 const FieldTrait_Hash_Array SecurityListUpdateReport::_ftha(SecurityListUpdateReport::_traits, 24);
 const MsgType SecurityListUpdateReport::_msgtype("BK");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityListUpdateReport::NoRelatedSym::_traits[] =
+const FieldTrait SecurityListUpdateReport::NoRelatedSym::_traits[]
 {
-   FieldTrait(  15,19,120,  0,0x04), FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14),
-   FieldTrait(  55,15,  1, 54,0x14), FieldTrait(  58,15,116,  0,0x04), FieldTrait(  65,15,  2, 54,0x14),
-   FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 167,15,  8, 54,0x14),
-   FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14),
-   FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 218,12,102,160,0x14),
-   FieldTrait( 220,19,103,160,0x14), FieldTrait( 221,15,104,160,0x14), FieldTrait( 222,15,105,160,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 232, 1,121,162,0x1c), FieldTrait( 235,15,110,198,0x14),
-   FieldTrait( 236,14,111,198,0x14), FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14),
-   FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 354, 2,117,  0,0x04),
-   FieldTrait( 355,28,118,  0,0x04), FieldTrait( 423, 1,138, 10,0x14), FieldTrait( 454, 1,  5,142,0x1c),
-   FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14),
-   FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 555, 1,101,145,0x1c), FieldTrait( 561,10,135, 10,0x14),
-   FieldTrait( 562,10,130, 10,0x14), FieldTrait( 662,11,106,160,0x14), FieldTrait( 663, 1,107,160,0x14),
-   FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 668, 1, 89, 55,0x14), FieldTrait( 691,15, 36, 54,0x14),
-   FieldTrait( 696,25,113,198,0x14), FieldTrait( 697,11,114,198,0x14), FieldTrait( 698, 1,115,198,0x14),
-   FieldTrait( 699,15,108,160,0x14), FieldTrait( 701,25,112,198,0x14), FieldTrait( 711, 1,119,188,0x1c),
-   FieldTrait( 761,15,109,160,0x14), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 788, 1, 96, 44,0x14),
-   FieldTrait( 827, 1,129, 10,0x14), FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 869,14, 90, 55,0x14),
-   FieldTrait( 870, 1, 91,  9,0x1c), FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14),
-   FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 898,14,100, 44,0x14),
-   FieldTrait( 913,15, 92, 44,0x14), FieldTrait( 914,15, 93, 44,0x14), FieldTrait( 915,25, 94, 44,0x14),
-   FieldTrait( 916,25, 97, 44,0x14), FieldTrait( 917,25, 98, 44,0x14), FieldTrait( 918,19, 95, 44,0x14),
-   FieldTrait( 919, 1, 99, 44,0x14), FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14),
-   FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14),
-   FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14),
-   FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c),
-   FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1140,10,131, 10,0x14),
-   FieldTrait(1143, 9,132, 10,0x14), FieldTrait(1144, 1,133, 10,0x14), FieldTrait(1146,13, 56, 54,0x14),
-   FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1148,11,126,106,0x14), FieldTrait(1149,11,127,106,0x14),
-   FieldTrait(1150,11,128,106,0x14), FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14),
-   FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14),
-   FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14),
-   FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14),
-   FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14),
-   FieldTrait(1201, 1,141,164,0x1c), FieldTrait(1205, 1,123,170,0x1c), FieldTrait(1227,15, 61, 54,0x14),
-   FieldTrait(1234, 1,124, 68,0x1c), FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14),
-   FieldTrait(1245,19,134, 10,0x14), FieldTrait(1306, 1,125,106,0x14), FieldTrait(1309, 1,139,175,0x1c),
-   FieldTrait(1312, 1,140, 79,0x1c), FieldTrait(1324, 7,122,  0,0x04), FieldTrait(1377, 1,136, 10,0x14),
-   FieldTrait(1378, 1,137, 10,0x14), FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14),
-   FieldTrait(1449,15, 77, 54,0x14), FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14),
-   FieldTrait(1452,14, 80, 54,0x14), FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14),
-   FieldTrait(1478, 1, 83, 54,0x14), FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14),
-   FieldTrait(1481, 1, 86, 54,0x14), FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c),
-   FieldTrait(1504,22,142,  0,0x04)
+   {  15,19,120,  0,0x04}, {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14},
+   {  58,15,116,  0,0x04}, {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14},
+   { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14},
+   { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 218,12,102,160,0x14}, { 220,19,103,160,0x14},
+   { 221,15,104,160,0x14}, { 222,15,105,160,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14},
+   { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14},
+   { 231, 9, 27, 54,0x14}, { 232, 1,121,162,0x1c}, { 235,15,110,198,0x14}, { 236,14,111,198,0x14},
+   { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 348, 2, 31, 54,0x14},
+   { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14}, { 354, 2,117,  0,0x04},
+   { 355,28,118,  0,0x04}, { 423, 1,138, 10,0x14}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1,101,145,0x1c}, { 561,10,135, 10,0x14},
+   { 562,10,130, 10,0x14}, { 662,11,106,160,0x14}, { 663, 1,107,160,0x14}, { 667,21, 37, 54,0x14},
+   { 668, 1, 89, 55,0x14}, { 691,15, 36, 54,0x14}, { 696,25,113,198,0x14}, { 697,11,114,198,0x14},
+   { 698, 1,115,198,0x14}, { 699,15,108,160,0x14}, { 701,25,112,198,0x14}, { 711, 1,119,188,0x1c},
+   { 761,15,109,160,0x14}, { 762,15,  9, 54,0x14}, { 788, 1, 96, 44,0x14}, { 827, 1,129, 10,0x14},
+   { 864, 1, 40, 38,0x1c}, { 869,14, 90, 55,0x14}, { 870, 1, 91,  9,0x1c}, { 873,25, 41, 54,0x14},
+   { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14}, { 898,14,100, 44,0x14},
+   { 913,15, 92, 44,0x14}, { 914,15, 93, 44,0x14}, { 915,25, 94, 44,0x14}, { 916,25, 97, 44,0x14},
+   { 917,25, 98, 44,0x14}, { 918,19, 95, 44,0x14}, { 919, 1, 99, 44,0x14}, { 947,19, 25, 54,0x14},
+   { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14},
+   { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14},
+   { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14},
+   {1140,10,131, 10,0x14}, {1143, 9,132, 10,0x14}, {1144, 1,133, 10,0x14}, {1146,13, 56, 54,0x14},
+   {1147,10, 57, 54,0x14}, {1148,11,126,106,0x14}, {1149,11,127,106,0x14}, {1150,11,128,106,0x14},
+   {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14},
+   {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14},
+   {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14},
+   {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1201, 1,141,164,0x1c}, {1205, 1,123,170,0x1c},
+   {1227,15, 61, 54,0x14}, {1234, 1,124, 68,0x1c}, {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14},
+   {1245,19,134, 10,0x14}, {1306, 1,125,106,0x14}, {1309, 1,139,175,0x1c}, {1312, 1,140, 79,0x1c},
+   {1324, 7,122,  0,0x04}, {1377, 1,136, 10,0x14}, {1378, 1,137, 10,0x14}, {1435, 1, 75, 54,0x14},
+   {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14},
+   {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14},
+   {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14},
+   {1483, 1, 88, 21,0x1c}, {1504,22,142,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    SecurityListUpdateReport::NoRelatedSym::_ftha(SecurityListUpdateReport::NoRelatedSym::_traits, 142);
@@ -6141,12 +5604,11 @@ const FieldTrait *SecurityListUpdateReport::NoRelatedSym::NoComplexEvents::NoCom
 const FieldTrait_Hash_Array& SecurityListUpdateReport::NoRelatedSym::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityListUpdateReport::NoRelatedSym::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AdjustedPositionReport::_traits[] =
+const FieldTrait AdjustedPositionReport::_traits[]
 {
-   FieldTrait( 146, 1,  7, 47,0x1c), FieldTrait( 453, 1,  5, 94,0x1c), FieldTrait( 702, 1,  6,103,0x1c),
-   FieldTrait( 714,15, 10,  0,0x04), FieldTrait( 715,25,  3,  0,0x04), FieldTrait( 716,15,  4,  0,0x04),
-   FieldTrait( 721,15,  1,  0,0x04), FieldTrait( 724, 1,  2,  0,0x04), FieldTrait( 730,11,  8,  0,0x04),
-   FieldTrait( 734,11,  9,  0,0x04)
+   { 146, 1,  7, 47,0x1c}, { 453, 1,  5, 94,0x1c}, { 702, 1,  6,103,0x1c}, { 714,15, 10,  0,0x04},
+   { 715,25,  3,  0,0x04}, { 716,15,  4,  0,0x04}, { 721,15,  1,  0,0x04}, { 724, 1,  2,  0,0x04},
+   { 730,11,  8,  0,0x04}, { 734,11,  9,  0,0x04}
 };
 const FieldTrait_Hash_Array AdjustedPositionReport::_ftha(AdjustedPositionReport::_traits, 10);
 const MsgType AdjustedPositionReport::_msgtype("BL");
@@ -6203,69 +5665,54 @@ const FieldTrait *AdjustedPositionReport::NoPositions::NoNestedPartyIDs::NoNeste
 const FieldTrait_Hash_Array& AdjustedPositionReport::NoPositions::NoNestedPartyIDs::NoNestedPartySubIDs::_ftha(NoNestedPartySubIDsV1_ftha);
 const MsgType& AdjustedPositionReport::NoPositions::NoNestedPartyIDs::NoNestedPartySubIDs::_msgtype(NoNestedPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AllocationInstructionAlert::_traits[] =
+const FieldTrait AllocationInstructionAlert::_traits[]
 {
-   FieldTrait(   6,11,127,  0,0x04), FieldTrait(  15,19,137,  0,0x04), FieldTrait(  22,15, 21, 54,0x14),
-   FieldTrait(  30,20,122,  0,0x04), FieldTrait(  48,15, 20, 54,0x14), FieldTrait(  53,10,120,  0,0x04),
-   FieldTrait(  54, 7, 17,  0,0x04), FieldTrait(  55,15, 18, 54,0x14), FieldTrait(  58,15,151,  0,0x04),
-   FieldTrait(  60,22,141,  0,0x04), FieldTrait(  63,15,142,  0,0x04), FieldTrait(  64,25,143,  0,0x04),
-   FieldTrait(  65,15, 19, 54,0x14), FieldTrait(  70,15,  1,  0,0x04), FieldTrait(  71, 7,  2,  0,0x04),
-   FieldTrait(  72,15,  5,  0,0x04), FieldTrait(  73, 1, 12, 90,0x1c), FieldTrait(  74, 1,138,  0,0x04),
-   FieldTrait(  75,25,140,  0,0x04), FieldTrait(  77, 7,149,  0,0x04), FieldTrait(  78, 1,173,  3,0x1c),
-   FieldTrait( 106,15, 47, 54,0x14), FieldTrait( 107,15, 50, 54,0x14), FieldTrait( 118,13,148,  0,0x04),
-   FieldTrait( 124, 1, 13, 39,0x1c), FieldTrait( 157, 1,154,  0,0x04), FieldTrait( 158,14,155,  0,0x04),
-   FieldTrait( 159,13,156,  0,0x04), FieldTrait( 167,15, 25, 54,0x14), FieldTrait( 196,15,  8,  0,0x04),
-   FieldTrait( 197, 1,  9,  0,0x04), FieldTrait( 200,21, 27, 54,0x14), FieldTrait( 201, 1, 88, 54,0x14),
-   FieldTrait( 202,11, 41, 54,0x14), FieldTrait( 206, 7, 43, 54,0x14), FieldTrait( 207,20, 46, 54,0x14),
-   FieldTrait( 218,12,129,160,0x14), FieldTrait( 220,19,130,160,0x14), FieldTrait( 221,15,131,160,0x14),
-   FieldTrait( 222,15,132,160,0x14), FieldTrait( 223,14, 45, 54,0x14), FieldTrait( 224,25, 29, 54,0x14),
-   FieldTrait( 225,25, 30, 54,0x14), FieldTrait( 226, 1, 32, 54,0x14), FieldTrait( 227,14, 33, 54,0x14),
-   FieldTrait( 228, 9, 34, 54,0x14), FieldTrait( 229,25,123,  0,0x04), FieldTrait( 231, 9, 44, 54,0x14),
-   FieldTrait( 232, 1,163,162,0x1c), FieldTrait( 235,15,164,198,0x14), FieldTrait( 236,14,165,198,0x14),
-   FieldTrait( 237,13,147,  0,0x04), FieldTrait( 238,13,146,  0,0x04), FieldTrait( 239, 1, 31, 54,0x14),
-   FieldTrait( 240,25, 40, 54,0x14), FieldTrait( 255,15, 35, 54,0x14), FieldTrait( 336,15,124,  0,0x04),
-   FieldTrait( 348, 2, 48, 54,0x14), FieldTrait( 349,28, 49, 54,0x14), FieldTrait( 350, 2, 51, 54,0x14),
-   FieldTrait( 351,28, 52, 54,0x14), FieldTrait( 354, 2,152,  0,0x04), FieldTrait( 355,28,153,  0,0x04),
-   FieldTrait( 381,13,145,  0,0x04), FieldTrait( 423, 1,126,  0,0x04), FieldTrait( 442, 7,180,  0,0x04),
-   FieldTrait( 453, 1,139, 94,0x1c), FieldTrait( 454, 1, 22,142,0x1c), FieldTrait( 460, 1, 23, 54,0x14),
-   FieldTrait( 461,15, 24, 54,0x14), FieldTrait( 466,15, 10,  0,0x04), FieldTrait( 470,18, 37, 54,0x14),
-   FieldTrait( 471,15, 38, 54,0x14), FieldTrait( 472,15, 39, 54,0x14), FieldTrait( 540,13,157,  0,0x04),
-   FieldTrait( 541,25, 28, 54,0x14), FieldTrait( 543,15, 36, 54,0x14), FieldTrait( 555, 1,119, 49,0x1c),
-   FieldTrait( 570, 8, 14,  0,0x04), FieldTrait( 574,15, 16,  0,0x04), FieldTrait( 578,15,179,  0,0x04),
-   FieldTrait( 582, 1,178,  0,0x04), FieldTrait( 625,15,125,  0,0x04), FieldTrait( 626, 1,  3,  0,0x04),
-   FieldTrait( 650, 8,162,  0,0x04), FieldTrait( 662,11,133,160,0x14), FieldTrait( 663, 1,134,160,0x14),
-   FieldTrait( 667,21, 54, 54,0x14), FieldTrait( 668, 1,106, 55,0x14), FieldTrait( 691,15, 53, 54,0x14),
-   FieldTrait( 696,25,167,198,0x14), FieldTrait( 697,11,168,198,0x14), FieldTrait( 698, 1,169,198,0x14),
-   FieldTrait( 699,15,135,160,0x14), FieldTrait( 700, 8, 15,  0,0x04), FieldTrait( 701,25,166,198,0x14),
-   FieldTrait( 711, 1,118,188,0x1c), FieldTrait( 715,25,175,  0,0x04), FieldTrait( 738,13,158,  0,0x04),
-   FieldTrait( 753, 1,170,102,0x1c), FieldTrait( 754, 8,150,  0,0x04), FieldTrait( 761,15,136,160,0x14),
-   FieldTrait( 762,15, 26, 54,0x14), FieldTrait( 775, 1,144,  0,0x04), FieldTrait( 788, 1,113, 44,0x14),
-   FieldTrait( 793,15,  4,  0,0x04), FieldTrait( 796, 1,  6,  0,0x04), FieldTrait( 808, 1,  7,  0,0x04),
-   FieldTrait( 819, 1,174,  0,0x04), FieldTrait( 828, 1,176,  0,0x04), FieldTrait( 829, 1,177,  0,0x04),
-   FieldTrait( 854, 1,121,  0,0x04), FieldTrait( 857, 1, 11,  0,0x04), FieldTrait( 860,11,128,  0,0x04),
-   FieldTrait( 864, 1, 57, 38,0x1c), FieldTrait( 869,14,107, 55,0x14), FieldTrait( 870, 1,108,  9,0x1c),
-   FieldTrait( 873,25, 58, 54,0x14), FieldTrait( 874,25, 59, 54,0x14), FieldTrait( 875, 1, 55, 54,0x14),
-   FieldTrait( 876,15, 56, 54,0x14), FieldTrait( 892, 1,171,  0,0x04), FieldTrait( 893, 8,172,  0,0x04),
-   FieldTrait( 898,14,117, 44,0x14), FieldTrait( 913,15,109, 44,0x14), FieldTrait( 914,15,110, 44,0x14),
-   FieldTrait( 915,25,111, 44,0x14), FieldTrait( 916,25,114, 44,0x14), FieldTrait( 917,25,115, 44,0x14),
-   FieldTrait( 918,19,112, 44,0x14), FieldTrait( 919, 1,116, 44,0x14), FieldTrait( 920,13,159,  0,0x04),
-   FieldTrait( 921,13,160,  0,0x04), FieldTrait( 922,13,161,  0,0x04), FieldTrait( 947,19, 42, 54,0x14),
-   FieldTrait( 965,15, 60, 54,0x14), FieldTrait( 966,15, 61, 54,0x14), FieldTrait( 967, 9, 63, 54,0x14),
-   FieldTrait( 968, 9, 64, 54,0x14), FieldTrait( 969, 9, 65, 54,0x14), FieldTrait( 970, 1, 66, 54,0x14),
-   FieldTrait( 971, 1, 67, 54,0x14), FieldTrait( 991,11,182,  0,0x04), FieldTrait( 996,15, 69, 54,0x14),
-   FieldTrait( 997,15, 70, 54,0x14), FieldTrait(1011,15,181,  0,0x04), FieldTrait(1018, 1, 68, 57,0x1c),
-   FieldTrait(1049, 7, 62, 54,0x14), FieldTrait(1079,26, 71, 54,0x14), FieldTrait(1146,13, 73, 54,0x14),
-   FieldTrait(1147,10, 74, 54,0x14), FieldTrait(1151,15, 72, 54,0x14), FieldTrait(1184, 2, 75,150,0x14),
-   FieldTrait(1185,29, 76,150,0x14), FieldTrait(1186,15, 77,150,0x14), FieldTrait(1191,15, 79, 54,0x14),
-   FieldTrait(1192,10, 80, 54,0x14), FieldTrait(1193, 7, 81, 54,0x14), FieldTrait(1194, 1, 82, 54,0x14),
-   FieldTrait(1195,13, 83, 54,0x14), FieldTrait(1196,15, 84, 54,0x14), FieldTrait(1197,15, 91, 54,0x14),
-   FieldTrait(1198, 1, 85, 54,0x14), FieldTrait(1199,11, 86, 54,0x14), FieldTrait(1200,11, 87, 54,0x14),
-   FieldTrait(1227,15, 78, 54,0x14), FieldTrait(1242, 8, 90, 54,0x14), FieldTrait(1244, 8, 89, 54,0x14),
-   FieldTrait(1435, 1, 92, 54,0x14), FieldTrait(1439, 1, 93, 54,0x14), FieldTrait(1449,15, 94, 54,0x14),
-   FieldTrait(1450,15, 95, 54,0x14), FieldTrait(1451,14, 96, 54,0x14), FieldTrait(1452,14, 97, 54,0x14),
-   FieldTrait(1457,14, 98, 54,0x14), FieldTrait(1458,14, 99, 54,0x14), FieldTrait(1478, 1,100, 54,0x14),
-   FieldTrait(1479, 1,101, 54,0x14), FieldTrait(1480,14,102, 54,0x14), FieldTrait(1481, 1,103, 54,0x14),
-   FieldTrait(1482, 1,104, 54,0x14), FieldTrait(1483, 1,105, 21,0x1c)
+   {   6,11,127,  0,0x04}, {  15,19,137,  0,0x04}, {  22,15, 21, 54,0x14}, {  30,20,122,  0,0x04},
+   {  48,15, 20, 54,0x14}, {  53,10,120,  0,0x04}, {  54, 7, 17,  0,0x04}, {  55,15, 18, 54,0x14},
+   {  58,15,151,  0,0x04}, {  60,22,141,  0,0x04}, {  63,15,142,  0,0x04}, {  64,25,143,  0,0x04},
+   {  65,15, 19, 54,0x14}, {  70,15,  1,  0,0x04}, {  71, 7,  2,  0,0x04}, {  72,15,  5,  0,0x04},
+   {  73, 1, 12, 90,0x1c}, {  74, 1,138,  0,0x04}, {  75,25,140,  0,0x04}, {  77, 7,149,  0,0x04},
+   {  78, 1,173,  3,0x1c}, { 106,15, 47, 54,0x14}, { 107,15, 50, 54,0x14}, { 118,13,148,  0,0x04},
+   { 124, 1, 13, 39,0x1c}, { 157, 1,154,  0,0x04}, { 158,14,155,  0,0x04}, { 159,13,156,  0,0x04},
+   { 167,15, 25, 54,0x14}, { 196,15,  8,  0,0x04}, { 197, 1,  9,  0,0x04}, { 200,21, 27, 54,0x14},
+   { 201, 1, 88, 54,0x14}, { 202,11, 41, 54,0x14}, { 206, 7, 43, 54,0x14}, { 207,20, 46, 54,0x14},
+   { 218,12,129,160,0x14}, { 220,19,130,160,0x14}, { 221,15,131,160,0x14}, { 222,15,132,160,0x14},
+   { 223,14, 45, 54,0x14}, { 224,25, 29, 54,0x14}, { 225,25, 30, 54,0x14}, { 226, 1, 32, 54,0x14},
+   { 227,14, 33, 54,0x14}, { 228, 9, 34, 54,0x14}, { 229,25,123,  0,0x04}, { 231, 9, 44, 54,0x14},
+   { 232, 1,163,162,0x1c}, { 235,15,164,198,0x14}, { 236,14,165,198,0x14}, { 237,13,147,  0,0x04},
+   { 238,13,146,  0,0x04}, { 239, 1, 31, 54,0x14}, { 240,25, 40, 54,0x14}, { 255,15, 35, 54,0x14},
+   { 336,15,124,  0,0x04}, { 348, 2, 48, 54,0x14}, { 349,28, 49, 54,0x14}, { 350, 2, 51, 54,0x14},
+   { 351,28, 52, 54,0x14}, { 354, 2,152,  0,0x04}, { 355,28,153,  0,0x04}, { 381,13,145,  0,0x04},
+   { 423, 1,126,  0,0x04}, { 442, 7,180,  0,0x04}, { 453, 1,139, 94,0x1c}, { 454, 1, 22,142,0x1c},
+   { 460, 1, 23, 54,0x14}, { 461,15, 24, 54,0x14}, { 466,15, 10,  0,0x04}, { 470,18, 37, 54,0x14},
+   { 471,15, 38, 54,0x14}, { 472,15, 39, 54,0x14}, { 540,13,157,  0,0x04}, { 541,25, 28, 54,0x14},
+   { 543,15, 36, 54,0x14}, { 555, 1,119, 49,0x1c}, { 570, 8, 14,  0,0x04}, { 574,15, 16,  0,0x04},
+   { 578,15,179,  0,0x04}, { 582, 1,178,  0,0x04}, { 625,15,125,  0,0x04}, { 626, 1,  3,  0,0x04},
+   { 650, 8,162,  0,0x04}, { 662,11,133,160,0x14}, { 663, 1,134,160,0x14}, { 667,21, 54, 54,0x14},
+   { 668, 1,106, 55,0x14}, { 691,15, 53, 54,0x14}, { 696,25,167,198,0x14}, { 697,11,168,198,0x14},
+   { 698, 1,169,198,0x14}, { 699,15,135,160,0x14}, { 700, 8, 15,  0,0x04}, { 701,25,166,198,0x14},
+   { 711, 1,118,188,0x1c}, { 715,25,175,  0,0x04}, { 738,13,158,  0,0x04}, { 753, 1,170,102,0x1c},
+   { 754, 8,150,  0,0x04}, { 761,15,136,160,0x14}, { 762,15, 26, 54,0x14}, { 775, 1,144,  0,0x04},
+   { 788, 1,113, 44,0x14}, { 793,15,  4,  0,0x04}, { 796, 1,  6,  0,0x04}, { 808, 1,  7,  0,0x04},
+   { 819, 1,174,  0,0x04}, { 828, 1,176,  0,0x04}, { 829, 1,177,  0,0x04}, { 854, 1,121,  0,0x04},
+   { 857, 1, 11,  0,0x04}, { 860,11,128,  0,0x04}, { 864, 1, 57, 38,0x1c}, { 869,14,107, 55,0x14},
+   { 870, 1,108,  9,0x1c}, { 873,25, 58, 54,0x14}, { 874,25, 59, 54,0x14}, { 875, 1, 55, 54,0x14},
+   { 876,15, 56, 54,0x14}, { 892, 1,171,  0,0x04}, { 893, 8,172,  0,0x04}, { 898,14,117, 44,0x14},
+   { 913,15,109, 44,0x14}, { 914,15,110, 44,0x14}, { 915,25,111, 44,0x14}, { 916,25,114, 44,0x14},
+   { 917,25,115, 44,0x14}, { 918,19,112, 44,0x14}, { 919, 1,116, 44,0x14}, { 920,13,159,  0,0x04},
+   { 921,13,160,  0,0x04}, { 922,13,161,  0,0x04}, { 947,19, 42, 54,0x14}, { 965,15, 60, 54,0x14},
+   { 966,15, 61, 54,0x14}, { 967, 9, 63, 54,0x14}, { 968, 9, 64, 54,0x14}, { 969, 9, 65, 54,0x14},
+   { 970, 1, 66, 54,0x14}, { 971, 1, 67, 54,0x14}, { 991,11,182,  0,0x04}, { 996,15, 69, 54,0x14},
+   { 997,15, 70, 54,0x14}, {1011,15,181,  0,0x04}, {1018, 1, 68, 57,0x1c}, {1049, 7, 62, 54,0x14},
+   {1079,26, 71, 54,0x14}, {1146,13, 73, 54,0x14}, {1147,10, 74, 54,0x14}, {1151,15, 72, 54,0x14},
+   {1184, 2, 75,150,0x14}, {1185,29, 76,150,0x14}, {1186,15, 77,150,0x14}, {1191,15, 79, 54,0x14},
+   {1192,10, 80, 54,0x14}, {1193, 7, 81, 54,0x14}, {1194, 1, 82, 54,0x14}, {1195,13, 83, 54,0x14},
+   {1196,15, 84, 54,0x14}, {1197,15, 91, 54,0x14}, {1198, 1, 85, 54,0x14}, {1199,11, 86, 54,0x14},
+   {1200,11, 87, 54,0x14}, {1227,15, 78, 54,0x14}, {1242, 8, 90, 54,0x14}, {1244, 8, 89, 54,0x14},
+   {1435, 1, 92, 54,0x14}, {1439, 1, 93, 54,0x14}, {1449,15, 94, 54,0x14}, {1450,15, 95, 54,0x14},
+   {1451,14, 96, 54,0x14}, {1452,14, 97, 54,0x14}, {1457,14, 98, 54,0x14}, {1458,14, 99, 54,0x14},
+   {1478, 1,100, 54,0x14}, {1479, 1,101, 54,0x14}, {1480,14,102, 54,0x14}, {1481, 1,103, 54,0x14},
+   {1482, 1,104, 54,0x14}, {1483, 1,105, 21,0x1c}
 };
 const FieldTrait_Hash_Array AllocationInstructionAlert::_ftha(AllocationInstructionAlert::_traits, 182);
 const MsgType AllocationInstructionAlert::_msgtype("BM");
@@ -6394,45 +5841,36 @@ const FieldTrait *AllocationInstructionAlert::NoComplexEvents::NoComplexEventDat
 const FieldTrait_Hash_Array& AllocationInstructionAlert::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& AllocationInstructionAlert::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ExecutionAcknowledgement::_traits[] =
+const FieldTrait ExecutionAcknowledgement::_traits[]
 {
-   FieldTrait(   6,11,108,  0,0x04), FieldTrait(  11,15,  3,  0,0x04), FieldTrait(  14,10,107,  0,0x04),
-   FieldTrait(  17,15,  5,  0,0x04), FieldTrait(  22,15, 10, 54,0x14), FieldTrait(  31,11,104,  0,0x04),
-   FieldTrait(  32,10,103,  0,0x04), FieldTrait(  37,15,  1,  0,0x04), FieldTrait(  38,10, 98, 93,0x14),
-   FieldTrait(  48,15,  9, 54,0x14), FieldTrait(  54, 7, 97,  0,0x04), FieldTrait(  55,15,  7, 54,0x14),
-   FieldTrait(  58,15,109,  0,0x04), FieldTrait(  65,15,  8, 54,0x14), FieldTrait( 106,15, 36, 54,0x14),
-   FieldTrait( 107,15, 39, 54,0x14), FieldTrait( 127, 7,  6,  0,0x04), FieldTrait( 152,10, 99, 93,0x14),
-   FieldTrait( 167,15, 14, 54,0x14), FieldTrait( 198,15,  2,  0,0x04), FieldTrait( 200,21, 16, 54,0x14),
-   FieldTrait( 201, 1, 77, 54,0x14), FieldTrait( 202,11, 30, 54,0x14), FieldTrait( 206, 7, 32, 54,0x14),
-   FieldTrait( 207,20, 35, 54,0x14), FieldTrait( 223,14, 34, 54,0x14), FieldTrait( 224,25, 18, 54,0x14),
-   FieldTrait( 225,25, 19, 54,0x14), FieldTrait( 226, 1, 21, 54,0x14), FieldTrait( 227,14, 22, 54,0x14),
-   FieldTrait( 228, 9, 23, 54,0x14), FieldTrait( 231, 9, 33, 54,0x14), FieldTrait( 239, 1, 20, 54,0x14),
-   FieldTrait( 240,25, 29, 54,0x14), FieldTrait( 255,15, 24, 54,0x14), FieldTrait( 348, 2, 37, 54,0x14),
-   FieldTrait( 349,28, 38, 54,0x14), FieldTrait( 350, 2, 40, 54,0x14), FieldTrait( 351,28, 41, 54,0x14),
-   FieldTrait( 354, 2,110,  0,0x04), FieldTrait( 355,28,111,  0,0x04), FieldTrait( 423, 1,105,  0,0x04),
-   FieldTrait( 454, 1, 11,142,0x1c), FieldTrait( 460, 1, 12, 54,0x14), FieldTrait( 461,15, 13, 54,0x14),
-   FieldTrait( 468, 7,101, 93,0x14), FieldTrait( 469, 9,102, 93,0x14), FieldTrait( 470,18, 26, 54,0x14),
-   FieldTrait( 471,15, 27, 54,0x14), FieldTrait( 472,15, 28, 54,0x14), FieldTrait( 516,14,100, 93,0x14),
-   FieldTrait( 541,25, 17, 54,0x14), FieldTrait( 543,15, 25, 54,0x14), FieldTrait( 555, 1, 96, 49,0x1c),
-   FieldTrait( 667,21, 43, 54,0x14), FieldTrait( 669,11,106,  0,0x04), FieldTrait( 691,15, 42, 54,0x14),
-   FieldTrait( 711, 1, 95,188,0x1c), FieldTrait( 762,15, 15, 54,0x14), FieldTrait( 864, 1, 46, 38,0x1c),
-   FieldTrait( 873,25, 47, 54,0x14), FieldTrait( 874,25, 48, 54,0x14), FieldTrait( 875, 1, 44, 54,0x14),
-   FieldTrait( 876,15, 45, 54,0x14), FieldTrait( 947,19, 31, 54,0x14), FieldTrait( 965,15, 49, 54,0x14),
-   FieldTrait( 966,15, 50, 54,0x14), FieldTrait( 967, 9, 52, 54,0x14), FieldTrait( 968, 9, 53, 54,0x14),
-   FieldTrait( 969, 9, 54, 54,0x14), FieldTrait( 970, 1, 55, 54,0x14), FieldTrait( 971, 1, 56, 54,0x14),
-   FieldTrait( 996,15, 58, 54,0x14), FieldTrait( 997,15, 59, 54,0x14), FieldTrait(1018, 1, 57, 57,0x1c),
-   FieldTrait(1036, 7,  4,  0,0x04), FieldTrait(1049, 7, 51, 54,0x14), FieldTrait(1079,26, 60, 54,0x14),
-   FieldTrait(1146,13, 62, 54,0x14), FieldTrait(1147,10, 63, 54,0x14), FieldTrait(1151,15, 61, 54,0x14),
-   FieldTrait(1184, 2, 64,150,0x14), FieldTrait(1185,29, 65,150,0x14), FieldTrait(1186,15, 66,150,0x14),
-   FieldTrait(1191,15, 68, 54,0x14), FieldTrait(1192,10, 69, 54,0x14), FieldTrait(1193, 7, 70, 54,0x14),
-   FieldTrait(1194, 1, 71, 54,0x14), FieldTrait(1195,13, 72, 54,0x14), FieldTrait(1196,15, 73, 54,0x14),
-   FieldTrait(1197,15, 80, 54,0x14), FieldTrait(1198, 1, 74, 54,0x14), FieldTrait(1199,11, 75, 54,0x14),
-   FieldTrait(1200,11, 76, 54,0x14), FieldTrait(1227,15, 67, 54,0x14), FieldTrait(1242, 8, 79, 54,0x14),
-   FieldTrait(1244, 8, 78, 54,0x14), FieldTrait(1435, 1, 81, 54,0x14), FieldTrait(1439, 1, 82, 54,0x14),
-   FieldTrait(1449,15, 83, 54,0x14), FieldTrait(1450,15, 84, 54,0x14), FieldTrait(1451,14, 85, 54,0x14),
-   FieldTrait(1452,14, 86, 54,0x14), FieldTrait(1457,14, 87, 54,0x14), FieldTrait(1458,14, 88, 54,0x14),
-   FieldTrait(1478, 1, 89, 54,0x14), FieldTrait(1479, 1, 90, 54,0x14), FieldTrait(1480,14, 91, 54,0x14),
-   FieldTrait(1481, 1, 92, 54,0x14), FieldTrait(1482, 1, 93, 54,0x14), FieldTrait(1483, 1, 94, 21,0x1c)
+   {   6,11,108,  0,0x04}, {  11,15,  3,  0,0x04}, {  14,10,107,  0,0x04}, {  17,15,  5,  0,0x04},
+   {  22,15, 10, 54,0x14}, {  31,11,104,  0,0x04}, {  32,10,103,  0,0x04}, {  37,15,  1,  0,0x04},
+   {  38,10, 98, 93,0x14}, {  48,15,  9, 54,0x14}, {  54, 7, 97,  0,0x04}, {  55,15,  7, 54,0x14},
+   {  58,15,109,  0,0x04}, {  65,15,  8, 54,0x14}, { 106,15, 36, 54,0x14}, { 107,15, 39, 54,0x14},
+   { 127, 7,  6,  0,0x04}, { 152,10, 99, 93,0x14}, { 167,15, 14, 54,0x14}, { 198,15,  2,  0,0x04},
+   { 200,21, 16, 54,0x14}, { 201, 1, 77, 54,0x14}, { 202,11, 30, 54,0x14}, { 206, 7, 32, 54,0x14},
+   { 207,20, 35, 54,0x14}, { 223,14, 34, 54,0x14}, { 224,25, 18, 54,0x14}, { 225,25, 19, 54,0x14},
+   { 226, 1, 21, 54,0x14}, { 227,14, 22, 54,0x14}, { 228, 9, 23, 54,0x14}, { 231, 9, 33, 54,0x14},
+   { 239, 1, 20, 54,0x14}, { 240,25, 29, 54,0x14}, { 255,15, 24, 54,0x14}, { 348, 2, 37, 54,0x14},
+   { 349,28, 38, 54,0x14}, { 350, 2, 40, 54,0x14}, { 351,28, 41, 54,0x14}, { 354, 2,110,  0,0x04},
+   { 355,28,111,  0,0x04}, { 423, 1,105,  0,0x04}, { 454, 1, 11,142,0x1c}, { 460, 1, 12, 54,0x14},
+   { 461,15, 13, 54,0x14}, { 468, 7,101, 93,0x14}, { 469, 9,102, 93,0x14}, { 470,18, 26, 54,0x14},
+   { 471,15, 27, 54,0x14}, { 472,15, 28, 54,0x14}, { 516,14,100, 93,0x14}, { 541,25, 17, 54,0x14},
+   { 543,15, 25, 54,0x14}, { 555, 1, 96, 49,0x1c}, { 667,21, 43, 54,0x14}, { 669,11,106,  0,0x04},
+   { 691,15, 42, 54,0x14}, { 711, 1, 95,188,0x1c}, { 762,15, 15, 54,0x14}, { 864, 1, 46, 38,0x1c},
+   { 873,25, 47, 54,0x14}, { 874,25, 48, 54,0x14}, { 875, 1, 44, 54,0x14}, { 876,15, 45, 54,0x14},
+   { 947,19, 31, 54,0x14}, { 965,15, 49, 54,0x14}, { 966,15, 50, 54,0x14}, { 967, 9, 52, 54,0x14},
+   { 968, 9, 53, 54,0x14}, { 969, 9, 54, 54,0x14}, { 970, 1, 55, 54,0x14}, { 971, 1, 56, 54,0x14},
+   { 996,15, 58, 54,0x14}, { 997,15, 59, 54,0x14}, {1018, 1, 57, 57,0x1c}, {1036, 7,  4,  0,0x04},
+   {1049, 7, 51, 54,0x14}, {1079,26, 60, 54,0x14}, {1146,13, 62, 54,0x14}, {1147,10, 63, 54,0x14},
+   {1151,15, 61, 54,0x14}, {1184, 2, 64,150,0x14}, {1185,29, 65,150,0x14}, {1186,15, 66,150,0x14},
+   {1191,15, 68, 54,0x14}, {1192,10, 69, 54,0x14}, {1193, 7, 70, 54,0x14}, {1194, 1, 71, 54,0x14},
+   {1195,13, 72, 54,0x14}, {1196,15, 73, 54,0x14}, {1197,15, 80, 54,0x14}, {1198, 1, 74, 54,0x14},
+   {1199,11, 75, 54,0x14}, {1200,11, 76, 54,0x14}, {1227,15, 67, 54,0x14}, {1242, 8, 79, 54,0x14},
+   {1244, 8, 78, 54,0x14}, {1435, 1, 81, 54,0x14}, {1439, 1, 82, 54,0x14}, {1449,15, 83, 54,0x14},
+   {1450,15, 84, 54,0x14}, {1451,14, 85, 54,0x14}, {1452,14, 86, 54,0x14}, {1457,14, 87, 54,0x14},
+   {1458,14, 88, 54,0x14}, {1478, 1, 89, 54,0x14}, {1479, 1, 90, 54,0x14}, {1480,14, 91, 54,0x14},
+   {1481, 1, 92, 54,0x14}, {1482, 1, 93, 54,0x14}, {1483, 1, 94, 21,0x1c}
 };
 const FieldTrait_Hash_Array ExecutionAcknowledgement::_ftha(ExecutionAcknowledgement::_traits, 111);
 const MsgType ExecutionAcknowledgement::_msgtype("BN");
@@ -6493,43 +5931,34 @@ const FieldTrait *ExecutionAcknowledgement::NoComplexEvents::NoComplexEventDates
 const FieldTrait_Hash_Array& ExecutionAcknowledgement::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& ExecutionAcknowledgement::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ContraryIntentionReport::_traits[] =
+const FieldTrait ContraryIntentionReport::_traits[]
 {
-   FieldTrait(  22,15, 11, 54,0x14), FieldTrait(  48,15, 10, 54,0x14), FieldTrait(  55,15,  8, 54,0x14),
-   FieldTrait(  58,15, 96,  0,0x04), FieldTrait(  60,22,  2,  0,0x04), FieldTrait(  65,15,  9, 54,0x14),
-   FieldTrait( 106,15, 37, 54,0x14), FieldTrait( 107,15, 40, 54,0x14), FieldTrait( 167,15, 15, 54,0x14),
-   FieldTrait( 200,21, 17, 54,0x14), FieldTrait( 201, 1, 78, 54,0x14), FieldTrait( 202,11, 31, 54,0x14),
-   FieldTrait( 206, 7, 33, 54,0x14), FieldTrait( 207,20, 36, 54,0x14), FieldTrait( 223,14, 35, 54,0x14),
-   FieldTrait( 224,25, 19, 54,0x14), FieldTrait( 225,25, 20, 54,0x14), FieldTrait( 226, 1, 22, 54,0x14),
-   FieldTrait( 227,14, 23, 54,0x14), FieldTrait( 228, 9, 24, 54,0x14), FieldTrait( 231, 9, 34, 54,0x14),
-   FieldTrait( 239, 1, 21, 54,0x14), FieldTrait( 240,25, 30, 54,0x14), FieldTrait( 255,15, 25, 54,0x14),
-   FieldTrait( 348, 2, 38, 54,0x14), FieldTrait( 349,28, 39, 54,0x14), FieldTrait( 350, 2, 41, 54,0x14),
-   FieldTrait( 351,28, 42, 54,0x14), FieldTrait( 354, 2, 97,  0,0x04), FieldTrait( 355,28, 98,  0,0x04),
-   FieldTrait( 453, 1,  6, 94,0x1c), FieldTrait( 454, 1, 12,142,0x1c), FieldTrait( 460, 1, 13, 54,0x14),
-   FieldTrait( 461,15, 14, 54,0x14), FieldTrait( 470,18, 27, 54,0x14), FieldTrait( 471,15, 28, 54,0x14),
-   FieldTrait( 472,15, 29, 54,0x14), FieldTrait( 541,25, 18, 54,0x14), FieldTrait( 543,15, 26, 54,0x14),
-   FieldTrait( 667,21, 44, 54,0x14), FieldTrait( 691,15, 43, 54,0x14), FieldTrait( 711, 1, 99,188,0x1c),
-   FieldTrait( 715,25,  5,  0,0x04), FieldTrait( 762,15, 16, 54,0x14), FieldTrait( 864, 1, 47, 38,0x1c),
-   FieldTrait( 873,25, 48, 54,0x14), FieldTrait( 874,25, 49, 54,0x14), FieldTrait( 875, 1, 45, 54,0x14),
-   FieldTrait( 876,15, 46, 54,0x14), FieldTrait( 947,19, 32, 54,0x14), FieldTrait( 965,15, 50, 54,0x14),
-   FieldTrait( 966,15, 51, 54,0x14), FieldTrait( 967, 9, 53, 54,0x14), FieldTrait( 968, 9, 54, 54,0x14),
-   FieldTrait( 969, 9, 55, 54,0x14), FieldTrait( 970, 1, 56, 54,0x14), FieldTrait( 971, 1, 57, 54,0x14),
-   FieldTrait( 977,15,  1,  0,0x04), FieldTrait( 978, 8,  3,  0,0x04), FieldTrait( 979,15,  4,  0,0x04),
-   FieldTrait( 981, 1,  7, 42,0x1c), FieldTrait( 996,15, 59, 54,0x14), FieldTrait( 997,15, 60, 54,0x14),
-   FieldTrait(1018, 1, 58, 57,0x1c), FieldTrait(1049, 7, 52, 54,0x14), FieldTrait(1079,26, 61, 54,0x14),
-   FieldTrait(1146,13, 63, 54,0x14), FieldTrait(1147,10, 64, 54,0x14), FieldTrait(1151,15, 62, 54,0x14),
-   FieldTrait(1180,15,100,  8,0x14), FieldTrait(1181, 4,101,  8,0x14), FieldTrait(1184, 2, 65,150,0x14),
-   FieldTrait(1185,29, 66,150,0x14), FieldTrait(1186,15, 67,150,0x14), FieldTrait(1191,15, 69, 54,0x14),
-   FieldTrait(1192,10, 70, 54,0x14), FieldTrait(1193, 7, 71, 54,0x14), FieldTrait(1194, 1, 72, 54,0x14),
-   FieldTrait(1195,13, 73, 54,0x14), FieldTrait(1196,15, 74, 54,0x14), FieldTrait(1197,15, 81, 54,0x14),
-   FieldTrait(1198, 1, 75, 54,0x14), FieldTrait(1199,11, 76, 54,0x14), FieldTrait(1200,11, 77, 54,0x14),
-   FieldTrait(1227,15, 68, 54,0x14), FieldTrait(1242, 8, 80, 54,0x14), FieldTrait(1244, 8, 79, 54,0x14),
-   FieldTrait(1350, 4,102,  8,0x14), FieldTrait(1352, 8,103,  8,0x14), FieldTrait(1435, 1, 82, 54,0x14),
-   FieldTrait(1439, 1, 83, 54,0x14), FieldTrait(1449,15, 84, 54,0x14), FieldTrait(1450,15, 85, 54,0x14),
-   FieldTrait(1451,14, 86, 54,0x14), FieldTrait(1452,14, 87, 54,0x14), FieldTrait(1457,14, 88, 54,0x14),
-   FieldTrait(1458,14, 89, 54,0x14), FieldTrait(1478, 1, 90, 54,0x14), FieldTrait(1479, 1, 91, 54,0x14),
-   FieldTrait(1480,14, 92, 54,0x14), FieldTrait(1481, 1, 93, 54,0x14), FieldTrait(1482, 1, 94, 54,0x14),
-   FieldTrait(1483, 1, 95, 21,0x1c)
+   {  22,15, 11, 54,0x14}, {  48,15, 10, 54,0x14}, {  55,15,  8, 54,0x14}, {  58,15, 96,  0,0x04},
+   {  60,22,  2,  0,0x04}, {  65,15,  9, 54,0x14}, { 106,15, 37, 54,0x14}, { 107,15, 40, 54,0x14},
+   { 167,15, 15, 54,0x14}, { 200,21, 17, 54,0x14}, { 201, 1, 78, 54,0x14}, { 202,11, 31, 54,0x14},
+   { 206, 7, 33, 54,0x14}, { 207,20, 36, 54,0x14}, { 223,14, 35, 54,0x14}, { 224,25, 19, 54,0x14},
+   { 225,25, 20, 54,0x14}, { 226, 1, 22, 54,0x14}, { 227,14, 23, 54,0x14}, { 228, 9, 24, 54,0x14},
+   { 231, 9, 34, 54,0x14}, { 239, 1, 21, 54,0x14}, { 240,25, 30, 54,0x14}, { 255,15, 25, 54,0x14},
+   { 348, 2, 38, 54,0x14}, { 349,28, 39, 54,0x14}, { 350, 2, 41, 54,0x14}, { 351,28, 42, 54,0x14},
+   { 354, 2, 97,  0,0x04}, { 355,28, 98,  0,0x04}, { 453, 1,  6, 94,0x1c}, { 454, 1, 12,142,0x1c},
+   { 460, 1, 13, 54,0x14}, { 461,15, 14, 54,0x14}, { 470,18, 27, 54,0x14}, { 471,15, 28, 54,0x14},
+   { 472,15, 29, 54,0x14}, { 541,25, 18, 54,0x14}, { 543,15, 26, 54,0x14}, { 667,21, 44, 54,0x14},
+   { 691,15, 43, 54,0x14}, { 711, 1, 99,188,0x1c}, { 715,25,  5,  0,0x04}, { 762,15, 16, 54,0x14},
+   { 864, 1, 47, 38,0x1c}, { 873,25, 48, 54,0x14}, { 874,25, 49, 54,0x14}, { 875, 1, 45, 54,0x14},
+   { 876,15, 46, 54,0x14}, { 947,19, 32, 54,0x14}, { 965,15, 50, 54,0x14}, { 966,15, 51, 54,0x14},
+   { 967, 9, 53, 54,0x14}, { 968, 9, 54, 54,0x14}, { 969, 9, 55, 54,0x14}, { 970, 1, 56, 54,0x14},
+   { 971, 1, 57, 54,0x14}, { 977,15,  1,  0,0x04}, { 978, 8,  3,  0,0x04}, { 979,15,  4,  0,0x04},
+   { 981, 1,  7, 42,0x1c}, { 996,15, 59, 54,0x14}, { 997,15, 60, 54,0x14}, {1018, 1, 58, 57,0x1c},
+   {1049, 7, 52, 54,0x14}, {1079,26, 61, 54,0x14}, {1146,13, 63, 54,0x14}, {1147,10, 64, 54,0x14},
+   {1151,15, 62, 54,0x14}, {1180,15,100,  8,0x14}, {1181, 4,101,  8,0x14}, {1184, 2, 65,150,0x14},
+   {1185,29, 66,150,0x14}, {1186,15, 67,150,0x14}, {1191,15, 69, 54,0x14}, {1192,10, 70, 54,0x14},
+   {1193, 7, 71, 54,0x14}, {1194, 1, 72, 54,0x14}, {1195,13, 73, 54,0x14}, {1196,15, 74, 54,0x14},
+   {1197,15, 81, 54,0x14}, {1198, 1, 75, 54,0x14}, {1199,11, 76, 54,0x14}, {1200,11, 77, 54,0x14},
+   {1227,15, 68, 54,0x14}, {1242, 8, 80, 54,0x14}, {1244, 8, 79, 54,0x14}, {1350, 4,102,  8,0x14},
+   {1352, 8,103,  8,0x14}, {1435, 1, 82, 54,0x14}, {1439, 1, 83, 54,0x14}, {1449,15, 84, 54,0x14},
+   {1450,15, 85, 54,0x14}, {1451,14, 86, 54,0x14}, {1452,14, 87, 54,0x14}, {1457,14, 88, 54,0x14},
+   {1458,14, 89, 54,0x14}, {1478, 1, 90, 54,0x14}, {1479, 1, 91, 54,0x14}, {1480,14, 92, 54,0x14},
+   {1481, 1, 93, 54,0x14}, {1482, 1, 94, 54,0x14}, {1483, 1, 95, 21,0x1c}
 };
 const FieldTrait_Hash_Array ContraryIntentionReport::_ftha(ContraryIntentionReport::_traits, 103);
 const MsgType ContraryIntentionReport::_msgtype("BO");
@@ -6570,9 +5999,9 @@ const FieldTrait *ContraryIntentionReport::NoEvents::_traits(NoEventsV1_traits);
 const FieldTrait_Hash_Array& ContraryIntentionReport::NoEvents::_ftha(NoEventsV1_ftha);
 const MsgType& ContraryIntentionReport::NoEvents::_msgtype(NoEventsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ContraryIntentionReport::NoExpiration::_traits[] =
+const FieldTrait ContraryIntentionReport::NoExpiration::_traits[]
 {
-   FieldTrait( 982, 1,  1,  0,0x04), FieldTrait( 983,10,  2,  0,0x04)
+   { 982, 1,  1,  0,0x04}, { 983,10,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ContraryIntentionReport::NoExpiration::_ftha(ContraryIntentionReport::NoExpiration::_traits, 2);
@@ -6598,50 +6027,40 @@ const FieldTrait *ContraryIntentionReport::NoComplexEvents::NoComplexEventDates:
 const FieldTrait_Hash_Array& ContraryIntentionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& ContraryIntentionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityDefinitionUpdateReport::_traits[] =
+const FieldTrait SecurityDefinitionUpdateReport::_traits[]
 {
-   FieldTrait(  15,19, 97,  0,0x04), FieldTrait(  22,15, 11, 54,0x14), FieldTrait(  48,15, 10, 54,0x14),
-   FieldTrait(  55,15,  8, 54,0x14), FieldTrait(  58,15, 98,  0,0x04), FieldTrait(  60,22,125,  0,0x04),
-   FieldTrait(  65,15,  9, 54,0x14), FieldTrait( 106,15, 37, 54,0x14), FieldTrait( 107,15, 40, 54,0x14),
-   FieldTrait( 167,15, 15, 54,0x14), FieldTrait( 200,21, 17, 54,0x14), FieldTrait( 201, 1, 78, 54,0x14),
-   FieldTrait( 202,11, 31, 54,0x14), FieldTrait( 206, 7, 33, 54,0x14), FieldTrait( 207,20, 36, 54,0x14),
-   FieldTrait( 218,12,106,160,0x14), FieldTrait( 220,19,107,160,0x14), FieldTrait( 221,15,108,160,0x14),
-   FieldTrait( 222,15,109,160,0x14), FieldTrait( 223,14, 35, 54,0x14), FieldTrait( 224,25, 19, 54,0x14),
-   FieldTrait( 225,25, 20, 54,0x14), FieldTrait( 226, 1, 22, 54,0x14), FieldTrait( 227,14, 23, 54,0x14),
-   FieldTrait( 228, 9, 24, 54,0x14), FieldTrait( 231, 9, 34, 54,0x14), FieldTrait( 232, 1,105,162,0x1c),
-   FieldTrait( 235,15,114,198,0x14), FieldTrait( 236,14,115,198,0x14), FieldTrait( 239, 1, 21, 54,0x14),
-   FieldTrait( 240,25, 30, 54,0x14), FieldTrait( 255,15, 25, 54,0x14), FieldTrait( 292,16,  7,  0,0x04),
-   FieldTrait( 320,15,  2,  0,0x04), FieldTrait( 322,15,  3,  0,0x04), FieldTrait( 323, 1,  4,  0,0x04),
-   FieldTrait( 348, 2, 38, 54,0x14), FieldTrait( 349,28, 39, 54,0x14), FieldTrait( 350, 2, 41, 54,0x14),
-   FieldTrait( 351,28, 42, 54,0x14), FieldTrait( 354, 2, 99,  0,0x04), FieldTrait( 355,28,100,  0,0x04),
-   FieldTrait( 454, 1, 12,142,0x1c), FieldTrait( 460, 1, 13, 54,0x14), FieldTrait( 461,15, 14, 54,0x14),
-   FieldTrait( 470,18, 27, 54,0x14), FieldTrait( 471,15, 28, 54,0x14), FieldTrait( 472,15, 29, 54,0x14),
-   FieldTrait( 541,25, 18, 54,0x14), FieldTrait( 543,15, 26, 54,0x14), FieldTrait( 555, 1,101, 49,0x1c),
-   FieldTrait( 662,11,110,160,0x14), FieldTrait( 663, 1,111,160,0x14), FieldTrait( 667,21, 44, 54,0x14),
-   FieldTrait( 668, 1,102, 55,0x14), FieldTrait( 691,15, 43, 54,0x14), FieldTrait( 696,25,117,198,0x14),
-   FieldTrait( 697,11,118,198,0x14), FieldTrait( 698, 1,119,198,0x14), FieldTrait( 699,15,112,160,0x14),
-   FieldTrait( 701,25,116,198,0x14), FieldTrait( 711, 1, 96,188,0x1c), FieldTrait( 715,25,  5,  0,0x04),
-   FieldTrait( 761,15,113,160,0x14), FieldTrait( 762,15, 16, 54,0x14), FieldTrait( 864, 1, 47, 38,0x1c),
-   FieldTrait( 869,14,103, 55,0x14), FieldTrait( 870, 1,104,  9,0x1c), FieldTrait( 873,25, 48, 54,0x14),
-   FieldTrait( 874,25, 49, 54,0x14), FieldTrait( 875, 1, 45, 54,0x14), FieldTrait( 876,15, 46, 54,0x14),
-   FieldTrait( 947,19, 32, 54,0x14), FieldTrait( 964, 1,  1,  0,0x04), FieldTrait( 965,15, 50, 54,0x14),
-   FieldTrait( 966,15, 51, 54,0x14), FieldTrait( 967, 9, 53, 54,0x14), FieldTrait( 968, 9, 54, 54,0x14),
-   FieldTrait( 969, 9, 55, 54,0x14), FieldTrait( 970, 1, 56, 54,0x14), FieldTrait( 971, 1, 57, 54,0x14),
-   FieldTrait( 980, 7,  6,  0,0x04), FieldTrait( 996,15, 59, 54,0x14), FieldTrait( 997,15, 60, 54,0x14),
-   FieldTrait(1018, 1, 58, 57,0x1c), FieldTrait(1049, 7, 52, 54,0x14), FieldTrait(1079,26, 61, 54,0x14),
-   FieldTrait(1146,13, 63, 54,0x14), FieldTrait(1147,10, 64, 54,0x14), FieldTrait(1151,15, 62, 54,0x14),
-   FieldTrait(1180,15,121,  8,0x14), FieldTrait(1181, 4,122,  8,0x14), FieldTrait(1184, 2, 65,150,0x14),
-   FieldTrait(1185,29, 66,150,0x14), FieldTrait(1186,15, 67,150,0x14), FieldTrait(1191,15, 69, 54,0x14),
-   FieldTrait(1192,10, 70, 54,0x14), FieldTrait(1193, 7, 71, 54,0x14), FieldTrait(1194, 1, 72, 54,0x14),
-   FieldTrait(1195,13, 73, 54,0x14), FieldTrait(1196,15, 74, 54,0x14), FieldTrait(1197,15, 81, 54,0x14),
-   FieldTrait(1198, 1, 75, 54,0x14), FieldTrait(1199,11, 76, 54,0x14), FieldTrait(1200,11, 77, 54,0x14),
-   FieldTrait(1227,15, 68, 54,0x14), FieldTrait(1242, 8, 80, 54,0x14), FieldTrait(1244, 8, 79, 54,0x14),
-   FieldTrait(1310, 1,120, 74,0x1c), FieldTrait(1350, 4,123,  8,0x14), FieldTrait(1352, 8,124,  8,0x14),
-   FieldTrait(1435, 1, 82, 54,0x14), FieldTrait(1439, 1, 83, 54,0x14), FieldTrait(1449,15, 84, 54,0x14),
-   FieldTrait(1450,15, 85, 54,0x14), FieldTrait(1451,14, 86, 54,0x14), FieldTrait(1452,14, 87, 54,0x14),
-   FieldTrait(1457,14, 88, 54,0x14), FieldTrait(1458,14, 89, 54,0x14), FieldTrait(1478, 1, 90, 54,0x14),
-   FieldTrait(1479, 1, 91, 54,0x14), FieldTrait(1480,14, 92, 54,0x14), FieldTrait(1481, 1, 93, 54,0x14),
-   FieldTrait(1482, 1, 94, 54,0x14), FieldTrait(1483, 1, 95, 21,0x1c)
+   {  15,19, 97,  0,0x04}, {  22,15, 11, 54,0x14}, {  48,15, 10, 54,0x14}, {  55,15,  8, 54,0x14},
+   {  58,15, 98,  0,0x04}, {  60,22,125,  0,0x04}, {  65,15,  9, 54,0x14}, { 106,15, 37, 54,0x14},
+   { 107,15, 40, 54,0x14}, { 167,15, 15, 54,0x14}, { 200,21, 17, 54,0x14}, { 201, 1, 78, 54,0x14},
+   { 202,11, 31, 54,0x14}, { 206, 7, 33, 54,0x14}, { 207,20, 36, 54,0x14}, { 218,12,106,160,0x14},
+   { 220,19,107,160,0x14}, { 221,15,108,160,0x14}, { 222,15,109,160,0x14}, { 223,14, 35, 54,0x14},
+   { 224,25, 19, 54,0x14}, { 225,25, 20, 54,0x14}, { 226, 1, 22, 54,0x14}, { 227,14, 23, 54,0x14},
+   { 228, 9, 24, 54,0x14}, { 231, 9, 34, 54,0x14}, { 232, 1,105,162,0x1c}, { 235,15,114,198,0x14},
+   { 236,14,115,198,0x14}, { 239, 1, 21, 54,0x14}, { 240,25, 30, 54,0x14}, { 255,15, 25, 54,0x14},
+   { 292,16,  7,  0,0x04}, { 320,15,  2,  0,0x04}, { 322,15,  3,  0,0x04}, { 323, 1,  4,  0,0x04},
+   { 348, 2, 38, 54,0x14}, { 349,28, 39, 54,0x14}, { 350, 2, 41, 54,0x14}, { 351,28, 42, 54,0x14},
+   { 354, 2, 99,  0,0x04}, { 355,28,100,  0,0x04}, { 454, 1, 12,142,0x1c}, { 460, 1, 13, 54,0x14},
+   { 461,15, 14, 54,0x14}, { 470,18, 27, 54,0x14}, { 471,15, 28, 54,0x14}, { 472,15, 29, 54,0x14},
+   { 541,25, 18, 54,0x14}, { 543,15, 26, 54,0x14}, { 555, 1,101, 49,0x1c}, { 662,11,110,160,0x14},
+   { 663, 1,111,160,0x14}, { 667,21, 44, 54,0x14}, { 668, 1,102, 55,0x14}, { 691,15, 43, 54,0x14},
+   { 696,25,117,198,0x14}, { 697,11,118,198,0x14}, { 698, 1,119,198,0x14}, { 699,15,112,160,0x14},
+   { 701,25,116,198,0x14}, { 711, 1, 96,188,0x1c}, { 715,25,  5,  0,0x04}, { 761,15,113,160,0x14},
+   { 762,15, 16, 54,0x14}, { 864, 1, 47, 38,0x1c}, { 869,14,103, 55,0x14}, { 870, 1,104,  9,0x1c},
+   { 873,25, 48, 54,0x14}, { 874,25, 49, 54,0x14}, { 875, 1, 45, 54,0x14}, { 876,15, 46, 54,0x14},
+   { 947,19, 32, 54,0x14}, { 964, 1,  1,  0,0x04}, { 965,15, 50, 54,0x14}, { 966,15, 51, 54,0x14},
+   { 967, 9, 53, 54,0x14}, { 968, 9, 54, 54,0x14}, { 969, 9, 55, 54,0x14}, { 970, 1, 56, 54,0x14},
+   { 971, 1, 57, 54,0x14}, { 980, 7,  6,  0,0x04}, { 996,15, 59, 54,0x14}, { 997,15, 60, 54,0x14},
+   {1018, 1, 58, 57,0x1c}, {1049, 7, 52, 54,0x14}, {1079,26, 61, 54,0x14}, {1146,13, 63, 54,0x14},
+   {1147,10, 64, 54,0x14}, {1151,15, 62, 54,0x14}, {1180,15,121,  8,0x14}, {1181, 4,122,  8,0x14},
+   {1184, 2, 65,150,0x14}, {1185,29, 66,150,0x14}, {1186,15, 67,150,0x14}, {1191,15, 69, 54,0x14},
+   {1192,10, 70, 54,0x14}, {1193, 7, 71, 54,0x14}, {1194, 1, 72, 54,0x14}, {1195,13, 73, 54,0x14},
+   {1196,15, 74, 54,0x14}, {1197,15, 81, 54,0x14}, {1198, 1, 75, 54,0x14}, {1199,11, 76, 54,0x14},
+   {1200,11, 77, 54,0x14}, {1227,15, 68, 54,0x14}, {1242, 8, 80, 54,0x14}, {1244, 8, 79, 54,0x14},
+   {1310, 1,120, 74,0x1c}, {1350, 4,123,  8,0x14}, {1352, 8,124,  8,0x14}, {1435, 1, 82, 54,0x14},
+   {1439, 1, 83, 54,0x14}, {1449,15, 84, 54,0x14}, {1450,15, 85, 54,0x14}, {1451,14, 86, 54,0x14},
+   {1452,14, 87, 54,0x14}, {1457,14, 88, 54,0x14}, {1458,14, 89, 54,0x14}, {1478, 1, 90, 54,0x14},
+   {1479, 1, 91, 54,0x14}, {1480,14, 92, 54,0x14}, {1481, 1, 93, 54,0x14}, {1482, 1, 94, 54,0x14},
+   {1483, 1, 95, 21,0x1c}
 };
 const FieldTrait_Hash_Array SecurityDefinitionUpdateReport::_ftha(SecurityDefinitionUpdateReport::_traits, 125);
 const MsgType SecurityDefinitionUpdateReport::_msgtype("BP");
@@ -6758,54 +6177,44 @@ const FieldTrait *SecurityDefinitionUpdateReport::NoComplexEvents::NoComplexEven
 const FieldTrait_Hash_Array& SecurityDefinitionUpdateReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityDefinitionUpdateReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SettlementObligationReport::_traits[] =
+const FieldTrait SettlementObligationReport::_traits[]
 {
-   FieldTrait(  58,15,  5,  0,0x04), FieldTrait(  60,22,  8,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04),
-   FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 715,25,  1,  0,0x04), FieldTrait(1153, 1,  2,  0,0x04),
-   FieldTrait(1159, 1,  4,  0,0x04), FieldTrait(1160,15,  3,  0,0x04), FieldTrait(1165, 1,  9,154,0x1c),
-   FieldTrait(1180,15, 10,  8,0x14), FieldTrait(1181, 4, 11,  8,0x14), FieldTrait(1350, 4, 12,  8,0x14),
-   FieldTrait(1352, 8, 13,  8,0x14)
+   {  58,15,  5,  0,0x04}, {  60,22,  8,  0,0x04}, { 354, 2,  6,  0,0x04}, { 355,28,  7,  0,0x04},
+   { 715,25,  1,  0,0x04}, {1153, 1,  2,  0,0x04}, {1159, 1,  4,  0,0x04}, {1160,15,  3,  0,0x04},
+   {1165, 1,  9,154,0x1c}, {1180,15, 10,  8,0x14}, {1181, 4, 11,  8,0x14}, {1350, 4, 12,  8,0x14},
+   {1352, 8, 13,  8,0x14}
 };
 const FieldTrait_Hash_Array SettlementObligationReport::_ftha(SettlementObligationReport::_traits, 13);
 const MsgType SettlementObligationReport::_msgtype("BQ");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SettlementObligationReport::NoSettlOblig::_traits[] =
+const FieldTrait SettlementObligationReport::NoSettlOblig::_traits[]
 {
-   FieldTrait(  15,19,  7,  0,0x04), FieldTrait(  22,15, 14, 54,0x14), FieldTrait(  48,15, 13, 54,0x14),
-   FieldTrait(  55,15, 11, 54,0x14), FieldTrait(  64,25, 10,  0,0x04), FieldTrait(  65,15, 12, 54,0x14),
-   FieldTrait( 106,15, 40, 54,0x14), FieldTrait( 107,15, 43, 54,0x14), FieldTrait( 119,13,  6,  0,0x04),
-   FieldTrait( 120,19,  8,  0,0x04), FieldTrait( 126,22,101,  0,0x04), FieldTrait( 155, 9,  9,  0,0x04),
-   FieldTrait( 167,15, 18, 54,0x14), FieldTrait( 168,22,100,  0,0x04), FieldTrait( 200,21, 20, 54,0x14),
-   FieldTrait( 201, 1, 81, 54,0x14), FieldTrait( 202,11, 34, 54,0x14), FieldTrait( 206, 7, 36, 54,0x14),
-   FieldTrait( 207,20, 39, 54,0x14), FieldTrait( 223,14, 38, 54,0x14), FieldTrait( 224,25, 22, 54,0x14),
-   FieldTrait( 225,25, 23, 54,0x14), FieldTrait( 226, 1, 25, 54,0x14), FieldTrait( 227,14, 26, 54,0x14),
-   FieldTrait( 228, 9, 27, 54,0x14), FieldTrait( 231, 9, 37, 54,0x14), FieldTrait( 239, 1, 24, 54,0x14),
-   FieldTrait( 240,25, 33, 54,0x14), FieldTrait( 255,15, 28, 54,0x14), FieldTrait( 348, 2, 41, 54,0x14),
-   FieldTrait( 349,28, 42, 54,0x14), FieldTrait( 350, 2, 44, 54,0x14), FieldTrait( 351,28, 45, 54,0x14),
-   FieldTrait( 430, 1,  1,  0,0x04), FieldTrait( 453, 1, 99, 94,0x1c), FieldTrait( 454, 1, 15,142,0x1c),
-   FieldTrait( 460, 1, 16, 54,0x14), FieldTrait( 461,15, 17, 54,0x14), FieldTrait( 470,18, 30, 54,0x14),
-   FieldTrait( 471,15, 31, 54,0x14), FieldTrait( 472,15, 32, 54,0x14), FieldTrait( 541,25, 21, 54,0x14),
-   FieldTrait( 543,15, 29, 54,0x14), FieldTrait( 667,21, 47, 54,0x14), FieldTrait( 691,15, 46, 54,0x14),
-   FieldTrait( 762,15, 19, 54,0x14), FieldTrait( 779,22,102,  0,0x04), FieldTrait( 864, 1, 50, 38,0x1c),
-   FieldTrait( 873,25, 51, 54,0x14), FieldTrait( 874,25, 52, 54,0x14), FieldTrait( 875, 1, 48, 54,0x14),
-   FieldTrait( 876,15, 49, 54,0x14), FieldTrait( 947,19, 35, 54,0x14), FieldTrait( 965,15, 53, 54,0x14),
-   FieldTrait( 966,15, 54, 54,0x14), FieldTrait( 967, 9, 56, 54,0x14), FieldTrait( 968, 9, 57, 54,0x14),
-   FieldTrait( 969, 9, 58, 54,0x14), FieldTrait( 970, 1, 59, 54,0x14), FieldTrait( 971, 1, 60, 54,0x14),
-   FieldTrait( 996,15, 62, 54,0x14), FieldTrait( 997,15, 63, 54,0x14), FieldTrait(1018, 1, 61, 57,0x1c),
-   FieldTrait(1049, 7, 55, 54,0x14), FieldTrait(1079,26, 64, 54,0x14), FieldTrait(1146,13, 66, 54,0x14),
-   FieldTrait(1147,10, 67, 54,0x14), FieldTrait(1151,15, 65, 54,0x14), FieldTrait(1157,13,  5,  0,0x04),
-   FieldTrait(1158, 1,103,151,0x1c), FieldTrait(1161,15,  2,  0,0x04), FieldTrait(1162, 7,  3,  0,0x04),
-   FieldTrait(1163,15,  4,  0,0x04), FieldTrait(1184, 2, 68,150,0x14), FieldTrait(1185,29, 69,150,0x14),
-   FieldTrait(1186,15, 70,150,0x14), FieldTrait(1191,15, 72, 54,0x14), FieldTrait(1192,10, 73, 54,0x14),
-   FieldTrait(1193, 7, 74, 54,0x14), FieldTrait(1194, 1, 75, 54,0x14), FieldTrait(1195,13, 76, 54,0x14),
-   FieldTrait(1196,15, 77, 54,0x14), FieldTrait(1197,15, 84, 54,0x14), FieldTrait(1198, 1, 78, 54,0x14),
-   FieldTrait(1199,11, 79, 54,0x14), FieldTrait(1200,11, 80, 54,0x14), FieldTrait(1227,15, 71, 54,0x14),
-   FieldTrait(1242, 8, 83, 54,0x14), FieldTrait(1244, 8, 82, 54,0x14), FieldTrait(1435, 1, 85, 54,0x14),
-   FieldTrait(1439, 1, 86, 54,0x14), FieldTrait(1449,15, 87, 54,0x14), FieldTrait(1450,15, 88, 54,0x14),
-   FieldTrait(1451,14, 89, 54,0x14), FieldTrait(1452,14, 90, 54,0x14), FieldTrait(1457,14, 91, 54,0x14),
-   FieldTrait(1458,14, 92, 54,0x14), FieldTrait(1478, 1, 93, 54,0x14), FieldTrait(1479, 1, 94, 54,0x14),
-   FieldTrait(1480,14, 95, 54,0x14), FieldTrait(1481, 1, 96, 54,0x14), FieldTrait(1482, 1, 97, 54,0x14),
-   FieldTrait(1483, 1, 98, 21,0x1c)
+   {  15,19,  7,  0,0x04}, {  22,15, 14, 54,0x14}, {  48,15, 13, 54,0x14}, {  55,15, 11, 54,0x14},
+   {  64,25, 10,  0,0x04}, {  65,15, 12, 54,0x14}, { 106,15, 40, 54,0x14}, { 107,15, 43, 54,0x14},
+   { 119,13,  6,  0,0x04}, { 120,19,  8,  0,0x04}, { 126,22,101,  0,0x04}, { 155, 9,  9,  0,0x04},
+   { 167,15, 18, 54,0x14}, { 168,22,100,  0,0x04}, { 200,21, 20, 54,0x14}, { 201, 1, 81, 54,0x14},
+   { 202,11, 34, 54,0x14}, { 206, 7, 36, 54,0x14}, { 207,20, 39, 54,0x14}, { 223,14, 38, 54,0x14},
+   { 224,25, 22, 54,0x14}, { 225,25, 23, 54,0x14}, { 226, 1, 25, 54,0x14}, { 227,14, 26, 54,0x14},
+   { 228, 9, 27, 54,0x14}, { 231, 9, 37, 54,0x14}, { 239, 1, 24, 54,0x14}, { 240,25, 33, 54,0x14},
+   { 255,15, 28, 54,0x14}, { 348, 2, 41, 54,0x14}, { 349,28, 42, 54,0x14}, { 350, 2, 44, 54,0x14},
+   { 351,28, 45, 54,0x14}, { 430, 1,  1,  0,0x04}, { 453, 1, 99, 94,0x1c}, { 454, 1, 15,142,0x1c},
+   { 460, 1, 16, 54,0x14}, { 461,15, 17, 54,0x14}, { 470,18, 30, 54,0x14}, { 471,15, 31, 54,0x14},
+   { 472,15, 32, 54,0x14}, { 541,25, 21, 54,0x14}, { 543,15, 29, 54,0x14}, { 667,21, 47, 54,0x14},
+   { 691,15, 46, 54,0x14}, { 762,15, 19, 54,0x14}, { 779,22,102,  0,0x04}, { 864, 1, 50, 38,0x1c},
+   { 873,25, 51, 54,0x14}, { 874,25, 52, 54,0x14}, { 875, 1, 48, 54,0x14}, { 876,15, 49, 54,0x14},
+   { 947,19, 35, 54,0x14}, { 965,15, 53, 54,0x14}, { 966,15, 54, 54,0x14}, { 967, 9, 56, 54,0x14},
+   { 968, 9, 57, 54,0x14}, { 969, 9, 58, 54,0x14}, { 970, 1, 59, 54,0x14}, { 971, 1, 60, 54,0x14},
+   { 996,15, 62, 54,0x14}, { 997,15, 63, 54,0x14}, {1018, 1, 61, 57,0x1c}, {1049, 7, 55, 54,0x14},
+   {1079,26, 64, 54,0x14}, {1146,13, 66, 54,0x14}, {1147,10, 67, 54,0x14}, {1151,15, 65, 54,0x14},
+   {1157,13,  5,  0,0x04}, {1158, 1,103,151,0x1c}, {1161,15,  2,  0,0x04}, {1162, 7,  3,  0,0x04},
+   {1163,15,  4,  0,0x04}, {1184, 2, 68,150,0x14}, {1185,29, 69,150,0x14}, {1186,15, 70,150,0x14},
+   {1191,15, 72, 54,0x14}, {1192,10, 73, 54,0x14}, {1193, 7, 74, 54,0x14}, {1194, 1, 75, 54,0x14},
+   {1195,13, 76, 54,0x14}, {1196,15, 77, 54,0x14}, {1197,15, 84, 54,0x14}, {1198, 1, 78, 54,0x14},
+   {1199,11, 79, 54,0x14}, {1200,11, 80, 54,0x14}, {1227,15, 71, 54,0x14}, {1242, 8, 83, 54,0x14},
+   {1244, 8, 82, 54,0x14}, {1435, 1, 85, 54,0x14}, {1439, 1, 86, 54,0x14}, {1449,15, 87, 54,0x14},
+   {1450,15, 88, 54,0x14}, {1451,14, 89, 54,0x14}, {1452,14, 90, 54,0x14}, {1457,14, 91, 54,0x14},
+   {1458,14, 92, 54,0x14}, {1478, 1, 93, 54,0x14}, {1479, 1, 94, 54,0x14}, {1480,14, 95, 54,0x14},
+   {1481, 1, 96, 54,0x14}, {1482, 1, 97, 54,0x14}, {1483, 1, 98, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    SettlementObligationReport::NoSettlOblig::_ftha(SettlementObligationReport::NoSettlOblig::_traits, 103);
@@ -6859,99 +6268,77 @@ const FieldTrait *SettlementObligationReport::NoSettlOblig::NoComplexEvents::NoC
 const FieldTrait_Hash_Array& SettlementObligationReport::NoSettlOblig::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SettlementObligationReport::NoSettlOblig::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait DerivativeSecurityListUpdateReport::_traits[] =
+const FieldTrait DerivativeSecurityListUpdateReport::_traits[]
 {
-   FieldTrait(  60,22,148,  0,0x04), FieldTrait( 146, 1,143,120,0x1c), FieldTrait( 241,25, 16,191,0x14),
-   FieldTrait( 242,25, 17,191,0x14), FieldTrait( 243, 1, 18,191,0x14), FieldTrait( 244, 1, 19,191,0x14),
-   FieldTrait( 245,14, 20,191,0x14), FieldTrait( 246, 9, 21,191,0x14), FieldTrait( 247,25, 27,191,0x14),
-   FieldTrait( 256,15, 22,191,0x14), FieldTrait( 305,15,  8,191,0x14), FieldTrait( 306,15, 34,191,0x14),
-   FieldTrait( 307,15, 37,191,0x14), FieldTrait( 308,20, 33,191,0x14), FieldTrait( 309,15,  7,191,0x14),
-   FieldTrait( 310,15, 12,191,0x14), FieldTrait( 311,15,  5,191,0x14), FieldTrait( 312,15,  6,191,0x14),
-   FieldTrait( 313,21, 14,191,0x14), FieldTrait( 315, 1, 64,191,0x14), FieldTrait( 316,11, 28,191,0x14),
-   FieldTrait( 317, 7, 30,191,0x14), FieldTrait( 318,19, 42,191,0x14), FieldTrait( 320,15,  1,  0,0x04),
-   FieldTrait( 322,15,  2,  0,0x04), FieldTrait( 362, 2, 35,191,0x14), FieldTrait( 363,28, 36,191,0x14),
-   FieldTrait( 364, 2, 38,191,0x14), FieldTrait( 365,28, 39,191,0x14), FieldTrait( 393, 1,141,  0,0x04),
-   FieldTrait( 435,14, 32,191,0x14), FieldTrait( 436, 9, 31,191,0x14), FieldTrait( 457, 1,  9,189,0x1c),
-   FieldTrait( 462, 1, 10,191,0x14), FieldTrait( 463,15, 11,191,0x14), FieldTrait( 542,25, 15,191,0x14),
-   FieldTrait( 560, 1,  3,  0,0x04), FieldTrait( 592,18, 24,191,0x14), FieldTrait( 593,15, 25,191,0x14),
-   FieldTrait( 594,15, 26,191,0x14), FieldTrait( 595,15, 23,191,0x14), FieldTrait( 763,15, 13,191,0x14),
-   FieldTrait( 810,11, 44,191,0x14), FieldTrait( 877,15, 40,191,0x14), FieldTrait( 878,15, 41,191,0x14),
-   FieldTrait( 879,10, 43,191,0x14), FieldTrait( 882,11, 45,191,0x14), FieldTrait( 883,11, 46,191,0x14),
-   FieldTrait( 884,13, 47,191,0x14), FieldTrait( 885,13, 48,191,0x14), FieldTrait( 886,13, 49,191,0x14),
-   FieldTrait( 887, 1, 50,194,0x1c), FieldTrait( 893, 8,142,  0,0x04), FieldTrait( 941,19, 29,191,0x14),
-   FieldTrait( 972,14, 51,191,0x14), FieldTrait( 973,13, 53,191,0x14), FieldTrait( 974,15, 54,191,0x14),
-   FieldTrait( 975, 1, 52,191,0x14), FieldTrait( 980, 7,  4,  0,0x04), FieldTrait( 998,15, 55,191,0x14),
-   FieldTrait(1000,15, 56,191,0x14), FieldTrait(1038,13, 57,191,0x14), FieldTrait(1039,15, 59,191,0x14),
-   FieldTrait(1044,10, 60,191,0x14), FieldTrait(1045, 9, 61,191,0x14), FieldTrait(1046, 7, 62,191,0x14),
-   FieldTrait(1058, 1, 58,195,0x1c), FieldTrait(1180,15,144,  8,0x14), FieldTrait(1181, 4,145,  8,0x14),
-   FieldTrait(1213,26, 63,191,0x14), FieldTrait(1214,15, 77, 28,0x14), FieldTrait(1215,15, 78, 28,0x14),
-   FieldTrait(1216,15, 79, 28,0x14), FieldTrait(1217,15, 80, 28,0x14), FieldTrait(1218, 1, 81, 32,0x1c),
-   FieldTrait(1225,13,113, 28,0x14), FieldTrait(1228,15, 83, 28,0x14), FieldTrait(1243, 8, 84, 28,0x14),
-   FieldTrait(1246, 1, 82, 28,0x14), FieldTrait(1247,15, 85, 28,0x14), FieldTrait(1248,15, 86, 28,0x14),
-   FieldTrait(1249,15, 87, 28,0x14), FieldTrait(1250,15, 88, 28,0x14), FieldTrait(1251,21, 89, 28,0x14),
-   FieldTrait(1252,25, 90, 28,0x14), FieldTrait(1253,26, 91, 28,0x14), FieldTrait(1254,15, 92, 28,0x14),
-   FieldTrait(1255, 7, 93, 28,0x14), FieldTrait(1256,15, 94, 28,0x14), FieldTrait(1257,15, 96, 28,0x14),
-   FieldTrait(1258,18, 97, 28,0x14), FieldTrait(1259,15, 98, 28,0x14), FieldTrait(1260,15,100, 28,0x14),
-   FieldTrait(1261,11, 99, 28,0x14), FieldTrait(1262,19,101, 28,0x14), FieldTrait(1263, 9,102, 28,0x14),
-   FieldTrait(1264, 9,103, 28,0x14), FieldTrait(1265, 7,104, 28,0x14), FieldTrait(1266, 9,105, 28,0x14),
-   FieldTrait(1267, 9,106, 28,0x14), FieldTrait(1268,13,107, 28,0x14), FieldTrait(1269,15,108, 28,0x14),
-   FieldTrait(1270,10,109, 28,0x14), FieldTrait(1271,15,114, 28,0x14), FieldTrait(1272,20,115, 28,0x14),
-   FieldTrait(1273, 1,116, 28,0x14), FieldTrait(1274, 1,117, 28,0x14), FieldTrait(1275,15,118, 28,0x14),
-   FieldTrait(1276,25, 95, 28,0x14), FieldTrait(1277, 2,119, 28,0x14), FieldTrait(1278,28,120, 28,0x14),
-   FieldTrait(1279,15,121, 28,0x14), FieldTrait(1280, 2,122, 28,0x14), FieldTrait(1281,28,123, 28,0x14),
-   FieldTrait(1282, 2,134, 34,0x14), FieldTrait(1283,28,135, 34,0x14), FieldTrait(1284,15,136, 34,0x14),
-   FieldTrait(1285,21,124, 28,0x14), FieldTrait(1286, 1,125, 27,0x1c), FieldTrait(1292, 1,126, 30,0x1c),
-   FieldTrait(1299, 7,112, 28,0x14), FieldTrait(1310, 1,140, 74,0x1c), FieldTrait(1311, 1,139, 29,0x1c),
-   FieldTrait(1315,15,110, 28,0x14), FieldTrait(1316,10,111, 28,0x14), FieldTrait(1317, 7,127, 28,0x14),
-   FieldTrait(1318,15,128, 28,0x14), FieldTrait(1319,15,129, 28,0x14), FieldTrait(1320, 1,130, 28,0x14),
-   FieldTrait(1321,11,131, 28,0x14), FieldTrait(1322,11,132, 28,0x14), FieldTrait(1323, 1,133, 28,0x14),
-   FieldTrait(1350, 4,146,  8,0x14), FieldTrait(1352, 8,147,  8,0x14), FieldTrait(1419, 1, 65,191,0x14),
-   FieldTrait(1423,10, 66,191,0x14), FieldTrait(1424,15, 67,191,0x14), FieldTrait(1425,10, 68,191,0x14),
-   FieldTrait(1437, 1, 69,191,0x14), FieldTrait(1438, 1,137, 28,0x14), FieldTrait(1441, 1, 70,191,0x14),
-   FieldTrait(1442, 1,138, 28,0x14), FieldTrait(1453,15, 71,191,0x14), FieldTrait(1454,15, 72,191,0x14),
-   FieldTrait(1455,14, 73,191,0x14), FieldTrait(1456,14, 74,191,0x14), FieldTrait(1459,14, 75,191,0x14),
-   FieldTrait(1460,14, 76,191,0x14)
+   {  60,22,148,  0,0x04}, { 146, 1,143,120,0x1c}, { 241,25, 16,191,0x14}, { 242,25, 17,191,0x14},
+   { 243, 1, 18,191,0x14}, { 244, 1, 19,191,0x14}, { 245,14, 20,191,0x14}, { 246, 9, 21,191,0x14},
+   { 247,25, 27,191,0x14}, { 256,15, 22,191,0x14}, { 305,15,  8,191,0x14}, { 306,15, 34,191,0x14},
+   { 307,15, 37,191,0x14}, { 308,20, 33,191,0x14}, { 309,15,  7,191,0x14}, { 310,15, 12,191,0x14},
+   { 311,15,  5,191,0x14}, { 312,15,  6,191,0x14}, { 313,21, 14,191,0x14}, { 315, 1, 64,191,0x14},
+   { 316,11, 28,191,0x14}, { 317, 7, 30,191,0x14}, { 318,19, 42,191,0x14}, { 320,15,  1,  0,0x04},
+   { 322,15,  2,  0,0x04}, { 362, 2, 35,191,0x14}, { 363,28, 36,191,0x14}, { 364, 2, 38,191,0x14},
+   { 365,28, 39,191,0x14}, { 393, 1,141,  0,0x04}, { 435,14, 32,191,0x14}, { 436, 9, 31,191,0x14},
+   { 457, 1,  9,189,0x1c}, { 462, 1, 10,191,0x14}, { 463,15, 11,191,0x14}, { 542,25, 15,191,0x14},
+   { 560, 1,  3,  0,0x04}, { 592,18, 24,191,0x14}, { 593,15, 25,191,0x14}, { 594,15, 26,191,0x14},
+   { 595,15, 23,191,0x14}, { 763,15, 13,191,0x14}, { 810,11, 44,191,0x14}, { 877,15, 40,191,0x14},
+   { 878,15, 41,191,0x14}, { 879,10, 43,191,0x14}, { 882,11, 45,191,0x14}, { 883,11, 46,191,0x14},
+   { 884,13, 47,191,0x14}, { 885,13, 48,191,0x14}, { 886,13, 49,191,0x14}, { 887, 1, 50,194,0x1c},
+   { 893, 8,142,  0,0x04}, { 941,19, 29,191,0x14}, { 972,14, 51,191,0x14}, { 973,13, 53,191,0x14},
+   { 974,15, 54,191,0x14}, { 975, 1, 52,191,0x14}, { 980, 7,  4,  0,0x04}, { 998,15, 55,191,0x14},
+   {1000,15, 56,191,0x14}, {1038,13, 57,191,0x14}, {1039,15, 59,191,0x14}, {1044,10, 60,191,0x14},
+   {1045, 9, 61,191,0x14}, {1046, 7, 62,191,0x14}, {1058, 1, 58,195,0x1c}, {1180,15,144,  8,0x14},
+   {1181, 4,145,  8,0x14}, {1213,26, 63,191,0x14}, {1214,15, 77, 28,0x14}, {1215,15, 78, 28,0x14},
+   {1216,15, 79, 28,0x14}, {1217,15, 80, 28,0x14}, {1218, 1, 81, 32,0x1c}, {1225,13,113, 28,0x14},
+   {1228,15, 83, 28,0x14}, {1243, 8, 84, 28,0x14}, {1246, 1, 82, 28,0x14}, {1247,15, 85, 28,0x14},
+   {1248,15, 86, 28,0x14}, {1249,15, 87, 28,0x14}, {1250,15, 88, 28,0x14}, {1251,21, 89, 28,0x14},
+   {1252,25, 90, 28,0x14}, {1253,26, 91, 28,0x14}, {1254,15, 92, 28,0x14}, {1255, 7, 93, 28,0x14},
+   {1256,15, 94, 28,0x14}, {1257,15, 96, 28,0x14}, {1258,18, 97, 28,0x14}, {1259,15, 98, 28,0x14},
+   {1260,15,100, 28,0x14}, {1261,11, 99, 28,0x14}, {1262,19,101, 28,0x14}, {1263, 9,102, 28,0x14},
+   {1264, 9,103, 28,0x14}, {1265, 7,104, 28,0x14}, {1266, 9,105, 28,0x14}, {1267, 9,106, 28,0x14},
+   {1268,13,107, 28,0x14}, {1269,15,108, 28,0x14}, {1270,10,109, 28,0x14}, {1271,15,114, 28,0x14},
+   {1272,20,115, 28,0x14}, {1273, 1,116, 28,0x14}, {1274, 1,117, 28,0x14}, {1275,15,118, 28,0x14},
+   {1276,25, 95, 28,0x14}, {1277, 2,119, 28,0x14}, {1278,28,120, 28,0x14}, {1279,15,121, 28,0x14},
+   {1280, 2,122, 28,0x14}, {1281,28,123, 28,0x14}, {1282, 2,134, 34,0x14}, {1283,28,135, 34,0x14},
+   {1284,15,136, 34,0x14}, {1285,21,124, 28,0x14}, {1286, 1,125, 27,0x1c}, {1292, 1,126, 30,0x1c},
+   {1299, 7,112, 28,0x14}, {1310, 1,140, 74,0x1c}, {1311, 1,139, 29,0x1c}, {1315,15,110, 28,0x14},
+   {1316,10,111, 28,0x14}, {1317, 7,127, 28,0x14}, {1318,15,128, 28,0x14}, {1319,15,129, 28,0x14},
+   {1320, 1,130, 28,0x14}, {1321,11,131, 28,0x14}, {1322,11,132, 28,0x14}, {1323, 1,133, 28,0x14},
+   {1350, 4,146,  8,0x14}, {1352, 8,147,  8,0x14}, {1419, 1, 65,191,0x14}, {1423,10, 66,191,0x14},
+   {1424,15, 67,191,0x14}, {1425,10, 68,191,0x14}, {1437, 1, 69,191,0x14}, {1438, 1,137, 28,0x14},
+   {1441, 1, 70,191,0x14}, {1442, 1,138, 28,0x14}, {1453,15, 71,191,0x14}, {1454,15, 72,191,0x14},
+   {1455,14, 73,191,0x14}, {1456,14, 74,191,0x14}, {1459,14, 75,191,0x14}, {1460,14, 76,191,0x14}
 };
 const FieldTrait_Hash_Array DerivativeSecurityListUpdateReport::_ftha(DerivativeSecurityListUpdateReport::_traits, 148);
 const MsgType DerivativeSecurityListUpdateReport::_msgtype("BR");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait DerivativeSecurityListUpdateReport::NoRelatedSym::_traits[] =
+const FieldTrait DerivativeSecurityListUpdateReport::NoRelatedSym::_traits[]
 {
-   FieldTrait(  15,19, 97,  0,0x04), FieldTrait(  22,15,  5, 54,0x14), FieldTrait(  48,15,  4, 54,0x14),
-   FieldTrait(  55,15,  2, 54,0x14), FieldTrait(  58,15, 99,  0,0x04), FieldTrait(  65,15,  3, 54,0x14),
-   FieldTrait( 106,15, 31, 54,0x14), FieldTrait( 107,15, 34, 54,0x14), FieldTrait( 167,15,  9, 54,0x14),
-   FieldTrait( 200,21, 11, 54,0x14), FieldTrait( 201, 1, 72, 54,0x14), FieldTrait( 202,11, 25, 54,0x14),
-   FieldTrait( 206, 7, 27, 54,0x14), FieldTrait( 207,20, 30, 54,0x14), FieldTrait( 223,14, 29, 54,0x14),
-   FieldTrait( 224,25, 13, 54,0x14), FieldTrait( 225,25, 14, 54,0x14), FieldTrait( 226, 1, 16, 54,0x14),
-   FieldTrait( 227,14, 17, 54,0x14), FieldTrait( 228, 9, 18, 54,0x14), FieldTrait( 231, 9, 28, 54,0x14),
-   FieldTrait( 239, 1, 15, 54,0x14), FieldTrait( 240,25, 24, 54,0x14), FieldTrait( 255,15, 19, 54,0x14),
-   FieldTrait( 292,16,102,  0,0x04), FieldTrait( 348, 2, 32, 54,0x14), FieldTrait( 349,28, 33, 54,0x14),
-   FieldTrait( 350, 2, 35, 54,0x14), FieldTrait( 351,28, 36, 54,0x14), FieldTrait( 354, 2,100,  0,0x04),
-   FieldTrait( 355,28,101,  0,0x04), FieldTrait( 454, 1,  6,142,0x1c), FieldTrait( 460, 1,  7, 54,0x14),
-   FieldTrait( 461,15,  8, 54,0x14), FieldTrait( 470,18, 21, 54,0x14), FieldTrait( 471,15, 22, 54,0x14),
-   FieldTrait( 472,15, 23, 54,0x14), FieldTrait( 541,25, 12, 54,0x14), FieldTrait( 543,15, 20, 54,0x14),
-   FieldTrait( 555, 1, 98, 49,0x1c), FieldTrait( 667,21, 38, 54,0x14), FieldTrait( 668, 1, 90, 55,0x14),
-   FieldTrait( 691,15, 37, 54,0x14), FieldTrait( 762,15, 10, 54,0x14), FieldTrait( 864, 1, 41, 38,0x1c),
-   FieldTrait( 869,14, 91, 55,0x14), FieldTrait( 870, 1, 92,  9,0x1c), FieldTrait( 873,25, 42, 54,0x14),
-   FieldTrait( 874,25, 43, 54,0x14), FieldTrait( 875, 1, 39, 54,0x14), FieldTrait( 876,15, 40, 54,0x14),
-   FieldTrait( 947,19, 26, 54,0x14), FieldTrait( 965,15, 44, 54,0x14), FieldTrait( 966,15, 45, 54,0x14),
-   FieldTrait( 967, 9, 47, 54,0x14), FieldTrait( 968, 9, 48, 54,0x14), FieldTrait( 969, 9, 49, 54,0x14),
-   FieldTrait( 970, 1, 50, 54,0x14), FieldTrait( 971, 1, 51, 54,0x14), FieldTrait( 996,15, 53, 54,0x14),
-   FieldTrait( 997,15, 54, 54,0x14), FieldTrait(1018, 1, 52, 57,0x1c), FieldTrait(1049, 7, 46, 54,0x14),
-   FieldTrait(1079,26, 55, 54,0x14), FieldTrait(1146,13, 57, 54,0x14), FieldTrait(1147,10, 58, 54,0x14),
-   FieldTrait(1151,15, 56, 54,0x14), FieldTrait(1184, 2, 59,150,0x14), FieldTrait(1185,29, 60,150,0x14),
-   FieldTrait(1186,15, 61,150,0x14), FieldTrait(1191,15, 63, 54,0x14), FieldTrait(1192,10, 64, 54,0x14),
-   FieldTrait(1193, 7, 65, 54,0x14), FieldTrait(1194, 1, 66, 54,0x14), FieldTrait(1195,13, 67, 54,0x14),
-   FieldTrait(1196,15, 68, 54,0x14), FieldTrait(1197,15, 75, 54,0x14), FieldTrait(1198, 1, 69, 54,0x14),
-   FieldTrait(1199,11, 70, 54,0x14), FieldTrait(1200,11, 71, 54,0x14), FieldTrait(1221,11, 94,148,0x14),
-   FieldTrait(1227,15, 62, 54,0x14), FieldTrait(1230,11, 95,148,0x14), FieldTrait(1240,11, 96,148,0x14),
-   FieldTrait(1242, 8, 74, 54,0x14), FieldTrait(1244, 8, 73, 54,0x14), FieldTrait(1305, 1, 93,148,0x14),
-   FieldTrait(1324, 7,  1,  0,0x04), FieldTrait(1435, 1, 76, 54,0x14), FieldTrait(1439, 1, 77, 54,0x14),
-   FieldTrait(1449,15, 78, 54,0x14), FieldTrait(1450,15, 79, 54,0x14), FieldTrait(1451,14, 80, 54,0x14),
-   FieldTrait(1452,14, 81, 54,0x14), FieldTrait(1457,14, 82, 54,0x14), FieldTrait(1458,14, 83, 54,0x14),
-   FieldTrait(1478, 1, 84, 54,0x14), FieldTrait(1479, 1, 85, 54,0x14), FieldTrait(1480,14, 86, 54,0x14),
-   FieldTrait(1481, 1, 87, 54,0x14), FieldTrait(1482, 1, 88, 54,0x14), FieldTrait(1483, 1, 89, 21,0x1c),
-   FieldTrait(1504,22,103,  0,0x04)
+   {  15,19, 97,  0,0x04}, {  22,15,  5, 54,0x14}, {  48,15,  4, 54,0x14}, {  55,15,  2, 54,0x14},
+   {  58,15, 99,  0,0x04}, {  65,15,  3, 54,0x14}, { 106,15, 31, 54,0x14}, { 107,15, 34, 54,0x14},
+   { 167,15,  9, 54,0x14}, { 200,21, 11, 54,0x14}, { 201, 1, 72, 54,0x14}, { 202,11, 25, 54,0x14},
+   { 206, 7, 27, 54,0x14}, { 207,20, 30, 54,0x14}, { 223,14, 29, 54,0x14}, { 224,25, 13, 54,0x14},
+   { 225,25, 14, 54,0x14}, { 226, 1, 16, 54,0x14}, { 227,14, 17, 54,0x14}, { 228, 9, 18, 54,0x14},
+   { 231, 9, 28, 54,0x14}, { 239, 1, 15, 54,0x14}, { 240,25, 24, 54,0x14}, { 255,15, 19, 54,0x14},
+   { 292,16,102,  0,0x04}, { 348, 2, 32, 54,0x14}, { 349,28, 33, 54,0x14}, { 350, 2, 35, 54,0x14},
+   { 351,28, 36, 54,0x14}, { 354, 2,100,  0,0x04}, { 355,28,101,  0,0x04}, { 454, 1,  6,142,0x1c},
+   { 460, 1,  7, 54,0x14}, { 461,15,  8, 54,0x14}, { 470,18, 21, 54,0x14}, { 471,15, 22, 54,0x14},
+   { 472,15, 23, 54,0x14}, { 541,25, 12, 54,0x14}, { 543,15, 20, 54,0x14}, { 555, 1, 98, 49,0x1c},
+   { 667,21, 38, 54,0x14}, { 668, 1, 90, 55,0x14}, { 691,15, 37, 54,0x14}, { 762,15, 10, 54,0x14},
+   { 864, 1, 41, 38,0x1c}, { 869,14, 91, 55,0x14}, { 870, 1, 92,  9,0x1c}, { 873,25, 42, 54,0x14},
+   { 874,25, 43, 54,0x14}, { 875, 1, 39, 54,0x14}, { 876,15, 40, 54,0x14}, { 947,19, 26, 54,0x14},
+   { 965,15, 44, 54,0x14}, { 966,15, 45, 54,0x14}, { 967, 9, 47, 54,0x14}, { 968, 9, 48, 54,0x14},
+   { 969, 9, 49, 54,0x14}, { 970, 1, 50, 54,0x14}, { 971, 1, 51, 54,0x14}, { 996,15, 53, 54,0x14},
+   { 997,15, 54, 54,0x14}, {1018, 1, 52, 57,0x1c}, {1049, 7, 46, 54,0x14}, {1079,26, 55, 54,0x14},
+   {1146,13, 57, 54,0x14}, {1147,10, 58, 54,0x14}, {1151,15, 56, 54,0x14}, {1184, 2, 59,150,0x14},
+   {1185,29, 60,150,0x14}, {1186,15, 61,150,0x14}, {1191,15, 63, 54,0x14}, {1192,10, 64, 54,0x14},
+   {1193, 7, 65, 54,0x14}, {1194, 1, 66, 54,0x14}, {1195,13, 67, 54,0x14}, {1196,15, 68, 54,0x14},
+   {1197,15, 75, 54,0x14}, {1198, 1, 69, 54,0x14}, {1199,11, 70, 54,0x14}, {1200,11, 71, 54,0x14},
+   {1221,11, 94,148,0x14}, {1227,15, 62, 54,0x14}, {1230,11, 95,148,0x14}, {1240,11, 96,148,0x14},
+   {1242, 8, 74, 54,0x14}, {1244, 8, 73, 54,0x14}, {1305, 1, 93,148,0x14}, {1324, 7,  1,  0,0x04},
+   {1435, 1, 76, 54,0x14}, {1439, 1, 77, 54,0x14}, {1449,15, 78, 54,0x14}, {1450,15, 79, 54,0x14},
+   {1451,14, 80, 54,0x14}, {1452,14, 81, 54,0x14}, {1457,14, 82, 54,0x14}, {1458,14, 83, 54,0x14},
+   {1478, 1, 84, 54,0x14}, {1479, 1, 85, 54,0x14}, {1480,14, 86, 54,0x14}, {1481, 1, 87, 54,0x14},
+   {1482, 1, 88, 54,0x14}, {1483, 1, 89, 21,0x1c}, {1504,22,103,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    DerivativeSecurityListUpdateReport::NoRelatedSym::_ftha(DerivativeSecurityListUpdateReport::NoRelatedSym::_traits, 103);
@@ -7081,10 +6468,10 @@ const FieldTrait *DerivativeSecurityListUpdateReport::NoDerivativeInstrAttrib::_
 const FieldTrait_Hash_Array& DerivativeSecurityListUpdateReport::NoDerivativeInstrAttrib::_ftha(NoDerivativeInstrAttribV1_ftha);
 const MsgType& DerivativeSecurityListUpdateReport::NoDerivativeInstrAttrib::_msgtype(NoDerivativeInstrAttribV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradingSessionListUpdateReport::_traits[] =
+const FieldTrait TradingSessionListUpdateReport::_traits[]
 {
-   FieldTrait( 335,15,  1,  0,0x04), FieldTrait( 386, 1,  2,184,0x1c), FieldTrait(1180,15,  3,  8,0x14),
-   FieldTrait(1181, 4,  4,  8,0x14), FieldTrait(1350, 4,  5,  8,0x14), FieldTrait(1352, 8,  6,  8,0x14)
+   { 335,15,  1,  0,0x04}, { 386, 1,  2,184,0x1c}, {1180,15,  3,  8,0x14}, {1181, 4,  4,  8,0x14},
+   {1350, 4,  5,  8,0x14}, {1352, 8,  6,  8,0x14}
 };
 const FieldTrait_Hash_Array TradingSessionListUpdateReport::_ftha(TradingSessionListUpdateReport::_traits, 6);
 const MsgType TradingSessionListUpdateReport::_msgtype("BS");
@@ -7113,28 +6500,25 @@ const FieldTrait *TradingSessionListUpdateReport::NoTradingSessions::NoTimeInFor
 const FieldTrait_Hash_Array& TradingSessionListUpdateReport::NoTradingSessions::NoTimeInForceRules::_ftha(NoTimeInForceRulesV1_ftha);
 const MsgType& TradingSessionListUpdateReport::NoTradingSessions::NoTimeInForceRules::_msgtype(NoTimeInForceRulesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDefinitionRequest::_traits[] =
+const FieldTrait MarketDefinitionRequest::_traits[]
 {
-   FieldTrait( 263, 7,  2,  0,0x04), FieldTrait(1300,15,  4,  0,0x04), FieldTrait(1301,20,  3,  0,0x04),
-   FieldTrait(1325,15,  5,  0,0x04), FieldTrait(1393,15,  1,  0,0x04)
+   { 263, 7,  2,  0,0x04}, {1300,15,  4,  0,0x04}, {1301,20,  3,  0,0x04}, {1325,15,  5,  0,0x04},
+   {1393,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array MarketDefinitionRequest::_ftha(MarketDefinitionRequest::_traits, 5);
 const MsgType MarketDefinitionRequest::_msgtype("BT");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDefinition::_traits[] =
+const FieldTrait MarketDefinition::_traits[]
 {
-   FieldTrait(  15,19,  9,  0,0x04), FieldTrait(  58,15, 30,  0,0x04), FieldTrait(  60,22, 29,  0,0x04),
-   FieldTrait( 354, 2, 31,  0,0x04), FieldTrait( 355,28, 32,  0,0x04), FieldTrait( 423, 1, 25, 10,0x14),
-   FieldTrait( 561,10, 22, 10,0x14), FieldTrait( 562,10, 17, 10,0x14), FieldTrait( 827, 1, 16, 10,0x14),
-   FieldTrait(1140,10, 18, 10,0x14), FieldTrait(1143, 9, 19, 10,0x14), FieldTrait(1144, 1, 20, 10,0x14),
-   FieldTrait(1148,11, 13,106,0x14), FieldTrait(1149,11, 14,106,0x14), FieldTrait(1150,11, 15,106,0x14),
-   FieldTrait(1180,15, 33,  8,0x14), FieldTrait(1181, 4, 34,  8,0x14), FieldTrait(1205, 1, 10,170,0x1c),
-   FieldTrait(1232, 1, 28, 41,0x1c), FieldTrait(1234, 1, 11, 68,0x1c), FieldTrait(1237, 1, 26, 92,0x1c),
-   FieldTrait(1239, 1, 27,171,0x1c), FieldTrait(1245,19, 21, 10,0x14), FieldTrait(1300,15,  4,  0,0x04),
-   FieldTrait(1301,20,  3,  0,0x04), FieldTrait(1306, 1, 12,106,0x14), FieldTrait(1325,15,  8,  0,0x04),
-   FieldTrait(1350, 4, 35,  8,0x14), FieldTrait(1352, 8, 36,  8,0x14), FieldTrait(1377, 1, 23, 10,0x14),
-   FieldTrait(1378, 1, 24, 10,0x14), FieldTrait(1393,15,  2,  0,0x04), FieldTrait(1394,15,  1,  0,0x04),
-   FieldTrait(1396,15,  5,  0,0x04), FieldTrait(1397, 2,  6,  0,0x04), FieldTrait(1398,28,  7,  0,0x04)
+   {  15,19,  9,  0,0x04}, {  58,15, 30,  0,0x04}, {  60,22, 29,  0,0x04}, { 354, 2, 31,  0,0x04},
+   { 355,28, 32,  0,0x04}, { 423, 1, 25, 10,0x14}, { 561,10, 22, 10,0x14}, { 562,10, 17, 10,0x14},
+   { 827, 1, 16, 10,0x14}, {1140,10, 18, 10,0x14}, {1143, 9, 19, 10,0x14}, {1144, 1, 20, 10,0x14},
+   {1148,11, 13,106,0x14}, {1149,11, 14,106,0x14}, {1150,11, 15,106,0x14}, {1180,15, 33,  8,0x14},
+   {1181, 4, 34,  8,0x14}, {1205, 1, 10,170,0x1c}, {1232, 1, 28, 41,0x1c}, {1234, 1, 11, 68,0x1c},
+   {1237, 1, 26, 92,0x1c}, {1239, 1, 27,171,0x1c}, {1245,19, 21, 10,0x14}, {1300,15,  4,  0,0x04},
+   {1301,20,  3,  0,0x04}, {1306, 1, 12,106,0x14}, {1325,15,  8,  0,0x04}, {1350, 4, 35,  8,0x14},
+   {1352, 8, 36,  8,0x14}, {1377, 1, 23, 10,0x14}, {1378, 1, 24, 10,0x14}, {1393,15,  2,  0,0x04},
+   {1394,15,  1,  0,0x04}, {1396,15,  5,  0,0x04}, {1397, 2,  6,  0,0x04}, {1398,28,  7,  0,0x04}
 };
 const FieldTrait_Hash_Array MarketDefinition::_ftha(MarketDefinition::_traits, 36);
 const MsgType MarketDefinition::_msgtype("BU");
@@ -7159,21 +6543,18 @@ const FieldTrait *MarketDefinition::NoTimeInForceRules::_traits(NoTimeInForceRul
 const FieldTrait_Hash_Array& MarketDefinition::NoTimeInForceRules::_ftha(NoTimeInForceRulesV1_ftha);
 const MsgType& MarketDefinition::NoTimeInForceRules::_msgtype(NoTimeInForceRulesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDefinitionUpdateReport::_traits[] =
+const FieldTrait MarketDefinitionUpdateReport::_traits[]
 {
-   FieldTrait(  15,19, 10,  0,0x04), FieldTrait(  58,15, 31,  0,0x04), FieldTrait(  60,22, 30,  0,0x04),
-   FieldTrait( 354, 2, 32,  0,0x04), FieldTrait( 355,28, 33,  0,0x04), FieldTrait( 423, 1, 26, 10,0x14),
-   FieldTrait( 561,10, 23, 10,0x14), FieldTrait( 562,10, 18, 10,0x14), FieldTrait( 827, 1, 17, 10,0x14),
-   FieldTrait(1140,10, 19, 10,0x14), FieldTrait(1143, 9, 20, 10,0x14), FieldTrait(1144, 1, 21, 10,0x14),
-   FieldTrait(1148,11, 14,106,0x14), FieldTrait(1149,11, 15,106,0x14), FieldTrait(1150,11, 16,106,0x14),
-   FieldTrait(1180,15, 34,  8,0x14), FieldTrait(1181, 4, 35,  8,0x14), FieldTrait(1205, 1, 11,170,0x1c),
-   FieldTrait(1232, 1, 29, 41,0x1c), FieldTrait(1234, 1, 12, 68,0x1c), FieldTrait(1237, 1, 27, 92,0x1c),
-   FieldTrait(1239, 1, 28,171,0x1c), FieldTrait(1245,19, 22, 10,0x14), FieldTrait(1300,15,  5,  0,0x04),
-   FieldTrait(1301,20,  4,  0,0x04), FieldTrait(1306, 1, 13,106,0x14), FieldTrait(1325,15,  9,  0,0x04),
-   FieldTrait(1350, 4, 36,  8,0x14), FieldTrait(1352, 8, 37,  8,0x14), FieldTrait(1377, 1, 24, 10,0x14),
-   FieldTrait(1378, 1, 25, 10,0x14), FieldTrait(1393,15,  2,  0,0x04), FieldTrait(1394,15,  1,  0,0x04),
-   FieldTrait(1395, 7,  3,  0,0x04), FieldTrait(1396,15,  6,  0,0x04), FieldTrait(1397, 2,  7,  0,0x04),
-   FieldTrait(1398,28,  8,  0,0x04)
+   {  15,19, 10,  0,0x04}, {  58,15, 31,  0,0x04}, {  60,22, 30,  0,0x04}, { 354, 2, 32,  0,0x04},
+   { 355,28, 33,  0,0x04}, { 423, 1, 26, 10,0x14}, { 561,10, 23, 10,0x14}, { 562,10, 18, 10,0x14},
+   { 827, 1, 17, 10,0x14}, {1140,10, 19, 10,0x14}, {1143, 9, 20, 10,0x14}, {1144, 1, 21, 10,0x14},
+   {1148,11, 14,106,0x14}, {1149,11, 15,106,0x14}, {1150,11, 16,106,0x14}, {1180,15, 34,  8,0x14},
+   {1181, 4, 35,  8,0x14}, {1205, 1, 11,170,0x1c}, {1232, 1, 29, 41,0x1c}, {1234, 1, 12, 68,0x1c},
+   {1237, 1, 27, 92,0x1c}, {1239, 1, 28,171,0x1c}, {1245,19, 22, 10,0x14}, {1300,15,  5,  0,0x04},
+   {1301,20,  4,  0,0x04}, {1306, 1, 13,106,0x14}, {1325,15,  9,  0,0x04}, {1350, 4, 36,  8,0x14},
+   {1352, 8, 37,  8,0x14}, {1377, 1, 24, 10,0x14}, {1378, 1, 25, 10,0x14}, {1393,15,  2,  0,0x04},
+   {1394,15,  1,  0,0x04}, {1395, 7,  3,  0,0x04}, {1396,15,  6,  0,0x04}, {1397, 2,  7,  0,0x04},
+   {1398,28,  8,  0,0x04}
 };
 const FieldTrait_Hash_Array MarketDefinitionUpdateReport::_ftha(MarketDefinitionUpdateReport::_traits, 37);
 const MsgType MarketDefinitionUpdateReport::_msgtype("BV");
@@ -7198,11 +6579,10 @@ const FieldTrait *MarketDefinitionUpdateReport::NoTimeInForceRules::_traits(NoTi
 const FieldTrait_Hash_Array& MarketDefinitionUpdateReport::NoTimeInForceRules::_ftha(NoTimeInForceRulesV1_ftha);
 const MsgType& MarketDefinitionUpdateReport::NoTimeInForceRules::_msgtype(NoTimeInForceRulesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ApplicationMessageRequest::_traits[] =
+const FieldTrait ApplicationMessageRequest::_traits[]
 {
-   FieldTrait(  58,15,  4,  0,0x04), FieldTrait( 354, 2,  5,  0,0x04), FieldTrait( 355,28,  6,  0,0x04),
-   FieldTrait( 453, 1,  7, 94,0x1c), FieldTrait(1346,15,  1,  0,0x04), FieldTrait(1347, 1,  2,  0,0x04),
-   FieldTrait(1351, 1,  3,  7,0x1c)
+   {  58,15,  4,  0,0x04}, { 354, 2,  5,  0,0x04}, { 355,28,  6,  0,0x04}, { 453, 1,  7, 94,0x1c},
+   {1346,15,  1,  0,0x04}, {1347, 1,  2,  0,0x04}, {1351, 1,  3,  7,0x1c}
 };
 const FieldTrait_Hash_Array ApplicationMessageRequest::_ftha(ApplicationMessageRequest::_traits, 7);
 const MsgType ApplicationMessageRequest::_msgtype("BW");
@@ -7215,10 +6595,10 @@ const FieldTrait *ApplicationMessageRequest::NoPartyIDs::NoPartySubIDs::_traits(
 const FieldTrait_Hash_Array& ApplicationMessageRequest::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& ApplicationMessageRequest::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ApplicationMessageRequest::NoApplIDs::_traits[] =
+const FieldTrait ApplicationMessageRequest::NoApplIDs::_traits[]
 {
-   FieldTrait( 539, 1,  4, 80,0x1c), FieldTrait(1182, 4,  2,  0,0x04), FieldTrait(1183, 4,  3,  0,0x04),
-   FieldTrait(1355,15,  1,  0,0x04), FieldTrait(1433,15,  5,  0,0x04)
+   { 539, 1,  4, 80,0x1c}, {1182, 4,  2,  0,0x04}, {1183, 4,  3,  0,0x04}, {1355,15,  1,  0,0x04},
+   {1433,15,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ApplicationMessageRequest::NoApplIDs::_ftha(ApplicationMessageRequest::NoApplIDs::_traits, 5);
@@ -7232,12 +6612,11 @@ const FieldTrait *ApplicationMessageRequest::NoApplIDs::NoNestedPartyIDs::NoNest
 const FieldTrait_Hash_Array& ApplicationMessageRequest::NoApplIDs::NoNestedPartyIDs::NoNestedPartySubIDs::_ftha(NoNestedPartySubIDsV1_ftha);
 const MsgType& ApplicationMessageRequest::NoApplIDs::NoNestedPartyIDs::NoNestedPartySubIDs::_msgtype(NoNestedPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ApplicationMessageRequestAck::_traits[] =
+const FieldTrait ApplicationMessageRequestAck::_traits[]
 {
-   FieldTrait(  58,15,  7,  0,0x04), FieldTrait( 354, 2,  8,  0,0x04), FieldTrait( 355,28,  9,  0,0x04),
-   FieldTrait( 453, 1, 10, 94,0x1c), FieldTrait(1346,15,  2,  0,0x04), FieldTrait(1347, 1,  3,  0,0x04),
-   FieldTrait(1348, 1,  4,  0,0x04), FieldTrait(1349, 1,  5,  0,0x04), FieldTrait(1351, 1,  6,  6,0x1c),
-   FieldTrait(1353,15,  1,  0,0x04)
+   {  58,15,  7,  0,0x04}, { 354, 2,  8,  0,0x04}, { 355,28,  9,  0,0x04}, { 453, 1, 10, 94,0x1c},
+   {1346,15,  2,  0,0x04}, {1347, 1,  3,  0,0x04}, {1348, 1,  4,  0,0x04}, {1349, 1,  5,  0,0x04},
+   {1351, 1,  6,  6,0x1c}, {1353,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array ApplicationMessageRequestAck::_ftha(ApplicationMessageRequestAck::_traits, 10);
 const MsgType ApplicationMessageRequestAck::_msgtype("BX");
@@ -7250,11 +6629,10 @@ const FieldTrait *ApplicationMessageRequestAck::NoPartyIDs::NoPartySubIDs::_trai
 const FieldTrait_Hash_Array& ApplicationMessageRequestAck::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& ApplicationMessageRequestAck::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ApplicationMessageRequestAck::NoApplIDs::_traits[] =
+const FieldTrait ApplicationMessageRequestAck::NoApplIDs::_traits[]
 {
-   FieldTrait( 539, 1,  6, 80,0x1c), FieldTrait(1182, 4,  2,  0,0x04), FieldTrait(1183, 4,  3,  0,0x04),
-   FieldTrait(1354, 1,  5,  0,0x04), FieldTrait(1355,15,  1,  0,0x04), FieldTrait(1357, 4,  4,  0,0x04),
-   FieldTrait(1433,15,  7,  0,0x04)
+   { 539, 1,  6, 80,0x1c}, {1182, 4,  2,  0,0x04}, {1183, 4,  3,  0,0x04}, {1354, 1,  5,  0,0x04},
+   {1355,15,  1,  0,0x04}, {1357, 4,  4,  0,0x04}, {1433,15,  7,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ApplicationMessageRequestAck::NoApplIDs::_ftha(ApplicationMessageRequestAck::NoApplIDs::_traits, 7);
@@ -7268,86 +6646,70 @@ const FieldTrait *ApplicationMessageRequestAck::NoApplIDs::NoNestedPartyIDs::NoN
 const FieldTrait_Hash_Array& ApplicationMessageRequestAck::NoApplIDs::NoNestedPartyIDs::NoNestedPartySubIDs::_ftha(NoNestedPartySubIDsV1_ftha);
 const MsgType& ApplicationMessageRequestAck::NoApplIDs::NoNestedPartyIDs::NoNestedPartySubIDs::_msgtype(NoNestedPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ApplicationMessageReport::_traits[] =
+const FieldTrait ApplicationMessageReport::_traits[]
 {
-   FieldTrait(  58,15,  4,  0,0x04), FieldTrait( 354, 2,  5,  0,0x04), FieldTrait( 355,28,  6,  0,0x04),
-   FieldTrait(1346,15,  7,  0,0x04), FieldTrait(1351, 1,  3,  5,0x1c), FieldTrait(1356,15,  1,  0,0x04),
-   FieldTrait(1426, 1,  2,  0,0x04)
+   {  58,15,  4,  0,0x04}, { 354, 2,  5,  0,0x04}, { 355,28,  6,  0,0x04}, {1346,15,  7,  0,0x04},
+   {1351, 1,  3,  5,0x1c}, {1356,15,  1,  0,0x04}, {1426, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array ApplicationMessageReport::_ftha(ApplicationMessageReport::_traits, 7);
 const MsgType ApplicationMessageReport::_msgtype("BY");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ApplicationMessageReport::NoApplIDs::_traits[] =
+const FieldTrait ApplicationMessageReport::NoApplIDs::_traits[]
 {
-   FieldTrait(1355,15,  1,  0,0x04), FieldTrait(1357, 4,  3,  0,0x04), FieldTrait(1399, 4,  2,  0,0x04)
+   {1355,15,  1,  0,0x04}, {1357, 4,  3,  0,0x04}, {1399, 4,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ApplicationMessageReport::NoApplIDs::_ftha(ApplicationMessageReport::NoApplIDs::_traits, 3);
 const MsgType ApplicationMessageReport::NoApplIDs::_msgtype("NoApplIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderMassActionReport::_traits[] =
+const FieldTrait OrderMassActionReport::_traits[]
 {
-   FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  22,15, 18, 54,0x14), FieldTrait(  48,15, 17, 54,0x14),
-   FieldTrait(  54, 7,175,  0,0x04), FieldTrait(  55,15, 15, 54,0x14), FieldTrait(  58,15,177,  0,0x04),
-   FieldTrait(  60,22,176,  0,0x04), FieldTrait(  65,15, 16, 54,0x14), FieldTrait( 106,15, 44, 54,0x14),
-   FieldTrait( 107,15, 47, 54,0x14), FieldTrait( 167,15, 22, 54,0x14), FieldTrait( 200,21, 24, 54,0x14),
-   FieldTrait( 201, 1, 85, 54,0x14), FieldTrait( 202,11, 38, 54,0x14), FieldTrait( 206, 7, 40, 54,0x14),
-   FieldTrait( 207,20, 43, 54,0x14), FieldTrait( 223,14, 42, 54,0x14), FieldTrait( 224,25, 26, 54,0x14),
-   FieldTrait( 225,25, 27, 54,0x14), FieldTrait( 226, 1, 29, 54,0x14), FieldTrait( 227,14, 30, 54,0x14),
-   FieldTrait( 228, 9, 31, 54,0x14), FieldTrait( 231, 9, 41, 54,0x14), FieldTrait( 239, 1, 28, 54,0x14),
-   FieldTrait( 240,25, 37, 54,0x14), FieldTrait( 241,25,114,191,0x14), FieldTrait( 242,25,115,191,0x14),
-   FieldTrait( 243, 1,116,191,0x14), FieldTrait( 244, 1,117,191,0x14), FieldTrait( 245,14,118,191,0x14),
-   FieldTrait( 246, 9,119,191,0x14), FieldTrait( 247,25,125,191,0x14), FieldTrait( 255,15, 32, 54,0x14),
-   FieldTrait( 256,15,120,191,0x14), FieldTrait( 305,15,106,191,0x14), FieldTrait( 306,15,132,191,0x14),
-   FieldTrait( 307,15,135,191,0x14), FieldTrait( 308,20,131,191,0x14), FieldTrait( 309,15,105,191,0x14),
-   FieldTrait( 310,15,110,191,0x14), FieldTrait( 311,15,103,191,0x14), FieldTrait( 312,15,104,191,0x14),
-   FieldTrait( 313,21,112,191,0x14), FieldTrait( 315, 1,162,191,0x14), FieldTrait( 316,11,126,191,0x14),
-   FieldTrait( 317, 7,128,191,0x14), FieldTrait( 318,19,140,191,0x14), FieldTrait( 336,15, 12,  0,0x04),
-   FieldTrait( 348, 2, 45, 54,0x14), FieldTrait( 349,28, 46, 54,0x14), FieldTrait( 350, 2, 48, 54,0x14),
-   FieldTrait( 351,28, 49, 54,0x14), FieldTrait( 354, 2,178,  0,0x04), FieldTrait( 355,28,179,  0,0x04),
-   FieldTrait( 362, 2,133,191,0x14), FieldTrait( 363,28,134,191,0x14), FieldTrait( 364, 2,136,191,0x14),
-   FieldTrait( 365,28,137,191,0x14), FieldTrait( 435,14,130,191,0x14), FieldTrait( 436, 9,129,191,0x14),
-   FieldTrait( 453, 1, 14, 94,0x1c), FieldTrait( 454, 1, 19,142,0x1c), FieldTrait( 457, 1,107,189,0x1c),
-   FieldTrait( 460, 1, 20, 54,0x14), FieldTrait( 461,15, 21, 54,0x14), FieldTrait( 462, 1,108,191,0x14),
-   FieldTrait( 463,15,109,191,0x14), FieldTrait( 470,18, 34, 54,0x14), FieldTrait( 471,15, 35, 54,0x14),
-   FieldTrait( 472,15, 36, 54,0x14), FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 533, 1,  8,  0,0x04),
-   FieldTrait( 534, 1,  9,  1,0x1c), FieldTrait( 541,25, 25, 54,0x14), FieldTrait( 542,25,113,191,0x14),
-   FieldTrait( 543,15, 33, 54,0x14), FieldTrait( 592,18,122,191,0x14), FieldTrait( 593,15,123,191,0x14),
-   FieldTrait( 594,15,124,191,0x14), FieldTrait( 595,15,121,191,0x14), FieldTrait( 625,15, 13,  0,0x04),
-   FieldTrait( 667,21, 51, 54,0x14), FieldTrait( 691,15, 50, 54,0x14), FieldTrait( 762,15, 23, 54,0x14),
-   FieldTrait( 763,15,111,191,0x14), FieldTrait( 810,11,142,191,0x14), FieldTrait( 864, 1, 54, 38,0x1c),
-   FieldTrait( 873,25, 55, 54,0x14), FieldTrait( 874,25, 56, 54,0x14), FieldTrait( 875, 1, 52, 54,0x14),
-   FieldTrait( 876,15, 53, 54,0x14), FieldTrait( 877,15,138,191,0x14), FieldTrait( 878,15,139,191,0x14),
-   FieldTrait( 879,10,141,191,0x14), FieldTrait( 882,11,143,191,0x14), FieldTrait( 883,11,144,191,0x14),
-   FieldTrait( 884,13,145,191,0x14), FieldTrait( 885,13,146,191,0x14), FieldTrait( 886,13,147,191,0x14),
-   FieldTrait( 887, 1,148,194,0x1c), FieldTrait( 941,19,127,191,0x14), FieldTrait( 947,19, 39, 54,0x14),
-   FieldTrait( 965,15, 57, 54,0x14), FieldTrait( 966,15, 58, 54,0x14), FieldTrait( 967, 9, 60, 54,0x14),
-   FieldTrait( 968, 9, 61, 54,0x14), FieldTrait( 969, 9, 62, 54,0x14), FieldTrait( 970, 1, 63, 54,0x14),
-   FieldTrait( 971, 1, 64, 54,0x14), FieldTrait( 972,14,149,191,0x14), FieldTrait( 973,13,151,191,0x14),
-   FieldTrait( 974,15,152,191,0x14), FieldTrait( 975, 1,150,191,0x14), FieldTrait( 996,15, 66, 54,0x14),
-   FieldTrait( 997,15, 67, 54,0x14), FieldTrait( 998,15,153,191,0x14), FieldTrait(1000,15,154,191,0x14),
-   FieldTrait(1018, 1, 65, 57,0x1c), FieldTrait(1038,13,155,191,0x14), FieldTrait(1039,15,157,191,0x14),
-   FieldTrait(1044,10,158,191,0x14), FieldTrait(1045, 9,159,191,0x14), FieldTrait(1046, 7,160,191,0x14),
-   FieldTrait(1049, 7, 59, 54,0x14), FieldTrait(1058, 1,156,195,0x1c), FieldTrait(1079,26, 68, 54,0x14),
-   FieldTrait(1146,13, 70, 54,0x14), FieldTrait(1147,10, 71, 54,0x14), FieldTrait(1151,15, 69, 54,0x14),
-   FieldTrait(1184, 2, 72,150,0x14), FieldTrait(1185,29, 73,150,0x14), FieldTrait(1186,15, 74,150,0x14),
-   FieldTrait(1191,15, 76, 54,0x14), FieldTrait(1192,10, 77, 54,0x14), FieldTrait(1193, 7, 78, 54,0x14),
-   FieldTrait(1194, 1, 79, 54,0x14), FieldTrait(1195,13, 80, 54,0x14), FieldTrait(1196,15, 81, 54,0x14),
-   FieldTrait(1197,15, 88, 54,0x14), FieldTrait(1198, 1, 82, 54,0x14), FieldTrait(1199,11, 83, 54,0x14),
-   FieldTrait(1200,11, 84, 54,0x14), FieldTrait(1213,26,161,191,0x14), FieldTrait(1227,15, 75, 54,0x14),
-   FieldTrait(1242, 8, 87, 54,0x14), FieldTrait(1244, 8, 86, 54,0x14), FieldTrait(1300,15, 11,  0,0x04),
-   FieldTrait(1301,20, 10,  0,0x04), FieldTrait(1369,15,  3,  0,0x04), FieldTrait(1370, 1,180, 85,0x1c),
-   FieldTrait(1373, 1,  4,  0,0x04), FieldTrait(1374, 1,  5,  0,0x04), FieldTrait(1375, 1,  6,  0,0x04),
-   FieldTrait(1376, 1,  7,  0,0x04), FieldTrait(1419, 1,163,191,0x14), FieldTrait(1423,10,164,191,0x14),
-   FieldTrait(1424,15,165,191,0x14), FieldTrait(1425,10,166,191,0x14), FieldTrait(1435, 1, 89, 54,0x14),
-   FieldTrait(1437, 1,167,191,0x14), FieldTrait(1439, 1, 90, 54,0x14), FieldTrait(1441, 1,168,191,0x14),
-   FieldTrait(1449,15, 91, 54,0x14), FieldTrait(1450,15, 92, 54,0x14), FieldTrait(1451,14, 93, 54,0x14),
-   FieldTrait(1452,14, 94, 54,0x14), FieldTrait(1453,15,169,191,0x14), FieldTrait(1454,15,170,191,0x14),
-   FieldTrait(1455,14,171,191,0x14), FieldTrait(1456,14,172,191,0x14), FieldTrait(1457,14, 95, 54,0x14),
-   FieldTrait(1458,14, 96, 54,0x14), FieldTrait(1459,14,173,191,0x14), FieldTrait(1460,14,174,191,0x14),
-   FieldTrait(1461, 1,181,169,0x1c), FieldTrait(1478, 1, 97, 54,0x14), FieldTrait(1479, 1, 98, 54,0x14),
-   FieldTrait(1480,14, 99, 54,0x14), FieldTrait(1481, 1,100, 54,0x14), FieldTrait(1482, 1,101, 54,0x14),
-   FieldTrait(1483, 1,102, 21,0x1c)
+   {  11,15,  1,  0,0x04}, {  22,15, 18, 54,0x14}, {  48,15, 17, 54,0x14}, {  54, 7,175,  0,0x04},
+   {  55,15, 15, 54,0x14}, {  58,15,177,  0,0x04}, {  60,22,176,  0,0x04}, {  65,15, 16, 54,0x14},
+   { 106,15, 44, 54,0x14}, { 107,15, 47, 54,0x14}, { 167,15, 22, 54,0x14}, { 200,21, 24, 54,0x14},
+   { 201, 1, 85, 54,0x14}, { 202,11, 38, 54,0x14}, { 206, 7, 40, 54,0x14}, { 207,20, 43, 54,0x14},
+   { 223,14, 42, 54,0x14}, { 224,25, 26, 54,0x14}, { 225,25, 27, 54,0x14}, { 226, 1, 29, 54,0x14},
+   { 227,14, 30, 54,0x14}, { 228, 9, 31, 54,0x14}, { 231, 9, 41, 54,0x14}, { 239, 1, 28, 54,0x14},
+   { 240,25, 37, 54,0x14}, { 241,25,114,191,0x14}, { 242,25,115,191,0x14}, { 243, 1,116,191,0x14},
+   { 244, 1,117,191,0x14}, { 245,14,118,191,0x14}, { 246, 9,119,191,0x14}, { 247,25,125,191,0x14},
+   { 255,15, 32, 54,0x14}, { 256,15,120,191,0x14}, { 305,15,106,191,0x14}, { 306,15,132,191,0x14},
+   { 307,15,135,191,0x14}, { 308,20,131,191,0x14}, { 309,15,105,191,0x14}, { 310,15,110,191,0x14},
+   { 311,15,103,191,0x14}, { 312,15,104,191,0x14}, { 313,21,112,191,0x14}, { 315, 1,162,191,0x14},
+   { 316,11,126,191,0x14}, { 317, 7,128,191,0x14}, { 318,19,140,191,0x14}, { 336,15, 12,  0,0x04},
+   { 348, 2, 45, 54,0x14}, { 349,28, 46, 54,0x14}, { 350, 2, 48, 54,0x14}, { 351,28, 49, 54,0x14},
+   { 354, 2,178,  0,0x04}, { 355,28,179,  0,0x04}, { 362, 2,133,191,0x14}, { 363,28,134,191,0x14},
+   { 364, 2,136,191,0x14}, { 365,28,137,191,0x14}, { 435,14,130,191,0x14}, { 436, 9,129,191,0x14},
+   { 453, 1, 14, 94,0x1c}, { 454, 1, 19,142,0x1c}, { 457, 1,107,189,0x1c}, { 460, 1, 20, 54,0x14},
+   { 461,15, 21, 54,0x14}, { 462, 1,108,191,0x14}, { 463,15,109,191,0x14}, { 470,18, 34, 54,0x14},
+   { 471,15, 35, 54,0x14}, { 472,15, 36, 54,0x14}, { 526,15,  2,  0,0x04}, { 533, 1,  8,  0,0x04},
+   { 534, 1,  9,  1,0x1c}, { 541,25, 25, 54,0x14}, { 542,25,113,191,0x14}, { 543,15, 33, 54,0x14},
+   { 592,18,122,191,0x14}, { 593,15,123,191,0x14}, { 594,15,124,191,0x14}, { 595,15,121,191,0x14},
+   { 625,15, 13,  0,0x04}, { 667,21, 51, 54,0x14}, { 691,15, 50, 54,0x14}, { 762,15, 23, 54,0x14},
+   { 763,15,111,191,0x14}, { 810,11,142,191,0x14}, { 864, 1, 54, 38,0x1c}, { 873,25, 55, 54,0x14},
+   { 874,25, 56, 54,0x14}, { 875, 1, 52, 54,0x14}, { 876,15, 53, 54,0x14}, { 877,15,138,191,0x14},
+   { 878,15,139,191,0x14}, { 879,10,141,191,0x14}, { 882,11,143,191,0x14}, { 883,11,144,191,0x14},
+   { 884,13,145,191,0x14}, { 885,13,146,191,0x14}, { 886,13,147,191,0x14}, { 887, 1,148,194,0x1c},
+   { 941,19,127,191,0x14}, { 947,19, 39, 54,0x14}, { 965,15, 57, 54,0x14}, { 966,15, 58, 54,0x14},
+   { 967, 9, 60, 54,0x14}, { 968, 9, 61, 54,0x14}, { 969, 9, 62, 54,0x14}, { 970, 1, 63, 54,0x14},
+   { 971, 1, 64, 54,0x14}, { 972,14,149,191,0x14}, { 973,13,151,191,0x14}, { 974,15,152,191,0x14},
+   { 975, 1,150,191,0x14}, { 996,15, 66, 54,0x14}, { 997,15, 67, 54,0x14}, { 998,15,153,191,0x14},
+   {1000,15,154,191,0x14}, {1018, 1, 65, 57,0x1c}, {1038,13,155,191,0x14}, {1039,15,157,191,0x14},
+   {1044,10,158,191,0x14}, {1045, 9,159,191,0x14}, {1046, 7,160,191,0x14}, {1049, 7, 59, 54,0x14},
+   {1058, 1,156,195,0x1c}, {1079,26, 68, 54,0x14}, {1146,13, 70, 54,0x14}, {1147,10, 71, 54,0x14},
+   {1151,15, 69, 54,0x14}, {1184, 2, 72,150,0x14}, {1185,29, 73,150,0x14}, {1186,15, 74,150,0x14},
+   {1191,15, 76, 54,0x14}, {1192,10, 77, 54,0x14}, {1193, 7, 78, 54,0x14}, {1194, 1, 79, 54,0x14},
+   {1195,13, 80, 54,0x14}, {1196,15, 81, 54,0x14}, {1197,15, 88, 54,0x14}, {1198, 1, 82, 54,0x14},
+   {1199,11, 83, 54,0x14}, {1200,11, 84, 54,0x14}, {1213,26,161,191,0x14}, {1227,15, 75, 54,0x14},
+   {1242, 8, 87, 54,0x14}, {1244, 8, 86, 54,0x14}, {1300,15, 11,  0,0x04}, {1301,20, 10,  0,0x04},
+   {1369,15,  3,  0,0x04}, {1370, 1,180, 85,0x1c}, {1373, 1,  4,  0,0x04}, {1374, 1,  5,  0,0x04},
+   {1375, 1,  6,  0,0x04}, {1376, 1,  7,  0,0x04}, {1419, 1,163,191,0x14}, {1423,10,164,191,0x14},
+   {1424,15,165,191,0x14}, {1425,10,166,191,0x14}, {1435, 1, 89, 54,0x14}, {1437, 1,167,191,0x14},
+   {1439, 1, 90, 54,0x14}, {1441, 1,168,191,0x14}, {1449,15, 91, 54,0x14}, {1450,15, 92, 54,0x14},
+   {1451,14, 93, 54,0x14}, {1452,14, 94, 54,0x14}, {1453,15,169,191,0x14}, {1454,15,170,191,0x14},
+   {1455,14,171,191,0x14}, {1456,14,172,191,0x14}, {1457,14, 95, 54,0x14}, {1458,14, 96, 54,0x14},
+   {1459,14,173,191,0x14}, {1460,14,174,191,0x14}, {1461, 1,181,169,0x1c}, {1478, 1, 97, 54,0x14},
+   {1479, 1, 98, 54,0x14}, {1480,14, 99, 54,0x14}, {1481, 1,100, 54,0x14}, {1482, 1,101, 54,0x14},
+   {1483, 1,102, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderMassActionReport::_ftha(OrderMassActionReport::_traits, 181);
 const MsgType OrderMassActionReport::_msgtype("BZ");
@@ -7416,13 +6778,12 @@ const FieldTrait *OrderMassActionReport::NoComplexEvents::NoComplexEventDates::N
 const FieldTrait_Hash_Array& OrderMassActionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderMassActionReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Email::_traits[] =
+const FieldTrait Email::_traits[]
 {
-   FieldTrait(  11,15, 12,  0,0x04), FieldTrait(  33, 1, 13, 66,0x1c), FieldTrait(  37,15, 11,  0,0x04),
-   FieldTrait(  42,22,  3,  0,0x04), FieldTrait(  94, 7,  2,  0,0x04), FieldTrait(  95, 2, 14,  0,0x04),
-   FieldTrait(  96,28, 15,  0,0x04), FieldTrait( 146, 1,  8, 47,0x1c), FieldTrait( 147,15,  4,  0,0x04),
-   FieldTrait( 164,15,  1,  0,0x04), FieldTrait( 215, 1,  7,141,0x1c), FieldTrait( 356, 2,  5,  0,0x04),
-   FieldTrait( 357,28,  6,  0,0x04), FieldTrait( 555, 1, 10, 49,0x1c), FieldTrait( 711, 1,  9,188,0x1c)
+   {  11,15, 12,  0,0x04}, {  33, 1, 13, 66,0x1c}, {  37,15, 11,  0,0x04}, {  42,22,  3,  0,0x04},
+   {  94, 7,  2,  0,0x04}, {  95, 2, 14,  0,0x04}, {  96,28, 15,  0,0x04}, { 146, 1,  8, 47,0x1c},
+   { 147,15,  4,  0,0x04}, { 164,15,  1,  0,0x04}, { 215, 1,  7,141,0x1c}, { 356, 2,  5,  0,0x04},
+   { 357,28,  6,  0,0x04}, { 555, 1, 10, 49,0x1c}, { 711, 1,  9,188,0x1c}
 };
 const FieldTrait_Hash_Array Email::_ftha(Email::_traits, 15);
 const MsgType Email::_msgtype("C");
@@ -7495,67 +6856,52 @@ const FieldTrait *Email::NoUnderlyings::NoUndlyInstrumentParties::NoUndlyInstrum
 const FieldTrait_Hash_Array& Email::NoUnderlyings::NoUndlyInstrumentParties::NoUndlyInstrumentPartySubIDs::_ftha(NoUndlyInstrumentPartySubIDsV1_ftha);
 const MsgType& Email::NoUnderlyings::NoUndlyInstrumentParties::NoUndlyInstrumentPartySubIDs::_msgtype(NoUndlyInstrumentPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderMassActionRequest::_traits[] =
+const FieldTrait OrderMassActionRequest::_traits[]
 {
-   FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  22,15, 13, 54,0x14), FieldTrait(  48,15, 12, 54,0x14),
-   FieldTrait(  54, 7,170,  0,0x04), FieldTrait(  55,15, 10, 54,0x14), FieldTrait(  58,15,172,  0,0x04),
-   FieldTrait(  60,22,171,  0,0x04), FieldTrait(  65,15, 11, 54,0x14), FieldTrait( 106,15, 39, 54,0x14),
-   FieldTrait( 107,15, 42, 54,0x14), FieldTrait( 167,15, 17, 54,0x14), FieldTrait( 200,21, 19, 54,0x14),
-   FieldTrait( 201, 1, 80, 54,0x14), FieldTrait( 202,11, 33, 54,0x14), FieldTrait( 206, 7, 35, 54,0x14),
-   FieldTrait( 207,20, 38, 54,0x14), FieldTrait( 223,14, 37, 54,0x14), FieldTrait( 224,25, 21, 54,0x14),
-   FieldTrait( 225,25, 22, 54,0x14), FieldTrait( 226, 1, 24, 54,0x14), FieldTrait( 227,14, 25, 54,0x14),
-   FieldTrait( 228, 9, 26, 54,0x14), FieldTrait( 231, 9, 36, 54,0x14), FieldTrait( 239, 1, 23, 54,0x14),
-   FieldTrait( 240,25, 32, 54,0x14), FieldTrait( 241,25,109,191,0x14), FieldTrait( 242,25,110,191,0x14),
-   FieldTrait( 243, 1,111,191,0x14), FieldTrait( 244, 1,112,191,0x14), FieldTrait( 245,14,113,191,0x14),
-   FieldTrait( 246, 9,114,191,0x14), FieldTrait( 247,25,120,191,0x14), FieldTrait( 255,15, 27, 54,0x14),
-   FieldTrait( 256,15,115,191,0x14), FieldTrait( 305,15,101,191,0x14), FieldTrait( 306,15,127,191,0x14),
-   FieldTrait( 307,15,130,191,0x14), FieldTrait( 308,20,126,191,0x14), FieldTrait( 309,15,100,191,0x14),
-   FieldTrait( 310,15,105,191,0x14), FieldTrait( 311,15, 98,191,0x14), FieldTrait( 312,15, 99,191,0x14),
-   FieldTrait( 313,21,107,191,0x14), FieldTrait( 315, 1,157,191,0x14), FieldTrait( 316,11,121,191,0x14),
-   FieldTrait( 317, 7,123,191,0x14), FieldTrait( 318,19,135,191,0x14), FieldTrait( 336,15,  7,  0,0x04),
-   FieldTrait( 348, 2, 40, 54,0x14), FieldTrait( 349,28, 41, 54,0x14), FieldTrait( 350, 2, 43, 54,0x14),
-   FieldTrait( 351,28, 44, 54,0x14), FieldTrait( 354, 2,173,  0,0x04), FieldTrait( 355,28,174,  0,0x04),
-   FieldTrait( 362, 2,128,191,0x14), FieldTrait( 363,28,129,191,0x14), FieldTrait( 364, 2,131,191,0x14),
-   FieldTrait( 365,28,132,191,0x14), FieldTrait( 435,14,125,191,0x14), FieldTrait( 436, 9,124,191,0x14),
-   FieldTrait( 453, 1,  9, 94,0x1c), FieldTrait( 454, 1, 14,142,0x1c), FieldTrait( 457, 1,102,189,0x1c),
-   FieldTrait( 460, 1, 15, 54,0x14), FieldTrait( 461,15, 16, 54,0x14), FieldTrait( 462, 1,103,191,0x14),
-   FieldTrait( 463,15,104,191,0x14), FieldTrait( 470,18, 29, 54,0x14), FieldTrait( 471,15, 30, 54,0x14),
-   FieldTrait( 472,15, 31, 54,0x14), FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 541,25, 20, 54,0x14),
-   FieldTrait( 542,25,108,191,0x14), FieldTrait( 543,15, 28, 54,0x14), FieldTrait( 592,18,117,191,0x14),
-   FieldTrait( 593,15,118,191,0x14), FieldTrait( 594,15,119,191,0x14), FieldTrait( 595,15,116,191,0x14),
-   FieldTrait( 625,15,  8,  0,0x04), FieldTrait( 667,21, 46, 54,0x14), FieldTrait( 691,15, 45, 54,0x14),
-   FieldTrait( 762,15, 18, 54,0x14), FieldTrait( 763,15,106,191,0x14), FieldTrait( 810,11,137,191,0x14),
-   FieldTrait( 864, 1, 49, 38,0x1c), FieldTrait( 873,25, 50, 54,0x14), FieldTrait( 874,25, 51, 54,0x14),
-   FieldTrait( 875, 1, 47, 54,0x14), FieldTrait( 876,15, 48, 54,0x14), FieldTrait( 877,15,133,191,0x14),
-   FieldTrait( 878,15,134,191,0x14), FieldTrait( 879,10,136,191,0x14), FieldTrait( 882,11,138,191,0x14),
-   FieldTrait( 883,11,139,191,0x14), FieldTrait( 884,13,140,191,0x14), FieldTrait( 885,13,141,191,0x14),
-   FieldTrait( 886,13,142,191,0x14), FieldTrait( 887, 1,143,194,0x1c), FieldTrait( 941,19,122,191,0x14),
-   FieldTrait( 947,19, 34, 54,0x14), FieldTrait( 965,15, 52, 54,0x14), FieldTrait( 966,15, 53, 54,0x14),
-   FieldTrait( 967, 9, 55, 54,0x14), FieldTrait( 968, 9, 56, 54,0x14), FieldTrait( 969, 9, 57, 54,0x14),
-   FieldTrait( 970, 1, 58, 54,0x14), FieldTrait( 971, 1, 59, 54,0x14), FieldTrait( 972,14,144,191,0x14),
-   FieldTrait( 973,13,146,191,0x14), FieldTrait( 974,15,147,191,0x14), FieldTrait( 975, 1,145,191,0x14),
-   FieldTrait( 996,15, 61, 54,0x14), FieldTrait( 997,15, 62, 54,0x14), FieldTrait( 998,15,148,191,0x14),
-   FieldTrait(1000,15,149,191,0x14), FieldTrait(1018, 1, 60, 57,0x1c), FieldTrait(1038,13,150,191,0x14),
-   FieldTrait(1039,15,152,191,0x14), FieldTrait(1044,10,153,191,0x14), FieldTrait(1045, 9,154,191,0x14),
-   FieldTrait(1046, 7,155,191,0x14), FieldTrait(1049, 7, 54, 54,0x14), FieldTrait(1058, 1,151,195,0x1c),
-   FieldTrait(1079,26, 63, 54,0x14), FieldTrait(1146,13, 65, 54,0x14), FieldTrait(1147,10, 66, 54,0x14),
-   FieldTrait(1151,15, 64, 54,0x14), FieldTrait(1184, 2, 67,150,0x14), FieldTrait(1185,29, 68,150,0x14),
-   FieldTrait(1186,15, 69,150,0x14), FieldTrait(1191,15, 71, 54,0x14), FieldTrait(1192,10, 72, 54,0x14),
-   FieldTrait(1193, 7, 73, 54,0x14), FieldTrait(1194, 1, 74, 54,0x14), FieldTrait(1195,13, 75, 54,0x14),
-   FieldTrait(1196,15, 76, 54,0x14), FieldTrait(1197,15, 83, 54,0x14), FieldTrait(1198, 1, 77, 54,0x14),
-   FieldTrait(1199,11, 78, 54,0x14), FieldTrait(1200,11, 79, 54,0x14), FieldTrait(1213,26,156,191,0x14),
-   FieldTrait(1227,15, 70, 54,0x14), FieldTrait(1242, 8, 82, 54,0x14), FieldTrait(1244, 8, 81, 54,0x14),
-   FieldTrait(1300,15,  6,  0,0x04), FieldTrait(1301,20,  5,  0,0x04), FieldTrait(1373, 1,  3,  0,0x04),
-   FieldTrait(1374, 1,  4,  0,0x04), FieldTrait(1419, 1,158,191,0x14), FieldTrait(1423,10,159,191,0x14),
-   FieldTrait(1424,15,160,191,0x14), FieldTrait(1425,10,161,191,0x14), FieldTrait(1435, 1, 84, 54,0x14),
-   FieldTrait(1437, 1,162,191,0x14), FieldTrait(1439, 1, 85, 54,0x14), FieldTrait(1441, 1,163,191,0x14),
-   FieldTrait(1449,15, 86, 54,0x14), FieldTrait(1450,15, 87, 54,0x14), FieldTrait(1451,14, 88, 54,0x14),
-   FieldTrait(1452,14, 89, 54,0x14), FieldTrait(1453,15,164,191,0x14), FieldTrait(1454,15,165,191,0x14),
-   FieldTrait(1455,14,166,191,0x14), FieldTrait(1456,14,167,191,0x14), FieldTrait(1457,14, 90, 54,0x14),
-   FieldTrait(1458,14, 91, 54,0x14), FieldTrait(1459,14,168,191,0x14), FieldTrait(1460,14,169,191,0x14),
-   FieldTrait(1461, 1,175,169,0x1c), FieldTrait(1478, 1, 92, 54,0x14), FieldTrait(1479, 1, 93, 54,0x14),
-   FieldTrait(1480,14, 94, 54,0x14), FieldTrait(1481, 1, 95, 54,0x14), FieldTrait(1482, 1, 96, 54,0x14),
-   FieldTrait(1483, 1, 97, 21,0x1c)
+   {  11,15,  1,  0,0x04}, {  22,15, 13, 54,0x14}, {  48,15, 12, 54,0x14}, {  54, 7,170,  0,0x04},
+   {  55,15, 10, 54,0x14}, {  58,15,172,  0,0x04}, {  60,22,171,  0,0x04}, {  65,15, 11, 54,0x14},
+   { 106,15, 39, 54,0x14}, { 107,15, 42, 54,0x14}, { 167,15, 17, 54,0x14}, { 200,21, 19, 54,0x14},
+   { 201, 1, 80, 54,0x14}, { 202,11, 33, 54,0x14}, { 206, 7, 35, 54,0x14}, { 207,20, 38, 54,0x14},
+   { 223,14, 37, 54,0x14}, { 224,25, 21, 54,0x14}, { 225,25, 22, 54,0x14}, { 226, 1, 24, 54,0x14},
+   { 227,14, 25, 54,0x14}, { 228, 9, 26, 54,0x14}, { 231, 9, 36, 54,0x14}, { 239, 1, 23, 54,0x14},
+   { 240,25, 32, 54,0x14}, { 241,25,109,191,0x14}, { 242,25,110,191,0x14}, { 243, 1,111,191,0x14},
+   { 244, 1,112,191,0x14}, { 245,14,113,191,0x14}, { 246, 9,114,191,0x14}, { 247,25,120,191,0x14},
+   { 255,15, 27, 54,0x14}, { 256,15,115,191,0x14}, { 305,15,101,191,0x14}, { 306,15,127,191,0x14},
+   { 307,15,130,191,0x14}, { 308,20,126,191,0x14}, { 309,15,100,191,0x14}, { 310,15,105,191,0x14},
+   { 311,15, 98,191,0x14}, { 312,15, 99,191,0x14}, { 313,21,107,191,0x14}, { 315, 1,157,191,0x14},
+   { 316,11,121,191,0x14}, { 317, 7,123,191,0x14}, { 318,19,135,191,0x14}, { 336,15,  7,  0,0x04},
+   { 348, 2, 40, 54,0x14}, { 349,28, 41, 54,0x14}, { 350, 2, 43, 54,0x14}, { 351,28, 44, 54,0x14},
+   { 354, 2,173,  0,0x04}, { 355,28,174,  0,0x04}, { 362, 2,128,191,0x14}, { 363,28,129,191,0x14},
+   { 364, 2,131,191,0x14}, { 365,28,132,191,0x14}, { 435,14,125,191,0x14}, { 436, 9,124,191,0x14},
+   { 453, 1,  9, 94,0x1c}, { 454, 1, 14,142,0x1c}, { 457, 1,102,189,0x1c}, { 460, 1, 15, 54,0x14},
+   { 461,15, 16, 54,0x14}, { 462, 1,103,191,0x14}, { 463,15,104,191,0x14}, { 470,18, 29, 54,0x14},
+   { 471,15, 30, 54,0x14}, { 472,15, 31, 54,0x14}, { 526,15,  2,  0,0x04}, { 541,25, 20, 54,0x14},
+   { 542,25,108,191,0x14}, { 543,15, 28, 54,0x14}, { 592,18,117,191,0x14}, { 593,15,118,191,0x14},
+   { 594,15,119,191,0x14}, { 595,15,116,191,0x14}, { 625,15,  8,  0,0x04}, { 667,21, 46, 54,0x14},
+   { 691,15, 45, 54,0x14}, { 762,15, 18, 54,0x14}, { 763,15,106,191,0x14}, { 810,11,137,191,0x14},
+   { 864, 1, 49, 38,0x1c}, { 873,25, 50, 54,0x14}, { 874,25, 51, 54,0x14}, { 875, 1, 47, 54,0x14},
+   { 876,15, 48, 54,0x14}, { 877,15,133,191,0x14}, { 878,15,134,191,0x14}, { 879,10,136,191,0x14},
+   { 882,11,138,191,0x14}, { 883,11,139,191,0x14}, { 884,13,140,191,0x14}, { 885,13,141,191,0x14},
+   { 886,13,142,191,0x14}, { 887, 1,143,194,0x1c}, { 941,19,122,191,0x14}, { 947,19, 34, 54,0x14},
+   { 965,15, 52, 54,0x14}, { 966,15, 53, 54,0x14}, { 967, 9, 55, 54,0x14}, { 968, 9, 56, 54,0x14},
+   { 969, 9, 57, 54,0x14}, { 970, 1, 58, 54,0x14}, { 971, 1, 59, 54,0x14}, { 972,14,144,191,0x14},
+   { 973,13,146,191,0x14}, { 974,15,147,191,0x14}, { 975, 1,145,191,0x14}, { 996,15, 61, 54,0x14},
+   { 997,15, 62, 54,0x14}, { 998,15,148,191,0x14}, {1000,15,149,191,0x14}, {1018, 1, 60, 57,0x1c},
+   {1038,13,150,191,0x14}, {1039,15,152,191,0x14}, {1044,10,153,191,0x14}, {1045, 9,154,191,0x14},
+   {1046, 7,155,191,0x14}, {1049, 7, 54, 54,0x14}, {1058, 1,151,195,0x1c}, {1079,26, 63, 54,0x14},
+   {1146,13, 65, 54,0x14}, {1147,10, 66, 54,0x14}, {1151,15, 64, 54,0x14}, {1184, 2, 67,150,0x14},
+   {1185,29, 68,150,0x14}, {1186,15, 69,150,0x14}, {1191,15, 71, 54,0x14}, {1192,10, 72, 54,0x14},
+   {1193, 7, 73, 54,0x14}, {1194, 1, 74, 54,0x14}, {1195,13, 75, 54,0x14}, {1196,15, 76, 54,0x14},
+   {1197,15, 83, 54,0x14}, {1198, 1, 77, 54,0x14}, {1199,11, 78, 54,0x14}, {1200,11, 79, 54,0x14},
+   {1213,26,156,191,0x14}, {1227,15, 70, 54,0x14}, {1242, 8, 82, 54,0x14}, {1244, 8, 81, 54,0x14},
+   {1300,15,  6,  0,0x04}, {1301,20,  5,  0,0x04}, {1373, 1,  3,  0,0x04}, {1374, 1,  4,  0,0x04},
+   {1419, 1,158,191,0x14}, {1423,10,159,191,0x14}, {1424,15,160,191,0x14}, {1425,10,161,191,0x14},
+   {1435, 1, 84, 54,0x14}, {1437, 1,162,191,0x14}, {1439, 1, 85, 54,0x14}, {1441, 1,163,191,0x14},
+   {1449,15, 86, 54,0x14}, {1450,15, 87, 54,0x14}, {1451,14, 88, 54,0x14}, {1452,14, 89, 54,0x14},
+   {1453,15,164,191,0x14}, {1454,15,165,191,0x14}, {1455,14,166,191,0x14}, {1456,14,167,191,0x14},
+   {1457,14, 90, 54,0x14}, {1458,14, 91, 54,0x14}, {1459,14,168,191,0x14}, {1460,14,169,191,0x14},
+   {1461, 1,175,169,0x1c}, {1478, 1, 92, 54,0x14}, {1479, 1, 93, 54,0x14}, {1480,14, 94, 54,0x14},
+   {1481, 1, 95, 54,0x14}, {1482, 1, 96, 54,0x14}, {1483, 1, 97, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderMassActionRequest::_ftha(OrderMassActionRequest::_traits, 175);
 const MsgType OrderMassActionRequest::_msgtype("CA");
@@ -7616,62 +6962,54 @@ const FieldTrait *OrderMassActionRequest::NoComplexEvents::NoComplexEventDates::
 const FieldTrait_Hash_Array& OrderMassActionRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderMassActionRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait UserNotification::_traits[] =
+const FieldTrait UserNotification::_traits[]
 {
-   FieldTrait(  58,15,  3,  0,0x04), FieldTrait( 354, 2,  4,  0,0x04), FieldTrait( 355,28,  5,  0,0x04),
-   FieldTrait( 553,15,  1,197,0x14), FieldTrait( 926, 1,  2,  0,0x04)
+   {  58,15,  3,  0,0x04}, { 354, 2,  4,  0,0x04}, { 355,28,  5,  0,0x04}, { 553,15,  1,197,0x14},
+   { 926, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array UserNotification::_ftha(UserNotification::_traits, 5);
 const MsgType UserNotification::_msgtype("CB");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentRequest::_traits[] =
+const FieldTrait StreamAssignmentRequest::_traits[]
 {
-   FieldTrait(1497,15,  1,  0,0x04), FieldTrait(1498, 1,  2,  0,0x04), FieldTrait(1499, 1,  3,165,0x1c)
+   {1497,15,  1,  0,0x04}, {1498, 1,  2,  0,0x04}, {1499, 1,  3,165,0x1c}
 };
 const FieldTrait_Hash_Array StreamAssignmentRequest::_ftha(StreamAssignmentRequest::_traits, 3);
 const MsgType StreamAssignmentRequest::_msgtype("CC");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentRequest::NoAsgnReqs::_traits[] =
+const FieldTrait StreamAssignmentRequest::NoAsgnReqs::_traits[]
 {
-   FieldTrait( 146, 1,  2,166,0x1c), FieldTrait( 453, 1,  1, 94,0x1c)
+   { 146, 1,  2,166,0x1c}, { 453, 1,  1, 94,0x1c}
 };
 const FieldTrait_Hash_Array 
    StreamAssignmentRequest::NoAsgnReqs::_ftha(StreamAssignmentRequest::NoAsgnReqs::_traits, 2);
 const MsgType StreamAssignmentRequest::NoAsgnReqs::_msgtype("NoAsgnReqs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentRequest::NoAsgnReqs::NoRelatedSym::_traits[] =
+const FieldTrait StreamAssignmentRequest::NoAsgnReqs::NoRelatedSym::_traits[]
 {
-   FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  63,15, 89,  0,0x04), FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14),
-   FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 200,21, 10, 54,0x14),
-   FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14), FieldTrait( 206, 7, 26, 54,0x14),
-   FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14),
-   FieldTrait( 225,25, 13, 54,0x14), FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14),
-   FieldTrait( 228, 9, 17, 54,0x14), FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 239, 1, 14, 54,0x14),
-   FieldTrait( 240,25, 23, 54,0x14), FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 271,10, 90,  0,0x04),
-   FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14), FieldTrait( 350, 2, 34, 54,0x14),
-   FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14),
-   FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14),
-   FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 541,25, 11, 54,0x14), FieldTrait( 543,15, 19, 54,0x14),
-   FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 691,15, 36, 54,0x14), FieldTrait( 762,15,  9, 54,0x14),
-   FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14),
-   FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 947,19, 25, 54,0x14),
-   FieldTrait( 965,15, 43, 54,0x14), FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14),
-   FieldTrait( 968, 9, 47, 54,0x14), FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14),
-   FieldTrait( 971, 1, 50, 54,0x14), FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14),
-   FieldTrait(1018, 1, 51, 57,0x1c), FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14),
-   FieldTrait(1146,13, 56, 54,0x14), FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14),
-   FieldTrait(1184, 2, 58,150,0x14), FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14),
-   FieldTrait(1191,15, 62, 54,0x14), FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14),
-   FieldTrait(1194, 1, 65, 54,0x14), FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14),
-   FieldTrait(1197,15, 74, 54,0x14), FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14),
-   FieldTrait(1200,11, 70, 54,0x14), FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14),
-   FieldTrait(1244, 8, 72, 54,0x14), FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14),
-   FieldTrait(1449,15, 77, 54,0x14), FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14),
-   FieldTrait(1452,14, 80, 54,0x14), FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14),
-   FieldTrait(1478, 1, 83, 54,0x14), FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14),
-   FieldTrait(1481, 1, 86, 54,0x14), FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c),
-   FieldTrait(1500,15, 91,  0,0x04)
+   {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14}, {  63,15, 89,  0,0x04},
+   {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14}, { 167,15,  8, 54,0x14},
+   { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14}, { 206, 7, 26, 54,0x14},
+   { 207,20, 29, 54,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14}, { 225,25, 13, 54,0x14},
+   { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14}, { 231, 9, 27, 54,0x14},
+   { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 271,10, 90,  0,0x04},
+   { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14},
+   { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14}, { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14},
+   { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14}, { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14},
+   { 667,21, 37, 54,0x14}, { 691,15, 36, 54,0x14}, { 762,15,  9, 54,0x14}, { 864, 1, 40, 38,0x1c},
+   { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14},
+   { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14},
+   { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14},
+   { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14},
+   {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14}, {1151,15, 55, 54,0x14},
+   {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14}, {1191,15, 62, 54,0x14},
+   {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14}, {1195,13, 66, 54,0x14},
+   {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14}, {1199,11, 69, 54,0x14},
+   {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14}, {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14},
+   {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14},
+   {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14},
+   {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14},
+   {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}, {1500,15, 91,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    StreamAssignmentRequest::NoAsgnReqs::NoRelatedSym::_ftha(StreamAssignmentRequest::NoAsgnReqs::NoRelatedSym::_traits, 91);
@@ -7713,56 +7051,47 @@ const FieldTrait *StreamAssignmentRequest::NoAsgnReqs::NoPartyIDs::NoPartySubIDs
 const FieldTrait_Hash_Array& StreamAssignmentRequest::NoAsgnReqs::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& StreamAssignmentRequest::NoAsgnReqs::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentReport::_traits[] =
+const FieldTrait StreamAssignmentReport::_traits[]
 {
-   FieldTrait(1497,15,  3,  0,0x04), FieldTrait(1498, 1,  2,  0,0x04), FieldTrait(1499, 1,  4,167,0x1c),
-   FieldTrait(1501,15,  1,  0,0x04)
+   {1497,15,  3,  0,0x04}, {1498, 1,  2,  0,0x04}, {1499, 1,  4,167,0x1c}, {1501,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array StreamAssignmentReport::_ftha(StreamAssignmentReport::_traits, 4);
 const MsgType StreamAssignmentReport::_msgtype("CD");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentReport::NoAsgnReqs::_traits[] =
+const FieldTrait StreamAssignmentReport::NoAsgnReqs::_traits[]
 {
-   FieldTrait( 146, 1,  2,168,0x1c), FieldTrait( 453, 1,  1, 94,0x1c)
+   { 146, 1,  2,168,0x1c}, { 453, 1,  1, 94,0x1c}
 };
 const FieldTrait_Hash_Array 
    StreamAssignmentReport::NoAsgnReqs::_ftha(StreamAssignmentReport::NoAsgnReqs::_traits, 2);
 const MsgType StreamAssignmentReport::NoAsgnReqs::_msgtype("NoAsgnReqs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentReport::NoAsgnReqs::NoRelatedSym::_traits[] =
+const FieldTrait StreamAssignmentReport::NoAsgnReqs::NoRelatedSym::_traits[]
 {
-   FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  58,15, 93,  0,0x04), FieldTrait(  63,15, 89,  0,0x04), FieldTrait(  65,15,  2, 54,0x14),
-   FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 167,15,  8, 54,0x14),
-   FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14),
-   FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 223,14, 28, 54,0x14),
-   FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14), FieldTrait( 226, 1, 15, 54,0x14),
-   FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14), FieldTrait( 231, 9, 27, 54,0x14),
-   FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14), FieldTrait( 255,15, 18, 54,0x14),
-   FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14), FieldTrait( 350, 2, 34, 54,0x14),
-   FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 354, 2, 94,  0,0x04), FieldTrait( 355,28, 95,  0,0x04),
-   FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14),
-   FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14),
-   FieldTrait( 541,25, 11, 54,0x14), FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 667,21, 37, 54,0x14),
-   FieldTrait( 691,15, 36, 54,0x14), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 864, 1, 40, 38,0x1c),
-   FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14),
-   FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14),
-   FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14),
-   FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14),
-   FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c),
-   FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1146,13, 56, 54,0x14),
-   FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14),
-   FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14),
-   FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14),
-   FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14),
-   FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14),
-   FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14),
-   FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14),
-   FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14),
-   FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14),
-   FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14),
-   FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c), FieldTrait(1500,15, 91,  0,0x04),
-   FieldTrait(1502, 1, 92,  0,0x04), FieldTrait(1617, 1, 90,  0,0x04)
+   {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14}, {  58,15, 93,  0,0x04},
+   {  63,15, 89,  0,0x04}, {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14},
+   { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14},
+   { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14},
+   { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14},
+   { 231, 9, 27, 54,0x14}, { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14},
+   { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14},
+   { 354, 2, 94,  0,0x04}, { 355,28, 95,  0,0x04}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 667,21, 37, 54,0x14}, { 691,15, 36, 54,0x14},
+   { 762,15,  9, 54,0x14}, { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14},
+   { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14},
+   { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14},
+   { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14},
+   {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14},
+   {1147,10, 57, 54,0x14}, {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14},
+   {1186,15, 60,150,0x14}, {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14},
+   {1194, 1, 65, 54,0x14}, {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14},
+   {1198, 1, 68, 54,0x14}, {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14},
+   {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14},
+   {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14},
+   {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14},
+   {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c},
+   {1500,15, 91,  0,0x04}, {1502, 1, 92,  0,0x04}, {1617, 1, 90,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    StreamAssignmentReport::NoAsgnReqs::NoRelatedSym::_ftha(StreamAssignmentReport::NoAsgnReqs::NoRelatedSym::_traits, 95);
@@ -7804,19 +7133,19 @@ const FieldTrait *StreamAssignmentReport::NoAsgnReqs::NoPartyIDs::NoPartySubIDs:
 const FieldTrait_Hash_Array& StreamAssignmentReport::NoAsgnReqs::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& StreamAssignmentReport::NoAsgnReqs::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait StreamAssignmentReportACK::_traits[] =
+const FieldTrait StreamAssignmentReportACK::_traits[]
 {
-   FieldTrait(  58,15,  4,  0,0x04), FieldTrait( 354, 2,  5,  0,0x04), FieldTrait( 355,28,  6,  0,0x04),
-   FieldTrait(1501,15,  2,  0,0x04), FieldTrait(1502, 1,  3,  0,0x04), FieldTrait(1503, 1,  1,  0,0x04)
+   {  58,15,  4,  0,0x04}, { 354, 2,  5,  0,0x04}, { 355,28,  6,  0,0x04}, {1501,15,  2,  0,0x04},
+   {1502, 1,  3,  0,0x04}, {1503, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array StreamAssignmentReportACK::_ftha(StreamAssignmentReportACK::_traits, 6);
 const MsgType StreamAssignmentReportACK::_msgtype("CE");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListRequest::_traits[] =
+const FieldTrait PartyDetailsListRequest::_traits[]
 {
-   FieldTrait(  58,15,  7,  0,0x04), FieldTrait( 263, 7,  6,  0,0x04), FieldTrait( 354, 2,  8,  0,0x04),
-   FieldTrait( 355,28,  9,  0,0x04), FieldTrait( 453, 1,  3, 94,0x1c), FieldTrait(1505,15,  1,  0,0x04),
-   FieldTrait(1506, 1,  2, 98,0x1c), FieldTrait(1508, 1,  4,132,0x1c), FieldTrait(1514, 1,  5, 99,0x1c)
+   {  58,15,  7,  0,0x04}, { 263, 7,  6,  0,0x04}, { 354, 2,  8,  0,0x04}, { 355,28,  9,  0,0x04},
+   { 453, 1,  3, 94,0x1c}, {1505,15,  1,  0,0x04}, {1506, 1,  2, 98,0x1c}, {1508, 1,  4,132,0x1c},
+   {1514, 1,  5, 99,0x1c}
 };
 const FieldTrait_Hash_Array PartyDetailsListRequest::_ftha(PartyDetailsListRequest::_traits, 9);
 const MsgType PartyDetailsListRequest::_msgtype("CF");
@@ -7829,17 +7158,17 @@ const FieldTrait *PartyDetailsListRequest::NoPartyIDs::NoPartySubIDs::_traits(No
 const FieldTrait_Hash_Array& PartyDetailsListRequest::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& PartyDetailsListRequest::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListRequest::NoPartyListResponseTypes::_traits[] =
+const FieldTrait PartyDetailsListRequest::NoPartyListResponseTypes::_traits[]
 {
-   FieldTrait(1507, 1,  1,  0,0x05)
+   {1507, 1,  1,  0,0x05}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListRequest::NoPartyListResponseTypes::_ftha(PartyDetailsListRequest::NoPartyListResponseTypes::_traits, 1);
 const MsgType PartyDetailsListRequest::NoPartyListResponseTypes::_msgtype("NoPartyListResponseTypes");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListRequest::NoRequestedPartyRoles::_traits[] =
+const FieldTrait PartyDetailsListRequest::NoRequestedPartyRoles::_traits[]
 {
-   FieldTrait(1509, 1,  1,  0,0x04)
+   {1509, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListRequest::NoRequestedPartyRoles::_ftha(PartyDetailsListRequest::NoRequestedPartyRoles::_traits, 1);
@@ -7849,22 +7178,20 @@ const FieldTrait *PartyDetailsListRequest::NoPartyRelationships::_traits(NoParty
 const FieldTrait_Hash_Array& PartyDetailsListRequest::NoPartyRelationships::_ftha(NoPartyRelationshipsV1_ftha);
 const MsgType& PartyDetailsListRequest::NoPartyRelationships::_msgtype(NoPartyRelationshipsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::_traits[] =
+const FieldTrait PartyDetailsListReport::_traits[]
 {
-   FieldTrait(  58,15, 11,  0,0x04), FieldTrait( 354, 2, 12,  0,0x04), FieldTrait( 355,28, 13,  0,0x04),
-   FieldTrait( 893, 8,  9,  0,0x04), FieldTrait(1180,15,  1,  8,0x14), FieldTrait(1181, 4,  2,  8,0x14),
-   FieldTrait(1350, 4,  3,  8,0x14), FieldTrait(1352, 8,  4,  8,0x14), FieldTrait(1505,15,  6,  0,0x04),
-   FieldTrait(1510,15,  5,  0,0x04), FieldTrait(1511, 1,  7,  0,0x04), FieldTrait(1512, 1,  8,  0,0x04),
-   FieldTrait(1513, 1, 10, 97,0x1c)
+   {  58,15, 11,  0,0x04}, { 354, 2, 12,  0,0x04}, { 355,28, 13,  0,0x04}, { 893, 8,  9,  0,0x04},
+   {1180,15,  1,  8,0x14}, {1181, 4,  2,  8,0x14}, {1350, 4,  3,  8,0x14}, {1352, 8,  4,  8,0x14},
+   {1505,15,  6,  0,0x04}, {1510,15,  5,  0,0x04}, {1511, 1,  7,  0,0x04}, {1512, 1,  8,  0,0x04},
+   {1513, 1, 10, 97,0x1c}
 };
 const FieldTrait_Hash_Array PartyDetailsListReport::_ftha(PartyDetailsListReport::_traits, 13);
 const MsgType PartyDetailsListReport::_msgtype("CG");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::_traits[]
 {
-   FieldTrait( 447, 7,  2, 96,0x14), FieldTrait( 448,15,  1, 96,0x14), FieldTrait( 452, 1,  3, 96,0x14),
-   FieldTrait( 802, 1,  4,107,0x1c), FieldTrait(1516, 1,  5, 95,0x1c), FieldTrait(1522, 1,  6, 23,0x1c),
-   FieldTrait(1529, 1,  7,136,0x1c), FieldTrait(1562, 1,  8,126,0x1c)
+   { 447, 7,  2, 96,0x14}, { 448,15,  1, 96,0x14}, { 452, 1,  3, 96,0x14}, { 802, 1,  4,107,0x1c},
+   {1516, 1,  5, 95,0x1c}, {1522, 1,  6, 23,0x1c}, {1529, 1,  7,136,0x1c}, {1562, 1,  8,126,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::_ftha(PartyDetailsListReport::NoPartyList::_traits, 8);
@@ -7874,85 +7201,81 @@ const FieldTrait *PartyDetailsListReport::NoPartyList::NoPartySubIDs::_traits(No
 const FieldTrait_Hash_Array& PartyDetailsListReport::NoPartyList::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& PartyDetailsListReport::NoPartyList::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoPartyAltIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoPartyAltIDs::_traits[]
 {
-   FieldTrait(1517,15,  1,  0,0x04), FieldTrait(1518, 7,  2,  0,0x04), FieldTrait(1519, 1,  3,  4,0x1c)
+   {1517,15,  1,  0,0x04}, {1518, 7,  2,  0,0x04}, {1519, 1,  3,  4,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoPartyAltIDs::_ftha(PartyDetailsListReport::NoPartyList::NoPartyAltIDs::_traits, 3);
 const MsgType PartyDetailsListReport::NoPartyList::NoPartyAltIDs::_msgtype("NoPartyAltIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoPartyAltIDs::NoPartyAltSubIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoPartyAltIDs::NoPartyAltSubIDs::_traits[]
 {
-   FieldTrait(1520,15,  1,  0,0x04), FieldTrait(1521, 1,  2,  0,0x04)
+   {1520,15,  1,  0,0x04}, {1521, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoPartyAltIDs::NoPartyAltSubIDs::_ftha(PartyDetailsListReport::NoPartyList::NoPartyAltIDs::NoPartyAltSubIDs::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoPartyAltIDs::NoPartyAltSubIDs::_msgtype("NoPartyAltSubIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoContextPartyIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoContextPartyIDs::_traits[]
 {
-   FieldTrait(1523,15,  1,  0,0x04), FieldTrait(1524, 7,  2,  0,0x04), FieldTrait(1525, 1,  3,  0,0x04),
-   FieldTrait(1526, 1,  4, 24,0x1c)
+   {1523,15,  1,  0,0x04}, {1524, 7,  2,  0,0x04}, {1525, 1,  3,  0,0x04}, {1526, 1,  4, 24,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoContextPartyIDs::_ftha(PartyDetailsListReport::NoPartyList::NoContextPartyIDs::_traits, 4);
 const MsgType PartyDetailsListReport::NoPartyList::NoContextPartyIDs::_msgtype("NoContextPartyIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoContextPartyIDs::NoContextPartySubIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoContextPartyIDs::NoContextPartySubIDs::_traits[]
 {
-   FieldTrait(1527,15,  1,  0,0x04), FieldTrait(1528, 1,  2,  0,0x04)
+   {1527,15,  1,  0,0x04}, {1528, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoContextPartyIDs::NoContextPartySubIDs::_ftha(PartyDetailsListReport::NoPartyList::NoContextPartyIDs::NoContextPartySubIDs::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoContextPartyIDs::NoContextPartySubIDs::_msgtype("NoContextPartySubIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::_traits[]
 {
-   FieldTrait(1530, 1,  1,  0,0x04), FieldTrait(1531,13,  2,  0,0x04), FieldTrait(1532,19,  3,  0,0x04),
-   FieldTrait(1533,15,  4,  0,0x04), FieldTrait(1534, 1,  5,135,0x1c), FieldTrait(1559, 1,  6,138,0x1c)
+   {1530, 1,  1,  0,0x04}, {1531,13,  2,  0,0x04}, {1532,19,  3,  0,0x04}, {1533,15,  4,  0,0x04},
+   {1534, 1,  5,135,0x1c}, {1559, 1,  6,138,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRiskLimits::_ftha(PartyDetailsListReport::NoPartyList::NoRiskLimits::_traits, 6);
 const MsgType PartyDetailsListReport::NoPartyList::NoRiskLimits::_msgtype("NoRiskLimits");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::_traits[]
 {
-   FieldTrait(1535, 1,  1,  0,0x04), FieldTrait(1536,15,  2,  0,0x04), FieldTrait(1537,15,  3,  0,0x04),
-   FieldTrait(1538,15,  4,  0,0x04), FieldTrait(1539,15,  5,  0,0x04), FieldTrait(1540, 1,  6,137,0x1c),
-   FieldTrait(1543, 1,  7,  0,0x04), FieldTrait(1544,15,  8,  0,0x04), FieldTrait(1545,15,  9,  0,0x04),
-   FieldTrait(1546,15, 10,  0,0x04), FieldTrait(1547,15, 11,  0,0x04), FieldTrait(1548,15, 12,  0,0x04),
-   FieldTrait(1549,21, 13,  0,0x04), FieldTrait(1550,26, 14,  0,0x04), FieldTrait(1551,15, 15,  0,0x04),
-   FieldTrait(1552,15, 16,  0,0x04), FieldTrait(1553, 1, 17,  0,0x04), FieldTrait(1554, 8, 18,  0,0x04),
-   FieldTrait(1555,14, 19,  0,0x04), FieldTrait(1556,15, 21,  0,0x04), FieldTrait(1557,15, 24,  0,0x04),
-   FieldTrait(1558, 9, 25,  0,0x04), FieldTrait(1616,20, 20,  0,0x04), FieldTrait(1620, 2, 22,  0,0x04),
-   FieldTrait(1621,28, 23,  0,0x04)
+   {1535, 1,  1,  0,0x04}, {1536,15,  2,  0,0x04}, {1537,15,  3,  0,0x04}, {1538,15,  4,  0,0x04},
+   {1539,15,  5,  0,0x04}, {1540, 1,  6,137,0x1c}, {1543, 1,  7,  0,0x04}, {1544,15,  8,  0,0x04},
+   {1545,15,  9,  0,0x04}, {1546,15, 10,  0,0x04}, {1547,15, 11,  0,0x04}, {1548,15, 12,  0,0x04},
+   {1549,21, 13,  0,0x04}, {1550,26, 14,  0,0x04}, {1551,15, 15,  0,0x04}, {1552,15, 16,  0,0x04},
+   {1553, 1, 17,  0,0x04}, {1554, 8, 18,  0,0x04}, {1555,14, 19,  0,0x04}, {1556,15, 21,  0,0x04},
+   {1557,15, 24,  0,0x04}, {1558, 9, 25,  0,0x04}, {1616,20, 20,  0,0x04}, {1620, 2, 22,  0,0x04},
+   {1621,28, 23,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::_ftha(PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::_traits, 25);
 const MsgType PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::_msgtype("NoRiskInstruments");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::NoRiskSecurityAltID::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::NoRiskSecurityAltID::_traits[]
 {
-   FieldTrait(1541,15,  1,  0,0x04), FieldTrait(1542,15,  2,  0,0x04)
+   {1541,15,  1,  0,0x04}, {1542,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::NoRiskSecurityAltID::_ftha(PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::NoRiskSecurityAltID::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskInstruments::NoRiskSecurityAltID::_msgtype("NoRiskSecurityAltID");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskWarningLevels::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskWarningLevels::_traits[]
 {
-   FieldTrait(1560,14,  1,  0,0x04), FieldTrait(1561,15,  2,  0,0x04)
+   {1560,14,  1,  0,0x04}, {1561,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskWarningLevels::_ftha(PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskWarningLevels::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRiskLimits::NoRiskWarningLevels::_msgtype("NoRiskWarningLevels");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::_traits[]
 {
-   FieldTrait(1514, 1,  8, 99,0x1c), FieldTrait(1563,15,  1,125,0x14), FieldTrait(1564, 7,  2,125,0x14),
-   FieldTrait(1565, 1,  3,125,0x14), FieldTrait(1566, 1,  4,127,0x1c), FieldTrait(1569, 1,  5,124,0x1c),
-   FieldTrait(1575, 1,  6,122,0x1c), FieldTrait(1582, 1,  7,129,0x1c)
+   {1514, 1,  8, 99,0x1c}, {1563,15,  1,125,0x14}, {1564, 7,  2,125,0x14}, {1565, 1,  3,125,0x14},
+   {1566, 1,  4,127,0x1c}, {1569, 1,  5,124,0x1c}, {1575, 1,  6,122,0x1c}, {1582, 1,  7,129,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::_traits, 8);
@@ -7962,171 +7285,148 @@ const FieldTrait *PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoPart
 const FieldTrait_Hash_Array& PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoPartyRelationships::_ftha(NoPartyRelationshipsV1_ftha);
 const MsgType& PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoPartyRelationships::_msgtype(NoPartyRelationshipsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartySubIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartySubIDs::_traits[]
 {
-   FieldTrait(1567,15,  1,  0,0x04), FieldTrait(1568, 1,  2,  0,0x04)
+   {1567,15,  1,  0,0x04}, {1568, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartySubIDs::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartySubIDs::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartySubIDs::_msgtype("NoRelatedPartySubIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::_traits[]
 {
-   FieldTrait(1570,15,  1,  0,0x04), FieldTrait(1571, 7,  2,  0,0x04), FieldTrait(1572, 1,  3,121,0x1c)
+   {1570,15,  1,  0,0x04}, {1571, 7,  2,  0,0x04}, {1572, 1,  3,121,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::_traits, 3);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::_msgtype("NoRelatedPartyAltIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::NoRelatedPartyAltSubIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::NoRelatedPartyAltSubIDs::_traits[]
 {
-   FieldTrait(1573,15,  1,  0,0x04), FieldTrait(1574, 1,  2,  0,0x04)
+   {1573,15,  1,  0,0x04}, {1574, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::NoRelatedPartyAltSubIDs::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::NoRelatedPartyAltSubIDs::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedPartyAltIDs::NoRelatedPartyAltSubIDs::_msgtype("NoRelatedPartyAltSubIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::_traits[]
 {
-   FieldTrait(1576,15,  1,  0,0x04), FieldTrait(1577, 7,  2,  0,0x04), FieldTrait(1578, 1,  3,  0,0x04),
-   FieldTrait(1579, 1,  4,123,0x1c)
+   {1576,15,  1,  0,0x04}, {1577, 7,  2,  0,0x04}, {1578, 1,  3,  0,0x04}, {1579, 1,  4,123,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::_traits, 4);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::_msgtype("NoRelatedContextPartyIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::NoRelatedContextPartySubIDs::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::NoRelatedContextPartySubIDs::_traits[]
 {
-   FieldTrait(1580,15,  1,  0,0x04), FieldTrait(1581, 1,  2,  0,0x04)
+   {1580,15,  1,  0,0x04}, {1581, 1,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::NoRelatedContextPartySubIDs::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::NoRelatedContextPartySubIDs::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelatedContextPartyIDs::NoRelatedContextPartySubIDs::_msgtype("NoRelatedContextPartySubIDs");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::_traits[]
 {
-   FieldTrait(1583, 1,  1,  0,0x04), FieldTrait(1584,13,  2,  0,0x04), FieldTrait(1585,19,  3,  0,0x04),
-   FieldTrait(1586,15,  4,  0,0x04), FieldTrait(1587, 1,  5,128,0x1c), FieldTrait(1613, 1,  6,131,0x1c)
+   {1583, 1,  1,  0,0x04}, {1584,13,  2,  0,0x04}, {1585,19,  3,  0,0x04}, {1586,15,  4,  0,0x04},
+   {1587, 1,  5,128,0x1c}, {1613, 1,  6,131,0x1c}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::_traits, 6);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::_msgtype("NoRelationshipRiskLimits");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::_traits[]
 {
-   FieldTrait(1588, 1,  1,  0,0x04), FieldTrait(1589,15,  2,  0,0x04), FieldTrait(1590,15,  3,  0,0x04),
-   FieldTrait(1591,15,  4,  0,0x04), FieldTrait(1592,15,  5,  0,0x04), FieldTrait(1593, 1,  6,130,0x1c),
-   FieldTrait(1596, 1,  7,  0,0x04), FieldTrait(1597,15,  8,  0,0x04), FieldTrait(1598,15,  9,  0,0x04),
-   FieldTrait(1599,15, 10,  0,0x04), FieldTrait(1600,15, 11,  0,0x04), FieldTrait(1601,15, 12,  0,0x04),
-   FieldTrait(1602,21, 13,  0,0x04), FieldTrait(1603,26, 14,  0,0x04), FieldTrait(1604,15, 15,  0,0x04),
-   FieldTrait(1605,15, 16,  0,0x04), FieldTrait(1606, 1, 17,  0,0x04), FieldTrait(1607, 8, 18,  0,0x04),
-   FieldTrait(1608,14, 19,  0,0x04), FieldTrait(1609,20, 20,  0,0x04), FieldTrait(1610,15, 21,  0,0x04),
-   FieldTrait(1611,15, 24,  0,0x04), FieldTrait(1612, 9, 25,  0,0x04), FieldTrait(1618, 2, 22,  0,0x04),
-   FieldTrait(1619,28, 23,  0,0x04)
+   {1588, 1,  1,  0,0x04}, {1589,15,  2,  0,0x04}, {1590,15,  3,  0,0x04}, {1591,15,  4,  0,0x04},
+   {1592,15,  5,  0,0x04}, {1593, 1,  6,130,0x1c}, {1596, 1,  7,  0,0x04}, {1597,15,  8,  0,0x04},
+   {1598,15,  9,  0,0x04}, {1599,15, 10,  0,0x04}, {1600,15, 11,  0,0x04}, {1601,15, 12,  0,0x04},
+   {1602,21, 13,  0,0x04}, {1603,26, 14,  0,0x04}, {1604,15, 15,  0,0x04}, {1605,15, 16,  0,0x04},
+   {1606, 1, 17,  0,0x04}, {1607, 8, 18,  0,0x04}, {1608,14, 19,  0,0x04}, {1609,20, 20,  0,0x04},
+   {1610,15, 21,  0,0x04}, {1611,15, 24,  0,0x04}, {1612, 9, 25,  0,0x04}, {1618, 2, 22,  0,0x04},
+   {1619,28, 23,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::_traits, 25);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::_msgtype("NoRelationshipRiskInstruments");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::NoRelationshipRiskSecurityAltID::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::NoRelationshipRiskSecurityAltID::_traits[]
 {
-   FieldTrait(1594,15,  1,  0,0x04), FieldTrait(1595,15,  2,  0,0x04)
+   {1594,15,  1,  0,0x04}, {1595,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::NoRelationshipRiskSecurityAltID::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::NoRelationshipRiskSecurityAltID::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskInstruments::NoRelationshipRiskSecurityAltID::_msgtype("NoRelationshipRiskSecurityAltID");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskWarningLevels::_traits[] =
+const FieldTrait PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskWarningLevels::_traits[]
 {
-   FieldTrait(1614,14,  1,  0,0x04), FieldTrait(1615,15,  2,  0,0x04)
+   {1614,14,  1,  0,0x04}, {1615,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskWarningLevels::_ftha(PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskWarningLevels::_traits, 2);
 const MsgType PartyDetailsListReport::NoPartyList::NoRelatedPartyIDs::NoRelationshipRiskLimits::NoRelationshipRiskWarningLevels::_msgtype("NoRelationshipRiskWarningLevels");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NewOrderSingle::_traits[] =
+const FieldTrait NewOrderSingle::_traits[]
 {
-   FieldTrait(   1,15,  7,  0,0x04), FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  12,13,163, 16,0x14),
-   FieldTrait(  13, 7,164, 16,0x14), FieldTrait(  15,19,153,  0,0x04), FieldTrait(  18,16, 20,  0,0x04),
-   FieldTrait(  21, 7, 19,  0,0x04), FieldTrait(  22,15, 29, 54,0x14), FieldTrait(  23,15,156,  0,0x04),
-   FieldTrait(  38,10,130, 93,0x14), FieldTrait(  40, 7,135,  0,0x04), FieldTrait(  44,11,137,  0,0x04),
-   FieldTrait(  48,15, 28, 54,0x14), FieldTrait(  54, 7,125,  0,0x04), FieldTrait(  55,15, 26, 54,0x14),
-   FieldTrait(  58,15,173,  0,0x04), FieldTrait(  59, 7,158,  0,0x04), FieldTrait(  60,22,127,  0,0x04),
-   FieldTrait(  63,15, 15,  0,0x04), FieldTrait(  64,25, 16,  0,0x04), FieldTrait(  65,15, 27, 54,0x14),
-   FieldTrait(  70,15, 13,  0,0x04), FieldTrait(  75,25,  6,  0,0x04), FieldTrait(  77, 7,179,  0,0x04),
-   FieldTrait(  78, 1, 14,104,0x1c), FieldTrait(  81, 7, 25,  0,0x04), FieldTrait(  99,11,138,  0,0x04),
-   FieldTrait( 100,20, 23,  0,0x04), FieldTrait( 106,15, 55, 54,0x14), FieldTrait( 107,15, 58, 54,0x14),
-   FieldTrait( 110,10, 21,  0,0x04), FieldTrait( 111,10, 22,  0,0x04), FieldTrait( 114, 8,126,  0,0x04),
-   FieldTrait( 117,15,157,  0,0x04), FieldTrait( 120,19,171,  0,0x04), FieldTrait( 121, 8,170,  0,0x04),
-   FieldTrait( 126,22,161,  0,0x04), FieldTrait( 140,11,124,  0,0x04), FieldTrait( 152,10,131, 93,0x14),
-   FieldTrait( 167,15, 33, 54,0x14), FieldTrait( 168,22,159,  0,0x04), FieldTrait( 192,10,177,  0,0x04),
-   FieldTrait( 193,25,176,  0,0x04), FieldTrait( 200,21, 35, 54,0x14), FieldTrait( 201, 1, 96, 54,0x14),
-   FieldTrait( 202,11, 49, 54,0x14), FieldTrait( 203, 1,180,  0,0x04), FieldTrait( 206, 7, 51, 54,0x14),
-   FieldTrait( 207,20, 54, 54,0x14), FieldTrait( 210,10,181,  0,0x04), FieldTrait( 211, 9,182,100,0x14),
-   FieldTrait( 218,12,139,160,0x14), FieldTrait( 220,19,140,160,0x14), FieldTrait( 221,15,141,160,0x14),
-   FieldTrait( 222,15,142,160,0x14), FieldTrait( 223,14, 53, 54,0x14), FieldTrait( 224,25, 37, 54,0x14),
-   FieldTrait( 225,25, 38, 54,0x14), FieldTrait( 226, 1, 40, 54,0x14), FieldTrait( 227,14, 41, 54,0x14),
-   FieldTrait( 228, 9, 42, 54,0x14), FieldTrait( 229,25,  5,  0,0x04), FieldTrait( 231, 9, 52, 54,0x14),
-   FieldTrait( 232, 1,128,162,0x1c), FieldTrait( 235,15,147,198,0x14), FieldTrait( 236,14,148,198,0x14),
-   FieldTrait( 239, 1, 39, 54,0x14), FieldTrait( 240,25, 48, 54,0x14), FieldTrait( 255,15, 43, 54,0x14),
-   FieldTrait( 348, 2, 56, 54,0x14), FieldTrait( 349,28, 57, 54,0x14), FieldTrait( 350, 2, 59, 54,0x14),
-   FieldTrait( 351,28, 60, 54,0x14), FieldTrait( 354, 2,174,  0,0x04), FieldTrait( 355,28,175,  0,0x04),
-   FieldTrait( 376,15,154,  0,0x04), FieldTrait( 377, 8,155,  0,0x04), FieldTrait( 386, 1, 24,185,0x1c),
-   FieldTrait( 388, 7,193, 35,0x14), FieldTrait( 389, 9,194, 35,0x14), FieldTrait( 423, 1,136,  0,0x04),
-   FieldTrait( 427, 1,162,  0,0x04), FieldTrait( 432,25,160,  0,0x04), FieldTrait( 453, 1,  4, 94,0x1c),
-   FieldTrait( 454, 1, 30,142,0x1c), FieldTrait( 460, 1, 31, 54,0x14), FieldTrait( 461,15, 32, 54,0x14),
-   FieldTrait( 468, 7,133, 93,0x14), FieldTrait( 469, 9,134, 93,0x14), FieldTrait( 470,18, 45, 54,0x14),
-   FieldTrait( 471,15, 46, 54,0x14), FieldTrait( 472,15, 47, 54,0x14), FieldTrait( 479,19,165, 16,0x14),
-   FieldTrait( 480, 7,203,  0,0x04), FieldTrait( 481, 7,204,  0,0x04), FieldTrait( 494,15,206,  0,0x04),
-   FieldTrait( 497, 7,166, 16,0x14), FieldTrait( 513,15,205,  0,0x04), FieldTrait( 516,14,132, 93,0x14),
-   FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 528, 7,167,  0,0x04), FieldTrait( 529,16,168,  0,0x04),
-   FieldTrait( 541,25, 36, 54,0x14), FieldTrait( 543,15, 44, 54,0x14), FieldTrait( 544, 7, 17,  0,0x04),
-   FieldTrait( 581, 1,  9,  0,0x04), FieldTrait( 582, 1,169,  0,0x04), FieldTrait( 583,15,  3,  0,0x04),
-   FieldTrait( 589, 7, 10,  0,0x04), FieldTrait( 590, 7, 11,  0,0x04), FieldTrait( 591, 7, 12,  0,0x04),
-   FieldTrait( 635,15, 18,  0,0x04), FieldTrait( 640,11,178,  0,0x04), FieldTrait( 660, 1,  8,  0,0x04),
-   FieldTrait( 662,11,143,160,0x14), FieldTrait( 663, 1,144,160,0x14), FieldTrait( 667,21, 62, 54,0x14),
-   FieldTrait( 691,15, 61, 54,0x14), FieldTrait( 696,25,150,198,0x14), FieldTrait( 697,11,151,198,0x14),
-   FieldTrait( 698, 1,152,198,0x14), FieldTrait( 699,15,145,160,0x14), FieldTrait( 701,25,149,198,0x14),
-   FieldTrait( 711, 1,123,188,0x1c), FieldTrait( 761,15,146,160,0x14), FieldTrait( 762,15, 34, 54,0x14),
-   FieldTrait( 768, 1,213,182,0x1c), FieldTrait( 775, 1,172,  0,0x04), FieldTrait( 788, 1,118, 44,0x14),
-   FieldTrait( 835, 1,183,100,0x14), FieldTrait( 836, 1,184,100,0x14), FieldTrait( 837, 1,185,100,0x14),
-   FieldTrait( 838, 1,186,100,0x14), FieldTrait( 840, 1,187,100,0x14), FieldTrait( 841, 1,195, 35,0x14),
-   FieldTrait( 842, 1,196, 35,0x14), FieldTrait( 843, 1,197, 35,0x14), FieldTrait( 844, 1,198, 35,0x14),
-   FieldTrait( 846, 1,199, 35,0x14), FieldTrait( 847, 1,200,  0,0x04), FieldTrait( 848,15,201,  0,0x04),
-   FieldTrait( 849,14,202,  0,0x04), FieldTrait( 854, 1,129,  0,0x04), FieldTrait( 864, 1, 65, 38,0x1c),
-   FieldTrait( 873,25, 66, 54,0x14), FieldTrait( 874,25, 67, 54,0x14), FieldTrait( 875, 1, 63, 54,0x14),
-   FieldTrait( 876,15, 64, 54,0x14), FieldTrait( 898,14,122, 44,0x14), FieldTrait( 913,15,114, 44,0x14),
-   FieldTrait( 914,15,115, 44,0x14), FieldTrait( 915,25,116, 44,0x14), FieldTrait( 916,25,119, 44,0x14),
-   FieldTrait( 917,25,120, 44,0x14), FieldTrait( 918,19,117, 44,0x14), FieldTrait( 919, 1,121, 44,0x14),
-   FieldTrait( 947,19, 50, 54,0x14), FieldTrait( 957, 1,207,163,0x1c), FieldTrait( 965,15, 68, 54,0x14),
-   FieldTrait( 966,15, 69, 54,0x14), FieldTrait( 967, 9, 71, 54,0x14), FieldTrait( 968, 9, 72, 54,0x14),
-   FieldTrait( 969, 9, 73, 54,0x14), FieldTrait( 970, 1, 74, 54,0x14), FieldTrait( 971, 1, 75, 54,0x14),
-   FieldTrait( 996,15, 77, 54,0x14), FieldTrait( 997,15, 78, 54,0x14), FieldTrait(1018, 1, 76, 57,0x1c),
-   FieldTrait(1028, 8,208,  0,0x04), FieldTrait(1029, 8,209,  0,0x04), FieldTrait(1030,15,210,  0,0x04),
-   FieldTrait(1031,17,211,  0,0x04), FieldTrait(1032, 1,212,  0,0x04), FieldTrait(1049, 7, 70, 54,0x14),
-   FieldTrait(1079,26, 79, 54,0x14), FieldTrait(1080,15,241,  0,0x04), FieldTrait(1081, 7,242,  0,0x04),
-   FieldTrait(1082,10,216, 36,0x14), FieldTrait(1083, 7,217, 36,0x14), FieldTrait(1084, 7,218, 36,0x14),
-   FieldTrait(1085,10,219, 36,0x14), FieldTrait(1086,10,220, 36,0x14), FieldTrait(1087,10,221, 36,0x14),
-   FieldTrait(1088,10,222, 36,0x14), FieldTrait(1089,10,214,  0,0x04), FieldTrait(1090, 1,215,  0,0x04),
-   FieldTrait(1091, 8,240,  0,0x04), FieldTrait(1092, 7,224,  0,0x04), FieldTrait(1094, 1,188,100,0x14),
-   FieldTrait(1096,15,189,100,0x14), FieldTrait(1097,15,190,100,0x14), FieldTrait(1098,15,191,100,0x14),
-   FieldTrait(1099,15,192,100,0x14), FieldTrait(1100, 7,225,186,0x14), FieldTrait(1101, 7,226,186,0x14),
-   FieldTrait(1102,11,227,186,0x14), FieldTrait(1103,15,228,186,0x14), FieldTrait(1104,15,229,186,0x14),
-   FieldTrait(1105,15,230,186,0x14), FieldTrait(1106,15,231,186,0x14), FieldTrait(1107, 7,232,186,0x14),
-   FieldTrait(1108, 7,233,186,0x14), FieldTrait(1109, 7,234,186,0x14), FieldTrait(1110,11,235,186,0x14),
-   FieldTrait(1111, 7,236,186,0x14), FieldTrait(1112,10,237,186,0x14), FieldTrait(1113,15,238,186,0x14),
-   FieldTrait(1114,15,239,186,0x14), FieldTrait(1133, 7,243,  0,0x04), FieldTrait(1138,10,223, 36,0x14),
-   FieldTrait(1146,13, 81, 54,0x14), FieldTrait(1147,10, 82, 54,0x14), FieldTrait(1151,15, 80, 54,0x14),
-   FieldTrait(1184, 2, 83,150,0x14), FieldTrait(1185,29, 84,150,0x14), FieldTrait(1186,15, 85,150,0x14),
-   FieldTrait(1191,15, 87, 54,0x14), FieldTrait(1192,10, 88, 54,0x14), FieldTrait(1193, 7, 89, 54,0x14),
-   FieldTrait(1194, 1, 90, 54,0x14), FieldTrait(1195,13, 91, 54,0x14), FieldTrait(1196,15, 92, 54,0x14),
-   FieldTrait(1197,15, 99, 54,0x14), FieldTrait(1198, 1, 93, 54,0x14), FieldTrait(1199,11, 94, 54,0x14),
-   FieldTrait(1200,11, 95, 54,0x14), FieldTrait(1227,15, 86, 54,0x14), FieldTrait(1242, 8, 98, 54,0x14),
-   FieldTrait(1244, 8, 97, 54,0x14), FieldTrait(1435, 1,100, 54,0x14), FieldTrait(1439, 1,101, 54,0x14),
-   FieldTrait(1449,15,102, 54,0x14), FieldTrait(1450,15,103, 54,0x14), FieldTrait(1451,14,104, 54,0x14),
-   FieldTrait(1452,14,105, 54,0x14), FieldTrait(1457,14,106, 54,0x14), FieldTrait(1458,14,107, 54,0x14),
-   FieldTrait(1478, 1,108, 54,0x14), FieldTrait(1479, 1,109, 54,0x14), FieldTrait(1480,14,110, 54,0x14),
-   FieldTrait(1481, 1,111, 54,0x14), FieldTrait(1482, 1,112, 54,0x14), FieldTrait(1483, 1,113, 21,0x1c)
+   {   1,15,  7,  0,0x04}, {  11,15,  1,  0,0x04}, {  12,13,163, 16,0x14}, {  13, 7,164, 16,0x14},
+   {  15,19,153,  0,0x04}, {  18,16, 20,  0,0x04}, {  21, 7, 19,  0,0x04}, {  22,15, 29, 54,0x14},
+   {  23,15,156,  0,0x04}, {  38,10,130, 93,0x14}, {  40, 7,135,  0,0x04}, {  44,11,137,  0,0x04},
+   {  48,15, 28, 54,0x14}, {  54, 7,125,  0,0x04}, {  55,15, 26, 54,0x14}, {  58,15,173,  0,0x04},
+   {  59, 7,158,  0,0x04}, {  60,22,127,  0,0x04}, {  63,15, 15,  0,0x04}, {  64,25, 16,  0,0x04},
+   {  65,15, 27, 54,0x14}, {  70,15, 13,  0,0x04}, {  75,25,  6,  0,0x04}, {  77, 7,179,  0,0x04},
+   {  78, 1, 14,104,0x1c}, {  81, 7, 25,  0,0x04}, {  99,11,138,  0,0x04}, { 100,20, 23,  0,0x04},
+   { 106,15, 55, 54,0x14}, { 107,15, 58, 54,0x14}, { 110,10, 21,  0,0x04}, { 111,10, 22,  0,0x04},
+   { 114, 8,126,  0,0x04}, { 117,15,157,  0,0x04}, { 120,19,171,  0,0x04}, { 121, 8,170,  0,0x04},
+   { 126,22,161,  0,0x04}, { 140,11,124,  0,0x04}, { 152,10,131, 93,0x14}, { 167,15, 33, 54,0x14},
+   { 168,22,159,  0,0x04}, { 192,10,177,  0,0x04}, { 193,25,176,  0,0x04}, { 200,21, 35, 54,0x14},
+   { 201, 1, 96, 54,0x14}, { 202,11, 49, 54,0x14}, { 203, 1,180,  0,0x04}, { 206, 7, 51, 54,0x14},
+   { 207,20, 54, 54,0x14}, { 210,10,181,  0,0x04}, { 211, 9,182,100,0x14}, { 218,12,139,160,0x14},
+   { 220,19,140,160,0x14}, { 221,15,141,160,0x14}, { 222,15,142,160,0x14}, { 223,14, 53, 54,0x14},
+   { 224,25, 37, 54,0x14}, { 225,25, 38, 54,0x14}, { 226, 1, 40, 54,0x14}, { 227,14, 41, 54,0x14},
+   { 228, 9, 42, 54,0x14}, { 229,25,  5,  0,0x04}, { 231, 9, 52, 54,0x14}, { 232, 1,128,162,0x1c},
+   { 235,15,147,198,0x14}, { 236,14,148,198,0x14}, { 239, 1, 39, 54,0x14}, { 240,25, 48, 54,0x14},
+   { 255,15, 43, 54,0x14}, { 348, 2, 56, 54,0x14}, { 349,28, 57, 54,0x14}, { 350, 2, 59, 54,0x14},
+   { 351,28, 60, 54,0x14}, { 354, 2,174,  0,0x04}, { 355,28,175,  0,0x04}, { 376,15,154,  0,0x04},
+   { 377, 8,155,  0,0x04}, { 386, 1, 24,185,0x1c}, { 388, 7,193, 35,0x14}, { 389, 9,194, 35,0x14},
+   { 423, 1,136,  0,0x04}, { 427, 1,162,  0,0x04}, { 432,25,160,  0,0x04}, { 453, 1,  4, 94,0x1c},
+   { 454, 1, 30,142,0x1c}, { 460, 1, 31, 54,0x14}, { 461,15, 32, 54,0x14}, { 468, 7,133, 93,0x14},
+   { 469, 9,134, 93,0x14}, { 470,18, 45, 54,0x14}, { 471,15, 46, 54,0x14}, { 472,15, 47, 54,0x14},
+   { 479,19,165, 16,0x14}, { 480, 7,203,  0,0x04}, { 481, 7,204,  0,0x04}, { 494,15,206,  0,0x04},
+   { 497, 7,166, 16,0x14}, { 513,15,205,  0,0x04}, { 516,14,132, 93,0x14}, { 526,15,  2,  0,0x04},
+   { 528, 7,167,  0,0x04}, { 529,16,168,  0,0x04}, { 541,25, 36, 54,0x14}, { 543,15, 44, 54,0x14},
+   { 544, 7, 17,  0,0x04}, { 581, 1,  9,  0,0x04}, { 582, 1,169,  0,0x04}, { 583,15,  3,  0,0x04},
+   { 589, 7, 10,  0,0x04}, { 590, 7, 11,  0,0x04}, { 591, 7, 12,  0,0x04}, { 635,15, 18,  0,0x04},
+   { 640,11,178,  0,0x04}, { 660, 1,  8,  0,0x04}, { 662,11,143,160,0x14}, { 663, 1,144,160,0x14},
+   { 667,21, 62, 54,0x14}, { 691,15, 61, 54,0x14}, { 696,25,150,198,0x14}, { 697,11,151,198,0x14},
+   { 698, 1,152,198,0x14}, { 699,15,145,160,0x14}, { 701,25,149,198,0x14}, { 711, 1,123,188,0x1c},
+   { 761,15,146,160,0x14}, { 762,15, 34, 54,0x14}, { 768, 1,213,182,0x1c}, { 775, 1,172,  0,0x04},
+   { 788, 1,118, 44,0x14}, { 835, 1,183,100,0x14}, { 836, 1,184,100,0x14}, { 837, 1,185,100,0x14},
+   { 838, 1,186,100,0x14}, { 840, 1,187,100,0x14}, { 841, 1,195, 35,0x14}, { 842, 1,196, 35,0x14},
+   { 843, 1,197, 35,0x14}, { 844, 1,198, 35,0x14}, { 846, 1,199, 35,0x14}, { 847, 1,200,  0,0x04},
+   { 848,15,201,  0,0x04}, { 849,14,202,  0,0x04}, { 854, 1,129,  0,0x04}, { 864, 1, 65, 38,0x1c},
+   { 873,25, 66, 54,0x14}, { 874,25, 67, 54,0x14}, { 875, 1, 63, 54,0x14}, { 876,15, 64, 54,0x14},
+   { 898,14,122, 44,0x14}, { 913,15,114, 44,0x14}, { 914,15,115, 44,0x14}, { 915,25,116, 44,0x14},
+   { 916,25,119, 44,0x14}, { 917,25,120, 44,0x14}, { 918,19,117, 44,0x14}, { 919, 1,121, 44,0x14},
+   { 947,19, 50, 54,0x14}, { 957, 1,207,163,0x1c}, { 965,15, 68, 54,0x14}, { 966,15, 69, 54,0x14},
+   { 967, 9, 71, 54,0x14}, { 968, 9, 72, 54,0x14}, { 969, 9, 73, 54,0x14}, { 970, 1, 74, 54,0x14},
+   { 971, 1, 75, 54,0x14}, { 996,15, 77, 54,0x14}, { 997,15, 78, 54,0x14}, {1018, 1, 76, 57,0x1c},
+   {1028, 8,208,  0,0x04}, {1029, 8,209,  0,0x04}, {1030,15,210,  0,0x04}, {1031,17,211,  0,0x04},
+   {1032, 1,212,  0,0x04}, {1049, 7, 70, 54,0x14}, {1079,26, 79, 54,0x14}, {1080,15,241,  0,0x04},
+   {1081, 7,242,  0,0x04}, {1082,10,216, 36,0x14}, {1083, 7,217, 36,0x14}, {1084, 7,218, 36,0x14},
+   {1085,10,219, 36,0x14}, {1086,10,220, 36,0x14}, {1087,10,221, 36,0x14}, {1088,10,222, 36,0x14},
+   {1089,10,214,  0,0x04}, {1090, 1,215,  0,0x04}, {1091, 8,240,  0,0x04}, {1092, 7,224,  0,0x04},
+   {1094, 1,188,100,0x14}, {1096,15,189,100,0x14}, {1097,15,190,100,0x14}, {1098,15,191,100,0x14},
+   {1099,15,192,100,0x14}, {1100, 7,225,186,0x14}, {1101, 7,226,186,0x14}, {1102,11,227,186,0x14},
+   {1103,15,228,186,0x14}, {1104,15,229,186,0x14}, {1105,15,230,186,0x14}, {1106,15,231,186,0x14},
+   {1107, 7,232,186,0x14}, {1108, 7,233,186,0x14}, {1109, 7,234,186,0x14}, {1110,11,235,186,0x14},
+   {1111, 7,236,186,0x14}, {1112,10,237,186,0x14}, {1113,15,238,186,0x14}, {1114,15,239,186,0x14},
+   {1133, 7,243,  0,0x04}, {1138,10,223, 36,0x14}, {1146,13, 81, 54,0x14}, {1147,10, 82, 54,0x14},
+   {1151,15, 80, 54,0x14}, {1184, 2, 83,150,0x14}, {1185,29, 84,150,0x14}, {1186,15, 85,150,0x14},
+   {1191,15, 87, 54,0x14}, {1192,10, 88, 54,0x14}, {1193, 7, 89, 54,0x14}, {1194, 1, 90, 54,0x14},
+   {1195,13, 91, 54,0x14}, {1196,15, 92, 54,0x14}, {1197,15, 99, 54,0x14}, {1198, 1, 93, 54,0x14},
+   {1199,11, 94, 54,0x14}, {1200,11, 95, 54,0x14}, {1227,15, 86, 54,0x14}, {1242, 8, 98, 54,0x14},
+   {1244, 8, 97, 54,0x14}, {1435, 1,100, 54,0x14}, {1439, 1,101, 54,0x14}, {1449,15,102, 54,0x14},
+   {1450,15,103, 54,0x14}, {1451,14,104, 54,0x14}, {1452,14,105, 54,0x14}, {1457,14,106, 54,0x14},
+   {1458,14,107, 54,0x14}, {1478, 1,108, 54,0x14}, {1479, 1,109, 54,0x14}, {1480,14,110, 54,0x14},
+   {1481, 1,111, 54,0x14}, {1482, 1,112, 54,0x14}, {1483, 1,113, 21,0x1c}
 };
 const FieldTrait_Hash_Array NewOrderSingle::_ftha(NewOrderSingle::_traits, 243);
 const MsgType NewOrderSingle::_msgtype("D");
@@ -8215,97 +7515,77 @@ const FieldTrait *NewOrderSingle::NoComplexEvents::NoComplexEventDates::NoComple
 const FieldTrait_Hash_Array& NewOrderSingle::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& NewOrderSingle::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NewOrderList::_traits[] =
+const FieldTrait NewOrderList::_traits[]
 {
-   FieldTrait(  66,15,  1,  0,0x04), FieldTrait(  68, 1, 17,  0,0x04), FieldTrait(  69,15, 11,  0,0x04),
-   FieldTrait(  73, 1, 19, 67,0x1c), FieldTrait( 352, 2, 12,  0,0x04), FieldTrait( 353,28, 13,  0,0x04),
-   FieldTrait( 390,15,  2,  0,0x04), FieldTrait( 391,15,  3,  0,0x04), FieldTrait( 394, 1,  5,  0,0x04),
-   FieldTrait( 414, 1,  4,  0,0x04), FieldTrait( 415, 1,  6,  0,0x04), FieldTrait( 433, 7, 10,  0,0x04),
-   FieldTrait( 480, 7,  7,  0,0x04), FieldTrait( 481, 7,  8,  0,0x04), FieldTrait( 513,15,  9,  0,0x04),
-   FieldTrait( 765,14, 14,  0,0x04), FieldTrait( 766,13, 15,  0,0x04), FieldTrait( 767,19, 16,  0,0x04),
-   FieldTrait( 893, 8, 18,  0,0x04), FieldTrait(1116, 1, 20,139,0x1c), FieldTrait(1385, 1, 21,  0,0x04)
+   {  66,15,  1,  0,0x04}, {  68, 1, 17,  0,0x04}, {  69,15, 11,  0,0x04}, {  73, 1, 19, 67,0x1c},
+   { 352, 2, 12,  0,0x04}, { 353,28, 13,  0,0x04}, { 390,15,  2,  0,0x04}, { 391,15,  3,  0,0x04},
+   { 394, 1,  5,  0,0x04}, { 414, 1,  4,  0,0x04}, { 415, 1,  6,  0,0x04}, { 433, 7, 10,  0,0x04},
+   { 480, 7,  7,  0,0x04}, { 481, 7,  8,  0,0x04}, { 513,15,  9,  0,0x04}, { 765,14, 14,  0,0x04},
+   { 766,13, 15,  0,0x04}, { 767,19, 16,  0,0x04}, { 893, 8, 18,  0,0x04}, {1116, 1, 20,139,0x1c},
+   {1385, 1, 21,  0,0x04}
 };
 const FieldTrait_Hash_Array NewOrderList::_ftha(NewOrderList::_traits, 21);
 const MsgType NewOrderList::_msgtype("E");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NewOrderList::NoOrders::_traits[] =
+const FieldTrait NewOrderList::NoOrders::_traits[]
 {
-   FieldTrait(   1,15,  9,  0,0x04), FieldTrait(  11,15,  1,  0,0x05), FieldTrait(  12,13,157, 16,0x14),
-   FieldTrait(  13, 7,158, 16,0x14), FieldTrait(  15,19,147,  0,0x04), FieldTrait(  18,16, 22,  0,0x04),
-   FieldTrait(  21, 7, 21,  0,0x04), FieldTrait(  22,15, 31, 54,0x14), FieldTrait(  23,15,150,  0,0x04),
-   FieldTrait(  38,10,124, 93,0x14), FieldTrait(  40, 7,129,  0,0x04), FieldTrait(  44,11,131,  0,0x04),
-   FieldTrait(  48,15, 30, 54,0x14), FieldTrait(  54, 7,118,  0,0x05), FieldTrait(  55,15, 28, 54,0x14),
-   FieldTrait(  58,15,167,  0,0x04), FieldTrait(  59, 7,152,  0,0x04), FieldTrait(  60,22,121,  0,0x04),
-   FieldTrait(  63,15, 17,  0,0x04), FieldTrait(  64,25, 18,  0,0x04), FieldTrait(  65,15, 29, 54,0x14),
-   FieldTrait(  67, 1,  3,  0,0x05), FieldTrait(  70,15, 14,  0,0x04), FieldTrait(  75,25,  8,  0,0x04),
-   FieldTrait(  77, 7,173,  0,0x04), FieldTrait(  78, 1, 16,104,0x1c), FieldTrait(  81, 7, 27,  0,0x04),
-   FieldTrait(  99,11,132,  0,0x04), FieldTrait( 100,20, 25,  0,0x04), FieldTrait( 106,15, 57, 54,0x14),
-   FieldTrait( 107,15, 60, 54,0x14), FieldTrait( 110,10, 23,  0,0x04), FieldTrait( 111,10, 24,  0,0x04),
-   FieldTrait( 114, 8,120,  0,0x04), FieldTrait( 117,15,151,  0,0x04), FieldTrait( 120,19,165,  0,0x04),
-   FieldTrait( 121, 8,164,  0,0x04), FieldTrait( 126,22,155,  0,0x04), FieldTrait( 140,11,117,  0,0x04),
-   FieldTrait( 152,10,125, 93,0x14), FieldTrait( 160, 7,  5,  0,0x04), FieldTrait( 167,15, 35, 54,0x14),
-   FieldTrait( 168,22,153,  0,0x04), FieldTrait( 192,10,171,  0,0x04), FieldTrait( 193,25,170,  0,0x04),
-   FieldTrait( 200,21, 37, 54,0x14), FieldTrait( 201, 1, 98, 54,0x14), FieldTrait( 202,11, 51, 54,0x14),
-   FieldTrait( 203, 1,174,  0,0x04), FieldTrait( 206, 7, 53, 54,0x14), FieldTrait( 207,20, 56, 54,0x14),
-   FieldTrait( 210,10,175,  0,0x04), FieldTrait( 211, 9,176,100,0x14), FieldTrait( 218,12,133,160,0x14),
-   FieldTrait( 220,19,134,160,0x14), FieldTrait( 221,15,135,160,0x14), FieldTrait( 222,15,136,160,0x14),
-   FieldTrait( 223,14, 55, 54,0x14), FieldTrait( 224,25, 39, 54,0x14), FieldTrait( 225,25, 40, 54,0x14),
-   FieldTrait( 226, 1, 42, 54,0x14), FieldTrait( 227,14, 43, 54,0x14), FieldTrait( 228, 9, 44, 54,0x14),
-   FieldTrait( 229,25,  7,  0,0x04), FieldTrait( 231, 9, 54, 54,0x14), FieldTrait( 232, 1,122,162,0x1c),
-   FieldTrait( 235,15,141,198,0x14), FieldTrait( 236,14,142,198,0x14), FieldTrait( 239, 1, 41, 54,0x14),
-   FieldTrait( 240,25, 50, 54,0x14), FieldTrait( 255,15, 45, 54,0x14), FieldTrait( 348, 2, 58, 54,0x14),
-   FieldTrait( 349,28, 59, 54,0x14), FieldTrait( 350, 2, 61, 54,0x14), FieldTrait( 351,28, 62, 54,0x14),
-   FieldTrait( 354, 2,168,  0,0x04), FieldTrait( 355,28,169,  0,0x04), FieldTrait( 376,15,148,  0,0x04),
-   FieldTrait( 377, 8,149,  0,0x04), FieldTrait( 386, 1, 26,185,0x1c), FieldTrait( 388, 7,187, 35,0x14),
-   FieldTrait( 389, 9,188, 35,0x14), FieldTrait( 401, 1,119,  0,0x04), FieldTrait( 423, 1,130,  0,0x04),
-   FieldTrait( 427, 1,156,  0,0x04), FieldTrait( 432,25,154,  0,0x04), FieldTrait( 453, 1,  6, 94,0x1c),
-   FieldTrait( 454, 1, 32,142,0x1c), FieldTrait( 460, 1, 33, 54,0x14), FieldTrait( 461,15, 34, 54,0x14),
-   FieldTrait( 468, 7,127, 93,0x14), FieldTrait( 469, 9,128, 93,0x14), FieldTrait( 470,18, 47, 54,0x14),
-   FieldTrait( 471,15, 48, 54,0x14), FieldTrait( 472,15, 49, 54,0x14), FieldTrait( 479,19,159, 16,0x14),
-   FieldTrait( 494,15,197,  0,0x04), FieldTrait( 497, 7,160, 16,0x14), FieldTrait( 516,14,126, 93,0x14),
-   FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 528, 7,161,  0,0x04), FieldTrait( 529,16,162,  0,0x04),
-   FieldTrait( 541,25, 38, 54,0x14), FieldTrait( 543,15, 46, 54,0x14), FieldTrait( 544, 7, 19,  0,0x04),
-   FieldTrait( 581, 1, 11,  0,0x04), FieldTrait( 582, 1,163,  0,0x04), FieldTrait( 583,15,  4,  0,0x04),
-   FieldTrait( 589, 7, 12,  0,0x04), FieldTrait( 590, 7, 13,  0,0x04), FieldTrait( 591, 7, 15,  0,0x04),
-   FieldTrait( 635,15, 20,  0,0x04), FieldTrait( 640,11,172,  0,0x04), FieldTrait( 660, 1, 10,  0,0x04),
-   FieldTrait( 662,11,137,160,0x14), FieldTrait( 663, 1,138,160,0x14), FieldTrait( 667,21, 64, 54,0x14),
-   FieldTrait( 691,15, 63, 54,0x14), FieldTrait( 696,25,144,198,0x14), FieldTrait( 697,11,145,198,0x14),
-   FieldTrait( 698, 1,146,198,0x14), FieldTrait( 699,15,139,160,0x14), FieldTrait( 701,25,143,198,0x14),
-   FieldTrait( 711, 1,116,188,0x1c), FieldTrait( 761,15,140,160,0x14), FieldTrait( 762,15, 36, 54,0x14),
-   FieldTrait( 775, 1,166,  0,0x04), FieldTrait( 835, 1,177,100,0x14), FieldTrait( 836, 1,178,100,0x14),
-   FieldTrait( 837, 1,179,100,0x14), FieldTrait( 838, 1,180,100,0x14), FieldTrait( 840, 1,181,100,0x14),
-   FieldTrait( 841, 1,189, 35,0x14), FieldTrait( 842, 1,190, 35,0x14), FieldTrait( 843, 1,191, 35,0x14),
-   FieldTrait( 844, 1,192, 35,0x14), FieldTrait( 846, 1,193, 35,0x14), FieldTrait( 847, 1,194,  0,0x04),
-   FieldTrait( 848,15,195,  0,0x04), FieldTrait( 849,14,196,  0,0x04), FieldTrait( 854, 1,123,  0,0x04),
-   FieldTrait( 864, 1, 67, 38,0x1c), FieldTrait( 873,25, 68, 54,0x14), FieldTrait( 874,25, 69, 54,0x14),
-   FieldTrait( 875, 1, 65, 54,0x14), FieldTrait( 876,15, 66, 54,0x14), FieldTrait( 947,19, 52, 54,0x14),
-   FieldTrait( 957, 1,198,163,0x1c), FieldTrait( 965,15, 70, 54,0x14), FieldTrait( 966,15, 71, 54,0x14),
-   FieldTrait( 967, 9, 73, 54,0x14), FieldTrait( 968, 9, 74, 54,0x14), FieldTrait( 969, 9, 75, 54,0x14),
-   FieldTrait( 970, 1, 76, 54,0x14), FieldTrait( 971, 1, 77, 54,0x14), FieldTrait( 996,15, 79, 54,0x14),
-   FieldTrait( 997,15, 80, 54,0x14), FieldTrait(1018, 1, 78, 57,0x1c), FieldTrait(1049, 7, 72, 54,0x14),
-   FieldTrait(1079,26, 81, 54,0x14), FieldTrait(1080,15,225,  0,0x04), FieldTrait(1081, 7,226,  0,0x04),
-   FieldTrait(1082,10,201, 36,0x14), FieldTrait(1083, 7,202, 36,0x14), FieldTrait(1084, 7,203, 36,0x14),
-   FieldTrait(1085,10,204, 36,0x14), FieldTrait(1086,10,205, 36,0x14), FieldTrait(1087,10,206, 36,0x14),
-   FieldTrait(1088,10,207, 36,0x14), FieldTrait(1089,10,199,  0,0x04), FieldTrait(1090, 1,200,  0,0x04),
-   FieldTrait(1091, 8,227,  0,0x04), FieldTrait(1092, 7,209,  0,0x04), FieldTrait(1094, 1,182,100,0x14),
-   FieldTrait(1096,15,183,100,0x14), FieldTrait(1097,15,184,100,0x14), FieldTrait(1098,15,185,100,0x14),
-   FieldTrait(1099,15,186,100,0x14), FieldTrait(1100, 7,210,186,0x14), FieldTrait(1101, 7,211,186,0x14),
-   FieldTrait(1102,11,212,186,0x14), FieldTrait(1103,15,213,186,0x14), FieldTrait(1104,15,214,186,0x14),
-   FieldTrait(1105,15,215,186,0x14), FieldTrait(1106,15,216,186,0x14), FieldTrait(1107, 7,217,186,0x14),
-   FieldTrait(1108, 7,218,186,0x14), FieldTrait(1109, 7,219,186,0x14), FieldTrait(1110,11,220,186,0x14),
-   FieldTrait(1111, 7,221,186,0x14), FieldTrait(1112,10,222,186,0x14), FieldTrait(1113,15,223,186,0x14),
-   FieldTrait(1114,15,224,186,0x14), FieldTrait(1133, 7,228,  0,0x04), FieldTrait(1138,10,208, 36,0x14),
-   FieldTrait(1146,13, 83, 54,0x14), FieldTrait(1147,10, 84, 54,0x14), FieldTrait(1151,15, 82, 54,0x14),
-   FieldTrait(1184, 2, 85,150,0x14), FieldTrait(1185,29, 86,150,0x14), FieldTrait(1186,15, 87,150,0x14),
-   FieldTrait(1191,15, 89, 54,0x14), FieldTrait(1192,10, 90, 54,0x14), FieldTrait(1193, 7, 91, 54,0x14),
-   FieldTrait(1194, 1, 92, 54,0x14), FieldTrait(1195,13, 93, 54,0x14), FieldTrait(1196,15, 94, 54,0x14),
-   FieldTrait(1197,15,101, 54,0x14), FieldTrait(1198, 1, 95, 54,0x14), FieldTrait(1199,11, 96, 54,0x14),
-   FieldTrait(1200,11, 97, 54,0x14), FieldTrait(1227,15, 88, 54,0x14), FieldTrait(1242, 8,100, 54,0x14),
-   FieldTrait(1244, 8, 99, 54,0x14), FieldTrait(1435, 1,102, 54,0x14), FieldTrait(1439, 1,103, 54,0x14),
-   FieldTrait(1449,15,104, 54,0x14), FieldTrait(1450,15,105, 54,0x14), FieldTrait(1451,14,106, 54,0x14),
-   FieldTrait(1452,14,107, 54,0x14), FieldTrait(1457,14,108, 54,0x14), FieldTrait(1458,14,109, 54,0x14),
-   FieldTrait(1478, 1,110, 54,0x14), FieldTrait(1479, 1,111, 54,0x14), FieldTrait(1480,14,112, 54,0x14),
-   FieldTrait(1481, 1,113, 54,0x14), FieldTrait(1482, 1,114, 54,0x14), FieldTrait(1483, 1,115, 21,0x1c)
+   {   1,15,  9,  0,0x04}, {  11,15,  1,  0,0x05}, {  12,13,157, 16,0x14}, {  13, 7,158, 16,0x14},
+   {  15,19,147,  0,0x04}, {  18,16, 22,  0,0x04}, {  21, 7, 21,  0,0x04}, {  22,15, 31, 54,0x14},
+   {  23,15,150,  0,0x04}, {  38,10,124, 93,0x14}, {  40, 7,129,  0,0x04}, {  44,11,131,  0,0x04},
+   {  48,15, 30, 54,0x14}, {  54, 7,118,  0,0x05}, {  55,15, 28, 54,0x14}, {  58,15,167,  0,0x04},
+   {  59, 7,152,  0,0x04}, {  60,22,121,  0,0x04}, {  63,15, 17,  0,0x04}, {  64,25, 18,  0,0x04},
+   {  65,15, 29, 54,0x14}, {  67, 1,  3,  0,0x05}, {  70,15, 14,  0,0x04}, {  75,25,  8,  0,0x04},
+   {  77, 7,173,  0,0x04}, {  78, 1, 16,104,0x1c}, {  81, 7, 27,  0,0x04}, {  99,11,132,  0,0x04},
+   { 100,20, 25,  0,0x04}, { 106,15, 57, 54,0x14}, { 107,15, 60, 54,0x14}, { 110,10, 23,  0,0x04},
+   { 111,10, 24,  0,0x04}, { 114, 8,120,  0,0x04}, { 117,15,151,  0,0x04}, { 120,19,165,  0,0x04},
+   { 121, 8,164,  0,0x04}, { 126,22,155,  0,0x04}, { 140,11,117,  0,0x04}, { 152,10,125, 93,0x14},
+   { 160, 7,  5,  0,0x04}, { 167,15, 35, 54,0x14}, { 168,22,153,  0,0x04}, { 192,10,171,  0,0x04},
+   { 193,25,170,  0,0x04}, { 200,21, 37, 54,0x14}, { 201, 1, 98, 54,0x14}, { 202,11, 51, 54,0x14},
+   { 203, 1,174,  0,0x04}, { 206, 7, 53, 54,0x14}, { 207,20, 56, 54,0x14}, { 210,10,175,  0,0x04},
+   { 211, 9,176,100,0x14}, { 218,12,133,160,0x14}, { 220,19,134,160,0x14}, { 221,15,135,160,0x14},
+   { 222,15,136,160,0x14}, { 223,14, 55, 54,0x14}, { 224,25, 39, 54,0x14}, { 225,25, 40, 54,0x14},
+   { 226, 1, 42, 54,0x14}, { 227,14, 43, 54,0x14}, { 228, 9, 44, 54,0x14}, { 229,25,  7,  0,0x04},
+   { 231, 9, 54, 54,0x14}, { 232, 1,122,162,0x1c}, { 235,15,141,198,0x14}, { 236,14,142,198,0x14},
+   { 239, 1, 41, 54,0x14}, { 240,25, 50, 54,0x14}, { 255,15, 45, 54,0x14}, { 348, 2, 58, 54,0x14},
+   { 349,28, 59, 54,0x14}, { 350, 2, 61, 54,0x14}, { 351,28, 62, 54,0x14}, { 354, 2,168,  0,0x04},
+   { 355,28,169,  0,0x04}, { 376,15,148,  0,0x04}, { 377, 8,149,  0,0x04}, { 386, 1, 26,185,0x1c},
+   { 388, 7,187, 35,0x14}, { 389, 9,188, 35,0x14}, { 401, 1,119,  0,0x04}, { 423, 1,130,  0,0x04},
+   { 427, 1,156,  0,0x04}, { 432,25,154,  0,0x04}, { 453, 1,  6, 94,0x1c}, { 454, 1, 32,142,0x1c},
+   { 460, 1, 33, 54,0x14}, { 461,15, 34, 54,0x14}, { 468, 7,127, 93,0x14}, { 469, 9,128, 93,0x14},
+   { 470,18, 47, 54,0x14}, { 471,15, 48, 54,0x14}, { 472,15, 49, 54,0x14}, { 479,19,159, 16,0x14},
+   { 494,15,197,  0,0x04}, { 497, 7,160, 16,0x14}, { 516,14,126, 93,0x14}, { 526,15,  2,  0,0x04},
+   { 528, 7,161,  0,0x04}, { 529,16,162,  0,0x04}, { 541,25, 38, 54,0x14}, { 543,15, 46, 54,0x14},
+   { 544, 7, 19,  0,0x04}, { 581, 1, 11,  0,0x04}, { 582, 1,163,  0,0x04}, { 583,15,  4,  0,0x04},
+   { 589, 7, 12,  0,0x04}, { 590, 7, 13,  0,0x04}, { 591, 7, 15,  0,0x04}, { 635,15, 20,  0,0x04},
+   { 640,11,172,  0,0x04}, { 660, 1, 10,  0,0x04}, { 662,11,137,160,0x14}, { 663, 1,138,160,0x14},
+   { 667,21, 64, 54,0x14}, { 691,15, 63, 54,0x14}, { 696,25,144,198,0x14}, { 697,11,145,198,0x14},
+   { 698, 1,146,198,0x14}, { 699,15,139,160,0x14}, { 701,25,143,198,0x14}, { 711, 1,116,188,0x1c},
+   { 761,15,140,160,0x14}, { 762,15, 36, 54,0x14}, { 775, 1,166,  0,0x04}, { 835, 1,177,100,0x14},
+   { 836, 1,178,100,0x14}, { 837, 1,179,100,0x14}, { 838, 1,180,100,0x14}, { 840, 1,181,100,0x14},
+   { 841, 1,189, 35,0x14}, { 842, 1,190, 35,0x14}, { 843, 1,191, 35,0x14}, { 844, 1,192, 35,0x14},
+   { 846, 1,193, 35,0x14}, { 847, 1,194,  0,0x04}, { 848,15,195,  0,0x04}, { 849,14,196,  0,0x04},
+   { 854, 1,123,  0,0x04}, { 864, 1, 67, 38,0x1c}, { 873,25, 68, 54,0x14}, { 874,25, 69, 54,0x14},
+   { 875, 1, 65, 54,0x14}, { 876,15, 66, 54,0x14}, { 947,19, 52, 54,0x14}, { 957, 1,198,163,0x1c},
+   { 965,15, 70, 54,0x14}, { 966,15, 71, 54,0x14}, { 967, 9, 73, 54,0x14}, { 968, 9, 74, 54,0x14},
+   { 969, 9, 75, 54,0x14}, { 970, 1, 76, 54,0x14}, { 971, 1, 77, 54,0x14}, { 996,15, 79, 54,0x14},
+   { 997,15, 80, 54,0x14}, {1018, 1, 78, 57,0x1c}, {1049, 7, 72, 54,0x14}, {1079,26, 81, 54,0x14},
+   {1080,15,225,  0,0x04}, {1081, 7,226,  0,0x04}, {1082,10,201, 36,0x14}, {1083, 7,202, 36,0x14},
+   {1084, 7,203, 36,0x14}, {1085,10,204, 36,0x14}, {1086,10,205, 36,0x14}, {1087,10,206, 36,0x14},
+   {1088,10,207, 36,0x14}, {1089,10,199,  0,0x04}, {1090, 1,200,  0,0x04}, {1091, 8,227,  0,0x04},
+   {1092, 7,209,  0,0x04}, {1094, 1,182,100,0x14}, {1096,15,183,100,0x14}, {1097,15,184,100,0x14},
+   {1098,15,185,100,0x14}, {1099,15,186,100,0x14}, {1100, 7,210,186,0x14}, {1101, 7,211,186,0x14},
+   {1102,11,212,186,0x14}, {1103,15,213,186,0x14}, {1104,15,214,186,0x14}, {1105,15,215,186,0x14},
+   {1106,15,216,186,0x14}, {1107, 7,217,186,0x14}, {1108, 7,218,186,0x14}, {1109, 7,219,186,0x14},
+   {1110,11,220,186,0x14}, {1111, 7,221,186,0x14}, {1112,10,222,186,0x14}, {1113,15,223,186,0x14},
+   {1114,15,224,186,0x14}, {1133, 7,228,  0,0x04}, {1138,10,208, 36,0x14}, {1146,13, 83, 54,0x14},
+   {1147,10, 84, 54,0x14}, {1151,15, 82, 54,0x14}, {1184, 2, 85,150,0x14}, {1185,29, 86,150,0x14},
+   {1186,15, 87,150,0x14}, {1191,15, 89, 54,0x14}, {1192,10, 90, 54,0x14}, {1193, 7, 91, 54,0x14},
+   {1194, 1, 92, 54,0x14}, {1195,13, 93, 54,0x14}, {1196,15, 94, 54,0x14}, {1197,15,101, 54,0x14},
+   {1198, 1, 95, 54,0x14}, {1199,11, 96, 54,0x14}, {1200,11, 97, 54,0x14}, {1227,15, 88, 54,0x14},
+   {1242, 8,100, 54,0x14}, {1244, 8, 99, 54,0x14}, {1435, 1,102, 54,0x14}, {1439, 1,103, 54,0x14},
+   {1449,15,104, 54,0x14}, {1450,15,105, 54,0x14}, {1451,14,106, 54,0x14}, {1452,14,107, 54,0x14},
+   {1457,14,108, 54,0x14}, {1458,14,109, 54,0x14}, {1478, 1,110, 54,0x14}, {1479, 1,111, 54,0x14},
+   {1480,14,112, 54,0x14}, {1481, 1,113, 54,0x14}, {1482, 1,114, 54,0x14}, {1483, 1,115, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    NewOrderList::NoOrders::_ftha(NewOrderList::NoOrders::_traits, 228);
@@ -8399,48 +7679,38 @@ const FieldTrait *NewOrderList::NoRootPartyIDs::NoRootPartySubIDs::_traits(NoRoo
 const FieldTrait_Hash_Array& NewOrderList::NoRootPartyIDs::NoRootPartySubIDs::_ftha(NoRootPartySubIDsV1_ftha);
 const MsgType& NewOrderList::NoRootPartyIDs::NoRootPartySubIDs::_msgtype(NoRootPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderCancelRequest::_traits[] =
+const FieldTrait OrderCancelRequest::_traits[]
 {
-   FieldTrait(   1,15,  8,  0,0x04), FieldTrait(  11,15,  3,  0,0x04), FieldTrait(  22,15, 15, 54,0x14),
-   FieldTrait(  37,15,  2,  0,0x04), FieldTrait(  38,10,112, 93,0x14), FieldTrait(  41,15,  1,  0,0x04),
-   FieldTrait(  48,15, 14, 54,0x14), FieldTrait(  54, 7,110,  0,0x04), FieldTrait(  55,15, 12, 54,0x14),
-   FieldTrait(  58,15,118,  0,0x04), FieldTrait(  60,22,111,  0,0x04), FieldTrait(  65,15, 13, 54,0x14),
-   FieldTrait(  66,15,  6,  0,0x04), FieldTrait( 106,15, 41, 54,0x14), FieldTrait( 107,15, 44, 54,0x14),
-   FieldTrait( 152,10,113, 93,0x14), FieldTrait( 167,15, 19, 54,0x14), FieldTrait( 200,21, 21, 54,0x14),
-   FieldTrait( 201, 1, 82, 54,0x14), FieldTrait( 202,11, 35, 54,0x14), FieldTrait( 206, 7, 37, 54,0x14),
-   FieldTrait( 207,20, 40, 54,0x14), FieldTrait( 223,14, 39, 54,0x14), FieldTrait( 224,25, 23, 54,0x14),
-   FieldTrait( 225,25, 24, 54,0x14), FieldTrait( 226, 1, 26, 54,0x14), FieldTrait( 227,14, 27, 54,0x14),
-   FieldTrait( 228, 9, 28, 54,0x14), FieldTrait( 231, 9, 38, 54,0x14), FieldTrait( 239, 1, 25, 54,0x14),
-   FieldTrait( 240,25, 34, 54,0x14), FieldTrait( 255,15, 29, 54,0x14), FieldTrait( 348, 2, 42, 54,0x14),
-   FieldTrait( 349,28, 43, 54,0x14), FieldTrait( 350, 2, 45, 54,0x14), FieldTrait( 351,28, 46, 54,0x14),
-   FieldTrait( 354, 2,119,  0,0x04), FieldTrait( 355,28,120,  0,0x04), FieldTrait( 376,15,117,  0,0x04),
-   FieldTrait( 453, 1, 11, 94,0x1c), FieldTrait( 454, 1, 16,142,0x1c), FieldTrait( 460, 1, 17, 54,0x14),
-   FieldTrait( 461,15, 18, 54,0x14), FieldTrait( 468, 7,115, 93,0x14), FieldTrait( 469, 9,116, 93,0x14),
-   FieldTrait( 470,18, 31, 54,0x14), FieldTrait( 471,15, 32, 54,0x14), FieldTrait( 472,15, 33, 54,0x14),
-   FieldTrait( 516,14,114, 93,0x14), FieldTrait( 526,15,  4,  0,0x04), FieldTrait( 541,25, 22, 54,0x14),
-   FieldTrait( 543,15, 30, 54,0x14), FieldTrait( 581, 1, 10,  0,0x04), FieldTrait( 583,15,  5,  0,0x04),
-   FieldTrait( 586,22,  7,  0,0x04), FieldTrait( 660, 1,  9,  0,0x04), FieldTrait( 667,21, 48, 54,0x14),
-   FieldTrait( 691,15, 47, 54,0x14), FieldTrait( 711, 1,109,188,0x1c), FieldTrait( 762,15, 20, 54,0x14),
-   FieldTrait( 788, 1,104, 44,0x14), FieldTrait( 864, 1, 51, 38,0x1c), FieldTrait( 873,25, 52, 54,0x14),
-   FieldTrait( 874,25, 53, 54,0x14), FieldTrait( 875, 1, 49, 54,0x14), FieldTrait( 876,15, 50, 54,0x14),
-   FieldTrait( 898,14,108, 44,0x14), FieldTrait( 913,15,100, 44,0x14), FieldTrait( 914,15,101, 44,0x14),
-   FieldTrait( 915,25,102, 44,0x14), FieldTrait( 916,25,105, 44,0x14), FieldTrait( 917,25,106, 44,0x14),
-   FieldTrait( 918,19,103, 44,0x14), FieldTrait( 919, 1,107, 44,0x14), FieldTrait( 947,19, 36, 54,0x14),
-   FieldTrait( 965,15, 54, 54,0x14), FieldTrait( 966,15, 55, 54,0x14), FieldTrait( 967, 9, 57, 54,0x14),
-   FieldTrait( 968, 9, 58, 54,0x14), FieldTrait( 969, 9, 59, 54,0x14), FieldTrait( 970, 1, 60, 54,0x14),
-   FieldTrait( 971, 1, 61, 54,0x14), FieldTrait( 996,15, 63, 54,0x14), FieldTrait( 997,15, 64, 54,0x14),
-   FieldTrait(1018, 1, 62, 57,0x1c), FieldTrait(1049, 7, 56, 54,0x14), FieldTrait(1079,26, 65, 54,0x14),
-   FieldTrait(1146,13, 67, 54,0x14), FieldTrait(1147,10, 68, 54,0x14), FieldTrait(1151,15, 66, 54,0x14),
-   FieldTrait(1184, 2, 69,150,0x14), FieldTrait(1185,29, 70,150,0x14), FieldTrait(1186,15, 71,150,0x14),
-   FieldTrait(1191,15, 73, 54,0x14), FieldTrait(1192,10, 74, 54,0x14), FieldTrait(1193, 7, 75, 54,0x14),
-   FieldTrait(1194, 1, 76, 54,0x14), FieldTrait(1195,13, 77, 54,0x14), FieldTrait(1196,15, 78, 54,0x14),
-   FieldTrait(1197,15, 85, 54,0x14), FieldTrait(1198, 1, 79, 54,0x14), FieldTrait(1199,11, 80, 54,0x14),
-   FieldTrait(1200,11, 81, 54,0x14), FieldTrait(1227,15, 72, 54,0x14), FieldTrait(1242, 8, 84, 54,0x14),
-   FieldTrait(1244, 8, 83, 54,0x14), FieldTrait(1435, 1, 86, 54,0x14), FieldTrait(1439, 1, 87, 54,0x14),
-   FieldTrait(1449,15, 88, 54,0x14), FieldTrait(1450,15, 89, 54,0x14), FieldTrait(1451,14, 90, 54,0x14),
-   FieldTrait(1452,14, 91, 54,0x14), FieldTrait(1457,14, 92, 54,0x14), FieldTrait(1458,14, 93, 54,0x14),
-   FieldTrait(1478, 1, 94, 54,0x14), FieldTrait(1479, 1, 95, 54,0x14), FieldTrait(1480,14, 96, 54,0x14),
-   FieldTrait(1481, 1, 97, 54,0x14), FieldTrait(1482, 1, 98, 54,0x14), FieldTrait(1483, 1, 99, 21,0x1c)
+   {   1,15,  8,  0,0x04}, {  11,15,  3,  0,0x04}, {  22,15, 15, 54,0x14}, {  37,15,  2,  0,0x04},
+   {  38,10,112, 93,0x14}, {  41,15,  1,  0,0x04}, {  48,15, 14, 54,0x14}, {  54, 7,110,  0,0x04},
+   {  55,15, 12, 54,0x14}, {  58,15,118,  0,0x04}, {  60,22,111,  0,0x04}, {  65,15, 13, 54,0x14},
+   {  66,15,  6,  0,0x04}, { 106,15, 41, 54,0x14}, { 107,15, 44, 54,0x14}, { 152,10,113, 93,0x14},
+   { 167,15, 19, 54,0x14}, { 200,21, 21, 54,0x14}, { 201, 1, 82, 54,0x14}, { 202,11, 35, 54,0x14},
+   { 206, 7, 37, 54,0x14}, { 207,20, 40, 54,0x14}, { 223,14, 39, 54,0x14}, { 224,25, 23, 54,0x14},
+   { 225,25, 24, 54,0x14}, { 226, 1, 26, 54,0x14}, { 227,14, 27, 54,0x14}, { 228, 9, 28, 54,0x14},
+   { 231, 9, 38, 54,0x14}, { 239, 1, 25, 54,0x14}, { 240,25, 34, 54,0x14}, { 255,15, 29, 54,0x14},
+   { 348, 2, 42, 54,0x14}, { 349,28, 43, 54,0x14}, { 350, 2, 45, 54,0x14}, { 351,28, 46, 54,0x14},
+   { 354, 2,119,  0,0x04}, { 355,28,120,  0,0x04}, { 376,15,117,  0,0x04}, { 453, 1, 11, 94,0x1c},
+   { 454, 1, 16,142,0x1c}, { 460, 1, 17, 54,0x14}, { 461,15, 18, 54,0x14}, { 468, 7,115, 93,0x14},
+   { 469, 9,116, 93,0x14}, { 470,18, 31, 54,0x14}, { 471,15, 32, 54,0x14}, { 472,15, 33, 54,0x14},
+   { 516,14,114, 93,0x14}, { 526,15,  4,  0,0x04}, { 541,25, 22, 54,0x14}, { 543,15, 30, 54,0x14},
+   { 581, 1, 10,  0,0x04}, { 583,15,  5,  0,0x04}, { 586,22,  7,  0,0x04}, { 660, 1,  9,  0,0x04},
+   { 667,21, 48, 54,0x14}, { 691,15, 47, 54,0x14}, { 711, 1,109,188,0x1c}, { 762,15, 20, 54,0x14},
+   { 788, 1,104, 44,0x14}, { 864, 1, 51, 38,0x1c}, { 873,25, 52, 54,0x14}, { 874,25, 53, 54,0x14},
+   { 875, 1, 49, 54,0x14}, { 876,15, 50, 54,0x14}, { 898,14,108, 44,0x14}, { 913,15,100, 44,0x14},
+   { 914,15,101, 44,0x14}, { 915,25,102, 44,0x14}, { 916,25,105, 44,0x14}, { 917,25,106, 44,0x14},
+   { 918,19,103, 44,0x14}, { 919, 1,107, 44,0x14}, { 947,19, 36, 54,0x14}, { 965,15, 54, 54,0x14},
+   { 966,15, 55, 54,0x14}, { 967, 9, 57, 54,0x14}, { 968, 9, 58, 54,0x14}, { 969, 9, 59, 54,0x14},
+   { 970, 1, 60, 54,0x14}, { 971, 1, 61, 54,0x14}, { 996,15, 63, 54,0x14}, { 997,15, 64, 54,0x14},
+   {1018, 1, 62, 57,0x1c}, {1049, 7, 56, 54,0x14}, {1079,26, 65, 54,0x14}, {1146,13, 67, 54,0x14},
+   {1147,10, 68, 54,0x14}, {1151,15, 66, 54,0x14}, {1184, 2, 69,150,0x14}, {1185,29, 70,150,0x14},
+   {1186,15, 71,150,0x14}, {1191,15, 73, 54,0x14}, {1192,10, 74, 54,0x14}, {1193, 7, 75, 54,0x14},
+   {1194, 1, 76, 54,0x14}, {1195,13, 77, 54,0x14}, {1196,15, 78, 54,0x14}, {1197,15, 85, 54,0x14},
+   {1198, 1, 79, 54,0x14}, {1199,11, 80, 54,0x14}, {1200,11, 81, 54,0x14}, {1227,15, 72, 54,0x14},
+   {1242, 8, 84, 54,0x14}, {1244, 8, 83, 54,0x14}, {1435, 1, 86, 54,0x14}, {1439, 1, 87, 54,0x14},
+   {1449,15, 88, 54,0x14}, {1450,15, 89, 54,0x14}, {1451,14, 90, 54,0x14}, {1452,14, 91, 54,0x14},
+   {1457,14, 92, 54,0x14}, {1458,14, 93, 54,0x14}, {1478, 1, 94, 54,0x14}, {1479, 1, 95, 54,0x14},
+   {1480,14, 96, 54,0x14}, {1481, 1, 97, 54,0x14}, {1482, 1, 98, 54,0x14}, {1483, 1, 99, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderCancelRequest::_ftha(OrderCancelRequest::_traits, 120);
 const MsgType OrderCancelRequest::_msgtype("F");
@@ -8501,88 +7771,68 @@ const FieldTrait *OrderCancelRequest::NoComplexEvents::NoComplexEventDates::NoCo
 const FieldTrait_Hash_Array& OrderCancelRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderCancelRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderCancelReplaceRequest::_traits[] =
+const FieldTrait OrderCancelReplaceRequest::_traits[]
 {
-   FieldTrait(   1,15, 11,  0,0x04), FieldTrait(  11,15,  6,  0,0x04), FieldTrait(  12,13,182, 16,0x14),
-   FieldTrait(  13, 7,183, 16,0x14), FieldTrait(  15,19,176,  0,0x04), FieldTrait(  18,16, 24,  0,0x04),
-   FieldTrait(  21, 7, 23,  0,0x04), FieldTrait(  22,15, 32, 54,0x14), FieldTrait(  37,15,  1,  0,0x04),
-   FieldTrait(  38,10,130, 93,0x14), FieldTrait(  40, 7,135,  0,0x04), FieldTrait(  41,15,  5,  0,0x04),
-   FieldTrait(  44,11,137,  0,0x04), FieldTrait(  48,15, 31, 54,0x14), FieldTrait(  54, 7,127,  0,0x04),
-   FieldTrait(  55,15, 29, 54,0x14), FieldTrait(  58,15,192,  0,0x04), FieldTrait(  59, 7,177,  0,0x04),
-   FieldTrait(  60,22,128,  0,0x04), FieldTrait(  63,15, 19,  0,0x04), FieldTrait(  64,25, 20,  0,0x04),
-   FieldTrait(  65,15, 30, 54,0x14), FieldTrait(  66,15,  9,  0,0x04), FieldTrait(  70,15, 17,  0,0x04),
-   FieldTrait(  75,25,  4,  0,0x04), FieldTrait(  77, 7,198,  0,0x04), FieldTrait(  78, 1, 18,104,0x1c),
-   FieldTrait(  99,11,138,  0,0x04), FieldTrait( 100,20, 27,  0,0x04), FieldTrait( 106,15, 58, 54,0x14),
-   FieldTrait( 107,15, 61, 54,0x14), FieldTrait( 110,10, 25,  0,0x04), FieldTrait( 111,10, 26,  0,0x04),
-   FieldTrait( 114, 8,201,  0,0x04), FieldTrait( 120,19,190,  0,0x04), FieldTrait( 121, 8,189,  0,0x04),
-   FieldTrait( 126,22,180,  0,0x04), FieldTrait( 152,10,131, 93,0x14), FieldTrait( 167,15, 36, 54,0x14),
-   FieldTrait( 168,22,178,  0,0x04), FieldTrait( 192,10,196,  0,0x04), FieldTrait( 193,25,195,  0,0x04),
-   FieldTrait( 200,21, 38, 54,0x14), FieldTrait( 201, 1, 99, 54,0x14), FieldTrait( 202,11, 52, 54,0x14),
-   FieldTrait( 203, 1,199,  0,0x04), FieldTrait( 206, 7, 54, 54,0x14), FieldTrait( 207,20, 57, 54,0x14),
-   FieldTrait( 210,10,200,  0,0x04), FieldTrait( 211, 9,153,100,0x14), FieldTrait( 218,12,139,160,0x14),
-   FieldTrait( 220,19,140,160,0x14), FieldTrait( 221,15,141,160,0x14), FieldTrait( 222,15,142,160,0x14),
-   FieldTrait( 223,14, 56, 54,0x14), FieldTrait( 224,25, 40, 54,0x14), FieldTrait( 225,25, 41, 54,0x14),
-   FieldTrait( 226, 1, 43, 54,0x14), FieldTrait( 227,14, 44, 54,0x14), FieldTrait( 228, 9, 45, 54,0x14),
-   FieldTrait( 229,25,  3,  0,0x04), FieldTrait( 231, 9, 55, 54,0x14), FieldTrait( 235,15,147,198,0x14),
-   FieldTrait( 236,14,148,198,0x14), FieldTrait( 239, 1, 42, 54,0x14), FieldTrait( 240,25, 51, 54,0x14),
-   FieldTrait( 255,15, 46, 54,0x14), FieldTrait( 348, 2, 59, 54,0x14), FieldTrait( 349,28, 60, 54,0x14),
-   FieldTrait( 350, 2, 62, 54,0x14), FieldTrait( 351,28, 63, 54,0x14), FieldTrait( 354, 2,193,  0,0x04),
-   FieldTrait( 355,28,194,  0,0x04), FieldTrait( 376,15,174,  0,0x04), FieldTrait( 377, 8,175,  0,0x04),
-   FieldTrait( 386, 1, 28,185,0x1c), FieldTrait( 388, 7,164, 35,0x14), FieldTrait( 389, 9,165, 35,0x14),
-   FieldTrait( 423, 1,136,  0,0x04), FieldTrait( 427, 1,181,  0,0x04), FieldTrait( 432,25,179,  0,0x04),
-   FieldTrait( 453, 1,  2, 94,0x1c), FieldTrait( 454, 1, 33,142,0x1c), FieldTrait( 460, 1, 34, 54,0x14),
-   FieldTrait( 461,15, 35, 54,0x14), FieldTrait( 468, 7,133, 93,0x14), FieldTrait( 469, 9,134, 93,0x14),
-   FieldTrait( 470,18, 48, 54,0x14), FieldTrait( 471,15, 49, 54,0x14), FieldTrait( 472,15, 50, 54,0x14),
-   FieldTrait( 479,19,184, 16,0x14), FieldTrait( 480, 7,202,  0,0x04), FieldTrait( 481, 7,203,  0,0x04),
-   FieldTrait( 494,15,205,  0,0x04), FieldTrait( 497, 7,185, 16,0x14), FieldTrait( 513,15,204,  0,0x04),
-   FieldTrait( 516,14,132, 93,0x14), FieldTrait( 526,15,  7,  0,0x04), FieldTrait( 528, 7,186,  0,0x04),
-   FieldTrait( 529,16,187,  0,0x04), FieldTrait( 541,25, 39, 54,0x14), FieldTrait( 543,15, 47, 54,0x14),
-   FieldTrait( 544, 7, 21,  0,0x04), FieldTrait( 581, 1, 13,  0,0x04), FieldTrait( 582, 1,188,  0,0x04),
-   FieldTrait( 583,15,  8,  0,0x04), FieldTrait( 586,22, 10,  0,0x04), FieldTrait( 589, 7, 14,  0,0x04),
-   FieldTrait( 590, 7, 15,  0,0x04), FieldTrait( 591, 7, 16,  0,0x04), FieldTrait( 635,15, 22,  0,0x04),
-   FieldTrait( 640,11,197,  0,0x04), FieldTrait( 660, 1, 12,  0,0x04), FieldTrait( 662,11,143,160,0x14),
-   FieldTrait( 663, 1,144,160,0x14), FieldTrait( 667,21, 65, 54,0x14), FieldTrait( 691,15, 64, 54,0x14),
-   FieldTrait( 696,25,150,198,0x14), FieldTrait( 697,11,151,198,0x14), FieldTrait( 698, 1,152,198,0x14),
-   FieldTrait( 699,15,145,160,0x14), FieldTrait( 701,25,149,198,0x14), FieldTrait( 711, 1,126,188,0x1c),
-   FieldTrait( 761,15,146,160,0x14), FieldTrait( 762,15, 37, 54,0x14), FieldTrait( 768, 1,212,182,0x1c),
-   FieldTrait( 775, 1,191,  0,0x04), FieldTrait( 788, 1,121, 44,0x14), FieldTrait( 835, 1,154,100,0x14),
-   FieldTrait( 836, 1,155,100,0x14), FieldTrait( 837, 1,156,100,0x14), FieldTrait( 838, 1,157,100,0x14),
-   FieldTrait( 840, 1,158,100,0x14), FieldTrait( 841, 1,166, 35,0x14), FieldTrait( 842, 1,167, 35,0x14),
-   FieldTrait( 843, 1,168, 35,0x14), FieldTrait( 844, 1,169, 35,0x14), FieldTrait( 846, 1,170, 35,0x14),
-   FieldTrait( 847, 1,171,  0,0x04), FieldTrait( 848,15,172,  0,0x04), FieldTrait( 849,14,173,  0,0x04),
-   FieldTrait( 854, 1,129,  0,0x04), FieldTrait( 864, 1, 68, 38,0x1c), FieldTrait( 873,25, 69, 54,0x14),
-   FieldTrait( 874,25, 70, 54,0x14), FieldTrait( 875, 1, 66, 54,0x14), FieldTrait( 876,15, 67, 54,0x14),
-   FieldTrait( 898,14,125, 44,0x14), FieldTrait( 913,15,117, 44,0x14), FieldTrait( 914,15,118, 44,0x14),
-   FieldTrait( 915,25,119, 44,0x14), FieldTrait( 916,25,122, 44,0x14), FieldTrait( 917,25,123, 44,0x14),
-   FieldTrait( 918,19,120, 44,0x14), FieldTrait( 919, 1,124, 44,0x14), FieldTrait( 947,19, 53, 54,0x14),
-   FieldTrait( 957, 1,206,163,0x1c), FieldTrait( 965,15, 71, 54,0x14), FieldTrait( 966,15, 72, 54,0x14),
-   FieldTrait( 967, 9, 74, 54,0x14), FieldTrait( 968, 9, 75, 54,0x14), FieldTrait( 969, 9, 76, 54,0x14),
-   FieldTrait( 970, 1, 77, 54,0x14), FieldTrait( 971, 1, 78, 54,0x14), FieldTrait( 996,15, 80, 54,0x14),
-   FieldTrait( 997,15, 81, 54,0x14), FieldTrait(1018, 1, 79, 57,0x1c), FieldTrait(1028, 8,207,  0,0x04),
-   FieldTrait(1029, 8,208,  0,0x04), FieldTrait(1030,15,209,  0,0x04), FieldTrait(1031,17,210,  0,0x04),
-   FieldTrait(1032, 1,211,  0,0x04), FieldTrait(1049, 7, 73, 54,0x14), FieldTrait(1079,26, 82, 54,0x14),
-   FieldTrait(1082,10,215, 36,0x14), FieldTrait(1083, 7,216, 36,0x14), FieldTrait(1084, 7,217, 36,0x14),
-   FieldTrait(1085,10,218, 36,0x14), FieldTrait(1086,10,219, 36,0x14), FieldTrait(1087,10,220, 36,0x14),
-   FieldTrait(1088,10,221, 36,0x14), FieldTrait(1089,10,213,  0,0x04), FieldTrait(1090, 1,214,  0,0x04),
-   FieldTrait(1091, 8,239,  0,0x04), FieldTrait(1092, 7,223,  0,0x04), FieldTrait(1094, 1,159,100,0x14),
-   FieldTrait(1096,15,160,100,0x14), FieldTrait(1097,15,161,100,0x14), FieldTrait(1098,15,162,100,0x14),
-   FieldTrait(1099,15,163,100,0x14), FieldTrait(1100, 7,224,186,0x14), FieldTrait(1101, 7,225,186,0x14),
-   FieldTrait(1102,11,226,186,0x14), FieldTrait(1103,15,227,186,0x14), FieldTrait(1104,15,228,186,0x14),
-   FieldTrait(1105,15,229,186,0x14), FieldTrait(1106,15,230,186,0x14), FieldTrait(1107, 7,231,186,0x14),
-   FieldTrait(1108, 7,232,186,0x14), FieldTrait(1109, 7,233,186,0x14), FieldTrait(1110,11,234,186,0x14),
-   FieldTrait(1111, 7,235,186,0x14), FieldTrait(1112,10,236,186,0x14), FieldTrait(1113,15,237,186,0x14),
-   FieldTrait(1114,15,238,186,0x14), FieldTrait(1133, 7,240,  0,0x04), FieldTrait(1138,10,222, 36,0x14),
-   FieldTrait(1146,13, 84, 54,0x14), FieldTrait(1147,10, 85, 54,0x14), FieldTrait(1151,15, 83, 54,0x14),
-   FieldTrait(1184, 2, 86,150,0x14), FieldTrait(1185,29, 87,150,0x14), FieldTrait(1186,15, 88,150,0x14),
-   FieldTrait(1191,15, 90, 54,0x14), FieldTrait(1192,10, 91, 54,0x14), FieldTrait(1193, 7, 92, 54,0x14),
-   FieldTrait(1194, 1, 93, 54,0x14), FieldTrait(1195,13, 94, 54,0x14), FieldTrait(1196,15, 95, 54,0x14),
-   FieldTrait(1197,15,102, 54,0x14), FieldTrait(1198, 1, 96, 54,0x14), FieldTrait(1199,11, 97, 54,0x14),
-   FieldTrait(1200,11, 98, 54,0x14), FieldTrait(1227,15, 89, 54,0x14), FieldTrait(1242, 8,101, 54,0x14),
-   FieldTrait(1244, 8,100, 54,0x14), FieldTrait(1435, 1,103, 54,0x14), FieldTrait(1439, 1,104, 54,0x14),
-   FieldTrait(1449,15,105, 54,0x14), FieldTrait(1450,15,106, 54,0x14), FieldTrait(1451,14,107, 54,0x14),
-   FieldTrait(1452,14,108, 54,0x14), FieldTrait(1457,14,109, 54,0x14), FieldTrait(1458,14,110, 54,0x14),
-   FieldTrait(1478, 1,111, 54,0x14), FieldTrait(1479, 1,112, 54,0x14), FieldTrait(1480,14,113, 54,0x14),
-   FieldTrait(1481, 1,114, 54,0x14), FieldTrait(1482, 1,115, 54,0x14), FieldTrait(1483, 1,116, 21,0x1c)
+   {   1,15, 11,  0,0x04}, {  11,15,  6,  0,0x04}, {  12,13,182, 16,0x14}, {  13, 7,183, 16,0x14},
+   {  15,19,176,  0,0x04}, {  18,16, 24,  0,0x04}, {  21, 7, 23,  0,0x04}, {  22,15, 32, 54,0x14},
+   {  37,15,  1,  0,0x04}, {  38,10,130, 93,0x14}, {  40, 7,135,  0,0x04}, {  41,15,  5,  0,0x04},
+   {  44,11,137,  0,0x04}, {  48,15, 31, 54,0x14}, {  54, 7,127,  0,0x04}, {  55,15, 29, 54,0x14},
+   {  58,15,192,  0,0x04}, {  59, 7,177,  0,0x04}, {  60,22,128,  0,0x04}, {  63,15, 19,  0,0x04},
+   {  64,25, 20,  0,0x04}, {  65,15, 30, 54,0x14}, {  66,15,  9,  0,0x04}, {  70,15, 17,  0,0x04},
+   {  75,25,  4,  0,0x04}, {  77, 7,198,  0,0x04}, {  78, 1, 18,104,0x1c}, {  99,11,138,  0,0x04},
+   { 100,20, 27,  0,0x04}, { 106,15, 58, 54,0x14}, { 107,15, 61, 54,0x14}, { 110,10, 25,  0,0x04},
+   { 111,10, 26,  0,0x04}, { 114, 8,201,  0,0x04}, { 120,19,190,  0,0x04}, { 121, 8,189,  0,0x04},
+   { 126,22,180,  0,0x04}, { 152,10,131, 93,0x14}, { 167,15, 36, 54,0x14}, { 168,22,178,  0,0x04},
+   { 192,10,196,  0,0x04}, { 193,25,195,  0,0x04}, { 200,21, 38, 54,0x14}, { 201, 1, 99, 54,0x14},
+   { 202,11, 52, 54,0x14}, { 203, 1,199,  0,0x04}, { 206, 7, 54, 54,0x14}, { 207,20, 57, 54,0x14},
+   { 210,10,200,  0,0x04}, { 211, 9,153,100,0x14}, { 218,12,139,160,0x14}, { 220,19,140,160,0x14},
+   { 221,15,141,160,0x14}, { 222,15,142,160,0x14}, { 223,14, 56, 54,0x14}, { 224,25, 40, 54,0x14},
+   { 225,25, 41, 54,0x14}, { 226, 1, 43, 54,0x14}, { 227,14, 44, 54,0x14}, { 228, 9, 45, 54,0x14},
+   { 229,25,  3,  0,0x04}, { 231, 9, 55, 54,0x14}, { 235,15,147,198,0x14}, { 236,14,148,198,0x14},
+   { 239, 1, 42, 54,0x14}, { 240,25, 51, 54,0x14}, { 255,15, 46, 54,0x14}, { 348, 2, 59, 54,0x14},
+   { 349,28, 60, 54,0x14}, { 350, 2, 62, 54,0x14}, { 351,28, 63, 54,0x14}, { 354, 2,193,  0,0x04},
+   { 355,28,194,  0,0x04}, { 376,15,174,  0,0x04}, { 377, 8,175,  0,0x04}, { 386, 1, 28,185,0x1c},
+   { 388, 7,164, 35,0x14}, { 389, 9,165, 35,0x14}, { 423, 1,136,  0,0x04}, { 427, 1,181,  0,0x04},
+   { 432,25,179,  0,0x04}, { 453, 1,  2, 94,0x1c}, { 454, 1, 33,142,0x1c}, { 460, 1, 34, 54,0x14},
+   { 461,15, 35, 54,0x14}, { 468, 7,133, 93,0x14}, { 469, 9,134, 93,0x14}, { 470,18, 48, 54,0x14},
+   { 471,15, 49, 54,0x14}, { 472,15, 50, 54,0x14}, { 479,19,184, 16,0x14}, { 480, 7,202,  0,0x04},
+   { 481, 7,203,  0,0x04}, { 494,15,205,  0,0x04}, { 497, 7,185, 16,0x14}, { 513,15,204,  0,0x04},
+   { 516,14,132, 93,0x14}, { 526,15,  7,  0,0x04}, { 528, 7,186,  0,0x04}, { 529,16,187,  0,0x04},
+   { 541,25, 39, 54,0x14}, { 543,15, 47, 54,0x14}, { 544, 7, 21,  0,0x04}, { 581, 1, 13,  0,0x04},
+   { 582, 1,188,  0,0x04}, { 583,15,  8,  0,0x04}, { 586,22, 10,  0,0x04}, { 589, 7, 14,  0,0x04},
+   { 590, 7, 15,  0,0x04}, { 591, 7, 16,  0,0x04}, { 635,15, 22,  0,0x04}, { 640,11,197,  0,0x04},
+   { 660, 1, 12,  0,0x04}, { 662,11,143,160,0x14}, { 663, 1,144,160,0x14}, { 667,21, 65, 54,0x14},
+   { 691,15, 64, 54,0x14}, { 696,25,150,198,0x14}, { 697,11,151,198,0x14}, { 698, 1,152,198,0x14},
+   { 699,15,145,160,0x14}, { 701,25,149,198,0x14}, { 711, 1,126,188,0x1c}, { 761,15,146,160,0x14},
+   { 762,15, 37, 54,0x14}, { 768, 1,212,182,0x1c}, { 775, 1,191,  0,0x04}, { 788, 1,121, 44,0x14},
+   { 835, 1,154,100,0x14}, { 836, 1,155,100,0x14}, { 837, 1,156,100,0x14}, { 838, 1,157,100,0x14},
+   { 840, 1,158,100,0x14}, { 841, 1,166, 35,0x14}, { 842, 1,167, 35,0x14}, { 843, 1,168, 35,0x14},
+   { 844, 1,169, 35,0x14}, { 846, 1,170, 35,0x14}, { 847, 1,171,  0,0x04}, { 848,15,172,  0,0x04},
+   { 849,14,173,  0,0x04}, { 854, 1,129,  0,0x04}, { 864, 1, 68, 38,0x1c}, { 873,25, 69, 54,0x14},
+   { 874,25, 70, 54,0x14}, { 875, 1, 66, 54,0x14}, { 876,15, 67, 54,0x14}, { 898,14,125, 44,0x14},
+   { 913,15,117, 44,0x14}, { 914,15,118, 44,0x14}, { 915,25,119, 44,0x14}, { 916,25,122, 44,0x14},
+   { 917,25,123, 44,0x14}, { 918,19,120, 44,0x14}, { 919, 1,124, 44,0x14}, { 947,19, 53, 54,0x14},
+   { 957, 1,206,163,0x1c}, { 965,15, 71, 54,0x14}, { 966,15, 72, 54,0x14}, { 967, 9, 74, 54,0x14},
+   { 968, 9, 75, 54,0x14}, { 969, 9, 76, 54,0x14}, { 970, 1, 77, 54,0x14}, { 971, 1, 78, 54,0x14},
+   { 996,15, 80, 54,0x14}, { 997,15, 81, 54,0x14}, {1018, 1, 79, 57,0x1c}, {1028, 8,207,  0,0x04},
+   {1029, 8,208,  0,0x04}, {1030,15,209,  0,0x04}, {1031,17,210,  0,0x04}, {1032, 1,211,  0,0x04},
+   {1049, 7, 73, 54,0x14}, {1079,26, 82, 54,0x14}, {1082,10,215, 36,0x14}, {1083, 7,216, 36,0x14},
+   {1084, 7,217, 36,0x14}, {1085,10,218, 36,0x14}, {1086,10,219, 36,0x14}, {1087,10,220, 36,0x14},
+   {1088,10,221, 36,0x14}, {1089,10,213,  0,0x04}, {1090, 1,214,  0,0x04}, {1091, 8,239,  0,0x04},
+   {1092, 7,223,  0,0x04}, {1094, 1,159,100,0x14}, {1096,15,160,100,0x14}, {1097,15,161,100,0x14},
+   {1098,15,162,100,0x14}, {1099,15,163,100,0x14}, {1100, 7,224,186,0x14}, {1101, 7,225,186,0x14},
+   {1102,11,226,186,0x14}, {1103,15,227,186,0x14}, {1104,15,228,186,0x14}, {1105,15,229,186,0x14},
+   {1106,15,230,186,0x14}, {1107, 7,231,186,0x14}, {1108, 7,232,186,0x14}, {1109, 7,233,186,0x14},
+   {1110,11,234,186,0x14}, {1111, 7,235,186,0x14}, {1112,10,236,186,0x14}, {1113,15,237,186,0x14},
+   {1114,15,238,186,0x14}, {1133, 7,240,  0,0x04}, {1138,10,222, 36,0x14}, {1146,13, 84, 54,0x14},
+   {1147,10, 85, 54,0x14}, {1151,15, 83, 54,0x14}, {1184, 2, 86,150,0x14}, {1185,29, 87,150,0x14},
+   {1186,15, 88,150,0x14}, {1191,15, 90, 54,0x14}, {1192,10, 91, 54,0x14}, {1193, 7, 92, 54,0x14},
+   {1194, 1, 93, 54,0x14}, {1195,13, 94, 54,0x14}, {1196,15, 95, 54,0x14}, {1197,15,102, 54,0x14},
+   {1198, 1, 96, 54,0x14}, {1199,11, 97, 54,0x14}, {1200,11, 98, 54,0x14}, {1227,15, 89, 54,0x14},
+   {1242, 8,101, 54,0x14}, {1244, 8,100, 54,0x14}, {1435, 1,103, 54,0x14}, {1439, 1,104, 54,0x14},
+   {1449,15,105, 54,0x14}, {1450,15,106, 54,0x14}, {1451,14,107, 54,0x14}, {1452,14,108, 54,0x14},
+   {1457,14,109, 54,0x14}, {1458,14,110, 54,0x14}, {1478, 1,111, 54,0x14}, {1479, 1,112, 54,0x14},
+   {1480,14,113, 54,0x14}, {1481, 1,114, 54,0x14}, {1482, 1,115, 54,0x14}, {1483, 1,116, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderCancelReplaceRequest::_ftha(OrderCancelReplaceRequest::_traits, 240);
 const MsgType OrderCancelReplaceRequest::_msgtype("G");
@@ -8667,44 +7917,35 @@ const FieldTrait *OrderCancelReplaceRequest::NoComplexEvents::NoComplexEventDate
 const FieldTrait_Hash_Array& OrderCancelReplaceRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderCancelReplaceRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderStatusRequest::_traits[] =
+const FieldTrait OrderStatusRequest::_traits[]
 {
-   FieldTrait(   1,15,  7,  0,0x04), FieldTrait(  11,15,  2,  0,0x04), FieldTrait(  22,15, 12, 54,0x14),
-   FieldTrait(  37,15,  1,  0,0x04), FieldTrait(  48,15, 11, 54,0x14), FieldTrait(  54, 7,107,  0,0x04),
-   FieldTrait(  55,15,  9, 54,0x14), FieldTrait(  65,15, 10, 54,0x14), FieldTrait( 106,15, 38, 54,0x14),
-   FieldTrait( 107,15, 41, 54,0x14), FieldTrait( 167,15, 16, 54,0x14), FieldTrait( 200,21, 18, 54,0x14),
-   FieldTrait( 201, 1, 79, 54,0x14), FieldTrait( 202,11, 32, 54,0x14), FieldTrait( 206, 7, 34, 54,0x14),
-   FieldTrait( 207,20, 37, 54,0x14), FieldTrait( 223,14, 36, 54,0x14), FieldTrait( 224,25, 20, 54,0x14),
-   FieldTrait( 225,25, 21, 54,0x14), FieldTrait( 226, 1, 23, 54,0x14), FieldTrait( 227,14, 24, 54,0x14),
-   FieldTrait( 228, 9, 25, 54,0x14), FieldTrait( 231, 9, 35, 54,0x14), FieldTrait( 239, 1, 22, 54,0x14),
-   FieldTrait( 240,25, 31, 54,0x14), FieldTrait( 255,15, 26, 54,0x14), FieldTrait( 348, 2, 39, 54,0x14),
-   FieldTrait( 349,28, 40, 54,0x14), FieldTrait( 350, 2, 42, 54,0x14), FieldTrait( 351,28, 43, 54,0x14),
-   FieldTrait( 453, 1,  5, 94,0x1c), FieldTrait( 454, 1, 13,142,0x1c), FieldTrait( 460, 1, 14, 54,0x14),
-   FieldTrait( 461,15, 15, 54,0x14), FieldTrait( 470,18, 28, 54,0x14), FieldTrait( 471,15, 29, 54,0x14),
-   FieldTrait( 472,15, 30, 54,0x14), FieldTrait( 526,15,  3,  0,0x04), FieldTrait( 541,25, 19, 54,0x14),
-   FieldTrait( 543,15, 27, 54,0x14), FieldTrait( 583,15,  4,  0,0x04), FieldTrait( 660, 1,  8,  0,0x04),
-   FieldTrait( 667,21, 45, 54,0x14), FieldTrait( 691,15, 44, 54,0x14), FieldTrait( 711, 1,106,188,0x1c),
-   FieldTrait( 762,15, 17, 54,0x14), FieldTrait( 788, 1,101, 44,0x14), FieldTrait( 790,15,  6,  0,0x04),
-   FieldTrait( 864, 1, 48, 38,0x1c), FieldTrait( 873,25, 49, 54,0x14), FieldTrait( 874,25, 50, 54,0x14),
-   FieldTrait( 875, 1, 46, 54,0x14), FieldTrait( 876,15, 47, 54,0x14), FieldTrait( 898,14,105, 44,0x14),
-   FieldTrait( 913,15, 97, 44,0x14), FieldTrait( 914,15, 98, 44,0x14), FieldTrait( 915,25, 99, 44,0x14),
-   FieldTrait( 916,25,102, 44,0x14), FieldTrait( 917,25,103, 44,0x14), FieldTrait( 918,19,100, 44,0x14),
-   FieldTrait( 919, 1,104, 44,0x14), FieldTrait( 947,19, 33, 54,0x14), FieldTrait( 965,15, 51, 54,0x14),
-   FieldTrait( 966,15, 52, 54,0x14), FieldTrait( 967, 9, 54, 54,0x14), FieldTrait( 968, 9, 55, 54,0x14),
-   FieldTrait( 969, 9, 56, 54,0x14), FieldTrait( 970, 1, 57, 54,0x14), FieldTrait( 971, 1, 58, 54,0x14),
-   FieldTrait( 996,15, 60, 54,0x14), FieldTrait( 997,15, 61, 54,0x14), FieldTrait(1018, 1, 59, 57,0x1c),
-   FieldTrait(1049, 7, 53, 54,0x14), FieldTrait(1079,26, 62, 54,0x14), FieldTrait(1146,13, 64, 54,0x14),
-   FieldTrait(1147,10, 65, 54,0x14), FieldTrait(1151,15, 63, 54,0x14), FieldTrait(1184, 2, 66,150,0x14),
-   FieldTrait(1185,29, 67,150,0x14), FieldTrait(1186,15, 68,150,0x14), FieldTrait(1191,15, 70, 54,0x14),
-   FieldTrait(1192,10, 71, 54,0x14), FieldTrait(1193, 7, 72, 54,0x14), FieldTrait(1194, 1, 73, 54,0x14),
-   FieldTrait(1195,13, 74, 54,0x14), FieldTrait(1196,15, 75, 54,0x14), FieldTrait(1197,15, 82, 54,0x14),
-   FieldTrait(1198, 1, 76, 54,0x14), FieldTrait(1199,11, 77, 54,0x14), FieldTrait(1200,11, 78, 54,0x14),
-   FieldTrait(1227,15, 69, 54,0x14), FieldTrait(1242, 8, 81, 54,0x14), FieldTrait(1244, 8, 80, 54,0x14),
-   FieldTrait(1435, 1, 83, 54,0x14), FieldTrait(1439, 1, 84, 54,0x14), FieldTrait(1449,15, 85, 54,0x14),
-   FieldTrait(1450,15, 86, 54,0x14), FieldTrait(1451,14, 87, 54,0x14), FieldTrait(1452,14, 88, 54,0x14),
-   FieldTrait(1457,14, 89, 54,0x14), FieldTrait(1458,14, 90, 54,0x14), FieldTrait(1478, 1, 91, 54,0x14),
-   FieldTrait(1479, 1, 92, 54,0x14), FieldTrait(1480,14, 93, 54,0x14), FieldTrait(1481, 1, 94, 54,0x14),
-   FieldTrait(1482, 1, 95, 54,0x14), FieldTrait(1483, 1, 96, 21,0x1c)
+   {   1,15,  7,  0,0x04}, {  11,15,  2,  0,0x04}, {  22,15, 12, 54,0x14}, {  37,15,  1,  0,0x04},
+   {  48,15, 11, 54,0x14}, {  54, 7,107,  0,0x04}, {  55,15,  9, 54,0x14}, {  65,15, 10, 54,0x14},
+   { 106,15, 38, 54,0x14}, { 107,15, 41, 54,0x14}, { 167,15, 16, 54,0x14}, { 200,21, 18, 54,0x14},
+   { 201, 1, 79, 54,0x14}, { 202,11, 32, 54,0x14}, { 206, 7, 34, 54,0x14}, { 207,20, 37, 54,0x14},
+   { 223,14, 36, 54,0x14}, { 224,25, 20, 54,0x14}, { 225,25, 21, 54,0x14}, { 226, 1, 23, 54,0x14},
+   { 227,14, 24, 54,0x14}, { 228, 9, 25, 54,0x14}, { 231, 9, 35, 54,0x14}, { 239, 1, 22, 54,0x14},
+   { 240,25, 31, 54,0x14}, { 255,15, 26, 54,0x14}, { 348, 2, 39, 54,0x14}, { 349,28, 40, 54,0x14},
+   { 350, 2, 42, 54,0x14}, { 351,28, 43, 54,0x14}, { 453, 1,  5, 94,0x1c}, { 454, 1, 13,142,0x1c},
+   { 460, 1, 14, 54,0x14}, { 461,15, 15, 54,0x14}, { 470,18, 28, 54,0x14}, { 471,15, 29, 54,0x14},
+   { 472,15, 30, 54,0x14}, { 526,15,  3,  0,0x04}, { 541,25, 19, 54,0x14}, { 543,15, 27, 54,0x14},
+   { 583,15,  4,  0,0x04}, { 660, 1,  8,  0,0x04}, { 667,21, 45, 54,0x14}, { 691,15, 44, 54,0x14},
+   { 711, 1,106,188,0x1c}, { 762,15, 17, 54,0x14}, { 788, 1,101, 44,0x14}, { 790,15,  6,  0,0x04},
+   { 864, 1, 48, 38,0x1c}, { 873,25, 49, 54,0x14}, { 874,25, 50, 54,0x14}, { 875, 1, 46, 54,0x14},
+   { 876,15, 47, 54,0x14}, { 898,14,105, 44,0x14}, { 913,15, 97, 44,0x14}, { 914,15, 98, 44,0x14},
+   { 915,25, 99, 44,0x14}, { 916,25,102, 44,0x14}, { 917,25,103, 44,0x14}, { 918,19,100, 44,0x14},
+   { 919, 1,104, 44,0x14}, { 947,19, 33, 54,0x14}, { 965,15, 51, 54,0x14}, { 966,15, 52, 54,0x14},
+   { 967, 9, 54, 54,0x14}, { 968, 9, 55, 54,0x14}, { 969, 9, 56, 54,0x14}, { 970, 1, 57, 54,0x14},
+   { 971, 1, 58, 54,0x14}, { 996,15, 60, 54,0x14}, { 997,15, 61, 54,0x14}, {1018, 1, 59, 57,0x1c},
+   {1049, 7, 53, 54,0x14}, {1079,26, 62, 54,0x14}, {1146,13, 64, 54,0x14}, {1147,10, 65, 54,0x14},
+   {1151,15, 63, 54,0x14}, {1184, 2, 66,150,0x14}, {1185,29, 67,150,0x14}, {1186,15, 68,150,0x14},
+   {1191,15, 70, 54,0x14}, {1192,10, 71, 54,0x14}, {1193, 7, 72, 54,0x14}, {1194, 1, 73, 54,0x14},
+   {1195,13, 74, 54,0x14}, {1196,15, 75, 54,0x14}, {1197,15, 82, 54,0x14}, {1198, 1, 76, 54,0x14},
+   {1199,11, 77, 54,0x14}, {1200,11, 78, 54,0x14}, {1227,15, 69, 54,0x14}, {1242, 8, 81, 54,0x14},
+   {1244, 8, 80, 54,0x14}, {1435, 1, 83, 54,0x14}, {1439, 1, 84, 54,0x14}, {1449,15, 85, 54,0x14},
+   {1450,15, 86, 54,0x14}, {1451,14, 87, 54,0x14}, {1452,14, 88, 54,0x14}, {1457,14, 89, 54,0x14},
+   {1458,14, 90, 54,0x14}, {1478, 1, 91, 54,0x14}, {1479, 1, 92, 54,0x14}, {1480,14, 93, 54,0x14},
+   {1481, 1, 94, 54,0x14}, {1482, 1, 95, 54,0x14}, {1483, 1, 96, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderStatusRequest::_ftha(OrderStatusRequest::_traits, 107);
 const MsgType OrderStatusRequest::_msgtype("H");
@@ -8765,69 +8006,54 @@ const FieldTrait *OrderStatusRequest::NoComplexEvents::NoComplexEventDates::NoCo
 const FieldTrait_Hash_Array& OrderStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AllocationInstruction::_traits[] =
+const FieldTrait AllocationInstruction::_traits[]
 {
-   FieldTrait(   6,11,127,  0,0x04), FieldTrait(  15,19,137,  0,0x04), FieldTrait(  22,15, 21, 54,0x14),
-   FieldTrait(  30,20,122,  0,0x04), FieldTrait(  48,15, 20, 54,0x14), FieldTrait(  53,10,120,  0,0x04),
-   FieldTrait(  54, 7, 17,  0,0x04), FieldTrait(  55,15, 18, 54,0x14), FieldTrait(  58,15,151,  0,0x04),
-   FieldTrait(  60,22,141,  0,0x04), FieldTrait(  63,15,142,  0,0x04), FieldTrait(  64,25,143,  0,0x04),
-   FieldTrait(  65,15, 19, 54,0x14), FieldTrait(  70,15,  1,  0,0x04), FieldTrait(  71, 7,  2,  0,0x04),
-   FieldTrait(  72,15,  5,  0,0x04), FieldTrait(  73, 1, 12, 90,0x1c), FieldTrait(  74, 1,138,  0,0x04),
-   FieldTrait(  75,25,140,  0,0x04), FieldTrait(  77, 7,149,  0,0x04), FieldTrait(  78, 1,172,  3,0x1c),
-   FieldTrait( 106,15, 47, 54,0x14), FieldTrait( 107,15, 50, 54,0x14), FieldTrait( 118,13,148,  0,0x04),
-   FieldTrait( 124, 1, 13, 39,0x1c), FieldTrait( 157, 1,154,  0,0x04), FieldTrait( 158,14,155,  0,0x04),
-   FieldTrait( 159,13,156,  0,0x04), FieldTrait( 167,15, 25, 54,0x14), FieldTrait( 196,15,  8,  0,0x04),
-   FieldTrait( 197, 1,  9,  0,0x04), FieldTrait( 200,21, 27, 54,0x14), FieldTrait( 201, 1, 88, 54,0x14),
-   FieldTrait( 202,11, 41, 54,0x14), FieldTrait( 206, 7, 43, 54,0x14), FieldTrait( 207,20, 46, 54,0x14),
-   FieldTrait( 218,12,129,160,0x14), FieldTrait( 220,19,130,160,0x14), FieldTrait( 221,15,131,160,0x14),
-   FieldTrait( 222,15,132,160,0x14), FieldTrait( 223,14, 45, 54,0x14), FieldTrait( 224,25, 29, 54,0x14),
-   FieldTrait( 225,25, 30, 54,0x14), FieldTrait( 226, 1, 32, 54,0x14), FieldTrait( 227,14, 33, 54,0x14),
-   FieldTrait( 228, 9, 34, 54,0x14), FieldTrait( 229,25,123,  0,0x04), FieldTrait( 231, 9, 44, 54,0x14),
-   FieldTrait( 232, 1,163,162,0x1c), FieldTrait( 235,15,164,198,0x14), FieldTrait( 236,14,165,198,0x14),
-   FieldTrait( 237,13,147,  0,0x04), FieldTrait( 238,13,146,  0,0x04), FieldTrait( 239, 1, 31, 54,0x14),
-   FieldTrait( 240,25, 40, 54,0x14), FieldTrait( 255,15, 35, 54,0x14), FieldTrait( 336,15,124,  0,0x04),
-   FieldTrait( 348, 2, 48, 54,0x14), FieldTrait( 349,28, 49, 54,0x14), FieldTrait( 350, 2, 51, 54,0x14),
-   FieldTrait( 351,28, 52, 54,0x14), FieldTrait( 354, 2,152,  0,0x04), FieldTrait( 355,28,153,  0,0x04),
-   FieldTrait( 381,13,145,  0,0x04), FieldTrait( 423, 1,126,  0,0x04), FieldTrait( 442, 7,180,  0,0x04),
-   FieldTrait( 453, 1,139, 94,0x1c), FieldTrait( 454, 1, 22,142,0x1c), FieldTrait( 460, 1, 23, 54,0x14),
-   FieldTrait( 461,15, 24, 54,0x14), FieldTrait( 466,15, 10,  0,0x04), FieldTrait( 470,18, 37, 54,0x14),
-   FieldTrait( 471,15, 38, 54,0x14), FieldTrait( 472,15, 39, 54,0x14), FieldTrait( 540,13,157,  0,0x04),
-   FieldTrait( 541,25, 28, 54,0x14), FieldTrait( 543,15, 36, 54,0x14), FieldTrait( 555, 1,119, 49,0x1c),
-   FieldTrait( 570, 8, 14,  0,0x04), FieldTrait( 574,15, 16,  0,0x04), FieldTrait( 578,15,179,  0,0x04),
-   FieldTrait( 582, 1,178,  0,0x04), FieldTrait( 625,15,125,  0,0x04), FieldTrait( 626, 1,  3,  0,0x04),
-   FieldTrait( 650, 8,162,  0,0x04), FieldTrait( 662,11,133,160,0x14), FieldTrait( 663, 1,134,160,0x14),
-   FieldTrait( 667,21, 54, 54,0x14), FieldTrait( 668, 1,106, 55,0x14), FieldTrait( 691,15, 53, 54,0x14),
-   FieldTrait( 696,25,167,198,0x14), FieldTrait( 697,11,168,198,0x14), FieldTrait( 698, 1,169,198,0x14),
-   FieldTrait( 699,15,135,160,0x14), FieldTrait( 700, 8, 15,  0,0x04), FieldTrait( 701,25,166,198,0x14),
-   FieldTrait( 711, 1,118,188,0x1c), FieldTrait( 715,25,175,  0,0x04), FieldTrait( 738,13,158,  0,0x04),
-   FieldTrait( 753, 1,173,102,0x1c), FieldTrait( 754, 8,150,  0,0x04), FieldTrait( 761,15,136,160,0x14),
-   FieldTrait( 762,15, 26, 54,0x14), FieldTrait( 775, 1,144,  0,0x04), FieldTrait( 788, 1,113, 44,0x14),
-   FieldTrait( 793,15,  4,  0,0x04), FieldTrait( 796, 1,  6,  0,0x04), FieldTrait( 808, 1,  7,  0,0x04),
-   FieldTrait( 819, 1,174,  0,0x04), FieldTrait( 828, 1,176,  0,0x04), FieldTrait( 829, 1,177,  0,0x04),
-   FieldTrait( 854, 1,121,  0,0x04), FieldTrait( 857, 1, 11,  0,0x04), FieldTrait( 860,11,128,  0,0x04),
-   FieldTrait( 864, 1, 57, 38,0x1c), FieldTrait( 869,14,107, 55,0x14), FieldTrait( 870, 1,108,  9,0x1c),
-   FieldTrait( 873,25, 58, 54,0x14), FieldTrait( 874,25, 59, 54,0x14), FieldTrait( 875, 1, 55, 54,0x14),
-   FieldTrait( 876,15, 56, 54,0x14), FieldTrait( 892, 1,170,  0,0x04), FieldTrait( 893, 8,171,  0,0x04),
-   FieldTrait( 898,14,117, 44,0x14), FieldTrait( 913,15,109, 44,0x14), FieldTrait( 914,15,110, 44,0x14),
-   FieldTrait( 915,25,111, 44,0x14), FieldTrait( 916,25,114, 44,0x14), FieldTrait( 917,25,115, 44,0x14),
-   FieldTrait( 918,19,112, 44,0x14), FieldTrait( 919, 1,116, 44,0x14), FieldTrait( 920,13,159,  0,0x04),
-   FieldTrait( 921,13,160,  0,0x04), FieldTrait( 922,13,161,  0,0x04), FieldTrait( 947,19, 42, 54,0x14),
-   FieldTrait( 965,15, 60, 54,0x14), FieldTrait( 966,15, 61, 54,0x14), FieldTrait( 967, 9, 63, 54,0x14),
-   FieldTrait( 968, 9, 64, 54,0x14), FieldTrait( 969, 9, 65, 54,0x14), FieldTrait( 970, 1, 66, 54,0x14),
-   FieldTrait( 971, 1, 67, 54,0x14), FieldTrait( 991,11,182,  0,0x04), FieldTrait( 996,15, 69, 54,0x14),
-   FieldTrait( 997,15, 70, 54,0x14), FieldTrait(1011,15,181,  0,0x04), FieldTrait(1018, 1, 68, 57,0x1c),
-   FieldTrait(1049, 7, 62, 54,0x14), FieldTrait(1079,26, 71, 54,0x14), FieldTrait(1146,13, 73, 54,0x14),
-   FieldTrait(1147,10, 74, 54,0x14), FieldTrait(1151,15, 72, 54,0x14), FieldTrait(1184, 2, 75,150,0x14),
-   FieldTrait(1185,29, 76,150,0x14), FieldTrait(1186,15, 77,150,0x14), FieldTrait(1191,15, 79, 54,0x14),
-   FieldTrait(1192,10, 80, 54,0x14), FieldTrait(1193, 7, 81, 54,0x14), FieldTrait(1194, 1, 82, 54,0x14),
-   FieldTrait(1195,13, 83, 54,0x14), FieldTrait(1196,15, 84, 54,0x14), FieldTrait(1197,15, 91, 54,0x14),
-   FieldTrait(1198, 1, 85, 54,0x14), FieldTrait(1199,11, 86, 54,0x14), FieldTrait(1200,11, 87, 54,0x14),
-   FieldTrait(1227,15, 78, 54,0x14), FieldTrait(1242, 8, 90, 54,0x14), FieldTrait(1244, 8, 89, 54,0x14),
-   FieldTrait(1435, 1, 92, 54,0x14), FieldTrait(1439, 1, 93, 54,0x14), FieldTrait(1445, 1,183,118,0x1c),
-   FieldTrait(1449,15, 94, 54,0x14), FieldTrait(1450,15, 95, 54,0x14), FieldTrait(1451,14, 96, 54,0x14),
-   FieldTrait(1452,14, 97, 54,0x14), FieldTrait(1457,14, 98, 54,0x14), FieldTrait(1458,14, 99, 54,0x14),
-   FieldTrait(1478, 1,100, 54,0x14), FieldTrait(1479, 1,101, 54,0x14), FieldTrait(1480,14,102, 54,0x14),
-   FieldTrait(1481, 1,103, 54,0x14), FieldTrait(1482, 1,104, 54,0x14), FieldTrait(1483, 1,105, 21,0x1c)
+   {   6,11,127,  0,0x04}, {  15,19,137,  0,0x04}, {  22,15, 21, 54,0x14}, {  30,20,122,  0,0x04},
+   {  48,15, 20, 54,0x14}, {  53,10,120,  0,0x04}, {  54, 7, 17,  0,0x04}, {  55,15, 18, 54,0x14},
+   {  58,15,151,  0,0x04}, {  60,22,141,  0,0x04}, {  63,15,142,  0,0x04}, {  64,25,143,  0,0x04},
+   {  65,15, 19, 54,0x14}, {  70,15,  1,  0,0x04}, {  71, 7,  2,  0,0x04}, {  72,15,  5,  0,0x04},
+   {  73, 1, 12, 90,0x1c}, {  74, 1,138,  0,0x04}, {  75,25,140,  0,0x04}, {  77, 7,149,  0,0x04},
+   {  78, 1,172,  3,0x1c}, { 106,15, 47, 54,0x14}, { 107,15, 50, 54,0x14}, { 118,13,148,  0,0x04},
+   { 124, 1, 13, 39,0x1c}, { 157, 1,154,  0,0x04}, { 158,14,155,  0,0x04}, { 159,13,156,  0,0x04},
+   { 167,15, 25, 54,0x14}, { 196,15,  8,  0,0x04}, { 197, 1,  9,  0,0x04}, { 200,21, 27, 54,0x14},
+   { 201, 1, 88, 54,0x14}, { 202,11, 41, 54,0x14}, { 206, 7, 43, 54,0x14}, { 207,20, 46, 54,0x14},
+   { 218,12,129,160,0x14}, { 220,19,130,160,0x14}, { 221,15,131,160,0x14}, { 222,15,132,160,0x14},
+   { 223,14, 45, 54,0x14}, { 224,25, 29, 54,0x14}, { 225,25, 30, 54,0x14}, { 226, 1, 32, 54,0x14},
+   { 227,14, 33, 54,0x14}, { 228, 9, 34, 54,0x14}, { 229,25,123,  0,0x04}, { 231, 9, 44, 54,0x14},
+   { 232, 1,163,162,0x1c}, { 235,15,164,198,0x14}, { 236,14,165,198,0x14}, { 237,13,147,  0,0x04},
+   { 238,13,146,  0,0x04}, { 239, 1, 31, 54,0x14}, { 240,25, 40, 54,0x14}, { 255,15, 35, 54,0x14},
+   { 336,15,124,  0,0x04}, { 348, 2, 48, 54,0x14}, { 349,28, 49, 54,0x14}, { 350, 2, 51, 54,0x14},
+   { 351,28, 52, 54,0x14}, { 354, 2,152,  0,0x04}, { 355,28,153,  0,0x04}, { 381,13,145,  0,0x04},
+   { 423, 1,126,  0,0x04}, { 442, 7,180,  0,0x04}, { 453, 1,139, 94,0x1c}, { 454, 1, 22,142,0x1c},
+   { 460, 1, 23, 54,0x14}, { 461,15, 24, 54,0x14}, { 466,15, 10,  0,0x04}, { 470,18, 37, 54,0x14},
+   { 471,15, 38, 54,0x14}, { 472,15, 39, 54,0x14}, { 540,13,157,  0,0x04}, { 541,25, 28, 54,0x14},
+   { 543,15, 36, 54,0x14}, { 555, 1,119, 49,0x1c}, { 570, 8, 14,  0,0x04}, { 574,15, 16,  0,0x04},
+   { 578,15,179,  0,0x04}, { 582, 1,178,  0,0x04}, { 625,15,125,  0,0x04}, { 626, 1,  3,  0,0x04},
+   { 650, 8,162,  0,0x04}, { 662,11,133,160,0x14}, { 663, 1,134,160,0x14}, { 667,21, 54, 54,0x14},
+   { 668, 1,106, 55,0x14}, { 691,15, 53, 54,0x14}, { 696,25,167,198,0x14}, { 697,11,168,198,0x14},
+   { 698, 1,169,198,0x14}, { 699,15,135,160,0x14}, { 700, 8, 15,  0,0x04}, { 701,25,166,198,0x14},
+   { 711, 1,118,188,0x1c}, { 715,25,175,  0,0x04}, { 738,13,158,  0,0x04}, { 753, 1,173,102,0x1c},
+   { 754, 8,150,  0,0x04}, { 761,15,136,160,0x14}, { 762,15, 26, 54,0x14}, { 775, 1,144,  0,0x04},
+   { 788, 1,113, 44,0x14}, { 793,15,  4,  0,0x04}, { 796, 1,  6,  0,0x04}, { 808, 1,  7,  0,0x04},
+   { 819, 1,174,  0,0x04}, { 828, 1,176,  0,0x04}, { 829, 1,177,  0,0x04}, { 854, 1,121,  0,0x04},
+   { 857, 1, 11,  0,0x04}, { 860,11,128,  0,0x04}, { 864, 1, 57, 38,0x1c}, { 869,14,107, 55,0x14},
+   { 870, 1,108,  9,0x1c}, { 873,25, 58, 54,0x14}, { 874,25, 59, 54,0x14}, { 875, 1, 55, 54,0x14},
+   { 876,15, 56, 54,0x14}, { 892, 1,170,  0,0x04}, { 893, 8,171,  0,0x04}, { 898,14,117, 44,0x14},
+   { 913,15,109, 44,0x14}, { 914,15,110, 44,0x14}, { 915,25,111, 44,0x14}, { 916,25,114, 44,0x14},
+   { 917,25,115, 44,0x14}, { 918,19,112, 44,0x14}, { 919, 1,116, 44,0x14}, { 920,13,159,  0,0x04},
+   { 921,13,160,  0,0x04}, { 922,13,161,  0,0x04}, { 947,19, 42, 54,0x14}, { 965,15, 60, 54,0x14},
+   { 966,15, 61, 54,0x14}, { 967, 9, 63, 54,0x14}, { 968, 9, 64, 54,0x14}, { 969, 9, 65, 54,0x14},
+   { 970, 1, 66, 54,0x14}, { 971, 1, 67, 54,0x14}, { 991,11,182,  0,0x04}, { 996,15, 69, 54,0x14},
+   { 997,15, 70, 54,0x14}, {1011,15,181,  0,0x04}, {1018, 1, 68, 57,0x1c}, {1049, 7, 62, 54,0x14},
+   {1079,26, 71, 54,0x14}, {1146,13, 73, 54,0x14}, {1147,10, 74, 54,0x14}, {1151,15, 72, 54,0x14},
+   {1184, 2, 75,150,0x14}, {1185,29, 76,150,0x14}, {1186,15, 77,150,0x14}, {1191,15, 79, 54,0x14},
+   {1192,10, 80, 54,0x14}, {1193, 7, 81, 54,0x14}, {1194, 1, 82, 54,0x14}, {1195,13, 83, 54,0x14},
+   {1196,15, 84, 54,0x14}, {1197,15, 91, 54,0x14}, {1198, 1, 85, 54,0x14}, {1199,11, 86, 54,0x14},
+   {1200,11, 87, 54,0x14}, {1227,15, 78, 54,0x14}, {1242, 8, 90, 54,0x14}, {1244, 8, 89, 54,0x14},
+   {1435, 1, 92, 54,0x14}, {1439, 1, 93, 54,0x14}, {1445, 1,183,118,0x1c}, {1449,15, 94, 54,0x14},
+   {1450,15, 95, 54,0x14}, {1451,14, 96, 54,0x14}, {1452,14, 97, 54,0x14}, {1457,14, 98, 54,0x14},
+   {1458,14, 99, 54,0x14}, {1478, 1,100, 54,0x14}, {1479, 1,101, 54,0x14}, {1480,14,102, 54,0x14},
+   {1481, 1,103, 54,0x14}, {1482, 1,104, 54,0x14}, {1483, 1,105, 21,0x1c}
 };
 const FieldTrait_Hash_Array AllocationInstruction::_ftha(AllocationInstruction::_traits, 183);
 const MsgType AllocationInstruction::_msgtype("J");
@@ -8960,11 +8186,10 @@ const FieldTrait *AllocationInstruction::NoComplexEvents::NoComplexEventDates::N
 const FieldTrait_Hash_Array& AllocationInstruction::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& AllocationInstruction::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListCancelRequest::_traits[] =
+const FieldTrait ListCancelRequest::_traits[]
 {
-   FieldTrait(  58,15,  5,  0,0x04), FieldTrait(  60,22,  2,  0,0x04), FieldTrait(  66,15,  1,  0,0x04),
-   FieldTrait(  75,25,  4,  0,0x04), FieldTrait( 229,25,  3,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04),
-   FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 453, 1,  8, 94,0x1c)
+   {  58,15,  5,  0,0x04}, {  60,22,  2,  0,0x04}, {  66,15,  1,  0,0x04}, {  75,25,  4,  0,0x04},
+   { 229,25,  3,  0,0x04}, { 354, 2,  6,  0,0x04}, { 355,28,  7,  0,0x04}, { 453, 1,  8, 94,0x1c}
 };
 const FieldTrait_Hash_Array ListCancelRequest::_ftha(ListCancelRequest::_traits, 8);
 const MsgType ListCancelRequest::_msgtype("K");
@@ -8977,54 +8202,48 @@ const FieldTrait *ListCancelRequest::NoPartyIDs::NoPartySubIDs::_traits(NoPartyS
 const FieldTrait_Hash_Array& ListCancelRequest::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& ListCancelRequest::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListExecute::_traits[] =
+const FieldTrait ListExecute::_traits[]
 {
-   FieldTrait(  58,15,  5,  0,0x04), FieldTrait(  60,22,  4,  0,0x04), FieldTrait(  66,15,  1,  0,0x04),
-   FieldTrait( 354, 2,  6,  0,0x04), FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 390,15,  3,  0,0x04),
-   FieldTrait( 391,15,  2,  0,0x04)
+   {  58,15,  5,  0,0x04}, {  60,22,  4,  0,0x04}, {  66,15,  1,  0,0x04}, { 354, 2,  6,  0,0x04},
+   { 355,28,  7,  0,0x04}, { 390,15,  3,  0,0x04}, { 391,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array ListExecute::_ftha(ListExecute::_traits, 7);
 const MsgType ListExecute::_msgtype("L");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListStatusRequest::_traits[] =
+const FieldTrait ListStatusRequest::_traits[]
 {
-   FieldTrait(  58,15,  2,  0,0x04), FieldTrait(  66,15,  1,  0,0x04), FieldTrait( 354, 2,  3,  0,0x04),
-   FieldTrait( 355,28,  4,  0,0x04)
+   {  58,15,  2,  0,0x04}, {  66,15,  1,  0,0x04}, { 354, 2,  3,  0,0x04}, { 355,28,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array ListStatusRequest::_ftha(ListStatusRequest::_traits, 4);
 const MsgType ListStatusRequest::_msgtype("M");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListStatus::_traits[] =
+const FieldTrait ListStatus::_traits[]
 {
-   FieldTrait(  60,22,  9,  0,0x04), FieldTrait(  66,15,  1,  0,0x04), FieldTrait(  68, 1, 10,  0,0x04),
-   FieldTrait(  73, 1, 12, 91,0x1c), FieldTrait(  82, 1,  3,  0,0x04), FieldTrait(  83, 1,  5,  0,0x04),
-   FieldTrait( 429, 1,  2,  0,0x04), FieldTrait( 431, 1,  4,  0,0x04), FieldTrait( 444,15,  6,  0,0x04),
-   FieldTrait( 445, 2,  7,  0,0x04), FieldTrait( 446,28,  8,  0,0x04), FieldTrait( 893, 8, 11,  0,0x04),
-   FieldTrait(1385, 1, 13,  0,0x04), FieldTrait(1386, 1, 14,  0,0x04)
+   {  60,22,  9,  0,0x04}, {  66,15,  1,  0,0x04}, {  68, 1, 10,  0,0x04}, {  73, 1, 12, 91,0x1c},
+   {  82, 1,  3,  0,0x04}, {  83, 1,  5,  0,0x04}, { 429, 1,  2,  0,0x04}, { 431, 1,  4,  0,0x04},
+   { 444,15,  6,  0,0x04}, { 445, 2,  7,  0,0x04}, { 446,28,  8,  0,0x04}, { 893, 8, 11,  0,0x04},
+   {1385, 1, 13,  0,0x04}, {1386, 1, 14,  0,0x04}
 };
 const FieldTrait_Hash_Array ListStatus::_ftha(ListStatus::_traits, 14);
 const MsgType ListStatus::_msgtype("N");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListStatus::NoOrders::_traits[] =
+const FieldTrait ListStatus::NoOrders::_traits[]
 {
-   FieldTrait(   6,11,  8,  0,0x05), FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  14,10,  3,  0,0x05),
-   FieldTrait(  37,15, 13,  0,0x04), FieldTrait(  39, 7,  4,  0,0x05), FieldTrait(  58,15, 10,  0,0x04),
-   FieldTrait(  84,10,  7,  0,0x05), FieldTrait( 103, 1,  9,  0,0x04), FieldTrait( 151,10,  6,  0,0x05),
-   FieldTrait( 354, 2, 11,  0,0x04), FieldTrait( 355,28, 12,  0,0x04), FieldTrait( 526,15,  2,  0,0x04),
-   FieldTrait( 636, 8,  5,  0,0x04)
+   {   6,11,  8,  0,0x05}, {  11,15,  1,  0,0x04}, {  14,10,  3,  0,0x05}, {  37,15, 13,  0,0x04},
+   {  39, 7,  4,  0,0x05}, {  58,15, 10,  0,0x04}, {  84,10,  7,  0,0x05}, { 103, 1,  9,  0,0x04},
+   { 151,10,  6,  0,0x05}, { 354, 2, 11,  0,0x04}, { 355,28, 12,  0,0x04}, { 526,15,  2,  0,0x04},
+   { 636, 8,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    ListStatus::NoOrders::_ftha(ListStatus::NoOrders::_traits, 13);
 const MsgType ListStatus::NoOrders::_msgtype("NoOrders");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait AllocationInstructionAck::_traits[] =
+const FieldTrait AllocationInstructionAck::_traits[]
 {
-   FieldTrait(  58,15, 13,  0,0x04), FieldTrait(  60,22,  5,  0,0x04), FieldTrait(  70,15,  1,  0,0x04),
-   FieldTrait(  75,25,  4,  0,0x04), FieldTrait(  78, 1, 16,  2,0x1c), FieldTrait(  87, 1,  6,  0,0x04),
-   FieldTrait(  88, 1,  7,  0,0x04), FieldTrait( 167,15, 12,  0,0x04), FieldTrait( 354, 2, 14,  0,0x04),
-   FieldTrait( 355,28, 15,  0,0x04), FieldTrait( 453, 1,  2, 94,0x1c), FieldTrait( 460, 1, 11,  0,0x04),
-   FieldTrait( 573, 7, 10,  0,0x04), FieldTrait( 626, 1,  8,  0,0x04), FieldTrait( 793,15,  3,  0,0x04),
-   FieldTrait( 808, 1,  9,  0,0x04)
+   {  58,15, 13,  0,0x04}, {  60,22,  5,  0,0x04}, {  70,15,  1,  0,0x04}, {  75,25,  4,  0,0x04},
+   {  78, 1, 16,  2,0x1c}, {  87, 1,  6,  0,0x04}, {  88, 1,  7,  0,0x04}, { 167,15, 12,  0,0x04},
+   { 354, 2, 14,  0,0x04}, { 355,28, 15,  0,0x04}, { 453, 1,  2, 94,0x1c}, { 460, 1, 11,  0,0x04},
+   { 573, 7, 10,  0,0x04}, { 626, 1,  8,  0,0x04}, { 793,15,  3,  0,0x04}, { 808, 1,  9,  0,0x04}
 };
 const FieldTrait_Hash_Array AllocationInstructionAck::_ftha(AllocationInstructionAck::_traits, 16);
 const MsgType AllocationInstructionAck::_msgtype("P");
@@ -9049,43 +8268,35 @@ const FieldTrait *AllocationInstructionAck::NoPartyIDs::NoPartySubIDs::_traits(N
 const FieldTrait_Hash_Array& AllocationInstructionAck::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& AllocationInstructionAck::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait DontKnowTrade::_traits[] =
+const FieldTrait DontKnowTrade::_traits[]
 {
-   FieldTrait(  17,15,  3,  0,0x04), FieldTrait(  22,15,  8, 54,0x14), FieldTrait(  31,11,102,  0,0x04),
-   FieldTrait(  32,10,101,  0,0x04), FieldTrait(  37,15,  1,  0,0x04), FieldTrait(  38,10, 96, 93,0x14),
-   FieldTrait(  48,15,  7, 54,0x14), FieldTrait(  54, 7, 95,  0,0x04), FieldTrait(  55,15,  5, 54,0x14),
-   FieldTrait(  58,15,103,  0,0x04), FieldTrait(  65,15,  6, 54,0x14), FieldTrait( 106,15, 34, 54,0x14),
-   FieldTrait( 107,15, 37, 54,0x14), FieldTrait( 127, 7,  4,  0,0x04), FieldTrait( 152,10, 97, 93,0x14),
-   FieldTrait( 167,15, 12, 54,0x14), FieldTrait( 198,15,  2,  0,0x04), FieldTrait( 200,21, 14, 54,0x14),
-   FieldTrait( 201, 1, 75, 54,0x14), FieldTrait( 202,11, 28, 54,0x14), FieldTrait( 206, 7, 30, 54,0x14),
-   FieldTrait( 207,20, 33, 54,0x14), FieldTrait( 223,14, 32, 54,0x14), FieldTrait( 224,25, 16, 54,0x14),
-   FieldTrait( 225,25, 17, 54,0x14), FieldTrait( 226, 1, 19, 54,0x14), FieldTrait( 227,14, 20, 54,0x14),
-   FieldTrait( 228, 9, 21, 54,0x14), FieldTrait( 231, 9, 31, 54,0x14), FieldTrait( 239, 1, 18, 54,0x14),
-   FieldTrait( 240,25, 27, 54,0x14), FieldTrait( 255,15, 22, 54,0x14), FieldTrait( 348, 2, 35, 54,0x14),
-   FieldTrait( 349,28, 36, 54,0x14), FieldTrait( 350, 2, 38, 54,0x14), FieldTrait( 351,28, 39, 54,0x14),
-   FieldTrait( 354, 2,104,  0,0x04), FieldTrait( 355,28,105,  0,0x04), FieldTrait( 454, 1,  9,142,0x1c),
-   FieldTrait( 460, 1, 10, 54,0x14), FieldTrait( 461,15, 11, 54,0x14), FieldTrait( 468, 7, 99, 93,0x14),
-   FieldTrait( 469, 9,100, 93,0x14), FieldTrait( 470,18, 24, 54,0x14), FieldTrait( 471,15, 25, 54,0x14),
-   FieldTrait( 472,15, 26, 54,0x14), FieldTrait( 516,14, 98, 93,0x14), FieldTrait( 541,25, 15, 54,0x14),
-   FieldTrait( 543,15, 23, 54,0x14), FieldTrait( 555, 1, 94, 49,0x1c), FieldTrait( 667,21, 41, 54,0x14),
-   FieldTrait( 691,15, 40, 54,0x14), FieldTrait( 711, 1, 93,188,0x1c), FieldTrait( 762,15, 13, 54,0x14),
-   FieldTrait( 864, 1, 44, 38,0x1c), FieldTrait( 873,25, 45, 54,0x14), FieldTrait( 874,25, 46, 54,0x14),
-   FieldTrait( 875, 1, 42, 54,0x14), FieldTrait( 876,15, 43, 54,0x14), FieldTrait( 947,19, 29, 54,0x14),
-   FieldTrait( 965,15, 47, 54,0x14), FieldTrait( 966,15, 48, 54,0x14), FieldTrait( 967, 9, 50, 54,0x14),
-   FieldTrait( 968, 9, 51, 54,0x14), FieldTrait( 969, 9, 52, 54,0x14), FieldTrait( 970, 1, 53, 54,0x14),
-   FieldTrait( 971, 1, 54, 54,0x14), FieldTrait( 996,15, 56, 54,0x14), FieldTrait( 997,15, 57, 54,0x14),
-   FieldTrait(1018, 1, 55, 57,0x1c), FieldTrait(1049, 7, 49, 54,0x14), FieldTrait(1079,26, 58, 54,0x14),
-   FieldTrait(1146,13, 60, 54,0x14), FieldTrait(1147,10, 61, 54,0x14), FieldTrait(1151,15, 59, 54,0x14),
-   FieldTrait(1184, 2, 62,150,0x14), FieldTrait(1185,29, 63,150,0x14), FieldTrait(1186,15, 64,150,0x14),
-   FieldTrait(1191,15, 66, 54,0x14), FieldTrait(1192,10, 67, 54,0x14), FieldTrait(1193, 7, 68, 54,0x14),
-   FieldTrait(1194, 1, 69, 54,0x14), FieldTrait(1195,13, 70, 54,0x14), FieldTrait(1196,15, 71, 54,0x14),
-   FieldTrait(1197,15, 78, 54,0x14), FieldTrait(1198, 1, 72, 54,0x14), FieldTrait(1199,11, 73, 54,0x14),
-   FieldTrait(1200,11, 74, 54,0x14), FieldTrait(1227,15, 65, 54,0x14), FieldTrait(1242, 8, 77, 54,0x14),
-   FieldTrait(1244, 8, 76, 54,0x14), FieldTrait(1435, 1, 79, 54,0x14), FieldTrait(1439, 1, 80, 54,0x14),
-   FieldTrait(1449,15, 81, 54,0x14), FieldTrait(1450,15, 82, 54,0x14), FieldTrait(1451,14, 83, 54,0x14),
-   FieldTrait(1452,14, 84, 54,0x14), FieldTrait(1457,14, 85, 54,0x14), FieldTrait(1458,14, 86, 54,0x14),
-   FieldTrait(1478, 1, 87, 54,0x14), FieldTrait(1479, 1, 88, 54,0x14), FieldTrait(1480,14, 89, 54,0x14),
-   FieldTrait(1481, 1, 90, 54,0x14), FieldTrait(1482, 1, 91, 54,0x14), FieldTrait(1483, 1, 92, 21,0x1c)
+   {  17,15,  3,  0,0x04}, {  22,15,  8, 54,0x14}, {  31,11,102,  0,0x04}, {  32,10,101,  0,0x04},
+   {  37,15,  1,  0,0x04}, {  38,10, 96, 93,0x14}, {  48,15,  7, 54,0x14}, {  54, 7, 95,  0,0x04},
+   {  55,15,  5, 54,0x14}, {  58,15,103,  0,0x04}, {  65,15,  6, 54,0x14}, { 106,15, 34, 54,0x14},
+   { 107,15, 37, 54,0x14}, { 127, 7,  4,  0,0x04}, { 152,10, 97, 93,0x14}, { 167,15, 12, 54,0x14},
+   { 198,15,  2,  0,0x04}, { 200,21, 14, 54,0x14}, { 201, 1, 75, 54,0x14}, { 202,11, 28, 54,0x14},
+   { 206, 7, 30, 54,0x14}, { 207,20, 33, 54,0x14}, { 223,14, 32, 54,0x14}, { 224,25, 16, 54,0x14},
+   { 225,25, 17, 54,0x14}, { 226, 1, 19, 54,0x14}, { 227,14, 20, 54,0x14}, { 228, 9, 21, 54,0x14},
+   { 231, 9, 31, 54,0x14}, { 239, 1, 18, 54,0x14}, { 240,25, 27, 54,0x14}, { 255,15, 22, 54,0x14},
+   { 348, 2, 35, 54,0x14}, { 349,28, 36, 54,0x14}, { 350, 2, 38, 54,0x14}, { 351,28, 39, 54,0x14},
+   { 354, 2,104,  0,0x04}, { 355,28,105,  0,0x04}, { 454, 1,  9,142,0x1c}, { 460, 1, 10, 54,0x14},
+   { 461,15, 11, 54,0x14}, { 468, 7, 99, 93,0x14}, { 469, 9,100, 93,0x14}, { 470,18, 24, 54,0x14},
+   { 471,15, 25, 54,0x14}, { 472,15, 26, 54,0x14}, { 516,14, 98, 93,0x14}, { 541,25, 15, 54,0x14},
+   { 543,15, 23, 54,0x14}, { 555, 1, 94, 49,0x1c}, { 667,21, 41, 54,0x14}, { 691,15, 40, 54,0x14},
+   { 711, 1, 93,188,0x1c}, { 762,15, 13, 54,0x14}, { 864, 1, 44, 38,0x1c}, { 873,25, 45, 54,0x14},
+   { 874,25, 46, 54,0x14}, { 875, 1, 42, 54,0x14}, { 876,15, 43, 54,0x14}, { 947,19, 29, 54,0x14},
+   { 965,15, 47, 54,0x14}, { 966,15, 48, 54,0x14}, { 967, 9, 50, 54,0x14}, { 968, 9, 51, 54,0x14},
+   { 969, 9, 52, 54,0x14}, { 970, 1, 53, 54,0x14}, { 971, 1, 54, 54,0x14}, { 996,15, 56, 54,0x14},
+   { 997,15, 57, 54,0x14}, {1018, 1, 55, 57,0x1c}, {1049, 7, 49, 54,0x14}, {1079,26, 58, 54,0x14},
+   {1146,13, 60, 54,0x14}, {1147,10, 61, 54,0x14}, {1151,15, 59, 54,0x14}, {1184, 2, 62,150,0x14},
+   {1185,29, 63,150,0x14}, {1186,15, 64,150,0x14}, {1191,15, 66, 54,0x14}, {1192,10, 67, 54,0x14},
+   {1193, 7, 68, 54,0x14}, {1194, 1, 69, 54,0x14}, {1195,13, 70, 54,0x14}, {1196,15, 71, 54,0x14},
+   {1197,15, 78, 54,0x14}, {1198, 1, 72, 54,0x14}, {1199,11, 73, 54,0x14}, {1200,11, 74, 54,0x14},
+   {1227,15, 65, 54,0x14}, {1242, 8, 77, 54,0x14}, {1244, 8, 76, 54,0x14}, {1435, 1, 79, 54,0x14},
+   {1439, 1, 80, 54,0x14}, {1449,15, 81, 54,0x14}, {1450,15, 82, 54,0x14}, {1451,14, 83, 54,0x14},
+   {1452,14, 84, 54,0x14}, {1457,14, 85, 54,0x14}, {1458,14, 86, 54,0x14}, {1478, 1, 87, 54,0x14},
+   {1479, 1, 88, 54,0x14}, {1480,14, 89, 54,0x14}, {1481, 1, 90, 54,0x14}, {1482, 1, 91, 54,0x14},
+   {1483, 1, 92, 21,0x1c}
 };
 const FieldTrait_Hash_Array DontKnowTrade::_ftha(DontKnowTrade::_traits, 105);
 const MsgType DontKnowTrade::_msgtype("Q");
@@ -9146,69 +8357,55 @@ const FieldTrait *DontKnowTrade::NoComplexEvents::NoComplexEventDates::NoComplex
 const FieldTrait_Hash_Array& DontKnowTrade::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& DontKnowTrade::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteRequest::_traits[] =
+const FieldTrait QuoteRequest::_traits[]
 {
-   FieldTrait(  11,15,  3,  0,0x04), FieldTrait(  58,15,  6,  0,0x04), FieldTrait( 131,15,  1,  0,0x04),
-   FieldTrait( 146, 1,  5,112,0x1c), FieldTrait( 354, 2,  7,  0,0x04), FieldTrait( 355,28,  8,  0,0x04),
-   FieldTrait( 528, 7,  4,  0,0x04), FieldTrait( 529,16, 14,  0,0x04), FieldTrait( 644,15,  2,  0,0x04),
-   FieldTrait( 775, 1, 13,  0,0x04), FieldTrait(1091, 8, 12,  0,0x04), FieldTrait(1116, 1,  9,139,0x1c),
-   FieldTrait(1171, 8, 10,  0,0x04), FieldTrait(1172, 1, 11,  0,0x04)
+   {  11,15,  3,  0,0x04}, {  58,15,  6,  0,0x04}, { 131,15,  1,  0,0x04}, { 146, 1,  5,112,0x1c},
+   { 354, 2,  7,  0,0x04}, { 355,28,  8,  0,0x04}, { 528, 7,  4,  0,0x04}, { 529,16, 14,  0,0x04},
+   { 644,15,  2,  0,0x04}, { 775, 1, 13,  0,0x04}, {1091, 8, 12,  0,0x04}, {1116, 1,  9,139,0x1c},
+   {1171, 8, 10,  0,0x04}, {1172, 1, 11,  0,0x04}
 };
 const FieldTrait_Hash_Array QuoteRequest::_ftha(QuoteRequest::_traits, 14);
 const MsgType QuoteRequest::_msgtype("R");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteRequest::NoRelatedSym::_traits[] =
+const FieldTrait QuoteRequest::NoRelatedSym::_traits[]
 {
-   FieldTrait(   1,15,118,  0,0x04), FieldTrait(  15,19,116,  0,0x04), FieldTrait(  22,15,  4, 54,0x14),
-   FieldTrait(  38,10,107, 93,0x14), FieldTrait(  40, 7,124,  0,0x04), FieldTrait(  44,11,137,  0,0x04),
-   FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  54, 7,105,  0,0x04), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  60,22,127,  0,0x04), FieldTrait(  62,22,125,  0,0x04), FieldTrait(  63,15,112,  0,0x04),
-   FieldTrait(  64,25,113,  0,0x04), FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14),
-   FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 110,10,146,  0,0x04), FieldTrait( 120,19,147,  0,0x04),
-   FieldTrait( 126,22,126,  0,0x04), FieldTrait( 140,11, 99,  0,0x04), FieldTrait( 152,10,108, 93,0x14),
-   FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 192,10,115,  0,0x04), FieldTrait( 193,25,114,  0,0x04),
-   FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14),
-   FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 218,12,128,160,0x14),
-   FieldTrait( 220,19,129,160,0x14), FieldTrait( 221,15,130,160,0x14), FieldTrait( 222,15,131,160,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 229,25,104,  0,0x04), FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 232, 1,117,162,0x1c),
-   FieldTrait( 235,15,139,198,0x14), FieldTrait( 236,14,140,198,0x14), FieldTrait( 239, 1, 14, 54,0x14),
-   FieldTrait( 240,25, 23, 54,0x14), FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 303, 1,100,  0,0x04),
-   FieldTrait( 336,15,102,  0,0x04), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 423, 1,136,  0,0x04),
-   FieldTrait( 453, 1,145, 94,0x1c), FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14),
-   FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 468, 7,110, 93,0x14), FieldTrait( 469, 9,111, 93,0x14),
-   FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14),
-   FieldTrait( 516,14,109, 93,0x14), FieldTrait( 537, 1,101,  0,0x04), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 555, 1,121,113,0x1c), FieldTrait( 581, 1,120,  0,0x04),
-   FieldTrait( 625,15,103,  0,0x04), FieldTrait( 640,11,138,  0,0x04), FieldTrait( 660, 1,119,  0,0x04),
-   FieldTrait( 662,11,132,160,0x14), FieldTrait( 663, 1,133,160,0x14), FieldTrait( 667,21, 37, 54,0x14),
-   FieldTrait( 691,15, 36, 54,0x14), FieldTrait( 692, 1,123,  0,0x04), FieldTrait( 696,25,142,198,0x14),
-   FieldTrait( 697,11,143,198,0x14), FieldTrait( 698, 1,144,198,0x14), FieldTrait( 699,15,134,160,0x14),
-   FieldTrait( 701,25,141,198,0x14), FieldTrait( 711, 1, 98,188,0x1c), FieldTrait( 735, 1,122,111,0x1c),
-   FieldTrait( 761,15,135,160,0x14), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 788, 1, 93, 44,0x14),
-   FieldTrait( 854, 1,106,  0,0x04), FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 873,25, 41, 54,0x14),
-   FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14),
-   FieldTrait( 898,14, 97, 44,0x14), FieldTrait( 913,15, 89, 44,0x14), FieldTrait( 914,15, 90, 44,0x14),
-   FieldTrait( 915,25, 91, 44,0x14), FieldTrait( 916,25, 94, 44,0x14), FieldTrait( 917,25, 95, 44,0x14),
-   FieldTrait( 918,19, 92, 44,0x14), FieldTrait( 919, 1, 96, 44,0x14), FieldTrait( 947,19, 25, 54,0x14),
-   FieldTrait( 965,15, 43, 54,0x14), FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14),
-   FieldTrait( 968, 9, 47, 54,0x14), FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14),
-   FieldTrait( 971, 1, 50, 54,0x14), FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14),
-   FieldTrait(1018, 1, 51, 57,0x1c), FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14),
-   FieldTrait(1146,13, 56, 54,0x14), FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14),
-   FieldTrait(1184, 2, 58,150,0x14), FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14),
-   FieldTrait(1191,15, 62, 54,0x14), FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14),
-   FieldTrait(1194, 1, 65, 54,0x14), FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14),
-   FieldTrait(1197,15, 74, 54,0x14), FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14),
-   FieldTrait(1200,11, 70, 54,0x14), FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14),
-   FieldTrait(1244, 8, 72, 54,0x14), FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14),
-   FieldTrait(1445, 1,148,118,0x1c), FieldTrait(1449,15, 77, 54,0x14), FieldTrait(1450,15, 78, 54,0x14),
-   FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14), FieldTrait(1457,14, 81, 54,0x14),
-   FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14), FieldTrait(1479, 1, 84, 54,0x14),
-   FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14), FieldTrait(1482, 1, 87, 54,0x14),
-   FieldTrait(1483, 1, 88, 21,0x1c)
+   {   1,15,118,  0,0x04}, {  15,19,116,  0,0x04}, {  22,15,  4, 54,0x14}, {  38,10,107, 93,0x14},
+   {  40, 7,124,  0,0x04}, {  44,11,137,  0,0x04}, {  48,15,  3, 54,0x14}, {  54, 7,105,  0,0x04},
+   {  55,15,  1, 54,0x14}, {  60,22,127,  0,0x04}, {  62,22,125,  0,0x04}, {  63,15,112,  0,0x04},
+   {  64,25,113,  0,0x04}, {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14},
+   { 110,10,146,  0,0x04}, { 120,19,147,  0,0x04}, { 126,22,126,  0,0x04}, { 140,11, 99,  0,0x04},
+   { 152,10,108, 93,0x14}, { 167,15,  8, 54,0x14}, { 192,10,115,  0,0x04}, { 193,25,114,  0,0x04},
+   { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14}, { 206, 7, 26, 54,0x14},
+   { 207,20, 29, 54,0x14}, { 218,12,128,160,0x14}, { 220,19,129,160,0x14}, { 221,15,130,160,0x14},
+   { 222,15,131,160,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14}, { 225,25, 13, 54,0x14},
+   { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14}, { 229,25,104,  0,0x04},
+   { 231, 9, 27, 54,0x14}, { 232, 1,117,162,0x1c}, { 235,15,139,198,0x14}, { 236,14,140,198,0x14},
+   { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 303, 1,100,  0,0x04},
+   { 336,15,102,  0,0x04}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14},
+   { 351,28, 35, 54,0x14}, { 423, 1,136,  0,0x04}, { 453, 1,145, 94,0x1c}, { 454, 1,  5,142,0x1c},
+   { 460, 1,  6, 54,0x14}, { 461,15,  7, 54,0x14}, { 468, 7,110, 93,0x14}, { 469, 9,111, 93,0x14},
+   { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14}, { 516,14,109, 93,0x14},
+   { 537, 1,101,  0,0x04}, { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1,121,113,0x1c},
+   { 581, 1,120,  0,0x04}, { 625,15,103,  0,0x04}, { 640,11,138,  0,0x04}, { 660, 1,119,  0,0x04},
+   { 662,11,132,160,0x14}, { 663, 1,133,160,0x14}, { 667,21, 37, 54,0x14}, { 691,15, 36, 54,0x14},
+   { 692, 1,123,  0,0x04}, { 696,25,142,198,0x14}, { 697,11,143,198,0x14}, { 698, 1,144,198,0x14},
+   { 699,15,134,160,0x14}, { 701,25,141,198,0x14}, { 711, 1, 98,188,0x1c}, { 735, 1,122,111,0x1c},
+   { 761,15,135,160,0x14}, { 762,15,  9, 54,0x14}, { 788, 1, 93, 44,0x14}, { 854, 1,106,  0,0x04},
+   { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14},
+   { 876,15, 39, 54,0x14}, { 898,14, 97, 44,0x14}, { 913,15, 89, 44,0x14}, { 914,15, 90, 44,0x14},
+   { 915,25, 91, 44,0x14}, { 916,25, 94, 44,0x14}, { 917,25, 95, 44,0x14}, { 918,19, 92, 44,0x14},
+   { 919, 1, 96, 44,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14},
+   { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14},
+   { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c},
+   {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14},
+   {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14},
+   {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14},
+   {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14},
+   {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14}, {1242, 8, 73, 54,0x14},
+   {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14}, {1445, 1,148,118,0x1c},
+   {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14},
+   {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14},
+   {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    QuoteRequest::NoRelatedSym::_ftha(QuoteRequest::NoRelatedSym::_traits, 148);
@@ -9310,68 +8507,53 @@ const FieldTrait *QuoteRequest::NoRootPartyIDs::NoRootPartySubIDs::_traits(NoRoo
 const FieldTrait_Hash_Array& QuoteRequest::NoRootPartyIDs::NoRootPartySubIDs::_ftha(NoRootPartySubIDsV1_ftha);
 const MsgType& QuoteRequest::NoRootPartyIDs::NoRootPartySubIDs::_msgtype(NoRootPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait Quote::_traits[] =
+const FieldTrait Quote::_traits[]
 {
-   FieldTrait(   1,15,120,  0,0x04), FieldTrait(  12,13,149,  0,0x04), FieldTrait(  13, 7,148,  0,0x04),
-   FieldTrait(  15,19,118,  0,0x04), FieldTrait(  22,15, 13, 54,0x14), FieldTrait(  38,10,109, 93,0x14),
-   FieldTrait(  40, 7,142,  0,0x04), FieldTrait(  48,15, 12, 54,0x14), FieldTrait(  54, 7,108,  0,0x04),
-   FieldTrait(  55,15, 10, 54,0x14), FieldTrait(  58,15,168,  0,0x04), FieldTrait(  60,22,141,  0,0x04),
-   FieldTrait(  62,22,132,  0,0x04), FieldTrait(  63,15,114,  0,0x04), FieldTrait(  64,25,115,  0,0x04),
-   FieldTrait(  65,15, 11, 54,0x14), FieldTrait( 100,20,151,  0,0x04), FieldTrait( 106,15, 39, 54,0x14),
-   FieldTrait( 107,15, 42, 54,0x14), FieldTrait( 110,10,176,  0,0x04), FieldTrait( 117,15,  2,  0,0x04),
-   FieldTrait( 120,19,179,  0,0x04), FieldTrait( 131,15,  1,  0,0x04), FieldTrait( 132,11,124,  0,0x04),
-   FieldTrait( 133,11,125,  0,0x04), FieldTrait( 134,10,129,  0,0x04), FieldTrait( 135,10,131,  0,0x04),
-   FieldTrait( 152,10,110, 93,0x14), FieldTrait( 156, 7,147,  0,0x04), FieldTrait( 167,15, 17, 54,0x14),
-   FieldTrait( 188,11,133,  0,0x04), FieldTrait( 189,12,135,  0,0x04), FieldTrait( 190,11,134,  0,0x04),
-   FieldTrait( 191,12,136,  0,0x04), FieldTrait( 192,10,117,  0,0x04), FieldTrait( 193,25,116,  0,0x04),
-   FieldTrait( 200,21, 19, 54,0x14), FieldTrait( 201, 1, 80, 54,0x14), FieldTrait( 202,11, 33, 54,0x14),
-   FieldTrait( 206, 7, 35, 54,0x14), FieldTrait( 207,20, 38, 54,0x14), FieldTrait( 218,12,154,160,0x14),
-   FieldTrait( 220,19,155,160,0x14), FieldTrait( 221,15,156,160,0x14), FieldTrait( 222,15,157,160,0x14),
-   FieldTrait( 223,14, 37, 54,0x14), FieldTrait( 224,25, 21, 54,0x14), FieldTrait( 225,25, 22, 54,0x14),
-   FieldTrait( 226, 1, 24, 54,0x14), FieldTrait( 227,14, 25, 54,0x14), FieldTrait( 228, 9, 26, 54,0x14),
-   FieldTrait( 231, 9, 36, 54,0x14), FieldTrait( 232, 1,119,162,0x1c), FieldTrait( 235,15,162,198,0x14),
-   FieldTrait( 236,14,163,198,0x14), FieldTrait( 239, 1, 23, 54,0x14), FieldTrait( 240,25, 32, 54,0x14),
-   FieldTrait( 255,15, 27, 54,0x14), FieldTrait( 301, 1,  6,  0,0x04), FieldTrait( 336,15,  8,  0,0x04),
-   FieldTrait( 348, 2, 40, 54,0x14), FieldTrait( 349,28, 41, 54,0x14), FieldTrait( 350, 2, 43, 54,0x14),
-   FieldTrait( 351,28, 44, 54,0x14), FieldTrait( 354, 2,169,  0,0x04), FieldTrait( 355,28,170,  0,0x04),
-   FieldTrait( 423, 1,153,  0,0x04), FieldTrait( 453, 1,  7, 94,0x1c), FieldTrait( 454, 1, 14,142,0x1c),
-   FieldTrait( 460, 1, 15, 54,0x14), FieldTrait( 461,15, 16, 54,0x14), FieldTrait( 468, 7,112, 93,0x14),
-   FieldTrait( 469, 9,113, 93,0x14), FieldTrait( 470,18, 29, 54,0x14), FieldTrait( 471,15, 30, 54,0x14),
-   FieldTrait( 472,15, 31, 54,0x14), FieldTrait( 516,14,111, 93,0x14), FieldTrait( 528, 7,152,  0,0x04),
-   FieldTrait( 529,16,178,  0,0x04), FieldTrait( 537, 1,  4,  0,0x04), FieldTrait( 541,25, 20, 54,0x14),
-   FieldTrait( 543,15, 28, 54,0x14), FieldTrait( 555, 1,123, 62,0x1c), FieldTrait( 581, 1,122,  0,0x04),
-   FieldTrait( 582, 1,150,  0,0x04), FieldTrait( 625,15,  9,  0,0x04), FieldTrait( 631,11,137,  0,0x04),
-   FieldTrait( 632,14,138,  0,0x04), FieldTrait( 633,14,139,  0,0x04), FieldTrait( 634,14,140,  0,0x04),
-   FieldTrait( 642,12,143,  0,0x04), FieldTrait( 643,12,144,  0,0x04), FieldTrait( 645,11,126,  0,0x04),
-   FieldTrait( 646,11,127,  0,0x04), FieldTrait( 647,10,128,  0,0x04), FieldTrait( 648,10,130,  0,0x04),
-   FieldTrait( 656, 9,145,  0,0x04), FieldTrait( 657, 9,146,  0,0x04), FieldTrait( 660, 1,121,  0,0x04),
-   FieldTrait( 662,11,158,160,0x14), FieldTrait( 663, 1,159,160,0x14), FieldTrait( 667,21, 46, 54,0x14),
-   FieldTrait( 691,15, 45, 54,0x14), FieldTrait( 693,15,  3,  0,0x04), FieldTrait( 696,25,165,198,0x14),
-   FieldTrait( 697,11,166,198,0x14), FieldTrait( 698, 1,167,198,0x14), FieldTrait( 699,15,160,160,0x14),
-   FieldTrait( 701,25,164,198,0x14), FieldTrait( 711, 1,107,188,0x1c), FieldTrait( 735, 1,  5,111,0x1c),
-   FieldTrait( 761,15,161,160,0x14), FieldTrait( 762,15, 18, 54,0x14), FieldTrait( 775, 1,177,  0,0x04),
-   FieldTrait( 788, 1,102, 44,0x14), FieldTrait( 864, 1, 49, 38,0x1c), FieldTrait( 873,25, 50, 54,0x14),
-   FieldTrait( 874,25, 51, 54,0x14), FieldTrait( 875, 1, 47, 54,0x14), FieldTrait( 876,15, 48, 54,0x14),
-   FieldTrait( 898,14,106, 44,0x14), FieldTrait( 913,15, 98, 44,0x14), FieldTrait( 914,15, 99, 44,0x14),
-   FieldTrait( 915,25,100, 44,0x14), FieldTrait( 916,25,103, 44,0x14), FieldTrait( 917,25,104, 44,0x14),
-   FieldTrait( 918,19,101, 44,0x14), FieldTrait( 919, 1,105, 44,0x14), FieldTrait( 947,19, 34, 54,0x14),
-   FieldTrait( 965,15, 52, 54,0x14), FieldTrait( 966,15, 53, 54,0x14), FieldTrait( 967, 9, 55, 54,0x14),
-   FieldTrait( 968, 9, 56, 54,0x14), FieldTrait( 969, 9, 57, 54,0x14), FieldTrait( 970, 1, 58, 54,0x14),
-   FieldTrait( 971, 1, 59, 54,0x14), FieldTrait( 996,15, 61, 54,0x14), FieldTrait( 997,15, 62, 54,0x14),
-   FieldTrait(1018, 1, 60, 57,0x1c), FieldTrait(1049, 7, 54, 54,0x14), FieldTrait(1065,12,171,  0,0x04),
-   FieldTrait(1066,12,172,  0,0x04), FieldTrait(1079,26, 63, 54,0x14), FieldTrait(1133, 7,173,  0,0x04),
-   FieldTrait(1146,13, 65, 54,0x14), FieldTrait(1147,10, 66, 54,0x14), FieldTrait(1151,15, 64, 54,0x14),
-   FieldTrait(1166,15,174,  0,0x04), FieldTrait(1171, 8,175,  0,0x04), FieldTrait(1184, 2, 67,150,0x14),
-   FieldTrait(1185,29, 68,150,0x14), FieldTrait(1186,15, 69,150,0x14), FieldTrait(1191,15, 71, 54,0x14),
-   FieldTrait(1192,10, 72, 54,0x14), FieldTrait(1193, 7, 73, 54,0x14), FieldTrait(1194, 1, 74, 54,0x14),
-   FieldTrait(1195,13, 75, 54,0x14), FieldTrait(1196,15, 76, 54,0x14), FieldTrait(1197,15, 83, 54,0x14),
-   FieldTrait(1198, 1, 77, 54,0x14), FieldTrait(1199,11, 78, 54,0x14), FieldTrait(1200,11, 79, 54,0x14),
-   FieldTrait(1227,15, 70, 54,0x14), FieldTrait(1242, 8, 82, 54,0x14), FieldTrait(1244, 8, 81, 54,0x14),
-   FieldTrait(1435, 1, 84, 54,0x14), FieldTrait(1439, 1, 85, 54,0x14), FieldTrait(1445, 1,180,118,0x1c),
-   FieldTrait(1449,15, 86, 54,0x14), FieldTrait(1450,15, 87, 54,0x14), FieldTrait(1451,14, 88, 54,0x14),
-   FieldTrait(1452,14, 89, 54,0x14), FieldTrait(1457,14, 90, 54,0x14), FieldTrait(1458,14, 91, 54,0x14),
-   FieldTrait(1478, 1, 92, 54,0x14), FieldTrait(1479, 1, 93, 54,0x14), FieldTrait(1480,14, 94, 54,0x14),
-   FieldTrait(1481, 1, 95, 54,0x14), FieldTrait(1482, 1, 96, 54,0x14), FieldTrait(1483, 1, 97, 21,0x1c)
+   {   1,15,120,  0,0x04}, {  12,13,149,  0,0x04}, {  13, 7,148,  0,0x04}, {  15,19,118,  0,0x04},
+   {  22,15, 13, 54,0x14}, {  38,10,109, 93,0x14}, {  40, 7,142,  0,0x04}, {  48,15, 12, 54,0x14},
+   {  54, 7,108,  0,0x04}, {  55,15, 10, 54,0x14}, {  58,15,168,  0,0x04}, {  60,22,141,  0,0x04},
+   {  62,22,132,  0,0x04}, {  63,15,114,  0,0x04}, {  64,25,115,  0,0x04}, {  65,15, 11, 54,0x14},
+   { 100,20,151,  0,0x04}, { 106,15, 39, 54,0x14}, { 107,15, 42, 54,0x14}, { 110,10,176,  0,0x04},
+   { 117,15,  2,  0,0x04}, { 120,19,179,  0,0x04}, { 131,15,  1,  0,0x04}, { 132,11,124,  0,0x04},
+   { 133,11,125,  0,0x04}, { 134,10,129,  0,0x04}, { 135,10,131,  0,0x04}, { 152,10,110, 93,0x14},
+   { 156, 7,147,  0,0x04}, { 167,15, 17, 54,0x14}, { 188,11,133,  0,0x04}, { 189,12,135,  0,0x04},
+   { 190,11,134,  0,0x04}, { 191,12,136,  0,0x04}, { 192,10,117,  0,0x04}, { 193,25,116,  0,0x04},
+   { 200,21, 19, 54,0x14}, { 201, 1, 80, 54,0x14}, { 202,11, 33, 54,0x14}, { 206, 7, 35, 54,0x14},
+   { 207,20, 38, 54,0x14}, { 218,12,154,160,0x14}, { 220,19,155,160,0x14}, { 221,15,156,160,0x14},
+   { 222,15,157,160,0x14}, { 223,14, 37, 54,0x14}, { 224,25, 21, 54,0x14}, { 225,25, 22, 54,0x14},
+   { 226, 1, 24, 54,0x14}, { 227,14, 25, 54,0x14}, { 228, 9, 26, 54,0x14}, { 231, 9, 36, 54,0x14},
+   { 232, 1,119,162,0x1c}, { 235,15,162,198,0x14}, { 236,14,163,198,0x14}, { 239, 1, 23, 54,0x14},
+   { 240,25, 32, 54,0x14}, { 255,15, 27, 54,0x14}, { 301, 1,  6,  0,0x04}, { 336,15,  8,  0,0x04},
+   { 348, 2, 40, 54,0x14}, { 349,28, 41, 54,0x14}, { 350, 2, 43, 54,0x14}, { 351,28, 44, 54,0x14},
+   { 354, 2,169,  0,0x04}, { 355,28,170,  0,0x04}, { 423, 1,153,  0,0x04}, { 453, 1,  7, 94,0x1c},
+   { 454, 1, 14,142,0x1c}, { 460, 1, 15, 54,0x14}, { 461,15, 16, 54,0x14}, { 468, 7,112, 93,0x14},
+   { 469, 9,113, 93,0x14}, { 470,18, 29, 54,0x14}, { 471,15, 30, 54,0x14}, { 472,15, 31, 54,0x14},
+   { 516,14,111, 93,0x14}, { 528, 7,152,  0,0x04}, { 529,16,178,  0,0x04}, { 537, 1,  4,  0,0x04},
+   { 541,25, 20, 54,0x14}, { 543,15, 28, 54,0x14}, { 555, 1,123, 62,0x1c}, { 581, 1,122,  0,0x04},
+   { 582, 1,150,  0,0x04}, { 625,15,  9,  0,0x04}, { 631,11,137,  0,0x04}, { 632,14,138,  0,0x04},
+   { 633,14,139,  0,0x04}, { 634,14,140,  0,0x04}, { 642,12,143,  0,0x04}, { 643,12,144,  0,0x04},
+   { 645,11,126,  0,0x04}, { 646,11,127,  0,0x04}, { 647,10,128,  0,0x04}, { 648,10,130,  0,0x04},
+   { 656, 9,145,  0,0x04}, { 657, 9,146,  0,0x04}, { 660, 1,121,  0,0x04}, { 662,11,158,160,0x14},
+   { 663, 1,159,160,0x14}, { 667,21, 46, 54,0x14}, { 691,15, 45, 54,0x14}, { 693,15,  3,  0,0x04},
+   { 696,25,165,198,0x14}, { 697,11,166,198,0x14}, { 698, 1,167,198,0x14}, { 699,15,160,160,0x14},
+   { 701,25,164,198,0x14}, { 711, 1,107,188,0x1c}, { 735, 1,  5,111,0x1c}, { 761,15,161,160,0x14},
+   { 762,15, 18, 54,0x14}, { 775, 1,177,  0,0x04}, { 788, 1,102, 44,0x14}, { 864, 1, 49, 38,0x1c},
+   { 873,25, 50, 54,0x14}, { 874,25, 51, 54,0x14}, { 875, 1, 47, 54,0x14}, { 876,15, 48, 54,0x14},
+   { 898,14,106, 44,0x14}, { 913,15, 98, 44,0x14}, { 914,15, 99, 44,0x14}, { 915,25,100, 44,0x14},
+   { 916,25,103, 44,0x14}, { 917,25,104, 44,0x14}, { 918,19,101, 44,0x14}, { 919, 1,105, 44,0x14},
+   { 947,19, 34, 54,0x14}, { 965,15, 52, 54,0x14}, { 966,15, 53, 54,0x14}, { 967, 9, 55, 54,0x14},
+   { 968, 9, 56, 54,0x14}, { 969, 9, 57, 54,0x14}, { 970, 1, 58, 54,0x14}, { 971, 1, 59, 54,0x14},
+   { 996,15, 61, 54,0x14}, { 997,15, 62, 54,0x14}, {1018, 1, 60, 57,0x1c}, {1049, 7, 54, 54,0x14},
+   {1065,12,171,  0,0x04}, {1066,12,172,  0,0x04}, {1079,26, 63, 54,0x14}, {1133, 7,173,  0,0x04},
+   {1146,13, 65, 54,0x14}, {1147,10, 66, 54,0x14}, {1151,15, 64, 54,0x14}, {1166,15,174,  0,0x04},
+   {1171, 8,175,  0,0x04}, {1184, 2, 67,150,0x14}, {1185,29, 68,150,0x14}, {1186,15, 69,150,0x14},
+   {1191,15, 71, 54,0x14}, {1192,10, 72, 54,0x14}, {1193, 7, 73, 54,0x14}, {1194, 1, 74, 54,0x14},
+   {1195,13, 75, 54,0x14}, {1196,15, 76, 54,0x14}, {1197,15, 83, 54,0x14}, {1198, 1, 77, 54,0x14},
+   {1199,11, 78, 54,0x14}, {1200,11, 79, 54,0x14}, {1227,15, 70, 54,0x14}, {1242, 8, 82, 54,0x14},
+   {1244, 8, 81, 54,0x14}, {1435, 1, 84, 54,0x14}, {1439, 1, 85, 54,0x14}, {1445, 1,180,118,0x1c},
+   {1449,15, 86, 54,0x14}, {1450,15, 87, 54,0x14}, {1451,14, 88, 54,0x14}, {1452,14, 89, 54,0x14},
+   {1457,14, 90, 54,0x14}, {1458,14, 91, 54,0x14}, {1478, 1, 92, 54,0x14}, {1479, 1, 93, 54,0x14},
+   {1480,14, 94, 54,0x14}, {1481, 1, 95, 54,0x14}, {1482, 1, 96, 54,0x14}, {1483, 1, 97, 21,0x1c}
 };
 const FieldTrait_Hash_Array Quote::_ftha(Quote::_traits, 180);
 const MsgType Quote::_msgtype("S");
@@ -9464,27 +8646,24 @@ const FieldTrait *Quote::NoComplexEvents::NoComplexEventDates::NoComplexEventTim
 const FieldTrait_Hash_Array& Quote::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& Quote::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SettlementInstructions::_traits[] =
+const FieldTrait SettlementInstructions::_traits[]
 {
-   FieldTrait(  11,15,  8,  0,0x04), FieldTrait(  58,15,  5,  0,0x04), FieldTrait(  60,22,  9,  0,0x04),
-   FieldTrait( 160, 7,  3,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04), FieldTrait( 355,28,  7,  0,0x04),
-   FieldTrait( 777,15,  1,  0,0x04), FieldTrait( 778, 1, 10,152,0x1c), FieldTrait( 791,15,  2,  0,0x04),
-   FieldTrait( 792, 1,  4,  0,0x04)
+   {  11,15,  8,  0,0x04}, {  58,15,  5,  0,0x04}, {  60,22,  9,  0,0x04}, { 160, 7,  3,  0,0x04},
+   { 354, 2,  6,  0,0x04}, { 355,28,  7,  0,0x04}, { 777,15,  1,  0,0x04}, { 778, 1, 10,152,0x1c},
+   { 791,15,  2,  0,0x04}, { 792, 1,  4,  0,0x04}
 };
 const FieldTrait_Hash_Array SettlementInstructions::_ftha(SettlementInstructions::_traits, 10);
 const MsgType SettlementInstructions::_msgtype("T");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SettlementInstructions::NoSettlInst::_traits[] =
+const FieldTrait SettlementInstructions::NoSettlInst::_traits[]
 {
-   FieldTrait(  54, 7,  5,  0,0x04), FieldTrait(  85, 1, 16, 37,0x1c), FieldTrait( 120,19, 26,  0,0x04),
-   FieldTrait( 126,22, 10,  0,0x04), FieldTrait( 162,15,  1,  0,0x04), FieldTrait( 163, 7,  2,  0,0x04),
-   FieldTrait( 167,15,  7,  0,0x04), FieldTrait( 168,22,  9,  0,0x04), FieldTrait( 169, 1, 13,153,0x14),
-   FieldTrait( 170,15, 14,153,0x14), FieldTrait( 171,15, 15,153,0x14), FieldTrait( 172, 1, 12,153,0x14),
-   FieldTrait( 214,15,  3,  0,0x04), FieldTrait( 453, 1,  4, 94,0x1c), FieldTrait( 460, 1,  6,  0,0x04),
-   FieldTrait( 461,15,  8,  0,0x04), FieldTrait( 476,15, 18,  0,0x04), FieldTrait( 488,15, 19,  0,0x04),
-   FieldTrait( 489,15, 20,  0,0x04), FieldTrait( 490,25, 22,  0,0x04), FieldTrait( 491,15, 23,  0,0x04),
-   FieldTrait( 492, 1, 17,  0,0x04), FieldTrait( 503,25, 21,  0,0x04), FieldTrait( 504,25, 24,  0,0x04),
-   FieldTrait( 505,15, 25,  0,0x04), FieldTrait( 779,22, 11,  0,0x04)
+   {  54, 7,  5,  0,0x04}, {  85, 1, 16, 37,0x1c}, { 120,19, 26,  0,0x04}, { 126,22, 10,  0,0x04},
+   { 162,15,  1,  0,0x04}, { 163, 7,  2,  0,0x04}, { 167,15,  7,  0,0x04}, { 168,22,  9,  0,0x04},
+   { 169, 1, 13,153,0x14}, { 170,15, 14,153,0x14}, { 171,15, 15,153,0x14}, { 172, 1, 12,153,0x14},
+   { 214,15,  3,  0,0x04}, { 453, 1,  4, 94,0x1c}, { 460, 1,  6,  0,0x04}, { 461,15,  8,  0,0x04},
+   { 476,15, 18,  0,0x04}, { 488,15, 19,  0,0x04}, { 489,15, 20,  0,0x04}, { 490,25, 22,  0,0x04},
+   { 491,15, 23,  0,0x04}, { 492, 1, 17,  0,0x04}, { 503,25, 21,  0,0x04}, { 504,25, 24,  0,0x04},
+   { 505,15, 25,  0,0x04}, { 779,22, 11,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    SettlementInstructions::NoSettlInst::_ftha(SettlementInstructions::NoSettlInst::_traits, 26);
@@ -9510,51 +8689,42 @@ const FieldTrait *SettlementInstructions::NoSettlInst::NoPartyIDs::NoPartySubIDs
 const FieldTrait_Hash_Array& SettlementInstructions::NoSettlInst::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& SettlementInstructions::NoSettlInst::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataRequest::_traits[] =
+const FieldTrait MarketDataRequest::_traits[]
 {
-   FieldTrait( 146, 1, 10, 52,0x1c), FieldTrait( 262,15,  1,  0,0x04), FieldTrait( 263, 7,  2,  0,0x04),
-   FieldTrait( 264, 1,  3,  0,0x04), FieldTrait( 265, 1,  4,  0,0x04), FieldTrait( 266, 8,  5,  0,0x04),
-   FieldTrait( 267, 1,  9, 71,0x1c), FieldTrait( 286,16,  6,  0,0x04), FieldTrait( 386, 1, 11,185,0x1c),
-   FieldTrait( 453, 1, 15, 94,0x1c), FieldTrait( 546,16,  7,  0,0x04), FieldTrait( 547, 8,  8,  0,0x04),
-   FieldTrait( 812, 1, 13,  0,0x04), FieldTrait( 815, 1, 12,  0,0x04), FieldTrait(1070, 1, 14,  0,0x04)
+   { 146, 1, 10, 52,0x1c}, { 262,15,  1,  0,0x04}, { 263, 7,  2,  0,0x04}, { 264, 1,  3,  0,0x04},
+   { 265, 1,  4,  0,0x04}, { 266, 8,  5,  0,0x04}, { 267, 1,  9, 71,0x1c}, { 286,16,  6,  0,0x04},
+   { 386, 1, 11,185,0x1c}, { 453, 1, 15, 94,0x1c}, { 546,16,  7,  0,0x04}, { 547, 8,  8,  0,0x04},
+   { 812, 1, 13,  0,0x04}, { 815, 1, 12,  0,0x04}, {1070, 1, 14,  0,0x04}
 };
 const FieldTrait_Hash_Array MarketDataRequest::_ftha(MarketDataRequest::_traits, 15);
 const MsgType MarketDataRequest::_msgtype("V");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataRequest::NoRelatedSym::_traits[] =
+const FieldTrait MarketDataRequest::NoRelatedSym::_traits[]
 {
-   FieldTrait(  15,19, 91,  0,0x04), FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14),
-   FieldTrait(  55,15,  1, 54,0x14), FieldTrait(  63,15, 93,  0,0x04), FieldTrait(  64,25, 94,  0,0x04),
-   FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14),
-   FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14),
-   FieldTrait( 202,11, 24, 54,0x14), FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14),
-   FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 271,10, 95,  0,0x04), FieldTrait( 348, 2, 31, 54,0x14),
-   FieldTrait( 349,28, 32, 54,0x14), FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14),
-   FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14),
-   FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14),
-   FieldTrait( 537, 1, 92,  0,0x04), FieldTrait( 541,25, 11, 54,0x14), FieldTrait( 543,15, 19, 54,0x14),
-   FieldTrait( 555, 1, 90, 49,0x1c), FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 691,15, 36, 54,0x14),
-   FieldTrait( 711, 1, 89,188,0x1c), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 864, 1, 40, 38,0x1c),
-   FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14),
-   FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14),
-   FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14),
-   FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14),
-   FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c),
-   FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1146,13, 56, 54,0x14),
-   FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14),
-   FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14),
-   FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14),
-   FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14),
-   FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14),
-   FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14),
-   FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14),
-   FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14),
-   FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14),
-   FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14),
-   FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c), FieldTrait(1500,15, 96,  0,0x04)
+   {  15,19, 91,  0,0x04}, {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14},
+   {  63,15, 93,  0,0x04}, {  64,25, 94,  0,0x04}, {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14},
+   { 107,15, 33, 54,0x14}, { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14},
+   { 202,11, 24, 54,0x14}, { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 223,14, 28, 54,0x14},
+   { 224,25, 12, 54,0x14}, { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14},
+   { 228, 9, 17, 54,0x14}, { 231, 9, 27, 54,0x14}, { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14},
+   { 255,15, 18, 54,0x14}, { 271,10, 95,  0,0x04}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14},
+   { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 537, 1, 92,  0,0x04}, { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1, 90, 49,0x1c},
+   { 667,21, 37, 54,0x14}, { 691,15, 36, 54,0x14}, { 711, 1, 89,188,0x1c}, { 762,15,  9, 54,0x14},
+   { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14},
+   { 876,15, 39, 54,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14},
+   { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14},
+   { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c},
+   {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14},
+   {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14},
+   {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14},
+   {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14},
+   {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14}, {1242, 8, 73, 54,0x14},
+   {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14},
+   {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14},
+   {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14},
+   {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}, {1500,15, 96,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    MarketDataRequest::NoRelatedSym::_ftha(MarketDataRequest::NoRelatedSym::_traits, 96);
@@ -9616,9 +8786,9 @@ const FieldTrait *MarketDataRequest::NoRelatedSym::NoComplexEvents::NoComplexEve
 const FieldTrait_Hash_Array& MarketDataRequest::NoRelatedSym::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& MarketDataRequest::NoRelatedSym::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataRequest::NoMDEntryTypes::_traits[] =
+const FieldTrait MarketDataRequest::NoMDEntryTypes::_traits[]
 {
-   FieldTrait( 269, 7,  1,  0,0x05)
+   { 269, 7,  1,  0,0x05}
 };
 const FieldTrait_Hash_Array 
    MarketDataRequest::NoMDEntryTypes::_ftha(MarketDataRequest::NoMDEntryTypes::_traits, 1);
@@ -9636,46 +8806,36 @@ const FieldTrait *MarketDataRequest::NoPartyIDs::NoPartySubIDs::_traits(NoPartyS
 const FieldTrait_Hash_Array& MarketDataRequest::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& MarketDataRequest::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataSnapshotFullRefresh::_traits[] =
+const FieldTrait MarketDataSnapshotFullRefresh::_traits[]
 {
-   FieldTrait(  22,15,  5, 54,0x14), FieldTrait(  48,15,  4, 54,0x14), FieldTrait(  55,15,  2, 54,0x14),
-   FieldTrait(  65,15,  3, 54,0x14), FieldTrait(  75,25,102,  0,0x04), FieldTrait( 106,15, 31, 54,0x14),
-   FieldTrait( 107,15, 34, 54,0x14), FieldTrait( 167,15,  9, 54,0x14), FieldTrait( 200,21, 11, 54,0x14),
-   FieldTrait( 201, 1, 72, 54,0x14), FieldTrait( 202,11, 25, 54,0x14), FieldTrait( 206, 7, 27, 54,0x14),
-   FieldTrait( 207,20, 30, 54,0x14), FieldTrait( 215, 1,103,141,0x1c), FieldTrait( 223,14, 29, 54,0x14),
-   FieldTrait( 224,25, 13, 54,0x14), FieldTrait( 225,25, 14, 54,0x14), FieldTrait( 226, 1, 16, 54,0x14),
-   FieldTrait( 227,14, 17, 54,0x14), FieldTrait( 228, 9, 18, 54,0x14), FieldTrait( 231, 9, 28, 54,0x14),
-   FieldTrait( 239, 1, 15, 54,0x14), FieldTrait( 240,25, 24, 54,0x14), FieldTrait( 255,15, 19, 54,0x14),
-   FieldTrait( 262,15,  1,  0,0x04), FieldTrait( 264, 1,105,  0,0x04), FieldTrait( 268, 1, 95, 69,0x1c),
-   FieldTrait( 291,16, 92,  0,0x04), FieldTrait( 292,16, 93,  0,0x04), FieldTrait( 348, 2, 32, 54,0x14),
-   FieldTrait( 349,28, 33, 54,0x14), FieldTrait( 350, 2, 35, 54,0x14), FieldTrait( 351,28, 36, 54,0x14),
-   FieldTrait( 451,12, 94,  0,0x04), FieldTrait( 454, 1,  6,142,0x1c), FieldTrait( 460, 1,  7, 54,0x14),
-   FieldTrait( 461,15,  8, 54,0x14), FieldTrait( 470,18, 21, 54,0x14), FieldTrait( 471,15, 22, 54,0x14),
-   FieldTrait( 472,15, 23, 54,0x14), FieldTrait( 541,25, 12, 54,0x14), FieldTrait( 543,15, 20, 54,0x14),
-   FieldTrait( 555, 1, 91, 49,0x1c), FieldTrait( 667,21, 38, 54,0x14), FieldTrait( 691,15, 37, 54,0x14),
-   FieldTrait( 711, 1, 90,188,0x1c), FieldTrait( 715,25, 99,  0,0x04), FieldTrait( 762,15, 10, 54,0x14),
-   FieldTrait( 813, 1, 96,  0,0x04), FieldTrait( 814, 1, 97,  0,0x04), FieldTrait( 864, 1, 41, 38,0x1c),
-   FieldTrait( 873,25, 42, 54,0x14), FieldTrait( 874,25, 43, 54,0x14), FieldTrait( 875, 1, 39, 54,0x14),
-   FieldTrait( 876,15, 40, 54,0x14), FieldTrait( 911, 1,106,  0,0x04), FieldTrait( 947,19, 26, 54,0x14),
-   FieldTrait( 963, 1, 98,  0,0x04), FieldTrait( 965,15, 44, 54,0x14), FieldTrait( 966,15, 45, 54,0x14),
-   FieldTrait( 967, 9, 47, 54,0x14), FieldTrait( 968, 9, 48, 54,0x14), FieldTrait( 969, 9, 49, 54,0x14),
-   FieldTrait( 970, 1, 50, 54,0x14), FieldTrait( 971, 1, 51, 54,0x14), FieldTrait( 996,15, 53, 54,0x14),
-   FieldTrait( 997,15, 54, 54,0x14), FieldTrait(1018, 1, 52, 57,0x1c), FieldTrait(1021, 1,100,  0,0x04),
-   FieldTrait(1022,15,101,  0,0x04), FieldTrait(1049, 7, 46, 54,0x14), FieldTrait(1079,26, 55, 54,0x14),
-   FieldTrait(1146,13, 57, 54,0x14), FieldTrait(1147,10, 58, 54,0x14), FieldTrait(1151,15, 56, 54,0x14),
-   FieldTrait(1173, 1,104,  0,0x04), FieldTrait(1180,15,108,  8,0x14), FieldTrait(1181, 4,109,  8,0x14),
-   FieldTrait(1184, 2, 59,150,0x14), FieldTrait(1185,29, 60,150,0x14), FieldTrait(1186,15, 61,150,0x14),
-   FieldTrait(1187, 8,107,  0,0x04), FieldTrait(1191,15, 63, 54,0x14), FieldTrait(1192,10, 64, 54,0x14),
-   FieldTrait(1193, 7, 65, 54,0x14), FieldTrait(1194, 1, 66, 54,0x14), FieldTrait(1195,13, 67, 54,0x14),
-   FieldTrait(1196,15, 68, 54,0x14), FieldTrait(1197,15, 75, 54,0x14), FieldTrait(1198, 1, 69, 54,0x14),
-   FieldTrait(1199,11, 70, 54,0x14), FieldTrait(1200,11, 71, 54,0x14), FieldTrait(1227,15, 62, 54,0x14),
-   FieldTrait(1242, 8, 74, 54,0x14), FieldTrait(1244, 8, 73, 54,0x14), FieldTrait(1350, 4,110,  8,0x14),
-   FieldTrait(1352, 8,111,  8,0x14), FieldTrait(1435, 1, 76, 54,0x14), FieldTrait(1439, 1, 77, 54,0x14),
-   FieldTrait(1449,15, 78, 54,0x14), FieldTrait(1450,15, 79, 54,0x14), FieldTrait(1451,14, 80, 54,0x14),
-   FieldTrait(1452,14, 81, 54,0x14), FieldTrait(1457,14, 82, 54,0x14), FieldTrait(1458,14, 83, 54,0x14),
-   FieldTrait(1478, 1, 84, 54,0x14), FieldTrait(1479, 1, 85, 54,0x14), FieldTrait(1480,14, 86, 54,0x14),
-   FieldTrait(1481, 1, 87, 54,0x14), FieldTrait(1482, 1, 88, 54,0x14), FieldTrait(1483, 1, 89, 21,0x1c),
-   FieldTrait(1500,15,112,  0,0x04)
+   {  22,15,  5, 54,0x14}, {  48,15,  4, 54,0x14}, {  55,15,  2, 54,0x14}, {  65,15,  3, 54,0x14},
+   {  75,25,102,  0,0x04}, { 106,15, 31, 54,0x14}, { 107,15, 34, 54,0x14}, { 167,15,  9, 54,0x14},
+   { 200,21, 11, 54,0x14}, { 201, 1, 72, 54,0x14}, { 202,11, 25, 54,0x14}, { 206, 7, 27, 54,0x14},
+   { 207,20, 30, 54,0x14}, { 215, 1,103,141,0x1c}, { 223,14, 29, 54,0x14}, { 224,25, 13, 54,0x14},
+   { 225,25, 14, 54,0x14}, { 226, 1, 16, 54,0x14}, { 227,14, 17, 54,0x14}, { 228, 9, 18, 54,0x14},
+   { 231, 9, 28, 54,0x14}, { 239, 1, 15, 54,0x14}, { 240,25, 24, 54,0x14}, { 255,15, 19, 54,0x14},
+   { 262,15,  1,  0,0x04}, { 264, 1,105,  0,0x04}, { 268, 1, 95, 69,0x1c}, { 291,16, 92,  0,0x04},
+   { 292,16, 93,  0,0x04}, { 348, 2, 32, 54,0x14}, { 349,28, 33, 54,0x14}, { 350, 2, 35, 54,0x14},
+   { 351,28, 36, 54,0x14}, { 451,12, 94,  0,0x04}, { 454, 1,  6,142,0x1c}, { 460, 1,  7, 54,0x14},
+   { 461,15,  8, 54,0x14}, { 470,18, 21, 54,0x14}, { 471,15, 22, 54,0x14}, { 472,15, 23, 54,0x14},
+   { 541,25, 12, 54,0x14}, { 543,15, 20, 54,0x14}, { 555, 1, 91, 49,0x1c}, { 667,21, 38, 54,0x14},
+   { 691,15, 37, 54,0x14}, { 711, 1, 90,188,0x1c}, { 715,25, 99,  0,0x04}, { 762,15, 10, 54,0x14},
+   { 813, 1, 96,  0,0x04}, { 814, 1, 97,  0,0x04}, { 864, 1, 41, 38,0x1c}, { 873,25, 42, 54,0x14},
+   { 874,25, 43, 54,0x14}, { 875, 1, 39, 54,0x14}, { 876,15, 40, 54,0x14}, { 911, 1,106,  0,0x04},
+   { 947,19, 26, 54,0x14}, { 963, 1, 98,  0,0x04}, { 965,15, 44, 54,0x14}, { 966,15, 45, 54,0x14},
+   { 967, 9, 47, 54,0x14}, { 968, 9, 48, 54,0x14}, { 969, 9, 49, 54,0x14}, { 970, 1, 50, 54,0x14},
+   { 971, 1, 51, 54,0x14}, { 996,15, 53, 54,0x14}, { 997,15, 54, 54,0x14}, {1018, 1, 52, 57,0x1c},
+   {1021, 1,100,  0,0x04}, {1022,15,101,  0,0x04}, {1049, 7, 46, 54,0x14}, {1079,26, 55, 54,0x14},
+   {1146,13, 57, 54,0x14}, {1147,10, 58, 54,0x14}, {1151,15, 56, 54,0x14}, {1173, 1,104,  0,0x04},
+   {1180,15,108,  8,0x14}, {1181, 4,109,  8,0x14}, {1184, 2, 59,150,0x14}, {1185,29, 60,150,0x14},
+   {1186,15, 61,150,0x14}, {1187, 8,107,  0,0x04}, {1191,15, 63, 54,0x14}, {1192,10, 64, 54,0x14},
+   {1193, 7, 65, 54,0x14}, {1194, 1, 66, 54,0x14}, {1195,13, 67, 54,0x14}, {1196,15, 68, 54,0x14},
+   {1197,15, 75, 54,0x14}, {1198, 1, 69, 54,0x14}, {1199,11, 70, 54,0x14}, {1200,11, 71, 54,0x14},
+   {1227,15, 62, 54,0x14}, {1242, 8, 74, 54,0x14}, {1244, 8, 73, 54,0x14}, {1350, 4,110,  8,0x14},
+   {1352, 8,111,  8,0x14}, {1435, 1, 76, 54,0x14}, {1439, 1, 77, 54,0x14}, {1449,15, 78, 54,0x14},
+   {1450,15, 79, 54,0x14}, {1451,14, 80, 54,0x14}, {1452,14, 81, 54,0x14}, {1457,14, 82, 54,0x14},
+   {1458,14, 83, 54,0x14}, {1478, 1, 84, 54,0x14}, {1479, 1, 85, 54,0x14}, {1480,14, 86, 54,0x14},
+   {1481, 1, 87, 54,0x14}, {1482, 1, 88, 54,0x14}, {1483, 1, 89, 21,0x1c}, {1500,15,112,  0,0x04}
 };
 const FieldTrait_Hash_Array MarketDataSnapshotFullRefresh::_ftha(MarketDataSnapshotFullRefresh::_traits, 112);
 const MsgType MarketDataSnapshotFullRefresh::_msgtype("W");
@@ -9684,33 +8844,27 @@ const FieldTrait *MarketDataSnapshotFullRefresh::NoRoutingIDs::_traits(NoRouting
 const FieldTrait_Hash_Array& MarketDataSnapshotFullRefresh::NoRoutingIDs::_ftha(NoRoutingIDsV1_ftha);
 const MsgType& MarketDataSnapshotFullRefresh::NoRoutingIDs::_msgtype(NoRoutingIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataSnapshotFullRefresh::NoMDEntries::_traits[] =
+const FieldTrait MarketDataSnapshotFullRefresh::NoMDEntries::_traits[]
 {
-   FieldTrait(  15,19,  3,  0,0x04), FieldTrait(  18,16, 21,  0,0x04), FieldTrait(  31,11, 74,  0,0x04),
-   FieldTrait(  37,15, 23,  0,0x04), FieldTrait(  40, 7, 50,  0,0x04), FieldTrait(  58,15, 31,  0,0x04),
-   FieldTrait(  59, 7, 17,  0,0x04), FieldTrait(  63,15, 40,  0,0x04), FieldTrait(  64,25, 41,  0,0x04),
-   FieldTrait(  83, 1, 43,  0,0x04), FieldTrait( 110,10, 20,  0,0x04), FieldTrait( 120,19, 70,  0,0x04),
-   FieldTrait( 126,22, 19,  0,0x04), FieldTrait( 198,15, 49,  0,0x04), FieldTrait( 218,12, 58,160,0x14),
-   FieldTrait( 220,19, 59,160,0x14), FieldTrait( 221,15, 60,160,0x14), FieldTrait( 222,15, 61,160,0x14),
-   FieldTrait( 235,15, 52,198,0x14), FieldTrait( 236,14, 53,198,0x14), FieldTrait( 269, 7,  1,  0,0x05),
-   FieldTrait( 270,11,  2,  0,0x04), FieldTrait( 271,10,  4,  0,0x04), FieldTrait( 272,24,  5,  0,0x04),
-   FieldTrait( 273,23,  6,  0,0x04), FieldTrait( 274, 7,  7,  0,0x04), FieldTrait( 275,20,  8,  0,0x04),
-   FieldTrait( 276,17, 11,  0,0x04), FieldTrait( 277,17, 12,  0,0x04), FieldTrait( 278,15, 47,  0,0x04),
-   FieldTrait( 282,15, 13,  0,0x04), FieldTrait( 283,15, 14,  0,0x04), FieldTrait( 284,15, 15,  0,0x04),
-   FieldTrait( 286,16, 16,  0,0x04), FieldTrait( 287, 1, 22,  0,0x04), FieldTrait( 288,15, 25,  0,0x04),
-   FieldTrait( 289,15, 26,  0,0x04), FieldTrait( 290, 1, 28,  0,0x04), FieldTrait( 299,15, 24,  0,0x04),
-   FieldTrait( 326, 1, 68,  0,0x04), FieldTrait( 327, 1, 69,  0,0x04), FieldTrait( 332,11, 37,  0,0x04),
-   FieldTrait( 333,11, 38,  0,0x04), FieldTrait( 336,15,  9,  0,0x04), FieldTrait( 346, 1, 27,  0,0x04),
-   FieldTrait( 354, 2, 32,  0,0x04), FieldTrait( 355,28, 33,  0,0x04), FieldTrait( 423, 1, 51,  0,0x04),
-   FieldTrait( 432,25, 18,  0,0x04), FieldTrait( 453, 1, 48, 94,0x1c), FieldTrait( 528, 7, 35,  0,0x04),
-   FieldTrait( 546,16, 29,  0,0x04), FieldTrait( 625,15, 10,  0,0x04), FieldTrait( 662,11, 62,160,0x14),
-   FieldTrait( 663, 1, 63,160,0x14), FieldTrait( 696,25, 55,198,0x14), FieldTrait( 697,11, 56,198,0x14),
-   FieldTrait( 698, 1, 57,198,0x14), FieldTrait( 699,15, 64,160,0x14), FieldTrait( 701,25, 54,198,0x14),
-   FieldTrait( 761,15, 65,160,0x14), FieldTrait( 811, 9, 30,  0,0x04), FieldTrait( 828, 1, 72,  0,0x04),
-   FieldTrait(1020,10, 39,  0,0x04), FieldTrait(1023, 1, 34,  0,0x04), FieldTrait(1024, 1, 36,  0,0x04),
-   FieldTrait(1025,11, 73,  0,0x04), FieldTrait(1026, 9, 45,  0,0x04), FieldTrait(1027,12, 46,  0,0x04),
-   FieldTrait(1048, 7, 44,  0,0x04), FieldTrait(1070, 1, 42,  0,0x04), FieldTrait(1093, 7, 67,  0,0x04),
-   FieldTrait(1177, 1, 66,146,0x1c), FieldTrait(1445, 1, 71,118,0x1c)
+   {  15,19,  3,  0,0x04}, {  18,16, 21,  0,0x04}, {  31,11, 74,  0,0x04}, {  37,15, 23,  0,0x04},
+   {  40, 7, 50,  0,0x04}, {  58,15, 31,  0,0x04}, {  59, 7, 17,  0,0x04}, {  63,15, 40,  0,0x04},
+   {  64,25, 41,  0,0x04}, {  83, 1, 43,  0,0x04}, { 110,10, 20,  0,0x04}, { 120,19, 70,  0,0x04},
+   { 126,22, 19,  0,0x04}, { 198,15, 49,  0,0x04}, { 218,12, 58,160,0x14}, { 220,19, 59,160,0x14},
+   { 221,15, 60,160,0x14}, { 222,15, 61,160,0x14}, { 235,15, 52,198,0x14}, { 236,14, 53,198,0x14},
+   { 269, 7,  1,  0,0x05}, { 270,11,  2,  0,0x04}, { 271,10,  4,  0,0x04}, { 272,24,  5,  0,0x04},
+   { 273,23,  6,  0,0x04}, { 274, 7,  7,  0,0x04}, { 275,20,  8,  0,0x04}, { 276,17, 11,  0,0x04},
+   { 277,17, 12,  0,0x04}, { 278,15, 47,  0,0x04}, { 282,15, 13,  0,0x04}, { 283,15, 14,  0,0x04},
+   { 284,15, 15,  0,0x04}, { 286,16, 16,  0,0x04}, { 287, 1, 22,  0,0x04}, { 288,15, 25,  0,0x04},
+   { 289,15, 26,  0,0x04}, { 290, 1, 28,  0,0x04}, { 299,15, 24,  0,0x04}, { 326, 1, 68,  0,0x04},
+   { 327, 1, 69,  0,0x04}, { 332,11, 37,  0,0x04}, { 333,11, 38,  0,0x04}, { 336,15,  9,  0,0x04},
+   { 346, 1, 27,  0,0x04}, { 354, 2, 32,  0,0x04}, { 355,28, 33,  0,0x04}, { 423, 1, 51,  0,0x04},
+   { 432,25, 18,  0,0x04}, { 453, 1, 48, 94,0x1c}, { 528, 7, 35,  0,0x04}, { 546,16, 29,  0,0x04},
+   { 625,15, 10,  0,0x04}, { 662,11, 62,160,0x14}, { 663, 1, 63,160,0x14}, { 696,25, 55,198,0x14},
+   { 697,11, 56,198,0x14}, { 698, 1, 57,198,0x14}, { 699,15, 64,160,0x14}, { 701,25, 54,198,0x14},
+   { 761,15, 65,160,0x14}, { 811, 9, 30,  0,0x04}, { 828, 1, 72,  0,0x04}, {1020,10, 39,  0,0x04},
+   {1023, 1, 34,  0,0x04}, {1024, 1, 36,  0,0x04}, {1025,11, 73,  0,0x04}, {1026, 9, 45,  0,0x04},
+   {1027,12, 46,  0,0x04}, {1048, 7, 44,  0,0x04}, {1070, 1, 42,  0,0x04}, {1093, 7, 67,  0,0x04},
+   {1177, 1, 66,146,0x1c}, {1445, 1, 71,118,0x1c}
 };
 const FieldTrait_Hash_Array 
    MarketDataSnapshotFullRefresh::NoMDEntries::_ftha(MarketDataSnapshotFullRefresh::NoMDEntries::_traits, 74);
@@ -9788,12 +8942,11 @@ const FieldTrait *MarketDataSnapshotFullRefresh::NoComplexEvents::NoComplexEvent
 const FieldTrait_Hash_Array& MarketDataSnapshotFullRefresh::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& MarketDataSnapshotFullRefresh::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataIncrementalRefresh::_traits[] =
+const FieldTrait MarketDataIncrementalRefresh::_traits[]
 {
-   FieldTrait(  75,25,  7,  0,0x04), FieldTrait( 215, 1,  8,141,0x1c), FieldTrait( 262,15,  1,  0,0x04),
-   FieldTrait( 268, 1,  2, 70,0x1c), FieldTrait( 813, 1,  3,  0,0x04), FieldTrait( 814, 1,  4,  0,0x04),
-   FieldTrait(1021, 1,  5,  0,0x04), FieldTrait(1022,15,  6,  0,0x04), FieldTrait(1180,15,  9,  8,0x14),
-   FieldTrait(1181, 4, 10,  8,0x14), FieldTrait(1350, 4, 11,  8,0x14), FieldTrait(1352, 8, 12,  8,0x14)
+   {  75,25,  7,  0,0x04}, { 215, 1,  8,141,0x1c}, { 262,15,  1,  0,0x04}, { 268, 1,  2, 70,0x1c},
+   { 813, 1,  3,  0,0x04}, { 814, 1,  4,  0,0x04}, {1021, 1,  5,  0,0x04}, {1022,15,  6,  0,0x04},
+   {1180,15,  9,  8,0x14}, {1181, 4, 10,  8,0x14}, {1350, 4, 11,  8,0x14}, {1352, 8, 12,  8,0x14}
 };
 const FieldTrait_Hash_Array MarketDataIncrementalRefresh::_ftha(MarketDataIncrementalRefresh::_traits, 12);
 const MsgType MarketDataIncrementalRefresh::_msgtype("X");
@@ -9802,68 +8955,53 @@ const FieldTrait *MarketDataIncrementalRefresh::NoRoutingIDs::_traits(NoRoutingI
 const FieldTrait_Hash_Array& MarketDataIncrementalRefresh::NoRoutingIDs::_ftha(NoRoutingIDsV1_ftha);
 const MsgType& MarketDataIncrementalRefresh::NoRoutingIDs::_msgtype(NoRoutingIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataIncrementalRefresh::NoMDEntries::_traits[] =
+const FieldTrait MarketDataIncrementalRefresh::NoMDEntries::_traits[]
 {
-   FieldTrait(  15,19, 99,  0,0x04), FieldTrait(  18,16,117,  0,0x04), FieldTrait(  22,15,  9, 54,0x14),
-   FieldTrait(  31,11,177,  0,0x04), FieldTrait(  37,15,119,  0,0x04), FieldTrait(  40, 7,146,  0,0x04),
-   FieldTrait(  48,15,  8, 54,0x14), FieldTrait(  55,15,  6, 54,0x14), FieldTrait(  58,15,128,  0,0x04),
-   FieldTrait(  59, 7,113,  0,0x04), FieldTrait(  60,22,172,  0,0x04), FieldTrait(  63,15,136,  0,0x04),
-   FieldTrait(  64,25,137,  0,0x04), FieldTrait(  65,15,  7, 54,0x14), FieldTrait(  83, 1,139,  0,0x04),
-   FieldTrait( 106,15, 35, 54,0x14), FieldTrait( 107,15, 38, 54,0x14), FieldTrait( 110,10,116,  0,0x04),
-   FieldTrait( 120,19,174,  0,0x04), FieldTrait( 126,22,115,  0,0x04), FieldTrait( 167,15, 13, 54,0x14),
-   FieldTrait( 198,15,145,  0,0x04), FieldTrait( 200,21, 15, 54,0x14), FieldTrait( 201, 1, 76, 54,0x14),
-   FieldTrait( 202,11, 29, 54,0x14), FieldTrait( 206, 7, 31, 54,0x14), FieldTrait( 207,20, 34, 54,0x14),
-   FieldTrait( 218,12,156,160,0x14), FieldTrait( 220,19,157,160,0x14), FieldTrait( 221,15,158,160,0x14),
-   FieldTrait( 222,15,159,160,0x14), FieldTrait( 223,14, 33, 54,0x14), FieldTrait( 224,25, 17, 54,0x14),
-   FieldTrait( 225,25, 18, 54,0x14), FieldTrait( 226, 1, 20, 54,0x14), FieldTrait( 227,14, 21, 54,0x14),
-   FieldTrait( 228, 9, 22, 54,0x14), FieldTrait( 231, 9, 32, 54,0x14), FieldTrait( 235,15,150,198,0x14),
-   FieldTrait( 236,14,151,198,0x14), FieldTrait( 239, 1, 19, 54,0x14), FieldTrait( 240,25, 28, 54,0x14),
-   FieldTrait( 255,15, 23, 54,0x14), FieldTrait( 264, 1,148,  0,0x04), FieldTrait( 269, 7,  3,  0,0x04),
-   FieldTrait( 270,11, 98,  0,0x04), FieldTrait( 271,10,100,  0,0x04), FieldTrait( 272,24,101,  0,0x04),
-   FieldTrait( 273,23,102,  0,0x04), FieldTrait( 274, 7,103,  0,0x04), FieldTrait( 275,20,104,  0,0x04),
-   FieldTrait( 276,17,107,  0,0x04), FieldTrait( 277,17,108,  0,0x04), FieldTrait( 278,15,  4,  0,0x04),
-   FieldTrait( 279, 7,  1,  0,0x05), FieldTrait( 280,15,  5,  0,0x04), FieldTrait( 282,15,109,  0,0x04),
-   FieldTrait( 283,15,110,  0,0x04), FieldTrait( 284,15,111,  0,0x04), FieldTrait( 285, 7,  2,  0,0x04),
-   FieldTrait( 286,16,112,  0,0x04), FieldTrait( 287, 1,118,  0,0x04), FieldTrait( 288,15,121,  0,0x04),
-   FieldTrait( 289,15,122,  0,0x04), FieldTrait( 290, 1,124,  0,0x04), FieldTrait( 291,16, 96,  0,0x04),
-   FieldTrait( 292,16, 97,  0,0x04), FieldTrait( 299,15,120,  0,0x04), FieldTrait( 326, 1,166,  0,0x04),
-   FieldTrait( 327, 1,167,  0,0x04), FieldTrait( 332,11,133,  0,0x04), FieldTrait( 333,11,134,  0,0x04),
-   FieldTrait( 336,15,105,  0,0x04), FieldTrait( 346, 1,123,  0,0x04), FieldTrait( 348, 2, 36, 54,0x14),
-   FieldTrait( 349,28, 37, 54,0x14), FieldTrait( 350, 2, 39, 54,0x14), FieldTrait( 351,28, 40, 54,0x14),
-   FieldTrait( 354, 2,129,  0,0x04), FieldTrait( 355,28,130,  0,0x04), FieldTrait( 423, 1,149,  0,0x04),
-   FieldTrait( 432,25,114,  0,0x04), FieldTrait( 451,12,127,  0,0x04), FieldTrait( 453, 1,144, 94,0x1c),
-   FieldTrait( 454, 1, 10,142,0x1c), FieldTrait( 460, 1, 11, 54,0x14), FieldTrait( 461,15, 12, 54,0x14),
-   FieldTrait( 470,18, 25, 54,0x14), FieldTrait( 471,15, 26, 54,0x14), FieldTrait( 472,15, 27, 54,0x14),
-   FieldTrait( 483,22,171,  0,0x04), FieldTrait( 528, 7,131,  0,0x04), FieldTrait( 541,25, 16, 54,0x14),
-   FieldTrait( 543,15, 24, 54,0x14), FieldTrait( 546,16,125,  0,0x04), FieldTrait( 555, 1, 95, 49,0x1c),
-   FieldTrait( 574,15,169,  0,0x04), FieldTrait( 625,15,106,  0,0x04), FieldTrait( 662,11,160,160,0x14),
-   FieldTrait( 663, 1,161,160,0x14), FieldTrait( 667,21, 42, 54,0x14), FieldTrait( 691,15, 41, 54,0x14),
-   FieldTrait( 696,25,153,198,0x14), FieldTrait( 697,11,154,198,0x14), FieldTrait( 698, 1,155,198,0x14),
-   FieldTrait( 699,15,162,160,0x14), FieldTrait( 701,25,152,198,0x14), FieldTrait( 711, 1, 94,188,0x1c),
-   FieldTrait( 761,15,163,160,0x14), FieldTrait( 762,15, 14, 54,0x14), FieldTrait( 811, 9,126,  0,0x04),
-   FieldTrait( 828, 1,168,  0,0x04), FieldTrait( 864, 1, 45, 38,0x1c), FieldTrait( 873,25, 46, 54,0x14),
-   FieldTrait( 874,25, 47, 54,0x14), FieldTrait( 875, 1, 43, 54,0x14), FieldTrait( 876,15, 44, 54,0x14),
-   FieldTrait( 947,19, 30, 54,0x14), FieldTrait( 965,15, 48, 54,0x14), FieldTrait( 966,15, 49, 54,0x14),
-   FieldTrait( 967, 9, 51, 54,0x14), FieldTrait( 968, 9, 52, 54,0x14), FieldTrait( 969, 9, 53, 54,0x14),
-   FieldTrait( 970, 1, 54, 54,0x14), FieldTrait( 971, 1, 55, 54,0x14), FieldTrait( 996,15, 57, 54,0x14),
-   FieldTrait( 997,15, 58, 54,0x14), FieldTrait(1003,15,170,  0,0x04), FieldTrait(1018, 1, 56, 57,0x1c),
-   FieldTrait(1020,10,135,  0,0x04), FieldTrait(1023, 1,143,  0,0x04), FieldTrait(1024, 1,132,  0,0x04),
-   FieldTrait(1025,11,176,  0,0x04), FieldTrait(1026, 9,141,  0,0x04), FieldTrait(1027,12,142,  0,0x04),
-   FieldTrait(1048, 7,140,  0,0x04), FieldTrait(1049, 7, 50, 54,0x14), FieldTrait(1070, 1,138,  0,0x04),
-   FieldTrait(1079,26, 59, 54,0x14), FieldTrait(1093, 7,165,  0,0x04), FieldTrait(1146,13, 61, 54,0x14),
-   FieldTrait(1147,10, 62, 54,0x14), FieldTrait(1151,15, 60, 54,0x14), FieldTrait(1173, 1,147,  0,0x04),
-   FieldTrait(1175, 1,173,161,0x1c), FieldTrait(1177, 1,164,146,0x1c), FieldTrait(1184, 2, 63,150,0x14),
-   FieldTrait(1185,29, 64,150,0x14), FieldTrait(1186,15, 65,150,0x14), FieldTrait(1191,15, 67, 54,0x14),
-   FieldTrait(1192,10, 68, 54,0x14), FieldTrait(1193, 7, 69, 54,0x14), FieldTrait(1194, 1, 70, 54,0x14),
-   FieldTrait(1195,13, 71, 54,0x14), FieldTrait(1196,15, 72, 54,0x14), FieldTrait(1197,15, 79, 54,0x14),
-   FieldTrait(1198, 1, 73, 54,0x14), FieldTrait(1199,11, 74, 54,0x14), FieldTrait(1200,11, 75, 54,0x14),
-   FieldTrait(1227,15, 66, 54,0x14), FieldTrait(1242, 8, 78, 54,0x14), FieldTrait(1244, 8, 77, 54,0x14),
-   FieldTrait(1435, 1, 80, 54,0x14), FieldTrait(1439, 1, 81, 54,0x14), FieldTrait(1445, 1,175,118,0x1c),
-   FieldTrait(1449,15, 82, 54,0x14), FieldTrait(1450,15, 83, 54,0x14), FieldTrait(1451,14, 84, 54,0x14),
-   FieldTrait(1452,14, 85, 54,0x14), FieldTrait(1457,14, 86, 54,0x14), FieldTrait(1458,14, 87, 54,0x14),
-   FieldTrait(1478, 1, 88, 54,0x14), FieldTrait(1479, 1, 89, 54,0x14), FieldTrait(1480,14, 90, 54,0x14),
-   FieldTrait(1481, 1, 91, 54,0x14), FieldTrait(1482, 1, 92, 54,0x14), FieldTrait(1483, 1, 93, 21,0x1c),
-   FieldTrait(1500,15,178,  0,0x04)
+   {  15,19, 99,  0,0x04}, {  18,16,117,  0,0x04}, {  22,15,  9, 54,0x14}, {  31,11,177,  0,0x04},
+   {  37,15,119,  0,0x04}, {  40, 7,146,  0,0x04}, {  48,15,  8, 54,0x14}, {  55,15,  6, 54,0x14},
+   {  58,15,128,  0,0x04}, {  59, 7,113,  0,0x04}, {  60,22,172,  0,0x04}, {  63,15,136,  0,0x04},
+   {  64,25,137,  0,0x04}, {  65,15,  7, 54,0x14}, {  83, 1,139,  0,0x04}, { 106,15, 35, 54,0x14},
+   { 107,15, 38, 54,0x14}, { 110,10,116,  0,0x04}, { 120,19,174,  0,0x04}, { 126,22,115,  0,0x04},
+   { 167,15, 13, 54,0x14}, { 198,15,145,  0,0x04}, { 200,21, 15, 54,0x14}, { 201, 1, 76, 54,0x14},
+   { 202,11, 29, 54,0x14}, { 206, 7, 31, 54,0x14}, { 207,20, 34, 54,0x14}, { 218,12,156,160,0x14},
+   { 220,19,157,160,0x14}, { 221,15,158,160,0x14}, { 222,15,159,160,0x14}, { 223,14, 33, 54,0x14},
+   { 224,25, 17, 54,0x14}, { 225,25, 18, 54,0x14}, { 226, 1, 20, 54,0x14}, { 227,14, 21, 54,0x14},
+   { 228, 9, 22, 54,0x14}, { 231, 9, 32, 54,0x14}, { 235,15,150,198,0x14}, { 236,14,151,198,0x14},
+   { 239, 1, 19, 54,0x14}, { 240,25, 28, 54,0x14}, { 255,15, 23, 54,0x14}, { 264, 1,148,  0,0x04},
+   { 269, 7,  3,  0,0x04}, { 270,11, 98,  0,0x04}, { 271,10,100,  0,0x04}, { 272,24,101,  0,0x04},
+   { 273,23,102,  0,0x04}, { 274, 7,103,  0,0x04}, { 275,20,104,  0,0x04}, { 276,17,107,  0,0x04},
+   { 277,17,108,  0,0x04}, { 278,15,  4,  0,0x04}, { 279, 7,  1,  0,0x05}, { 280,15,  5,  0,0x04},
+   { 282,15,109,  0,0x04}, { 283,15,110,  0,0x04}, { 284,15,111,  0,0x04}, { 285, 7,  2,  0,0x04},
+   { 286,16,112,  0,0x04}, { 287, 1,118,  0,0x04}, { 288,15,121,  0,0x04}, { 289,15,122,  0,0x04},
+   { 290, 1,124,  0,0x04}, { 291,16, 96,  0,0x04}, { 292,16, 97,  0,0x04}, { 299,15,120,  0,0x04},
+   { 326, 1,166,  0,0x04}, { 327, 1,167,  0,0x04}, { 332,11,133,  0,0x04}, { 333,11,134,  0,0x04},
+   { 336,15,105,  0,0x04}, { 346, 1,123,  0,0x04}, { 348, 2, 36, 54,0x14}, { 349,28, 37, 54,0x14},
+   { 350, 2, 39, 54,0x14}, { 351,28, 40, 54,0x14}, { 354, 2,129,  0,0x04}, { 355,28,130,  0,0x04},
+   { 423, 1,149,  0,0x04}, { 432,25,114,  0,0x04}, { 451,12,127,  0,0x04}, { 453, 1,144, 94,0x1c},
+   { 454, 1, 10,142,0x1c}, { 460, 1, 11, 54,0x14}, { 461,15, 12, 54,0x14}, { 470,18, 25, 54,0x14},
+   { 471,15, 26, 54,0x14}, { 472,15, 27, 54,0x14}, { 483,22,171,  0,0x04}, { 528, 7,131,  0,0x04},
+   { 541,25, 16, 54,0x14}, { 543,15, 24, 54,0x14}, { 546,16,125,  0,0x04}, { 555, 1, 95, 49,0x1c},
+   { 574,15,169,  0,0x04}, { 625,15,106,  0,0x04}, { 662,11,160,160,0x14}, { 663, 1,161,160,0x14},
+   { 667,21, 42, 54,0x14}, { 691,15, 41, 54,0x14}, { 696,25,153,198,0x14}, { 697,11,154,198,0x14},
+   { 698, 1,155,198,0x14}, { 699,15,162,160,0x14}, { 701,25,152,198,0x14}, { 711, 1, 94,188,0x1c},
+   { 761,15,163,160,0x14}, { 762,15, 14, 54,0x14}, { 811, 9,126,  0,0x04}, { 828, 1,168,  0,0x04},
+   { 864, 1, 45, 38,0x1c}, { 873,25, 46, 54,0x14}, { 874,25, 47, 54,0x14}, { 875, 1, 43, 54,0x14},
+   { 876,15, 44, 54,0x14}, { 947,19, 30, 54,0x14}, { 965,15, 48, 54,0x14}, { 966,15, 49, 54,0x14},
+   { 967, 9, 51, 54,0x14}, { 968, 9, 52, 54,0x14}, { 969, 9, 53, 54,0x14}, { 970, 1, 54, 54,0x14},
+   { 971, 1, 55, 54,0x14}, { 996,15, 57, 54,0x14}, { 997,15, 58, 54,0x14}, {1003,15,170,  0,0x04},
+   {1018, 1, 56, 57,0x1c}, {1020,10,135,  0,0x04}, {1023, 1,143,  0,0x04}, {1024, 1,132,  0,0x04},
+   {1025,11,176,  0,0x04}, {1026, 9,141,  0,0x04}, {1027,12,142,  0,0x04}, {1048, 7,140,  0,0x04},
+   {1049, 7, 50, 54,0x14}, {1070, 1,138,  0,0x04}, {1079,26, 59, 54,0x14}, {1093, 7,165,  0,0x04},
+   {1146,13, 61, 54,0x14}, {1147,10, 62, 54,0x14}, {1151,15, 60, 54,0x14}, {1173, 1,147,  0,0x04},
+   {1175, 1,173,161,0x1c}, {1177, 1,164,146,0x1c}, {1184, 2, 63,150,0x14}, {1185,29, 64,150,0x14},
+   {1186,15, 65,150,0x14}, {1191,15, 67, 54,0x14}, {1192,10, 68, 54,0x14}, {1193, 7, 69, 54,0x14},
+   {1194, 1, 70, 54,0x14}, {1195,13, 71, 54,0x14}, {1196,15, 72, 54,0x14}, {1197,15, 79, 54,0x14},
+   {1198, 1, 73, 54,0x14}, {1199,11, 74, 54,0x14}, {1200,11, 75, 54,0x14}, {1227,15, 66, 54,0x14},
+   {1242, 8, 78, 54,0x14}, {1244, 8, 77, 54,0x14}, {1435, 1, 80, 54,0x14}, {1439, 1, 81, 54,0x14},
+   {1445, 1,175,118,0x1c}, {1449,15, 82, 54,0x14}, {1450,15, 83, 54,0x14}, {1451,14, 84, 54,0x14},
+   {1452,14, 85, 54,0x14}, {1457,14, 86, 54,0x14}, {1458,14, 87, 54,0x14}, {1478, 1, 88, 54,0x14},
+   {1479, 1, 89, 54,0x14}, {1480,14, 90, 54,0x14}, {1481, 1, 91, 54,0x14}, {1482, 1, 92, 54,0x14},
+   {1483, 1, 93, 21,0x1c}, {1500,15,178,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    MarketDataIncrementalRefresh::NoMDEntries::_ftha(MarketDataIncrementalRefresh::NoMDEntries::_traits, 178);
@@ -9921,9 +9059,9 @@ const FieldTrait *MarketDataIncrementalRefresh::NoMDEntries::NoInstrumentParties
 const FieldTrait_Hash_Array& MarketDataIncrementalRefresh::NoMDEntries::NoInstrumentParties::NoInstrumentPartySubIDs::_ftha(NoInstrumentPartySubIDsV1_ftha);
 const MsgType& MarketDataIncrementalRefresh::NoMDEntries::NoInstrumentParties::NoInstrumentPartySubIDs::_msgtype(NoInstrumentPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataIncrementalRefresh::NoMDEntries::NoStatsIndicators::_traits[] =
+const FieldTrait MarketDataIncrementalRefresh::NoMDEntries::NoStatsIndicators::_traits[]
 {
-   FieldTrait(1176, 1,  1,  0,0x04)
+   {1176, 1,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    MarketDataIncrementalRefresh::NoMDEntries::NoStatsIndicators::_ftha(MarketDataIncrementalRefresh::NoMDEntries::NoStatsIndicators::_traits, 1);
@@ -9949,11 +9087,10 @@ const FieldTrait *MarketDataIncrementalRefresh::NoMDEntries::NoComplexEvents::No
 const FieldTrait_Hash_Array& MarketDataIncrementalRefresh::NoMDEntries::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& MarketDataIncrementalRefresh::NoMDEntries::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataRequestReject::_traits[] =
+const FieldTrait MarketDataRequestReject::_traits[]
 {
-   FieldTrait(  58,15,  4,  0,0x04), FieldTrait( 262,15,  1,  0,0x04), FieldTrait( 281, 7,  2,  0,0x04),
-   FieldTrait( 354, 2,  5,  0,0x04), FieldTrait( 355,28,  6,  0,0x04), FieldTrait( 453, 1,  7, 94,0x1c),
-   FieldTrait( 816, 1,  3, 72,0x1c)
+   {  58,15,  4,  0,0x04}, { 262,15,  1,  0,0x04}, { 281, 7,  2,  0,0x04}, { 354, 2,  5,  0,0x04},
+   { 355,28,  6,  0,0x04}, { 453, 1,  7, 94,0x1c}, { 816, 1,  3, 72,0x1c}
 };
 const FieldTrait_Hash_Array MarketDataRequestReject::_ftha(MarketDataRequestReject::_traits, 7);
 const MsgType MarketDataRequestReject::_msgtype("Y");
@@ -9966,60 +9103,51 @@ const FieldTrait *MarketDataRequestReject::NoPartyIDs::NoPartySubIDs::_traits(No
 const FieldTrait_Hash_Array& MarketDataRequestReject::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& MarketDataRequestReject::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MarketDataRequestReject::NoAltMDSource::_traits[] =
+const FieldTrait MarketDataRequestReject::NoAltMDSource::_traits[]
 {
-   FieldTrait( 817,15,  1,  0,0x04)
+   { 817,15,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    MarketDataRequestReject::NoAltMDSource::_ftha(MarketDataRequestReject::NoAltMDSource::_traits, 1);
 const MsgType MarketDataRequestReject::NoAltMDSource::_msgtype("NoAltMDSource");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteCancel::_traits[] =
+const FieldTrait QuoteCancel::_traits[]
 {
-   FieldTrait(   1,15,  6,  0,0x04), FieldTrait( 117,15,  2,  0,0x04), FieldTrait( 131,15,  1,  0,0x04),
-   FieldTrait( 295, 1, 11,108,0x1c), FieldTrait( 298, 1,  3,  0,0x04), FieldTrait( 301, 1,  4,  0,0x04),
-   FieldTrait( 336,15,  9,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c), FieldTrait( 537, 1, 13,  0,0x04),
-   FieldTrait( 581, 1,  8,  0,0x04), FieldTrait( 625,15, 10,  0,0x04), FieldTrait( 660, 1,  7,  0,0x04),
-   FieldTrait(1166,15, 12,  0,0x04), FieldTrait(1461, 1, 14,169,0x1c)
+   {   1,15,  6,  0,0x04}, { 117,15,  2,  0,0x04}, { 131,15,  1,  0,0x04}, { 295, 1, 11,108,0x1c},
+   { 298, 1,  3,  0,0x04}, { 301, 1,  4,  0,0x04}, { 336,15,  9,  0,0x04}, { 453, 1,  5, 94,0x1c},
+   { 537, 1, 13,  0,0x04}, { 581, 1,  8,  0,0x04}, { 625,15, 10,  0,0x04}, { 660, 1,  7,  0,0x04},
+   {1166,15, 12,  0,0x04}, {1461, 1, 14,169,0x1c}
 };
 const FieldTrait_Hash_Array QuoteCancel::_ftha(QuoteCancel::_traits, 14);
 const MsgType QuoteCancel::_msgtype("Z");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteCancel::NoQuoteEntries::_traits[] =
+const FieldTrait QuoteCancel::NoQuoteEntries::_traits[]
 {
-   FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  55,15,  1, 54,0x14),
-   FieldTrait(  65,15,  2, 54,0x14), FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14),
-   FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14),
-   FieldTrait( 202,11, 24, 54,0x14), FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14),
-   FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 454, 1,  5,142,0x1c),
-   FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14),
-   FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 555, 1, 99, 49,0x1c), FieldTrait( 667,21, 37, 54,0x14),
-   FieldTrait( 691,15, 36, 54,0x14), FieldTrait( 711, 1, 98,188,0x1c), FieldTrait( 762,15,  9, 54,0x14),
-   FieldTrait( 788, 1, 93, 44,0x14), FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 873,25, 41, 54,0x14),
-   FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14),
-   FieldTrait( 898,14, 97, 44,0x14), FieldTrait( 913,15, 89, 44,0x14), FieldTrait( 914,15, 90, 44,0x14),
-   FieldTrait( 915,25, 91, 44,0x14), FieldTrait( 916,25, 94, 44,0x14), FieldTrait( 917,25, 95, 44,0x14),
-   FieldTrait( 918,19, 92, 44,0x14), FieldTrait( 919, 1, 96, 44,0x14), FieldTrait( 947,19, 25, 54,0x14),
-   FieldTrait( 965,15, 43, 54,0x14), FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14),
-   FieldTrait( 968, 9, 47, 54,0x14), FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14),
-   FieldTrait( 971, 1, 50, 54,0x14), FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14),
-   FieldTrait(1018, 1, 51, 57,0x1c), FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14),
-   FieldTrait(1146,13, 56, 54,0x14), FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14),
-   FieldTrait(1184, 2, 58,150,0x14), FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14),
-   FieldTrait(1191,15, 62, 54,0x14), FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14),
-   FieldTrait(1194, 1, 65, 54,0x14), FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14),
-   FieldTrait(1197,15, 74, 54,0x14), FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14),
-   FieldTrait(1200,11, 70, 54,0x14), FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14),
-   FieldTrait(1244, 8, 72, 54,0x14), FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14),
-   FieldTrait(1449,15, 77, 54,0x14), FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14),
-   FieldTrait(1452,14, 80, 54,0x14), FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14),
-   FieldTrait(1478, 1, 83, 54,0x14), FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14),
-   FieldTrait(1481, 1, 86, 54,0x14), FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c)
+   {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14}, {  65,15,  2, 54,0x14},
+   { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14}, { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14},
+   { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14}, { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14},
+   { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14}, { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14},
+   { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14}, { 231, 9, 27, 54,0x14}, { 239, 1, 14, 54,0x14},
+   { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14},
+   { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1, 99, 49,0x1c}, { 667,21, 37, 54,0x14},
+   { 691,15, 36, 54,0x14}, { 711, 1, 98,188,0x1c}, { 762,15,  9, 54,0x14}, { 788, 1, 93, 44,0x14},
+   { 864, 1, 40, 38,0x1c}, { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14},
+   { 876,15, 39, 54,0x14}, { 898,14, 97, 44,0x14}, { 913,15, 89, 44,0x14}, { 914,15, 90, 44,0x14},
+   { 915,25, 91, 44,0x14}, { 916,25, 94, 44,0x14}, { 917,25, 95, 44,0x14}, { 918,19, 92, 44,0x14},
+   { 919, 1, 96, 44,0x14}, { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14},
+   { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14},
+   { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c},
+   {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14},
+   {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14},
+   {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14},
+   {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14},
+   {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14}, {1242, 8, 73, 54,0x14},
+   {1244, 8, 72, 54,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14},
+   {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14},
+   {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14},
+   {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    QuoteCancel::NoQuoteEntries::_ftha(QuoteCancel::NoQuoteEntries::_traits, 99);
@@ -10093,45 +9221,36 @@ const FieldTrait *QuoteCancel::NoTargetPartyIDs::_traits(NoTargetPartyIDsV1_trai
 const FieldTrait_Hash_Array& QuoteCancel::NoTargetPartyIDs::_ftha(NoTargetPartyIDsV1_ftha);
 const MsgType& QuoteCancel::NoTargetPartyIDs::_msgtype(NoTargetPartyIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait QuoteStatusRequest::_traits[] =
+const FieldTrait QuoteStatusRequest::_traits[]
 {
-   FieldTrait(   1,15,103,  0,0x04), FieldTrait(  22,15,  6, 54,0x14), FieldTrait(  48,15,  5, 54,0x14),
-   FieldTrait(  55,15,  3, 54,0x14), FieldTrait(  65,15,  4, 54,0x14), FieldTrait( 106,15, 32, 54,0x14),
-   FieldTrait( 107,15, 35, 54,0x14), FieldTrait( 117,15,  2,  0,0x04), FieldTrait( 167,15, 10, 54,0x14),
-   FieldTrait( 200,21, 12, 54,0x14), FieldTrait( 201, 1, 73, 54,0x14), FieldTrait( 202,11, 26, 54,0x14),
-   FieldTrait( 206, 7, 28, 54,0x14), FieldTrait( 207,20, 31, 54,0x14), FieldTrait( 223,14, 30, 54,0x14),
-   FieldTrait( 224,25, 14, 54,0x14), FieldTrait( 225,25, 15, 54,0x14), FieldTrait( 226, 1, 17, 54,0x14),
-   FieldTrait( 227,14, 18, 54,0x14), FieldTrait( 228, 9, 19, 54,0x14), FieldTrait( 231, 9, 29, 54,0x14),
-   FieldTrait( 239, 1, 16, 54,0x14), FieldTrait( 240,25, 25, 54,0x14), FieldTrait( 255,15, 20, 54,0x14),
-   FieldTrait( 263, 7,108,  0,0x04), FieldTrait( 336,15,106,  0,0x04), FieldTrait( 348, 2, 33, 54,0x14),
-   FieldTrait( 349,28, 34, 54,0x14), FieldTrait( 350, 2, 36, 54,0x14), FieldTrait( 351,28, 37, 54,0x14),
-   FieldTrait( 453, 1,102, 94,0x1c), FieldTrait( 454, 1,  7,142,0x1c), FieldTrait( 460, 1,  8, 54,0x14),
-   FieldTrait( 461,15,  9, 54,0x14), FieldTrait( 470,18, 22, 54,0x14), FieldTrait( 471,15, 23, 54,0x14),
-   FieldTrait( 472,15, 24, 54,0x14), FieldTrait( 541,25, 13, 54,0x14), FieldTrait( 543,15, 21, 54,0x14),
-   FieldTrait( 555, 1,101, 49,0x1c), FieldTrait( 581, 1,105,  0,0x04), FieldTrait( 625,15,107,  0,0x04),
-   FieldTrait( 649,15,  1,  0,0x04), FieldTrait( 660, 1,104,  0,0x04), FieldTrait( 667,21, 39, 54,0x14),
-   FieldTrait( 691,15, 38, 54,0x14), FieldTrait( 711, 1,100,188,0x1c), FieldTrait( 762,15, 11, 54,0x14),
-   FieldTrait( 788, 1, 95, 44,0x14), FieldTrait( 864, 1, 42, 38,0x1c), FieldTrait( 873,25, 43, 54,0x14),
-   FieldTrait( 874,25, 44, 54,0x14), FieldTrait( 875, 1, 40, 54,0x14), FieldTrait( 876,15, 41, 54,0x14),
-   FieldTrait( 898,14, 99, 44,0x14), FieldTrait( 913,15, 91, 44,0x14), FieldTrait( 914,15, 92, 44,0x14),
-   FieldTrait( 915,25, 93, 44,0x14), FieldTrait( 916,25, 96, 44,0x14), FieldTrait( 917,25, 97, 44,0x14),
-   FieldTrait( 918,19, 94, 44,0x14), FieldTrait( 919, 1, 98, 44,0x14), FieldTrait( 947,19, 27, 54,0x14),
-   FieldTrait( 965,15, 45, 54,0x14), FieldTrait( 966,15, 46, 54,0x14), FieldTrait( 967, 9, 48, 54,0x14),
-   FieldTrait( 968, 9, 49, 54,0x14), FieldTrait( 969, 9, 50, 54,0x14), FieldTrait( 970, 1, 51, 54,0x14),
-   FieldTrait( 971, 1, 52, 54,0x14), FieldTrait( 996,15, 54, 54,0x14), FieldTrait( 997,15, 55, 54,0x14),
-   FieldTrait(1018, 1, 53, 57,0x1c), FieldTrait(1049, 7, 47, 54,0x14), FieldTrait(1079,26, 56, 54,0x14),
-   FieldTrait(1146,13, 58, 54,0x14), FieldTrait(1147,10, 59, 54,0x14), FieldTrait(1151,15, 57, 54,0x14),
-   FieldTrait(1184, 2, 60,150,0x14), FieldTrait(1185,29, 61,150,0x14), FieldTrait(1186,15, 62,150,0x14),
-   FieldTrait(1191,15, 64, 54,0x14), FieldTrait(1192,10, 65, 54,0x14), FieldTrait(1193, 7, 66, 54,0x14),
-   FieldTrait(1194, 1, 67, 54,0x14), FieldTrait(1195,13, 68, 54,0x14), FieldTrait(1196,15, 69, 54,0x14),
-   FieldTrait(1197,15, 76, 54,0x14), FieldTrait(1198, 1, 70, 54,0x14), FieldTrait(1199,11, 71, 54,0x14),
-   FieldTrait(1200,11, 72, 54,0x14), FieldTrait(1227,15, 63, 54,0x14), FieldTrait(1242, 8, 75, 54,0x14),
-   FieldTrait(1244, 8, 74, 54,0x14), FieldTrait(1435, 1, 77, 54,0x14), FieldTrait(1439, 1, 78, 54,0x14),
-   FieldTrait(1449,15, 79, 54,0x14), FieldTrait(1450,15, 80, 54,0x14), FieldTrait(1451,14, 81, 54,0x14),
-   FieldTrait(1452,14, 82, 54,0x14), FieldTrait(1457,14, 83, 54,0x14), FieldTrait(1458,14, 84, 54,0x14),
-   FieldTrait(1461, 1,109,169,0x1c), FieldTrait(1478, 1, 85, 54,0x14), FieldTrait(1479, 1, 86, 54,0x14),
-   FieldTrait(1480,14, 87, 54,0x14), FieldTrait(1481, 1, 88, 54,0x14), FieldTrait(1482, 1, 89, 54,0x14),
-   FieldTrait(1483, 1, 90, 21,0x1c)
+   {   1,15,103,  0,0x04}, {  22,15,  6, 54,0x14}, {  48,15,  5, 54,0x14}, {  55,15,  3, 54,0x14},
+   {  65,15,  4, 54,0x14}, { 106,15, 32, 54,0x14}, { 107,15, 35, 54,0x14}, { 117,15,  2,  0,0x04},
+   { 167,15, 10, 54,0x14}, { 200,21, 12, 54,0x14}, { 201, 1, 73, 54,0x14}, { 202,11, 26, 54,0x14},
+   { 206, 7, 28, 54,0x14}, { 207,20, 31, 54,0x14}, { 223,14, 30, 54,0x14}, { 224,25, 14, 54,0x14},
+   { 225,25, 15, 54,0x14}, { 226, 1, 17, 54,0x14}, { 227,14, 18, 54,0x14}, { 228, 9, 19, 54,0x14},
+   { 231, 9, 29, 54,0x14}, { 239, 1, 16, 54,0x14}, { 240,25, 25, 54,0x14}, { 255,15, 20, 54,0x14},
+   { 263, 7,108,  0,0x04}, { 336,15,106,  0,0x04}, { 348, 2, 33, 54,0x14}, { 349,28, 34, 54,0x14},
+   { 350, 2, 36, 54,0x14}, { 351,28, 37, 54,0x14}, { 453, 1,102, 94,0x1c}, { 454, 1,  7,142,0x1c},
+   { 460, 1,  8, 54,0x14}, { 461,15,  9, 54,0x14}, { 470,18, 22, 54,0x14}, { 471,15, 23, 54,0x14},
+   { 472,15, 24, 54,0x14}, { 541,25, 13, 54,0x14}, { 543,15, 21, 54,0x14}, { 555, 1,101, 49,0x1c},
+   { 581, 1,105,  0,0x04}, { 625,15,107,  0,0x04}, { 649,15,  1,  0,0x04}, { 660, 1,104,  0,0x04},
+   { 667,21, 39, 54,0x14}, { 691,15, 38, 54,0x14}, { 711, 1,100,188,0x1c}, { 762,15, 11, 54,0x14},
+   { 788, 1, 95, 44,0x14}, { 864, 1, 42, 38,0x1c}, { 873,25, 43, 54,0x14}, { 874,25, 44, 54,0x14},
+   { 875, 1, 40, 54,0x14}, { 876,15, 41, 54,0x14}, { 898,14, 99, 44,0x14}, { 913,15, 91, 44,0x14},
+   { 914,15, 92, 44,0x14}, { 915,25, 93, 44,0x14}, { 916,25, 96, 44,0x14}, { 917,25, 97, 44,0x14},
+   { 918,19, 94, 44,0x14}, { 919, 1, 98, 44,0x14}, { 947,19, 27, 54,0x14}, { 965,15, 45, 54,0x14},
+   { 966,15, 46, 54,0x14}, { 967, 9, 48, 54,0x14}, { 968, 9, 49, 54,0x14}, { 969, 9, 50, 54,0x14},
+   { 970, 1, 51, 54,0x14}, { 971, 1, 52, 54,0x14}, { 996,15, 54, 54,0x14}, { 997,15, 55, 54,0x14},
+   {1018, 1, 53, 57,0x1c}, {1049, 7, 47, 54,0x14}, {1079,26, 56, 54,0x14}, {1146,13, 58, 54,0x14},
+   {1147,10, 59, 54,0x14}, {1151,15, 57, 54,0x14}, {1184, 2, 60,150,0x14}, {1185,29, 61,150,0x14},
+   {1186,15, 62,150,0x14}, {1191,15, 64, 54,0x14}, {1192,10, 65, 54,0x14}, {1193, 7, 66, 54,0x14},
+   {1194, 1, 67, 54,0x14}, {1195,13, 68, 54,0x14}, {1196,15, 69, 54,0x14}, {1197,15, 76, 54,0x14},
+   {1198, 1, 70, 54,0x14}, {1199,11, 71, 54,0x14}, {1200,11, 72, 54,0x14}, {1227,15, 63, 54,0x14},
+   {1242, 8, 75, 54,0x14}, {1244, 8, 74, 54,0x14}, {1435, 1, 77, 54,0x14}, {1439, 1, 78, 54,0x14},
+   {1449,15, 79, 54,0x14}, {1450,15, 80, 54,0x14}, {1451,14, 81, 54,0x14}, {1452,14, 82, 54,0x14},
+   {1457,14, 83, 54,0x14}, {1458,14, 84, 54,0x14}, {1461, 1,109,169,0x1c}, {1478, 1, 85, 54,0x14},
+   {1479, 1, 86, 54,0x14}, {1480,14, 87, 54,0x14}, {1481, 1, 88, 54,0x14}, {1482, 1, 89, 54,0x14},
+   {1483, 1, 90, 21,0x1c}
 };
 const FieldTrait_Hash_Array QuoteStatusRequest::_ftha(QuoteStatusRequest::_traits, 109);
 const MsgType QuoteStatusRequest::_msgtype("a");
@@ -10204,94 +9323,75 @@ const FieldTrait *QuoteStatusRequest::NoComplexEvents::NoComplexEventDates::NoCo
 const FieldTrait_Hash_Array& QuoteStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& QuoteStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MassQuoteAcknowledgement::_traits[] =
+const FieldTrait MassQuoteAcknowledgement::_traits[]
 {
-   FieldTrait(   1,15,  8,  0,0x04), FieldTrait(  58,15, 11,  0,0x04), FieldTrait( 117,15,  2,  0,0x04),
-   FieldTrait( 131,15,  1,  0,0x04), FieldTrait( 296, 1, 14,115,0x1c), FieldTrait( 297, 1,  3,  0,0x04),
-   FieldTrait( 298, 1, 15,  0,0x04), FieldTrait( 300, 1,  4,  0,0x04), FieldTrait( 301, 1,  5,  0,0x04),
-   FieldTrait( 354, 2, 12,  0,0x04), FieldTrait( 355,28, 13,  0,0x04), FieldTrait( 453, 1,  7, 94,0x1c),
-   FieldTrait( 537, 1,  6,  0,0x04), FieldTrait( 581, 1, 10,  0,0x04), FieldTrait( 660, 1,  9,  0,0x04),
-   FieldTrait(1461, 1, 16,169,0x1c)
+   {   1,15,  8,  0,0x04}, {  58,15, 11,  0,0x04}, { 117,15,  2,  0,0x04}, { 131,15,  1,  0,0x04},
+   { 296, 1, 14,115,0x1c}, { 297, 1,  3,  0,0x04}, { 298, 1, 15,  0,0x04}, { 300, 1,  4,  0,0x04},
+   { 301, 1,  5,  0,0x04}, { 354, 2, 12,  0,0x04}, { 355,28, 13,  0,0x04}, { 453, 1,  7, 94,0x1c},
+   { 537, 1,  6,  0,0x04}, { 581, 1, 10,  0,0x04}, { 660, 1,  9,  0,0x04}, {1461, 1, 16,169,0x1c}
 };
 const FieldTrait_Hash_Array MassQuoteAcknowledgement::_ftha(MassQuoteAcknowledgement::_traits, 16);
 const MsgType MassQuoteAcknowledgement::_msgtype("b");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MassQuoteAcknowledgement::NoQuoteSets::_traits[] =
+const FieldTrait MassQuoteAcknowledgement::NoQuoteSets::_traits[]
 {
-   FieldTrait( 241,25, 13,191,0x14), FieldTrait( 242,25, 14,191,0x14), FieldTrait( 243, 1, 15,191,0x14),
-   FieldTrait( 244, 1, 16,191,0x14), FieldTrait( 245,14, 17,191,0x14), FieldTrait( 246, 9, 18,191,0x14),
-   FieldTrait( 247,25, 24,191,0x14), FieldTrait( 256,15, 19,191,0x14), FieldTrait( 295, 1, 76,109,0x1c),
-   FieldTrait( 302,15,  1,  0,0x04), FieldTrait( 304, 1, 74,  0,0x04), FieldTrait( 305,15,  5,191,0x14),
-   FieldTrait( 306,15, 31,191,0x14), FieldTrait( 307,15, 34,191,0x14), FieldTrait( 308,20, 30,191,0x14),
-   FieldTrait( 309,15,  4,191,0x14), FieldTrait( 310,15,  9,191,0x14), FieldTrait( 311,15,  2,191,0x14),
-   FieldTrait( 312,15,  3,191,0x14), FieldTrait( 313,21, 11,191,0x14), FieldTrait( 315, 1, 61,191,0x14),
-   FieldTrait( 316,11, 25,191,0x14), FieldTrait( 317, 7, 27,191,0x14), FieldTrait( 318,19, 39,191,0x14),
-   FieldTrait( 362, 2, 32,191,0x14), FieldTrait( 363,28, 33,191,0x14), FieldTrait( 364, 2, 35,191,0x14),
-   FieldTrait( 365,28, 36,191,0x14), FieldTrait( 367,22, 80,  0,0x04), FieldTrait( 435,14, 29,191,0x14),
-   FieldTrait( 436, 9, 28,191,0x14), FieldTrait( 457, 1,  6,189,0x1c), FieldTrait( 462, 1,  7,191,0x14),
-   FieldTrait( 463,15,  8,191,0x14), FieldTrait( 542,25, 12,191,0x14), FieldTrait( 592,18, 21,191,0x14),
-   FieldTrait( 593,15, 22,191,0x14), FieldTrait( 594,15, 23,191,0x14), FieldTrait( 595,15, 20,191,0x14),
-   FieldTrait( 763,15, 10,191,0x14), FieldTrait( 810,11, 41,191,0x14), FieldTrait( 877,15, 37,191,0x14),
-   FieldTrait( 878,15, 38,191,0x14), FieldTrait( 879,10, 40,191,0x14), FieldTrait( 882,11, 42,191,0x14),
-   FieldTrait( 883,11, 43,191,0x14), FieldTrait( 884,13, 44,191,0x14), FieldTrait( 885,13, 45,191,0x14),
-   FieldTrait( 886,13, 46,191,0x14), FieldTrait( 887, 1, 47,194,0x1c), FieldTrait( 893, 8, 75,  0,0x04),
-   FieldTrait( 941,19, 26,191,0x14), FieldTrait( 972,14, 48,191,0x14), FieldTrait( 973,13, 50,191,0x14),
-   FieldTrait( 974,15, 51,191,0x14), FieldTrait( 975, 1, 49,191,0x14), FieldTrait( 998,15, 52,191,0x14),
-   FieldTrait(1000,15, 53,191,0x14), FieldTrait(1038,13, 54,191,0x14), FieldTrait(1039,15, 56,191,0x14),
-   FieldTrait(1044,10, 57,191,0x14), FieldTrait(1045, 9, 58,191,0x14), FieldTrait(1046, 7, 59,191,0x14),
-   FieldTrait(1058, 1, 55,195,0x1c), FieldTrait(1168, 1, 77,  0,0x04), FieldTrait(1169, 1, 78,  0,0x04),
-   FieldTrait(1170, 1, 79,  0,0x04), FieldTrait(1213,26, 60,191,0x14), FieldTrait(1419, 1, 62,191,0x14),
-   FieldTrait(1423,10, 63,191,0x14), FieldTrait(1424,15, 64,191,0x14), FieldTrait(1425,10, 65,191,0x14),
-   FieldTrait(1437, 1, 66,191,0x14), FieldTrait(1441, 1, 67,191,0x14), FieldTrait(1453,15, 68,191,0x14),
-   FieldTrait(1454,15, 69,191,0x14), FieldTrait(1455,14, 70,191,0x14), FieldTrait(1456,14, 71,191,0x14),
-   FieldTrait(1459,14, 72,191,0x14), FieldTrait(1460,14, 73,191,0x14)
+   { 241,25, 13,191,0x14}, { 242,25, 14,191,0x14}, { 243, 1, 15,191,0x14}, { 244, 1, 16,191,0x14},
+   { 245,14, 17,191,0x14}, { 246, 9, 18,191,0x14}, { 247,25, 24,191,0x14}, { 256,15, 19,191,0x14},
+   { 295, 1, 76,109,0x1c}, { 302,15,  1,  0,0x04}, { 304, 1, 74,  0,0x04}, { 305,15,  5,191,0x14},
+   { 306,15, 31,191,0x14}, { 307,15, 34,191,0x14}, { 308,20, 30,191,0x14}, { 309,15,  4,191,0x14},
+   { 310,15,  9,191,0x14}, { 311,15,  2,191,0x14}, { 312,15,  3,191,0x14}, { 313,21, 11,191,0x14},
+   { 315, 1, 61,191,0x14}, { 316,11, 25,191,0x14}, { 317, 7, 27,191,0x14}, { 318,19, 39,191,0x14},
+   { 362, 2, 32,191,0x14}, { 363,28, 33,191,0x14}, { 364, 2, 35,191,0x14}, { 365,28, 36,191,0x14},
+   { 367,22, 80,  0,0x04}, { 435,14, 29,191,0x14}, { 436, 9, 28,191,0x14}, { 457, 1,  6,189,0x1c},
+   { 462, 1,  7,191,0x14}, { 463,15,  8,191,0x14}, { 542,25, 12,191,0x14}, { 592,18, 21,191,0x14},
+   { 593,15, 22,191,0x14}, { 594,15, 23,191,0x14}, { 595,15, 20,191,0x14}, { 763,15, 10,191,0x14},
+   { 810,11, 41,191,0x14}, { 877,15, 37,191,0x14}, { 878,15, 38,191,0x14}, { 879,10, 40,191,0x14},
+   { 882,11, 42,191,0x14}, { 883,11, 43,191,0x14}, { 884,13, 44,191,0x14}, { 885,13, 45,191,0x14},
+   { 886,13, 46,191,0x14}, { 887, 1, 47,194,0x1c}, { 893, 8, 75,  0,0x04}, { 941,19, 26,191,0x14},
+   { 972,14, 48,191,0x14}, { 973,13, 50,191,0x14}, { 974,15, 51,191,0x14}, { 975, 1, 49,191,0x14},
+   { 998,15, 52,191,0x14}, {1000,15, 53,191,0x14}, {1038,13, 54,191,0x14}, {1039,15, 56,191,0x14},
+   {1044,10, 57,191,0x14}, {1045, 9, 58,191,0x14}, {1046, 7, 59,191,0x14}, {1058, 1, 55,195,0x1c},
+   {1168, 1, 77,  0,0x04}, {1169, 1, 78,  0,0x04}, {1170, 1, 79,  0,0x04}, {1213,26, 60,191,0x14},
+   {1419, 1, 62,191,0x14}, {1423,10, 63,191,0x14}, {1424,15, 64,191,0x14}, {1425,10, 65,191,0x14},
+   {1437, 1, 66,191,0x14}, {1441, 1, 67,191,0x14}, {1453,15, 68,191,0x14}, {1454,15, 69,191,0x14},
+   {1455,14, 70,191,0x14}, {1456,14, 71,191,0x14}, {1459,14, 72,191,0x14}, {1460,14, 73,191,0x14}
 };
 const FieldTrait_Hash_Array 
    MassQuoteAcknowledgement::NoQuoteSets::_ftha(MassQuoteAcknowledgement::NoQuoteSets::_traits, 80);
 const MsgType MassQuoteAcknowledgement::NoQuoteSets::_msgtype("NoQuoteSets");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MassQuoteAcknowledgement::NoQuoteSets::NoQuoteEntries::_traits[] =
+const FieldTrait MassQuoteAcknowledgement::NoQuoteSets::NoQuoteEntries::_traits[]
 {
-   FieldTrait(  15,19,113,  0,0x04), FieldTrait(  22,15,  5, 54,0x14), FieldTrait(  40, 7,108,  0,0x04),
-   FieldTrait(  48,15,  4, 54,0x14), FieldTrait(  55,15,  2, 54,0x14), FieldTrait(  60,22,104,  0,0x04),
-   FieldTrait(  62,22, 95,  0,0x04), FieldTrait(  64,25,107,  0,0x04), FieldTrait(  65,15,  3, 54,0x14),
-   FieldTrait( 106,15, 31, 54,0x14), FieldTrait( 107,15, 34, 54,0x14), FieldTrait( 132,11, 91,  0,0x04),
-   FieldTrait( 133,11, 92,  0,0x04), FieldTrait( 134,10, 93,  0,0x04), FieldTrait( 135,10, 94,  0,0x04),
-   FieldTrait( 167,15,  9, 54,0x14), FieldTrait( 188,11, 96,  0,0x04), FieldTrait( 189,12, 98,  0,0x04),
-   FieldTrait( 190,11, 97,  0,0x04), FieldTrait( 191,12, 99,  0,0x04), FieldTrait( 192,10,110,  0,0x04),
-   FieldTrait( 193,25,109,  0,0x04), FieldTrait( 200,21, 11, 54,0x14), FieldTrait( 201, 1, 72, 54,0x14),
-   FieldTrait( 202,11, 25, 54,0x14), FieldTrait( 206, 7, 27, 54,0x14), FieldTrait( 207,20, 30, 54,0x14),
-   FieldTrait( 223,14, 29, 54,0x14), FieldTrait( 224,25, 13, 54,0x14), FieldTrait( 225,25, 14, 54,0x14),
-   FieldTrait( 226, 1, 16, 54,0x14), FieldTrait( 227,14, 17, 54,0x14), FieldTrait( 228, 9, 18, 54,0x14),
-   FieldTrait( 231, 9, 28, 54,0x14), FieldTrait( 239, 1, 15, 54,0x14), FieldTrait( 240,25, 24, 54,0x14),
-   FieldTrait( 255,15, 19, 54,0x14), FieldTrait( 299,15,  1,  0,0x04), FieldTrait( 336,15,105,  0,0x04),
-   FieldTrait( 348, 2, 32, 54,0x14), FieldTrait( 349,28, 33, 54,0x14), FieldTrait( 350, 2, 35, 54,0x14),
-   FieldTrait( 351,28, 36, 54,0x14), FieldTrait( 368, 1,114,  0,0x04), FieldTrait( 454, 1,  6,142,0x1c),
-   FieldTrait( 460, 1,  7, 54,0x14), FieldTrait( 461,15,  8, 54,0x14), FieldTrait( 470,18, 21, 54,0x14),
-   FieldTrait( 471,15, 22, 54,0x14), FieldTrait( 472,15, 23, 54,0x14), FieldTrait( 528, 7,117,  0,0x04),
-   FieldTrait( 529,16,118,  0,0x04), FieldTrait( 541,25, 12, 54,0x14), FieldTrait( 543,15, 20, 54,0x14),
-   FieldTrait( 555, 1, 90, 49,0x1c), FieldTrait( 625,15,106,  0,0x04), FieldTrait( 631,11,100,  0,0x04),
-   FieldTrait( 632,14,101,  0,0x04), FieldTrait( 633,14,102,  0,0x04), FieldTrait( 634,14,103,  0,0x04),
-   FieldTrait( 642,12,111,  0,0x04), FieldTrait( 643,12,112,  0,0x04), FieldTrait( 667,21, 38, 54,0x14),
-   FieldTrait( 691,15, 37, 54,0x14), FieldTrait( 762,15, 10, 54,0x14), FieldTrait( 775, 1,116,  0,0x04),
-   FieldTrait( 864, 1, 41, 38,0x1c), FieldTrait( 873,25, 42, 54,0x14), FieldTrait( 874,25, 43, 54,0x14),
-   FieldTrait( 875, 1, 39, 54,0x14), FieldTrait( 876,15, 40, 54,0x14), FieldTrait( 947,19, 26, 54,0x14),
-   FieldTrait( 965,15, 44, 54,0x14), FieldTrait( 966,15, 45, 54,0x14), FieldTrait( 967, 9, 47, 54,0x14),
-   FieldTrait( 968, 9, 48, 54,0x14), FieldTrait( 969, 9, 49, 54,0x14), FieldTrait( 970, 1, 50, 54,0x14),
-   FieldTrait( 971, 1, 51, 54,0x14), FieldTrait( 996,15, 53, 54,0x14), FieldTrait( 997,15, 54, 54,0x14),
-   FieldTrait(1018, 1, 52, 57,0x1c), FieldTrait(1049, 7, 46, 54,0x14), FieldTrait(1079,26, 55, 54,0x14),
-   FieldTrait(1146,13, 57, 54,0x14), FieldTrait(1147,10, 58, 54,0x14), FieldTrait(1151,15, 56, 54,0x14),
-   FieldTrait(1167, 1,115,  0,0x04), FieldTrait(1184, 2, 59,150,0x14), FieldTrait(1185,29, 60,150,0x14),
-   FieldTrait(1186,15, 61,150,0x14), FieldTrait(1191,15, 63, 54,0x14), FieldTrait(1192,10, 64, 54,0x14),
-   FieldTrait(1193, 7, 65, 54,0x14), FieldTrait(1194, 1, 66, 54,0x14), FieldTrait(1195,13, 67, 54,0x14),
-   FieldTrait(1196,15, 68, 54,0x14), FieldTrait(1197,15, 75, 54,0x14), FieldTrait(1198, 1, 69, 54,0x14),
-   FieldTrait(1199,11, 70, 54,0x14), FieldTrait(1200,11, 71, 54,0x14), FieldTrait(1227,15, 62, 54,0x14),
-   FieldTrait(1242, 8, 74, 54,0x14), FieldTrait(1244, 8, 73, 54,0x14), FieldTrait(1435, 1, 76, 54,0x14),
-   FieldTrait(1439, 1, 77, 54,0x14), FieldTrait(1449,15, 78, 54,0x14), FieldTrait(1450,15, 79, 54,0x14),
-   FieldTrait(1451,14, 80, 54,0x14), FieldTrait(1452,14, 81, 54,0x14), FieldTrait(1457,14, 82, 54,0x14),
-   FieldTrait(1458,14, 83, 54,0x14), FieldTrait(1478, 1, 84, 54,0x14), FieldTrait(1479, 1, 85, 54,0x14),
-   FieldTrait(1480,14, 86, 54,0x14), FieldTrait(1481, 1, 87, 54,0x14), FieldTrait(1482, 1, 88, 54,0x14),
-   FieldTrait(1483, 1, 89, 21,0x1c)
+   {  15,19,113,  0,0x04}, {  22,15,  5, 54,0x14}, {  40, 7,108,  0,0x04}, {  48,15,  4, 54,0x14},
+   {  55,15,  2, 54,0x14}, {  60,22,104,  0,0x04}, {  62,22, 95,  0,0x04}, {  64,25,107,  0,0x04},
+   {  65,15,  3, 54,0x14}, { 106,15, 31, 54,0x14}, { 107,15, 34, 54,0x14}, { 132,11, 91,  0,0x04},
+   { 133,11, 92,  0,0x04}, { 134,10, 93,  0,0x04}, { 135,10, 94,  0,0x04}, { 167,15,  9, 54,0x14},
+   { 188,11, 96,  0,0x04}, { 189,12, 98,  0,0x04}, { 190,11, 97,  0,0x04}, { 191,12, 99,  0,0x04},
+   { 192,10,110,  0,0x04}, { 193,25,109,  0,0x04}, { 200,21, 11, 54,0x14}, { 201, 1, 72, 54,0x14},
+   { 202,11, 25, 54,0x14}, { 206, 7, 27, 54,0x14}, { 207,20, 30, 54,0x14}, { 223,14, 29, 54,0x14},
+   { 224,25, 13, 54,0x14}, { 225,25, 14, 54,0x14}, { 226, 1, 16, 54,0x14}, { 227,14, 17, 54,0x14},
+   { 228, 9, 18, 54,0x14}, { 231, 9, 28, 54,0x14}, { 239, 1, 15, 54,0x14}, { 240,25, 24, 54,0x14},
+   { 255,15, 19, 54,0x14}, { 299,15,  1,  0,0x04}, { 336,15,105,  0,0x04}, { 348, 2, 32, 54,0x14},
+   { 349,28, 33, 54,0x14}, { 350, 2, 35, 54,0x14}, { 351,28, 36, 54,0x14}, { 368, 1,114,  0,0x04},
+   { 454, 1,  6,142,0x1c}, { 460, 1,  7, 54,0x14}, { 461,15,  8, 54,0x14}, { 470,18, 21, 54,0x14},
+   { 471,15, 22, 54,0x14}, { 472,15, 23, 54,0x14}, { 528, 7,117,  0,0x04}, { 529,16,118,  0,0x04},
+   { 541,25, 12, 54,0x14}, { 543,15, 20, 54,0x14}, { 555, 1, 90, 49,0x1c}, { 625,15,106,  0,0x04},
+   { 631,11,100,  0,0x04}, { 632,14,101,  0,0x04}, { 633,14,102,  0,0x04}, { 634,14,103,  0,0x04},
+   { 642,12,111,  0,0x04}, { 643,12,112,  0,0x04}, { 667,21, 38, 54,0x14}, { 691,15, 37, 54,0x14},
+   { 762,15, 10, 54,0x14}, { 775, 1,116,  0,0x04}, { 864, 1, 41, 38,0x1c}, { 873,25, 42, 54,0x14},
+   { 874,25, 43, 54,0x14}, { 875, 1, 39, 54,0x14}, { 876,15, 40, 54,0x14}, { 947,19, 26, 54,0x14},
+   { 965,15, 44, 54,0x14}, { 966,15, 45, 54,0x14}, { 967, 9, 47, 54,0x14}, { 968, 9, 48, 54,0x14},
+   { 969, 9, 49, 54,0x14}, { 970, 1, 50, 54,0x14}, { 971, 1, 51, 54,0x14}, { 996,15, 53, 54,0x14},
+   { 997,15, 54, 54,0x14}, {1018, 1, 52, 57,0x1c}, {1049, 7, 46, 54,0x14}, {1079,26, 55, 54,0x14},
+   {1146,13, 57, 54,0x14}, {1147,10, 58, 54,0x14}, {1151,15, 56, 54,0x14}, {1167, 1,115,  0,0x04},
+   {1184, 2, 59,150,0x14}, {1185,29, 60,150,0x14}, {1186,15, 61,150,0x14}, {1191,15, 63, 54,0x14},
+   {1192,10, 64, 54,0x14}, {1193, 7, 65, 54,0x14}, {1194, 1, 66, 54,0x14}, {1195,13, 67, 54,0x14},
+   {1196,15, 68, 54,0x14}, {1197,15, 75, 54,0x14}, {1198, 1, 69, 54,0x14}, {1199,11, 70, 54,0x14},
+   {1200,11, 71, 54,0x14}, {1227,15, 62, 54,0x14}, {1242, 8, 74, 54,0x14}, {1244, 8, 73, 54,0x14},
+   {1435, 1, 76, 54,0x14}, {1439, 1, 77, 54,0x14}, {1449,15, 78, 54,0x14}, {1450,15, 79, 54,0x14},
+   {1451,14, 80, 54,0x14}, {1452,14, 81, 54,0x14}, {1457,14, 82, 54,0x14}, {1458,14, 83, 54,0x14},
+   {1478, 1, 84, 54,0x14}, {1479, 1, 85, 54,0x14}, {1480,14, 86, 54,0x14}, {1481, 1, 87, 54,0x14},
+   {1482, 1, 88, 54,0x14}, {1483, 1, 89, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    MassQuoteAcknowledgement::NoQuoteSets::NoQuoteEntries::_ftha(MassQuoteAcknowledgement::NoQuoteSets::NoQuoteEntries::_traits, 118);
@@ -10361,48 +9461,38 @@ const FieldTrait *MassQuoteAcknowledgement::NoTargetPartyIDs::_traits(NoTargetPa
 const FieldTrait_Hash_Array& MassQuoteAcknowledgement::NoTargetPartyIDs::_ftha(NoTargetPartyIDsV1_ftha);
 const MsgType& MassQuoteAcknowledgement::NoTargetPartyIDs::_msgtype(NoTargetPartyIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityDefinitionRequest::_traits[] =
+const FieldTrait SecurityDefinitionRequest::_traits[]
 {
-   FieldTrait(  15,19, 95,  0,0x04), FieldTrait(  22,15,  6, 54,0x14), FieldTrait(  48,15,  5, 54,0x14),
-   FieldTrait(  55,15,  3, 54,0x14), FieldTrait(  58,15, 96,  0,0x04), FieldTrait(  65,15,  4, 54,0x14),
-   FieldTrait( 106,15, 32, 54,0x14), FieldTrait( 107,15, 35, 54,0x14), FieldTrait( 167,15, 10, 54,0x14),
-   FieldTrait( 200,21, 12, 54,0x14), FieldTrait( 201, 1, 73, 54,0x14), FieldTrait( 202,11, 26, 54,0x14),
-   FieldTrait( 206, 7, 28, 54,0x14), FieldTrait( 207,20, 31, 54,0x14), FieldTrait( 218,12,105,160,0x14),
-   FieldTrait( 220,19,106,160,0x14), FieldTrait( 221,15,107,160,0x14), FieldTrait( 222,15,108,160,0x14),
-   FieldTrait( 223,14, 30, 54,0x14), FieldTrait( 224,25, 14, 54,0x14), FieldTrait( 225,25, 15, 54,0x14),
-   FieldTrait( 226, 1, 17, 54,0x14), FieldTrait( 227,14, 18, 54,0x14), FieldTrait( 228, 9, 19, 54,0x14),
-   FieldTrait( 231, 9, 29, 54,0x14), FieldTrait( 232, 1,104,162,0x1c), FieldTrait( 235,15,113,198,0x14),
-   FieldTrait( 236,14,114,198,0x14), FieldTrait( 239, 1, 16, 54,0x14), FieldTrait( 240,25, 25, 54,0x14),
-   FieldTrait( 255,15, 20, 54,0x14), FieldTrait( 263, 7,103,  0,0x04), FieldTrait( 320,15,  1,  0,0x04),
-   FieldTrait( 321, 1,  2,  0,0x04), FieldTrait( 336,15, 99,  0,0x04), FieldTrait( 348, 2, 33, 54,0x14),
-   FieldTrait( 349,28, 34, 54,0x14), FieldTrait( 350, 2, 36, 54,0x14), FieldTrait( 351,28, 37, 54,0x14),
-   FieldTrait( 354, 2, 97,  0,0x04), FieldTrait( 355,28, 98,  0,0x04), FieldTrait( 454, 1,  7,142,0x1c),
-   FieldTrait( 460, 1,  8, 54,0x14), FieldTrait( 461,15,  9, 54,0x14), FieldTrait( 470,18, 22, 54,0x14),
-   FieldTrait( 471,15, 23, 54,0x14), FieldTrait( 472,15, 24, 54,0x14), FieldTrait( 541,25, 13, 54,0x14),
-   FieldTrait( 543,15, 21, 54,0x14), FieldTrait( 555, 1,101, 49,0x1c), FieldTrait( 625,15,100,  0,0x04),
-   FieldTrait( 662,11,109,160,0x14), FieldTrait( 663, 1,110,160,0x14), FieldTrait( 667,21, 39, 54,0x14),
-   FieldTrait( 668, 1, 91, 55,0x14), FieldTrait( 691,15, 38, 54,0x14), FieldTrait( 696,25,116,198,0x14),
-   FieldTrait( 697,11,117,198,0x14), FieldTrait( 698, 1,118,198,0x14), FieldTrait( 699,15,111,160,0x14),
-   FieldTrait( 701,25,115,198,0x14), FieldTrait( 711, 1, 94,188,0x1c), FieldTrait( 761,15,112,160,0x14),
-   FieldTrait( 762,15, 11, 54,0x14), FieldTrait( 827, 1,102,  0,0x04), FieldTrait( 864, 1, 42, 38,0x1c),
-   FieldTrait( 869,14, 92, 55,0x14), FieldTrait( 870, 1, 93,  9,0x1c), FieldTrait( 873,25, 43, 54,0x14),
-   FieldTrait( 874,25, 44, 54,0x14), FieldTrait( 875, 1, 40, 54,0x14), FieldTrait( 876,15, 41, 54,0x14),
-   FieldTrait( 947,19, 27, 54,0x14), FieldTrait( 965,15, 45, 54,0x14), FieldTrait( 966,15, 46, 54,0x14),
-   FieldTrait( 967, 9, 48, 54,0x14), FieldTrait( 968, 9, 49, 54,0x14), FieldTrait( 969, 9, 50, 54,0x14),
-   FieldTrait( 970, 1, 51, 54,0x14), FieldTrait( 971, 1, 52, 54,0x14), FieldTrait( 996,15, 54, 54,0x14),
-   FieldTrait( 997,15, 55, 54,0x14), FieldTrait(1018, 1, 53, 57,0x1c), FieldTrait(1049, 7, 47, 54,0x14),
-   FieldTrait(1079,26, 56, 54,0x14), FieldTrait(1146,13, 58, 54,0x14), FieldTrait(1147,10, 59, 54,0x14),
-   FieldTrait(1151,15, 57, 54,0x14), FieldTrait(1184, 2, 60,150,0x14), FieldTrait(1185,29, 61,150,0x14),
-   FieldTrait(1186,15, 62,150,0x14), FieldTrait(1191,15, 64, 54,0x14), FieldTrait(1192,10, 65, 54,0x14),
-   FieldTrait(1193, 7, 66, 54,0x14), FieldTrait(1194, 1, 67, 54,0x14), FieldTrait(1195,13, 68, 54,0x14),
-   FieldTrait(1196,15, 69, 54,0x14), FieldTrait(1197,15, 76, 54,0x14), FieldTrait(1198, 1, 70, 54,0x14),
-   FieldTrait(1199,11, 71, 54,0x14), FieldTrait(1200,11, 72, 54,0x14), FieldTrait(1227,15, 63, 54,0x14),
-   FieldTrait(1242, 8, 75, 54,0x14), FieldTrait(1244, 8, 74, 54,0x14), FieldTrait(1300,15,120,  0,0x04),
-   FieldTrait(1301,20,119,  0,0x04), FieldTrait(1435, 1, 77, 54,0x14), FieldTrait(1439, 1, 78, 54,0x14),
-   FieldTrait(1449,15, 79, 54,0x14), FieldTrait(1450,15, 80, 54,0x14), FieldTrait(1451,14, 81, 54,0x14),
-   FieldTrait(1452,14, 82, 54,0x14), FieldTrait(1457,14, 83, 54,0x14), FieldTrait(1458,14, 84, 54,0x14),
-   FieldTrait(1478, 1, 85, 54,0x14), FieldTrait(1479, 1, 86, 54,0x14), FieldTrait(1480,14, 87, 54,0x14),
-   FieldTrait(1481, 1, 88, 54,0x14), FieldTrait(1482, 1, 89, 54,0x14), FieldTrait(1483, 1, 90, 21,0x1c)
+   {  15,19, 95,  0,0x04}, {  22,15,  6, 54,0x14}, {  48,15,  5, 54,0x14}, {  55,15,  3, 54,0x14},
+   {  58,15, 96,  0,0x04}, {  65,15,  4, 54,0x14}, { 106,15, 32, 54,0x14}, { 107,15, 35, 54,0x14},
+   { 167,15, 10, 54,0x14}, { 200,21, 12, 54,0x14}, { 201, 1, 73, 54,0x14}, { 202,11, 26, 54,0x14},
+   { 206, 7, 28, 54,0x14}, { 207,20, 31, 54,0x14}, { 218,12,105,160,0x14}, { 220,19,106,160,0x14},
+   { 221,15,107,160,0x14}, { 222,15,108,160,0x14}, { 223,14, 30, 54,0x14}, { 224,25, 14, 54,0x14},
+   { 225,25, 15, 54,0x14}, { 226, 1, 17, 54,0x14}, { 227,14, 18, 54,0x14}, { 228, 9, 19, 54,0x14},
+   { 231, 9, 29, 54,0x14}, { 232, 1,104,162,0x1c}, { 235,15,113,198,0x14}, { 236,14,114,198,0x14},
+   { 239, 1, 16, 54,0x14}, { 240,25, 25, 54,0x14}, { 255,15, 20, 54,0x14}, { 263, 7,103,  0,0x04},
+   { 320,15,  1,  0,0x04}, { 321, 1,  2,  0,0x04}, { 336,15, 99,  0,0x04}, { 348, 2, 33, 54,0x14},
+   { 349,28, 34, 54,0x14}, { 350, 2, 36, 54,0x14}, { 351,28, 37, 54,0x14}, { 354, 2, 97,  0,0x04},
+   { 355,28, 98,  0,0x04}, { 454, 1,  7,142,0x1c}, { 460, 1,  8, 54,0x14}, { 461,15,  9, 54,0x14},
+   { 470,18, 22, 54,0x14}, { 471,15, 23, 54,0x14}, { 472,15, 24, 54,0x14}, { 541,25, 13, 54,0x14},
+   { 543,15, 21, 54,0x14}, { 555, 1,101, 49,0x1c}, { 625,15,100,  0,0x04}, { 662,11,109,160,0x14},
+   { 663, 1,110,160,0x14}, { 667,21, 39, 54,0x14}, { 668, 1, 91, 55,0x14}, { 691,15, 38, 54,0x14},
+   { 696,25,116,198,0x14}, { 697,11,117,198,0x14}, { 698, 1,118,198,0x14}, { 699,15,111,160,0x14},
+   { 701,25,115,198,0x14}, { 711, 1, 94,188,0x1c}, { 761,15,112,160,0x14}, { 762,15, 11, 54,0x14},
+   { 827, 1,102,  0,0x04}, { 864, 1, 42, 38,0x1c}, { 869,14, 92, 55,0x14}, { 870, 1, 93,  9,0x1c},
+   { 873,25, 43, 54,0x14}, { 874,25, 44, 54,0x14}, { 875, 1, 40, 54,0x14}, { 876,15, 41, 54,0x14},
+   { 947,19, 27, 54,0x14}, { 965,15, 45, 54,0x14}, { 966,15, 46, 54,0x14}, { 967, 9, 48, 54,0x14},
+   { 968, 9, 49, 54,0x14}, { 969, 9, 50, 54,0x14}, { 970, 1, 51, 54,0x14}, { 971, 1, 52, 54,0x14},
+   { 996,15, 54, 54,0x14}, { 997,15, 55, 54,0x14}, {1018, 1, 53, 57,0x1c}, {1049, 7, 47, 54,0x14},
+   {1079,26, 56, 54,0x14}, {1146,13, 58, 54,0x14}, {1147,10, 59, 54,0x14}, {1151,15, 57, 54,0x14},
+   {1184, 2, 60,150,0x14}, {1185,29, 61,150,0x14}, {1186,15, 62,150,0x14}, {1191,15, 64, 54,0x14},
+   {1192,10, 65, 54,0x14}, {1193, 7, 66, 54,0x14}, {1194, 1, 67, 54,0x14}, {1195,13, 68, 54,0x14},
+   {1196,15, 69, 54,0x14}, {1197,15, 76, 54,0x14}, {1198, 1, 70, 54,0x14}, {1199,11, 71, 54,0x14},
+   {1200,11, 72, 54,0x14}, {1227,15, 63, 54,0x14}, {1242, 8, 75, 54,0x14}, {1244, 8, 74, 54,0x14},
+   {1300,15,120,  0,0x04}, {1301,20,119,  0,0x04}, {1435, 1, 77, 54,0x14}, {1439, 1, 78, 54,0x14},
+   {1449,15, 79, 54,0x14}, {1450,15, 80, 54,0x14}, {1451,14, 81, 54,0x14}, {1452,14, 82, 54,0x14},
+   {1457,14, 83, 54,0x14}, {1458,14, 84, 54,0x14}, {1478, 1, 85, 54,0x14}, {1479, 1, 86, 54,0x14},
+   {1480,14, 87, 54,0x14}, {1481, 1, 88, 54,0x14}, {1482, 1, 89, 54,0x14}, {1483, 1, 90, 21,0x1c}
 };
 const FieldTrait_Hash_Array SecurityDefinitionRequest::_ftha(SecurityDefinitionRequest::_traits, 120);
 const MsgType SecurityDefinitionRequest::_msgtype("c");
@@ -10471,50 +9561,39 @@ const FieldTrait *SecurityDefinitionRequest::NoComplexEvents::NoComplexEventDate
 const FieldTrait_Hash_Array& SecurityDefinitionRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityDefinitionRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityDefinition::_traits[] =
+const FieldTrait SecurityDefinition::_traits[]
 {
-   FieldTrait(  15,19, 96,  0,0x04), FieldTrait(  22,15,  7, 54,0x14), FieldTrait(  48,15,  6, 54,0x14),
-   FieldTrait(  55,15,  4, 54,0x14), FieldTrait(  58,15, 97,  0,0x04), FieldTrait(  60,22,124,  0,0x04),
-   FieldTrait(  65,15,  5, 54,0x14), FieldTrait( 106,15, 33, 54,0x14), FieldTrait( 107,15, 36, 54,0x14),
-   FieldTrait( 167,15, 11, 54,0x14), FieldTrait( 200,21, 13, 54,0x14), FieldTrait( 201, 1, 74, 54,0x14),
-   FieldTrait( 202,11, 27, 54,0x14), FieldTrait( 206, 7, 29, 54,0x14), FieldTrait( 207,20, 32, 54,0x14),
-   FieldTrait( 218,12,104,160,0x14), FieldTrait( 220,19,105,160,0x14), FieldTrait( 221,15,106,160,0x14),
-   FieldTrait( 222,15,107,160,0x14), FieldTrait( 223,14, 31, 54,0x14), FieldTrait( 224,25, 15, 54,0x14),
-   FieldTrait( 225,25, 16, 54,0x14), FieldTrait( 226, 1, 18, 54,0x14), FieldTrait( 227,14, 19, 54,0x14),
-   FieldTrait( 228, 9, 20, 54,0x14), FieldTrait( 231, 9, 30, 54,0x14), FieldTrait( 232, 1,103,162,0x1c),
-   FieldTrait( 235,15,112,198,0x14), FieldTrait( 236,14,113,198,0x14), FieldTrait( 239, 1, 17, 54,0x14),
-   FieldTrait( 240,25, 26, 54,0x14), FieldTrait( 255,15, 21, 54,0x14), FieldTrait( 292,16,118,  0,0x04),
-   FieldTrait( 320,15,  1,  0,0x04), FieldTrait( 322,15,  2,  0,0x04), FieldTrait( 323, 1,  3,  0,0x04),
-   FieldTrait( 348, 2, 34, 54,0x14), FieldTrait( 349,28, 35, 54,0x14), FieldTrait( 350, 2, 37, 54,0x14),
-   FieldTrait( 351,28, 38, 54,0x14), FieldTrait( 354, 2, 98,  0,0x04), FieldTrait( 355,28, 99,  0,0x04),
-   FieldTrait( 454, 1,  8,142,0x1c), FieldTrait( 460, 1,  9, 54,0x14), FieldTrait( 461,15, 10, 54,0x14),
-   FieldTrait( 470,18, 23, 54,0x14), FieldTrait( 471,15, 24, 54,0x14), FieldTrait( 472,15, 25, 54,0x14),
-   FieldTrait( 541,25, 14, 54,0x14), FieldTrait( 543,15, 22, 54,0x14), FieldTrait( 555, 1,100, 49,0x1c),
-   FieldTrait( 662,11,108,160,0x14), FieldTrait( 663, 1,109,160,0x14), FieldTrait( 667,21, 40, 54,0x14),
-   FieldTrait( 668, 1, 92, 55,0x14), FieldTrait( 691,15, 39, 54,0x14), FieldTrait( 696,25,115,198,0x14),
-   FieldTrait( 697,11,116,198,0x14), FieldTrait( 698, 1,117,198,0x14), FieldTrait( 699,15,110,160,0x14),
-   FieldTrait( 701,25,114,198,0x14), FieldTrait( 711, 1, 95,188,0x1c), FieldTrait( 715,25,102,  0,0x04),
-   FieldTrait( 761,15,111,160,0x14), FieldTrait( 762,15, 12, 54,0x14), FieldTrait( 864, 1, 43, 38,0x1c),
-   FieldTrait( 869,14, 93, 55,0x14), FieldTrait( 870, 1, 94,  9,0x1c), FieldTrait( 873,25, 44, 54,0x14),
-   FieldTrait( 874,25, 45, 54,0x14), FieldTrait( 875, 1, 41, 54,0x14), FieldTrait( 876,15, 42, 54,0x14),
-   FieldTrait( 947,19, 28, 54,0x14), FieldTrait( 964, 1,101,  0,0x04), FieldTrait( 965,15, 46, 54,0x14),
-   FieldTrait( 966,15, 47, 54,0x14), FieldTrait( 967, 9, 49, 54,0x14), FieldTrait( 968, 9, 50, 54,0x14),
-   FieldTrait( 969, 9, 51, 54,0x14), FieldTrait( 970, 1, 52, 54,0x14), FieldTrait( 971, 1, 53, 54,0x14),
-   FieldTrait( 996,15, 55, 54,0x14), FieldTrait( 997,15, 56, 54,0x14), FieldTrait(1018, 1, 54, 57,0x1c),
-   FieldTrait(1049, 7, 48, 54,0x14), FieldTrait(1079,26, 57, 54,0x14), FieldTrait(1146,13, 59, 54,0x14),
-   FieldTrait(1147,10, 60, 54,0x14), FieldTrait(1151,15, 58, 54,0x14), FieldTrait(1180,15,120,  8,0x14),
-   FieldTrait(1181, 4,121,  8,0x14), FieldTrait(1184, 2, 61,150,0x14), FieldTrait(1185,29, 62,150,0x14),
-   FieldTrait(1186,15, 63,150,0x14), FieldTrait(1191,15, 65, 54,0x14), FieldTrait(1192,10, 66, 54,0x14),
-   FieldTrait(1193, 7, 67, 54,0x14), FieldTrait(1194, 1, 68, 54,0x14), FieldTrait(1195,13, 69, 54,0x14),
-   FieldTrait(1196,15, 70, 54,0x14), FieldTrait(1197,15, 77, 54,0x14), FieldTrait(1198, 1, 71, 54,0x14),
-   FieldTrait(1199,11, 72, 54,0x14), FieldTrait(1200,11, 73, 54,0x14), FieldTrait(1227,15, 64, 54,0x14),
-   FieldTrait(1242, 8, 76, 54,0x14), FieldTrait(1244, 8, 75, 54,0x14), FieldTrait(1310, 1,119, 74,0x1c),
-   FieldTrait(1350, 4,122,  8,0x14), FieldTrait(1352, 8,123,  8,0x14), FieldTrait(1435, 1, 78, 54,0x14),
-   FieldTrait(1439, 1, 79, 54,0x14), FieldTrait(1449,15, 80, 54,0x14), FieldTrait(1450,15, 81, 54,0x14),
-   FieldTrait(1451,14, 82, 54,0x14), FieldTrait(1452,14, 83, 54,0x14), FieldTrait(1457,14, 84, 54,0x14),
-   FieldTrait(1458,14, 85, 54,0x14), FieldTrait(1478, 1, 86, 54,0x14), FieldTrait(1479, 1, 87, 54,0x14),
-   FieldTrait(1480,14, 88, 54,0x14), FieldTrait(1481, 1, 89, 54,0x14), FieldTrait(1482, 1, 90, 54,0x14),
-   FieldTrait(1483, 1, 91, 21,0x1c)
+   {  15,19, 96,  0,0x04}, {  22,15,  7, 54,0x14}, {  48,15,  6, 54,0x14}, {  55,15,  4, 54,0x14},
+   {  58,15, 97,  0,0x04}, {  60,22,124,  0,0x04}, {  65,15,  5, 54,0x14}, { 106,15, 33, 54,0x14},
+   { 107,15, 36, 54,0x14}, { 167,15, 11, 54,0x14}, { 200,21, 13, 54,0x14}, { 201, 1, 74, 54,0x14},
+   { 202,11, 27, 54,0x14}, { 206, 7, 29, 54,0x14}, { 207,20, 32, 54,0x14}, { 218,12,104,160,0x14},
+   { 220,19,105,160,0x14}, { 221,15,106,160,0x14}, { 222,15,107,160,0x14}, { 223,14, 31, 54,0x14},
+   { 224,25, 15, 54,0x14}, { 225,25, 16, 54,0x14}, { 226, 1, 18, 54,0x14}, { 227,14, 19, 54,0x14},
+   { 228, 9, 20, 54,0x14}, { 231, 9, 30, 54,0x14}, { 232, 1,103,162,0x1c}, { 235,15,112,198,0x14},
+   { 236,14,113,198,0x14}, { 239, 1, 17, 54,0x14}, { 240,25, 26, 54,0x14}, { 255,15, 21, 54,0x14},
+   { 292,16,118,  0,0x04}, { 320,15,  1,  0,0x04}, { 322,15,  2,  0,0x04}, { 323, 1,  3,  0,0x04},
+   { 348, 2, 34, 54,0x14}, { 349,28, 35, 54,0x14}, { 350, 2, 37, 54,0x14}, { 351,28, 38, 54,0x14},
+   { 354, 2, 98,  0,0x04}, { 355,28, 99,  0,0x04}, { 454, 1,  8,142,0x1c}, { 460, 1,  9, 54,0x14},
+   { 461,15, 10, 54,0x14}, { 470,18, 23, 54,0x14}, { 471,15, 24, 54,0x14}, { 472,15, 25, 54,0x14},
+   { 541,25, 14, 54,0x14}, { 543,15, 22, 54,0x14}, { 555, 1,100, 49,0x1c}, { 662,11,108,160,0x14},
+   { 663, 1,109,160,0x14}, { 667,21, 40, 54,0x14}, { 668, 1, 92, 55,0x14}, { 691,15, 39, 54,0x14},
+   { 696,25,115,198,0x14}, { 697,11,116,198,0x14}, { 698, 1,117,198,0x14}, { 699,15,110,160,0x14},
+   { 701,25,114,198,0x14}, { 711, 1, 95,188,0x1c}, { 715,25,102,  0,0x04}, { 761,15,111,160,0x14},
+   { 762,15, 12, 54,0x14}, { 864, 1, 43, 38,0x1c}, { 869,14, 93, 55,0x14}, { 870, 1, 94,  9,0x1c},
+   { 873,25, 44, 54,0x14}, { 874,25, 45, 54,0x14}, { 875, 1, 41, 54,0x14}, { 876,15, 42, 54,0x14},
+   { 947,19, 28, 54,0x14}, { 964, 1,101,  0,0x04}, { 965,15, 46, 54,0x14}, { 966,15, 47, 54,0x14},
+   { 967, 9, 49, 54,0x14}, { 968, 9, 50, 54,0x14}, { 969, 9, 51, 54,0x14}, { 970, 1, 52, 54,0x14},
+   { 971, 1, 53, 54,0x14}, { 996,15, 55, 54,0x14}, { 997,15, 56, 54,0x14}, {1018, 1, 54, 57,0x1c},
+   {1049, 7, 48, 54,0x14}, {1079,26, 57, 54,0x14}, {1146,13, 59, 54,0x14}, {1147,10, 60, 54,0x14},
+   {1151,15, 58, 54,0x14}, {1180,15,120,  8,0x14}, {1181, 4,121,  8,0x14}, {1184, 2, 61,150,0x14},
+   {1185,29, 62,150,0x14}, {1186,15, 63,150,0x14}, {1191,15, 65, 54,0x14}, {1192,10, 66, 54,0x14},
+   {1193, 7, 67, 54,0x14}, {1194, 1, 68, 54,0x14}, {1195,13, 69, 54,0x14}, {1196,15, 70, 54,0x14},
+   {1197,15, 77, 54,0x14}, {1198, 1, 71, 54,0x14}, {1199,11, 72, 54,0x14}, {1200,11, 73, 54,0x14},
+   {1227,15, 64, 54,0x14}, {1242, 8, 76, 54,0x14}, {1244, 8, 75, 54,0x14}, {1310, 1,119, 74,0x1c},
+   {1350, 4,122,  8,0x14}, {1352, 8,123,  8,0x14}, {1435, 1, 78, 54,0x14}, {1439, 1, 79, 54,0x14},
+   {1449,15, 80, 54,0x14}, {1450,15, 81, 54,0x14}, {1451,14, 82, 54,0x14}, {1452,14, 83, 54,0x14},
+   {1457,14, 84, 54,0x14}, {1458,14, 85, 54,0x14}, {1478, 1, 86, 54,0x14}, {1479, 1, 87, 54,0x14},
+   {1480,14, 88, 54,0x14}, {1481, 1, 89, 54,0x14}, {1482, 1, 90, 54,0x14}, {1483, 1, 91, 21,0x1c}
 };
 const FieldTrait_Hash_Array SecurityDefinition::_ftha(SecurityDefinition::_traits, 124);
 const MsgType SecurityDefinition::_msgtype("d");
@@ -10631,42 +9710,33 @@ const FieldTrait *SecurityDefinition::NoComplexEvents::NoComplexEventDates::NoCo
 const FieldTrait_Hash_Array& SecurityDefinition::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityDefinition::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityStatusRequest::_traits[] =
+const FieldTrait SecurityStatusRequest::_traits[]
 {
-   FieldTrait(  15,19, 95,  0,0x04), FieldTrait(  22,15,  5, 54,0x14), FieldTrait(  48,15,  4, 54,0x14),
-   FieldTrait(  55,15,  2, 54,0x14), FieldTrait(  65,15,  3, 54,0x14), FieldTrait( 106,15, 31, 54,0x14),
-   FieldTrait( 107,15, 34, 54,0x14), FieldTrait( 167,15,  9, 54,0x14), FieldTrait( 200,21, 11, 54,0x14),
-   FieldTrait( 201, 1, 72, 54,0x14), FieldTrait( 202,11, 25, 54,0x14), FieldTrait( 206, 7, 27, 54,0x14),
-   FieldTrait( 207,20, 30, 54,0x14), FieldTrait( 223,14, 29, 54,0x14), FieldTrait( 224,25, 13, 54,0x14),
-   FieldTrait( 225,25, 14, 54,0x14), FieldTrait( 226, 1, 16, 54,0x14), FieldTrait( 227,14, 17, 54,0x14),
-   FieldTrait( 228, 9, 18, 54,0x14), FieldTrait( 231, 9, 28, 54,0x14), FieldTrait( 239, 1, 15, 54,0x14),
-   FieldTrait( 240,25, 24, 54,0x14), FieldTrait( 255,15, 19, 54,0x14), FieldTrait( 263, 7, 96,  0,0x04),
-   FieldTrait( 324,15,  1,  0,0x04), FieldTrait( 336,15, 97,  0,0x04), FieldTrait( 348, 2, 32, 54,0x14),
-   FieldTrait( 349,28, 33, 54,0x14), FieldTrait( 350, 2, 35, 54,0x14), FieldTrait( 351,28, 36, 54,0x14),
-   FieldTrait( 454, 1,  6,142,0x1c), FieldTrait( 460, 1,  7, 54,0x14), FieldTrait( 461,15,  8, 54,0x14),
-   FieldTrait( 470,18, 21, 54,0x14), FieldTrait( 471,15, 22, 54,0x14), FieldTrait( 472,15, 23, 54,0x14),
-   FieldTrait( 541,25, 12, 54,0x14), FieldTrait( 543,15, 20, 54,0x14), FieldTrait( 555, 1, 94, 49,0x1c),
-   FieldTrait( 625,15, 98,  0,0x04), FieldTrait( 667,21, 38, 54,0x14), FieldTrait( 668, 1, 90, 55,0x14),
-   FieldTrait( 691,15, 37, 54,0x14), FieldTrait( 711, 1, 93,188,0x1c), FieldTrait( 762,15, 10, 54,0x14),
-   FieldTrait( 864, 1, 41, 38,0x1c), FieldTrait( 869,14, 91, 55,0x14), FieldTrait( 870, 1, 92,  9,0x1c),
-   FieldTrait( 873,25, 42, 54,0x14), FieldTrait( 874,25, 43, 54,0x14), FieldTrait( 875, 1, 39, 54,0x14),
-   FieldTrait( 876,15, 40, 54,0x14), FieldTrait( 947,19, 26, 54,0x14), FieldTrait( 965,15, 44, 54,0x14),
-   FieldTrait( 966,15, 45, 54,0x14), FieldTrait( 967, 9, 47, 54,0x14), FieldTrait( 968, 9, 48, 54,0x14),
-   FieldTrait( 969, 9, 49, 54,0x14), FieldTrait( 970, 1, 50, 54,0x14), FieldTrait( 971, 1, 51, 54,0x14),
-   FieldTrait( 996,15, 53, 54,0x14), FieldTrait( 997,15, 54, 54,0x14), FieldTrait(1018, 1, 52, 57,0x1c),
-   FieldTrait(1049, 7, 46, 54,0x14), FieldTrait(1079,26, 55, 54,0x14), FieldTrait(1146,13, 57, 54,0x14),
-   FieldTrait(1147,10, 58, 54,0x14), FieldTrait(1151,15, 56, 54,0x14), FieldTrait(1184, 2, 59,150,0x14),
-   FieldTrait(1185,29, 60,150,0x14), FieldTrait(1186,15, 61,150,0x14), FieldTrait(1191,15, 63, 54,0x14),
-   FieldTrait(1192,10, 64, 54,0x14), FieldTrait(1193, 7, 65, 54,0x14), FieldTrait(1194, 1, 66, 54,0x14),
-   FieldTrait(1195,13, 67, 54,0x14), FieldTrait(1196,15, 68, 54,0x14), FieldTrait(1197,15, 75, 54,0x14),
-   FieldTrait(1198, 1, 69, 54,0x14), FieldTrait(1199,11, 70, 54,0x14), FieldTrait(1200,11, 71, 54,0x14),
-   FieldTrait(1227,15, 62, 54,0x14), FieldTrait(1242, 8, 74, 54,0x14), FieldTrait(1244, 8, 73, 54,0x14),
-   FieldTrait(1300,15,100,  0,0x04), FieldTrait(1301,20, 99,  0,0x04), FieldTrait(1435, 1, 76, 54,0x14),
-   FieldTrait(1439, 1, 77, 54,0x14), FieldTrait(1449,15, 78, 54,0x14), FieldTrait(1450,15, 79, 54,0x14),
-   FieldTrait(1451,14, 80, 54,0x14), FieldTrait(1452,14, 81, 54,0x14), FieldTrait(1457,14, 82, 54,0x14),
-   FieldTrait(1458,14, 83, 54,0x14), FieldTrait(1478, 1, 84, 54,0x14), FieldTrait(1479, 1, 85, 54,0x14),
-   FieldTrait(1480,14, 86, 54,0x14), FieldTrait(1481, 1, 87, 54,0x14), FieldTrait(1482, 1, 88, 54,0x14),
-   FieldTrait(1483, 1, 89, 21,0x1c)
+   {  15,19, 95,  0,0x04}, {  22,15,  5, 54,0x14}, {  48,15,  4, 54,0x14}, {  55,15,  2, 54,0x14},
+   {  65,15,  3, 54,0x14}, { 106,15, 31, 54,0x14}, { 107,15, 34, 54,0x14}, { 167,15,  9, 54,0x14},
+   { 200,21, 11, 54,0x14}, { 201, 1, 72, 54,0x14}, { 202,11, 25, 54,0x14}, { 206, 7, 27, 54,0x14},
+   { 207,20, 30, 54,0x14}, { 223,14, 29, 54,0x14}, { 224,25, 13, 54,0x14}, { 225,25, 14, 54,0x14},
+   { 226, 1, 16, 54,0x14}, { 227,14, 17, 54,0x14}, { 228, 9, 18, 54,0x14}, { 231, 9, 28, 54,0x14},
+   { 239, 1, 15, 54,0x14}, { 240,25, 24, 54,0x14}, { 255,15, 19, 54,0x14}, { 263, 7, 96,  0,0x04},
+   { 324,15,  1,  0,0x04}, { 336,15, 97,  0,0x04}, { 348, 2, 32, 54,0x14}, { 349,28, 33, 54,0x14},
+   { 350, 2, 35, 54,0x14}, { 351,28, 36, 54,0x14}, { 454, 1,  6,142,0x1c}, { 460, 1,  7, 54,0x14},
+   { 461,15,  8, 54,0x14}, { 470,18, 21, 54,0x14}, { 471,15, 22, 54,0x14}, { 472,15, 23, 54,0x14},
+   { 541,25, 12, 54,0x14}, { 543,15, 20, 54,0x14}, { 555, 1, 94, 49,0x1c}, { 625,15, 98,  0,0x04},
+   { 667,21, 38, 54,0x14}, { 668, 1, 90, 55,0x14}, { 691,15, 37, 54,0x14}, { 711, 1, 93,188,0x1c},
+   { 762,15, 10, 54,0x14}, { 864, 1, 41, 38,0x1c}, { 869,14, 91, 55,0x14}, { 870, 1, 92,  9,0x1c},
+   { 873,25, 42, 54,0x14}, { 874,25, 43, 54,0x14}, { 875, 1, 39, 54,0x14}, { 876,15, 40, 54,0x14},
+   { 947,19, 26, 54,0x14}, { 965,15, 44, 54,0x14}, { 966,15, 45, 54,0x14}, { 967, 9, 47, 54,0x14},
+   { 968, 9, 48, 54,0x14}, { 969, 9, 49, 54,0x14}, { 970, 1, 50, 54,0x14}, { 971, 1, 51, 54,0x14},
+   { 996,15, 53, 54,0x14}, { 997,15, 54, 54,0x14}, {1018, 1, 52, 57,0x1c}, {1049, 7, 46, 54,0x14},
+   {1079,26, 55, 54,0x14}, {1146,13, 57, 54,0x14}, {1147,10, 58, 54,0x14}, {1151,15, 56, 54,0x14},
+   {1184, 2, 59,150,0x14}, {1185,29, 60,150,0x14}, {1186,15, 61,150,0x14}, {1191,15, 63, 54,0x14},
+   {1192,10, 64, 54,0x14}, {1193, 7, 65, 54,0x14}, {1194, 1, 66, 54,0x14}, {1195,13, 67, 54,0x14},
+   {1196,15, 68, 54,0x14}, {1197,15, 75, 54,0x14}, {1198, 1, 69, 54,0x14}, {1199,11, 70, 54,0x14},
+   {1200,11, 71, 54,0x14}, {1227,15, 62, 54,0x14}, {1242, 8, 74, 54,0x14}, {1244, 8, 73, 54,0x14},
+   {1300,15,100,  0,0x04}, {1301,20, 99,  0,0x04}, {1435, 1, 76, 54,0x14}, {1439, 1, 77, 54,0x14},
+   {1449,15, 78, 54,0x14}, {1450,15, 79, 54,0x14}, {1451,14, 80, 54,0x14}, {1452,14, 81, 54,0x14},
+   {1457,14, 82, 54,0x14}, {1458,14, 83, 54,0x14}, {1478, 1, 84, 54,0x14}, {1479, 1, 85, 54,0x14},
+   {1480,14, 86, 54,0x14}, {1481, 1, 87, 54,0x14}, {1482, 1, 88, 54,0x14}, {1483, 1, 89, 21,0x1c}
 };
 const FieldTrait_Hash_Array SecurityStatusRequest::_ftha(SecurityStatusRequest::_traits, 100);
 const MsgType SecurityStatusRequest::_msgtype("e");
@@ -10731,50 +9801,39 @@ const FieldTrait *SecurityStatusRequest::NoComplexEvents::NoComplexEventDates::N
 const FieldTrait_Hash_Array& SecurityStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityStatusRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityStatus::_traits[] =
+const FieldTrait SecurityStatus::_traits[]
 {
-   FieldTrait(  15,19, 95,  0,0x04), FieldTrait(  22,15,  5, 54,0x14), FieldTrait(  31,11,109,  0,0x04),
-   FieldTrait(  48,15,  4, 54,0x14), FieldTrait(  55,15,  2, 54,0x14), FieldTrait(  58,15,112,  0,0x04),
-   FieldTrait(  60,22,110,  0,0x04), FieldTrait(  65,15,  3, 54,0x14), FieldTrait( 106,15, 31, 54,0x14),
-   FieldTrait( 107,15, 34, 54,0x14), FieldTrait( 167,15,  9, 54,0x14), FieldTrait( 200,21, 11, 54,0x14),
-   FieldTrait( 201, 1, 72, 54,0x14), FieldTrait( 202,11, 25, 54,0x14), FieldTrait( 206, 7, 27, 54,0x14),
-   FieldTrait( 207,20, 30, 54,0x14), FieldTrait( 223,14, 29, 54,0x14), FieldTrait( 224,25, 13, 54,0x14),
-   FieldTrait( 225,25, 14, 54,0x14), FieldTrait( 226, 1, 16, 54,0x14), FieldTrait( 227,14, 17, 54,0x14),
-   FieldTrait( 228, 9, 18, 54,0x14), FieldTrait( 231, 9, 28, 54,0x14), FieldTrait( 239, 1, 15, 54,0x14),
-   FieldTrait( 240,25, 24, 54,0x14), FieldTrait( 255,15, 19, 54,0x14), FieldTrait( 264, 1,118,  0,0x04),
-   FieldTrait( 291,16,100,  0,0x04), FieldTrait( 292,16,101,  0,0x04), FieldTrait( 324,15,  1,  0,0x04),
-   FieldTrait( 325, 8, 98,  0,0x04), FieldTrait( 326, 1, 99,  0,0x04), FieldTrait( 327, 1,102,  0,0x04),
-   FieldTrait( 328, 8,103,  0,0x04), FieldTrait( 329, 8,104,  0,0x04), FieldTrait( 330,10,105,  0,0x04),
-   FieldTrait( 331,10,106,  0,0x04), FieldTrait( 332,11,107,  0,0x04), FieldTrait( 333,11,108,  0,0x04),
-   FieldTrait( 334, 1,111,  0,0x04), FieldTrait( 336,15, 96,  0,0x04), FieldTrait( 348, 2, 32, 54,0x14),
-   FieldTrait( 349,28, 33, 54,0x14), FieldTrait( 350, 2, 35, 54,0x14), FieldTrait( 351,28, 36, 54,0x14),
-   FieldTrait( 354, 2,113,  0,0x04), FieldTrait( 355,28,114,  0,0x04), FieldTrait( 454, 1,  6,142,0x1c),
-   FieldTrait( 460, 1,  7, 54,0x14), FieldTrait( 461,15,  8, 54,0x14), FieldTrait( 470,18, 21, 54,0x14),
-   FieldTrait( 471,15, 22, 54,0x14), FieldTrait( 472,15, 23, 54,0x14), FieldTrait( 541,25, 12, 54,0x14),
-   FieldTrait( 543,15, 20, 54,0x14), FieldTrait( 555, 1, 94, 49,0x1c), FieldTrait( 625,15, 97,  0,0x04),
-   FieldTrait( 667,21, 38, 54,0x14), FieldTrait( 668, 1, 90, 55,0x14), FieldTrait( 691,15, 37, 54,0x14),
-   FieldTrait( 711, 1, 93,188,0x1c), FieldTrait( 762,15, 10, 54,0x14), FieldTrait( 864, 1, 41, 38,0x1c),
-   FieldTrait( 869,14, 91, 55,0x14), FieldTrait( 870, 1, 92,  9,0x1c), FieldTrait( 873,25, 42, 54,0x14),
-   FieldTrait( 874,25, 43, 54,0x14), FieldTrait( 875, 1, 39, 54,0x14), FieldTrait( 876,15, 40, 54,0x14),
-   FieldTrait( 947,19, 26, 54,0x14), FieldTrait( 965,15, 44, 54,0x14), FieldTrait( 966,15, 45, 54,0x14),
-   FieldTrait( 967, 9, 47, 54,0x14), FieldTrait( 968, 9, 48, 54,0x14), FieldTrait( 969, 9, 49, 54,0x14),
-   FieldTrait( 970, 1, 50, 54,0x14), FieldTrait( 971, 1, 51, 54,0x14), FieldTrait( 996,15, 53, 54,0x14),
-   FieldTrait( 997,15, 54, 54,0x14), FieldTrait(1018, 1, 52, 57,0x1c), FieldTrait(1021, 1,117,  0,0x04),
-   FieldTrait(1025,11,115,  0,0x04), FieldTrait(1049, 7, 46, 54,0x14), FieldTrait(1079,26, 55, 54,0x14),
-   FieldTrait(1146,13, 57, 54,0x14), FieldTrait(1147,10, 58, 54,0x14), FieldTrait(1151,15, 56, 54,0x14),
-   FieldTrait(1174, 1,116,  0,0x04), FieldTrait(1180,15,121,  8,0x14), FieldTrait(1181, 4,122,  8,0x14),
-   FieldTrait(1184, 2, 59,150,0x14), FieldTrait(1185,29, 60,150,0x14), FieldTrait(1186,15, 61,150,0x14),
-   FieldTrait(1191,15, 63, 54,0x14), FieldTrait(1192,10, 64, 54,0x14), FieldTrait(1193, 7, 65, 54,0x14),
-   FieldTrait(1194, 1, 66, 54,0x14), FieldTrait(1195,13, 67, 54,0x14), FieldTrait(1196,15, 68, 54,0x14),
-   FieldTrait(1197,15, 75, 54,0x14), FieldTrait(1198, 1, 69, 54,0x14), FieldTrait(1199,11, 70, 54,0x14),
-   FieldTrait(1200,11, 71, 54,0x14), FieldTrait(1227,15, 62, 54,0x14), FieldTrait(1242, 8, 74, 54,0x14),
-   FieldTrait(1244, 8, 73, 54,0x14), FieldTrait(1300,15,120,  0,0x04), FieldTrait(1301,20,119,  0,0x04),
-   FieldTrait(1350, 4,123,  8,0x14), FieldTrait(1352, 8,124,  8,0x14), FieldTrait(1435, 1, 76, 54,0x14),
-   FieldTrait(1439, 1, 77, 54,0x14), FieldTrait(1449,15, 78, 54,0x14), FieldTrait(1450,15, 79, 54,0x14),
-   FieldTrait(1451,14, 80, 54,0x14), FieldTrait(1452,14, 81, 54,0x14), FieldTrait(1457,14, 82, 54,0x14),
-   FieldTrait(1458,14, 83, 54,0x14), FieldTrait(1478, 1, 84, 54,0x14), FieldTrait(1479, 1, 85, 54,0x14),
-   FieldTrait(1480,14, 86, 54,0x14), FieldTrait(1481, 1, 87, 54,0x14), FieldTrait(1482, 1, 88, 54,0x14),
-   FieldTrait(1483, 1, 89, 21,0x1c)
+   {  15,19, 95,  0,0x04}, {  22,15,  5, 54,0x14}, {  31,11,109,  0,0x04}, {  48,15,  4, 54,0x14},
+   {  55,15,  2, 54,0x14}, {  58,15,112,  0,0x04}, {  60,22,110,  0,0x04}, {  65,15,  3, 54,0x14},
+   { 106,15, 31, 54,0x14}, { 107,15, 34, 54,0x14}, { 167,15,  9, 54,0x14}, { 200,21, 11, 54,0x14},
+   { 201, 1, 72, 54,0x14}, { 202,11, 25, 54,0x14}, { 206, 7, 27, 54,0x14}, { 207,20, 30, 54,0x14},
+   { 223,14, 29, 54,0x14}, { 224,25, 13, 54,0x14}, { 225,25, 14, 54,0x14}, { 226, 1, 16, 54,0x14},
+   { 227,14, 17, 54,0x14}, { 228, 9, 18, 54,0x14}, { 231, 9, 28, 54,0x14}, { 239, 1, 15, 54,0x14},
+   { 240,25, 24, 54,0x14}, { 255,15, 19, 54,0x14}, { 264, 1,118,  0,0x04}, { 291,16,100,  0,0x04},
+   { 292,16,101,  0,0x04}, { 324,15,  1,  0,0x04}, { 325, 8, 98,  0,0x04}, { 326, 1, 99,  0,0x04},
+   { 327, 1,102,  0,0x04}, { 328, 8,103,  0,0x04}, { 329, 8,104,  0,0x04}, { 330,10,105,  0,0x04},
+   { 331,10,106,  0,0x04}, { 332,11,107,  0,0x04}, { 333,11,108,  0,0x04}, { 334, 1,111,  0,0x04},
+   { 336,15, 96,  0,0x04}, { 348, 2, 32, 54,0x14}, { 349,28, 33, 54,0x14}, { 350, 2, 35, 54,0x14},
+   { 351,28, 36, 54,0x14}, { 354, 2,113,  0,0x04}, { 355,28,114,  0,0x04}, { 454, 1,  6,142,0x1c},
+   { 460, 1,  7, 54,0x14}, { 461,15,  8, 54,0x14}, { 470,18, 21, 54,0x14}, { 471,15, 22, 54,0x14},
+   { 472,15, 23, 54,0x14}, { 541,25, 12, 54,0x14}, { 543,15, 20, 54,0x14}, { 555, 1, 94, 49,0x1c},
+   { 625,15, 97,  0,0x04}, { 667,21, 38, 54,0x14}, { 668, 1, 90, 55,0x14}, { 691,15, 37, 54,0x14},
+   { 711, 1, 93,188,0x1c}, { 762,15, 10, 54,0x14}, { 864, 1, 41, 38,0x1c}, { 869,14, 91, 55,0x14},
+   { 870, 1, 92,  9,0x1c}, { 873,25, 42, 54,0x14}, { 874,25, 43, 54,0x14}, { 875, 1, 39, 54,0x14},
+   { 876,15, 40, 54,0x14}, { 947,19, 26, 54,0x14}, { 965,15, 44, 54,0x14}, { 966,15, 45, 54,0x14},
+   { 967, 9, 47, 54,0x14}, { 968, 9, 48, 54,0x14}, { 969, 9, 49, 54,0x14}, { 970, 1, 50, 54,0x14},
+   { 971, 1, 51, 54,0x14}, { 996,15, 53, 54,0x14}, { 997,15, 54, 54,0x14}, {1018, 1, 52, 57,0x1c},
+   {1021, 1,117,  0,0x04}, {1025,11,115,  0,0x04}, {1049, 7, 46, 54,0x14}, {1079,26, 55, 54,0x14},
+   {1146,13, 57, 54,0x14}, {1147,10, 58, 54,0x14}, {1151,15, 56, 54,0x14}, {1174, 1,116,  0,0x04},
+   {1180,15,121,  8,0x14}, {1181, 4,122,  8,0x14}, {1184, 2, 59,150,0x14}, {1185,29, 60,150,0x14},
+   {1186,15, 61,150,0x14}, {1191,15, 63, 54,0x14}, {1192,10, 64, 54,0x14}, {1193, 7, 65, 54,0x14},
+   {1194, 1, 66, 54,0x14}, {1195,13, 67, 54,0x14}, {1196,15, 68, 54,0x14}, {1197,15, 75, 54,0x14},
+   {1198, 1, 69, 54,0x14}, {1199,11, 70, 54,0x14}, {1200,11, 71, 54,0x14}, {1227,15, 62, 54,0x14},
+   {1242, 8, 74, 54,0x14}, {1244, 8, 73, 54,0x14}, {1300,15,120,  0,0x04}, {1301,20,119,  0,0x04},
+   {1350, 4,123,  8,0x14}, {1352, 8,124,  8,0x14}, {1435, 1, 76, 54,0x14}, {1439, 1, 77, 54,0x14},
+   {1449,15, 78, 54,0x14}, {1450,15, 79, 54,0x14}, {1451,14, 80, 54,0x14}, {1452,14, 81, 54,0x14},
+   {1457,14, 82, 54,0x14}, {1458,14, 83, 54,0x14}, {1478, 1, 84, 54,0x14}, {1479, 1, 85, 54,0x14},
+   {1480,14, 86, 54,0x14}, {1481, 1, 87, 54,0x14}, {1482, 1, 88, 54,0x14}, {1483, 1, 89, 21,0x1c}
 };
 const FieldTrait_Hash_Array SecurityStatus::_ftha(SecurityStatus::_traits, 124);
 const MsgType SecurityStatus::_msgtype("f");
@@ -10839,55 +9898,45 @@ const FieldTrait *SecurityStatus::NoComplexEvents::NoComplexEventDates::NoComple
 const FieldTrait_Hash_Array& SecurityStatus::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityStatus::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradingSessionStatusRequest::_traits[] =
+const FieldTrait TradingSessionStatusRequest::_traits[]
 {
-   FieldTrait( 207,20,  7,  0,0x04), FieldTrait( 263, 7,  6,  0,0x04), FieldTrait( 335,15,  1,  0,0x04),
-   FieldTrait( 336,15,  2,  0,0x04), FieldTrait( 338, 1,  4,  0,0x04), FieldTrait( 339, 1,  5,  0,0x04),
-   FieldTrait( 625,15,  3,  0,0x04), FieldTrait(1300,15,  9,  0,0x04), FieldTrait(1301,20,  8,  0,0x04)
+   { 207,20,  7,  0,0x04}, { 263, 7,  6,  0,0x04}, { 335,15,  1,  0,0x04}, { 336,15,  2,  0,0x04},
+   { 338, 1,  4,  0,0x04}, { 339, 1,  5,  0,0x04}, { 625,15,  3,  0,0x04}, {1300,15,  9,  0,0x04},
+   {1301,20,  8,  0,0x04}
 };
 const FieldTrait_Hash_Array TradingSessionStatusRequest::_ftha(TradingSessionStatusRequest::_traits, 9);
 const MsgType TradingSessionStatusRequest::_msgtype("g");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait TradingSessionStatus::_traits[] =
+const FieldTrait TradingSessionStatus::_traits[]
 {
-   FieldTrait(  22,15, 21, 54,0x14), FieldTrait(  48,15, 20, 54,0x14), FieldTrait(  55,15, 18, 54,0x14),
-   FieldTrait(  58,15, 15,  0,0x04), FieldTrait(  65,15, 19, 54,0x14), FieldTrait( 106,15, 47, 54,0x14),
-   FieldTrait( 107,15, 50, 54,0x14), FieldTrait( 167,15, 25, 54,0x14), FieldTrait( 200,21, 27, 54,0x14),
-   FieldTrait( 201, 1, 88, 54,0x14), FieldTrait( 202,11, 41, 54,0x14), FieldTrait( 206, 7, 43, 54,0x14),
-   FieldTrait( 207,20, 46, 54,0x14), FieldTrait( 223,14, 45, 54,0x14), FieldTrait( 224,25, 29, 54,0x14),
-   FieldTrait( 225,25, 30, 54,0x14), FieldTrait( 226, 1, 32, 54,0x14), FieldTrait( 227,14, 33, 54,0x14),
-   FieldTrait( 228, 9, 34, 54,0x14), FieldTrait( 231, 9, 44, 54,0x14), FieldTrait( 239, 1, 31, 54,0x14),
-   FieldTrait( 240,25, 40, 54,0x14), FieldTrait( 255,15, 35, 54,0x14), FieldTrait( 325, 8,  6,  0,0x04),
-   FieldTrait( 335,15,  1,  0,0x04), FieldTrait( 336,15,  2,  0,0x04), FieldTrait( 338, 1,  4,  0,0x04),
-   FieldTrait( 339, 1,  5,  0,0x04), FieldTrait( 340, 1,  7,  0,0x04), FieldTrait( 341,22,  9,  0,0x04),
-   FieldTrait( 342,22, 10,  0,0x04), FieldTrait( 343,22, 11,  0,0x04), FieldTrait( 344,22, 12,  0,0x04),
-   FieldTrait( 345,22, 13,  0,0x04), FieldTrait( 348, 2, 48, 54,0x14), FieldTrait( 349,28, 49, 54,0x14),
-   FieldTrait( 350, 2, 51, 54,0x14), FieldTrait( 351,28, 52, 54,0x14), FieldTrait( 354, 2, 16,  0,0x04),
-   FieldTrait( 355,28, 17,  0,0x04), FieldTrait( 387,10, 14,  0,0x04), FieldTrait( 454, 1, 22,142,0x1c),
-   FieldTrait( 460, 1, 23, 54,0x14), FieldTrait( 461,15, 24, 54,0x14), FieldTrait( 470,18, 37, 54,0x14),
-   FieldTrait( 471,15, 38, 54,0x14), FieldTrait( 472,15, 39, 54,0x14), FieldTrait( 541,25, 28, 54,0x14),
-   FieldTrait( 543,15, 36, 54,0x14), FieldTrait( 567, 1,  8,  0,0x04), FieldTrait( 625,15,  3,  0,0x04),
-   FieldTrait( 667,21, 54, 54,0x14), FieldTrait( 691,15, 53, 54,0x14), FieldTrait( 762,15, 26, 54,0x14),
-   FieldTrait( 864, 1, 57, 38,0x1c), FieldTrait( 873,25, 58, 54,0x14), FieldTrait( 874,25, 59, 54,0x14),
-   FieldTrait( 875, 1, 55, 54,0x14), FieldTrait( 876,15, 56, 54,0x14), FieldTrait( 947,19, 42, 54,0x14),
-   FieldTrait( 965,15, 60, 54,0x14), FieldTrait( 966,15, 61, 54,0x14), FieldTrait( 967, 9, 63, 54,0x14),
-   FieldTrait( 968, 9, 64, 54,0x14), FieldTrait( 969, 9, 65, 54,0x14), FieldTrait( 970, 1, 66, 54,0x14),
-   FieldTrait( 971, 1, 67, 54,0x14), FieldTrait( 996,15, 69, 54,0x14), FieldTrait( 997,15, 70, 54,0x14),
-   FieldTrait(1018, 1, 68, 57,0x1c), FieldTrait(1049, 7, 62, 54,0x14), FieldTrait(1079,26, 71, 54,0x14),
-   FieldTrait(1146,13, 73, 54,0x14), FieldTrait(1147,10, 74, 54,0x14), FieldTrait(1151,15, 72, 54,0x14),
-   FieldTrait(1180,15,109,  8,0x14), FieldTrait(1181, 4,110,  8,0x14), FieldTrait(1184, 2, 75,150,0x14),
-   FieldTrait(1185,29, 76,150,0x14), FieldTrait(1186,15, 77,150,0x14), FieldTrait(1191,15, 79, 54,0x14),
-   FieldTrait(1192,10, 80, 54,0x14), FieldTrait(1193, 7, 81, 54,0x14), FieldTrait(1194, 1, 82, 54,0x14),
-   FieldTrait(1195,13, 83, 54,0x14), FieldTrait(1196,15, 84, 54,0x14), FieldTrait(1197,15, 91, 54,0x14),
-   FieldTrait(1198, 1, 85, 54,0x14), FieldTrait(1199,11, 86, 54,0x14), FieldTrait(1200,11, 87, 54,0x14),
-   FieldTrait(1227,15, 78, 54,0x14), FieldTrait(1242, 8, 90, 54,0x14), FieldTrait(1244, 8, 89, 54,0x14),
-   FieldTrait(1300,15,107,  0,0x04), FieldTrait(1301,20,106,  0,0x04), FieldTrait(1350, 4,111,  8,0x14),
-   FieldTrait(1352, 8,112,  8,0x14), FieldTrait(1368, 1,108,  0,0x04), FieldTrait(1435, 1, 92, 54,0x14),
-   FieldTrait(1439, 1, 93, 54,0x14), FieldTrait(1449,15, 94, 54,0x14), FieldTrait(1450,15, 95, 54,0x14),
-   FieldTrait(1451,14, 96, 54,0x14), FieldTrait(1452,14, 97, 54,0x14), FieldTrait(1457,14, 98, 54,0x14),
-   FieldTrait(1458,14, 99, 54,0x14), FieldTrait(1478, 1,100, 54,0x14), FieldTrait(1479, 1,101, 54,0x14),
-   FieldTrait(1480,14,102, 54,0x14), FieldTrait(1481, 1,103, 54,0x14), FieldTrait(1482, 1,104, 54,0x14),
-   FieldTrait(1483, 1,105, 21,0x1c)
+   {  22,15, 21, 54,0x14}, {  48,15, 20, 54,0x14}, {  55,15, 18, 54,0x14}, {  58,15, 15,  0,0x04},
+   {  65,15, 19, 54,0x14}, { 106,15, 47, 54,0x14}, { 107,15, 50, 54,0x14}, { 167,15, 25, 54,0x14},
+   { 200,21, 27, 54,0x14}, { 201, 1, 88, 54,0x14}, { 202,11, 41, 54,0x14}, { 206, 7, 43, 54,0x14},
+   { 207,20, 46, 54,0x14}, { 223,14, 45, 54,0x14}, { 224,25, 29, 54,0x14}, { 225,25, 30, 54,0x14},
+   { 226, 1, 32, 54,0x14}, { 227,14, 33, 54,0x14}, { 228, 9, 34, 54,0x14}, { 231, 9, 44, 54,0x14},
+   { 239, 1, 31, 54,0x14}, { 240,25, 40, 54,0x14}, { 255,15, 35, 54,0x14}, { 325, 8,  6,  0,0x04},
+   { 335,15,  1,  0,0x04}, { 336,15,  2,  0,0x04}, { 338, 1,  4,  0,0x04}, { 339, 1,  5,  0,0x04},
+   { 340, 1,  7,  0,0x04}, { 341,22,  9,  0,0x04}, { 342,22, 10,  0,0x04}, { 343,22, 11,  0,0x04},
+   { 344,22, 12,  0,0x04}, { 345,22, 13,  0,0x04}, { 348, 2, 48, 54,0x14}, { 349,28, 49, 54,0x14},
+   { 350, 2, 51, 54,0x14}, { 351,28, 52, 54,0x14}, { 354, 2, 16,  0,0x04}, { 355,28, 17,  0,0x04},
+   { 387,10, 14,  0,0x04}, { 454, 1, 22,142,0x1c}, { 460, 1, 23, 54,0x14}, { 461,15, 24, 54,0x14},
+   { 470,18, 37, 54,0x14}, { 471,15, 38, 54,0x14}, { 472,15, 39, 54,0x14}, { 541,25, 28, 54,0x14},
+   { 543,15, 36, 54,0x14}, { 567, 1,  8,  0,0x04}, { 625,15,  3,  0,0x04}, { 667,21, 54, 54,0x14},
+   { 691,15, 53, 54,0x14}, { 762,15, 26, 54,0x14}, { 864, 1, 57, 38,0x1c}, { 873,25, 58, 54,0x14},
+   { 874,25, 59, 54,0x14}, { 875, 1, 55, 54,0x14}, { 876,15, 56, 54,0x14}, { 947,19, 42, 54,0x14},
+   { 965,15, 60, 54,0x14}, { 966,15, 61, 54,0x14}, { 967, 9, 63, 54,0x14}, { 968, 9, 64, 54,0x14},
+   { 969, 9, 65, 54,0x14}, { 970, 1, 66, 54,0x14}, { 971, 1, 67, 54,0x14}, { 996,15, 69, 54,0x14},
+   { 997,15, 70, 54,0x14}, {1018, 1, 68, 57,0x1c}, {1049, 7, 62, 54,0x14}, {1079,26, 71, 54,0x14},
+   {1146,13, 73, 54,0x14}, {1147,10, 74, 54,0x14}, {1151,15, 72, 54,0x14}, {1180,15,109,  8,0x14},
+   {1181, 4,110,  8,0x14}, {1184, 2, 75,150,0x14}, {1185,29, 76,150,0x14}, {1186,15, 77,150,0x14},
+   {1191,15, 79, 54,0x14}, {1192,10, 80, 54,0x14}, {1193, 7, 81, 54,0x14}, {1194, 1, 82, 54,0x14},
+   {1195,13, 83, 54,0x14}, {1196,15, 84, 54,0x14}, {1197,15, 91, 54,0x14}, {1198, 1, 85, 54,0x14},
+   {1199,11, 86, 54,0x14}, {1200,11, 87, 54,0x14}, {1227,15, 78, 54,0x14}, {1242, 8, 90, 54,0x14},
+   {1244, 8, 89, 54,0x14}, {1300,15,107,  0,0x04}, {1301,20,106,  0,0x04}, {1350, 4,111,  8,0x14},
+   {1352, 8,112,  8,0x14}, {1368, 1,108,  0,0x04}, {1435, 1, 92, 54,0x14}, {1439, 1, 93, 54,0x14},
+   {1449,15, 94, 54,0x14}, {1450,15, 95, 54,0x14}, {1451,14, 96, 54,0x14}, {1452,14, 97, 54,0x14},
+   {1457,14, 98, 54,0x14}, {1458,14, 99, 54,0x14}, {1478, 1,100, 54,0x14}, {1479, 1,101, 54,0x14},
+   {1480,14,102, 54,0x14}, {1481, 1,103, 54,0x14}, {1482, 1,104, 54,0x14}, {1483, 1,105, 21,0x1c}
 };
 const FieldTrait_Hash_Array TradingSessionStatus::_ftha(TradingSessionStatus::_traits, 112);
 const MsgType TradingSessionStatus::_msgtype("h");
@@ -10920,114 +9969,95 @@ const FieldTrait *TradingSessionStatus::NoComplexEvents::NoComplexEventDates::No
 const FieldTrait_Hash_Array& TradingSessionStatus::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& TradingSessionStatus::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait header::_traits[] =
+const FieldTrait header::_traits[]
 {
-   FieldTrait(   8,15,  1,  0,0x64), FieldTrait(   9, 2,  2,  0,0x64), FieldTrait(  34, 4, 10,  0,0x04),
-   FieldTrait(  35,15,  3,  0,0x44), FieldTrait(  43, 8, 19,  0,0x04), FieldTrait(  49,15,  4,  0,0x04),
-   FieldTrait(  50,15, 11,  0,0x04), FieldTrait(  52,22, 21,  0,0x04), FieldTrait(  56,15,  5,  0,0x04),
-   FieldTrait(  57,15, 13,  0,0x04), FieldTrait(  90, 2,  8,  0,0x04), FieldTrait(  91,28,  9,  0,0x04),
-   FieldTrait(  97, 8, 20,  0,0x04), FieldTrait( 115,15,  6,  0,0x04), FieldTrait( 116,15, 15,  0,0x04),
-   FieldTrait( 122,22, 22,  0,0x04), FieldTrait( 128,15,  7,  0,0x04), FieldTrait( 129,15, 17,  0,0x04),
-   FieldTrait( 142,15, 12,  0,0x04), FieldTrait( 143,15, 14,  0,0x04), FieldTrait( 144,15, 16,  0,0x04),
-   FieldTrait( 145,15, 18,  0,0x04), FieldTrait( 212, 2, 23,  0,0x04), FieldTrait( 213,28, 24,  0,0x04),
-   FieldTrait( 347,15, 25,  0,0x04), FieldTrait( 369, 4, 26,  0,0x04), FieldTrait( 627, 1, 27, 45,0x1c),
-   FieldTrait(1128,15, 28,  0,0x04), FieldTrait(1129,15, 29,  0,0x04)
+   {   8,15,  1,  0,0x64}, {   9, 2,  2,  0,0x64}, {  34, 4, 10,  0,0x04}, {  35,15,  3,  0,0x44},
+   {  43, 8, 19,  0,0x04}, {  49,15,  4,  0,0x04}, {  50,15, 11,  0,0x04}, {  52,22, 21,  0,0x04},
+   {  56,15,  5,  0,0x04}, {  57,15, 13,  0,0x04}, {  90, 2,  8,  0,0x04}, {  91,28,  9,  0,0x04},
+   {  97, 8, 20,  0,0x04}, { 115,15,  6,  0,0x04}, { 116,15, 15,  0,0x04}, { 122,22, 22,  0,0x04},
+   { 128,15,  7,  0,0x04}, { 129,15, 17,  0,0x04}, { 142,15, 12,  0,0x04}, { 143,15, 14,  0,0x04},
+   { 144,15, 16,  0,0x04}, { 145,15, 18,  0,0x04}, { 212, 2, 23,  0,0x04}, { 213,28, 24,  0,0x04},
+   { 347,15, 25,  0,0x04}, { 369, 4, 26,  0,0x04}, { 627, 1, 27, 45,0x1c}, {1128,15, 28,  0,0x04},
+   {1129,15, 29,  0,0x04}
 };
 const FieldTrait_Hash_Array header::_ftha(header::_traits, 29);
 const MsgType header::_msgtype("header");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait header::NoHops::_traits[] =
+const FieldTrait header::NoHops::_traits[]
 {
-   FieldTrait( 628,15,  1,  0,0x04), FieldTrait( 629,22,  2,  0,0x04), FieldTrait( 630, 4,  3,  0,0x04)
+   { 628,15,  1,  0,0x04}, { 629,22,  2,  0,0x04}, { 630, 4,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    header::NoHops::_ftha(header::NoHops::_traits, 3);
 const MsgType header::NoHops::_msgtype("NoHops");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MassQuote::_traits[] =
+const FieldTrait MassQuote::_traits[]
 {
-   FieldTrait(   1,15,  6,  0,0x04), FieldTrait( 117,15,  2,  0,0x04), FieldTrait( 131,15,  1,  0,0x04),
-   FieldTrait( 293,10,  9,  0,0x04), FieldTrait( 294,10, 10,  0,0x04), FieldTrait( 296, 1, 11,116,0x1c),
-   FieldTrait( 301, 1,  4,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c), FieldTrait( 537, 1,  3,  0,0x04),
-   FieldTrait( 581, 1,  8,  0,0x04), FieldTrait( 660, 1,  7,  0,0x04)
+   {   1,15,  6,  0,0x04}, { 117,15,  2,  0,0x04}, { 131,15,  1,  0,0x04}, { 293,10,  9,  0,0x04},
+   { 294,10, 10,  0,0x04}, { 296, 1, 11,116,0x1c}, { 301, 1,  4,  0,0x04}, { 453, 1,  5, 94,0x1c},
+   { 537, 1,  3,  0,0x04}, { 581, 1,  8,  0,0x04}, { 660, 1,  7,  0,0x04}
 };
 const FieldTrait_Hash_Array MassQuote::_ftha(MassQuote::_traits, 11);
 const MsgType MassQuote::_msgtype("i");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MassQuote::NoQuoteSets::_traits[] =
+const FieldTrait MassQuote::NoQuoteSets::_traits[]
 {
-   FieldTrait( 241,25, 13,191,0x14), FieldTrait( 242,25, 14,191,0x14), FieldTrait( 243, 1, 15,191,0x14),
-   FieldTrait( 244, 1, 16,191,0x14), FieldTrait( 245,14, 17,191,0x14), FieldTrait( 246, 9, 18,191,0x14),
-   FieldTrait( 247,25, 24,191,0x14), FieldTrait( 256,15, 19,191,0x14), FieldTrait( 295, 1, 77,110,0x1c),
-   FieldTrait( 302,15,  1,  0,0x05), FieldTrait( 304, 1, 75,  0,0x05), FieldTrait( 305,15,  5,191,0x14),
-   FieldTrait( 306,15, 31,191,0x14), FieldTrait( 307,15, 34,191,0x14), FieldTrait( 308,20, 30,191,0x14),
-   FieldTrait( 309,15,  4,191,0x14), FieldTrait( 310,15,  9,191,0x14), FieldTrait( 311,15,  2,191,0x14),
-   FieldTrait( 312,15,  3,191,0x14), FieldTrait( 313,21, 11,191,0x14), FieldTrait( 315, 1, 61,191,0x14),
-   FieldTrait( 316,11, 25,191,0x14), FieldTrait( 317, 7, 27,191,0x14), FieldTrait( 318,19, 39,191,0x14),
-   FieldTrait( 362, 2, 32,191,0x14), FieldTrait( 363,28, 33,191,0x14), FieldTrait( 364, 2, 35,191,0x14),
-   FieldTrait( 365,28, 36,191,0x14), FieldTrait( 367,22, 74,  0,0x04), FieldTrait( 435,14, 29,191,0x14),
-   FieldTrait( 436, 9, 28,191,0x14), FieldTrait( 457, 1,  6,189,0x1c), FieldTrait( 462, 1,  7,191,0x14),
-   FieldTrait( 463,15,  8,191,0x14), FieldTrait( 542,25, 12,191,0x14), FieldTrait( 592,18, 21,191,0x14),
-   FieldTrait( 593,15, 22,191,0x14), FieldTrait( 594,15, 23,191,0x14), FieldTrait( 595,15, 20,191,0x14),
-   FieldTrait( 763,15, 10,191,0x14), FieldTrait( 810,11, 41,191,0x14), FieldTrait( 877,15, 37,191,0x14),
-   FieldTrait( 878,15, 38,191,0x14), FieldTrait( 879,10, 40,191,0x14), FieldTrait( 882,11, 42,191,0x14),
-   FieldTrait( 883,11, 43,191,0x14), FieldTrait( 884,13, 44,191,0x14), FieldTrait( 885,13, 45,191,0x14),
-   FieldTrait( 886,13, 46,191,0x14), FieldTrait( 887, 1, 47,194,0x1c), FieldTrait( 893, 8, 76,  0,0x04),
-   FieldTrait( 941,19, 26,191,0x14), FieldTrait( 972,14, 48,191,0x14), FieldTrait( 973,13, 50,191,0x14),
-   FieldTrait( 974,15, 51,191,0x14), FieldTrait( 975, 1, 49,191,0x14), FieldTrait( 998,15, 52,191,0x14),
-   FieldTrait(1000,15, 53,191,0x14), FieldTrait(1038,13, 54,191,0x14), FieldTrait(1039,15, 56,191,0x14),
-   FieldTrait(1044,10, 57,191,0x14), FieldTrait(1045, 9, 58,191,0x14), FieldTrait(1046, 7, 59,191,0x14),
-   FieldTrait(1058, 1, 55,195,0x1c), FieldTrait(1213,26, 60,191,0x14), FieldTrait(1419, 1, 62,191,0x14),
-   FieldTrait(1423,10, 63,191,0x14), FieldTrait(1424,15, 64,191,0x14), FieldTrait(1425,10, 65,191,0x14),
-   FieldTrait(1437, 1, 66,191,0x14), FieldTrait(1441, 1, 67,191,0x14), FieldTrait(1453,15, 68,191,0x14),
-   FieldTrait(1454,15, 69,191,0x14), FieldTrait(1455,14, 70,191,0x14), FieldTrait(1456,14, 71,191,0x14),
-   FieldTrait(1459,14, 72,191,0x14), FieldTrait(1460,14, 73,191,0x14)
+   { 241,25, 13,191,0x14}, { 242,25, 14,191,0x14}, { 243, 1, 15,191,0x14}, { 244, 1, 16,191,0x14},
+   { 245,14, 17,191,0x14}, { 246, 9, 18,191,0x14}, { 247,25, 24,191,0x14}, { 256,15, 19,191,0x14},
+   { 295, 1, 77,110,0x1c}, { 302,15,  1,  0,0x05}, { 304, 1, 75,  0,0x05}, { 305,15,  5,191,0x14},
+   { 306,15, 31,191,0x14}, { 307,15, 34,191,0x14}, { 308,20, 30,191,0x14}, { 309,15,  4,191,0x14},
+   { 310,15,  9,191,0x14}, { 311,15,  2,191,0x14}, { 312,15,  3,191,0x14}, { 313,21, 11,191,0x14},
+   { 315, 1, 61,191,0x14}, { 316,11, 25,191,0x14}, { 317, 7, 27,191,0x14}, { 318,19, 39,191,0x14},
+   { 362, 2, 32,191,0x14}, { 363,28, 33,191,0x14}, { 364, 2, 35,191,0x14}, { 365,28, 36,191,0x14},
+   { 367,22, 74,  0,0x04}, { 435,14, 29,191,0x14}, { 436, 9, 28,191,0x14}, { 457, 1,  6,189,0x1c},
+   { 462, 1,  7,191,0x14}, { 463,15,  8,191,0x14}, { 542,25, 12,191,0x14}, { 592,18, 21,191,0x14},
+   { 593,15, 22,191,0x14}, { 594,15, 23,191,0x14}, { 595,15, 20,191,0x14}, { 763,15, 10,191,0x14},
+   { 810,11, 41,191,0x14}, { 877,15, 37,191,0x14}, { 878,15, 38,191,0x14}, { 879,10, 40,191,0x14},
+   { 882,11, 42,191,0x14}, { 883,11, 43,191,0x14}, { 884,13, 44,191,0x14}, { 885,13, 45,191,0x14},
+   { 886,13, 46,191,0x14}, { 887, 1, 47,194,0x1c}, { 893, 8, 76,  0,0x04}, { 941,19, 26,191,0x14},
+   { 972,14, 48,191,0x14}, { 973,13, 50,191,0x14}, { 974,15, 51,191,0x14}, { 975, 1, 49,191,0x14},
+   { 998,15, 52,191,0x14}, {1000,15, 53,191,0x14}, {1038,13, 54,191,0x14}, {1039,15, 56,191,0x14},
+   {1044,10, 57,191,0x14}, {1045, 9, 58,191,0x14}, {1046, 7, 59,191,0x14}, {1058, 1, 55,195,0x1c},
+   {1213,26, 60,191,0x14}, {1419, 1, 62,191,0x14}, {1423,10, 63,191,0x14}, {1424,15, 64,191,0x14},
+   {1425,10, 65,191,0x14}, {1437, 1, 66,191,0x14}, {1441, 1, 67,191,0x14}, {1453,15, 68,191,0x14},
+   {1454,15, 69,191,0x14}, {1455,14, 70,191,0x14}, {1456,14, 71,191,0x14}, {1459,14, 72,191,0x14},
+   {1460,14, 73,191,0x14}
 };
 const FieldTrait_Hash_Array 
    MassQuote::NoQuoteSets::_ftha(MassQuote::NoQuoteSets::_traits, 77);
 const MsgType MassQuote::NoQuoteSets::_msgtype("NoQuoteSets");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait MassQuote::NoQuoteSets::NoQuoteEntries::_traits[] =
+const FieldTrait MassQuote::NoQuoteSets::NoQuoteEntries::_traits[]
 {
-   FieldTrait(  15,19,113,  0,0x04), FieldTrait(  22,15,  5, 54,0x14), FieldTrait(  40, 7,108,  0,0x04),
-   FieldTrait(  48,15,  4, 54,0x14), FieldTrait(  55,15,  2, 54,0x14), FieldTrait(  60,22,104,  0,0x04),
-   FieldTrait(  62,22, 95,  0,0x04), FieldTrait(  64,25,107,  0,0x04), FieldTrait(  65,15,  3, 54,0x14),
-   FieldTrait( 106,15, 31, 54,0x14), FieldTrait( 107,15, 34, 54,0x14), FieldTrait( 132,11, 91,  0,0x04),
-   FieldTrait( 133,11, 92,  0,0x04), FieldTrait( 134,10, 93,  0,0x04), FieldTrait( 135,10, 94,  0,0x04),
-   FieldTrait( 167,15,  9, 54,0x14), FieldTrait( 188,11, 96,  0,0x04), FieldTrait( 189,12, 98,  0,0x04),
-   FieldTrait( 190,11, 97,  0,0x04), FieldTrait( 191,12, 99,  0,0x04), FieldTrait( 192,10,110,  0,0x04),
-   FieldTrait( 193,25,109,  0,0x04), FieldTrait( 200,21, 11, 54,0x14), FieldTrait( 201, 1, 72, 54,0x14),
-   FieldTrait( 202,11, 25, 54,0x14), FieldTrait( 206, 7, 27, 54,0x14), FieldTrait( 207,20, 30, 54,0x14),
-   FieldTrait( 223,14, 29, 54,0x14), FieldTrait( 224,25, 13, 54,0x14), FieldTrait( 225,25, 14, 54,0x14),
-   FieldTrait( 226, 1, 16, 54,0x14), FieldTrait( 227,14, 17, 54,0x14), FieldTrait( 228, 9, 18, 54,0x14),
-   FieldTrait( 231, 9, 28, 54,0x14), FieldTrait( 239, 1, 15, 54,0x14), FieldTrait( 240,25, 24, 54,0x14),
-   FieldTrait( 255,15, 19, 54,0x14), FieldTrait( 299,15,  1,  0,0x05), FieldTrait( 336,15,105,  0,0x04),
-   FieldTrait( 348, 2, 32, 54,0x14), FieldTrait( 349,28, 33, 54,0x14), FieldTrait( 350, 2, 35, 54,0x14),
-   FieldTrait( 351,28, 36, 54,0x14), FieldTrait( 454, 1,  6,142,0x1c), FieldTrait( 460, 1,  7, 54,0x14),
-   FieldTrait( 461,15,  8, 54,0x14), FieldTrait( 470,18, 21, 54,0x14), FieldTrait( 471,15, 22, 54,0x14),
-   FieldTrait( 472,15, 23, 54,0x14), FieldTrait( 528, 7,115,  0,0x04), FieldTrait( 529,16,116,  0,0x04),
-   FieldTrait( 541,25, 12, 54,0x14), FieldTrait( 543,15, 20, 54,0x14), FieldTrait( 555, 1, 90, 49,0x1c),
-   FieldTrait( 625,15,106,  0,0x04), FieldTrait( 631,11,100,  0,0x04), FieldTrait( 632,14,101,  0,0x04),
-   FieldTrait( 633,14,102,  0,0x04), FieldTrait( 634,14,103,  0,0x04), FieldTrait( 642,12,111,  0,0x04),
-   FieldTrait( 643,12,112,  0,0x04), FieldTrait( 667,21, 38, 54,0x14), FieldTrait( 691,15, 37, 54,0x14),
-   FieldTrait( 762,15, 10, 54,0x14), FieldTrait( 775, 1,114,  0,0x04), FieldTrait( 864, 1, 41, 38,0x1c),
-   FieldTrait( 873,25, 42, 54,0x14), FieldTrait( 874,25, 43, 54,0x14), FieldTrait( 875, 1, 39, 54,0x14),
-   FieldTrait( 876,15, 40, 54,0x14), FieldTrait( 947,19, 26, 54,0x14), FieldTrait( 965,15, 44, 54,0x14),
-   FieldTrait( 966,15, 45, 54,0x14), FieldTrait( 967, 9, 47, 54,0x14), FieldTrait( 968, 9, 48, 54,0x14),
-   FieldTrait( 969, 9, 49, 54,0x14), FieldTrait( 970, 1, 50, 54,0x14), FieldTrait( 971, 1, 51, 54,0x14),
-   FieldTrait( 996,15, 53, 54,0x14), FieldTrait( 997,15, 54, 54,0x14), FieldTrait(1018, 1, 52, 57,0x1c),
-   FieldTrait(1049, 7, 46, 54,0x14), FieldTrait(1079,26, 55, 54,0x14), FieldTrait(1146,13, 57, 54,0x14),
-   FieldTrait(1147,10, 58, 54,0x14), FieldTrait(1151,15, 56, 54,0x14), FieldTrait(1184, 2, 59,150,0x14),
-   FieldTrait(1185,29, 60,150,0x14), FieldTrait(1186,15, 61,150,0x14), FieldTrait(1191,15, 63, 54,0x14),
-   FieldTrait(1192,10, 64, 54,0x14), FieldTrait(1193, 7, 65, 54,0x14), FieldTrait(1194, 1, 66, 54,0x14),
-   FieldTrait(1195,13, 67, 54,0x14), FieldTrait(1196,15, 68, 54,0x14), FieldTrait(1197,15, 75, 54,0x14),
-   FieldTrait(1198, 1, 69, 54,0x14), FieldTrait(1199,11, 70, 54,0x14), FieldTrait(1200,11, 71, 54,0x14),
-   FieldTrait(1227,15, 62, 54,0x14), FieldTrait(1242, 8, 74, 54,0x14), FieldTrait(1244, 8, 73, 54,0x14),
-   FieldTrait(1435, 1, 76, 54,0x14), FieldTrait(1439, 1, 77, 54,0x14), FieldTrait(1449,15, 78, 54,0x14),
-   FieldTrait(1450,15, 79, 54,0x14), FieldTrait(1451,14, 80, 54,0x14), FieldTrait(1452,14, 81, 54,0x14),
-   FieldTrait(1457,14, 82, 54,0x14), FieldTrait(1458,14, 83, 54,0x14), FieldTrait(1478, 1, 84, 54,0x14),
-   FieldTrait(1479, 1, 85, 54,0x14), FieldTrait(1480,14, 86, 54,0x14), FieldTrait(1481, 1, 87, 54,0x14),
-   FieldTrait(1482, 1, 88, 54,0x14), FieldTrait(1483, 1, 89, 21,0x1c)
+   {  15,19,113,  0,0x04}, {  22,15,  5, 54,0x14}, {  40, 7,108,  0,0x04}, {  48,15,  4, 54,0x14},
+   {  55,15,  2, 54,0x14}, {  60,22,104,  0,0x04}, {  62,22, 95,  0,0x04}, {  64,25,107,  0,0x04},
+   {  65,15,  3, 54,0x14}, { 106,15, 31, 54,0x14}, { 107,15, 34, 54,0x14}, { 132,11, 91,  0,0x04},
+   { 133,11, 92,  0,0x04}, { 134,10, 93,  0,0x04}, { 135,10, 94,  0,0x04}, { 167,15,  9, 54,0x14},
+   { 188,11, 96,  0,0x04}, { 189,12, 98,  0,0x04}, { 190,11, 97,  0,0x04}, { 191,12, 99,  0,0x04},
+   { 192,10,110,  0,0x04}, { 193,25,109,  0,0x04}, { 200,21, 11, 54,0x14}, { 201, 1, 72, 54,0x14},
+   { 202,11, 25, 54,0x14}, { 206, 7, 27, 54,0x14}, { 207,20, 30, 54,0x14}, { 223,14, 29, 54,0x14},
+   { 224,25, 13, 54,0x14}, { 225,25, 14, 54,0x14}, { 226, 1, 16, 54,0x14}, { 227,14, 17, 54,0x14},
+   { 228, 9, 18, 54,0x14}, { 231, 9, 28, 54,0x14}, { 239, 1, 15, 54,0x14}, { 240,25, 24, 54,0x14},
+   { 255,15, 19, 54,0x14}, { 299,15,  1,  0,0x05}, { 336,15,105,  0,0x04}, { 348, 2, 32, 54,0x14},
+   { 349,28, 33, 54,0x14}, { 350, 2, 35, 54,0x14}, { 351,28, 36, 54,0x14}, { 454, 1,  6,142,0x1c},
+   { 460, 1,  7, 54,0x14}, { 461,15,  8, 54,0x14}, { 470,18, 21, 54,0x14}, { 471,15, 22, 54,0x14},
+   { 472,15, 23, 54,0x14}, { 528, 7,115,  0,0x04}, { 529,16,116,  0,0x04}, { 541,25, 12, 54,0x14},
+   { 543,15, 20, 54,0x14}, { 555, 1, 90, 49,0x1c}, { 625,15,106,  0,0x04}, { 631,11,100,  0,0x04},
+   { 632,14,101,  0,0x04}, { 633,14,102,  0,0x04}, { 634,14,103,  0,0x04}, { 642,12,111,  0,0x04},
+   { 643,12,112,  0,0x04}, { 667,21, 38, 54,0x14}, { 691,15, 37, 54,0x14}, { 762,15, 10, 54,0x14},
+   { 775, 1,114,  0,0x04}, { 864, 1, 41, 38,0x1c}, { 873,25, 42, 54,0x14}, { 874,25, 43, 54,0x14},
+   { 875, 1, 39, 54,0x14}, { 876,15, 40, 54,0x14}, { 947,19, 26, 54,0x14}, { 965,15, 44, 54,0x14},
+   { 966,15, 45, 54,0x14}, { 967, 9, 47, 54,0x14}, { 968, 9, 48, 54,0x14}, { 969, 9, 49, 54,0x14},
+   { 970, 1, 50, 54,0x14}, { 971, 1, 51, 54,0x14}, { 996,15, 53, 54,0x14}, { 997,15, 54, 54,0x14},
+   {1018, 1, 52, 57,0x1c}, {1049, 7, 46, 54,0x14}, {1079,26, 55, 54,0x14}, {1146,13, 57, 54,0x14},
+   {1147,10, 58, 54,0x14}, {1151,15, 56, 54,0x14}, {1184, 2, 59,150,0x14}, {1185,29, 60,150,0x14},
+   {1186,15, 61,150,0x14}, {1191,15, 63, 54,0x14}, {1192,10, 64, 54,0x14}, {1193, 7, 65, 54,0x14},
+   {1194, 1, 66, 54,0x14}, {1195,13, 67, 54,0x14}, {1196,15, 68, 54,0x14}, {1197,15, 75, 54,0x14},
+   {1198, 1, 69, 54,0x14}, {1199,11, 70, 54,0x14}, {1200,11, 71, 54,0x14}, {1227,15, 62, 54,0x14},
+   {1242, 8, 74, 54,0x14}, {1244, 8, 73, 54,0x14}, {1435, 1, 76, 54,0x14}, {1439, 1, 77, 54,0x14},
+   {1449,15, 78, 54,0x14}, {1450,15, 79, 54,0x14}, {1451,14, 80, 54,0x14}, {1452,14, 81, 54,0x14},
+   {1457,14, 82, 54,0x14}, {1458,14, 83, 54,0x14}, {1478, 1, 84, 54,0x14}, {1479, 1, 85, 54,0x14},
+   {1480,14, 86, 54,0x14}, {1481, 1, 87, 54,0x14}, {1482, 1, 88, 54,0x14}, {1483, 1, 89, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    MassQuote::NoQuoteSets::NoQuoteEntries::_ftha(MassQuote::NoQuoteSets::NoQuoteEntries::_traits, 116);
@@ -11093,116 +10123,102 @@ const FieldTrait *MassQuote::NoPartyIDs::NoPartySubIDs::_traits(NoPartySubIDsV1_
 const FieldTrait_Hash_Array& MassQuote::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& MassQuote::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait BusinessMessageReject::_traits[] =
+const FieldTrait BusinessMessageReject::_traits[]
 {
-   FieldTrait(  45, 4,  1,  0,0x04), FieldTrait(  58,15,  5,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04),
-   FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 372,15,  2,  0,0x04), FieldTrait( 379,15,  3,  0,0x04),
-   FieldTrait( 380, 1,  4,  0,0x04), FieldTrait(1130,15,  8,  0,0x04), FieldTrait(1131,15, 10,  0,0x04),
-   FieldTrait(1406, 1,  9,  0,0x04)
+   {  45, 4,  1,  0,0x04}, {  58,15,  5,  0,0x04}, { 354, 2,  6,  0,0x04}, { 355,28,  7,  0,0x04},
+   { 372,15,  2,  0,0x04}, { 379,15,  3,  0,0x04}, { 380, 1,  4,  0,0x04}, {1130,15,  8,  0,0x04},
+   {1131,15, 10,  0,0x04}, {1406, 1,  9,  0,0x04}
 };
 const FieldTrait_Hash_Array BusinessMessageReject::_ftha(BusinessMessageReject::_traits, 10);
 const MsgType BusinessMessageReject::_msgtype("j");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait BidRequest::_traits[] =
+const FieldTrait BidRequest::_traits[]
 {
-   FieldTrait(  15,19,  8,  0,0x04), FieldTrait(  58,15, 27,  0,0x04), FieldTrait(  75,25, 23,  0,0x04),
-   FieldTrait( 121, 8, 21,  0,0x04), FieldTrait( 354, 2, 28,  0,0x04), FieldTrait( 355,28, 29,  0,0x04),
-   FieldTrait( 374, 7,  3,  0,0x04), FieldTrait( 390,15,  1,  0,0x04), FieldTrait( 391,15,  2,  0,0x04),
-   FieldTrait( 392,15,  4,  0,0x04), FieldTrait( 393, 1,  5,  0,0x04), FieldTrait( 394, 1,  6,  0,0x04),
-   FieldTrait( 395, 1,  7,  0,0x04), FieldTrait( 396,13,  9,  0,0x04), FieldTrait( 397,13, 10,  0,0x04),
-   FieldTrait( 398, 1, 11, 13,0x1c), FieldTrait( 409, 1, 13,  0,0x04), FieldTrait( 410,14, 14,  0,0x04),
-   FieldTrait( 411, 8, 15,  0,0x04), FieldTrait( 412,13, 16,  0,0x04), FieldTrait( 413,14, 17,  0,0x04),
-   FieldTrait( 414, 1, 18,  0,0x04), FieldTrait( 415, 1, 19,  0,0x04), FieldTrait( 416, 1, 20,  0,0x04),
-   FieldTrait( 417, 1, 22,  0,0x04), FieldTrait( 418, 7, 24,  0,0x04), FieldTrait( 419, 7, 25,  0,0x04),
-   FieldTrait( 420, 1, 12, 11,0x1c), FieldTrait( 443,22, 26,  0,0x04)
+   {  15,19,  8,  0,0x04}, {  58,15, 27,  0,0x04}, {  75,25, 23,  0,0x04}, { 121, 8, 21,  0,0x04},
+   { 354, 2, 28,  0,0x04}, { 355,28, 29,  0,0x04}, { 374, 7,  3,  0,0x04}, { 390,15,  1,  0,0x04},
+   { 391,15,  2,  0,0x04}, { 392,15,  4,  0,0x04}, { 393, 1,  5,  0,0x04}, { 394, 1,  6,  0,0x04},
+   { 395, 1,  7,  0,0x04}, { 396,13,  9,  0,0x04}, { 397,13, 10,  0,0x04}, { 398, 1, 11, 13,0x1c},
+   { 409, 1, 13,  0,0x04}, { 410,14, 14,  0,0x04}, { 411, 8, 15,  0,0x04}, { 412,13, 16,  0,0x04},
+   { 413,14, 17,  0,0x04}, { 414, 1, 18,  0,0x04}, { 415, 1, 19,  0,0x04}, { 416, 1, 20,  0,0x04},
+   { 417, 1, 22,  0,0x04}, { 418, 7, 24,  0,0x04}, { 419, 7, 25,  0,0x04}, { 420, 1, 12, 11,0x1c},
+   { 443,22, 26,  0,0x04}
 };
 const FieldTrait_Hash_Array BidRequest::_ftha(BidRequest::_traits, 29);
 const MsgType BidRequest::_msgtype("k");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait BidRequest::NoBidDescriptors::_traits[] =
+const FieldTrait BidRequest::NoBidDescriptors::_traits[]
 {
-   FieldTrait( 399, 1,  1,  0,0x04), FieldTrait( 400,15,  2,  0,0x04), FieldTrait( 401, 1,  3,  0,0x04),
-   FieldTrait( 402,14,  6,  0,0x04), FieldTrait( 403,14,  7,  0,0x04), FieldTrait( 404,13,  4,  0,0x04),
-   FieldTrait( 405,14,  8,  0,0x04), FieldTrait( 406,13,  9,  0,0x04), FieldTrait( 407,14, 10,  0,0x04),
-   FieldTrait( 408,13, 11,  0,0x04), FieldTrait( 441, 1,  5,  0,0x04)
+   { 399, 1,  1,  0,0x04}, { 400,15,  2,  0,0x04}, { 401, 1,  3,  0,0x04}, { 402,14,  6,  0,0x04},
+   { 403,14,  7,  0,0x04}, { 404,13,  4,  0,0x04}, { 405,14,  8,  0,0x04}, { 406,13,  9,  0,0x04},
+   { 407,14, 10,  0,0x04}, { 408,13, 11,  0,0x04}, { 441, 1,  5,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    BidRequest::NoBidDescriptors::_ftha(BidRequest::NoBidDescriptors::_traits, 11);
 const MsgType BidRequest::NoBidDescriptors::_msgtype("NoBidDescriptors");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait BidRequest::NoBidComponents::_traits[] =
+const FieldTrait BidRequest::NoBidComponents::_traits[]
 {
-   FieldTrait(   1,15,  8,  0,0x04), FieldTrait(  54, 7,  2,  0,0x04), FieldTrait(  63,15,  6,  0,0x04),
-   FieldTrait(  64,25,  7,  0,0x04), FieldTrait(  66,15,  1,  0,0x04), FieldTrait( 336,15,  3,  0,0x04),
-   FieldTrait( 430, 1,  5,  0,0x04), FieldTrait( 625,15,  4,  0,0x04), FieldTrait( 660, 1,  9,  0,0x04)
+   {   1,15,  8,  0,0x04}, {  54, 7,  2,  0,0x04}, {  63,15,  6,  0,0x04}, {  64,25,  7,  0,0x04},
+   {  66,15,  1,  0,0x04}, { 336,15,  3,  0,0x04}, { 430, 1,  5,  0,0x04}, { 625,15,  4,  0,0x04},
+   { 660, 1,  9,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    BidRequest::NoBidComponents::_ftha(BidRequest::NoBidComponents::_traits, 9);
 const MsgType BidRequest::NoBidComponents::_msgtype("NoBidComponents");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait BidResponse::_traits[] =
+const FieldTrait BidResponse::_traits[]
 {
-   FieldTrait( 390,15,  1,  0,0x04), FieldTrait( 391,15,  2,  0,0x04), FieldTrait( 420, 1,  3, 12,0x1c)
+   { 390,15,  1,  0,0x04}, { 391,15,  2,  0,0x04}, { 420, 1,  3, 12,0x1c}
 };
 const FieldTrait_Hash_Array BidResponse::_ftha(BidResponse::_traits, 3);
 const MsgType BidResponse::_msgtype("l");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait BidResponse::NoBidComponents::_traits[] =
+const FieldTrait BidResponse::NoBidComponents::_traits[]
 {
-   FieldTrait(  12,13,  1, 16,0x14), FieldTrait(  13, 7,  2, 16,0x14), FieldTrait(  44,11,  8,  0,0x04),
-   FieldTrait(  54, 7,  7,  0,0x04), FieldTrait(  58,15, 16,  0,0x04), FieldTrait(  63,15, 12,  0,0x04),
-   FieldTrait(  64,25, 13,  0,0x04), FieldTrait(  66,15,  5,  0,0x04), FieldTrait( 336,15, 14,  0,0x04),
-   FieldTrait( 354, 2, 17,  0,0x04), FieldTrait( 355,28, 18,  0,0x04), FieldTrait( 406,13, 10,  0,0x04),
-   FieldTrait( 421,18,  6,  0,0x04), FieldTrait( 423, 1,  9,  0,0x04), FieldTrait( 430, 1, 11,  0,0x04),
-   FieldTrait( 479,19,  3, 16,0x14), FieldTrait( 497, 7,  4, 16,0x14), FieldTrait( 625,15, 15,  0,0x04)
+   {  12,13,  1, 16,0x14}, {  13, 7,  2, 16,0x14}, {  44,11,  8,  0,0x04}, {  54, 7,  7,  0,0x04},
+   {  58,15, 16,  0,0x04}, {  63,15, 12,  0,0x04}, {  64,25, 13,  0,0x04}, {  66,15,  5,  0,0x04},
+   { 336,15, 14,  0,0x04}, { 354, 2, 17,  0,0x04}, { 355,28, 18,  0,0x04}, { 406,13, 10,  0,0x04},
+   { 421,18,  6,  0,0x04}, { 423, 1,  9,  0,0x04}, { 430, 1, 11,  0,0x04}, { 479,19,  3, 16,0x14},
+   { 497, 7,  4, 16,0x14}, { 625,15, 15,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    BidResponse::NoBidComponents::_ftha(BidResponse::NoBidComponents::_traits, 18);
 const MsgType BidResponse::NoBidComponents::_msgtype("NoBidComponents");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListStrikePrice::_traits[] =
+const FieldTrait ListStrikePrice::_traits[]
 {
-   FieldTrait(  66,15,  1,  0,0x04), FieldTrait( 422, 1,  2,  0,0x04), FieldTrait( 428, 1,  4, 53,0x1c),
-   FieldTrait( 893, 8,  3,  0,0x04)
+   {  66,15,  1,  0,0x04}, { 422, 1,  2,  0,0x04}, { 428, 1,  4, 53,0x1c}, { 893, 8,  3,  0,0x04}
 };
 const FieldTrait_Hash_Array ListStrikePrice::_ftha(ListStrikePrice::_traits, 4);
 const MsgType ListStrikePrice::_msgtype("m");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait ListStrikePrice::NoStrikes::_traits[] =
+const FieldTrait ListStrikePrice::NoStrikes::_traits[]
 {
-   FieldTrait(  11,15, 91,  0,0x04), FieldTrait(  15,19, 95,  0,0x04), FieldTrait(  22,15,  4, 54,0x14),
-   FieldTrait(  44,11, 94,  0,0x04), FieldTrait(  48,15,  3, 54,0x14), FieldTrait(  54, 7, 93,  0,0x04),
-   FieldTrait(  55,15,  1, 54,0x14), FieldTrait(  58,15, 96,  0,0x04), FieldTrait(  65,15,  2, 54,0x14),
-   FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 140,11, 90,  0,0x04),
-   FieldTrait( 167,15,  8, 54,0x14), FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14),
-   FieldTrait( 202,11, 24, 54,0x14), FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14),
-   FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 354, 2, 97,  0,0x04),
-   FieldTrait( 355,28, 98,  0,0x04), FieldTrait( 454, 1,  5,142,0x1c), FieldTrait( 460, 1,  6, 54,0x14),
-   FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14), FieldTrait( 471,15, 21, 54,0x14),
-   FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 526,15, 92,  0,0x04), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 691,15, 36, 54,0x14),
-   FieldTrait( 711, 1, 89,188,0x1c), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 864, 1, 40, 38,0x1c),
-   FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14), FieldTrait( 875, 1, 38, 54,0x14),
-   FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14),
-   FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14),
-   FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14),
-   FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c),
-   FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1146,13, 56, 54,0x14),
-   FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14),
-   FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14),
-   FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14),
-   FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14),
-   FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14),
-   FieldTrait(1227,15, 61, 54,0x14), FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14),
-   FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14),
-   FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14),
-   FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14),
-   FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14),
-   FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c)
+   {  11,15, 91,  0,0x04}, {  15,19, 95,  0,0x04}, {  22,15,  4, 54,0x14}, {  44,11, 94,  0,0x04},
+   {  48,15,  3, 54,0x14}, {  54, 7, 93,  0,0x04}, {  55,15,  1, 54,0x14}, {  58,15, 96,  0,0x04},
+   {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14}, { 140,11, 90,  0,0x04},
+   { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14},
+   { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14},
+   { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14},
+   { 231, 9, 27, 54,0x14}, { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14},
+   { 348, 2, 31, 54,0x14}, { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14},
+   { 354, 2, 97,  0,0x04}, { 355,28, 98,  0,0x04}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 526,15, 92,  0,0x04}, { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 667,21, 37, 54,0x14},
+   { 691,15, 36, 54,0x14}, { 711, 1, 89,188,0x1c}, { 762,15,  9, 54,0x14}, { 864, 1, 40, 38,0x1c},
+   { 873,25, 41, 54,0x14}, { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14},
+   { 947,19, 25, 54,0x14}, { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14},
+   { 968, 9, 47, 54,0x14}, { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14},
+   { 996,15, 52, 54,0x14}, { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14},
+   {1079,26, 54, 54,0x14}, {1146,13, 56, 54,0x14}, {1147,10, 57, 54,0x14}, {1151,15, 55, 54,0x14},
+   {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14}, {1191,15, 62, 54,0x14},
+   {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14}, {1195,13, 66, 54,0x14},
+   {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14}, {1199,11, 69, 54,0x14},
+   {1200,11, 70, 54,0x14}, {1227,15, 61, 54,0x14}, {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14},
+   {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14}, {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14},
+   {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14}, {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14},
+   {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14}, {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14},
+   {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c}
 };
 const FieldTrait_Hash_Array 
    ListStrikePrice::NoStrikes::_ftha(ListStrikePrice::NoStrikes::_traits, 98);
@@ -11256,12 +10272,11 @@ const FieldTrait *ListStrikePrice::NoStrikes::NoComplexEvents::NoComplexEventDat
 const FieldTrait_Hash_Array& ListStrikePrice::NoStrikes::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& ListStrikePrice::NoStrikes::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RegistrationInstructions::_traits[] =
+const FieldTrait RegistrationInstructions::_traits[]
 {
-   FieldTrait(   1,15,  6,  0,0x04), FieldTrait(  11,15,  4,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c),
-   FieldTrait( 473, 1, 11,134,0x1c), FieldTrait( 493,15,  8,  0,0x04), FieldTrait( 495, 1,  9,  0,0x04),
-   FieldTrait( 508,15,  3,  0,0x04), FieldTrait( 510, 1, 12,133,0x1c), FieldTrait( 513,15,  1,  0,0x04),
-   FieldTrait( 514, 7,  2,  0,0x04), FieldTrait( 517, 7, 10,  0,0x04), FieldTrait( 660, 1,  7,  0,0x04)
+   {   1,15,  6,  0,0x04}, {  11,15,  4,  0,0x04}, { 453, 1,  5, 94,0x1c}, { 473, 1, 11,134,0x1c},
+   { 493,15,  8,  0,0x04}, { 495, 1,  9,  0,0x04}, { 508,15,  3,  0,0x04}, { 510, 1, 12,133,0x1c},
+   { 513,15,  1,  0,0x04}, { 514, 7,  2,  0,0x04}, { 517, 7, 10,  0,0x04}, { 660, 1,  7,  0,0x04}
 };
 const FieldTrait_Hash_Array RegistrationInstructions::_ftha(RegistrationInstructions::_traits, 12);
 const MsgType RegistrationInstructions::_msgtype("o");
@@ -11274,11 +10289,10 @@ const FieldTrait *RegistrationInstructions::NoPartyIDs::NoPartySubIDs::_traits(N
 const FieldTrait_Hash_Array& RegistrationInstructions::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& RegistrationInstructions::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RegistrationInstructions::NoRegistDtls::_traits[] =
+const FieldTrait RegistrationInstructions::NoRegistDtls::_traits[]
 {
-   FieldTrait( 474,15,  3,  0,0x04), FieldTrait( 475,18,  8,  0,0x04), FieldTrait( 482,15,  4,  0,0x04),
-   FieldTrait( 486,25,  7,  0,0x04), FieldTrait( 509,15,  1,  0,0x04), FieldTrait( 511,15,  2,  0,0x04),
-   FieldTrait( 522, 1,  6,  0,0x04), FieldTrait( 539, 1,  5, 80,0x1c)
+   { 474,15,  3,  0,0x04}, { 475,18,  8,  0,0x04}, { 482,15,  4,  0,0x04}, { 486,25,  7,  0,0x04},
+   { 509,15,  1,  0,0x04}, { 511,15,  2,  0,0x04}, { 522, 1,  6,  0,0x04}, { 539, 1,  5, 80,0x1c}
 };
 const FieldTrait_Hash_Array 
    RegistrationInstructions::NoRegistDtls::_ftha(RegistrationInstructions::NoRegistDtls::_traits, 8);
@@ -11292,22 +10306,20 @@ const FieldTrait *RegistrationInstructions::NoRegistDtls::NoNestedPartyIDs::NoNe
 const FieldTrait_Hash_Array& RegistrationInstructions::NoRegistDtls::NoNestedPartyIDs::NoNestedPartySubIDs::_ftha(NoNestedPartySubIDsV1_ftha);
 const MsgType& RegistrationInstructions::NoRegistDtls::NoNestedPartyIDs::NoNestedPartySubIDs::_msgtype(NoNestedPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RegistrationInstructions::NoDistribInsts::_traits[] =
+const FieldTrait RegistrationInstructions::NoDistribInsts::_traits[]
 {
-   FieldTrait( 477, 1,  1,  0,0x04), FieldTrait( 478,19,  3,  0,0x04), FieldTrait( 498,15,  4,  0,0x04),
-   FieldTrait( 499,15,  5,  0,0x04), FieldTrait( 500,15,  6,  0,0x04), FieldTrait( 501,15,  7,  0,0x04),
-   FieldTrait( 502,15,  8,  0,0x04), FieldTrait( 512,14,  2,  0,0x04)
+   { 477, 1,  1,  0,0x04}, { 478,19,  3,  0,0x04}, { 498,15,  4,  0,0x04}, { 499,15,  5,  0,0x04},
+   { 500,15,  6,  0,0x04}, { 501,15,  7,  0,0x04}, { 502,15,  8,  0,0x04}, { 512,14,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    RegistrationInstructions::NoDistribInsts::_ftha(RegistrationInstructions::NoDistribInsts::_traits, 8);
 const MsgType RegistrationInstructions::NoDistribInsts::_msgtype("NoDistribInsts");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait RegistrationInstructionsResponse::_traits[] =
+const FieldTrait RegistrationInstructionsResponse::_traits[]
 {
-   FieldTrait(   1,15,  6,  0,0x04), FieldTrait(  11,15,  4,  0,0x04), FieldTrait( 453, 1,  5, 94,0x1c),
-   FieldTrait( 496,15, 10,  0,0x04), FieldTrait( 506, 7,  8,  0,0x04), FieldTrait( 507, 1,  9,  0,0x04),
-   FieldTrait( 508,15,  3,  0,0x04), FieldTrait( 513,15,  1,  0,0x04), FieldTrait( 514, 7,  2,  0,0x04),
-   FieldTrait( 660, 1,  7,  0,0x04)
+   {   1,15,  6,  0,0x04}, {  11,15,  4,  0,0x04}, { 453, 1,  5, 94,0x1c}, { 496,15, 10,  0,0x04},
+   { 506, 7,  8,  0,0x04}, { 507, 1,  9,  0,0x04}, { 508,15,  3,  0,0x04}, { 513,15,  1,  0,0x04},
+   { 514, 7,  2,  0,0x04}, { 660, 1,  7,  0,0x04}
 };
 const FieldTrait_Hash_Array RegistrationInstructionsResponse::_ftha(RegistrationInstructionsResponse::_traits, 10);
 const MsgType RegistrationInstructionsResponse::_msgtype("p");
@@ -11320,66 +10332,52 @@ const FieldTrait *RegistrationInstructionsResponse::NoPartyIDs::NoPartySubIDs::_
 const FieldTrait_Hash_Array& RegistrationInstructionsResponse::NoPartyIDs::NoPartySubIDs::_ftha(NoPartySubIDsV1_ftha);
 const MsgType& RegistrationInstructionsResponse::NoPartyIDs::NoPartySubIDs::_msgtype(NoPartySubIDsV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderMassCancelRequest::_traits[] =
+const FieldTrait OrderMassCancelRequest::_traits[]
 {
-   FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  22,15,  9, 54,0x14), FieldTrait(  48,15,  8, 54,0x14),
-   FieldTrait(  54, 7,166,  0,0x04), FieldTrait(  55,15,  6, 54,0x14), FieldTrait(  58,15,168,  0,0x04),
-   FieldTrait(  60,22,167,  0,0x04), FieldTrait(  65,15,  7, 54,0x14), FieldTrait( 106,15, 35, 54,0x14),
-   FieldTrait( 107,15, 38, 54,0x14), FieldTrait( 167,15, 13, 54,0x14), FieldTrait( 200,21, 15, 54,0x14),
-   FieldTrait( 201, 1, 76, 54,0x14), FieldTrait( 202,11, 29, 54,0x14), FieldTrait( 206, 7, 31, 54,0x14),
-   FieldTrait( 207,20, 34, 54,0x14), FieldTrait( 223,14, 33, 54,0x14), FieldTrait( 224,25, 17, 54,0x14),
-   FieldTrait( 225,25, 18, 54,0x14), FieldTrait( 226, 1, 20, 54,0x14), FieldTrait( 227,14, 21, 54,0x14),
-   FieldTrait( 228, 9, 22, 54,0x14), FieldTrait( 231, 9, 32, 54,0x14), FieldTrait( 239, 1, 19, 54,0x14),
-   FieldTrait( 240,25, 28, 54,0x14), FieldTrait( 241,25,105,191,0x14), FieldTrait( 242,25,106,191,0x14),
-   FieldTrait( 243, 1,107,191,0x14), FieldTrait( 244, 1,108,191,0x14), FieldTrait( 245,14,109,191,0x14),
-   FieldTrait( 246, 9,110,191,0x14), FieldTrait( 247,25,116,191,0x14), FieldTrait( 255,15, 23, 54,0x14),
-   FieldTrait( 256,15,111,191,0x14), FieldTrait( 305,15, 97,191,0x14), FieldTrait( 306,15,123,191,0x14),
-   FieldTrait( 307,15,126,191,0x14), FieldTrait( 308,20,122,191,0x14), FieldTrait( 309,15, 96,191,0x14),
-   FieldTrait( 310,15,101,191,0x14), FieldTrait( 311,15, 94,191,0x14), FieldTrait( 312,15, 95,191,0x14),
-   FieldTrait( 313,21,103,191,0x14), FieldTrait( 315, 1,153,191,0x14), FieldTrait( 316,11,117,191,0x14),
-   FieldTrait( 317, 7,119,191,0x14), FieldTrait( 318,19,131,191,0x14), FieldTrait( 336,15,  4,  0,0x04),
-   FieldTrait( 348, 2, 36, 54,0x14), FieldTrait( 349,28, 37, 54,0x14), FieldTrait( 350, 2, 39, 54,0x14),
-   FieldTrait( 351,28, 40, 54,0x14), FieldTrait( 354, 2,169,  0,0x04), FieldTrait( 355,28,170,  0,0x04),
-   FieldTrait( 362, 2,124,191,0x14), FieldTrait( 363,28,125,191,0x14), FieldTrait( 364, 2,127,191,0x14),
-   FieldTrait( 365,28,128,191,0x14), FieldTrait( 435,14,121,191,0x14), FieldTrait( 436, 9,120,191,0x14),
-   FieldTrait( 453, 1,171, 94,0x1c), FieldTrait( 454, 1, 10,142,0x1c), FieldTrait( 457, 1, 98,189,0x1c),
-   FieldTrait( 460, 1, 11, 54,0x14), FieldTrait( 461,15, 12, 54,0x14), FieldTrait( 462, 1, 99,191,0x14),
-   FieldTrait( 463,15,100,191,0x14), FieldTrait( 470,18, 25, 54,0x14), FieldTrait( 471,15, 26, 54,0x14),
-   FieldTrait( 472,15, 27, 54,0x14), FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 530, 7,  3,  0,0x04),
-   FieldTrait( 541,25, 16, 54,0x14), FieldTrait( 542,25,104,191,0x14), FieldTrait( 543,15, 24, 54,0x14),
-   FieldTrait( 592,18,113,191,0x14), FieldTrait( 593,15,114,191,0x14), FieldTrait( 594,15,115,191,0x14),
-   FieldTrait( 595,15,112,191,0x14), FieldTrait( 625,15,  5,  0,0x04), FieldTrait( 667,21, 42, 54,0x14),
-   FieldTrait( 691,15, 41, 54,0x14), FieldTrait( 762,15, 14, 54,0x14), FieldTrait( 763,15,102,191,0x14),
-   FieldTrait( 810,11,133,191,0x14), FieldTrait( 864, 1, 45, 38,0x1c), FieldTrait( 873,25, 46, 54,0x14),
-   FieldTrait( 874,25, 47, 54,0x14), FieldTrait( 875, 1, 43, 54,0x14), FieldTrait( 876,15, 44, 54,0x14),
-   FieldTrait( 877,15,129,191,0x14), FieldTrait( 878,15,130,191,0x14), FieldTrait( 879,10,132,191,0x14),
-   FieldTrait( 882,11,134,191,0x14), FieldTrait( 883,11,135,191,0x14), FieldTrait( 884,13,136,191,0x14),
-   FieldTrait( 885,13,137,191,0x14), FieldTrait( 886,13,138,191,0x14), FieldTrait( 887, 1,139,194,0x1c),
-   FieldTrait( 941,19,118,191,0x14), FieldTrait( 947,19, 30, 54,0x14), FieldTrait( 965,15, 48, 54,0x14),
-   FieldTrait( 966,15, 49, 54,0x14), FieldTrait( 967, 9, 51, 54,0x14), FieldTrait( 968, 9, 52, 54,0x14),
-   FieldTrait( 969, 9, 53, 54,0x14), FieldTrait( 970, 1, 54, 54,0x14), FieldTrait( 971, 1, 55, 54,0x14),
-   FieldTrait( 972,14,140,191,0x14), FieldTrait( 973,13,142,191,0x14), FieldTrait( 974,15,143,191,0x14),
-   FieldTrait( 975, 1,141,191,0x14), FieldTrait( 996,15, 57, 54,0x14), FieldTrait( 997,15, 58, 54,0x14),
-   FieldTrait( 998,15,144,191,0x14), FieldTrait(1000,15,145,191,0x14), FieldTrait(1018, 1, 56, 57,0x1c),
-   FieldTrait(1038,13,146,191,0x14), FieldTrait(1039,15,148,191,0x14), FieldTrait(1044,10,149,191,0x14),
-   FieldTrait(1045, 9,150,191,0x14), FieldTrait(1046, 7,151,191,0x14), FieldTrait(1049, 7, 50, 54,0x14),
-   FieldTrait(1058, 1,147,195,0x1c), FieldTrait(1079,26, 59, 54,0x14), FieldTrait(1146,13, 61, 54,0x14),
-   FieldTrait(1147,10, 62, 54,0x14), FieldTrait(1151,15, 60, 54,0x14), FieldTrait(1184, 2, 63,150,0x14),
-   FieldTrait(1185,29, 64,150,0x14), FieldTrait(1186,15, 65,150,0x14), FieldTrait(1191,15, 67, 54,0x14),
-   FieldTrait(1192,10, 68, 54,0x14), FieldTrait(1193, 7, 69, 54,0x14), FieldTrait(1194, 1, 70, 54,0x14),
-   FieldTrait(1195,13, 71, 54,0x14), FieldTrait(1196,15, 72, 54,0x14), FieldTrait(1197,15, 79, 54,0x14),
-   FieldTrait(1198, 1, 73, 54,0x14), FieldTrait(1199,11, 74, 54,0x14), FieldTrait(1200,11, 75, 54,0x14),
-   FieldTrait(1213,26,152,191,0x14), FieldTrait(1227,15, 66, 54,0x14), FieldTrait(1242, 8, 78, 54,0x14),
-   FieldTrait(1244, 8, 77, 54,0x14), FieldTrait(1300,15,173,  0,0x04), FieldTrait(1301,20,172,  0,0x04),
-   FieldTrait(1419, 1,154,191,0x14), FieldTrait(1423,10,155,191,0x14), FieldTrait(1424,15,156,191,0x14),
-   FieldTrait(1425,10,157,191,0x14), FieldTrait(1435, 1, 80, 54,0x14), FieldTrait(1437, 1,158,191,0x14),
-   FieldTrait(1439, 1, 81, 54,0x14), FieldTrait(1441, 1,159,191,0x14), FieldTrait(1449,15, 82, 54,0x14),
-   FieldTrait(1450,15, 83, 54,0x14), FieldTrait(1451,14, 84, 54,0x14), FieldTrait(1452,14, 85, 54,0x14),
-   FieldTrait(1453,15,160,191,0x14), FieldTrait(1454,15,161,191,0x14), FieldTrait(1455,14,162,191,0x14),
-   FieldTrait(1456,14,163,191,0x14), FieldTrait(1457,14, 86, 54,0x14), FieldTrait(1458,14, 87, 54,0x14),
-   FieldTrait(1459,14,164,191,0x14), FieldTrait(1460,14,165,191,0x14), FieldTrait(1461, 1,174,169,0x1c),
-   FieldTrait(1478, 1, 88, 54,0x14), FieldTrait(1479, 1, 89, 54,0x14), FieldTrait(1480,14, 90, 54,0x14),
-   FieldTrait(1481, 1, 91, 54,0x14), FieldTrait(1482, 1, 92, 54,0x14), FieldTrait(1483, 1, 93, 21,0x1c)
+   {  11,15,  1,  0,0x04}, {  22,15,  9, 54,0x14}, {  48,15,  8, 54,0x14}, {  54, 7,166,  0,0x04},
+   {  55,15,  6, 54,0x14}, {  58,15,168,  0,0x04}, {  60,22,167,  0,0x04}, {  65,15,  7, 54,0x14},
+   { 106,15, 35, 54,0x14}, { 107,15, 38, 54,0x14}, { 167,15, 13, 54,0x14}, { 200,21, 15, 54,0x14},
+   { 201, 1, 76, 54,0x14}, { 202,11, 29, 54,0x14}, { 206, 7, 31, 54,0x14}, { 207,20, 34, 54,0x14},
+   { 223,14, 33, 54,0x14}, { 224,25, 17, 54,0x14}, { 225,25, 18, 54,0x14}, { 226, 1, 20, 54,0x14},
+   { 227,14, 21, 54,0x14}, { 228, 9, 22, 54,0x14}, { 231, 9, 32, 54,0x14}, { 239, 1, 19, 54,0x14},
+   { 240,25, 28, 54,0x14}, { 241,25,105,191,0x14}, { 242,25,106,191,0x14}, { 243, 1,107,191,0x14},
+   { 244, 1,108,191,0x14}, { 245,14,109,191,0x14}, { 246, 9,110,191,0x14}, { 247,25,116,191,0x14},
+   { 255,15, 23, 54,0x14}, { 256,15,111,191,0x14}, { 305,15, 97,191,0x14}, { 306,15,123,191,0x14},
+   { 307,15,126,191,0x14}, { 308,20,122,191,0x14}, { 309,15, 96,191,0x14}, { 310,15,101,191,0x14},
+   { 311,15, 94,191,0x14}, { 312,15, 95,191,0x14}, { 313,21,103,191,0x14}, { 315, 1,153,191,0x14},
+   { 316,11,117,191,0x14}, { 317, 7,119,191,0x14}, { 318,19,131,191,0x14}, { 336,15,  4,  0,0x04},
+   { 348, 2, 36, 54,0x14}, { 349,28, 37, 54,0x14}, { 350, 2, 39, 54,0x14}, { 351,28, 40, 54,0x14},
+   { 354, 2,169,  0,0x04}, { 355,28,170,  0,0x04}, { 362, 2,124,191,0x14}, { 363,28,125,191,0x14},
+   { 364, 2,127,191,0x14}, { 365,28,128,191,0x14}, { 435,14,121,191,0x14}, { 436, 9,120,191,0x14},
+   { 453, 1,171, 94,0x1c}, { 454, 1, 10,142,0x1c}, { 457, 1, 98,189,0x1c}, { 460, 1, 11, 54,0x14},
+   { 461,15, 12, 54,0x14}, { 462, 1, 99,191,0x14}, { 463,15,100,191,0x14}, { 470,18, 25, 54,0x14},
+   { 471,15, 26, 54,0x14}, { 472,15, 27, 54,0x14}, { 526,15,  2,  0,0x04}, { 530, 7,  3,  0,0x04},
+   { 541,25, 16, 54,0x14}, { 542,25,104,191,0x14}, { 543,15, 24, 54,0x14}, { 592,18,113,191,0x14},
+   { 593,15,114,191,0x14}, { 594,15,115,191,0x14}, { 595,15,112,191,0x14}, { 625,15,  5,  0,0x04},
+   { 667,21, 42, 54,0x14}, { 691,15, 41, 54,0x14}, { 762,15, 14, 54,0x14}, { 763,15,102,191,0x14},
+   { 810,11,133,191,0x14}, { 864, 1, 45, 38,0x1c}, { 873,25, 46, 54,0x14}, { 874,25, 47, 54,0x14},
+   { 875, 1, 43, 54,0x14}, { 876,15, 44, 54,0x14}, { 877,15,129,191,0x14}, { 878,15,130,191,0x14},
+   { 879,10,132,191,0x14}, { 882,11,134,191,0x14}, { 883,11,135,191,0x14}, { 884,13,136,191,0x14},
+   { 885,13,137,191,0x14}, { 886,13,138,191,0x14}, { 887, 1,139,194,0x1c}, { 941,19,118,191,0x14},
+   { 947,19, 30, 54,0x14}, { 965,15, 48, 54,0x14}, { 966,15, 49, 54,0x14}, { 967, 9, 51, 54,0x14},
+   { 968, 9, 52, 54,0x14}, { 969, 9, 53, 54,0x14}, { 970, 1, 54, 54,0x14}, { 971, 1, 55, 54,0x14},
+   { 972,14,140,191,0x14}, { 973,13,142,191,0x14}, { 974,15,143,191,0x14}, { 975, 1,141,191,0x14},
+   { 996,15, 57, 54,0x14}, { 997,15, 58, 54,0x14}, { 998,15,144,191,0x14}, {1000,15,145,191,0x14},
+   {1018, 1, 56, 57,0x1c}, {1038,13,146,191,0x14}, {1039,15,148,191,0x14}, {1044,10,149,191,0x14},
+   {1045, 9,150,191,0x14}, {1046, 7,151,191,0x14}, {1049, 7, 50, 54,0x14}, {1058, 1,147,195,0x1c},
+   {1079,26, 59, 54,0x14}, {1146,13, 61, 54,0x14}, {1147,10, 62, 54,0x14}, {1151,15, 60, 54,0x14},
+   {1184, 2, 63,150,0x14}, {1185,29, 64,150,0x14}, {1186,15, 65,150,0x14}, {1191,15, 67, 54,0x14},
+   {1192,10, 68, 54,0x14}, {1193, 7, 69, 54,0x14}, {1194, 1, 70, 54,0x14}, {1195,13, 71, 54,0x14},
+   {1196,15, 72, 54,0x14}, {1197,15, 79, 54,0x14}, {1198, 1, 73, 54,0x14}, {1199,11, 74, 54,0x14},
+   {1200,11, 75, 54,0x14}, {1213,26,152,191,0x14}, {1227,15, 66, 54,0x14}, {1242, 8, 78, 54,0x14},
+   {1244, 8, 77, 54,0x14}, {1300,15,173,  0,0x04}, {1301,20,172,  0,0x04}, {1419, 1,154,191,0x14},
+   {1423,10,155,191,0x14}, {1424,15,156,191,0x14}, {1425,10,157,191,0x14}, {1435, 1, 80, 54,0x14},
+   {1437, 1,158,191,0x14}, {1439, 1, 81, 54,0x14}, {1441, 1,159,191,0x14}, {1449,15, 82, 54,0x14},
+   {1450,15, 83, 54,0x14}, {1451,14, 84, 54,0x14}, {1452,14, 85, 54,0x14}, {1453,15,160,191,0x14},
+   {1454,15,161,191,0x14}, {1455,14,162,191,0x14}, {1456,14,163,191,0x14}, {1457,14, 86, 54,0x14},
+   {1458,14, 87, 54,0x14}, {1459,14,164,191,0x14}, {1460,14,165,191,0x14}, {1461, 1,174,169,0x1c},
+   {1478, 1, 88, 54,0x14}, {1479, 1, 89, 54,0x14}, {1480,14, 90, 54,0x14}, {1481, 1, 91, 54,0x14},
+   {1482, 1, 92, 54,0x14}, {1483, 1, 93, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderMassCancelRequest::_ftha(OrderMassCancelRequest::_traits, 174);
 const MsgType OrderMassCancelRequest::_msgtype("q");
@@ -11440,69 +10438,54 @@ const FieldTrait *OrderMassCancelRequest::NoComplexEvents::NoComplexEventDates::
 const FieldTrait_Hash_Array& OrderMassCancelRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderMassCancelRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait OrderMassCancelReport::_traits[] =
+const FieldTrait OrderMassCancelReport::_traits[]
 {
-   FieldTrait(  11,15,  1,  0,0x04), FieldTrait(  22,15, 15, 54,0x14), FieldTrait(  37,15,  3,  0,0x04),
-   FieldTrait(  48,15, 14, 54,0x14), FieldTrait(  54, 7,172,  0,0x04), FieldTrait(  55,15, 12, 54,0x14),
-   FieldTrait(  58,15,174,  0,0x04), FieldTrait(  60,22,173,  0,0x04), FieldTrait(  65,15, 13, 54,0x14),
-   FieldTrait( 106,15, 41, 54,0x14), FieldTrait( 107,15, 44, 54,0x14), FieldTrait( 167,15, 19, 54,0x14),
-   FieldTrait( 198,15,  4,  0,0x04), FieldTrait( 200,21, 21, 54,0x14), FieldTrait( 201, 1, 82, 54,0x14),
-   FieldTrait( 202,11, 35, 54,0x14), FieldTrait( 206, 7, 37, 54,0x14), FieldTrait( 207,20, 40, 54,0x14),
-   FieldTrait( 223,14, 39, 54,0x14), FieldTrait( 224,25, 23, 54,0x14), FieldTrait( 225,25, 24, 54,0x14),
-   FieldTrait( 226, 1, 26, 54,0x14), FieldTrait( 227,14, 27, 54,0x14), FieldTrait( 228, 9, 28, 54,0x14),
-   FieldTrait( 231, 9, 38, 54,0x14), FieldTrait( 239, 1, 25, 54,0x14), FieldTrait( 240,25, 34, 54,0x14),
-   FieldTrait( 241,25,111,191,0x14), FieldTrait( 242,25,112,191,0x14), FieldTrait( 243, 1,113,191,0x14),
-   FieldTrait( 244, 1,114,191,0x14), FieldTrait( 245,14,115,191,0x14), FieldTrait( 246, 9,116,191,0x14),
-   FieldTrait( 247,25,122,191,0x14), FieldTrait( 255,15, 29, 54,0x14), FieldTrait( 256,15,117,191,0x14),
-   FieldTrait( 305,15,103,191,0x14), FieldTrait( 306,15,129,191,0x14), FieldTrait( 307,15,132,191,0x14),
-   FieldTrait( 308,20,128,191,0x14), FieldTrait( 309,15,102,191,0x14), FieldTrait( 310,15,107,191,0x14),
-   FieldTrait( 311,15,100,191,0x14), FieldTrait( 312,15,101,191,0x14), FieldTrait( 313,21,109,191,0x14),
-   FieldTrait( 315, 1,159,191,0x14), FieldTrait( 316,11,123,191,0x14), FieldTrait( 317, 7,125,191,0x14),
-   FieldTrait( 318,19,137,191,0x14), FieldTrait( 336,15, 10,  0,0x04), FieldTrait( 348, 2, 42, 54,0x14),
-   FieldTrait( 349,28, 43, 54,0x14), FieldTrait( 350, 2, 45, 54,0x14), FieldTrait( 351,28, 46, 54,0x14),
-   FieldTrait( 354, 2,175,  0,0x04), FieldTrait( 355,28,176,  0,0x04), FieldTrait( 362, 2,130,191,0x14),
-   FieldTrait( 363,28,131,191,0x14), FieldTrait( 364, 2,133,191,0x14), FieldTrait( 365,28,134,191,0x14),
-   FieldTrait( 435,14,127,191,0x14), FieldTrait( 436, 9,126,191,0x14), FieldTrait( 453, 1,177, 94,0x1c),
-   FieldTrait( 454, 1, 16,142,0x1c), FieldTrait( 457, 1,104,189,0x1c), FieldTrait( 460, 1, 17, 54,0x14),
-   FieldTrait( 461,15, 18, 54,0x14), FieldTrait( 462, 1,105,191,0x14), FieldTrait( 463,15,106,191,0x14),
-   FieldTrait( 470,18, 31, 54,0x14), FieldTrait( 471,15, 32, 54,0x14), FieldTrait( 472,15, 33, 54,0x14),
-   FieldTrait( 526,15,  2,  0,0x04), FieldTrait( 530, 7,  5,  0,0x04), FieldTrait( 531, 7,  6,  0,0x04),
-   FieldTrait( 532, 1,  7,  0,0x04), FieldTrait( 533, 1,  8,  0,0x04), FieldTrait( 534, 1,  9,  1,0x1c),
-   FieldTrait( 541,25, 22, 54,0x14), FieldTrait( 542,25,110,191,0x14), FieldTrait( 543,15, 30, 54,0x14),
-   FieldTrait( 592,18,119,191,0x14), FieldTrait( 593,15,120,191,0x14), FieldTrait( 594,15,121,191,0x14),
-   FieldTrait( 595,15,118,191,0x14), FieldTrait( 625,15, 11,  0,0x04), FieldTrait( 667,21, 48, 54,0x14),
-   FieldTrait( 691,15, 47, 54,0x14), FieldTrait( 762,15, 20, 54,0x14), FieldTrait( 763,15,108,191,0x14),
-   FieldTrait( 810,11,139,191,0x14), FieldTrait( 864, 1, 51, 38,0x1c), FieldTrait( 873,25, 52, 54,0x14),
-   FieldTrait( 874,25, 53, 54,0x14), FieldTrait( 875, 1, 49, 54,0x14), FieldTrait( 876,15, 50, 54,0x14),
-   FieldTrait( 877,15,135,191,0x14), FieldTrait( 878,15,136,191,0x14), FieldTrait( 879,10,138,191,0x14),
-   FieldTrait( 882,11,140,191,0x14), FieldTrait( 883,11,141,191,0x14), FieldTrait( 884,13,142,191,0x14),
-   FieldTrait( 885,13,143,191,0x14), FieldTrait( 886,13,144,191,0x14), FieldTrait( 887, 1,145,194,0x1c),
-   FieldTrait( 941,19,124,191,0x14), FieldTrait( 947,19, 36, 54,0x14), FieldTrait( 965,15, 54, 54,0x14),
-   FieldTrait( 966,15, 55, 54,0x14), FieldTrait( 967, 9, 57, 54,0x14), FieldTrait( 968, 9, 58, 54,0x14),
-   FieldTrait( 969, 9, 59, 54,0x14), FieldTrait( 970, 1, 60, 54,0x14), FieldTrait( 971, 1, 61, 54,0x14),
-   FieldTrait( 972,14,146,191,0x14), FieldTrait( 973,13,148,191,0x14), FieldTrait( 974,15,149,191,0x14),
-   FieldTrait( 975, 1,147,191,0x14), FieldTrait( 996,15, 63, 54,0x14), FieldTrait( 997,15, 64, 54,0x14),
-   FieldTrait( 998,15,150,191,0x14), FieldTrait(1000,15,151,191,0x14), FieldTrait(1018, 1, 62, 57,0x1c),
-   FieldTrait(1038,13,152,191,0x14), FieldTrait(1039,15,154,191,0x14), FieldTrait(1044,10,155,191,0x14),
-   FieldTrait(1045, 9,156,191,0x14), FieldTrait(1046, 7,157,191,0x14), FieldTrait(1049, 7, 56, 54,0x14),
-   FieldTrait(1058, 1,153,195,0x1c), FieldTrait(1079,26, 65, 54,0x14), FieldTrait(1146,13, 67, 54,0x14),
-   FieldTrait(1147,10, 68, 54,0x14), FieldTrait(1151,15, 66, 54,0x14), FieldTrait(1184, 2, 69,150,0x14),
-   FieldTrait(1185,29, 70,150,0x14), FieldTrait(1186,15, 71,150,0x14), FieldTrait(1191,15, 73, 54,0x14),
-   FieldTrait(1192,10, 74, 54,0x14), FieldTrait(1193, 7, 75, 54,0x14), FieldTrait(1194, 1, 76, 54,0x14),
-   FieldTrait(1195,13, 77, 54,0x14), FieldTrait(1196,15, 78, 54,0x14), FieldTrait(1197,15, 85, 54,0x14),
-   FieldTrait(1198, 1, 79, 54,0x14), FieldTrait(1199,11, 80, 54,0x14), FieldTrait(1200,11, 81, 54,0x14),
-   FieldTrait(1213,26,158,191,0x14), FieldTrait(1227,15, 72, 54,0x14), FieldTrait(1242, 8, 84, 54,0x14),
-   FieldTrait(1244, 8, 83, 54,0x14), FieldTrait(1300,15,181,  0,0x04), FieldTrait(1301,20,180,  0,0x04),
-   FieldTrait(1369,15,178,  0,0x04), FieldTrait(1370, 1,179, 85,0x1c), FieldTrait(1419, 1,160,191,0x14),
-   FieldTrait(1423,10,161,191,0x14), FieldTrait(1424,15,162,191,0x14), FieldTrait(1425,10,163,191,0x14),
-   FieldTrait(1435, 1, 86, 54,0x14), FieldTrait(1437, 1,164,191,0x14), FieldTrait(1439, 1, 87, 54,0x14),
-   FieldTrait(1441, 1,165,191,0x14), FieldTrait(1449,15, 88, 54,0x14), FieldTrait(1450,15, 89, 54,0x14),
-   FieldTrait(1451,14, 90, 54,0x14), FieldTrait(1452,14, 91, 54,0x14), FieldTrait(1453,15,166,191,0x14),
-   FieldTrait(1454,15,167,191,0x14), FieldTrait(1455,14,168,191,0x14), FieldTrait(1456,14,169,191,0x14),
-   FieldTrait(1457,14, 92, 54,0x14), FieldTrait(1458,14, 93, 54,0x14), FieldTrait(1459,14,170,191,0x14),
-   FieldTrait(1460,14,171,191,0x14), FieldTrait(1461, 1,182,169,0x1c), FieldTrait(1478, 1, 94, 54,0x14),
-   FieldTrait(1479, 1, 95, 54,0x14), FieldTrait(1480,14, 96, 54,0x14), FieldTrait(1481, 1, 97, 54,0x14),
-   FieldTrait(1482, 1, 98, 54,0x14), FieldTrait(1483, 1, 99, 21,0x1c)
+   {  11,15,  1,  0,0x04}, {  22,15, 15, 54,0x14}, {  37,15,  3,  0,0x04}, {  48,15, 14, 54,0x14},
+   {  54, 7,172,  0,0x04}, {  55,15, 12, 54,0x14}, {  58,15,174,  0,0x04}, {  60,22,173,  0,0x04},
+   {  65,15, 13, 54,0x14}, { 106,15, 41, 54,0x14}, { 107,15, 44, 54,0x14}, { 167,15, 19, 54,0x14},
+   { 198,15,  4,  0,0x04}, { 200,21, 21, 54,0x14}, { 201, 1, 82, 54,0x14}, { 202,11, 35, 54,0x14},
+   { 206, 7, 37, 54,0x14}, { 207,20, 40, 54,0x14}, { 223,14, 39, 54,0x14}, { 224,25, 23, 54,0x14},
+   { 225,25, 24, 54,0x14}, { 226, 1, 26, 54,0x14}, { 227,14, 27, 54,0x14}, { 228, 9, 28, 54,0x14},
+   { 231, 9, 38, 54,0x14}, { 239, 1, 25, 54,0x14}, { 240,25, 34, 54,0x14}, { 241,25,111,191,0x14},
+   { 242,25,112,191,0x14}, { 243, 1,113,191,0x14}, { 244, 1,114,191,0x14}, { 245,14,115,191,0x14},
+   { 246, 9,116,191,0x14}, { 247,25,122,191,0x14}, { 255,15, 29, 54,0x14}, { 256,15,117,191,0x14},
+   { 305,15,103,191,0x14}, { 306,15,129,191,0x14}, { 307,15,132,191,0x14}, { 308,20,128,191,0x14},
+   { 309,15,102,191,0x14}, { 310,15,107,191,0x14}, { 311,15,100,191,0x14}, { 312,15,101,191,0x14},
+   { 313,21,109,191,0x14}, { 315, 1,159,191,0x14}, { 316,11,123,191,0x14}, { 317, 7,125,191,0x14},
+   { 318,19,137,191,0x14}, { 336,15, 10,  0,0x04}, { 348, 2, 42, 54,0x14}, { 349,28, 43, 54,0x14},
+   { 350, 2, 45, 54,0x14}, { 351,28, 46, 54,0x14}, { 354, 2,175,  0,0x04}, { 355,28,176,  0,0x04},
+   { 362, 2,130,191,0x14}, { 363,28,131,191,0x14}, { 364, 2,133,191,0x14}, { 365,28,134,191,0x14},
+   { 435,14,127,191,0x14}, { 436, 9,126,191,0x14}, { 453, 1,177, 94,0x1c}, { 454, 1, 16,142,0x1c},
+   { 457, 1,104,189,0x1c}, { 460, 1, 17, 54,0x14}, { 461,15, 18, 54,0x14}, { 462, 1,105,191,0x14},
+   { 463,15,106,191,0x14}, { 470,18, 31, 54,0x14}, { 471,15, 32, 54,0x14}, { 472,15, 33, 54,0x14},
+   { 526,15,  2,  0,0x04}, { 530, 7,  5,  0,0x04}, { 531, 7,  6,  0,0x04}, { 532, 1,  7,  0,0x04},
+   { 533, 1,  8,  0,0x04}, { 534, 1,  9,  1,0x1c}, { 541,25, 22, 54,0x14}, { 542,25,110,191,0x14},
+   { 543,15, 30, 54,0x14}, { 592,18,119,191,0x14}, { 593,15,120,191,0x14}, { 594,15,121,191,0x14},
+   { 595,15,118,191,0x14}, { 625,15, 11,  0,0x04}, { 667,21, 48, 54,0x14}, { 691,15, 47, 54,0x14},
+   { 762,15, 20, 54,0x14}, { 763,15,108,191,0x14}, { 810,11,139,191,0x14}, { 864, 1, 51, 38,0x1c},
+   { 873,25, 52, 54,0x14}, { 874,25, 53, 54,0x14}, { 875, 1, 49, 54,0x14}, { 876,15, 50, 54,0x14},
+   { 877,15,135,191,0x14}, { 878,15,136,191,0x14}, { 879,10,138,191,0x14}, { 882,11,140,191,0x14},
+   { 883,11,141,191,0x14}, { 884,13,142,191,0x14}, { 885,13,143,191,0x14}, { 886,13,144,191,0x14},
+   { 887, 1,145,194,0x1c}, { 941,19,124,191,0x14}, { 947,19, 36, 54,0x14}, { 965,15, 54, 54,0x14},
+   { 966,15, 55, 54,0x14}, { 967, 9, 57, 54,0x14}, { 968, 9, 58, 54,0x14}, { 969, 9, 59, 54,0x14},
+   { 970, 1, 60, 54,0x14}, { 971, 1, 61, 54,0x14}, { 972,14,146,191,0x14}, { 973,13,148,191,0x14},
+   { 974,15,149,191,0x14}, { 975, 1,147,191,0x14}, { 996,15, 63, 54,0x14}, { 997,15, 64, 54,0x14},
+   { 998,15,150,191,0x14}, {1000,15,151,191,0x14}, {1018, 1, 62, 57,0x1c}, {1038,13,152,191,0x14},
+   {1039,15,154,191,0x14}, {1044,10,155,191,0x14}, {1045, 9,156,191,0x14}, {1046, 7,157,191,0x14},
+   {1049, 7, 56, 54,0x14}, {1058, 1,153,195,0x1c}, {1079,26, 65, 54,0x14}, {1146,13, 67, 54,0x14},
+   {1147,10, 68, 54,0x14}, {1151,15, 66, 54,0x14}, {1184, 2, 69,150,0x14}, {1185,29, 70,150,0x14},
+   {1186,15, 71,150,0x14}, {1191,15, 73, 54,0x14}, {1192,10, 74, 54,0x14}, {1193, 7, 75, 54,0x14},
+   {1194, 1, 76, 54,0x14}, {1195,13, 77, 54,0x14}, {1196,15, 78, 54,0x14}, {1197,15, 85, 54,0x14},
+   {1198, 1, 79, 54,0x14}, {1199,11, 80, 54,0x14}, {1200,11, 81, 54,0x14}, {1213,26,158,191,0x14},
+   {1227,15, 72, 54,0x14}, {1242, 8, 84, 54,0x14}, {1244, 8, 83, 54,0x14}, {1300,15,181,  0,0x04},
+   {1301,20,180,  0,0x04}, {1369,15,178,  0,0x04}, {1370, 1,179, 85,0x1c}, {1419, 1,160,191,0x14},
+   {1423,10,161,191,0x14}, {1424,15,162,191,0x14}, {1425,10,163,191,0x14}, {1435, 1, 86, 54,0x14},
+   {1437, 1,164,191,0x14}, {1439, 1, 87, 54,0x14}, {1441, 1,165,191,0x14}, {1449,15, 88, 54,0x14},
+   {1450,15, 89, 54,0x14}, {1451,14, 90, 54,0x14}, {1452,14, 91, 54,0x14}, {1453,15,166,191,0x14},
+   {1454,15,167,191,0x14}, {1455,14,168,191,0x14}, {1456,14,169,191,0x14}, {1457,14, 92, 54,0x14},
+   {1458,14, 93, 54,0x14}, {1459,14,170,191,0x14}, {1460,14,171,191,0x14}, {1461, 1,182,169,0x1c},
+   {1478, 1, 94, 54,0x14}, {1479, 1, 95, 54,0x14}, {1480,14, 96, 54,0x14}, {1481, 1, 97, 54,0x14},
+   {1482, 1, 98, 54,0x14}, {1483, 1, 99, 21,0x1c}
 };
 const FieldTrait_Hash_Array OrderMassCancelReport::_ftha(OrderMassCancelReport::_traits, 182);
 const MsgType OrderMassCancelReport::_msgtype("r");
@@ -11571,72 +10554,56 @@ const FieldTrait *OrderMassCancelReport::NoComplexEvents::NoComplexEventDates::N
 const FieldTrait_Hash_Array& OrderMassCancelReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& OrderMassCancelReport::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait NewOrderCross::_traits[] =
+const FieldTrait NewOrderCross::_traits[]
 {
-   FieldTrait(  15,19,126,  0,0x04), FieldTrait(  18,16, 98,  0,0x04), FieldTrait(  21, 7, 97,  0,0x04),
-   FieldTrait(  22,15,  8, 54,0x14), FieldTrait(  23,15,128,  0,0x04), FieldTrait(  40, 7,108,  0,0x04),
-   FieldTrait(  44,11,110,  0,0x04), FieldTrait(  48,15,  7, 54,0x14), FieldTrait(  55,15,  5, 54,0x14),
-   FieldTrait(  59, 7,130,  0,0x04), FieldTrait(  60,22,106,  0,0x04), FieldTrait(  63,15, 95,  0,0x04),
-   FieldTrait(  64,25, 96,  0,0x04), FieldTrait(  65,15,  6, 54,0x14), FieldTrait(  81, 7,103,  0,0x04),
-   FieldTrait(  99,11,111,  0,0x04), FieldTrait( 100,20,101,  0,0x04), FieldTrait( 106,15, 34, 54,0x14),
-   FieldTrait( 107,15, 37, 54,0x14), FieldTrait( 110,10, 99,  0,0x04), FieldTrait( 111,10,100,  0,0x04),
-   FieldTrait( 114, 8,105,  0,0x04), FieldTrait( 117,15,129,  0,0x04), FieldTrait( 126,22,133,  0,0x04),
-   FieldTrait( 140,11,104,  0,0x04), FieldTrait( 167,15, 12, 54,0x14), FieldTrait( 168,22,131,  0,0x04),
-   FieldTrait( 200,21, 14, 54,0x14), FieldTrait( 201, 1, 75, 54,0x14), FieldTrait( 202,11, 28, 54,0x14),
-   FieldTrait( 206, 7, 30, 54,0x14), FieldTrait( 207,20, 33, 54,0x14), FieldTrait( 210,10,135,  0,0x04),
-   FieldTrait( 211, 9,136,100,0x14), FieldTrait( 218,12,112,160,0x14), FieldTrait( 220,19,113,160,0x14),
-   FieldTrait( 221,15,114,160,0x14), FieldTrait( 222,15,115,160,0x14), FieldTrait( 223,14, 32, 54,0x14),
-   FieldTrait( 224,25, 16, 54,0x14), FieldTrait( 225,25, 17, 54,0x14), FieldTrait( 226, 1, 19, 54,0x14),
-   FieldTrait( 227,14, 20, 54,0x14), FieldTrait( 228, 9, 21, 54,0x14), FieldTrait( 231, 9, 31, 54,0x14),
-   FieldTrait( 232, 1,107,162,0x1c), FieldTrait( 235,15,120,198,0x14), FieldTrait( 236,14,121,198,0x14),
-   FieldTrait( 239, 1, 18, 54,0x14), FieldTrait( 240,25, 27, 54,0x14), FieldTrait( 255,15, 22, 54,0x14),
-   FieldTrait( 348, 2, 35, 54,0x14), FieldTrait( 349,28, 36, 54,0x14), FieldTrait( 350, 2, 38, 54,0x14),
-   FieldTrait( 351,28, 39, 54,0x14), FieldTrait( 376,15,127,  0,0x04), FieldTrait( 386, 1,102,185,0x1c),
-   FieldTrait( 388, 7,147, 35,0x14), FieldTrait( 389, 9,148, 35,0x14), FieldTrait( 423, 1,109,  0,0x04),
-   FieldTrait( 427, 1,134,  0,0x04), FieldTrait( 432,25,132,  0,0x04), FieldTrait( 454, 1,  9,142,0x1c),
-   FieldTrait( 460, 1, 10, 54,0x14), FieldTrait( 461,15, 11, 54,0x14), FieldTrait( 470,18, 24, 54,0x14),
-   FieldTrait( 471,15, 25, 54,0x14), FieldTrait( 472,15, 26, 54,0x14), FieldTrait( 480, 7,157,  0,0x04),
-   FieldTrait( 481, 7,158,  0,0x04), FieldTrait( 483,22,162,  0,0x04), FieldTrait( 494,15,160,  0,0x04),
-   FieldTrait( 513,15,159,  0,0x04), FieldTrait( 541,25, 15, 54,0x14), FieldTrait( 543,15, 23, 54,0x14),
-   FieldTrait( 548,15,  1,  0,0x04), FieldTrait( 549, 1,  2,  0,0x04), FieldTrait( 550, 1,  3,  0,0x04),
-   FieldTrait( 552, 1,  4,158,0x1c), FieldTrait( 555, 1, 94, 49,0x1c), FieldTrait( 662,11,116,160,0x14),
-   FieldTrait( 663, 1,117,160,0x14), FieldTrait( 667,21, 41, 54,0x14), FieldTrait( 691,15, 40, 54,0x14),
-   FieldTrait( 696,25,123,198,0x14), FieldTrait( 697,11,124,198,0x14), FieldTrait( 698, 1,125,198,0x14),
-   FieldTrait( 699,15,118,160,0x14), FieldTrait( 701,25,122,198,0x14), FieldTrait( 711, 1, 93,188,0x1c),
-   FieldTrait( 761,15,119,160,0x14), FieldTrait( 762,15, 13, 54,0x14), FieldTrait( 835, 1,137,100,0x14),
-   FieldTrait( 836, 1,138,100,0x14), FieldTrait( 837, 1,139,100,0x14), FieldTrait( 838, 1,140,100,0x14),
-   FieldTrait( 840, 1,141,100,0x14), FieldTrait( 841, 1,149, 35,0x14), FieldTrait( 842, 1,150, 35,0x14),
-   FieldTrait( 843, 1,151, 35,0x14), FieldTrait( 844, 1,152, 35,0x14), FieldTrait( 846, 1,153, 35,0x14),
-   FieldTrait( 847, 1,154,  0,0x04), FieldTrait( 848,15,155,  0,0x04), FieldTrait( 849,14,156,  0,0x04),
-   FieldTrait( 864, 1, 44, 38,0x1c), FieldTrait( 873,25, 45, 54,0x14), FieldTrait( 874,25, 46, 54,0x14),
-   FieldTrait( 875, 1, 42, 54,0x14), FieldTrait( 876,15, 43, 54,0x14), FieldTrait( 947,19, 29, 54,0x14),
-   FieldTrait( 957, 1,161,163,0x1c), FieldTrait( 965,15, 47, 54,0x14), FieldTrait( 966,15, 48, 54,0x14),
-   FieldTrait( 967, 9, 50, 54,0x14), FieldTrait( 968, 9, 51, 54,0x14), FieldTrait( 969, 9, 52, 54,0x14),
-   FieldTrait( 970, 1, 53, 54,0x14), FieldTrait( 971, 1, 54, 54,0x14), FieldTrait( 996,15, 56, 54,0x14),
-   FieldTrait( 997,15, 57, 54,0x14), FieldTrait(1018, 1, 55, 57,0x1c), FieldTrait(1049, 7, 49, 54,0x14),
-   FieldTrait(1079,26, 58, 54,0x14), FieldTrait(1082,10,166, 36,0x14), FieldTrait(1083, 7,167, 36,0x14),
-   FieldTrait(1084, 7,168, 36,0x14), FieldTrait(1085,10,169, 36,0x14), FieldTrait(1086,10,170, 36,0x14),
-   FieldTrait(1087,10,171, 36,0x14), FieldTrait(1088,10,172, 36,0x14), FieldTrait(1089,10,164,  0,0x04),
-   FieldTrait(1090, 1,165,  0,0x04), FieldTrait(1092, 7,174,  0,0x04), FieldTrait(1094, 1,142,100,0x14),
-   FieldTrait(1096,15,143,100,0x14), FieldTrait(1097,15,144,100,0x14), FieldTrait(1098,15,145,100,0x14),
-   FieldTrait(1099,15,146,100,0x14), FieldTrait(1100, 7,175,186,0x14), FieldTrait(1101, 7,176,186,0x14),
-   FieldTrait(1102,11,177,186,0x14), FieldTrait(1103,15,178,186,0x14), FieldTrait(1104,15,179,186,0x14),
-   FieldTrait(1105,15,180,186,0x14), FieldTrait(1106,15,181,186,0x14), FieldTrait(1107, 7,182,186,0x14),
-   FieldTrait(1108, 7,183,186,0x14), FieldTrait(1109, 7,184,186,0x14), FieldTrait(1110,11,185,186,0x14),
-   FieldTrait(1111, 7,186,186,0x14), FieldTrait(1112,10,187,186,0x14), FieldTrait(1113,15,188,186,0x14),
-   FieldTrait(1114,15,189,186,0x14), FieldTrait(1116, 1,163,139,0x1c), FieldTrait(1133, 7,190,  0,0x04),
-   FieldTrait(1138,10,173, 36,0x14), FieldTrait(1146,13, 60, 54,0x14), FieldTrait(1147,10, 61, 54,0x14),
-   FieldTrait(1151,15, 59, 54,0x14), FieldTrait(1184, 2, 62,150,0x14), FieldTrait(1185,29, 63,150,0x14),
-   FieldTrait(1186,15, 64,150,0x14), FieldTrait(1191,15, 66, 54,0x14), FieldTrait(1192,10, 67, 54,0x14),
-   FieldTrait(1193, 7, 68, 54,0x14), FieldTrait(1194, 1, 69, 54,0x14), FieldTrait(1195,13, 70, 54,0x14),
-   FieldTrait(1196,15, 71, 54,0x14), FieldTrait(1197,15, 78, 54,0x14), FieldTrait(1198, 1, 72, 54,0x14),
-   FieldTrait(1199,11, 73, 54,0x14), FieldTrait(1200,11, 74, 54,0x14), FieldTrait(1227,15, 65, 54,0x14),
-   FieldTrait(1242, 8, 77, 54,0x14), FieldTrait(1244, 8, 76, 54,0x14), FieldTrait(1435, 1, 79, 54,0x14),
-   FieldTrait(1439, 1, 80, 54,0x14), FieldTrait(1449,15, 81, 54,0x14), FieldTrait(1450,15, 82, 54,0x14),
-   FieldTrait(1451,14, 83, 54,0x14), FieldTrait(1452,14, 84, 54,0x14), FieldTrait(1457,14, 85, 54,0x14),
-   FieldTrait(1458,14, 86, 54,0x14), FieldTrait(1478, 1, 87, 54,0x14), FieldTrait(1479, 1, 88, 54,0x14),
-   FieldTrait(1480,14, 89, 54,0x14), FieldTrait(1481, 1, 90, 54,0x14), FieldTrait(1482, 1, 91, 54,0x14),
-   FieldTrait(1483, 1, 92, 21,0x1c)
+   {  15,19,126,  0,0x04}, {  18,16, 98,  0,0x04}, {  21, 7, 97,  0,0x04}, {  22,15,  8, 54,0x14},
+   {  23,15,128,  0,0x04}, {  40, 7,108,  0,0x04}, {  44,11,110,  0,0x04}, {  48,15,  7, 54,0x14},
+   {  55,15,  5, 54,0x14}, {  59, 7,130,  0,0x04}, {  60,22,106,  0,0x04}, {  63,15, 95,  0,0x04},
+   {  64,25, 96,  0,0x04}, {  65,15,  6, 54,0x14}, {  81, 7,103,  0,0x04}, {  99,11,111,  0,0x04},
+   { 100,20,101,  0,0x04}, { 106,15, 34, 54,0x14}, { 107,15, 37, 54,0x14}, { 110,10, 99,  0,0x04},
+   { 111,10,100,  0,0x04}, { 114, 8,105,  0,0x04}, { 117,15,129,  0,0x04}, { 126,22,133,  0,0x04},
+   { 140,11,104,  0,0x04}, { 167,15, 12, 54,0x14}, { 168,22,131,  0,0x04}, { 200,21, 14, 54,0x14},
+   { 201, 1, 75, 54,0x14}, { 202,11, 28, 54,0x14}, { 206, 7, 30, 54,0x14}, { 207,20, 33, 54,0x14},
+   { 210,10,135,  0,0x04}, { 211, 9,136,100,0x14}, { 218,12,112,160,0x14}, { 220,19,113,160,0x14},
+   { 221,15,114,160,0x14}, { 222,15,115,160,0x14}, { 223,14, 32, 54,0x14}, { 224,25, 16, 54,0x14},
+   { 225,25, 17, 54,0x14}, { 226, 1, 19, 54,0x14}, { 227,14, 20, 54,0x14}, { 228, 9, 21, 54,0x14},
+   { 231, 9, 31, 54,0x14}, { 232, 1,107,162,0x1c}, { 235,15,120,198,0x14}, { 236,14,121,198,0x14},
+   { 239, 1, 18, 54,0x14}, { 240,25, 27, 54,0x14}, { 255,15, 22, 54,0x14}, { 348, 2, 35, 54,0x14},
+   { 349,28, 36, 54,0x14}, { 350, 2, 38, 54,0x14}, { 351,28, 39, 54,0x14}, { 376,15,127,  0,0x04},
+   { 386, 1,102,185,0x1c}, { 388, 7,147, 35,0x14}, { 389, 9,148, 35,0x14}, { 423, 1,109,  0,0x04},
+   { 427, 1,134,  0,0x04}, { 432,25,132,  0,0x04}, { 454, 1,  9,142,0x1c}, { 460, 1, 10, 54,0x14},
+   { 461,15, 11, 54,0x14}, { 470,18, 24, 54,0x14}, { 471,15, 25, 54,0x14}, { 472,15, 26, 54,0x14},
+   { 480, 7,157,  0,0x04}, { 481, 7,158,  0,0x04}, { 483,22,162,  0,0x04}, { 494,15,160,  0,0x04},
+   { 513,15,159,  0,0x04}, { 541,25, 15, 54,0x14}, { 543,15, 23, 54,0x14}, { 548,15,  1,  0,0x04},
+   { 549, 1,  2,  0,0x04}, { 550, 1,  3,  0,0x04}, { 552, 1,  4,158,0x1c}, { 555, 1, 94, 49,0x1c},
+   { 662,11,116,160,0x14}, { 663, 1,117,160,0x14}, { 667,21, 41, 54,0x14}, { 691,15, 40, 54,0x14},
+   { 696,25,123,198,0x14}, { 697,11,124,198,0x14}, { 698, 1,125,198,0x14}, { 699,15,118,160,0x14},
+   { 701,25,122,198,0x14}, { 711, 1, 93,188,0x1c}, { 761,15,119,160,0x14}, { 762,15, 13, 54,0x14},
+   { 835, 1,137,100,0x14}, { 836, 1,138,100,0x14}, { 837, 1,139,100,0x14}, { 838, 1,140,100,0x14},
+   { 840, 1,141,100,0x14}, { 841, 1,149, 35,0x14}, { 842, 1,150, 35,0x14}, { 843, 1,151, 35,0x14},
+   { 844, 1,152, 35,0x14}, { 846, 1,153, 35,0x14}, { 847, 1,154,  0,0x04}, { 848,15,155,  0,0x04},
+   { 849,14,156,  0,0x04}, { 864, 1, 44, 38,0x1c}, { 873,25, 45, 54,0x14}, { 874,25, 46, 54,0x14},
+   { 875, 1, 42, 54,0x14}, { 876,15, 43, 54,0x14}, { 947,19, 29, 54,0x14}, { 957, 1,161,163,0x1c},
+   { 965,15, 47, 54,0x14}, { 966,15, 48, 54,0x14}, { 967, 9, 50, 54,0x14}, { 968, 9, 51, 54,0x14},
+   { 969, 9, 52, 54,0x14}, { 970, 1, 53, 54,0x14}, { 971, 1, 54, 54,0x14}, { 996,15, 56, 54,0x14},
+   { 997,15, 57, 54,0x14}, {1018, 1, 55, 57,0x1c}, {1049, 7, 49, 54,0x14}, {1079,26, 58, 54,0x14},
+   {1082,10,166, 36,0x14}, {1083, 7,167, 36,0x14}, {1084, 7,168, 36,0x14}, {1085,10,169, 36,0x14},
+   {1086,10,170, 36,0x14}, {1087,10,171, 36,0x14}, {1088,10,172, 36,0x14}, {1089,10,164,  0,0x04},
+   {1090, 1,165,  0,0x04}, {1092, 7,174,  0,0x04}, {1094, 1,142,100,0x14}, {1096,15,143,100,0x14},
+   {1097,15,144,100,0x14}, {1098,15,145,100,0x14}, {1099,15,146,100,0x14}, {1100, 7,175,186,0x14},
+   {1101, 7,176,186,0x14}, {1102,11,177,186,0x14}, {1103,15,178,186,0x14}, {1104,15,179,186,0x14},
+   {1105,15,180,186,0x14}, {1106,15,181,186,0x14}, {1107, 7,182,186,0x14}, {1108, 7,183,186,0x14},
+   {1109, 7,184,186,0x14}, {1110,11,185,186,0x14}, {1111, 7,186,186,0x14}, {1112,10,187,186,0x14},
+   {1113,15,188,186,0x14}, {1114,15,189,186,0x14}, {1116, 1,163,139,0x1c}, {1133, 7,190,  0,0x04},
+   {1138,10,173, 36,0x14}, {1146,13, 60, 54,0x14}, {1147,10, 61, 54,0x14}, {1151,15, 59, 54,0x14},
+   {1184, 2, 62,150,0x14}, {1185,29, 63,150,0x14}, {1186,15, 64,150,0x14}, {1191,15, 66, 54,0x14},
+   {1192,10, 67, 54,0x14}, {1193, 7, 68, 54,0x14}, {1194, 1, 69, 54,0x14}, {1195,13, 70, 54,0x14},
+   {1196,15, 71, 54,0x14}, {1197,15, 78, 54,0x14}, {1198, 1, 72, 54,0x14}, {1199,11, 73, 54,0x14},
+   {1200,11, 74, 54,0x14}, {1227,15, 65, 54,0x14}, {1242, 8, 77, 54,0x14}, {1244, 8, 76, 54,0x14},
+   {1435, 1, 79, 54,0x14}, {1439, 1, 80, 54,0x14}, {1449,15, 81, 54,0x14}, {1450,15, 82, 54,0x14},
+   {1451,14, 83, 54,0x14}, {1452,14, 84, 54,0x14}, {1457,14, 85, 54,0x14}, {1458,14, 86, 54,0x14},
+   {1478, 1, 87, 54,0x14}, {1479, 1, 88, 54,0x14}, {1480,14, 89, 54,0x14}, {1481, 1, 90, 54,0x14},
+   {1482, 1, 91, 54,0x14}, {1483, 1, 92, 21,0x1c}
 };
 const FieldTrait_Hash_Array NewOrderCross::_ftha(NewOrderCross::_traits, 190);
 const MsgType NewOrderCross::_msgtype("s");
@@ -11741,73 +10708,57 @@ const FieldTrait *NewOrderCross::NoComplexEvents::NoComplexEventDates::NoComplex
 const FieldTrait_Hash_Array& NewOrderCross::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& NewOrderCross::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CrossOrderCancelReplaceRequest::_traits[] =
+const FieldTrait CrossOrderCancelReplaceRequest::_traits[]
 {
-   FieldTrait(  15,19,128,  0,0x04), FieldTrait(  18,16,100,  0,0x04), FieldTrait(  21, 7, 99,  0,0x04),
-   FieldTrait(  22,15, 10, 54,0x14), FieldTrait(  23,15,130,  0,0x04), FieldTrait(  37,15,  1,  0,0x04),
-   FieldTrait(  40, 7,110,  0,0x04), FieldTrait(  44,11,112,  0,0x04), FieldTrait(  48,15,  9, 54,0x14),
-   FieldTrait(  55,15,  7, 54,0x14), FieldTrait(  59, 7,132,  0,0x04), FieldTrait(  60,22,108,  0,0x04),
-   FieldTrait(  63,15, 97,  0,0x04), FieldTrait(  64,25, 98,  0,0x04), FieldTrait(  65,15,  8, 54,0x14),
-   FieldTrait(  81, 7,105,  0,0x04), FieldTrait(  99,11,113,  0,0x04), FieldTrait( 100,20,103,  0,0x04),
-   FieldTrait( 106,15, 36, 54,0x14), FieldTrait( 107,15, 39, 54,0x14), FieldTrait( 110,10,101,  0,0x04),
-   FieldTrait( 111,10,102,  0,0x04), FieldTrait( 114, 8,107,  0,0x04), FieldTrait( 117,15,131,  0,0x04),
-   FieldTrait( 126,22,135,  0,0x04), FieldTrait( 140,11,106,  0,0x04), FieldTrait( 167,15, 14, 54,0x14),
-   FieldTrait( 168,22,133,  0,0x04), FieldTrait( 200,21, 16, 54,0x14), FieldTrait( 201, 1, 77, 54,0x14),
-   FieldTrait( 202,11, 30, 54,0x14), FieldTrait( 206, 7, 32, 54,0x14), FieldTrait( 207,20, 35, 54,0x14),
-   FieldTrait( 210,10,137,  0,0x04), FieldTrait( 211, 9,138,100,0x14), FieldTrait( 218,12,114,160,0x14),
-   FieldTrait( 220,19,115,160,0x14), FieldTrait( 221,15,116,160,0x14), FieldTrait( 222,15,117,160,0x14),
-   FieldTrait( 223,14, 34, 54,0x14), FieldTrait( 224,25, 18, 54,0x14), FieldTrait( 225,25, 19, 54,0x14),
-   FieldTrait( 226, 1, 21, 54,0x14), FieldTrait( 227,14, 22, 54,0x14), FieldTrait( 228, 9, 23, 54,0x14),
-   FieldTrait( 231, 9, 33, 54,0x14), FieldTrait( 232, 1,109,162,0x1c), FieldTrait( 235,15,122,198,0x14),
-   FieldTrait( 236,14,123,198,0x14), FieldTrait( 239, 1, 20, 54,0x14), FieldTrait( 240,25, 29, 54,0x14),
-   FieldTrait( 255,15, 24, 54,0x14), FieldTrait( 348, 2, 37, 54,0x14), FieldTrait( 349,28, 38, 54,0x14),
-   FieldTrait( 350, 2, 40, 54,0x14), FieldTrait( 351,28, 41, 54,0x14), FieldTrait( 376,15,129,  0,0x04),
-   FieldTrait( 386, 1,104,185,0x1c), FieldTrait( 388, 7,149, 35,0x14), FieldTrait( 389, 9,150, 35,0x14),
-   FieldTrait( 423, 1,111,  0,0x04), FieldTrait( 427, 1,136,  0,0x04), FieldTrait( 432,25,134,  0,0x04),
-   FieldTrait( 454, 1, 11,142,0x1c), FieldTrait( 460, 1, 12, 54,0x14), FieldTrait( 461,15, 13, 54,0x14),
-   FieldTrait( 470,18, 26, 54,0x14), FieldTrait( 471,15, 27, 54,0x14), FieldTrait( 472,15, 28, 54,0x14),
-   FieldTrait( 480, 7,159,  0,0x04), FieldTrait( 481, 7,160,  0,0x04), FieldTrait( 483,22,165,  0,0x04),
-   FieldTrait( 494,15,162,  0,0x04), FieldTrait( 513,15,161,  0,0x04), FieldTrait( 541,25, 17, 54,0x14),
-   FieldTrait( 543,15, 25, 54,0x14), FieldTrait( 548,15,  2,  0,0x04), FieldTrait( 549, 1,  4,  0,0x04),
-   FieldTrait( 550, 1,  5,  0,0x04), FieldTrait( 551,15,  3,  0,0x04), FieldTrait( 552, 1,  6,158,0x1c),
-   FieldTrait( 555, 1, 96, 49,0x1c), FieldTrait( 662,11,118,160,0x14), FieldTrait( 663, 1,119,160,0x14),
-   FieldTrait( 667,21, 43, 54,0x14), FieldTrait( 691,15, 42, 54,0x14), FieldTrait( 696,25,125,198,0x14),
-   FieldTrait( 697,11,126,198,0x14), FieldTrait( 698, 1,127,198,0x14), FieldTrait( 699,15,120,160,0x14),
-   FieldTrait( 701,25,124,198,0x14), FieldTrait( 711, 1, 95,188,0x1c), FieldTrait( 761,15,121,160,0x14),
-   FieldTrait( 762,15, 15, 54,0x14), FieldTrait( 835, 1,139,100,0x14), FieldTrait( 836, 1,140,100,0x14),
-   FieldTrait( 837, 1,141,100,0x14), FieldTrait( 838, 1,142,100,0x14), FieldTrait( 840, 1,143,100,0x14),
-   FieldTrait( 841, 1,151, 35,0x14), FieldTrait( 842, 1,152, 35,0x14), FieldTrait( 843, 1,153, 35,0x14),
-   FieldTrait( 844, 1,154, 35,0x14), FieldTrait( 846, 1,155, 35,0x14), FieldTrait( 847, 1,156,  0,0x04),
-   FieldTrait( 848,15,157,  0,0x04), FieldTrait( 849,14,158,  0,0x04), FieldTrait( 864, 1, 46, 38,0x1c),
-   FieldTrait( 873,25, 47, 54,0x14), FieldTrait( 874,25, 48, 54,0x14), FieldTrait( 875, 1, 44, 54,0x14),
-   FieldTrait( 876,15, 45, 54,0x14), FieldTrait( 947,19, 31, 54,0x14), FieldTrait( 957, 1,163,163,0x1c),
-   FieldTrait( 961,15,164,  0,0x04), FieldTrait( 965,15, 49, 54,0x14), FieldTrait( 966,15, 50, 54,0x14),
-   FieldTrait( 967, 9, 52, 54,0x14), FieldTrait( 968, 9, 53, 54,0x14), FieldTrait( 969, 9, 54, 54,0x14),
-   FieldTrait( 970, 1, 55, 54,0x14), FieldTrait( 971, 1, 56, 54,0x14), FieldTrait( 996,15, 58, 54,0x14),
-   FieldTrait( 997,15, 59, 54,0x14), FieldTrait(1018, 1, 57, 57,0x1c), FieldTrait(1049, 7, 51, 54,0x14),
-   FieldTrait(1079,26, 60, 54,0x14), FieldTrait(1082,10,169, 36,0x14), FieldTrait(1083, 7,170, 36,0x14),
-   FieldTrait(1084, 7,171, 36,0x14), FieldTrait(1085,10,172, 36,0x14), FieldTrait(1086,10,173, 36,0x14),
-   FieldTrait(1087,10,174, 36,0x14), FieldTrait(1088,10,175, 36,0x14), FieldTrait(1089,10,167,  0,0x04),
-   FieldTrait(1090, 1,168,  0,0x04), FieldTrait(1092, 7,177,  0,0x04), FieldTrait(1094, 1,144,100,0x14),
-   FieldTrait(1096,15,145,100,0x14), FieldTrait(1097,15,146,100,0x14), FieldTrait(1098,15,147,100,0x14),
-   FieldTrait(1099,15,148,100,0x14), FieldTrait(1100, 7,178,186,0x14), FieldTrait(1101, 7,179,186,0x14),
-   FieldTrait(1102,11,180,186,0x14), FieldTrait(1103,15,181,186,0x14), FieldTrait(1104,15,182,186,0x14),
-   FieldTrait(1105,15,183,186,0x14), FieldTrait(1106,15,184,186,0x14), FieldTrait(1107, 7,185,186,0x14),
-   FieldTrait(1108, 7,186,186,0x14), FieldTrait(1109, 7,187,186,0x14), FieldTrait(1110,11,188,186,0x14),
-   FieldTrait(1111, 7,189,186,0x14), FieldTrait(1112,10,190,186,0x14), FieldTrait(1113,15,191,186,0x14),
-   FieldTrait(1114,15,192,186,0x14), FieldTrait(1116, 1,166,139,0x1c), FieldTrait(1133, 7,193,  0,0x04),
-   FieldTrait(1138,10,176, 36,0x14), FieldTrait(1146,13, 62, 54,0x14), FieldTrait(1147,10, 63, 54,0x14),
-   FieldTrait(1151,15, 61, 54,0x14), FieldTrait(1184, 2, 64,150,0x14), FieldTrait(1185,29, 65,150,0x14),
-   FieldTrait(1186,15, 66,150,0x14), FieldTrait(1191,15, 68, 54,0x14), FieldTrait(1192,10, 69, 54,0x14),
-   FieldTrait(1193, 7, 70, 54,0x14), FieldTrait(1194, 1, 71, 54,0x14), FieldTrait(1195,13, 72, 54,0x14),
-   FieldTrait(1196,15, 73, 54,0x14), FieldTrait(1197,15, 80, 54,0x14), FieldTrait(1198, 1, 74, 54,0x14),
-   FieldTrait(1199,11, 75, 54,0x14), FieldTrait(1200,11, 76, 54,0x14), FieldTrait(1227,15, 67, 54,0x14),
-   FieldTrait(1242, 8, 79, 54,0x14), FieldTrait(1244, 8, 78, 54,0x14), FieldTrait(1435, 1, 81, 54,0x14),
-   FieldTrait(1439, 1, 82, 54,0x14), FieldTrait(1449,15, 83, 54,0x14), FieldTrait(1450,15, 84, 54,0x14),
-   FieldTrait(1451,14, 85, 54,0x14), FieldTrait(1452,14, 86, 54,0x14), FieldTrait(1457,14, 87, 54,0x14),
-   FieldTrait(1458,14, 88, 54,0x14), FieldTrait(1478, 1, 89, 54,0x14), FieldTrait(1479, 1, 90, 54,0x14),
-   FieldTrait(1480,14, 91, 54,0x14), FieldTrait(1481, 1, 92, 54,0x14), FieldTrait(1482, 1, 93, 54,0x14),
-   FieldTrait(1483, 1, 94, 21,0x1c)
+   {  15,19,128,  0,0x04}, {  18,16,100,  0,0x04}, {  21, 7, 99,  0,0x04}, {  22,15, 10, 54,0x14},
+   {  23,15,130,  0,0x04}, {  37,15,  1,  0,0x04}, {  40, 7,110,  0,0x04}, {  44,11,112,  0,0x04},
+   {  48,15,  9, 54,0x14}, {  55,15,  7, 54,0x14}, {  59, 7,132,  0,0x04}, {  60,22,108,  0,0x04},
+   {  63,15, 97,  0,0x04}, {  64,25, 98,  0,0x04}, {  65,15,  8, 54,0x14}, {  81, 7,105,  0,0x04},
+   {  99,11,113,  0,0x04}, { 100,20,103,  0,0x04}, { 106,15, 36, 54,0x14}, { 107,15, 39, 54,0x14},
+   { 110,10,101,  0,0x04}, { 111,10,102,  0,0x04}, { 114, 8,107,  0,0x04}, { 117,15,131,  0,0x04},
+   { 126,22,135,  0,0x04}, { 140,11,106,  0,0x04}, { 167,15, 14, 54,0x14}, { 168,22,133,  0,0x04},
+   { 200,21, 16, 54,0x14}, { 201, 1, 77, 54,0x14}, { 202,11, 30, 54,0x14}, { 206, 7, 32, 54,0x14},
+   { 207,20, 35, 54,0x14}, { 210,10,137,  0,0x04}, { 211, 9,138,100,0x14}, { 218,12,114,160,0x14},
+   { 220,19,115,160,0x14}, { 221,15,116,160,0x14}, { 222,15,117,160,0x14}, { 223,14, 34, 54,0x14},
+   { 224,25, 18, 54,0x14}, { 225,25, 19, 54,0x14}, { 226, 1, 21, 54,0x14}, { 227,14, 22, 54,0x14},
+   { 228, 9, 23, 54,0x14}, { 231, 9, 33, 54,0x14}, { 232, 1,109,162,0x1c}, { 235,15,122,198,0x14},
+   { 236,14,123,198,0x14}, { 239, 1, 20, 54,0x14}, { 240,25, 29, 54,0x14}, { 255,15, 24, 54,0x14},
+   { 348, 2, 37, 54,0x14}, { 349,28, 38, 54,0x14}, { 350, 2, 40, 54,0x14}, { 351,28, 41, 54,0x14},
+   { 376,15,129,  0,0x04}, { 386, 1,104,185,0x1c}, { 388, 7,149, 35,0x14}, { 389, 9,150, 35,0x14},
+   { 423, 1,111,  0,0x04}, { 427, 1,136,  0,0x04}, { 432,25,134,  0,0x04}, { 454, 1, 11,142,0x1c},
+   { 460, 1, 12, 54,0x14}, { 461,15, 13, 54,0x14}, { 470,18, 26, 54,0x14}, { 471,15, 27, 54,0x14},
+   { 472,15, 28, 54,0x14}, { 480, 7,159,  0,0x04}, { 481, 7,160,  0,0x04}, { 483,22,165,  0,0x04},
+   { 494,15,162,  0,0x04}, { 513,15,161,  0,0x04}, { 541,25, 17, 54,0x14}, { 543,15, 25, 54,0x14},
+   { 548,15,  2,  0,0x04}, { 549, 1,  4,  0,0x04}, { 550, 1,  5,  0,0x04}, { 551,15,  3,  0,0x04},
+   { 552, 1,  6,158,0x1c}, { 555, 1, 96, 49,0x1c}, { 662,11,118,160,0x14}, { 663, 1,119,160,0x14},
+   { 667,21, 43, 54,0x14}, { 691,15, 42, 54,0x14}, { 696,25,125,198,0x14}, { 697,11,126,198,0x14},
+   { 698, 1,127,198,0x14}, { 699,15,120,160,0x14}, { 701,25,124,198,0x14}, { 711, 1, 95,188,0x1c},
+   { 761,15,121,160,0x14}, { 762,15, 15, 54,0x14}, { 835, 1,139,100,0x14}, { 836, 1,140,100,0x14},
+   { 837, 1,141,100,0x14}, { 838, 1,142,100,0x14}, { 840, 1,143,100,0x14}, { 841, 1,151, 35,0x14},
+   { 842, 1,152, 35,0x14}, { 843, 1,153, 35,0x14}, { 844, 1,154, 35,0x14}, { 846, 1,155, 35,0x14},
+   { 847, 1,156,  0,0x04}, { 848,15,157,  0,0x04}, { 849,14,158,  0,0x04}, { 864, 1, 46, 38,0x1c},
+   { 873,25, 47, 54,0x14}, { 874,25, 48, 54,0x14}, { 875, 1, 44, 54,0x14}, { 876,15, 45, 54,0x14},
+   { 947,19, 31, 54,0x14}, { 957, 1,163,163,0x1c}, { 961,15,164,  0,0x04}, { 965,15, 49, 54,0x14},
+   { 966,15, 50, 54,0x14}, { 967, 9, 52, 54,0x14}, { 968, 9, 53, 54,0x14}, { 969, 9, 54, 54,0x14},
+   { 970, 1, 55, 54,0x14}, { 971, 1, 56, 54,0x14}, { 996,15, 58, 54,0x14}, { 997,15, 59, 54,0x14},
+   {1018, 1, 57, 57,0x1c}, {1049, 7, 51, 54,0x14}, {1079,26, 60, 54,0x14}, {1082,10,169, 36,0x14},
+   {1083, 7,170, 36,0x14}, {1084, 7,171, 36,0x14}, {1085,10,172, 36,0x14}, {1086,10,173, 36,0x14},
+   {1087,10,174, 36,0x14}, {1088,10,175, 36,0x14}, {1089,10,167,  0,0x04}, {1090, 1,168,  0,0x04},
+   {1092, 7,177,  0,0x04}, {1094, 1,144,100,0x14}, {1096,15,145,100,0x14}, {1097,15,146,100,0x14},
+   {1098,15,147,100,0x14}, {1099,15,148,100,0x14}, {1100, 7,178,186,0x14}, {1101, 7,179,186,0x14},
+   {1102,11,180,186,0x14}, {1103,15,181,186,0x14}, {1104,15,182,186,0x14}, {1105,15,183,186,0x14},
+   {1106,15,184,186,0x14}, {1107, 7,185,186,0x14}, {1108, 7,186,186,0x14}, {1109, 7,187,186,0x14},
+   {1110,11,188,186,0x14}, {1111, 7,189,186,0x14}, {1112,10,190,186,0x14}, {1113,15,191,186,0x14},
+   {1114,15,192,186,0x14}, {1116, 1,166,139,0x1c}, {1133, 7,193,  0,0x04}, {1138,10,176, 36,0x14},
+   {1146,13, 62, 54,0x14}, {1147,10, 63, 54,0x14}, {1151,15, 61, 54,0x14}, {1184, 2, 64,150,0x14},
+   {1185,29, 65,150,0x14}, {1186,15, 66,150,0x14}, {1191,15, 68, 54,0x14}, {1192,10, 69, 54,0x14},
+   {1193, 7, 70, 54,0x14}, {1194, 1, 71, 54,0x14}, {1195,13, 72, 54,0x14}, {1196,15, 73, 54,0x14},
+   {1197,15, 80, 54,0x14}, {1198, 1, 74, 54,0x14}, {1199,11, 75, 54,0x14}, {1200,11, 76, 54,0x14},
+   {1227,15, 67, 54,0x14}, {1242, 8, 79, 54,0x14}, {1244, 8, 78, 54,0x14}, {1435, 1, 81, 54,0x14},
+   {1439, 1, 82, 54,0x14}, {1449,15, 83, 54,0x14}, {1450,15, 84, 54,0x14}, {1451,14, 85, 54,0x14},
+   {1452,14, 86, 54,0x14}, {1457,14, 87, 54,0x14}, {1458,14, 88, 54,0x14}, {1478, 1, 89, 54,0x14},
+   {1479, 1, 90, 54,0x14}, {1480,14, 91, 54,0x14}, {1481, 1, 92, 54,0x14}, {1482, 1, 93, 54,0x14},
+   {1483, 1, 94, 21,0x1c}
 };
 const FieldTrait_Hash_Array CrossOrderCancelReplaceRequest::_ftha(CrossOrderCancelReplaceRequest::_traits, 193);
 const MsgType CrossOrderCancelReplaceRequest::_msgtype("t");
@@ -11912,48 +10863,40 @@ const FieldTrait *CrossOrderCancelReplaceRequest::NoComplexEvents::NoComplexEven
 const FieldTrait_Hash_Array& CrossOrderCancelReplaceRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CrossOrderCancelReplaceRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait trailer::_traits[] =
+const FieldTrait trailer::_traits[]
 {
-   FieldTrait(  10,15,  3,  0,0x64), FieldTrait(  89,28,  2,  0,0x04), FieldTrait(  93, 2,  1,  0,0x04)
+   {  10,15,  3,  0,0x64}, {  89,28,  2,  0,0x04}, {  93, 2,  1,  0,0x04}
 };
 const FieldTrait_Hash_Array trailer::_ftha(trailer::_traits, 3);
 const MsgType trailer::_msgtype("trailer");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CrossOrderCancelRequest::_traits[] =
+const FieldTrait CrossOrderCancelRequest::_traits[]
 {
-   FieldTrait(  22,15, 10, 54,0x14), FieldTrait(  37,15,  1,  0,0x04), FieldTrait(  48,15,  9, 54,0x14),
-   FieldTrait(  55,15,  7, 54,0x14), FieldTrait(  60,22, 97,  0,0x04), FieldTrait(  65,15,  8, 54,0x14),
-   FieldTrait( 106,15, 36, 54,0x14), FieldTrait( 107,15, 39, 54,0x14), FieldTrait( 167,15, 14, 54,0x14),
-   FieldTrait( 200,21, 16, 54,0x14), FieldTrait( 201, 1, 77, 54,0x14), FieldTrait( 202,11, 30, 54,0x14),
-   FieldTrait( 206, 7, 32, 54,0x14), FieldTrait( 207,20, 35, 54,0x14), FieldTrait( 223,14, 34, 54,0x14),
-   FieldTrait( 224,25, 18, 54,0x14), FieldTrait( 225,25, 19, 54,0x14), FieldTrait( 226, 1, 21, 54,0x14),
-   FieldTrait( 227,14, 22, 54,0x14), FieldTrait( 228, 9, 23, 54,0x14), FieldTrait( 231, 9, 33, 54,0x14),
-   FieldTrait( 239, 1, 20, 54,0x14), FieldTrait( 240,25, 29, 54,0x14), FieldTrait( 255,15, 24, 54,0x14),
-   FieldTrait( 348, 2, 37, 54,0x14), FieldTrait( 349,28, 38, 54,0x14), FieldTrait( 350, 2, 40, 54,0x14),
-   FieldTrait( 351,28, 41, 54,0x14), FieldTrait( 454, 1, 11,142,0x1c), FieldTrait( 460, 1, 12, 54,0x14),
-   FieldTrait( 461,15, 13, 54,0x14), FieldTrait( 470,18, 26, 54,0x14), FieldTrait( 471,15, 27, 54,0x14),
-   FieldTrait( 472,15, 28, 54,0x14), FieldTrait( 541,25, 17, 54,0x14), FieldTrait( 543,15, 25, 54,0x14),
-   FieldTrait( 548,15,  2,  0,0x04), FieldTrait( 549, 1,  4,  0,0x04), FieldTrait( 550, 1,  5,  0,0x04),
-   FieldTrait( 551,15,  3,  0,0x04), FieldTrait( 552, 1,  6,157,0x1c), FieldTrait( 555, 1, 96, 49,0x1c),
-   FieldTrait( 667,21, 43, 54,0x14), FieldTrait( 691,15, 42, 54,0x14), FieldTrait( 711, 1, 95,188,0x1c),
-   FieldTrait( 762,15, 15, 54,0x14), FieldTrait( 864, 1, 46, 38,0x1c), FieldTrait( 873,25, 47, 54,0x14),
-   FieldTrait( 874,25, 48, 54,0x14), FieldTrait( 875, 1, 44, 54,0x14), FieldTrait( 876,15, 45, 54,0x14),
-   FieldTrait( 947,19, 31, 54,0x14), FieldTrait( 961,15, 98,  0,0x04), FieldTrait( 965,15, 49, 54,0x14),
-   FieldTrait( 966,15, 50, 54,0x14), FieldTrait( 967, 9, 52, 54,0x14), FieldTrait( 968, 9, 53, 54,0x14),
-   FieldTrait( 969, 9, 54, 54,0x14), FieldTrait( 970, 1, 55, 54,0x14), FieldTrait( 971, 1, 56, 54,0x14),
-   FieldTrait( 996,15, 58, 54,0x14), FieldTrait( 997,15, 59, 54,0x14), FieldTrait(1018, 1, 57, 57,0x1c),
-   FieldTrait(1049, 7, 51, 54,0x14), FieldTrait(1079,26, 60, 54,0x14), FieldTrait(1116, 1, 99,139,0x1c),
-   FieldTrait(1146,13, 62, 54,0x14), FieldTrait(1147,10, 63, 54,0x14), FieldTrait(1151,15, 61, 54,0x14),
-   FieldTrait(1184, 2, 64,150,0x14), FieldTrait(1185,29, 65,150,0x14), FieldTrait(1186,15, 66,150,0x14),
-   FieldTrait(1191,15, 68, 54,0x14), FieldTrait(1192,10, 69, 54,0x14), FieldTrait(1193, 7, 70, 54,0x14),
-   FieldTrait(1194, 1, 71, 54,0x14), FieldTrait(1195,13, 72, 54,0x14), FieldTrait(1196,15, 73, 54,0x14),
-   FieldTrait(1197,15, 80, 54,0x14), FieldTrait(1198, 1, 74, 54,0x14), FieldTrait(1199,11, 75, 54,0x14),
-   FieldTrait(1200,11, 76, 54,0x14), FieldTrait(1227,15, 67, 54,0x14), FieldTrait(1242, 8, 79, 54,0x14),
-   FieldTrait(1244, 8, 78, 54,0x14), FieldTrait(1435, 1, 81, 54,0x14), FieldTrait(1439, 1, 82, 54,0x14),
-   FieldTrait(1449,15, 83, 54,0x14), FieldTrait(1450,15, 84, 54,0x14), FieldTrait(1451,14, 85, 54,0x14),
-   FieldTrait(1452,14, 86, 54,0x14), FieldTrait(1457,14, 87, 54,0x14), FieldTrait(1458,14, 88, 54,0x14),
-   FieldTrait(1478, 1, 89, 54,0x14), FieldTrait(1479, 1, 90, 54,0x14), FieldTrait(1480,14, 91, 54,0x14),
-   FieldTrait(1481, 1, 92, 54,0x14), FieldTrait(1482, 1, 93, 54,0x14), FieldTrait(1483, 1, 94, 21,0x1c)
+   {  22,15, 10, 54,0x14}, {  37,15,  1,  0,0x04}, {  48,15,  9, 54,0x14}, {  55,15,  7, 54,0x14},
+   {  60,22, 97,  0,0x04}, {  65,15,  8, 54,0x14}, { 106,15, 36, 54,0x14}, { 107,15, 39, 54,0x14},
+   { 167,15, 14, 54,0x14}, { 200,21, 16, 54,0x14}, { 201, 1, 77, 54,0x14}, { 202,11, 30, 54,0x14},
+   { 206, 7, 32, 54,0x14}, { 207,20, 35, 54,0x14}, { 223,14, 34, 54,0x14}, { 224,25, 18, 54,0x14},
+   { 225,25, 19, 54,0x14}, { 226, 1, 21, 54,0x14}, { 227,14, 22, 54,0x14}, { 228, 9, 23, 54,0x14},
+   { 231, 9, 33, 54,0x14}, { 239, 1, 20, 54,0x14}, { 240,25, 29, 54,0x14}, { 255,15, 24, 54,0x14},
+   { 348, 2, 37, 54,0x14}, { 349,28, 38, 54,0x14}, { 350, 2, 40, 54,0x14}, { 351,28, 41, 54,0x14},
+   { 454, 1, 11,142,0x1c}, { 460, 1, 12, 54,0x14}, { 461,15, 13, 54,0x14}, { 470,18, 26, 54,0x14},
+   { 471,15, 27, 54,0x14}, { 472,15, 28, 54,0x14}, { 541,25, 17, 54,0x14}, { 543,15, 25, 54,0x14},
+   { 548,15,  2,  0,0x04}, { 549, 1,  4,  0,0x04}, { 550, 1,  5,  0,0x04}, { 551,15,  3,  0,0x04},
+   { 552, 1,  6,157,0x1c}, { 555, 1, 96, 49,0x1c}, { 667,21, 43, 54,0x14}, { 691,15, 42, 54,0x14},
+   { 711, 1, 95,188,0x1c}, { 762,15, 15, 54,0x14}, { 864, 1, 46, 38,0x1c}, { 873,25, 47, 54,0x14},
+   { 874,25, 48, 54,0x14}, { 875, 1, 44, 54,0x14}, { 876,15, 45, 54,0x14}, { 947,19, 31, 54,0x14},
+   { 961,15, 98,  0,0x04}, { 965,15, 49, 54,0x14}, { 966,15, 50, 54,0x14}, { 967, 9, 52, 54,0x14},
+   { 968, 9, 53, 54,0x14}, { 969, 9, 54, 54,0x14}, { 970, 1, 55, 54,0x14}, { 971, 1, 56, 54,0x14},
+   { 996,15, 58, 54,0x14}, { 997,15, 59, 54,0x14}, {1018, 1, 57, 57,0x1c}, {1049, 7, 51, 54,0x14},
+   {1079,26, 60, 54,0x14}, {1116, 1, 99,139,0x1c}, {1146,13, 62, 54,0x14}, {1147,10, 63, 54,0x14},
+   {1151,15, 61, 54,0x14}, {1184, 2, 64,150,0x14}, {1185,29, 65,150,0x14}, {1186,15, 66,150,0x14},
+   {1191,15, 68, 54,0x14}, {1192,10, 69, 54,0x14}, {1193, 7, 70, 54,0x14}, {1194, 1, 71, 54,0x14},
+   {1195,13, 72, 54,0x14}, {1196,15, 73, 54,0x14}, {1197,15, 80, 54,0x14}, {1198, 1, 74, 54,0x14},
+   {1199,11, 75, 54,0x14}, {1200,11, 76, 54,0x14}, {1227,15, 67, 54,0x14}, {1242, 8, 79, 54,0x14},
+   {1244, 8, 78, 54,0x14}, {1435, 1, 81, 54,0x14}, {1439, 1, 82, 54,0x14}, {1449,15, 83, 54,0x14},
+   {1450,15, 84, 54,0x14}, {1451,14, 85, 54,0x14}, {1452,14, 86, 54,0x14}, {1457,14, 87, 54,0x14},
+   {1458,14, 88, 54,0x14}, {1478, 1, 89, 54,0x14}, {1479, 1, 90, 54,0x14}, {1480,14, 91, 54,0x14},
+   {1481, 1, 92, 54,0x14}, {1482, 1, 93, 54,0x14}, {1483, 1, 94, 21,0x1c}
 };
 const FieldTrait_Hash_Array CrossOrderCancelRequest::_ftha(CrossOrderCancelRequest::_traits, 99);
 const MsgType CrossOrderCancelRequest::_msgtype("u");
@@ -11962,14 +10905,13 @@ const FieldTrait *CrossOrderCancelRequest::NoSecurityAltID::_traits(NoSecurityAl
 const FieldTrait_Hash_Array& CrossOrderCancelRequest::NoSecurityAltID::_ftha(NoSecurityAltIDV1_ftha);
 const MsgType& CrossOrderCancelRequest::NoSecurityAltID::_msgtype(NoSecurityAltIDV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait CrossOrderCancelRequest::NoSides::_traits[] =
+const FieldTrait CrossOrderCancelRequest::NoSides::_traits[]
 {
-   FieldTrait(  11,15,  3,  0,0x05), FieldTrait(  38,10, 10, 93,0x14), FieldTrait(  41,15,  2,  0,0x04),
-   FieldTrait(  54, 7,  1,  0,0x05), FieldTrait(  58,15, 16,  0,0x04), FieldTrait(  75,25,  9,  0,0x04),
-   FieldTrait( 152,10, 11, 93,0x14), FieldTrait( 229,25,  8,  0,0x04), FieldTrait( 354, 2, 17,  0,0x04),
-   FieldTrait( 355,28, 18,  0,0x04), FieldTrait( 376,15, 15,  0,0x04), FieldTrait( 453, 1,  7, 94,0x1c),
-   FieldTrait( 468, 7, 13, 93,0x14), FieldTrait( 469, 9, 14, 93,0x14), FieldTrait( 516,14, 12, 93,0x14),
-   FieldTrait( 526,15,  4,  0,0x04), FieldTrait( 583,15,  5,  0,0x04), FieldTrait( 586,22,  6,  0,0x04)
+   {  11,15,  3,  0,0x05}, {  38,10, 10, 93,0x14}, {  41,15,  2,  0,0x04}, {  54, 7,  1,  0,0x05},
+   {  58,15, 16,  0,0x04}, {  75,25,  9,  0,0x04}, { 152,10, 11, 93,0x14}, { 229,25,  8,  0,0x04},
+   { 354, 2, 17,  0,0x04}, { 355,28, 18,  0,0x04}, { 376,15, 15,  0,0x04}, { 453, 1,  7, 94,0x1c},
+   { 468, 7, 13, 93,0x14}, { 469, 9, 14, 93,0x14}, { 516,14, 12, 93,0x14}, { 526,15,  4,  0,0x04},
+   { 583,15,  5,  0,0x04}, { 586,22,  6,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    CrossOrderCancelRequest::NoSides::_ftha(CrossOrderCancelRequest::NoSides::_traits, 18);
@@ -12043,78 +10985,66 @@ const FieldTrait *CrossOrderCancelRequest::NoComplexEvents::NoComplexEventDates:
 const FieldTrait_Hash_Array& CrossOrderCancelRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& CrossOrderCancelRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityTypeRequest::_traits[] =
+const FieldTrait SecurityTypeRequest::_traits[]
 {
-   FieldTrait(  58,15,  2,  0,0x04), FieldTrait( 167,15,  8,  0,0x04), FieldTrait( 320,15,  1,  0,0x04),
-   FieldTrait( 336,15,  5,  0,0x04), FieldTrait( 354, 2,  3,  0,0x04), FieldTrait( 355,28,  4,  0,0x04),
-   FieldTrait( 460, 1,  7,  0,0x04), FieldTrait( 625,15,  6,  0,0x04), FieldTrait( 762,15,  9,  0,0x04),
-   FieldTrait(1300,15, 11,  0,0x04), FieldTrait(1301,20, 10,  0,0x04)
+   {  58,15,  2,  0,0x04}, { 167,15,  8,  0,0x04}, { 320,15,  1,  0,0x04}, { 336,15,  5,  0,0x04},
+   { 354, 2,  3,  0,0x04}, { 355,28,  4,  0,0x04}, { 460, 1,  7,  0,0x04}, { 625,15,  6,  0,0x04},
+   { 762,15,  9,  0,0x04}, {1300,15, 11,  0,0x04}, {1301,20, 10,  0,0x04}
 };
 const FieldTrait_Hash_Array SecurityTypeRequest::_ftha(SecurityTypeRequest::_traits, 11);
 const MsgType SecurityTypeRequest::_msgtype("v");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityTypes::_traits[] =
+const FieldTrait SecurityTypes::_traits[]
 {
-   FieldTrait(  58,15,  7,  0,0x04), FieldTrait( 263, 7, 12,  0,0x04), FieldTrait( 320,15,  1,  0,0x04),
-   FieldTrait( 322,15,  2,  0,0x04), FieldTrait( 323, 1,  3,  0,0x04), FieldTrait( 336,15, 10,  0,0x04),
-   FieldTrait( 354, 2,  8,  0,0x04), FieldTrait( 355,28,  9,  0,0x04), FieldTrait( 557, 1,  4,  0,0x04),
-   FieldTrait( 558, 1,  6,147,0x1c), FieldTrait( 625,15, 11,  0,0x04), FieldTrait( 893, 8,  5,  0,0x04),
-   FieldTrait(1180,15, 15,  8,0x14), FieldTrait(1181, 4, 16,  8,0x14), FieldTrait(1300,15, 14,  0,0x04),
-   FieldTrait(1301,20, 13,  0,0x04), FieldTrait(1350, 4, 17,  8,0x14), FieldTrait(1352, 8, 18,  8,0x14)
+   {  58,15,  7,  0,0x04}, { 263, 7, 12,  0,0x04}, { 320,15,  1,  0,0x04}, { 322,15,  2,  0,0x04},
+   { 323, 1,  3,  0,0x04}, { 336,15, 10,  0,0x04}, { 354, 2,  8,  0,0x04}, { 355,28,  9,  0,0x04},
+   { 557, 1,  4,  0,0x04}, { 558, 1,  6,147,0x1c}, { 625,15, 11,  0,0x04}, { 893, 8,  5,  0,0x04},
+   {1180,15, 15,  8,0x14}, {1181, 4, 16,  8,0x14}, {1300,15, 14,  0,0x04}, {1301,20, 13,  0,0x04},
+   {1350, 4, 17,  8,0x14}, {1352, 8, 18,  8,0x14}
 };
 const FieldTrait_Hash_Array SecurityTypes::_ftha(SecurityTypes::_traits, 18);
 const MsgType SecurityTypes::_msgtype("w");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityTypes::NoSecurityTypes::_traits[] =
+const FieldTrait SecurityTypes::NoSecurityTypes::_traits[]
 {
-   FieldTrait(  60,22,  5,  0,0x04), FieldTrait( 167,15,  1,  0,0x04), FieldTrait( 460, 1,  3,  0,0x04),
-   FieldTrait( 461,15,  4,  0,0x04), FieldTrait( 762,15,  2,  0,0x04)
+   {  60,22,  5,  0,0x04}, { 167,15,  1,  0,0x04}, { 460, 1,  3,  0,0x04}, { 461,15,  4,  0,0x04},
+   { 762,15,  2,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    SecurityTypes::NoSecurityTypes::_ftha(SecurityTypes::NoSecurityTypes::_traits, 5);
 const MsgType SecurityTypes::NoSecurityTypes::_msgtype("NoSecurityTypes");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityListRequest::_traits[] =
+const FieldTrait SecurityListRequest::_traits[]
 {
-   FieldTrait(  15,19,105,  0,0x04), FieldTrait(  22,15,  6, 54,0x14), FieldTrait(  48,15,  5, 54,0x14),
-   FieldTrait(  55,15,  3, 54,0x14), FieldTrait(  58,15,106,  0,0x04), FieldTrait(  65,15,  4, 54,0x14),
-   FieldTrait( 106,15, 32, 54,0x14), FieldTrait( 107,15, 35, 54,0x14), FieldTrait( 167,15, 10, 54,0x14),
-   FieldTrait( 200,21, 12, 54,0x14), FieldTrait( 201, 1, 73, 54,0x14), FieldTrait( 202,11, 26, 54,0x14),
-   FieldTrait( 206, 7, 28, 54,0x14), FieldTrait( 207,20, 31, 54,0x14), FieldTrait( 223,14, 30, 54,0x14),
-   FieldTrait( 224,25, 14, 54,0x14), FieldTrait( 225,25, 15, 54,0x14), FieldTrait( 226, 1, 17, 54,0x14),
-   FieldTrait( 227,14, 18, 54,0x14), FieldTrait( 228, 9, 19, 54,0x14), FieldTrait( 231, 9, 29, 54,0x14),
-   FieldTrait( 239, 1, 16, 54,0x14), FieldTrait( 240,25, 25, 54,0x14), FieldTrait( 255,15, 20, 54,0x14),
-   FieldTrait( 263, 7,111,  0,0x04), FieldTrait( 320,15,  1,  0,0x04), FieldTrait( 336,15,109,  0,0x04),
-   FieldTrait( 348, 2, 33, 54,0x14), FieldTrait( 349,28, 34, 54,0x14), FieldTrait( 350, 2, 36, 54,0x14),
-   FieldTrait( 351,28, 37, 54,0x14), FieldTrait( 354, 2,107,  0,0x04), FieldTrait( 355,28,108,  0,0x04),
-   FieldTrait( 454, 1,  7,142,0x1c), FieldTrait( 460, 1,  8, 54,0x14), FieldTrait( 461,15,  9, 54,0x14),
-   FieldTrait( 470,18, 22, 54,0x14), FieldTrait( 471,15, 23, 54,0x14), FieldTrait( 472,15, 24, 54,0x14),
-   FieldTrait( 541,25, 13, 54,0x14), FieldTrait( 543,15, 21, 54,0x14), FieldTrait( 555, 1,104, 49,0x1c),
-   FieldTrait( 559, 1,  2,  0,0x04), FieldTrait( 625,15,110,  0,0x04), FieldTrait( 667,21, 39, 54,0x14),
-   FieldTrait( 668, 1, 91, 55,0x14), FieldTrait( 691,15, 38, 54,0x14), FieldTrait( 711, 1,103,188,0x1c),
-   FieldTrait( 762,15, 11, 54,0x14), FieldTrait( 788, 1, 98, 44,0x14), FieldTrait( 864, 1, 42, 38,0x1c),
-   FieldTrait( 869,14, 92, 55,0x14), FieldTrait( 870, 1, 93,  9,0x1c), FieldTrait( 873,25, 43, 54,0x14),
-   FieldTrait( 874,25, 44, 54,0x14), FieldTrait( 875, 1, 40, 54,0x14), FieldTrait( 876,15, 41, 54,0x14),
-   FieldTrait( 898,14,102, 44,0x14), FieldTrait( 913,15, 94, 44,0x14), FieldTrait( 914,15, 95, 44,0x14),
-   FieldTrait( 915,25, 96, 44,0x14), FieldTrait( 916,25, 99, 44,0x14), FieldTrait( 917,25,100, 44,0x14),
-   FieldTrait( 918,19, 97, 44,0x14), FieldTrait( 919, 1,101, 44,0x14), FieldTrait( 947,19, 27, 54,0x14),
-   FieldTrait( 965,15, 45, 54,0x14), FieldTrait( 966,15, 46, 54,0x14), FieldTrait( 967, 9, 48, 54,0x14),
-   FieldTrait( 968, 9, 49, 54,0x14), FieldTrait( 969, 9, 50, 54,0x14), FieldTrait( 970, 1, 51, 54,0x14),
-   FieldTrait( 971, 1, 52, 54,0x14), FieldTrait( 996,15, 54, 54,0x14), FieldTrait( 997,15, 55, 54,0x14),
-   FieldTrait(1018, 1, 53, 57,0x1c), FieldTrait(1049, 7, 47, 54,0x14), FieldTrait(1079,26, 56, 54,0x14),
-   FieldTrait(1146,13, 58, 54,0x14), FieldTrait(1147,10, 59, 54,0x14), FieldTrait(1151,15, 57, 54,0x14),
-   FieldTrait(1184, 2, 60,150,0x14), FieldTrait(1185,29, 61,150,0x14), FieldTrait(1186,15, 62,150,0x14),
-   FieldTrait(1191,15, 64, 54,0x14), FieldTrait(1192,10, 65, 54,0x14), FieldTrait(1193, 7, 66, 54,0x14),
-   FieldTrait(1194, 1, 67, 54,0x14), FieldTrait(1195,13, 68, 54,0x14), FieldTrait(1196,15, 69, 54,0x14),
-   FieldTrait(1197,15, 76, 54,0x14), FieldTrait(1198, 1, 70, 54,0x14), FieldTrait(1199,11, 71, 54,0x14),
-   FieldTrait(1200,11, 72, 54,0x14), FieldTrait(1227,15, 63, 54,0x14), FieldTrait(1242, 8, 75, 54,0x14),
-   FieldTrait(1244, 8, 74, 54,0x14), FieldTrait(1300,15,113,  0,0x04), FieldTrait(1301,20,112,  0,0x04),
-   FieldTrait(1435, 1, 77, 54,0x14), FieldTrait(1439, 1, 78, 54,0x14), FieldTrait(1449,15, 79, 54,0x14),
-   FieldTrait(1450,15, 80, 54,0x14), FieldTrait(1451,14, 81, 54,0x14), FieldTrait(1452,14, 82, 54,0x14),
-   FieldTrait(1457,14, 83, 54,0x14), FieldTrait(1458,14, 84, 54,0x14), FieldTrait(1465,15,114,  0,0x04),
-   FieldTrait(1470, 1,115,  0,0x04), FieldTrait(1471, 1,116,  0,0x04), FieldTrait(1478, 1, 85, 54,0x14),
-   FieldTrait(1479, 1, 86, 54,0x14), FieldTrait(1480,14, 87, 54,0x14), FieldTrait(1481, 1, 88, 54,0x14),
-   FieldTrait(1482, 1, 89, 54,0x14), FieldTrait(1483, 1, 90, 21,0x1c)
+   {  15,19,105,  0,0x04}, {  22,15,  6, 54,0x14}, {  48,15,  5, 54,0x14}, {  55,15,  3, 54,0x14},
+   {  58,15,106,  0,0x04}, {  65,15,  4, 54,0x14}, { 106,15, 32, 54,0x14}, { 107,15, 35, 54,0x14},
+   { 167,15, 10, 54,0x14}, { 200,21, 12, 54,0x14}, { 201, 1, 73, 54,0x14}, { 202,11, 26, 54,0x14},
+   { 206, 7, 28, 54,0x14}, { 207,20, 31, 54,0x14}, { 223,14, 30, 54,0x14}, { 224,25, 14, 54,0x14},
+   { 225,25, 15, 54,0x14}, { 226, 1, 17, 54,0x14}, { 227,14, 18, 54,0x14}, { 228, 9, 19, 54,0x14},
+   { 231, 9, 29, 54,0x14}, { 239, 1, 16, 54,0x14}, { 240,25, 25, 54,0x14}, { 255,15, 20, 54,0x14},
+   { 263, 7,111,  0,0x04}, { 320,15,  1,  0,0x04}, { 336,15,109,  0,0x04}, { 348, 2, 33, 54,0x14},
+   { 349,28, 34, 54,0x14}, { 350, 2, 36, 54,0x14}, { 351,28, 37, 54,0x14}, { 354, 2,107,  0,0x04},
+   { 355,28,108,  0,0x04}, { 454, 1,  7,142,0x1c}, { 460, 1,  8, 54,0x14}, { 461,15,  9, 54,0x14},
+   { 470,18, 22, 54,0x14}, { 471,15, 23, 54,0x14}, { 472,15, 24, 54,0x14}, { 541,25, 13, 54,0x14},
+   { 543,15, 21, 54,0x14}, { 555, 1,104, 49,0x1c}, { 559, 1,  2,  0,0x04}, { 625,15,110,  0,0x04},
+   { 667,21, 39, 54,0x14}, { 668, 1, 91, 55,0x14}, { 691,15, 38, 54,0x14}, { 711, 1,103,188,0x1c},
+   { 762,15, 11, 54,0x14}, { 788, 1, 98, 44,0x14}, { 864, 1, 42, 38,0x1c}, { 869,14, 92, 55,0x14},
+   { 870, 1, 93,  9,0x1c}, { 873,25, 43, 54,0x14}, { 874,25, 44, 54,0x14}, { 875, 1, 40, 54,0x14},
+   { 876,15, 41, 54,0x14}, { 898,14,102, 44,0x14}, { 913,15, 94, 44,0x14}, { 914,15, 95, 44,0x14},
+   { 915,25, 96, 44,0x14}, { 916,25, 99, 44,0x14}, { 917,25,100, 44,0x14}, { 918,19, 97, 44,0x14},
+   { 919, 1,101, 44,0x14}, { 947,19, 27, 54,0x14}, { 965,15, 45, 54,0x14}, { 966,15, 46, 54,0x14},
+   { 967, 9, 48, 54,0x14}, { 968, 9, 49, 54,0x14}, { 969, 9, 50, 54,0x14}, { 970, 1, 51, 54,0x14},
+   { 971, 1, 52, 54,0x14}, { 996,15, 54, 54,0x14}, { 997,15, 55, 54,0x14}, {1018, 1, 53, 57,0x1c},
+   {1049, 7, 47, 54,0x14}, {1079,26, 56, 54,0x14}, {1146,13, 58, 54,0x14}, {1147,10, 59, 54,0x14},
+   {1151,15, 57, 54,0x14}, {1184, 2, 60,150,0x14}, {1185,29, 61,150,0x14}, {1186,15, 62,150,0x14},
+   {1191,15, 64, 54,0x14}, {1192,10, 65, 54,0x14}, {1193, 7, 66, 54,0x14}, {1194, 1, 67, 54,0x14},
+   {1195,13, 68, 54,0x14}, {1196,15, 69, 54,0x14}, {1197,15, 76, 54,0x14}, {1198, 1, 70, 54,0x14},
+   {1199,11, 71, 54,0x14}, {1200,11, 72, 54,0x14}, {1227,15, 63, 54,0x14}, {1242, 8, 75, 54,0x14},
+   {1244, 8, 74, 54,0x14}, {1300,15,113,  0,0x04}, {1301,20,112,  0,0x04}, {1435, 1, 77, 54,0x14},
+   {1439, 1, 78, 54,0x14}, {1449,15, 79, 54,0x14}, {1450,15, 80, 54,0x14}, {1451,14, 81, 54,0x14},
+   {1452,14, 82, 54,0x14}, {1457,14, 83, 54,0x14}, {1458,14, 84, 54,0x14}, {1465,15,114,  0,0x04},
+   {1470, 1,115,  0,0x04}, {1471, 1,116,  0,0x04}, {1478, 1, 85, 54,0x14}, {1479, 1, 86, 54,0x14},
+   {1480,14, 87, 54,0x14}, {1481, 1, 88, 54,0x14}, {1482, 1, 89, 54,0x14}, {1483, 1, 90, 21,0x1c}
 };
 const FieldTrait_Hash_Array SecurityListRequest::_ftha(SecurityListRequest::_traits, 116);
 const MsgType SecurityListRequest::_msgtype("x");
@@ -12179,69 +11109,56 @@ const FieldTrait *SecurityListRequest::NoComplexEvents::NoComplexEventDates::NoC
 const FieldTrait_Hash_Array& SecurityListRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityListRequest::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityList::_traits[] =
+const FieldTrait SecurityList::_traits[]
 {
-   FieldTrait(  60,22, 22,  0,0x04), FieldTrait( 146, 1,  6,143,0x1c), FieldTrait( 320,15,  1,  0,0x04),
-   FieldTrait( 322,15,  2,  0,0x04), FieldTrait( 393, 1,  4,  0,0x04), FieldTrait( 560, 1,  3,  0,0x04),
-   FieldTrait( 715,25,  8,  0,0x04), FieldTrait( 893, 8,  5,  0,0x04), FieldTrait( 964, 1,  7,  0,0x04),
-   FieldTrait(1180,15, 11,  8,0x14), FieldTrait(1181, 4, 12,  8,0x14), FieldTrait(1300,15, 10,  0,0x04),
-   FieldTrait(1301,20,  9,  0,0x04), FieldTrait(1350, 4, 13,  8,0x14), FieldTrait(1352, 8, 14,  8,0x14),
-   FieldTrait(1465,15, 15,  0,0x04), FieldTrait(1466,15, 16,  0,0x04), FieldTrait(1467,15, 17,  0,0x04),
-   FieldTrait(1468, 2, 18,  0,0x04), FieldTrait(1469,28, 19,  0,0x04), FieldTrait(1470, 1, 20,  0,0x04),
-   FieldTrait(1471, 1, 21,  0,0x04)
+   {  60,22, 22,  0,0x04}, { 146, 1,  6,143,0x1c}, { 320,15,  1,  0,0x04}, { 322,15,  2,  0,0x04},
+   { 393, 1,  4,  0,0x04}, { 560, 1,  3,  0,0x04}, { 715,25,  8,  0,0x04}, { 893, 8,  5,  0,0x04},
+   { 964, 1,  7,  0,0x04}, {1180,15, 11,  8,0x14}, {1181, 4, 12,  8,0x14}, {1300,15, 10,  0,0x04},
+   {1301,20,  9,  0,0x04}, {1350, 4, 13,  8,0x14}, {1352, 8, 14,  8,0x14}, {1465,15, 15,  0,0x04},
+   {1466,15, 16,  0,0x04}, {1467,15, 17,  0,0x04}, {1468, 2, 18,  0,0x04}, {1469,28, 19,  0,0x04},
+   {1470, 1, 20,  0,0x04}, {1471, 1, 21,  0,0x04}
 };
 const FieldTrait_Hash_Array SecurityList::_ftha(SecurityList::_traits, 22);
 const MsgType SecurityList::_msgtype("y");
 //-------------------------------------------------------------------------------------------------
-const FieldTrait SecurityList::NoRelatedSym::_traits[] =
+const FieldTrait SecurityList::NoRelatedSym::_traits[]
 {
-   FieldTrait(  15,19,102,  0,0x04), FieldTrait(  22,15,  4, 54,0x14), FieldTrait(  48,15,  3, 54,0x14),
-   FieldTrait(  55,15,  1, 54,0x14), FieldTrait(  58,15,119,  0,0x04), FieldTrait(  65,15,  2, 54,0x14),
-   FieldTrait( 106,15, 30, 54,0x14), FieldTrait( 107,15, 33, 54,0x14), FieldTrait( 167,15,  8, 54,0x14),
-   FieldTrait( 200,21, 10, 54,0x14), FieldTrait( 201, 1, 71, 54,0x14), FieldTrait( 202,11, 24, 54,0x14),
-   FieldTrait( 206, 7, 26, 54,0x14), FieldTrait( 207,20, 29, 54,0x14), FieldTrait( 218,12,105,160,0x14),
-   FieldTrait( 220,19,106,160,0x14), FieldTrait( 221,15,107,160,0x14), FieldTrait( 222,15,108,160,0x14),
-   FieldTrait( 223,14, 28, 54,0x14), FieldTrait( 224,25, 12, 54,0x14), FieldTrait( 225,25, 13, 54,0x14),
-   FieldTrait( 226, 1, 15, 54,0x14), FieldTrait( 227,14, 16, 54,0x14), FieldTrait( 228, 9, 17, 54,0x14),
-   FieldTrait( 231, 9, 27, 54,0x14), FieldTrait( 232, 1,103,162,0x1c), FieldTrait( 235,15,113,198,0x14),
-   FieldTrait( 236,14,114,198,0x14), FieldTrait( 239, 1, 14, 54,0x14), FieldTrait( 240,25, 23, 54,0x14),
-   FieldTrait( 255,15, 18, 54,0x14), FieldTrait( 348, 2, 31, 54,0x14), FieldTrait( 349,28, 32, 54,0x14),
-   FieldTrait( 350, 2, 34, 54,0x14), FieldTrait( 351,28, 35, 54,0x14), FieldTrait( 354, 2,120,  0,0x04),
-   FieldTrait( 355,28,121,  0,0x04), FieldTrait( 423, 1,137, 10,0x14), FieldTrait( 454, 1,  5,142,0x1c),
-   FieldTrait( 460, 1,  6, 54,0x14), FieldTrait( 461,15,  7, 54,0x14), FieldTrait( 470,18, 20, 54,0x14),
-   FieldTrait( 471,15, 21, 54,0x14), FieldTrait( 472,15, 22, 54,0x14), FieldTrait( 541,25, 11, 54,0x14),
-   FieldTrait( 543,15, 19, 54,0x14), FieldTrait( 555, 1,104, 51,0x1c), FieldTrait( 561,10,134, 10,0x14),
-   FieldTrait( 562,10,129, 10,0x14), FieldTrait( 662,11,109,160,0x14), FieldTrait( 663, 1,110,160,0x14),
-   FieldTrait( 667,21, 37, 54,0x14), FieldTrait( 668, 1, 89, 55,0x14), FieldTrait( 691,15, 36, 54,0x14),
-   FieldTrait( 696,25,116,198,0x14), FieldTrait( 697,11,117,198,0x14), FieldTrait( 698, 1,118,198,0x14),
-   FieldTrait( 699,15,111,160,0x14), FieldTrait( 701,25,115,198,0x14), FieldTrait( 711, 1,101,188,0x1c),
-   FieldTrait( 761,15,112,160,0x14), FieldTrait( 762,15,  9, 54,0x14), FieldTrait( 788, 1, 96, 44,0x14),
-   FieldTrait( 827, 1,128, 10,0x14), FieldTrait( 864, 1, 40, 38,0x1c), FieldTrait( 869,14, 90, 55,0x14),
-   FieldTrait( 870, 1, 91,  9,0x1c), FieldTrait( 873,25, 41, 54,0x14), FieldTrait( 874,25, 42, 54,0x14),
-   FieldTrait( 875, 1, 38, 54,0x14), FieldTrait( 876,15, 39, 54,0x14), FieldTrait( 898,14,100, 44,0x14),
-   FieldTrait( 913,15, 92, 44,0x14), FieldTrait( 914,15, 93, 44,0x14), FieldTrait( 915,25, 94, 44,0x14),
-   FieldTrait( 916,25, 97, 44,0x14), FieldTrait( 917,25, 98, 44,0x14), FieldTrait( 918,19, 95, 44,0x14),
-   FieldTrait( 919, 1, 99, 44,0x14), FieldTrait( 947,19, 25, 54,0x14), FieldTrait( 965,15, 43, 54,0x14),
-   FieldTrait( 966,15, 44, 54,0x14), FieldTrait( 967, 9, 46, 54,0x14), FieldTrait( 968, 9, 47, 54,0x14),
-   FieldTrait( 969, 9, 48, 54,0x14), FieldTrait( 970, 1, 49, 54,0x14), FieldTrait( 971, 1, 50, 54,0x14),
-   FieldTrait( 996,15, 52, 54,0x14), FieldTrait( 997,15, 53, 54,0x14), FieldTrait(1018, 1, 51, 57,0x1c),
-   FieldTrait(1049, 7, 45, 54,0x14), FieldTrait(1079,26, 54, 54,0x14), FieldTrait(1140,10,130, 10,0x14),
-   FieldTrait(1143, 9,131, 10,0x14), FieldTrait(1144, 1,132, 10,0x14), FieldTrait(1146,13, 56, 54,0x14),
-   FieldTrait(1147,10, 57, 54,0x14), FieldTrait(1148,11,125,106,0x14), FieldTrait(1149,11,126,106,0x14),
-   FieldTrait(1150,11,127,106,0x14), FieldTrait(1151,15, 55, 54,0x14), FieldTrait(1184, 2, 58,150,0x14),
-   FieldTrait(1185,29, 59,150,0x14), FieldTrait(1186,15, 60,150,0x14), FieldTrait(1191,15, 62, 54,0x14),
-   FieldTrait(1192,10, 63, 54,0x14), FieldTrait(1193, 7, 64, 54,0x14), FieldTrait(1194, 1, 65, 54,0x14),
-   FieldTrait(1195,13, 66, 54,0x14), FieldTrait(1196,15, 67, 54,0x14), FieldTrait(1197,15, 74, 54,0x14),
-   FieldTrait(1198, 1, 68, 54,0x14), FieldTrait(1199,11, 69, 54,0x14), FieldTrait(1200,11, 70, 54,0x14),
-   FieldTrait(1201, 1,140,164,0x1c), FieldTrait(1205, 1,122,170,0x1c), FieldTrait(1227,15, 61, 54,0x14),
-   FieldTrait(1234, 1,123, 68,0x1c), FieldTrait(1242, 8, 73, 54,0x14), FieldTrait(1244, 8, 72, 54,0x14),
-   FieldTrait(1245,19,133, 10,0x14), FieldTrait(1306, 1,124,106,0x14), FieldTrait(1309, 1,138,175,0x1c),
-   FieldTrait(1312, 1,139, 79,0x1c), FieldTrait(1377, 1,135, 10,0x14), FieldTrait(1378, 1,136, 10,0x14),
-   FieldTrait(1435, 1, 75, 54,0x14), FieldTrait(1439, 1, 76, 54,0x14), FieldTrait(1449,15, 77, 54,0x14),
-   FieldTrait(1450,15, 78, 54,0x14), FieldTrait(1451,14, 79, 54,0x14), FieldTrait(1452,14, 80, 54,0x14),
-   FieldTrait(1457,14, 81, 54,0x14), FieldTrait(1458,14, 82, 54,0x14), FieldTrait(1478, 1, 83, 54,0x14),
-   FieldTrait(1479, 1, 84, 54,0x14), FieldTrait(1480,14, 85, 54,0x14), FieldTrait(1481, 1, 86, 54,0x14),
-   FieldTrait(1482, 1, 87, 54,0x14), FieldTrait(1483, 1, 88, 21,0x1c), FieldTrait(1504,22,141,  0,0x04)
+   {  15,19,102,  0,0x04}, {  22,15,  4, 54,0x14}, {  48,15,  3, 54,0x14}, {  55,15,  1, 54,0x14},
+   {  58,15,119,  0,0x04}, {  65,15,  2, 54,0x14}, { 106,15, 30, 54,0x14}, { 107,15, 33, 54,0x14},
+   { 167,15,  8, 54,0x14}, { 200,21, 10, 54,0x14}, { 201, 1, 71, 54,0x14}, { 202,11, 24, 54,0x14},
+   { 206, 7, 26, 54,0x14}, { 207,20, 29, 54,0x14}, { 218,12,105,160,0x14}, { 220,19,106,160,0x14},
+   { 221,15,107,160,0x14}, { 222,15,108,160,0x14}, { 223,14, 28, 54,0x14}, { 224,25, 12, 54,0x14},
+   { 225,25, 13, 54,0x14}, { 226, 1, 15, 54,0x14}, { 227,14, 16, 54,0x14}, { 228, 9, 17, 54,0x14},
+   { 231, 9, 27, 54,0x14}, { 232, 1,103,162,0x1c}, { 235,15,113,198,0x14}, { 236,14,114,198,0x14},
+   { 239, 1, 14, 54,0x14}, { 240,25, 23, 54,0x14}, { 255,15, 18, 54,0x14}, { 348, 2, 31, 54,0x14},
+   { 349,28, 32, 54,0x14}, { 350, 2, 34, 54,0x14}, { 351,28, 35, 54,0x14}, { 354, 2,120,  0,0x04},
+   { 355,28,121,  0,0x04}, { 423, 1,137, 10,0x14}, { 454, 1,  5,142,0x1c}, { 460, 1,  6, 54,0x14},
+   { 461,15,  7, 54,0x14}, { 470,18, 20, 54,0x14}, { 471,15, 21, 54,0x14}, { 472,15, 22, 54,0x14},
+   { 541,25, 11, 54,0x14}, { 543,15, 19, 54,0x14}, { 555, 1,104, 51,0x1c}, { 561,10,134, 10,0x14},
+   { 562,10,129, 10,0x14}, { 662,11,109,160,0x14}, { 663, 1,110,160,0x14}, { 667,21, 37, 54,0x14},
+   { 668, 1, 89, 55,0x14}, { 691,15, 36, 54,0x14}, { 696,25,116,198,0x14}, { 697,11,117,198,0x14},
+   { 698, 1,118,198,0x14}, { 699,15,111,160,0x14}, { 701,25,115,198,0x14}, { 711, 1,101,188,0x1c},
+   { 761,15,112,160,0x14}, { 762,15,  9, 54,0x14}, { 788, 1, 96, 44,0x14}, { 827, 1,128, 10,0x14},
+   { 864, 1, 40, 38,0x1c}, { 869,14, 90, 55,0x14}, { 870, 1, 91,  9,0x1c}, { 873,25, 41, 54,0x14},
+   { 874,25, 42, 54,0x14}, { 875, 1, 38, 54,0x14}, { 876,15, 39, 54,0x14}, { 898,14,100, 44,0x14},
+   { 913,15, 92, 44,0x14}, { 914,15, 93, 44,0x14}, { 915,25, 94, 44,0x14}, { 916,25, 97, 44,0x14},
+   { 917,25, 98, 44,0x14}, { 918,19, 95, 44,0x14}, { 919, 1, 99, 44,0x14}, { 947,19, 25, 54,0x14},
+   { 965,15, 43, 54,0x14}, { 966,15, 44, 54,0x14}, { 967, 9, 46, 54,0x14}, { 968, 9, 47, 54,0x14},
+   { 969, 9, 48, 54,0x14}, { 970, 1, 49, 54,0x14}, { 971, 1, 50, 54,0x14}, { 996,15, 52, 54,0x14},
+   { 997,15, 53, 54,0x14}, {1018, 1, 51, 57,0x1c}, {1049, 7, 45, 54,0x14}, {1079,26, 54, 54,0x14},
+   {1140,10,130, 10,0x14}, {1143, 9,131, 10,0x14}, {1144, 1,132, 10,0x14}, {1146,13, 56, 54,0x14},
+   {1147,10, 57, 54,0x14}, {1148,11,125,106,0x14}, {1149,11,126,106,0x14}, {1150,11,127,106,0x14},
+   {1151,15, 55, 54,0x14}, {1184, 2, 58,150,0x14}, {1185,29, 59,150,0x14}, {1186,15, 60,150,0x14},
+   {1191,15, 62, 54,0x14}, {1192,10, 63, 54,0x14}, {1193, 7, 64, 54,0x14}, {1194, 1, 65, 54,0x14},
+   {1195,13, 66, 54,0x14}, {1196,15, 67, 54,0x14}, {1197,15, 74, 54,0x14}, {1198, 1, 68, 54,0x14},
+   {1199,11, 69, 54,0x14}, {1200,11, 70, 54,0x14}, {1201, 1,140,164,0x1c}, {1205, 1,122,170,0x1c},
+   {1227,15, 61, 54,0x14}, {1234, 1,123, 68,0x1c}, {1242, 8, 73, 54,0x14}, {1244, 8, 72, 54,0x14},
+   {1245,19,133, 10,0x14}, {1306, 1,124,106,0x14}, {1309, 1,138,175,0x1c}, {1312, 1,139, 79,0x1c},
+   {1377, 1,135, 10,0x14}, {1378, 1,136, 10,0x14}, {1435, 1, 75, 54,0x14}, {1439, 1, 76, 54,0x14},
+   {1449,15, 77, 54,0x14}, {1450,15, 78, 54,0x14}, {1451,14, 79, 54,0x14}, {1452,14, 80, 54,0x14},
+   {1457,14, 81, 54,0x14}, {1458,14, 82, 54,0x14}, {1478, 1, 83, 54,0x14}, {1479, 1, 84, 54,0x14},
+   {1480,14, 85, 54,0x14}, {1481, 1, 86, 54,0x14}, {1482, 1, 87, 54,0x14}, {1483, 1, 88, 21,0x1c},
+   {1504,22,141,  0,0x04}
 };
 const FieldTrait_Hash_Array 
    SecurityList::NoRelatedSym::_ftha(SecurityList::NoRelatedSym::_traits, 141);
@@ -12359,57 +11276,45 @@ const FieldTrait *SecurityList::NoRelatedSym::NoComplexEvents::NoComplexEventDat
 const FieldTrait_Hash_Array& SecurityList::NoRelatedSym::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_ftha(NoComplexEventTimesV1_ftha);
 const MsgType& SecurityList::NoRelatedSym::NoComplexEvents::NoComplexEventDates::NoComplexEventTimes::_msgtype(NoComplexEventTimesV1_msgtype);
 //-------------------------------------------------------------------------------------------------
-const FieldTrait DerivativeSecurityListRequest::_traits[] =
+const FieldTrait DerivativeSecurityListRequest::_traits[]
 {
-   FieldTrait(  15,19, 76,  0,0x04), FieldTrait(  58,15, 77,  0,0x04), FieldTrait( 241,25, 14,191,0x14),
-   FieldTrait( 242,25, 15,191,0x14), FieldTrait( 243, 1, 16,191,0x14), FieldTrait( 244, 1, 17,191,0x14),
-   FieldTrait( 245,14, 18,191,0x14), FieldTrait( 246, 9, 19,191,0x14), FieldTrait( 247,25, 25,191,0x14),
-   FieldTrait( 256,15, 20,191,0x14), FieldTrait( 263, 7, 82,  0,0x04), FieldTrait( 305,15,  6,191,0x14),
-   FieldTrait( 306,15, 32,191,0x14), FieldTrait( 307,15, 35,191,0x14), FieldTrait( 308,20, 31,191,0x14),
-   FieldTrait( 309,15,  5,191,0x14), FieldTrait( 310,15, 10,191,0x14), FieldTrait( 311,15,  3,191,0x14),
-   FieldTrait( 312,15,  4,191,0x14), FieldTrait( 313,21, 12,191,0x14), FieldTrait( 315, 1, 62,191,0x14),
-   FieldTrait( 316,11, 26,191,0x14), FieldTrait( 317, 7, 28,191,0x14), FieldTrait( 318,19, 40,191,0x14),
-   FieldTrait( 320,15,  1,  0,0x04), FieldTrait( 336,15, 80,  0,0x04), FieldTrait( 354, 2, 78,  0,0x04),
-   FieldTrait( 355,28, 79,  0,0x04), FieldTrait( 362, 2, 33,191,0x14), FieldTrait( 363,28, 34,191,0x14),
-   FieldTrait( 364, 2, 36,191,0x14), FieldTrait( 365,28, 37,191,0x14), FieldTrait( 435,14, 30,191,0x14),
-   FieldTrait( 436, 9, 29,191,0x14), FieldTrait( 457, 1,  7,189,0x1c), FieldTrait( 462, 1,  8,191,0x14),
-   FieldTrait( 463,15,  9,191,0x14), FieldTrait( 542,25, 13,191,0x14), FieldTrait( 559, 1,  2,  0,0x04),
-   FieldTrait( 592,18, 22,191,0x14), FieldTrait( 593,15, 23,191,0x14), FieldTrait( 594,15, 24,191,0x14),
-   FieldTrait( 595,15, 21,191,0x14), FieldTrait( 625,15, 81,  0,0x04), FieldTrait( 762,15, 75,  0,0x04),
-   FieldTrait( 763,15, 11,191,0x14), FieldTrait( 810,11, 42,191,0x14), FieldTrait( 877,15, 38,191,0x14),
-   FieldTrait( 878,15, 39,191,0x14), FieldTrait( 879,10, 41,191,0x14), FieldTrait( 882,11, 43,191,0x14),
-   FieldTrait( 883,11, 44,191,0x14), FieldTrait( 884,13, 45,191,0x14), FieldTrait( 885,13, 46,191,0x14),
-   FieldTrait( 886,13, 47,191,0x14), FieldTrait( 887, 1, 48,194,0x1c), FieldTrait( 941,19, 27,191,0x14),
-   FieldTrait( 972,14, 49,191,0x14), FieldTrait( 973,13, 51,191,0x14), FieldTrait( 974,15, 52,191,0x14),
-   FieldTrait( 975, 1, 50,191,0x14), FieldTrait( 998,15, 53,191,0x14), FieldTrait(1000,15, 54,191,0x14),
-   FieldTrait(1038,13, 55,191,0x14), FieldTrait(1039,15, 57,191,0x14), FieldTrait(1044,10, 58,191,0x14),
-   FieldTrait(1045, 9, 59,191,0x14), FieldTrait(1046, 7, 60,191,0x14), FieldTrait(1058, 1, 56,195,0x1c),
-   FieldTrait(1213,26, 61,191,0x14), FieldTrait(1214,15, 85, 28,0x14), FieldTrait(1215,15, 86, 28,0x14),
-   FieldTrait(1216,15, 87, 28,0x14), FieldTrait(1217,15, 88, 28,0x14), FieldTrait(1218, 1, 89, 32,0x1c),
-   FieldTrait(1225,13,121, 28,0x14), FieldTrait(1228,15, 91, 28,0x14), FieldTrait(1243, 8, 92, 28,0x14),
-   FieldTrait(1246, 1, 90, 28,0x14), FieldTrait(1247,15, 93, 28,0x14), FieldTrait(1248,15, 94, 28,0x14),
-   FieldTrait(1249,15, 95, 28,0x14), FieldTrait(1250,15, 96, 28,0x14), FieldTrait(1251,21, 97, 28,0x14),
-   FieldTrait(1252,25, 98, 28,0x14), FieldTrait(1253,26, 99, 28,0x14), FieldTrait(1254,15,100, 28,0x14),
-   FieldTrait(1255, 7,101, 28,0x14), FieldTrait(1256,15,102, 28,0x14), FieldTrait(1257,15,104, 28,0x14),
-   FieldTrait(1258,18,105, 28,0x14), FieldTrait(1259,15,106, 28,0x14), FieldTrait(1260,15,108, 28,0x14),
-   FieldTrait(1261,11,107, 28,0x14), FieldTrait(1262,19,109, 28,0x14), FieldTrait(1263, 9,110, 28,0x14),
-   FieldTrait(1264, 9,111, 28,0x14), FieldTrait(1265, 7,112, 28,0x14), FieldTrait(1266, 9,113, 28,0x14),
-   FieldTrait(1267, 9,114, 28,0x14), FieldTrait(1268,13,115, 28,0x14), FieldTrait(1269,15,116, 28,0x14),
-   FieldTrait(1270,10,117, 28,0x14), FieldTrait(1271,15,122, 28,0x14), FieldTrait(1272,20,123, 28,0x14),
-   FieldTrait(1273, 1,124, 28,0x14), FieldTrait(1274, 1,125, 28,0x14), FieldTrait(1275,15,126, 28,0x14),
-   FieldTrait(1276,25,103, 28,0x14), FieldTrait(1277, 2,127, 28,0x14), FieldTrait(1278,28,128, 28,0x14),
-   FieldTrait(1279,15,129, 28,0x14), FieldTrait(1280, 2,130, 28,0x14), FieldTrait(1281,28,131, 28,0x14),
-   FieldTrait(1282, 2,142, 34,0x14), FieldTrait(1283,28,143, 34,0x14), FieldTrait(1284,15,144, 34,0x14),
-   FieldTrait(1285,21,132, 28,0x14), FieldTrait(1286, 1,133, 27,0x1c), FieldTrait(1292, 1,134, 30,0x1c),
-   FieldTrait(1299, 7,120, 28,0x14), FieldTrait(1300,15, 84,  0,0x04), FieldTrait(1301,20, 83,  0,0x04),
-   FieldTrait(1315,15,118, 28,0x14), FieldTrait(1316,10,119, 28,0x14), FieldTrait(1317, 7,135, 28,0x14),
-   FieldTrait(1318,15,136, 28,0x14), FieldTrait(1319,15,137, 28,0x14), FieldTrait(1320, 1,138, 28,0x14),
-   FieldTrait(1321,11,139, 28,0x14), FieldTrait(1322,11,140, 28,0x14), FieldTrait(1323, 1,141, 28,0x14),
-   FieldTrait(1419, 1, 63,191,0x14), FieldTrait(1423,10, 64,191,0x14), FieldTrait(1424,15, 65,191,0x14),
-   FieldTrait(1425,10, 66,191,0x14), FieldTrait(1437, 1, 67,191,0x14), FieldTrait(1438, 1,145, 28,0x14),
-   FieldTrait(1441, 1, 68,191,0x14), FieldTrait(1442, 1,146, 28,0x14), FieldTrait(1453,15, 69,191,0x14),
-   FieldTrait(1454,15, 70,191,0x14), FieldTrait(1455,14, 71,191,0x14), FieldTrait(1456,14, 72,191,0x14),
-   FieldTrait(1459,14, 73,191,0x14), FieldTrait(1460,14, 74,191,0x14)
+   {  15,19, 76,  0,0x04}, {  58,15, 77,  0,0x04}, { 241,25, 14,191,0x14}, { 242,25, 15,191,0x14},
+   { 243, 1, 16,191,0x14}, { 244, 1, 17,191,0x14}, { 245,14, 18,191,0x14}, { 246, 9, 19,191,0x14},
+   { 247,25, 25,191,0x14}, { 256,15, 20,191,0x14}, { 263, 7, 82,  0,0x04}, { 305,15,  6,191,0x14},
+   { 306,15, 32,191,0x14}, { 307,15, 35,191,0x14}, { 308,20, 31,191,0x14}, { 309,15,  5,191,0x14},
+   { 310,15, 10,191,0x14}, { 311,15,  3,191,0x14}, { 312,15,  4,191,0x14}, { 313,21, 12,191,0x14},
+   { 315, 1, 62,191,0x14}, { 316,11, 26,191,0x14}, { 317, 7, 28,191,0x14}, { 318,19, 40,191,0x14},
+   { 320,15,  1,  0,0x04}, { 336,15, 80,  0,0x04}, { 354, 2, 78,  0,0x04}, { 355,28, 79,  0,0x04},
+   { 362, 2, 33,191,0x14}, { 363,28, 34,191,0x14}, { 364, 2, 36,191,0x14}, { 365,28, 37,191,0x14},
+   { 435,14, 30,191,0x14}, { 436, 9, 29,191,0x14}, { 457, 1,  7,189,0x1c}, { 462, 1,  8,191,0x14},
+   { 463,15,  9,191,0x14}, { 542,25, 13,191,0x14}, { 559, 1,  2,  0,0x04}, { 592,18, 22,191,0x14},
+   { 593,15, 23,191,0x14}, { 594,15, 24,191,0x14}, { 595,15, 21,191,0x14}, { 625,15, 81,  0,0x04},
+   { 762,15, 75,  0,0x04}, { 763,15, 11,191,0x14}, { 810,11, 42,191,0x14}, { 877,15, 38,191,0x14},
+   { 878,15, 39,191,0x14}, { 879,10, 41,191,0x14}, { 882,11, 43,191,0x14}, { 883,11, 44,191,0x14},
+   { 884,13, 45,191,0x14}, { 885,13, 46,191,0x14}, { 886,13, 47,191,0x14}, { 887, 1, 48,194,0x1c},
+   { 941,19, 27,191,0x14}, { 972,14, 49,191,0x14}, { 973,13, 51,191,0x14}, { 974,15, 52,191,0x14},
+   { 975, 1, 50,191,0x14}, { 998,15, 53,191,0x14}, {1000,15, 54,191,0x14}, {1038,13, 55,191,0x14},
+   {1039,15, 57,191,0x14}, {1044,10, 58,191,0x14}, {1045, 9, 59,191,0x14}, {1046, 7, 60,191,0x14},
+   {1058, 1, 56,195,0x1c}, {1213,26, 61,191,0x14}, {1214,15, 85, 28,0x14}, {1215,15, 86, 28,0x14},
+   {1216,15, 87, 28,0x14}, {1217,15, 88, 28,0x14}, {1218, 1, 89, 32,0x1c}, {1225,13,121, 28,0x14},
+   {1228,15, 91, 28,0x14}, {1243, 8, 92, 28,0x14}, {1246, 1, 90, 28,0x14}, {1247,15, 93, 28,0x14},
+   {1248,15, 94, 28,0x14}, {1249,15, 95, 28,0x14}, {1250,15, 96, 28,0x14}, {1251,21, 97, 28,0x14},
+   {1252,25, 98, 28,0x14}, {1253,26, 99, 28,0x14}, {1254,15,100, 28,0x14}, {1255, 7,101, 28,0x14},
+   {1256,15,102, 28,0x14}, {1257,15,104, 28,0x14}, {1258,18,105, 28,0x14}, {1259,15,106, 28,0x14},
+   {1260,15,108, 28,0x14}, {1261,11,107, 28,0x14}, {1262,19,109, 28,0x14}, {1263, 9,110, 28,0x14},
+   {1264, 9,111, 28,0x14}, {1265, 7,112, 28,0x14}, {1266, 9,113, 28,0x14}, {1267, 9,114, 28,0x14},
+   {1268,13,115, 28,0x14}, {1269,15,116, 28,0x14}, {1270,10,117, 28,0x14}, {1271,15,122, 28,0x14},
+   {1272,20,123, 28,0x14}, {1273, 1,124, 28,0x14}, {1274, 1,125, 28,0x14}, {1275,15,126, 28,0x14},
+   {1276,25,103, 28,0x14}, {1277, 2,127, 28,0x14}, {1278,28,128, 28,0x14}, {1279,15,129, 28,0x14},
+   {1280, 2,130, 28,0x14}, {1281,28,131, 28,0x14}, {1282, 2,142, 34,0x14}, {1283,28,143, 34,0x14},
+   {1284,15,144, 34,0x14}, {1285,21,132, 28,0x14}, {1286, 1,133, 27,0x1c}, {1292, 1,134, 30,0x1c},
+   {1299, 7,120, 28,0x14}, {1300,15, 84,  0,0x04}, {1301,20, 83,  0,0x04}, {1315,15,118, 28,0x14},
+   {1316,10,119, 28,0x14}, {1317, 7,135, 28,0x14}, {1318,15,136, 28,0x14}, {1319,15,137, 28,0x14},
+   {1320, 1,138, 28,0x14}, {1321,11,139, 28,0x14}, {1322,11,140, 28,0x14}, {1323, 1,141, 28,0x14},
+   {1419, 1, 63,191,0x14}, {1423,10, 64,191,0x14}, {1424,15, 65,191,0x14}, {1425,10, 66,191,0x14},
+   {1437, 1, 67,191,0x14}, {1438, 1,145, 28,0x14}, {1441, 1, 68,191,0x14}, {1442, 1,146, 28,0x14},
+   {1453,15, 69,191,0x14}, {1454,15, 70,191,0x14}, {1455,14, 71,191,0x14}, {1456,14, 72,191,0x14},
+   {1459,14, 73,191,0x14}, {1460,14, 74,191,0x14}
 };
 const FieldTrait_Hash_Array DerivativeSecurityListRequest::_ftha(DerivativeSecurityListRequest::_traits, 146);
 const MsgType DerivativeSecurityListRequest::_msgtype("z");

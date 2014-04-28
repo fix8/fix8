@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-// *** f8c generated file: DO NOT EDIT! Created: 2014-04-05 01:38:20 ***
+// *** f8c generated file: DO NOT EDIT! Created: 2014-04-27 23:02:33 ***
 //-------------------------------------------------------------------------------------------------
 /*
 
@@ -48,8 +48,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
-#if defined MAGIC_NUM && MAGIC_NUM > 16781312L
-#error Myfix_types.cpp version 1.1.0 is out of date. Please regenerate with f8c.
+#if defined MAGIC_NUM && MAGIC_NUM > 16785408L
+#error Myfix_types.cpp version 1.2.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_types.cpp
@@ -66,9 +66,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <algorithm>
 #include <cerrno>
 #include <string.h>
-#if defined HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 // f8 includes
 #include <fix8/f8includes.hpp>
 #include "Myfix_types.hpp"
@@ -79,2134 +76,1780 @@ namespace TEX {
 namespace {
 
 //-------------------------------------------------------------------------------------------------
-const char AdvSide_realm[] = 
+const char AdvSide_realm[]  
    { 'B', 'S', 'T', 'X' };
-const char *AdvSide_descriptions[] = 
+const char *AdvSide_descriptions[]  
    { "BUY", "SELL", "TRADE", "CROSS" };
-const f8String AdvTransType_realm[] = 
+const f8String AdvTransType_realm[]  
    { "C", "N", "R" };
-const char *AdvTransType_descriptions[] = 
+const char *AdvTransType_descriptions[]  
    { "CANCEL", "NEW", "REPLACE" };
-const char CommType_realm[] = 
+const char CommType_realm[]  
    { '1', '2', '3', '4', '5', '6' };
-const char *CommType_descriptions[] = 
+const char *CommType_descriptions[]  
    { "PER_UNIT", "PERCENT", "ABSOLUTE", "PERCENTAGE_WAIVED_4", "PERCENTAGE_WAIVED_5", "POINTS_PER_BOND_OR_CONTRACT" };
-const f8String ExecInst_realm[] = 
+const f8String ExecInst_realm[]  
    { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t" };
-const char *ExecInst_descriptions[] = 
+const char *ExecInst_descriptions[]  
    { "STAY_ON_OFFER_SIDE", "NOT_HELD", "WORK", "GO_ALONG", "OVER_THE_DAY", "HELD", "PARTICIPANT_DONT_INITIATE", "STRICT_SCALE", "TRY_TO_SCALE", "STAY_ON_BID_SIDE", "NO_CROSS", "OK_TO_CROSS", "CALL_FIRST", "PERCENT_OF_VOLUME", "DO_NOT_INCREASE", "DO_NOT_REDUCE", "ALL_OR_NONE", "REINSTATE_ON_SYSTEM_FAILURE", "INSTITUTIONS_ONLY", "REINSTATE_ON_TRADING_HALT", "CANCEL_ON_TRADING_HALT", "LAST_PEG", "MID_PRICE_PEG", "NON_NEGOTIABLE", "OPENING_PEG", "MARKET_PEG", "CANCEL_ON_SYSTEM_FAILURE", "PRIMARY_PEG", "SUSPEND", "FIXED_PEG_TO_LOCAL_BEST_BID_OR_OFFER_AT_TIME_OF_ORDER", "CUSTOMER_DISPLAY_INSTRUCTION", "NETTING", "PEG_TO_VWAP", "TRADE_ALONG", "TRY_TO_STOP", "CANCEL_IF_NOT_BEST", "TRAILING_STOP_PEG", "STRICT_LIMIT", "IGNORE_PRICE_VALIDITY_CHECKS", "PEG_TO_LIMIT_PRICE", "WORK_TO_TARGET_STRATEGY", "INTERMARKET_SWEEP", "EXTERNAL_ROUTING_ALLOWED", "EXTERNAL_ROUTING_NOT_ALLOWED", "IMBALANCE_ONLY", "SINGLE_EXECUTION_REQUESTED_FOR_BLOCK_TRADE", "BEST_EXECUTION", "SUSPEND_ON_SYSTEM_FAILURE", "SUSPEND_ON_TRADING_HALT", "REINSTATE_ON_CONNECTION_LOSS", "CANCEL_ON_CONNECTION_LOSS", "SUSPEND_ON_CONNECTION_LOSS", "RELEASE_FROM_SUSPENSION", "EXECUTE_AS_DELTA_NEUTRAL_USING_VOLATILITY_PROVIDED", "EXECUTE_AS_DURATION_NEUTRAL", "EXECUTE_AS_FX_NEUTRAL" };
-const char HandlInst_realm[] = 
+const char HandlInst_realm[]  
    { '1', '2', '3' };
-const char *HandlInst_descriptions[] = 
+const char *HandlInst_descriptions[]  
    { "AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION", "AUTOMATED_EXECUTION_ORDER_PUBLIC_BROKER_INTERVENTION_OK", "MANUAL_ORDER_BEST_EXECUTION" };
-const f8String SecurityIDSource_realm[] = 
+const f8String SecurityIDSource_realm[]  
    { "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
-const char *SecurityIDSource_descriptions[] = 
+const char *SecurityIDSource_descriptions[]  
    { "CUSIP", "SEDOL", "QUIK", "ISIN_NUMBER", "RIC_CODE", "ISO_CURRENCY_CODE", "ISO_COUNTRY_CODE", "EXCHANGE_SYMBOL", "CONSOLIDATED_TAPE_ASSOCIATION", "BLOOMBERG_SYMBOL", "WERTPAPIER", "DUTCH", "VALOREN", "SICOVAM", "BELGIAN", "COMMON", "CLEARING_HOUSE", "ISDA_FPML_PRODUCT_SPECIFICATION", "OPTION_PRICE_REPORTING_AUTHORITY", "ISDA_FPML_PRODUCT_URL", "LETTER_OF_CREDIT", "MARKETPLACE_ASSIGNED_IDENTIFIER" };
-const char IOIQltyInd_realm[] = 
+const char IOIQltyInd_realm[]  
    { 'H', 'L', 'M' };
-const char *IOIQltyInd_descriptions[] = 
+const char *IOIQltyInd_descriptions[]  
    { "HIGH", "LOW", "MEDIUM" };
-const f8String IOIQty_realm[] = 
+const f8String IOIQty_realm[]  
    { "0", "L", "M", "S", "U" };
-const char *IOIQty_descriptions[] = 
+const char *IOIQty_descriptions[]  
    { "1000000000", "LARGE", "MEDIUM", "SMALL", "UNDISCLOSED_QUANTITY" };
-const char IOITransType_realm[] = 
+const char IOITransType_realm[]  
    { 'C', 'N', 'R' };
-const char *IOITransType_descriptions[] = 
+const char *IOITransType_descriptions[]  
    { "CANCEL", "NEW", "REPLACE" };
-const char LastCapacity_realm[] = 
+const char LastCapacity_realm[]  
    { '1', '2', '3', '4' };
-const char *LastCapacity_descriptions[] = 
+const char *LastCapacity_descriptions[]  
    { "AGENT", "CROSS_AS_AGENT", "CROSS_AS_PRINCIPAL", "PRINCIPAL" };
-const f8String MsgType_realm[] = 
+const f8String MsgType_realm[]  
    { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ", "B", "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ", "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY", "BZ", "C", "CA", "CB", "CC", "CD", "CE", "CF", "CG", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
-const char *MsgType_descriptions[] = 
+const char *MsgType_descriptions[]  
    { "HEARTBEAT", "TESTREQUEST", "RESENDREQUEST", "REJECT", "SEQUENCERESET", "LOGOUT", "IOI", "ADVERTISEMENT", "EXECUTIONREPORT", "ORDERCANCELREJECT", "LOGON", "DERIVATIVESECURITYLIST", "NEWORDERMULTILEG", "MULTILEGORDERCANCELREPLACE", "TRADECAPTUREREPORTREQUEST", "TRADECAPTUREREPORT", "ORDERMASSSTATUSREQUEST", "QUOTEREQUESTREJECT", "RFQREQUEST", "QUOTESTATUSREPORT", "QUOTERESPONSE", "CONFIRMATION", "POSITIONMAINTENANCEREQUEST", "POSITIONMAINTENANCEREPORT", "REQUESTFORPOSITIONS", "REQUESTFORPOSITIONSACK", "POSITIONREPORT", "TRADECAPTUREREPORTREQUESTACK", "TRADECAPTUREREPORTACK", "ALLOCATIONREPORT", "ALLOCATIONREPORTACK", "CONFIRMATION_ACK", "SETTLEMENTINSTRUCTIONREQUEST", "ASSIGNMENTREPORT", "COLLATERALREQUEST", "COLLATERALASSIGNMENT", "COLLATERALRESPONSE", "NEWS", "COLLATERALREPORT", "COLLATERALINQUIRY", "NETWORKCOUNTERPARTYSYSTEMSTATUSREQUEST", "NETWORKCOUNTERPARTYSYSTEMSTATUSRESPONSE", "USERREQUEST", "USERRESPONSE", "COLLATERALINQUIRYACK", "CONFIRMATIONREQUEST", "TRADINGSESSIONLISTREQUEST", "TRADINGSESSIONLIST", "SECURITYLISTUPDATEREPORT", "ADJUSTEDPOSITIONREPORT", "ALLOCATIONINSTRUCTIONALERT", "EXECUTIONACKNOWLEDGEMENT", "CONTRARYINTENTIONREPORT", "SECURITYDEFINITIONUPDATEREPORT", "SETTLEMENTOBLIGATIONREPORT", "DERIVATIVESECURITYLISTUPDATEREPORT", "TRADINGSESSIONLISTUPDATEREPORT", "MARKETDEFINITIONREQUEST", "MARKETDEFINITION", "MARKETDEFINITIONUPDATEREPORT", "APPLICATIONMESSAGEREQUEST", "APPLICATIONMESSAGEREQUESTACK", "APPLICATIONMESSAGEREPORT", "ORDERMASSACTIONREPORT", "EMAIL", "ORDERMASSACTIONREQUEST", "USERNOTIFICATION", "STREAMASSIGNMENTREQUEST", "STREAMASSIGNMENTREPORT", "STREAMASSIGNMENTREPORTACK", "PARTYDETAILSLISTREQUEST", "PARTYDETAILSLISTREPORT", "NEWORDERSINGLE", "NEWORDERLIST", "ORDERCANCELREQUEST", "ORDERCANCELREPLACEREQUEST", "ORDERSTATUSREQUEST", "ALLOCATIONINSTRUCTION", "LISTCANCELREQUEST", "LISTEXECUTE", "LISTSTATUSREQUEST", "LISTSTATUS", "ALLOCATIONINSTRUCTIONACK", "DONTKNOWTRADEDK", "QUOTEREQUEST", "QUOTE", "SETTLEMENTINSTRUCTIONS", "MARKETDATAREQUEST", "MARKETDATASNAPSHOTFULLREFRESH", "MARKETDATAINCREMENTALREFRESH", "MARKETDATAREQUESTREJECT", "QUOTECANCEL", "QUOTESTATUSREQUEST", "MASSQUOTEACKNOWLEDGEMENT", "SECURITYDEFINITIONREQUEST", "SECURITYDEFINITION", "SECURITYSTATUSREQUEST", "SECURITYSTATUS", "TRADINGSESSIONSTATUSREQUEST", "TRADINGSESSIONSTATUS", "MASSQUOTE", "BUSINESSMESSAGEREJECT", "BIDREQUEST", "BIDRESPONSE", "LISTSTRIKEPRICE", "XML_NON_FIX", "REGISTRATIONINSTRUCTIONS", "REGISTRATIONINSTRUCTIONSRESPONSE", "ORDERMASSCANCELREQUEST", "ORDERMASSCANCELREPORT", "NEWORDERCROSS", "CROSSORDERCANCELREPLACEREQUEST", "CROSSORDERCANCELREQUEST", "SECURITYTYPEREQUEST", "SECURITYTYPES", "SECURITYLISTREQUEST", "SECURITYLIST", "DERIVATIVESECURITYLISTREQUEST" };
-const char OrdStatus_realm[] = 
+const char OrdStatus_realm[]  
    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E' };
-const char *OrdStatus_descriptions[] = 
+const char *OrdStatus_descriptions[]  
    { "NEW", "PARTIALLY_FILLED", "FILLED", "DONE_FOR_DAY", "CANCELED", "REPLACED", "PENDING_CANCEL", "STOPPED", "REJECTED", "SUSPENDED", "PENDING_NEW", "CALCULATED", "EXPIRED", "ACCEPTED_FOR_BIDDING", "PENDING_REPLACE" };
-const char OrdType_realm[] = 
+const char OrdType_realm[]  
    { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'P', 'Q' };
-const char *OrdType_descriptions[] = 
+const char *OrdType_descriptions[]  
    { "MARKET", "LIMIT", "STOP", "STOP_LIMIT", "MARKET_ON_CLOSE", "WITH_OR_WITHOUT", "LIMIT_OR_BETTER", "LIMIT_WITH_OR_WITHOUT", "ON_BASIS", "ON_CLOSE", "LIMIT_ON_CLOSE", "FOREX_MARKET", "PREVIOUSLY_QUOTED", "PREVIOUSLY_INDICATED", "FOREX_LIMIT", "FOREX_SWAP", "FOREX_PREVIOUSLY_QUOTED", "FUNARI", "MARKET_IF_TOUCHED", "MARKET_WITH_LEFT_OVER_AS_LIMIT", "PREVIOUS_FUND_VALUATION_POINT", "NEXT_FUND_VALUATION_POINT", "PEGGED", "COUNTER_ORDER_SELECTION" };
-const char Side_realm[] = 
+const char Side_realm[]  
    { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
-const char *Side_descriptions[] = 
+const char *Side_descriptions[]  
    { "BUY", "SELL", "BUY_MINUS", "SELL_PLUS", "SELL_SHORT", "SELL_SHORT_EXEMPT", "UNDISCLOSED", "CROSS", "CROSS_SHORT", "CROSS_SHORT_EXEMPT", "AS_DEFINED", "OPPOSITE", "SUBSCRIBE", "REDEEM", "LEND", "BORROW" };
-const char TimeInForce_realm[] = 
+const char TimeInForce_realm[]  
    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-const char *TimeInForce_descriptions[] = 
+const char *TimeInForce_descriptions[]  
    { "DAY", "GOOD_TILL_CANCEL", "AT_THE_OPENING", "IMMEDIATE_OR_CANCEL", "FILL_OR_KILL", "GOOD_TILL_CROSSING", "GOOD_TILL_DATE", "AT_THE_CLOSE", "GOOD_THROUGH_CROSSING", "AT_CROSSING" };
-const char Urgency_realm[] = 
+const char Urgency_realm[]  
    { '0', '1', '2' };
-const char *Urgency_descriptions[] = 
+const char *Urgency_descriptions[]  
    { "NORMAL", "FLASH", "BACKGROUND" };
-const f8String SettlType_realm[] = 
+const f8String SettlType_realm[]  
    { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "B", "C" };
-const char *SettlType_descriptions[] = 
+const char *SettlType_descriptions[]  
    { "REGULAR", "CASH", "NEXT_DAY", "T_PLUS_2", "T_PLUS_3", "T_PLUS_4", "FUTURE", "WHEN_AND_IF_ISSUED", "SELLERS_OPTION", "T_PLUS_5", "BROKEN_DATE", "FX_SPOT_NEXT_SETTLEMENT" };
-const f8String SymbolSfx_realm[] = 
+const f8String SymbolSfx_realm[]  
    { "CD", "WI" };
-const char *SymbolSfx_descriptions[] = 
+const char *SymbolSfx_descriptions[]  
    { "EUCP_WITH_LUMP_SUM_INTEREST_RATHER_THAN_DISCOUNT_PRICE", "WHEN_ISSUED_FOR_A_SECURITY_TO_BE_REISSUED_UNDER_AN_OLD_CUSIP_OR_ISIN" };
-const char AllocTransType_realm[] = 
+const char AllocTransType_realm[]  
    { '0', '1', '2', '3', '4', '5', '6' };
-const char *AllocTransType_descriptions[] = 
+const char *AllocTransType_descriptions[]  
    { "NEW", "REPLACE", "CANCEL", "PRELIMINARY", "CALCULATED", "CALCULATED_WITHOUT_PRELIMINARY", "REVERSAL" };
-const char PositionEffect_realm[] = 
+const char PositionEffect_realm[]  
    { 'C', 'D', 'F', 'N', 'O', 'R' };
-const char *PositionEffect_descriptions[] = 
+const char *PositionEffect_descriptions[]  
    { "CLOSE", "DEFAULT", "FIFO", "CLOSE_BUT_NOTIFY_ON_OPEN", "OPEN", "ROLLED" };
-const char ProcessCode_realm[] = 
+const char ProcessCode_realm[]  
    { '0', '1', '2', '3', '4', '5', '6' };
-const char *ProcessCode_descriptions[] = 
+const char *ProcessCode_descriptions[]  
    { "REGULAR", "SOFT_DOLLAR", "STEP_IN", "STEP_OUT", "SOFT_DOLLAR_STEP_IN", "SOFT_DOLLAR_STEP_OUT", "PLAN_SPONSOR" };
-const int AllocStatus_realm[] = 
+const int AllocStatus_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7 };
-const char *AllocStatus_descriptions[] = 
+const char *AllocStatus_descriptions[]  
    { "ACCEPTED", "BLOCK_LEVEL_REJECT", "ACCOUNT_LEVEL_REJECT", "RECEIVED", "INCOMPLETE", "REJECTED_BY_INTERMEDIARY", "ALLOCATION_PENDING", "REVERSED" };
-const int AllocRejCode_realm[] = 
+const int AllocRejCode_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99 };
-const char *AllocRejCode_descriptions[] = 
+const char *AllocRejCode_descriptions[]  
    { "UNKNOWN_ACCOUNT", "INCORRECT_QUANTITY", "INCORRECT_AVERAGEG_PRICE", "UNKNOWN_EXECUTING_BROKER_MNEMONIC", "COMMISSION_DIFFERENCE", "UNKNOWN_ORDERID", "UNKNOWN_LISTID", "OTHER_7", "INCORRECT_ALLOCATED_QUANTITY", "CALCULATION_DIFFERENCE", "UNKNOWN_OR_STALE_EXECID", "MISMATCHED_DATA", "UNKNOWN_CLORDID", "WAREHOUSE_REQUEST_REJECTED", "OTHER_99" };
-const char EmailType_realm[] = 
+const char EmailType_realm[]  
    { '0', '1', '2' };
-const char *EmailType_descriptions[] = 
+const char *EmailType_descriptions[]  
    { "NEW", "REPLY", "ADMIN_REPLY" };
-const int EncryptMethod_realm[] = 
+const int EncryptMethod_realm[]  
    { 0, 1, 2, 3, 4, 5, 6 };
-const char *EncryptMethod_descriptions[] = 
+const char *EncryptMethod_descriptions[]  
    { "NONE_OTHER", "PKCS", "DES", "PKCS_DES", "PGP_DES", "PGP_DES_MD5", "PEM_DES_MD5" };
-const int CxlRejReason_realm[] = 
+const int CxlRejReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 99 };
-const char *CxlRejReason_descriptions[] = 
+const char *CxlRejReason_descriptions[]  
    { "TOO_LATE_TO_CANCEL", "UNKNOWN_ORDER", "BROKER", "ORDER_ALREADY_IN_PENDING_CANCEL_OR_PENDING_REPLACE_STATUS", "UNABLE_TO_PROCESS_ORDER_MASS_CANCEL_REQUEST", "ORIGORDMODTIME", "DUPLICATE_CLORDID", "PRICE_EXCEEDS_CURRENT_PRICE", "PRICE_EXCEEDS_CURRENT_PRICE_BAND", "INVALID_PRICE_INCREMENT", "OTHER" };
-const int OrdRejReason_realm[] = 
+const int OrdRejReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 99 };
-const char *OrdRejReason_descriptions[] = 
+const char *OrdRejReason_descriptions[]  
    { "BROKER", "UNKNOWN_SYMBOL", "EXCHANGE_CLOSED", "ORDER_EXCEEDS_LIMIT", "TOO_LATE_TO_ENTER", "UNKNOWN_ORDER", "DUPLICATE_ORDER", "DUPLICATE_OF_A_VERBALLY_COMMUNICATED_ORDER", "STALE_ORDER", "TRADE_ALONG_REQUIRED", "INVALID_INVESTOR_ID", "UNSUPPORTED_ORDER_CHARACTERISTIC", "SURVEILLENCE_OPTION", "INCORRECT_QUANTITY", "INCORRECT_ALLOCATED_QUANTITY", "UNKNOWN_ACCOUNT", "PRICE_EXCEEDS_CURRENT_PRICE_BAND", "INVALID_PRICE_INCREMENT", "OTHER" };
-const char IOIQualifier_realm[] = 
+const char IOIQualifier_realm[]  
    { 'A', 'B', 'C', 'D', 'I', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z' };
-const char *IOIQualifier_descriptions[] = 
+const char *IOIQualifier_descriptions[]  
    { "ALL_OR_NONE", "MARKET_ON_CLOSE", "AT_THE_CLOSE", "VWAP", "IN_TOUCH_WITH", "LIMIT", "MORE_BEHIND", "AT_THE_OPEN", "TAKING_A_POSITION", "AT_THE_MARKET", "READY_TO_TRADE", "PORTFOLIO_SHOWN", "THROUGH_THE_DAY", "VERSUS", "INDICATION", "CROSSING_OPPORTUNITY", "AT_THE_MIDPOINT", "PRE_OPEN" };
-const char ReportToExch_realm[] = 
+const char ReportToExch_realm[]  
    { 'N', 'Y' };
-const char *ReportToExch_descriptions[] = 
+const char *ReportToExch_descriptions[]  
    { "NO", "YES" };
-const char LocateReqd_realm[] = 
+const char LocateReqd_realm[]  
    { 'N', 'Y' };
-const char *LocateReqd_descriptions[] = 
+const char *LocateReqd_descriptions[]  
    { "NO", "YES" };
-const char ForexReq_realm[] = 
+const char ForexReq_realm[]  
    { 'N', 'Y' };
-const char *ForexReq_descriptions[] = 
+const char *ForexReq_descriptions[]  
    { "NO", "YES" };
-const char DKReason_realm[] = 
+const char DKReason_realm[]  
    { 'A', 'B', 'C', 'D', 'E', 'F', 'Z' };
-const char *DKReason_descriptions[] = 
+const char *DKReason_descriptions[]  
    { "UNKNOWN_SYMBOL", "WRONG_SIDE", "QUANTITY_EXCEEDS_ORDER", "NO_MATCHING_ORDER", "PRICE_EXCEEDS_LIMIT", "CALCULATION_DIFFERENCE", "OTHER" };
-const char IOINaturalFlag_realm[] = 
+const char IOINaturalFlag_realm[]  
    { 'N', 'Y' };
-const char *IOINaturalFlag_descriptions[] = 
+const char *IOINaturalFlag_descriptions[]  
    { "NO", "YES" };
-const f8String MiscFeeType_realm[] = 
+const f8String MiscFeeType_realm[]  
    { "1", "10", "11", "12", "13", "14", "2", "3", "4", "5", "6", "7", "8", "9" };
-const char *MiscFeeType_descriptions[] = 
+const char *MiscFeeType_descriptions[]  
    { "REGULATORY", "PER_TRANSACTION", "CONVERSION", "AGENT", "TRANSFER_FEE", "SECURITY_LENDING", "TAX", "LOCAL_COMMISSION", "EXCHANGE_FEES", "STAMP", "LEVY", "OTHER", "MARKUP", "CONSUMPTION_TAX" };
-const char ExecType_realm[] = 
+const char ExecType_realm[]  
    { '0', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L' };
-const char *ExecType_descriptions[] = 
+const char *ExecType_descriptions[]  
    { "NEW", "DONE_FOR_DAY", "CANCELED", "REPLACED", "PENDING_CANCEL", "STOPPED", "REJECTED", "SUSPENDED", "PENDING_NEW", "CALCULATED", "EXPIRED", "RESTATED", "PENDING_REPLACE", "TRADE", "TRADE_CORRECT", "TRADE_CANCEL", "ORDER_STATUS", "TRADE_IN_A_CLEARING_HOLD", "TRADE_HAS_BEEN_RELEASED_TO_CLEARING", "TRIGGERED_OR_ACTIVATED_BY_SYSTEM" };
-const char SettlCurrFxRateCalc_realm[] = 
+const char SettlCurrFxRateCalc_realm[]  
    { 'D', 'M' };
-const char *SettlCurrFxRateCalc_descriptions[] = 
+const char *SettlCurrFxRateCalc_descriptions[]  
    { "DIVIDE", "MULTIPLY" };
-const char SettlInstMode_realm[] = 
+const char SettlInstMode_realm[]  
    { '0', '1', '2', '3', '4', '5' };
-const char *SettlInstMode_descriptions[] = 
+const char *SettlInstMode_descriptions[]  
    { "DEFAULT", "STANDING_INSTRUCTIONS_PROVIDED", "SPECIFIC_ALLOCATION_ACCOUNT_OVERRIDING", "SPECIFIC_ALLOCATION_ACCOUNT_STANDING", "SPECIFIC_ORDER_FOR_A_SINGLE_ACCOUNT", "REQUEST_REJECT" };
-const char SettlInstTransType_realm[] = 
+const char SettlInstTransType_realm[]  
    { 'C', 'N', 'R', 'T' };
-const char *SettlInstTransType_descriptions[] = 
+const char *SettlInstTransType_descriptions[]  
    { "CANCEL", "NEW", "REPLACE", "RESTATE" };
-const char SettlInstSource_realm[] = 
+const char SettlInstSource_realm[]  
    { '1', '2', '3' };
-const char *SettlInstSource_descriptions[] = 
+const char *SettlInstSource_descriptions[]  
    { "BROKERS_INSTRUCTIONS", "INSTITUTIONS_INSTRUCTIONS", "INVESTOR" };
-const f8String SecurityType_realm[] = 
+const f8String SecurityType_realm[]  
    { "?", "ABS", "AMENDED", "AN", "BA", "BDN", "BN", "BOX", "BRADY", "BRIDGE", "BUYSELL", "CAMM", "CAN", "CASH", "CB", "CD", "CDS", "CL", "CMB", "CMBS", "CMO", "COFO", "COFP", "CORP", "CP", "CPP", "CS", "CTB", "DEFLTED", "DINP", "DN", "DUAL", "EUCD", "EUCORP", "EUCP", "EUFRN", "EUSOV", "EUSUPRA", "FAC", "FADN", "FOR", "FORWARD", "FRN", "FUT", "FXFWD", "FXNDF", "FXSPOT", "FXSWAP", "GO", "IET", "IRS", "LOFC", "LQN", "MATURED", "MBS", "MF", "MIO", "MLEG", "MPO", "MPP", "MPT", "MT", "MTN", "NONE", "ONITE", "OOC", "OOF", "OOP", "OPT", "PEF", "PFAND", "PN", "PROV", "PS", "PZFJ", "RAN", "REPLACD", "REPO", "RETIRED", "REV", "RVLV", "RVLVTRM", "SECLOAN", "SECPLEDGE", "SLQN", "SPCLA", "SPCLO", "SPCLT", "STN", "STRUCT", "SUPRA", "SWING", "TAN", "TAXA", "TB", "TBA", "TBILL", "TBOND", "TCAL", "TD", "TECP", "TERM", "TINT", "TIPS", "TLQN", "TMCP", "TNOTE", "TPRN", "TRAN", "UST", "USTB", "VRDN", "WAR", "WITHDRN", "XCN", "XLINKD", "YANK", "YCD" };
-const char *SecurityType_descriptions[] = 
+const char *SecurityType_descriptions[]  
    { "WILDCARD_ENTRY_FOR_USE_ON_SECURITY_DEFINITION_REQUEST", "ASSET_BACKED_SECURITIES", "AMENDED_RESTATED", "OTHER_ANTICIPATION_NOTES", "BANKERS_ACCEPTANCE", "BANK_DEPOSITORY_NOTE", "BANK_NOTES", "BILL_OF_EXCHANGES", "BRADY_BOND", "BRIDGE_LOAN", "BUY_SELLBACK", "CANADIAN_MONEY_MARKETS", "CANADIAN_TREASURY_NOTES", "CASH", "CONVERTIBLE_BOND", "CERTIFICATE_OF_DEPOSIT", "CREDIT_DEFAULT_SWAP", "CALL_LOANS", "CANADIAN_MORTGAGE_BONDS", "CORP_MORTGAGE_BACKED_SECURITIES", "COLLATERALIZED_MORTGAGE_OBLIGATION", "CERTIFICATE_OF_OBLIGATION", "CERTIFICATE_OF_PARTICIPATION", "CORPORATE_BOND", "COMMERCIAL_PAPER", "CORPORATE_PRIVATE_PLACEMENT", "COMMON_STOCK", "CANADIAN_TREASURY_BILLS", "DEFAULTED", "DEBTOR_IN_POSSESSION", "DEPOSIT_NOTES", "DUAL_CURRENCY", "EURO_CERTIFICATE_OF_DEPOSIT", "EURO_CORPORATE_BOND", "EURO_COMMERCIAL_PAPER", "EURO_CORPORATE_FLOATING_RATE_NOTES", "EURO_SOVEREIGNS", "EURO_SUPRANATIONAL_COUPONS", "FEDERAL_AGENCY_COUPON", "FEDERAL_AGENCY_DISCOUNT_NOTE", "FOREIGN_EXCHANGE_CONTRACT", "FORWARD", "US_CORPORATE_FLOATING_RATE_NOTES", "FUTURE", "FX_FORWARD", "NON_DELIVERABLE_FORWARD", "FX_SPOT", "FX_SWAP", "GENERAL_OBLIGATION_BONDS", "IOETTE_MORTGAGE", "INTEREST_RATE_SWAP", "LETTER_OF_CREDIT", "LIQUIDITY_NOTE", "MATURED", "MORTGAGE_BACKED_SECURITIES", "MUTUAL_FUND", "MORTGAGE_INTEREST_ONLY", "MULTILEG_INSTRUMENT", "MORTGAGE_PRINCIPAL_ONLY", "MORTGAGE_PRIVATE_PLACEMENT", "MISCELLANEOUS_PASS_THROUGH", "MANDATORY_TENDER", "MEDIUM_TERM_NOTES", "NO_SECURITY_TYPE", "OVERNIGHT", "OPTIONS_ON_COMBO", "OPTIONS_ON_FUTURES", "OPTIONS_ON_PHYSICAL", "OPTION", "PRIVATE_EXPORT_FUNDING", "PFANDBRIEFE", "PROMISSORY_NOTE", "CANADIAN_PROVINCIAL_BONDS", "PREFERRED_STOCK", "PLAZOS_FIJOS", "REVENUE_ANTICIPATION_NOTE", "REPLACED", "REPURCHASE", "RETIRED", "REVENUE_BONDS", "REVOLVER_LOAN", "REVOLVER_TERM_LOAN", "SECURITIES_LOAN", "SECURITIES_PLEDGE", "SECURED_LIQUIDITY_NOTE", "SPECIAL_ASSESSMENT", "SPECIAL_OBLIGATION", "SPECIAL_TAX", "SHORT_TERM_LOAN_NOTE", "STRUCTURED_NOTES", "USD_SUPRANATIONAL_COUPONS", "SWING_LINE_FACILITY", "TAX_ANTICIPATION_NOTE", "TAX_ALLOCATION", "TREASURY_BILL", "TO_BE_ANNOUNCED", "US_TREASURY_BILL_TBILL", "US_TREASURY_BOND", "PRINCIPAL_STRIP_OF_A_CALLABLE_BOND_OR_NOTE", "TIME_DEPOSIT", "TAX_EXEMPT_COMMERCIAL_PAPER", "TERM_LOAN", "INTEREST_STRIP_FROM_ANY_BOND_OR_NOTE", "TREASURY_INFLATION_PROTECTED_SECURITIES", "TERM_LIQUIDITY_NOTE", "TAXABLE_MUNICIPAL_CP", "US_TREASURY_NOTE_TNOTE", "PRINCIPAL_STRIP_FROM_A_NON_CALLABLE_BOND_OR_NOTE", "TAX_REVENUE_ANTICIPATION_NOTE", "US_TREASURY_NOTE_UST", "US_TREASURY_BILL_USTB", "VARIABLE_RATE_DEMAND_NOTE", "WARRANT", "WITHDRAWN", "EXTENDED_COMM_NOTE", "INDEXED_LINKED", "YANKEE_CORPORATE_BOND", "YANKEE_CERTIFICATE_OF_DEPOSIT" };
-const int StandInstDbType_realm[] = 
+const int StandInstDbType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *StandInstDbType_descriptions[] = 
+const char *StandInstDbType_descriptions[]  
    { "OTHER", "DTC_SID", "THOMSON_ALERT", "A_GLOBAL_CUSTODIAN", "ACCOUNTNET" };
-const int SettlDeliveryType_realm[] = 
+const int SettlDeliveryType_realm[]  
    { 0, 1, 2, 3 };
-const char *SettlDeliveryType_descriptions[] = 
+const char *SettlDeliveryType_descriptions[]  
    { "VERSUS_PAYMENT_DELIVER", "FREE_DELIVER", "TRI_PARTY", "HOLD_IN_CUSTODY" };
-const int AllocLinkType_realm[] = 
+const int AllocLinkType_realm[]  
    { 0, 1 };
-const char *AllocLinkType_descriptions[] = 
+const char *AllocLinkType_descriptions[]  
    { "FX_NETTING", "FX_SWAP" };
-const int PutOrCall_realm[] = 
+const int PutOrCall_realm[]  
    { 0, 1 };
-const char *PutOrCall_descriptions[] = 
+const char *PutOrCall_descriptions[]  
    { "PUT", "CALL" };
-const int CoveredOrUncovered_realm[] = 
+const int CoveredOrUncovered_realm[]  
    { 0, 1 };
-const char *CoveredOrUncovered_descriptions[] = 
+const char *CoveredOrUncovered_descriptions[]  
    { "COVERED", "UNCOVERED" };
-const char NotifyBrokerOfCredit_realm[] = 
+const char NotifyBrokerOfCredit_realm[]  
    { 'N', 'Y' };
-const char *NotifyBrokerOfCredit_descriptions[] = 
+const char *NotifyBrokerOfCredit_descriptions[]  
    { "NO", "YES" };
-const int AllocHandlInst_realm[] = 
+const int AllocHandlInst_realm[]  
    { 1, 2, 3 };
-const char *AllocHandlInst_descriptions[] = 
+const char *AllocHandlInst_descriptions[]  
    { "MATCH", "FORWARD", "FORWARD_AND_MATCH" };
-const int RoutingType_realm[] = 
+const int RoutingType_realm[]  
    { 1, 2, 3, 4 };
-const char *RoutingType_descriptions[] = 
+const char *RoutingType_descriptions[]  
    { "TARGET_FIRM", "TARGET_LIST", "BLOCK_FIRM", "BLOCK_LIST" };
-const f8String BenchmarkCurveName_realm[] = 
+const f8String BenchmarkCurveName_realm[]  
    { "EONIA", "EUREPO", "Euribor", "FutureSWAP", "LIBID", "LIBOR", "MuniAAA", "OTHER", "Pfandbriefe", "SONIA", "SWAP", "Treasury" };
-const char *BenchmarkCurveName_descriptions[] = 
+const char *BenchmarkCurveName_descriptions[]  
    { "EONIA", "EUREPO", "EURIBOR", "FUTURESWAP", "LIBID", "LIBOR", "MUNIAAA", "OTHER", "PFANDBRIEFE", "SONIA", "SWAP", "TREASURY" };
-const f8String StipulationType_realm[] = 
+const f8String StipulationType_realm[]  
    { "ABS", "AMT", "AUTOREINV", "AVAILQTY", "AVFICO", "AVSIZE", "BANKQUAL", "BGNCON", "BROKERCREDIT", "COUPON", "CPP", "CPR", "CPY", "CURRENCY", "CUSTOMDATE", "DISCOUNT", "GEOG", "HAIRCUT", "HEP", "INSURED", "INTERNALPX", "INTERNALQTY", "ISSUE", "ISSUER", "ISSUESIZE", "LEAVEQTY", "LOOKBACK", "LOT", "LOTVAR", "MAT", "MATURITY", "MAXBAL", "MAXORDQTY", "MAXSUBS", "MHP", "MINDNOM", "MININCR", "MINQTY", "MPR", "ORDRINCR", "PAYFREQ", "PIECES", "PMAX", "POOL", "PPC", "PPL", "PPM", "PPT", "PRICE", "PRICEFREQ", "PRIMARY", "PROD", "PROTECT", "PSA", "PURPOSE", "PXSOURCE", "RATING", "REDEMPTION", "REFINT", "REFPRIN", "REFTRADE", "RESTRICTED", "ROLLTYPE", "SALESCREDITOVR", "SECTOR", "SECTYPE", "SMM", "STRUCT", "SUBSFREQ", "SUBSLEFT", "TEXT", "TRADERCREDIT", "TRDVAR", "WAC", "WAL", "WALA", "WAM", "WHOLE", "YIELD", "YTM" };
-const char *StipulationType_descriptions[] = 
+const char *StipulationType_descriptions[]  
    { "ABSOLUTE_PREPAYMENT_SPEED", "ALTERNATIVE_MINIMUM_TAX", "AUTO_REINVESTMENT_AT_RATE_OR_BETTER", "AVAILABLE_OFFER_QUANTITY_TO_BE_SHOWN_TO_THE_STREET", "AVERAGE_FICO_SCORE", "AVERAGE_LOAN_SIZE", "BANK_QUALIFIED", "BARGAIN_CONDITIONS", "BROKERS_SALES_CREDIT", "COUPON_RANGE", "CONSTANT_PREPAYMENT_PENALTY", "CONSTANT_PREPAYMENT_RATE", "CONSTANT_PREPAYMENT_YIELD", "ISO_CURRENCY_CODE", "CUSTOM_START_END_DATE", "DISCOUNT_RATE", "GEOGRAPHICS_AND_RANGE", "VALUATION_DISCOUNT", "FINAL_CPR_OF_HOME_EQUITY_PREPAYMENT_CURVE", "INSURED", "OFFER_PRICE_TO_BE_SHOWN_TO_INTERNAL_BROKERS", "OFFER_QUANTITY_TO_BE_SHOWN_TO_INTERNAL_BROKERS", "YEAR_OR_YEAR_MONTH_OF_ISSUE", "ISSUERS_TICKER", "ISSUE_SIZE_RANGE", "THE_MINIMUM_RESIDUAL_OFFER_QUANTITY", "LOOKBACK_DAYS", "EXPLICIT_LOT_IDENTIFIER", "LOT_VARIANCE", "MATURITY_YEAR_AND_MONTH", "MATURITY_RANGE", "MAXIMUM_LOAN_BALANCE", "MAXIMUM_ORDER_SIZE", "MAXIMUM_SUBSTITUTIONS", "PERCENT_OF_MANUFACTURED_HOUSING_PREPAYMENT_CURVE", "MINIMUM_DENOMINATION", "MINIMUM_INCREMENT", "MINIMUM_QUANTITY", "MONTHLY_PREPAYMENT_RATE", "ORDER_QUANTITY_INCREMENT", "PAYMENT_FREQUENCY_CALENDAR", "NUMBER_OF_PIECES", "POOLS_MAXIMUM", "POOL_IDENTIFIER", "PERCENT_OF_PROSPECTUS_PREPAYMENT_CURVE", "POOLS_PER_LOT", "POOLS_PER_MILLION", "POOLS_PER_TRADE", "PRICE_RANGE", "PRICING_FREQUENCY", "PRIMARY_OR_SECONDARY_MARKET_INDICATOR", "PRODUCTION_YEAR", "CALL_PROTECTION", "PERCENT_OF_BMA_PREPAYMENT_CURVE", "PURPOSE", "BENCHMARK_PRICE_SOURCE", "RATING_SOURCE_AND_RANGE", "TYPE_OF_REDEMPTION", "INTEREST_OF_ROLLING_OR_CLOSING_TRADE", "PRINCIPAL_OF_ROLLING_OR_CLOSING_TRADE", "REFERENCE_TO_ROLLING_OR_CLOSING_TRADE", "RESTRICTED", "TYPE_OF_ROLL_TRADE", "BROKER_SALES_CREDIT_OVERRIDE", "MARKET_SECTOR", "SECURITY_TYPE_INCLUDED_OR_EXCLUDED", "SINGLE_MONTHLY_MORTALITY", "STRUCTURE", "SUBSTITUTIONS_FREQUENCY", "SUBSTITUTIONS_LEFT", "FREEFORM_TEXT", "TRADERS_CREDIT", "TRADE_VARIANCE", "WEIGHTED_AVERAGE_COUPON", "WEIGHTED_AVERAGE_LIFE_COUPON", "WEIGHTED_AVERAGE_LOAN_AGE", "WEIGHTED_AVERAGE_MATURITY", "WHOLE_POOL", "YIELD_RANGE", "YIELD_TO_MATURITY" };
-const f8String YieldType_realm[] = 
+const f8String YieldType_realm[]  
    { "AFTERTAX", "ANNUAL", "ATISSUE", "AVGMATURITY", "BOOK", "CALL", "CHANGE", "CLOSE", "COMPOUND", "CURRENT", "GOVTEQUIV", "GROSS", "INFLATION", "INVERSEFLOATER", "LASTCLOSE", "LASTMONTH", "LASTQUARTER", "LASTYEAR", "LONGAVGLIFE", "MARK", "MATURITY", "NEXTREFUND", "OPENAVG", "PREVCLOSE", "PROCEEDS", "PUT", "SEMIANNUAL", "SHORTAVGLIFE", "SIMPLE", "TAXEQUIV", "TENDER", "TRUE", "VALUE1_32", "WORST" };
-const char *YieldType_descriptions[] = 
+const char *YieldType_descriptions[]  
    { "AFTER_TAX_YIELD", "ANNUAL_YIELD", "YIELD_AT_ISSUE", "YIELD_TO_AVG_MATURITY", "BOOK_YIELD", "YIELD_TO_NEXT_CALL", "YIELD_CHANGE_SINCE_CLOSE", "CLOSING_YIELD", "COMPOUND_YIELD", "CURRENT_YIELD", "GVNT_EQUIVALENT_YIELD", "TRUE_GROSS_YIELD", "YIELD_WITH_INFLATION_ASSUMPTION", "INVERSE_FLOATER_BOND_YIELD", "MOST_RECENT_CLOSING_YIELD", "CLOSING_YIELD_MOST_RECENT_MONTH", "CLOSING_YIELD_MOST_RECENT_QUARTER", "CLOSING_YIELD_MOST_RECENT_YEAR", "YIELD_TO_LONGEST_AVERAGE_LIFE", "MARK_TO_MARKET_YIELD", "YIELD_TO_MATURITY", "YIELD_TO_NEXT_REFUND", "OPEN_AVERAGE_YIELD", "PREVIOUS_CLOSE_YIELD", "PROCEEDS_YIELD", "YIELD_TO_NEXT_PUT", "SEMI_ANNUAL_YIELD", "YIELD_TO_SHORTEST_AVERAGE_LIFE", "SIMPLE_YIELD", "TAX_EQUIVALENT_YIELD", "YIELD_TO_TENDER_DATE", "TRUE_YIELD", "YIELD_VALUE_OF_1_32", "YIELD_TO_WORST" };
-const char TradedFlatSwitch_realm[] = 
+const char TradedFlatSwitch_realm[]  
    { 'N', 'Y' };
-const char *TradedFlatSwitch_descriptions[] = 
+const char *TradedFlatSwitch_descriptions[]  
    { "NO", "YES" };
-const char SubscriptionRequestType_realm[] = 
+const char SubscriptionRequestType_realm[]  
    { '0', '1', '2' };
-const char *SubscriptionRequestType_descriptions[] = 
+const char *SubscriptionRequestType_descriptions[]  
    { "SNAPSHOT", "SNAPSHOT_PLUS_UPDATES", "DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST" };
-const int MDUpdateType_realm[] = 
+const int MDUpdateType_realm[]  
    { 0, 1 };
-const char *MDUpdateType_descriptions[] = 
+const char *MDUpdateType_descriptions[]  
    { "FULL_REFRESH", "INCREMENTAL_REFRESH" };
-const char AggregatedBook_realm[] = 
+const char AggregatedBook_realm[]  
    { 'N', 'Y' };
-const char *AggregatedBook_descriptions[] = 
+const char *AggregatedBook_descriptions[]  
    { "NO", "YES" };
-const char MDEntryType_realm[] = 
+const char MDEntryType_realm[]  
    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a' };
-const char *MDEntryType_descriptions[] = 
+const char *MDEntryType_descriptions[]  
    { "BID", "OFFER", "TRADE", "INDEX_VALUE", "OPENING_PRICE", "CLOSING_PRICE", "SETTLEMENT_PRICE", "TRADING_SESSION_HIGH_PRICE", "TRADING_SESSION_LOW_PRICE", "TRADING_SESSION_VWAP_PRICE", "IMBALANCE", "TRADE_VOLUME", "OPEN_INTEREST", "COMPOSITE_UNDERLYING_PRICE", "SIMULATED_SELL_PRICE", "SIMULATED_BUY_PRICE", "MARGIN_RATE", "MID_PRICE", "EMPTY_BOOK", "SETTLE_HIGH_PRICE", "SETTLE_LOW_PRICE", "PRIOR_SETTLE_PRICE", "SESSION_HIGH_BID", "SESSION_LOW_OFFER", "EARLY_PRICES", "AUCTION_CLEARING_PRICE", "DAILY_VALUE_ADJUSTMENT_FOR_LONG_POSITIONS", "SWAP_VALUE_FACTOR", "CUMULATIVE_VALUE_ADJUSTMENT_FOR_LONG_POSITIONS", "DAILY_VALUE_ADJUSTMENT_FOR_SHORT_POSITIONS", "CUMULATIVE_VALUE_ADJUSTMENT_FOR_SHORT_POSITIONS", "FIXING_PRICE", "CASH_RATE", "RECOVERY_RATE", "RECOVERY_RATE_FOR_LONG", "RECOVERY_RATE_FOR_SHORT" };
-const char TickDirection_realm[] = 
+const char TickDirection_realm[]  
    { '0', '1', '2', '3' };
-const char *TickDirection_descriptions[] = 
+const char *TickDirection_descriptions[]  
    { "PLUS_TICK", "ZERO_PLUS_TICK", "MINUS_TICK", "ZERO_MINUS_TICK" };
-const f8String QuoteCondition_realm[] = 
+const f8String QuoteCondition_realm[]  
    { "0", "1", "2", "3", "4", "5", "6", "7", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f ", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
-const char *QuoteCondition_descriptions[] = 
+const char *QuoteCondition_descriptions[]  
    { "RESERVED_SAM", "NO_ACTIVE_SAM", "RESTRICTED", "REST_OF_BOOK_VWAP", "BETTER_PRICES_IN_CONDITIONAL_ORDERS", "MEDIAN_PRICE", "FULL_CURVE", "FLAT_CURVE", "OPEN_ACTIVE", "CLOSED_INACTIVE", "EXCHANGE_BEST", "CONSOLIDATED_BEST", "LOCKED", "CROSSED", "DEPTH", "FAST_TRADING", "NON_FIRM", "OUTRIGHT_PRICE", "IMPLIED_PRICE", "MANUAL_SLOW_QUOTE", "DEPTH_ON_OFFER", "DEPTH_ON_BID", "CLOSING", "NEWS_DISSEMINATION", "TRADING_RANGE", "ORDER_INFLUX", "DUE_TO_RELATED", "NEWS_PENDING", "ADDITIONAL_INFO", "ADDITIONAL_INFO_DUE_TO_RELATED", "RESUME", "VIEW_OF_COMMON", "VOLUME_ALERT", "ORDER_IMBALANCE", "EQUIPMENT_CHANGEOVER", "NO_OPEN", "REGULAR_ETH", "AUTOMATIC_EXECUTION", "AUTOMATIC_EXECUTION_ETH", "FAST_MARKET_ETH", "INACTIVE_ETH", "ROTATION", "ROTATION_ETH", "HALT", "HALT_ETH", "DUE_TO_NEWS_DISSEMINATION", "DUE_TO_NEWS_PENDING", "TRADING_RESUME", "OUT_OF_SEQUENCE", "BID_SPECIALIST", "OFFER_SPECIALIST", "BID_OFFER_SPECIALIST", "END_OF_DAY_SAM", "FORBIDDEN_SAM", "FROZEN_SAM", "PREOPENING_SAM", "OPENING_SAM", "OPEN_SAM", "SURVEILLANCE_SAM", "SUSPENDED_SAM" };
-const f8String TradeCondition_realm[] = 
+const f8String TradeCondition_realm[]  
    { "0", "1", "2", "3", "4", "A", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AV", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
-const char *TradeCondition_descriptions[] = 
+const char *TradeCondition_descriptions[]  
    { "CANCEL", "IMPLIED_TRADE", "MARKETPLACE_ENTERED_TRADE", "MULT_ASSET_CLASS_MULTILEG_TRADE", "MULTILEG_TO_MULTILEG_TRADE", "CASH", "SPREAD", "SPREAD_ETH", "STRADDLE", "STRADDLE_ETH", "STOPPED", "STOPPED_ETH", "REGULAR_ETH", "COMBO", "COMBO_ETH", "OFFICIAL_CLOSING_PRICE", "PRIOR_REFERENCE_PRICE", "STOPPED_SOLD_LAST", "STOPPED_OUT_OF_SEQUENCE", "OFFICAL_CLOSING_PRICE", "CROSSED_AO", "FAST_MARKET", "AUTOMATIC_EXECUTION", "FORM_T", "BASKET_INDEX", "BURST_BASKET", "OUTSIDE_SPREAD", "AVERAGE_PRICE_TRADE", "CASH_TRADE", "NEXT_DAY", "OPENING_REOPENING_TRADE_DETAIL", "INTRADAY_TRADE_DETAIL", "RULE_127_TRADE", "RULE_155_TRADE", "SOLD_LAST", "NEXT_DAY_TRADE", "OPENED", "SELLER", "SOLD", "STOPPED_STOCK", "IMBALANCE_MORE_BUYERS", "IMBALANCE_MORE_SELLERS", "OPENING_PRICE", "BARGAIN_CONDITION", "CONVERTED_PRICE_INDICATOR", "EXCHANGE_LAST", "FINAL_PRICE_OF_SESSION", "EX_PIT", "CROSSED_X", "TRADES_RESULTING_FROM_MANUAL_SLOW_QUOTE", "TRADES_RESULTING_FROM_INTERMARKET_SWEEP", "VOLUME_ONLY", "DIRECT_PLUS", "ACQUISITION", "BUNCHED", "DISTRIBUTION", "BUNCHED_SALE", "SPLIT_TRADE", "CANCEL_STOPPED", "CANCEL_ETH", "CANCEL_STOPPED_ETH", "OUT_OF_SEQUENCE_ETH", "CANCEL_LAST_ETH", "SOLD_LAST_SALE_ETH", "CANCEL_LAST", "SOLD_LAST_SALE", "CANCEL_OPEN", "CANCEL_OPEN_ETH", "OPENED_SALE_ETH", "CANCEL_ONLY", "CANCEL_ONLY_ETH", "LATE_OPEN_ETH", "AUTO_EXECUTION_ETH", "REOPEN", "REOPEN_ETH", "ADJUSTED", "ADJUSTED_ETH" };
-const char MDUpdateAction_realm[] = 
+const char MDUpdateAction_realm[]  
    { '0', '1', '2', '3', '4', '5' };
-const char *MDUpdateAction_descriptions[] = 
+const char *MDUpdateAction_descriptions[]  
    { "NEW", "CHANGE", "DELETE", "DELETE_THRU", "DELETE_FROM", "OVERLAY" };
-const char MDReqRejReason_realm[] = 
+const char MDReqRejReason_realm[]  
    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D' };
-const char *MDReqRejReason_descriptions[] = 
+const char *MDReqRejReason_descriptions[]  
    { "UNKNOWN_SYMBOL", "DUPLICATE_MDREQID", "INSUFFICIENT_BANDWIDTH", "INSUFFICIENT_PERMISSIONS", "UNSUPPORTED_SUBSCRIPTIONREQUESTTYPE", "UNSUPPORTED_MARKETDEPTH", "UNSUPPORTED_MDUPDATETYPE", "UNSUPPORTED_AGGREGATEDBOOK", "UNSUPPORTED_MDENTRYTYPE", "UNSUPPORTED_TRADINGSESSIONID", "UNSUPPORTED_SCOPE", "UNSUPPORTED_OPENCLOSESETTLEFLAG", "UNSUPPORTED_MDIMPLICITDELETE", "INSUFFICIENT_CREDIT" };
-const char DeleteReason_realm[] = 
+const char DeleteReason_realm[]  
    { '0', '1' };
-const char *DeleteReason_descriptions[] = 
+const char *DeleteReason_descriptions[]  
    { "CANCELLATION", "ERROR" };
-const f8String OpenCloseSettlFlag_realm[] = 
+const f8String OpenCloseSettlFlag_realm[]  
    { "0", "1", "2", "3", "4", "5" };
-const char *OpenCloseSettlFlag_descriptions[] = 
+const char *OpenCloseSettlFlag_descriptions[]  
    { "DAILY_OPEN", "SESSION_OPEN", "DELIVERY_SETTLEMENT_ENTRY", "EXPECTED_ENTRY", "ENTRY_FROM_PREVIOUS_BUSINESS_DAY", "THEORETICAL_PRICE_VALUE" };
-const f8String FinancialStatus_realm[] = 
+const f8String FinancialStatus_realm[]  
    { "1", "2", "3" };
-const char *FinancialStatus_descriptions[] = 
+const char *FinancialStatus_descriptions[]  
    { "BANKRUPT", "PENDING_DELISTING", "RESTRICTED" };
-const f8String CorporateAction_realm[] = 
+const f8String CorporateAction_realm[]  
    { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W" };
-const char *CorporateAction_descriptions[] = 
+const char *CorporateAction_descriptions[]  
    { "EX_DIVIDEND", "EX_DISTRIBUTION", "EX_RIGHTS", "NEW", "EX_INTEREST", "CASH_DIVIDEND", "STOCK_DIVIDEND", "NON_INTEGER_STOCK_SPLIT", "REVERSE_STOCK_SPLIT", "STANDARD_INTEGER_STOCK_SPLIT", "POSITION_CONSOLIDATION", "LIQUIDATION_REORGANIZATION", "MERGER_REORGANIZATION", "RIGHTS_OFFERING", "SHAREHOLDER_MEETING", "SPINOFF", "TENDER_OFFER", "WARRANT", "SPECIAL_ACTION", "SYMBOL_CONVERSION", "CUSIP", "LEAP_ROLLOVER", "SUCCESSION_EVENT" };
-const int QuoteStatus_realm[] = 
+const int QuoteStatus_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
-const char *QuoteStatus_descriptions[] = 
+const char *QuoteStatus_descriptions[]  
    { "ACCEPTED", "CANCEL_FOR_SYMBOL", "CANCELED_FOR_SECURITY_TYPE", "CANCELED_FOR_UNDERLYING", "CANCELED_ALL", "REJECTED", "REMOVED_FROM_MARKET", "EXPIRED", "QUERY", "QUOTE_NOT_FOUND", "PENDING", "PASS", "LOCKED_MARKET_WARNING", "CROSS_MARKET_WARNING", "CANCELED_DUE_TO_LOCK_MARKET", "CANCELED_DUE_TO_CROSS_MARKET", "ACTIVE", "CANCELED", "UNSOLICITED_QUOTE_REPLENISHMENT", "PENDING_END_TRADE", "TOO_LATE_TO_END" };
-const int QuoteCancelType_realm[] = 
+const int QuoteCancelType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8 };
-const char *QuoteCancelType_descriptions[] = 
+const char *QuoteCancelType_descriptions[]  
    { "CANCEL_FOR_ONE_OR_MORE_SECURITIES", "CANCEL_FOR_SECURITY_TYPE", "CANCEL_FOR_UNDERLYING_SECURITY", "CANCEL_ALL_QUOTES", "CANCEL_QUOTE_SPECIFIED_IN_QUOTEID", "CANCEL_BY_QUOTETYPE", "CANCEL_FOR_SECURITY_ISSUER", "CANCEL_FOR_ISSUER_OF_UNDERLYING_SECURITY" };
-const int QuoteRejectReason_realm[] = 
+const int QuoteRejectReason_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99 };
-const char *QuoteRejectReason_descriptions[] = 
+const char *QuoteRejectReason_descriptions[]  
    { "UNKNOWN_SYMBOL", "EXCHANGE", "QUOTE_REQUEST_EXCEEDS_LIMIT", "TOO_LATE_TO_ENTER", "UNKNOWN_QUOTE", "DUPLICATE_QUOTE", "INVALID_BID_ASK_SPREAD", "INVALID_PRICE", "NOT_AUTHORIZED_TO_QUOTE_SECURITY", "PRICE_EXCEEDS_CURRENT_PRICE_BAND", "QUOTE_LOCKED", "INVALID_OR_UNKNOWN_SECURITY_ISSUER", "INVALID_OR_UNKNOWN_ISSUER_OF_UNDERLYING_SECURITY", "OTHER" };
-const int QuoteResponseLevel_realm[] = 
+const int QuoteResponseLevel_realm[]  
    { 0, 1, 2, 3 };
-const char *QuoteResponseLevel_descriptions[] = 
+const char *QuoteResponseLevel_descriptions[]  
    { "NO_ACKNOWLEDGEMENT", "ACKNOWLEDGE_ONLY_NEGATIVE_OR_ERRONEOUS_QUOTES", "ACKNOWLEDGE_EACH_QUOTE_MESSAGE", "SUMMARY_ACKNOWLEDGEMENT" };
-const int QuoteRequestType_realm[] = 
+const int QuoteRequestType_realm[]  
    { 1, 2 };
-const char *QuoteRequestType_descriptions[] = 
+const char *QuoteRequestType_descriptions[]  
    { "MANUAL", "AUTOMATIC" };
-const int SecurityRequestType_realm[] = 
+const int SecurityRequestType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-const char *SecurityRequestType_descriptions[] = 
+const char *SecurityRequestType_descriptions[]  
    { "REQUEST_SECURITY_IDENTITY_AND_SPECIFICATIONS", "REQUEST_SECURITY_IDENTITY_FOR_THE_SPECIFICATIONS_PROVIDED", "REQUEST_LIST_SECURITY_TYPES", "REQUEST_LIST_SECURITIES", "SYMBOL", "SECURITYTYPE_AND_OR_CFICODE", "PRODUCT", "TRADINGSESSIONID", "ALL_SECURITIES", "MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID" };
-const int SecurityResponseType_realm[] = 
+const int SecurityResponseType_realm[]  
    { 1, 2, 3, 4, 5, 6 };
-const char *SecurityResponseType_descriptions[] = 
+const char *SecurityResponseType_descriptions[]  
    { "ACCEPT_SECURITY_PROPOSAL_AS_IS", "ACCEPT_SECURITY_PROPOSAL_WITH_REVISIONS_AS_INDICATED_IN_THE_MESSAGE", "LIST_OF_SECURITY_TYPES_RETURNED_PER_REQUEST", "LIST_OF_SECURITIES_RETURNED_PER_REQUEST", "REJECT_SECURITY_PROPOSAL", "CANNOT_MATCH_SELECTION_CRITERIA" };
-const char UnsolicitedIndicator_realm[] = 
+const char UnsolicitedIndicator_realm[]  
    { 'N', 'Y' };
-const char *UnsolicitedIndicator_descriptions[] = 
+const char *UnsolicitedIndicator_descriptions[]  
    { "NO", "YES" };
-const int SecurityTradingStatus_realm[] = 
+const int SecurityTradingStatus_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 };
-const char *SecurityTradingStatus_descriptions[] = 
+const char *SecurityTradingStatus_descriptions[]  
    { "OPENING_DELAY", "TRADING_HALT", "RESUME", "NO_OPEN", "PRICE_INDICATION", "TRADING_RANGE_INDICATION", "MARKET_IMBALANCE_BUY", "MARKET_IMBALANCE_SELL", "MARKET_ON_CLOSE_IMBALANCE_BUY", "MARKET_ON_CLOSE_IMBALANCE_SELL", "11", "NO_MARKET_IMBALANCE", "NO_MARKET_ON_CLOSE_IMBALANCE", "ITS_PRE_OPENING", "NEW_PRICE_INDICATION", "TRADE_DISSEMINATION_TIME", "READY_TO_TRADE", "NOT_AVAILABLE_FOR_TRADING", "NOT_TRADED_ON_THIS_MARKET", "UNKNOWN_OR_INVALID", "PRE_OPEN", "OPENING_ROTATION", "FAST_MARKET", "PRE_CROSS", "CROSS", "POST_CLOSE" };
-const int HaltReasonInt_realm[] = 
+const int HaltReasonInt_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *HaltReasonInt_descriptions[] = 
+const char *HaltReasonInt_descriptions[]  
    { "NEWS_DISSEMINATION", "ORDER_INFLUX", "ORDER_IMBALANCE", "ADDITIONAL_INFORMATION", "NEWS_PENDING", "EQUIPMENT_CHANGEOVER" };
-const char InViewOfCommon_realm[] = 
+const char InViewOfCommon_realm[]  
    { 'N', 'Y' };
-const char *InViewOfCommon_descriptions[] = 
+const char *InViewOfCommon_descriptions[]  
    { "NO", "YES" };
-const char DueToRelated_realm[] = 
+const char DueToRelated_realm[]  
    { 'N', 'Y' };
-const char *DueToRelated_descriptions[] = 
+const char *DueToRelated_descriptions[]  
    { "NO", "YES" };
-const int Adjustment_realm[] = 
+const int Adjustment_realm[]  
    { 1, 2, 3 };
-const char *Adjustment_descriptions[] = 
+const char *Adjustment_descriptions[]  
    { "CANCEL", "ERROR", "CORRECTION" };
-const f8String TradingSessionID_realm[] = 
+const f8String TradingSessionID_realm[]  
    { "1", "2", "3", "4", "5", "6" };
-const char *TradingSessionID_descriptions[] = 
+const char *TradingSessionID_descriptions[]  
    { "DAY", "HALFDAY", "MORNING", "AFTERNOON", "EVENING", "AFTER_HOURS" };
-const int TradSesMethod_realm[] = 
+const int TradSesMethod_realm[]  
    { 1, 2, 3 };
-const char *TradSesMethod_descriptions[] = 
+const char *TradSesMethod_descriptions[]  
    { "ELECTRONIC", "OPEN_OUTCRY", "TWO_PARTY" };
-const int TradSesMode_realm[] = 
+const int TradSesMode_realm[]  
    { 1, 2, 3 };
-const char *TradSesMode_descriptions[] = 
+const char *TradSesMode_descriptions[]  
    { "TESTING", "SIMULATED", "PRODUCTION" };
-const int TradSesStatus_realm[] = 
+const int TradSesStatus_realm[]  
    { 0, 1, 2, 3, 4, 5, 6 };
-const char *TradSesStatus_descriptions[] = 
+const char *TradSesStatus_descriptions[]  
    { "UNKNOWN", "HALTED", "OPEN", "CLOSED", "PRE_OPEN", "PRE_CLOSE", "REQUEST_REJECTED" };
-const f8String MessageEncoding_realm[] = 
+const f8String MessageEncoding_realm[]  
    { "EUC-JP", "ISO-2022-JP", "SHIFT_JIS", "UTF-8" };
-const char *MessageEncoding_descriptions[] = 
+const char *MessageEncoding_descriptions[]  
    { "EUC_JP", "ISO_2022_JP", "SHIFT_JIS", "UTF_8" };
-const int SessionRejectReason_realm[] = 
+const int SessionRejectReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 99 };
-const char *SessionRejectReason_descriptions[] = 
+const char *SessionRejectReason_descriptions[]  
    { "INVALID_TAG_NUMBER", "REQUIRED_TAG_MISSING", "TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE", "UNDEFINED_TAG", "TAG_SPECIFIED_WITHOUT_A_VALUE", "VALUE_IS_INCORRECT", "INCORRECT_DATA_FORMAT_FOR_VALUE", "DECRYPTION_PROBLEM", "SIGNATURE_PROBLEM", "COMPID_PROBLEM", "SENDINGTIME_ACCURACY_PROBLEM", "INVALID_MSGTYPE", "XML_VALIDATION_ERROR", "TAG_APPEARS_MORE_THAN_ONCE", "TAG_SPECIFIED_OUT_OF_REQUIRED_ORDER", "REPEATING_GROUP_FIELDS_OUT_OF_ORDER", "INCORRECT_NUMINGROUP_COUNT_FOR_REPEATING_GROUP", "NON_DATA_VALUE_INCLUDES_FIELD_DELIMITER", "OTHER" };
-const char BidRequestTransType_realm[] = 
+const char BidRequestTransType_realm[]  
    { 'C', 'N' };
-const char *BidRequestTransType_descriptions[] = 
+const char *BidRequestTransType_descriptions[]  
    { "CANCEL", "NO" };
-const char SolicitedFlag_realm[] = 
+const char SolicitedFlag_realm[]  
    { 'N', 'Y' };
-const char *SolicitedFlag_descriptions[] = 
+const char *SolicitedFlag_descriptions[]  
    { "NO", "YES" };
-const int ExecRestatementReason_realm[] = 
+const int ExecRestatementReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99 };
-const char *ExecRestatementReason_descriptions[] = 
+const char *ExecRestatementReason_descriptions[]  
    { "GT_CORPORATE_ACTION", "GT_RENEWAL", "VERBAL_CHANGE", "REPRICING_OF_ORDER", "BROKER_OPTION", "PARTIAL_DECLINE_OF_ORDERQTY", "CANCEL_ON_TRADING_HALT", "CANCEL_ON_SYSTEM_FAILURE", "MARKET", "CANCELED_NOT_BEST", "WAREHOUSE_RECAP", "PEG_REFRESH", "OTHER" };
-const int BusinessRejectReason_realm[] = 
+const int BusinessRejectReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 18 };
-const char *BusinessRejectReason_descriptions[] = 
+const char *BusinessRejectReason_descriptions[]  
    { "OTHER", "UNKNOWN_ID", "UNKNOWN_SECURITY", "UNSUPPORTED_MESSAGE_TYPE", "APPLICATION_NOT_AVAILABLE", "CONDITIONALLY_REQUIRED_FIELD_MISSING", "NOT_AUTHORIZED", "DELIVERTO_FIRM_NOT_AVAILABLE_AT_THIS_TIME", "INVALID_PRICE_INCREMENT" };
-const char MsgDirection_realm[] = 
+const char MsgDirection_realm[]  
    { 'R', 'S' };
-const char *MsgDirection_descriptions[] = 
+const char *MsgDirection_descriptions[]  
    { "RECEIVE", "SEND" };
-const char DiscretionInst_realm[] = 
+const char DiscretionInst_realm[]  
    { '0', '1', '2', '3', '4', '5', '6', '7' };
-const char *DiscretionInst_descriptions[] = 
+const char *DiscretionInst_descriptions[]  
    { "RELATED_TO_DISPLAYED_PRICE", "RELATED_TO_MARKET_PRICE", "RELATED_TO_PRIMARY_PRICE", "RELATED_TO_LOCAL_PRIMARY_PRICE", "RELATED_TO_MIDPOINT_PRICE", "RELATED_TO_LAST_TRADE_PRICE", "RELATED_TO_VWAP", "AVERAGE_PRICE_GUARANTEE" };
-const int BidType_realm[] = 
+const int BidType_realm[]  
    { 1, 2, 3 };
-const char *BidType_descriptions[] = 
+const char *BidType_descriptions[]  
    { "NON_DISCLOSED_STYLE", "DISCLOSED_SYTLE", "NO_BIDDING_PROCESS" };
-const int BidDescriptorType_realm[] = 
+const int BidDescriptorType_realm[]  
    { 1, 2, 3 };
-const char *BidDescriptorType_descriptions[] = 
+const char *BidDescriptorType_descriptions[]  
    { "SECTOR", "COUNTRY", "INDEX" };
-const int SideValueInd_realm[] = 
+const int SideValueInd_realm[]  
    { 1, 2 };
-const char *SideValueInd_descriptions[] = 
+const char *SideValueInd_descriptions[]  
    { "SIDE_VALUE_1", "SIDE_VALUE_2" };
-const int LiquidityIndType_realm[] = 
+const int LiquidityIndType_realm[]  
    { 1, 2, 3, 4 };
-const char *LiquidityIndType_descriptions[] = 
+const char *LiquidityIndType_descriptions[]  
    { "5_DAY_MOVING_AVERAGE", "20_DAY_MOVING_AVERAGE", "NORMAL_MARKET_SIZE", "OTHER" };
-const char ExchangeForPhysical_realm[] = 
+const char ExchangeForPhysical_realm[]  
    { 'N', 'Y' };
-const char *ExchangeForPhysical_descriptions[] = 
+const char *ExchangeForPhysical_descriptions[]  
    { "NO", "YES" };
-const int ProgRptReqs_realm[] = 
+const int ProgRptReqs_realm[]  
    { 1, 2, 3 };
-const char *ProgRptReqs_descriptions[] = 
+const char *ProgRptReqs_descriptions[]  
    { "BUY_SIDE_EXPLICITLY_REQUESTS_STATUS_USING_STATUE_REQUEST", "SELL_SIDE_PERIODICALLY_SENDS_STATUS_USING_LIST_STATUS_PERIOD_OPTIONALLY_SPECIFIED_IN_PROGRESSPERIOD", "REAL_TIME_EXECUTION_REPORTS" };
-const int IncTaxInd_realm[] = 
+const int IncTaxInd_realm[]  
    { 1, 2 };
-const char *IncTaxInd_descriptions[] = 
+const char *IncTaxInd_descriptions[]  
    { "NET", "GROSS" };
-const char BidTradeType_realm[] = 
+const char BidTradeType_realm[]  
    { 'A', 'G', 'J', 'R' };
-const char *BidTradeType_descriptions[] = 
+const char *BidTradeType_descriptions[]  
    { "AGENCY", "VWAP_GUARANTEE", "GUARANTEED_CLOSE", "RISK_TRADE" };
-const char BasisPxType_realm[] = 
+const char BasisPxType_realm[]  
    { '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'Z' };
-const char *BasisPxType_descriptions[] = 
+const char *BasisPxType_descriptions[]  
    { "CLOSING_PRICE_AT_MORNINGN_SESSION", "CLOSING_PRICE", "CURRENT_PRICE", "SQ", "VWAP_THROUGH_A_DAY", "VWAP_THROUGH_A_MORNING_SESSION", "VWAP_THROUGH_AN_AFTERNOON_SESSION", "VWAP_THROUGH_A_DAY_EXCEPT_YORI", "VWAP_THROUGH_A_MORNING_SESSION_EXCEPT_YORI", "VWAP_THROUGH_AN_AFTERNOON_SESSION_EXCEPT_YORI", "STRIKE", "OPEN", "OTHERS" };
-const int PriceType_realm[] = 
+const int PriceType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19 };
-const char *PriceType_descriptions[] = 
+const char *PriceType_descriptions[]  
    { "PERCENTAGE", "PER_UNIT", "FIXED_AMOUNT", "DISCOUNT", "PREMIUM", "SPREAD", "TED_PRICE", "TED_YIELD", "YIELD", "FIXED_CABINET_TRADE_PRICE", "VARIABLE_CABINET_TRADE_PRICE", "PRODUCT_TICKS_IN_HALFS", "PRODUCT_TICKS_IN_FOURTHS", "PRODUCT_TICKS_IN_EIGHTS", "PRODUCT_TICKS_IN_SIXTEENTHS", "PRODUCT_TICKS_IN_THIRTY_SECONDS", "PRODUCT_TICKS_IN_SIXTY_FORTHS", "PRODUCT_TICKS_IN_ONE_TWENTY_EIGHTS" };
-const int GTBookingInst_realm[] = 
+const int GTBookingInst_realm[]  
    { 0, 1, 2 };
-const char *GTBookingInst_descriptions[] = 
+const char *GTBookingInst_descriptions[]  
    { "BOOK_OUT_ALL_TRADES_ON_DAY_OF_EXECUTION", "ACCUMULATE_EXECTUIONS_UNTIL_FORDER_IS_FILLED_OR_EXPIRES", "ACCUMULATE_UNTIL_VERBALLLY_NOTIFIED_OTHERWISE" };
-const int ListStatusType_realm[] = 
+const int ListStatusType_realm[]  
    { 1, 2, 3, 4, 5, 6 };
-const char *ListStatusType_descriptions[] = 
+const char *ListStatusType_descriptions[]  
    { "ACK", "RESPONSE", "TIMED", "EXEC_STARTED", "ALL_DONE", "ALERT" };
-const int NetGrossInd_realm[] = 
+const int NetGrossInd_realm[]  
    { 1, 2 };
-const char *NetGrossInd_descriptions[] = 
+const char *NetGrossInd_descriptions[]  
    { "NET", "GROSS" };
-const int ListOrderStatus_realm[] = 
+const int ListOrderStatus_realm[]  
    { 1, 2, 3, 4, 5, 6, 7 };
-const char *ListOrderStatus_descriptions[] = 
+const char *ListOrderStatus_descriptions[]  
    { "IN_BIDDING_PROCESS", "RECEIVED_FOR_EXECUTION", "EXECUTING", "CANCELLING", "ALERT", "ALL_DONE", "REJECT" };
-const char ListExecInstType_realm[] = 
+const char ListExecInstType_realm[]  
    { '1', '2', '3', '4', '5' };
-const char *ListExecInstType_descriptions[] = 
+const char *ListExecInstType_descriptions[]  
    { "IMMEDIATE", "WAIT_FOR_EXECUT_INSTRUCTION", "EXCHANGE_SWITCH_CIV_ORDER_3", "EXCHANGE_SWITCH_CIV_ORDER_4", "EXCHANGE_SWITCH_CIV_ORDER_5" };
-const char CxlRejResponseTo_realm[] = 
+const char CxlRejResponseTo_realm[]  
    { '1', '2' };
-const char *CxlRejResponseTo_descriptions[] = 
+const char *CxlRejResponseTo_descriptions[]  
    { "ORDER_CANCEL_REQUEST", "ORDER_CANCEL_REPLACE_REQUEST" };
-const char MultiLegReportingType_realm[] = 
+const char MultiLegReportingType_realm[]  
    { '1', '2', '3' };
-const char *MultiLegReportingType_descriptions[] = 
+const char *MultiLegReportingType_descriptions[]  
    { "SINGLE_SECURITY", "INDIVIDUAL_LEG_OF_A_MULTI_LEG_SECURITY", "MULTI_LEG_SECURITY" };
-const char PartyIDSource_realm[] = 
+const char PartyIDSource_realm[]  
    { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
-const char *PartyIDSource_descriptions[] = 
+const char *PartyIDSource_descriptions[]  
    { "KOREAN_INVESTOR_ID", "TAIWANESE_QUALIFIED_FOREIGN_INVESTOR_ID_QFII_FID", "TAIWANESE_TRADING_ACCT", "MALAYSIAN_CENTRAL_DEPOSITORY", "CHINESE_INVESTOR_ID", "UK_NATIONAL_INSURANCE_OR_PENSION_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "US_EMPLOYER_OR_TAX_ID_NUMBER", "AUSTRALIAN_BUSINESS_NUMBER", "AUSTRALIAN_TAX_FILE_NUMBER", "BIC", "GENERALLY_ACCEPTED_MARKET_PARTICIPANT_IDENTIFIER", "PROPRIETARY", "ISO_COUNTRY_CODE", "SETTLEMENT_ENTITY_LOCATION", "MIC", "CSD_PARTICIPANT_MEMBER_CODE", "DIRECTED_BROKER_THREE_CHARACTER_ACRONYM_AS_DEFINED_IN_ISITC_ETC_BEST_PRACTICE_GUIDELINES_DOCUMENT" };
-const int PartyRole_realm[] = 
+const int PartyRole_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85 };
-const char *PartyRole_descriptions[] = 
+const char *PartyRole_descriptions[]  
    { "EXECUTING_FIRM", "BROKER_OF_CREDIT", "CLIENT_ID", "CLEARING_FIRM", "INVESTOR_ID", "INTRODUCING_FIRM", "ENTERING_FIRM", "LOCATE", "FUND_MANAGER_CLIENT_ID", "SETTLEMENT_LOCATION", "ORDER_ORIGINATION_TRADER", "EXECUTING_TRADER", "ORDER_ORIGINATION_FIRM", "GIVEUP_CLEARING_FIRM", "CORRESPONDANT_CLEARING_FIRM", "EXECUTING_SYSTEM", "CONTRA_FIRM", "CONTRA_CLEARING_FIRM", "SPONSORING_FIRM", "UNDERLYING_CONTRA_FIRM", "CLEARING_ORGANIZATION", "EXCHANGE", "CUSTOMER_ACCOUNT", "CORRESPONDENT_CLEARING_ORGANIZATION", "CORRESPONDENT_BROKER", "BUYER_SELLER", "CUSTODIAN", "INTERMEDIARY", "AGENT", "SUB_CUSTODIAN", "BENEFICIARY", "INTERESTED_PARTY", "REGULATORY_BODY", "LIQUIDITY_PROVIDER", "ENTERING_TRADER", "CONTRA_TRADER", "POSITION_ACCOUNT", "CONTRA_INVESTOR_ID", "TRANSFER_TO_FIRM", "CONTRA_POSITION_ACCOUNT", "CONTRA_EXCHANGE", "INTERNAL_CARRY_ACCOUNT", "ORDER_ENTRY_OPERATOR_ID", "SECONDARY_ACCOUNT_NUMBER", "FOREIGN_FIRM", "THIRD_PARTY_ALLOCATION_FIRM", "CLAIMING_ACCOUNT", "ASSET_MANAGER", "PLEDGOR_ACCOUNT", "PLEDGEE_ACCOUNT", "LARGE_TRADER_REPORTABLE_ACCOUNT", "TRADER_MNEMONIC", "SENDER_LOCATION", "SESSION_ID", "ACCEPTABLE_COUNTERPARTY", "UNACCEPTABLE_COUNTERPARTY", "ENTERING_UNIT", "EXECUTING_UNIT", "INTRODUCING_BROKER", "QUOTE_ORIGINATOR", "REPORT_ORIGINATOR", "SYSTEMATIC_INTERNALISER", "MULTILATERAL_TRADING_FACILITY", "REGULATED_MARKET", "MARKET_MAKER", "INVESTMENT_FIRM", "HOST_COMPETENT_AUTHORITY", "HOME_COMPETENT_AUTHORITY", "COMPETENT_AUTHORITY_OF_THE_MOST_RELEVANT_MARKET_IN_TERMS_OF_LIQUIDITY", "COMPETENT_AUTHORITY_OF_THE_TRANSACTION", "REPORTING_INTERMEDIARY", "EXECUTION_VENUE", "MARKET_DATA_ENTRY_ORIGINATOR", "LOCATION_ID", "DESK_ID", "MARKET_DATA_MARKET", "ALLOCATION_ENTITY", "PRIME_BROKER_PROVIDING_GENERAL_TRADE_SERVICES", "STEP_OUT_FIRM", "BROKERCLEARINGID", "CENTRAL_REGISTRATION_DEPOSITORY", "CLEARING_ACCOUNT", "ACCEPTABLE_SETTLING_COUNTERPARTY", "UNACCEPTABLE_SETTLING_COUNTERPARTY" };
-const int Product_realm[] = 
+const int Product_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-const char *Product_descriptions[] = 
+const char *Product_descriptions[]  
    { "AGENCY", "COMMODITY", "CORPORATE", "CURRENCY", "EQUITY", "GOVERNMENT", "INDEX", "LOAN", "MONEYMARKET", "MORTGAGE", "MUNICIPAL", "OTHER", "FINANCING" };
-const char RoundingDirection_realm[] = 
+const char RoundingDirection_realm[]  
    { '0', '1', '2' };
-const char *RoundingDirection_descriptions[] = 
+const char *RoundingDirection_descriptions[]  
    { "ROUND_TO_NEAREST", "ROUND_DOWN", "ROUND_UP" };
-const int DistribPaymentMethod_realm[] = 
+const int DistribPaymentMethod_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-const char *DistribPaymentMethod_descriptions[] = 
+const char *DistribPaymentMethod_descriptions[]  
    { "CREST", "NSCC", "EUROCLEAR", "CLEARSTREAM", "CHEQUE", "TELEGRAPHIC_TRANSFER", "FED_WIRE", "DIRECT_CREDIT", "ACH_CREDIT", "BPAY", "HIGH_VALUE_CLEARING_SYSTEM_HVACS", "REINVEST_IN_FUND" };
-const char CancellationRights_realm[] = 
+const char CancellationRights_realm[]  
    { 'M', 'N', 'O', 'Y' };
-const char *CancellationRights_descriptions[] = 
+const char *CancellationRights_descriptions[]  
    { "NO_M", "NO_N", "NO_O", "YES" };
-const char MoneyLaunderingStatus_realm[] = 
+const char MoneyLaunderingStatus_realm[]  
    { '1', '2', '3', 'N', 'Y' };
-const char *MoneyLaunderingStatus_descriptions[] = 
+const char *MoneyLaunderingStatus_descriptions[]  
    { "EXEMPT_1", "EXEMPT_2", "EXEMPT_3", "NOT_CHECKED", "PASSED" };
-const char ExecPriceType_realm[] = 
+const char ExecPriceType_realm[]  
    { 'B', 'C', 'D', 'E', 'O', 'P', 'Q', 'S' };
-const char *ExecPriceType_descriptions[] = 
+const char *ExecPriceType_descriptions[]  
    { "BID_PRICE", "CREATION_PRICE", "CREATION_PRICE_PLUS_ADJUSTMENT_PERCENT", "CREATION_PRICE_PLUS_ADJUSTMENT_AMOUNT", "OFFER_PRICE", "OFFER_PRICE_MINUS_ADJUSTMENT_PERCENT", "OFFER_PRICE_MINUS_ADJUSTMENT_AMOUNT", "SINGLE_PRICE" };
-const int TradeReportTransType_realm[] = 
+const int TradeReportTransType_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *TradeReportTransType_descriptions[] = 
+const char *TradeReportTransType_descriptions[]  
    { "NEW", "CANCEL", "REPLACE", "RELEASE", "REVERSE", "CANCEL_DUE_TO_BACK_OUT_OF_TRADE" };
-const int PaymentMethod_realm[] = 
+const int PaymentMethod_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-const char *PaymentMethod_descriptions[] = 
+const char *PaymentMethod_descriptions[]  
    { "CREST", "NSCC", "EUROCLEAR", "CLEARSTREAM", "CHEQUE", "TELEGRAPHIC_TRANSFER", "FED_WIRE", "DEBIT_CARD", "DIRECT_DEBIT", "DIRECT_CREDIT", "CREDIT_CARD", "ACH_DEBIT", "ACH_CREDIT", "BPAY", "HIGH_VALUE_CLEARING_SYSTEM" };
-const int TaxAdvantageType_realm[] = 
+const int TaxAdvantageType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 999 };
-const char *TaxAdvantageType_descriptions[] = 
+const char *TaxAdvantageType_descriptions[]  
    { "NONE_NOT_APPLICABLE", "MAXI_ISA", "TESSA", "MINI_CASH_ISA", "MINI_STOCKS_AND_SHARES_ISA", "MINI_INSURANCE_ISA", "CURRENT_YEAR_PAYMENT", "PRIOR_YEAR_PAYMENT", "ASSET_TRANSFER", "EMPLOYEE_9", "EMPLOYEE_10", "EMPLOYER_11", "EMPLOYER_12", "NON_FUND_PROTOTYPE_IRA", "NON_FUND_QUALIFIED_PLAN", "DEFINED_CONTRIBUTION_PLAN", "INDIVIDUAL_RETIREMENT_ACCOUNT_16", "INDIVIDUAL_RETIREMENT_ACCOUNT_17", "KEOGH", "PROFIT_SHARING_PLAN", "401", "SELF_DIRECTED_IRA", "403", "457", "ROTH_IRA_24", "ROTH_IRA_25", "ROTH_CONVERSION_IRA_26", "ROTH_CONVERSION_IRA_27", "EDUCATION_IRA_28", "EDUCATION_IRA_29", "OTHER" };
-const char FundRenewWaiv_realm[] = 
+const char FundRenewWaiv_realm[]  
    { 'N', 'Y' };
-const char *FundRenewWaiv_descriptions[] = 
+const char *FundRenewWaiv_descriptions[]  
    { "NO", "YES" };
-const char RegistStatus_realm[] = 
+const char RegistStatus_realm[]  
    { 'A', 'H', 'N', 'R' };
-const char *RegistStatus_descriptions[] = 
+const char *RegistStatus_descriptions[]  
    { "ACCEPTED", "HELD", "REMINDER", "REJECTED" };
-const int RegistRejReasonCode_realm[] = 
+const int RegistRejReasonCode_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 99 };
-const char *RegistRejReasonCode_descriptions[] = 
+const char *RegistRejReasonCode_descriptions[]  
    { "INVALID_UNACCEPTABLE_ACCOUNT_TYPE", "INVALID_UNACCEPTABLE_TAX_EXEMPT_TYPE", "INVALID_UNACCEPTABLE_OWNERSHIP_TYPE", "INVALID_UNACCEPTABLE_NO_REG_DETAILS", "INVALID_UNACCEPTABLE_REG_SEQ_NO", "INVALID_UNACCEPTABLE_REG_DETAILS", "INVALID_UNACCEPTABLE_MAILING_DETAILS", "INVALID_UNACCEPTABLE_MAILING_INSTRUCTIONS", "INVALID_UNACCEPTABLE_INVESTOR_ID", "INVALID_UNACEEPTABLE_INVESTOR_ID_SOURCE", "INVALID_UNACCEPTABLE_DATE_OF_BIRTH", "INVALID_UNACCEPTABLE_INVESTOR_COUNTRY_OF_RESIDENCE", "INVALID_UNACCEPTABLE_NO_DISTRIB_INSTNS", "INVALID_UNACCEPTABLE_DISTRIB_PERCENTAGE", "INVALID_UNACCEPTABLE_DISTRIB_PAYMENT_METHOD", "INVALID_UNACCEPTABLE_CASH_DISTRIB_AGENT_ACCT_NAME", "INVALID_UNACCEPTABLE_CASH_DISTRIB_AGENT_CODE", "INVALID_UNACCEPTABLE_CASH_DISTRIB_AGENT_ACCT_NUM", "OTHER" };
-const char RegistTransType_realm[] = 
+const char RegistTransType_realm[]  
    { '0', '1', '2' };
-const char *RegistTransType_descriptions[] = 
+const char *RegistTransType_descriptions[]  
    { "NEW", "REPLACE", "CANCEL" };
-const char OwnershipType_realm[] = 
+const char OwnershipType_realm[]  
    { '2', 'J', 'T' };
-const char *OwnershipType_descriptions[] = 
+const char *OwnershipType_descriptions[]  
    { "JOINT_TRUSTEES", "JOINT_INVESTORS", "TENANTS_IN_COMMON" };
-const int ContAmtType_realm[] = 
+const int ContAmtType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-const char *ContAmtType_descriptions[] = 
+const char *ContAmtType_descriptions[]  
    { "COMMISSION_AMOUNT", "COMMISSION_PERCENT", "INITIAL_CHARGE_AMOUNT", "INITIAL_CHARGE_PERCENT", "DISCOUNT_AMOUNT", "DISCOUNT_PERCENT", "DILUTION_LEVY_AMOUNT", "DILUTION_LEVY_PERCENT", "EXIT_CHARGE_AMOUNT", "EXIT_CHARGE_PERCENT", "FUND_BASED_RENEWAL_COMMISSION_PERCENT", "PROJECTED_FUND_VALUE", "FUND_BASED_RENEWAL_COMMISSION_AMOUNT_13", "FUND_BASED_RENEWAL_COMMISSION_AMOUNT_14", "NET_SETTLEMENT_AMOUNT" };
-const int OwnerType_realm[] = 
+const int OwnerType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-const char *OwnerType_descriptions[] = 
+const char *OwnerType_descriptions[]  
    { "INDIVIDUAL_INVESTOR", "PUBLIC_COMPANY", "PRIVATE_COMPANY", "INDIVIDUAL_TRUSTEE", "COMPANY_TRUSTEE", "PENSION_PLAN", "CUSTODIAN_UNDER_GIFTS_TO_MINORS_ACT", "TRUSTS", "FIDUCIARIES", "NETWORKING_SUB_ACCOUNT", "NON_PROFIT_ORGANIZATION", "CORPORATE_BODY", "NOMINEE" };
-const char OrderCapacity_realm[] = 
+const char OrderCapacity_realm[]  
    { 'A', 'G', 'I', 'P', 'R', 'W' };
-const char *OrderCapacity_descriptions[] = 
+const char *OrderCapacity_descriptions[]  
    { "AGENCY", "PROPRIETARY", "INDIVIDUAL", "PRINCIPAL", "RISKLESS_PRINCIPAL", "AGENT_FOR_OTHER_MEMBER" };
-const f8String OrderRestrictions_realm[] = 
+const f8String OrderRestrictions_realm[]  
    { "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
-const char *OrderRestrictions_descriptions[] = 
+const char *OrderRestrictions_descriptions[]  
    { "PROGRAM_TRADE", "INDEX_ARBITRAGE", "NON_INDEX_ARBITRAGE", "COMPETING_MARKET_MAKER", "ACTING_AS_MARKET_MAKER_OR_SPECIALIST_IN_THE_SECURITY", "ACTING_AS_MARKET_MAKER_OR_SPECIALIST_IN_THE_UNDERLYING_SECURITY_OF_A_DERIVATIVE_SECURITY", "FOREIGN_ENTITY", "EXTERNAL_MARKET_PARTICIPANT", "EXTERNAL_INTER_CONNECTED_MARKET_LINKAGE", "RISKLESS_ARBITRAGE", "ISSUER_HOLDING", "ISSUE_PRICE_STABILIZATION", "NON_ALGORITHMIC", "ALGORITHMIC", "CROSS" };
-const char MassCancelRequestType_realm[] = 
+const char MassCancelRequestType_realm[]  
    { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C' };
-const char *MassCancelRequestType_descriptions[] = 
+const char *MassCancelRequestType_descriptions[]  
    { "CANCEL_ORDERS_FOR_A_SECURITY", "CANCEL_ORDERS_FOR_AN_UNDERLYING_SECURITY", "CANCEL_ORDERS_FOR_A_PRODUCT", "CANCEL_ORDERS_FOR_A_CFICODE", "CANCEL_ORDERS_FOR_A_SECURITYTYPE", "CANCEL_ORDERS_FOR_A_TRADING_SESSION", "CANCEL_ALL_ORDERS", "CANCEL_ORDERS_FOR_A_MARKET", "CANCEL_ORDERS_FOR_A_MARKET_SEGMENT", "CANCEL_ORDERS_FOR_A_SECURITY_GROUP", "CANCEL_FOR_SECURITY_ISSUER", "CANCEL_FOR_ISSUER_OF_UNDERLYING_SECURITY" };
-const char MassCancelResponse_realm[] = 
+const char MassCancelResponse_realm[]  
    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C' };
-const char *MassCancelResponse_descriptions[] = 
+const char *MassCancelResponse_descriptions[]  
    { "CANCEL_REQUEST_REJECTED", "CANCEL_ORDERS_FOR_A_SECURITY", "CANCEL_ORDERS_FOR_AN_UNDERLYING_SECURITY", "CANCEL_ORDERS_FOR_A_PRODUCT", "CANCEL_ORDERS_FOR_A_CFICODE", "CANCEL_ORDERS_FOR_A_SECURITYTYPE", "CANCEL_ORDERS_FOR_A_TRADING_SESSION", "CANCEL_ALL_ORDERS", "CANCEL_ORDERS_FOR_A_MARKET", "CANCEL_ORDERS_FOR_A_MARKET_SEGMENT", "CANCEL_ORDERS_FOR_A_SECURITY_GROUP", "CANCEL_ORDERS_FOR_A_SECURITIES_ISSUER", "CANCEL_ORDERS_FOR_ISSUER_OF_UNDERLYING_SECURITY" };
-const int MassCancelRejectReason_realm[] = 
+const int MassCancelRejectReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99 };
-const char *MassCancelRejectReason_descriptions[] = 
+const char *MassCancelRejectReason_descriptions[]  
    { "MASS_CANCEL_NOT_SUPPORTED", "INVALID_OR_UNKNOWN_SECURITY", "INVALID_OR_UNKOWN_UNDERLYING_SECURITY", "INVALID_OR_UNKNOWN_PRODUCT", "INVALID_OR_UNKNOWN_CFICODE", "INVALID_OR_UNKNOWN_SECURITYTYPE", "INVALID_OR_UNKNOWN_TRADING_SESSION", "INVALID_OR_UNKNOWN_MARKET", "INVALID_OR_UNKOWN_MARKET_SEGMENT", "INVALID_OR_UNKNOWN_SECURITY_GROUP", "INVALID_OR_UNKNOWN_SECURITY_ISSUER", "INVALID_OR_UNKNOWN_ISSUER_OF_UNDERLYING_SECURITY", "OTHER" };
-const int QuoteType_realm[] = 
+const int QuoteType_realm[]  
    { 0, 1, 2, 3 };
-const char *QuoteType_descriptions[] = 
+const char *QuoteType_descriptions[]  
    { "INDICATIVE", "TRADEABLE", "RESTRICTED_TRADEABLE", "COUNTER" };
-const char CashMargin_realm[] = 
+const char CashMargin_realm[]  
    { '1', '2', '3' };
-const char *CashMargin_descriptions[] = 
+const char *CashMargin_descriptions[]  
    { "CASH", "MARGIN_OPEN", "MARGIN_CLOSE" };
-const f8String Scope_realm[] = 
+const f8String Scope_realm[]  
    { "1", "2", "3" };
-const char *Scope_descriptions[] = 
+const char *Scope_descriptions[]  
    { "LOCAL_MARKET", "NATIONAL", "GLOBAL" };
-const char MDImplicitDelete_realm[] = 
+const char MDImplicitDelete_realm[]  
    { 'N', 'Y' };
-const char *MDImplicitDelete_descriptions[] = 
+const char *MDImplicitDelete_descriptions[]  
    { "NO", "YES" };
-const int CrossType_realm[] = 
+const int CrossType_realm[]  
    { 1, 2, 3, 4 };
-const char *CrossType_descriptions[] = 
+const char *CrossType_descriptions[]  
    { "CROSS_AON", "CROSS_IOC", "CROSS_ONE_SIDE", "CROSS_SAME_PRICE" };
-const int CrossPrioritization_realm[] = 
+const int CrossPrioritization_realm[]  
    { 0, 1, 2 };
-const char *CrossPrioritization_descriptions[] = 
+const char *CrossPrioritization_descriptions[]  
    { "NONE", "BUY_SIDE_IS_PRIORITIZED", "SELL_SIDE_IS_PRIORITIZED" };
-const int NoSides_realm[] = 
+const int NoSides_realm[]  
    { 1, 2 };
-const char *NoSides_descriptions[] = 
+const char *NoSides_descriptions[]  
    { "ONE_SIDE", "BOTH_SIDES" };
-const int SecurityListRequestType_realm[] = 
+const int SecurityListRequestType_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *SecurityListRequestType_descriptions[] = 
+const char *SecurityListRequestType_descriptions[]  
    { "SYMBOL", "SECURITYTYPE_AND_OR_CFICODE", "PRODUCT", "TRADINGSESSIONID", "ALL_SECURITIES", "MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID" };
-const int SecurityRequestResult_realm[] = 
+const int SecurityRequestResult_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *SecurityRequestResult_descriptions[] = 
+const char *SecurityRequestResult_descriptions[]  
    { "VALID_REQUEST", "INVALID_OR_UNSUPPORTED_REQUEST", "NO_INSTRUMENTS_FOUND_THAT_MATCH_SELECTION_CRITERIA", "NOT_AUTHORIZED_TO_RETRIEVE_INSTRUMENT_DATA", "INSTRUMENT_DATA_TEMPORARILY_UNAVAILABLE", "REQUEST_FOR_INSTRUMENT_DATA_NOT_SUPPORTED" };
-const int MultiLegRptTypeReq_realm[] = 
+const int MultiLegRptTypeReq_realm[]  
    { 0, 1, 2 };
-const char *MultiLegRptTypeReq_descriptions[] = 
+const char *MultiLegRptTypeReq_descriptions[]  
    { "REPORT_BY_MULITLEG_SECURITY_ONLY", "REPORT_BY_MULTILEG_SECURITY_AND_BY_INSTRUMENT_LEGS_BELONGING_TO_THE_MULTILEG_SECURITY", "REPORT_BY_INSTRUMENT_LEGS_BELONGING_TO_THE_MULTILEG_SECURITY_ONLY" };
-const int TradSesStatusRejReason_realm[] = 
+const int TradSesStatusRejReason_realm[]  
    { 1, 99 };
-const char *TradSesStatusRejReason_descriptions[] = 
+const char *TradSesStatusRejReason_descriptions[]  
    { "UNKNOWN_OR_INVALID_TRADINGSESSIONID", "OTHER" };
-const int TradeRequestType_realm[] = 
+const int TradeRequestType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *TradeRequestType_descriptions[] = 
+const char *TradeRequestType_descriptions[]  
    { "ALL_TRADES", "MATCHED_TRADES_MATCHING_CRITERIA_PROVIDED_ON_REQUEST", "UNMATCHED_TRADES_THAT_MATCH_CRITERIA", "UNREPORTED_TRADES_THAT_MATCH_CRITERIA", "ADVISORIES_THAT_MATCH_CRITERIA" };
-const char PreviouslyReported_realm[] = 
+const char PreviouslyReported_realm[]  
    { 'N', 'Y' };
-const char *PreviouslyReported_descriptions[] = 
+const char *PreviouslyReported_descriptions[]  
    { "NO", "YES" };
-const char MatchStatus_realm[] = 
+const char MatchStatus_realm[]  
    { '0', '1', '2' };
-const char *MatchStatus_descriptions[] = 
+const char *MatchStatus_descriptions[]  
    { "COMPARED_MATCHED_OR_AFFIRMED", "UNCOMPARED_UNMATCHED_OR_UNAFFIRMED", "ADVISORY_OR_ALERT" };
-const f8String MatchType_realm[] = 
+const f8String MatchType_realm[]  
    { "1", "2", "3", "4", "5", "6", "7", "8", "A1", "A2", "A3", "A4", "A5", "AQ", "M1", "M2", "M3", "M4", "M5", "M6", "MT", "S1", "S2", "S3", "S4", "S5" };
-const char *MatchType_descriptions[] = 
+const char *MatchType_descriptions[]  
    { "ONE_PARTY_TRADE_REPORT", "TWO_PARTY_TRADE_REPORT", "CONFIRMED_TRADE_REPORT", "AUTO_MATCH", "CROSS_AUCTION", "COUNTER_ORDER_SELECTION", "CALL_AUCTION", "ISSUING_BUY_BACK_AUCTION", "EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADE_TYPE_AND_SPECIAL_TRADE_INDICATOR_PLUS_FOUR_BADGES_AND_EXECUTION_TIME", "EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADE_TYPE_AND_SPECIAL_TRADE_INDICATOR_PLUS_FOUR_BADGES", "EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADE_TYPE_AND_SPECIAL_TRADE_INDICATOR_PLUS_TWO_BADGES_AND_EXECUTION_TIME", "EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADE_TYPE_AND_SPECIAL_TRADE_INDICATOR_PLUS_TWO_BADGES", "EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADETYPE_AND_SPECIAL_TRADE_INDICATOR_PLUS_EXECUTION_TIME", "COMPARED_RECORDS_RESULTING_FROM_STAMPED_ADVISORIES_OR_SPECIALIST_ACCEPTS_PAIR_OFFS", "EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADE_TYPE_AND_SPECIAL_TRADE_INDICATOR_MINUS_BADGES_AND_TIMES_ACT_M1_MATCH", "SUMMARIZED_MATCH_MINUS_BADGES_AND_TIMES_ACT_M2_MATCH", "ACT_ACCEPTED_TRADE", "ACT_DEFAULT_TRADE", "ACT_DEFAULT_AFTER_M2", "ACT_M6_MATCH", "OCS_LOCKED_IN_NON_ACT", "SUMMARIZED_MATCH_USING_A1_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIED", "SUMMARIZED_MATCH_USING_A2_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED", "SUMMARIZED_MATCH_USING_A3_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED", "SUMMARIZED_MATCH_USING_A4_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED", "SUMMARIZED_MATCH_USING_A5_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED" };
-const char OddLot_realm[] = 
+const char OddLot_realm[]  
    { 'N', 'Y' };
-const char *OddLot_descriptions[] = 
+const char *OddLot_descriptions[]  
    { "NO", "YES" };
-const int ClearingInstruction_realm[] = 
+const int ClearingInstruction_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-const char *ClearingInstruction_descriptions[] = 
+const char *ClearingInstruction_descriptions[]  
    { "PROCESS_NORMALLY", "EXCLUDE_FROM_ALL_NETTING", "BILATERAL_NETTING_ONLY", "EX_CLEARING", "SPECIAL_TRADE", "MULTILATERAL_NETTING", "CLEAR_AGAINST_CENTRAL_COUNTERPARTY", "EXCLUDE_FROM_CENTRAL_COUNTERPARTY", "MANUAL_MODE", "AUTOMATIC_POSTING_MODE", "AUTOMATIC_GIVE_UP_MODE", "QUALIFIED_SERVICE_REPRESENTATIVE_QSR", "CUSTOMER_TRADE", "SELF_CLEARING" };
-const int AccountType_realm[] = 
+const int AccountType_realm[]  
    { 1, 2, 3, 4, 6, 7, 8 };
-const char *AccountType_descriptions[] = 
+const char *AccountType_descriptions[]  
    { "ACCOUNT_IS_CARRIED_ON_CUSTOMER_SIDE_OF_THE_BOOKS", "ACCOUNT_IS_CARRIED_ON_NON_CUSTOMER_SIDE_OF_BOOKS", "HOUSE_TRADER", "FLOOR_TRADER", "ACCOUNT_IS_CARRIED_ON_NON_CUSTOMER_SIDE_OF_BOOKS_AND_IS_CROSS_MARGINED", "ACCOUNT_IS_HOUSE_TRADER_AND_IS_CROSS_MARGINED", "JOINT_BACK_OFFICE_ACCOUNT" };
-const int CustOrderCapacity_realm[] = 
+const int CustOrderCapacity_realm[]  
    { 1, 2, 3, 4 };
-const char *CustOrderCapacity_descriptions[] = 
+const char *CustOrderCapacity_descriptions[]  
    { "MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT", "CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT", "MEMBER_TRADING_FOR_ANOTHER_MEMBER", "ALL_OTHER" };
-const int MassStatusReqType_realm[] = 
+const int MassStatusReqType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-const char *MassStatusReqType_descriptions[] = 
+const char *MassStatusReqType_descriptions[]  
    { "STATUS_FOR_ORDERS_FOR_A_SECURITY", "STATUS_FOR_ORDERS_FOR_AN_UNDERLYING_SECURITY", "STATUS_FOR_ORDERS_FOR_A_PRODUCT", "STATUS_FOR_ORDERS_FOR_A_CFICODE", "STATUS_FOR_ORDERS_FOR_A_SECURITYTYPE", "STATUS_FOR_ORDERS_FOR_A_TRADING_SESSION", "STATUS_FOR_ALL_ORDERS", "STATUS_FOR_ORDERS_FOR_A_PARTYID", "STATUS_FOR_SECURITY_ISSUER", "STATUS_FOR_ISSUER_OF_UNDERLYING_SECURITY" };
-const char DayBookingInst_realm[] = 
+const char DayBookingInst_realm[]  
    { '0', '1', '2' };
-const char *DayBookingInst_descriptions[] = 
+const char *DayBookingInst_descriptions[]  
    { "CAN_TRIGGER_BOOKING_WITHOUT_REFERENCE_TO_THE_ORDER_INITIATOR", "SPEAK_WITH_ORDER_INITIATOR_BEFORE_BOOKING", "ACCUMULATE" };
-const char BookingUnit_realm[] = 
+const char BookingUnit_realm[]  
    { '0', '1', '2' };
-const char *BookingUnit_descriptions[] = 
+const char *BookingUnit_descriptions[]  
    { "EACH_PARTIAL_EXECUTION_IS_A_BOOKABLE_UNIT", "AGGREGATE_PARTIAL_EXECUTIONS_ON_THIS_ORDER_AND_BOOK_ONE_TRADE_PER_ORDER", "AGGREGATE_EXECUTIONS_FOR_THIS_SYMBOL_SIDE_AND_SETTLEMENT_DATE" };
-const char PreallocMethod_realm[] = 
+const char PreallocMethod_realm[]  
    { '0', '1' };
-const char *PreallocMethod_descriptions[] = 
+const char *PreallocMethod_descriptions[]  
    { "PRO_RATA", "DO_NOT_PRO_RATA" };
-const f8String TradingSessionSubID_realm[] = 
+const f8String TradingSessionSubID_realm[]  
    { "1", "2", "3", "4", "5", "6", "7" };
-const char *TradingSessionSubID_descriptions[] = 
+const char *TradingSessionSubID_descriptions[]  
    { "PRE_TRADING", "OPENING_OR_OPENING_AUCTION", "3", "CLOSING_OR_CLOSING_AUCTION", "POST_TRADING", "INTRADAY_AUCTION", "QUIESCENT" };
-const int AllocType_realm[] = 
+const int AllocType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-const char *AllocType_descriptions[] = 
+const char *AllocType_descriptions[]  
    { "CALCULATED", "PRELIMINARY", "SELLSIDE_CALCULATED_USING_PRELIMINARY", "SELLSIDE_CALCULATED_WITHOUT_PRELIMINARY", "READY_TO_BOOK", "BUYSIDE_READY_TO_BOOK", "WAREHOUSE_INSTRUCTION", "REQUEST_TO_INTERMEDIARY", "ACCEPT", "REJECT", "ACCEPT_PENDING", "INCOMPLETE_GROUP", "COMPLETE_GROUP", "REVERSAL_PENDING" };
-const f8String ClearingFeeIndicator_realm[] = 
+const f8String ClearingFeeIndicator_realm[]  
    { "1", "2", "3", "4", "5", "9", "B", "C", "E", "F", "H", "I", "L", "M" };
-const char *ClearingFeeIndicator_descriptions[] = 
+const char *ClearingFeeIndicator_descriptions[]  
    { "1ST_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT", "2ND_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT", "3RD_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT", "4TH_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT", "5TH_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT", "6TH_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT", "CBOE_MEMBER", "NON_MEMBER_AND_CUSTOMER", "EQUITY_MEMBER_AND_CLEARING_MEMBER", "FULL_AND_ASSOCIATE_MEMBER_TRADING_FOR_OWN_ACCOUNT_AND_AS_FLOOR_BROKERS", "106H_AND_106J_FIRMS", "GIM_IDEM_AND_COM_MEMBERSHIP_INTEREST_HOLDERS", "LESSEE_106F_EMPLOYEES", "ALL_OTHER_OWNERSHIP_TYPES" };
-const char WorkingIndicator_realm[] = 
+const char WorkingIndicator_realm[]  
    { 'N', 'Y' };
-const char *WorkingIndicator_descriptions[] = 
+const char *WorkingIndicator_descriptions[]  
    { "NO", "YES" };
-const int PriorityIndicator_realm[] = 
+const int PriorityIndicator_realm[]  
    { 0, 1 };
-const char *PriorityIndicator_descriptions[] = 
+const char *PriorityIndicator_descriptions[]  
    { "PRIORITY_UNCHANGED", "LOST_PRIORITY_AS_RESULT_OF_ORDER_CHANGE" };
-const char LegalConfirm_realm[] = 
+const char LegalConfirm_realm[]  
    { 'N', 'Y' };
-const char *LegalConfirm_descriptions[] = 
+const char *LegalConfirm_descriptions[]  
    { "NO", "YES" };
-const int QuoteRequestRejectReason_realm[] = 
+const int QuoteRequestRejectReason_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99 };
-const char *QuoteRequestRejectReason_descriptions[] = 
+const char *QuoteRequestRejectReason_descriptions[]  
    { "UNKNOWN_SYMBOL", "EXCHANGE", "QUOTE_REQUEST_EXCEEDS_LIMIT", "TOO_LATE_TO_ENTER", "INVALID_PRICE", "NOT_AUTHORIZED_TO_REQUEST_QUOTE", "NO_MATCH_FOR_INQUIRY", "NO_MARKET_FOR_INSTRUMENT", "NO_INVENTORY", "PASS", "INSUFFICIENT_CREDIT", "OTHER" };
-const int AcctIDSource_realm[] = 
+const int AcctIDSource_realm[]  
    { 1, 2, 3, 4, 5, 99 };
-const char *AcctIDSource_descriptions[] = 
+const char *AcctIDSource_descriptions[]  
    { "BIC", "SID_CODE", "TFM", "OMGEO", "DTCC_CODE", "OTHER" };
-const int ConfirmStatus_realm[] = 
+const int ConfirmStatus_realm[]  
    { 1, 2, 3, 4, 5 };
-const char *ConfirmStatus_descriptions[] = 
+const char *ConfirmStatus_descriptions[]  
    { "RECEIVED", "MISMATCHED_ACCOUNT", "MISSING_SETTLEMENT_INSTRUCTIONS", "CONFIRMED", "REQUEST_REJECTED" };
-const int ConfirmTransType_realm[] = 
+const int ConfirmTransType_realm[]  
    { 0, 1, 2 };
-const char *ConfirmTransType_descriptions[] = 
+const char *ConfirmTransType_descriptions[]  
    { "NEW", "REPLACE", "CANCEL" };
-const int DeliveryForm_realm[] = 
+const int DeliveryForm_realm[]  
    { 1, 2 };
-const char *DeliveryForm_descriptions[] = 
+const char *DeliveryForm_descriptions[]  
    { "BOOK_ENTRY", "BEARER" };
-const int LegSwapType_realm[] = 
+const int LegSwapType_realm[]  
    { 1, 2, 4, 5 };
-const char *LegSwapType_descriptions[] = 
+const char *LegSwapType_descriptions[]  
    { "PAR_FOR_PAR", "MODIFIED_DURATION", "RISK", "PROCEEDS" };
-const int QuotePriceType_realm[] = 
+const int QuotePriceType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-const char *QuotePriceType_descriptions[] = 
+const char *QuotePriceType_descriptions[]  
    { "PERCENT", "PER_SHARE", "FIXED_AMOUNT", "DISCOUNT", "PREMIUM", "SPREAD", "TED_PRICE", "TED_YIELD", "YIELD_SPREAD", "YIELD" };
-const int QuoteRespType_realm[] = 
+const int QuoteRespType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8 };
-const char *QuoteRespType_descriptions[] = 
+const char *QuoteRespType_descriptions[]  
    { "HIT_LIFT", "COUNTER", "EXPIRED", "COVER", "DONE_AWAY", "PASS", "END_TRADE", "TIMED_OUT" };
-const f8String PosType_realm[] = 
+const f8String PosType_realm[]  
    { "ALC", "AS", "ASF", "CAA", "CEA", "DLT", "DLV", "DN", "EP", "ETR", "EX", "FIN", "IAS", "IES", "PA", "PIT", "PNTN", "RCV", "SEA", "SOD", "SPL", "TA", "TOT", "TQ", "TRF", "TX", "XM" };
-const char *PosType_descriptions[] = 
+const char *PosType_descriptions[]  
    { "ALLOCATION_TRADE_QTY", "OPTION_ASSIGNMENT", "AS_OF_TRADE_QTY", "CORPORATE_ACTION_ADJUSTMENT", "CREDIT_EVENT_ADJUSTMENT", "NET_DELTA_QTY", "DELIVERY_QTY", "DELIVERY_NOTICE_QTY", "EXCHANGE_FOR_PHYSICAL_QTY", "ELECTRONIC_TRADE_QTY", "OPTION_EXERCISE_QTY", "END_OF_DAY_QTY", "INTRA_SPREAD_QTY", "INTER_SPREAD_QTY", "ADJUSTMENT_QTY", "PIT_TRADE_QTY", "PRIVATELY_NEGOTIATED_TRADE_QTY", "RECEIVE_QUANTITY", "SUCCESSION_EVENT_ADJUSTMENT", "START_OF_DAY_QTY", "INTEGRAL_SPLIT", "TRANSACTION_FROM_ASSIGNMENT", "TOTAL_TRANSACTION_QTY", "TRANSACTION_QUANTITY", "TRANSFER_TRADE_QTY", "TRANSACTION_FROM_EXERCISE", "CROSS_MARGIN_QTY" };
-const int PosQtyStatus_realm[] = 
+const int PosQtyStatus_realm[]  
    { 0, 1, 2 };
-const char *PosQtyStatus_descriptions[] = 
+const char *PosQtyStatus_descriptions[]  
    { "SUBMITTED", "ACCEPTED", "REJECTED" };
-const f8String PosAmtType_realm[] = 
+const f8String PosAmtType_realm[]  
    { "ACPN", "BANK", "CASH", "CMTM", "COLAT", "CPN", "CRES", "DLV", "FMTM", "IACPN", "ICMTM", "ICPN", "IMTM", "PREM", "SETL", "SMTM", "TVAR", "VADJ" };
-const char *PosAmtType_descriptions[] = 
+const char *PosAmtType_descriptions[]  
    { "ACCRUED_COUPON_AMOUNT", "TOTAL_BANKED_AMOUNT", "CASH_AMOUNT", "COLLATERALIZED_MARK_TO_MARKET", "TOTAL_COLLATERALIZED_AMOUNT", "COUPON_AMOUNT", "CASH_RESIDUAL_AMOUNT", "COMPENSATION_AMOUNT", "FINAL_MARK_TO_MARKET_AMOUNT", "INCREMENTAL_ACCRUED_COUPON", "INCREMENTAL_COLLATERALIZED_MARK_TO_MARKET", "INITIAL_TRADE_COUPON_AMOUNT", "INCREMENTAL_MARK_TO_MARKET_AMOUNT", "PREMIUM_AMOUNT", "SETTLEMENT_VALUE", "START_OF_DAY_MARK_TO_MARKET_AMOUNT", "TRADE_VARIATION_AMOUNT", "VALUE_ADJUSTED_AMOUNT" };
-const int PosTransType_realm[] = 
+const int PosTransType_realm[]  
    { 1, 2, 3, 4, 5, 6 };
-const char *PosTransType_descriptions[] = 
+const char *PosTransType_descriptions[]  
    { "EXERCISE", "DO_NOT_EXERCISE", "POSITION_ADJUSTMENT", "POSITION_CHANGE_SUBMISSION_MARGIN_DISPOSITION", "PLEDGE", "LARGE_TRADER_SUBMISSION" };
-const int PosMaintAction_realm[] = 
+const int PosMaintAction_realm[]  
    { 1, 2, 3, 4 };
-const char *PosMaintAction_descriptions[] = 
+const char *PosMaintAction_descriptions[]  
    { "NEW", "REPLACE", "CANCEL", "REVERSE" };
-const f8String SettlSessID_realm[] = 
+const f8String SettlSessID_realm[]  
    { "EOD", "ETH", "ITD", "RTH" };
-const char *SettlSessID_descriptions[] = 
+const char *SettlSessID_descriptions[]  
    { "END_OF_DAY", "ELECTRONIC_TRADING_HOURS", "INTRADAY", "REGULAR_TRADING_HOURS" };
-const int AdjustmentType_realm[] = 
+const int AdjustmentType_realm[]  
    { 0, 1, 2, 3 };
-const char *AdjustmentType_descriptions[] = 
+const char *AdjustmentType_descriptions[]  
    { "PROCESS_REQUEST_AS_MARGIN_DISPOSITION", "DELTA_PLUS", "DELTA_MINUS", "FINAL" };
-const int PosMaintStatus_realm[] = 
+const int PosMaintStatus_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *PosMaintStatus_descriptions[] = 
+const char *PosMaintStatus_descriptions[]  
    { "ACCEPTED", "ACCEPTED_WITH_WARNINGS", "REJECTED", "COMPLETED", "COMPLETED_WITH_WARNINGS" };
-const int PosMaintResult_realm[] = 
+const int PosMaintResult_realm[]  
    { 0, 1, 99 };
-const char *PosMaintResult_descriptions[] = 
+const char *PosMaintResult_descriptions[]  
    { "SUCCESSFUL_COMPLETION", "REJECTED", "OTHER" };
-const int PosReqType_realm[] = 
+const int PosReqType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6 };
-const char *PosReqType_descriptions[] = 
+const char *PosReqType_descriptions[]  
    { "POSITIONS", "TRADES", "EXERCISES", "ASSIGNMENTS", "SETTLEMENT_ACTIVITY", "BACKOUT_MESSAGE", "DELTA_POSITIONS" };
-const int ResponseTransportType_realm[] = 
+const int ResponseTransportType_realm[]  
    { 0, 1 };
-const char *ResponseTransportType_descriptions[] = 
+const char *ResponseTransportType_descriptions[]  
    { "INBAND", "OUT_OF_BAND" };
-const int PosReqResult_realm[] = 
+const int PosReqResult_realm[]  
    { 0, 1, 2, 3, 4, 99 };
-const char *PosReqResult_descriptions[] = 
+const char *PosReqResult_descriptions[]  
    { "VALID_REQUEST", "INVALID_OR_UNSUPPORTED_REQUEST", "NO_POSITIONS_FOUND_THAT_MATCH_CRITERIA", "NOT_AUTHORIZED_TO_REQUEST_POSITIONS", "REQUEST_FOR_POSITION_NOT_SUPPORTED", "OTHER" };
-const int PosReqStatus_realm[] = 
+const int PosReqStatus_realm[]  
    { 0, 1, 2 };
-const char *PosReqStatus_descriptions[] = 
+const char *PosReqStatus_descriptions[]  
    { "COMPLETED", "COMPLETED_WITH_WARNINGS", "REJECTED" };
-const int SettlPriceType_realm[] = 
+const int SettlPriceType_realm[]  
    { 1, 2 };
-const char *SettlPriceType_descriptions[] = 
+const char *SettlPriceType_descriptions[]  
    { "FINAL", "THEORETICAL" };
-const char AssignmentMethod_realm[] = 
+const char AssignmentMethod_realm[]  
    { 'P', 'R' };
-const char *AssignmentMethod_descriptions[] = 
+const char *AssignmentMethod_descriptions[]  
    { "PRO_RATA", "RANDOM" };
-const char ExerciseMethod_realm[] = 
+const char ExerciseMethod_realm[]  
    { 'A', 'M' };
-const char *ExerciseMethod_descriptions[] = 
+const char *ExerciseMethod_descriptions[]  
    { "AUTOMATIC", "MANUAL" };
-const int TradeRequestResult_realm[] = 
+const int TradeRequestResult_realm[]  
    { 0, 1, 2, 3, 4, 5, 8, 9, 99 };
-const char *TradeRequestResult_descriptions[] = 
+const char *TradeRequestResult_descriptions[]  
    { "SUCCESSFUL", "INVALID_OR_UNKNOWN_INSTRUMENT", "INVALID_TYPE_OF_TRADE_REQUESTED", "INVALID_PARTIES", "INVALID_TRANSPORT_TYPE_REQUESTED", "INVALID_DESTINATION_REQUESTED", "TRADEREQUESTTYPE_NOT_SUPPORTED", "NOT_AUTHORIZED", "OTHER" };
-const int TradeRequestStatus_realm[] = 
+const int TradeRequestStatus_realm[]  
    { 0, 1, 2 };
-const char *TradeRequestStatus_descriptions[] = 
+const char *TradeRequestStatus_descriptions[]  
    { "ACCEPTED", "COMPLETED", "REJECTED" };
-const int TradeReportRejectReason_realm[] = 
+const int TradeReportRejectReason_realm[]  
    { 0, 1, 2, 3, 4, 99 };
-const char *TradeReportRejectReason_descriptions[] = 
+const char *TradeReportRejectReason_descriptions[]  
    { "SUCCESSFUL", "INVALID_PARTY_ONFORMATION", "UNKNOWN_INSTRUMENT", "UNAUTHORIZED_TO_REPORT_TRADES", "INVALID_TRADE_TYPE", "OTHER" };
-const int SideMultiLegReportingType_realm[] = 
+const int SideMultiLegReportingType_realm[]  
    { 1, 2, 3 };
-const char *SideMultiLegReportingType_descriptions[] = 
+const char *SideMultiLegReportingType_descriptions[]  
    { "SINGLE_SECURITY", "INDIVIDUAL_LEG_OF_A_MULTILEG_SECURITY", "MULTILEG_SECURITY" };
-const int TrdRegTimestampType_realm[] = 
+const int TrdRegTimestampType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7 };
-const char *TrdRegTimestampType_descriptions[] = 
+const char *TrdRegTimestampType_descriptions[]  
    { "EXECUTION_TIME", "TIME_IN", "TIME_OUT", "BROKER_RECEIPT", "BROKER_EXECUTION", "DESK_RECEIPT", "SUBMISSION_TO_CLEARING" };
-const int ConfirmType_realm[] = 
+const int ConfirmType_realm[]  
    { 1, 2, 3 };
-const char *ConfirmType_descriptions[] = 
+const char *ConfirmType_descriptions[]  
    { "STATUS", "CONFIRMATION", "CONFIRMATION_REQUEST_REJECTED" };
-const int ConfirmRejReason_realm[] = 
+const int ConfirmRejReason_realm[]  
    { 1, 2, 99 };
-const char *ConfirmRejReason_descriptions[] = 
+const char *ConfirmRejReason_descriptions[]  
    { "MISMATCHED_ACCOUNT", "MISSING_SETTLEMENT_INSTRUCTIONS", "OTHER" };
-const int BookingType_realm[] = 
+const int BookingType_realm[]  
    { 0, 1, 2 };
-const char *BookingType_descriptions[] = 
+const char *BookingType_descriptions[]  
    { "REGULAR_BOOKING", "CFD", "TOTAL_RETURN_SWAP" };
-const int AllocSettlInstType_realm[] = 
+const int AllocSettlInstType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *AllocSettlInstType_descriptions[] = 
+const char *AllocSettlInstType_descriptions[]  
    { "USE_DEFAULT_INSTRUCTIONS", "DERIVE_FROM_PARAMETERS_PROVIDED", "FULL_DETAILS_PROVIDED", "SSI_DB_IDS_PROVIDED", "PHONE_FOR_INSTRUCTIONS" };
-const char DlvyInstType_realm[] = 
+const char DlvyInstType_realm[]  
    { 'C', 'S' };
-const char *DlvyInstType_descriptions[] = 
+const char *DlvyInstType_descriptions[]  
    { "CASH", "SECURITIES" };
-const int TerminationType_realm[] = 
+const int TerminationType_realm[]  
    { 1, 2, 3, 4 };
-const char *TerminationType_descriptions[] = 
+const char *TerminationType_descriptions[]  
    { "OVERNIGHT", "TERM", "FLEXIBLE", "OPEN" };
-const int SettlInstReqRejCode_realm[] = 
+const int SettlInstReqRejCode_realm[]  
    { 0, 1, 2, 99 };
-const char *SettlInstReqRejCode_descriptions[] = 
+const char *SettlInstReqRejCode_descriptions[]  
    { "UNABLE_TO_PROCESS_REQUEST", "UNKNOWN_ACCOUNT", "NO_MATCHING_SETTLEMENT_INSTRUCTIONS_FOUND", "OTHER" };
-const int AllocReportType_realm[] = 
+const int AllocReportType_realm[]  
    { 2, 3, 4, 5, 8, 9, 10, 11, 12, 14 };
-const char *AllocReportType_descriptions[] = 
+const char *AllocReportType_descriptions[]  
    { "PRELIMINARY_REQUEST_TO_INTERMEDIARY", "SELLSIDE_CALCULATED_USING_PRELIMINARY", "SELLSIDE_CALCULATED_WITHOUT_PRELIMINARY", "WAREHOUSE_RECAP", "REQUEST_TO_INTERMEDIARY", "ACCEPT", "REJECT", "ACCEPT_PENDING", "COMPLETE", "REVERSE_PENDING" };
-const int AllocCancReplaceReason_realm[] = 
+const int AllocCancReplaceReason_realm[]  
    { 1, 2, 99 };
-const char *AllocCancReplaceReason_descriptions[] = 
+const char *AllocCancReplaceReason_descriptions[]  
    { "ORIGINAL_DETAILS_INCOMPLETE_INCORRECT", "CHANGE_IN_UNDERLYING_ORDER_DETAILS", "OTHER" };
-const int AllocAccountType_realm[] = 
+const int AllocAccountType_realm[]  
    { 1, 2, 3, 4, 6, 7, 8 };
-const char *AllocAccountType_descriptions[] = 
+const char *AllocAccountType_descriptions[]  
    { "ACCOUNT_IS_CARRIED_PN_CUSTOMER_SIDE_OF_BOOKS", "ACCOUNT_IS_CARRIED_ON_NON_CUSTOMER_SIDE_OF_BOOKS", "HOUSE_TRADER", "FLOOR_TRADER", "ACCOUNT_IS_CARRIED_ON_NON_CUSTOMER_SIDE_OF_BOOKS_AND_IS_CROSS_MARGINED", "ACCOUNT_IS_HOUSE_TRADER_AND_IS_CROSS_MARGINED", "JOINT_BACK_OFFICE_ACCOUNT" };
-const int PartySubIDType_realm[] = 
+const int PartySubIDType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
-const char *PartySubIDType_descriptions[] = 
+const char *PartySubIDType_descriptions[]  
    { "FIRM", "PERSON", "SYSTEM", "APPLICATION", "FULL_LEGAL_NAME_OF_FIRM", "POSTAL_ADDRESS", "PHONE_NUMBER", "EMAIL_ADDRESS", "CONTACT_NAME", "SECURITIES_ACCOUNT_NUMBER", "REGISTRATION_NUMBER", "REGISTERED_ADDRESS_12", "REGULATORY_STATUS", "REGISTRATION_NAME", "CASH_ACCOUNT_NUMBER", "BIC", "CSD_PARTICIPANT_MEMBER_CODE", "REGISTERED_ADDRESS_18", "FUND_ACCOUNT_NAME", "TELEX_NUMBER", "FAX_NUMBER", "SECURITIES_ACCOUNT_NAME", "CASH_ACCOUNT_NAME", "DEPARTMENT", "LOCATION_DESK", "POSITION_ACCOUNT_TYPE", "SECURITY_LOCATE_ID", "MARKET_MAKER", "ELIGIBLE_COUNTERPARTY", "PROFESSIONAL_CLIENT", "LOCATION", "EXECUTION_VENUE", "CURRENCY_DELIVERY_IDENTIFIER" };
-const int AllocIntermedReqType_realm[] = 
+const int AllocIntermedReqType_realm[]  
    { 1, 2, 3, 4, 5, 6 };
-const char *AllocIntermedReqType_descriptions[] = 
+const char *AllocIntermedReqType_descriptions[]  
    { "PENDING_ACCEPT", "PENDING_RELEASE", "PENDING_REVERSAL", "ACCEPT", "BLOCK_LEVEL_REJECT", "ACCOUNT_LEVEL_REJECT" };
-const int ApplQueueResolution_realm[] = 
+const int ApplQueueResolution_realm[]  
    { 0, 1, 2, 3 };
-const char *ApplQueueResolution_descriptions[] = 
+const char *ApplQueueResolution_descriptions[]  
    { "NO_ACTION_TAKEN", "QUEUE_FLUSHED", "OVERLAY_LAST", "END_SESSION" };
-const int ApplQueueAction_realm[] = 
+const int ApplQueueAction_realm[]  
    { 0, 1, 2, 3 };
-const char *ApplQueueAction_descriptions[] = 
+const char *ApplQueueAction_descriptions[]  
    { "NO_ACTION_TAKEN", "QUEUE_FLUSHED", "OVERLAY_LAST", "END_SESSION" };
-const int AvgPxIndicator_realm[] = 
+const int AvgPxIndicator_realm[]  
    { 0, 1, 2 };
-const char *AvgPxIndicator_descriptions[] = 
+const char *AvgPxIndicator_descriptions[]  
    { "NO_AVERAGE_PRICING", "TRADE_IS_PART_OF_AN_AVERAGE_PRICE_GROUP_IDENTIFIED_BY_THE_TRADELINKID", "LAST_TRADE_IS_THE_AVERAGE_PRICE_GROUP_IDENTIFIED_BY_THE_TRADELINKID" };
-const int TradeAllocIndicator_realm[] = 
+const int TradeAllocIndicator_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *TradeAllocIndicator_descriptions[] = 
+const char *TradeAllocIndicator_descriptions[]  
    { "ALLOCATION_NOT_REQUIRED", "ALLOCATION_REQUIRED", "USE_ALLOCATION_PROVIDED_WITH_THE_TRADE", "ALLOCATION_GIVE_UP_EXECUTOR", "ALLOCATION_FROM_EXECUTOR", "ALLOCATION_TO_CLAIM_ACCOUNT" };
-const int ExpirationCycle_realm[] = 
+const int ExpirationCycle_realm[]  
    { 0, 1, 2 };
-const char *ExpirationCycle_descriptions[] = 
+const char *ExpirationCycle_descriptions[]  
    { "EXPIRE_ON_TRADING_SESSION_CLOSE", "EXPIRE_ON_TRADING_SESSION_OPEN", "TRADING_ELIGIBILITY_EXPIRATION_SPECIFIED_IN_THE_DATE_AND_TIME_FIELDS_EVENTDATE" };
-const int TrdType_realm[] = 
+const int TrdType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 };
-const char *TrdType_descriptions[] = 
+const char *TrdType_descriptions[]  
    { "REGULAR_TRADE", "BLOCK_TRADE_1", "EFP", "TRANSFER", "LATE_TRADE", "T_TRADE", "WEIGHTED_AVERAGE_PRICE_TRADE", "BUNCHED_TRADE", "LATE_BUNCHED_TRADE", "PRIOR_REFERENCE_PRICE_TRADE", "AFTER_HOURS_TRADE", "EXCHANGE_FOR_RISK", "EXCHANGE_FOR_SWAP", "EXCHANGE_OF_FUTURES_FOR", "EXCHANGE_OF_OPTIONS_FOR_OPTIONS", "TRADING_AT_SETTLEMENT", "ALL_OR_NONE", "FUTURES_LARGE_ORDER_EXECUTION", "EXCHANGE_OF_FUTURES_FOR_FUTURES", "OPTION_INTERIM_TRADE", "OPTION_CABINET_TRADE", "PRIVATELY_NEGOTIATED_TRADES", "SUBSTITUTION_OF_FUTURES_FOR_FORWARDS", "ERROR_TRADE", "SPECIAL_CUM_DIVIDEND", "SPECIAL_EX_DIVIDEND", "SPECIAL_CUM_COUPON", "SPECIAL_EX_COUPON", "CASH_SETTLEMENT", "SPECIAL_PRICE", "GUARANTEED_DELIVERY", "SPECIAL_CUM_RIGHTS", "SPECIAL_EX_RIGHTS", "SPECIAL_CUM_CAPITAL_REPAYMENTS", "SPECIAL_EX_CAPITAL_REPAYMENTS", "SPECIAL_CUM_BONUS", "SPECIAL_EX_BONUS", "BLOCK_TRADE_38", "WORKED_PRINCIPAL_TRADE", "BLOCK_TRADES", "NAME_CHANGE", "PORTFOLIO_TRANSFER", "PROROGATION_BUY", "PROROGATION_SELL", "OPTION_EXERCISE", "DELTA_NEUTRAL_TRANSACTION", "FINANCING_TRANSACTION", "NON_STANDARD_SETTLEMENT", "DERIVATIVE_RELATED_TRANSACTION", "PORTFOLIO_TRADE", "VOLUME_WEIGHTED_AVERAGE_TRADE", "EXCHANGE_GRANTED_TRADE", "REPURCHASE_AGREEMENT", "OTC", "EXCHANGE_BASIS_FACILITY" };
-const int TrdSubType_realm[] = 
+const int TrdSubType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 };
-const char *TrdSubType_descriptions[] = 
+const char *TrdSubType_descriptions[]  
    { "CMTA", "INTERNAL_TRANSFER_OR_ADJUSTMENT", "EXTERNAL_TRANSFER_OR_TRANSFER_OF_ACCOUNT", "REJECT_FOR_SUBMITTING_SIDE", "ADVISORY_FOR_CONTRA_SIDE", "OFFSET_DUE_TO_AN_ALLOCATION", "ONSET_DUE_TO_AN_ALLOCATION", "DIFFERENTIAL_SPREAD", "IMPLIED_SPREAD_LEG_EXECUTED_AGAINST_AN_OUTRIGHT", "TRANSACTION_FROM_EXERCISE", "TRANSACTION_FROM_ASSIGNMENT", "ACATS", "AI", "B", "K", "LC", "M", "N", "NM", "NR", "P", "PA", "PC", "PN", "R", "RO", "RT", "SW", "T", "WN", "WT", "OFF_HOURS_TRADE", "ON_HOURS_TRADE", "OTC_QUOTE", "CONVERTED_SWAP", "CROSSED_TRADE", "INTERIM_PROTECTED_TRADE", "LARGE_IN_SCALE" };
-const int PegMoveType_realm[] = 
+const int PegMoveType_realm[]  
    { 0, 1 };
-const char *PegMoveType_descriptions[] = 
+const char *PegMoveType_descriptions[]  
    { "FLOATING", "FIXED" };
-const int PegOffsetType_realm[] = 
+const int PegOffsetType_realm[]  
    { 0, 1, 2, 3 };
-const char *PegOffsetType_descriptions[] = 
+const char *PegOffsetType_descriptions[]  
    { "PRICE", "BASIS_POINTS", "TICKS", "PRICE_TIER" };
-const int PegLimitType_realm[] = 
+const int PegLimitType_realm[]  
    { 0, 1, 2 };
-const char *PegLimitType_descriptions[] = 
+const char *PegLimitType_descriptions[]  
    { "OR_BETTER", "STRICT", "OR_WORSE" };
-const int PegRoundDirection_realm[] = 
+const int PegRoundDirection_realm[]  
    { 1, 2 };
-const char *PegRoundDirection_descriptions[] = 
+const char *PegRoundDirection_descriptions[]  
    { "MORE_AGGRESSIVE", "MORE_PASSIVE" };
-const int PegScope_realm[] = 
+const int PegScope_realm[]  
    { 1, 2, 3, 4 };
-const char *PegScope_descriptions[] = 
+const char *PegScope_descriptions[]  
    { "LOCAL", "NATIONAL", "GLOBAL", "NATIONAL_EXCLUDING_LOCAL" };
-const int DiscretionMoveType_realm[] = 
+const int DiscretionMoveType_realm[]  
    { 0, 1 };
-const char *DiscretionMoveType_descriptions[] = 
+const char *DiscretionMoveType_descriptions[]  
    { "FLOATING", "FIXED" };
-const int DiscretionOffsetType_realm[] = 
+const int DiscretionOffsetType_realm[]  
    { 0, 1, 2, 3 };
-const char *DiscretionOffsetType_descriptions[] = 
+const char *DiscretionOffsetType_descriptions[]  
    { "PRICE", "BASIS_POINTS", "TICKS", "PRICE_TIER" };
-const int DiscretionLimitType_realm[] = 
+const int DiscretionLimitType_realm[]  
    { 0, 1, 2 };
-const char *DiscretionLimitType_descriptions[] = 
+const char *DiscretionLimitType_descriptions[]  
    { "OR_BETTER", "STRICT", "OR_WORSE" };
-const int DiscretionRoundDirection_realm[] = 
+const int DiscretionRoundDirection_realm[]  
    { 1, 2 };
-const char *DiscretionRoundDirection_descriptions[] = 
+const char *DiscretionRoundDirection_descriptions[]  
    { "MORE_AGGRESSIVE", "MORE_PASSIVE" };
-const int DiscretionScope_realm[] = 
+const int DiscretionScope_realm[]  
    { 1, 2, 3, 4 };
-const char *DiscretionScope_descriptions[] = 
+const char *DiscretionScope_descriptions[]  
    { "LOCAL", "NATIONAL", "GLOBAL", "NATIONAL_EXCLUDING_LOCAL" };
-const int TargetStrategy_realm[] = 
+const int TargetStrategy_realm[]  
    { 1, 2, 3 };
-const char *TargetStrategy_descriptions[] = 
+const char *TargetStrategy_descriptions[]  
    { "VWAP", "PARTICIPATE", "MININIZE_MARKET_IMPACT" };
-const int LastLiquidityInd_realm[] = 
+const int LastLiquidityInd_realm[]  
    { 1, 2, 3, 4 };
-const char *LastLiquidityInd_descriptions[] = 
+const char *LastLiquidityInd_descriptions[]  
    { "ADDED_LIQUIDITY", "REMOVED_LIQUIDITY", "LIQUIDITY_ROUTED_OUT", "AUCTION" };
-const char PublishTrdIndicator_realm[] = 
+const char PublishTrdIndicator_realm[]  
    { 'N', 'Y' };
-const char *PublishTrdIndicator_descriptions[] = 
+const char *PublishTrdIndicator_descriptions[]  
    { "NO", "YES" };
-const int ShortSaleReason_realm[] = 
+const int ShortSaleReason_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *ShortSaleReason_descriptions[] = 
+const char *ShortSaleReason_descriptions[]  
    { "DEALER_SOLD_SHORT", "DEALER_SOLD_SHORT_EXEMPT", "SELLING_CUSTOMER_SOLD_SHORT", "SELLING_CUSTOMER_SOLD_SHORT_EXEMPT", "QUALIFIED_SERVICE_REPRESENTATIVE", "QSR_OR_AGU_CONTRA_SIDE_SOLD_SHORT_EXEMPT" };
-const int QtyType_realm[] = 
+const int QtyType_realm[]  
    { 0, 1, 2 };
-const char *QtyType_descriptions[] = 
+const char *QtyType_descriptions[]  
    { "UNITS", "CONTRACTS", "UNITS_OF_MEASURE_PER_TIME_UNIT" };
-const int TradeReportType_realm[] = 
+const int TradeReportType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-const char *TradeReportType_descriptions[] = 
+const char *TradeReportType_descriptions[]  
    { "SUBMIT", "ALLEGED_1", "ACCEPT", "DECLINE", "ADDENDUM", "NO_WAS", "TRADE_REPORT_CANCEL", "7", "DEFAULTED", "INVALID_CMTA", "PENDED", "ALLEGED_NEW", "ALLEGED_ADDENDUM", "ALLEGED_NO_WAS", "ALLEGED_TRADE_REPORT_CANCEL", "ALLEGED_15" };
-const int AllocNoOrdersType_realm[] = 
+const int AllocNoOrdersType_realm[]  
    { 0, 1 };
-const char *AllocNoOrdersType_descriptions[] = 
+const char *AllocNoOrdersType_descriptions[]  
    { "NOT_SPECIFIED", "EXPLICIT_LIST_PROVIDED" };
-const int EventType_realm[] = 
+const int EventType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 99 };
-const char *EventType_descriptions[] = 
+const char *EventType_descriptions[]  
    { "PUT", "CALL", "TENDER", "SINKING_FUND_CALL", "ACTIVATION", "INACTIVIATION", "LAST_ELIGIBLE_TRADE_DATE", "SWAP_START_DATE", "SWAP_END_DATE", "SWAP_ROLL_DATE", "SWAP_NEXT_START_DATE", "SWAP_NEXT_ROLL_DATE", "FIRST_DELIVERY_DATE", "LAST_DELIVERY_DATE", "INITIAL_INVENTORY_DUE_DATE", "FINAL_INVENTORY_DUE_DATE", "FIRST_INTENT_DATE", "LAST_INTENT_DATE", "POSITION_REMOVAL_DATE", "OTHER" };
-const int InstrAttribType_realm[] = 
+const int InstrAttribType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 99 };
-const char *InstrAttribType_descriptions[] = 
+const char *InstrAttribType_descriptions[]  
    { "FLAT", "ZERO_COUPON", "INTEREST_BEARING", "NO_PERIODIC_PAYMENTS", "VARIABLE_RATE", "LESS_FEE_FOR_PUT", "STEPPED_COUPON", "COUPON_PERIOD", "WHEN_AND_IF_ISSUED", "ORIGINAL_ISSUE_DISCOUNT", "CALLABLE_PUTTABLE", "ESCROWED_TO_MATURITY", "ESCROWED_TO_REDEMPTION_DATE", "PRE_REFUNDED", "IN_DEFAULT", "UNRATED", "TAXABLE", "INDEXED", "SUBJECT_TO_ALTERNATIVE_MINIMUM_TAX", "ORIGINAL_ISSUE_DISCOUNT_PRICE_SUPPLY_PRICE_IN_THE_INSTRATTRIBVALUE", "CALLABLE_BELOW_MATURITY_VALUE", "CALLABLE_WITHOUT_NOTICE_BY_MAIL_TO_HOLDER_UNLESS_REGISTERED", "PRICE_TICK_RULES_FOR_SECURITY", "TRADE_TYPE_ELIGIBILITY_DETAILS_FOR_SECURITY", "INSTRUMENT_DENOMINATOR", "INSTRUMENT_NUMERATOR", "INSTRUMENT_PRICE_PRECISION", "INSTRUMENT_STRIKE_PRICE", "TRADEABLE_INDICATOR", "TEXT_SUPPLY_THE_TEXT_OF_THE_ATTRIBUTE_OR_DISCLAIMER_IN_THE_INSTRATTRIBVALUE" };
-const int CPProgram_realm[] = 
+const int CPProgram_realm[]  
    { 1, 2, 99 };
-const char *CPProgram_descriptions[] = 
+const char *CPProgram_descriptions[]  
    { "3", "4", "OTHER" };
-const int MiscFeeBasis_realm[] = 
+const int MiscFeeBasis_realm[]  
    { 0, 1, 2 };
-const char *MiscFeeBasis_descriptions[] = 
+const char *MiscFeeBasis_descriptions[]  
    { "ABSOLUTE", "PER_UNIT", "PERCENTAGE" };
-const char LastFragment_realm[] = 
+const char LastFragment_realm[]  
    { 'N', 'Y' };
-const char *LastFragment_descriptions[] = 
+const char *LastFragment_descriptions[]  
    { "NO", "YES" };
-const int CollAsgnReason_realm[] = 
+const int CollAsgnReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7 };
-const char *CollAsgnReason_descriptions[] = 
+const char *CollAsgnReason_descriptions[]  
    { "INITIAL", "SCHEDULED", "TIME_WARNING", "MARGIN_DEFICIENCY", "MARGIN_EXCESS", "FORWARD_COLLATERAL_DEMAND", "EVENT_OF_DEFAULT", "ADVERSE_TAX_EVENT" };
-const int CollInquiryQualifier_realm[] = 
+const int CollInquiryQualifier_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7 };
-const char *CollInquiryQualifier_descriptions[] = 
+const char *CollInquiryQualifier_descriptions[]  
    { "TRADE_DATE", "GC_INSTRUMENT", "COLLATERAL_INSTRUMENT", "SUBSTITUTION_ELIGIBLE", "NOT_ASSIGNED", "PARTIALLY_ASSIGNED", "FULLY_ASSIGNED", "OUTSTANDING_TRADES" };
-const int CollAsgnTransType_realm[] = 
+const int CollAsgnTransType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *CollAsgnTransType_descriptions[] = 
+const char *CollAsgnTransType_descriptions[]  
    { "NEW", "REPLACE", "CANCEL", "RELEASE", "REVERSE" };
-const int CollAsgnRespType_realm[] = 
+const int CollAsgnRespType_realm[]  
    { 0, 1, 2, 3 };
-const char *CollAsgnRespType_descriptions[] = 
+const char *CollAsgnRespType_descriptions[]  
    { "RECEIVED", "ACCEPTED", "DECLINED", "REJECTED" };
-const int CollAsgnRejectReason_realm[] = 
+const int CollAsgnRejectReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 99 };
-const char *CollAsgnRejectReason_descriptions[] = 
+const char *CollAsgnRejectReason_descriptions[]  
    { "UNKNOWN_DEAL", "UNKNOWN_OR_INVALID_INSTRUMENT", "UNAUTHORIZED_TRANSACTION", "INSUFFICIENT_COLLATERAL", "INVALID_TYPE_OF_COLLATERAL", "EXCESSIVE_SUBSTITUTION", "OTHER" };
-const int CollStatus_realm[] = 
+const int CollStatus_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *CollStatus_descriptions[] = 
+const char *CollStatus_descriptions[]  
    { "UNASSIGNED", "PARTIALLY_ASSIGNED", "ASSIGNMENT_PROPOSED", "ASSIGNED", "CHALLENGED" };
-const char LastRptRequested_realm[] = 
+const char LastRptRequested_realm[]  
    { 'N', 'Y' };
-const char *LastRptRequested_descriptions[] = 
+const char *LastRptRequested_descriptions[]  
    { "NO", "YES" };
-const int DeliveryType_realm[] = 
+const int DeliveryType_realm[]  
    { 0, 1, 2, 3 };
-const char *DeliveryType_descriptions[] = 
+const char *DeliveryType_descriptions[]  
    { "VERSUS_PAYMENT_DELIVER", "FREE_DELIVER", "TRI_PARTY", "HOLD_IN_CUSTODY" };
-const int UserRequestType_realm[] = 
+const int UserRequestType_realm[]  
    { 1, 2, 3, 4 };
-const char *UserRequestType_descriptions[] = 
+const char *UserRequestType_descriptions[]  
    { "LOG_ON_USER", "LOG_OFF_USER", "CHANGE_PASSWORD_FOR_USER", "REQUEST_INDIVIDUAL_USER_STATUS" };
-const int UserStatus_realm[] = 
+const int UserStatus_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8 };
-const char *UserStatus_descriptions[] = 
+const char *UserStatus_descriptions[]  
    { "LOGGED_IN", "NOT_LOGGED_IN", "USER_NOT_RECOGNISED", "PASSWORD_INCORRECT", "PASSWORD_CHANGED", "OTHER", "FORCED_USER_LOGOUT_BY_EXCHANGE", "SESSION_SHUTDOWN_WARNING" };
-const int StatusValue_realm[] = 
+const int StatusValue_realm[]  
    { 1, 2, 3, 4 };
-const char *StatusValue_descriptions[] = 
+const char *StatusValue_descriptions[]  
    { "CONNECTED", "NOT_CONNECTED_2", "NOT_CONNECTED_3", "IN_PROCESS" };
-const int NetworkRequestType_realm[] = 
+const int NetworkRequestType_realm[]  
    { 1, 2, 4, 8 };
-const char *NetworkRequestType_descriptions[] = 
+const char *NetworkRequestType_descriptions[]  
    { "SNAPSHOT", "SUBSCRIBE", "STOP_SUBSCRIBING", "LEVEL_OF_DETAIL_THEN_NOCOMPIDS_BECOMES_REQUIRED" };
-const int NetworkStatusResponseType_realm[] = 
+const int NetworkStatusResponseType_realm[]  
    { 1, 2 };
-const char *NetworkStatusResponseType_descriptions[] = 
+const char *NetworkStatusResponseType_descriptions[]  
    { "FULL", "INCREMENTAL_UPDATE" };
-const int TrdRptStatus_realm[] = 
+const int TrdRptStatus_realm[]  
    { 0, 1, 3 };
-const char *TrdRptStatus_descriptions[] = 
+const char *TrdRptStatus_descriptions[]  
    { "ACCEPTED", "REJECTED", "ACCEPTED_WITH_ERRORS" };
-const int AffirmStatus_realm[] = 
+const int AffirmStatus_realm[]  
    { 1, 2, 3 };
-const char *AffirmStatus_descriptions[] = 
+const char *AffirmStatus_descriptions[]  
    { "RECEIVED", "CONFIRM_REJECTED_IE_NOT_AFFIRMED", "AFFIRMED" };
-const int CollAction_realm[] = 
+const int CollAction_realm[]  
    { 0, 1, 2 };
-const char *CollAction_descriptions[] = 
+const char *CollAction_descriptions[]  
    { "RETAIN", "ADD", "REMOVE" };
-const int CollInquiryStatus_realm[] = 
+const int CollInquiryStatus_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *CollInquiryStatus_descriptions[] = 
+const char *CollInquiryStatus_descriptions[]  
    { "ACCEPTED", "ACCEPTED_WITH_WARNINGS", "COMPLETED", "COMPLETED_WITH_WARNINGS", "REJECTED" };
-const int CollInquiryResult_realm[] = 
+const int CollInquiryResult_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 99 };
-const char *CollInquiryResult_descriptions[] = 
+const char *CollInquiryResult_descriptions[]  
    { "SUCCESSFUL", "INVALID_OR_UNKNOWN_INSTRUMENT", "INVALID_OR_UNKNOWN_COLLATERAL_TYPE", "INVALID_PARTIES", "INVALID_TRANSPORT_TYPE_REQUESTED", "INVALID_DESTINATION_REQUESTED", "NO_COLLATERAL_FOUND_FOR_THE_TRADE_SPECIFIED", "NO_COLLATERAL_FOUND_FOR_THE_ORDER_SPECIFIED", "COLLATERAL_INQUIRY_TYPE_NOT_SUPPORTED", "UNAUTHORIZED_FOR_COLLATERAL_INQUIRY", "OTHER" };
-const int StrategyParameterType_realm[] = 
+const int StrategyParameterType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 };
-const char *StrategyParameterType_descriptions[] = 
+const char *StrategyParameterType_descriptions[]  
    { "INT", "LENGTH", "NUMINGROUP", "SEQNUM", "TAGNUM", "FLOAT", "QTY", "PRICE", "PRICEOFFSET", "AMT", "PERCENTAGE", "CHAR", "BOOLEAN", "STRING", "MULTIPLECHARVALUE", "CURRENCY", "EXCHANGE", "MONTHYEAR", "UTCTIMESTAMP", "UTCTIMEONLY", "LOCALMKTDATE", "UTCDATEONLY", "DATA", "MULTIPLESTRINGVALUE", "COUNTRY", "LANGUAGE", "TZTIMEONLY", "TZTIMESTAMP", "TENOR" };
-const f8String SecurityStatusID_realm[] = 
+const f8String SecurityStatusID_realm[]  
    { "1", "2" };
-const char *SecurityStatusID_descriptions[] = 
+const char *SecurityStatusID_descriptions[]  
    { "ACTIVE", "INACTIVE" };
-const f8String UnderlyingCashType_realm[] = 
+const f8String UnderlyingCashType_realm[]  
    { "DIFF", "FIXED" };
-const char *UnderlyingCashType_descriptions[] = 
+const char *UnderlyingCashType_descriptions[]  
    { "DIFF", "FIXED" };
-const int UnderlyingSettlementType_realm[] = 
+const int UnderlyingSettlementType_realm[]  
    { 2, 4, 5 };
-const char *UnderlyingSettlementType_descriptions[] = 
+const char *UnderlyingSettlementType_descriptions[]  
    { "T_PLUS_1", "T_PLUS_3", "T_PLUS_4" };
-const char SecurityUpdateAction_realm[] = 
+const char SecurityUpdateAction_realm[]  
    { 'A', 'D', 'M' };
-const char *SecurityUpdateAction_descriptions[] = 
+const char *SecurityUpdateAction_descriptions[]  
    { "ADD", "DELETE", "MODIFY" };
-const int ExpirationQtyType_realm[] = 
+const int ExpirationQtyType_realm[]  
    { 1, 2, 3, 4, 5 };
-const char *ExpirationQtyType_descriptions[] = 
+const char *ExpirationQtyType_descriptions[]  
    { "AUTO_EXERCISE", "NON_AUTO_EXERCISE", "FINAL_WILL_BE_EXERCISED", "CONTRARY_INTENTION", "DIFFERENCE" };
-const int IndividualAllocType_realm[] = 
+const int IndividualAllocType_realm[]  
    { 1, 2 };
-const char *IndividualAllocType_descriptions[] = 
+const char *IndividualAllocType_descriptions[]  
    { "SUB_ALLOCATE", "THIRD_PARTY_ALLOCATION" };
-const f8String UnitOfMeasure_realm[] = 
+const f8String UnitOfMeasure_realm[]  
    { "Alw", "Bbl", "Bcf", "Bu", "Gal", "MMBtu", "MMbbl", "MWh", "USD", "lbs", "oz_tr", "t", "tn" };
-const char *UnitOfMeasure_descriptions[] = 
+const char *UnitOfMeasure_descriptions[]  
    { "ALLOWANCES", "BARRELS", "BILLION_CUBIC_FEET", "BUSHELS", "GALLONS", "ONE_MILLION_BTU", "MILLION_BARRELS", "MEGAWATT_HOURS", "US_DOLLARS", "POUNDS", "TROY_OUNCES", "METRIC_TONS", "TONS" };
-const f8String TimeUnit_realm[] = 
+const f8String TimeUnit_realm[]  
    { "D", "H", "Min", "Mo", "S", "Wk", "Yr" };
-const char *TimeUnit_descriptions[] = 
+const char *TimeUnit_descriptions[]  
    { "DAY", "HOUR", "MINUTE", "MONTH", "SECOND", "WEEK", "YEAR" };
-const int AllocMethod_realm[] = 
+const int AllocMethod_realm[]  
    { 1, 2, 3 };
-const char *AllocMethod_descriptions[] = 
+const char *AllocMethod_descriptions[]  
    { "AUTOMATIC", "GUARANTOR", "MANUAL" };
-const char AsOfIndicator_realm[] = 
+const char AsOfIndicator_realm[]  
    { '0', '1' };
-const char *AsOfIndicator_descriptions[] = 
+const char *AsOfIndicator_descriptions[]  
    { "FALSE", "TRUE" };
-const int MDBookType_realm[] = 
+const int MDBookType_realm[]  
    { 1, 2, 3 };
-const char *MDBookType_descriptions[] = 
+const char *MDBookType_descriptions[]  
    { "TOP_OF_BOOK", "PRICE_DEPTH", "ORDER_DEPTH" };
-const int MDOriginType_realm[] = 
+const int MDOriginType_realm[]  
    { 0, 1, 2 };
-const char *MDOriginType_descriptions[] = 
+const char *MDOriginType_descriptions[]  
    { "BOOK", "OFF_BOOK", "CROSS" };
-const f8String CustOrderHandlingInst_realm[] = 
+const f8String CustOrderHandlingInst_realm[]  
    { "ADD", "AON", "CNH", "DIR", "E.W", "FOK", "IO", "IOC", "LOC", "LOO", "MAC", "MAO", "MOC", "MOO", "MQT", "NH", "OVD", "PEG", "RSV", "S.W", "SCL", "TMO", "TS", "WRK" };
-const char *CustOrderHandlingInst_descriptions[] = 
+const char *CustOrderHandlingInst_descriptions[]  
    { "ADD_ON_ORDER", "ALL_OR_NONE", "CASH_NOT_HELD", "DIRECTED_ORDER", "EXCHANGE_FOR_PHYSICAL_TRANSACTION", "FILL_OR_KILL", "IMBALANCE_ONLY", "IMMEDIATE_OR_CANCEL", "LIMIT_ON_CLOSE", "LIMIT_ON_OPEN", "MARKET_AT_CLOSE", "MARKET_AT_OPEN", "MARKET_ON_CLOSE", "MARKET_ON_OPEN", "MINIMUM_QUANTITY", "NOT_HELD", "OVER_THE_DAY", "PEGGED", "RESERVE_SIZE_ORDER", "STOP_STOCK_TRANSACTION", "SCALE", "TIME_ORDER", "TRAILING_STOP", "WORK" };
-const int OrderHandlingInstSource_realm[] = 
+const int OrderHandlingInstSource_realm[]  
    { 1 };
-const char *OrderHandlingInstSource_descriptions[] = 
+const char *OrderHandlingInstSource_descriptions[]  
    { "NASD_OATS" };
-const f8String DeskType_realm[] = 
+const f8String DeskType_realm[]  
    { "A", "AR", "D", "IN", "IS", "O", "PF", "PR", "PT", "S", "T" };
-const char *DeskType_descriptions[] = 
+const char *DeskType_descriptions[]  
    { "AGENCY", "ARBITRAGE", "DERIVATIVES", "INTERNATIONAL", "INSTITUTIONAL", "OTHER", "PREFERRED_TRADING", "PROPRIETARY", "PROGRAM_TRADING", "SALES", "TRADING" };
-const int DeskTypeSource_realm[] = 
+const int DeskTypeSource_realm[]  
    { 1 };
-const char *DeskTypeSource_descriptions[] = 
+const char *DeskTypeSource_descriptions[]  
    { "NASD_OATS" };
-const f8String DeskOrderHandlingInst_realm[] = 
+const f8String DeskOrderHandlingInst_realm[]  
    { "ADD", "AON", "CNH", "DIR", "E.W", "FOK", "IO", "IOC", "LOC", "LOO", "MAC", "MAO", "MOC", "MOO", "MQT", "NH", "OVD", "PEG", "RSV", "S.W", "SCL", "TMO", "TS", "WRK" };
-const char *DeskOrderHandlingInst_descriptions[] = 
+const char *DeskOrderHandlingInst_descriptions[]  
    { "ADD_ON_ORDER", "ALL_OR_NONE", "CASH_NOT_HELD", "DIRECTED_ORDER", "EXCHANGE_FOR_PHYSICAL_TRANSACTION", "FILL_OR_KILL", "IMBALANCE_ONLY", "IMMEDIATE_OR_CANCEL", "LIMIT_ON_CLOSE", "LIMIT_ON_OPEN", "MARKET_AT_CLOSE", "MARKET_AT_OPEN", "MARKET_ON_CLOSE", "MARKET_ON_OPEN", "MINIMUM_QUANTITY", "NOT_HELD", "OVER_THE_DAY", "PEGGED", "RESERVE_SIZE_ORDER", "STOP_STOCK_TRANSACTION", "SCALE", "TIME_ORDER", "TRAILING_STOP", "WORK" };
-const char ExecAckStatus_realm[] = 
+const char ExecAckStatus_realm[]  
    { '0', '1', '2' };
-const char *ExecAckStatus_descriptions[] = 
+const char *ExecAckStatus_descriptions[]  
    { "RECEIVED_NOT_YET_PROCESSED", "ACCEPTED", "DONT_KNOW" };
-const int CollApplType_realm[] = 
+const int CollApplType_realm[]  
    { 0, 1 };
-const char *CollApplType_descriptions[] = 
+const char *CollApplType_descriptions[]  
    { "SPECIFIC_DEPOSIT", "GENERAL" };
-const char UnderlyingFXRateCalc_realm[] = 
+const char UnderlyingFXRateCalc_realm[]  
    { 'D', 'M' };
-const char *UnderlyingFXRateCalc_descriptions[] = 
+const char *UnderlyingFXRateCalc_descriptions[]  
    { "DIVIDE", "MULTIPLY" };
-const char AllocPositionEffect_realm[] = 
+const char AllocPositionEffect_realm[]  
    { 'C', 'F', 'O', 'R' };
-const char *AllocPositionEffect_descriptions[] = 
+const char *AllocPositionEffect_descriptions[]  
    { "CLOSE", "FIFO", "OPEN", "ROLLED" };
-const char DealingCapacity_realm[] = 
+const char DealingCapacity_realm[]  
    { 'A', 'P', 'R' };
-const char *DealingCapacity_descriptions[] = 
+const char *DealingCapacity_descriptions[]  
    { "AGENT", "PRINCIPAL", "RISKLESS_PRINCIPAL" };
-const char AggressorIndicator_realm[] = 
+const char AggressorIndicator_realm[]  
    { 'N', 'Y' };
-const char *AggressorIndicator_descriptions[] = 
+const char *AggressorIndicator_descriptions[]  
    { "NO", "YES" };
-const int MDQuoteType_realm[] = 
+const int MDQuoteType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *MDQuoteType_descriptions[] = 
+const char *MDQuoteType_descriptions[]  
    { "INDICATIVE", "TRADEABLE", "RESTRICTED_TRADEABLE", "COUNTER", "INDICATIVE_AND_TRADEABLE" };
-const char RefOrderIDSource_realm[] = 
+const char RefOrderIDSource_realm[]  
    { '0', '1', '2', '3', '4' };
-const char *RefOrderIDSource_descriptions[] = 
+const char *RefOrderIDSource_descriptions[]  
    { "SECONDARYORDERID", "ORDERID", "MDENTRYID", "QUOTEENTRYID", "ORIGINAL_ORDER_ID" };
-const char DisplayWhen_realm[] = 
+const char DisplayWhen_realm[]  
    { '1', '2' };
-const char *DisplayWhen_descriptions[] = 
+const char *DisplayWhen_descriptions[]  
    { "IMMEDIATE", "EXHAUST" };
-const char DisplayMethod_realm[] = 
+const char DisplayMethod_realm[]  
    { '1', '2', '3', '4' };
-const char *DisplayMethod_descriptions[] = 
+const char *DisplayMethod_descriptions[]  
    { "INITIAL", "NEW", "RANDOM", "UNDISCLOSED" };
-const char PriceProtectionScope_realm[] = 
+const char PriceProtectionScope_realm[]  
    { '0', '1', '2', '3' };
-const char *PriceProtectionScope_descriptions[] = 
+const char *PriceProtectionScope_descriptions[]  
    { "NONE", "LOCAL", "NATIONAL", "GLOBAL" };
-const char LotType_realm[] = 
+const char LotType_realm[]  
    { '1', '2', '3', '4' };
-const char *LotType_descriptions[] = 
+const char *LotType_descriptions[]  
    { "ODD_LOT", "ROUND_LOT", "BLOCK_LOT", "ROUND_LOT_BASED_UPON_UNITOFMEASURE" };
-const int PegPriceType_realm[] = 
+const int PegPriceType_realm[]  
    { 1, 2, 3, 4, 5, 7, 8, 9 };
-const char *PegPriceType_descriptions[] = 
+const char *PegPriceType_descriptions[]  
    { "LAST_PEG", "MID_PRICE_PEG", "OPENING_PEG", "MARKET_PEG", "PRIMARY_PEG", "PEG_TO_VWAP", "TRAILING_STOP_PEG", "PEG_TO_LIMIT_PRICE" };
-const char TriggerType_realm[] = 
+const char TriggerType_realm[]  
    { '1', '2', '3', '4' };
-const char *TriggerType_descriptions[] = 
+const char *TriggerType_descriptions[]  
    { "PARTIAL_EXECUTION", "SPECIFIED_TRADING_SESSION", "NEXT_AUCTION", "PRICE_MOVEMENT" };
-const char TriggerAction_realm[] = 
+const char TriggerAction_realm[]  
    { '1', '2', '3' };
-const char *TriggerAction_descriptions[] = 
+const char *TriggerAction_descriptions[]  
    { "ACTIVATE", "MODIFY", "CANCEL" };
-const char TriggerPriceType_realm[] = 
+const char TriggerPriceType_realm[]  
    { '1', '2', '3', '4', '5', '6' };
-const char *TriggerPriceType_descriptions[] = 
+const char *TriggerPriceType_descriptions[]  
    { "BEST_OFFER", "LAST_TRADE", "BEST_BID", "BEST_BID_OR_LAST_TRADE", "BEST_OFFER_OR_LAST_TRADE", "BEST_MID" };
-const char TriggerPriceTypeScope_realm[] = 
+const char TriggerPriceTypeScope_realm[]  
    { '0', '1', '2', '3' };
-const char *TriggerPriceTypeScope_descriptions[] = 
+const char *TriggerPriceTypeScope_descriptions[]  
    { "NONE", "LOCAL", "NATIONAL", "GLOBAL" };
-const char TriggerPriceDirection_realm[] = 
+const char TriggerPriceDirection_realm[]  
    { 'D', 'U' };
-const char *TriggerPriceDirection_descriptions[] = 
+const char *TriggerPriceDirection_descriptions[]  
    { "TRIGGER_IF_THE_PRICE_OF_THE_SPECIFIED_TYPE_GOES_DOWN_TO_OR_THROUGH_THE_SPECIFIED_TRIGGER_PRICE", "TRIGGER_IF_THE_PRICE_OF_THE_SPECIFIED_TYPE_GOES_UP_TO_OR_THROUGH_THE_SPECIFIED_TRIGGER_PRICE" };
-const char TriggerOrderType_realm[] = 
+const char TriggerOrderType_realm[]  
    { '1', '2' };
-const char *TriggerOrderType_descriptions[] = 
+const char *TriggerOrderType_descriptions[]  
    { "MARKET", "LIMIT" };
-const char OrderCategory_realm[] = 
+const char OrderCategory_realm[]  
    { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-const char *OrderCategory_descriptions[] = 
+const char *OrderCategory_descriptions[]  
    { "ORDER", "QUOTE", "PRIVATELY_NEGOTIATED_TRADE", "MULTILEG_ORDER", "LINKED_ORDER", "QUOTE_REQUEST", "IMPLIED_ORDER", "CROSS_ORDER", "STREAMING_PRICE" };
-const char TradeHandlingInstr_realm[] = 
+const char TradeHandlingInstr_realm[]  
    { '0', '1', '2', '3', '4', '5' };
-const char *TradeHandlingInstr_descriptions[] = 
+const char *TradeHandlingInstr_descriptions[]  
    { "TRADE_CONFIRMATION", "TWO_PARTY_REPORT", "ONE_PARTY_REPORT_FOR_MATCHING", "ONE_PARTY_REPORT_FOR_PASS_THROUGH", "AUTOMATED_FLOOR_ORDER_ROUTING", "TWO_PARTY_REPORT_FOR_CLAIM" };
-const f8String ApplVerID_realm[] = 
+const f8String ApplVerID_realm[]  
    { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-const char *ApplVerID_descriptions[] = 
+const char *ApplVerID_descriptions[]  
    { "FIX27", "FIX30", "FIX40", "FIX41", "FIX42", "FIX43", "FIX44", "FIX50", "FIX50SP1", "FIX50SP2" };
-const char ExDestinationIDSource_realm[] = 
+const char ExDestinationIDSource_realm[]  
    { 'B', 'C', 'D', 'E', 'G' };
-const char *ExDestinationIDSource_descriptions[] = 
+const char *ExDestinationIDSource_descriptions[]  
    { "BIC", "GENERALLY_ACCEPTED_MARKET_PARTICIPANT_IDENTIFIER", "PROPRIETARY", "ISO_COUNTRY_CODE", "MIC" };
-const f8String DefaultApplVerID_realm[] = 
+const f8String DefaultApplVerID_realm[]  
    { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-const char *DefaultApplVerID_descriptions[] = 
+const char *DefaultApplVerID_descriptions[]  
    { "FIX27", "FIX30", "FIX40", "FIX41", "FIX42", "FIX43", "FIX44", "FIX50", "FIX50SP1", "FIX50SP2" };
-const int ImpliedMarketIndicator_realm[] = 
+const int ImpliedMarketIndicator_realm[]  
    { 0, 1, 2, 3 };
-const char *ImpliedMarketIndicator_descriptions[] = 
+const char *ImpliedMarketIndicator_descriptions[]  
    { "NOT_IMPLIED", "IMPLIED_IN", "IMPLIED_OUT", "BOTH_IMPLIED_IN_AND_IMPLIED_OUT" };
-const int SettlObligMode_realm[] = 
+const int SettlObligMode_realm[]  
    { 1, 2 };
-const char *SettlObligMode_descriptions[] = 
+const char *SettlObligMode_descriptions[]  
    { "PRELIMINARY", "FINAL" };
-const char SettlObligTransType_realm[] = 
+const char SettlObligTransType_realm[]  
    { 'C', 'N', 'R', 'T' };
-const char *SettlObligTransType_descriptions[] = 
+const char *SettlObligTransType_descriptions[]  
    { "CANCEL", "NEW", "REPLACE", "RESTATE" };
-const char SettlObligSource_realm[] = 
+const char SettlObligSource_realm[]  
    { '1', '2', '3' };
-const char *SettlObligSource_descriptions[] = 
+const char *SettlObligSource_descriptions[]  
    { "INSTRUCTIONS_OF_BROKER", "INSTRUCTIONS_FOR_INSTITUTION", "INVESTOR" };
-const int QuoteEntryStatus_realm[] = 
+const int QuoteEntryStatus_realm[]  
    { 0, 5, 6, 7, 12, 13, 14, 15, 16 };
-const char *QuoteEntryStatus_descriptions[] = 
+const char *QuoteEntryStatus_descriptions[]  
    { "ACCEPTED", "REJECTED", "REMOVED_FROM_MARKET", "EXPIRED", "LOCKED_MARKET_WARNING", "CROSS_MARKET_WARNING", "CANCELED_DUE_TO_LOCK_MARKET", "CANCELED_DUE_TO_CROSS_MARKET", "ACTIVE" };
-const int RespondentType_realm[] = 
+const int RespondentType_realm[]  
    { 1, 2, 3, 4 };
-const char *RespondentType_descriptions[] = 
+const char *RespondentType_descriptions[]  
    { "ALL_MARKET_PARTICIPANTS", "SPECIFIED_MARKET_PARTICIPANTS", "ALL_MARKET_MAKERS", "PRIMARY_MARKET_MAKER" };
-const int SecurityTradingEvent_realm[] = 
+const int SecurityTradingEvent_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8 };
-const char *SecurityTradingEvent_descriptions[] = 
+const char *SecurityTradingEvent_descriptions[]  
    { "ORDER_IMBALANCE_AUCTION_IS_EXTENDED", "TRADING_RESUMES", "PRICE_VOLATILITY_INTERRUPTION", "CHANGE_OF_TRADING_SESSION", "CHANGE_OF_TRADING_SUBSESSION", "CHANGE_OF_SECURITY_TRADING_STATUS", "CHANGE_OF_BOOK_TYPE", "CHANGE_OF_MARKET_DEPTH" };
-const int StatsType_realm[] = 
+const int StatsType_realm[]  
    { 1, 2, 3, 4 };
-const char *StatsType_descriptions[] = 
+const char *StatsType_descriptions[]  
    { "EXCHANGE_LAST", "HIGH", "AVERAGE_PRICE", "TURNOVER" };
-const int MDSecSizeType_realm[] = 
+const int MDSecSizeType_realm[]  
    { 1 };
-const char *MDSecSizeType_descriptions[] = 
+const char *MDSecSizeType_descriptions[]  
    { "CUSTOMER" };
-const char SettlMethod_realm[] = 
+const char SettlMethod_realm[]  
    { 'C', 'P' };
-const char *SettlMethod_descriptions[] = 
+const char *SettlMethod_descriptions[]  
    { "CASH_SETTLEMENT_REQUIRED", "PHYSICAL_SETTLEMENT_REQUIRED" };
-const int ExerciseStyle_realm[] = 
+const int ExerciseStyle_realm[]  
    { 0, 1, 2 };
-const char *ExerciseStyle_descriptions[] = 
+const char *ExerciseStyle_descriptions[]  
    { "EUROPEAN", "AMERICAN", "BERMUDA" };
-const f8String PriceQuoteMethod_realm[] = 
+const f8String PriceQuoteMethod_realm[]  
    { "INT", "INX", "PCTPAR", "STD" };
-const char *PriceQuoteMethod_descriptions[] = 
+const char *PriceQuoteMethod_descriptions[]  
    { "INTEREST_RATE_INDEX", "INDEX", "PERCENT_OF_PAR", "STANDARD" };
-const f8String ValuationMethod_realm[] = 
+const f8String ValuationMethod_realm[]  
    { "CDS", "CDSD", "EQTY", "FUT", "FUTDA" };
-const char *ValuationMethod_descriptions[] = 
+const char *ValuationMethod_descriptions[]  
    { "CDS_STYLE_COLLATERALIZATION_OF_MARKET_TO_MARKET_AND_COUPON", "CDS_IN_DELIVERY", "PREMIUM_STYLE", "FUTURES_STYLE_MARK_TO_MARKET", "FUTURES_STYLE_WITH_AN_ATTACHED_CASH_ADJUSTMENT" };
-const int ListMethod_realm[] = 
+const int ListMethod_realm[]  
    { 0, 1 };
-const char *ListMethod_descriptions[] = 
+const char *ListMethod_descriptions[]  
    { "PRE_LISTED_ONLY", "USER_REQUESTED" };
-const int TickRuleType_realm[] = 
+const int TickRuleType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *TickRuleType_descriptions[] = 
+const char *TickRuleType_descriptions[]  
    { "REGULAR", "VARIABLE", "FIXED", "TRADED_AS_A_SPREAD_LEG", "SETTLED_AS_A_SPREAD_LEG" };
-const int MaturityMonthYearIncrementUnits_realm[] = 
+const int MaturityMonthYearIncrementUnits_realm[]  
    { 0, 1, 2, 3 };
-const char *MaturityMonthYearIncrementUnits_descriptions[] = 
+const char *MaturityMonthYearIncrementUnits_descriptions[]  
    { "MONTHS", "DAYS", "WEEKS", "YEARS" };
-const int MaturityMonthYearFormat_realm[] = 
+const int MaturityMonthYearFormat_realm[]  
    { 0, 1, 2 };
-const char *MaturityMonthYearFormat_descriptions[] = 
+const char *MaturityMonthYearFormat_descriptions[]  
    { "YEARMONTH_ONLY", "YEARMONTHDAY", "YEARMONTHWEEK" };
-const int PriceLimitType_realm[] = 
+const int PriceLimitType_realm[]  
    { 0, 1, 2 };
-const char *PriceLimitType_descriptions[] = 
+const char *PriceLimitType_descriptions[]  
    { "PRICE", "TICKS", "PERCENTAGE" };
-const int ApplReqType_realm[] = 
+const int ApplReqType_realm[]  
    { 0, 1, 2, 3, 4, 5, 6 };
-const char *ApplReqType_descriptions[] = 
+const char *ApplReqType_descriptions[]  
    { "RETRANSMISSION_OF_APPLICATION_MESSAGES_FOR_THE_SPECIFIED_APPLICATIONS", "SUBSCRIPTION_TO_THE_SPECIFIED_APPLICATIONS", "REQUEST_FOR_THE_LAST_APPLLASTSEQNUM_PUBLISHED_FOR_THE_SPECIFIED_APPLICATIONS", "REQUEST_VALID_SET_OF_APPLICATIONS", "UNSUBSCRIBE_TO_THE_SPECIFIED_APPLICATIONS", "CANCEL_RETRANSMISSION", "CANCEL_RETRANSMISSION_AND_UNSUBSCRIBE_TO_THE_SPECIFIED_APPLICATIONS" };
-const int ApplResponseType_realm[] = 
+const int ApplResponseType_realm[]  
    { 0, 1, 2 };
-const char *ApplResponseType_descriptions[] = 
+const char *ApplResponseType_descriptions[]  
    { "REQUEST_SUCCESSFULLY_PROCESSED", "APPLICATION_DOES_NOT_EXIST", "MESSAGES_NOT_AVAILABLE" };
-const int ApplResponseError_realm[] = 
+const int ApplResponseError_realm[]  
    { 0, 1, 2 };
-const char *ApplResponseError_descriptions[] = 
+const char *ApplResponseError_descriptions[]  
    { "APPLICATION_DOES_NOT_EXIST", "MESSAGES_REQUESTED_ARE_NOT_AVAILABLE", "USER_NOT_AUTHORIZED_FOR_APPLICATION" };
-const int TradSesEvent_realm[] = 
+const int TradSesEvent_realm[]  
    { 0, 1, 2, 3 };
-const char *TradSesEvent_descriptions[] = 
+const char *TradSesEvent_descriptions[]  
    { "TRADING_RESUMES", "CHANGE_OF_TRADING_SESSION", "CHANGE_OF_TRADING_SUBSESSION", "CHANGE_OF_TRADING_STATUS" };
-const int MassActionType_realm[] = 
+const int MassActionType_realm[]  
    { 1, 2, 3 };
-const char *MassActionType_descriptions[] = 
+const char *MassActionType_descriptions[]  
    { "SUSPEND_ORDERS", "RELEASE_ORDERS_FROM_SUSPENSION", "CANCEL_ORDERS" };
-const int MassActionScope_realm[] = 
+const int MassActionScope_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-const char *MassActionScope_descriptions[] = 
+const char *MassActionScope_descriptions[]  
    { "ALL_ORDERS_FOR_A_SECURITY", "ALL_ORDERS_FOR_AN_UNDERLYING_SECURITY", "ALL_ORDERS_FOR_A_PRODUCT", "ALL_ORDERS_FOR_A_CFICODE", "ALL_ORDERS_FOR_A_SECURITYTYPE", "ALL_ORDERS_FOR_A_TRADING_SESSION", "ALL_ORDERS", "ALL_ORDERS_FOR_A_MARKET", "ALL_ORDERS_FOR_A_MARKET_SEGMENT", "ALL_ORDERS_FOR_A_SECURITY_GROUP", "CANCEL_FOR_SECURITY_ISSUER", "CANCEL_FOR_ISSUER_OF_UNDERLYING_SECURITY" };
-const int MassActionResponse_realm[] = 
+const int MassActionResponse_realm[]  
    { 0, 1 };
-const char *MassActionResponse_descriptions[] = 
+const char *MassActionResponse_descriptions[]  
    { "REJECTED", "ACCEPTED" };
-const int MassActionRejectReason_realm[] = 
+const int MassActionRejectReason_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99 };
-const char *MassActionRejectReason_descriptions[] = 
+const char *MassActionRejectReason_descriptions[]  
    { "MASS_ACTION_NOT_SUPPORTED", "INVALID_OR_UNKNOWN_SECURITY", "INVALID_OR_UNKNOWN_UNDERLYING_SECURITY", "INVALID_OR_UNKNOWN_PRODUCT", "INVALID_OR_UNKNOWN_CFICODE", "INVALID_OR_UNKNOWN_SECURITYTYPE", "INVALID_OR_UNKNOWN_TRADING_SESSION", "INVALID_OR_UNKNOWN_MARKET", "INVALID_OR_UNKNOWN_MARKET_SEGMENT", "INVALID_OR_UNKNOWN_SECURITY_GROUP", "INVALID_OR_UNKNOWN_SECURITY_ISSUER", "INVALID_OR_UNKNOWN_ISSUER_OF_UNDERLYING_SECURITY", "OTHER" };
-const int MultilegModel_realm[] = 
+const int MultilegModel_realm[]  
    { 0, 1, 2 };
-const char *MultilegModel_descriptions[] = 
+const char *MultilegModel_descriptions[]  
    { "PREDEFINED_MULTILEG_SECURITY", "USER_DEFINED_MULTLEG_SECURITY", "USER_DEFINED_NON_SECURITIZED_MULTILEG" };
-const int MultilegPriceMethod_realm[] = 
+const int MultilegPriceMethod_realm[]  
    { 0, 1, 2, 3, 4, 5 };
-const char *MultilegPriceMethod_descriptions[] = 
+const char *MultilegPriceMethod_descriptions[]  
    { "NET_PRICE", "REVERSED_NET_PRICE", "YIELD_DIFFERENCE", "INDIVIDUAL", "CONTRACT_WEIGHTED_AVERAGE_PRICE", "MULTIPLIED_PRICE" };
-const int ContingencyType_realm[] = 
+const int ContingencyType_realm[]  
    { 1, 2, 3, 4 };
-const char *ContingencyType_descriptions[] = 
+const char *ContingencyType_descriptions[]  
    { "ONE_CANCELS_THE_OTHER", "ONE_TRIGGERS_THE_OTHER", "ONE_UPDATES_THE_OTHER_3", "ONE_UPDATES_THE_OTHER_4" };
-const int ListRejectReason_realm[] = 
+const int ListRejectReason_realm[]  
    { 0, 2, 4, 5, 6, 11, 99 };
-const char *ListRejectReason_descriptions[] = 
+const char *ListRejectReason_descriptions[]  
    { "BROKER", "EXCHANGE_CLOSED", "TOO_LATE_TO_ENTER", "UNKNOWN_ORDER", "DUPLICATE_ORDER", "UNSUPPORTED_ORDER_CHARACTERISTIC", "OTHER" };
-const int TradePublishIndicator_realm[] = 
+const int TradePublishIndicator_realm[]  
    { 0, 1, 2 };
-const char *TradePublishIndicator_descriptions[] = 
+const char *TradePublishIndicator_descriptions[]  
    { "DO_NOT_PUBLISH_TRADE", "PUBLISH_TRADE", "DEFERRED_PUBLICATION" };
-const char MarketUpdateAction_realm[] = 
+const char MarketUpdateAction_realm[]  
    { 'A', 'D', 'M' };
-const char *MarketUpdateAction_descriptions[] = 
+const char *MarketUpdateAction_descriptions[]  
    { "ADD", "DELETE", "MODIFY" };
-const int ApplReportType_realm[] = 
+const int ApplReportType_realm[]  
    { 0, 1, 2, 3 };
-const char *ApplReportType_descriptions[] = 
+const char *ApplReportType_descriptions[]  
    { "RESET_APPLSEQNUM_TO_NEW_VALUE_SPECIFIED_IN_APPLNEWSEQNUM", "REPORTS_THAT_THE_LAST_MESSAGE_HAS_BEEN_SENT_FOR_THE_APPLIDS_REFER_TO_REFAPPLLASTSEQNUM", "HEARTBEAT_MESSAGE_INDICATING_THAT_APPLICATION_IDENTIFIED_BY_REFAPPLID", "APPLICATION_MESSAGE_RE_SEND_COMPLETED" };
-const int OrderDelayUnit_realm[] = 
+const int OrderDelayUnit_realm[]  
    { 0, 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15 };
-const char *OrderDelayUnit_descriptions[] = 
+const char *OrderDelayUnit_descriptions[]  
    { "SECONDS", "TENTHS_OF_A_SECOND", "HUNDREDTHS_OF_A_SECOND", "MILLISECONDS", "MICROSECONDS", "NANOSECONDS", "MINUTES", "HOURS", "DAYS", "WEEKS", "MONTHS", "YEARS" };
-const char VenueType_realm[] = 
+const char VenueType_realm[]  
    { 'E', 'P', 'X' };
-const char *VenueType_descriptions[] = 
+const char *VenueType_descriptions[]  
    { "ELECTRONIC", "PIT", "EX_PIT" };
-const int RefOrdIDReason_realm[] = 
+const int RefOrdIDReason_realm[]  
    { 0, 1, 2 };
-const char *RefOrdIDReason_descriptions[] = 
+const char *RefOrdIDReason_descriptions[]  
    { "GTC_FROM_PREVIOUS_DAY", "PARTIAL_FILL_REMAINING", "ORDER_CHANGED" };
-const int OrigCustOrderCapacity_realm[] = 
+const int OrigCustOrderCapacity_realm[]  
    { 1, 2, 3, 4 };
-const char *OrigCustOrderCapacity_descriptions[] = 
+const char *OrigCustOrderCapacity_descriptions[]  
    { "MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT", "CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT", "MEMBER_TRADING_FOR_ANOTHER_MEMBER", "ALL_OTHER" };
-const int ModelType_realm[] = 
+const int ModelType_realm[]  
    { 0, 1 };
-const char *ModelType_descriptions[] = 
+const char *ModelType_descriptions[]  
    { "UTILITY_PROVIDED_STANDARD_MODEL", "PROPRIETARY" };
-const int ContractMultiplierUnit_realm[] = 
+const int ContractMultiplierUnit_realm[]  
    { 0, 1, 2 };
-const char *ContractMultiplierUnit_descriptions[] = 
+const char *ContractMultiplierUnit_descriptions[]  
    { "SHARES", "HOURS", "DAYS" };
-const int FlowScheduleType_realm[] = 
+const int FlowScheduleType_realm[]  
    { 0, 1, 2, 3, 4 };
-const char *FlowScheduleType_descriptions[] = 
+const char *FlowScheduleType_descriptions[]  
    { "NERC_EASTERN_OFF_PEAK", "NERC_WESTERN_OFF_PEAK", "NERC_CALENDAR_ALL_DAYS_IN_MONTH", "NERC_EASTERN_PEAK", "NERC_WESTERN_PEAK" };
-const int RateSource_realm[] = 
+const int RateSource_realm[]  
    { 0, 1, 2, 99 };
-const char *RateSource_descriptions[] = 
+const char *RateSource_descriptions[]  
    { "BLOOMBERG", "REUTERS", "TELERATE", "OTHER" };
-const int RateSourceType_realm[] = 
+const int RateSourceType_realm[]  
    { 0, 1 };
-const char *RateSourceType_descriptions[] = 
+const char *RateSourceType_descriptions[]  
    { "PRIMARY", "SECONDARY" };
-const f8String RestructuringType_realm[] = 
+const f8String RestructuringType_realm[]  
    { "FR", "MM", "MR", "XR" };
-const char *RestructuringType_descriptions[] = 
+const char *RestructuringType_descriptions[]  
    { "FULL_RESTRUCTURING", "MODIFIED_MOD_RESTRUCTURING", "MODIFIED_RESTRUCTURING", "NO_RESTRUCTURING_SPECIFIED" };
-const f8String Seniority_realm[] = 
+const f8String Seniority_realm[]  
    { "SB", "SD", "SR" };
-const char *Seniority_descriptions[] = 
+const char *Seniority_descriptions[]  
    { "SUBORDINATED", "SENIOR_SECURED", "SENIOR" };
-const int SecurityListType_realm[] = 
+const int SecurityListType_realm[]  
    { 1, 2, 3, 4 };
-const char *SecurityListType_descriptions[] = 
+const char *SecurityListType_descriptions[]  
    { "INDUSTRY_CLASSIFICATION", "TRADING_LIST", "MARKET", "NEWSPAPER_LIST" };
-const int SecurityListTypeSource_realm[] = 
+const int SecurityListTypeSource_realm[]  
    { 1, 2, 3 };
-const char *SecurityListTypeSource_descriptions[] = 
+const char *SecurityListTypeSource_descriptions[]  
    { "ICB", "NAICS", "GICS" };
-const int NewsCategory_realm[] = 
+const int NewsCategory_realm[]  
    { 0, 1, 2, 3, 99 };
-const char *NewsCategory_descriptions[] = 
+const char *NewsCategory_descriptions[]  
    { "COMPANY_NEWS", "MARKETPLACE_NEWS", "FINANCIAL_MARKET_NEWS", "TECHNICAL_NEWS", "OTHER_NEWS" };
-const int NewsRefType_realm[] = 
+const int NewsRefType_realm[]  
    { 0, 1, 2 };
-const char *NewsRefType_descriptions[] = 
+const char *NewsRefType_descriptions[]  
    { "REPLACEMENT", "OTHER_LANGUAGE", "COMPLIMENTARY" };
-const int StrikePriceDeterminationMethod_realm[] = 
+const int StrikePriceDeterminationMethod_realm[]  
    { 1, 2, 3, 4 };
-const char *StrikePriceDeterminationMethod_descriptions[] = 
+const char *StrikePriceDeterminationMethod_descriptions[]  
    { "FIXED_STRIKE", "STRIKE_SET_AT_EXPIRATION_TO_UNDERLYING_OR_OTHER_VALUE", "STRIKE_SET_TO_AVERAGE_OF_UNDERLYING_SETTLEMENT_PRICE_ACROSS_THE_LIFE_OF_THE_OPTION", "STRIKE_SET_TO_OPTIMAL_VALUE" };
-const int StrikePriceBoundaryMethod_realm[] = 
+const int StrikePriceBoundaryMethod_realm[]  
    { 1, 2, 3, 4, 5 };
-const char *StrikePriceBoundaryMethod_descriptions[] = 
+const char *StrikePriceBoundaryMethod_descriptions[]  
    { "LESS_THAN_UNDERLYING_PRICE_IS_IN_THE_MONEY", "LESS_THAN_OR_EQUAL_TO_THE_UNDERLYING_PRICE_IS_IN_THE_MONEY", "EQUAL_TO_THE_UNDERLYING_PRICE_IS_IN_THE_MONEY", "GREATER_THAN_OR_EQUAL_TO_UNDERLYING_PRICE_IS_IN_THE_MONEY", "GREATER_THAN_UNDERLYING_IS_IN_THE_MONEY" };
-const int UnderlyingPriceDeterminationMethod_realm[] = 
+const int UnderlyingPriceDeterminationMethod_realm[]  
    { 1, 2, 3, 4 };
-const char *UnderlyingPriceDeterminationMethod_descriptions[] = 
+const char *UnderlyingPriceDeterminationMethod_descriptions[]  
    { "REGULAR", "SPECIAL_REFERENCE", "OPTIMAL_VALUE", "AVERAGE_VALUE" };
-const int OptPayoutType_realm[] = 
+const int OptPayoutType_realm[]  
    { 1, 2, 3 };
-const char *OptPayoutType_descriptions[] = 
+const char *OptPayoutType_descriptions[]  
    { "VANILLA", "CAPPED", "BINARY" };
-const int ComplexEventType_realm[] = 
+const int ComplexEventType_realm[]  
    { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-const char *ComplexEventType_descriptions[] = 
+const char *ComplexEventType_descriptions[]  
    { "CAPPED", "TRIGGER", "KNOCK_IN_UP", "KOCK_IN_DOWN", "KNOCK_OUT_UP", "KNOCK_OUT_DOWN", "UNDERLYING", "RESET_BARRIER", "ROLLING_BARRIER" };
-const int ComplexEventPriceBoundaryMethod_realm[] = 
+const int ComplexEventPriceBoundaryMethod_realm[]  
    { 1, 2, 3, 4, 5 };
-const char *ComplexEventPriceBoundaryMethod_descriptions[] = 
+const char *ComplexEventPriceBoundaryMethod_descriptions[]  
    { "LESS_THAN_COMPLEXEVENTPRICE", "LESS_THAN_OR_EQUAL_TO_COMPLEXEVENTPRICE", "EQUAL_TO_COMPLEXEVENTPRICE", "GREATER_THAN_OR_EQUAL_TO_COMPLEXEVENTPRICE", "GREATER_THAN_COMPLEXEVENTPRICE" };
-const int ComplexEventPriceTimeType_realm[] = 
+const int ComplexEventPriceTimeType_realm[]  
    { 1, 2, 3 };
-const char *ComplexEventPriceTimeType_descriptions[] = 
+const char *ComplexEventPriceTimeType_descriptions[]  
    { "EXPIRATION", "IMMEDIATE", "SPECIFIED_DATE_TIME" };
-const int ComplexEventCondition_realm[] = 
+const int ComplexEventCondition_realm[]  
    { 1, 2 };
-const char *ComplexEventCondition_descriptions[] = 
+const char *ComplexEventCondition_descriptions[]  
    { "AND", "OR" };
-const int StreamAsgnReqType_realm[] = 
+const int StreamAsgnReqType_realm[]  
    { 1, 2 };
-const char *StreamAsgnReqType_descriptions[] = 
+const char *StreamAsgnReqType_descriptions[]  
    { "STREAM_ASSIGNMENT_FOR_NEW_CUSTOMER", "STREAM_ASSIGNMENT_FOR_EXISTING_CUSTOMER" };
-const int StreamAsgnRejReason_realm[] = 
+const int StreamAsgnRejReason_realm[]  
    { 0, 1, 2, 3, 99 };
-const char *StreamAsgnRejReason_descriptions[] = 
+const char *StreamAsgnRejReason_descriptions[]  
    { "UNKNOWN_CLIENT", "EXCEEDS_MAXIMUM_SIZE", "UNKNOWN_OR_INVALID_CURRENCY_PAIR", "NO_AVAILABLE_STREAM", "OTHER" };
-const int StreamAsgnAckType_realm[] = 
+const int StreamAsgnAckType_realm[]  
    { 0, 1 };
-const char *StreamAsgnAckType_descriptions[] = 
+const char *StreamAsgnAckType_descriptions[]  
    { "ASSIGNMENT_ACCEPTED", "ASSIGNMENT_REJECTED" };
-const int PartyListResponseType_realm[] = 
+const int PartyListResponseType_realm[]  
    { 0, 1, 2, 3 };
-const char *PartyListResponseType_descriptions[] = 
+const char *PartyListResponseType_descriptions[]  
    { "RETURN_ALL_AVAILABLE_INFORMATION_ON_PARTIES_AND_RELATED_PARTIES", "RETURN_ONLY_PARTY_INFORMATION", "INCLUDE_INFORMATION_ON_RELATED_PARTIES", "INCLUDE_RISK_LIMIT_INFORMATION" };
-const int PartyDetailsRequestResult_realm[] = 
+const int PartyDetailsRequestResult_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 99 };
-const char *PartyDetailsRequestResult_descriptions[] = 
+const char *PartyDetailsRequestResult_descriptions[]  
    { "VALID_REQUEST", "INVALID_OR_UNSUPPORTED_REQUEST", "NO_PARTIES_OR_PARTY_DETAILS_FOUND_THAT_MATCH_SELECTION_CRITERIA", "UNSUPPORTED_PARTYLISTRESPONSETYPE", "NOT_AUTHORIZED_TO_RETRIEVE_PARTIES_OR_PARTY_DETAILS_DATA", "PARTIES_OR_PARTY_DETAILS_DATA_TEMPORARILY_UNAVAILABLE", "REQUEST_FOR_PARTIES_DATA_NOT_SUPPORTED", "OTHER" };
-const int PartyRelationship_realm[] = 
+const int PartyRelationship_realm[]  
    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 };
-const char *PartyRelationship_descriptions[] = 
+const char *PartyRelationship_descriptions[]  
    { "IS_ALSO", "CLEARS_FOR", "CLEARS_THROUGH", "TRADES_FOR", "TRADES_THROUGH", "SPONSORS", "SPONSORED_THROUGH", "PROVIDES_GUARANTEE_FOR", "IS_GUARANTEED_BY", "MEMBER_OF", "HAS_MEMBERS", "PROVIDES_MARKETPLACE_FOR", "PARTICIPANT_OF_MARKETPLACE", "CARRIES_POSITIONS_FOR", "POSTS_TRADES_TO", "ENTERS_TRADES_FOR", "ENTERS_TRADES_THROUGH", "PROVIDES_QUOTES_TO", "REQUESTS_QUOTES_FROM", "INVESTS_FOR", "INVESTS_THROUGH", "BROKERS_TRADES_FOR", "BROKERS_TRADES_THROUGH", "PROVIDES_TRADING_SERVICES_FOR", "USES_TRADING_SERVICES_OF", "APPROVES_OF", "APPROVED_BY", "PARENT_FIRM_FOR", "SUBSIDIARY_OF", "REGULATORY_OWNER_OF", "OWNED_BY_30", "CONTROLS", "IS_CONTROLLED_BY", "LEGAL", "OWNED_BY_34", "BENEFICIAL_OWNER_OF", "OWNED_BY_36" };
-const int RiskLimitType_realm[] = 
+const int RiskLimitType_realm[]  
    { 1, 2, 3, 4, 5 };
-const char *RiskLimitType_descriptions[] = 
+const char *RiskLimitType_descriptions[]  
    { "GROSS_LIMIT", "NET_LIMIT", "EXPOSURE", "LONG_LIMIT", "SHORT_LIMIT" };
-const int RiskInstrumentOperator_realm[] = 
+const int RiskInstrumentOperator_realm[]  
    { 1, 2 };
-const char *RiskInstrumentOperator_descriptions[] = 
+const char *RiskInstrumentOperator_descriptions[]  
    { "INCLUDE", "EXCLUDE" };
-const int StreamAsgnType_realm[] = 
+const int StreamAsgnType_realm[]  
    { 1, 2, 3 };
-const char *StreamAsgnType_descriptions[] = 
+const char *StreamAsgnType_descriptions[]  
    { "ASSIGNMENT", "REJECTED", "TERMINATE_UNASSIGN" };
 
 //-------------------------------------------------------------------------------------------------
-const RealmBase realmbases[] =
+const RealmBase realmbases[] 
 {
-   { reinterpret_cast<const void *>(AdvSide_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, AdvSide_descriptions },
-   { reinterpret_cast<const void *>(AdvTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 3, AdvTransType_descriptions },
-   { reinterpret_cast<const void *>(CommType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, CommType_descriptions },
-   { reinterpret_cast<const void *>(ExecInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(16), 56, ExecInst_descriptions },
-   { reinterpret_cast<const void *>(HandlInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, HandlInst_descriptions },
-   { reinterpret_cast<const void *>(SecurityIDSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 22, SecurityIDSource_descriptions },
-   { reinterpret_cast<const void *>(IOIQltyInd_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, IOIQltyInd_descriptions },
-   { reinterpret_cast<const void *>(IOIQty_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 5, IOIQty_descriptions },
-   { reinterpret_cast<const void *>(IOITransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, IOITransType_descriptions },
-   { reinterpret_cast<const void *>(LastCapacity_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, LastCapacity_descriptions },
-   { reinterpret_cast<const void *>(MsgType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 118, MsgType_descriptions },
-   { reinterpret_cast<const void *>(OrdStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 15, OrdStatus_descriptions },
-   { reinterpret_cast<const void *>(OrdType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 24, OrdType_descriptions },
-   { reinterpret_cast<const void *>(Side_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 16, Side_descriptions },
-   { reinterpret_cast<const void *>(TimeInForce_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 10, TimeInForce_descriptions },
-   { reinterpret_cast<const void *>(Urgency_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, Urgency_descriptions },
-   { reinterpret_cast<const void *>(SettlType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 12, SettlType_descriptions },
-   { reinterpret_cast<const void *>(SymbolSfx_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 2, SymbolSfx_descriptions },
-   { reinterpret_cast<const void *>(AllocTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 7, AllocTransType_descriptions },
-   { reinterpret_cast<const void *>(PositionEffect_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, PositionEffect_descriptions },
-   { reinterpret_cast<const void *>(ProcessCode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 7, ProcessCode_descriptions },
-   { reinterpret_cast<const void *>(AllocStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, AllocStatus_descriptions },
-   { reinterpret_cast<const void *>(AllocRejCode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 15, AllocRejCode_descriptions },
-   { reinterpret_cast<const void *>(EmailType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, EmailType_descriptions },
-   { reinterpret_cast<const void *>(EncryptMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, EncryptMethod_descriptions },
-   { reinterpret_cast<const void *>(CxlRejReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 11, CxlRejReason_descriptions },
-   { reinterpret_cast<const void *>(OrdRejReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 19, OrdRejReason_descriptions },
-   { reinterpret_cast<const void *>(IOIQualifier_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 18, IOIQualifier_descriptions },
-   { reinterpret_cast<const void *>(ReportToExch_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, ReportToExch_descriptions },
-   { reinterpret_cast<const void *>(LocateReqd_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, LocateReqd_descriptions },
-   { reinterpret_cast<const void *>(ForexReq_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, ForexReq_descriptions },
-   { reinterpret_cast<const void *>(DKReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 7, DKReason_descriptions },
-   { reinterpret_cast<const void *>(IOINaturalFlag_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, IOINaturalFlag_descriptions },
-   { reinterpret_cast<const void *>(MiscFeeType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 14, MiscFeeType_descriptions },
-   { reinterpret_cast<const void *>(ExecType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 20, ExecType_descriptions },
-   { reinterpret_cast<const void *>(SettlCurrFxRateCalc_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, SettlCurrFxRateCalc_descriptions },
-   { reinterpret_cast<const void *>(SettlInstMode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, SettlInstMode_descriptions },
-   { reinterpret_cast<const void *>(SettlInstTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, SettlInstTransType_descriptions },
-   { reinterpret_cast<const void *>(SettlInstSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, SettlInstSource_descriptions },
-   { reinterpret_cast<const void *>(SecurityType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 118, SecurityType_descriptions },
-   { reinterpret_cast<const void *>(StandInstDbType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, StandInstDbType_descriptions },
-   { reinterpret_cast<const void *>(SettlDeliveryType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, SettlDeliveryType_descriptions },
-   { reinterpret_cast<const void *>(AllocLinkType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, AllocLinkType_descriptions },
-   { reinterpret_cast<const void *>(PutOrCall_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, PutOrCall_descriptions },
-   { reinterpret_cast<const void *>(CoveredOrUncovered_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, CoveredOrUncovered_descriptions },
-   { reinterpret_cast<const void *>(NotifyBrokerOfCredit_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, NotifyBrokerOfCredit_descriptions },
-   { reinterpret_cast<const void *>(AllocHandlInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, AllocHandlInst_descriptions },
-   { reinterpret_cast<const void *>(RoutingType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, RoutingType_descriptions },
-   { reinterpret_cast<const void *>(BenchmarkCurveName_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 12, BenchmarkCurveName_descriptions },
-   { reinterpret_cast<const void *>(StipulationType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 80, StipulationType_descriptions },
-   { reinterpret_cast<const void *>(YieldType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 34, YieldType_descriptions },
-   { reinterpret_cast<const void *>(TradedFlatSwitch_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, TradedFlatSwitch_descriptions },
-   { reinterpret_cast<const void *>(SubscriptionRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, SubscriptionRequestType_descriptions },
-   { reinterpret_cast<const void *>(MDUpdateType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, MDUpdateType_descriptions },
-   { reinterpret_cast<const void *>(AggregatedBook_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, AggregatedBook_descriptions },
-   { reinterpret_cast<const void *>(MDEntryType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 36, MDEntryType_descriptions },
-   { reinterpret_cast<const void *>(TickDirection_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, TickDirection_descriptions },
-   { reinterpret_cast<const void *>(QuoteCondition_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(17), 60, QuoteCondition_descriptions },
-   { reinterpret_cast<const void *>(TradeCondition_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(17), 77, TradeCondition_descriptions },
-   { reinterpret_cast<const void *>(MDUpdateAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, MDUpdateAction_descriptions },
-   { reinterpret_cast<const void *>(MDReqRejReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 14, MDReqRejReason_descriptions },
-   { reinterpret_cast<const void *>(DeleteReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, DeleteReason_descriptions },
-   { reinterpret_cast<const void *>(OpenCloseSettlFlag_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(16), 6, OpenCloseSettlFlag_descriptions },
-   { reinterpret_cast<const void *>(FinancialStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(16), 3, FinancialStatus_descriptions },
-   { reinterpret_cast<const void *>(CorporateAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(16), 23, CorporateAction_descriptions },
-   { reinterpret_cast<const void *>(QuoteStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 21, QuoteStatus_descriptions },
-   { reinterpret_cast<const void *>(QuoteCancelType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, QuoteCancelType_descriptions },
-   { reinterpret_cast<const void *>(QuoteRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 14, QuoteRejectReason_descriptions },
-   { reinterpret_cast<const void *>(QuoteResponseLevel_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, QuoteResponseLevel_descriptions },
-   { reinterpret_cast<const void *>(QuoteRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, QuoteRequestType_descriptions },
-   { reinterpret_cast<const void *>(SecurityRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 10, SecurityRequestType_descriptions },
-   { reinterpret_cast<const void *>(SecurityResponseType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, SecurityResponseType_descriptions },
-   { reinterpret_cast<const void *>(UnsolicitedIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, UnsolicitedIndicator_descriptions },
-   { reinterpret_cast<const void *>(SecurityTradingStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 26, SecurityTradingStatus_descriptions },
-   { reinterpret_cast<const void *>(HaltReasonInt_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, HaltReasonInt_descriptions },
-   { reinterpret_cast<const void *>(InViewOfCommon_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, InViewOfCommon_descriptions },
-   { reinterpret_cast<const void *>(DueToRelated_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, DueToRelated_descriptions },
-   { reinterpret_cast<const void *>(Adjustment_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, Adjustment_descriptions },
-   { reinterpret_cast<const void *>(TradingSessionID_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 6, TradingSessionID_descriptions },
-   { reinterpret_cast<const void *>(TradSesMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, TradSesMethod_descriptions },
-   { reinterpret_cast<const void *>(TradSesMode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, TradSesMode_descriptions },
-   { reinterpret_cast<const void *>(TradSesStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, TradSesStatus_descriptions },
-   { reinterpret_cast<const void *>(MessageEncoding_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 4, MessageEncoding_descriptions },
-   { reinterpret_cast<const void *>(SessionRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 19, SessionRejectReason_descriptions },
-   { reinterpret_cast<const void *>(BidRequestTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, BidRequestTransType_descriptions },
-   { reinterpret_cast<const void *>(SolicitedFlag_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, SolicitedFlag_descriptions },
-   { reinterpret_cast<const void *>(ExecRestatementReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 13, ExecRestatementReason_descriptions },
-   { reinterpret_cast<const void *>(BusinessRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 9, BusinessRejectReason_descriptions },
-   { reinterpret_cast<const void *>(MsgDirection_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, MsgDirection_descriptions },
-   { reinterpret_cast<const void *>(DiscretionInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 8, DiscretionInst_descriptions },
-   { reinterpret_cast<const void *>(BidType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, BidType_descriptions },
-   { reinterpret_cast<const void *>(BidDescriptorType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, BidDescriptorType_descriptions },
-   { reinterpret_cast<const void *>(SideValueInd_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, SideValueInd_descriptions },
-   { reinterpret_cast<const void *>(LiquidityIndType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, LiquidityIndType_descriptions },
-   { reinterpret_cast<const void *>(ExchangeForPhysical_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, ExchangeForPhysical_descriptions },
-   { reinterpret_cast<const void *>(ProgRptReqs_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ProgRptReqs_descriptions },
-   { reinterpret_cast<const void *>(IncTaxInd_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, IncTaxInd_descriptions },
-   { reinterpret_cast<const void *>(BidTradeType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, BidTradeType_descriptions },
-   { reinterpret_cast<const void *>(BasisPxType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 13, BasisPxType_descriptions },
-   { reinterpret_cast<const void *>(PriceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 18, PriceType_descriptions },
-   { reinterpret_cast<const void *>(GTBookingInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, GTBookingInst_descriptions },
-   { reinterpret_cast<const void *>(ListStatusType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, ListStatusType_descriptions },
-   { reinterpret_cast<const void *>(NetGrossInd_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, NetGrossInd_descriptions },
-   { reinterpret_cast<const void *>(ListOrderStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, ListOrderStatus_descriptions },
-   { reinterpret_cast<const void *>(ListExecInstType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 5, ListExecInstType_descriptions },
-   { reinterpret_cast<const void *>(CxlRejResponseTo_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, CxlRejResponseTo_descriptions },
-   { reinterpret_cast<const void *>(MultiLegReportingType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, MultiLegReportingType_descriptions },
-   { reinterpret_cast<const void *>(PartyIDSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 18, PartyIDSource_descriptions },
-   { reinterpret_cast<const void *>(PartyRole_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 84, PartyRole_descriptions },
-   { reinterpret_cast<const void *>(Product_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 13, Product_descriptions },
-   { reinterpret_cast<const void *>(RoundingDirection_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, RoundingDirection_descriptions },
-   { reinterpret_cast<const void *>(DistribPaymentMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 12, DistribPaymentMethod_descriptions },
-   { reinterpret_cast<const void *>(CancellationRights_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, CancellationRights_descriptions },
-   { reinterpret_cast<const void *>(MoneyLaunderingStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 5, MoneyLaunderingStatus_descriptions },
-   { reinterpret_cast<const void *>(ExecPriceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 8, ExecPriceType_descriptions },
-   { reinterpret_cast<const void *>(TradeReportTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, TradeReportTransType_descriptions },
-   { reinterpret_cast<const void *>(PaymentMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 15, PaymentMethod_descriptions },
-   { reinterpret_cast<const void *>(TaxAdvantageType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 31, TaxAdvantageType_descriptions },
-   { reinterpret_cast<const void *>(FundRenewWaiv_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, FundRenewWaiv_descriptions },
-   { reinterpret_cast<const void *>(RegistStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, RegistStatus_descriptions },
-   { reinterpret_cast<const void *>(RegistRejReasonCode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 19, RegistRejReasonCode_descriptions },
-   { reinterpret_cast<const void *>(RegistTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, RegistTransType_descriptions },
-   { reinterpret_cast<const void *>(OwnershipType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, OwnershipType_descriptions },
-   { reinterpret_cast<const void *>(ContAmtType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 15, ContAmtType_descriptions },
-   { reinterpret_cast<const void *>(OwnerType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 13, OwnerType_descriptions },
-   { reinterpret_cast<const void *>(OrderCapacity_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, OrderCapacity_descriptions },
-   { reinterpret_cast<const void *>(OrderRestrictions_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(16), 15, OrderRestrictions_descriptions },
-   { reinterpret_cast<const void *>(MassCancelRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 12, MassCancelRequestType_descriptions },
-   { reinterpret_cast<const void *>(MassCancelResponse_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 13, MassCancelResponse_descriptions },
-   { reinterpret_cast<const void *>(MassCancelRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 13, MassCancelRejectReason_descriptions },
-   { reinterpret_cast<const void *>(QuoteType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, QuoteType_descriptions },
-   { reinterpret_cast<const void *>(CashMargin_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, CashMargin_descriptions },
-   { reinterpret_cast<const void *>(Scope_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(16), 3, Scope_descriptions },
-   { reinterpret_cast<const void *>(MDImplicitDelete_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, MDImplicitDelete_descriptions },
-   { reinterpret_cast<const void *>(CrossType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, CrossType_descriptions },
-   { reinterpret_cast<const void *>(CrossPrioritization_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, CrossPrioritization_descriptions },
-   { reinterpret_cast<const void *>(NoSides_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(5), 2, NoSides_descriptions },
-   { reinterpret_cast<const void *>(SecurityListRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, SecurityListRequestType_descriptions },
-   { reinterpret_cast<const void *>(SecurityRequestResult_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, SecurityRequestResult_descriptions },
-   { reinterpret_cast<const void *>(MultiLegRptTypeReq_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MultiLegRptTypeReq_descriptions },
-   { reinterpret_cast<const void *>(TradSesStatusRejReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, TradSesStatusRejReason_descriptions },
-   { reinterpret_cast<const void *>(TradeRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, TradeRequestType_descriptions },
-   { reinterpret_cast<const void *>(PreviouslyReported_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, PreviouslyReported_descriptions },
-   { reinterpret_cast<const void *>(MatchStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, MatchStatus_descriptions },
-   { reinterpret_cast<const void *>(MatchType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 26, MatchType_descriptions },
-   { reinterpret_cast<const void *>(OddLot_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, OddLot_descriptions },
-   { reinterpret_cast<const void *>(ClearingInstruction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 14, ClearingInstruction_descriptions },
-   { reinterpret_cast<const void *>(AccountType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, AccountType_descriptions },
-   { reinterpret_cast<const void *>(CustOrderCapacity_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, CustOrderCapacity_descriptions },
-   { reinterpret_cast<const void *>(MassStatusReqType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 10, MassStatusReqType_descriptions },
-   { reinterpret_cast<const void *>(DayBookingInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, DayBookingInst_descriptions },
-   { reinterpret_cast<const void *>(BookingUnit_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, BookingUnit_descriptions },
-   { reinterpret_cast<const void *>(PreallocMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, PreallocMethod_descriptions },
-   { reinterpret_cast<const void *>(TradingSessionSubID_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 7, TradingSessionSubID_descriptions },
-   { reinterpret_cast<const void *>(AllocType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 14, AllocType_descriptions },
-   { reinterpret_cast<const void *>(ClearingFeeIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 14, ClearingFeeIndicator_descriptions },
-   { reinterpret_cast<const void *>(WorkingIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, WorkingIndicator_descriptions },
-   { reinterpret_cast<const void *>(PriorityIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, PriorityIndicator_descriptions },
-   { reinterpret_cast<const void *>(LegalConfirm_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, LegalConfirm_descriptions },
-   { reinterpret_cast<const void *>(QuoteRequestRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 12, QuoteRequestRejectReason_descriptions },
-   { reinterpret_cast<const void *>(AcctIDSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, AcctIDSource_descriptions },
-   { reinterpret_cast<const void *>(ConfirmStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, ConfirmStatus_descriptions },
-   { reinterpret_cast<const void *>(ConfirmTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ConfirmTransType_descriptions },
-   { reinterpret_cast<const void *>(DeliveryForm_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, DeliveryForm_descriptions },
-   { reinterpret_cast<const void *>(LegSwapType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, LegSwapType_descriptions },
-   { reinterpret_cast<const void *>(QuotePriceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 10, QuotePriceType_descriptions },
-   { reinterpret_cast<const void *>(QuoteRespType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, QuoteRespType_descriptions },
-   { reinterpret_cast<const void *>(PosType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 27, PosType_descriptions },
-   { reinterpret_cast<const void *>(PosQtyStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, PosQtyStatus_descriptions },
-   { reinterpret_cast<const void *>(PosAmtType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 18, PosAmtType_descriptions },
-   { reinterpret_cast<const void *>(PosTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, PosTransType_descriptions },
-   { reinterpret_cast<const void *>(PosMaintAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, PosMaintAction_descriptions },
-   { reinterpret_cast<const void *>(SettlSessID_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 4, SettlSessID_descriptions },
-   { reinterpret_cast<const void *>(AdjustmentType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, AdjustmentType_descriptions },
-   { reinterpret_cast<const void *>(PosMaintStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, PosMaintStatus_descriptions },
-   { reinterpret_cast<const void *>(PosMaintResult_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, PosMaintResult_descriptions },
-   { reinterpret_cast<const void *>(PosReqType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, PosReqType_descriptions },
-   { reinterpret_cast<const void *>(ResponseTransportType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, ResponseTransportType_descriptions },
-   { reinterpret_cast<const void *>(PosReqResult_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, PosReqResult_descriptions },
-   { reinterpret_cast<const void *>(PosReqStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, PosReqStatus_descriptions },
-   { reinterpret_cast<const void *>(SettlPriceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, SettlPriceType_descriptions },
-   { reinterpret_cast<const void *>(AssignmentMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, AssignmentMethod_descriptions },
-   { reinterpret_cast<const void *>(ExerciseMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, ExerciseMethod_descriptions },
-   { reinterpret_cast<const void *>(TradeRequestResult_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 9, TradeRequestResult_descriptions },
-   { reinterpret_cast<const void *>(TradeRequestStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, TradeRequestStatus_descriptions },
-   { reinterpret_cast<const void *>(TradeReportRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, TradeReportRejectReason_descriptions },
-   { reinterpret_cast<const void *>(SideMultiLegReportingType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, SideMultiLegReportingType_descriptions },
-   { reinterpret_cast<const void *>(TrdRegTimestampType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, TrdRegTimestampType_descriptions },
-   { reinterpret_cast<const void *>(ConfirmType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ConfirmType_descriptions },
-   { reinterpret_cast<const void *>(ConfirmRejReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ConfirmRejReason_descriptions },
-   { reinterpret_cast<const void *>(BookingType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, BookingType_descriptions },
-   { reinterpret_cast<const void *>(AllocSettlInstType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, AllocSettlInstType_descriptions },
-   { reinterpret_cast<const void *>(DlvyInstType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, DlvyInstType_descriptions },
-   { reinterpret_cast<const void *>(TerminationType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, TerminationType_descriptions },
-   { reinterpret_cast<const void *>(SettlInstReqRejCode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, SettlInstReqRejCode_descriptions },
-   { reinterpret_cast<const void *>(AllocReportType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 10, AllocReportType_descriptions },
-   { reinterpret_cast<const void *>(AllocCancReplaceReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, AllocCancReplaceReason_descriptions },
-   { reinterpret_cast<const void *>(AllocAccountType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, AllocAccountType_descriptions },
-   { reinterpret_cast<const void *>(PartySubIDType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 33, PartySubIDType_descriptions },
-   { reinterpret_cast<const void *>(AllocIntermedReqType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, AllocIntermedReqType_descriptions },
-   { reinterpret_cast<const void *>(ApplQueueResolution_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, ApplQueueResolution_descriptions },
-   { reinterpret_cast<const void *>(ApplQueueAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, ApplQueueAction_descriptions },
-   { reinterpret_cast<const void *>(AvgPxIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, AvgPxIndicator_descriptions },
-   { reinterpret_cast<const void *>(TradeAllocIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, TradeAllocIndicator_descriptions },
-   { reinterpret_cast<const void *>(ExpirationCycle_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ExpirationCycle_descriptions },
-   { reinterpret_cast<const void *>(TrdType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 55, TrdType_descriptions },
-   { reinterpret_cast<const void *>(TrdSubType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 38, TrdSubType_descriptions },
-   { reinterpret_cast<const void *>(PegMoveType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, PegMoveType_descriptions },
-   { reinterpret_cast<const void *>(PegOffsetType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, PegOffsetType_descriptions },
-   { reinterpret_cast<const void *>(PegLimitType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, PegLimitType_descriptions },
-   { reinterpret_cast<const void *>(PegRoundDirection_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, PegRoundDirection_descriptions },
-   { reinterpret_cast<const void *>(PegScope_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, PegScope_descriptions },
-   { reinterpret_cast<const void *>(DiscretionMoveType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, DiscretionMoveType_descriptions },
-   { reinterpret_cast<const void *>(DiscretionOffsetType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, DiscretionOffsetType_descriptions },
-   { reinterpret_cast<const void *>(DiscretionLimitType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, DiscretionLimitType_descriptions },
-   { reinterpret_cast<const void *>(DiscretionRoundDirection_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, DiscretionRoundDirection_descriptions },
-   { reinterpret_cast<const void *>(DiscretionScope_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, DiscretionScope_descriptions },
-   { reinterpret_cast<const void *>(TargetStrategy_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, TargetStrategy_descriptions },
-   { reinterpret_cast<const void *>(LastLiquidityInd_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, LastLiquidityInd_descriptions },
-   { reinterpret_cast<const void *>(PublishTrdIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, PublishTrdIndicator_descriptions },
-   { reinterpret_cast<const void *>(ShortSaleReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, ShortSaleReason_descriptions },
-   { reinterpret_cast<const void *>(QtyType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, QtyType_descriptions },
-   { reinterpret_cast<const void *>(TradeReportType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 16, TradeReportType_descriptions },
-   { reinterpret_cast<const void *>(AllocNoOrdersType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, AllocNoOrdersType_descriptions },
-   { reinterpret_cast<const void *>(EventType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 20, EventType_descriptions },
-   { reinterpret_cast<const void *>(InstrAttribType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 30, InstrAttribType_descriptions },
-   { reinterpret_cast<const void *>(CPProgram_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, CPProgram_descriptions },
-   { reinterpret_cast<const void *>(MiscFeeBasis_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MiscFeeBasis_descriptions },
-   { reinterpret_cast<const void *>(LastFragment_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, LastFragment_descriptions },
-   { reinterpret_cast<const void *>(CollAsgnReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, CollAsgnReason_descriptions },
-   { reinterpret_cast<const void *>(CollInquiryQualifier_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, CollInquiryQualifier_descriptions },
-   { reinterpret_cast<const void *>(CollAsgnTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, CollAsgnTransType_descriptions },
-   { reinterpret_cast<const void *>(CollAsgnRespType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, CollAsgnRespType_descriptions },
-   { reinterpret_cast<const void *>(CollAsgnRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, CollAsgnRejectReason_descriptions },
-   { reinterpret_cast<const void *>(CollStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, CollStatus_descriptions },
-   { reinterpret_cast<const void *>(LastRptRequested_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, LastRptRequested_descriptions },
-   { reinterpret_cast<const void *>(DeliveryType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, DeliveryType_descriptions },
-   { reinterpret_cast<const void *>(UserRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, UserRequestType_descriptions },
-   { reinterpret_cast<const void *>(UserStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, UserStatus_descriptions },
-   { reinterpret_cast<const void *>(StatusValue_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, StatusValue_descriptions },
-   { reinterpret_cast<const void *>(NetworkRequestType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, NetworkRequestType_descriptions },
-   { reinterpret_cast<const void *>(NetworkStatusResponseType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, NetworkStatusResponseType_descriptions },
-   { reinterpret_cast<const void *>(TrdRptStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, TrdRptStatus_descriptions },
-   { reinterpret_cast<const void *>(AffirmStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, AffirmStatus_descriptions },
-   { reinterpret_cast<const void *>(CollAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, CollAction_descriptions },
-   { reinterpret_cast<const void *>(CollInquiryStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, CollInquiryStatus_descriptions },
-   { reinterpret_cast<const void *>(CollInquiryResult_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 11, CollInquiryResult_descriptions },
-   { reinterpret_cast<const void *>(StrategyParameterType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 29, StrategyParameterType_descriptions },
-   { reinterpret_cast<const void *>(SecurityStatusID_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 2, SecurityStatusID_descriptions },
-   { reinterpret_cast<const void *>(UnderlyingCashType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 2, UnderlyingCashType_descriptions },
-   { reinterpret_cast<const void *>(UnderlyingSettlementType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, UnderlyingSettlementType_descriptions },
-   { reinterpret_cast<const void *>(SecurityUpdateAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, SecurityUpdateAction_descriptions },
-   { reinterpret_cast<const void *>(ExpirationQtyType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, ExpirationQtyType_descriptions },
-   { reinterpret_cast<const void *>(IndividualAllocType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, IndividualAllocType_descriptions },
-   { reinterpret_cast<const void *>(UnitOfMeasure_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 13, UnitOfMeasure_descriptions },
-   { reinterpret_cast<const void *>(TimeUnit_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 7, TimeUnit_descriptions },
-   { reinterpret_cast<const void *>(AllocMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, AllocMethod_descriptions },
-   { reinterpret_cast<const void *>(AsOfIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, AsOfIndicator_descriptions },
-   { reinterpret_cast<const void *>(MDBookType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MDBookType_descriptions },
-   { reinterpret_cast<const void *>(MDOriginType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MDOriginType_descriptions },
-   { reinterpret_cast<const void *>(CustOrderHandlingInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(17), 24, CustOrderHandlingInst_descriptions },
-   { reinterpret_cast<const void *>(OrderHandlingInstSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 1, OrderHandlingInstSource_descriptions },
-   { reinterpret_cast<const void *>(DeskType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 11, DeskType_descriptions },
-   { reinterpret_cast<const void *>(DeskTypeSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 1, DeskTypeSource_descriptions },
-   { reinterpret_cast<const void *>(DeskOrderHandlingInst_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(17), 24, DeskOrderHandlingInst_descriptions },
-   { reinterpret_cast<const void *>(ExecAckStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, ExecAckStatus_descriptions },
-   { reinterpret_cast<const void *>(CollApplType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, CollApplType_descriptions },
-   { reinterpret_cast<const void *>(UnderlyingFXRateCalc_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, UnderlyingFXRateCalc_descriptions },
-   { reinterpret_cast<const void *>(AllocPositionEffect_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, AllocPositionEffect_descriptions },
-   { reinterpret_cast<const void *>(DealingCapacity_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, DealingCapacity_descriptions },
-   { reinterpret_cast<const void *>(AggressorIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(8), 2, AggressorIndicator_descriptions },
-   { reinterpret_cast<const void *>(MDQuoteType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, MDQuoteType_descriptions },
-   { reinterpret_cast<const void *>(RefOrderIDSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 5, RefOrderIDSource_descriptions },
-   { reinterpret_cast<const void *>(DisplayWhen_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, DisplayWhen_descriptions },
-   { reinterpret_cast<const void *>(DisplayMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, DisplayMethod_descriptions },
-   { reinterpret_cast<const void *>(PriceProtectionScope_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, PriceProtectionScope_descriptions },
-   { reinterpret_cast<const void *>(LotType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, LotType_descriptions },
-   { reinterpret_cast<const void *>(PegPriceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, PegPriceType_descriptions },
-   { reinterpret_cast<const void *>(TriggerType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, TriggerType_descriptions },
-   { reinterpret_cast<const void *>(TriggerAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, TriggerAction_descriptions },
-   { reinterpret_cast<const void *>(TriggerPriceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, TriggerPriceType_descriptions },
-   { reinterpret_cast<const void *>(TriggerPriceTypeScope_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, TriggerPriceTypeScope_descriptions },
-   { reinterpret_cast<const void *>(TriggerPriceDirection_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, TriggerPriceDirection_descriptions },
-   { reinterpret_cast<const void *>(TriggerOrderType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, TriggerOrderType_descriptions },
-   { reinterpret_cast<const void *>(OrderCategory_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 9, OrderCategory_descriptions },
-   { reinterpret_cast<const void *>(TradeHandlingInstr_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 6, TradeHandlingInstr_descriptions },
-   { reinterpret_cast<const void *>(ApplVerID_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 10, ApplVerID_descriptions },
-   { reinterpret_cast<const void *>(ExDestinationIDSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 5, ExDestinationIDSource_descriptions },
-   { reinterpret_cast<const void *>(DefaultApplVerID_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 10, DefaultApplVerID_descriptions },
-   { reinterpret_cast<const void *>(ImpliedMarketIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, ImpliedMarketIndicator_descriptions },
-   { reinterpret_cast<const void *>(SettlObligMode_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, SettlObligMode_descriptions },
-   { reinterpret_cast<const void *>(SettlObligTransType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 4, SettlObligTransType_descriptions },
-   { reinterpret_cast<const void *>(SettlObligSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, SettlObligSource_descriptions },
-   { reinterpret_cast<const void *>(QuoteEntryStatus_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 9, QuoteEntryStatus_descriptions },
-   { reinterpret_cast<const void *>(RespondentType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, RespondentType_descriptions },
-   { reinterpret_cast<const void *>(SecurityTradingEvent_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, SecurityTradingEvent_descriptions },
-   { reinterpret_cast<const void *>(StatsType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, StatsType_descriptions },
-   { reinterpret_cast<const void *>(MDSecSizeType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 1, MDSecSizeType_descriptions },
-   { reinterpret_cast<const void *>(SettlMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 2, SettlMethod_descriptions },
-   { reinterpret_cast<const void *>(ExerciseStyle_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ExerciseStyle_descriptions },
-   { reinterpret_cast<const void *>(PriceQuoteMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 4, PriceQuoteMethod_descriptions },
-   { reinterpret_cast<const void *>(ValuationMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 5, ValuationMethod_descriptions },
-   { reinterpret_cast<const void *>(ListMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, ListMethod_descriptions },
-   { reinterpret_cast<const void *>(TickRuleType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, TickRuleType_descriptions },
-   { reinterpret_cast<const void *>(MaturityMonthYearIncrementUnits_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, MaturityMonthYearIncrementUnits_descriptions },
-   { reinterpret_cast<const void *>(MaturityMonthYearFormat_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MaturityMonthYearFormat_descriptions },
-   { reinterpret_cast<const void *>(PriceLimitType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, PriceLimitType_descriptions },
-   { reinterpret_cast<const void *>(ApplReqType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, ApplReqType_descriptions },
-   { reinterpret_cast<const void *>(ApplResponseType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ApplResponseType_descriptions },
-   { reinterpret_cast<const void *>(ApplResponseError_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ApplResponseError_descriptions },
-   { reinterpret_cast<const void *>(TradSesEvent_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, TradSesEvent_descriptions },
-   { reinterpret_cast<const void *>(MassActionType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MassActionType_descriptions },
-   { reinterpret_cast<const void *>(MassActionScope_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 12, MassActionScope_descriptions },
-   { reinterpret_cast<const void *>(MassActionResponse_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, MassActionResponse_descriptions },
-   { reinterpret_cast<const void *>(MassActionRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 13, MassActionRejectReason_descriptions },
-   { reinterpret_cast<const void *>(MultilegModel_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, MultilegModel_descriptions },
-   { reinterpret_cast<const void *>(MultilegPriceMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 6, MultilegPriceMethod_descriptions },
-   { reinterpret_cast<const void *>(ContingencyType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, ContingencyType_descriptions },
-   { reinterpret_cast<const void *>(ListRejectReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 7, ListRejectReason_descriptions },
-   { reinterpret_cast<const void *>(TradePublishIndicator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, TradePublishIndicator_descriptions },
-   { reinterpret_cast<const void *>(MarketUpdateAction_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, MarketUpdateAction_descriptions },
-   { reinterpret_cast<const void *>(ApplReportType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, ApplReportType_descriptions },
-   { reinterpret_cast<const void *>(OrderDelayUnit_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 12, OrderDelayUnit_descriptions },
-   { reinterpret_cast<const void *>(VenueType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(7), 3, VenueType_descriptions },
-   { reinterpret_cast<const void *>(RefOrdIDReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, RefOrdIDReason_descriptions },
-   { reinterpret_cast<const void *>(OrigCustOrderCapacity_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, OrigCustOrderCapacity_descriptions },
-   { reinterpret_cast<const void *>(ModelType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, ModelType_descriptions },
-   { reinterpret_cast<const void *>(ContractMultiplierUnit_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ContractMultiplierUnit_descriptions },
-   { reinterpret_cast<const void *>(FlowScheduleType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, FlowScheduleType_descriptions },
-   { reinterpret_cast<const void *>(RateSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, RateSource_descriptions },
-   { reinterpret_cast<const void *>(RateSourceType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, RateSourceType_descriptions },
-   { reinterpret_cast<const void *>(RestructuringType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 4, RestructuringType_descriptions },
-   { reinterpret_cast<const void *>(Seniority_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(15), 3, Seniority_descriptions },
-   { reinterpret_cast<const void *>(SecurityListType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, SecurityListType_descriptions },
-   { reinterpret_cast<const void *>(SecurityListTypeSource_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, SecurityListTypeSource_descriptions },
-   { reinterpret_cast<const void *>(NewsCategory_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, NewsCategory_descriptions },
-   { reinterpret_cast<const void *>(NewsRefType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, NewsRefType_descriptions },
-   { reinterpret_cast<const void *>(StrikePriceDeterminationMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, StrikePriceDeterminationMethod_descriptions },
-   { reinterpret_cast<const void *>(StrikePriceBoundaryMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, StrikePriceBoundaryMethod_descriptions },
-   { reinterpret_cast<const void *>(UnderlyingPriceDeterminationMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, UnderlyingPriceDeterminationMethod_descriptions },
-   { reinterpret_cast<const void *>(OptPayoutType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, OptPayoutType_descriptions },
-   { reinterpret_cast<const void *>(ComplexEventType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 9, ComplexEventType_descriptions },
-   { reinterpret_cast<const void *>(ComplexEventPriceBoundaryMethod_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, ComplexEventPriceBoundaryMethod_descriptions },
-   { reinterpret_cast<const void *>(ComplexEventPriceTimeType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, ComplexEventPriceTimeType_descriptions },
-   { reinterpret_cast<const void *>(ComplexEventCondition_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, ComplexEventCondition_descriptions },
-   { reinterpret_cast<const void *>(StreamAsgnReqType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, StreamAsgnReqType_descriptions },
-   { reinterpret_cast<const void *>(StreamAsgnRejReason_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, StreamAsgnRejReason_descriptions },
-   { reinterpret_cast<const void *>(StreamAsgnAckType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, StreamAsgnAckType_descriptions },
-   { reinterpret_cast<const void *>(PartyListResponseType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 4, PartyListResponseType_descriptions },
-   { reinterpret_cast<const void *>(PartyDetailsRequestResult_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 8, PartyDetailsRequestResult_descriptions },
-   { reinterpret_cast<const void *>(PartyRelationship_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 37, PartyRelationship_descriptions },
-   { reinterpret_cast<const void *>(RiskLimitType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 5, RiskLimitType_descriptions },
-   { reinterpret_cast<const void *>(RiskInstrumentOperator_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 2, RiskInstrumentOperator_descriptions },
-   { reinterpret_cast<const void *>(StreamAsgnType_realm), static_cast<RealmBase::RealmType>(1), 
-      static_cast<FieldTrait::FieldType>(1), 3, StreamAsgnType_descriptions },
+   { reinterpret_cast<const void *>(AdvSide_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, AdvSide_descriptions },
+   { reinterpret_cast<const void *>(AdvTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 3, AdvTransType_descriptions },
+   { reinterpret_cast<const void *>(CommType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, CommType_descriptions },
+   { reinterpret_cast<const void *>(ExecInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(16), 56, ExecInst_descriptions },
+   { reinterpret_cast<const void *>(HandlInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, HandlInst_descriptions },
+   { reinterpret_cast<const void *>(SecurityIDSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 22, SecurityIDSource_descriptions },
+   { reinterpret_cast<const void *>(IOIQltyInd_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, IOIQltyInd_descriptions },
+   { reinterpret_cast<const void *>(IOIQty_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 5, IOIQty_descriptions },
+   { reinterpret_cast<const void *>(IOITransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, IOITransType_descriptions },
+   { reinterpret_cast<const void *>(LastCapacity_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, LastCapacity_descriptions },
+   { reinterpret_cast<const void *>(MsgType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 118, MsgType_descriptions },
+   { reinterpret_cast<const void *>(OrdStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 15, OrdStatus_descriptions },
+   { reinterpret_cast<const void *>(OrdType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 24, OrdType_descriptions },
+   { reinterpret_cast<const void *>(Side_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 16, Side_descriptions },
+   { reinterpret_cast<const void *>(TimeInForce_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 10, TimeInForce_descriptions },
+   { reinterpret_cast<const void *>(Urgency_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, Urgency_descriptions },
+   { reinterpret_cast<const void *>(SettlType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 12, SettlType_descriptions },
+   { reinterpret_cast<const void *>(SymbolSfx_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 2, SymbolSfx_descriptions },
+   { reinterpret_cast<const void *>(AllocTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 7, AllocTransType_descriptions },
+   { reinterpret_cast<const void *>(PositionEffect_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, PositionEffect_descriptions },
+   { reinterpret_cast<const void *>(ProcessCode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 7, ProcessCode_descriptions },
+   { reinterpret_cast<const void *>(AllocStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, AllocStatus_descriptions },
+   { reinterpret_cast<const void *>(AllocRejCode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 15, AllocRejCode_descriptions },
+   { reinterpret_cast<const void *>(EmailType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, EmailType_descriptions },
+   { reinterpret_cast<const void *>(EncryptMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, EncryptMethod_descriptions },
+   { reinterpret_cast<const void *>(CxlRejReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 11, CxlRejReason_descriptions },
+   { reinterpret_cast<const void *>(OrdRejReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 19, OrdRejReason_descriptions },
+   { reinterpret_cast<const void *>(IOIQualifier_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 18, IOIQualifier_descriptions },
+   { reinterpret_cast<const void *>(ReportToExch_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, ReportToExch_descriptions },
+   { reinterpret_cast<const void *>(LocateReqd_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, LocateReqd_descriptions },
+   { reinterpret_cast<const void *>(ForexReq_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, ForexReq_descriptions },
+   { reinterpret_cast<const void *>(DKReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 7, DKReason_descriptions },
+   { reinterpret_cast<const void *>(IOINaturalFlag_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, IOINaturalFlag_descriptions },
+   { reinterpret_cast<const void *>(MiscFeeType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 14, MiscFeeType_descriptions },
+   { reinterpret_cast<const void *>(ExecType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 20, ExecType_descriptions },
+   { reinterpret_cast<const void *>(SettlCurrFxRateCalc_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, SettlCurrFxRateCalc_descriptions },
+   { reinterpret_cast<const void *>(SettlInstMode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, SettlInstMode_descriptions },
+   { reinterpret_cast<const void *>(SettlInstTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, SettlInstTransType_descriptions },
+   { reinterpret_cast<const void *>(SettlInstSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, SettlInstSource_descriptions },
+   { reinterpret_cast<const void *>(SecurityType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 118, SecurityType_descriptions },
+   { reinterpret_cast<const void *>(StandInstDbType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, StandInstDbType_descriptions },
+   { reinterpret_cast<const void *>(SettlDeliveryType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, SettlDeliveryType_descriptions },
+   { reinterpret_cast<const void *>(AllocLinkType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, AllocLinkType_descriptions },
+   { reinterpret_cast<const void *>(PutOrCall_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, PutOrCall_descriptions },
+   { reinterpret_cast<const void *>(CoveredOrUncovered_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, CoveredOrUncovered_descriptions },
+   { reinterpret_cast<const void *>(NotifyBrokerOfCredit_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, NotifyBrokerOfCredit_descriptions },
+   { reinterpret_cast<const void *>(AllocHandlInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, AllocHandlInst_descriptions },
+   { reinterpret_cast<const void *>(RoutingType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, RoutingType_descriptions },
+   { reinterpret_cast<const void *>(BenchmarkCurveName_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 12, BenchmarkCurveName_descriptions },
+   { reinterpret_cast<const void *>(StipulationType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 80, StipulationType_descriptions },
+   { reinterpret_cast<const void *>(YieldType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 34, YieldType_descriptions },
+   { reinterpret_cast<const void *>(TradedFlatSwitch_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, TradedFlatSwitch_descriptions },
+   { reinterpret_cast<const void *>(SubscriptionRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, SubscriptionRequestType_descriptions },
+   { reinterpret_cast<const void *>(MDUpdateType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, MDUpdateType_descriptions },
+   { reinterpret_cast<const void *>(AggregatedBook_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, AggregatedBook_descriptions },
+   { reinterpret_cast<const void *>(MDEntryType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 36, MDEntryType_descriptions },
+   { reinterpret_cast<const void *>(TickDirection_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, TickDirection_descriptions },
+   { reinterpret_cast<const void *>(QuoteCondition_realm), RealmBase::RealmType(1), FieldTrait::FieldType(17), 60, QuoteCondition_descriptions },
+   { reinterpret_cast<const void *>(TradeCondition_realm), RealmBase::RealmType(1), FieldTrait::FieldType(17), 77, TradeCondition_descriptions },
+   { reinterpret_cast<const void *>(MDUpdateAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, MDUpdateAction_descriptions },
+   { reinterpret_cast<const void *>(MDReqRejReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 14, MDReqRejReason_descriptions },
+   { reinterpret_cast<const void *>(DeleteReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, DeleteReason_descriptions },
+   { reinterpret_cast<const void *>(OpenCloseSettlFlag_realm), RealmBase::RealmType(1), FieldTrait::FieldType(16), 6, OpenCloseSettlFlag_descriptions },
+   { reinterpret_cast<const void *>(FinancialStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(16), 3, FinancialStatus_descriptions },
+   { reinterpret_cast<const void *>(CorporateAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(16), 23, CorporateAction_descriptions },
+   { reinterpret_cast<const void *>(QuoteStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 21, QuoteStatus_descriptions },
+   { reinterpret_cast<const void *>(QuoteCancelType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, QuoteCancelType_descriptions },
+   { reinterpret_cast<const void *>(QuoteRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 14, QuoteRejectReason_descriptions },
+   { reinterpret_cast<const void *>(QuoteResponseLevel_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, QuoteResponseLevel_descriptions },
+   { reinterpret_cast<const void *>(QuoteRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, QuoteRequestType_descriptions },
+   { reinterpret_cast<const void *>(SecurityRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 10, SecurityRequestType_descriptions },
+   { reinterpret_cast<const void *>(SecurityResponseType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, SecurityResponseType_descriptions },
+   { reinterpret_cast<const void *>(UnsolicitedIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, UnsolicitedIndicator_descriptions },
+   { reinterpret_cast<const void *>(SecurityTradingStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 26, SecurityTradingStatus_descriptions },
+   { reinterpret_cast<const void *>(HaltReasonInt_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, HaltReasonInt_descriptions },
+   { reinterpret_cast<const void *>(InViewOfCommon_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, InViewOfCommon_descriptions },
+   { reinterpret_cast<const void *>(DueToRelated_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, DueToRelated_descriptions },
+   { reinterpret_cast<const void *>(Adjustment_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, Adjustment_descriptions },
+   { reinterpret_cast<const void *>(TradingSessionID_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 6, TradingSessionID_descriptions },
+   { reinterpret_cast<const void *>(TradSesMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, TradSesMethod_descriptions },
+   { reinterpret_cast<const void *>(TradSesMode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, TradSesMode_descriptions },
+   { reinterpret_cast<const void *>(TradSesStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, TradSesStatus_descriptions },
+   { reinterpret_cast<const void *>(MessageEncoding_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 4, MessageEncoding_descriptions },
+   { reinterpret_cast<const void *>(SessionRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 19, SessionRejectReason_descriptions },
+   { reinterpret_cast<const void *>(BidRequestTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, BidRequestTransType_descriptions },
+   { reinterpret_cast<const void *>(SolicitedFlag_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, SolicitedFlag_descriptions },
+   { reinterpret_cast<const void *>(ExecRestatementReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 13, ExecRestatementReason_descriptions },
+   { reinterpret_cast<const void *>(BusinessRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 9, BusinessRejectReason_descriptions },
+   { reinterpret_cast<const void *>(MsgDirection_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, MsgDirection_descriptions },
+   { reinterpret_cast<const void *>(DiscretionInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 8, DiscretionInst_descriptions },
+   { reinterpret_cast<const void *>(BidType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, BidType_descriptions },
+   { reinterpret_cast<const void *>(BidDescriptorType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, BidDescriptorType_descriptions },
+   { reinterpret_cast<const void *>(SideValueInd_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, SideValueInd_descriptions },
+   { reinterpret_cast<const void *>(LiquidityIndType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, LiquidityIndType_descriptions },
+   { reinterpret_cast<const void *>(ExchangeForPhysical_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, ExchangeForPhysical_descriptions },
+   { reinterpret_cast<const void *>(ProgRptReqs_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ProgRptReqs_descriptions },
+   { reinterpret_cast<const void *>(IncTaxInd_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, IncTaxInd_descriptions },
+   { reinterpret_cast<const void *>(BidTradeType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, BidTradeType_descriptions },
+   { reinterpret_cast<const void *>(BasisPxType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 13, BasisPxType_descriptions },
+   { reinterpret_cast<const void *>(PriceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 18, PriceType_descriptions },
+   { reinterpret_cast<const void *>(GTBookingInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, GTBookingInst_descriptions },
+   { reinterpret_cast<const void *>(ListStatusType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, ListStatusType_descriptions },
+   { reinterpret_cast<const void *>(NetGrossInd_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, NetGrossInd_descriptions },
+   { reinterpret_cast<const void *>(ListOrderStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, ListOrderStatus_descriptions },
+   { reinterpret_cast<const void *>(ListExecInstType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 5, ListExecInstType_descriptions },
+   { reinterpret_cast<const void *>(CxlRejResponseTo_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, CxlRejResponseTo_descriptions },
+   { reinterpret_cast<const void *>(MultiLegReportingType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, MultiLegReportingType_descriptions },
+   { reinterpret_cast<const void *>(PartyIDSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 18, PartyIDSource_descriptions },
+   { reinterpret_cast<const void *>(PartyRole_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 84, PartyRole_descriptions },
+   { reinterpret_cast<const void *>(Product_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 13, Product_descriptions },
+   { reinterpret_cast<const void *>(RoundingDirection_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, RoundingDirection_descriptions },
+   { reinterpret_cast<const void *>(DistribPaymentMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 12, DistribPaymentMethod_descriptions },
+   { reinterpret_cast<const void *>(CancellationRights_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, CancellationRights_descriptions },
+   { reinterpret_cast<const void *>(MoneyLaunderingStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 5, MoneyLaunderingStatus_descriptions },
+   { reinterpret_cast<const void *>(ExecPriceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 8, ExecPriceType_descriptions },
+   { reinterpret_cast<const void *>(TradeReportTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, TradeReportTransType_descriptions },
+   { reinterpret_cast<const void *>(PaymentMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 15, PaymentMethod_descriptions },
+   { reinterpret_cast<const void *>(TaxAdvantageType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 31, TaxAdvantageType_descriptions },
+   { reinterpret_cast<const void *>(FundRenewWaiv_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, FundRenewWaiv_descriptions },
+   { reinterpret_cast<const void *>(RegistStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, RegistStatus_descriptions },
+   { reinterpret_cast<const void *>(RegistRejReasonCode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 19, RegistRejReasonCode_descriptions },
+   { reinterpret_cast<const void *>(RegistTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, RegistTransType_descriptions },
+   { reinterpret_cast<const void *>(OwnershipType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, OwnershipType_descriptions },
+   { reinterpret_cast<const void *>(ContAmtType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 15, ContAmtType_descriptions },
+   { reinterpret_cast<const void *>(OwnerType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 13, OwnerType_descriptions },
+   { reinterpret_cast<const void *>(OrderCapacity_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, OrderCapacity_descriptions },
+   { reinterpret_cast<const void *>(OrderRestrictions_realm), RealmBase::RealmType(1), FieldTrait::FieldType(16), 15, OrderRestrictions_descriptions },
+   { reinterpret_cast<const void *>(MassCancelRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 12, MassCancelRequestType_descriptions },
+   { reinterpret_cast<const void *>(MassCancelResponse_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 13, MassCancelResponse_descriptions },
+   { reinterpret_cast<const void *>(MassCancelRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 13, MassCancelRejectReason_descriptions },
+   { reinterpret_cast<const void *>(QuoteType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, QuoteType_descriptions },
+   { reinterpret_cast<const void *>(CashMargin_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, CashMargin_descriptions },
+   { reinterpret_cast<const void *>(Scope_realm), RealmBase::RealmType(1), FieldTrait::FieldType(16), 3, Scope_descriptions },
+   { reinterpret_cast<const void *>(MDImplicitDelete_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, MDImplicitDelete_descriptions },
+   { reinterpret_cast<const void *>(CrossType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, CrossType_descriptions },
+   { reinterpret_cast<const void *>(CrossPrioritization_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, CrossPrioritization_descriptions },
+   { reinterpret_cast<const void *>(NoSides_realm), RealmBase::RealmType(1), FieldTrait::FieldType(5), 2, NoSides_descriptions },
+   { reinterpret_cast<const void *>(SecurityListRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, SecurityListRequestType_descriptions },
+   { reinterpret_cast<const void *>(SecurityRequestResult_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, SecurityRequestResult_descriptions },
+   { reinterpret_cast<const void *>(MultiLegRptTypeReq_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MultiLegRptTypeReq_descriptions },
+   { reinterpret_cast<const void *>(TradSesStatusRejReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, TradSesStatusRejReason_descriptions },
+   { reinterpret_cast<const void *>(TradeRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, TradeRequestType_descriptions },
+   { reinterpret_cast<const void *>(PreviouslyReported_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, PreviouslyReported_descriptions },
+   { reinterpret_cast<const void *>(MatchStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, MatchStatus_descriptions },
+   { reinterpret_cast<const void *>(MatchType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 26, MatchType_descriptions },
+   { reinterpret_cast<const void *>(OddLot_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, OddLot_descriptions },
+   { reinterpret_cast<const void *>(ClearingInstruction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 14, ClearingInstruction_descriptions },
+   { reinterpret_cast<const void *>(AccountType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, AccountType_descriptions },
+   { reinterpret_cast<const void *>(CustOrderCapacity_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, CustOrderCapacity_descriptions },
+   { reinterpret_cast<const void *>(MassStatusReqType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 10, MassStatusReqType_descriptions },
+   { reinterpret_cast<const void *>(DayBookingInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, DayBookingInst_descriptions },
+   { reinterpret_cast<const void *>(BookingUnit_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, BookingUnit_descriptions },
+   { reinterpret_cast<const void *>(PreallocMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, PreallocMethod_descriptions },
+   { reinterpret_cast<const void *>(TradingSessionSubID_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 7, TradingSessionSubID_descriptions },
+   { reinterpret_cast<const void *>(AllocType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 14, AllocType_descriptions },
+   { reinterpret_cast<const void *>(ClearingFeeIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 14, ClearingFeeIndicator_descriptions },
+   { reinterpret_cast<const void *>(WorkingIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, WorkingIndicator_descriptions },
+   { reinterpret_cast<const void *>(PriorityIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, PriorityIndicator_descriptions },
+   { reinterpret_cast<const void *>(LegalConfirm_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, LegalConfirm_descriptions },
+   { reinterpret_cast<const void *>(QuoteRequestRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 12, QuoteRequestRejectReason_descriptions },
+   { reinterpret_cast<const void *>(AcctIDSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, AcctIDSource_descriptions },
+   { reinterpret_cast<const void *>(ConfirmStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, ConfirmStatus_descriptions },
+   { reinterpret_cast<const void *>(ConfirmTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ConfirmTransType_descriptions },
+   { reinterpret_cast<const void *>(DeliveryForm_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, DeliveryForm_descriptions },
+   { reinterpret_cast<const void *>(LegSwapType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, LegSwapType_descriptions },
+   { reinterpret_cast<const void *>(QuotePriceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 10, QuotePriceType_descriptions },
+   { reinterpret_cast<const void *>(QuoteRespType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, QuoteRespType_descriptions },
+   { reinterpret_cast<const void *>(PosType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 27, PosType_descriptions },
+   { reinterpret_cast<const void *>(PosQtyStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, PosQtyStatus_descriptions },
+   { reinterpret_cast<const void *>(PosAmtType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 18, PosAmtType_descriptions },
+   { reinterpret_cast<const void *>(PosTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, PosTransType_descriptions },
+   { reinterpret_cast<const void *>(PosMaintAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, PosMaintAction_descriptions },
+   { reinterpret_cast<const void *>(SettlSessID_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 4, SettlSessID_descriptions },
+   { reinterpret_cast<const void *>(AdjustmentType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, AdjustmentType_descriptions },
+   { reinterpret_cast<const void *>(PosMaintStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, PosMaintStatus_descriptions },
+   { reinterpret_cast<const void *>(PosMaintResult_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, PosMaintResult_descriptions },
+   { reinterpret_cast<const void *>(PosReqType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, PosReqType_descriptions },
+   { reinterpret_cast<const void *>(ResponseTransportType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, ResponseTransportType_descriptions },
+   { reinterpret_cast<const void *>(PosReqResult_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, PosReqResult_descriptions },
+   { reinterpret_cast<const void *>(PosReqStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, PosReqStatus_descriptions },
+   { reinterpret_cast<const void *>(SettlPriceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, SettlPriceType_descriptions },
+   { reinterpret_cast<const void *>(AssignmentMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, AssignmentMethod_descriptions },
+   { reinterpret_cast<const void *>(ExerciseMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, ExerciseMethod_descriptions },
+   { reinterpret_cast<const void *>(TradeRequestResult_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 9, TradeRequestResult_descriptions },
+   { reinterpret_cast<const void *>(TradeRequestStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, TradeRequestStatus_descriptions },
+   { reinterpret_cast<const void *>(TradeReportRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, TradeReportRejectReason_descriptions },
+   { reinterpret_cast<const void *>(SideMultiLegReportingType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, SideMultiLegReportingType_descriptions },
+   { reinterpret_cast<const void *>(TrdRegTimestampType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, TrdRegTimestampType_descriptions },
+   { reinterpret_cast<const void *>(ConfirmType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ConfirmType_descriptions },
+   { reinterpret_cast<const void *>(ConfirmRejReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ConfirmRejReason_descriptions },
+   { reinterpret_cast<const void *>(BookingType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, BookingType_descriptions },
+   { reinterpret_cast<const void *>(AllocSettlInstType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, AllocSettlInstType_descriptions },
+   { reinterpret_cast<const void *>(DlvyInstType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, DlvyInstType_descriptions },
+   { reinterpret_cast<const void *>(TerminationType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, TerminationType_descriptions },
+   { reinterpret_cast<const void *>(SettlInstReqRejCode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, SettlInstReqRejCode_descriptions },
+   { reinterpret_cast<const void *>(AllocReportType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 10, AllocReportType_descriptions },
+   { reinterpret_cast<const void *>(AllocCancReplaceReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, AllocCancReplaceReason_descriptions },
+   { reinterpret_cast<const void *>(AllocAccountType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, AllocAccountType_descriptions },
+   { reinterpret_cast<const void *>(PartySubIDType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 33, PartySubIDType_descriptions },
+   { reinterpret_cast<const void *>(AllocIntermedReqType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, AllocIntermedReqType_descriptions },
+   { reinterpret_cast<const void *>(ApplQueueResolution_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, ApplQueueResolution_descriptions },
+   { reinterpret_cast<const void *>(ApplQueueAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, ApplQueueAction_descriptions },
+   { reinterpret_cast<const void *>(AvgPxIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, AvgPxIndicator_descriptions },
+   { reinterpret_cast<const void *>(TradeAllocIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, TradeAllocIndicator_descriptions },
+   { reinterpret_cast<const void *>(ExpirationCycle_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ExpirationCycle_descriptions },
+   { reinterpret_cast<const void *>(TrdType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 55, TrdType_descriptions },
+   { reinterpret_cast<const void *>(TrdSubType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 38, TrdSubType_descriptions },
+   { reinterpret_cast<const void *>(PegMoveType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, PegMoveType_descriptions },
+   { reinterpret_cast<const void *>(PegOffsetType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, PegOffsetType_descriptions },
+   { reinterpret_cast<const void *>(PegLimitType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, PegLimitType_descriptions },
+   { reinterpret_cast<const void *>(PegRoundDirection_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, PegRoundDirection_descriptions },
+   { reinterpret_cast<const void *>(PegScope_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, PegScope_descriptions },
+   { reinterpret_cast<const void *>(DiscretionMoveType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, DiscretionMoveType_descriptions },
+   { reinterpret_cast<const void *>(DiscretionOffsetType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, DiscretionOffsetType_descriptions },
+   { reinterpret_cast<const void *>(DiscretionLimitType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, DiscretionLimitType_descriptions },
+   { reinterpret_cast<const void *>(DiscretionRoundDirection_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, DiscretionRoundDirection_descriptions },
+   { reinterpret_cast<const void *>(DiscretionScope_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, DiscretionScope_descriptions },
+   { reinterpret_cast<const void *>(TargetStrategy_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, TargetStrategy_descriptions },
+   { reinterpret_cast<const void *>(LastLiquidityInd_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, LastLiquidityInd_descriptions },
+   { reinterpret_cast<const void *>(PublishTrdIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, PublishTrdIndicator_descriptions },
+   { reinterpret_cast<const void *>(ShortSaleReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, ShortSaleReason_descriptions },
+   { reinterpret_cast<const void *>(QtyType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, QtyType_descriptions },
+   { reinterpret_cast<const void *>(TradeReportType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 16, TradeReportType_descriptions },
+   { reinterpret_cast<const void *>(AllocNoOrdersType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, AllocNoOrdersType_descriptions },
+   { reinterpret_cast<const void *>(EventType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 20, EventType_descriptions },
+   { reinterpret_cast<const void *>(InstrAttribType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 30, InstrAttribType_descriptions },
+   { reinterpret_cast<const void *>(CPProgram_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, CPProgram_descriptions },
+   { reinterpret_cast<const void *>(MiscFeeBasis_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MiscFeeBasis_descriptions },
+   { reinterpret_cast<const void *>(LastFragment_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, LastFragment_descriptions },
+   { reinterpret_cast<const void *>(CollAsgnReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, CollAsgnReason_descriptions },
+   { reinterpret_cast<const void *>(CollInquiryQualifier_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, CollInquiryQualifier_descriptions },
+   { reinterpret_cast<const void *>(CollAsgnTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, CollAsgnTransType_descriptions },
+   { reinterpret_cast<const void *>(CollAsgnRespType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, CollAsgnRespType_descriptions },
+   { reinterpret_cast<const void *>(CollAsgnRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, CollAsgnRejectReason_descriptions },
+   { reinterpret_cast<const void *>(CollStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, CollStatus_descriptions },
+   { reinterpret_cast<const void *>(LastRptRequested_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, LastRptRequested_descriptions },
+   { reinterpret_cast<const void *>(DeliveryType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, DeliveryType_descriptions },
+   { reinterpret_cast<const void *>(UserRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, UserRequestType_descriptions },
+   { reinterpret_cast<const void *>(UserStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, UserStatus_descriptions },
+   { reinterpret_cast<const void *>(StatusValue_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, StatusValue_descriptions },
+   { reinterpret_cast<const void *>(NetworkRequestType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, NetworkRequestType_descriptions },
+   { reinterpret_cast<const void *>(NetworkStatusResponseType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, NetworkStatusResponseType_descriptions },
+   { reinterpret_cast<const void *>(TrdRptStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, TrdRptStatus_descriptions },
+   { reinterpret_cast<const void *>(AffirmStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, AffirmStatus_descriptions },
+   { reinterpret_cast<const void *>(CollAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, CollAction_descriptions },
+   { reinterpret_cast<const void *>(CollInquiryStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, CollInquiryStatus_descriptions },
+   { reinterpret_cast<const void *>(CollInquiryResult_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 11, CollInquiryResult_descriptions },
+   { reinterpret_cast<const void *>(StrategyParameterType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 29, StrategyParameterType_descriptions },
+   { reinterpret_cast<const void *>(SecurityStatusID_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 2, SecurityStatusID_descriptions },
+   { reinterpret_cast<const void *>(UnderlyingCashType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 2, UnderlyingCashType_descriptions },
+   { reinterpret_cast<const void *>(UnderlyingSettlementType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, UnderlyingSettlementType_descriptions },
+   { reinterpret_cast<const void *>(SecurityUpdateAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, SecurityUpdateAction_descriptions },
+   { reinterpret_cast<const void *>(ExpirationQtyType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, ExpirationQtyType_descriptions },
+   { reinterpret_cast<const void *>(IndividualAllocType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, IndividualAllocType_descriptions },
+   { reinterpret_cast<const void *>(UnitOfMeasure_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 13, UnitOfMeasure_descriptions },
+   { reinterpret_cast<const void *>(TimeUnit_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 7, TimeUnit_descriptions },
+   { reinterpret_cast<const void *>(AllocMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, AllocMethod_descriptions },
+   { reinterpret_cast<const void *>(AsOfIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, AsOfIndicator_descriptions },
+   { reinterpret_cast<const void *>(MDBookType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MDBookType_descriptions },
+   { reinterpret_cast<const void *>(MDOriginType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MDOriginType_descriptions },
+   { reinterpret_cast<const void *>(CustOrderHandlingInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(17), 24, CustOrderHandlingInst_descriptions },
+   { reinterpret_cast<const void *>(OrderHandlingInstSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 1, OrderHandlingInstSource_descriptions },
+   { reinterpret_cast<const void *>(DeskType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 11, DeskType_descriptions },
+   { reinterpret_cast<const void *>(DeskTypeSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 1, DeskTypeSource_descriptions },
+   { reinterpret_cast<const void *>(DeskOrderHandlingInst_realm), RealmBase::RealmType(1), FieldTrait::FieldType(17), 24, DeskOrderHandlingInst_descriptions },
+   { reinterpret_cast<const void *>(ExecAckStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, ExecAckStatus_descriptions },
+   { reinterpret_cast<const void *>(CollApplType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, CollApplType_descriptions },
+   { reinterpret_cast<const void *>(UnderlyingFXRateCalc_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, UnderlyingFXRateCalc_descriptions },
+   { reinterpret_cast<const void *>(AllocPositionEffect_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, AllocPositionEffect_descriptions },
+   { reinterpret_cast<const void *>(DealingCapacity_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, DealingCapacity_descriptions },
+   { reinterpret_cast<const void *>(AggressorIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(8), 2, AggressorIndicator_descriptions },
+   { reinterpret_cast<const void *>(MDQuoteType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, MDQuoteType_descriptions },
+   { reinterpret_cast<const void *>(RefOrderIDSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 5, RefOrderIDSource_descriptions },
+   { reinterpret_cast<const void *>(DisplayWhen_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, DisplayWhen_descriptions },
+   { reinterpret_cast<const void *>(DisplayMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, DisplayMethod_descriptions },
+   { reinterpret_cast<const void *>(PriceProtectionScope_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, PriceProtectionScope_descriptions },
+   { reinterpret_cast<const void *>(LotType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, LotType_descriptions },
+   { reinterpret_cast<const void *>(PegPriceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, PegPriceType_descriptions },
+   { reinterpret_cast<const void *>(TriggerType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, TriggerType_descriptions },
+   { reinterpret_cast<const void *>(TriggerAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, TriggerAction_descriptions },
+   { reinterpret_cast<const void *>(TriggerPriceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, TriggerPriceType_descriptions },
+   { reinterpret_cast<const void *>(TriggerPriceTypeScope_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, TriggerPriceTypeScope_descriptions },
+   { reinterpret_cast<const void *>(TriggerPriceDirection_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, TriggerPriceDirection_descriptions },
+   { reinterpret_cast<const void *>(TriggerOrderType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, TriggerOrderType_descriptions },
+   { reinterpret_cast<const void *>(OrderCategory_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 9, OrderCategory_descriptions },
+   { reinterpret_cast<const void *>(TradeHandlingInstr_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 6, TradeHandlingInstr_descriptions },
+   { reinterpret_cast<const void *>(ApplVerID_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 10, ApplVerID_descriptions },
+   { reinterpret_cast<const void *>(ExDestinationIDSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 5, ExDestinationIDSource_descriptions },
+   { reinterpret_cast<const void *>(DefaultApplVerID_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 10, DefaultApplVerID_descriptions },
+   { reinterpret_cast<const void *>(ImpliedMarketIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, ImpliedMarketIndicator_descriptions },
+   { reinterpret_cast<const void *>(SettlObligMode_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, SettlObligMode_descriptions },
+   { reinterpret_cast<const void *>(SettlObligTransType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 4, SettlObligTransType_descriptions },
+   { reinterpret_cast<const void *>(SettlObligSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, SettlObligSource_descriptions },
+   { reinterpret_cast<const void *>(QuoteEntryStatus_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 9, QuoteEntryStatus_descriptions },
+   { reinterpret_cast<const void *>(RespondentType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, RespondentType_descriptions },
+   { reinterpret_cast<const void *>(SecurityTradingEvent_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, SecurityTradingEvent_descriptions },
+   { reinterpret_cast<const void *>(StatsType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, StatsType_descriptions },
+   { reinterpret_cast<const void *>(MDSecSizeType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 1, MDSecSizeType_descriptions },
+   { reinterpret_cast<const void *>(SettlMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 2, SettlMethod_descriptions },
+   { reinterpret_cast<const void *>(ExerciseStyle_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ExerciseStyle_descriptions },
+   { reinterpret_cast<const void *>(PriceQuoteMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 4, PriceQuoteMethod_descriptions },
+   { reinterpret_cast<const void *>(ValuationMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 5, ValuationMethod_descriptions },
+   { reinterpret_cast<const void *>(ListMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, ListMethod_descriptions },
+   { reinterpret_cast<const void *>(TickRuleType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, TickRuleType_descriptions },
+   { reinterpret_cast<const void *>(MaturityMonthYearIncrementUnits_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, MaturityMonthYearIncrementUnits_descriptions },
+   { reinterpret_cast<const void *>(MaturityMonthYearFormat_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MaturityMonthYearFormat_descriptions },
+   { reinterpret_cast<const void *>(PriceLimitType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, PriceLimitType_descriptions },
+   { reinterpret_cast<const void *>(ApplReqType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, ApplReqType_descriptions },
+   { reinterpret_cast<const void *>(ApplResponseType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ApplResponseType_descriptions },
+   { reinterpret_cast<const void *>(ApplResponseError_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ApplResponseError_descriptions },
+   { reinterpret_cast<const void *>(TradSesEvent_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, TradSesEvent_descriptions },
+   { reinterpret_cast<const void *>(MassActionType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MassActionType_descriptions },
+   { reinterpret_cast<const void *>(MassActionScope_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 12, MassActionScope_descriptions },
+   { reinterpret_cast<const void *>(MassActionResponse_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, MassActionResponse_descriptions },
+   { reinterpret_cast<const void *>(MassActionRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 13, MassActionRejectReason_descriptions },
+   { reinterpret_cast<const void *>(MultilegModel_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, MultilegModel_descriptions },
+   { reinterpret_cast<const void *>(MultilegPriceMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 6, MultilegPriceMethod_descriptions },
+   { reinterpret_cast<const void *>(ContingencyType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, ContingencyType_descriptions },
+   { reinterpret_cast<const void *>(ListRejectReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 7, ListRejectReason_descriptions },
+   { reinterpret_cast<const void *>(TradePublishIndicator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, TradePublishIndicator_descriptions },
+   { reinterpret_cast<const void *>(MarketUpdateAction_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, MarketUpdateAction_descriptions },
+   { reinterpret_cast<const void *>(ApplReportType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, ApplReportType_descriptions },
+   { reinterpret_cast<const void *>(OrderDelayUnit_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 12, OrderDelayUnit_descriptions },
+   { reinterpret_cast<const void *>(VenueType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(7), 3, VenueType_descriptions },
+   { reinterpret_cast<const void *>(RefOrdIDReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, RefOrdIDReason_descriptions },
+   { reinterpret_cast<const void *>(OrigCustOrderCapacity_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, OrigCustOrderCapacity_descriptions },
+   { reinterpret_cast<const void *>(ModelType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, ModelType_descriptions },
+   { reinterpret_cast<const void *>(ContractMultiplierUnit_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ContractMultiplierUnit_descriptions },
+   { reinterpret_cast<const void *>(FlowScheduleType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, FlowScheduleType_descriptions },
+   { reinterpret_cast<const void *>(RateSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, RateSource_descriptions },
+   { reinterpret_cast<const void *>(RateSourceType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, RateSourceType_descriptions },
+   { reinterpret_cast<const void *>(RestructuringType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 4, RestructuringType_descriptions },
+   { reinterpret_cast<const void *>(Seniority_realm), RealmBase::RealmType(1), FieldTrait::FieldType(15), 3, Seniority_descriptions },
+   { reinterpret_cast<const void *>(SecurityListType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, SecurityListType_descriptions },
+   { reinterpret_cast<const void *>(SecurityListTypeSource_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, SecurityListTypeSource_descriptions },
+   { reinterpret_cast<const void *>(NewsCategory_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, NewsCategory_descriptions },
+   { reinterpret_cast<const void *>(NewsRefType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, NewsRefType_descriptions },
+   { reinterpret_cast<const void *>(StrikePriceDeterminationMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, StrikePriceDeterminationMethod_descriptions },
+   { reinterpret_cast<const void *>(StrikePriceBoundaryMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, StrikePriceBoundaryMethod_descriptions },
+   { reinterpret_cast<const void *>(UnderlyingPriceDeterminationMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, UnderlyingPriceDeterminationMethod_descriptions },
+   { reinterpret_cast<const void *>(OptPayoutType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, OptPayoutType_descriptions },
+   { reinterpret_cast<const void *>(ComplexEventType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 9, ComplexEventType_descriptions },
+   { reinterpret_cast<const void *>(ComplexEventPriceBoundaryMethod_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, ComplexEventPriceBoundaryMethod_descriptions },
+   { reinterpret_cast<const void *>(ComplexEventPriceTimeType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, ComplexEventPriceTimeType_descriptions },
+   { reinterpret_cast<const void *>(ComplexEventCondition_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, ComplexEventCondition_descriptions },
+   { reinterpret_cast<const void *>(StreamAsgnReqType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, StreamAsgnReqType_descriptions },
+   { reinterpret_cast<const void *>(StreamAsgnRejReason_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, StreamAsgnRejReason_descriptions },
+   { reinterpret_cast<const void *>(StreamAsgnAckType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, StreamAsgnAckType_descriptions },
+   { reinterpret_cast<const void *>(PartyListResponseType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 4, PartyListResponseType_descriptions },
+   { reinterpret_cast<const void *>(PartyDetailsRequestResult_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 8, PartyDetailsRequestResult_descriptions },
+   { reinterpret_cast<const void *>(PartyRelationship_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 37, PartyRelationship_descriptions },
+   { reinterpret_cast<const void *>(RiskLimitType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 5, RiskLimitType_descriptions },
+   { reinterpret_cast<const void *>(RiskInstrumentOperator_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 2, RiskInstrumentOperator_descriptions },
+   { reinterpret_cast<const void *>(StreamAsgnType_realm), RealmBase::RealmType(1), FieldTrait::FieldType(1), 3, StreamAsgnType_descriptions },
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -2215,1570 +1858,1570 @@ const RealmBase realmbases[] =
 
 //-------------------------------------------------------------------------------------------------
 extern const Myfix_BaseEntry::Pair fldpairs[];
-const Myfix_BaseEntry::Pair fldpairs[] =
+const Myfix_BaseEntry::Pair fldpairs[] 
 {
-   { 1, { Inst(Type2Type<TEX::Account>()), 0, "Account", 0 } },
-   { 2, { Inst(Type2Type<TEX::AdvId>()), 0, "AdvId", 0 } },
-   { 3, { Inst(Type2Type<TEX::AdvRefID>()), 0, "AdvRefID", 0 } },
-   { 4, { Inst(Type2Types<TEX::AdvSide, char>()), &TEX::realmbases[0], "AdvSide", 0 } },
-   { 5, { Inst(Type2Types<TEX::AdvTransType, f8String>()), &TEX::realmbases[1], "AdvTransType", 0 } },
-   { 6, { Inst(Type2Type<TEX::AvgPx>()), 0, "AvgPx", 0 } },
-   { 7, { Inst(Type2Type<TEX::BeginSeqNo>()), 0, "BeginSeqNo", 0 } },
-   { 8, { Inst(Type2Type<TEX::BeginString>()), 0, "BeginString", 0 } },
-   { 9, { Inst(Type2Type<TEX::BodyLength>()), 0, "BodyLength", 0 } },
-   { 10, { Inst(Type2Type<TEX::CheckSum>()), 0, "CheckSum", 0 } },
-   { 11, { Inst(Type2Type<TEX::ClOrdID>()), 0, "ClOrdID", 0 } },
-   { 12, { Inst(Type2Type<TEX::Commission>()), 0, "Commission", 0 } },
-   { 13, { Inst(Type2Types<TEX::CommType, char>()), &TEX::realmbases[2], "CommType", 0 } },
-   { 14, { Inst(Type2Type<TEX::CumQty>()), 0, "CumQty", 0 } },
-   { 15, { Inst(Type2Type<TEX::Currency>()), 0, "Currency", 0 } },
-   { 16, { Inst(Type2Type<TEX::EndSeqNo>()), 0, "EndSeqNo", 0 } },
-   { 17, { Inst(Type2Type<TEX::ExecID>()), 0, "ExecID", 0 } },
-   { 18, { Inst(Type2Types<TEX::ExecInst, f8String>()), &TEX::realmbases[3], "ExecInst", 0 } },
-   { 19, { Inst(Type2Type<TEX::ExecRefID>()), 0, "ExecRefID", 0 } },
-   { 21, { Inst(Type2Types<TEX::HandlInst, char>()), &TEX::realmbases[4], "HandlInst", 0 } },
-   { 22, { Inst(Type2Types<TEX::SecurityIDSource, f8String>()), &TEX::realmbases[5], "SecurityIDSource", 0 } },
-   { 23, { Inst(Type2Type<TEX::IOIID>()), 0, "IOIID", 0 } },
-   { 25, { Inst(Type2Types<TEX::IOIQltyInd, char>()), &TEX::realmbases[6], "IOIQltyInd", 0 } },
-   { 26, { Inst(Type2Type<TEX::IOIRefID>()), 0, "IOIRefID", 0 } },
-   { 27, { Inst(Type2Types<TEX::IOIQty, f8String>()), &TEX::realmbases[7], "IOIQty", 0 } },
-   { 28, { Inst(Type2Types<TEX::IOITransType, char>()), &TEX::realmbases[8], "IOITransType", 0 } },
-   { 29, { Inst(Type2Types<TEX::LastCapacity, char>()), &TEX::realmbases[9], "LastCapacity", 0 } },
-   { 30, { Inst(Type2Type<TEX::LastMkt>()), 0, "LastMkt", 0 } },
-   { 31, { Inst(Type2Type<TEX::LastPx>()), 0, "LastPx", 0 } },
-   { 32, { Inst(Type2Type<TEX::LastQty>()), 0, "LastQty", 0 } },
-   { 33, { Inst(Type2Type<TEX::NoLinesOfText>()), 0, "NoLinesOfText", 0 } },
-   { 34, { Inst(Type2Type<TEX::MsgSeqNum>()), 0, "MsgSeqNum", 0 } },
-   { 35, { Inst(Type2Types<TEX::MsgType, f8String>()), &TEX::realmbases[10], "MsgType", 0 } },
-   { 36, { Inst(Type2Type<TEX::NewSeqNo>()), 0, "NewSeqNo", 0 } },
-   { 37, { Inst(Type2Type<TEX::OrderID>()), 0, "OrderID", 0 } },
-   { 38, { Inst(Type2Type<TEX::OrderQty>()), 0, "OrderQty", 0 } },
-   { 39, { Inst(Type2Types<TEX::OrdStatus, char>()), &TEX::realmbases[11], "OrdStatus", 0 } },
-   { 40, { Inst(Type2Types<TEX::OrdType, char>()), &TEX::realmbases[12], "OrdType", 0 } },
-   { 41, { Inst(Type2Type<TEX::OrigClOrdID>()), 0, "OrigClOrdID", 0 } },
-   { 42, { Inst(Type2Type<TEX::OrigTime>()), 0, "OrigTime", 0 } },
-   { 43, { Inst(Type2Type<TEX::PossDupFlag>()), 0, "PossDupFlag", 0 } },
-   { 44, { Inst(Type2Type<TEX::Price>()), 0, "Price", 0 } },
-   { 45, { Inst(Type2Type<TEX::RefSeqNum>()), 0, "RefSeqNum", 0 } },
-   { 48, { Inst(Type2Type<TEX::SecurityID>()), 0, "SecurityID", 0 } },
-   { 49, { Inst(Type2Type<TEX::SenderCompID>()), 0, "SenderCompID", 0 } },
-   { 50, { Inst(Type2Type<TEX::SenderSubID>()), 0, "SenderSubID", 0 } },
-   { 52, { Inst(Type2Type<TEX::SendingTime>()), 0, "SendingTime", 0 } },
-   { 53, { Inst(Type2Type<TEX::Quantity>()), 0, "Quantity", 0 } },
-   { 54, { Inst(Type2Types<TEX::Side, char>()), &TEX::realmbases[13], "Side", 0 } },
-   { 55, { Inst(Type2Type<TEX::Symbol>()), 0, "Symbol", 0 } },
-   { 56, { Inst(Type2Type<TEX::TargetCompID>()), 0, "TargetCompID", 0 } },
-   { 57, { Inst(Type2Type<TEX::TargetSubID>()), 0, "TargetSubID", 0 } },
-   { 58, { Inst(Type2Type<TEX::Text>()), 0, "Text", 0 } },
-   { 59, { Inst(Type2Types<TEX::TimeInForce, char>()), &TEX::realmbases[14], "TimeInForce", 0 } },
-   { 60, { Inst(Type2Type<TEX::TransactTime>()), 0, "TransactTime", 0 } },
-   { 61, { Inst(Type2Types<TEX::Urgency, char>()), &TEX::realmbases[15], "Urgency", 0 } },
-   { 62, { Inst(Type2Type<TEX::ValidUntilTime>()), 0, "ValidUntilTime", 0 } },
-   { 63, { Inst(Type2Types<TEX::SettlType, f8String>()), &TEX::realmbases[16], "SettlType", 0 } },
-   { 64, { Inst(Type2Type<TEX::SettlDate>()), 0, "SettlDate", 0 } },
-   { 65, { Inst(Type2Types<TEX::SymbolSfx, f8String>()), &TEX::realmbases[17], "SymbolSfx", 0 } },
-   { 66, { Inst(Type2Type<TEX::ListID>()), 0, "ListID", 0 } },
-   { 67, { Inst(Type2Type<TEX::ListSeqNo>()), 0, "ListSeqNo", 0 } },
-   { 68, { Inst(Type2Type<TEX::TotNoOrders>()), 0, "TotNoOrders", 0 } },
-   { 69, { Inst(Type2Type<TEX::ListExecInst>()), 0, "ListExecInst", 0 } },
-   { 70, { Inst(Type2Type<TEX::AllocID>()), 0, "AllocID", 0 } },
-   { 71, { Inst(Type2Types<TEX::AllocTransType, char>()), &TEX::realmbases[18], "AllocTransType", 0 } },
-   { 72, { Inst(Type2Type<TEX::RefAllocID>()), 0, "RefAllocID", 0 } },
-   { 73, { Inst(Type2Type<TEX::NoOrders>()), 0, "NoOrders", 0 } },
-   { 74, { Inst(Type2Type<TEX::AvgPxPrecision>()), 0, "AvgPxPrecision", 0 } },
-   { 75, { Inst(Type2Type<TEX::TradeDate>()), 0, "TradeDate", 0 } },
-   { 77, { Inst(Type2Types<TEX::PositionEffect, char>()), &TEX::realmbases[19], "PositionEffect", 0 } },
-   { 78, { Inst(Type2Type<TEX::NoAllocs>()), 0, "NoAllocs", 0 } },
-   { 79, { Inst(Type2Type<TEX::AllocAccount>()), 0, "AllocAccount", 0 } },
-   { 80, { Inst(Type2Type<TEX::AllocQty>()), 0, "AllocQty", 0 } },
-   { 81, { Inst(Type2Types<TEX::ProcessCode, char>()), &TEX::realmbases[20], "ProcessCode", 0 } },
-   { 82, { Inst(Type2Type<TEX::NoRpts>()), 0, "NoRpts", 0 } },
-   { 83, { Inst(Type2Type<TEX::RptSeq>()), 0, "RptSeq", 0 } },
-   { 84, { Inst(Type2Type<TEX::CxlQty>()), 0, "CxlQty", 0 } },
-   { 85, { Inst(Type2Type<TEX::NoDlvyInst>()), 0, "NoDlvyInst", 0 } },
-   { 87, { Inst(Type2Types<TEX::AllocStatus, int>()), &TEX::realmbases[21], "AllocStatus", 0 } },
-   { 88, { Inst(Type2Types<TEX::AllocRejCode, int>()), &TEX::realmbases[22], "AllocRejCode", 0 } },
-   { 89, { Inst(Type2Type<TEX::Signature>()), 0, "Signature", 0 } },
-   { 90, { Inst(Type2Type<TEX::SecureDataLen>()), 0, "SecureDataLen", 0 } },
-   { 91, { Inst(Type2Type<TEX::SecureData>()), 0, "SecureData", 0 } },
-   { 93, { Inst(Type2Type<TEX::SignatureLength>()), 0, "SignatureLength", 0 } },
-   { 94, { Inst(Type2Types<TEX::EmailType, char>()), &TEX::realmbases[23], "EmailType", 0 } },
-   { 95, { Inst(Type2Type<TEX::RawDataLength>()), 0, "RawDataLength", 0 } },
-   { 96, { Inst(Type2Type<TEX::RawData>()), 0, "RawData", 0 } },
-   { 97, { Inst(Type2Type<TEX::PossResend>()), 0, "PossResend", 0 } },
-   { 98, { Inst(Type2Types<TEX::EncryptMethod, int>()), &TEX::realmbases[24], "EncryptMethod", 0 } },
-   { 99, { Inst(Type2Type<TEX::StopPx>()), 0, "StopPx", 0 } },
-   { 100, { Inst(Type2Type<TEX::ExDestination>()), 0, "ExDestination", 0 } },
-   { 102, { Inst(Type2Types<TEX::CxlRejReason, int>()), &TEX::realmbases[25], "CxlRejReason", 0 } },
-   { 103, { Inst(Type2Types<TEX::OrdRejReason, int>()), &TEX::realmbases[26], "OrdRejReason", 0 } },
-   { 104, { Inst(Type2Types<TEX::IOIQualifier, char>()), &TEX::realmbases[27], "IOIQualifier", 0 } },
-   { 106, { Inst(Type2Type<TEX::Issuer>()), 0, "Issuer", 0 } },
-   { 107, { Inst(Type2Type<TEX::SecurityDesc>()), 0, "SecurityDesc", 0 } },
-   { 108, { Inst(Type2Type<TEX::HeartBtInt>()), 0, "HeartBtInt", 0 } },
-   { 110, { Inst(Type2Type<TEX::MinQty>()), 0, "MinQty", 0 } },
-   { 111, { Inst(Type2Type<TEX::MaxFloor>()), 0, "MaxFloor", 0 } },
-   { 112, { Inst(Type2Type<TEX::TestReqID>()), 0, "TestReqID", 0 } },
-   { 113, { Inst(Type2Types<TEX::ReportToExch, char>()), &TEX::realmbases[28], "ReportToExch", 0 } },
-   { 114, { Inst(Type2Types<TEX::LocateReqd, char>()), &TEX::realmbases[29], "LocateReqd", 0 } },
-   { 115, { Inst(Type2Type<TEX::OnBehalfOfCompID>()), 0, "OnBehalfOfCompID", 0 } },
-   { 116, { Inst(Type2Type<TEX::OnBehalfOfSubID>()), 0, "OnBehalfOfSubID", 0 } },
-   { 117, { Inst(Type2Type<TEX::QuoteID>()), 0, "QuoteID", 0 } },
-   { 118, { Inst(Type2Type<TEX::NetMoney>()), 0, "NetMoney", 0 } },
-   { 119, { Inst(Type2Type<TEX::SettlCurrAmt>()), 0, "SettlCurrAmt", 0 } },
-   { 120, { Inst(Type2Type<TEX::SettlCurrency>()), 0, "SettlCurrency", 0 } },
-   { 121, { Inst(Type2Types<TEX::ForexReq, char>()), &TEX::realmbases[30], "ForexReq", 0 } },
-   { 122, { Inst(Type2Type<TEX::OrigSendingTime>()), 0, "OrigSendingTime", 0 } },
-   { 123, { Inst(Type2Type<TEX::GapFillFlag>()), 0, "GapFillFlag", 0 } },
-   { 124, { Inst(Type2Type<TEX::NoExecs>()), 0, "NoExecs", 0 } },
-   { 126, { Inst(Type2Type<TEX::ExpireTime>()), 0, "ExpireTime", 0 } },
-   { 127, { Inst(Type2Types<TEX::DKReason, char>()), &TEX::realmbases[31], "DKReason", 0 } },
-   { 128, { Inst(Type2Type<TEX::DeliverToCompID>()), 0, "DeliverToCompID", 0 } },
-   { 129, { Inst(Type2Type<TEX::DeliverToSubID>()), 0, "DeliverToSubID", 0 } },
-   { 130, { Inst(Type2Types<TEX::IOINaturalFlag, char>()), &TEX::realmbases[32], "IOINaturalFlag", 0 } },
-   { 131, { Inst(Type2Type<TEX::QuoteReqID>()), 0, "QuoteReqID", 0 } },
-   { 132, { Inst(Type2Type<TEX::BidPx>()), 0, "BidPx", 0 } },
-   { 133, { Inst(Type2Type<TEX::OfferPx>()), 0, "OfferPx", 0 } },
-   { 134, { Inst(Type2Type<TEX::BidSize>()), 0, "BidSize", 0 } },
-   { 135, { Inst(Type2Type<TEX::OfferSize>()), 0, "OfferSize", 0 } },
-   { 136, { Inst(Type2Type<TEX::NoMiscFees>()), 0, "NoMiscFees", 0 } },
-   { 137, { Inst(Type2Type<TEX::MiscFeeAmt>()), 0, "MiscFeeAmt", 0 } },
-   { 138, { Inst(Type2Type<TEX::MiscFeeCurr>()), 0, "MiscFeeCurr", 0 } },
-   { 139, { Inst(Type2Types<TEX::MiscFeeType, f8String>()), &TEX::realmbases[33], "MiscFeeType", 0 } },
-   { 140, { Inst(Type2Type<TEX::PrevClosePx>()), 0, "PrevClosePx", 0 } },
-   { 141, { Inst(Type2Type<TEX::ResetSeqNumFlag>()), 0, "ResetSeqNumFlag", 0 } },
-   { 142, { Inst(Type2Type<TEX::SenderLocationID>()), 0, "SenderLocationID", 0 } },
-   { 143, { Inst(Type2Type<TEX::TargetLocationID>()), 0, "TargetLocationID", 0 } },
-   { 144, { Inst(Type2Type<TEX::OnBehalfOfLocationID>()), 0, "OnBehalfOfLocationID", 0 } },
-   { 145, { Inst(Type2Type<TEX::DeliverToLocationID>()), 0, "DeliverToLocationID", 0 } },
-   { 146, { Inst(Type2Type<TEX::NoRelatedSym>()), 0, "NoRelatedSym", 0 } },
-   { 147, { Inst(Type2Type<TEX::Subject>()), 0, "Subject", 0 } },
-   { 148, { Inst(Type2Type<TEX::Headline>()), 0, "Headline", 0 } },
-   { 149, { Inst(Type2Type<TEX::URLLink>()), 0, "URLLink", 0 } },
-   { 150, { Inst(Type2Types<TEX::ExecType, char>()), &TEX::realmbases[34], "ExecType", 0 } },
-   { 151, { Inst(Type2Type<TEX::LeavesQty>()), 0, "LeavesQty", 0 } },
-   { 152, { Inst(Type2Type<TEX::CashOrderQty>()), 0, "CashOrderQty", 0 } },
-   { 153, { Inst(Type2Type<TEX::AllocAvgPx>()), 0, "AllocAvgPx", 0 } },
-   { 154, { Inst(Type2Type<TEX::AllocNetMoney>()), 0, "AllocNetMoney", 0 } },
-   { 155, { Inst(Type2Type<TEX::SettlCurrFxRate>()), 0, "SettlCurrFxRate", 0 } },
-   { 156, { Inst(Type2Types<TEX::SettlCurrFxRateCalc, char>()), &TEX::realmbases[35], "SettlCurrFxRateCalc", 0 } },
-   { 157, { Inst(Type2Type<TEX::NumDaysInterest>()), 0, "NumDaysInterest", 0 } },
-   { 158, { Inst(Type2Type<TEX::AccruedInterestRate>()), 0, "AccruedInterestRate", 0 } },
-   { 159, { Inst(Type2Type<TEX::AccruedInterestAmt>()), 0, "AccruedInterestAmt", 0 } },
-   { 160, { Inst(Type2Types<TEX::SettlInstMode, char>()), &TEX::realmbases[36], "SettlInstMode", 0 } },
-   { 161, { Inst(Type2Type<TEX::AllocText>()), 0, "AllocText", 0 } },
-   { 162, { Inst(Type2Type<TEX::SettlInstID>()), 0, "SettlInstID", 0 } },
-   { 163, { Inst(Type2Types<TEX::SettlInstTransType, char>()), &TEX::realmbases[37], "SettlInstTransType", 0 } },
-   { 164, { Inst(Type2Type<TEX::EmailThreadID>()), 0, "EmailThreadID", 0 } },
-   { 165, { Inst(Type2Types<TEX::SettlInstSource, char>()), &TEX::realmbases[38], "SettlInstSource", 0 } },
-   { 167, { Inst(Type2Types<TEX::SecurityType, f8String>()), &TEX::realmbases[39], "SecurityType", 0 } },
-   { 168, { Inst(Type2Type<TEX::EffectiveTime>()), 0, "EffectiveTime", 0 } },
-   { 169, { Inst(Type2Types<TEX::StandInstDbType, int>()), &TEX::realmbases[40], "StandInstDbType", 0 } },
-   { 170, { Inst(Type2Type<TEX::StandInstDbName>()), 0, "StandInstDbName", 0 } },
-   { 171, { Inst(Type2Type<TEX::StandInstDbID>()), 0, "StandInstDbID", 0 } },
-   { 172, { Inst(Type2Types<TEX::SettlDeliveryType, int>()), &TEX::realmbases[41], "SettlDeliveryType", 0 } },
-   { 188, { Inst(Type2Type<TEX::BidSpotRate>()), 0, "BidSpotRate", 0 } },
-   { 189, { Inst(Type2Type<TEX::BidForwardPoints>()), 0, "BidForwardPoints", 0 } },
-   { 190, { Inst(Type2Type<TEX::OfferSpotRate>()), 0, "OfferSpotRate", 0 } },
-   { 191, { Inst(Type2Type<TEX::OfferForwardPoints>()), 0, "OfferForwardPoints", 0 } },
-   { 192, { Inst(Type2Type<TEX::OrderQty2>()), 0, "OrderQty2", 0 } },
-   { 193, { Inst(Type2Type<TEX::SettlDate2>()), 0, "SettlDate2", 0 } },
-   { 194, { Inst(Type2Type<TEX::LastSpotRate>()), 0, "LastSpotRate", 0 } },
-   { 195, { Inst(Type2Type<TEX::LastForwardPoints>()), 0, "LastForwardPoints", 0 } },
-   { 196, { Inst(Type2Type<TEX::AllocLinkID>()), 0, "AllocLinkID", 0 } },
-   { 197, { Inst(Type2Types<TEX::AllocLinkType, int>()), &TEX::realmbases[42], "AllocLinkType", 0 } },
-   { 198, { Inst(Type2Type<TEX::SecondaryOrderID>()), 0, "SecondaryOrderID", 0 } },
-   { 199, { Inst(Type2Type<TEX::NoIOIQualifiers>()), 0, "NoIOIQualifiers", 0 } },
-   { 200, { Inst(Type2Type<TEX::MaturityMonthYear>()), 0, "MaturityMonthYear", 0 } },
-   { 201, { Inst(Type2Types<TEX::PutOrCall, int>()), &TEX::realmbases[43], "PutOrCall", 0 } },
-   { 202, { Inst(Type2Type<TEX::StrikePrice>()), 0, "StrikePrice", 0 } },
-   { 203, { Inst(Type2Types<TEX::CoveredOrUncovered, int>()), &TEX::realmbases[44], "CoveredOrUncovered", 0 } },
-   { 206, { Inst(Type2Type<TEX::OptAttribute>()), 0, "OptAttribute", 0 } },
-   { 207, { Inst(Type2Type<TEX::SecurityExchange>()), 0, "SecurityExchange", 0 } },
-   { 208, { Inst(Type2Types<TEX::NotifyBrokerOfCredit, char>()), &TEX::realmbases[45], "NotifyBrokerOfCredit", 0 } },
-   { 209, { Inst(Type2Types<TEX::AllocHandlInst, int>()), &TEX::realmbases[46], "AllocHandlInst", 0 } },
-   { 210, { Inst(Type2Type<TEX::MaxShow>()), 0, "MaxShow", 0 } },
-   { 211, { Inst(Type2Type<TEX::PegOffsetValue>()), 0, "PegOffsetValue", 0 } },
-   { 212, { Inst(Type2Type<TEX::XmlDataLen>()), 0, "XmlDataLen", 0 } },
-   { 213, { Inst(Type2Type<TEX::XmlData>()), 0, "XmlData", 0 } },
-   { 214, { Inst(Type2Type<TEX::SettlInstRefID>()), 0, "SettlInstRefID", 0 } },
-   { 215, { Inst(Type2Type<TEX::NoRoutingIDs>()), 0, "NoRoutingIDs", 0 } },
-   { 216, { Inst(Type2Types<TEX::RoutingType, int>()), &TEX::realmbases[47], "RoutingType", 0 } },
-   { 217, { Inst(Type2Type<TEX::RoutingID>()), 0, "RoutingID", 0 } },
-   { 218, { Inst(Type2Type<TEX::Spread>()), 0, "Spread", 0 } },
-   { 220, { Inst(Type2Type<TEX::BenchmarkCurveCurrency>()), 0, "BenchmarkCurveCurrency", 0 } },
-   { 221, { Inst(Type2Types<TEX::BenchmarkCurveName, f8String>()), &TEX::realmbases[48], "BenchmarkCurveName", 0 } },
-   { 222, { Inst(Type2Type<TEX::BenchmarkCurvePoint>()), 0, "BenchmarkCurvePoint", 0 } },
-   { 223, { Inst(Type2Type<TEX::CouponRate>()), 0, "CouponRate", 0 } },
-   { 224, { Inst(Type2Type<TEX::CouponPaymentDate>()), 0, "CouponPaymentDate", 0 } },
-   { 225, { Inst(Type2Type<TEX::IssueDate>()), 0, "IssueDate", 0 } },
-   { 226, { Inst(Type2Type<TEX::RepurchaseTerm>()), 0, "RepurchaseTerm", 0 } },
-   { 227, { Inst(Type2Type<TEX::RepurchaseRate>()), 0, "RepurchaseRate", 0 } },
-   { 228, { Inst(Type2Type<TEX::Factor>()), 0, "Factor", 0 } },
-   { 229, { Inst(Type2Type<TEX::TradeOriginationDate>()), 0, "TradeOriginationDate", 0 } },
-   { 230, { Inst(Type2Type<TEX::ExDate>()), 0, "ExDate", 0 } },
-   { 231, { Inst(Type2Type<TEX::ContractMultiplier>()), 0, "ContractMultiplier", 0 } },
-   { 232, { Inst(Type2Type<TEX::NoStipulations>()), 0, "NoStipulations", 0 } },
-   { 233, { Inst(Type2Types<TEX::StipulationType, f8String>()), &TEX::realmbases[49], "StipulationType", 0 } },
-   { 234, { Inst(Type2Type<TEX::StipulationValue>()), 0, "StipulationValue", 0 } },
-   { 235, { Inst(Type2Types<TEX::YieldType, f8String>()), &TEX::realmbases[50], "YieldType", 0 } },
-   { 236, { Inst(Type2Type<TEX::Yield>()), 0, "Yield", 0 } },
-   { 237, { Inst(Type2Type<TEX::TotalTakedown>()), 0, "TotalTakedown", 0 } },
-   { 238, { Inst(Type2Type<TEX::Concession>()), 0, "Concession", 0 } },
-   { 239, { Inst(Type2Type<TEX::RepoCollateralSecurityType>()), 0, "RepoCollateralSecurityType", 0 } },
-   { 240, { Inst(Type2Type<TEX::RedemptionDate>()), 0, "RedemptionDate", 0 } },
-   { 241, { Inst(Type2Type<TEX::UnderlyingCouponPaymentDate>()), 0, "UnderlyingCouponPaymentDate", 0 } },
-   { 242, { Inst(Type2Type<TEX::UnderlyingIssueDate>()), 0, "UnderlyingIssueDate", 0 } },
-   { 243, { Inst(Type2Type<TEX::UnderlyingRepoCollateralSecurityType>()), 0, "UnderlyingRepoCollateralSecurityType", 0 } },
-   { 244, { Inst(Type2Type<TEX::UnderlyingRepurchaseTerm>()), 0, "UnderlyingRepurchaseTerm", 0 } },
-   { 245, { Inst(Type2Type<TEX::UnderlyingRepurchaseRate>()), 0, "UnderlyingRepurchaseRate", 0 } },
-   { 246, { Inst(Type2Type<TEX::UnderlyingFactor>()), 0, "UnderlyingFactor", 0 } },
-   { 247, { Inst(Type2Type<TEX::UnderlyingRedemptionDate>()), 0, "UnderlyingRedemptionDate", 0 } },
-   { 248, { Inst(Type2Type<TEX::LegCouponPaymentDate>()), 0, "LegCouponPaymentDate", 0 } },
-   { 249, { Inst(Type2Type<TEX::LegIssueDate>()), 0, "LegIssueDate", 0 } },
-   { 250, { Inst(Type2Type<TEX::LegRepoCollateralSecurityType>()), 0, "LegRepoCollateralSecurityType", 0 } },
-   { 251, { Inst(Type2Type<TEX::LegRepurchaseTerm>()), 0, "LegRepurchaseTerm", 0 } },
-   { 252, { Inst(Type2Type<TEX::LegRepurchaseRate>()), 0, "LegRepurchaseRate", 0 } },
-   { 253, { Inst(Type2Type<TEX::LegFactor>()), 0, "LegFactor", 0 } },
-   { 254, { Inst(Type2Type<TEX::LegRedemptionDate>()), 0, "LegRedemptionDate", 0 } },
-   { 255, { Inst(Type2Type<TEX::CreditRating>()), 0, "CreditRating", 0 } },
-   { 256, { Inst(Type2Type<TEX::UnderlyingCreditRating>()), 0, "UnderlyingCreditRating", 0 } },
-   { 257, { Inst(Type2Type<TEX::LegCreditRating>()), 0, "LegCreditRating", 0 } },
-   { 258, { Inst(Type2Types<TEX::TradedFlatSwitch, char>()), &TEX::realmbases[51], "TradedFlatSwitch", 0 } },
-   { 259, { Inst(Type2Type<TEX::BasisFeatureDate>()), 0, "BasisFeatureDate", 0 } },
-   { 260, { Inst(Type2Type<TEX::BasisFeaturePrice>()), 0, "BasisFeaturePrice", 0 } },
-   { 262, { Inst(Type2Type<TEX::MDReqID>()), 0, "MDReqID", 0 } },
-   { 263, { Inst(Type2Types<TEX::SubscriptionRequestType, char>()), &TEX::realmbases[52], "SubscriptionRequestType", 0 } },
-   { 264, { Inst(Type2Type<TEX::MarketDepth>()), 0, "MarketDepth", 0 } },
-   { 265, { Inst(Type2Types<TEX::MDUpdateType, int>()), &TEX::realmbases[53], "MDUpdateType", 0 } },
-   { 266, { Inst(Type2Types<TEX::AggregatedBook, char>()), &TEX::realmbases[54], "AggregatedBook", 0 } },
-   { 267, { Inst(Type2Type<TEX::NoMDEntryTypes>()), 0, "NoMDEntryTypes", 0 } },
-   { 268, { Inst(Type2Type<TEX::NoMDEntries>()), 0, "NoMDEntries", 0 } },
-   { 269, { Inst(Type2Types<TEX::MDEntryType, char>()), &TEX::realmbases[55], "MDEntryType", 0 } },
-   { 270, { Inst(Type2Type<TEX::MDEntryPx>()), 0, "MDEntryPx", 0 } },
-   { 271, { Inst(Type2Type<TEX::MDEntrySize>()), 0, "MDEntrySize", 0 } },
-   { 272, { Inst(Type2Type<TEX::MDEntryDate>()), 0, "MDEntryDate", 0 } },
-   { 273, { Inst(Type2Type<TEX::MDEntryTime>()), 0, "MDEntryTime", 0 } },
-   { 274, { Inst(Type2Types<TEX::TickDirection, char>()), &TEX::realmbases[56], "TickDirection", 0 } },
-   { 275, { Inst(Type2Type<TEX::MDMkt>()), 0, "MDMkt", 0 } },
-   { 276, { Inst(Type2Types<TEX::QuoteCondition, f8String>()), &TEX::realmbases[57], "QuoteCondition", 0 } },
-   { 277, { Inst(Type2Types<TEX::TradeCondition, f8String>()), &TEX::realmbases[58], "TradeCondition", 0 } },
-   { 278, { Inst(Type2Type<TEX::MDEntryID>()), 0, "MDEntryID", 0 } },
-   { 279, { Inst(Type2Types<TEX::MDUpdateAction, char>()), &TEX::realmbases[59], "MDUpdateAction", 0 } },
-   { 280, { Inst(Type2Type<TEX::MDEntryRefID>()), 0, "MDEntryRefID", 0 } },
-   { 281, { Inst(Type2Types<TEX::MDReqRejReason, char>()), &TEX::realmbases[60], "MDReqRejReason", 0 } },
-   { 282, { Inst(Type2Type<TEX::MDEntryOriginator>()), 0, "MDEntryOriginator", 0 } },
-   { 283, { Inst(Type2Type<TEX::LocationID>()), 0, "LocationID", 0 } },
-   { 284, { Inst(Type2Type<TEX::DeskID>()), 0, "DeskID", 0 } },
-   { 285, { Inst(Type2Types<TEX::DeleteReason, char>()), &TEX::realmbases[61], "DeleteReason", 0 } },
-   { 286, { Inst(Type2Types<TEX::OpenCloseSettlFlag, f8String>()), &TEX::realmbases[62], "OpenCloseSettlFlag", 0 } },
-   { 287, { Inst(Type2Type<TEX::SellerDays>()), 0, "SellerDays", 0 } },
-   { 288, { Inst(Type2Type<TEX::MDEntryBuyer>()), 0, "MDEntryBuyer", 0 } },
-   { 289, { Inst(Type2Type<TEX::MDEntrySeller>()), 0, "MDEntrySeller", 0 } },
-   { 290, { Inst(Type2Type<TEX::MDEntryPositionNo>()), 0, "MDEntryPositionNo", 0 } },
-   { 291, { Inst(Type2Types<TEX::FinancialStatus, f8String>()), &TEX::realmbases[63], "FinancialStatus", 0 } },
-   { 292, { Inst(Type2Types<TEX::CorporateAction, f8String>()), &TEX::realmbases[64], "CorporateAction", 0 } },
-   { 293, { Inst(Type2Type<TEX::DefBidSize>()), 0, "DefBidSize", 0 } },
-   { 294, { Inst(Type2Type<TEX::DefOfferSize>()), 0, "DefOfferSize", 0 } },
-   { 295, { Inst(Type2Type<TEX::NoQuoteEntries>()), 0, "NoQuoteEntries", 0 } },
-   { 296, { Inst(Type2Type<TEX::NoQuoteSets>()), 0, "NoQuoteSets", 0 } },
-   { 297, { Inst(Type2Types<TEX::QuoteStatus, int>()), &TEX::realmbases[65], "QuoteStatus", 0 } },
-   { 298, { Inst(Type2Types<TEX::QuoteCancelType, int>()), &TEX::realmbases[66], "QuoteCancelType", 0 } },
-   { 299, { Inst(Type2Type<TEX::QuoteEntryID>()), 0, "QuoteEntryID", 0 } },
-   { 300, { Inst(Type2Types<TEX::QuoteRejectReason, int>()), &TEX::realmbases[67], "QuoteRejectReason", 0 } },
-   { 301, { Inst(Type2Types<TEX::QuoteResponseLevel, int>()), &TEX::realmbases[68], "QuoteResponseLevel", 0 } },
-   { 302, { Inst(Type2Type<TEX::QuoteSetID>()), 0, "QuoteSetID", 0 } },
-   { 303, { Inst(Type2Types<TEX::QuoteRequestType, int>()), &TEX::realmbases[69], "QuoteRequestType", 0 } },
-   { 304, { Inst(Type2Type<TEX::TotNoQuoteEntries>()), 0, "TotNoQuoteEntries", 0 } },
-   { 305, { Inst(Type2Type<TEX::UnderlyingSecurityIDSource>()), 0, "UnderlyingSecurityIDSource", 0 } },
-   { 306, { Inst(Type2Type<TEX::UnderlyingIssuer>()), 0, "UnderlyingIssuer", 0 } },
-   { 307, { Inst(Type2Type<TEX::UnderlyingSecurityDesc>()), 0, "UnderlyingSecurityDesc", 0 } },
-   { 308, { Inst(Type2Type<TEX::UnderlyingSecurityExchange>()), 0, "UnderlyingSecurityExchange", 0 } },
-   { 309, { Inst(Type2Type<TEX::UnderlyingSecurityID>()), 0, "UnderlyingSecurityID", 0 } },
-   { 310, { Inst(Type2Type<TEX::UnderlyingSecurityType>()), 0, "UnderlyingSecurityType", 0 } },
-   { 311, { Inst(Type2Type<TEX::UnderlyingSymbol>()), 0, "UnderlyingSymbol", 0 } },
-   { 312, { Inst(Type2Type<TEX::UnderlyingSymbolSfx>()), 0, "UnderlyingSymbolSfx", 0 } },
-   { 313, { Inst(Type2Type<TEX::UnderlyingMaturityMonthYear>()), 0, "UnderlyingMaturityMonthYear", 0 } },
-   { 315, { Inst(Type2Type<TEX::UnderlyingPutOrCall>()), 0, "UnderlyingPutOrCall", 0 } },
-   { 316, { Inst(Type2Type<TEX::UnderlyingStrikePrice>()), 0, "UnderlyingStrikePrice", 0 } },
-   { 317, { Inst(Type2Type<TEX::UnderlyingOptAttribute>()), 0, "UnderlyingOptAttribute", 0 } },
-   { 318, { Inst(Type2Type<TEX::UnderlyingCurrency>()), 0, "UnderlyingCurrency", 0 } },
-   { 320, { Inst(Type2Type<TEX::SecurityReqID>()), 0, "SecurityReqID", 0 } },
-   { 321, { Inst(Type2Types<TEX::SecurityRequestType, int>()), &TEX::realmbases[70], "SecurityRequestType", 0 } },
-   { 322, { Inst(Type2Type<TEX::SecurityResponseID>()), 0, "SecurityResponseID", 0 } },
-   { 323, { Inst(Type2Types<TEX::SecurityResponseType, int>()), &TEX::realmbases[71], "SecurityResponseType", 0 } },
-   { 324, { Inst(Type2Type<TEX::SecurityStatusReqID>()), 0, "SecurityStatusReqID", 0 } },
-   { 325, { Inst(Type2Types<TEX::UnsolicitedIndicator, char>()), &TEX::realmbases[72], "UnsolicitedIndicator", 0 } },
-   { 326, { Inst(Type2Types<TEX::SecurityTradingStatus, int>()), &TEX::realmbases[73], "SecurityTradingStatus", 0 } },
-   { 327, { Inst(Type2Types<TEX::HaltReasonInt, int>()), &TEX::realmbases[74], "HaltReasonInt", 0 } },
-   { 328, { Inst(Type2Types<TEX::InViewOfCommon, char>()), &TEX::realmbases[75], "InViewOfCommon", 0 } },
-   { 329, { Inst(Type2Types<TEX::DueToRelated, char>()), &TEX::realmbases[76], "DueToRelated", 0 } },
-   { 330, { Inst(Type2Type<TEX::BuyVolume>()), 0, "BuyVolume", 0 } },
-   { 331, { Inst(Type2Type<TEX::SellVolume>()), 0, "SellVolume", 0 } },
-   { 332, { Inst(Type2Type<TEX::HighPx>()), 0, "HighPx", 0 } },
-   { 333, { Inst(Type2Type<TEX::LowPx>()), 0, "LowPx", 0 } },
-   { 334, { Inst(Type2Types<TEX::Adjustment, int>()), &TEX::realmbases[77], "Adjustment", 0 } },
-   { 335, { Inst(Type2Type<TEX::TradSesReqID>()), 0, "TradSesReqID", 0 } },
-   { 336, { Inst(Type2Types<TEX::TradingSessionID, f8String>()), &TEX::realmbases[78], "TradingSessionID", 0 } },
-   { 337, { Inst(Type2Type<TEX::ContraTrader>()), 0, "ContraTrader", 0 } },
-   { 338, { Inst(Type2Types<TEX::TradSesMethod, int>()), &TEX::realmbases[79], "TradSesMethod", 0 } },
-   { 339, { Inst(Type2Types<TEX::TradSesMode, int>()), &TEX::realmbases[80], "TradSesMode", 0 } },
-   { 340, { Inst(Type2Types<TEX::TradSesStatus, int>()), &TEX::realmbases[81], "TradSesStatus", 0 } },
-   { 341, { Inst(Type2Type<TEX::TradSesStartTime>()), 0, "TradSesStartTime", 0 } },
-   { 342, { Inst(Type2Type<TEX::TradSesOpenTime>()), 0, "TradSesOpenTime", 0 } },
-   { 343, { Inst(Type2Type<TEX::TradSesPreCloseTime>()), 0, "TradSesPreCloseTime", 0 } },
-   { 344, { Inst(Type2Type<TEX::TradSesCloseTime>()), 0, "TradSesCloseTime", 0 } },
-   { 345, { Inst(Type2Type<TEX::TradSesEndTime>()), 0, "TradSesEndTime", 0 } },
-   { 346, { Inst(Type2Type<TEX::NumberOfOrders>()), 0, "NumberOfOrders", 0 } },
-   { 347, { Inst(Type2Types<TEX::MessageEncoding, f8String>()), &TEX::realmbases[82], "MessageEncoding", 0 } },
-   { 348, { Inst(Type2Type<TEX::EncodedIssuerLen>()), 0, "EncodedIssuerLen", 0 } },
-   { 349, { Inst(Type2Type<TEX::EncodedIssuer>()), 0, "EncodedIssuer", 0 } },
-   { 350, { Inst(Type2Type<TEX::EncodedSecurityDescLen>()), 0, "EncodedSecurityDescLen", 0 } },
-   { 351, { Inst(Type2Type<TEX::EncodedSecurityDesc>()), 0, "EncodedSecurityDesc", 0 } },
-   { 352, { Inst(Type2Type<TEX::EncodedListExecInstLen>()), 0, "EncodedListExecInstLen", 0 } },
-   { 353, { Inst(Type2Type<TEX::EncodedListExecInst>()), 0, "EncodedListExecInst", 0 } },
-   { 354, { Inst(Type2Type<TEX::EncodedTextLen>()), 0, "EncodedTextLen", 0 } },
-   { 355, { Inst(Type2Type<TEX::EncodedText>()), 0, "EncodedText", 0 } },
-   { 356, { Inst(Type2Type<TEX::EncodedSubjectLen>()), 0, "EncodedSubjectLen", 0 } },
-   { 357, { Inst(Type2Type<TEX::EncodedSubject>()), 0, "EncodedSubject", 0 } },
-   { 358, { Inst(Type2Type<TEX::EncodedHeadlineLen>()), 0, "EncodedHeadlineLen", 0 } },
-   { 359, { Inst(Type2Type<TEX::EncodedHeadline>()), 0, "EncodedHeadline", 0 } },
-   { 360, { Inst(Type2Type<TEX::EncodedAllocTextLen>()), 0, "EncodedAllocTextLen", 0 } },
-   { 361, { Inst(Type2Type<TEX::EncodedAllocText>()), 0, "EncodedAllocText", 0 } },
-   { 362, { Inst(Type2Type<TEX::EncodedUnderlyingIssuerLen>()), 0, "EncodedUnderlyingIssuerLen", 0 } },
-   { 363, { Inst(Type2Type<TEX::EncodedUnderlyingIssuer>()), 0, "EncodedUnderlyingIssuer", 0 } },
-   { 364, { Inst(Type2Type<TEX::EncodedUnderlyingSecurityDescLen>()), 0, "EncodedUnderlyingSecurityDescLen", 0 } },
-   { 365, { Inst(Type2Type<TEX::EncodedUnderlyingSecurityDesc>()), 0, "EncodedUnderlyingSecurityDesc", 0 } },
-   { 366, { Inst(Type2Type<TEX::AllocPrice>()), 0, "AllocPrice", 0 } },
-   { 367, { Inst(Type2Type<TEX::QuoteSetValidUntilTime>()), 0, "QuoteSetValidUntilTime", 0 } },
-   { 368, { Inst(Type2Type<TEX::QuoteEntryRejectReason>()), 0, "QuoteEntryRejectReason", 0 } },
-   { 369, { Inst(Type2Type<TEX::LastMsgSeqNumProcessed>()), 0, "LastMsgSeqNumProcessed", 0 } },
-   { 371, { Inst(Type2Type<TEX::RefTagID>()), 0, "RefTagID", 0 } },
-   { 372, { Inst(Type2Type<TEX::RefMsgType>()), 0, "RefMsgType", 0 } },
-   { 373, { Inst(Type2Types<TEX::SessionRejectReason, int>()), &TEX::realmbases[83], "SessionRejectReason", 0 } },
-   { 374, { Inst(Type2Types<TEX::BidRequestTransType, char>()), &TEX::realmbases[84], "BidRequestTransType", 0 } },
-   { 375, { Inst(Type2Type<TEX::ContraBroker>()), 0, "ContraBroker", 0 } },
-   { 376, { Inst(Type2Type<TEX::ComplianceID>()), 0, "ComplianceID", 0 } },
-   { 377, { Inst(Type2Types<TEX::SolicitedFlag, char>()), &TEX::realmbases[85], "SolicitedFlag", 0 } },
-   { 378, { Inst(Type2Types<TEX::ExecRestatementReason, int>()), &TEX::realmbases[86], "ExecRestatementReason", 0 } },
-   { 379, { Inst(Type2Type<TEX::BusinessRejectRefID>()), 0, "BusinessRejectRefID", 0 } },
-   { 380, { Inst(Type2Types<TEX::BusinessRejectReason, int>()), &TEX::realmbases[87], "BusinessRejectReason", 0 } },
-   { 381, { Inst(Type2Type<TEX::GrossTradeAmt>()), 0, "GrossTradeAmt", 0 } },
-   { 382, { Inst(Type2Type<TEX::NoContraBrokers>()), 0, "NoContraBrokers", 0 } },
-   { 383, { Inst(Type2Type<TEX::MaxMessageSize>()), 0, "MaxMessageSize", 0 } },
-   { 384, { Inst(Type2Type<TEX::NoMsgTypes>()), 0, "NoMsgTypes", 0 } },
-   { 385, { Inst(Type2Types<TEX::MsgDirection, char>()), &TEX::realmbases[88], "MsgDirection", 0 } },
-   { 386, { Inst(Type2Type<TEX::NoTradingSessions>()), 0, "NoTradingSessions", 0 } },
-   { 387, { Inst(Type2Type<TEX::TotalVolumeTraded>()), 0, "TotalVolumeTraded", 0 } },
-   { 388, { Inst(Type2Types<TEX::DiscretionInst, char>()), &TEX::realmbases[89], "DiscretionInst", 0 } },
-   { 389, { Inst(Type2Type<TEX::DiscretionOffsetValue>()), 0, "DiscretionOffsetValue", 0 } },
-   { 390, { Inst(Type2Type<TEX::BidID>()), 0, "BidID", 0 } },
-   { 391, { Inst(Type2Type<TEX::ClientBidID>()), 0, "ClientBidID", 0 } },
-   { 392, { Inst(Type2Type<TEX::ListName>()), 0, "ListName", 0 } },
-   { 393, { Inst(Type2Type<TEX::TotNoRelatedSym>()), 0, "TotNoRelatedSym", 0 } },
-   { 394, { Inst(Type2Types<TEX::BidType, int>()), &TEX::realmbases[90], "BidType", 0 } },
-   { 395, { Inst(Type2Type<TEX::NumTickets>()), 0, "NumTickets", 0 } },
-   { 396, { Inst(Type2Type<TEX::SideValue1>()), 0, "SideValue1", 0 } },
-   { 397, { Inst(Type2Type<TEX::SideValue2>()), 0, "SideValue2", 0 } },
-   { 398, { Inst(Type2Type<TEX::NoBidDescriptors>()), 0, "NoBidDescriptors", 0 } },
-   { 399, { Inst(Type2Types<TEX::BidDescriptorType, int>()), &TEX::realmbases[91], "BidDescriptorType", 0 } },
-   { 400, { Inst(Type2Type<TEX::BidDescriptor>()), 0, "BidDescriptor", 0 } },
-   { 401, { Inst(Type2Types<TEX::SideValueInd, int>()), &TEX::realmbases[92], "SideValueInd", 0 } },
-   { 402, { Inst(Type2Type<TEX::LiquidityPctLow>()), 0, "LiquidityPctLow", 0 } },
-   { 403, { Inst(Type2Type<TEX::LiquidityPctHigh>()), 0, "LiquidityPctHigh", 0 } },
-   { 404, { Inst(Type2Type<TEX::LiquidityValue>()), 0, "LiquidityValue", 0 } },
-   { 405, { Inst(Type2Type<TEX::EFPTrackingError>()), 0, "EFPTrackingError", 0 } },
-   { 406, { Inst(Type2Type<TEX::FairValue>()), 0, "FairValue", 0 } },
-   { 407, { Inst(Type2Type<TEX::OutsideIndexPct>()), 0, "OutsideIndexPct", 0 } },
-   { 408, { Inst(Type2Type<TEX::ValueOfFutures>()), 0, "ValueOfFutures", 0 } },
-   { 409, { Inst(Type2Types<TEX::LiquidityIndType, int>()), &TEX::realmbases[93], "LiquidityIndType", 0 } },
-   { 410, { Inst(Type2Type<TEX::WtAverageLiquidity>()), 0, "WtAverageLiquidity", 0 } },
-   { 411, { Inst(Type2Types<TEX::ExchangeForPhysical, char>()), &TEX::realmbases[94], "ExchangeForPhysical", 0 } },
-   { 412, { Inst(Type2Type<TEX::OutMainCntryUIndex>()), 0, "OutMainCntryUIndex", 0 } },
-   { 413, { Inst(Type2Type<TEX::CrossPercent>()), 0, "CrossPercent", 0 } },
-   { 414, { Inst(Type2Types<TEX::ProgRptReqs, int>()), &TEX::realmbases[95], "ProgRptReqs", 0 } },
-   { 415, { Inst(Type2Type<TEX::ProgPeriodInterval>()), 0, "ProgPeriodInterval", 0 } },
-   { 416, { Inst(Type2Types<TEX::IncTaxInd, int>()), &TEX::realmbases[96], "IncTaxInd", 0 } },
-   { 417, { Inst(Type2Type<TEX::NumBidders>()), 0, "NumBidders", 0 } },
-   { 418, { Inst(Type2Types<TEX::BidTradeType, char>()), &TEX::realmbases[97], "BidTradeType", 0 } },
-   { 419, { Inst(Type2Types<TEX::BasisPxType, char>()), &TEX::realmbases[98], "BasisPxType", 0 } },
-   { 420, { Inst(Type2Type<TEX::NoBidComponents>()), 0, "NoBidComponents", 0 } },
-   { 421, { Inst(Type2Type<TEX::Country>()), 0, "Country", 0 } },
-   { 422, { Inst(Type2Type<TEX::TotNoStrikes>()), 0, "TotNoStrikes", 0 } },
-   { 423, { Inst(Type2Types<TEX::PriceType, int>()), &TEX::realmbases[99], "PriceType", 0 } },
-   { 424, { Inst(Type2Type<TEX::DayOrderQty>()), 0, "DayOrderQty", 0 } },
-   { 425, { Inst(Type2Type<TEX::DayCumQty>()), 0, "DayCumQty", 0 } },
-   { 426, { Inst(Type2Type<TEX::DayAvgPx>()), 0, "DayAvgPx", 0 } },
-   { 427, { Inst(Type2Types<TEX::GTBookingInst, int>()), &TEX::realmbases[100], "GTBookingInst", 0 } },
-   { 428, { Inst(Type2Type<TEX::NoStrikes>()), 0, "NoStrikes", 0 } },
-   { 429, { Inst(Type2Types<TEX::ListStatusType, int>()), &TEX::realmbases[101], "ListStatusType", 0 } },
-   { 430, { Inst(Type2Types<TEX::NetGrossInd, int>()), &TEX::realmbases[102], "NetGrossInd", 0 } },
-   { 431, { Inst(Type2Types<TEX::ListOrderStatus, int>()), &TEX::realmbases[103], "ListOrderStatus", 0 } },
-   { 432, { Inst(Type2Type<TEX::ExpireDate>()), 0, "ExpireDate", 0 } },
-   { 433, { Inst(Type2Types<TEX::ListExecInstType, char>()), &TEX::realmbases[104], "ListExecInstType", 0 } },
-   { 434, { Inst(Type2Types<TEX::CxlRejResponseTo, char>()), &TEX::realmbases[105], "CxlRejResponseTo", 0 } },
-   { 435, { Inst(Type2Type<TEX::UnderlyingCouponRate>()), 0, "UnderlyingCouponRate", 0 } },
-   { 436, { Inst(Type2Type<TEX::UnderlyingContractMultiplier>()), 0, "UnderlyingContractMultiplier", 0 } },
-   { 437, { Inst(Type2Type<TEX::ContraTradeQty>()), 0, "ContraTradeQty", 0 } },
-   { 438, { Inst(Type2Type<TEX::ContraTradeTime>()), 0, "ContraTradeTime", 0 } },
-   { 441, { Inst(Type2Type<TEX::LiquidityNumSecurities>()), 0, "LiquidityNumSecurities", 0 } },
-   { 442, { Inst(Type2Types<TEX::MultiLegReportingType, char>()), &TEX::realmbases[106], "MultiLegReportingType", 0 } },
-   { 443, { Inst(Type2Type<TEX::StrikeTime>()), 0, "StrikeTime", 0 } },
-   { 444, { Inst(Type2Type<TEX::ListStatusText>()), 0, "ListStatusText", 0 } },
-   { 445, { Inst(Type2Type<TEX::EncodedListStatusTextLen>()), 0, "EncodedListStatusTextLen", 0 } },
-   { 446, { Inst(Type2Type<TEX::EncodedListStatusText>()), 0, "EncodedListStatusText", 0 } },
-   { 447, { Inst(Type2Types<TEX::PartyIDSource, char>()), &TEX::realmbases[107], "PartyIDSource", 0 } },
-   { 448, { Inst(Type2Type<TEX::PartyID>()), 0, "PartyID", 0 } },
-   { 451, { Inst(Type2Type<TEX::NetChgPrevDay>()), 0, "NetChgPrevDay", 0 } },
-   { 452, { Inst(Type2Types<TEX::PartyRole, int>()), &TEX::realmbases[108], "PartyRole", 0 } },
-   { 453, { Inst(Type2Type<TEX::NoPartyIDs>()), 0, "NoPartyIDs", 0 } },
-   { 454, { Inst(Type2Type<TEX::NoSecurityAltID>()), 0, "NoSecurityAltID", 0 } },
-   { 455, { Inst(Type2Type<TEX::SecurityAltID>()), 0, "SecurityAltID", 0 } },
-   { 456, { Inst(Type2Type<TEX::SecurityAltIDSource>()), 0, "SecurityAltIDSource", 0 } },
-   { 457, { Inst(Type2Type<TEX::NoUnderlyingSecurityAltID>()), 0, "NoUnderlyingSecurityAltID", 0 } },
-   { 458, { Inst(Type2Type<TEX::UnderlyingSecurityAltID>()), 0, "UnderlyingSecurityAltID", 0 } },
-   { 459, { Inst(Type2Type<TEX::UnderlyingSecurityAltIDSource>()), 0, "UnderlyingSecurityAltIDSource", 0 } },
-   { 460, { Inst(Type2Types<TEX::Product, int>()), &TEX::realmbases[109], "Product", 0 } },
-   { 461, { Inst(Type2Type<TEX::CFICode>()), 0, "CFICode", 0 } },
-   { 462, { Inst(Type2Type<TEX::UnderlyingProduct>()), 0, "UnderlyingProduct", 0 } },
-   { 463, { Inst(Type2Type<TEX::UnderlyingCFICode>()), 0, "UnderlyingCFICode", 0 } },
-   { 464, { Inst(Type2Type<TEX::TestMessageIndicator>()), 0, "TestMessageIndicator", 0 } },
-   { 466, { Inst(Type2Type<TEX::BookingRefID>()), 0, "BookingRefID", 0 } },
-   { 467, { Inst(Type2Type<TEX::IndividualAllocID>()), 0, "IndividualAllocID", 0 } },
-   { 468, { Inst(Type2Types<TEX::RoundingDirection, char>()), &TEX::realmbases[110], "RoundingDirection", 0 } },
-   { 469, { Inst(Type2Type<TEX::RoundingModulus>()), 0, "RoundingModulus", 0 } },
-   { 470, { Inst(Type2Type<TEX::CountryOfIssue>()), 0, "CountryOfIssue", 0 } },
-   { 471, { Inst(Type2Type<TEX::StateOrProvinceOfIssue>()), 0, "StateOrProvinceOfIssue", 0 } },
-   { 472, { Inst(Type2Type<TEX::LocaleOfIssue>()), 0, "LocaleOfIssue", 0 } },
-   { 473, { Inst(Type2Type<TEX::NoRegistDtls>()), 0, "NoRegistDtls", 0 } },
-   { 474, { Inst(Type2Type<TEX::MailingDtls>()), 0, "MailingDtls", 0 } },
-   { 475, { Inst(Type2Type<TEX::InvestorCountryOfResidence>()), 0, "InvestorCountryOfResidence", 0 } },
-   { 476, { Inst(Type2Type<TEX::PaymentRef>()), 0, "PaymentRef", 0 } },
-   { 477, { Inst(Type2Types<TEX::DistribPaymentMethod, int>()), &TEX::realmbases[111], "DistribPaymentMethod", 0 } },
-   { 478, { Inst(Type2Type<TEX::CashDistribCurr>()), 0, "CashDistribCurr", 0 } },
-   { 479, { Inst(Type2Type<TEX::CommCurrency>()), 0, "CommCurrency", 0 } },
-   { 480, { Inst(Type2Types<TEX::CancellationRights, char>()), &TEX::realmbases[112], "CancellationRights", 0 } },
-   { 481, { Inst(Type2Types<TEX::MoneyLaunderingStatus, char>()), &TEX::realmbases[113], "MoneyLaunderingStatus", 0 } },
-   { 482, { Inst(Type2Type<TEX::MailingInst>()), 0, "MailingInst", 0 } },
-   { 483, { Inst(Type2Type<TEX::TransBkdTime>()), 0, "TransBkdTime", 0 } },
-   { 484, { Inst(Type2Types<TEX::ExecPriceType, char>()), &TEX::realmbases[114], "ExecPriceType", 0 } },
-   { 485, { Inst(Type2Type<TEX::ExecPriceAdjustment>()), 0, "ExecPriceAdjustment", 0 } },
-   { 486, { Inst(Type2Type<TEX::DateOfBirth>()), 0, "DateOfBirth", 0 } },
-   { 487, { Inst(Type2Types<TEX::TradeReportTransType, int>()), &TEX::realmbases[115], "TradeReportTransType", 0 } },
-   { 488, { Inst(Type2Type<TEX::CardHolderName>()), 0, "CardHolderName", 0 } },
-   { 489, { Inst(Type2Type<TEX::CardNumber>()), 0, "CardNumber", 0 } },
-   { 490, { Inst(Type2Type<TEX::CardExpDate>()), 0, "CardExpDate", 0 } },
-   { 491, { Inst(Type2Type<TEX::CardIssNum>()), 0, "CardIssNum", 0 } },
-   { 492, { Inst(Type2Types<TEX::PaymentMethod, int>()), &TEX::realmbases[116], "PaymentMethod", 0 } },
-   { 493, { Inst(Type2Type<TEX::RegistAcctType>()), 0, "RegistAcctType", 0 } },
-   { 494, { Inst(Type2Type<TEX::Designation>()), 0, "Designation", 0 } },
-   { 495, { Inst(Type2Types<TEX::TaxAdvantageType, int>()), &TEX::realmbases[117], "TaxAdvantageType", 0 } },
-   { 496, { Inst(Type2Type<TEX::RegistRejReasonText>()), 0, "RegistRejReasonText", 0 } },
-   { 497, { Inst(Type2Types<TEX::FundRenewWaiv, char>()), &TEX::realmbases[118], "FundRenewWaiv", 0 } },
-   { 498, { Inst(Type2Type<TEX::CashDistribAgentName>()), 0, "CashDistribAgentName", 0 } },
-   { 499, { Inst(Type2Type<TEX::CashDistribAgentCode>()), 0, "CashDistribAgentCode", 0 } },
-   { 500, { Inst(Type2Type<TEX::CashDistribAgentAcctNumber>()), 0, "CashDistribAgentAcctNumber", 0 } },
-   { 501, { Inst(Type2Type<TEX::CashDistribPayRef>()), 0, "CashDistribPayRef", 0 } },
-   { 502, { Inst(Type2Type<TEX::CashDistribAgentAcctName>()), 0, "CashDistribAgentAcctName", 0 } },
-   { 503, { Inst(Type2Type<TEX::CardStartDate>()), 0, "CardStartDate", 0 } },
-   { 504, { Inst(Type2Type<TEX::PaymentDate>()), 0, "PaymentDate", 0 } },
-   { 505, { Inst(Type2Type<TEX::PaymentRemitterID>()), 0, "PaymentRemitterID", 0 } },
-   { 506, { Inst(Type2Types<TEX::RegistStatus, char>()), &TEX::realmbases[119], "RegistStatus", 0 } },
-   { 507, { Inst(Type2Types<TEX::RegistRejReasonCode, int>()), &TEX::realmbases[120], "RegistRejReasonCode", 0 } },
-   { 508, { Inst(Type2Type<TEX::RegistRefID>()), 0, "RegistRefID", 0 } },
-   { 509, { Inst(Type2Type<TEX::RegistDtls>()), 0, "RegistDtls", 0 } },
-   { 510, { Inst(Type2Type<TEX::NoDistribInsts>()), 0, "NoDistribInsts", 0 } },
-   { 511, { Inst(Type2Type<TEX::RegistEmail>()), 0, "RegistEmail", 0 } },
-   { 512, { Inst(Type2Type<TEX::DistribPercentage>()), 0, "DistribPercentage", 0 } },
-   { 513, { Inst(Type2Type<TEX::RegistID>()), 0, "RegistID", 0 } },
-   { 514, { Inst(Type2Types<TEX::RegistTransType, char>()), &TEX::realmbases[121], "RegistTransType", 0 } },
-   { 515, { Inst(Type2Type<TEX::ExecValuationPoint>()), 0, "ExecValuationPoint", 0 } },
-   { 516, { Inst(Type2Type<TEX::OrderPercent>()), 0, "OrderPercent", 0 } },
-   { 517, { Inst(Type2Types<TEX::OwnershipType, char>()), &TEX::realmbases[122], "OwnershipType", 0 } },
-   { 518, { Inst(Type2Type<TEX::NoContAmts>()), 0, "NoContAmts", 0 } },
-   { 519, { Inst(Type2Types<TEX::ContAmtType, int>()), &TEX::realmbases[123], "ContAmtType", 0 } },
-   { 520, { Inst(Type2Type<TEX::ContAmtValue>()), 0, "ContAmtValue", 0 } },
-   { 521, { Inst(Type2Type<TEX::ContAmtCurr>()), 0, "ContAmtCurr", 0 } },
-   { 522, { Inst(Type2Types<TEX::OwnerType, int>()), &TEX::realmbases[124], "OwnerType", 0 } },
-   { 523, { Inst(Type2Type<TEX::PartySubID>()), 0, "PartySubID", 0 } },
-   { 524, { Inst(Type2Type<TEX::NestedPartyID>()), 0, "NestedPartyID", 0 } },
-   { 525, { Inst(Type2Type<TEX::NestedPartyIDSource>()), 0, "NestedPartyIDSource", 0 } },
-   { 526, { Inst(Type2Type<TEX::SecondaryClOrdID>()), 0, "SecondaryClOrdID", 0 } },
-   { 527, { Inst(Type2Type<TEX::SecondaryExecID>()), 0, "SecondaryExecID", 0 } },
-   { 528, { Inst(Type2Types<TEX::OrderCapacity, char>()), &TEX::realmbases[125], "OrderCapacity", 0 } },
-   { 529, { Inst(Type2Types<TEX::OrderRestrictions, f8String>()), &TEX::realmbases[126], "OrderRestrictions", 0 } },
-   { 530, { Inst(Type2Types<TEX::MassCancelRequestType, char>()), &TEX::realmbases[127], "MassCancelRequestType", 0 } },
-   { 531, { Inst(Type2Types<TEX::MassCancelResponse, char>()), &TEX::realmbases[128], "MassCancelResponse", 0 } },
-   { 532, { Inst(Type2Types<TEX::MassCancelRejectReason, int>()), &TEX::realmbases[129], "MassCancelRejectReason", 0 } },
-   { 533, { Inst(Type2Type<TEX::TotalAffectedOrders>()), 0, "TotalAffectedOrders", 0 } },
-   { 534, { Inst(Type2Type<TEX::NoAffectedOrders>()), 0, "NoAffectedOrders", 0 } },
-   { 535, { Inst(Type2Type<TEX::AffectedOrderID>()), 0, "AffectedOrderID", 0 } },
-   { 536, { Inst(Type2Type<TEX::AffectedSecondaryOrderID>()), 0, "AffectedSecondaryOrderID", 0 } },
-   { 537, { Inst(Type2Types<TEX::QuoteType, int>()), &TEX::realmbases[130], "QuoteType", 0 } },
-   { 538, { Inst(Type2Type<TEX::NestedPartyRole>()), 0, "NestedPartyRole", 0 } },
-   { 539, { Inst(Type2Type<TEX::NoNestedPartyIDs>()), 0, "NoNestedPartyIDs", 0 } },
-   { 540, { Inst(Type2Type<TEX::TotalAccruedInterestAmt>()), 0, "TotalAccruedInterestAmt", 0 } },
-   { 541, { Inst(Type2Type<TEX::MaturityDate>()), 0, "MaturityDate", 0 } },
-   { 542, { Inst(Type2Type<TEX::UnderlyingMaturityDate>()), 0, "UnderlyingMaturityDate", 0 } },
-   { 543, { Inst(Type2Type<TEX::InstrRegistry>()), 0, "InstrRegistry", 0 } },
-   { 544, { Inst(Type2Types<TEX::CashMargin, char>()), &TEX::realmbases[131], "CashMargin", 0 } },
-   { 545, { Inst(Type2Type<TEX::NestedPartySubID>()), 0, "NestedPartySubID", 0 } },
-   { 546, { Inst(Type2Types<TEX::Scope, f8String>()), &TEX::realmbases[132], "Scope", 0 } },
-   { 547, { Inst(Type2Types<TEX::MDImplicitDelete, char>()), &TEX::realmbases[133], "MDImplicitDelete", 0 } },
-   { 548, { Inst(Type2Type<TEX::CrossID>()), 0, "CrossID", 0 } },
-   { 549, { Inst(Type2Types<TEX::CrossType, int>()), &TEX::realmbases[134], "CrossType", 0 } },
-   { 550, { Inst(Type2Types<TEX::CrossPrioritization, int>()), &TEX::realmbases[135], "CrossPrioritization", 0 } },
-   { 551, { Inst(Type2Type<TEX::OrigCrossID>()), 0, "OrigCrossID", 0 } },
-   { 552, { Inst(Type2Types<TEX::NoSides, int>()), &TEX::realmbases[136], "NoSides", 0 } },
-   { 553, { Inst(Type2Type<TEX::Username>()), 0, "Username", 0 } },
-   { 554, { Inst(Type2Type<TEX::Password>()), 0, "Password", 0 } },
-   { 555, { Inst(Type2Type<TEX::NoLegs>()), 0, "NoLegs", 0 } },
-   { 556, { Inst(Type2Type<TEX::LegCurrency>()), 0, "LegCurrency", 0 } },
-   { 557, { Inst(Type2Type<TEX::TotNoSecurityTypes>()), 0, "TotNoSecurityTypes", 0 } },
-   { 558, { Inst(Type2Type<TEX::NoSecurityTypes>()), 0, "NoSecurityTypes", 0 } },
-   { 559, { Inst(Type2Types<TEX::SecurityListRequestType, int>()), &TEX::realmbases[137], "SecurityListRequestType", 0 } },
-   { 560, { Inst(Type2Types<TEX::SecurityRequestResult, int>()), &TEX::realmbases[138], "SecurityRequestResult", 0 } },
-   { 561, { Inst(Type2Type<TEX::RoundLot>()), 0, "RoundLot", 0 } },
-   { 562, { Inst(Type2Type<TEX::MinTradeVol>()), 0, "MinTradeVol", 0 } },
-   { 563, { Inst(Type2Types<TEX::MultiLegRptTypeReq, int>()), &TEX::realmbases[139], "MultiLegRptTypeReq", 0 } },
-   { 564, { Inst(Type2Type<TEX::LegPositionEffect>()), 0, "LegPositionEffect", 0 } },
-   { 565, { Inst(Type2Type<TEX::LegCoveredOrUncovered>()), 0, "LegCoveredOrUncovered", 0 } },
-   { 566, { Inst(Type2Type<TEX::LegPrice>()), 0, "LegPrice", 0 } },
-   { 567, { Inst(Type2Types<TEX::TradSesStatusRejReason, int>()), &TEX::realmbases[140], "TradSesStatusRejReason", 0 } },
-   { 568, { Inst(Type2Type<TEX::TradeRequestID>()), 0, "TradeRequestID", 0 } },
-   { 569, { Inst(Type2Types<TEX::TradeRequestType, int>()), &TEX::realmbases[141], "TradeRequestType", 0 } },
-   { 570, { Inst(Type2Types<TEX::PreviouslyReported, char>()), &TEX::realmbases[142], "PreviouslyReported", 0 } },
-   { 571, { Inst(Type2Type<TEX::TradeReportID>()), 0, "TradeReportID", 0 } },
-   { 572, { Inst(Type2Type<TEX::TradeReportRefID>()), 0, "TradeReportRefID", 0 } },
-   { 573, { Inst(Type2Types<TEX::MatchStatus, char>()), &TEX::realmbases[143], "MatchStatus", 0 } },
-   { 574, { Inst(Type2Types<TEX::MatchType, f8String>()), &TEX::realmbases[144], "MatchType", 0 } },
-   { 575, { Inst(Type2Types<TEX::OddLot, char>()), &TEX::realmbases[145], "OddLot", 0 } },
-   { 576, { Inst(Type2Type<TEX::NoClearingInstructions>()), 0, "NoClearingInstructions", 0 } },
-   { 577, { Inst(Type2Types<TEX::ClearingInstruction, int>()), &TEX::realmbases[146], "ClearingInstruction", 0 } },
-   { 578, { Inst(Type2Type<TEX::TradeInputSource>()), 0, "TradeInputSource", 0 } },
-   { 579, { Inst(Type2Type<TEX::TradeInputDevice>()), 0, "TradeInputDevice", 0 } },
-   { 580, { Inst(Type2Type<TEX::NoDates>()), 0, "NoDates", 0 } },
-   { 581, { Inst(Type2Types<TEX::AccountType, int>()), &TEX::realmbases[147], "AccountType", 0 } },
-   { 582, { Inst(Type2Types<TEX::CustOrderCapacity, int>()), &TEX::realmbases[148], "CustOrderCapacity", 0 } },
-   { 583, { Inst(Type2Type<TEX::ClOrdLinkID>()), 0, "ClOrdLinkID", 0 } },
-   { 584, { Inst(Type2Type<TEX::MassStatusReqID>()), 0, "MassStatusReqID", 0 } },
-   { 585, { Inst(Type2Types<TEX::MassStatusReqType, int>()), &TEX::realmbases[149], "MassStatusReqType", 0 } },
-   { 586, { Inst(Type2Type<TEX::OrigOrdModTime>()), 0, "OrigOrdModTime", 0 } },
-   { 587, { Inst(Type2Type<TEX::LegSettlType>()), 0, "LegSettlType", 0 } },
-   { 588, { Inst(Type2Type<TEX::LegSettlDate>()), 0, "LegSettlDate", 0 } },
-   { 589, { Inst(Type2Types<TEX::DayBookingInst, char>()), &TEX::realmbases[150], "DayBookingInst", 0 } },
-   { 590, { Inst(Type2Types<TEX::BookingUnit, char>()), &TEX::realmbases[151], "BookingUnit", 0 } },
-   { 591, { Inst(Type2Types<TEX::PreallocMethod, char>()), &TEX::realmbases[152], "PreallocMethod", 0 } },
-   { 592, { Inst(Type2Type<TEX::UnderlyingCountryOfIssue>()), 0, "UnderlyingCountryOfIssue", 0 } },
-   { 593, { Inst(Type2Type<TEX::UnderlyingStateOrProvinceOfIssue>()), 0, "UnderlyingStateOrProvinceOfIssue", 0 } },
-   { 594, { Inst(Type2Type<TEX::UnderlyingLocaleOfIssue>()), 0, "UnderlyingLocaleOfIssue", 0 } },
-   { 595, { Inst(Type2Type<TEX::UnderlyingInstrRegistry>()), 0, "UnderlyingInstrRegistry", 0 } },
-   { 596, { Inst(Type2Type<TEX::LegCountryOfIssue>()), 0, "LegCountryOfIssue", 0 } },
-   { 597, { Inst(Type2Type<TEX::LegStateOrProvinceOfIssue>()), 0, "LegStateOrProvinceOfIssue", 0 } },
-   { 598, { Inst(Type2Type<TEX::LegLocaleOfIssue>()), 0, "LegLocaleOfIssue", 0 } },
-   { 599, { Inst(Type2Type<TEX::LegInstrRegistry>()), 0, "LegInstrRegistry", 0 } },
-   { 600, { Inst(Type2Type<TEX::LegSymbol>()), 0, "LegSymbol", 0 } },
-   { 601, { Inst(Type2Type<TEX::LegSymbolSfx>()), 0, "LegSymbolSfx", 0 } },
-   { 602, { Inst(Type2Type<TEX::LegSecurityID>()), 0, "LegSecurityID", 0 } },
-   { 603, { Inst(Type2Type<TEX::LegSecurityIDSource>()), 0, "LegSecurityIDSource", 0 } },
-   { 604, { Inst(Type2Type<TEX::NoLegSecurityAltID>()), 0, "NoLegSecurityAltID", 0 } },
-   { 605, { Inst(Type2Type<TEX::LegSecurityAltID>()), 0, "LegSecurityAltID", 0 } },
-   { 606, { Inst(Type2Type<TEX::LegSecurityAltIDSource>()), 0, "LegSecurityAltIDSource", 0 } },
-   { 607, { Inst(Type2Type<TEX::LegProduct>()), 0, "LegProduct", 0 } },
-   { 608, { Inst(Type2Type<TEX::LegCFICode>()), 0, "LegCFICode", 0 } },
-   { 609, { Inst(Type2Type<TEX::LegSecurityType>()), 0, "LegSecurityType", 0 } },
-   { 610, { Inst(Type2Type<TEX::LegMaturityMonthYear>()), 0, "LegMaturityMonthYear", 0 } },
-   { 611, { Inst(Type2Type<TEX::LegMaturityDate>()), 0, "LegMaturityDate", 0 } },
-   { 612, { Inst(Type2Type<TEX::LegStrikePrice>()), 0, "LegStrikePrice", 0 } },
-   { 613, { Inst(Type2Type<TEX::LegOptAttribute>()), 0, "LegOptAttribute", 0 } },
-   { 614, { Inst(Type2Type<TEX::LegContractMultiplier>()), 0, "LegContractMultiplier", 0 } },
-   { 615, { Inst(Type2Type<TEX::LegCouponRate>()), 0, "LegCouponRate", 0 } },
-   { 616, { Inst(Type2Type<TEX::LegSecurityExchange>()), 0, "LegSecurityExchange", 0 } },
-   { 617, { Inst(Type2Type<TEX::LegIssuer>()), 0, "LegIssuer", 0 } },
-   { 618, { Inst(Type2Type<TEX::EncodedLegIssuerLen>()), 0, "EncodedLegIssuerLen", 0 } },
-   { 619, { Inst(Type2Type<TEX::EncodedLegIssuer>()), 0, "EncodedLegIssuer", 0 } },
-   { 620, { Inst(Type2Type<TEX::LegSecurityDesc>()), 0, "LegSecurityDesc", 0 } },
-   { 621, { Inst(Type2Type<TEX::EncodedLegSecurityDescLen>()), 0, "EncodedLegSecurityDescLen", 0 } },
-   { 622, { Inst(Type2Type<TEX::EncodedLegSecurityDesc>()), 0, "EncodedLegSecurityDesc", 0 } },
-   { 623, { Inst(Type2Type<TEX::LegRatioQty>()), 0, "LegRatioQty", 0 } },
-   { 624, { Inst(Type2Type<TEX::LegSide>()), 0, "LegSide", 0 } },
-   { 625, { Inst(Type2Types<TEX::TradingSessionSubID, f8String>()), &TEX::realmbases[153], "TradingSessionSubID", 0 } },
-   { 626, { Inst(Type2Types<TEX::AllocType, int>()), &TEX::realmbases[154], "AllocType", 0 } },
-   { 627, { Inst(Type2Type<TEX::NoHops>()), 0, "NoHops", 0 } },
-   { 628, { Inst(Type2Type<TEX::HopCompID>()), 0, "HopCompID", 0 } },
-   { 629, { Inst(Type2Type<TEX::HopSendingTime>()), 0, "HopSendingTime", 0 } },
-   { 630, { Inst(Type2Type<TEX::HopRefID>()), 0, "HopRefID", 0 } },
-   { 631, { Inst(Type2Type<TEX::MidPx>()), 0, "MidPx", 0 } },
-   { 632, { Inst(Type2Type<TEX::BidYield>()), 0, "BidYield", 0 } },
-   { 633, { Inst(Type2Type<TEX::MidYield>()), 0, "MidYield", 0 } },
-   { 634, { Inst(Type2Type<TEX::OfferYield>()), 0, "OfferYield", 0 } },
-   { 635, { Inst(Type2Types<TEX::ClearingFeeIndicator, f8String>()), &TEX::realmbases[155], "ClearingFeeIndicator", 0 } },
-   { 636, { Inst(Type2Types<TEX::WorkingIndicator, char>()), &TEX::realmbases[156], "WorkingIndicator", 0 } },
-   { 637, { Inst(Type2Type<TEX::LegLastPx>()), 0, "LegLastPx", 0 } },
-   { 638, { Inst(Type2Types<TEX::PriorityIndicator, int>()), &TEX::realmbases[157], "PriorityIndicator", 0 } },
-   { 639, { Inst(Type2Type<TEX::PriceImprovement>()), 0, "PriceImprovement", 0 } },
-   { 640, { Inst(Type2Type<TEX::Price2>()), 0, "Price2", 0 } },
-   { 641, { Inst(Type2Type<TEX::LastForwardPoints2>()), 0, "LastForwardPoints2", 0 } },
-   { 642, { Inst(Type2Type<TEX::BidForwardPoints2>()), 0, "BidForwardPoints2", 0 } },
-   { 643, { Inst(Type2Type<TEX::OfferForwardPoints2>()), 0, "OfferForwardPoints2", 0 } },
-   { 644, { Inst(Type2Type<TEX::RFQReqID>()), 0, "RFQReqID", 0 } },
-   { 645, { Inst(Type2Type<TEX::MktBidPx>()), 0, "MktBidPx", 0 } },
-   { 646, { Inst(Type2Type<TEX::MktOfferPx>()), 0, "MktOfferPx", 0 } },
-   { 647, { Inst(Type2Type<TEX::MinBidSize>()), 0, "MinBidSize", 0 } },
-   { 648, { Inst(Type2Type<TEX::MinOfferSize>()), 0, "MinOfferSize", 0 } },
-   { 649, { Inst(Type2Type<TEX::QuoteStatusReqID>()), 0, "QuoteStatusReqID", 0 } },
-   { 650, { Inst(Type2Types<TEX::LegalConfirm, char>()), &TEX::realmbases[158], "LegalConfirm", 0 } },
-   { 651, { Inst(Type2Type<TEX::UnderlyingLastPx>()), 0, "UnderlyingLastPx", 0 } },
-   { 652, { Inst(Type2Type<TEX::UnderlyingLastQty>()), 0, "UnderlyingLastQty", 0 } },
-   { 654, { Inst(Type2Type<TEX::LegRefID>()), 0, "LegRefID", 0 } },
-   { 655, { Inst(Type2Type<TEX::ContraLegRefID>()), 0, "ContraLegRefID", 0 } },
-   { 656, { Inst(Type2Type<TEX::SettlCurrBidFxRate>()), 0, "SettlCurrBidFxRate", 0 } },
-   { 657, { Inst(Type2Type<TEX::SettlCurrOfferFxRate>()), 0, "SettlCurrOfferFxRate", 0 } },
-   { 658, { Inst(Type2Types<TEX::QuoteRequestRejectReason, int>()), &TEX::realmbases[159], "QuoteRequestRejectReason", 0 } },
-   { 659, { Inst(Type2Type<TEX::SideComplianceID>()), 0, "SideComplianceID", 0 } },
-   { 660, { Inst(Type2Types<TEX::AcctIDSource, int>()), &TEX::realmbases[160], "AcctIDSource", 0 } },
-   { 661, { Inst(Type2Type<TEX::AllocAcctIDSource>()), 0, "AllocAcctIDSource", 0 } },
-   { 662, { Inst(Type2Type<TEX::BenchmarkPrice>()), 0, "BenchmarkPrice", 0 } },
-   { 663, { Inst(Type2Type<TEX::BenchmarkPriceType>()), 0, "BenchmarkPriceType", 0 } },
-   { 664, { Inst(Type2Type<TEX::ConfirmID>()), 0, "ConfirmID", 0 } },
-   { 665, { Inst(Type2Types<TEX::ConfirmStatus, int>()), &TEX::realmbases[161], "ConfirmStatus", 0 } },
-   { 666, { Inst(Type2Types<TEX::ConfirmTransType, int>()), &TEX::realmbases[162], "ConfirmTransType", 0 } },
-   { 667, { Inst(Type2Type<TEX::ContractSettlMonth>()), 0, "ContractSettlMonth", 0 } },
-   { 668, { Inst(Type2Types<TEX::DeliveryForm, int>()), &TEX::realmbases[163], "DeliveryForm", 0 } },
-   { 669, { Inst(Type2Type<TEX::LastParPx>()), 0, "LastParPx", 0 } },
-   { 670, { Inst(Type2Type<TEX::NoLegAllocs>()), 0, "NoLegAllocs", 0 } },
-   { 671, { Inst(Type2Type<TEX::LegAllocAccount>()), 0, "LegAllocAccount", 0 } },
-   { 672, { Inst(Type2Type<TEX::LegIndividualAllocID>()), 0, "LegIndividualAllocID", 0 } },
-   { 673, { Inst(Type2Type<TEX::LegAllocQty>()), 0, "LegAllocQty", 0 } },
-   { 674, { Inst(Type2Type<TEX::LegAllocAcctIDSource>()), 0, "LegAllocAcctIDSource", 0 } },
-   { 675, { Inst(Type2Type<TEX::LegSettlCurrency>()), 0, "LegSettlCurrency", 0 } },
-   { 676, { Inst(Type2Type<TEX::LegBenchmarkCurveCurrency>()), 0, "LegBenchmarkCurveCurrency", 0 } },
-   { 677, { Inst(Type2Type<TEX::LegBenchmarkCurveName>()), 0, "LegBenchmarkCurveName", 0 } },
-   { 678, { Inst(Type2Type<TEX::LegBenchmarkCurvePoint>()), 0, "LegBenchmarkCurvePoint", 0 } },
-   { 679, { Inst(Type2Type<TEX::LegBenchmarkPrice>()), 0, "LegBenchmarkPrice", 0 } },
-   { 680, { Inst(Type2Type<TEX::LegBenchmarkPriceType>()), 0, "LegBenchmarkPriceType", 0 } },
-   { 681, { Inst(Type2Type<TEX::LegBidPx>()), 0, "LegBidPx", 0 } },
-   { 682, { Inst(Type2Type<TEX::LegIOIQty>()), 0, "LegIOIQty", 0 } },
-   { 683, { Inst(Type2Type<TEX::NoLegStipulations>()), 0, "NoLegStipulations", 0 } },
-   { 684, { Inst(Type2Type<TEX::LegOfferPx>()), 0, "LegOfferPx", 0 } },
-   { 685, { Inst(Type2Type<TEX::LegOrderQty>()), 0, "LegOrderQty", 0 } },
-   { 686, { Inst(Type2Type<TEX::LegPriceType>()), 0, "LegPriceType", 0 } },
-   { 687, { Inst(Type2Type<TEX::LegQty>()), 0, "LegQty", 0 } },
-   { 688, { Inst(Type2Type<TEX::LegStipulationType>()), 0, "LegStipulationType", 0 } },
-   { 689, { Inst(Type2Type<TEX::LegStipulationValue>()), 0, "LegStipulationValue", 0 } },
-   { 690, { Inst(Type2Types<TEX::LegSwapType, int>()), &TEX::realmbases[164], "LegSwapType", 0 } },
-   { 691, { Inst(Type2Type<TEX::Pool>()), 0, "Pool", 0 } },
-   { 692, { Inst(Type2Types<TEX::QuotePriceType, int>()), &TEX::realmbases[165], "QuotePriceType", 0 } },
-   { 693, { Inst(Type2Type<TEX::QuoteRespID>()), 0, "QuoteRespID", 0 } },
-   { 694, { Inst(Type2Types<TEX::QuoteRespType, int>()), &TEX::realmbases[166], "QuoteRespType", 0 } },
-   { 695, { Inst(Type2Type<TEX::QuoteQualifier>()), 0, "QuoteQualifier", 0 } },
-   { 696, { Inst(Type2Type<TEX::YieldRedemptionDate>()), 0, "YieldRedemptionDate", 0 } },
-   { 697, { Inst(Type2Type<TEX::YieldRedemptionPrice>()), 0, "YieldRedemptionPrice", 0 } },
-   { 698, { Inst(Type2Type<TEX::YieldRedemptionPriceType>()), 0, "YieldRedemptionPriceType", 0 } },
-   { 699, { Inst(Type2Type<TEX::BenchmarkSecurityID>()), 0, "BenchmarkSecurityID", 0 } },
-   { 700, { Inst(Type2Type<TEX::ReversalIndicator>()), 0, "ReversalIndicator", 0 } },
-   { 701, { Inst(Type2Type<TEX::YieldCalcDate>()), 0, "YieldCalcDate", 0 } },
-   { 702, { Inst(Type2Type<TEX::NoPositions>()), 0, "NoPositions", 0 } },
-   { 703, { Inst(Type2Types<TEX::PosType, f8String>()), &TEX::realmbases[167], "PosType", 0 } },
-   { 704, { Inst(Type2Type<TEX::LongQty>()), 0, "LongQty", 0 } },
-   { 705, { Inst(Type2Type<TEX::ShortQty>()), 0, "ShortQty", 0 } },
-   { 706, { Inst(Type2Types<TEX::PosQtyStatus, int>()), &TEX::realmbases[168], "PosQtyStatus", 0 } },
-   { 707, { Inst(Type2Types<TEX::PosAmtType, f8String>()), &TEX::realmbases[169], "PosAmtType", 0 } },
-   { 708, { Inst(Type2Type<TEX::PosAmt>()), 0, "PosAmt", 0 } },
-   { 709, { Inst(Type2Types<TEX::PosTransType, int>()), &TEX::realmbases[170], "PosTransType", 0 } },
-   { 710, { Inst(Type2Type<TEX::PosReqID>()), 0, "PosReqID", 0 } },
-   { 711, { Inst(Type2Type<TEX::NoUnderlyings>()), 0, "NoUnderlyings", 0 } },
-   { 712, { Inst(Type2Types<TEX::PosMaintAction, int>()), &TEX::realmbases[171], "PosMaintAction", 0 } },
-   { 713, { Inst(Type2Type<TEX::OrigPosReqRefID>()), 0, "OrigPosReqRefID", 0 } },
-   { 714, { Inst(Type2Type<TEX::PosMaintRptRefID>()), 0, "PosMaintRptRefID", 0 } },
-   { 715, { Inst(Type2Type<TEX::ClearingBusinessDate>()), 0, "ClearingBusinessDate", 0 } },
-   { 716, { Inst(Type2Types<TEX::SettlSessID, f8String>()), &TEX::realmbases[172], "SettlSessID", 0 } },
-   { 717, { Inst(Type2Type<TEX::SettlSessSubID>()), 0, "SettlSessSubID", 0 } },
-   { 718, { Inst(Type2Types<TEX::AdjustmentType, int>()), &TEX::realmbases[173], "AdjustmentType", 0 } },
-   { 719, { Inst(Type2Type<TEX::ContraryInstructionIndicator>()), 0, "ContraryInstructionIndicator", 0 } },
-   { 720, { Inst(Type2Type<TEX::PriorSpreadIndicator>()), 0, "PriorSpreadIndicator", 0 } },
-   { 721, { Inst(Type2Type<TEX::PosMaintRptID>()), 0, "PosMaintRptID", 0 } },
-   { 722, { Inst(Type2Types<TEX::PosMaintStatus, int>()), &TEX::realmbases[174], "PosMaintStatus", 0 } },
-   { 723, { Inst(Type2Types<TEX::PosMaintResult, int>()), &TEX::realmbases[175], "PosMaintResult", 0 } },
-   { 724, { Inst(Type2Types<TEX::PosReqType, int>()), &TEX::realmbases[176], "PosReqType", 0 } },
-   { 725, { Inst(Type2Types<TEX::ResponseTransportType, int>()), &TEX::realmbases[177], "ResponseTransportType", 0 } },
-   { 726, { Inst(Type2Type<TEX::ResponseDestination>()), 0, "ResponseDestination", 0 } },
-   { 727, { Inst(Type2Type<TEX::TotalNumPosReports>()), 0, "TotalNumPosReports", 0 } },
-   { 728, { Inst(Type2Types<TEX::PosReqResult, int>()), &TEX::realmbases[178], "PosReqResult", 0 } },
-   { 729, { Inst(Type2Types<TEX::PosReqStatus, int>()), &TEX::realmbases[179], "PosReqStatus", 0 } },
-   { 730, { Inst(Type2Type<TEX::SettlPrice>()), 0, "SettlPrice", 0 } },
-   { 731, { Inst(Type2Types<TEX::SettlPriceType, int>()), &TEX::realmbases[180], "SettlPriceType", 0 } },
-   { 732, { Inst(Type2Type<TEX::UnderlyingSettlPrice>()), 0, "UnderlyingSettlPrice", 0 } },
-   { 733, { Inst(Type2Type<TEX::UnderlyingSettlPriceType>()), 0, "UnderlyingSettlPriceType", 0 } },
-   { 734, { Inst(Type2Type<TEX::PriorSettlPrice>()), 0, "PriorSettlPrice", 0 } },
-   { 735, { Inst(Type2Type<TEX::NoQuoteQualifiers>()), 0, "NoQuoteQualifiers", 0 } },
-   { 736, { Inst(Type2Type<TEX::AllocSettlCurrency>()), 0, "AllocSettlCurrency", 0 } },
-   { 737, { Inst(Type2Type<TEX::AllocSettlCurrAmt>()), 0, "AllocSettlCurrAmt", 0 } },
-   { 738, { Inst(Type2Type<TEX::InterestAtMaturity>()), 0, "InterestAtMaturity", 0 } },
-   { 739, { Inst(Type2Type<TEX::LegDatedDate>()), 0, "LegDatedDate", 0 } },
-   { 740, { Inst(Type2Type<TEX::LegPool>()), 0, "LegPool", 0 } },
-   { 741, { Inst(Type2Type<TEX::AllocInterestAtMaturity>()), 0, "AllocInterestAtMaturity", 0 } },
-   { 742, { Inst(Type2Type<TEX::AllocAccruedInterestAmt>()), 0, "AllocAccruedInterestAmt", 0 } },
-   { 743, { Inst(Type2Type<TEX::DeliveryDate>()), 0, "DeliveryDate", 0 } },
-   { 744, { Inst(Type2Types<TEX::AssignmentMethod, char>()), &TEX::realmbases[181], "AssignmentMethod", 0 } },
-   { 745, { Inst(Type2Type<TEX::AssignmentUnit>()), 0, "AssignmentUnit", 0 } },
-   { 746, { Inst(Type2Type<TEX::OpenInterest>()), 0, "OpenInterest", 0 } },
-   { 747, { Inst(Type2Types<TEX::ExerciseMethod, char>()), &TEX::realmbases[182], "ExerciseMethod", 0 } },
-   { 748, { Inst(Type2Type<TEX::TotNumTradeReports>()), 0, "TotNumTradeReports", 0 } },
-   { 749, { Inst(Type2Types<TEX::TradeRequestResult, int>()), &TEX::realmbases[183], "TradeRequestResult", 0 } },
-   { 750, { Inst(Type2Types<TEX::TradeRequestStatus, int>()), &TEX::realmbases[184], "TradeRequestStatus", 0 } },
-   { 751, { Inst(Type2Types<TEX::TradeReportRejectReason, int>()), &TEX::realmbases[185], "TradeReportRejectReason", 0 } },
-   { 752, { Inst(Type2Types<TEX::SideMultiLegReportingType, int>()), &TEX::realmbases[186], "SideMultiLegReportingType", 0 } },
-   { 753, { Inst(Type2Type<TEX::NoPosAmt>()), 0, "NoPosAmt", 0 } },
-   { 754, { Inst(Type2Type<TEX::AutoAcceptIndicator>()), 0, "AutoAcceptIndicator", 0 } },
-   { 755, { Inst(Type2Type<TEX::AllocReportID>()), 0, "AllocReportID", 0 } },
-   { 756, { Inst(Type2Type<TEX::NoNested2PartyIDs>()), 0, "NoNested2PartyIDs", 0 } },
-   { 757, { Inst(Type2Type<TEX::Nested2PartyID>()), 0, "Nested2PartyID", 0 } },
-   { 758, { Inst(Type2Type<TEX::Nested2PartyIDSource>()), 0, "Nested2PartyIDSource", 0 } },
-   { 759, { Inst(Type2Type<TEX::Nested2PartyRole>()), 0, "Nested2PartyRole", 0 } },
-   { 760, { Inst(Type2Type<TEX::Nested2PartySubID>()), 0, "Nested2PartySubID", 0 } },
-   { 761, { Inst(Type2Type<TEX::BenchmarkSecurityIDSource>()), 0, "BenchmarkSecurityIDSource", 0 } },
-   { 762, { Inst(Type2Type<TEX::SecuritySubType>()), 0, "SecuritySubType", 0 } },
-   { 763, { Inst(Type2Type<TEX::UnderlyingSecuritySubType>()), 0, "UnderlyingSecuritySubType", 0 } },
-   { 764, { Inst(Type2Type<TEX::LegSecuritySubType>()), 0, "LegSecuritySubType", 0 } },
-   { 765, { Inst(Type2Type<TEX::AllowableOneSidednessPct>()), 0, "AllowableOneSidednessPct", 0 } },
-   { 766, { Inst(Type2Type<TEX::AllowableOneSidednessValue>()), 0, "AllowableOneSidednessValue", 0 } },
-   { 767, { Inst(Type2Type<TEX::AllowableOneSidednessCurr>()), 0, "AllowableOneSidednessCurr", 0 } },
-   { 768, { Inst(Type2Type<TEX::NoTrdRegTimestamps>()), 0, "NoTrdRegTimestamps", 0 } },
-   { 769, { Inst(Type2Type<TEX::TrdRegTimestamp>()), 0, "TrdRegTimestamp", 0 } },
-   { 770, { Inst(Type2Types<TEX::TrdRegTimestampType, int>()), &TEX::realmbases[187], "TrdRegTimestampType", 0 } },
-   { 771, { Inst(Type2Type<TEX::TrdRegTimestampOrigin>()), 0, "TrdRegTimestampOrigin", 0 } },
-   { 772, { Inst(Type2Type<TEX::ConfirmRefID>()), 0, "ConfirmRefID", 0 } },
-   { 773, { Inst(Type2Types<TEX::ConfirmType, int>()), &TEX::realmbases[188], "ConfirmType", 0 } },
-   { 774, { Inst(Type2Types<TEX::ConfirmRejReason, int>()), &TEX::realmbases[189], "ConfirmRejReason", 0 } },
-   { 775, { Inst(Type2Types<TEX::BookingType, int>()), &TEX::realmbases[190], "BookingType", 0 } },
-   { 776, { Inst(Type2Type<TEX::IndividualAllocRejCode>()), 0, "IndividualAllocRejCode", 0 } },
-   { 777, { Inst(Type2Type<TEX::SettlInstMsgID>()), 0, "SettlInstMsgID", 0 } },
-   { 778, { Inst(Type2Type<TEX::NoSettlInst>()), 0, "NoSettlInst", 0 } },
-   { 779, { Inst(Type2Type<TEX::LastUpdateTime>()), 0, "LastUpdateTime", 0 } },
-   { 780, { Inst(Type2Types<TEX::AllocSettlInstType, int>()), &TEX::realmbases[191], "AllocSettlInstType", 0 } },
-   { 781, { Inst(Type2Type<TEX::NoSettlPartyIDs>()), 0, "NoSettlPartyIDs", 0 } },
-   { 782, { Inst(Type2Type<TEX::SettlPartyID>()), 0, "SettlPartyID", 0 } },
-   { 783, { Inst(Type2Type<TEX::SettlPartyIDSource>()), 0, "SettlPartyIDSource", 0 } },
-   { 784, { Inst(Type2Type<TEX::SettlPartyRole>()), 0, "SettlPartyRole", 0 } },
-   { 785, { Inst(Type2Type<TEX::SettlPartySubID>()), 0, "SettlPartySubID", 0 } },
-   { 786, { Inst(Type2Type<TEX::SettlPartySubIDType>()), 0, "SettlPartySubIDType", 0 } },
-   { 787, { Inst(Type2Types<TEX::DlvyInstType, char>()), &TEX::realmbases[192], "DlvyInstType", 0 } },
-   { 788, { Inst(Type2Types<TEX::TerminationType, int>()), &TEX::realmbases[193], "TerminationType", 0 } },
-   { 789, { Inst(Type2Type<TEX::NextExpectedMsgSeqNum>()), 0, "NextExpectedMsgSeqNum", 0 } },
-   { 790, { Inst(Type2Type<TEX::OrdStatusReqID>()), 0, "OrdStatusReqID", 0 } },
-   { 791, { Inst(Type2Type<TEX::SettlInstReqID>()), 0, "SettlInstReqID", 0 } },
-   { 792, { Inst(Type2Types<TEX::SettlInstReqRejCode, int>()), &TEX::realmbases[194], "SettlInstReqRejCode", 0 } },
-   { 793, { Inst(Type2Type<TEX::SecondaryAllocID>()), 0, "SecondaryAllocID", 0 } },
-   { 794, { Inst(Type2Types<TEX::AllocReportType, int>()), &TEX::realmbases[195], "AllocReportType", 0 } },
-   { 795, { Inst(Type2Type<TEX::AllocReportRefID>()), 0, "AllocReportRefID", 0 } },
-   { 796, { Inst(Type2Types<TEX::AllocCancReplaceReason, int>()), &TEX::realmbases[196], "AllocCancReplaceReason", 0 } },
-   { 797, { Inst(Type2Type<TEX::CopyMsgIndicator>()), 0, "CopyMsgIndicator", 0 } },
-   { 798, { Inst(Type2Types<TEX::AllocAccountType, int>()), &TEX::realmbases[197], "AllocAccountType", 0 } },
-   { 799, { Inst(Type2Type<TEX::OrderAvgPx>()), 0, "OrderAvgPx", 0 } },
-   { 800, { Inst(Type2Type<TEX::OrderBookingQty>()), 0, "OrderBookingQty", 0 } },
-   { 801, { Inst(Type2Type<TEX::NoSettlPartySubIDs>()), 0, "NoSettlPartySubIDs", 0 } },
-   { 802, { Inst(Type2Type<TEX::NoPartySubIDs>()), 0, "NoPartySubIDs", 0 } },
-   { 803, { Inst(Type2Types<TEX::PartySubIDType, int>()), &TEX::realmbases[198], "PartySubIDType", 0 } },
-   { 804, { Inst(Type2Type<TEX::NoNestedPartySubIDs>()), 0, "NoNestedPartySubIDs", 0 } },
-   { 805, { Inst(Type2Type<TEX::NestedPartySubIDType>()), 0, "NestedPartySubIDType", 0 } },
-   { 806, { Inst(Type2Type<TEX::NoNested2PartySubIDs>()), 0, "NoNested2PartySubIDs", 0 } },
-   { 807, { Inst(Type2Type<TEX::Nested2PartySubIDType>()), 0, "Nested2PartySubIDType", 0 } },
-   { 808, { Inst(Type2Types<TEX::AllocIntermedReqType, int>()), &TEX::realmbases[199], "AllocIntermedReqType", 0 } },
-   { 810, { Inst(Type2Type<TEX::UnderlyingPx>()), 0, "UnderlyingPx", 0 } },
-   { 811, { Inst(Type2Type<TEX::PriceDelta>()), 0, "PriceDelta", 0 } },
-   { 812, { Inst(Type2Type<TEX::ApplQueueMax>()), 0, "ApplQueueMax", 0 } },
-   { 813, { Inst(Type2Type<TEX::ApplQueueDepth>()), 0, "ApplQueueDepth", 0 } },
-   { 814, { Inst(Type2Types<TEX::ApplQueueResolution, int>()), &TEX::realmbases[200], "ApplQueueResolution", 0 } },
-   { 815, { Inst(Type2Types<TEX::ApplQueueAction, int>()), &TEX::realmbases[201], "ApplQueueAction", 0 } },
-   { 816, { Inst(Type2Type<TEX::NoAltMDSource>()), 0, "NoAltMDSource", 0 } },
-   { 817, { Inst(Type2Type<TEX::AltMDSourceID>()), 0, "AltMDSourceID", 0 } },
-   { 818, { Inst(Type2Type<TEX::SecondaryTradeReportID>()), 0, "SecondaryTradeReportID", 0 } },
-   { 819, { Inst(Type2Types<TEX::AvgPxIndicator, int>()), &TEX::realmbases[202], "AvgPxIndicator", 0 } },
-   { 820, { Inst(Type2Type<TEX::TradeLinkID>()), 0, "TradeLinkID", 0 } },
-   { 821, { Inst(Type2Type<TEX::OrderInputDevice>()), 0, "OrderInputDevice", 0 } },
-   { 822, { Inst(Type2Type<TEX::UnderlyingTradingSessionID>()), 0, "UnderlyingTradingSessionID", 0 } },
-   { 823, { Inst(Type2Type<TEX::UnderlyingTradingSessionSubID>()), 0, "UnderlyingTradingSessionSubID", 0 } },
-   { 824, { Inst(Type2Type<TEX::TradeLegRefID>()), 0, "TradeLegRefID", 0 } },
-   { 825, { Inst(Type2Type<TEX::ExchangeRule>()), 0, "ExchangeRule", 0 } },
-   { 826, { Inst(Type2Types<TEX::TradeAllocIndicator, int>()), &TEX::realmbases[203], "TradeAllocIndicator", 0 } },
-   { 827, { Inst(Type2Types<TEX::ExpirationCycle, int>()), &TEX::realmbases[204], "ExpirationCycle", 0 } },
-   { 828, { Inst(Type2Types<TEX::TrdType, int>()), &TEX::realmbases[205], "TrdType", 0 } },
-   { 829, { Inst(Type2Types<TEX::TrdSubType, int>()), &TEX::realmbases[206], "TrdSubType", 0 } },
-   { 830, { Inst(Type2Type<TEX::TransferReason>()), 0, "TransferReason", 0 } },
-   { 832, { Inst(Type2Type<TEX::TotNumAssignmentReports>()), 0, "TotNumAssignmentReports", 0 } },
-   { 833, { Inst(Type2Type<TEX::AsgnRptID>()), 0, "AsgnRptID", 0 } },
-   { 834, { Inst(Type2Type<TEX::ThresholdAmount>()), 0, "ThresholdAmount", 0 } },
-   { 835, { Inst(Type2Types<TEX::PegMoveType, int>()), &TEX::realmbases[207], "PegMoveType", 0 } },
-   { 836, { Inst(Type2Types<TEX::PegOffsetType, int>()), &TEX::realmbases[208], "PegOffsetType", 0 } },
-   { 837, { Inst(Type2Types<TEX::PegLimitType, int>()), &TEX::realmbases[209], "PegLimitType", 0 } },
-   { 838, { Inst(Type2Types<TEX::PegRoundDirection, int>()), &TEX::realmbases[210], "PegRoundDirection", 0 } },
-   { 839, { Inst(Type2Type<TEX::PeggedPrice>()), 0, "PeggedPrice", 0 } },
-   { 840, { Inst(Type2Types<TEX::PegScope, int>()), &TEX::realmbases[211], "PegScope", 0 } },
-   { 841, { Inst(Type2Types<TEX::DiscretionMoveType, int>()), &TEX::realmbases[212], "DiscretionMoveType", 0 } },
-   { 842, { Inst(Type2Types<TEX::DiscretionOffsetType, int>()), &TEX::realmbases[213], "DiscretionOffsetType", 0 } },
-   { 843, { Inst(Type2Types<TEX::DiscretionLimitType, int>()), &TEX::realmbases[214], "DiscretionLimitType", 0 } },
-   { 844, { Inst(Type2Types<TEX::DiscretionRoundDirection, int>()), &TEX::realmbases[215], "DiscretionRoundDirection", 0 } },
-   { 845, { Inst(Type2Type<TEX::DiscretionPrice>()), 0, "DiscretionPrice", 0 } },
-   { 846, { Inst(Type2Types<TEX::DiscretionScope, int>()), &TEX::realmbases[216], "DiscretionScope", 0 } },
-   { 847, { Inst(Type2Types<TEX::TargetStrategy, int>()), &TEX::realmbases[217], "TargetStrategy", 0 } },
-   { 848, { Inst(Type2Type<TEX::TargetStrategyParameters>()), 0, "TargetStrategyParameters", 0 } },
-   { 849, { Inst(Type2Type<TEX::ParticipationRate>()), 0, "ParticipationRate", 0 } },
-   { 850, { Inst(Type2Type<TEX::TargetStrategyPerformance>()), 0, "TargetStrategyPerformance", 0 } },
-   { 851, { Inst(Type2Types<TEX::LastLiquidityInd, int>()), &TEX::realmbases[218], "LastLiquidityInd", 0 } },
-   { 852, { Inst(Type2Types<TEX::PublishTrdIndicator, char>()), &TEX::realmbases[219], "PublishTrdIndicator", 0 } },
-   { 853, { Inst(Type2Types<TEX::ShortSaleReason, int>()), &TEX::realmbases[220], "ShortSaleReason", 0 } },
-   { 854, { Inst(Type2Types<TEX::QtyType, int>()), &TEX::realmbases[221], "QtyType", 0 } },
-   { 855, { Inst(Type2Type<TEX::SecondaryTrdType>()), 0, "SecondaryTrdType", 0 } },
-   { 856, { Inst(Type2Types<TEX::TradeReportType, int>()), &TEX::realmbases[222], "TradeReportType", 0 } },
-   { 857, { Inst(Type2Types<TEX::AllocNoOrdersType, int>()), &TEX::realmbases[223], "AllocNoOrdersType", 0 } },
-   { 858, { Inst(Type2Type<TEX::SharedCommission>()), 0, "SharedCommission", 0 } },
-   { 859, { Inst(Type2Type<TEX::ConfirmReqID>()), 0, "ConfirmReqID", 0 } },
-   { 860, { Inst(Type2Type<TEX::AvgParPx>()), 0, "AvgParPx", 0 } },
-   { 861, { Inst(Type2Type<TEX::ReportedPx>()), 0, "ReportedPx", 0 } },
-   { 862, { Inst(Type2Type<TEX::NoCapacities>()), 0, "NoCapacities", 0 } },
-   { 863, { Inst(Type2Type<TEX::OrderCapacityQty>()), 0, "OrderCapacityQty", 0 } },
-   { 864, { Inst(Type2Type<TEX::NoEvents>()), 0, "NoEvents", 0 } },
-   { 865, { Inst(Type2Types<TEX::EventType, int>()), &TEX::realmbases[224], "EventType", 0 } },
-   { 866, { Inst(Type2Type<TEX::EventDate>()), 0, "EventDate", 0 } },
-   { 867, { Inst(Type2Type<TEX::EventPx>()), 0, "EventPx", 0 } },
-   { 868, { Inst(Type2Type<TEX::EventText>()), 0, "EventText", 0 } },
-   { 869, { Inst(Type2Type<TEX::PctAtRisk>()), 0, "PctAtRisk", 0 } },
-   { 870, { Inst(Type2Type<TEX::NoInstrAttrib>()), 0, "NoInstrAttrib", 0 } },
-   { 871, { Inst(Type2Types<TEX::InstrAttribType, int>()), &TEX::realmbases[225], "InstrAttribType", 0 } },
-   { 872, { Inst(Type2Type<TEX::InstrAttribValue>()), 0, "InstrAttribValue", 0 } },
-   { 873, { Inst(Type2Type<TEX::DatedDate>()), 0, "DatedDate", 0 } },
-   { 874, { Inst(Type2Type<TEX::InterestAccrualDate>()), 0, "InterestAccrualDate", 0 } },
-   { 875, { Inst(Type2Types<TEX::CPProgram, int>()), &TEX::realmbases[226], "CPProgram", 0 } },
-   { 876, { Inst(Type2Type<TEX::CPRegType>()), 0, "CPRegType", 0 } },
-   { 877, { Inst(Type2Type<TEX::UnderlyingCPProgram>()), 0, "UnderlyingCPProgram", 0 } },
-   { 878, { Inst(Type2Type<TEX::UnderlyingCPRegType>()), 0, "UnderlyingCPRegType", 0 } },
-   { 879, { Inst(Type2Type<TEX::UnderlyingQty>()), 0, "UnderlyingQty", 0 } },
-   { 880, { Inst(Type2Type<TEX::TrdMatchID>()), 0, "TrdMatchID", 0 } },
-   { 881, { Inst(Type2Type<TEX::SecondaryTradeReportRefID>()), 0, "SecondaryTradeReportRefID", 0 } },
-   { 882, { Inst(Type2Type<TEX::UnderlyingDirtyPrice>()), 0, "UnderlyingDirtyPrice", 0 } },
-   { 883, { Inst(Type2Type<TEX::UnderlyingEndPrice>()), 0, "UnderlyingEndPrice", 0 } },
-   { 884, { Inst(Type2Type<TEX::UnderlyingStartValue>()), 0, "UnderlyingStartValue", 0 } },
-   { 885, { Inst(Type2Type<TEX::UnderlyingCurrentValue>()), 0, "UnderlyingCurrentValue", 0 } },
-   { 886, { Inst(Type2Type<TEX::UnderlyingEndValue>()), 0, "UnderlyingEndValue", 0 } },
-   { 887, { Inst(Type2Type<TEX::NoUnderlyingStips>()), 0, "NoUnderlyingStips", 0 } },
-   { 888, { Inst(Type2Type<TEX::UnderlyingStipType>()), 0, "UnderlyingStipType", 0 } },
-   { 889, { Inst(Type2Type<TEX::UnderlyingStipValue>()), 0, "UnderlyingStipValue", 0 } },
-   { 890, { Inst(Type2Type<TEX::MaturityNetMoney>()), 0, "MaturityNetMoney", 0 } },
-   { 891, { Inst(Type2Types<TEX::MiscFeeBasis, int>()), &TEX::realmbases[227], "MiscFeeBasis", 0 } },
-   { 892, { Inst(Type2Type<TEX::TotNoAllocs>()), 0, "TotNoAllocs", 0 } },
-   { 893, { Inst(Type2Types<TEX::LastFragment, char>()), &TEX::realmbases[228], "LastFragment", 0 } },
-   { 894, { Inst(Type2Type<TEX::CollReqID>()), 0, "CollReqID", 0 } },
-   { 895, { Inst(Type2Types<TEX::CollAsgnReason, int>()), &TEX::realmbases[229], "CollAsgnReason", 0 } },
-   { 896, { Inst(Type2Types<TEX::CollInquiryQualifier, int>()), &TEX::realmbases[230], "CollInquiryQualifier", 0 } },
-   { 897, { Inst(Type2Type<TEX::NoTrades>()), 0, "NoTrades", 0 } },
-   { 898, { Inst(Type2Type<TEX::MarginRatio>()), 0, "MarginRatio", 0 } },
-   { 899, { Inst(Type2Type<TEX::MarginExcess>()), 0, "MarginExcess", 0 } },
-   { 900, { Inst(Type2Type<TEX::TotalNetValue>()), 0, "TotalNetValue", 0 } },
-   { 901, { Inst(Type2Type<TEX::CashOutstanding>()), 0, "CashOutstanding", 0 } },
-   { 902, { Inst(Type2Type<TEX::CollAsgnID>()), 0, "CollAsgnID", 0 } },
-   { 903, { Inst(Type2Types<TEX::CollAsgnTransType, int>()), &TEX::realmbases[231], "CollAsgnTransType", 0 } },
-   { 904, { Inst(Type2Type<TEX::CollRespID>()), 0, "CollRespID", 0 } },
-   { 905, { Inst(Type2Types<TEX::CollAsgnRespType, int>()), &TEX::realmbases[232], "CollAsgnRespType", 0 } },
-   { 906, { Inst(Type2Types<TEX::CollAsgnRejectReason, int>()), &TEX::realmbases[233], "CollAsgnRejectReason", 0 } },
-   { 907, { Inst(Type2Type<TEX::CollAsgnRefID>()), 0, "CollAsgnRefID", 0 } },
-   { 908, { Inst(Type2Type<TEX::CollRptID>()), 0, "CollRptID", 0 } },
-   { 909, { Inst(Type2Type<TEX::CollInquiryID>()), 0, "CollInquiryID", 0 } },
-   { 910, { Inst(Type2Types<TEX::CollStatus, int>()), &TEX::realmbases[234], "CollStatus", 0 } },
-   { 911, { Inst(Type2Type<TEX::TotNumReports>()), 0, "TotNumReports", 0 } },
-   { 912, { Inst(Type2Types<TEX::LastRptRequested, char>()), &TEX::realmbases[235], "LastRptRequested", 0 } },
-   { 913, { Inst(Type2Type<TEX::AgreementDesc>()), 0, "AgreementDesc", 0 } },
-   { 914, { Inst(Type2Type<TEX::AgreementID>()), 0, "AgreementID", 0 } },
-   { 915, { Inst(Type2Type<TEX::AgreementDate>()), 0, "AgreementDate", 0 } },
-   { 916, { Inst(Type2Type<TEX::StartDate>()), 0, "StartDate", 0 } },
-   { 917, { Inst(Type2Type<TEX::EndDate>()), 0, "EndDate", 0 } },
-   { 918, { Inst(Type2Type<TEX::AgreementCurrency>()), 0, "AgreementCurrency", 0 } },
-   { 919, { Inst(Type2Types<TEX::DeliveryType, int>()), &TEX::realmbases[236], "DeliveryType", 0 } },
-   { 920, { Inst(Type2Type<TEX::EndAccruedInterestAmt>()), 0, "EndAccruedInterestAmt", 0 } },
-   { 921, { Inst(Type2Type<TEX::StartCash>()), 0, "StartCash", 0 } },
-   { 922, { Inst(Type2Type<TEX::EndCash>()), 0, "EndCash", 0 } },
-   { 923, { Inst(Type2Type<TEX::UserRequestID>()), 0, "UserRequestID", 0 } },
-   { 924, { Inst(Type2Types<TEX::UserRequestType, int>()), &TEX::realmbases[237], "UserRequestType", 0 } },
-   { 925, { Inst(Type2Type<TEX::NewPassword>()), 0, "NewPassword", 0 } },
-   { 926, { Inst(Type2Types<TEX::UserStatus, int>()), &TEX::realmbases[238], "UserStatus", 0 } },
-   { 927, { Inst(Type2Type<TEX::UserStatusText>()), 0, "UserStatusText", 0 } },
-   { 928, { Inst(Type2Types<TEX::StatusValue, int>()), &TEX::realmbases[239], "StatusValue", 0 } },
-   { 929, { Inst(Type2Type<TEX::StatusText>()), 0, "StatusText", 0 } },
-   { 930, { Inst(Type2Type<TEX::RefCompID>()), 0, "RefCompID", 0 } },
-   { 931, { Inst(Type2Type<TEX::RefSubID>()), 0, "RefSubID", 0 } },
-   { 932, { Inst(Type2Type<TEX::NetworkResponseID>()), 0, "NetworkResponseID", 0 } },
-   { 933, { Inst(Type2Type<TEX::NetworkRequestID>()), 0, "NetworkRequestID", 0 } },
-   { 934, { Inst(Type2Type<TEX::LastNetworkResponseID>()), 0, "LastNetworkResponseID", 0 } },
-   { 935, { Inst(Type2Types<TEX::NetworkRequestType, int>()), &TEX::realmbases[240], "NetworkRequestType", 0 } },
-   { 936, { Inst(Type2Type<TEX::NoCompIDs>()), 0, "NoCompIDs", 0 } },
-   { 937, { Inst(Type2Types<TEX::NetworkStatusResponseType, int>()), &TEX::realmbases[241], "NetworkStatusResponseType", 0 } },
-   { 938, { Inst(Type2Type<TEX::NoCollInquiryQualifier>()), 0, "NoCollInquiryQualifier", 0 } },
-   { 939, { Inst(Type2Types<TEX::TrdRptStatus, int>()), &TEX::realmbases[242], "TrdRptStatus", 0 } },
-   { 940, { Inst(Type2Types<TEX::AffirmStatus, int>()), &TEX::realmbases[243], "AffirmStatus", 0 } },
-   { 941, { Inst(Type2Type<TEX::UnderlyingStrikeCurrency>()), 0, "UnderlyingStrikeCurrency", 0 } },
-   { 942, { Inst(Type2Type<TEX::LegStrikeCurrency>()), 0, "LegStrikeCurrency", 0 } },
-   { 943, { Inst(Type2Type<TEX::TimeBracket>()), 0, "TimeBracket", 0 } },
-   { 944, { Inst(Type2Types<TEX::CollAction, int>()), &TEX::realmbases[244], "CollAction", 0 } },
-   { 945, { Inst(Type2Types<TEX::CollInquiryStatus, int>()), &TEX::realmbases[245], "CollInquiryStatus", 0 } },
-   { 946, { Inst(Type2Types<TEX::CollInquiryResult, int>()), &TEX::realmbases[246], "CollInquiryResult", 0 } },
-   { 947, { Inst(Type2Type<TEX::StrikeCurrency>()), 0, "StrikeCurrency", 0 } },
-   { 948, { Inst(Type2Type<TEX::NoNested3PartyIDs>()), 0, "NoNested3PartyIDs", 0 } },
-   { 949, { Inst(Type2Type<TEX::Nested3PartyID>()), 0, "Nested3PartyID", 0 } },
-   { 950, { Inst(Type2Type<TEX::Nested3PartyIDSource>()), 0, "Nested3PartyIDSource", 0 } },
-   { 951, { Inst(Type2Type<TEX::Nested3PartyRole>()), 0, "Nested3PartyRole", 0 } },
-   { 952, { Inst(Type2Type<TEX::NoNested3PartySubIDs>()), 0, "NoNested3PartySubIDs", 0 } },
-   { 953, { Inst(Type2Type<TEX::Nested3PartySubID>()), 0, "Nested3PartySubID", 0 } },
-   { 954, { Inst(Type2Type<TEX::Nested3PartySubIDType>()), 0, "Nested3PartySubIDType", 0 } },
-   { 955, { Inst(Type2Type<TEX::LegContractSettlMonth>()), 0, "LegContractSettlMonth", 0 } },
-   { 956, { Inst(Type2Type<TEX::LegInterestAccrualDate>()), 0, "LegInterestAccrualDate", 0 } },
-   { 957, { Inst(Type2Type<TEX::NoStrategyParameters>()), 0, "NoStrategyParameters", 0 } },
-   { 958, { Inst(Type2Type<TEX::StrategyParameterName>()), 0, "StrategyParameterName", 0 } },
-   { 959, { Inst(Type2Types<TEX::StrategyParameterType, int>()), &TEX::realmbases[247], "StrategyParameterType", 0 } },
-   { 960, { Inst(Type2Type<TEX::StrategyParameterValue>()), 0, "StrategyParameterValue", 0 } },
-   { 961, { Inst(Type2Type<TEX::HostCrossID>()), 0, "HostCrossID", 0 } },
-   { 962, { Inst(Type2Type<TEX::SideTimeInForce>()), 0, "SideTimeInForce", 0 } },
-   { 963, { Inst(Type2Type<TEX::MDReportID>()), 0, "MDReportID", 0 } },
-   { 964, { Inst(Type2Type<TEX::SecurityReportID>()), 0, "SecurityReportID", 0 } },
-   { 965, { Inst(Type2Types<TEX::SecurityStatusID, f8String>()), &TEX::realmbases[248], "SecurityStatusID", 0 } },
-   { 966, { Inst(Type2Type<TEX::SettleOnOpenFlag>()), 0, "SettleOnOpenFlag", 0 } },
-   { 967, { Inst(Type2Type<TEX::StrikeMultiplier>()), 0, "StrikeMultiplier", 0 } },
-   { 968, { Inst(Type2Type<TEX::StrikeValue>()), 0, "StrikeValue", 0 } },
-   { 969, { Inst(Type2Type<TEX::MinPriceIncrement>()), 0, "MinPriceIncrement", 0 } },
-   { 970, { Inst(Type2Type<TEX::PositionLimit>()), 0, "PositionLimit", 0 } },
-   { 971, { Inst(Type2Type<TEX::NTPositionLimit>()), 0, "NTPositionLimit", 0 } },
-   { 972, { Inst(Type2Type<TEX::UnderlyingAllocationPercent>()), 0, "UnderlyingAllocationPercent", 0 } },
-   { 973, { Inst(Type2Type<TEX::UnderlyingCashAmount>()), 0, "UnderlyingCashAmount", 0 } },
-   { 974, { Inst(Type2Types<TEX::UnderlyingCashType, f8String>()), &TEX::realmbases[249], "UnderlyingCashType", 0 } },
-   { 975, { Inst(Type2Types<TEX::UnderlyingSettlementType, int>()), &TEX::realmbases[250], "UnderlyingSettlementType", 0 } },
-   { 976, { Inst(Type2Type<TEX::QuantityDate>()), 0, "QuantityDate", 0 } },
-   { 977, { Inst(Type2Type<TEX::ContIntRptID>()), 0, "ContIntRptID", 0 } },
-   { 978, { Inst(Type2Type<TEX::LateIndicator>()), 0, "LateIndicator", 0 } },
-   { 979, { Inst(Type2Type<TEX::InputSource>()), 0, "InputSource", 0 } },
-   { 980, { Inst(Type2Types<TEX::SecurityUpdateAction, char>()), &TEX::realmbases[251], "SecurityUpdateAction", 0 } },
-   { 981, { Inst(Type2Type<TEX::NoExpiration>()), 0, "NoExpiration", 0 } },
-   { 982, { Inst(Type2Types<TEX::ExpirationQtyType, int>()), &TEX::realmbases[252], "ExpirationQtyType", 0 } },
-   { 983, { Inst(Type2Type<TEX::ExpQty>()), 0, "ExpQty", 0 } },
-   { 984, { Inst(Type2Type<TEX::NoUnderlyingAmounts>()), 0, "NoUnderlyingAmounts", 0 } },
-   { 985, { Inst(Type2Type<TEX::UnderlyingPayAmount>()), 0, "UnderlyingPayAmount", 0 } },
-   { 986, { Inst(Type2Type<TEX::UnderlyingCollectAmount>()), 0, "UnderlyingCollectAmount", 0 } },
-   { 987, { Inst(Type2Type<TEX::UnderlyingSettlementDate>()), 0, "UnderlyingSettlementDate", 0 } },
-   { 988, { Inst(Type2Type<TEX::UnderlyingSettlementStatus>()), 0, "UnderlyingSettlementStatus", 0 } },
-   { 989, { Inst(Type2Type<TEX::SecondaryIndividualAllocID>()), 0, "SecondaryIndividualAllocID", 0 } },
-   { 990, { Inst(Type2Type<TEX::LegReportID>()), 0, "LegReportID", 0 } },
-   { 991, { Inst(Type2Type<TEX::RndPx>()), 0, "RndPx", 0 } },
-   { 992, { Inst(Type2Types<TEX::IndividualAllocType, int>()), &TEX::realmbases[253], "IndividualAllocType", 0 } },
-   { 993, { Inst(Type2Type<TEX::AllocCustomerCapacity>()), 0, "AllocCustomerCapacity", 0 } },
-   { 994, { Inst(Type2Type<TEX::TierCode>()), 0, "TierCode", 0 } },
-   { 996, { Inst(Type2Types<TEX::UnitOfMeasure, f8String>()), &TEX::realmbases[254], "UnitOfMeasure", 0 } },
-   { 997, { Inst(Type2Types<TEX::TimeUnit, f8String>()), &TEX::realmbases[255], "TimeUnit", 0 } },
-   { 998, { Inst(Type2Type<TEX::UnderlyingUnitOfMeasure>()), 0, "UnderlyingUnitOfMeasure", 0 } },
-   { 999, { Inst(Type2Type<TEX::LegUnitOfMeasure>()), 0, "LegUnitOfMeasure", 0 } },
-   { 1000, { Inst(Type2Type<TEX::UnderlyingTimeUnit>()), 0, "UnderlyingTimeUnit", 0 } },
-   { 1001, { Inst(Type2Type<TEX::LegTimeUnit>()), 0, "LegTimeUnit", 0 } },
-   { 1002, { Inst(Type2Types<TEX::AllocMethod, int>()), &TEX::realmbases[256], "AllocMethod", 0 } },
-   { 1003, { Inst(Type2Type<TEX::TradeID>()), 0, "TradeID", 0 } },
-   { 1005, { Inst(Type2Type<TEX::SideTradeReportID>()), 0, "SideTradeReportID", 0 } },
-   { 1006, { Inst(Type2Type<TEX::SideFillStationCd>()), 0, "SideFillStationCd", 0 } },
-   { 1007, { Inst(Type2Type<TEX::SideReasonCd>()), 0, "SideReasonCd", 0 } },
-   { 1008, { Inst(Type2Type<TEX::SideTrdSubTyp>()), 0, "SideTrdSubTyp", 0 } },
-   { 1009, { Inst(Type2Type<TEX::SideLastQty>()), 0, "SideLastQty", 0 } },
-   { 1011, { Inst(Type2Type<TEX::MessageEventSource>()), 0, "MessageEventSource", 0 } },
-   { 1012, { Inst(Type2Type<TEX::SideTrdRegTimestamp>()), 0, "SideTrdRegTimestamp", 0 } },
-   { 1013, { Inst(Type2Type<TEX::SideTrdRegTimestampType>()), 0, "SideTrdRegTimestampType", 0 } },
-   { 1014, { Inst(Type2Type<TEX::SideTrdRegTimestampSrc>()), 0, "SideTrdRegTimestampSrc", 0 } },
-   { 1015, { Inst(Type2Types<TEX::AsOfIndicator, char>()), &TEX::realmbases[257], "AsOfIndicator", 0 } },
-   { 1016, { Inst(Type2Type<TEX::NoSideTrdRegTS>()), 0, "NoSideTrdRegTS", 0 } },
-   { 1017, { Inst(Type2Type<TEX::LegOptionRatio>()), 0, "LegOptionRatio", 0 } },
-   { 1018, { Inst(Type2Type<TEX::NoInstrumentParties>()), 0, "NoInstrumentParties", 0 } },
-   { 1019, { Inst(Type2Type<TEX::InstrumentPartyID>()), 0, "InstrumentPartyID", 0 } },
-   { 1020, { Inst(Type2Type<TEX::TradeVolume>()), 0, "TradeVolume", 0 } },
-   { 1021, { Inst(Type2Types<TEX::MDBookType, int>()), &TEX::realmbases[258], "MDBookType", 0 } },
-   { 1022, { Inst(Type2Type<TEX::MDFeedType>()), 0, "MDFeedType", 0 } },
-   { 1023, { Inst(Type2Type<TEX::MDPriceLevel>()), 0, "MDPriceLevel", 0 } },
-   { 1024, { Inst(Type2Types<TEX::MDOriginType, int>()), &TEX::realmbases[259], "MDOriginType", 0 } },
-   { 1025, { Inst(Type2Type<TEX::FirstPx>()), 0, "FirstPx", 0 } },
-   { 1026, { Inst(Type2Type<TEX::MDEntrySpotRate>()), 0, "MDEntrySpotRate", 0 } },
-   { 1027, { Inst(Type2Type<TEX::MDEntryForwardPoints>()), 0, "MDEntryForwardPoints", 0 } },
-   { 1028, { Inst(Type2Type<TEX::ManualOrderIndicator>()), 0, "ManualOrderIndicator", 0 } },
-   { 1029, { Inst(Type2Type<TEX::CustDirectedOrder>()), 0, "CustDirectedOrder", 0 } },
-   { 1030, { Inst(Type2Type<TEX::ReceivedDeptID>()), 0, "ReceivedDeptID", 0 } },
-   { 1031, { Inst(Type2Types<TEX::CustOrderHandlingInst, f8String>()), &TEX::realmbases[260], "CustOrderHandlingInst", 0 } },
-   { 1032, { Inst(Type2Types<TEX::OrderHandlingInstSource, int>()), &TEX::realmbases[261], "OrderHandlingInstSource", 0 } },
-   { 1033, { Inst(Type2Types<TEX::DeskType, f8String>()), &TEX::realmbases[262], "DeskType", 0 } },
-   { 1034, { Inst(Type2Types<TEX::DeskTypeSource, int>()), &TEX::realmbases[263], "DeskTypeSource", 0 } },
-   { 1035, { Inst(Type2Types<TEX::DeskOrderHandlingInst, f8String>()), &TEX::realmbases[264], "DeskOrderHandlingInst", 0 } },
-   { 1036, { Inst(Type2Types<TEX::ExecAckStatus, char>()), &TEX::realmbases[265], "ExecAckStatus", 0 } },
-   { 1037, { Inst(Type2Type<TEX::UnderlyingDeliveryAmount>()), 0, "UnderlyingDeliveryAmount", 0 } },
-   { 1038, { Inst(Type2Type<TEX::UnderlyingCapValue>()), 0, "UnderlyingCapValue", 0 } },
-   { 1039, { Inst(Type2Type<TEX::UnderlyingSettlMethod>()), 0, "UnderlyingSettlMethod", 0 } },
-   { 1040, { Inst(Type2Type<TEX::SecondaryTradeID>()), 0, "SecondaryTradeID", 0 } },
-   { 1041, { Inst(Type2Type<TEX::FirmTradeID>()), 0, "FirmTradeID", 0 } },
-   { 1042, { Inst(Type2Type<TEX::SecondaryFirmTradeID>()), 0, "SecondaryFirmTradeID", 0 } },
-   { 1043, { Inst(Type2Types<TEX::CollApplType, int>()), &TEX::realmbases[266], "CollApplType", 0 } },
-   { 1044, { Inst(Type2Type<TEX::UnderlyingAdjustedQuantity>()), 0, "UnderlyingAdjustedQuantity", 0 } },
-   { 1045, { Inst(Type2Type<TEX::UnderlyingFXRate>()), 0, "UnderlyingFXRate", 0 } },
-   { 1046, { Inst(Type2Types<TEX::UnderlyingFXRateCalc, char>()), &TEX::realmbases[267], "UnderlyingFXRateCalc", 0 } },
-   { 1047, { Inst(Type2Types<TEX::AllocPositionEffect, char>()), &TEX::realmbases[268], "AllocPositionEffect", 0 } },
-   { 1048, { Inst(Type2Types<TEX::DealingCapacity, char>()), &TEX::realmbases[269], "DealingCapacity", 0 } },
-   { 1049, { Inst(Type2Type<TEX::InstrmtAssignmentMethod>()), 0, "InstrmtAssignmentMethod", 0 } },
-   { 1050, { Inst(Type2Type<TEX::InstrumentPartyIDSource>()), 0, "InstrumentPartyIDSource", 0 } },
-   { 1051, { Inst(Type2Type<TEX::InstrumentPartyRole>()), 0, "InstrumentPartyRole", 0 } },
-   { 1052, { Inst(Type2Type<TEX::NoInstrumentPartySubIDs>()), 0, "NoInstrumentPartySubIDs", 0 } },
-   { 1053, { Inst(Type2Type<TEX::InstrumentPartySubID>()), 0, "InstrumentPartySubID", 0 } },
-   { 1054, { Inst(Type2Type<TEX::InstrumentPartySubIDType>()), 0, "InstrumentPartySubIDType", 0 } },
-   { 1055, { Inst(Type2Type<TEX::PositionCurrency>()), 0, "PositionCurrency", 0 } },
-   { 1056, { Inst(Type2Type<TEX::CalculatedCcyLastQty>()), 0, "CalculatedCcyLastQty", 0 } },
-   { 1057, { Inst(Type2Types<TEX::AggressorIndicator, char>()), &TEX::realmbases[270], "AggressorIndicator", 0 } },
-   { 1058, { Inst(Type2Type<TEX::NoUndlyInstrumentParties>()), 0, "NoUndlyInstrumentParties", 0 } },
-   { 1059, { Inst(Type2Type<TEX::UnderlyingInstrumentPartyID>()), 0, "UnderlyingInstrumentPartyID", 0 } },
-   { 1060, { Inst(Type2Type<TEX::UnderlyingInstrumentPartyIDSource>()), 0, "UnderlyingInstrumentPartyIDSource", 0 } },
-   { 1061, { Inst(Type2Type<TEX::UnderlyingInstrumentPartyRole>()), 0, "UnderlyingInstrumentPartyRole", 0 } },
-   { 1062, { Inst(Type2Type<TEX::NoUndlyInstrumentPartySubIDs>()), 0, "NoUndlyInstrumentPartySubIDs", 0 } },
-   { 1063, { Inst(Type2Type<TEX::UnderlyingInstrumentPartySubID>()), 0, "UnderlyingInstrumentPartySubID", 0 } },
-   { 1064, { Inst(Type2Type<TEX::UnderlyingInstrumentPartySubIDType>()), 0, "UnderlyingInstrumentPartySubIDType", 0 } },
-   { 1065, { Inst(Type2Type<TEX::BidSwapPoints>()), 0, "BidSwapPoints", 0 } },
-   { 1066, { Inst(Type2Type<TEX::OfferSwapPoints>()), 0, "OfferSwapPoints", 0 } },
-   { 1067, { Inst(Type2Type<TEX::LegBidForwardPoints>()), 0, "LegBidForwardPoints", 0 } },
-   { 1068, { Inst(Type2Type<TEX::LegOfferForwardPoints>()), 0, "LegOfferForwardPoints", 0 } },
-   { 1069, { Inst(Type2Type<TEX::SwapPoints>()), 0, "SwapPoints", 0 } },
-   { 1070, { Inst(Type2Types<TEX::MDQuoteType, int>()), &TEX::realmbases[271], "MDQuoteType", 0 } },
-   { 1071, { Inst(Type2Type<TEX::LastSwapPoints>()), 0, "LastSwapPoints", 0 } },
-   { 1072, { Inst(Type2Type<TEX::SideGrossTradeAmt>()), 0, "SideGrossTradeAmt", 0 } },
-   { 1073, { Inst(Type2Type<TEX::LegLastForwardPoints>()), 0, "LegLastForwardPoints", 0 } },
-   { 1074, { Inst(Type2Type<TEX::LegCalculatedCcyLastQty>()), 0, "LegCalculatedCcyLastQty", 0 } },
-   { 1075, { Inst(Type2Type<TEX::LegGrossTradeAmt>()), 0, "LegGrossTradeAmt", 0 } },
-   { 1079, { Inst(Type2Type<TEX::MaturityTime>()), 0, "MaturityTime", 0 } },
-   { 1080, { Inst(Type2Type<TEX::RefOrderID>()), 0, "RefOrderID", 0 } },
-   { 1081, { Inst(Type2Types<TEX::RefOrderIDSource, char>()), &TEX::realmbases[272], "RefOrderIDSource", 0 } },
-   { 1082, { Inst(Type2Type<TEX::SecondaryDisplayQty>()), 0, "SecondaryDisplayQty", 0 } },
-   { 1083, { Inst(Type2Types<TEX::DisplayWhen, char>()), &TEX::realmbases[273], "DisplayWhen", 0 } },
-   { 1084, { Inst(Type2Types<TEX::DisplayMethod, char>()), &TEX::realmbases[274], "DisplayMethod", 0 } },
-   { 1085, { Inst(Type2Type<TEX::DisplayLowQty>()), 0, "DisplayLowQty", 0 } },
-   { 1086, { Inst(Type2Type<TEX::DisplayHighQty>()), 0, "DisplayHighQty", 0 } },
-   { 1087, { Inst(Type2Type<TEX::DisplayMinIncr>()), 0, "DisplayMinIncr", 0 } },
-   { 1088, { Inst(Type2Type<TEX::RefreshQty>()), 0, "RefreshQty", 0 } },
-   { 1089, { Inst(Type2Type<TEX::MatchIncrement>()), 0, "MatchIncrement", 0 } },
-   { 1090, { Inst(Type2Type<TEX::MaxPriceLevels>()), 0, "MaxPriceLevels", 0 } },
-   { 1091, { Inst(Type2Type<TEX::PreTradeAnonymity>()), 0, "PreTradeAnonymity", 0 } },
-   { 1092, { Inst(Type2Types<TEX::PriceProtectionScope, char>()), &TEX::realmbases[275], "PriceProtectionScope", 0 } },
-   { 1093, { Inst(Type2Types<TEX::LotType, char>()), &TEX::realmbases[276], "LotType", 0 } },
-   { 1094, { Inst(Type2Types<TEX::PegPriceType, int>()), &TEX::realmbases[277], "PegPriceType", 0 } },
-   { 1095, { Inst(Type2Type<TEX::PeggedRefPrice>()), 0, "PeggedRefPrice", 0 } },
-   { 1096, { Inst(Type2Type<TEX::PegSecurityIDSource>()), 0, "PegSecurityIDSource", 0 } },
-   { 1097, { Inst(Type2Type<TEX::PegSecurityID>()), 0, "PegSecurityID", 0 } },
-   { 1098, { Inst(Type2Type<TEX::PegSymbol>()), 0, "PegSymbol", 0 } },
-   { 1099, { Inst(Type2Type<TEX::PegSecurityDesc>()), 0, "PegSecurityDesc", 0 } },
-   { 1100, { Inst(Type2Types<TEX::TriggerType, char>()), &TEX::realmbases[278], "TriggerType", 0 } },
-   { 1101, { Inst(Type2Types<TEX::TriggerAction, char>()), &TEX::realmbases[279], "TriggerAction", 0 } },
-   { 1102, { Inst(Type2Type<TEX::TriggerPrice>()), 0, "TriggerPrice", 0 } },
-   { 1103, { Inst(Type2Type<TEX::TriggerSymbol>()), 0, "TriggerSymbol", 0 } },
-   { 1104, { Inst(Type2Type<TEX::TriggerSecurityID>()), 0, "TriggerSecurityID", 0 } },
-   { 1105, { Inst(Type2Type<TEX::TriggerSecurityIDSource>()), 0, "TriggerSecurityIDSource", 0 } },
-   { 1106, { Inst(Type2Type<TEX::TriggerSecurityDesc>()), 0, "TriggerSecurityDesc", 0 } },
-   { 1107, { Inst(Type2Types<TEX::TriggerPriceType, char>()), &TEX::realmbases[280], "TriggerPriceType", 0 } },
-   { 1108, { Inst(Type2Types<TEX::TriggerPriceTypeScope, char>()), &TEX::realmbases[281], "TriggerPriceTypeScope", 0 } },
-   { 1109, { Inst(Type2Types<TEX::TriggerPriceDirection, char>()), &TEX::realmbases[282], "TriggerPriceDirection", 0 } },
-   { 1110, { Inst(Type2Type<TEX::TriggerNewPrice>()), 0, "TriggerNewPrice", 0 } },
-   { 1111, { Inst(Type2Types<TEX::TriggerOrderType, char>()), &TEX::realmbases[283], "TriggerOrderType", 0 } },
-   { 1112, { Inst(Type2Type<TEX::TriggerNewQty>()), 0, "TriggerNewQty", 0 } },
-   { 1113, { Inst(Type2Type<TEX::TriggerTradingSessionID>()), 0, "TriggerTradingSessionID", 0 } },
-   { 1114, { Inst(Type2Type<TEX::TriggerTradingSessionSubID>()), 0, "TriggerTradingSessionSubID", 0 } },
-   { 1115, { Inst(Type2Types<TEX::OrderCategory, char>()), &TEX::realmbases[284], "OrderCategory", 0 } },
-   { 1116, { Inst(Type2Type<TEX::NoRootPartyIDs>()), 0, "NoRootPartyIDs", 0 } },
-   { 1117, { Inst(Type2Type<TEX::RootPartyID>()), 0, "RootPartyID", 0 } },
-   { 1118, { Inst(Type2Type<TEX::RootPartyIDSource>()), 0, "RootPartyIDSource", 0 } },
-   { 1119, { Inst(Type2Type<TEX::RootPartyRole>()), 0, "RootPartyRole", 0 } },
-   { 1120, { Inst(Type2Type<TEX::NoRootPartySubIDs>()), 0, "NoRootPartySubIDs", 0 } },
-   { 1121, { Inst(Type2Type<TEX::RootPartySubID>()), 0, "RootPartySubID", 0 } },
-   { 1122, { Inst(Type2Type<TEX::RootPartySubIDType>()), 0, "RootPartySubIDType", 0 } },
-   { 1123, { Inst(Type2Types<TEX::TradeHandlingInstr, char>()), &TEX::realmbases[285], "TradeHandlingInstr", 0 } },
-   { 1124, { Inst(Type2Type<TEX::OrigTradeHandlingInstr>()), 0, "OrigTradeHandlingInstr", 0 } },
-   { 1125, { Inst(Type2Type<TEX::OrigTradeDate>()), 0, "OrigTradeDate", 0 } },
-   { 1126, { Inst(Type2Type<TEX::OrigTradeID>()), 0, "OrigTradeID", 0 } },
-   { 1127, { Inst(Type2Type<TEX::OrigSecondaryTradeID>()), 0, "OrigSecondaryTradeID", 0 } },
-   { 1128, { Inst(Type2Types<TEX::ApplVerID, f8String>()), &TEX::realmbases[286], "ApplVerID", 0 } },
-   { 1129, { Inst(Type2Type<TEX::CstmApplVerID>()), 0, "CstmApplVerID", 0 } },
-   { 1130, { Inst(Type2Type<TEX::RefApplVerID>()), 0, "RefApplVerID", 0 } },
-   { 1131, { Inst(Type2Type<TEX::RefCstmApplVerID>()), 0, "RefCstmApplVerID", 0 } },
-   { 1132, { Inst(Type2Type<TEX::TZTransactTime>()), 0, "TZTransactTime", 0 } },
-   { 1133, { Inst(Type2Types<TEX::ExDestinationIDSource, char>()), &TEX::realmbases[287], "ExDestinationIDSource", 0 } },
-   { 1134, { Inst(Type2Type<TEX::ReportedPxDiff>()), 0, "ReportedPxDiff", 0 } },
-   { 1135, { Inst(Type2Type<TEX::RptSys>()), 0, "RptSys", 0 } },
-   { 1136, { Inst(Type2Type<TEX::AllocClearingFeeIndicator>()), 0, "AllocClearingFeeIndicator", 0 } },
-   { 1137, { Inst(Type2Types<TEX::DefaultApplVerID, f8String>()), &TEX::realmbases[288], "DefaultApplVerID", 0 } },
-   { 1138, { Inst(Type2Type<TEX::DisplayQty>()), 0, "DisplayQty", 0 } },
-   { 1139, { Inst(Type2Type<TEX::ExchangeSpecialInstructions>()), 0, "ExchangeSpecialInstructions", 0 } },
-   { 1140, { Inst(Type2Type<TEX::MaxTradeVol>()), 0, "MaxTradeVol", 0 } },
-   { 1141, { Inst(Type2Type<TEX::NoMDFeedTypes>()), 0, "NoMDFeedTypes", 0 } },
-   { 1142, { Inst(Type2Type<TEX::MatchAlgorithm>()), 0, "MatchAlgorithm", 0 } },
-   { 1143, { Inst(Type2Type<TEX::MaxPriceVariation>()), 0, "MaxPriceVariation", 0 } },
-   { 1144, { Inst(Type2Types<TEX::ImpliedMarketIndicator, int>()), &TEX::realmbases[289], "ImpliedMarketIndicator", 0 } },
-   { 1145, { Inst(Type2Type<TEX::EventTime>()), 0, "EventTime", 0 } },
-   { 1146, { Inst(Type2Type<TEX::MinPriceIncrementAmount>()), 0, "MinPriceIncrementAmount", 0 } },
-   { 1147, { Inst(Type2Type<TEX::UnitOfMeasureQty>()), 0, "UnitOfMeasureQty", 0 } },
-   { 1148, { Inst(Type2Type<TEX::LowLimitPrice>()), 0, "LowLimitPrice", 0 } },
-   { 1149, { Inst(Type2Type<TEX::HighLimitPrice>()), 0, "HighLimitPrice", 0 } },
-   { 1150, { Inst(Type2Type<TEX::TradingReferencePrice>()), 0, "TradingReferencePrice", 0 } },
-   { 1151, { Inst(Type2Type<TEX::SecurityGroup>()), 0, "SecurityGroup", 0 } },
-   { 1152, { Inst(Type2Type<TEX::LegNumber>()), 0, "LegNumber", 0 } },
-   { 1153, { Inst(Type2Type<TEX::SettlementCycleNo>()), 0, "SettlementCycleNo", 0 } },
-   { 1154, { Inst(Type2Type<TEX::SideCurrency>()), 0, "SideCurrency", 0 } },
-   { 1155, { Inst(Type2Type<TEX::SideSettlCurrency>()), 0, "SideSettlCurrency", 0 } },
-   { 1157, { Inst(Type2Type<TEX::CcyAmt>()), 0, "CcyAmt", 0 } },
-   { 1158, { Inst(Type2Type<TEX::NoSettlDetails>()), 0, "NoSettlDetails", 0 } },
-   { 1159, { Inst(Type2Types<TEX::SettlObligMode, int>()), &TEX::realmbases[290], "SettlObligMode", 0 } },
-   { 1160, { Inst(Type2Type<TEX::SettlObligMsgID>()), 0, "SettlObligMsgID", 0 } },
-   { 1161, { Inst(Type2Type<TEX::SettlObligID>()), 0, "SettlObligID", 0 } },
-   { 1162, { Inst(Type2Types<TEX::SettlObligTransType, char>()), &TEX::realmbases[291], "SettlObligTransType", 0 } },
-   { 1163, { Inst(Type2Type<TEX::SettlObligRefID>()), 0, "SettlObligRefID", 0 } },
-   { 1164, { Inst(Type2Types<TEX::SettlObligSource, char>()), &TEX::realmbases[292], "SettlObligSource", 0 } },
-   { 1165, { Inst(Type2Type<TEX::NoSettlOblig>()), 0, "NoSettlOblig", 0 } },
-   { 1166, { Inst(Type2Type<TEX::QuoteMsgID>()), 0, "QuoteMsgID", 0 } },
-   { 1167, { Inst(Type2Types<TEX::QuoteEntryStatus, int>()), &TEX::realmbases[293], "QuoteEntryStatus", 0 } },
-   { 1168, { Inst(Type2Type<TEX::TotNoCxldQuotes>()), 0, "TotNoCxldQuotes", 0 } },
-   { 1169, { Inst(Type2Type<TEX::TotNoAccQuotes>()), 0, "TotNoAccQuotes", 0 } },
-   { 1170, { Inst(Type2Type<TEX::TotNoRejQuotes>()), 0, "TotNoRejQuotes", 0 } },
-   { 1171, { Inst(Type2Type<TEX::PrivateQuote>()), 0, "PrivateQuote", 0 } },
-   { 1172, { Inst(Type2Types<TEX::RespondentType, int>()), &TEX::realmbases[294], "RespondentType", 0 } },
-   { 1173, { Inst(Type2Type<TEX::MDSubBookType>()), 0, "MDSubBookType", 0 } },
-   { 1174, { Inst(Type2Types<TEX::SecurityTradingEvent, int>()), &TEX::realmbases[295], "SecurityTradingEvent", 0 } },
-   { 1175, { Inst(Type2Type<TEX::NoStatsIndicators>()), 0, "NoStatsIndicators", 0 } },
-   { 1176, { Inst(Type2Types<TEX::StatsType, int>()), &TEX::realmbases[296], "StatsType", 0 } },
-   { 1177, { Inst(Type2Type<TEX::NoOfSecSizes>()), 0, "NoOfSecSizes", 0 } },
-   { 1178, { Inst(Type2Types<TEX::MDSecSizeType, int>()), &TEX::realmbases[297], "MDSecSizeType", 0 } },
-   { 1179, { Inst(Type2Type<TEX::MDSecSize>()), 0, "MDSecSize", 0 } },
-   { 1180, { Inst(Type2Type<TEX::ApplID>()), 0, "ApplID", 0 } },
-   { 1181, { Inst(Type2Type<TEX::ApplSeqNum>()), 0, "ApplSeqNum", 0 } },
-   { 1182, { Inst(Type2Type<TEX::ApplBegSeqNum>()), 0, "ApplBegSeqNum", 0 } },
-   { 1183, { Inst(Type2Type<TEX::ApplEndSeqNum>()), 0, "ApplEndSeqNum", 0 } },
-   { 1184, { Inst(Type2Type<TEX::SecurityXMLLen>()), 0, "SecurityXMLLen", 0 } },
-   { 1185, { Inst(Type2Type<TEX::SecurityXML>()), 0, "SecurityXML", 0 } },
-   { 1186, { Inst(Type2Type<TEX::SecurityXMLSchema>()), 0, "SecurityXMLSchema", 0 } },
-   { 1187, { Inst(Type2Type<TEX::RefreshIndicator>()), 0, "RefreshIndicator", 0 } },
-   { 1188, { Inst(Type2Type<TEX::Volatility>()), 0, "Volatility", 0 } },
-   { 1189, { Inst(Type2Type<TEX::TimeToExpiration>()), 0, "TimeToExpiration", 0 } },
-   { 1190, { Inst(Type2Type<TEX::RiskFreeRate>()), 0, "RiskFreeRate", 0 } },
-   { 1191, { Inst(Type2Type<TEX::PriceUnitOfMeasure>()), 0, "PriceUnitOfMeasure", 0 } },
-   { 1192, { Inst(Type2Type<TEX::PriceUnitOfMeasureQty>()), 0, "PriceUnitOfMeasureQty", 0 } },
-   { 1193, { Inst(Type2Types<TEX::SettlMethod, char>()), &TEX::realmbases[298], "SettlMethod", 0 } },
-   { 1194, { Inst(Type2Types<TEX::ExerciseStyle, int>()), &TEX::realmbases[299], "ExerciseStyle", 0 } },
-   { 1195, { Inst(Type2Type<TEX::OptPayoutAmount>()), 0, "OptPayoutAmount", 0 } },
-   { 1196, { Inst(Type2Types<TEX::PriceQuoteMethod, f8String>()), &TEX::realmbases[300], "PriceQuoteMethod", 0 } },
-   { 1197, { Inst(Type2Types<TEX::ValuationMethod, f8String>()), &TEX::realmbases[301], "ValuationMethod", 0 } },
-   { 1198, { Inst(Type2Types<TEX::ListMethod, int>()), &TEX::realmbases[302], "ListMethod", 0 } },
-   { 1199, { Inst(Type2Type<TEX::CapPrice>()), 0, "CapPrice", 0 } },
-   { 1200, { Inst(Type2Type<TEX::FloorPrice>()), 0, "FloorPrice", 0 } },
-   { 1201, { Inst(Type2Type<TEX::NoStrikeRules>()), 0, "NoStrikeRules", 0 } },
-   { 1202, { Inst(Type2Type<TEX::StartStrikePxRange>()), 0, "StartStrikePxRange", 0 } },
-   { 1203, { Inst(Type2Type<TEX::EndStrikePxRange>()), 0, "EndStrikePxRange", 0 } },
-   { 1204, { Inst(Type2Type<TEX::StrikeIncrement>()), 0, "StrikeIncrement", 0 } },
-   { 1205, { Inst(Type2Type<TEX::NoTickRules>()), 0, "NoTickRules", 0 } },
-   { 1206, { Inst(Type2Type<TEX::StartTickPriceRange>()), 0, "StartTickPriceRange", 0 } },
-   { 1207, { Inst(Type2Type<TEX::EndTickPriceRange>()), 0, "EndTickPriceRange", 0 } },
-   { 1208, { Inst(Type2Type<TEX::TickIncrement>()), 0, "TickIncrement", 0 } },
-   { 1209, { Inst(Type2Types<TEX::TickRuleType, int>()), &TEX::realmbases[303], "TickRuleType", 0 } },
-   { 1210, { Inst(Type2Type<TEX::NestedInstrAttribType>()), 0, "NestedInstrAttribType", 0 } },
-   { 1211, { Inst(Type2Type<TEX::NestedInstrAttribValue>()), 0, "NestedInstrAttribValue", 0 } },
-   { 1212, { Inst(Type2Type<TEX::LegMaturityTime>()), 0, "LegMaturityTime", 0 } },
-   { 1213, { Inst(Type2Type<TEX::UnderlyingMaturityTime>()), 0, "UnderlyingMaturityTime", 0 } },
-   { 1214, { Inst(Type2Type<TEX::DerivativeSymbol>()), 0, "DerivativeSymbol", 0 } },
-   { 1215, { Inst(Type2Type<TEX::DerivativeSymbolSfx>()), 0, "DerivativeSymbolSfx", 0 } },
-   { 1216, { Inst(Type2Type<TEX::DerivativeSecurityID>()), 0, "DerivativeSecurityID", 0 } },
-   { 1217, { Inst(Type2Type<TEX::DerivativeSecurityIDSource>()), 0, "DerivativeSecurityIDSource", 0 } },
-   { 1218, { Inst(Type2Type<TEX::NoDerivativeSecurityAltID>()), 0, "NoDerivativeSecurityAltID", 0 } },
-   { 1219, { Inst(Type2Type<TEX::DerivativeSecurityAltID>()), 0, "DerivativeSecurityAltID", 0 } },
-   { 1220, { Inst(Type2Type<TEX::DerivativeSecurityAltIDSource>()), 0, "DerivativeSecurityAltIDSource", 0 } },
-   { 1221, { Inst(Type2Type<TEX::SecondaryLowLimitPrice>()), 0, "SecondaryLowLimitPrice", 0 } },
-   { 1222, { Inst(Type2Type<TEX::MaturityRuleID>()), 0, "MaturityRuleID", 0 } },
-   { 1223, { Inst(Type2Type<TEX::StrikeRuleID>()), 0, "StrikeRuleID", 0 } },
-   { 1224, { Inst(Type2Type<TEX::LegUnitOfMeasureQty>()), 0, "LegUnitOfMeasureQty", 0 } },
-   { 1225, { Inst(Type2Type<TEX::DerivativeOptPayAmount>()), 0, "DerivativeOptPayAmount", 0 } },
-   { 1226, { Inst(Type2Type<TEX::EndMaturityMonthYear>()), 0, "EndMaturityMonthYear", 0 } },
-   { 1227, { Inst(Type2Type<TEX::ProductComplex>()), 0, "ProductComplex", 0 } },
-   { 1228, { Inst(Type2Type<TEX::DerivativeProductComplex>()), 0, "DerivativeProductComplex", 0 } },
-   { 1229, { Inst(Type2Type<TEX::MaturityMonthYearIncrement>()), 0, "MaturityMonthYearIncrement", 0 } },
-   { 1230, { Inst(Type2Type<TEX::SecondaryHighLimitPrice>()), 0, "SecondaryHighLimitPrice", 0 } },
-   { 1231, { Inst(Type2Type<TEX::MinLotSize>()), 0, "MinLotSize", 0 } },
-   { 1232, { Inst(Type2Type<TEX::NoExecInstRules>()), 0, "NoExecInstRules", 0 } },
-   { 1234, { Inst(Type2Type<TEX::NoLotTypeRules>()), 0, "NoLotTypeRules", 0 } },
-   { 1235, { Inst(Type2Type<TEX::NoMatchRules>()), 0, "NoMatchRules", 0 } },
-   { 1236, { Inst(Type2Type<TEX::NoMaturityRules>()), 0, "NoMaturityRules", 0 } },
-   { 1237, { Inst(Type2Type<TEX::NoOrdTypeRules>()), 0, "NoOrdTypeRules", 0 } },
-   { 1239, { Inst(Type2Type<TEX::NoTimeInForceRules>()), 0, "NoTimeInForceRules", 0 } },
-   { 1240, { Inst(Type2Type<TEX::SecondaryTradingReferencePrice>()), 0, "SecondaryTradingReferencePrice", 0 } },
-   { 1241, { Inst(Type2Type<TEX::StartMaturityMonthYear>()), 0, "StartMaturityMonthYear", 0 } },
-   { 1242, { Inst(Type2Type<TEX::FlexProductEligibilityIndicator>()), 0, "FlexProductEligibilityIndicator", 0 } },
-   { 1243, { Inst(Type2Type<TEX::DerivFlexProductEligibilityIndicator>()), 0, "DerivFlexProductEligibilityIndicator", 0 } },
-   { 1244, { Inst(Type2Type<TEX::FlexibleIndicator>()), 0, "FlexibleIndicator", 0 } },
-   { 1245, { Inst(Type2Type<TEX::TradingCurrency>()), 0, "TradingCurrency", 0 } },
-   { 1246, { Inst(Type2Type<TEX::DerivativeProduct>()), 0, "DerivativeProduct", 0 } },
-   { 1247, { Inst(Type2Type<TEX::DerivativeSecurityGroup>()), 0, "DerivativeSecurityGroup", 0 } },
-   { 1248, { Inst(Type2Type<TEX::DerivativeCFICode>()), 0, "DerivativeCFICode", 0 } },
-   { 1249, { Inst(Type2Type<TEX::DerivativeSecurityType>()), 0, "DerivativeSecurityType", 0 } },
-   { 1250, { Inst(Type2Type<TEX::DerivativeSecuritySubType>()), 0, "DerivativeSecuritySubType", 0 } },
-   { 1251, { Inst(Type2Type<TEX::DerivativeMaturityMonthYear>()), 0, "DerivativeMaturityMonthYear", 0 } },
-   { 1252, { Inst(Type2Type<TEX::DerivativeMaturityDate>()), 0, "DerivativeMaturityDate", 0 } },
-   { 1253, { Inst(Type2Type<TEX::DerivativeMaturityTime>()), 0, "DerivativeMaturityTime", 0 } },
-   { 1254, { Inst(Type2Type<TEX::DerivativeSettleOnOpenFlag>()), 0, "DerivativeSettleOnOpenFlag", 0 } },
-   { 1255, { Inst(Type2Type<TEX::DerivativeInstrmtAssignmentMethod>()), 0, "DerivativeInstrmtAssignmentMethod", 0 } },
-   { 1256, { Inst(Type2Type<TEX::DerivativeSecurityStatus>()), 0, "DerivativeSecurityStatus", 0 } },
-   { 1257, { Inst(Type2Type<TEX::DerivativeInstrRegistry>()), 0, "DerivativeInstrRegistry", 0 } },
-   { 1258, { Inst(Type2Type<TEX::DerivativeCountryOfIssue>()), 0, "DerivativeCountryOfIssue", 0 } },
-   { 1259, { Inst(Type2Type<TEX::DerivativeStateOrProvinceOfIssue>()), 0, "DerivativeStateOrProvinceOfIssue", 0 } },
-   { 1260, { Inst(Type2Type<TEX::DerivativeLocaleOfIssue>()), 0, "DerivativeLocaleOfIssue", 0 } },
-   { 1261, { Inst(Type2Type<TEX::DerivativeStrikePrice>()), 0, "DerivativeStrikePrice", 0 } },
-   { 1262, { Inst(Type2Type<TEX::DerivativeStrikeCurrency>()), 0, "DerivativeStrikeCurrency", 0 } },
-   { 1263, { Inst(Type2Type<TEX::DerivativeStrikeMultiplier>()), 0, "DerivativeStrikeMultiplier", 0 } },
-   { 1264, { Inst(Type2Type<TEX::DerivativeStrikeValue>()), 0, "DerivativeStrikeValue", 0 } },
-   { 1265, { Inst(Type2Type<TEX::DerivativeOptAttribute>()), 0, "DerivativeOptAttribute", 0 } },
-   { 1266, { Inst(Type2Type<TEX::DerivativeContractMultiplier>()), 0, "DerivativeContractMultiplier", 0 } },
-   { 1267, { Inst(Type2Type<TEX::DerivativeMinPriceIncrement>()), 0, "DerivativeMinPriceIncrement", 0 } },
-   { 1268, { Inst(Type2Type<TEX::DerivativeMinPriceIncrementAmount>()), 0, "DerivativeMinPriceIncrementAmount", 0 } },
-   { 1269, { Inst(Type2Type<TEX::DerivativeUnitOfMeasure>()), 0, "DerivativeUnitOfMeasure", 0 } },
-   { 1270, { Inst(Type2Type<TEX::DerivativeUnitOfMeasureQty>()), 0, "DerivativeUnitOfMeasureQty", 0 } },
-   { 1271, { Inst(Type2Type<TEX::DerivativeTimeUnit>()), 0, "DerivativeTimeUnit", 0 } },
-   { 1272, { Inst(Type2Type<TEX::DerivativeSecurityExchange>()), 0, "DerivativeSecurityExchange", 0 } },
-   { 1273, { Inst(Type2Type<TEX::DerivativePositionLimit>()), 0, "DerivativePositionLimit", 0 } },
-   { 1274, { Inst(Type2Type<TEX::DerivativeNTPositionLimit>()), 0, "DerivativeNTPositionLimit", 0 } },
-   { 1275, { Inst(Type2Type<TEX::DerivativeIssuer>()), 0, "DerivativeIssuer", 0 } },
-   { 1276, { Inst(Type2Type<TEX::DerivativeIssueDate>()), 0, "DerivativeIssueDate", 0 } },
-   { 1277, { Inst(Type2Type<TEX::DerivativeEncodedIssuerLen>()), 0, "DerivativeEncodedIssuerLen", 0 } },
-   { 1278, { Inst(Type2Type<TEX::DerivativeEncodedIssuer>()), 0, "DerivativeEncodedIssuer", 0 } },
-   { 1279, { Inst(Type2Type<TEX::DerivativeSecurityDesc>()), 0, "DerivativeSecurityDesc", 0 } },
-   { 1280, { Inst(Type2Type<TEX::DerivativeEncodedSecurityDescLen>()), 0, "DerivativeEncodedSecurityDescLen", 0 } },
-   { 1281, { Inst(Type2Type<TEX::DerivativeEncodedSecurityDesc>()), 0, "DerivativeEncodedSecurityDesc", 0 } },
-   { 1282, { Inst(Type2Type<TEX::DerivativeSecurityXMLLen>()), 0, "DerivativeSecurityXMLLen", 0 } },
-   { 1283, { Inst(Type2Type<TEX::DerivativeSecurityXML>()), 0, "DerivativeSecurityXML", 0 } },
-   { 1284, { Inst(Type2Type<TEX::DerivativeSecurityXMLSchema>()), 0, "DerivativeSecurityXMLSchema", 0 } },
-   { 1285, { Inst(Type2Type<TEX::DerivativeContractSettlMonth>()), 0, "DerivativeContractSettlMonth", 0 } },
-   { 1286, { Inst(Type2Type<TEX::NoDerivativeEvents>()), 0, "NoDerivativeEvents", 0 } },
-   { 1287, { Inst(Type2Type<TEX::DerivativeEventType>()), 0, "DerivativeEventType", 0 } },
-   { 1288, { Inst(Type2Type<TEX::DerivativeEventDate>()), 0, "DerivativeEventDate", 0 } },
-   { 1289, { Inst(Type2Type<TEX::DerivativeEventTime>()), 0, "DerivativeEventTime", 0 } },
-   { 1290, { Inst(Type2Type<TEX::DerivativeEventPx>()), 0, "DerivativeEventPx", 0 } },
-   { 1291, { Inst(Type2Type<TEX::DerivativeEventText>()), 0, "DerivativeEventText", 0 } },
-   { 1292, { Inst(Type2Type<TEX::NoDerivativeInstrumentParties>()), 0, "NoDerivativeInstrumentParties", 0 } },
-   { 1293, { Inst(Type2Type<TEX::DerivativeInstrumentPartyID>()), 0, "DerivativeInstrumentPartyID", 0 } },
-   { 1294, { Inst(Type2Type<TEX::DerivativeInstrumentPartyIDSource>()), 0, "DerivativeInstrumentPartyIDSource", 0 } },
-   { 1295, { Inst(Type2Type<TEX::DerivativeInstrumentPartyRole>()), 0, "DerivativeInstrumentPartyRole", 0 } },
-   { 1296, { Inst(Type2Type<TEX::NoDerivativeInstrumentPartySubIDs>()), 0, "NoDerivativeInstrumentPartySubIDs", 0 } },
-   { 1297, { Inst(Type2Type<TEX::DerivativeInstrumentPartySubID>()), 0, "DerivativeInstrumentPartySubID", 0 } },
-   { 1298, { Inst(Type2Type<TEX::DerivativeInstrumentPartySubIDType>()), 0, "DerivativeInstrumentPartySubIDType", 0 } },
-   { 1299, { Inst(Type2Type<TEX::DerivativeExerciseStyle>()), 0, "DerivativeExerciseStyle", 0 } },
-   { 1300, { Inst(Type2Type<TEX::MarketSegmentID>()), 0, "MarketSegmentID", 0 } },
-   { 1301, { Inst(Type2Type<TEX::MarketID>()), 0, "MarketID", 0 } },
-   { 1302, { Inst(Type2Types<TEX::MaturityMonthYearIncrementUnits, int>()), &TEX::realmbases[304], "MaturityMonthYearIncrementUnits", 0 } },
-   { 1303, { Inst(Type2Types<TEX::MaturityMonthYearFormat, int>()), &TEX::realmbases[305], "MaturityMonthYearFormat", 0 } },
-   { 1304, { Inst(Type2Type<TEX::StrikeExerciseStyle>()), 0, "StrikeExerciseStyle", 0 } },
-   { 1305, { Inst(Type2Type<TEX::SecondaryPriceLimitType>()), 0, "SecondaryPriceLimitType", 0 } },
-   { 1306, { Inst(Type2Types<TEX::PriceLimitType, int>()), &TEX::realmbases[306], "PriceLimitType", 0 } },
-   { 1308, { Inst(Type2Type<TEX::ExecInstValue>()), 0, "ExecInstValue", 0 } },
-   { 1309, { Inst(Type2Type<TEX::NoTradingSessionRules>()), 0, "NoTradingSessionRules", 0 } },
-   { 1310, { Inst(Type2Type<TEX::NoMarketSegments>()), 0, "NoMarketSegments", 0 } },
-   { 1311, { Inst(Type2Type<TEX::NoDerivativeInstrAttrib>()), 0, "NoDerivativeInstrAttrib", 0 } },
-   { 1312, { Inst(Type2Type<TEX::NoNestedInstrAttrib>()), 0, "NoNestedInstrAttrib", 0 } },
-   { 1313, { Inst(Type2Type<TEX::DerivativeInstrAttribType>()), 0, "DerivativeInstrAttribType", 0 } },
-   { 1314, { Inst(Type2Type<TEX::DerivativeInstrAttribValue>()), 0, "DerivativeInstrAttribValue", 0 } },
-   { 1315, { Inst(Type2Type<TEX::DerivativePriceUnitOfMeasure>()), 0, "DerivativePriceUnitOfMeasure", 0 } },
-   { 1316, { Inst(Type2Type<TEX::DerivativePriceUnitOfMeasureQty>()), 0, "DerivativePriceUnitOfMeasureQty", 0 } },
-   { 1317, { Inst(Type2Type<TEX::DerivativeSettlMethod>()), 0, "DerivativeSettlMethod", 0 } },
-   { 1318, { Inst(Type2Type<TEX::DerivativePriceQuoteMethod>()), 0, "DerivativePriceQuoteMethod", 0 } },
-   { 1319, { Inst(Type2Type<TEX::DerivativeValuationMethod>()), 0, "DerivativeValuationMethod", 0 } },
-   { 1320, { Inst(Type2Type<TEX::DerivativeListMethod>()), 0, "DerivativeListMethod", 0 } },
-   { 1321, { Inst(Type2Type<TEX::DerivativeCapPrice>()), 0, "DerivativeCapPrice", 0 } },
-   { 1322, { Inst(Type2Type<TEX::DerivativeFloorPrice>()), 0, "DerivativeFloorPrice", 0 } },
-   { 1323, { Inst(Type2Type<TEX::DerivativePutOrCall>()), 0, "DerivativePutOrCall", 0 } },
-   { 1324, { Inst(Type2Type<TEX::ListUpdateAction>()), 0, "ListUpdateAction", 0 } },
-   { 1325, { Inst(Type2Type<TEX::ParentMktSegmID>()), 0, "ParentMktSegmID", 0 } },
-   { 1326, { Inst(Type2Type<TEX::TradingSessionDesc>()), 0, "TradingSessionDesc", 0 } },
-   { 1327, { Inst(Type2Type<TEX::TradSesUpdateAction>()), 0, "TradSesUpdateAction", 0 } },
-   { 1328, { Inst(Type2Type<TEX::RejectText>()), 0, "RejectText", 0 } },
-   { 1329, { Inst(Type2Type<TEX::FeeMultiplier>()), 0, "FeeMultiplier", 0 } },
-   { 1330, { Inst(Type2Type<TEX::UnderlyingLegSymbol>()), 0, "UnderlyingLegSymbol", 0 } },
-   { 1331, { Inst(Type2Type<TEX::UnderlyingLegSymbolSfx>()), 0, "UnderlyingLegSymbolSfx", 0 } },
-   { 1332, { Inst(Type2Type<TEX::UnderlyingLegSecurityID>()), 0, "UnderlyingLegSecurityID", 0 } },
-   { 1333, { Inst(Type2Type<TEX::UnderlyingLegSecurityIDSource>()), 0, "UnderlyingLegSecurityIDSource", 0 } },
-   { 1334, { Inst(Type2Type<TEX::NoUnderlyingLegSecurityAltID>()), 0, "NoUnderlyingLegSecurityAltID", 0 } },
-   { 1335, { Inst(Type2Type<TEX::UnderlyingLegSecurityAltID>()), 0, "UnderlyingLegSecurityAltID", 0 } },
-   { 1336, { Inst(Type2Type<TEX::UnderlyingLegSecurityAltIDSource>()), 0, "UnderlyingLegSecurityAltIDSource", 0 } },
-   { 1337, { Inst(Type2Type<TEX::UnderlyingLegSecurityType>()), 0, "UnderlyingLegSecurityType", 0 } },
-   { 1338, { Inst(Type2Type<TEX::UnderlyingLegSecuritySubType>()), 0, "UnderlyingLegSecuritySubType", 0 } },
-   { 1339, { Inst(Type2Type<TEX::UnderlyingLegMaturityMonthYear>()), 0, "UnderlyingLegMaturityMonthYear", 0 } },
-   { 1340, { Inst(Type2Type<TEX::UnderlyingLegStrikePrice>()), 0, "UnderlyingLegStrikePrice", 0 } },
-   { 1341, { Inst(Type2Type<TEX::UnderlyingLegSecurityExchange>()), 0, "UnderlyingLegSecurityExchange", 0 } },
-   { 1342, { Inst(Type2Type<TEX::NoOfLegUnderlyings>()), 0, "NoOfLegUnderlyings", 0 } },
-   { 1343, { Inst(Type2Type<TEX::UnderlyingLegPutOrCall>()), 0, "UnderlyingLegPutOrCall", 0 } },
-   { 1344, { Inst(Type2Type<TEX::UnderlyingLegCFICode>()), 0, "UnderlyingLegCFICode", 0 } },
-   { 1345, { Inst(Type2Type<TEX::UnderlyingLegMaturityDate>()), 0, "UnderlyingLegMaturityDate", 0 } },
-   { 1346, { Inst(Type2Type<TEX::ApplReqID>()), 0, "ApplReqID", 0 } },
-   { 1347, { Inst(Type2Types<TEX::ApplReqType, int>()), &TEX::realmbases[307], "ApplReqType", 0 } },
-   { 1348, { Inst(Type2Types<TEX::ApplResponseType, int>()), &TEX::realmbases[308], "ApplResponseType", 0 } },
-   { 1349, { Inst(Type2Type<TEX::ApplTotalMessageCount>()), 0, "ApplTotalMessageCount", 0 } },
-   { 1350, { Inst(Type2Type<TEX::ApplLastSeqNum>()), 0, "ApplLastSeqNum", 0 } },
-   { 1351, { Inst(Type2Type<TEX::NoApplIDs>()), 0, "NoApplIDs", 0 } },
-   { 1352, { Inst(Type2Type<TEX::ApplResendFlag>()), 0, "ApplResendFlag", 0 } },
-   { 1353, { Inst(Type2Type<TEX::ApplResponseID>()), 0, "ApplResponseID", 0 } },
-   { 1354, { Inst(Type2Types<TEX::ApplResponseError, int>()), &TEX::realmbases[309], "ApplResponseError", 0 } },
-   { 1355, { Inst(Type2Type<TEX::RefApplID>()), 0, "RefApplID", 0 } },
-   { 1356, { Inst(Type2Type<TEX::ApplReportID>()), 0, "ApplReportID", 0 } },
-   { 1357, { Inst(Type2Type<TEX::RefApplLastSeqNum>()), 0, "RefApplLastSeqNum", 0 } },
-   { 1358, { Inst(Type2Type<TEX::LegPutOrCall>()), 0, "LegPutOrCall", 0 } },
-   { 1361, { Inst(Type2Type<TEX::TotNoFills>()), 0, "TotNoFills", 0 } },
-   { 1362, { Inst(Type2Type<TEX::NoFills>()), 0, "NoFills", 0 } },
-   { 1363, { Inst(Type2Type<TEX::FillExecID>()), 0, "FillExecID", 0 } },
-   { 1364, { Inst(Type2Type<TEX::FillPx>()), 0, "FillPx", 0 } },
-   { 1365, { Inst(Type2Type<TEX::FillQty>()), 0, "FillQty", 0 } },
-   { 1366, { Inst(Type2Type<TEX::LegAllocID>()), 0, "LegAllocID", 0 } },
-   { 1367, { Inst(Type2Type<TEX::LegAllocSettlCurrency>()), 0, "LegAllocSettlCurrency", 0 } },
-   { 1368, { Inst(Type2Types<TEX::TradSesEvent, int>()), &TEX::realmbases[310], "TradSesEvent", 0 } },
-   { 1369, { Inst(Type2Type<TEX::MassActionReportID>()), 0, "MassActionReportID", 0 } },
-   { 1370, { Inst(Type2Type<TEX::NoNotAffectedOrders>()), 0, "NoNotAffectedOrders", 0 } },
-   { 1371, { Inst(Type2Type<TEX::NotAffectedOrderID>()), 0, "NotAffectedOrderID", 0 } },
-   { 1372, { Inst(Type2Type<TEX::NotAffOrigClOrdID>()), 0, "NotAffOrigClOrdID", 0 } },
-   { 1373, { Inst(Type2Types<TEX::MassActionType, int>()), &TEX::realmbases[311], "MassActionType", 0 } },
-   { 1374, { Inst(Type2Types<TEX::MassActionScope, int>()), &TEX::realmbases[312], "MassActionScope", 0 } },
-   { 1375, { Inst(Type2Types<TEX::MassActionResponse, int>()), &TEX::realmbases[313], "MassActionResponse", 0 } },
-   { 1376, { Inst(Type2Types<TEX::MassActionRejectReason, int>()), &TEX::realmbases[314], "MassActionRejectReason", 0 } },
-   { 1377, { Inst(Type2Types<TEX::MultilegModel, int>()), &TEX::realmbases[315], "MultilegModel", 0 } },
-   { 1378, { Inst(Type2Types<TEX::MultilegPriceMethod, int>()), &TEX::realmbases[316], "MultilegPriceMethod", 0 } },
-   { 1379, { Inst(Type2Type<TEX::LegVolatility>()), 0, "LegVolatility", 0 } },
-   { 1380, { Inst(Type2Type<TEX::DividendYield>()), 0, "DividendYield", 0 } },
-   { 1381, { Inst(Type2Type<TEX::LegDividendYield>()), 0, "LegDividendYield", 0 } },
-   { 1382, { Inst(Type2Type<TEX::CurrencyRatio>()), 0, "CurrencyRatio", 0 } },
-   { 1383, { Inst(Type2Type<TEX::LegCurrencyRatio>()), 0, "LegCurrencyRatio", 0 } },
-   { 1384, { Inst(Type2Type<TEX::LegExecInst>()), 0, "LegExecInst", 0 } },
-   { 1385, { Inst(Type2Types<TEX::ContingencyType, int>()), &TEX::realmbases[317], "ContingencyType", 0 } },
-   { 1386, { Inst(Type2Types<TEX::ListRejectReason, int>()), &TEX::realmbases[318], "ListRejectReason", 0 } },
-   { 1387, { Inst(Type2Type<TEX::NoTrdRepIndicators>()), 0, "NoTrdRepIndicators", 0 } },
-   { 1388, { Inst(Type2Type<TEX::TrdRepPartyRole>()), 0, "TrdRepPartyRole", 0 } },
-   { 1389, { Inst(Type2Type<TEX::TrdRepIndicator>()), 0, "TrdRepIndicator", 0 } },
-   { 1390, { Inst(Type2Types<TEX::TradePublishIndicator, int>()), &TEX::realmbases[319], "TradePublishIndicator", 0 } },
-   { 1391, { Inst(Type2Type<TEX::UnderlyingLegOptAttribute>()), 0, "UnderlyingLegOptAttribute", 0 } },
-   { 1392, { Inst(Type2Type<TEX::UnderlyingLegSecurityDesc>()), 0, "UnderlyingLegSecurityDesc", 0 } },
-   { 1393, { Inst(Type2Type<TEX::MarketReqID>()), 0, "MarketReqID", 0 } },
-   { 1394, { Inst(Type2Type<TEX::MarketReportID>()), 0, "MarketReportID", 0 } },
-   { 1395, { Inst(Type2Types<TEX::MarketUpdateAction, char>()), &TEX::realmbases[320], "MarketUpdateAction", 0 } },
-   { 1396, { Inst(Type2Type<TEX::MarketSegmentDesc>()), 0, "MarketSegmentDesc", 0 } },
-   { 1397, { Inst(Type2Type<TEX::EncodedMktSegmDescLen>()), 0, "EncodedMktSegmDescLen", 0 } },
-   { 1398, { Inst(Type2Type<TEX::EncodedMktSegmDesc>()), 0, "EncodedMktSegmDesc", 0 } },
-   { 1399, { Inst(Type2Type<TEX::ApplNewSeqNum>()), 0, "ApplNewSeqNum", 0 } },
-   { 1400, { Inst(Type2Type<TEX::EncryptedPasswordMethod>()), 0, "EncryptedPasswordMethod", 0 } },
-   { 1401, { Inst(Type2Type<TEX::EncryptedPasswordLen>()), 0, "EncryptedPasswordLen", 0 } },
-   { 1402, { Inst(Type2Type<TEX::EncryptedPassword>()), 0, "EncryptedPassword", 0 } },
-   { 1403, { Inst(Type2Type<TEX::EncryptedNewPasswordLen>()), 0, "EncryptedNewPasswordLen", 0 } },
-   { 1404, { Inst(Type2Type<TEX::EncryptedNewPassword>()), 0, "EncryptedNewPassword", 0 } },
-   { 1405, { Inst(Type2Type<TEX::UnderlyingLegMaturityTime>()), 0, "UnderlyingLegMaturityTime", 0 } },
-   { 1406, { Inst(Type2Type<TEX::RefApplExtID>()), 0, "RefApplExtID", 0 } },
-   { 1411, { Inst(Type2Type<TEX::Nested4PartySubIDType>()), 0, "Nested4PartySubIDType", 0 } },
-   { 1412, { Inst(Type2Type<TEX::Nested4PartySubID>()), 0, "Nested4PartySubID", 0 } },
-   { 1413, { Inst(Type2Type<TEX::NoNested4PartySubIDs>()), 0, "NoNested4PartySubIDs", 0 } },
-   { 1414, { Inst(Type2Type<TEX::NoNested4PartyIDs>()), 0, "NoNested4PartyIDs", 0 } },
-   { 1415, { Inst(Type2Type<TEX::Nested4PartyID>()), 0, "Nested4PartyID", 0 } },
-   { 1416, { Inst(Type2Type<TEX::Nested4PartyIDSource>()), 0, "Nested4PartyIDSource", 0 } },
-   { 1417, { Inst(Type2Type<TEX::Nested4PartyRole>()), 0, "Nested4PartyRole", 0 } },
-   { 1418, { Inst(Type2Type<TEX::LegLastQty>()), 0, "LegLastQty", 0 } },
-   { 1419, { Inst(Type2Type<TEX::UnderlyingExerciseStyle>()), 0, "UnderlyingExerciseStyle", 0 } },
-   { 1420, { Inst(Type2Type<TEX::LegExerciseStyle>()), 0, "LegExerciseStyle", 0 } },
-   { 1421, { Inst(Type2Type<TEX::LegPriceUnitOfMeasure>()), 0, "LegPriceUnitOfMeasure", 0 } },
-   { 1422, { Inst(Type2Type<TEX::LegPriceUnitOfMeasureQty>()), 0, "LegPriceUnitOfMeasureQty", 0 } },
-   { 1423, { Inst(Type2Type<TEX::UnderlyingUnitOfMeasureQty>()), 0, "UnderlyingUnitOfMeasureQty", 0 } },
-   { 1424, { Inst(Type2Type<TEX::UnderlyingPriceUnitOfMeasure>()), 0, "UnderlyingPriceUnitOfMeasure", 0 } },
-   { 1425, { Inst(Type2Type<TEX::UnderlyingPriceUnitOfMeasureQty>()), 0, "UnderlyingPriceUnitOfMeasureQty", 0 } },
-   { 1426, { Inst(Type2Types<TEX::ApplReportType, int>()), &TEX::realmbases[321], "ApplReportType", 0 } },
-   { 1427, { Inst(Type2Type<TEX::SideExecID>()), 0, "SideExecID", 0 } },
-   { 1428, { Inst(Type2Type<TEX::OrderDelay>()), 0, "OrderDelay", 0 } },
-   { 1429, { Inst(Type2Types<TEX::OrderDelayUnit, int>()), &TEX::realmbases[322], "OrderDelayUnit", 0 } },
-   { 1430, { Inst(Type2Types<TEX::VenueType, char>()), &TEX::realmbases[323], "VenueType", 0 } },
-   { 1431, { Inst(Type2Types<TEX::RefOrdIDReason, int>()), &TEX::realmbases[324], "RefOrdIDReason", 0 } },
-   { 1432, { Inst(Type2Types<TEX::OrigCustOrderCapacity, int>()), &TEX::realmbases[325], "OrigCustOrderCapacity", 0 } },
-   { 1433, { Inst(Type2Type<TEX::RefApplReqID>()), 0, "RefApplReqID", 0 } },
-   { 1434, { Inst(Type2Types<TEX::ModelType, int>()), &TEX::realmbases[326], "ModelType", 0 } },
-   { 1435, { Inst(Type2Types<TEX::ContractMultiplierUnit, int>()), &TEX::realmbases[327], "ContractMultiplierUnit", 0 } },
-   { 1436, { Inst(Type2Type<TEX::LegContractMultiplierUnit>()), 0, "LegContractMultiplierUnit", 0 } },
-   { 1437, { Inst(Type2Type<TEX::UnderlyingContractMultiplierUnit>()), 0, "UnderlyingContractMultiplierUnit", 0 } },
-   { 1438, { Inst(Type2Type<TEX::DerivativeContractMultiplierUnit>()), 0, "DerivativeContractMultiplierUnit", 0 } },
-   { 1439, { Inst(Type2Types<TEX::FlowScheduleType, int>()), &TEX::realmbases[328], "FlowScheduleType", 0 } },
-   { 1440, { Inst(Type2Type<TEX::LegFlowScheduleType>()), 0, "LegFlowScheduleType", 0 } },
-   { 1441, { Inst(Type2Type<TEX::UnderlyingFlowScheduleType>()), 0, "UnderlyingFlowScheduleType", 0 } },
-   { 1442, { Inst(Type2Type<TEX::DerivativeFlowScheduleType>()), 0, "DerivativeFlowScheduleType", 0 } },
-   { 1443, { Inst(Type2Type<TEX::FillLiquidityInd>()), 0, "FillLiquidityInd", 0 } },
-   { 1444, { Inst(Type2Type<TEX::SideLiquidityInd>()), 0, "SideLiquidityInd", 0 } },
-   { 1445, { Inst(Type2Type<TEX::NoRateSources>()), 0, "NoRateSources", 0 } },
-   { 1446, { Inst(Type2Types<TEX::RateSource, int>()), &TEX::realmbases[329], "RateSource", 0 } },
-   { 1447, { Inst(Type2Types<TEX::RateSourceType, int>()), &TEX::realmbases[330], "RateSourceType", 0 } },
-   { 1448, { Inst(Type2Type<TEX::ReferencePage>()), 0, "ReferencePage", 0 } },
-   { 1449, { Inst(Type2Types<TEX::RestructuringType, f8String>()), &TEX::realmbases[331], "RestructuringType", 0 } },
-   { 1450, { Inst(Type2Types<TEX::Seniority, f8String>()), &TEX::realmbases[332], "Seniority", 0 } },
-   { 1451, { Inst(Type2Type<TEX::NotionalPercentageOutstanding>()), 0, "NotionalPercentageOutstanding", 0 } },
-   { 1452, { Inst(Type2Type<TEX::OriginalNotionalPercentageOutstanding>()), 0, "OriginalNotionalPercentageOutstanding", 0 } },
-   { 1453, { Inst(Type2Type<TEX::UnderlyingRestructuringType>()), 0, "UnderlyingRestructuringType", 0 } },
-   { 1454, { Inst(Type2Type<TEX::UnderlyingSeniority>()), 0, "UnderlyingSeniority", 0 } },
-   { 1455, { Inst(Type2Type<TEX::UnderlyingNotionalPercentageOutstanding>()), 0, "UnderlyingNotionalPercentageOutstanding", 0 } },
-   { 1456, { Inst(Type2Type<TEX::UnderlyingOriginalNotionalPercentageOutstanding>()), 0, "UnderlyingOriginalNotionalPercentageOutstanding", 0 } },
-   { 1457, { Inst(Type2Type<TEX::AttachmentPoint>()), 0, "AttachmentPoint", 0 } },
-   { 1458, { Inst(Type2Type<TEX::DetachmentPoint>()), 0, "DetachmentPoint", 0 } },
-   { 1459, { Inst(Type2Type<TEX::UnderlyingAttachmentPoint>()), 0, "UnderlyingAttachmentPoint", 0 } },
-   { 1460, { Inst(Type2Type<TEX::UnderlyingDetachmentPoint>()), 0, "UnderlyingDetachmentPoint", 0 } },
-   { 1461, { Inst(Type2Type<TEX::NoTargetPartyIDs>()), 0, "NoTargetPartyIDs", 0 } },
-   { 1462, { Inst(Type2Type<TEX::TargetPartyID>()), 0, "TargetPartyID", 0 } },
-   { 1463, { Inst(Type2Type<TEX::TargetPartyIDSource>()), 0, "TargetPartyIDSource", 0 } },
-   { 1464, { Inst(Type2Type<TEX::TargetPartyRole>()), 0, "TargetPartyRole", 0 } },
-   { 1465, { Inst(Type2Type<TEX::SecurityListID>()), 0, "SecurityListID", 0 } },
-   { 1466, { Inst(Type2Type<TEX::SecurityListRefID>()), 0, "SecurityListRefID", 0 } },
-   { 1467, { Inst(Type2Type<TEX::SecurityListDesc>()), 0, "SecurityListDesc", 0 } },
-   { 1468, { Inst(Type2Type<TEX::EncodedSecurityListDescLen>()), 0, "EncodedSecurityListDescLen", 0 } },
-   { 1469, { Inst(Type2Type<TEX::EncodedSecurityListDesc>()), 0, "EncodedSecurityListDesc", 0 } },
-   { 1470, { Inst(Type2Types<TEX::SecurityListType, int>()), &TEX::realmbases[333], "SecurityListType", 0 } },
-   { 1471, { Inst(Type2Types<TEX::SecurityListTypeSource, int>()), &TEX::realmbases[334], "SecurityListTypeSource", 0 } },
-   { 1472, { Inst(Type2Type<TEX::NewsID>()), 0, "NewsID", 0 } },
-   { 1473, { Inst(Type2Types<TEX::NewsCategory, int>()), &TEX::realmbases[335], "NewsCategory", 0 } },
-   { 1474, { Inst(Type2Type<TEX::LanguageCode>()), 0, "LanguageCode", 0 } },
-   { 1475, { Inst(Type2Type<TEX::NoNewsRefIDs>()), 0, "NoNewsRefIDs", 0 } },
-   { 1476, { Inst(Type2Type<TEX::NewsRefID>()), 0, "NewsRefID", 0 } },
-   { 1477, { Inst(Type2Types<TEX::NewsRefType, int>()), &TEX::realmbases[336], "NewsRefType", 0 } },
-   { 1478, { Inst(Type2Types<TEX::StrikePriceDeterminationMethod, int>()), &TEX::realmbases[337], "StrikePriceDeterminationMethod", 0 } },
-   { 1479, { Inst(Type2Types<TEX::StrikePriceBoundaryMethod, int>()), &TEX::realmbases[338], "StrikePriceBoundaryMethod", 0 } },
-   { 1480, { Inst(Type2Type<TEX::StrikePriceBoundaryPrecision>()), 0, "StrikePriceBoundaryPrecision", 0 } },
-   { 1481, { Inst(Type2Types<TEX::UnderlyingPriceDeterminationMethod, int>()), &TEX::realmbases[339], "UnderlyingPriceDeterminationMethod", 0 } },
-   { 1482, { Inst(Type2Types<TEX::OptPayoutType, int>()), &TEX::realmbases[340], "OptPayoutType", 0 } },
-   { 1483, { Inst(Type2Type<TEX::NoComplexEvents>()), 0, "NoComplexEvents", 0 } },
-   { 1484, { Inst(Type2Types<TEX::ComplexEventType, int>()), &TEX::realmbases[341], "ComplexEventType", 0 } },
-   { 1485, { Inst(Type2Type<TEX::ComplexOptPayoutAmount>()), 0, "ComplexOptPayoutAmount", 0 } },
-   { 1486, { Inst(Type2Type<TEX::ComplexEventPrice>()), 0, "ComplexEventPrice", 0 } },
-   { 1487, { Inst(Type2Types<TEX::ComplexEventPriceBoundaryMethod, int>()), &TEX::realmbases[342], "ComplexEventPriceBoundaryMethod", 0 } },
-   { 1488, { Inst(Type2Type<TEX::ComplexEventPriceBoundaryPrecision>()), 0, "ComplexEventPriceBoundaryPrecision", 0 } },
-   { 1489, { Inst(Type2Types<TEX::ComplexEventPriceTimeType, int>()), &TEX::realmbases[343], "ComplexEventPriceTimeType", 0 } },
-   { 1490, { Inst(Type2Types<TEX::ComplexEventCondition, int>()), &TEX::realmbases[344], "ComplexEventCondition", 0 } },
-   { 1491, { Inst(Type2Type<TEX::NoComplexEventDates>()), 0, "NoComplexEventDates", 0 } },
-   { 1492, { Inst(Type2Type<TEX::ComplexEventStartDate>()), 0, "ComplexEventStartDate", 0 } },
-   { 1493, { Inst(Type2Type<TEX::ComplexEventEndDate>()), 0, "ComplexEventEndDate", 0 } },
-   { 1494, { Inst(Type2Type<TEX::NoComplexEventTimes>()), 0, "NoComplexEventTimes", 0 } },
-   { 1495, { Inst(Type2Type<TEX::ComplexEventStartTime>()), 0, "ComplexEventStartTime", 0 } },
-   { 1496, { Inst(Type2Type<TEX::ComplexEventEndTime>()), 0, "ComplexEventEndTime", 0 } },
-   { 1497, { Inst(Type2Type<TEX::StreamAsgnReqID>()), 0, "StreamAsgnReqID", 0 } },
-   { 1498, { Inst(Type2Types<TEX::StreamAsgnReqType, int>()), &TEX::realmbases[345], "StreamAsgnReqType", 0 } },
-   { 1499, { Inst(Type2Type<TEX::NoAsgnReqs>()), 0, "NoAsgnReqs", 0 } },
-   { 1500, { Inst(Type2Type<TEX::MDStreamID>()), 0, "MDStreamID", 0 } },
-   { 1501, { Inst(Type2Type<TEX::StreamAsgnRptID>()), 0, "StreamAsgnRptID", 0 } },
-   { 1502, { Inst(Type2Types<TEX::StreamAsgnRejReason, int>()), &TEX::realmbases[346], "StreamAsgnRejReason", 0 } },
-   { 1503, { Inst(Type2Types<TEX::StreamAsgnAckType, int>()), &TEX::realmbases[347], "StreamAsgnAckType", 0 } },
-   { 1504, { Inst(Type2Type<TEX::RelSymTransactTime>()), 0, "RelSymTransactTime", 0 } },
-   { 1505, { Inst(Type2Type<TEX::PartyDetailsListRequestID>()), 0, "PartyDetailsListRequestID", 0 } },
-   { 1506, { Inst(Type2Type<TEX::NoPartyListResponseTypes>()), 0, "NoPartyListResponseTypes", 0 } },
-   { 1507, { Inst(Type2Types<TEX::PartyListResponseType, int>()), &TEX::realmbases[348], "PartyListResponseType", 0 } },
-   { 1508, { Inst(Type2Type<TEX::NoRequestedPartyRoles>()), 0, "NoRequestedPartyRoles", 0 } },
-   { 1509, { Inst(Type2Type<TEX::RequestedPartyRole>()), 0, "RequestedPartyRole", 0 } },
-   { 1510, { Inst(Type2Type<TEX::PartyDetailsListReportID>()), 0, "PartyDetailsListReportID", 0 } },
-   { 1511, { Inst(Type2Types<TEX::PartyDetailsRequestResult, int>()), &TEX::realmbases[349], "PartyDetailsRequestResult", 0 } },
-   { 1512, { Inst(Type2Type<TEX::TotNoPartyList>()), 0, "TotNoPartyList", 0 } },
-   { 1513, { Inst(Type2Type<TEX::NoPartyList>()), 0, "NoPartyList", 0 } },
-   { 1514, { Inst(Type2Type<TEX::NoPartyRelationships>()), 0, "NoPartyRelationships", 0 } },
-   { 1515, { Inst(Type2Types<TEX::PartyRelationship, int>()), &TEX::realmbases[350], "PartyRelationship", 0 } },
-   { 1516, { Inst(Type2Type<TEX::NoPartyAltIDs>()), 0, "NoPartyAltIDs", 0 } },
-   { 1517, { Inst(Type2Type<TEX::PartyAltID>()), 0, "PartyAltID", 0 } },
-   { 1518, { Inst(Type2Type<TEX::PartyAltIDSource>()), 0, "PartyAltIDSource", 0 } },
-   { 1519, { Inst(Type2Type<TEX::NoPartyAltSubIDs>()), 0, "NoPartyAltSubIDs", 0 } },
-   { 1520, { Inst(Type2Type<TEX::PartyAltSubID>()), 0, "PartyAltSubID", 0 } },
-   { 1521, { Inst(Type2Type<TEX::PartyAltSubIDType>()), 0, "PartyAltSubIDType", 0 } },
-   { 1522, { Inst(Type2Type<TEX::NoContextPartyIDs>()), 0, "NoContextPartyIDs", 0 } },
-   { 1523, { Inst(Type2Type<TEX::ContextPartyID>()), 0, "ContextPartyID", 0 } },
-   { 1524, { Inst(Type2Type<TEX::ContextPartyIDSource>()), 0, "ContextPartyIDSource", 0 } },
-   { 1525, { Inst(Type2Type<TEX::ContextPartyRole>()), 0, "ContextPartyRole", 0 } },
-   { 1526, { Inst(Type2Type<TEX::NoContextPartySubIDs>()), 0, "NoContextPartySubIDs", 0 } },
-   { 1527, { Inst(Type2Type<TEX::ContextPartySubID>()), 0, "ContextPartySubID", 0 } },
-   { 1528, { Inst(Type2Type<TEX::ContextPartySubIDType>()), 0, "ContextPartySubIDType", 0 } },
-   { 1529, { Inst(Type2Type<TEX::NoRiskLimits>()), 0, "NoRiskLimits", 0 } },
-   { 1530, { Inst(Type2Types<TEX::RiskLimitType, int>()), &TEX::realmbases[351], "RiskLimitType", 0 } },
-   { 1531, { Inst(Type2Type<TEX::RiskLimitAmount>()), 0, "RiskLimitAmount", 0 } },
-   { 1532, { Inst(Type2Type<TEX::RiskLimitCurrency>()), 0, "RiskLimitCurrency", 0 } },
-   { 1533, { Inst(Type2Type<TEX::RiskLimitPlatform>()), 0, "RiskLimitPlatform", 0 } },
-   { 1534, { Inst(Type2Type<TEX::NoRiskInstruments>()), 0, "NoRiskInstruments", 0 } },
-   { 1535, { Inst(Type2Types<TEX::RiskInstrumentOperator, int>()), &TEX::realmbases[352], "RiskInstrumentOperator", 0 } },
-   { 1536, { Inst(Type2Type<TEX::RiskSymbol>()), 0, "RiskSymbol", 0 } },
-   { 1537, { Inst(Type2Type<TEX::RiskSymbolSfx>()), 0, "RiskSymbolSfx", 0 } },
-   { 1538, { Inst(Type2Type<TEX::RiskSecurityID>()), 0, "RiskSecurityID", 0 } },
-   { 1539, { Inst(Type2Type<TEX::RiskSecurityIDSource>()), 0, "RiskSecurityIDSource", 0 } },
-   { 1540, { Inst(Type2Type<TEX::NoRiskSecurityAltID>()), 0, "NoRiskSecurityAltID", 0 } },
-   { 1541, { Inst(Type2Type<TEX::RiskSecurityAltID>()), 0, "RiskSecurityAltID", 0 } },
-   { 1542, { Inst(Type2Type<TEX::RiskSecurityAltIDSource>()), 0, "RiskSecurityAltIDSource", 0 } },
-   { 1543, { Inst(Type2Type<TEX::RiskProduct>()), 0, "RiskProduct", 0 } },
-   { 1544, { Inst(Type2Type<TEX::RiskProductComplex>()), 0, "RiskProductComplex", 0 } },
-   { 1545, { Inst(Type2Type<TEX::RiskSecurityGroup>()), 0, "RiskSecurityGroup", 0 } },
-   { 1546, { Inst(Type2Type<TEX::RiskCFICode>()), 0, "RiskCFICode", 0 } },
-   { 1547, { Inst(Type2Type<TEX::RiskSecurityType>()), 0, "RiskSecurityType", 0 } },
-   { 1548, { Inst(Type2Type<TEX::RiskSecuritySubType>()), 0, "RiskSecuritySubType", 0 } },
-   { 1549, { Inst(Type2Type<TEX::RiskMaturityMonthYear>()), 0, "RiskMaturityMonthYear", 0 } },
-   { 1550, { Inst(Type2Type<TEX::RiskMaturityTime>()), 0, "RiskMaturityTime", 0 } },
-   { 1551, { Inst(Type2Type<TEX::RiskRestructuringType>()), 0, "RiskRestructuringType", 0 } },
-   { 1552, { Inst(Type2Type<TEX::RiskSeniority>()), 0, "RiskSeniority", 0 } },
-   { 1553, { Inst(Type2Type<TEX::RiskPutOrCall>()), 0, "RiskPutOrCall", 0 } },
-   { 1554, { Inst(Type2Type<TEX::RiskFlexibleIndicator>()), 0, "RiskFlexibleIndicator", 0 } },
-   { 1555, { Inst(Type2Type<TEX::RiskCouponRate>()), 0, "RiskCouponRate", 0 } },
-   { 1556, { Inst(Type2Type<TEX::RiskSecurityDesc>()), 0, "RiskSecurityDesc", 0 } },
-   { 1557, { Inst(Type2Type<TEX::RiskInstrumentSettlType>()), 0, "RiskInstrumentSettlType", 0 } },
-   { 1558, { Inst(Type2Type<TEX::RiskInstrumentMultiplier>()), 0, "RiskInstrumentMultiplier", 0 } },
-   { 1559, { Inst(Type2Type<TEX::NoRiskWarningLevels>()), 0, "NoRiskWarningLevels", 0 } },
-   { 1560, { Inst(Type2Type<TEX::RiskWarningLevelPercent>()), 0, "RiskWarningLevelPercent", 0 } },
-   { 1561, { Inst(Type2Type<TEX::RiskWarningLevelName>()), 0, "RiskWarningLevelName", 0 } },
-   { 1562, { Inst(Type2Type<TEX::NoRelatedPartyIDs>()), 0, "NoRelatedPartyIDs", 0 } },
-   { 1563, { Inst(Type2Type<TEX::RelatedPartyID>()), 0, "RelatedPartyID", 0 } },
-   { 1564, { Inst(Type2Type<TEX::RelatedPartyIDSource>()), 0, "RelatedPartyIDSource", 0 } },
-   { 1565, { Inst(Type2Type<TEX::RelatedPartyRole>()), 0, "RelatedPartyRole", 0 } },
-   { 1566, { Inst(Type2Type<TEX::NoRelatedPartySubIDs>()), 0, "NoRelatedPartySubIDs", 0 } },
-   { 1567, { Inst(Type2Type<TEX::RelatedPartySubID>()), 0, "RelatedPartySubID", 0 } },
-   { 1568, { Inst(Type2Type<TEX::RelatedPartySubIDType>()), 0, "RelatedPartySubIDType", 0 } },
-   { 1569, { Inst(Type2Type<TEX::NoRelatedPartyAltIDs>()), 0, "NoRelatedPartyAltIDs", 0 } },
-   { 1570, { Inst(Type2Type<TEX::RelatedPartyAltID>()), 0, "RelatedPartyAltID", 0 } },
-   { 1571, { Inst(Type2Type<TEX::RelatedPartyAltIDSource>()), 0, "RelatedPartyAltIDSource", 0 } },
-   { 1572, { Inst(Type2Type<TEX::NoRelatedPartyAltSubIDs>()), 0, "NoRelatedPartyAltSubIDs", 0 } },
-   { 1573, { Inst(Type2Type<TEX::RelatedPartyAltSubID>()), 0, "RelatedPartyAltSubID", 0 } },
-   { 1574, { Inst(Type2Type<TEX::RelatedPartyAltSubIDType>()), 0, "RelatedPartyAltSubIDType", 0 } },
-   { 1575, { Inst(Type2Type<TEX::NoRelatedContextPartyIDs>()), 0, "NoRelatedContextPartyIDs", 0 } },
-   { 1576, { Inst(Type2Type<TEX::RelatedContextPartyID>()), 0, "RelatedContextPartyID", 0 } },
-   { 1577, { Inst(Type2Type<TEX::RelatedContextPartyIDSource>()), 0, "RelatedContextPartyIDSource", 0 } },
-   { 1578, { Inst(Type2Type<TEX::RelatedContextPartyRole>()), 0, "RelatedContextPartyRole", 0 } },
-   { 1579, { Inst(Type2Type<TEX::NoRelatedContextPartySubIDs>()), 0, "NoRelatedContextPartySubIDs", 0 } },
-   { 1580, { Inst(Type2Type<TEX::RelatedContextPartySubID>()), 0, "RelatedContextPartySubID", 0 } },
-   { 1581, { Inst(Type2Type<TEX::RelatedContextPartySubIDType>()), 0, "RelatedContextPartySubIDType", 0 } },
-   { 1582, { Inst(Type2Type<TEX::NoRelationshipRiskLimits>()), 0, "NoRelationshipRiskLimits", 0 } },
-   { 1583, { Inst(Type2Type<TEX::RelationshipRiskLimitType>()), 0, "RelationshipRiskLimitType", 0 } },
-   { 1584, { Inst(Type2Type<TEX::RelationshipRiskLimitAmount>()), 0, "RelationshipRiskLimitAmount", 0 } },
-   { 1585, { Inst(Type2Type<TEX::RelationshipRiskLimitCurrency>()), 0, "RelationshipRiskLimitCurrency", 0 } },
-   { 1586, { Inst(Type2Type<TEX::RelationshipRiskLimitPlatform>()), 0, "RelationshipRiskLimitPlatform", 0 } },
-   { 1587, { Inst(Type2Type<TEX::NoRelationshipRiskInstruments>()), 0, "NoRelationshipRiskInstruments", 0 } },
-   { 1588, { Inst(Type2Type<TEX::RelationshipRiskInstrumentOperator>()), 0, "RelationshipRiskInstrumentOperator", 0 } },
-   { 1589, { Inst(Type2Type<TEX::RelationshipRiskSymbol>()), 0, "RelationshipRiskSymbol", 0 } },
-   { 1590, { Inst(Type2Type<TEX::RelationshipRiskSymbolSfx>()), 0, "RelationshipRiskSymbolSfx", 0 } },
-   { 1591, { Inst(Type2Type<TEX::RelationshipRiskSecurityID>()), 0, "RelationshipRiskSecurityID", 0 } },
-   { 1592, { Inst(Type2Type<TEX::RelationshipRiskSecurityIDSource>()), 0, "RelationshipRiskSecurityIDSource", 0 } },
-   { 1593, { Inst(Type2Type<TEX::NoRelationshipRiskSecurityAltID>()), 0, "NoRelationshipRiskSecurityAltID", 0 } },
-   { 1594, { Inst(Type2Type<TEX::RelationshipRiskSecurityAltID>()), 0, "RelationshipRiskSecurityAltID", 0 } },
-   { 1595, { Inst(Type2Type<TEX::RelationshipRiskSecurityAltIDSource>()), 0, "RelationshipRiskSecurityAltIDSource", 0 } },
-   { 1596, { Inst(Type2Type<TEX::RelationshipRiskProduct>()), 0, "RelationshipRiskProduct", 0 } },
-   { 1597, { Inst(Type2Type<TEX::RelationshipRiskProductComplex>()), 0, "RelationshipRiskProductComplex", 0 } },
-   { 1598, { Inst(Type2Type<TEX::RelationshipRiskSecurityGroup>()), 0, "RelationshipRiskSecurityGroup", 0 } },
-   { 1599, { Inst(Type2Type<TEX::RelationshipRiskCFICode>()), 0, "RelationshipRiskCFICode", 0 } },
-   { 1600, { Inst(Type2Type<TEX::RelationshipRiskSecurityType>()), 0, "RelationshipRiskSecurityType", 0 } },
-   { 1601, { Inst(Type2Type<TEX::RelationshipRiskSecuritySubType>()), 0, "RelationshipRiskSecuritySubType", 0 } },
-   { 1602, { Inst(Type2Type<TEX::RelationshipRiskMaturityMonthYear>()), 0, "RelationshipRiskMaturityMonthYear", 0 } },
-   { 1603, { Inst(Type2Type<TEX::RelationshipRiskMaturityTime>()), 0, "RelationshipRiskMaturityTime", 0 } },
-   { 1604, { Inst(Type2Type<TEX::RelationshipRiskRestructuringType>()), 0, "RelationshipRiskRestructuringType", 0 } },
-   { 1605, { Inst(Type2Type<TEX::RelationshipRiskSeniority>()), 0, "RelationshipRiskSeniority", 0 } },
-   { 1606, { Inst(Type2Type<TEX::RelationshipRiskPutOrCall>()), 0, "RelationshipRiskPutOrCall", 0 } },
-   { 1607, { Inst(Type2Type<TEX::RelationshipRiskFlexibleIndicator>()), 0, "RelationshipRiskFlexibleIndicator", 0 } },
-   { 1608, { Inst(Type2Type<TEX::RelationshipRiskCouponRate>()), 0, "RelationshipRiskCouponRate", 0 } },
-   { 1609, { Inst(Type2Type<TEX::RelationshipRiskSecurityExchange>()), 0, "RelationshipRiskSecurityExchange", 0 } },
-   { 1610, { Inst(Type2Type<TEX::RelationshipRiskSecurityDesc>()), 0, "RelationshipRiskSecurityDesc", 0 } },
-   { 1611, { Inst(Type2Type<TEX::RelationshipRiskInstrumentSettlType>()), 0, "RelationshipRiskInstrumentSettlType", 0 } },
-   { 1612, { Inst(Type2Type<TEX::RelationshipRiskInstrumentMultiplier>()), 0, "RelationshipRiskInstrumentMultiplier", 0 } },
-   { 1613, { Inst(Type2Type<TEX::NoRelationshipRiskWarningLevels>()), 0, "NoRelationshipRiskWarningLevels", 0 } },
-   { 1614, { Inst(Type2Type<TEX::RelationshipRiskWarningLevelPercent>()), 0, "RelationshipRiskWarningLevelPercent", 0 } },
-   { 1615, { Inst(Type2Type<TEX::RelationshipRiskWarningLevelName>()), 0, "RelationshipRiskWarningLevelName", 0 } },
-   { 1616, { Inst(Type2Type<TEX::RiskSecurityExchange>()), 0, "RiskSecurityExchange", 0 } },
-   { 1617, { Inst(Type2Types<TEX::StreamAsgnType, int>()), &TEX::realmbases[353], "StreamAsgnType", 0 } },
-   { 1618, { Inst(Type2Type<TEX::RelationshipRiskEncodedSecurityDescLen>()), 0, "RelationshipRiskEncodedSecurityDescLen", 0 } },
-   { 1619, { Inst(Type2Type<TEX::RelationshipRiskEncodedSecurityDesc>()), 0, "RelationshipRiskEncodedSecurityDesc", 0 } },
-   { 1620, { Inst(Type2Type<TEX::RiskEncodedSecurityDescLen>()), 0, "RiskEncodedSecurityDescLen", 0 } },
-   { 1621, { Inst(Type2Type<TEX::RiskEncodedSecurityDesc>()), 0, "RiskEncodedSecurityDesc", 0 } }
+   { 1, { Inst(Type2Type<TEX::Account>()), nullptr, "Account" } },
+   { 2, { Inst(Type2Type<TEX::AdvId>()), nullptr, "AdvId" } },
+   { 3, { Inst(Type2Type<TEX::AdvRefID>()), nullptr, "AdvRefID" } },
+   { 4, { Inst(Type2Types<TEX::AdvSide, char>()), &TEX::realmbases[0], "AdvSide" } },
+   { 5, { Inst(Type2Types<TEX::AdvTransType, f8String>()), &TEX::realmbases[1], "AdvTransType" } },
+   { 6, { Inst(Type2Type<TEX::AvgPx>()), nullptr, "AvgPx" } },
+   { 7, { Inst(Type2Type<TEX::BeginSeqNo>()), nullptr, "BeginSeqNo" } },
+   { 8, { Inst(Type2Type<TEX::BeginString>()), nullptr, "BeginString" } },
+   { 9, { Inst(Type2Type<TEX::BodyLength>()), nullptr, "BodyLength" } },
+   { 10, { Inst(Type2Type<TEX::CheckSum>()), nullptr, "CheckSum" } },
+   { 11, { Inst(Type2Type<TEX::ClOrdID>()), nullptr, "ClOrdID" } },
+   { 12, { Inst(Type2Type<TEX::Commission>()), nullptr, "Commission" } },
+   { 13, { Inst(Type2Types<TEX::CommType, char>()), &TEX::realmbases[2], "CommType" } },
+   { 14, { Inst(Type2Type<TEX::CumQty>()), nullptr, "CumQty" } },
+   { 15, { Inst(Type2Type<TEX::Currency>()), nullptr, "Currency" } },
+   { 16, { Inst(Type2Type<TEX::EndSeqNo>()), nullptr, "EndSeqNo" } },
+   { 17, { Inst(Type2Type<TEX::ExecID>()), nullptr, "ExecID" } },
+   { 18, { Inst(Type2Types<TEX::ExecInst, f8String>()), &TEX::realmbases[3], "ExecInst" } },
+   { 19, { Inst(Type2Type<TEX::ExecRefID>()), nullptr, "ExecRefID" } },
+   { 21, { Inst(Type2Types<TEX::HandlInst, char>()), &TEX::realmbases[4], "HandlInst" } },
+   { 22, { Inst(Type2Types<TEX::SecurityIDSource, f8String>()), &TEX::realmbases[5], "SecurityIDSource" } },
+   { 23, { Inst(Type2Type<TEX::IOIID>()), nullptr, "IOIID" } },
+   { 25, { Inst(Type2Types<TEX::IOIQltyInd, char>()), &TEX::realmbases[6], "IOIQltyInd" } },
+   { 26, { Inst(Type2Type<TEX::IOIRefID>()), nullptr, "IOIRefID" } },
+   { 27, { Inst(Type2Types<TEX::IOIQty, f8String>()), &TEX::realmbases[7], "IOIQty" } },
+   { 28, { Inst(Type2Types<TEX::IOITransType, char>()), &TEX::realmbases[8], "IOITransType" } },
+   { 29, { Inst(Type2Types<TEX::LastCapacity, char>()), &TEX::realmbases[9], "LastCapacity" } },
+   { 30, { Inst(Type2Type<TEX::LastMkt>()), nullptr, "LastMkt" } },
+   { 31, { Inst(Type2Type<TEX::LastPx>()), nullptr, "LastPx" } },
+   { 32, { Inst(Type2Type<TEX::LastQty>()), nullptr, "LastQty" } },
+   { 33, { Inst(Type2Type<TEX::NoLinesOfText>()), nullptr, "NoLinesOfText" } },
+   { 34, { Inst(Type2Type<TEX::MsgSeqNum>()), nullptr, "MsgSeqNum" } },
+   { 35, { Inst(Type2Types<TEX::MsgType, f8String>()), &TEX::realmbases[10], "MsgType" } },
+   { 36, { Inst(Type2Type<TEX::NewSeqNo>()), nullptr, "NewSeqNo" } },
+   { 37, { Inst(Type2Type<TEX::OrderID>()), nullptr, "OrderID" } },
+   { 38, { Inst(Type2Type<TEX::OrderQty>()), nullptr, "OrderQty" } },
+   { 39, { Inst(Type2Types<TEX::OrdStatus, char>()), &TEX::realmbases[11], "OrdStatus" } },
+   { 40, { Inst(Type2Types<TEX::OrdType, char>()), &TEX::realmbases[12], "OrdType" } },
+   { 41, { Inst(Type2Type<TEX::OrigClOrdID>()), nullptr, "OrigClOrdID" } },
+   { 42, { Inst(Type2Type<TEX::OrigTime>()), nullptr, "OrigTime" } },
+   { 43, { Inst(Type2Type<TEX::PossDupFlag>()), nullptr, "PossDupFlag" } },
+   { 44, { Inst(Type2Type<TEX::Price>()), nullptr, "Price" } },
+   { 45, { Inst(Type2Type<TEX::RefSeqNum>()), nullptr, "RefSeqNum" } },
+   { 48, { Inst(Type2Type<TEX::SecurityID>()), nullptr, "SecurityID" } },
+   { 49, { Inst(Type2Type<TEX::SenderCompID>()), nullptr, "SenderCompID" } },
+   { 50, { Inst(Type2Type<TEX::SenderSubID>()), nullptr, "SenderSubID" } },
+   { 52, { Inst(Type2Type<TEX::SendingTime>()), nullptr, "SendingTime" } },
+   { 53, { Inst(Type2Type<TEX::Quantity>()), nullptr, "Quantity" } },
+   { 54, { Inst(Type2Types<TEX::Side, char>()), &TEX::realmbases[13], "Side" } },
+   { 55, { Inst(Type2Type<TEX::Symbol>()), nullptr, "Symbol" } },
+   { 56, { Inst(Type2Type<TEX::TargetCompID>()), nullptr, "TargetCompID" } },
+   { 57, { Inst(Type2Type<TEX::TargetSubID>()), nullptr, "TargetSubID" } },
+   { 58, { Inst(Type2Type<TEX::Text>()), nullptr, "Text" } },
+   { 59, { Inst(Type2Types<TEX::TimeInForce, char>()), &TEX::realmbases[14], "TimeInForce" } },
+   { 60, { Inst(Type2Type<TEX::TransactTime>()), nullptr, "TransactTime" } },
+   { 61, { Inst(Type2Types<TEX::Urgency, char>()), &TEX::realmbases[15], "Urgency" } },
+   { 62, { Inst(Type2Type<TEX::ValidUntilTime>()), nullptr, "ValidUntilTime" } },
+   { 63, { Inst(Type2Types<TEX::SettlType, f8String>()), &TEX::realmbases[16], "SettlType" } },
+   { 64, { Inst(Type2Type<TEX::SettlDate>()), nullptr, "SettlDate" } },
+   { 65, { Inst(Type2Types<TEX::SymbolSfx, f8String>()), &TEX::realmbases[17], "SymbolSfx" } },
+   { 66, { Inst(Type2Type<TEX::ListID>()), nullptr, "ListID" } },
+   { 67, { Inst(Type2Type<TEX::ListSeqNo>()), nullptr, "ListSeqNo" } },
+   { 68, { Inst(Type2Type<TEX::TotNoOrders>()), nullptr, "TotNoOrders" } },
+   { 69, { Inst(Type2Type<TEX::ListExecInst>()), nullptr, "ListExecInst" } },
+   { 70, { Inst(Type2Type<TEX::AllocID>()), nullptr, "AllocID" } },
+   { 71, { Inst(Type2Types<TEX::AllocTransType, char>()), &TEX::realmbases[18], "AllocTransType" } },
+   { 72, { Inst(Type2Type<TEX::RefAllocID>()), nullptr, "RefAllocID" } },
+   { 73, { Inst(Type2Type<TEX::NoOrders>()), nullptr, "NoOrders" } },
+   { 74, { Inst(Type2Type<TEX::AvgPxPrecision>()), nullptr, "AvgPxPrecision" } },
+   { 75, { Inst(Type2Type<TEX::TradeDate>()), nullptr, "TradeDate" } },
+   { 77, { Inst(Type2Types<TEX::PositionEffect, char>()), &TEX::realmbases[19], "PositionEffect" } },
+   { 78, { Inst(Type2Type<TEX::NoAllocs>()), nullptr, "NoAllocs" } },
+   { 79, { Inst(Type2Type<TEX::AllocAccount>()), nullptr, "AllocAccount" } },
+   { 80, { Inst(Type2Type<TEX::AllocQty>()), nullptr, "AllocQty" } },
+   { 81, { Inst(Type2Types<TEX::ProcessCode, char>()), &TEX::realmbases[20], "ProcessCode" } },
+   { 82, { Inst(Type2Type<TEX::NoRpts>()), nullptr, "NoRpts" } },
+   { 83, { Inst(Type2Type<TEX::RptSeq>()), nullptr, "RptSeq" } },
+   { 84, { Inst(Type2Type<TEX::CxlQty>()), nullptr, "CxlQty" } },
+   { 85, { Inst(Type2Type<TEX::NoDlvyInst>()), nullptr, "NoDlvyInst" } },
+   { 87, { Inst(Type2Types<TEX::AllocStatus, int>()), &TEX::realmbases[21], "AllocStatus" } },
+   { 88, { Inst(Type2Types<TEX::AllocRejCode, int>()), &TEX::realmbases[22], "AllocRejCode" } },
+   { 89, { Inst(Type2Type<TEX::Signature>()), nullptr, "Signature" } },
+   { 90, { Inst(Type2Type<TEX::SecureDataLen>()), nullptr, "SecureDataLen" } },
+   { 91, { Inst(Type2Type<TEX::SecureData>()), nullptr, "SecureData" } },
+   { 93, { Inst(Type2Type<TEX::SignatureLength>()), nullptr, "SignatureLength" } },
+   { 94, { Inst(Type2Types<TEX::EmailType, char>()), &TEX::realmbases[23], "EmailType" } },
+   { 95, { Inst(Type2Type<TEX::RawDataLength>()), nullptr, "RawDataLength" } },
+   { 96, { Inst(Type2Type<TEX::RawData>()), nullptr, "RawData" } },
+   { 97, { Inst(Type2Type<TEX::PossResend>()), nullptr, "PossResend" } },
+   { 98, { Inst(Type2Types<TEX::EncryptMethod, int>()), &TEX::realmbases[24], "EncryptMethod" } },
+   { 99, { Inst(Type2Type<TEX::StopPx>()), nullptr, "StopPx" } },
+   { 100, { Inst(Type2Type<TEX::ExDestination>()), nullptr, "ExDestination" } },
+   { 102, { Inst(Type2Types<TEX::CxlRejReason, int>()), &TEX::realmbases[25], "CxlRejReason" } },
+   { 103, { Inst(Type2Types<TEX::OrdRejReason, int>()), &TEX::realmbases[26], "OrdRejReason" } },
+   { 104, { Inst(Type2Types<TEX::IOIQualifier, char>()), &TEX::realmbases[27], "IOIQualifier" } },
+   { 106, { Inst(Type2Type<TEX::Issuer>()), nullptr, "Issuer" } },
+   { 107, { Inst(Type2Type<TEX::SecurityDesc>()), nullptr, "SecurityDesc" } },
+   { 108, { Inst(Type2Type<TEX::HeartBtInt>()), nullptr, "HeartBtInt" } },
+   { 110, { Inst(Type2Type<TEX::MinQty>()), nullptr, "MinQty" } },
+   { 111, { Inst(Type2Type<TEX::MaxFloor>()), nullptr, "MaxFloor" } },
+   { 112, { Inst(Type2Type<TEX::TestReqID>()), nullptr, "TestReqID" } },
+   { 113, { Inst(Type2Types<TEX::ReportToExch, char>()), &TEX::realmbases[28], "ReportToExch" } },
+   { 114, { Inst(Type2Types<TEX::LocateReqd, char>()), &TEX::realmbases[29], "LocateReqd" } },
+   { 115, { Inst(Type2Type<TEX::OnBehalfOfCompID>()), nullptr, "OnBehalfOfCompID" } },
+   { 116, { Inst(Type2Type<TEX::OnBehalfOfSubID>()), nullptr, "OnBehalfOfSubID" } },
+   { 117, { Inst(Type2Type<TEX::QuoteID>()), nullptr, "QuoteID" } },
+   { 118, { Inst(Type2Type<TEX::NetMoney>()), nullptr, "NetMoney" } },
+   { 119, { Inst(Type2Type<TEX::SettlCurrAmt>()), nullptr, "SettlCurrAmt" } },
+   { 120, { Inst(Type2Type<TEX::SettlCurrency>()), nullptr, "SettlCurrency" } },
+   { 121, { Inst(Type2Types<TEX::ForexReq, char>()), &TEX::realmbases[30], "ForexReq" } },
+   { 122, { Inst(Type2Type<TEX::OrigSendingTime>()), nullptr, "OrigSendingTime" } },
+   { 123, { Inst(Type2Type<TEX::GapFillFlag>()), nullptr, "GapFillFlag" } },
+   { 124, { Inst(Type2Type<TEX::NoExecs>()), nullptr, "NoExecs" } },
+   { 126, { Inst(Type2Type<TEX::ExpireTime>()), nullptr, "ExpireTime" } },
+   { 127, { Inst(Type2Types<TEX::DKReason, char>()), &TEX::realmbases[31], "DKReason" } },
+   { 128, { Inst(Type2Type<TEX::DeliverToCompID>()), nullptr, "DeliverToCompID" } },
+   { 129, { Inst(Type2Type<TEX::DeliverToSubID>()), nullptr, "DeliverToSubID" } },
+   { 130, { Inst(Type2Types<TEX::IOINaturalFlag, char>()), &TEX::realmbases[32], "IOINaturalFlag" } },
+   { 131, { Inst(Type2Type<TEX::QuoteReqID>()), nullptr, "QuoteReqID" } },
+   { 132, { Inst(Type2Type<TEX::BidPx>()), nullptr, "BidPx" } },
+   { 133, { Inst(Type2Type<TEX::OfferPx>()), nullptr, "OfferPx" } },
+   { 134, { Inst(Type2Type<TEX::BidSize>()), nullptr, "BidSize" } },
+   { 135, { Inst(Type2Type<TEX::OfferSize>()), nullptr, "OfferSize" } },
+   { 136, { Inst(Type2Type<TEX::NoMiscFees>()), nullptr, "NoMiscFees" } },
+   { 137, { Inst(Type2Type<TEX::MiscFeeAmt>()), nullptr, "MiscFeeAmt" } },
+   { 138, { Inst(Type2Type<TEX::MiscFeeCurr>()), nullptr, "MiscFeeCurr" } },
+   { 139, { Inst(Type2Types<TEX::MiscFeeType, f8String>()), &TEX::realmbases[33], "MiscFeeType" } },
+   { 140, { Inst(Type2Type<TEX::PrevClosePx>()), nullptr, "PrevClosePx" } },
+   { 141, { Inst(Type2Type<TEX::ResetSeqNumFlag>()), nullptr, "ResetSeqNumFlag" } },
+   { 142, { Inst(Type2Type<TEX::SenderLocationID>()), nullptr, "SenderLocationID" } },
+   { 143, { Inst(Type2Type<TEX::TargetLocationID>()), nullptr, "TargetLocationID" } },
+   { 144, { Inst(Type2Type<TEX::OnBehalfOfLocationID>()), nullptr, "OnBehalfOfLocationID" } },
+   { 145, { Inst(Type2Type<TEX::DeliverToLocationID>()), nullptr, "DeliverToLocationID" } },
+   { 146, { Inst(Type2Type<TEX::NoRelatedSym>()), nullptr, "NoRelatedSym" } },
+   { 147, { Inst(Type2Type<TEX::Subject>()), nullptr, "Subject" } },
+   { 148, { Inst(Type2Type<TEX::Headline>()), nullptr, "Headline" } },
+   { 149, { Inst(Type2Type<TEX::URLLink>()), nullptr, "URLLink" } },
+   { 150, { Inst(Type2Types<TEX::ExecType, char>()), &TEX::realmbases[34], "ExecType" } },
+   { 151, { Inst(Type2Type<TEX::LeavesQty>()), nullptr, "LeavesQty" } },
+   { 152, { Inst(Type2Type<TEX::CashOrderQty>()), nullptr, "CashOrderQty" } },
+   { 153, { Inst(Type2Type<TEX::AllocAvgPx>()), nullptr, "AllocAvgPx" } },
+   { 154, { Inst(Type2Type<TEX::AllocNetMoney>()), nullptr, "AllocNetMoney" } },
+   { 155, { Inst(Type2Type<TEX::SettlCurrFxRate>()), nullptr, "SettlCurrFxRate" } },
+   { 156, { Inst(Type2Types<TEX::SettlCurrFxRateCalc, char>()), &TEX::realmbases[35], "SettlCurrFxRateCalc" } },
+   { 157, { Inst(Type2Type<TEX::NumDaysInterest>()), nullptr, "NumDaysInterest" } },
+   { 158, { Inst(Type2Type<TEX::AccruedInterestRate>()), nullptr, "AccruedInterestRate" } },
+   { 159, { Inst(Type2Type<TEX::AccruedInterestAmt>()), nullptr, "AccruedInterestAmt" } },
+   { 160, { Inst(Type2Types<TEX::SettlInstMode, char>()), &TEX::realmbases[36], "SettlInstMode" } },
+   { 161, { Inst(Type2Type<TEX::AllocText>()), nullptr, "AllocText" } },
+   { 162, { Inst(Type2Type<TEX::SettlInstID>()), nullptr, "SettlInstID" } },
+   { 163, { Inst(Type2Types<TEX::SettlInstTransType, char>()), &TEX::realmbases[37], "SettlInstTransType" } },
+   { 164, { Inst(Type2Type<TEX::EmailThreadID>()), nullptr, "EmailThreadID" } },
+   { 165, { Inst(Type2Types<TEX::SettlInstSource, char>()), &TEX::realmbases[38], "SettlInstSource" } },
+   { 167, { Inst(Type2Types<TEX::SecurityType, f8String>()), &TEX::realmbases[39], "SecurityType" } },
+   { 168, { Inst(Type2Type<TEX::EffectiveTime>()), nullptr, "EffectiveTime" } },
+   { 169, { Inst(Type2Types<TEX::StandInstDbType, int>()), &TEX::realmbases[40], "StandInstDbType" } },
+   { 170, { Inst(Type2Type<TEX::StandInstDbName>()), nullptr, "StandInstDbName" } },
+   { 171, { Inst(Type2Type<TEX::StandInstDbID>()), nullptr, "StandInstDbID" } },
+   { 172, { Inst(Type2Types<TEX::SettlDeliveryType, int>()), &TEX::realmbases[41], "SettlDeliveryType" } },
+   { 188, { Inst(Type2Type<TEX::BidSpotRate>()), nullptr, "BidSpotRate" } },
+   { 189, { Inst(Type2Type<TEX::BidForwardPoints>()), nullptr, "BidForwardPoints" } },
+   { 190, { Inst(Type2Type<TEX::OfferSpotRate>()), nullptr, "OfferSpotRate" } },
+   { 191, { Inst(Type2Type<TEX::OfferForwardPoints>()), nullptr, "OfferForwardPoints" } },
+   { 192, { Inst(Type2Type<TEX::OrderQty2>()), nullptr, "OrderQty2" } },
+   { 193, { Inst(Type2Type<TEX::SettlDate2>()), nullptr, "SettlDate2" } },
+   { 194, { Inst(Type2Type<TEX::LastSpotRate>()), nullptr, "LastSpotRate" } },
+   { 195, { Inst(Type2Type<TEX::LastForwardPoints>()), nullptr, "LastForwardPoints" } },
+   { 196, { Inst(Type2Type<TEX::AllocLinkID>()), nullptr, "AllocLinkID" } },
+   { 197, { Inst(Type2Types<TEX::AllocLinkType, int>()), &TEX::realmbases[42], "AllocLinkType" } },
+   { 198, { Inst(Type2Type<TEX::SecondaryOrderID>()), nullptr, "SecondaryOrderID" } },
+   { 199, { Inst(Type2Type<TEX::NoIOIQualifiers>()), nullptr, "NoIOIQualifiers" } },
+   { 200, { Inst(Type2Type<TEX::MaturityMonthYear>()), nullptr, "MaturityMonthYear" } },
+   { 201, { Inst(Type2Types<TEX::PutOrCall, int>()), &TEX::realmbases[43], "PutOrCall" } },
+   { 202, { Inst(Type2Type<TEX::StrikePrice>()), nullptr, "StrikePrice" } },
+   { 203, { Inst(Type2Types<TEX::CoveredOrUncovered, int>()), &TEX::realmbases[44], "CoveredOrUncovered" } },
+   { 206, { Inst(Type2Type<TEX::OptAttribute>()), nullptr, "OptAttribute" } },
+   { 207, { Inst(Type2Type<TEX::SecurityExchange>()), nullptr, "SecurityExchange" } },
+   { 208, { Inst(Type2Types<TEX::NotifyBrokerOfCredit, char>()), &TEX::realmbases[45], "NotifyBrokerOfCredit" } },
+   { 209, { Inst(Type2Types<TEX::AllocHandlInst, int>()), &TEX::realmbases[46], "AllocHandlInst" } },
+   { 210, { Inst(Type2Type<TEX::MaxShow>()), nullptr, "MaxShow" } },
+   { 211, { Inst(Type2Type<TEX::PegOffsetValue>()), nullptr, "PegOffsetValue" } },
+   { 212, { Inst(Type2Type<TEX::XmlDataLen>()), nullptr, "XmlDataLen" } },
+   { 213, { Inst(Type2Type<TEX::XmlData>()), nullptr, "XmlData" } },
+   { 214, { Inst(Type2Type<TEX::SettlInstRefID>()), nullptr, "SettlInstRefID" } },
+   { 215, { Inst(Type2Type<TEX::NoRoutingIDs>()), nullptr, "NoRoutingIDs" } },
+   { 216, { Inst(Type2Types<TEX::RoutingType, int>()), &TEX::realmbases[47], "RoutingType" } },
+   { 217, { Inst(Type2Type<TEX::RoutingID>()), nullptr, "RoutingID" } },
+   { 218, { Inst(Type2Type<TEX::Spread>()), nullptr, "Spread" } },
+   { 220, { Inst(Type2Type<TEX::BenchmarkCurveCurrency>()), nullptr, "BenchmarkCurveCurrency" } },
+   { 221, { Inst(Type2Types<TEX::BenchmarkCurveName, f8String>()), &TEX::realmbases[48], "BenchmarkCurveName" } },
+   { 222, { Inst(Type2Type<TEX::BenchmarkCurvePoint>()), nullptr, "BenchmarkCurvePoint" } },
+   { 223, { Inst(Type2Type<TEX::CouponRate>()), nullptr, "CouponRate" } },
+   { 224, { Inst(Type2Type<TEX::CouponPaymentDate>()), nullptr, "CouponPaymentDate" } },
+   { 225, { Inst(Type2Type<TEX::IssueDate>()), nullptr, "IssueDate" } },
+   { 226, { Inst(Type2Type<TEX::RepurchaseTerm>()), nullptr, "RepurchaseTerm" } },
+   { 227, { Inst(Type2Type<TEX::RepurchaseRate>()), nullptr, "RepurchaseRate" } },
+   { 228, { Inst(Type2Type<TEX::Factor>()), nullptr, "Factor" } },
+   { 229, { Inst(Type2Type<TEX::TradeOriginationDate>()), nullptr, "TradeOriginationDate" } },
+   { 230, { Inst(Type2Type<TEX::ExDate>()), nullptr, "ExDate" } },
+   { 231, { Inst(Type2Type<TEX::ContractMultiplier>()), nullptr, "ContractMultiplier" } },
+   { 232, { Inst(Type2Type<TEX::NoStipulations>()), nullptr, "NoStipulations" } },
+   { 233, { Inst(Type2Types<TEX::StipulationType, f8String>()), &TEX::realmbases[49], "StipulationType" } },
+   { 234, { Inst(Type2Type<TEX::StipulationValue>()), nullptr, "StipulationValue" } },
+   { 235, { Inst(Type2Types<TEX::YieldType, f8String>()), &TEX::realmbases[50], "YieldType" } },
+   { 236, { Inst(Type2Type<TEX::Yield>()), nullptr, "Yield" } },
+   { 237, { Inst(Type2Type<TEX::TotalTakedown>()), nullptr, "TotalTakedown" } },
+   { 238, { Inst(Type2Type<TEX::Concession>()), nullptr, "Concession" } },
+   { 239, { Inst(Type2Type<TEX::RepoCollateralSecurityType>()), nullptr, "RepoCollateralSecurityType" } },
+   { 240, { Inst(Type2Type<TEX::RedemptionDate>()), nullptr, "RedemptionDate" } },
+   { 241, { Inst(Type2Type<TEX::UnderlyingCouponPaymentDate>()), nullptr, "UnderlyingCouponPaymentDate" } },
+   { 242, { Inst(Type2Type<TEX::UnderlyingIssueDate>()), nullptr, "UnderlyingIssueDate" } },
+   { 243, { Inst(Type2Type<TEX::UnderlyingRepoCollateralSecurityType>()), nullptr, "UnderlyingRepoCollateralSecurityType" } },
+   { 244, { Inst(Type2Type<TEX::UnderlyingRepurchaseTerm>()), nullptr, "UnderlyingRepurchaseTerm" } },
+   { 245, { Inst(Type2Type<TEX::UnderlyingRepurchaseRate>()), nullptr, "UnderlyingRepurchaseRate" } },
+   { 246, { Inst(Type2Type<TEX::UnderlyingFactor>()), nullptr, "UnderlyingFactor" } },
+   { 247, { Inst(Type2Type<TEX::UnderlyingRedemptionDate>()), nullptr, "UnderlyingRedemptionDate" } },
+   { 248, { Inst(Type2Type<TEX::LegCouponPaymentDate>()), nullptr, "LegCouponPaymentDate" } },
+   { 249, { Inst(Type2Type<TEX::LegIssueDate>()), nullptr, "LegIssueDate" } },
+   { 250, { Inst(Type2Type<TEX::LegRepoCollateralSecurityType>()), nullptr, "LegRepoCollateralSecurityType" } },
+   { 251, { Inst(Type2Type<TEX::LegRepurchaseTerm>()), nullptr, "LegRepurchaseTerm" } },
+   { 252, { Inst(Type2Type<TEX::LegRepurchaseRate>()), nullptr, "LegRepurchaseRate" } },
+   { 253, { Inst(Type2Type<TEX::LegFactor>()), nullptr, "LegFactor" } },
+   { 254, { Inst(Type2Type<TEX::LegRedemptionDate>()), nullptr, "LegRedemptionDate" } },
+   { 255, { Inst(Type2Type<TEX::CreditRating>()), nullptr, "CreditRating" } },
+   { 256, { Inst(Type2Type<TEX::UnderlyingCreditRating>()), nullptr, "UnderlyingCreditRating" } },
+   { 257, { Inst(Type2Type<TEX::LegCreditRating>()), nullptr, "LegCreditRating" } },
+   { 258, { Inst(Type2Types<TEX::TradedFlatSwitch, char>()), &TEX::realmbases[51], "TradedFlatSwitch" } },
+   { 259, { Inst(Type2Type<TEX::BasisFeatureDate>()), nullptr, "BasisFeatureDate" } },
+   { 260, { Inst(Type2Type<TEX::BasisFeaturePrice>()), nullptr, "BasisFeaturePrice" } },
+   { 262, { Inst(Type2Type<TEX::MDReqID>()), nullptr, "MDReqID" } },
+   { 263, { Inst(Type2Types<TEX::SubscriptionRequestType, char>()), &TEX::realmbases[52], "SubscriptionRequestType" } },
+   { 264, { Inst(Type2Type<TEX::MarketDepth>()), nullptr, "MarketDepth" } },
+   { 265, { Inst(Type2Types<TEX::MDUpdateType, int>()), &TEX::realmbases[53], "MDUpdateType" } },
+   { 266, { Inst(Type2Types<TEX::AggregatedBook, char>()), &TEX::realmbases[54], "AggregatedBook" } },
+   { 267, { Inst(Type2Type<TEX::NoMDEntryTypes>()), nullptr, "NoMDEntryTypes" } },
+   { 268, { Inst(Type2Type<TEX::NoMDEntries>()), nullptr, "NoMDEntries" } },
+   { 269, { Inst(Type2Types<TEX::MDEntryType, char>()), &TEX::realmbases[55], "MDEntryType" } },
+   { 270, { Inst(Type2Type<TEX::MDEntryPx>()), nullptr, "MDEntryPx" } },
+   { 271, { Inst(Type2Type<TEX::MDEntrySize>()), nullptr, "MDEntrySize" } },
+   { 272, { Inst(Type2Type<TEX::MDEntryDate>()), nullptr, "MDEntryDate" } },
+   { 273, { Inst(Type2Type<TEX::MDEntryTime>()), nullptr, "MDEntryTime" } },
+   { 274, { Inst(Type2Types<TEX::TickDirection, char>()), &TEX::realmbases[56], "TickDirection" } },
+   { 275, { Inst(Type2Type<TEX::MDMkt>()), nullptr, "MDMkt" } },
+   { 276, { Inst(Type2Types<TEX::QuoteCondition, f8String>()), &TEX::realmbases[57], "QuoteCondition" } },
+   { 277, { Inst(Type2Types<TEX::TradeCondition, f8String>()), &TEX::realmbases[58], "TradeCondition" } },
+   { 278, { Inst(Type2Type<TEX::MDEntryID>()), nullptr, "MDEntryID" } },
+   { 279, { Inst(Type2Types<TEX::MDUpdateAction, char>()), &TEX::realmbases[59], "MDUpdateAction" } },
+   { 280, { Inst(Type2Type<TEX::MDEntryRefID>()), nullptr, "MDEntryRefID" } },
+   { 281, { Inst(Type2Types<TEX::MDReqRejReason, char>()), &TEX::realmbases[60], "MDReqRejReason" } },
+   { 282, { Inst(Type2Type<TEX::MDEntryOriginator>()), nullptr, "MDEntryOriginator" } },
+   { 283, { Inst(Type2Type<TEX::LocationID>()), nullptr, "LocationID" } },
+   { 284, { Inst(Type2Type<TEX::DeskID>()), nullptr, "DeskID" } },
+   { 285, { Inst(Type2Types<TEX::DeleteReason, char>()), &TEX::realmbases[61], "DeleteReason" } },
+   { 286, { Inst(Type2Types<TEX::OpenCloseSettlFlag, f8String>()), &TEX::realmbases[62], "OpenCloseSettlFlag" } },
+   { 287, { Inst(Type2Type<TEX::SellerDays>()), nullptr, "SellerDays" } },
+   { 288, { Inst(Type2Type<TEX::MDEntryBuyer>()), nullptr, "MDEntryBuyer" } },
+   { 289, { Inst(Type2Type<TEX::MDEntrySeller>()), nullptr, "MDEntrySeller" } },
+   { 290, { Inst(Type2Type<TEX::MDEntryPositionNo>()), nullptr, "MDEntryPositionNo" } },
+   { 291, { Inst(Type2Types<TEX::FinancialStatus, f8String>()), &TEX::realmbases[63], "FinancialStatus" } },
+   { 292, { Inst(Type2Types<TEX::CorporateAction, f8String>()), &TEX::realmbases[64], "CorporateAction" } },
+   { 293, { Inst(Type2Type<TEX::DefBidSize>()), nullptr, "DefBidSize" } },
+   { 294, { Inst(Type2Type<TEX::DefOfferSize>()), nullptr, "DefOfferSize" } },
+   { 295, { Inst(Type2Type<TEX::NoQuoteEntries>()), nullptr, "NoQuoteEntries" } },
+   { 296, { Inst(Type2Type<TEX::NoQuoteSets>()), nullptr, "NoQuoteSets" } },
+   { 297, { Inst(Type2Types<TEX::QuoteStatus, int>()), &TEX::realmbases[65], "QuoteStatus" } },
+   { 298, { Inst(Type2Types<TEX::QuoteCancelType, int>()), &TEX::realmbases[66], "QuoteCancelType" } },
+   { 299, { Inst(Type2Type<TEX::QuoteEntryID>()), nullptr, "QuoteEntryID" } },
+   { 300, { Inst(Type2Types<TEX::QuoteRejectReason, int>()), &TEX::realmbases[67], "QuoteRejectReason" } },
+   { 301, { Inst(Type2Types<TEX::QuoteResponseLevel, int>()), &TEX::realmbases[68], "QuoteResponseLevel" } },
+   { 302, { Inst(Type2Type<TEX::QuoteSetID>()), nullptr, "QuoteSetID" } },
+   { 303, { Inst(Type2Types<TEX::QuoteRequestType, int>()), &TEX::realmbases[69], "QuoteRequestType" } },
+   { 304, { Inst(Type2Type<TEX::TotNoQuoteEntries>()), nullptr, "TotNoQuoteEntries" } },
+   { 305, { Inst(Type2Type<TEX::UnderlyingSecurityIDSource>()), nullptr, "UnderlyingSecurityIDSource" } },
+   { 306, { Inst(Type2Type<TEX::UnderlyingIssuer>()), nullptr, "UnderlyingIssuer" } },
+   { 307, { Inst(Type2Type<TEX::UnderlyingSecurityDesc>()), nullptr, "UnderlyingSecurityDesc" } },
+   { 308, { Inst(Type2Type<TEX::UnderlyingSecurityExchange>()), nullptr, "UnderlyingSecurityExchange" } },
+   { 309, { Inst(Type2Type<TEX::UnderlyingSecurityID>()), nullptr, "UnderlyingSecurityID" } },
+   { 310, { Inst(Type2Type<TEX::UnderlyingSecurityType>()), nullptr, "UnderlyingSecurityType" } },
+   { 311, { Inst(Type2Type<TEX::UnderlyingSymbol>()), nullptr, "UnderlyingSymbol" } },
+   { 312, { Inst(Type2Type<TEX::UnderlyingSymbolSfx>()), nullptr, "UnderlyingSymbolSfx" } },
+   { 313, { Inst(Type2Type<TEX::UnderlyingMaturityMonthYear>()), nullptr, "UnderlyingMaturityMonthYear" } },
+   { 315, { Inst(Type2Type<TEX::UnderlyingPutOrCall>()), nullptr, "UnderlyingPutOrCall" } },
+   { 316, { Inst(Type2Type<TEX::UnderlyingStrikePrice>()), nullptr, "UnderlyingStrikePrice" } },
+   { 317, { Inst(Type2Type<TEX::UnderlyingOptAttribute>()), nullptr, "UnderlyingOptAttribute" } },
+   { 318, { Inst(Type2Type<TEX::UnderlyingCurrency>()), nullptr, "UnderlyingCurrency" } },
+   { 320, { Inst(Type2Type<TEX::SecurityReqID>()), nullptr, "SecurityReqID" } },
+   { 321, { Inst(Type2Types<TEX::SecurityRequestType, int>()), &TEX::realmbases[70], "SecurityRequestType" } },
+   { 322, { Inst(Type2Type<TEX::SecurityResponseID>()), nullptr, "SecurityResponseID" } },
+   { 323, { Inst(Type2Types<TEX::SecurityResponseType, int>()), &TEX::realmbases[71], "SecurityResponseType" } },
+   { 324, { Inst(Type2Type<TEX::SecurityStatusReqID>()), nullptr, "SecurityStatusReqID" } },
+   { 325, { Inst(Type2Types<TEX::UnsolicitedIndicator, char>()), &TEX::realmbases[72], "UnsolicitedIndicator" } },
+   { 326, { Inst(Type2Types<TEX::SecurityTradingStatus, int>()), &TEX::realmbases[73], "SecurityTradingStatus" } },
+   { 327, { Inst(Type2Types<TEX::HaltReasonInt, int>()), &TEX::realmbases[74], "HaltReasonInt" } },
+   { 328, { Inst(Type2Types<TEX::InViewOfCommon, char>()), &TEX::realmbases[75], "InViewOfCommon" } },
+   { 329, { Inst(Type2Types<TEX::DueToRelated, char>()), &TEX::realmbases[76], "DueToRelated" } },
+   { 330, { Inst(Type2Type<TEX::BuyVolume>()), nullptr, "BuyVolume" } },
+   { 331, { Inst(Type2Type<TEX::SellVolume>()), nullptr, "SellVolume" } },
+   { 332, { Inst(Type2Type<TEX::HighPx>()), nullptr, "HighPx" } },
+   { 333, { Inst(Type2Type<TEX::LowPx>()), nullptr, "LowPx" } },
+   { 334, { Inst(Type2Types<TEX::Adjustment, int>()), &TEX::realmbases[77], "Adjustment" } },
+   { 335, { Inst(Type2Type<TEX::TradSesReqID>()), nullptr, "TradSesReqID" } },
+   { 336, { Inst(Type2Types<TEX::TradingSessionID, f8String>()), &TEX::realmbases[78], "TradingSessionID" } },
+   { 337, { Inst(Type2Type<TEX::ContraTrader>()), nullptr, "ContraTrader" } },
+   { 338, { Inst(Type2Types<TEX::TradSesMethod, int>()), &TEX::realmbases[79], "TradSesMethod" } },
+   { 339, { Inst(Type2Types<TEX::TradSesMode, int>()), &TEX::realmbases[80], "TradSesMode" } },
+   { 340, { Inst(Type2Types<TEX::TradSesStatus, int>()), &TEX::realmbases[81], "TradSesStatus" } },
+   { 341, { Inst(Type2Type<TEX::TradSesStartTime>()), nullptr, "TradSesStartTime" } },
+   { 342, { Inst(Type2Type<TEX::TradSesOpenTime>()), nullptr, "TradSesOpenTime" } },
+   { 343, { Inst(Type2Type<TEX::TradSesPreCloseTime>()), nullptr, "TradSesPreCloseTime" } },
+   { 344, { Inst(Type2Type<TEX::TradSesCloseTime>()), nullptr, "TradSesCloseTime" } },
+   { 345, { Inst(Type2Type<TEX::TradSesEndTime>()), nullptr, "TradSesEndTime" } },
+   { 346, { Inst(Type2Type<TEX::NumberOfOrders>()), nullptr, "NumberOfOrders" } },
+   { 347, { Inst(Type2Types<TEX::MessageEncoding, f8String>()), &TEX::realmbases[82], "MessageEncoding" } },
+   { 348, { Inst(Type2Type<TEX::EncodedIssuerLen>()), nullptr, "EncodedIssuerLen" } },
+   { 349, { Inst(Type2Type<TEX::EncodedIssuer>()), nullptr, "EncodedIssuer" } },
+   { 350, { Inst(Type2Type<TEX::EncodedSecurityDescLen>()), nullptr, "EncodedSecurityDescLen" } },
+   { 351, { Inst(Type2Type<TEX::EncodedSecurityDesc>()), nullptr, "EncodedSecurityDesc" } },
+   { 352, { Inst(Type2Type<TEX::EncodedListExecInstLen>()), nullptr, "EncodedListExecInstLen" } },
+   { 353, { Inst(Type2Type<TEX::EncodedListExecInst>()), nullptr, "EncodedListExecInst" } },
+   { 354, { Inst(Type2Type<TEX::EncodedTextLen>()), nullptr, "EncodedTextLen" } },
+   { 355, { Inst(Type2Type<TEX::EncodedText>()), nullptr, "EncodedText" } },
+   { 356, { Inst(Type2Type<TEX::EncodedSubjectLen>()), nullptr, "EncodedSubjectLen" } },
+   { 357, { Inst(Type2Type<TEX::EncodedSubject>()), nullptr, "EncodedSubject" } },
+   { 358, { Inst(Type2Type<TEX::EncodedHeadlineLen>()), nullptr, "EncodedHeadlineLen" } },
+   { 359, { Inst(Type2Type<TEX::EncodedHeadline>()), nullptr, "EncodedHeadline" } },
+   { 360, { Inst(Type2Type<TEX::EncodedAllocTextLen>()), nullptr, "EncodedAllocTextLen" } },
+   { 361, { Inst(Type2Type<TEX::EncodedAllocText>()), nullptr, "EncodedAllocText" } },
+   { 362, { Inst(Type2Type<TEX::EncodedUnderlyingIssuerLen>()), nullptr, "EncodedUnderlyingIssuerLen" } },
+   { 363, { Inst(Type2Type<TEX::EncodedUnderlyingIssuer>()), nullptr, "EncodedUnderlyingIssuer" } },
+   { 364, { Inst(Type2Type<TEX::EncodedUnderlyingSecurityDescLen>()), nullptr, "EncodedUnderlyingSecurityDescLen" } },
+   { 365, { Inst(Type2Type<TEX::EncodedUnderlyingSecurityDesc>()), nullptr, "EncodedUnderlyingSecurityDesc" } },
+   { 366, { Inst(Type2Type<TEX::AllocPrice>()), nullptr, "AllocPrice" } },
+   { 367, { Inst(Type2Type<TEX::QuoteSetValidUntilTime>()), nullptr, "QuoteSetValidUntilTime" } },
+   { 368, { Inst(Type2Type<TEX::QuoteEntryRejectReason>()), nullptr, "QuoteEntryRejectReason" } },
+   { 369, { Inst(Type2Type<TEX::LastMsgSeqNumProcessed>()), nullptr, "LastMsgSeqNumProcessed" } },
+   { 371, { Inst(Type2Type<TEX::RefTagID>()), nullptr, "RefTagID" } },
+   { 372, { Inst(Type2Type<TEX::RefMsgType>()), nullptr, "RefMsgType" } },
+   { 373, { Inst(Type2Types<TEX::SessionRejectReason, int>()), &TEX::realmbases[83], "SessionRejectReason" } },
+   { 374, { Inst(Type2Types<TEX::BidRequestTransType, char>()), &TEX::realmbases[84], "BidRequestTransType" } },
+   { 375, { Inst(Type2Type<TEX::ContraBroker>()), nullptr, "ContraBroker" } },
+   { 376, { Inst(Type2Type<TEX::ComplianceID>()), nullptr, "ComplianceID" } },
+   { 377, { Inst(Type2Types<TEX::SolicitedFlag, char>()), &TEX::realmbases[85], "SolicitedFlag" } },
+   { 378, { Inst(Type2Types<TEX::ExecRestatementReason, int>()), &TEX::realmbases[86], "ExecRestatementReason" } },
+   { 379, { Inst(Type2Type<TEX::BusinessRejectRefID>()), nullptr, "BusinessRejectRefID" } },
+   { 380, { Inst(Type2Types<TEX::BusinessRejectReason, int>()), &TEX::realmbases[87], "BusinessRejectReason" } },
+   { 381, { Inst(Type2Type<TEX::GrossTradeAmt>()), nullptr, "GrossTradeAmt" } },
+   { 382, { Inst(Type2Type<TEX::NoContraBrokers>()), nullptr, "NoContraBrokers" } },
+   { 383, { Inst(Type2Type<TEX::MaxMessageSize>()), nullptr, "MaxMessageSize" } },
+   { 384, { Inst(Type2Type<TEX::NoMsgTypes>()), nullptr, "NoMsgTypes" } },
+   { 385, { Inst(Type2Types<TEX::MsgDirection, char>()), &TEX::realmbases[88], "MsgDirection" } },
+   { 386, { Inst(Type2Type<TEX::NoTradingSessions>()), nullptr, "NoTradingSessions" } },
+   { 387, { Inst(Type2Type<TEX::TotalVolumeTraded>()), nullptr, "TotalVolumeTraded" } },
+   { 388, { Inst(Type2Types<TEX::DiscretionInst, char>()), &TEX::realmbases[89], "DiscretionInst" } },
+   { 389, { Inst(Type2Type<TEX::DiscretionOffsetValue>()), nullptr, "DiscretionOffsetValue" } },
+   { 390, { Inst(Type2Type<TEX::BidID>()), nullptr, "BidID" } },
+   { 391, { Inst(Type2Type<TEX::ClientBidID>()), nullptr, "ClientBidID" } },
+   { 392, { Inst(Type2Type<TEX::ListName>()), nullptr, "ListName" } },
+   { 393, { Inst(Type2Type<TEX::TotNoRelatedSym>()), nullptr, "TotNoRelatedSym" } },
+   { 394, { Inst(Type2Types<TEX::BidType, int>()), &TEX::realmbases[90], "BidType" } },
+   { 395, { Inst(Type2Type<TEX::NumTickets>()), nullptr, "NumTickets" } },
+   { 396, { Inst(Type2Type<TEX::SideValue1>()), nullptr, "SideValue1" } },
+   { 397, { Inst(Type2Type<TEX::SideValue2>()), nullptr, "SideValue2" } },
+   { 398, { Inst(Type2Type<TEX::NoBidDescriptors>()), nullptr, "NoBidDescriptors" } },
+   { 399, { Inst(Type2Types<TEX::BidDescriptorType, int>()), &TEX::realmbases[91], "BidDescriptorType" } },
+   { 400, { Inst(Type2Type<TEX::BidDescriptor>()), nullptr, "BidDescriptor" } },
+   { 401, { Inst(Type2Types<TEX::SideValueInd, int>()), &TEX::realmbases[92], "SideValueInd" } },
+   { 402, { Inst(Type2Type<TEX::LiquidityPctLow>()), nullptr, "LiquidityPctLow" } },
+   { 403, { Inst(Type2Type<TEX::LiquidityPctHigh>()), nullptr, "LiquidityPctHigh" } },
+   { 404, { Inst(Type2Type<TEX::LiquidityValue>()), nullptr, "LiquidityValue" } },
+   { 405, { Inst(Type2Type<TEX::EFPTrackingError>()), nullptr, "EFPTrackingError" } },
+   { 406, { Inst(Type2Type<TEX::FairValue>()), nullptr, "FairValue" } },
+   { 407, { Inst(Type2Type<TEX::OutsideIndexPct>()), nullptr, "OutsideIndexPct" } },
+   { 408, { Inst(Type2Type<TEX::ValueOfFutures>()), nullptr, "ValueOfFutures" } },
+   { 409, { Inst(Type2Types<TEX::LiquidityIndType, int>()), &TEX::realmbases[93], "LiquidityIndType" } },
+   { 410, { Inst(Type2Type<TEX::WtAverageLiquidity>()), nullptr, "WtAverageLiquidity" } },
+   { 411, { Inst(Type2Types<TEX::ExchangeForPhysical, char>()), &TEX::realmbases[94], "ExchangeForPhysical" } },
+   { 412, { Inst(Type2Type<TEX::OutMainCntryUIndex>()), nullptr, "OutMainCntryUIndex" } },
+   { 413, { Inst(Type2Type<TEX::CrossPercent>()), nullptr, "CrossPercent" } },
+   { 414, { Inst(Type2Types<TEX::ProgRptReqs, int>()), &TEX::realmbases[95], "ProgRptReqs" } },
+   { 415, { Inst(Type2Type<TEX::ProgPeriodInterval>()), nullptr, "ProgPeriodInterval" } },
+   { 416, { Inst(Type2Types<TEX::IncTaxInd, int>()), &TEX::realmbases[96], "IncTaxInd" } },
+   { 417, { Inst(Type2Type<TEX::NumBidders>()), nullptr, "NumBidders" } },
+   { 418, { Inst(Type2Types<TEX::BidTradeType, char>()), &TEX::realmbases[97], "BidTradeType" } },
+   { 419, { Inst(Type2Types<TEX::BasisPxType, char>()), &TEX::realmbases[98], "BasisPxType" } },
+   { 420, { Inst(Type2Type<TEX::NoBidComponents>()), nullptr, "NoBidComponents" } },
+   { 421, { Inst(Type2Type<TEX::Country>()), nullptr, "Country" } },
+   { 422, { Inst(Type2Type<TEX::TotNoStrikes>()), nullptr, "TotNoStrikes" } },
+   { 423, { Inst(Type2Types<TEX::PriceType, int>()), &TEX::realmbases[99], "PriceType" } },
+   { 424, { Inst(Type2Type<TEX::DayOrderQty>()), nullptr, "DayOrderQty" } },
+   { 425, { Inst(Type2Type<TEX::DayCumQty>()), nullptr, "DayCumQty" } },
+   { 426, { Inst(Type2Type<TEX::DayAvgPx>()), nullptr, "DayAvgPx" } },
+   { 427, { Inst(Type2Types<TEX::GTBookingInst, int>()), &TEX::realmbases[100], "GTBookingInst" } },
+   { 428, { Inst(Type2Type<TEX::NoStrikes>()), nullptr, "NoStrikes" } },
+   { 429, { Inst(Type2Types<TEX::ListStatusType, int>()), &TEX::realmbases[101], "ListStatusType" } },
+   { 430, { Inst(Type2Types<TEX::NetGrossInd, int>()), &TEX::realmbases[102], "NetGrossInd" } },
+   { 431, { Inst(Type2Types<TEX::ListOrderStatus, int>()), &TEX::realmbases[103], "ListOrderStatus" } },
+   { 432, { Inst(Type2Type<TEX::ExpireDate>()), nullptr, "ExpireDate" } },
+   { 433, { Inst(Type2Types<TEX::ListExecInstType, char>()), &TEX::realmbases[104], "ListExecInstType" } },
+   { 434, { Inst(Type2Types<TEX::CxlRejResponseTo, char>()), &TEX::realmbases[105], "CxlRejResponseTo" } },
+   { 435, { Inst(Type2Type<TEX::UnderlyingCouponRate>()), nullptr, "UnderlyingCouponRate" } },
+   { 436, { Inst(Type2Type<TEX::UnderlyingContractMultiplier>()), nullptr, "UnderlyingContractMultiplier" } },
+   { 437, { Inst(Type2Type<TEX::ContraTradeQty>()), nullptr, "ContraTradeQty" } },
+   { 438, { Inst(Type2Type<TEX::ContraTradeTime>()), nullptr, "ContraTradeTime" } },
+   { 441, { Inst(Type2Type<TEX::LiquidityNumSecurities>()), nullptr, "LiquidityNumSecurities" } },
+   { 442, { Inst(Type2Types<TEX::MultiLegReportingType, char>()), &TEX::realmbases[106], "MultiLegReportingType" } },
+   { 443, { Inst(Type2Type<TEX::StrikeTime>()), nullptr, "StrikeTime" } },
+   { 444, { Inst(Type2Type<TEX::ListStatusText>()), nullptr, "ListStatusText" } },
+   { 445, { Inst(Type2Type<TEX::EncodedListStatusTextLen>()), nullptr, "EncodedListStatusTextLen" } },
+   { 446, { Inst(Type2Type<TEX::EncodedListStatusText>()), nullptr, "EncodedListStatusText" } },
+   { 447, { Inst(Type2Types<TEX::PartyIDSource, char>()), &TEX::realmbases[107], "PartyIDSource" } },
+   { 448, { Inst(Type2Type<TEX::PartyID>()), nullptr, "PartyID" } },
+   { 451, { Inst(Type2Type<TEX::NetChgPrevDay>()), nullptr, "NetChgPrevDay" } },
+   { 452, { Inst(Type2Types<TEX::PartyRole, int>()), &TEX::realmbases[108], "PartyRole" } },
+   { 453, { Inst(Type2Type<TEX::NoPartyIDs>()), nullptr, "NoPartyIDs" } },
+   { 454, { Inst(Type2Type<TEX::NoSecurityAltID>()), nullptr, "NoSecurityAltID" } },
+   { 455, { Inst(Type2Type<TEX::SecurityAltID>()), nullptr, "SecurityAltID" } },
+   { 456, { Inst(Type2Type<TEX::SecurityAltIDSource>()), nullptr, "SecurityAltIDSource" } },
+   { 457, { Inst(Type2Type<TEX::NoUnderlyingSecurityAltID>()), nullptr, "NoUnderlyingSecurityAltID" } },
+   { 458, { Inst(Type2Type<TEX::UnderlyingSecurityAltID>()), nullptr, "UnderlyingSecurityAltID" } },
+   { 459, { Inst(Type2Type<TEX::UnderlyingSecurityAltIDSource>()), nullptr, "UnderlyingSecurityAltIDSource" } },
+   { 460, { Inst(Type2Types<TEX::Product, int>()), &TEX::realmbases[109], "Product" } },
+   { 461, { Inst(Type2Type<TEX::CFICode>()), nullptr, "CFICode" } },
+   { 462, { Inst(Type2Type<TEX::UnderlyingProduct>()), nullptr, "UnderlyingProduct" } },
+   { 463, { Inst(Type2Type<TEX::UnderlyingCFICode>()), nullptr, "UnderlyingCFICode" } },
+   { 464, { Inst(Type2Type<TEX::TestMessageIndicator>()), nullptr, "TestMessageIndicator" } },
+   { 466, { Inst(Type2Type<TEX::BookingRefID>()), nullptr, "BookingRefID" } },
+   { 467, { Inst(Type2Type<TEX::IndividualAllocID>()), nullptr, "IndividualAllocID" } },
+   { 468, { Inst(Type2Types<TEX::RoundingDirection, char>()), &TEX::realmbases[110], "RoundingDirection" } },
+   { 469, { Inst(Type2Type<TEX::RoundingModulus>()), nullptr, "RoundingModulus" } },
+   { 470, { Inst(Type2Type<TEX::CountryOfIssue>()), nullptr, "CountryOfIssue" } },
+   { 471, { Inst(Type2Type<TEX::StateOrProvinceOfIssue>()), nullptr, "StateOrProvinceOfIssue" } },
+   { 472, { Inst(Type2Type<TEX::LocaleOfIssue>()), nullptr, "LocaleOfIssue" } },
+   { 473, { Inst(Type2Type<TEX::NoRegistDtls>()), nullptr, "NoRegistDtls" } },
+   { 474, { Inst(Type2Type<TEX::MailingDtls>()), nullptr, "MailingDtls" } },
+   { 475, { Inst(Type2Type<TEX::InvestorCountryOfResidence>()), nullptr, "InvestorCountryOfResidence" } },
+   { 476, { Inst(Type2Type<TEX::PaymentRef>()), nullptr, "PaymentRef" } },
+   { 477, { Inst(Type2Types<TEX::DistribPaymentMethod, int>()), &TEX::realmbases[111], "DistribPaymentMethod" } },
+   { 478, { Inst(Type2Type<TEX::CashDistribCurr>()), nullptr, "CashDistribCurr" } },
+   { 479, { Inst(Type2Type<TEX::CommCurrency>()), nullptr, "CommCurrency" } },
+   { 480, { Inst(Type2Types<TEX::CancellationRights, char>()), &TEX::realmbases[112], "CancellationRights" } },
+   { 481, { Inst(Type2Types<TEX::MoneyLaunderingStatus, char>()), &TEX::realmbases[113], "MoneyLaunderingStatus" } },
+   { 482, { Inst(Type2Type<TEX::MailingInst>()), nullptr, "MailingInst" } },
+   { 483, { Inst(Type2Type<TEX::TransBkdTime>()), nullptr, "TransBkdTime" } },
+   { 484, { Inst(Type2Types<TEX::ExecPriceType, char>()), &TEX::realmbases[114], "ExecPriceType" } },
+   { 485, { Inst(Type2Type<TEX::ExecPriceAdjustment>()), nullptr, "ExecPriceAdjustment" } },
+   { 486, { Inst(Type2Type<TEX::DateOfBirth>()), nullptr, "DateOfBirth" } },
+   { 487, { Inst(Type2Types<TEX::TradeReportTransType, int>()), &TEX::realmbases[115], "TradeReportTransType" } },
+   { 488, { Inst(Type2Type<TEX::CardHolderName>()), nullptr, "CardHolderName" } },
+   { 489, { Inst(Type2Type<TEX::CardNumber>()), nullptr, "CardNumber" } },
+   { 490, { Inst(Type2Type<TEX::CardExpDate>()), nullptr, "CardExpDate" } },
+   { 491, { Inst(Type2Type<TEX::CardIssNum>()), nullptr, "CardIssNum" } },
+   { 492, { Inst(Type2Types<TEX::PaymentMethod, int>()), &TEX::realmbases[116], "PaymentMethod" } },
+   { 493, { Inst(Type2Type<TEX::RegistAcctType>()), nullptr, "RegistAcctType" } },
+   { 494, { Inst(Type2Type<TEX::Designation>()), nullptr, "Designation" } },
+   { 495, { Inst(Type2Types<TEX::TaxAdvantageType, int>()), &TEX::realmbases[117], "TaxAdvantageType" } },
+   { 496, { Inst(Type2Type<TEX::RegistRejReasonText>()), nullptr, "RegistRejReasonText" } },
+   { 497, { Inst(Type2Types<TEX::FundRenewWaiv, char>()), &TEX::realmbases[118], "FundRenewWaiv" } },
+   { 498, { Inst(Type2Type<TEX::CashDistribAgentName>()), nullptr, "CashDistribAgentName" } },
+   { 499, { Inst(Type2Type<TEX::CashDistribAgentCode>()), nullptr, "CashDistribAgentCode" } },
+   { 500, { Inst(Type2Type<TEX::CashDistribAgentAcctNumber>()), nullptr, "CashDistribAgentAcctNumber" } },
+   { 501, { Inst(Type2Type<TEX::CashDistribPayRef>()), nullptr, "CashDistribPayRef" } },
+   { 502, { Inst(Type2Type<TEX::CashDistribAgentAcctName>()), nullptr, "CashDistribAgentAcctName" } },
+   { 503, { Inst(Type2Type<TEX::CardStartDate>()), nullptr, "CardStartDate" } },
+   { 504, { Inst(Type2Type<TEX::PaymentDate>()), nullptr, "PaymentDate" } },
+   { 505, { Inst(Type2Type<TEX::PaymentRemitterID>()), nullptr, "PaymentRemitterID" } },
+   { 506, { Inst(Type2Types<TEX::RegistStatus, char>()), &TEX::realmbases[119], "RegistStatus" } },
+   { 507, { Inst(Type2Types<TEX::RegistRejReasonCode, int>()), &TEX::realmbases[120], "RegistRejReasonCode" } },
+   { 508, { Inst(Type2Type<TEX::RegistRefID>()), nullptr, "RegistRefID" } },
+   { 509, { Inst(Type2Type<TEX::RegistDtls>()), nullptr, "RegistDtls" } },
+   { 510, { Inst(Type2Type<TEX::NoDistribInsts>()), nullptr, "NoDistribInsts" } },
+   { 511, { Inst(Type2Type<TEX::RegistEmail>()), nullptr, "RegistEmail" } },
+   { 512, { Inst(Type2Type<TEX::DistribPercentage>()), nullptr, "DistribPercentage" } },
+   { 513, { Inst(Type2Type<TEX::RegistID>()), nullptr, "RegistID" } },
+   { 514, { Inst(Type2Types<TEX::RegistTransType, char>()), &TEX::realmbases[121], "RegistTransType" } },
+   { 515, { Inst(Type2Type<TEX::ExecValuationPoint>()), nullptr, "ExecValuationPoint" } },
+   { 516, { Inst(Type2Type<TEX::OrderPercent>()), nullptr, "OrderPercent" } },
+   { 517, { Inst(Type2Types<TEX::OwnershipType, char>()), &TEX::realmbases[122], "OwnershipType" } },
+   { 518, { Inst(Type2Type<TEX::NoContAmts>()), nullptr, "NoContAmts" } },
+   { 519, { Inst(Type2Types<TEX::ContAmtType, int>()), &TEX::realmbases[123], "ContAmtType" } },
+   { 520, { Inst(Type2Type<TEX::ContAmtValue>()), nullptr, "ContAmtValue" } },
+   { 521, { Inst(Type2Type<TEX::ContAmtCurr>()), nullptr, "ContAmtCurr" } },
+   { 522, { Inst(Type2Types<TEX::OwnerType, int>()), &TEX::realmbases[124], "OwnerType" } },
+   { 523, { Inst(Type2Type<TEX::PartySubID>()), nullptr, "PartySubID" } },
+   { 524, { Inst(Type2Type<TEX::NestedPartyID>()), nullptr, "NestedPartyID" } },
+   { 525, { Inst(Type2Type<TEX::NestedPartyIDSource>()), nullptr, "NestedPartyIDSource" } },
+   { 526, { Inst(Type2Type<TEX::SecondaryClOrdID>()), nullptr, "SecondaryClOrdID" } },
+   { 527, { Inst(Type2Type<TEX::SecondaryExecID>()), nullptr, "SecondaryExecID" } },
+   { 528, { Inst(Type2Types<TEX::OrderCapacity, char>()), &TEX::realmbases[125], "OrderCapacity" } },
+   { 529, { Inst(Type2Types<TEX::OrderRestrictions, f8String>()), &TEX::realmbases[126], "OrderRestrictions" } },
+   { 530, { Inst(Type2Types<TEX::MassCancelRequestType, char>()), &TEX::realmbases[127], "MassCancelRequestType" } },
+   { 531, { Inst(Type2Types<TEX::MassCancelResponse, char>()), &TEX::realmbases[128], "MassCancelResponse" } },
+   { 532, { Inst(Type2Types<TEX::MassCancelRejectReason, int>()), &TEX::realmbases[129], "MassCancelRejectReason" } },
+   { 533, { Inst(Type2Type<TEX::TotalAffectedOrders>()), nullptr, "TotalAffectedOrders" } },
+   { 534, { Inst(Type2Type<TEX::NoAffectedOrders>()), nullptr, "NoAffectedOrders" } },
+   { 535, { Inst(Type2Type<TEX::AffectedOrderID>()), nullptr, "AffectedOrderID" } },
+   { 536, { Inst(Type2Type<TEX::AffectedSecondaryOrderID>()), nullptr, "AffectedSecondaryOrderID" } },
+   { 537, { Inst(Type2Types<TEX::QuoteType, int>()), &TEX::realmbases[130], "QuoteType" } },
+   { 538, { Inst(Type2Type<TEX::NestedPartyRole>()), nullptr, "NestedPartyRole" } },
+   { 539, { Inst(Type2Type<TEX::NoNestedPartyIDs>()), nullptr, "NoNestedPartyIDs" } },
+   { 540, { Inst(Type2Type<TEX::TotalAccruedInterestAmt>()), nullptr, "TotalAccruedInterestAmt" } },
+   { 541, { Inst(Type2Type<TEX::MaturityDate>()), nullptr, "MaturityDate" } },
+   { 542, { Inst(Type2Type<TEX::UnderlyingMaturityDate>()), nullptr, "UnderlyingMaturityDate" } },
+   { 543, { Inst(Type2Type<TEX::InstrRegistry>()), nullptr, "InstrRegistry" } },
+   { 544, { Inst(Type2Types<TEX::CashMargin, char>()), &TEX::realmbases[131], "CashMargin" } },
+   { 545, { Inst(Type2Type<TEX::NestedPartySubID>()), nullptr, "NestedPartySubID" } },
+   { 546, { Inst(Type2Types<TEX::Scope, f8String>()), &TEX::realmbases[132], "Scope" } },
+   { 547, { Inst(Type2Types<TEX::MDImplicitDelete, char>()), &TEX::realmbases[133], "MDImplicitDelete" } },
+   { 548, { Inst(Type2Type<TEX::CrossID>()), nullptr, "CrossID" } },
+   { 549, { Inst(Type2Types<TEX::CrossType, int>()), &TEX::realmbases[134], "CrossType" } },
+   { 550, { Inst(Type2Types<TEX::CrossPrioritization, int>()), &TEX::realmbases[135], "CrossPrioritization" } },
+   { 551, { Inst(Type2Type<TEX::OrigCrossID>()), nullptr, "OrigCrossID" } },
+   { 552, { Inst(Type2Types<TEX::NoSides, int>()), &TEX::realmbases[136], "NoSides" } },
+   { 553, { Inst(Type2Type<TEX::Username>()), nullptr, "Username" } },
+   { 554, { Inst(Type2Type<TEX::Password>()), nullptr, "Password" } },
+   { 555, { Inst(Type2Type<TEX::NoLegs>()), nullptr, "NoLegs" } },
+   { 556, { Inst(Type2Type<TEX::LegCurrency>()), nullptr, "LegCurrency" } },
+   { 557, { Inst(Type2Type<TEX::TotNoSecurityTypes>()), nullptr, "TotNoSecurityTypes" } },
+   { 558, { Inst(Type2Type<TEX::NoSecurityTypes>()), nullptr, "NoSecurityTypes" } },
+   { 559, { Inst(Type2Types<TEX::SecurityListRequestType, int>()), &TEX::realmbases[137], "SecurityListRequestType" } },
+   { 560, { Inst(Type2Types<TEX::SecurityRequestResult, int>()), &TEX::realmbases[138], "SecurityRequestResult" } },
+   { 561, { Inst(Type2Type<TEX::RoundLot>()), nullptr, "RoundLot" } },
+   { 562, { Inst(Type2Type<TEX::MinTradeVol>()), nullptr, "MinTradeVol" } },
+   { 563, { Inst(Type2Types<TEX::MultiLegRptTypeReq, int>()), &TEX::realmbases[139], "MultiLegRptTypeReq" } },
+   { 564, { Inst(Type2Type<TEX::LegPositionEffect>()), nullptr, "LegPositionEffect" } },
+   { 565, { Inst(Type2Type<TEX::LegCoveredOrUncovered>()), nullptr, "LegCoveredOrUncovered" } },
+   { 566, { Inst(Type2Type<TEX::LegPrice>()), nullptr, "LegPrice" } },
+   { 567, { Inst(Type2Types<TEX::TradSesStatusRejReason, int>()), &TEX::realmbases[140], "TradSesStatusRejReason" } },
+   { 568, { Inst(Type2Type<TEX::TradeRequestID>()), nullptr, "TradeRequestID" } },
+   { 569, { Inst(Type2Types<TEX::TradeRequestType, int>()), &TEX::realmbases[141], "TradeRequestType" } },
+   { 570, { Inst(Type2Types<TEX::PreviouslyReported, char>()), &TEX::realmbases[142], "PreviouslyReported" } },
+   { 571, { Inst(Type2Type<TEX::TradeReportID>()), nullptr, "TradeReportID" } },
+   { 572, { Inst(Type2Type<TEX::TradeReportRefID>()), nullptr, "TradeReportRefID" } },
+   { 573, { Inst(Type2Types<TEX::MatchStatus, char>()), &TEX::realmbases[143], "MatchStatus" } },
+   { 574, { Inst(Type2Types<TEX::MatchType, f8String>()), &TEX::realmbases[144], "MatchType" } },
+   { 575, { Inst(Type2Types<TEX::OddLot, char>()), &TEX::realmbases[145], "OddLot" } },
+   { 576, { Inst(Type2Type<TEX::NoClearingInstructions>()), nullptr, "NoClearingInstructions" } },
+   { 577, { Inst(Type2Types<TEX::ClearingInstruction, int>()), &TEX::realmbases[146], "ClearingInstruction" } },
+   { 578, { Inst(Type2Type<TEX::TradeInputSource>()), nullptr, "TradeInputSource" } },
+   { 579, { Inst(Type2Type<TEX::TradeInputDevice>()), nullptr, "TradeInputDevice" } },
+   { 580, { Inst(Type2Type<TEX::NoDates>()), nullptr, "NoDates" } },
+   { 581, { Inst(Type2Types<TEX::AccountType, int>()), &TEX::realmbases[147], "AccountType" } },
+   { 582, { Inst(Type2Types<TEX::CustOrderCapacity, int>()), &TEX::realmbases[148], "CustOrderCapacity" } },
+   { 583, { Inst(Type2Type<TEX::ClOrdLinkID>()), nullptr, "ClOrdLinkID" } },
+   { 584, { Inst(Type2Type<TEX::MassStatusReqID>()), nullptr, "MassStatusReqID" } },
+   { 585, { Inst(Type2Types<TEX::MassStatusReqType, int>()), &TEX::realmbases[149], "MassStatusReqType" } },
+   { 586, { Inst(Type2Type<TEX::OrigOrdModTime>()), nullptr, "OrigOrdModTime" } },
+   { 587, { Inst(Type2Type<TEX::LegSettlType>()), nullptr, "LegSettlType" } },
+   { 588, { Inst(Type2Type<TEX::LegSettlDate>()), nullptr, "LegSettlDate" } },
+   { 589, { Inst(Type2Types<TEX::DayBookingInst, char>()), &TEX::realmbases[150], "DayBookingInst" } },
+   { 590, { Inst(Type2Types<TEX::BookingUnit, char>()), &TEX::realmbases[151], "BookingUnit" } },
+   { 591, { Inst(Type2Types<TEX::PreallocMethod, char>()), &TEX::realmbases[152], "PreallocMethod" } },
+   { 592, { Inst(Type2Type<TEX::UnderlyingCountryOfIssue>()), nullptr, "UnderlyingCountryOfIssue" } },
+   { 593, { Inst(Type2Type<TEX::UnderlyingStateOrProvinceOfIssue>()), nullptr, "UnderlyingStateOrProvinceOfIssue" } },
+   { 594, { Inst(Type2Type<TEX::UnderlyingLocaleOfIssue>()), nullptr, "UnderlyingLocaleOfIssue" } },
+   { 595, { Inst(Type2Type<TEX::UnderlyingInstrRegistry>()), nullptr, "UnderlyingInstrRegistry" } },
+   { 596, { Inst(Type2Type<TEX::LegCountryOfIssue>()), nullptr, "LegCountryOfIssue" } },
+   { 597, { Inst(Type2Type<TEX::LegStateOrProvinceOfIssue>()), nullptr, "LegStateOrProvinceOfIssue" } },
+   { 598, { Inst(Type2Type<TEX::LegLocaleOfIssue>()), nullptr, "LegLocaleOfIssue" } },
+   { 599, { Inst(Type2Type<TEX::LegInstrRegistry>()), nullptr, "LegInstrRegistry" } },
+   { 600, { Inst(Type2Type<TEX::LegSymbol>()), nullptr, "LegSymbol" } },
+   { 601, { Inst(Type2Type<TEX::LegSymbolSfx>()), nullptr, "LegSymbolSfx" } },
+   { 602, { Inst(Type2Type<TEX::LegSecurityID>()), nullptr, "LegSecurityID" } },
+   { 603, { Inst(Type2Type<TEX::LegSecurityIDSource>()), nullptr, "LegSecurityIDSource" } },
+   { 604, { Inst(Type2Type<TEX::NoLegSecurityAltID>()), nullptr, "NoLegSecurityAltID" } },
+   { 605, { Inst(Type2Type<TEX::LegSecurityAltID>()), nullptr, "LegSecurityAltID" } },
+   { 606, { Inst(Type2Type<TEX::LegSecurityAltIDSource>()), nullptr, "LegSecurityAltIDSource" } },
+   { 607, { Inst(Type2Type<TEX::LegProduct>()), nullptr, "LegProduct" } },
+   { 608, { Inst(Type2Type<TEX::LegCFICode>()), nullptr, "LegCFICode" } },
+   { 609, { Inst(Type2Type<TEX::LegSecurityType>()), nullptr, "LegSecurityType" } },
+   { 610, { Inst(Type2Type<TEX::LegMaturityMonthYear>()), nullptr, "LegMaturityMonthYear" } },
+   { 611, { Inst(Type2Type<TEX::LegMaturityDate>()), nullptr, "LegMaturityDate" } },
+   { 612, { Inst(Type2Type<TEX::LegStrikePrice>()), nullptr, "LegStrikePrice" } },
+   { 613, { Inst(Type2Type<TEX::LegOptAttribute>()), nullptr, "LegOptAttribute" } },
+   { 614, { Inst(Type2Type<TEX::LegContractMultiplier>()), nullptr, "LegContractMultiplier" } },
+   { 615, { Inst(Type2Type<TEX::LegCouponRate>()), nullptr, "LegCouponRate" } },
+   { 616, { Inst(Type2Type<TEX::LegSecurityExchange>()), nullptr, "LegSecurityExchange" } },
+   { 617, { Inst(Type2Type<TEX::LegIssuer>()), nullptr, "LegIssuer" } },
+   { 618, { Inst(Type2Type<TEX::EncodedLegIssuerLen>()), nullptr, "EncodedLegIssuerLen" } },
+   { 619, { Inst(Type2Type<TEX::EncodedLegIssuer>()), nullptr, "EncodedLegIssuer" } },
+   { 620, { Inst(Type2Type<TEX::LegSecurityDesc>()), nullptr, "LegSecurityDesc" } },
+   { 621, { Inst(Type2Type<TEX::EncodedLegSecurityDescLen>()), nullptr, "EncodedLegSecurityDescLen" } },
+   { 622, { Inst(Type2Type<TEX::EncodedLegSecurityDesc>()), nullptr, "EncodedLegSecurityDesc" } },
+   { 623, { Inst(Type2Type<TEX::LegRatioQty>()), nullptr, "LegRatioQty" } },
+   { 624, { Inst(Type2Type<TEX::LegSide>()), nullptr, "LegSide" } },
+   { 625, { Inst(Type2Types<TEX::TradingSessionSubID, f8String>()), &TEX::realmbases[153], "TradingSessionSubID" } },
+   { 626, { Inst(Type2Types<TEX::AllocType, int>()), &TEX::realmbases[154], "AllocType" } },
+   { 627, { Inst(Type2Type<TEX::NoHops>()), nullptr, "NoHops" } },
+   { 628, { Inst(Type2Type<TEX::HopCompID>()), nullptr, "HopCompID" } },
+   { 629, { Inst(Type2Type<TEX::HopSendingTime>()), nullptr, "HopSendingTime" } },
+   { 630, { Inst(Type2Type<TEX::HopRefID>()), nullptr, "HopRefID" } },
+   { 631, { Inst(Type2Type<TEX::MidPx>()), nullptr, "MidPx" } },
+   { 632, { Inst(Type2Type<TEX::BidYield>()), nullptr, "BidYield" } },
+   { 633, { Inst(Type2Type<TEX::MidYield>()), nullptr, "MidYield" } },
+   { 634, { Inst(Type2Type<TEX::OfferYield>()), nullptr, "OfferYield" } },
+   { 635, { Inst(Type2Types<TEX::ClearingFeeIndicator, f8String>()), &TEX::realmbases[155], "ClearingFeeIndicator" } },
+   { 636, { Inst(Type2Types<TEX::WorkingIndicator, char>()), &TEX::realmbases[156], "WorkingIndicator" } },
+   { 637, { Inst(Type2Type<TEX::LegLastPx>()), nullptr, "LegLastPx" } },
+   { 638, { Inst(Type2Types<TEX::PriorityIndicator, int>()), &TEX::realmbases[157], "PriorityIndicator" } },
+   { 639, { Inst(Type2Type<TEX::PriceImprovement>()), nullptr, "PriceImprovement" } },
+   { 640, { Inst(Type2Type<TEX::Price2>()), nullptr, "Price2" } },
+   { 641, { Inst(Type2Type<TEX::LastForwardPoints2>()), nullptr, "LastForwardPoints2" } },
+   { 642, { Inst(Type2Type<TEX::BidForwardPoints2>()), nullptr, "BidForwardPoints2" } },
+   { 643, { Inst(Type2Type<TEX::OfferForwardPoints2>()), nullptr, "OfferForwardPoints2" } },
+   { 644, { Inst(Type2Type<TEX::RFQReqID>()), nullptr, "RFQReqID" } },
+   { 645, { Inst(Type2Type<TEX::MktBidPx>()), nullptr, "MktBidPx" } },
+   { 646, { Inst(Type2Type<TEX::MktOfferPx>()), nullptr, "MktOfferPx" } },
+   { 647, { Inst(Type2Type<TEX::MinBidSize>()), nullptr, "MinBidSize" } },
+   { 648, { Inst(Type2Type<TEX::MinOfferSize>()), nullptr, "MinOfferSize" } },
+   { 649, { Inst(Type2Type<TEX::QuoteStatusReqID>()), nullptr, "QuoteStatusReqID" } },
+   { 650, { Inst(Type2Types<TEX::LegalConfirm, char>()), &TEX::realmbases[158], "LegalConfirm" } },
+   { 651, { Inst(Type2Type<TEX::UnderlyingLastPx>()), nullptr, "UnderlyingLastPx" } },
+   { 652, { Inst(Type2Type<TEX::UnderlyingLastQty>()), nullptr, "UnderlyingLastQty" } },
+   { 654, { Inst(Type2Type<TEX::LegRefID>()), nullptr, "LegRefID" } },
+   { 655, { Inst(Type2Type<TEX::ContraLegRefID>()), nullptr, "ContraLegRefID" } },
+   { 656, { Inst(Type2Type<TEX::SettlCurrBidFxRate>()), nullptr, "SettlCurrBidFxRate" } },
+   { 657, { Inst(Type2Type<TEX::SettlCurrOfferFxRate>()), nullptr, "SettlCurrOfferFxRate" } },
+   { 658, { Inst(Type2Types<TEX::QuoteRequestRejectReason, int>()), &TEX::realmbases[159], "QuoteRequestRejectReason" } },
+   { 659, { Inst(Type2Type<TEX::SideComplianceID>()), nullptr, "SideComplianceID" } },
+   { 660, { Inst(Type2Types<TEX::AcctIDSource, int>()), &TEX::realmbases[160], "AcctIDSource" } },
+   { 661, { Inst(Type2Type<TEX::AllocAcctIDSource>()), nullptr, "AllocAcctIDSource" } },
+   { 662, { Inst(Type2Type<TEX::BenchmarkPrice>()), nullptr, "BenchmarkPrice" } },
+   { 663, { Inst(Type2Type<TEX::BenchmarkPriceType>()), nullptr, "BenchmarkPriceType" } },
+   { 664, { Inst(Type2Type<TEX::ConfirmID>()), nullptr, "ConfirmID" } },
+   { 665, { Inst(Type2Types<TEX::ConfirmStatus, int>()), &TEX::realmbases[161], "ConfirmStatus" } },
+   { 666, { Inst(Type2Types<TEX::ConfirmTransType, int>()), &TEX::realmbases[162], "ConfirmTransType" } },
+   { 667, { Inst(Type2Type<TEX::ContractSettlMonth>()), nullptr, "ContractSettlMonth" } },
+   { 668, { Inst(Type2Types<TEX::DeliveryForm, int>()), &TEX::realmbases[163], "DeliveryForm" } },
+   { 669, { Inst(Type2Type<TEX::LastParPx>()), nullptr, "LastParPx" } },
+   { 670, { Inst(Type2Type<TEX::NoLegAllocs>()), nullptr, "NoLegAllocs" } },
+   { 671, { Inst(Type2Type<TEX::LegAllocAccount>()), nullptr, "LegAllocAccount" } },
+   { 672, { Inst(Type2Type<TEX::LegIndividualAllocID>()), nullptr, "LegIndividualAllocID" } },
+   { 673, { Inst(Type2Type<TEX::LegAllocQty>()), nullptr, "LegAllocQty" } },
+   { 674, { Inst(Type2Type<TEX::LegAllocAcctIDSource>()), nullptr, "LegAllocAcctIDSource" } },
+   { 675, { Inst(Type2Type<TEX::LegSettlCurrency>()), nullptr, "LegSettlCurrency" } },
+   { 676, { Inst(Type2Type<TEX::LegBenchmarkCurveCurrency>()), nullptr, "LegBenchmarkCurveCurrency" } },
+   { 677, { Inst(Type2Type<TEX::LegBenchmarkCurveName>()), nullptr, "LegBenchmarkCurveName" } },
+   { 678, { Inst(Type2Type<TEX::LegBenchmarkCurvePoint>()), nullptr, "LegBenchmarkCurvePoint" } },
+   { 679, { Inst(Type2Type<TEX::LegBenchmarkPrice>()), nullptr, "LegBenchmarkPrice" } },
+   { 680, { Inst(Type2Type<TEX::LegBenchmarkPriceType>()), nullptr, "LegBenchmarkPriceType" } },
+   { 681, { Inst(Type2Type<TEX::LegBidPx>()), nullptr, "LegBidPx" } },
+   { 682, { Inst(Type2Type<TEX::LegIOIQty>()), nullptr, "LegIOIQty" } },
+   { 683, { Inst(Type2Type<TEX::NoLegStipulations>()), nullptr, "NoLegStipulations" } },
+   { 684, { Inst(Type2Type<TEX::LegOfferPx>()), nullptr, "LegOfferPx" } },
+   { 685, { Inst(Type2Type<TEX::LegOrderQty>()), nullptr, "LegOrderQty" } },
+   { 686, { Inst(Type2Type<TEX::LegPriceType>()), nullptr, "LegPriceType" } },
+   { 687, { Inst(Type2Type<TEX::LegQty>()), nullptr, "LegQty" } },
+   { 688, { Inst(Type2Type<TEX::LegStipulationType>()), nullptr, "LegStipulationType" } },
+   { 689, { Inst(Type2Type<TEX::LegStipulationValue>()), nullptr, "LegStipulationValue" } },
+   { 690, { Inst(Type2Types<TEX::LegSwapType, int>()), &TEX::realmbases[164], "LegSwapType" } },
+   { 691, { Inst(Type2Type<TEX::Pool>()), nullptr, "Pool" } },
+   { 692, { Inst(Type2Types<TEX::QuotePriceType, int>()), &TEX::realmbases[165], "QuotePriceType" } },
+   { 693, { Inst(Type2Type<TEX::QuoteRespID>()), nullptr, "QuoteRespID" } },
+   { 694, { Inst(Type2Types<TEX::QuoteRespType, int>()), &TEX::realmbases[166], "QuoteRespType" } },
+   { 695, { Inst(Type2Type<TEX::QuoteQualifier>()), nullptr, "QuoteQualifier" } },
+   { 696, { Inst(Type2Type<TEX::YieldRedemptionDate>()), nullptr, "YieldRedemptionDate" } },
+   { 697, { Inst(Type2Type<TEX::YieldRedemptionPrice>()), nullptr, "YieldRedemptionPrice" } },
+   { 698, { Inst(Type2Type<TEX::YieldRedemptionPriceType>()), nullptr, "YieldRedemptionPriceType" } },
+   { 699, { Inst(Type2Type<TEX::BenchmarkSecurityID>()), nullptr, "BenchmarkSecurityID" } },
+   { 700, { Inst(Type2Type<TEX::ReversalIndicator>()), nullptr, "ReversalIndicator" } },
+   { 701, { Inst(Type2Type<TEX::YieldCalcDate>()), nullptr, "YieldCalcDate" } },
+   { 702, { Inst(Type2Type<TEX::NoPositions>()), nullptr, "NoPositions" } },
+   { 703, { Inst(Type2Types<TEX::PosType, f8String>()), &TEX::realmbases[167], "PosType" } },
+   { 704, { Inst(Type2Type<TEX::LongQty>()), nullptr, "LongQty" } },
+   { 705, { Inst(Type2Type<TEX::ShortQty>()), nullptr, "ShortQty" } },
+   { 706, { Inst(Type2Types<TEX::PosQtyStatus, int>()), &TEX::realmbases[168], "PosQtyStatus" } },
+   { 707, { Inst(Type2Types<TEX::PosAmtType, f8String>()), &TEX::realmbases[169], "PosAmtType" } },
+   { 708, { Inst(Type2Type<TEX::PosAmt>()), nullptr, "PosAmt" } },
+   { 709, { Inst(Type2Types<TEX::PosTransType, int>()), &TEX::realmbases[170], "PosTransType" } },
+   { 710, { Inst(Type2Type<TEX::PosReqID>()), nullptr, "PosReqID" } },
+   { 711, { Inst(Type2Type<TEX::NoUnderlyings>()), nullptr, "NoUnderlyings" } },
+   { 712, { Inst(Type2Types<TEX::PosMaintAction, int>()), &TEX::realmbases[171], "PosMaintAction" } },
+   { 713, { Inst(Type2Type<TEX::OrigPosReqRefID>()), nullptr, "OrigPosReqRefID" } },
+   { 714, { Inst(Type2Type<TEX::PosMaintRptRefID>()), nullptr, "PosMaintRptRefID" } },
+   { 715, { Inst(Type2Type<TEX::ClearingBusinessDate>()), nullptr, "ClearingBusinessDate" } },
+   { 716, { Inst(Type2Types<TEX::SettlSessID, f8String>()), &TEX::realmbases[172], "SettlSessID" } },
+   { 717, { Inst(Type2Type<TEX::SettlSessSubID>()), nullptr, "SettlSessSubID" } },
+   { 718, { Inst(Type2Types<TEX::AdjustmentType, int>()), &TEX::realmbases[173], "AdjustmentType" } },
+   { 719, { Inst(Type2Type<TEX::ContraryInstructionIndicator>()), nullptr, "ContraryInstructionIndicator" } },
+   { 720, { Inst(Type2Type<TEX::PriorSpreadIndicator>()), nullptr, "PriorSpreadIndicator" } },
+   { 721, { Inst(Type2Type<TEX::PosMaintRptID>()), nullptr, "PosMaintRptID" } },
+   { 722, { Inst(Type2Types<TEX::PosMaintStatus, int>()), &TEX::realmbases[174], "PosMaintStatus" } },
+   { 723, { Inst(Type2Types<TEX::PosMaintResult, int>()), &TEX::realmbases[175], "PosMaintResult" } },
+   { 724, { Inst(Type2Types<TEX::PosReqType, int>()), &TEX::realmbases[176], "PosReqType" } },
+   { 725, { Inst(Type2Types<TEX::ResponseTransportType, int>()), &TEX::realmbases[177], "ResponseTransportType" } },
+   { 726, { Inst(Type2Type<TEX::ResponseDestination>()), nullptr, "ResponseDestination" } },
+   { 727, { Inst(Type2Type<TEX::TotalNumPosReports>()), nullptr, "TotalNumPosReports" } },
+   { 728, { Inst(Type2Types<TEX::PosReqResult, int>()), &TEX::realmbases[178], "PosReqResult" } },
+   { 729, { Inst(Type2Types<TEX::PosReqStatus, int>()), &TEX::realmbases[179], "PosReqStatus" } },
+   { 730, { Inst(Type2Type<TEX::SettlPrice>()), nullptr, "SettlPrice" } },
+   { 731, { Inst(Type2Types<TEX::SettlPriceType, int>()), &TEX::realmbases[180], "SettlPriceType" } },
+   { 732, { Inst(Type2Type<TEX::UnderlyingSettlPrice>()), nullptr, "UnderlyingSettlPrice" } },
+   { 733, { Inst(Type2Type<TEX::UnderlyingSettlPriceType>()), nullptr, "UnderlyingSettlPriceType" } },
+   { 734, { Inst(Type2Type<TEX::PriorSettlPrice>()), nullptr, "PriorSettlPrice" } },
+   { 735, { Inst(Type2Type<TEX::NoQuoteQualifiers>()), nullptr, "NoQuoteQualifiers" } },
+   { 736, { Inst(Type2Type<TEX::AllocSettlCurrency>()), nullptr, "AllocSettlCurrency" } },
+   { 737, { Inst(Type2Type<TEX::AllocSettlCurrAmt>()), nullptr, "AllocSettlCurrAmt" } },
+   { 738, { Inst(Type2Type<TEX::InterestAtMaturity>()), nullptr, "InterestAtMaturity" } },
+   { 739, { Inst(Type2Type<TEX::LegDatedDate>()), nullptr, "LegDatedDate" } },
+   { 740, { Inst(Type2Type<TEX::LegPool>()), nullptr, "LegPool" } },
+   { 741, { Inst(Type2Type<TEX::AllocInterestAtMaturity>()), nullptr, "AllocInterestAtMaturity" } },
+   { 742, { Inst(Type2Type<TEX::AllocAccruedInterestAmt>()), nullptr, "AllocAccruedInterestAmt" } },
+   { 743, { Inst(Type2Type<TEX::DeliveryDate>()), nullptr, "DeliveryDate" } },
+   { 744, { Inst(Type2Types<TEX::AssignmentMethod, char>()), &TEX::realmbases[181], "AssignmentMethod" } },
+   { 745, { Inst(Type2Type<TEX::AssignmentUnit>()), nullptr, "AssignmentUnit" } },
+   { 746, { Inst(Type2Type<TEX::OpenInterest>()), nullptr, "OpenInterest" } },
+   { 747, { Inst(Type2Types<TEX::ExerciseMethod, char>()), &TEX::realmbases[182], "ExerciseMethod" } },
+   { 748, { Inst(Type2Type<TEX::TotNumTradeReports>()), nullptr, "TotNumTradeReports" } },
+   { 749, { Inst(Type2Types<TEX::TradeRequestResult, int>()), &TEX::realmbases[183], "TradeRequestResult" } },
+   { 750, { Inst(Type2Types<TEX::TradeRequestStatus, int>()), &TEX::realmbases[184], "TradeRequestStatus" } },
+   { 751, { Inst(Type2Types<TEX::TradeReportRejectReason, int>()), &TEX::realmbases[185], "TradeReportRejectReason" } },
+   { 752, { Inst(Type2Types<TEX::SideMultiLegReportingType, int>()), &TEX::realmbases[186], "SideMultiLegReportingType" } },
+   { 753, { Inst(Type2Type<TEX::NoPosAmt>()), nullptr, "NoPosAmt" } },
+   { 754, { Inst(Type2Type<TEX::AutoAcceptIndicator>()), nullptr, "AutoAcceptIndicator" } },
+   { 755, { Inst(Type2Type<TEX::AllocReportID>()), nullptr, "AllocReportID" } },
+   { 756, { Inst(Type2Type<TEX::NoNested2PartyIDs>()), nullptr, "NoNested2PartyIDs" } },
+   { 757, { Inst(Type2Type<TEX::Nested2PartyID>()), nullptr, "Nested2PartyID" } },
+   { 758, { Inst(Type2Type<TEX::Nested2PartyIDSource>()), nullptr, "Nested2PartyIDSource" } },
+   { 759, { Inst(Type2Type<TEX::Nested2PartyRole>()), nullptr, "Nested2PartyRole" } },
+   { 760, { Inst(Type2Type<TEX::Nested2PartySubID>()), nullptr, "Nested2PartySubID" } },
+   { 761, { Inst(Type2Type<TEX::BenchmarkSecurityIDSource>()), nullptr, "BenchmarkSecurityIDSource" } },
+   { 762, { Inst(Type2Type<TEX::SecuritySubType>()), nullptr, "SecuritySubType" } },
+   { 763, { Inst(Type2Type<TEX::UnderlyingSecuritySubType>()), nullptr, "UnderlyingSecuritySubType" } },
+   { 764, { Inst(Type2Type<TEX::LegSecuritySubType>()), nullptr, "LegSecuritySubType" } },
+   { 765, { Inst(Type2Type<TEX::AllowableOneSidednessPct>()), nullptr, "AllowableOneSidednessPct" } },
+   { 766, { Inst(Type2Type<TEX::AllowableOneSidednessValue>()), nullptr, "AllowableOneSidednessValue" } },
+   { 767, { Inst(Type2Type<TEX::AllowableOneSidednessCurr>()), nullptr, "AllowableOneSidednessCurr" } },
+   { 768, { Inst(Type2Type<TEX::NoTrdRegTimestamps>()), nullptr, "NoTrdRegTimestamps" } },
+   { 769, { Inst(Type2Type<TEX::TrdRegTimestamp>()), nullptr, "TrdRegTimestamp" } },
+   { 770, { Inst(Type2Types<TEX::TrdRegTimestampType, int>()), &TEX::realmbases[187], "TrdRegTimestampType" } },
+   { 771, { Inst(Type2Type<TEX::TrdRegTimestampOrigin>()), nullptr, "TrdRegTimestampOrigin" } },
+   { 772, { Inst(Type2Type<TEX::ConfirmRefID>()), nullptr, "ConfirmRefID" } },
+   { 773, { Inst(Type2Types<TEX::ConfirmType, int>()), &TEX::realmbases[188], "ConfirmType" } },
+   { 774, { Inst(Type2Types<TEX::ConfirmRejReason, int>()), &TEX::realmbases[189], "ConfirmRejReason" } },
+   { 775, { Inst(Type2Types<TEX::BookingType, int>()), &TEX::realmbases[190], "BookingType" } },
+   { 776, { Inst(Type2Type<TEX::IndividualAllocRejCode>()), nullptr, "IndividualAllocRejCode" } },
+   { 777, { Inst(Type2Type<TEX::SettlInstMsgID>()), nullptr, "SettlInstMsgID" } },
+   { 778, { Inst(Type2Type<TEX::NoSettlInst>()), nullptr, "NoSettlInst" } },
+   { 779, { Inst(Type2Type<TEX::LastUpdateTime>()), nullptr, "LastUpdateTime" } },
+   { 780, { Inst(Type2Types<TEX::AllocSettlInstType, int>()), &TEX::realmbases[191], "AllocSettlInstType" } },
+   { 781, { Inst(Type2Type<TEX::NoSettlPartyIDs>()), nullptr, "NoSettlPartyIDs" } },
+   { 782, { Inst(Type2Type<TEX::SettlPartyID>()), nullptr, "SettlPartyID" } },
+   { 783, { Inst(Type2Type<TEX::SettlPartyIDSource>()), nullptr, "SettlPartyIDSource" } },
+   { 784, { Inst(Type2Type<TEX::SettlPartyRole>()), nullptr, "SettlPartyRole" } },
+   { 785, { Inst(Type2Type<TEX::SettlPartySubID>()), nullptr, "SettlPartySubID" } },
+   { 786, { Inst(Type2Type<TEX::SettlPartySubIDType>()), nullptr, "SettlPartySubIDType" } },
+   { 787, { Inst(Type2Types<TEX::DlvyInstType, char>()), &TEX::realmbases[192], "DlvyInstType" } },
+   { 788, { Inst(Type2Types<TEX::TerminationType, int>()), &TEX::realmbases[193], "TerminationType" } },
+   { 789, { Inst(Type2Type<TEX::NextExpectedMsgSeqNum>()), nullptr, "NextExpectedMsgSeqNum" } },
+   { 790, { Inst(Type2Type<TEX::OrdStatusReqID>()), nullptr, "OrdStatusReqID" } },
+   { 791, { Inst(Type2Type<TEX::SettlInstReqID>()), nullptr, "SettlInstReqID" } },
+   { 792, { Inst(Type2Types<TEX::SettlInstReqRejCode, int>()), &TEX::realmbases[194], "SettlInstReqRejCode" } },
+   { 793, { Inst(Type2Type<TEX::SecondaryAllocID>()), nullptr, "SecondaryAllocID" } },
+   { 794, { Inst(Type2Types<TEX::AllocReportType, int>()), &TEX::realmbases[195], "AllocReportType" } },
+   { 795, { Inst(Type2Type<TEX::AllocReportRefID>()), nullptr, "AllocReportRefID" } },
+   { 796, { Inst(Type2Types<TEX::AllocCancReplaceReason, int>()), &TEX::realmbases[196], "AllocCancReplaceReason" } },
+   { 797, { Inst(Type2Type<TEX::CopyMsgIndicator>()), nullptr, "CopyMsgIndicator" } },
+   { 798, { Inst(Type2Types<TEX::AllocAccountType, int>()), &TEX::realmbases[197], "AllocAccountType" } },
+   { 799, { Inst(Type2Type<TEX::OrderAvgPx>()), nullptr, "OrderAvgPx" } },
+   { 800, { Inst(Type2Type<TEX::OrderBookingQty>()), nullptr, "OrderBookingQty" } },
+   { 801, { Inst(Type2Type<TEX::NoSettlPartySubIDs>()), nullptr, "NoSettlPartySubIDs" } },
+   { 802, { Inst(Type2Type<TEX::NoPartySubIDs>()), nullptr, "NoPartySubIDs" } },
+   { 803, { Inst(Type2Types<TEX::PartySubIDType, int>()), &TEX::realmbases[198], "PartySubIDType" } },
+   { 804, { Inst(Type2Type<TEX::NoNestedPartySubIDs>()), nullptr, "NoNestedPartySubIDs" } },
+   { 805, { Inst(Type2Type<TEX::NestedPartySubIDType>()), nullptr, "NestedPartySubIDType" } },
+   { 806, { Inst(Type2Type<TEX::NoNested2PartySubIDs>()), nullptr, "NoNested2PartySubIDs" } },
+   { 807, { Inst(Type2Type<TEX::Nested2PartySubIDType>()), nullptr, "Nested2PartySubIDType" } },
+   { 808, { Inst(Type2Types<TEX::AllocIntermedReqType, int>()), &TEX::realmbases[199], "AllocIntermedReqType" } },
+   { 810, { Inst(Type2Type<TEX::UnderlyingPx>()), nullptr, "UnderlyingPx" } },
+   { 811, { Inst(Type2Type<TEX::PriceDelta>()), nullptr, "PriceDelta" } },
+   { 812, { Inst(Type2Type<TEX::ApplQueueMax>()), nullptr, "ApplQueueMax" } },
+   { 813, { Inst(Type2Type<TEX::ApplQueueDepth>()), nullptr, "ApplQueueDepth" } },
+   { 814, { Inst(Type2Types<TEX::ApplQueueResolution, int>()), &TEX::realmbases[200], "ApplQueueResolution" } },
+   { 815, { Inst(Type2Types<TEX::ApplQueueAction, int>()), &TEX::realmbases[201], "ApplQueueAction" } },
+   { 816, { Inst(Type2Type<TEX::NoAltMDSource>()), nullptr, "NoAltMDSource" } },
+   { 817, { Inst(Type2Type<TEX::AltMDSourceID>()), nullptr, "AltMDSourceID" } },
+   { 818, { Inst(Type2Type<TEX::SecondaryTradeReportID>()), nullptr, "SecondaryTradeReportID" } },
+   { 819, { Inst(Type2Types<TEX::AvgPxIndicator, int>()), &TEX::realmbases[202], "AvgPxIndicator" } },
+   { 820, { Inst(Type2Type<TEX::TradeLinkID>()), nullptr, "TradeLinkID" } },
+   { 821, { Inst(Type2Type<TEX::OrderInputDevice>()), nullptr, "OrderInputDevice" } },
+   { 822, { Inst(Type2Type<TEX::UnderlyingTradingSessionID>()), nullptr, "UnderlyingTradingSessionID" } },
+   { 823, { Inst(Type2Type<TEX::UnderlyingTradingSessionSubID>()), nullptr, "UnderlyingTradingSessionSubID" } },
+   { 824, { Inst(Type2Type<TEX::TradeLegRefID>()), nullptr, "TradeLegRefID" } },
+   { 825, { Inst(Type2Type<TEX::ExchangeRule>()), nullptr, "ExchangeRule" } },
+   { 826, { Inst(Type2Types<TEX::TradeAllocIndicator, int>()), &TEX::realmbases[203], "TradeAllocIndicator" } },
+   { 827, { Inst(Type2Types<TEX::ExpirationCycle, int>()), &TEX::realmbases[204], "ExpirationCycle" } },
+   { 828, { Inst(Type2Types<TEX::TrdType, int>()), &TEX::realmbases[205], "TrdType" } },
+   { 829, { Inst(Type2Types<TEX::TrdSubType, int>()), &TEX::realmbases[206], "TrdSubType" } },
+   { 830, { Inst(Type2Type<TEX::TransferReason>()), nullptr, "TransferReason" } },
+   { 832, { Inst(Type2Type<TEX::TotNumAssignmentReports>()), nullptr, "TotNumAssignmentReports" } },
+   { 833, { Inst(Type2Type<TEX::AsgnRptID>()), nullptr, "AsgnRptID" } },
+   { 834, { Inst(Type2Type<TEX::ThresholdAmount>()), nullptr, "ThresholdAmount" } },
+   { 835, { Inst(Type2Types<TEX::PegMoveType, int>()), &TEX::realmbases[207], "PegMoveType" } },
+   { 836, { Inst(Type2Types<TEX::PegOffsetType, int>()), &TEX::realmbases[208], "PegOffsetType" } },
+   { 837, { Inst(Type2Types<TEX::PegLimitType, int>()), &TEX::realmbases[209], "PegLimitType" } },
+   { 838, { Inst(Type2Types<TEX::PegRoundDirection, int>()), &TEX::realmbases[210], "PegRoundDirection" } },
+   { 839, { Inst(Type2Type<TEX::PeggedPrice>()), nullptr, "PeggedPrice" } },
+   { 840, { Inst(Type2Types<TEX::PegScope, int>()), &TEX::realmbases[211], "PegScope" } },
+   { 841, { Inst(Type2Types<TEX::DiscretionMoveType, int>()), &TEX::realmbases[212], "DiscretionMoveType" } },
+   { 842, { Inst(Type2Types<TEX::DiscretionOffsetType, int>()), &TEX::realmbases[213], "DiscretionOffsetType" } },
+   { 843, { Inst(Type2Types<TEX::DiscretionLimitType, int>()), &TEX::realmbases[214], "DiscretionLimitType" } },
+   { 844, { Inst(Type2Types<TEX::DiscretionRoundDirection, int>()), &TEX::realmbases[215], "DiscretionRoundDirection" } },
+   { 845, { Inst(Type2Type<TEX::DiscretionPrice>()), nullptr, "DiscretionPrice" } },
+   { 846, { Inst(Type2Types<TEX::DiscretionScope, int>()), &TEX::realmbases[216], "DiscretionScope" } },
+   { 847, { Inst(Type2Types<TEX::TargetStrategy, int>()), &TEX::realmbases[217], "TargetStrategy" } },
+   { 848, { Inst(Type2Type<TEX::TargetStrategyParameters>()), nullptr, "TargetStrategyParameters" } },
+   { 849, { Inst(Type2Type<TEX::ParticipationRate>()), nullptr, "ParticipationRate" } },
+   { 850, { Inst(Type2Type<TEX::TargetStrategyPerformance>()), nullptr, "TargetStrategyPerformance" } },
+   { 851, { Inst(Type2Types<TEX::LastLiquidityInd, int>()), &TEX::realmbases[218], "LastLiquidityInd" } },
+   { 852, { Inst(Type2Types<TEX::PublishTrdIndicator, char>()), &TEX::realmbases[219], "PublishTrdIndicator" } },
+   { 853, { Inst(Type2Types<TEX::ShortSaleReason, int>()), &TEX::realmbases[220], "ShortSaleReason" } },
+   { 854, { Inst(Type2Types<TEX::QtyType, int>()), &TEX::realmbases[221], "QtyType" } },
+   { 855, { Inst(Type2Type<TEX::SecondaryTrdType>()), nullptr, "SecondaryTrdType" } },
+   { 856, { Inst(Type2Types<TEX::TradeReportType, int>()), &TEX::realmbases[222], "TradeReportType" } },
+   { 857, { Inst(Type2Types<TEX::AllocNoOrdersType, int>()), &TEX::realmbases[223], "AllocNoOrdersType" } },
+   { 858, { Inst(Type2Type<TEX::SharedCommission>()), nullptr, "SharedCommission" } },
+   { 859, { Inst(Type2Type<TEX::ConfirmReqID>()), nullptr, "ConfirmReqID" } },
+   { 860, { Inst(Type2Type<TEX::AvgParPx>()), nullptr, "AvgParPx" } },
+   { 861, { Inst(Type2Type<TEX::ReportedPx>()), nullptr, "ReportedPx" } },
+   { 862, { Inst(Type2Type<TEX::NoCapacities>()), nullptr, "NoCapacities" } },
+   { 863, { Inst(Type2Type<TEX::OrderCapacityQty>()), nullptr, "OrderCapacityQty" } },
+   { 864, { Inst(Type2Type<TEX::NoEvents>()), nullptr, "NoEvents" } },
+   { 865, { Inst(Type2Types<TEX::EventType, int>()), &TEX::realmbases[224], "EventType" } },
+   { 866, { Inst(Type2Type<TEX::EventDate>()), nullptr, "EventDate" } },
+   { 867, { Inst(Type2Type<TEX::EventPx>()), nullptr, "EventPx" } },
+   { 868, { Inst(Type2Type<TEX::EventText>()), nullptr, "EventText" } },
+   { 869, { Inst(Type2Type<TEX::PctAtRisk>()), nullptr, "PctAtRisk" } },
+   { 870, { Inst(Type2Type<TEX::NoInstrAttrib>()), nullptr, "NoInstrAttrib" } },
+   { 871, { Inst(Type2Types<TEX::InstrAttribType, int>()), &TEX::realmbases[225], "InstrAttribType" } },
+   { 872, { Inst(Type2Type<TEX::InstrAttribValue>()), nullptr, "InstrAttribValue" } },
+   { 873, { Inst(Type2Type<TEX::DatedDate>()), nullptr, "DatedDate" } },
+   { 874, { Inst(Type2Type<TEX::InterestAccrualDate>()), nullptr, "InterestAccrualDate" } },
+   { 875, { Inst(Type2Types<TEX::CPProgram, int>()), &TEX::realmbases[226], "CPProgram" } },
+   { 876, { Inst(Type2Type<TEX::CPRegType>()), nullptr, "CPRegType" } },
+   { 877, { Inst(Type2Type<TEX::UnderlyingCPProgram>()), nullptr, "UnderlyingCPProgram" } },
+   { 878, { Inst(Type2Type<TEX::UnderlyingCPRegType>()), nullptr, "UnderlyingCPRegType" } },
+   { 879, { Inst(Type2Type<TEX::UnderlyingQty>()), nullptr, "UnderlyingQty" } },
+   { 880, { Inst(Type2Type<TEX::TrdMatchID>()), nullptr, "TrdMatchID" } },
+   { 881, { Inst(Type2Type<TEX::SecondaryTradeReportRefID>()), nullptr, "SecondaryTradeReportRefID" } },
+   { 882, { Inst(Type2Type<TEX::UnderlyingDirtyPrice>()), nullptr, "UnderlyingDirtyPrice" } },
+   { 883, { Inst(Type2Type<TEX::UnderlyingEndPrice>()), nullptr, "UnderlyingEndPrice" } },
+   { 884, { Inst(Type2Type<TEX::UnderlyingStartValue>()), nullptr, "UnderlyingStartValue" } },
+   { 885, { Inst(Type2Type<TEX::UnderlyingCurrentValue>()), nullptr, "UnderlyingCurrentValue" } },
+   { 886, { Inst(Type2Type<TEX::UnderlyingEndValue>()), nullptr, "UnderlyingEndValue" } },
+   { 887, { Inst(Type2Type<TEX::NoUnderlyingStips>()), nullptr, "NoUnderlyingStips" } },
+   { 888, { Inst(Type2Type<TEX::UnderlyingStipType>()), nullptr, "UnderlyingStipType" } },
+   { 889, { Inst(Type2Type<TEX::UnderlyingStipValue>()), nullptr, "UnderlyingStipValue" } },
+   { 890, { Inst(Type2Type<TEX::MaturityNetMoney>()), nullptr, "MaturityNetMoney" } },
+   { 891, { Inst(Type2Types<TEX::MiscFeeBasis, int>()), &TEX::realmbases[227], "MiscFeeBasis" } },
+   { 892, { Inst(Type2Type<TEX::TotNoAllocs>()), nullptr, "TotNoAllocs" } },
+   { 893, { Inst(Type2Types<TEX::LastFragment, char>()), &TEX::realmbases[228], "LastFragment" } },
+   { 894, { Inst(Type2Type<TEX::CollReqID>()), nullptr, "CollReqID" } },
+   { 895, { Inst(Type2Types<TEX::CollAsgnReason, int>()), &TEX::realmbases[229], "CollAsgnReason" } },
+   { 896, { Inst(Type2Types<TEX::CollInquiryQualifier, int>()), &TEX::realmbases[230], "CollInquiryQualifier" } },
+   { 897, { Inst(Type2Type<TEX::NoTrades>()), nullptr, "NoTrades" } },
+   { 898, { Inst(Type2Type<TEX::MarginRatio>()), nullptr, "MarginRatio" } },
+   { 899, { Inst(Type2Type<TEX::MarginExcess>()), nullptr, "MarginExcess" } },
+   { 900, { Inst(Type2Type<TEX::TotalNetValue>()), nullptr, "TotalNetValue" } },
+   { 901, { Inst(Type2Type<TEX::CashOutstanding>()), nullptr, "CashOutstanding" } },
+   { 902, { Inst(Type2Type<TEX::CollAsgnID>()), nullptr, "CollAsgnID" } },
+   { 903, { Inst(Type2Types<TEX::CollAsgnTransType, int>()), &TEX::realmbases[231], "CollAsgnTransType" } },
+   { 904, { Inst(Type2Type<TEX::CollRespID>()), nullptr, "CollRespID" } },
+   { 905, { Inst(Type2Types<TEX::CollAsgnRespType, int>()), &TEX::realmbases[232], "CollAsgnRespType" } },
+   { 906, { Inst(Type2Types<TEX::CollAsgnRejectReason, int>()), &TEX::realmbases[233], "CollAsgnRejectReason" } },
+   { 907, { Inst(Type2Type<TEX::CollAsgnRefID>()), nullptr, "CollAsgnRefID" } },
+   { 908, { Inst(Type2Type<TEX::CollRptID>()), nullptr, "CollRptID" } },
+   { 909, { Inst(Type2Type<TEX::CollInquiryID>()), nullptr, "CollInquiryID" } },
+   { 910, { Inst(Type2Types<TEX::CollStatus, int>()), &TEX::realmbases[234], "CollStatus" } },
+   { 911, { Inst(Type2Type<TEX::TotNumReports>()), nullptr, "TotNumReports" } },
+   { 912, { Inst(Type2Types<TEX::LastRptRequested, char>()), &TEX::realmbases[235], "LastRptRequested" } },
+   { 913, { Inst(Type2Type<TEX::AgreementDesc>()), nullptr, "AgreementDesc" } },
+   { 914, { Inst(Type2Type<TEX::AgreementID>()), nullptr, "AgreementID" } },
+   { 915, { Inst(Type2Type<TEX::AgreementDate>()), nullptr, "AgreementDate" } },
+   { 916, { Inst(Type2Type<TEX::StartDate>()), nullptr, "StartDate" } },
+   { 917, { Inst(Type2Type<TEX::EndDate>()), nullptr, "EndDate" } },
+   { 918, { Inst(Type2Type<TEX::AgreementCurrency>()), nullptr, "AgreementCurrency" } },
+   { 919, { Inst(Type2Types<TEX::DeliveryType, int>()), &TEX::realmbases[236], "DeliveryType" } },
+   { 920, { Inst(Type2Type<TEX::EndAccruedInterestAmt>()), nullptr, "EndAccruedInterestAmt" } },
+   { 921, { Inst(Type2Type<TEX::StartCash>()), nullptr, "StartCash" } },
+   { 922, { Inst(Type2Type<TEX::EndCash>()), nullptr, "EndCash" } },
+   { 923, { Inst(Type2Type<TEX::UserRequestID>()), nullptr, "UserRequestID" } },
+   { 924, { Inst(Type2Types<TEX::UserRequestType, int>()), &TEX::realmbases[237], "UserRequestType" } },
+   { 925, { Inst(Type2Type<TEX::NewPassword>()), nullptr, "NewPassword" } },
+   { 926, { Inst(Type2Types<TEX::UserStatus, int>()), &TEX::realmbases[238], "UserStatus" } },
+   { 927, { Inst(Type2Type<TEX::UserStatusText>()), nullptr, "UserStatusText" } },
+   { 928, { Inst(Type2Types<TEX::StatusValue, int>()), &TEX::realmbases[239], "StatusValue" } },
+   { 929, { Inst(Type2Type<TEX::StatusText>()), nullptr, "StatusText" } },
+   { 930, { Inst(Type2Type<TEX::RefCompID>()), nullptr, "RefCompID" } },
+   { 931, { Inst(Type2Type<TEX::RefSubID>()), nullptr, "RefSubID" } },
+   { 932, { Inst(Type2Type<TEX::NetworkResponseID>()), nullptr, "NetworkResponseID" } },
+   { 933, { Inst(Type2Type<TEX::NetworkRequestID>()), nullptr, "NetworkRequestID" } },
+   { 934, { Inst(Type2Type<TEX::LastNetworkResponseID>()), nullptr, "LastNetworkResponseID" } },
+   { 935, { Inst(Type2Types<TEX::NetworkRequestType, int>()), &TEX::realmbases[240], "NetworkRequestType" } },
+   { 936, { Inst(Type2Type<TEX::NoCompIDs>()), nullptr, "NoCompIDs" } },
+   { 937, { Inst(Type2Types<TEX::NetworkStatusResponseType, int>()), &TEX::realmbases[241], "NetworkStatusResponseType" } },
+   { 938, { Inst(Type2Type<TEX::NoCollInquiryQualifier>()), nullptr, "NoCollInquiryQualifier" } },
+   { 939, { Inst(Type2Types<TEX::TrdRptStatus, int>()), &TEX::realmbases[242], "TrdRptStatus" } },
+   { 940, { Inst(Type2Types<TEX::AffirmStatus, int>()), &TEX::realmbases[243], "AffirmStatus" } },
+   { 941, { Inst(Type2Type<TEX::UnderlyingStrikeCurrency>()), nullptr, "UnderlyingStrikeCurrency" } },
+   { 942, { Inst(Type2Type<TEX::LegStrikeCurrency>()), nullptr, "LegStrikeCurrency" } },
+   { 943, { Inst(Type2Type<TEX::TimeBracket>()), nullptr, "TimeBracket" } },
+   { 944, { Inst(Type2Types<TEX::CollAction, int>()), &TEX::realmbases[244], "CollAction" } },
+   { 945, { Inst(Type2Types<TEX::CollInquiryStatus, int>()), &TEX::realmbases[245], "CollInquiryStatus" } },
+   { 946, { Inst(Type2Types<TEX::CollInquiryResult, int>()), &TEX::realmbases[246], "CollInquiryResult" } },
+   { 947, { Inst(Type2Type<TEX::StrikeCurrency>()), nullptr, "StrikeCurrency" } },
+   { 948, { Inst(Type2Type<TEX::NoNested3PartyIDs>()), nullptr, "NoNested3PartyIDs" } },
+   { 949, { Inst(Type2Type<TEX::Nested3PartyID>()), nullptr, "Nested3PartyID" } },
+   { 950, { Inst(Type2Type<TEX::Nested3PartyIDSource>()), nullptr, "Nested3PartyIDSource" } },
+   { 951, { Inst(Type2Type<TEX::Nested3PartyRole>()), nullptr, "Nested3PartyRole" } },
+   { 952, { Inst(Type2Type<TEX::NoNested3PartySubIDs>()), nullptr, "NoNested3PartySubIDs" } },
+   { 953, { Inst(Type2Type<TEX::Nested3PartySubID>()), nullptr, "Nested3PartySubID" } },
+   { 954, { Inst(Type2Type<TEX::Nested3PartySubIDType>()), nullptr, "Nested3PartySubIDType" } },
+   { 955, { Inst(Type2Type<TEX::LegContractSettlMonth>()), nullptr, "LegContractSettlMonth" } },
+   { 956, { Inst(Type2Type<TEX::LegInterestAccrualDate>()), nullptr, "LegInterestAccrualDate" } },
+   { 957, { Inst(Type2Type<TEX::NoStrategyParameters>()), nullptr, "NoStrategyParameters" } },
+   { 958, { Inst(Type2Type<TEX::StrategyParameterName>()), nullptr, "StrategyParameterName" } },
+   { 959, { Inst(Type2Types<TEX::StrategyParameterType, int>()), &TEX::realmbases[247], "StrategyParameterType" } },
+   { 960, { Inst(Type2Type<TEX::StrategyParameterValue>()), nullptr, "StrategyParameterValue" } },
+   { 961, { Inst(Type2Type<TEX::HostCrossID>()), nullptr, "HostCrossID" } },
+   { 962, { Inst(Type2Type<TEX::SideTimeInForce>()), nullptr, "SideTimeInForce" } },
+   { 963, { Inst(Type2Type<TEX::MDReportID>()), nullptr, "MDReportID" } },
+   { 964, { Inst(Type2Type<TEX::SecurityReportID>()), nullptr, "SecurityReportID" } },
+   { 965, { Inst(Type2Types<TEX::SecurityStatusID, f8String>()), &TEX::realmbases[248], "SecurityStatusID" } },
+   { 966, { Inst(Type2Type<TEX::SettleOnOpenFlag>()), nullptr, "SettleOnOpenFlag" } },
+   { 967, { Inst(Type2Type<TEX::StrikeMultiplier>()), nullptr, "StrikeMultiplier" } },
+   { 968, { Inst(Type2Type<TEX::StrikeValue>()), nullptr, "StrikeValue" } },
+   { 969, { Inst(Type2Type<TEX::MinPriceIncrement>()), nullptr, "MinPriceIncrement" } },
+   { 970, { Inst(Type2Type<TEX::PositionLimit>()), nullptr, "PositionLimit" } },
+   { 971, { Inst(Type2Type<TEX::NTPositionLimit>()), nullptr, "NTPositionLimit" } },
+   { 972, { Inst(Type2Type<TEX::UnderlyingAllocationPercent>()), nullptr, "UnderlyingAllocationPercent" } },
+   { 973, { Inst(Type2Type<TEX::UnderlyingCashAmount>()), nullptr, "UnderlyingCashAmount" } },
+   { 974, { Inst(Type2Types<TEX::UnderlyingCashType, f8String>()), &TEX::realmbases[249], "UnderlyingCashType" } },
+   { 975, { Inst(Type2Types<TEX::UnderlyingSettlementType, int>()), &TEX::realmbases[250], "UnderlyingSettlementType" } },
+   { 976, { Inst(Type2Type<TEX::QuantityDate>()), nullptr, "QuantityDate" } },
+   { 977, { Inst(Type2Type<TEX::ContIntRptID>()), nullptr, "ContIntRptID" } },
+   { 978, { Inst(Type2Type<TEX::LateIndicator>()), nullptr, "LateIndicator" } },
+   { 979, { Inst(Type2Type<TEX::InputSource>()), nullptr, "InputSource" } },
+   { 980, { Inst(Type2Types<TEX::SecurityUpdateAction, char>()), &TEX::realmbases[251], "SecurityUpdateAction" } },
+   { 981, { Inst(Type2Type<TEX::NoExpiration>()), nullptr, "NoExpiration" } },
+   { 982, { Inst(Type2Types<TEX::ExpirationQtyType, int>()), &TEX::realmbases[252], "ExpirationQtyType" } },
+   { 983, { Inst(Type2Type<TEX::ExpQty>()), nullptr, "ExpQty" } },
+   { 984, { Inst(Type2Type<TEX::NoUnderlyingAmounts>()), nullptr, "NoUnderlyingAmounts" } },
+   { 985, { Inst(Type2Type<TEX::UnderlyingPayAmount>()), nullptr, "UnderlyingPayAmount" } },
+   { 986, { Inst(Type2Type<TEX::UnderlyingCollectAmount>()), nullptr, "UnderlyingCollectAmount" } },
+   { 987, { Inst(Type2Type<TEX::UnderlyingSettlementDate>()), nullptr, "UnderlyingSettlementDate" } },
+   { 988, { Inst(Type2Type<TEX::UnderlyingSettlementStatus>()), nullptr, "UnderlyingSettlementStatus" } },
+   { 989, { Inst(Type2Type<TEX::SecondaryIndividualAllocID>()), nullptr, "SecondaryIndividualAllocID" } },
+   { 990, { Inst(Type2Type<TEX::LegReportID>()), nullptr, "LegReportID" } },
+   { 991, { Inst(Type2Type<TEX::RndPx>()), nullptr, "RndPx" } },
+   { 992, { Inst(Type2Types<TEX::IndividualAllocType, int>()), &TEX::realmbases[253], "IndividualAllocType" } },
+   { 993, { Inst(Type2Type<TEX::AllocCustomerCapacity>()), nullptr, "AllocCustomerCapacity" } },
+   { 994, { Inst(Type2Type<TEX::TierCode>()), nullptr, "TierCode" } },
+   { 996, { Inst(Type2Types<TEX::UnitOfMeasure, f8String>()), &TEX::realmbases[254], "UnitOfMeasure" } },
+   { 997, { Inst(Type2Types<TEX::TimeUnit, f8String>()), &TEX::realmbases[255], "TimeUnit" } },
+   { 998, { Inst(Type2Type<TEX::UnderlyingUnitOfMeasure>()), nullptr, "UnderlyingUnitOfMeasure" } },
+   { 999, { Inst(Type2Type<TEX::LegUnitOfMeasure>()), nullptr, "LegUnitOfMeasure" } },
+   { 1000, { Inst(Type2Type<TEX::UnderlyingTimeUnit>()), nullptr, "UnderlyingTimeUnit" } },
+   { 1001, { Inst(Type2Type<TEX::LegTimeUnit>()), nullptr, "LegTimeUnit" } },
+   { 1002, { Inst(Type2Types<TEX::AllocMethod, int>()), &TEX::realmbases[256], "AllocMethod" } },
+   { 1003, { Inst(Type2Type<TEX::TradeID>()), nullptr, "TradeID" } },
+   { 1005, { Inst(Type2Type<TEX::SideTradeReportID>()), nullptr, "SideTradeReportID" } },
+   { 1006, { Inst(Type2Type<TEX::SideFillStationCd>()), nullptr, "SideFillStationCd" } },
+   { 1007, { Inst(Type2Type<TEX::SideReasonCd>()), nullptr, "SideReasonCd" } },
+   { 1008, { Inst(Type2Type<TEX::SideTrdSubTyp>()), nullptr, "SideTrdSubTyp" } },
+   { 1009, { Inst(Type2Type<TEX::SideLastQty>()), nullptr, "SideLastQty" } },
+   { 1011, { Inst(Type2Type<TEX::MessageEventSource>()), nullptr, "MessageEventSource" } },
+   { 1012, { Inst(Type2Type<TEX::SideTrdRegTimestamp>()), nullptr, "SideTrdRegTimestamp" } },
+   { 1013, { Inst(Type2Type<TEX::SideTrdRegTimestampType>()), nullptr, "SideTrdRegTimestampType" } },
+   { 1014, { Inst(Type2Type<TEX::SideTrdRegTimestampSrc>()), nullptr, "SideTrdRegTimestampSrc" } },
+   { 1015, { Inst(Type2Types<TEX::AsOfIndicator, char>()), &TEX::realmbases[257], "AsOfIndicator" } },
+   { 1016, { Inst(Type2Type<TEX::NoSideTrdRegTS>()), nullptr, "NoSideTrdRegTS" } },
+   { 1017, { Inst(Type2Type<TEX::LegOptionRatio>()), nullptr, "LegOptionRatio" } },
+   { 1018, { Inst(Type2Type<TEX::NoInstrumentParties>()), nullptr, "NoInstrumentParties" } },
+   { 1019, { Inst(Type2Type<TEX::InstrumentPartyID>()), nullptr, "InstrumentPartyID" } },
+   { 1020, { Inst(Type2Type<TEX::TradeVolume>()), nullptr, "TradeVolume" } },
+   { 1021, { Inst(Type2Types<TEX::MDBookType, int>()), &TEX::realmbases[258], "MDBookType" } },
+   { 1022, { Inst(Type2Type<TEX::MDFeedType>()), nullptr, "MDFeedType" } },
+   { 1023, { Inst(Type2Type<TEX::MDPriceLevel>()), nullptr, "MDPriceLevel" } },
+   { 1024, { Inst(Type2Types<TEX::MDOriginType, int>()), &TEX::realmbases[259], "MDOriginType" } },
+   { 1025, { Inst(Type2Type<TEX::FirstPx>()), nullptr, "FirstPx" } },
+   { 1026, { Inst(Type2Type<TEX::MDEntrySpotRate>()), nullptr, "MDEntrySpotRate" } },
+   { 1027, { Inst(Type2Type<TEX::MDEntryForwardPoints>()), nullptr, "MDEntryForwardPoints" } },
+   { 1028, { Inst(Type2Type<TEX::ManualOrderIndicator>()), nullptr, "ManualOrderIndicator" } },
+   { 1029, { Inst(Type2Type<TEX::CustDirectedOrder>()), nullptr, "CustDirectedOrder" } },
+   { 1030, { Inst(Type2Type<TEX::ReceivedDeptID>()), nullptr, "ReceivedDeptID" } },
+   { 1031, { Inst(Type2Types<TEX::CustOrderHandlingInst, f8String>()), &TEX::realmbases[260], "CustOrderHandlingInst" } },
+   { 1032, { Inst(Type2Types<TEX::OrderHandlingInstSource, int>()), &TEX::realmbases[261], "OrderHandlingInstSource" } },
+   { 1033, { Inst(Type2Types<TEX::DeskType, f8String>()), &TEX::realmbases[262], "DeskType" } },
+   { 1034, { Inst(Type2Types<TEX::DeskTypeSource, int>()), &TEX::realmbases[263], "DeskTypeSource" } },
+   { 1035, { Inst(Type2Types<TEX::DeskOrderHandlingInst, f8String>()), &TEX::realmbases[264], "DeskOrderHandlingInst" } },
+   { 1036, { Inst(Type2Types<TEX::ExecAckStatus, char>()), &TEX::realmbases[265], "ExecAckStatus" } },
+   { 1037, { Inst(Type2Type<TEX::UnderlyingDeliveryAmount>()), nullptr, "UnderlyingDeliveryAmount" } },
+   { 1038, { Inst(Type2Type<TEX::UnderlyingCapValue>()), nullptr, "UnderlyingCapValue" } },
+   { 1039, { Inst(Type2Type<TEX::UnderlyingSettlMethod>()), nullptr, "UnderlyingSettlMethod" } },
+   { 1040, { Inst(Type2Type<TEX::SecondaryTradeID>()), nullptr, "SecondaryTradeID" } },
+   { 1041, { Inst(Type2Type<TEX::FirmTradeID>()), nullptr, "FirmTradeID" } },
+   { 1042, { Inst(Type2Type<TEX::SecondaryFirmTradeID>()), nullptr, "SecondaryFirmTradeID" } },
+   { 1043, { Inst(Type2Types<TEX::CollApplType, int>()), &TEX::realmbases[266], "CollApplType" } },
+   { 1044, { Inst(Type2Type<TEX::UnderlyingAdjustedQuantity>()), nullptr, "UnderlyingAdjustedQuantity" } },
+   { 1045, { Inst(Type2Type<TEX::UnderlyingFXRate>()), nullptr, "UnderlyingFXRate" } },
+   { 1046, { Inst(Type2Types<TEX::UnderlyingFXRateCalc, char>()), &TEX::realmbases[267], "UnderlyingFXRateCalc" } },
+   { 1047, { Inst(Type2Types<TEX::AllocPositionEffect, char>()), &TEX::realmbases[268], "AllocPositionEffect" } },
+   { 1048, { Inst(Type2Types<TEX::DealingCapacity, char>()), &TEX::realmbases[269], "DealingCapacity" } },
+   { 1049, { Inst(Type2Type<TEX::InstrmtAssignmentMethod>()), nullptr, "InstrmtAssignmentMethod" } },
+   { 1050, { Inst(Type2Type<TEX::InstrumentPartyIDSource>()), nullptr, "InstrumentPartyIDSource" } },
+   { 1051, { Inst(Type2Type<TEX::InstrumentPartyRole>()), nullptr, "InstrumentPartyRole" } },
+   { 1052, { Inst(Type2Type<TEX::NoInstrumentPartySubIDs>()), nullptr, "NoInstrumentPartySubIDs" } },
+   { 1053, { Inst(Type2Type<TEX::InstrumentPartySubID>()), nullptr, "InstrumentPartySubID" } },
+   { 1054, { Inst(Type2Type<TEX::InstrumentPartySubIDType>()), nullptr, "InstrumentPartySubIDType" } },
+   { 1055, { Inst(Type2Type<TEX::PositionCurrency>()), nullptr, "PositionCurrency" } },
+   { 1056, { Inst(Type2Type<TEX::CalculatedCcyLastQty>()), nullptr, "CalculatedCcyLastQty" } },
+   { 1057, { Inst(Type2Types<TEX::AggressorIndicator, char>()), &TEX::realmbases[270], "AggressorIndicator" } },
+   { 1058, { Inst(Type2Type<TEX::NoUndlyInstrumentParties>()), nullptr, "NoUndlyInstrumentParties" } },
+   { 1059, { Inst(Type2Type<TEX::UnderlyingInstrumentPartyID>()), nullptr, "UnderlyingInstrumentPartyID" } },
+   { 1060, { Inst(Type2Type<TEX::UnderlyingInstrumentPartyIDSource>()), nullptr, "UnderlyingInstrumentPartyIDSource" } },
+   { 1061, { Inst(Type2Type<TEX::UnderlyingInstrumentPartyRole>()), nullptr, "UnderlyingInstrumentPartyRole" } },
+   { 1062, { Inst(Type2Type<TEX::NoUndlyInstrumentPartySubIDs>()), nullptr, "NoUndlyInstrumentPartySubIDs" } },
+   { 1063, { Inst(Type2Type<TEX::UnderlyingInstrumentPartySubID>()), nullptr, "UnderlyingInstrumentPartySubID" } },
+   { 1064, { Inst(Type2Type<TEX::UnderlyingInstrumentPartySubIDType>()), nullptr, "UnderlyingInstrumentPartySubIDType" } },
+   { 1065, { Inst(Type2Type<TEX::BidSwapPoints>()), nullptr, "BidSwapPoints" } },
+   { 1066, { Inst(Type2Type<TEX::OfferSwapPoints>()), nullptr, "OfferSwapPoints" } },
+   { 1067, { Inst(Type2Type<TEX::LegBidForwardPoints>()), nullptr, "LegBidForwardPoints" } },
+   { 1068, { Inst(Type2Type<TEX::LegOfferForwardPoints>()), nullptr, "LegOfferForwardPoints" } },
+   { 1069, { Inst(Type2Type<TEX::SwapPoints>()), nullptr, "SwapPoints" } },
+   { 1070, { Inst(Type2Types<TEX::MDQuoteType, int>()), &TEX::realmbases[271], "MDQuoteType" } },
+   { 1071, { Inst(Type2Type<TEX::LastSwapPoints>()), nullptr, "LastSwapPoints" } },
+   { 1072, { Inst(Type2Type<TEX::SideGrossTradeAmt>()), nullptr, "SideGrossTradeAmt" } },
+   { 1073, { Inst(Type2Type<TEX::LegLastForwardPoints>()), nullptr, "LegLastForwardPoints" } },
+   { 1074, { Inst(Type2Type<TEX::LegCalculatedCcyLastQty>()), nullptr, "LegCalculatedCcyLastQty" } },
+   { 1075, { Inst(Type2Type<TEX::LegGrossTradeAmt>()), nullptr, "LegGrossTradeAmt" } },
+   { 1079, { Inst(Type2Type<TEX::MaturityTime>()), nullptr, "MaturityTime" } },
+   { 1080, { Inst(Type2Type<TEX::RefOrderID>()), nullptr, "RefOrderID" } },
+   { 1081, { Inst(Type2Types<TEX::RefOrderIDSource, char>()), &TEX::realmbases[272], "RefOrderIDSource" } },
+   { 1082, { Inst(Type2Type<TEX::SecondaryDisplayQty>()), nullptr, "SecondaryDisplayQty" } },
+   { 1083, { Inst(Type2Types<TEX::DisplayWhen, char>()), &TEX::realmbases[273], "DisplayWhen" } },
+   { 1084, { Inst(Type2Types<TEX::DisplayMethod, char>()), &TEX::realmbases[274], "DisplayMethod" } },
+   { 1085, { Inst(Type2Type<TEX::DisplayLowQty>()), nullptr, "DisplayLowQty" } },
+   { 1086, { Inst(Type2Type<TEX::DisplayHighQty>()), nullptr, "DisplayHighQty" } },
+   { 1087, { Inst(Type2Type<TEX::DisplayMinIncr>()), nullptr, "DisplayMinIncr" } },
+   { 1088, { Inst(Type2Type<TEX::RefreshQty>()), nullptr, "RefreshQty" } },
+   { 1089, { Inst(Type2Type<TEX::MatchIncrement>()), nullptr, "MatchIncrement" } },
+   { 1090, { Inst(Type2Type<TEX::MaxPriceLevels>()), nullptr, "MaxPriceLevels" } },
+   { 1091, { Inst(Type2Type<TEX::PreTradeAnonymity>()), nullptr, "PreTradeAnonymity" } },
+   { 1092, { Inst(Type2Types<TEX::PriceProtectionScope, char>()), &TEX::realmbases[275], "PriceProtectionScope" } },
+   { 1093, { Inst(Type2Types<TEX::LotType, char>()), &TEX::realmbases[276], "LotType" } },
+   { 1094, { Inst(Type2Types<TEX::PegPriceType, int>()), &TEX::realmbases[277], "PegPriceType" } },
+   { 1095, { Inst(Type2Type<TEX::PeggedRefPrice>()), nullptr, "PeggedRefPrice" } },
+   { 1096, { Inst(Type2Type<TEX::PegSecurityIDSource>()), nullptr, "PegSecurityIDSource" } },
+   { 1097, { Inst(Type2Type<TEX::PegSecurityID>()), nullptr, "PegSecurityID" } },
+   { 1098, { Inst(Type2Type<TEX::PegSymbol>()), nullptr, "PegSymbol" } },
+   { 1099, { Inst(Type2Type<TEX::PegSecurityDesc>()), nullptr, "PegSecurityDesc" } },
+   { 1100, { Inst(Type2Types<TEX::TriggerType, char>()), &TEX::realmbases[278], "TriggerType" } },
+   { 1101, { Inst(Type2Types<TEX::TriggerAction, char>()), &TEX::realmbases[279], "TriggerAction" } },
+   { 1102, { Inst(Type2Type<TEX::TriggerPrice>()), nullptr, "TriggerPrice" } },
+   { 1103, { Inst(Type2Type<TEX::TriggerSymbol>()), nullptr, "TriggerSymbol" } },
+   { 1104, { Inst(Type2Type<TEX::TriggerSecurityID>()), nullptr, "TriggerSecurityID" } },
+   { 1105, { Inst(Type2Type<TEX::TriggerSecurityIDSource>()), nullptr, "TriggerSecurityIDSource" } },
+   { 1106, { Inst(Type2Type<TEX::TriggerSecurityDesc>()), nullptr, "TriggerSecurityDesc" } },
+   { 1107, { Inst(Type2Types<TEX::TriggerPriceType, char>()), &TEX::realmbases[280], "TriggerPriceType" } },
+   { 1108, { Inst(Type2Types<TEX::TriggerPriceTypeScope, char>()), &TEX::realmbases[281], "TriggerPriceTypeScope" } },
+   { 1109, { Inst(Type2Types<TEX::TriggerPriceDirection, char>()), &TEX::realmbases[282], "TriggerPriceDirection" } },
+   { 1110, { Inst(Type2Type<TEX::TriggerNewPrice>()), nullptr, "TriggerNewPrice" } },
+   { 1111, { Inst(Type2Types<TEX::TriggerOrderType, char>()), &TEX::realmbases[283], "TriggerOrderType" } },
+   { 1112, { Inst(Type2Type<TEX::TriggerNewQty>()), nullptr, "TriggerNewQty" } },
+   { 1113, { Inst(Type2Type<TEX::TriggerTradingSessionID>()), nullptr, "TriggerTradingSessionID" } },
+   { 1114, { Inst(Type2Type<TEX::TriggerTradingSessionSubID>()), nullptr, "TriggerTradingSessionSubID" } },
+   { 1115, { Inst(Type2Types<TEX::OrderCategory, char>()), &TEX::realmbases[284], "OrderCategory" } },
+   { 1116, { Inst(Type2Type<TEX::NoRootPartyIDs>()), nullptr, "NoRootPartyIDs" } },
+   { 1117, { Inst(Type2Type<TEX::RootPartyID>()), nullptr, "RootPartyID" } },
+   { 1118, { Inst(Type2Type<TEX::RootPartyIDSource>()), nullptr, "RootPartyIDSource" } },
+   { 1119, { Inst(Type2Type<TEX::RootPartyRole>()), nullptr, "RootPartyRole" } },
+   { 1120, { Inst(Type2Type<TEX::NoRootPartySubIDs>()), nullptr, "NoRootPartySubIDs" } },
+   { 1121, { Inst(Type2Type<TEX::RootPartySubID>()), nullptr, "RootPartySubID" } },
+   { 1122, { Inst(Type2Type<TEX::RootPartySubIDType>()), nullptr, "RootPartySubIDType" } },
+   { 1123, { Inst(Type2Types<TEX::TradeHandlingInstr, char>()), &TEX::realmbases[285], "TradeHandlingInstr" } },
+   { 1124, { Inst(Type2Type<TEX::OrigTradeHandlingInstr>()), nullptr, "OrigTradeHandlingInstr" } },
+   { 1125, { Inst(Type2Type<TEX::OrigTradeDate>()), nullptr, "OrigTradeDate" } },
+   { 1126, { Inst(Type2Type<TEX::OrigTradeID>()), nullptr, "OrigTradeID" } },
+   { 1127, { Inst(Type2Type<TEX::OrigSecondaryTradeID>()), nullptr, "OrigSecondaryTradeID" } },
+   { 1128, { Inst(Type2Types<TEX::ApplVerID, f8String>()), &TEX::realmbases[286], "ApplVerID" } },
+   { 1129, { Inst(Type2Type<TEX::CstmApplVerID>()), nullptr, "CstmApplVerID" } },
+   { 1130, { Inst(Type2Type<TEX::RefApplVerID>()), nullptr, "RefApplVerID" } },
+   { 1131, { Inst(Type2Type<TEX::RefCstmApplVerID>()), nullptr, "RefCstmApplVerID" } },
+   { 1132, { Inst(Type2Type<TEX::TZTransactTime>()), nullptr, "TZTransactTime" } },
+   { 1133, { Inst(Type2Types<TEX::ExDestinationIDSource, char>()), &TEX::realmbases[287], "ExDestinationIDSource" } },
+   { 1134, { Inst(Type2Type<TEX::ReportedPxDiff>()), nullptr, "ReportedPxDiff" } },
+   { 1135, { Inst(Type2Type<TEX::RptSys>()), nullptr, "RptSys" } },
+   { 1136, { Inst(Type2Type<TEX::AllocClearingFeeIndicator>()), nullptr, "AllocClearingFeeIndicator" } },
+   { 1137, { Inst(Type2Types<TEX::DefaultApplVerID, f8String>()), &TEX::realmbases[288], "DefaultApplVerID" } },
+   { 1138, { Inst(Type2Type<TEX::DisplayQty>()), nullptr, "DisplayQty" } },
+   { 1139, { Inst(Type2Type<TEX::ExchangeSpecialInstructions>()), nullptr, "ExchangeSpecialInstructions" } },
+   { 1140, { Inst(Type2Type<TEX::MaxTradeVol>()), nullptr, "MaxTradeVol" } },
+   { 1141, { Inst(Type2Type<TEX::NoMDFeedTypes>()), nullptr, "NoMDFeedTypes" } },
+   { 1142, { Inst(Type2Type<TEX::MatchAlgorithm>()), nullptr, "MatchAlgorithm" } },
+   { 1143, { Inst(Type2Type<TEX::MaxPriceVariation>()), nullptr, "MaxPriceVariation" } },
+   { 1144, { Inst(Type2Types<TEX::ImpliedMarketIndicator, int>()), &TEX::realmbases[289], "ImpliedMarketIndicator" } },
+   { 1145, { Inst(Type2Type<TEX::EventTime>()), nullptr, "EventTime" } },
+   { 1146, { Inst(Type2Type<TEX::MinPriceIncrementAmount>()), nullptr, "MinPriceIncrementAmount" } },
+   { 1147, { Inst(Type2Type<TEX::UnitOfMeasureQty>()), nullptr, "UnitOfMeasureQty" } },
+   { 1148, { Inst(Type2Type<TEX::LowLimitPrice>()), nullptr, "LowLimitPrice" } },
+   { 1149, { Inst(Type2Type<TEX::HighLimitPrice>()), nullptr, "HighLimitPrice" } },
+   { 1150, { Inst(Type2Type<TEX::TradingReferencePrice>()), nullptr, "TradingReferencePrice" } },
+   { 1151, { Inst(Type2Type<TEX::SecurityGroup>()), nullptr, "SecurityGroup" } },
+   { 1152, { Inst(Type2Type<TEX::LegNumber>()), nullptr, "LegNumber" } },
+   { 1153, { Inst(Type2Type<TEX::SettlementCycleNo>()), nullptr, "SettlementCycleNo" } },
+   { 1154, { Inst(Type2Type<TEX::SideCurrency>()), nullptr, "SideCurrency" } },
+   { 1155, { Inst(Type2Type<TEX::SideSettlCurrency>()), nullptr, "SideSettlCurrency" } },
+   { 1157, { Inst(Type2Type<TEX::CcyAmt>()), nullptr, "CcyAmt" } },
+   { 1158, { Inst(Type2Type<TEX::NoSettlDetails>()), nullptr, "NoSettlDetails" } },
+   { 1159, { Inst(Type2Types<TEX::SettlObligMode, int>()), &TEX::realmbases[290], "SettlObligMode" } },
+   { 1160, { Inst(Type2Type<TEX::SettlObligMsgID>()), nullptr, "SettlObligMsgID" } },
+   { 1161, { Inst(Type2Type<TEX::SettlObligID>()), nullptr, "SettlObligID" } },
+   { 1162, { Inst(Type2Types<TEX::SettlObligTransType, char>()), &TEX::realmbases[291], "SettlObligTransType" } },
+   { 1163, { Inst(Type2Type<TEX::SettlObligRefID>()), nullptr, "SettlObligRefID" } },
+   { 1164, { Inst(Type2Types<TEX::SettlObligSource, char>()), &TEX::realmbases[292], "SettlObligSource" } },
+   { 1165, { Inst(Type2Type<TEX::NoSettlOblig>()), nullptr, "NoSettlOblig" } },
+   { 1166, { Inst(Type2Type<TEX::QuoteMsgID>()), nullptr, "QuoteMsgID" } },
+   { 1167, { Inst(Type2Types<TEX::QuoteEntryStatus, int>()), &TEX::realmbases[293], "QuoteEntryStatus" } },
+   { 1168, { Inst(Type2Type<TEX::TotNoCxldQuotes>()), nullptr, "TotNoCxldQuotes" } },
+   { 1169, { Inst(Type2Type<TEX::TotNoAccQuotes>()), nullptr, "TotNoAccQuotes" } },
+   { 1170, { Inst(Type2Type<TEX::TotNoRejQuotes>()), nullptr, "TotNoRejQuotes" } },
+   { 1171, { Inst(Type2Type<TEX::PrivateQuote>()), nullptr, "PrivateQuote" } },
+   { 1172, { Inst(Type2Types<TEX::RespondentType, int>()), &TEX::realmbases[294], "RespondentType" } },
+   { 1173, { Inst(Type2Type<TEX::MDSubBookType>()), nullptr, "MDSubBookType" } },
+   { 1174, { Inst(Type2Types<TEX::SecurityTradingEvent, int>()), &TEX::realmbases[295], "SecurityTradingEvent" } },
+   { 1175, { Inst(Type2Type<TEX::NoStatsIndicators>()), nullptr, "NoStatsIndicators" } },
+   { 1176, { Inst(Type2Types<TEX::StatsType, int>()), &TEX::realmbases[296], "StatsType" } },
+   { 1177, { Inst(Type2Type<TEX::NoOfSecSizes>()), nullptr, "NoOfSecSizes" } },
+   { 1178, { Inst(Type2Types<TEX::MDSecSizeType, int>()), &TEX::realmbases[297], "MDSecSizeType" } },
+   { 1179, { Inst(Type2Type<TEX::MDSecSize>()), nullptr, "MDSecSize" } },
+   { 1180, { Inst(Type2Type<TEX::ApplID>()), nullptr, "ApplID" } },
+   { 1181, { Inst(Type2Type<TEX::ApplSeqNum>()), nullptr, "ApplSeqNum" } },
+   { 1182, { Inst(Type2Type<TEX::ApplBegSeqNum>()), nullptr, "ApplBegSeqNum" } },
+   { 1183, { Inst(Type2Type<TEX::ApplEndSeqNum>()), nullptr, "ApplEndSeqNum" } },
+   { 1184, { Inst(Type2Type<TEX::SecurityXMLLen>()), nullptr, "SecurityXMLLen" } },
+   { 1185, { Inst(Type2Type<TEX::SecurityXML>()), nullptr, "SecurityXML" } },
+   { 1186, { Inst(Type2Type<TEX::SecurityXMLSchema>()), nullptr, "SecurityXMLSchema" } },
+   { 1187, { Inst(Type2Type<TEX::RefreshIndicator>()), nullptr, "RefreshIndicator" } },
+   { 1188, { Inst(Type2Type<TEX::Volatility>()), nullptr, "Volatility" } },
+   { 1189, { Inst(Type2Type<TEX::TimeToExpiration>()), nullptr, "TimeToExpiration" } },
+   { 1190, { Inst(Type2Type<TEX::RiskFreeRate>()), nullptr, "RiskFreeRate" } },
+   { 1191, { Inst(Type2Type<TEX::PriceUnitOfMeasure>()), nullptr, "PriceUnitOfMeasure" } },
+   { 1192, { Inst(Type2Type<TEX::PriceUnitOfMeasureQty>()), nullptr, "PriceUnitOfMeasureQty" } },
+   { 1193, { Inst(Type2Types<TEX::SettlMethod, char>()), &TEX::realmbases[298], "SettlMethod" } },
+   { 1194, { Inst(Type2Types<TEX::ExerciseStyle, int>()), &TEX::realmbases[299], "ExerciseStyle" } },
+   { 1195, { Inst(Type2Type<TEX::OptPayoutAmount>()), nullptr, "OptPayoutAmount" } },
+   { 1196, { Inst(Type2Types<TEX::PriceQuoteMethod, f8String>()), &TEX::realmbases[300], "PriceQuoteMethod" } },
+   { 1197, { Inst(Type2Types<TEX::ValuationMethod, f8String>()), &TEX::realmbases[301], "ValuationMethod" } },
+   { 1198, { Inst(Type2Types<TEX::ListMethod, int>()), &TEX::realmbases[302], "ListMethod" } },
+   { 1199, { Inst(Type2Type<TEX::CapPrice>()), nullptr, "CapPrice" } },
+   { 1200, { Inst(Type2Type<TEX::FloorPrice>()), nullptr, "FloorPrice" } },
+   { 1201, { Inst(Type2Type<TEX::NoStrikeRules>()), nullptr, "NoStrikeRules" } },
+   { 1202, { Inst(Type2Type<TEX::StartStrikePxRange>()), nullptr, "StartStrikePxRange" } },
+   { 1203, { Inst(Type2Type<TEX::EndStrikePxRange>()), nullptr, "EndStrikePxRange" } },
+   { 1204, { Inst(Type2Type<TEX::StrikeIncrement>()), nullptr, "StrikeIncrement" } },
+   { 1205, { Inst(Type2Type<TEX::NoTickRules>()), nullptr, "NoTickRules" } },
+   { 1206, { Inst(Type2Type<TEX::StartTickPriceRange>()), nullptr, "StartTickPriceRange" } },
+   { 1207, { Inst(Type2Type<TEX::EndTickPriceRange>()), nullptr, "EndTickPriceRange" } },
+   { 1208, { Inst(Type2Type<TEX::TickIncrement>()), nullptr, "TickIncrement" } },
+   { 1209, { Inst(Type2Types<TEX::TickRuleType, int>()), &TEX::realmbases[303], "TickRuleType" } },
+   { 1210, { Inst(Type2Type<TEX::NestedInstrAttribType>()), nullptr, "NestedInstrAttribType" } },
+   { 1211, { Inst(Type2Type<TEX::NestedInstrAttribValue>()), nullptr, "NestedInstrAttribValue" } },
+   { 1212, { Inst(Type2Type<TEX::LegMaturityTime>()), nullptr, "LegMaturityTime" } },
+   { 1213, { Inst(Type2Type<TEX::UnderlyingMaturityTime>()), nullptr, "UnderlyingMaturityTime" } },
+   { 1214, { Inst(Type2Type<TEX::DerivativeSymbol>()), nullptr, "DerivativeSymbol" } },
+   { 1215, { Inst(Type2Type<TEX::DerivativeSymbolSfx>()), nullptr, "DerivativeSymbolSfx" } },
+   { 1216, { Inst(Type2Type<TEX::DerivativeSecurityID>()), nullptr, "DerivativeSecurityID" } },
+   { 1217, { Inst(Type2Type<TEX::DerivativeSecurityIDSource>()), nullptr, "DerivativeSecurityIDSource" } },
+   { 1218, { Inst(Type2Type<TEX::NoDerivativeSecurityAltID>()), nullptr, "NoDerivativeSecurityAltID" } },
+   { 1219, { Inst(Type2Type<TEX::DerivativeSecurityAltID>()), nullptr, "DerivativeSecurityAltID" } },
+   { 1220, { Inst(Type2Type<TEX::DerivativeSecurityAltIDSource>()), nullptr, "DerivativeSecurityAltIDSource" } },
+   { 1221, { Inst(Type2Type<TEX::SecondaryLowLimitPrice>()), nullptr, "SecondaryLowLimitPrice" } },
+   { 1222, { Inst(Type2Type<TEX::MaturityRuleID>()), nullptr, "MaturityRuleID" } },
+   { 1223, { Inst(Type2Type<TEX::StrikeRuleID>()), nullptr, "StrikeRuleID" } },
+   { 1224, { Inst(Type2Type<TEX::LegUnitOfMeasureQty>()), nullptr, "LegUnitOfMeasureQty" } },
+   { 1225, { Inst(Type2Type<TEX::DerivativeOptPayAmount>()), nullptr, "DerivativeOptPayAmount" } },
+   { 1226, { Inst(Type2Type<TEX::EndMaturityMonthYear>()), nullptr, "EndMaturityMonthYear" } },
+   { 1227, { Inst(Type2Type<TEX::ProductComplex>()), nullptr, "ProductComplex" } },
+   { 1228, { Inst(Type2Type<TEX::DerivativeProductComplex>()), nullptr, "DerivativeProductComplex" } },
+   { 1229, { Inst(Type2Type<TEX::MaturityMonthYearIncrement>()), nullptr, "MaturityMonthYearIncrement" } },
+   { 1230, { Inst(Type2Type<TEX::SecondaryHighLimitPrice>()), nullptr, "SecondaryHighLimitPrice" } },
+   { 1231, { Inst(Type2Type<TEX::MinLotSize>()), nullptr, "MinLotSize" } },
+   { 1232, { Inst(Type2Type<TEX::NoExecInstRules>()), nullptr, "NoExecInstRules" } },
+   { 1234, { Inst(Type2Type<TEX::NoLotTypeRules>()), nullptr, "NoLotTypeRules" } },
+   { 1235, { Inst(Type2Type<TEX::NoMatchRules>()), nullptr, "NoMatchRules" } },
+   { 1236, { Inst(Type2Type<TEX::NoMaturityRules>()), nullptr, "NoMaturityRules" } },
+   { 1237, { Inst(Type2Type<TEX::NoOrdTypeRules>()), nullptr, "NoOrdTypeRules" } },
+   { 1239, { Inst(Type2Type<TEX::NoTimeInForceRules>()), nullptr, "NoTimeInForceRules" } },
+   { 1240, { Inst(Type2Type<TEX::SecondaryTradingReferencePrice>()), nullptr, "SecondaryTradingReferencePrice" } },
+   { 1241, { Inst(Type2Type<TEX::StartMaturityMonthYear>()), nullptr, "StartMaturityMonthYear" } },
+   { 1242, { Inst(Type2Type<TEX::FlexProductEligibilityIndicator>()), nullptr, "FlexProductEligibilityIndicator" } },
+   { 1243, { Inst(Type2Type<TEX::DerivFlexProductEligibilityIndicator>()), nullptr, "DerivFlexProductEligibilityIndicator" } },
+   { 1244, { Inst(Type2Type<TEX::FlexibleIndicator>()), nullptr, "FlexibleIndicator" } },
+   { 1245, { Inst(Type2Type<TEX::TradingCurrency>()), nullptr, "TradingCurrency" } },
+   { 1246, { Inst(Type2Type<TEX::DerivativeProduct>()), nullptr, "DerivativeProduct" } },
+   { 1247, { Inst(Type2Type<TEX::DerivativeSecurityGroup>()), nullptr, "DerivativeSecurityGroup" } },
+   { 1248, { Inst(Type2Type<TEX::DerivativeCFICode>()), nullptr, "DerivativeCFICode" } },
+   { 1249, { Inst(Type2Type<TEX::DerivativeSecurityType>()), nullptr, "DerivativeSecurityType" } },
+   { 1250, { Inst(Type2Type<TEX::DerivativeSecuritySubType>()), nullptr, "DerivativeSecuritySubType" } },
+   { 1251, { Inst(Type2Type<TEX::DerivativeMaturityMonthYear>()), nullptr, "DerivativeMaturityMonthYear" } },
+   { 1252, { Inst(Type2Type<TEX::DerivativeMaturityDate>()), nullptr, "DerivativeMaturityDate" } },
+   { 1253, { Inst(Type2Type<TEX::DerivativeMaturityTime>()), nullptr, "DerivativeMaturityTime" } },
+   { 1254, { Inst(Type2Type<TEX::DerivativeSettleOnOpenFlag>()), nullptr, "DerivativeSettleOnOpenFlag" } },
+   { 1255, { Inst(Type2Type<TEX::DerivativeInstrmtAssignmentMethod>()), nullptr, "DerivativeInstrmtAssignmentMethod" } },
+   { 1256, { Inst(Type2Type<TEX::DerivativeSecurityStatus>()), nullptr, "DerivativeSecurityStatus" } },
+   { 1257, { Inst(Type2Type<TEX::DerivativeInstrRegistry>()), nullptr, "DerivativeInstrRegistry" } },
+   { 1258, { Inst(Type2Type<TEX::DerivativeCountryOfIssue>()), nullptr, "DerivativeCountryOfIssue" } },
+   { 1259, { Inst(Type2Type<TEX::DerivativeStateOrProvinceOfIssue>()), nullptr, "DerivativeStateOrProvinceOfIssue" } },
+   { 1260, { Inst(Type2Type<TEX::DerivativeLocaleOfIssue>()), nullptr, "DerivativeLocaleOfIssue" } },
+   { 1261, { Inst(Type2Type<TEX::DerivativeStrikePrice>()), nullptr, "DerivativeStrikePrice" } },
+   { 1262, { Inst(Type2Type<TEX::DerivativeStrikeCurrency>()), nullptr, "DerivativeStrikeCurrency" } },
+   { 1263, { Inst(Type2Type<TEX::DerivativeStrikeMultiplier>()), nullptr, "DerivativeStrikeMultiplier" } },
+   { 1264, { Inst(Type2Type<TEX::DerivativeStrikeValue>()), nullptr, "DerivativeStrikeValue" } },
+   { 1265, { Inst(Type2Type<TEX::DerivativeOptAttribute>()), nullptr, "DerivativeOptAttribute" } },
+   { 1266, { Inst(Type2Type<TEX::DerivativeContractMultiplier>()), nullptr, "DerivativeContractMultiplier" } },
+   { 1267, { Inst(Type2Type<TEX::DerivativeMinPriceIncrement>()), nullptr, "DerivativeMinPriceIncrement" } },
+   { 1268, { Inst(Type2Type<TEX::DerivativeMinPriceIncrementAmount>()), nullptr, "DerivativeMinPriceIncrementAmount" } },
+   { 1269, { Inst(Type2Type<TEX::DerivativeUnitOfMeasure>()), nullptr, "DerivativeUnitOfMeasure" } },
+   { 1270, { Inst(Type2Type<TEX::DerivativeUnitOfMeasureQty>()), nullptr, "DerivativeUnitOfMeasureQty" } },
+   { 1271, { Inst(Type2Type<TEX::DerivativeTimeUnit>()), nullptr, "DerivativeTimeUnit" } },
+   { 1272, { Inst(Type2Type<TEX::DerivativeSecurityExchange>()), nullptr, "DerivativeSecurityExchange" } },
+   { 1273, { Inst(Type2Type<TEX::DerivativePositionLimit>()), nullptr, "DerivativePositionLimit" } },
+   { 1274, { Inst(Type2Type<TEX::DerivativeNTPositionLimit>()), nullptr, "DerivativeNTPositionLimit" } },
+   { 1275, { Inst(Type2Type<TEX::DerivativeIssuer>()), nullptr, "DerivativeIssuer" } },
+   { 1276, { Inst(Type2Type<TEX::DerivativeIssueDate>()), nullptr, "DerivativeIssueDate" } },
+   { 1277, { Inst(Type2Type<TEX::DerivativeEncodedIssuerLen>()), nullptr, "DerivativeEncodedIssuerLen" } },
+   { 1278, { Inst(Type2Type<TEX::DerivativeEncodedIssuer>()), nullptr, "DerivativeEncodedIssuer" } },
+   { 1279, { Inst(Type2Type<TEX::DerivativeSecurityDesc>()), nullptr, "DerivativeSecurityDesc" } },
+   { 1280, { Inst(Type2Type<TEX::DerivativeEncodedSecurityDescLen>()), nullptr, "DerivativeEncodedSecurityDescLen" } },
+   { 1281, { Inst(Type2Type<TEX::DerivativeEncodedSecurityDesc>()), nullptr, "DerivativeEncodedSecurityDesc" } },
+   { 1282, { Inst(Type2Type<TEX::DerivativeSecurityXMLLen>()), nullptr, "DerivativeSecurityXMLLen" } },
+   { 1283, { Inst(Type2Type<TEX::DerivativeSecurityXML>()), nullptr, "DerivativeSecurityXML" } },
+   { 1284, { Inst(Type2Type<TEX::DerivativeSecurityXMLSchema>()), nullptr, "DerivativeSecurityXMLSchema" } },
+   { 1285, { Inst(Type2Type<TEX::DerivativeContractSettlMonth>()), nullptr, "DerivativeContractSettlMonth" } },
+   { 1286, { Inst(Type2Type<TEX::NoDerivativeEvents>()), nullptr, "NoDerivativeEvents" } },
+   { 1287, { Inst(Type2Type<TEX::DerivativeEventType>()), nullptr, "DerivativeEventType" } },
+   { 1288, { Inst(Type2Type<TEX::DerivativeEventDate>()), nullptr, "DerivativeEventDate" } },
+   { 1289, { Inst(Type2Type<TEX::DerivativeEventTime>()), nullptr, "DerivativeEventTime" } },
+   { 1290, { Inst(Type2Type<TEX::DerivativeEventPx>()), nullptr, "DerivativeEventPx" } },
+   { 1291, { Inst(Type2Type<TEX::DerivativeEventText>()), nullptr, "DerivativeEventText" } },
+   { 1292, { Inst(Type2Type<TEX::NoDerivativeInstrumentParties>()), nullptr, "NoDerivativeInstrumentParties" } },
+   { 1293, { Inst(Type2Type<TEX::DerivativeInstrumentPartyID>()), nullptr, "DerivativeInstrumentPartyID" } },
+   { 1294, { Inst(Type2Type<TEX::DerivativeInstrumentPartyIDSource>()), nullptr, "DerivativeInstrumentPartyIDSource" } },
+   { 1295, { Inst(Type2Type<TEX::DerivativeInstrumentPartyRole>()), nullptr, "DerivativeInstrumentPartyRole" } },
+   { 1296, { Inst(Type2Type<TEX::NoDerivativeInstrumentPartySubIDs>()), nullptr, "NoDerivativeInstrumentPartySubIDs" } },
+   { 1297, { Inst(Type2Type<TEX::DerivativeInstrumentPartySubID>()), nullptr, "DerivativeInstrumentPartySubID" } },
+   { 1298, { Inst(Type2Type<TEX::DerivativeInstrumentPartySubIDType>()), nullptr, "DerivativeInstrumentPartySubIDType" } },
+   { 1299, { Inst(Type2Type<TEX::DerivativeExerciseStyle>()), nullptr, "DerivativeExerciseStyle" } },
+   { 1300, { Inst(Type2Type<TEX::MarketSegmentID>()), nullptr, "MarketSegmentID" } },
+   { 1301, { Inst(Type2Type<TEX::MarketID>()), nullptr, "MarketID" } },
+   { 1302, { Inst(Type2Types<TEX::MaturityMonthYearIncrementUnits, int>()), &TEX::realmbases[304], "MaturityMonthYearIncrementUnits" } },
+   { 1303, { Inst(Type2Types<TEX::MaturityMonthYearFormat, int>()), &TEX::realmbases[305], "MaturityMonthYearFormat" } },
+   { 1304, { Inst(Type2Type<TEX::StrikeExerciseStyle>()), nullptr, "StrikeExerciseStyle" } },
+   { 1305, { Inst(Type2Type<TEX::SecondaryPriceLimitType>()), nullptr, "SecondaryPriceLimitType" } },
+   { 1306, { Inst(Type2Types<TEX::PriceLimitType, int>()), &TEX::realmbases[306], "PriceLimitType" } },
+   { 1308, { Inst(Type2Type<TEX::ExecInstValue>()), nullptr, "ExecInstValue" } },
+   { 1309, { Inst(Type2Type<TEX::NoTradingSessionRules>()), nullptr, "NoTradingSessionRules" } },
+   { 1310, { Inst(Type2Type<TEX::NoMarketSegments>()), nullptr, "NoMarketSegments" } },
+   { 1311, { Inst(Type2Type<TEX::NoDerivativeInstrAttrib>()), nullptr, "NoDerivativeInstrAttrib" } },
+   { 1312, { Inst(Type2Type<TEX::NoNestedInstrAttrib>()), nullptr, "NoNestedInstrAttrib" } },
+   { 1313, { Inst(Type2Type<TEX::DerivativeInstrAttribType>()), nullptr, "DerivativeInstrAttribType" } },
+   { 1314, { Inst(Type2Type<TEX::DerivativeInstrAttribValue>()), nullptr, "DerivativeInstrAttribValue" } },
+   { 1315, { Inst(Type2Type<TEX::DerivativePriceUnitOfMeasure>()), nullptr, "DerivativePriceUnitOfMeasure" } },
+   { 1316, { Inst(Type2Type<TEX::DerivativePriceUnitOfMeasureQty>()), nullptr, "DerivativePriceUnitOfMeasureQty" } },
+   { 1317, { Inst(Type2Type<TEX::DerivativeSettlMethod>()), nullptr, "DerivativeSettlMethod" } },
+   { 1318, { Inst(Type2Type<TEX::DerivativePriceQuoteMethod>()), nullptr, "DerivativePriceQuoteMethod" } },
+   { 1319, { Inst(Type2Type<TEX::DerivativeValuationMethod>()), nullptr, "DerivativeValuationMethod" } },
+   { 1320, { Inst(Type2Type<TEX::DerivativeListMethod>()), nullptr, "DerivativeListMethod" } },
+   { 1321, { Inst(Type2Type<TEX::DerivativeCapPrice>()), nullptr, "DerivativeCapPrice" } },
+   { 1322, { Inst(Type2Type<TEX::DerivativeFloorPrice>()), nullptr, "DerivativeFloorPrice" } },
+   { 1323, { Inst(Type2Type<TEX::DerivativePutOrCall>()), nullptr, "DerivativePutOrCall" } },
+   { 1324, { Inst(Type2Type<TEX::ListUpdateAction>()), nullptr, "ListUpdateAction" } },
+   { 1325, { Inst(Type2Type<TEX::ParentMktSegmID>()), nullptr, "ParentMktSegmID" } },
+   { 1326, { Inst(Type2Type<TEX::TradingSessionDesc>()), nullptr, "TradingSessionDesc" } },
+   { 1327, { Inst(Type2Type<TEX::TradSesUpdateAction>()), nullptr, "TradSesUpdateAction" } },
+   { 1328, { Inst(Type2Type<TEX::RejectText>()), nullptr, "RejectText" } },
+   { 1329, { Inst(Type2Type<TEX::FeeMultiplier>()), nullptr, "FeeMultiplier" } },
+   { 1330, { Inst(Type2Type<TEX::UnderlyingLegSymbol>()), nullptr, "UnderlyingLegSymbol" } },
+   { 1331, { Inst(Type2Type<TEX::UnderlyingLegSymbolSfx>()), nullptr, "UnderlyingLegSymbolSfx" } },
+   { 1332, { Inst(Type2Type<TEX::UnderlyingLegSecurityID>()), nullptr, "UnderlyingLegSecurityID" } },
+   { 1333, { Inst(Type2Type<TEX::UnderlyingLegSecurityIDSource>()), nullptr, "UnderlyingLegSecurityIDSource" } },
+   { 1334, { Inst(Type2Type<TEX::NoUnderlyingLegSecurityAltID>()), nullptr, "NoUnderlyingLegSecurityAltID" } },
+   { 1335, { Inst(Type2Type<TEX::UnderlyingLegSecurityAltID>()), nullptr, "UnderlyingLegSecurityAltID" } },
+   { 1336, { Inst(Type2Type<TEX::UnderlyingLegSecurityAltIDSource>()), nullptr, "UnderlyingLegSecurityAltIDSource" } },
+   { 1337, { Inst(Type2Type<TEX::UnderlyingLegSecurityType>()), nullptr, "UnderlyingLegSecurityType" } },
+   { 1338, { Inst(Type2Type<TEX::UnderlyingLegSecuritySubType>()), nullptr, "UnderlyingLegSecuritySubType" } },
+   { 1339, { Inst(Type2Type<TEX::UnderlyingLegMaturityMonthYear>()), nullptr, "UnderlyingLegMaturityMonthYear" } },
+   { 1340, { Inst(Type2Type<TEX::UnderlyingLegStrikePrice>()), nullptr, "UnderlyingLegStrikePrice" } },
+   { 1341, { Inst(Type2Type<TEX::UnderlyingLegSecurityExchange>()), nullptr, "UnderlyingLegSecurityExchange" } },
+   { 1342, { Inst(Type2Type<TEX::NoOfLegUnderlyings>()), nullptr, "NoOfLegUnderlyings" } },
+   { 1343, { Inst(Type2Type<TEX::UnderlyingLegPutOrCall>()), nullptr, "UnderlyingLegPutOrCall" } },
+   { 1344, { Inst(Type2Type<TEX::UnderlyingLegCFICode>()), nullptr, "UnderlyingLegCFICode" } },
+   { 1345, { Inst(Type2Type<TEX::UnderlyingLegMaturityDate>()), nullptr, "UnderlyingLegMaturityDate" } },
+   { 1346, { Inst(Type2Type<TEX::ApplReqID>()), nullptr, "ApplReqID" } },
+   { 1347, { Inst(Type2Types<TEX::ApplReqType, int>()), &TEX::realmbases[307], "ApplReqType" } },
+   { 1348, { Inst(Type2Types<TEX::ApplResponseType, int>()), &TEX::realmbases[308], "ApplResponseType" } },
+   { 1349, { Inst(Type2Type<TEX::ApplTotalMessageCount>()), nullptr, "ApplTotalMessageCount" } },
+   { 1350, { Inst(Type2Type<TEX::ApplLastSeqNum>()), nullptr, "ApplLastSeqNum" } },
+   { 1351, { Inst(Type2Type<TEX::NoApplIDs>()), nullptr, "NoApplIDs" } },
+   { 1352, { Inst(Type2Type<TEX::ApplResendFlag>()), nullptr, "ApplResendFlag" } },
+   { 1353, { Inst(Type2Type<TEX::ApplResponseID>()), nullptr, "ApplResponseID" } },
+   { 1354, { Inst(Type2Types<TEX::ApplResponseError, int>()), &TEX::realmbases[309], "ApplResponseError" } },
+   { 1355, { Inst(Type2Type<TEX::RefApplID>()), nullptr, "RefApplID" } },
+   { 1356, { Inst(Type2Type<TEX::ApplReportID>()), nullptr, "ApplReportID" } },
+   { 1357, { Inst(Type2Type<TEX::RefApplLastSeqNum>()), nullptr, "RefApplLastSeqNum" } },
+   { 1358, { Inst(Type2Type<TEX::LegPutOrCall>()), nullptr, "LegPutOrCall" } },
+   { 1361, { Inst(Type2Type<TEX::TotNoFills>()), nullptr, "TotNoFills" } },
+   { 1362, { Inst(Type2Type<TEX::NoFills>()), nullptr, "NoFills" } },
+   { 1363, { Inst(Type2Type<TEX::FillExecID>()), nullptr, "FillExecID" } },
+   { 1364, { Inst(Type2Type<TEX::FillPx>()), nullptr, "FillPx" } },
+   { 1365, { Inst(Type2Type<TEX::FillQty>()), nullptr, "FillQty" } },
+   { 1366, { Inst(Type2Type<TEX::LegAllocID>()), nullptr, "LegAllocID" } },
+   { 1367, { Inst(Type2Type<TEX::LegAllocSettlCurrency>()), nullptr, "LegAllocSettlCurrency" } },
+   { 1368, { Inst(Type2Types<TEX::TradSesEvent, int>()), &TEX::realmbases[310], "TradSesEvent" } },
+   { 1369, { Inst(Type2Type<TEX::MassActionReportID>()), nullptr, "MassActionReportID" } },
+   { 1370, { Inst(Type2Type<TEX::NoNotAffectedOrders>()), nullptr, "NoNotAffectedOrders" } },
+   { 1371, { Inst(Type2Type<TEX::NotAffectedOrderID>()), nullptr, "NotAffectedOrderID" } },
+   { 1372, { Inst(Type2Type<TEX::NotAffOrigClOrdID>()), nullptr, "NotAffOrigClOrdID" } },
+   { 1373, { Inst(Type2Types<TEX::MassActionType, int>()), &TEX::realmbases[311], "MassActionType" } },
+   { 1374, { Inst(Type2Types<TEX::MassActionScope, int>()), &TEX::realmbases[312], "MassActionScope" } },
+   { 1375, { Inst(Type2Types<TEX::MassActionResponse, int>()), &TEX::realmbases[313], "MassActionResponse" } },
+   { 1376, { Inst(Type2Types<TEX::MassActionRejectReason, int>()), &TEX::realmbases[314], "MassActionRejectReason" } },
+   { 1377, { Inst(Type2Types<TEX::MultilegModel, int>()), &TEX::realmbases[315], "MultilegModel" } },
+   { 1378, { Inst(Type2Types<TEX::MultilegPriceMethod, int>()), &TEX::realmbases[316], "MultilegPriceMethod" } },
+   { 1379, { Inst(Type2Type<TEX::LegVolatility>()), nullptr, "LegVolatility" } },
+   { 1380, { Inst(Type2Type<TEX::DividendYield>()), nullptr, "DividendYield" } },
+   { 1381, { Inst(Type2Type<TEX::LegDividendYield>()), nullptr, "LegDividendYield" } },
+   { 1382, { Inst(Type2Type<TEX::CurrencyRatio>()), nullptr, "CurrencyRatio" } },
+   { 1383, { Inst(Type2Type<TEX::LegCurrencyRatio>()), nullptr, "LegCurrencyRatio" } },
+   { 1384, { Inst(Type2Type<TEX::LegExecInst>()), nullptr, "LegExecInst" } },
+   { 1385, { Inst(Type2Types<TEX::ContingencyType, int>()), &TEX::realmbases[317], "ContingencyType" } },
+   { 1386, { Inst(Type2Types<TEX::ListRejectReason, int>()), &TEX::realmbases[318], "ListRejectReason" } },
+   { 1387, { Inst(Type2Type<TEX::NoTrdRepIndicators>()), nullptr, "NoTrdRepIndicators" } },
+   { 1388, { Inst(Type2Type<TEX::TrdRepPartyRole>()), nullptr, "TrdRepPartyRole" } },
+   { 1389, { Inst(Type2Type<TEX::TrdRepIndicator>()), nullptr, "TrdRepIndicator" } },
+   { 1390, { Inst(Type2Types<TEX::TradePublishIndicator, int>()), &TEX::realmbases[319], "TradePublishIndicator" } },
+   { 1391, { Inst(Type2Type<TEX::UnderlyingLegOptAttribute>()), nullptr, "UnderlyingLegOptAttribute" } },
+   { 1392, { Inst(Type2Type<TEX::UnderlyingLegSecurityDesc>()), nullptr, "UnderlyingLegSecurityDesc" } },
+   { 1393, { Inst(Type2Type<TEX::MarketReqID>()), nullptr, "MarketReqID" } },
+   { 1394, { Inst(Type2Type<TEX::MarketReportID>()), nullptr, "MarketReportID" } },
+   { 1395, { Inst(Type2Types<TEX::MarketUpdateAction, char>()), &TEX::realmbases[320], "MarketUpdateAction" } },
+   { 1396, { Inst(Type2Type<TEX::MarketSegmentDesc>()), nullptr, "MarketSegmentDesc" } },
+   { 1397, { Inst(Type2Type<TEX::EncodedMktSegmDescLen>()), nullptr, "EncodedMktSegmDescLen" } },
+   { 1398, { Inst(Type2Type<TEX::EncodedMktSegmDesc>()), nullptr, "EncodedMktSegmDesc" } },
+   { 1399, { Inst(Type2Type<TEX::ApplNewSeqNum>()), nullptr, "ApplNewSeqNum" } },
+   { 1400, { Inst(Type2Type<TEX::EncryptedPasswordMethod>()), nullptr, "EncryptedPasswordMethod" } },
+   { 1401, { Inst(Type2Type<TEX::EncryptedPasswordLen>()), nullptr, "EncryptedPasswordLen" } },
+   { 1402, { Inst(Type2Type<TEX::EncryptedPassword>()), nullptr, "EncryptedPassword" } },
+   { 1403, { Inst(Type2Type<TEX::EncryptedNewPasswordLen>()), nullptr, "EncryptedNewPasswordLen" } },
+   { 1404, { Inst(Type2Type<TEX::EncryptedNewPassword>()), nullptr, "EncryptedNewPassword" } },
+   { 1405, { Inst(Type2Type<TEX::UnderlyingLegMaturityTime>()), nullptr, "UnderlyingLegMaturityTime" } },
+   { 1406, { Inst(Type2Type<TEX::RefApplExtID>()), nullptr, "RefApplExtID" } },
+   { 1411, { Inst(Type2Type<TEX::Nested4PartySubIDType>()), nullptr, "Nested4PartySubIDType" } },
+   { 1412, { Inst(Type2Type<TEX::Nested4PartySubID>()), nullptr, "Nested4PartySubID" } },
+   { 1413, { Inst(Type2Type<TEX::NoNested4PartySubIDs>()), nullptr, "NoNested4PartySubIDs" } },
+   { 1414, { Inst(Type2Type<TEX::NoNested4PartyIDs>()), nullptr, "NoNested4PartyIDs" } },
+   { 1415, { Inst(Type2Type<TEX::Nested4PartyID>()), nullptr, "Nested4PartyID" } },
+   { 1416, { Inst(Type2Type<TEX::Nested4PartyIDSource>()), nullptr, "Nested4PartyIDSource" } },
+   { 1417, { Inst(Type2Type<TEX::Nested4PartyRole>()), nullptr, "Nested4PartyRole" } },
+   { 1418, { Inst(Type2Type<TEX::LegLastQty>()), nullptr, "LegLastQty" } },
+   { 1419, { Inst(Type2Type<TEX::UnderlyingExerciseStyle>()), nullptr, "UnderlyingExerciseStyle" } },
+   { 1420, { Inst(Type2Type<TEX::LegExerciseStyle>()), nullptr, "LegExerciseStyle" } },
+   { 1421, { Inst(Type2Type<TEX::LegPriceUnitOfMeasure>()), nullptr, "LegPriceUnitOfMeasure" } },
+   { 1422, { Inst(Type2Type<TEX::LegPriceUnitOfMeasureQty>()), nullptr, "LegPriceUnitOfMeasureQty" } },
+   { 1423, { Inst(Type2Type<TEX::UnderlyingUnitOfMeasureQty>()), nullptr, "UnderlyingUnitOfMeasureQty" } },
+   { 1424, { Inst(Type2Type<TEX::UnderlyingPriceUnitOfMeasure>()), nullptr, "UnderlyingPriceUnitOfMeasure" } },
+   { 1425, { Inst(Type2Type<TEX::UnderlyingPriceUnitOfMeasureQty>()), nullptr, "UnderlyingPriceUnitOfMeasureQty" } },
+   { 1426, { Inst(Type2Types<TEX::ApplReportType, int>()), &TEX::realmbases[321], "ApplReportType" } },
+   { 1427, { Inst(Type2Type<TEX::SideExecID>()), nullptr, "SideExecID" } },
+   { 1428, { Inst(Type2Type<TEX::OrderDelay>()), nullptr, "OrderDelay" } },
+   { 1429, { Inst(Type2Types<TEX::OrderDelayUnit, int>()), &TEX::realmbases[322], "OrderDelayUnit" } },
+   { 1430, { Inst(Type2Types<TEX::VenueType, char>()), &TEX::realmbases[323], "VenueType" } },
+   { 1431, { Inst(Type2Types<TEX::RefOrdIDReason, int>()), &TEX::realmbases[324], "RefOrdIDReason" } },
+   { 1432, { Inst(Type2Types<TEX::OrigCustOrderCapacity, int>()), &TEX::realmbases[325], "OrigCustOrderCapacity" } },
+   { 1433, { Inst(Type2Type<TEX::RefApplReqID>()), nullptr, "RefApplReqID" } },
+   { 1434, { Inst(Type2Types<TEX::ModelType, int>()), &TEX::realmbases[326], "ModelType" } },
+   { 1435, { Inst(Type2Types<TEX::ContractMultiplierUnit, int>()), &TEX::realmbases[327], "ContractMultiplierUnit" } },
+   { 1436, { Inst(Type2Type<TEX::LegContractMultiplierUnit>()), nullptr, "LegContractMultiplierUnit" } },
+   { 1437, { Inst(Type2Type<TEX::UnderlyingContractMultiplierUnit>()), nullptr, "UnderlyingContractMultiplierUnit" } },
+   { 1438, { Inst(Type2Type<TEX::DerivativeContractMultiplierUnit>()), nullptr, "DerivativeContractMultiplierUnit" } },
+   { 1439, { Inst(Type2Types<TEX::FlowScheduleType, int>()), &TEX::realmbases[328], "FlowScheduleType" } },
+   { 1440, { Inst(Type2Type<TEX::LegFlowScheduleType>()), nullptr, "LegFlowScheduleType" } },
+   { 1441, { Inst(Type2Type<TEX::UnderlyingFlowScheduleType>()), nullptr, "UnderlyingFlowScheduleType" } },
+   { 1442, { Inst(Type2Type<TEX::DerivativeFlowScheduleType>()), nullptr, "DerivativeFlowScheduleType" } },
+   { 1443, { Inst(Type2Type<TEX::FillLiquidityInd>()), nullptr, "FillLiquidityInd" } },
+   { 1444, { Inst(Type2Type<TEX::SideLiquidityInd>()), nullptr, "SideLiquidityInd" } },
+   { 1445, { Inst(Type2Type<TEX::NoRateSources>()), nullptr, "NoRateSources" } },
+   { 1446, { Inst(Type2Types<TEX::RateSource, int>()), &TEX::realmbases[329], "RateSource" } },
+   { 1447, { Inst(Type2Types<TEX::RateSourceType, int>()), &TEX::realmbases[330], "RateSourceType" } },
+   { 1448, { Inst(Type2Type<TEX::ReferencePage>()), nullptr, "ReferencePage" } },
+   { 1449, { Inst(Type2Types<TEX::RestructuringType, f8String>()), &TEX::realmbases[331], "RestructuringType" } },
+   { 1450, { Inst(Type2Types<TEX::Seniority, f8String>()), &TEX::realmbases[332], "Seniority" } },
+   { 1451, { Inst(Type2Type<TEX::NotionalPercentageOutstanding>()), nullptr, "NotionalPercentageOutstanding" } },
+   { 1452, { Inst(Type2Type<TEX::OriginalNotionalPercentageOutstanding>()), nullptr, "OriginalNotionalPercentageOutstanding" } },
+   { 1453, { Inst(Type2Type<TEX::UnderlyingRestructuringType>()), nullptr, "UnderlyingRestructuringType" } },
+   { 1454, { Inst(Type2Type<TEX::UnderlyingSeniority>()), nullptr, "UnderlyingSeniority" } },
+   { 1455, { Inst(Type2Type<TEX::UnderlyingNotionalPercentageOutstanding>()), nullptr, "UnderlyingNotionalPercentageOutstanding" } },
+   { 1456, { Inst(Type2Type<TEX::UnderlyingOriginalNotionalPercentageOutstanding>()), nullptr, "UnderlyingOriginalNotionalPercentageOutstanding" } },
+   { 1457, { Inst(Type2Type<TEX::AttachmentPoint>()), nullptr, "AttachmentPoint" } },
+   { 1458, { Inst(Type2Type<TEX::DetachmentPoint>()), nullptr, "DetachmentPoint" } },
+   { 1459, { Inst(Type2Type<TEX::UnderlyingAttachmentPoint>()), nullptr, "UnderlyingAttachmentPoint" } },
+   { 1460, { Inst(Type2Type<TEX::UnderlyingDetachmentPoint>()), nullptr, "UnderlyingDetachmentPoint" } },
+   { 1461, { Inst(Type2Type<TEX::NoTargetPartyIDs>()), nullptr, "NoTargetPartyIDs" } },
+   { 1462, { Inst(Type2Type<TEX::TargetPartyID>()), nullptr, "TargetPartyID" } },
+   { 1463, { Inst(Type2Type<TEX::TargetPartyIDSource>()), nullptr, "TargetPartyIDSource" } },
+   { 1464, { Inst(Type2Type<TEX::TargetPartyRole>()), nullptr, "TargetPartyRole" } },
+   { 1465, { Inst(Type2Type<TEX::SecurityListID>()), nullptr, "SecurityListID" } },
+   { 1466, { Inst(Type2Type<TEX::SecurityListRefID>()), nullptr, "SecurityListRefID" } },
+   { 1467, { Inst(Type2Type<TEX::SecurityListDesc>()), nullptr, "SecurityListDesc" } },
+   { 1468, { Inst(Type2Type<TEX::EncodedSecurityListDescLen>()), nullptr, "EncodedSecurityListDescLen" } },
+   { 1469, { Inst(Type2Type<TEX::EncodedSecurityListDesc>()), nullptr, "EncodedSecurityListDesc" } },
+   { 1470, { Inst(Type2Types<TEX::SecurityListType, int>()), &TEX::realmbases[333], "SecurityListType" } },
+   { 1471, { Inst(Type2Types<TEX::SecurityListTypeSource, int>()), &TEX::realmbases[334], "SecurityListTypeSource" } },
+   { 1472, { Inst(Type2Type<TEX::NewsID>()), nullptr, "NewsID" } },
+   { 1473, { Inst(Type2Types<TEX::NewsCategory, int>()), &TEX::realmbases[335], "NewsCategory" } },
+   { 1474, { Inst(Type2Type<TEX::LanguageCode>()), nullptr, "LanguageCode" } },
+   { 1475, { Inst(Type2Type<TEX::NoNewsRefIDs>()), nullptr, "NoNewsRefIDs" } },
+   { 1476, { Inst(Type2Type<TEX::NewsRefID>()), nullptr, "NewsRefID" } },
+   { 1477, { Inst(Type2Types<TEX::NewsRefType, int>()), &TEX::realmbases[336], "NewsRefType" } },
+   { 1478, { Inst(Type2Types<TEX::StrikePriceDeterminationMethod, int>()), &TEX::realmbases[337], "StrikePriceDeterminationMethod" } },
+   { 1479, { Inst(Type2Types<TEX::StrikePriceBoundaryMethod, int>()), &TEX::realmbases[338], "StrikePriceBoundaryMethod" } },
+   { 1480, { Inst(Type2Type<TEX::StrikePriceBoundaryPrecision>()), nullptr, "StrikePriceBoundaryPrecision" } },
+   { 1481, { Inst(Type2Types<TEX::UnderlyingPriceDeterminationMethod, int>()), &TEX::realmbases[339], "UnderlyingPriceDeterminationMethod" } },
+   { 1482, { Inst(Type2Types<TEX::OptPayoutType, int>()), &TEX::realmbases[340], "OptPayoutType" } },
+   { 1483, { Inst(Type2Type<TEX::NoComplexEvents>()), nullptr, "NoComplexEvents" } },
+   { 1484, { Inst(Type2Types<TEX::ComplexEventType, int>()), &TEX::realmbases[341], "ComplexEventType" } },
+   { 1485, { Inst(Type2Type<TEX::ComplexOptPayoutAmount>()), nullptr, "ComplexOptPayoutAmount" } },
+   { 1486, { Inst(Type2Type<TEX::ComplexEventPrice>()), nullptr, "ComplexEventPrice" } },
+   { 1487, { Inst(Type2Types<TEX::ComplexEventPriceBoundaryMethod, int>()), &TEX::realmbases[342], "ComplexEventPriceBoundaryMethod" } },
+   { 1488, { Inst(Type2Type<TEX::ComplexEventPriceBoundaryPrecision>()), nullptr, "ComplexEventPriceBoundaryPrecision" } },
+   { 1489, { Inst(Type2Types<TEX::ComplexEventPriceTimeType, int>()), &TEX::realmbases[343], "ComplexEventPriceTimeType" } },
+   { 1490, { Inst(Type2Types<TEX::ComplexEventCondition, int>()), &TEX::realmbases[344], "ComplexEventCondition" } },
+   { 1491, { Inst(Type2Type<TEX::NoComplexEventDates>()), nullptr, "NoComplexEventDates" } },
+   { 1492, { Inst(Type2Type<TEX::ComplexEventStartDate>()), nullptr, "ComplexEventStartDate" } },
+   { 1493, { Inst(Type2Type<TEX::ComplexEventEndDate>()), nullptr, "ComplexEventEndDate" } },
+   { 1494, { Inst(Type2Type<TEX::NoComplexEventTimes>()), nullptr, "NoComplexEventTimes" } },
+   { 1495, { Inst(Type2Type<TEX::ComplexEventStartTime>()), nullptr, "ComplexEventStartTime" } },
+   { 1496, { Inst(Type2Type<TEX::ComplexEventEndTime>()), nullptr, "ComplexEventEndTime" } },
+   { 1497, { Inst(Type2Type<TEX::StreamAsgnReqID>()), nullptr, "StreamAsgnReqID" } },
+   { 1498, { Inst(Type2Types<TEX::StreamAsgnReqType, int>()), &TEX::realmbases[345], "StreamAsgnReqType" } },
+   { 1499, { Inst(Type2Type<TEX::NoAsgnReqs>()), nullptr, "NoAsgnReqs" } },
+   { 1500, { Inst(Type2Type<TEX::MDStreamID>()), nullptr, "MDStreamID" } },
+   { 1501, { Inst(Type2Type<TEX::StreamAsgnRptID>()), nullptr, "StreamAsgnRptID" } },
+   { 1502, { Inst(Type2Types<TEX::StreamAsgnRejReason, int>()), &TEX::realmbases[346], "StreamAsgnRejReason" } },
+   { 1503, { Inst(Type2Types<TEX::StreamAsgnAckType, int>()), &TEX::realmbases[347], "StreamAsgnAckType" } },
+   { 1504, { Inst(Type2Type<TEX::RelSymTransactTime>()), nullptr, "RelSymTransactTime" } },
+   { 1505, { Inst(Type2Type<TEX::PartyDetailsListRequestID>()), nullptr, "PartyDetailsListRequestID" } },
+   { 1506, { Inst(Type2Type<TEX::NoPartyListResponseTypes>()), nullptr, "NoPartyListResponseTypes" } },
+   { 1507, { Inst(Type2Types<TEX::PartyListResponseType, int>()), &TEX::realmbases[348], "PartyListResponseType" } },
+   { 1508, { Inst(Type2Type<TEX::NoRequestedPartyRoles>()), nullptr, "NoRequestedPartyRoles" } },
+   { 1509, { Inst(Type2Type<TEX::RequestedPartyRole>()), nullptr, "RequestedPartyRole" } },
+   { 1510, { Inst(Type2Type<TEX::PartyDetailsListReportID>()), nullptr, "PartyDetailsListReportID" } },
+   { 1511, { Inst(Type2Types<TEX::PartyDetailsRequestResult, int>()), &TEX::realmbases[349], "PartyDetailsRequestResult" } },
+   { 1512, { Inst(Type2Type<TEX::TotNoPartyList>()), nullptr, "TotNoPartyList" } },
+   { 1513, { Inst(Type2Type<TEX::NoPartyList>()), nullptr, "NoPartyList" } },
+   { 1514, { Inst(Type2Type<TEX::NoPartyRelationships>()), nullptr, "NoPartyRelationships" } },
+   { 1515, { Inst(Type2Types<TEX::PartyRelationship, int>()), &TEX::realmbases[350], "PartyRelationship" } },
+   { 1516, { Inst(Type2Type<TEX::NoPartyAltIDs>()), nullptr, "NoPartyAltIDs" } },
+   { 1517, { Inst(Type2Type<TEX::PartyAltID>()), nullptr, "PartyAltID" } },
+   { 1518, { Inst(Type2Type<TEX::PartyAltIDSource>()), nullptr, "PartyAltIDSource" } },
+   { 1519, { Inst(Type2Type<TEX::NoPartyAltSubIDs>()), nullptr, "NoPartyAltSubIDs" } },
+   { 1520, { Inst(Type2Type<TEX::PartyAltSubID>()), nullptr, "PartyAltSubID" } },
+   { 1521, { Inst(Type2Type<TEX::PartyAltSubIDType>()), nullptr, "PartyAltSubIDType" } },
+   { 1522, { Inst(Type2Type<TEX::NoContextPartyIDs>()), nullptr, "NoContextPartyIDs" } },
+   { 1523, { Inst(Type2Type<TEX::ContextPartyID>()), nullptr, "ContextPartyID" } },
+   { 1524, { Inst(Type2Type<TEX::ContextPartyIDSource>()), nullptr, "ContextPartyIDSource" } },
+   { 1525, { Inst(Type2Type<TEX::ContextPartyRole>()), nullptr, "ContextPartyRole" } },
+   { 1526, { Inst(Type2Type<TEX::NoContextPartySubIDs>()), nullptr, "NoContextPartySubIDs" } },
+   { 1527, { Inst(Type2Type<TEX::ContextPartySubID>()), nullptr, "ContextPartySubID" } },
+   { 1528, { Inst(Type2Type<TEX::ContextPartySubIDType>()), nullptr, "ContextPartySubIDType" } },
+   { 1529, { Inst(Type2Type<TEX::NoRiskLimits>()), nullptr, "NoRiskLimits" } },
+   { 1530, { Inst(Type2Types<TEX::RiskLimitType, int>()), &TEX::realmbases[351], "RiskLimitType" } },
+   { 1531, { Inst(Type2Type<TEX::RiskLimitAmount>()), nullptr, "RiskLimitAmount" } },
+   { 1532, { Inst(Type2Type<TEX::RiskLimitCurrency>()), nullptr, "RiskLimitCurrency" } },
+   { 1533, { Inst(Type2Type<TEX::RiskLimitPlatform>()), nullptr, "RiskLimitPlatform" } },
+   { 1534, { Inst(Type2Type<TEX::NoRiskInstruments>()), nullptr, "NoRiskInstruments" } },
+   { 1535, { Inst(Type2Types<TEX::RiskInstrumentOperator, int>()), &TEX::realmbases[352], "RiskInstrumentOperator" } },
+   { 1536, { Inst(Type2Type<TEX::RiskSymbol>()), nullptr, "RiskSymbol" } },
+   { 1537, { Inst(Type2Type<TEX::RiskSymbolSfx>()), nullptr, "RiskSymbolSfx" } },
+   { 1538, { Inst(Type2Type<TEX::RiskSecurityID>()), nullptr, "RiskSecurityID" } },
+   { 1539, { Inst(Type2Type<TEX::RiskSecurityIDSource>()), nullptr, "RiskSecurityIDSource" } },
+   { 1540, { Inst(Type2Type<TEX::NoRiskSecurityAltID>()), nullptr, "NoRiskSecurityAltID" } },
+   { 1541, { Inst(Type2Type<TEX::RiskSecurityAltID>()), nullptr, "RiskSecurityAltID" } },
+   { 1542, { Inst(Type2Type<TEX::RiskSecurityAltIDSource>()), nullptr, "RiskSecurityAltIDSource" } },
+   { 1543, { Inst(Type2Type<TEX::RiskProduct>()), nullptr, "RiskProduct" } },
+   { 1544, { Inst(Type2Type<TEX::RiskProductComplex>()), nullptr, "RiskProductComplex" } },
+   { 1545, { Inst(Type2Type<TEX::RiskSecurityGroup>()), nullptr, "RiskSecurityGroup" } },
+   { 1546, { Inst(Type2Type<TEX::RiskCFICode>()), nullptr, "RiskCFICode" } },
+   { 1547, { Inst(Type2Type<TEX::RiskSecurityType>()), nullptr, "RiskSecurityType" } },
+   { 1548, { Inst(Type2Type<TEX::RiskSecuritySubType>()), nullptr, "RiskSecuritySubType" } },
+   { 1549, { Inst(Type2Type<TEX::RiskMaturityMonthYear>()), nullptr, "RiskMaturityMonthYear" } },
+   { 1550, { Inst(Type2Type<TEX::RiskMaturityTime>()), nullptr, "RiskMaturityTime" } },
+   { 1551, { Inst(Type2Type<TEX::RiskRestructuringType>()), nullptr, "RiskRestructuringType" } },
+   { 1552, { Inst(Type2Type<TEX::RiskSeniority>()), nullptr, "RiskSeniority" } },
+   { 1553, { Inst(Type2Type<TEX::RiskPutOrCall>()), nullptr, "RiskPutOrCall" } },
+   { 1554, { Inst(Type2Type<TEX::RiskFlexibleIndicator>()), nullptr, "RiskFlexibleIndicator" } },
+   { 1555, { Inst(Type2Type<TEX::RiskCouponRate>()), nullptr, "RiskCouponRate" } },
+   { 1556, { Inst(Type2Type<TEX::RiskSecurityDesc>()), nullptr, "RiskSecurityDesc" } },
+   { 1557, { Inst(Type2Type<TEX::RiskInstrumentSettlType>()), nullptr, "RiskInstrumentSettlType" } },
+   { 1558, { Inst(Type2Type<TEX::RiskInstrumentMultiplier>()), nullptr, "RiskInstrumentMultiplier" } },
+   { 1559, { Inst(Type2Type<TEX::NoRiskWarningLevels>()), nullptr, "NoRiskWarningLevels" } },
+   { 1560, { Inst(Type2Type<TEX::RiskWarningLevelPercent>()), nullptr, "RiskWarningLevelPercent" } },
+   { 1561, { Inst(Type2Type<TEX::RiskWarningLevelName>()), nullptr, "RiskWarningLevelName" } },
+   { 1562, { Inst(Type2Type<TEX::NoRelatedPartyIDs>()), nullptr, "NoRelatedPartyIDs" } },
+   { 1563, { Inst(Type2Type<TEX::RelatedPartyID>()), nullptr, "RelatedPartyID" } },
+   { 1564, { Inst(Type2Type<TEX::RelatedPartyIDSource>()), nullptr, "RelatedPartyIDSource" } },
+   { 1565, { Inst(Type2Type<TEX::RelatedPartyRole>()), nullptr, "RelatedPartyRole" } },
+   { 1566, { Inst(Type2Type<TEX::NoRelatedPartySubIDs>()), nullptr, "NoRelatedPartySubIDs" } },
+   { 1567, { Inst(Type2Type<TEX::RelatedPartySubID>()), nullptr, "RelatedPartySubID" } },
+   { 1568, { Inst(Type2Type<TEX::RelatedPartySubIDType>()), nullptr, "RelatedPartySubIDType" } },
+   { 1569, { Inst(Type2Type<TEX::NoRelatedPartyAltIDs>()), nullptr, "NoRelatedPartyAltIDs" } },
+   { 1570, { Inst(Type2Type<TEX::RelatedPartyAltID>()), nullptr, "RelatedPartyAltID" } },
+   { 1571, { Inst(Type2Type<TEX::RelatedPartyAltIDSource>()), nullptr, "RelatedPartyAltIDSource" } },
+   { 1572, { Inst(Type2Type<TEX::NoRelatedPartyAltSubIDs>()), nullptr, "NoRelatedPartyAltSubIDs" } },
+   { 1573, { Inst(Type2Type<TEX::RelatedPartyAltSubID>()), nullptr, "RelatedPartyAltSubID" } },
+   { 1574, { Inst(Type2Type<TEX::RelatedPartyAltSubIDType>()), nullptr, "RelatedPartyAltSubIDType" } },
+   { 1575, { Inst(Type2Type<TEX::NoRelatedContextPartyIDs>()), nullptr, "NoRelatedContextPartyIDs" } },
+   { 1576, { Inst(Type2Type<TEX::RelatedContextPartyID>()), nullptr, "RelatedContextPartyID" } },
+   { 1577, { Inst(Type2Type<TEX::RelatedContextPartyIDSource>()), nullptr, "RelatedContextPartyIDSource" } },
+   { 1578, { Inst(Type2Type<TEX::RelatedContextPartyRole>()), nullptr, "RelatedContextPartyRole" } },
+   { 1579, { Inst(Type2Type<TEX::NoRelatedContextPartySubIDs>()), nullptr, "NoRelatedContextPartySubIDs" } },
+   { 1580, { Inst(Type2Type<TEX::RelatedContextPartySubID>()), nullptr, "RelatedContextPartySubID" } },
+   { 1581, { Inst(Type2Type<TEX::RelatedContextPartySubIDType>()), nullptr, "RelatedContextPartySubIDType" } },
+   { 1582, { Inst(Type2Type<TEX::NoRelationshipRiskLimits>()), nullptr, "NoRelationshipRiskLimits" } },
+   { 1583, { Inst(Type2Type<TEX::RelationshipRiskLimitType>()), nullptr, "RelationshipRiskLimitType" } },
+   { 1584, { Inst(Type2Type<TEX::RelationshipRiskLimitAmount>()), nullptr, "RelationshipRiskLimitAmount" } },
+   { 1585, { Inst(Type2Type<TEX::RelationshipRiskLimitCurrency>()), nullptr, "RelationshipRiskLimitCurrency" } },
+   { 1586, { Inst(Type2Type<TEX::RelationshipRiskLimitPlatform>()), nullptr, "RelationshipRiskLimitPlatform" } },
+   { 1587, { Inst(Type2Type<TEX::NoRelationshipRiskInstruments>()), nullptr, "NoRelationshipRiskInstruments" } },
+   { 1588, { Inst(Type2Type<TEX::RelationshipRiskInstrumentOperator>()), nullptr, "RelationshipRiskInstrumentOperator" } },
+   { 1589, { Inst(Type2Type<TEX::RelationshipRiskSymbol>()), nullptr, "RelationshipRiskSymbol" } },
+   { 1590, { Inst(Type2Type<TEX::RelationshipRiskSymbolSfx>()), nullptr, "RelationshipRiskSymbolSfx" } },
+   { 1591, { Inst(Type2Type<TEX::RelationshipRiskSecurityID>()), nullptr, "RelationshipRiskSecurityID" } },
+   { 1592, { Inst(Type2Type<TEX::RelationshipRiskSecurityIDSource>()), nullptr, "RelationshipRiskSecurityIDSource" } },
+   { 1593, { Inst(Type2Type<TEX::NoRelationshipRiskSecurityAltID>()), nullptr, "NoRelationshipRiskSecurityAltID" } },
+   { 1594, { Inst(Type2Type<TEX::RelationshipRiskSecurityAltID>()), nullptr, "RelationshipRiskSecurityAltID" } },
+   { 1595, { Inst(Type2Type<TEX::RelationshipRiskSecurityAltIDSource>()), nullptr, "RelationshipRiskSecurityAltIDSource" } },
+   { 1596, { Inst(Type2Type<TEX::RelationshipRiskProduct>()), nullptr, "RelationshipRiskProduct" } },
+   { 1597, { Inst(Type2Type<TEX::RelationshipRiskProductComplex>()), nullptr, "RelationshipRiskProductComplex" } },
+   { 1598, { Inst(Type2Type<TEX::RelationshipRiskSecurityGroup>()), nullptr, "RelationshipRiskSecurityGroup" } },
+   { 1599, { Inst(Type2Type<TEX::RelationshipRiskCFICode>()), nullptr, "RelationshipRiskCFICode" } },
+   { 1600, { Inst(Type2Type<TEX::RelationshipRiskSecurityType>()), nullptr, "RelationshipRiskSecurityType" } },
+   { 1601, { Inst(Type2Type<TEX::RelationshipRiskSecuritySubType>()), nullptr, "RelationshipRiskSecuritySubType" } },
+   { 1602, { Inst(Type2Type<TEX::RelationshipRiskMaturityMonthYear>()), nullptr, "RelationshipRiskMaturityMonthYear" } },
+   { 1603, { Inst(Type2Type<TEX::RelationshipRiskMaturityTime>()), nullptr, "RelationshipRiskMaturityTime" } },
+   { 1604, { Inst(Type2Type<TEX::RelationshipRiskRestructuringType>()), nullptr, "RelationshipRiskRestructuringType" } },
+   { 1605, { Inst(Type2Type<TEX::RelationshipRiskSeniority>()), nullptr, "RelationshipRiskSeniority" } },
+   { 1606, { Inst(Type2Type<TEX::RelationshipRiskPutOrCall>()), nullptr, "RelationshipRiskPutOrCall" } },
+   { 1607, { Inst(Type2Type<TEX::RelationshipRiskFlexibleIndicator>()), nullptr, "RelationshipRiskFlexibleIndicator" } },
+   { 1608, { Inst(Type2Type<TEX::RelationshipRiskCouponRate>()), nullptr, "RelationshipRiskCouponRate" } },
+   { 1609, { Inst(Type2Type<TEX::RelationshipRiskSecurityExchange>()), nullptr, "RelationshipRiskSecurityExchange" } },
+   { 1610, { Inst(Type2Type<TEX::RelationshipRiskSecurityDesc>()), nullptr, "RelationshipRiskSecurityDesc" } },
+   { 1611, { Inst(Type2Type<TEX::RelationshipRiskInstrumentSettlType>()), nullptr, "RelationshipRiskInstrumentSettlType" } },
+   { 1612, { Inst(Type2Type<TEX::RelationshipRiskInstrumentMultiplier>()), nullptr, "RelationshipRiskInstrumentMultiplier" } },
+   { 1613, { Inst(Type2Type<TEX::NoRelationshipRiskWarningLevels>()), nullptr, "NoRelationshipRiskWarningLevels" } },
+   { 1614, { Inst(Type2Type<TEX::RelationshipRiskWarningLevelPercent>()), nullptr, "RelationshipRiskWarningLevelPercent" } },
+   { 1615, { Inst(Type2Type<TEX::RelationshipRiskWarningLevelName>()), nullptr, "RelationshipRiskWarningLevelName" } },
+   { 1616, { Inst(Type2Type<TEX::RiskSecurityExchange>()), nullptr, "RiskSecurityExchange" } },
+   { 1617, { Inst(Type2Types<TEX::StreamAsgnType, int>()), &TEX::realmbases[353], "StreamAsgnType" } },
+   { 1618, { Inst(Type2Type<TEX::RelationshipRiskEncodedSecurityDescLen>()), nullptr, "RelationshipRiskEncodedSecurityDescLen" } },
+   { 1619, { Inst(Type2Type<TEX::RelationshipRiskEncodedSecurityDesc>()), nullptr, "RelationshipRiskEncodedSecurityDesc" } },
+   { 1620, { Inst(Type2Type<TEX::RiskEncodedSecurityDescLen>()), nullptr, "RiskEncodedSecurityDescLen" } },
+   { 1621, { Inst(Type2Type<TEX::RiskEncodedSecurityDesc>()), nullptr, "RiskEncodedSecurityDesc" } }
 }; // 1562
 } // namespace TEX
 

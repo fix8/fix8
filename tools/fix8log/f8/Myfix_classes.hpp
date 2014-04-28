@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-// *** f8c generated file: DO NOT EDIT! Created: 2014-04-05 01:38:19 ***
+// *** f8c generated file: DO NOT EDIT! Created: 2014-04-27 23:02:33 ***
 //-------------------------------------------------------------------------------------------------
 /*
 
@@ -48,8 +48,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
-#if defined MAGIC_NUM && MAGIC_NUM > 16781312L
-#error Myfix_classes.hpp version 1.1.0 is out of date. Please regenerate with f8c.
+#if defined MAGIC_NUM && MAGIC_NUM > 16785408L
+#error Myfix_classes.hpp version 1.2.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_classes.hpp
@@ -61,7 +61,7 @@ namespace FIX8 {
 namespace TEX {
 
 //-------------------------------------------------------------------------------------------------
-typedef MsgTable Myfix_BaseMsgEntry;
+using Myfix_BaseMsgEntry = MsgTable;
 /// Compiler generated metadata object, accessed through this function
 const F8MetaCntx& ctx();
 class Myfix_Router;
@@ -76,7 +76,7 @@ class Heartbeat : public Message
 
 public:
    Heartbeat() : Message(ctx(), _msgtype(), _traits, 1, &_ftha) {}
-   ~Heartbeat() {}
+   ~Heartbeat() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -93,7 +93,7 @@ class TestRequest : public Message
 
 public:
    TestRequest() : Message(ctx(), _msgtype(), _traits, 1, &_ftha) {}
-   ~TestRequest() {}
+   ~TestRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -110,7 +110,7 @@ class ResendRequest : public Message
 
 public:
    ResendRequest() : Message(ctx(), _msgtype(), _traits, 2, &_ftha) {}
-   ~ResendRequest() {}
+   ~ResendRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -127,7 +127,7 @@ class Reject : public Message
 
 public:
    Reject() : Message(ctx(), _msgtype(), _traits, 7, &_ftha) {}
-   ~Reject() {}
+   ~Reject() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -144,7 +144,7 @@ class SequenceReset : public Message
 
 public:
    SequenceReset() : Message(ctx(), _msgtype(), _traits, 2, &_ftha) {}
-   ~SequenceReset() {}
+   ~SequenceReset() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -161,7 +161,7 @@ class Logout : public Message
 
 public:
    Logout() : Message(ctx(), _msgtype(), _traits, 3, &_ftha) {}
-   ~Logout() {}
+   ~Logout() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -179,18 +179,20 @@ class IOI : public Message
 public:
    IOI() : Message(ctx(), _msgtype(), _traits, 143, &_ftha)
    {
-      _groups.insert(Groups::value_type(199, new NoIOIQualifiers));
-      _groups.insert(_groups.end(), Groups::value_type(215, new NoRoutingIDs));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 199, new NoIOIQualifiers },
+         { 215, new NoRoutingIDs },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~IOI() {}
+   ~IOI() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -207,7 +209,7 @@ public:
       enum { _fnum = 199 };
 
       NoIOIQualifiers() : GroupBase(_fnum) {}
-      ~NoIOIQualifiers() {}
+      ~NoIOIQualifiers() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -225,7 +227,7 @@ public:
       enum { _fnum = 215 };
 
       NoRoutingIDs() : GroupBase(_fnum) {}
-      ~NoRoutingIDs() {}
+      ~NoRoutingIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -243,7 +245,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -261,11 +263,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -283,7 +285,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -302,7 +304,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -320,12 +322,14 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 56, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegStipulations); // 683
+         mb->get_groups().insert({
+            { 604, new NoLegSecurityAltID },
+            { 683, new NoLegStipulations },
+         });
          return mb;
       }
 
@@ -343,7 +347,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -361,7 +365,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -380,13 +384,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -404,7 +410,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -422,7 +428,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -440,11 +446,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -462,7 +468,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -482,7 +488,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -500,11 +506,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -522,7 +528,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -541,11 +547,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -563,11 +569,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -585,7 +591,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -605,14 +611,16 @@ class Advertisement : public Message
 public:
    Advertisement() : Message(ctx(), _msgtype(), _traits, 107, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~Advertisement() {}
+   ~Advertisement() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -629,7 +637,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -647,11 +655,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -669,7 +677,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -688,13 +696,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -712,7 +722,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -730,7 +740,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -748,11 +758,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -770,7 +780,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -790,7 +800,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -808,11 +818,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -830,7 +840,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -849,11 +859,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -871,11 +881,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -893,7 +903,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -913,24 +923,26 @@ class ExecutionReport : public Message
 public:
    ExecutionReport() : Message(ctx(), _msgtype(), _traits, 326, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(136, new NoMiscFees));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(382, new NoContraBrokers));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(518, new NoContAmts));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1362, new NoFills));
-      _groups.insert(_groups.end(), Groups::value_type(1445, new NoRateSources));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 136, new NoMiscFees },
+         { 232, new NoStipulations },
+         { 382, new NoContraBrokers },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 518, new NoContAmts },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1362, new NoFills },
+         { 1445, new NoRateSources },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~ExecutionReport() {}
+   ~ExecutionReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -947,11 +959,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -969,11 +981,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -991,7 +1003,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1011,7 +1023,7 @@ public:
       enum { _fnum = 136 };
 
       NoMiscFees() : GroupBase(_fnum) {}
-      ~NoMiscFees() {}
+      ~NoMiscFees() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1029,7 +1041,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1047,7 +1059,7 @@ public:
       enum { _fnum = 382 };
 
       NoContraBrokers() : GroupBase(_fnum) {}
-      ~NoContraBrokers() {}
+      ~NoContraBrokers() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1065,11 +1077,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -1087,7 +1099,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1106,7 +1118,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1124,7 +1136,7 @@ public:
       enum { _fnum = 518 };
 
       NoContAmts() : GroupBase(_fnum) {}
-      ~NoContAmts() {}
+      ~NoContAmts() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1142,14 +1154,16 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 76, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegAllocs); // 670
-         mb->append_group(new NoLegStipulations); // 683
-         mb->append_group(new NoNested3PartyIDs); // 948
+         mb->get_groups().insert({
+            { 604, new NoLegSecurityAltID },
+            { 670, new NoLegAllocs },
+            { 683, new NoLegStipulations },
+            { 948, new NoNested3PartyIDs },
+         });
          return mb;
       }
 
@@ -1167,7 +1181,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1185,11 +1199,11 @@ public:
          enum { _fnum = 670 };
 
          NoLegAllocs() : GroupBase(_fnum) {}
-         ~NoLegAllocs() {}
+         ~NoLegAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoNested2PartyIDs); // 756
+            mb->get_groups().insert({756, new NoNested2PartyIDs });
             return mb;
          }
 
@@ -1207,11 +1221,11 @@ public:
             enum { _fnum = 756 };
 
             NoNested2PartyIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartyIDs() {}
+            ~NoNested2PartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNested2PartySubIDs); // 806
+               mb->get_groups().insert({806, new NoNested2PartySubIDs });
                return mb;
             }
 
@@ -1229,7 +1243,7 @@ public:
                enum { _fnum = 806 };
 
                NoNested2PartySubIDs() : GroupBase(_fnum) {}
-               ~NoNested2PartySubIDs() {}
+               ~NoNested2PartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -1249,7 +1263,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1267,11 +1281,11 @@ public:
          enum { _fnum = 948 };
 
          NoNested3PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested3PartyIDs() {}
+         ~NoNested3PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested3PartySubIDs); // 952
+            mb->get_groups().insert({952, new NoNested3PartySubIDs });
             return mb;
          }
 
@@ -1289,7 +1303,7 @@ public:
             enum { _fnum = 952 };
 
             NoNested3PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested3PartySubIDs() {}
+            ~NoNested3PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1309,13 +1323,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -1333,7 +1349,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1351,7 +1367,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1369,11 +1385,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -1391,7 +1407,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1411,7 +1427,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1429,7 +1445,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1447,7 +1463,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1465,11 +1481,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -1487,7 +1503,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1506,11 +1522,11 @@ public:
       enum { _fnum = 1362 };
 
       NoFills() : GroupBase(_fnum) {}
-      ~NoFills() {}
+      ~NoFills() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha));
-         mb->append_group(new NoNested4PartyIDs); // 1414
+         mb->get_groups().insert({1414, new NoNested4PartyIDs });
          return mb;
       }
 
@@ -1528,11 +1544,11 @@ public:
          enum { _fnum = 1414 };
 
          NoNested4PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested4PartyIDs() {}
+         ~NoNested4PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested4PartySubIDs); // 1413
+            mb->get_groups().insert({1413, new NoNested4PartySubIDs });
             return mb;
          }
 
@@ -1550,7 +1566,7 @@ public:
             enum { _fnum = 1413 };
 
             NoNested4PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested4PartySubIDs() {}
+            ~NoNested4PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1570,7 +1586,7 @@ public:
       enum { _fnum = 1445 };
 
       NoRateSources() : GroupBase(_fnum) {}
-      ~NoRateSources() {}
+      ~NoRateSources() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1588,11 +1604,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -1610,11 +1626,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -1632,7 +1648,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1651,7 +1667,7 @@ class OrderCancelReject : public Message
 
 public:
    OrderCancelReject() : Message(ctx(), _msgtype(), _traits, 21, &_ftha) {}
-   ~OrderCancelReject() {}
+   ~OrderCancelReject() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -1668,9 +1684,9 @@ class Logon : public Message
 public:
    Logon() : Message(ctx(), _msgtype(), _traits, 12, &_ftha)
    {
-      _groups.insert(Groups::value_type(384, new NoMsgTypes));
+      _groups.insert({384, new NoMsgTypes });
    }
-   ~Logon() {}
+   ~Logon() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
    bool is_admin() const { return true; }
 
@@ -1688,7 +1704,7 @@ public:
       enum { _fnum = 384 };
 
       NoMsgTypes() : GroupBase(_fnum) {}
-      ~NoMsgTypes() {}
+      ~NoMsgTypes() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1706,17 +1722,19 @@ class DerivativeSecurityList : public Message
 public:
    DerivativeSecurityList() : Message(ctx(), _msgtype(), _traits, 149, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1218, new NoDerivativeSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(1286, new NoDerivativeEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1292, new NoDerivativeInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1310, new NoMarketSegments));
-      _groups.insert(_groups.end(), Groups::value_type(1311, new NoDerivativeInstrAttrib));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 887, new NoUnderlyingStips },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1218, new NoDerivativeSecurityAltID },
+         { 1286, new NoDerivativeEvents },
+         { 1292, new NoDerivativeInstrumentParties },
+         { 1310, new NoMarketSegments },
+         { 1311, new NoDerivativeInstrAttrib },
+      });
    }
-   ~DerivativeSecurityList() {}
+   ~DerivativeSecurityList() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -1733,16 +1751,18 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 102, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrAttrib); // 870
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 864, new NoEvents },
+            { 870, new NoInstrAttrib },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -1760,7 +1780,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1778,11 +1798,11 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
+            mb->get_groups().insert({604, new NoLegSecurityAltID });
             return mb;
          }
 
@@ -1800,7 +1820,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1819,7 +1839,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1837,7 +1857,7 @@ public:
          enum { _fnum = 870 };
 
          NoInstrAttrib() : GroupBase(_fnum) {}
-         ~NoInstrAttrib() {}
+         ~NoInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -1855,11 +1875,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -1877,7 +1897,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -1896,11 +1916,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -1918,11 +1938,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -1940,7 +1960,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -1961,7 +1981,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1979,7 +1999,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -1997,11 +2017,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -2019,7 +2039,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2038,7 +2058,7 @@ public:
       enum { _fnum = 1218 };
 
       NoDerivativeSecurityAltID() : GroupBase(_fnum) {}
-      ~NoDerivativeSecurityAltID() {}
+      ~NoDerivativeSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2056,7 +2076,7 @@ public:
       enum { _fnum = 1286 };
 
       NoDerivativeEvents() : GroupBase(_fnum) {}
-      ~NoDerivativeEvents() {}
+      ~NoDerivativeEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2074,11 +2094,11 @@ public:
       enum { _fnum = 1292 };
 
       NoDerivativeInstrumentParties() : GroupBase(_fnum) {}
-      ~NoDerivativeInstrumentParties() {}
+      ~NoDerivativeInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoDerivativeInstrumentPartySubIDs); // 1296
+         mb->get_groups().insert({1296, new NoDerivativeInstrumentPartySubIDs });
          return mb;
       }
 
@@ -2096,7 +2116,7 @@ public:
          enum { _fnum = 1296 };
 
          NoDerivativeInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoDerivativeInstrumentPartySubIDs() {}
+         ~NoDerivativeInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2115,15 +2135,17 @@ public:
       enum { _fnum = 1310 };
 
       NoMarketSegments() : GroupBase(_fnum) {}
-      ~NoMarketSegments() {}
+      ~NoMarketSegments() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 21, &_ftha));
-         mb->append_group(new NoStrikeRules); // 1201
-         mb->append_group(new NoTickRules); // 1205
-         mb->append_group(new NoLotTypeRules); // 1234
-         mb->append_group(new NoTradingSessionRules); // 1309
-         mb->append_group(new NoNestedInstrAttrib); // 1312
+         mb->get_groups().insert({
+            { 1201, new NoStrikeRules },
+            { 1205, new NoTickRules },
+            { 1234, new NoLotTypeRules },
+            { 1309, new NoTradingSessionRules },
+            { 1312, new NoNestedInstrAttrib },
+         });
          return mb;
       }
 
@@ -2141,11 +2163,11 @@ public:
          enum { _fnum = 1201 };
 
          NoStrikeRules() : GroupBase(_fnum) {}
-         ~NoStrikeRules() {}
+         ~NoStrikeRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoMaturityRules); // 1236
+            mb->get_groups().insert({1236, new NoMaturityRules });
             return mb;
          }
 
@@ -2163,7 +2185,7 @@ public:
             enum { _fnum = 1236 };
 
             NoMaturityRules() : GroupBase(_fnum) {}
-            ~NoMaturityRules() {}
+            ~NoMaturityRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2182,7 +2204,7 @@ public:
          enum { _fnum = 1205 };
 
          NoTickRules() : GroupBase(_fnum) {}
-         ~NoTickRules() {}
+         ~NoTickRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2200,7 +2222,7 @@ public:
          enum { _fnum = 1234 };
 
          NoLotTypeRules() : GroupBase(_fnum) {}
-         ~NoLotTypeRules() {}
+         ~NoLotTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2218,15 +2240,17 @@ public:
          enum { _fnum = 1309 };
 
          NoTradingSessionRules() : GroupBase(_fnum) {}
-         ~NoTradingSessionRules() {}
+         ~NoTradingSessionRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-            mb->append_group(new NoMDFeedTypes); // 1141
-            mb->append_group(new NoExecInstRules); // 1232
-            mb->append_group(new NoMatchRules); // 1235
-            mb->append_group(new NoOrdTypeRules); // 1237
-            mb->append_group(new NoTimeInForceRules); // 1239
+            mb->get_groups().insert({
+               { 1141, new NoMDFeedTypes },
+               { 1232, new NoExecInstRules },
+               { 1235, new NoMatchRules },
+               { 1237, new NoOrdTypeRules },
+               { 1239, new NoTimeInForceRules },
+            });
             return mb;
          }
 
@@ -2244,7 +2268,7 @@ public:
             enum { _fnum = 1141 };
 
             NoMDFeedTypes() : GroupBase(_fnum) {}
-            ~NoMDFeedTypes() {}
+            ~NoMDFeedTypes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2262,7 +2286,7 @@ public:
             enum { _fnum = 1232 };
 
             NoExecInstRules() : GroupBase(_fnum) {}
-            ~NoExecInstRules() {}
+            ~NoExecInstRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2280,7 +2304,7 @@ public:
             enum { _fnum = 1235 };
 
             NoMatchRules() : GroupBase(_fnum) {}
-            ~NoMatchRules() {}
+            ~NoMatchRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2298,7 +2322,7 @@ public:
             enum { _fnum = 1237 };
 
             NoOrdTypeRules() : GroupBase(_fnum) {}
-            ~NoOrdTypeRules() {}
+            ~NoOrdTypeRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2316,7 +2340,7 @@ public:
             enum { _fnum = 1239 };
 
             NoTimeInForceRules() : GroupBase(_fnum) {}
-            ~NoTimeInForceRules() {}
+            ~NoTimeInForceRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2335,7 +2359,7 @@ public:
          enum { _fnum = 1312 };
 
          NoNestedInstrAttrib() : GroupBase(_fnum) {}
-         ~NoNestedInstrAttrib() {}
+         ~NoNestedInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2354,7 +2378,7 @@ public:
       enum { _fnum = 1311 };
 
       NoDerivativeInstrAttrib() : GroupBase(_fnum) {}
-      ~NoDerivativeInstrAttrib() {}
+      ~NoDerivativeInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2372,18 +2396,20 @@ class NewOrderMultileg : public Message
 public:
    NewOrderMultileg() : Message(ctx(), _msgtype(), _traits, 216, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~NewOrderMultileg() {}
+   ~NewOrderMultileg() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -2400,11 +2426,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNested3PartyIDs); // 948
+         mb->get_groups().insert({948, new NoNested3PartyIDs });
          return mb;
       }
 
@@ -2422,11 +2448,11 @@ public:
          enum { _fnum = 948 };
 
          NoNested3PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested3PartyIDs() {}
+         ~NoNested3PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested3PartySubIDs); // 952
+            mb->get_groups().insert({952, new NoNested3PartySubIDs });
             return mb;
          }
 
@@ -2444,7 +2470,7 @@ public:
             enum { _fnum = 952 };
 
             NoNested3PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested3PartySubIDs() {}
+            ~NoNested3PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2464,7 +2490,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2482,11 +2508,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -2504,7 +2530,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2523,7 +2549,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2541,14 +2567,16 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 71, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegAllocs); // 670
-         mb->append_group(new NoLegStipulations); // 683
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 670, new NoLegAllocs },
+            { 683, new NoLegStipulations },
+         });
          return mb;
       }
 
@@ -2566,11 +2594,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -2588,7 +2616,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2607,7 +2635,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2625,11 +2653,11 @@ public:
          enum { _fnum = 670 };
 
          NoLegAllocs() : GroupBase(_fnum) {}
-         ~NoLegAllocs() {}
+         ~NoLegAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoNested2PartyIDs); // 756
+            mb->get_groups().insert({756, new NoNested2PartyIDs });
             return mb;
          }
 
@@ -2647,11 +2675,11 @@ public:
             enum { _fnum = 756 };
 
             NoNested2PartyIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartyIDs() {}
+            ~NoNested2PartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNested2PartySubIDs); // 806
+               mb->get_groups().insert({806, new NoNested2PartySubIDs });
                return mb;
             }
 
@@ -2669,7 +2697,7 @@ public:
                enum { _fnum = 806 };
 
                NoNested2PartySubIDs() : GroupBase(_fnum) {}
-               ~NoNested2PartySubIDs() {}
+               ~NoNested2PartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -2689,7 +2717,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2708,13 +2736,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -2732,7 +2762,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2750,7 +2780,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2768,11 +2798,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -2790,7 +2820,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2810,7 +2840,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2828,7 +2858,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -2846,11 +2876,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -2868,7 +2898,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -2887,11 +2917,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -2909,11 +2939,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -2931,7 +2961,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -2951,18 +2981,20 @@ class MultilegOrderCancelReplace : public Message
 public:
    MultilegOrderCancelReplace() : Message(ctx(), _msgtype(), _traits, 217, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~MultilegOrderCancelReplace() {}
+   ~MultilegOrderCancelReplace() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -2979,11 +3011,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNested3PartyIDs); // 948
+         mb->get_groups().insert({948, new NoNested3PartyIDs });
          return mb;
       }
 
@@ -3001,11 +3033,11 @@ public:
          enum { _fnum = 948 };
 
          NoNested3PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested3PartyIDs() {}
+         ~NoNested3PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested3PartySubIDs); // 952
+            mb->get_groups().insert({952, new NoNested3PartySubIDs });
             return mb;
          }
 
@@ -3023,7 +3055,7 @@ public:
             enum { _fnum = 952 };
 
             NoNested3PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested3PartySubIDs() {}
+            ~NoNested3PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -3043,7 +3075,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3061,11 +3093,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -3083,7 +3115,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3102,7 +3134,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3120,14 +3152,16 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 71, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegAllocs); // 670
-         mb->append_group(new NoLegStipulations); // 683
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 670, new NoLegAllocs },
+            { 683, new NoLegStipulations },
+         });
          return mb;
       }
 
@@ -3145,11 +3179,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -3167,7 +3201,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -3186,7 +3220,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3204,11 +3238,11 @@ public:
          enum { _fnum = 670 };
 
          NoLegAllocs() : GroupBase(_fnum) {}
-         ~NoLegAllocs() {}
+         ~NoLegAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoNested2PartyIDs); // 756
+            mb->get_groups().insert({756, new NoNested2PartyIDs });
             return mb;
          }
 
@@ -3226,11 +3260,11 @@ public:
             enum { _fnum = 756 };
 
             NoNested2PartyIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartyIDs() {}
+            ~NoNested2PartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNested2PartySubIDs); // 806
+               mb->get_groups().insert({806, new NoNested2PartySubIDs });
                return mb;
             }
 
@@ -3248,7 +3282,7 @@ public:
                enum { _fnum = 806 };
 
                NoNested2PartySubIDs() : GroupBase(_fnum) {}
-               ~NoNested2PartySubIDs() {}
+               ~NoNested2PartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -3268,7 +3302,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3287,13 +3321,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -3311,7 +3347,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3329,7 +3365,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3347,11 +3383,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -3369,7 +3405,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -3389,7 +3425,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3407,7 +3443,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3425,11 +3461,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -3447,7 +3483,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3466,11 +3502,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -3488,11 +3524,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -3510,7 +3546,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -3530,17 +3566,19 @@ class TradeCaptureReportRequest : public Message
 public:
    TradeCaptureReportRequest() : Message(ctx(), _msgtype(), _traits, 139, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(580, new NoDates));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 580, new NoDates },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~TradeCaptureReportRequest() {}
+   ~TradeCaptureReportRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -3557,11 +3595,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -3579,7 +3617,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3598,7 +3636,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3616,11 +3654,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -3638,7 +3676,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3657,7 +3695,7 @@ public:
       enum { _fnum = 580 };
 
       NoDates() : GroupBase(_fnum) {}
-      ~NoDates() {}
+      ~NoDates() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3675,13 +3713,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -3699,7 +3739,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3717,7 +3757,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3735,11 +3775,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -3757,7 +3797,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -3777,7 +3817,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3795,7 +3835,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3813,11 +3853,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -3835,7 +3875,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -3854,11 +3894,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -3876,11 +3916,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -3898,7 +3938,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -3918,19 +3958,21 @@ class TradeCaptureReport : public Message
 public:
    TradeCaptureReport() : Message(ctx(), _msgtype(), _traits, 203, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(552, new NoSides));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1387, new NoTrdRepIndicators));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 552, new NoSides },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1116, new NoRootPartyIDs },
+         { 1387, new NoTrdRepIndicators },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~TradeCaptureReport() {}
+   ~TradeCaptureReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -3947,7 +3989,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -3965,18 +4007,20 @@ public:
       enum { _fnum = 552 };
 
       NoSides() : GroupBase(_fnum) {}
-      ~NoSides() {}
+      ~NoSides() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 104, &_ftha));
-         mb->append_group(new NoAllocs); // 78
-         mb->append_group(new NoMiscFees); // 136
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoContAmts); // 518
-         mb->append_group(new NoClearingInstructions); // 576
-         mb->append_group(new NoSideTrdRegTS); // 1016
-         mb->append_group(new NoSettlDetails); // 1158
+         mb->get_groups().insert({
+            { 78, new NoAllocs },
+            { 136, new NoMiscFees },
+            { 232, new NoStipulations },
+            { 453, new NoPartyIDs },
+            { 518, new NoContAmts },
+            { 576, new NoClearingInstructions },
+            { 1016, new NoSideTrdRegTS },
+            { 1158, new NoSettlDetails },
+         });
          return mb;
       }
 
@@ -3994,11 +4038,11 @@ public:
          enum { _fnum = 78 };
 
          NoAllocs() : GroupBase(_fnum) {}
-         ~NoAllocs() {}
+         ~NoAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 10, &_ftha));
-            mb->append_group(new NoNested2PartyIDs); // 756
+            mb->get_groups().insert({756, new NoNested2PartyIDs });
             return mb;
          }
 
@@ -4016,11 +4060,11 @@ public:
             enum { _fnum = 756 };
 
             NoNested2PartyIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartyIDs() {}
+            ~NoNested2PartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNested2PartySubIDs); // 806
+               mb->get_groups().insert({806, new NoNested2PartySubIDs });
                return mb;
             }
 
@@ -4038,7 +4082,7 @@ public:
                enum { _fnum = 806 };
 
                NoNested2PartySubIDs() : GroupBase(_fnum) {}
-               ~NoNested2PartySubIDs() {}
+               ~NoNested2PartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -4058,7 +4102,7 @@ public:
          enum { _fnum = 136 };
 
          NoMiscFees() : GroupBase(_fnum) {}
-         ~NoMiscFees() {}
+         ~NoMiscFees() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4076,7 +4120,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4094,11 +4138,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -4116,7 +4160,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -4135,7 +4179,7 @@ public:
          enum { _fnum = 518 };
 
          NoContAmts() : GroupBase(_fnum) {}
-         ~NoContAmts() {}
+         ~NoContAmts() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4153,7 +4197,7 @@ public:
          enum { _fnum = 576 };
 
          NoClearingInstructions() : GroupBase(_fnum) {}
-         ~NoClearingInstructions() {}
+         ~NoClearingInstructions() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4171,7 +4215,7 @@ public:
          enum { _fnum = 1016 };
 
          NoSideTrdRegTS() : GroupBase(_fnum) {}
-         ~NoSideTrdRegTS() {}
+         ~NoSideTrdRegTS() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4189,11 +4233,11 @@ public:
          enum { _fnum = 1158 };
 
          NoSettlDetails() : GroupBase(_fnum) {}
-         ~NoSettlDetails() {}
+         ~NoSettlDetails() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -4211,11 +4255,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -4233,7 +4277,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -4254,14 +4298,16 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 76, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegStipulations); // 683
-         mb->append_group(new NoOfLegUnderlyings); // 1342
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 683, new NoLegStipulations },
+            { 1342, new NoOfLegUnderlyings },
+         });
          return mb;
       }
 
@@ -4279,11 +4325,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -4301,7 +4347,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -4320,7 +4366,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4338,7 +4384,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4356,11 +4402,11 @@ public:
          enum { _fnum = 1342 };
 
          NoOfLegUnderlyings() : GroupBase(_fnum) {}
-         ~NoOfLegUnderlyings() {}
+         ~NoOfLegUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 16, &_ftha));
-            mb->append_group(new NoUnderlyingLegSecurityAltID); // 1334
+            mb->get_groups().insert({1334, new NoUnderlyingLegSecurityAltID });
             return mb;
          }
 
@@ -4378,7 +4424,7 @@ public:
             enum { _fnum = 1334 };
 
             NoUnderlyingLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingLegSecurityAltID() {}
+            ~NoUnderlyingLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -4398,13 +4444,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -4422,7 +4470,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4440,7 +4488,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4458,11 +4506,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -4480,7 +4528,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -4500,7 +4548,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4518,7 +4566,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4536,7 +4584,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4554,11 +4602,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -4576,7 +4624,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4595,11 +4643,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -4617,7 +4665,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4636,7 +4684,7 @@ public:
       enum { _fnum = 1387 };
 
       NoTrdRepIndicators() : GroupBase(_fnum) {}
-      ~NoTrdRepIndicators() {}
+      ~NoTrdRepIndicators() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4654,11 +4702,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -4676,11 +4724,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -4698,7 +4746,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -4718,17 +4766,19 @@ class OrderMassStatusRequest : public Message
 public:
    OrderMassStatusRequest() : Message(ctx(), _msgtype(), _traits, 169, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 864, new NoEvents },
+         { 887, new NoUnderlyingStips },
+         { 1018, new NoInstrumentParties },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderMassStatusRequest() {}
+   ~OrderMassStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -4745,11 +4795,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -4767,7 +4817,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4786,7 +4836,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4804,7 +4854,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4822,7 +4872,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4840,7 +4890,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4858,11 +4908,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -4880,7 +4930,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4899,11 +4949,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -4921,7 +4971,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -4940,7 +4990,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -4958,11 +5008,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -4980,11 +5030,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -5002,7 +5052,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5022,10 +5072,12 @@ class QuoteRequestReject : public Message
 public:
    QuoteRequestReject() : Message(ctx(), _msgtype(), _traits, 11, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 1116, new NoRootPartyIDs },
+      });
    }
-   ~QuoteRequestReject() {}
+   ~QuoteRequestReject() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -5042,19 +5094,21 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 144, &_ftha));
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoQuoteQualifiers); // 735
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 232, new NoStipulations },
+            { 453, new NoPartyIDs },
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 735, new NoQuoteQualifiers },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -5072,7 +5126,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5090,11 +5144,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -5112,7 +5166,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5131,7 +5185,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5149,13 +5203,15 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 67, &_ftha));
-            mb->append_group(new NoNestedPartyIDs); // 539
-            mb->append_group(new NoLegSecurityAltID); // 604
-            mb->append_group(new NoLegStipulations); // 683
+            mb->get_groups().insert({
+               { 539, new NoNestedPartyIDs },
+               { 604, new NoLegSecurityAltID },
+               { 683, new NoLegStipulations },
+            });
             return mb;
          }
 
@@ -5173,11 +5229,11 @@ public:
             enum { _fnum = 539 };
 
             NoNestedPartyIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartyIDs() {}
+            ~NoNestedPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNestedPartySubIDs); // 804
+               mb->get_groups().insert({804, new NoNestedPartySubIDs });
                return mb;
             }
 
@@ -5195,7 +5251,7 @@ public:
                enum { _fnum = 804 };
 
                NoNestedPartySubIDs() : GroupBase(_fnum) {}
-               ~NoNestedPartySubIDs() {}
+               ~NoNestedPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -5214,7 +5270,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5232,7 +5288,7 @@ public:
             enum { _fnum = 683 };
 
             NoLegStipulations() : GroupBase(_fnum) {}
-            ~NoLegStipulations() {}
+            ~NoLegStipulations() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5251,13 +5307,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -5275,7 +5333,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5293,7 +5351,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5311,11 +5369,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -5333,7 +5391,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -5353,7 +5411,7 @@ public:
          enum { _fnum = 735 };
 
          NoQuoteQualifiers() : GroupBase(_fnum) {}
-         ~NoQuoteQualifiers() {}
+         ~NoQuoteQualifiers() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5371,7 +5429,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5389,11 +5447,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -5411,7 +5469,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5430,11 +5488,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -5452,11 +5510,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -5474,7 +5532,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -5495,11 +5553,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -5517,7 +5575,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5536,10 +5594,12 @@ class RFQRequest : public Message
 public:
    RFQRequest() : Message(ctx(), _msgtype(), _traits, 5, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 453, new NoPartyIDs },
+      });
    }
-   ~RFQRequest() {}
+   ~RFQRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -5556,16 +5616,18 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 95, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -5583,7 +5645,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5601,11 +5663,11 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
+            mb->get_groups().insert({604, new NoLegSecurityAltID });
             return mb;
          }
 
@@ -5623,7 +5685,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5642,13 +5704,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -5666,7 +5730,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5684,7 +5748,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5702,11 +5766,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -5724,7 +5788,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -5744,7 +5808,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5762,11 +5826,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -5784,7 +5848,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -5803,11 +5867,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -5825,11 +5889,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -5847,7 +5911,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -5868,11 +5932,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -5890,7 +5954,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5909,18 +5973,20 @@ class QuoteStatusReport : public Message
 public:
    QuoteStatusReport() : Message(ctx(), _msgtype(), _traits, 181, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(735, new NoQuoteQualifiers));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 735, new NoQuoteQualifiers },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~QuoteStatusReport() {}
+   ~QuoteStatusReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -5937,7 +6003,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -5955,11 +6021,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -5977,7 +6043,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -5996,7 +6062,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6014,13 +6080,15 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 61, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegStipulations); // 683
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 683, new NoLegStipulations },
+         });
          return mb;
       }
 
@@ -6038,11 +6106,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -6060,7 +6128,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6079,7 +6147,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6097,7 +6165,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6116,13 +6184,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -6140,7 +6210,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6158,7 +6228,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6176,11 +6246,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -6198,7 +6268,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6218,7 +6288,7 @@ public:
       enum { _fnum = 735 };
 
       NoQuoteQualifiers() : GroupBase(_fnum) {}
-      ~NoQuoteQualifiers() {}
+      ~NoQuoteQualifiers() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6236,7 +6306,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6254,11 +6324,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -6276,7 +6346,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6295,7 +6365,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6313,11 +6383,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -6335,11 +6405,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -6357,7 +6427,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6377,17 +6447,19 @@ class QuoteResponse : public Message
 public:
    QuoteResponse() : Message(ctx(), _msgtype(), _traits, 177, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(735, new NoQuoteQualifiers));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 735, new NoQuoteQualifiers },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~QuoteResponse() {}
+   ~QuoteResponse() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -6404,7 +6476,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6422,11 +6494,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -6444,7 +6516,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6463,7 +6535,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6481,13 +6553,15 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegStipulations); // 683
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 683, new NoLegStipulations },
+         });
          return mb;
       }
 
@@ -6505,11 +6579,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -6527,7 +6601,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6546,7 +6620,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6564,7 +6638,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6583,13 +6657,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -6607,7 +6683,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6625,7 +6701,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6643,11 +6719,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -6665,7 +6741,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6685,7 +6761,7 @@ public:
       enum { _fnum = 735 };
 
       NoQuoteQualifiers() : GroupBase(_fnum) {}
-      ~NoQuoteQualifiers() {}
+      ~NoQuoteQualifiers() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6703,7 +6779,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -6721,11 +6797,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -6743,7 +6819,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -6762,11 +6838,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -6784,11 +6860,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -6806,7 +6882,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6826,22 +6902,24 @@ class Confirmation : public Message
 public:
    Confirmation() : Message(ctx(), _msgtype(), _traits, 181, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
-      _groups.insert(_groups.end(), Groups::value_type(85, new NoDlvyInst));
-      _groups.insert(_groups.end(), Groups::value_type(136, new NoMiscFees));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(862, new NoCapacities));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 73, new NoOrders },
+         { 85, new NoDlvyInst },
+         { 136, new NoMiscFees },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 862, new NoCapacities },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~Confirmation() {}
+   ~Confirmation() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -6858,11 +6936,11 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 9, &_ftha));
-         mb->append_group(new NoNested2PartyIDs); // 756
+         mb->get_groups().insert({756, new NoNested2PartyIDs });
          return mb;
       }
 
@@ -6880,11 +6958,11 @@ public:
          enum { _fnum = 756 };
 
          NoNested2PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested2PartyIDs() {}
+         ~NoNested2PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested2PartySubIDs); // 806
+            mb->get_groups().insert({806, new NoNested2PartySubIDs });
             return mb;
          }
 
@@ -6902,7 +6980,7 @@ public:
             enum { _fnum = 806 };
 
             NoNested2PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartySubIDs() {}
+            ~NoNested2PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6922,11 +7000,11 @@ public:
       enum { _fnum = 85 };
 
       NoDlvyInst() : GroupBase(_fnum) {}
-      ~NoDlvyInst() {}
+      ~NoDlvyInst() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-         mb->append_group(new NoSettlPartyIDs); // 781
+         mb->get_groups().insert({781, new NoSettlPartyIDs });
          return mb;
       }
 
@@ -6944,11 +7022,11 @@ public:
          enum { _fnum = 781 };
 
          NoSettlPartyIDs() : GroupBase(_fnum) {}
-         ~NoSettlPartyIDs() {}
+         ~NoSettlPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoSettlPartySubIDs); // 801
+            mb->get_groups().insert({801, new NoSettlPartySubIDs });
             return mb;
          }
 
@@ -6966,7 +7044,7 @@ public:
             enum { _fnum = 801 };
 
             NoSettlPartySubIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartySubIDs() {}
+            ~NoSettlPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -6986,7 +7064,7 @@ public:
       enum { _fnum = 136 };
 
       NoMiscFees() : GroupBase(_fnum) {}
-      ~NoMiscFees() {}
+      ~NoMiscFees() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7004,7 +7082,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7022,11 +7100,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -7044,7 +7122,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7063,7 +7141,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7081,11 +7159,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -7103,7 +7181,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7122,13 +7200,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -7146,7 +7226,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7164,7 +7244,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7182,11 +7262,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -7204,7 +7284,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -7224,7 +7304,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7242,7 +7322,7 @@ public:
       enum { _fnum = 862 };
 
       NoCapacities() : GroupBase(_fnum) {}
-      ~NoCapacities() {}
+      ~NoCapacities() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7260,7 +7340,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7278,7 +7358,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7296,11 +7376,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -7318,7 +7398,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7337,11 +7417,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -7359,11 +7439,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -7381,7 +7461,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -7401,18 +7481,20 @@ class PositionMaintenanceRequest : public Message
 public:
    PositionMaintenanceRequest() : Message(ctx(), _msgtype(), _traits, 115, &_ftha)
    {
-      _groups.insert(Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(702, new NoPositions));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 702, new NoPositions },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~PositionMaintenanceRequest() {}
+   ~PositionMaintenanceRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -7429,7 +7511,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7447,11 +7529,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -7469,7 +7551,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7488,7 +7570,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7506,11 +7588,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -7528,7 +7610,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7547,11 +7629,11 @@ public:
       enum { _fnum = 702 };
 
       NoPositions() : GroupBase(_fnum) {}
-      ~NoPositions() {}
+      ~NoPositions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -7569,11 +7651,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -7591,7 +7673,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -7611,13 +7693,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -7635,7 +7719,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7653,7 +7737,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7671,11 +7755,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -7693,7 +7777,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -7713,7 +7797,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7731,7 +7815,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7749,11 +7833,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -7771,7 +7855,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7790,11 +7874,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -7812,11 +7896,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -7834,7 +7918,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -7854,18 +7938,20 @@ class PositionMaintenanceReport : public Message
 public:
    PositionMaintenanceReport() : Message(ctx(), _msgtype(), _traits, 118, &_ftha)
    {
-      _groups.insert(Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(702, new NoPositions));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 702, new NoPositions },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~PositionMaintenanceReport() {}
+   ~PositionMaintenanceReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -7882,7 +7968,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7900,11 +7986,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -7922,7 +8008,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -7941,7 +8027,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -7959,11 +8045,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -7981,7 +8067,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8000,11 +8086,11 @@ public:
       enum { _fnum = 702 };
 
       NoPositions() : GroupBase(_fnum) {}
-      ~NoPositions() {}
+      ~NoPositions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -8022,11 +8108,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -8044,7 +8130,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -8064,13 +8150,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -8088,7 +8176,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8106,7 +8194,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8124,11 +8212,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -8146,7 +8234,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -8166,7 +8254,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8184,7 +8272,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8202,11 +8290,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -8224,7 +8312,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8243,11 +8331,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -8265,11 +8353,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -8287,7 +8375,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -8307,16 +8395,18 @@ class RequestForPositions : public Message
 public:
    RequestForPositions() : Message(ctx(), _msgtype(), _traits, 110, &_ftha)
    {
-      _groups.insert(Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~RequestForPositions() {}
+   ~RequestForPositions() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -8333,7 +8423,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8351,11 +8441,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -8373,7 +8463,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8392,7 +8482,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8410,11 +8500,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -8432,7 +8522,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8451,13 +8541,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -8475,7 +8567,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8493,7 +8585,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8511,11 +8603,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -8533,7 +8625,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -8553,7 +8645,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8571,11 +8663,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -8593,7 +8685,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8612,11 +8704,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -8634,11 +8726,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -8656,7 +8748,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -8676,15 +8768,17 @@ class RequestForPositionsAck : public Message
 public:
    RequestForPositionsAck() : Message(ctx(), _msgtype(), _traits, 113, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~RequestForPositionsAck() {}
+   ~RequestForPositionsAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -8701,11 +8795,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -8723,7 +8817,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8742,7 +8836,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8760,11 +8854,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -8782,7 +8876,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8801,13 +8895,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -8825,7 +8921,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8843,7 +8939,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8861,11 +8957,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -8883,7 +8979,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -8903,7 +8999,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -8921,11 +9017,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -8943,7 +9039,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -8962,11 +9058,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -8984,11 +9080,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -9006,7 +9102,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -9026,17 +9122,19 @@ class PositionReport : public Message
 public:
    PositionReport() : Message(ctx(), _msgtype(), _traits, 125, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(702, new NoPositions));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 702, new NoPositions },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~PositionReport() {}
+   ~PositionReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -9053,11 +9151,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -9075,7 +9173,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9094,7 +9192,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -9112,11 +9210,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -9134,7 +9232,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9153,11 +9251,11 @@ public:
       enum { _fnum = 702 };
 
       NoPositions() : GroupBase(_fnum) {}
-      ~NoPositions() {}
+      ~NoPositions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -9175,11 +9273,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -9197,7 +9295,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -9217,14 +9315,16 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 76, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUnderlyingAmounts); // 984
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 984, new NoUnderlyingAmounts },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -9242,7 +9342,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9260,7 +9360,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9278,7 +9378,7 @@ public:
          enum { _fnum = 984 };
 
          NoUnderlyingAmounts() : GroupBase(_fnum) {}
-         ~NoUnderlyingAmounts() {}
+         ~NoUnderlyingAmounts() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9296,11 +9396,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -9318,7 +9418,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -9338,7 +9438,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -9356,7 +9456,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -9374,11 +9474,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -9396,7 +9496,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9415,11 +9515,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -9437,11 +9537,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -9459,7 +9559,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -9479,14 +9579,16 @@ class TradeCaptureReportRequestAck : public Message
 public:
    TradeCaptureReportRequestAck() : Message(ctx(), _msgtype(), _traits, 107, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~TradeCaptureReportRequestAck() {}
+   ~TradeCaptureReportRequestAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -9503,7 +9605,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -9521,11 +9623,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -9543,7 +9645,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9562,13 +9664,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -9586,7 +9690,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9604,7 +9708,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9622,11 +9726,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -9644,7 +9748,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -9664,7 +9768,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -9682,11 +9786,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -9704,7 +9808,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9723,11 +9827,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -9745,11 +9849,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -9767,7 +9871,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -9787,19 +9891,21 @@ class TradeCaptureReportAck : public Message
 public:
    TradeCaptureReportAck() : Message(ctx(), _msgtype(), _traits, 172, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(552, new NoSides));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1387, new NoTrdRepIndicators));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 552, new NoSides },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1116, new NoRootPartyIDs },
+         { 1387, new NoTrdRepIndicators },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~TradeCaptureReportAck() {}
+   ~TradeCaptureReportAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -9816,7 +9922,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -9834,18 +9940,20 @@ public:
       enum { _fnum = 552 };
 
       NoSides() : GroupBase(_fnum) {}
-      ~NoSides() {}
+      ~NoSides() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 99, &_ftha));
-         mb->append_group(new NoAllocs); // 78
-         mb->append_group(new NoMiscFees); // 136
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoContAmts); // 518
-         mb->append_group(new NoClearingInstructions); // 576
-         mb->append_group(new NoSideTrdRegTS); // 1016
-         mb->append_group(new NoSettlDetails); // 1158
+         mb->get_groups().insert({
+            { 78, new NoAllocs },
+            { 136, new NoMiscFees },
+            { 232, new NoStipulations },
+            { 453, new NoPartyIDs },
+            { 518, new NoContAmts },
+            { 576, new NoClearingInstructions },
+            { 1016, new NoSideTrdRegTS },
+            { 1158, new NoSettlDetails },
+         });
          return mb;
       }
 
@@ -9863,11 +9971,11 @@ public:
          enum { _fnum = 78 };
 
          NoAllocs() : GroupBase(_fnum) {}
-         ~NoAllocs() {}
+         ~NoAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 10, &_ftha));
-            mb->append_group(new NoNested2PartyIDs); // 756
+            mb->get_groups().insert({756, new NoNested2PartyIDs });
             return mb;
          }
 
@@ -9885,11 +9993,11 @@ public:
             enum { _fnum = 756 };
 
             NoNested2PartyIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartyIDs() {}
+            ~NoNested2PartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNested2PartySubIDs); // 806
+               mb->get_groups().insert({806, new NoNested2PartySubIDs });
                return mb;
             }
 
@@ -9907,7 +10015,7 @@ public:
                enum { _fnum = 806 };
 
                NoNested2PartySubIDs() : GroupBase(_fnum) {}
-               ~NoNested2PartySubIDs() {}
+               ~NoNested2PartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -9927,7 +10035,7 @@ public:
          enum { _fnum = 136 };
 
          NoMiscFees() : GroupBase(_fnum) {}
-         ~NoMiscFees() {}
+         ~NoMiscFees() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9945,7 +10053,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -9963,11 +10071,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -9985,7 +10093,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10004,7 +10112,7 @@ public:
          enum { _fnum = 518 };
 
          NoContAmts() : GroupBase(_fnum) {}
-         ~NoContAmts() {}
+         ~NoContAmts() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10022,7 +10130,7 @@ public:
          enum { _fnum = 576 };
 
          NoClearingInstructions() : GroupBase(_fnum) {}
-         ~NoClearingInstructions() {}
+         ~NoClearingInstructions() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10040,7 +10148,7 @@ public:
          enum { _fnum = 1016 };
 
          NoSideTrdRegTS() : GroupBase(_fnum) {}
-         ~NoSideTrdRegTS() {}
+         ~NoSideTrdRegTS() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10058,11 +10166,11 @@ public:
          enum { _fnum = 1158 };
 
          NoSettlDetails() : GroupBase(_fnum) {}
-         ~NoSettlDetails() {}
+         ~NoSettlDetails() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -10080,11 +10188,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -10102,7 +10210,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -10123,14 +10231,16 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 76, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegStipulations); // 683
-         mb->append_group(new NoOfLegUnderlyings); // 1342
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 683, new NoLegStipulations },
+            { 1342, new NoOfLegUnderlyings },
+         });
          return mb;
       }
 
@@ -10148,11 +10258,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -10170,7 +10280,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10189,7 +10299,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10207,7 +10317,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10225,11 +10335,11 @@ public:
          enum { _fnum = 1342 };
 
          NoOfLegUnderlyings() : GroupBase(_fnum) {}
-         ~NoOfLegUnderlyings() {}
+         ~NoOfLegUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 16, &_ftha));
-            mb->append_group(new NoUnderlyingLegSecurityAltID); // 1334
+            mb->get_groups().insert({1334, new NoUnderlyingLegSecurityAltID });
             return mb;
          }
 
@@ -10247,7 +10357,7 @@ public:
             enum { _fnum = 1334 };
 
             NoUnderlyingLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingLegSecurityAltID() {}
+            ~NoUnderlyingLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10267,13 +10377,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -10291,7 +10403,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10309,7 +10421,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10327,11 +10439,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -10349,7 +10461,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10369,7 +10481,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10387,7 +10499,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10405,7 +10517,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10423,11 +10535,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -10445,7 +10557,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10464,11 +10576,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -10486,7 +10598,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10505,7 +10617,7 @@ public:
       enum { _fnum = 1387 };
 
       NoTrdRepIndicators() : GroupBase(_fnum) {}
-      ~NoTrdRepIndicators() {}
+      ~NoTrdRepIndicators() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10523,11 +10635,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -10545,11 +10657,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -10567,7 +10679,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10587,22 +10699,24 @@ class AllocationReport : public Message
 public:
    AllocationReport() : Message(ctx(), _msgtype(), _traits, 188, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
-      _groups.insert(_groups.end(), Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1445, new NoRateSources));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 73, new NoOrders },
+         { 78, new NoAllocs },
+         { 124, new NoExecs },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1445, new NoRateSources },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~AllocationReport() {}
+   ~AllocationReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -10619,11 +10733,11 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 9, &_ftha));
-         mb->append_group(new NoNested2PartyIDs); // 756
+         mb->get_groups().insert({756, new NoNested2PartyIDs });
          return mb;
       }
 
@@ -10641,11 +10755,11 @@ public:
          enum { _fnum = 756 };
 
          NoNested2PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested2PartyIDs() {}
+         ~NoNested2PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested2PartySubIDs); // 806
+            mb->get_groups().insert({806, new NoNested2PartySubIDs });
             return mb;
          }
 
@@ -10663,7 +10777,7 @@ public:
             enum { _fnum = 806 };
 
             NoNested2PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartySubIDs() {}
+            ~NoNested2PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10683,14 +10797,16 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 41, &_ftha));
-         mb->append_group(new NoDlvyInst); // 85
-         mb->append_group(new NoMiscFees); // 136
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoClearingInstructions); // 576
+         mb->get_groups().insert({
+            { 85, new NoDlvyInst },
+            { 136, new NoMiscFees },
+            { 539, new NoNestedPartyIDs },
+            { 576, new NoClearingInstructions },
+         });
          return mb;
       }
 
@@ -10708,11 +10824,11 @@ public:
          enum { _fnum = 85 };
 
          NoDlvyInst() : GroupBase(_fnum) {}
-         ~NoDlvyInst() {}
+         ~NoDlvyInst() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -10730,11 +10846,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -10752,7 +10868,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -10772,7 +10888,7 @@ public:
          enum { _fnum = 136 };
 
          NoMiscFees() : GroupBase(_fnum) {}
-         ~NoMiscFees() {}
+         ~NoMiscFees() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10790,11 +10906,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -10812,7 +10928,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -10831,7 +10947,7 @@ public:
          enum { _fnum = 576 };
 
          NoClearingInstructions() : GroupBase(_fnum) {}
-         ~NoClearingInstructions() {}
+         ~NoClearingInstructions() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10850,7 +10966,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10868,7 +10984,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10886,11 +11002,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -10908,7 +11024,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10927,7 +11043,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -10945,11 +11061,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -10967,7 +11083,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -10986,13 +11102,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -11010,7 +11128,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11028,7 +11146,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11046,11 +11164,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -11068,7 +11186,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -11088,7 +11206,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11106,7 +11224,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11124,7 +11242,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11142,11 +11260,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -11164,7 +11282,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11183,7 +11301,7 @@ public:
       enum { _fnum = 1445 };
 
       NoRateSources() : GroupBase(_fnum) {}
-      ~NoRateSources() {}
+      ~NoRateSources() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11201,11 +11319,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -11223,11 +11341,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -11245,7 +11363,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -11265,10 +11383,12 @@ class AllocationReportAck : public Message
 public:
    AllocationReportAck() : Message(ctx(), _msgtype(), _traits, 21, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 453, new NoPartyIDs },
+      });
    }
-   ~AllocationReportAck() {}
+   ~AllocationReportAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -11285,11 +11405,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 14, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -11307,11 +11427,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -11329,7 +11449,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -11349,11 +11469,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -11371,7 +11491,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11389,7 +11509,7 @@ class ConfirmationAck : public Message
 
 public:
    ConfirmationAck() : Message(ctx(), _msgtype(), _traits, 9, &_ftha) {}
-   ~ConfirmationAck() {}
+   ~ConfirmationAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -11406,9 +11526,9 @@ class SettlementInstructionRequest : public Message
 public:
    SettlementInstructionRequest() : Message(ctx(), _msgtype(), _traits, 16, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({453, new NoPartyIDs });
    }
-   ~SettlementInstructionRequest() {}
+   ~SettlementInstructionRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -11425,11 +11545,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -11447,7 +11567,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11466,17 +11586,19 @@ class AssignmentReport : public Message
 public:
    AssignmentReport() : Message(ctx(), _msgtype(), _traits, 120, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(702, new NoPositions));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 702, new NoPositions },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~AssignmentReport() {}
+   ~AssignmentReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -11493,11 +11615,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -11515,7 +11637,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11534,7 +11656,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11552,11 +11674,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -11574,7 +11696,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11593,11 +11715,11 @@ public:
       enum { _fnum = 702 };
 
       NoPositions() : GroupBase(_fnum) {}
-      ~NoPositions() {}
+      ~NoPositions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -11615,11 +11737,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -11637,7 +11759,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -11657,13 +11779,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -11681,7 +11805,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11699,7 +11823,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11717,11 +11841,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -11739,7 +11863,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -11759,7 +11883,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11777,7 +11901,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11795,11 +11919,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -11817,7 +11941,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -11836,11 +11960,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -11858,11 +11982,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -11880,7 +12004,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -11900,20 +12024,22 @@ class CollateralRequest : public Message
 public:
    CollateralRequest() : Message(ctx(), _msgtype(), _traits, 145, &_ftha)
    {
-      _groups.insert(Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(136, new NoMiscFees));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(897, new NoTrades));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 124, new NoExecs },
+         { 136, new NoMiscFees },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 897, new NoTrades },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CollateralRequest() {}
+   ~CollateralRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -11930,7 +12056,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11948,7 +12074,7 @@ public:
       enum { _fnum = 136 };
 
       NoMiscFees() : GroupBase(_fnum) {}
-      ~NoMiscFees() {}
+      ~NoMiscFees() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11966,7 +12092,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -11984,11 +12110,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -12006,7 +12132,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12025,7 +12151,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12043,11 +12169,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -12065,7 +12191,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12084,13 +12210,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 73, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -12108,7 +12236,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12126,7 +12254,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12144,11 +12272,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -12166,7 +12294,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -12186,7 +12314,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12204,7 +12332,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12222,7 +12350,7 @@ public:
       enum { _fnum = 897 };
 
       NoTrades() : GroupBase(_fnum) {}
-      ~NoTrades() {}
+      ~NoTrades() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12240,11 +12368,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -12262,7 +12390,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12281,11 +12409,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -12303,11 +12431,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -12325,7 +12453,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -12345,21 +12473,23 @@ class CollateralAssignment : public Message
 public:
    CollateralAssignment() : Message(ctx(), _msgtype(), _traits, 153, &_ftha)
    {
-      _groups.insert(Groups::value_type(85, new NoDlvyInst));
-      _groups.insert(_groups.end(), Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(136, new NoMiscFees));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(897, new NoTrades));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 85, new NoDlvyInst },
+         { 124, new NoExecs },
+         { 136, new NoMiscFees },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 897, new NoTrades },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CollateralAssignment() {}
+   ~CollateralAssignment() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -12376,11 +12506,11 @@ public:
       enum { _fnum = 85 };
 
       NoDlvyInst() : GroupBase(_fnum) {}
-      ~NoDlvyInst() {}
+      ~NoDlvyInst() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-         mb->append_group(new NoSettlPartyIDs); // 781
+         mb->get_groups().insert({781, new NoSettlPartyIDs });
          return mb;
       }
 
@@ -12398,11 +12528,11 @@ public:
          enum { _fnum = 781 };
 
          NoSettlPartyIDs() : GroupBase(_fnum) {}
-         ~NoSettlPartyIDs() {}
+         ~NoSettlPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoSettlPartySubIDs); // 801
+            mb->get_groups().insert({801, new NoSettlPartySubIDs });
             return mb;
          }
 
@@ -12420,7 +12550,7 @@ public:
             enum { _fnum = 801 };
 
             NoSettlPartySubIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartySubIDs() {}
+            ~NoSettlPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -12440,7 +12570,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12458,7 +12588,7 @@ public:
       enum { _fnum = 136 };
 
       NoMiscFees() : GroupBase(_fnum) {}
-      ~NoMiscFees() {}
+      ~NoMiscFees() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12476,7 +12606,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12494,11 +12624,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -12516,7 +12646,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12535,7 +12665,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12553,11 +12683,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -12575,7 +12705,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12594,13 +12724,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 73, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -12618,7 +12750,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12636,7 +12768,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12654,11 +12786,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -12676,7 +12808,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -12696,7 +12828,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12714,7 +12846,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12732,7 +12864,7 @@ public:
       enum { _fnum = 897 };
 
       NoTrades() : GroupBase(_fnum) {}
-      ~NoTrades() {}
+      ~NoTrades() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12750,11 +12882,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -12772,7 +12904,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12791,11 +12923,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -12813,11 +12945,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -12835,7 +12967,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -12855,20 +12987,22 @@ class CollateralResponse : public Message
 public:
    CollateralResponse() : Message(ctx(), _msgtype(), _traits, 147, &_ftha)
    {
-      _groups.insert(Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(136, new NoMiscFees));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(897, new NoTrades));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 124, new NoExecs },
+         { 136, new NoMiscFees },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 897, new NoTrades },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CollateralResponse() {}
+   ~CollateralResponse() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -12885,7 +13019,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12903,7 +13037,7 @@ public:
       enum { _fnum = 136 };
 
       NoMiscFees() : GroupBase(_fnum) {}
-      ~NoMiscFees() {}
+      ~NoMiscFees() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12921,7 +13055,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12939,11 +13073,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -12961,7 +13095,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -12980,7 +13114,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -12998,11 +13132,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -13020,7 +13154,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13039,13 +13173,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 73, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -13063,7 +13199,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13081,7 +13217,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13099,11 +13235,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -13121,7 +13257,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -13141,7 +13277,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13159,7 +13295,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13177,7 +13313,7 @@ public:
       enum { _fnum = 897 };
 
       NoTrades() : GroupBase(_fnum) {}
-      ~NoTrades() {}
+      ~NoTrades() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13195,11 +13331,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -13217,7 +13353,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13236,11 +13372,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -13258,11 +13394,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -13280,7 +13416,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -13300,14 +13436,16 @@ class News : public Message
 public:
    News() : Message(ctx(), _msgtype(), _traits, 23, &_ftha)
    {
-      _groups.insert(Groups::value_type(33, new NoLinesOfText));
-      _groups.insert(_groups.end(), Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(215, new NoRoutingIDs));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(1475, new NoNewsRefIDs));
+      _groups.insert({
+         { 33, new NoLinesOfText },
+         { 146, new NoRelatedSym },
+         { 215, new NoRoutingIDs },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 1475, new NoNewsRefIDs },
+      });
    }
-   ~News() {}
+   ~News() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -13324,7 +13462,7 @@ public:
       enum { _fnum = 33 };
 
       NoLinesOfText() : GroupBase(_fnum) {}
-      ~NoLinesOfText() {}
+      ~NoLinesOfText() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13342,14 +13480,16 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 88, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -13367,7 +13507,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13385,7 +13525,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13403,11 +13543,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -13425,7 +13565,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -13444,11 +13584,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -13466,11 +13606,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -13488,7 +13628,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -13509,7 +13649,7 @@ public:
       enum { _fnum = 215 };
 
       NoRoutingIDs() : GroupBase(_fnum) {}
-      ~NoRoutingIDs() {}
+      ~NoRoutingIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13527,11 +13667,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -13549,7 +13689,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13568,13 +13708,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -13592,7 +13734,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13610,7 +13752,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13628,11 +13770,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -13650,7 +13792,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -13670,7 +13812,7 @@ public:
       enum { _fnum = 1475 };
 
       NoNewsRefIDs() : GroupBase(_fnum) {}
-      ~NoNewsRefIDs() {}
+      ~NoNewsRefIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13688,21 +13830,23 @@ class CollateralReport : public Message
 public:
    CollateralReport() : Message(ctx(), _msgtype(), _traits, 154, &_ftha)
    {
-      _groups.insert(Groups::value_type(85, new NoDlvyInst));
-      _groups.insert(_groups.end(), Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(136, new NoMiscFees));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(897, new NoTrades));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 85, new NoDlvyInst },
+         { 124, new NoExecs },
+         { 136, new NoMiscFees },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 897, new NoTrades },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CollateralReport() {}
+   ~CollateralReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -13719,11 +13863,11 @@ public:
       enum { _fnum = 85 };
 
       NoDlvyInst() : GroupBase(_fnum) {}
-      ~NoDlvyInst() {}
+      ~NoDlvyInst() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-         mb->append_group(new NoSettlPartyIDs); // 781
+         mb->get_groups().insert({781, new NoSettlPartyIDs });
          return mb;
       }
 
@@ -13741,11 +13885,11 @@ public:
          enum { _fnum = 781 };
 
          NoSettlPartyIDs() : GroupBase(_fnum) {}
-         ~NoSettlPartyIDs() {}
+         ~NoSettlPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoSettlPartySubIDs); // 801
+            mb->get_groups().insert({801, new NoSettlPartySubIDs });
             return mb;
          }
 
@@ -13763,7 +13907,7 @@ public:
             enum { _fnum = 801 };
 
             NoSettlPartySubIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartySubIDs() {}
+            ~NoSettlPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -13783,7 +13927,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13801,7 +13945,7 @@ public:
       enum { _fnum = 136 };
 
       NoMiscFees() : GroupBase(_fnum) {}
-      ~NoMiscFees() {}
+      ~NoMiscFees() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13819,7 +13963,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13837,11 +13981,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -13859,7 +14003,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13878,7 +14022,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -13896,11 +14040,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -13918,7 +14062,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13937,13 +14081,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -13961,7 +14107,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13979,7 +14125,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -13997,11 +14143,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -14019,7 +14165,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -14039,7 +14185,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14057,7 +14203,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14075,7 +14221,7 @@ public:
       enum { _fnum = 897 };
 
       NoTrades() : GroupBase(_fnum) {}
-      ~NoTrades() {}
+      ~NoTrades() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14093,11 +14239,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -14115,7 +14261,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14134,11 +14280,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -14156,11 +14302,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -14178,7 +14324,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -14198,21 +14344,23 @@ class CollateralInquiry : public Message
 public:
    CollateralInquiry() : Message(ctx(), _msgtype(), _traits, 150, &_ftha)
    {
-      _groups.insert(Groups::value_type(85, new NoDlvyInst));
-      _groups.insert(_groups.end(), Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(897, new NoTrades));
-      _groups.insert(_groups.end(), Groups::value_type(938, new NoCollInquiryQualifier));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 85, new NoDlvyInst },
+         { 124, new NoExecs },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 897, new NoTrades },
+         { 938, new NoCollInquiryQualifier },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CollateralInquiry() {}
+   ~CollateralInquiry() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -14229,11 +14377,11 @@ public:
       enum { _fnum = 85 };
 
       NoDlvyInst() : GroupBase(_fnum) {}
-      ~NoDlvyInst() {}
+      ~NoDlvyInst() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-         mb->append_group(new NoSettlPartyIDs); // 781
+         mb->get_groups().insert({781, new NoSettlPartyIDs });
          return mb;
       }
 
@@ -14251,11 +14399,11 @@ public:
          enum { _fnum = 781 };
 
          NoSettlPartyIDs() : GroupBase(_fnum) {}
-         ~NoSettlPartyIDs() {}
+         ~NoSettlPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoSettlPartySubIDs); // 801
+            mb->get_groups().insert({801, new NoSettlPartySubIDs });
             return mb;
          }
 
@@ -14273,7 +14421,7 @@ public:
             enum { _fnum = 801 };
 
             NoSettlPartySubIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartySubIDs() {}
+            ~NoSettlPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -14293,7 +14441,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14311,7 +14459,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14329,11 +14477,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -14351,7 +14499,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14370,7 +14518,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14388,11 +14536,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -14410,7 +14558,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14429,13 +14577,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -14453,7 +14603,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14471,7 +14621,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14489,11 +14639,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -14511,7 +14661,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -14531,7 +14681,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14549,7 +14699,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14567,7 +14717,7 @@ public:
       enum { _fnum = 897 };
 
       NoTrades() : GroupBase(_fnum) {}
-      ~NoTrades() {}
+      ~NoTrades() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14585,7 +14735,7 @@ public:
       enum { _fnum = 938 };
 
       NoCollInquiryQualifier() : GroupBase(_fnum) {}
-      ~NoCollInquiryQualifier() {}
+      ~NoCollInquiryQualifier() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14603,11 +14753,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -14625,7 +14775,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14644,11 +14794,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -14666,11 +14816,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -14688,7 +14838,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -14708,9 +14858,9 @@ class NetworkCounterpartySystemStatusRequest : public Message
 public:
    NetworkCounterpartySystemStatusRequest() : Message(ctx(), _msgtype(), _traits, 3, &_ftha)
    {
-      _groups.insert(Groups::value_type(936, new NoCompIDs));
+      _groups.insert({936, new NoCompIDs });
    }
-   ~NetworkCounterpartySystemStatusRequest() {}
+   ~NetworkCounterpartySystemStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -14727,7 +14877,7 @@ public:
       enum { _fnum = 936 };
 
       NoCompIDs() : GroupBase(_fnum) {}
-      ~NoCompIDs() {}
+      ~NoCompIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14745,9 +14895,9 @@ class NetworkCounterpartySystemStatusResponse : public Message
 public:
    NetworkCounterpartySystemStatusResponse() : Message(ctx(), _msgtype(), _traits, 5, &_ftha)
    {
-      _groups.insert(Groups::value_type(936, new NoCompIDs));
+      _groups.insert({936, new NoCompIDs });
    }
-   ~NetworkCounterpartySystemStatusResponse() {}
+   ~NetworkCounterpartySystemStatusResponse() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -14764,7 +14914,7 @@ public:
       enum { _fnum = 936 };
 
       NoCompIDs() : GroupBase(_fnum) {}
-      ~NoCompIDs() {}
+      ~NoCompIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14781,7 +14931,7 @@ class UserRequest : public Message
 
 public:
    UserRequest() : Message(ctx(), _msgtype(), _traits, 12, &_ftha) {}
-   ~UserRequest() {}
+   ~UserRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -14797,7 +14947,7 @@ class UserResponse : public Message
 
 public:
    UserResponse() : Message(ctx(), _msgtype(), _traits, 4, &_ftha) {}
-   ~UserResponse() {}
+   ~UserResponse() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -14814,18 +14964,20 @@ class CollateralInquiryAck : public Message
 public:
    CollateralInquiryAck() : Message(ctx(), _msgtype(), _traits, 127, &_ftha)
    {
-      _groups.insert(Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(897, new NoTrades));
-      _groups.insert(_groups.end(), Groups::value_type(938, new NoCollInquiryQualifier));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 124, new NoExecs },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 897, new NoTrades },
+         { 938, new NoCollInquiryQualifier },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CollateralInquiryAck() {}
+   ~CollateralInquiryAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -14842,7 +14994,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14860,11 +15012,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -14882,7 +15034,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14901,7 +15053,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -14919,11 +15071,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -14941,7 +15093,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -14960,13 +15112,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -14984,7 +15138,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15002,7 +15156,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15020,11 +15174,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -15042,7 +15196,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15062,7 +15216,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -15080,7 +15234,7 @@ public:
       enum { _fnum = 897 };
 
       NoTrades() : GroupBase(_fnum) {}
-      ~NoTrades() {}
+      ~NoTrades() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -15098,7 +15252,7 @@ public:
       enum { _fnum = 938 };
 
       NoCollInquiryQualifier() : GroupBase(_fnum) {}
-      ~NoCollInquiryQualifier() {}
+      ~NoCollInquiryQualifier() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -15116,11 +15270,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -15138,7 +15292,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15157,11 +15311,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -15179,11 +15333,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -15201,7 +15355,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15221,9 +15375,9 @@ class ConfirmationRequest : public Message
 public:
    ConfirmationRequest() : Message(ctx(), _msgtype(), _traits, 13, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
+      _groups.insert({73, new NoOrders });
    }
-   ~ConfirmationRequest() {}
+   ~ConfirmationRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -15240,11 +15394,11 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 9, &_ftha));
-         mb->append_group(new NoNested2PartyIDs); // 756
+         mb->get_groups().insert({756, new NoNested2PartyIDs });
          return mb;
       }
 
@@ -15262,11 +15416,11 @@ public:
          enum { _fnum = 756 };
 
          NoNested2PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested2PartyIDs() {}
+         ~NoNested2PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested2PartySubIDs); // 806
+            mb->get_groups().insert({806, new NoNested2PartySubIDs });
             return mb;
          }
 
@@ -15284,7 +15438,7 @@ public:
             enum { _fnum = 806 };
 
             NoNested2PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartySubIDs() {}
+            ~NoNested2PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15303,7 +15457,7 @@ class TradingSessionListRequest : public Message
 
 public:
    TradingSessionListRequest() : Message(ctx(), _msgtype(), _traits, 9, &_ftha) {}
-   ~TradingSessionListRequest() {}
+   ~TradingSessionListRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -15320,9 +15474,9 @@ class TradingSessionList : public Message
 public:
    TradingSessionList() : Message(ctx(), _msgtype(), _traits, 6, &_ftha)
    {
-      _groups.insert(Groups::value_type(386, new NoTradingSessions));
+      _groups.insert({386, new NoTradingSessions });
    }
-   ~TradingSessionList() {}
+   ~TradingSessionList() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -15339,15 +15493,17 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 27, &_ftha));
-         mb->append_group(new NoMDFeedTypes); // 1141
-         mb->append_group(new NoExecInstRules); // 1232
-         mb->append_group(new NoMatchRules); // 1235
-         mb->append_group(new NoOrdTypeRules); // 1237
-         mb->append_group(new NoTimeInForceRules); // 1239
+         mb->get_groups().insert({
+            { 1141, new NoMDFeedTypes },
+            { 1232, new NoExecInstRules },
+            { 1235, new NoMatchRules },
+            { 1237, new NoOrdTypeRules },
+            { 1239, new NoTimeInForceRules },
+         });
          return mb;
       }
 
@@ -15365,7 +15521,7 @@ public:
          enum { _fnum = 1141 };
 
          NoMDFeedTypes() : GroupBase(_fnum) {}
-         ~NoMDFeedTypes() {}
+         ~NoMDFeedTypes() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15383,7 +15539,7 @@ public:
          enum { _fnum = 1232 };
 
          NoExecInstRules() : GroupBase(_fnum) {}
-         ~NoExecInstRules() {}
+         ~NoExecInstRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15401,7 +15557,7 @@ public:
          enum { _fnum = 1235 };
 
          NoMatchRules() : GroupBase(_fnum) {}
-         ~NoMatchRules() {}
+         ~NoMatchRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15419,7 +15575,7 @@ public:
          enum { _fnum = 1237 };
 
          NoOrdTypeRules() : GroupBase(_fnum) {}
-         ~NoOrdTypeRules() {}
+         ~NoOrdTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15437,7 +15593,7 @@ public:
          enum { _fnum = 1239 };
 
          NoTimeInForceRules() : GroupBase(_fnum) {}
-         ~NoTimeInForceRules() {}
+         ~NoTimeInForceRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15456,9 +15612,9 @@ class SecurityListUpdateReport : public Message
 public:
    SecurityListUpdateReport() : Message(ctx(), _msgtype(), _traits, 24, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
+      _groups.insert({146, new NoRelatedSym });
    }
-   ~SecurityListUpdateReport() {}
+   ~SecurityListUpdateReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -15475,23 +15631,25 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 142, &_ftha));
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrAttrib); // 870
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoStrikeRules); // 1201
-         mb->append_group(new NoTickRules); // 1205
-         mb->append_group(new NoLotTypeRules); // 1234
-         mb->append_group(new NoTradingSessionRules); // 1309
-         mb->append_group(new NoNestedInstrAttrib); // 1312
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 232, new NoStipulations },
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 870, new NoInstrAttrib },
+            { 1018, new NoInstrumentParties },
+            { 1201, new NoStrikeRules },
+            { 1205, new NoTickRules },
+            { 1234, new NoLotTypeRules },
+            { 1309, new NoTradingSessionRules },
+            { 1312, new NoNestedInstrAttrib },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -15509,7 +15667,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15527,7 +15685,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15545,12 +15703,14 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 62, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
-            mb->append_group(new NoLegStipulations); // 683
+            mb->get_groups().insert({
+               { 604, new NoLegSecurityAltID },
+               { 683, new NoLegStipulations },
+            });
             return mb;
          }
 
@@ -15568,7 +15728,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15586,7 +15746,7 @@ public:
             enum { _fnum = 683 };
 
             NoLegStipulations() : GroupBase(_fnum) {}
-            ~NoLegStipulations() {}
+            ~NoLegStipulations() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15605,13 +15765,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -15629,7 +15791,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15647,7 +15809,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15665,11 +15827,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -15687,7 +15849,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -15707,7 +15869,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15725,7 +15887,7 @@ public:
          enum { _fnum = 870 };
 
          NoInstrAttrib() : GroupBase(_fnum) {}
-         ~NoInstrAttrib() {}
+         ~NoInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15743,11 +15905,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -15765,7 +15927,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15784,11 +15946,11 @@ public:
          enum { _fnum = 1201 };
 
          NoStrikeRules() : GroupBase(_fnum) {}
-         ~NoStrikeRules() {}
+         ~NoStrikeRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoMaturityRules); // 1236
+            mb->get_groups().insert({1236, new NoMaturityRules });
             return mb;
          }
 
@@ -15806,7 +15968,7 @@ public:
             enum { _fnum = 1236 };
 
             NoMaturityRules() : GroupBase(_fnum) {}
-            ~NoMaturityRules() {}
+            ~NoMaturityRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15825,7 +15987,7 @@ public:
          enum { _fnum = 1205 };
 
          NoTickRules() : GroupBase(_fnum) {}
-         ~NoTickRules() {}
+         ~NoTickRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15843,7 +16005,7 @@ public:
          enum { _fnum = 1234 };
 
          NoLotTypeRules() : GroupBase(_fnum) {}
-         ~NoLotTypeRules() {}
+         ~NoLotTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15861,15 +16023,17 @@ public:
          enum { _fnum = 1309 };
 
          NoTradingSessionRules() : GroupBase(_fnum) {}
-         ~NoTradingSessionRules() {}
+         ~NoTradingSessionRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-            mb->append_group(new NoMDFeedTypes); // 1141
-            mb->append_group(new NoExecInstRules); // 1232
-            mb->append_group(new NoMatchRules); // 1235
-            mb->append_group(new NoOrdTypeRules); // 1237
-            mb->append_group(new NoTimeInForceRules); // 1239
+            mb->get_groups().insert({
+               { 1141, new NoMDFeedTypes },
+               { 1232, new NoExecInstRules },
+               { 1235, new NoMatchRules },
+               { 1237, new NoOrdTypeRules },
+               { 1239, new NoTimeInForceRules },
+            });
             return mb;
          }
 
@@ -15887,7 +16051,7 @@ public:
             enum { _fnum = 1141 };
 
             NoMDFeedTypes() : GroupBase(_fnum) {}
-            ~NoMDFeedTypes() {}
+            ~NoMDFeedTypes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15905,7 +16069,7 @@ public:
             enum { _fnum = 1232 };
 
             NoExecInstRules() : GroupBase(_fnum) {}
-            ~NoExecInstRules() {}
+            ~NoExecInstRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15923,7 +16087,7 @@ public:
             enum { _fnum = 1235 };
 
             NoMatchRules() : GroupBase(_fnum) {}
-            ~NoMatchRules() {}
+            ~NoMatchRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15941,7 +16105,7 @@ public:
             enum { _fnum = 1237 };
 
             NoOrdTypeRules() : GroupBase(_fnum) {}
-            ~NoOrdTypeRules() {}
+            ~NoOrdTypeRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15959,7 +16123,7 @@ public:
             enum { _fnum = 1239 };
 
             NoTimeInForceRules() : GroupBase(_fnum) {}
-            ~NoTimeInForceRules() {}
+            ~NoTimeInForceRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -15978,7 +16142,7 @@ public:
          enum { _fnum = 1312 };
 
          NoNestedInstrAttrib() : GroupBase(_fnum) {}
-         ~NoNestedInstrAttrib() {}
+         ~NoNestedInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -15996,11 +16160,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -16018,11 +16182,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -16040,7 +16204,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -16061,11 +16225,13 @@ class AdjustedPositionReport : public Message
 public:
    AdjustedPositionReport() : Message(ctx(), _msgtype(), _traits, 10, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(702, new NoPositions));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 453, new NoPartyIDs },
+         { 702, new NoPositions },
+      });
    }
-   ~AdjustedPositionReport() {}
+   ~AdjustedPositionReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -16082,14 +16248,16 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 88, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -16107,7 +16275,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16125,7 +16293,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16143,11 +16311,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -16165,7 +16333,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -16184,11 +16352,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -16206,11 +16374,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -16228,7 +16396,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -16249,11 +16417,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -16271,7 +16439,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16290,11 +16458,11 @@ public:
       enum { _fnum = 702 };
 
       NoPositions() : GroupBase(_fnum) {}
-      ~NoPositions() {}
+      ~NoPositions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -16312,11 +16480,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -16334,7 +16502,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -16354,21 +16522,23 @@ class AllocationInstructionAlert : public Message
 public:
    AllocationInstructionAlert() : Message(ctx(), _msgtype(), _traits, 182, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
-      _groups.insert(_groups.end(), Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 73, new NoOrders },
+         { 78, new NoAllocs },
+         { 124, new NoExecs },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~AllocationInstructionAlert() {}
+   ~AllocationInstructionAlert() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -16385,11 +16555,11 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 9, &_ftha));
-         mb->append_group(new NoNested2PartyIDs); // 756
+         mb->get_groups().insert({756, new NoNested2PartyIDs });
          return mb;
       }
 
@@ -16407,11 +16577,11 @@ public:
          enum { _fnum = 756 };
 
          NoNested2PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested2PartyIDs() {}
+         ~NoNested2PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested2PartySubIDs); // 806
+            mb->get_groups().insert({806, new NoNested2PartySubIDs });
             return mb;
          }
 
@@ -16429,7 +16599,7 @@ public:
             enum { _fnum = 806 };
 
             NoNested2PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartySubIDs() {}
+            ~NoNested2PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -16449,14 +16619,16 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 41, &_ftha));
-         mb->append_group(new NoDlvyInst); // 85
-         mb->append_group(new NoMiscFees); // 136
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoClearingInstructions); // 576
+         mb->get_groups().insert({
+            { 85, new NoDlvyInst },
+            { 136, new NoMiscFees },
+            { 539, new NoNestedPartyIDs },
+            { 576, new NoClearingInstructions },
+         });
          return mb;
       }
 
@@ -16474,11 +16646,11 @@ public:
          enum { _fnum = 85 };
 
          NoDlvyInst() : GroupBase(_fnum) {}
-         ~NoDlvyInst() {}
+         ~NoDlvyInst() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -16496,11 +16668,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -16518,7 +16690,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -16538,7 +16710,7 @@ public:
          enum { _fnum = 136 };
 
          NoMiscFees() : GroupBase(_fnum) {}
-         ~NoMiscFees() {}
+         ~NoMiscFees() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16556,11 +16728,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -16578,7 +16750,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -16597,7 +16769,7 @@ public:
          enum { _fnum = 576 };
 
          NoClearingInstructions() : GroupBase(_fnum) {}
-         ~NoClearingInstructions() {}
+         ~NoClearingInstructions() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16616,7 +16788,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -16634,7 +16806,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -16652,11 +16824,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -16674,7 +16846,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16693,7 +16865,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -16711,11 +16883,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -16733,7 +16905,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16752,13 +16924,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -16776,7 +16950,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16794,7 +16968,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16812,11 +16986,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -16834,7 +17008,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -16854,7 +17028,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -16872,7 +17046,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -16890,7 +17064,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -16908,11 +17082,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -16930,7 +17104,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -16949,11 +17123,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -16971,11 +17145,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -16993,7 +17167,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17013,14 +17187,16 @@ class ExecutionAcknowledgement : public Message
 public:
    ExecutionAcknowledgement() : Message(ctx(), _msgtype(), _traits, 111, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~ExecutionAcknowledgement() {}
+   ~ExecutionAcknowledgement() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -17037,7 +17213,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17055,11 +17231,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -17077,7 +17253,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17096,13 +17272,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -17120,7 +17298,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17138,7 +17316,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17156,11 +17334,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -17178,7 +17356,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17198,7 +17376,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17216,11 +17394,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -17238,7 +17416,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17257,11 +17435,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -17279,11 +17457,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -17301,7 +17479,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17321,15 +17499,17 @@ class ContraryIntentionReport : public Message
 public:
    ContraryIntentionReport() : Message(ctx(), _msgtype(), _traits, 103, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(981, new NoExpiration));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 981, new NoExpiration },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~ContraryIntentionReport() {}
+   ~ContraryIntentionReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -17346,11 +17526,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -17368,7 +17548,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17387,7 +17567,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17405,13 +17585,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -17429,7 +17611,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17447,7 +17629,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17465,11 +17647,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -17487,7 +17669,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17507,7 +17689,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17525,7 +17707,7 @@ public:
       enum { _fnum = 981 };
 
       NoExpiration() : GroupBase(_fnum) {}
-      ~NoExpiration() {}
+      ~NoExpiration() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17543,11 +17725,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -17565,7 +17747,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17584,11 +17766,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -17606,11 +17788,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -17628,7 +17810,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17648,17 +17830,19 @@ class SecurityDefinitionUpdateReport : public Message
 public:
    SecurityDefinitionUpdateReport() : Message(ctx(), _msgtype(), _traits, 125, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1310, new NoMarketSegments));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1310, new NoMarketSegments },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~SecurityDefinitionUpdateReport() {}
+   ~SecurityDefinitionUpdateReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -17675,7 +17859,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17693,7 +17877,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17711,11 +17895,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -17733,7 +17917,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17752,13 +17936,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -17776,7 +17962,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17794,7 +17980,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17812,11 +17998,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -17834,7 +18020,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17854,7 +18040,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17872,7 +18058,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -17890,11 +18076,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -17912,7 +18098,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -17931,15 +18117,17 @@ public:
       enum { _fnum = 1310 };
 
       NoMarketSegments() : GroupBase(_fnum) {}
-      ~NoMarketSegments() {}
+      ~NoMarketSegments() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 21, &_ftha));
-         mb->append_group(new NoStrikeRules); // 1201
-         mb->append_group(new NoTickRules); // 1205
-         mb->append_group(new NoLotTypeRules); // 1234
-         mb->append_group(new NoTradingSessionRules); // 1309
-         mb->append_group(new NoNestedInstrAttrib); // 1312
+         mb->get_groups().insert({
+            { 1201, new NoStrikeRules },
+            { 1205, new NoTickRules },
+            { 1234, new NoLotTypeRules },
+            { 1309, new NoTradingSessionRules },
+            { 1312, new NoNestedInstrAttrib },
+         });
          return mb;
       }
 
@@ -17957,11 +18145,11 @@ public:
          enum { _fnum = 1201 };
 
          NoStrikeRules() : GroupBase(_fnum) {}
-         ~NoStrikeRules() {}
+         ~NoStrikeRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoMaturityRules); // 1236
+            mb->get_groups().insert({1236, new NoMaturityRules });
             return mb;
          }
 
@@ -17979,7 +18167,7 @@ public:
             enum { _fnum = 1236 };
 
             NoMaturityRules() : GroupBase(_fnum) {}
-            ~NoMaturityRules() {}
+            ~NoMaturityRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -17998,7 +18186,7 @@ public:
          enum { _fnum = 1205 };
 
          NoTickRules() : GroupBase(_fnum) {}
-         ~NoTickRules() {}
+         ~NoTickRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18016,7 +18204,7 @@ public:
          enum { _fnum = 1234 };
 
          NoLotTypeRules() : GroupBase(_fnum) {}
-         ~NoLotTypeRules() {}
+         ~NoLotTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18034,15 +18222,17 @@ public:
          enum { _fnum = 1309 };
 
          NoTradingSessionRules() : GroupBase(_fnum) {}
-         ~NoTradingSessionRules() {}
+         ~NoTradingSessionRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-            mb->append_group(new NoMDFeedTypes); // 1141
-            mb->append_group(new NoExecInstRules); // 1232
-            mb->append_group(new NoMatchRules); // 1235
-            mb->append_group(new NoOrdTypeRules); // 1237
-            mb->append_group(new NoTimeInForceRules); // 1239
+            mb->get_groups().insert({
+               { 1141, new NoMDFeedTypes },
+               { 1232, new NoExecInstRules },
+               { 1235, new NoMatchRules },
+               { 1237, new NoOrdTypeRules },
+               { 1239, new NoTimeInForceRules },
+            });
             return mb;
          }
 
@@ -18060,7 +18250,7 @@ public:
             enum { _fnum = 1141 };
 
             NoMDFeedTypes() : GroupBase(_fnum) {}
-            ~NoMDFeedTypes() {}
+            ~NoMDFeedTypes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18078,7 +18268,7 @@ public:
             enum { _fnum = 1232 };
 
             NoExecInstRules() : GroupBase(_fnum) {}
-            ~NoExecInstRules() {}
+            ~NoExecInstRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18096,7 +18286,7 @@ public:
             enum { _fnum = 1235 };
 
             NoMatchRules() : GroupBase(_fnum) {}
-            ~NoMatchRules() {}
+            ~NoMatchRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18114,7 +18304,7 @@ public:
             enum { _fnum = 1237 };
 
             NoOrdTypeRules() : GroupBase(_fnum) {}
-            ~NoOrdTypeRules() {}
+            ~NoOrdTypeRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18132,7 +18322,7 @@ public:
             enum { _fnum = 1239 };
 
             NoTimeInForceRules() : GroupBase(_fnum) {}
-            ~NoTimeInForceRules() {}
+            ~NoTimeInForceRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18151,7 +18341,7 @@ public:
          enum { _fnum = 1312 };
 
          NoNestedInstrAttrib() : GroupBase(_fnum) {}
-         ~NoNestedInstrAttrib() {}
+         ~NoNestedInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18170,11 +18360,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -18192,11 +18382,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -18214,7 +18404,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18234,9 +18424,9 @@ class SettlementObligationReport : public Message
 public:
    SettlementObligationReport() : Message(ctx(), _msgtype(), _traits, 13, &_ftha)
    {
-      _groups.insert(Groups::value_type(1165, new NoSettlOblig));
+      _groups.insert({1165, new NoSettlOblig });
    }
-   ~SettlementObligationReport() {}
+   ~SettlementObligationReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -18253,16 +18443,18 @@ public:
       enum { _fnum = 1165 };
 
       NoSettlOblig() : GroupBase(_fnum) {}
-      ~NoSettlOblig() {}
+      ~NoSettlOblig() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 103, &_ftha));
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoSettlDetails); // 1158
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 453, new NoPartyIDs },
+            { 454, new NoSecurityAltID },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1158, new NoSettlDetails },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -18280,11 +18472,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -18302,7 +18494,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18321,7 +18513,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18339,7 +18531,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18357,11 +18549,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -18379,7 +18571,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18398,11 +18590,11 @@ public:
          enum { _fnum = 1158 };
 
          NoSettlDetails() : GroupBase(_fnum) {}
-         ~NoSettlDetails() {}
+         ~NoSettlDetails() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -18420,11 +18612,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -18442,7 +18634,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -18462,11 +18654,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -18484,11 +18676,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -18506,7 +18698,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -18527,17 +18719,19 @@ class DerivativeSecurityListUpdateReport : public Message
 public:
    DerivativeSecurityListUpdateReport() : Message(ctx(), _msgtype(), _traits, 148, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1218, new NoDerivativeSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(1286, new NoDerivativeEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1292, new NoDerivativeInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1310, new NoMarketSegments));
-      _groups.insert(_groups.end(), Groups::value_type(1311, new NoDerivativeInstrAttrib));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 887, new NoUnderlyingStips },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1218, new NoDerivativeSecurityAltID },
+         { 1286, new NoDerivativeEvents },
+         { 1292, new NoDerivativeInstrumentParties },
+         { 1310, new NoMarketSegments },
+         { 1311, new NoDerivativeInstrAttrib },
+      });
    }
-   ~DerivativeSecurityListUpdateReport() {}
+   ~DerivativeSecurityListUpdateReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -18554,16 +18748,18 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 103, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrAttrib); // 870
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 864, new NoEvents },
+            { 870, new NoInstrAttrib },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -18581,7 +18777,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18599,11 +18795,11 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
+            mb->get_groups().insert({604, new NoLegSecurityAltID });
             return mb;
          }
 
@@ -18621,7 +18817,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18640,7 +18836,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18658,7 +18854,7 @@ public:
          enum { _fnum = 870 };
 
          NoInstrAttrib() : GroupBase(_fnum) {}
-         ~NoInstrAttrib() {}
+         ~NoInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18676,11 +18872,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -18698,7 +18894,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -18717,11 +18913,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -18739,11 +18935,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -18761,7 +18957,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -18782,7 +18978,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -18800,7 +18996,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -18818,11 +19014,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -18840,7 +19036,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18859,7 +19055,7 @@ public:
       enum { _fnum = 1218 };
 
       NoDerivativeSecurityAltID() : GroupBase(_fnum) {}
-      ~NoDerivativeSecurityAltID() {}
+      ~NoDerivativeSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -18877,7 +19073,7 @@ public:
       enum { _fnum = 1286 };
 
       NoDerivativeEvents() : GroupBase(_fnum) {}
-      ~NoDerivativeEvents() {}
+      ~NoDerivativeEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -18895,11 +19091,11 @@ public:
       enum { _fnum = 1292 };
 
       NoDerivativeInstrumentParties() : GroupBase(_fnum) {}
-      ~NoDerivativeInstrumentParties() {}
+      ~NoDerivativeInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoDerivativeInstrumentPartySubIDs); // 1296
+         mb->get_groups().insert({1296, new NoDerivativeInstrumentPartySubIDs });
          return mb;
       }
 
@@ -18917,7 +19113,7 @@ public:
          enum { _fnum = 1296 };
 
          NoDerivativeInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoDerivativeInstrumentPartySubIDs() {}
+         ~NoDerivativeInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -18936,15 +19132,17 @@ public:
       enum { _fnum = 1310 };
 
       NoMarketSegments() : GroupBase(_fnum) {}
-      ~NoMarketSegments() {}
+      ~NoMarketSegments() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 21, &_ftha));
-         mb->append_group(new NoStrikeRules); // 1201
-         mb->append_group(new NoTickRules); // 1205
-         mb->append_group(new NoLotTypeRules); // 1234
-         mb->append_group(new NoTradingSessionRules); // 1309
-         mb->append_group(new NoNestedInstrAttrib); // 1312
+         mb->get_groups().insert({
+            { 1201, new NoStrikeRules },
+            { 1205, new NoTickRules },
+            { 1234, new NoLotTypeRules },
+            { 1309, new NoTradingSessionRules },
+            { 1312, new NoNestedInstrAttrib },
+         });
          return mb;
       }
 
@@ -18962,11 +19160,11 @@ public:
          enum { _fnum = 1201 };
 
          NoStrikeRules() : GroupBase(_fnum) {}
-         ~NoStrikeRules() {}
+         ~NoStrikeRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoMaturityRules); // 1236
+            mb->get_groups().insert({1236, new NoMaturityRules });
             return mb;
          }
 
@@ -18984,7 +19182,7 @@ public:
             enum { _fnum = 1236 };
 
             NoMaturityRules() : GroupBase(_fnum) {}
-            ~NoMaturityRules() {}
+            ~NoMaturityRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19003,7 +19201,7 @@ public:
          enum { _fnum = 1205 };
 
          NoTickRules() : GroupBase(_fnum) {}
-         ~NoTickRules() {}
+         ~NoTickRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19021,7 +19219,7 @@ public:
          enum { _fnum = 1234 };
 
          NoLotTypeRules() : GroupBase(_fnum) {}
-         ~NoLotTypeRules() {}
+         ~NoLotTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19039,15 +19237,17 @@ public:
          enum { _fnum = 1309 };
 
          NoTradingSessionRules() : GroupBase(_fnum) {}
-         ~NoTradingSessionRules() {}
+         ~NoTradingSessionRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-            mb->append_group(new NoMDFeedTypes); // 1141
-            mb->append_group(new NoExecInstRules); // 1232
-            mb->append_group(new NoMatchRules); // 1235
-            mb->append_group(new NoOrdTypeRules); // 1237
-            mb->append_group(new NoTimeInForceRules); // 1239
+            mb->get_groups().insert({
+               { 1141, new NoMDFeedTypes },
+               { 1232, new NoExecInstRules },
+               { 1235, new NoMatchRules },
+               { 1237, new NoOrdTypeRules },
+               { 1239, new NoTimeInForceRules },
+            });
             return mb;
          }
 
@@ -19065,7 +19265,7 @@ public:
             enum { _fnum = 1141 };
 
             NoMDFeedTypes() : GroupBase(_fnum) {}
-            ~NoMDFeedTypes() {}
+            ~NoMDFeedTypes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19083,7 +19283,7 @@ public:
             enum { _fnum = 1232 };
 
             NoExecInstRules() : GroupBase(_fnum) {}
-            ~NoExecInstRules() {}
+            ~NoExecInstRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19101,7 +19301,7 @@ public:
             enum { _fnum = 1235 };
 
             NoMatchRules() : GroupBase(_fnum) {}
-            ~NoMatchRules() {}
+            ~NoMatchRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19119,7 +19319,7 @@ public:
             enum { _fnum = 1237 };
 
             NoOrdTypeRules() : GroupBase(_fnum) {}
-            ~NoOrdTypeRules() {}
+            ~NoOrdTypeRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19137,7 +19337,7 @@ public:
             enum { _fnum = 1239 };
 
             NoTimeInForceRules() : GroupBase(_fnum) {}
-            ~NoTimeInForceRules() {}
+            ~NoTimeInForceRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19156,7 +19356,7 @@ public:
          enum { _fnum = 1312 };
 
          NoNestedInstrAttrib() : GroupBase(_fnum) {}
-         ~NoNestedInstrAttrib() {}
+         ~NoNestedInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19175,7 +19375,7 @@ public:
       enum { _fnum = 1311 };
 
       NoDerivativeInstrAttrib() : GroupBase(_fnum) {}
-      ~NoDerivativeInstrAttrib() {}
+      ~NoDerivativeInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19193,9 +19393,9 @@ class TradingSessionListUpdateReport : public Message
 public:
    TradingSessionListUpdateReport() : Message(ctx(), _msgtype(), _traits, 6, &_ftha)
    {
-      _groups.insert(Groups::value_type(386, new NoTradingSessions));
+      _groups.insert({386, new NoTradingSessions });
    }
-   ~TradingSessionListUpdateReport() {}
+   ~TradingSessionListUpdateReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19212,15 +19412,17 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 27, &_ftha));
-         mb->append_group(new NoMDFeedTypes); // 1141
-         mb->append_group(new NoExecInstRules); // 1232
-         mb->append_group(new NoMatchRules); // 1235
-         mb->append_group(new NoOrdTypeRules); // 1237
-         mb->append_group(new NoTimeInForceRules); // 1239
+         mb->get_groups().insert({
+            { 1141, new NoMDFeedTypes },
+            { 1232, new NoExecInstRules },
+            { 1235, new NoMatchRules },
+            { 1237, new NoOrdTypeRules },
+            { 1239, new NoTimeInForceRules },
+         });
          return mb;
       }
 
@@ -19238,7 +19440,7 @@ public:
          enum { _fnum = 1141 };
 
          NoMDFeedTypes() : GroupBase(_fnum) {}
-         ~NoMDFeedTypes() {}
+         ~NoMDFeedTypes() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19256,7 +19458,7 @@ public:
          enum { _fnum = 1232 };
 
          NoExecInstRules() : GroupBase(_fnum) {}
-         ~NoExecInstRules() {}
+         ~NoExecInstRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19274,7 +19476,7 @@ public:
          enum { _fnum = 1235 };
 
          NoMatchRules() : GroupBase(_fnum) {}
-         ~NoMatchRules() {}
+         ~NoMatchRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19292,7 +19494,7 @@ public:
          enum { _fnum = 1237 };
 
          NoOrdTypeRules() : GroupBase(_fnum) {}
-         ~NoOrdTypeRules() {}
+         ~NoOrdTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19310,7 +19512,7 @@ public:
          enum { _fnum = 1239 };
 
          NoTimeInForceRules() : GroupBase(_fnum) {}
-         ~NoTimeInForceRules() {}
+         ~NoTimeInForceRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19328,7 +19530,7 @@ class MarketDefinitionRequest : public Message
 
 public:
    MarketDefinitionRequest() : Message(ctx(), _msgtype(), _traits, 5, &_ftha) {}
-   ~MarketDefinitionRequest() {}
+   ~MarketDefinitionRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19345,13 +19547,15 @@ class MarketDefinition : public Message
 public:
    MarketDefinition() : Message(ctx(), _msgtype(), _traits, 36, &_ftha)
    {
-      _groups.insert(Groups::value_type(1205, new NoTickRules));
-      _groups.insert(_groups.end(), Groups::value_type(1232, new NoExecInstRules));
-      _groups.insert(_groups.end(), Groups::value_type(1234, new NoLotTypeRules));
-      _groups.insert(_groups.end(), Groups::value_type(1237, new NoOrdTypeRules));
-      _groups.insert(_groups.end(), Groups::value_type(1239, new NoTimeInForceRules));
+      _groups.insert({
+         { 1205, new NoTickRules },
+         { 1232, new NoExecInstRules },
+         { 1234, new NoLotTypeRules },
+         { 1237, new NoOrdTypeRules },
+         { 1239, new NoTimeInForceRules },
+      });
    }
-   ~MarketDefinition() {}
+   ~MarketDefinition() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19368,7 +19572,7 @@ public:
       enum { _fnum = 1205 };
 
       NoTickRules() : GroupBase(_fnum) {}
-      ~NoTickRules() {}
+      ~NoTickRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19386,7 +19590,7 @@ public:
       enum { _fnum = 1232 };
 
       NoExecInstRules() : GroupBase(_fnum) {}
-      ~NoExecInstRules() {}
+      ~NoExecInstRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19404,7 +19608,7 @@ public:
       enum { _fnum = 1234 };
 
       NoLotTypeRules() : GroupBase(_fnum) {}
-      ~NoLotTypeRules() {}
+      ~NoLotTypeRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19422,7 +19626,7 @@ public:
       enum { _fnum = 1237 };
 
       NoOrdTypeRules() : GroupBase(_fnum) {}
-      ~NoOrdTypeRules() {}
+      ~NoOrdTypeRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19440,7 +19644,7 @@ public:
       enum { _fnum = 1239 };
 
       NoTimeInForceRules() : GroupBase(_fnum) {}
-      ~NoTimeInForceRules() {}
+      ~NoTimeInForceRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19458,13 +19662,15 @@ class MarketDefinitionUpdateReport : public Message
 public:
    MarketDefinitionUpdateReport() : Message(ctx(), _msgtype(), _traits, 37, &_ftha)
    {
-      _groups.insert(Groups::value_type(1205, new NoTickRules));
-      _groups.insert(_groups.end(), Groups::value_type(1232, new NoExecInstRules));
-      _groups.insert(_groups.end(), Groups::value_type(1234, new NoLotTypeRules));
-      _groups.insert(_groups.end(), Groups::value_type(1237, new NoOrdTypeRules));
-      _groups.insert(_groups.end(), Groups::value_type(1239, new NoTimeInForceRules));
+      _groups.insert({
+         { 1205, new NoTickRules },
+         { 1232, new NoExecInstRules },
+         { 1234, new NoLotTypeRules },
+         { 1237, new NoOrdTypeRules },
+         { 1239, new NoTimeInForceRules },
+      });
    }
-   ~MarketDefinitionUpdateReport() {}
+   ~MarketDefinitionUpdateReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19481,7 +19687,7 @@ public:
       enum { _fnum = 1205 };
 
       NoTickRules() : GroupBase(_fnum) {}
-      ~NoTickRules() {}
+      ~NoTickRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19499,7 +19705,7 @@ public:
       enum { _fnum = 1232 };
 
       NoExecInstRules() : GroupBase(_fnum) {}
-      ~NoExecInstRules() {}
+      ~NoExecInstRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19517,7 +19723,7 @@ public:
       enum { _fnum = 1234 };
 
       NoLotTypeRules() : GroupBase(_fnum) {}
-      ~NoLotTypeRules() {}
+      ~NoLotTypeRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19535,7 +19741,7 @@ public:
       enum { _fnum = 1237 };
 
       NoOrdTypeRules() : GroupBase(_fnum) {}
-      ~NoOrdTypeRules() {}
+      ~NoOrdTypeRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19553,7 +19759,7 @@ public:
       enum { _fnum = 1239 };
 
       NoTimeInForceRules() : GroupBase(_fnum) {}
-      ~NoTimeInForceRules() {}
+      ~NoTimeInForceRules() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19571,10 +19777,12 @@ class ApplicationMessageRequest : public Message
 public:
    ApplicationMessageRequest() : Message(ctx(), _msgtype(), _traits, 7, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1351, new NoApplIDs));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 1351, new NoApplIDs },
+      });
    }
-   ~ApplicationMessageRequest() {}
+   ~ApplicationMessageRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19591,11 +19799,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -19613,7 +19821,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19632,11 +19840,11 @@ public:
       enum { _fnum = 1351 };
 
       NoApplIDs() : GroupBase(_fnum) {}
-      ~NoApplIDs() {}
+      ~NoApplIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -19654,11 +19862,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -19676,7 +19884,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19696,10 +19904,12 @@ class ApplicationMessageRequestAck : public Message
 public:
    ApplicationMessageRequestAck() : Message(ctx(), _msgtype(), _traits, 10, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1351, new NoApplIDs));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 1351, new NoApplIDs },
+      });
    }
-   ~ApplicationMessageRequestAck() {}
+   ~ApplicationMessageRequestAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19716,11 +19926,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -19738,7 +19948,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19757,11 +19967,11 @@ public:
       enum { _fnum = 1351 };
 
       NoApplIDs() : GroupBase(_fnum) {}
-      ~NoApplIDs() {}
+      ~NoApplIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -19779,11 +19989,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -19801,7 +20011,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -19821,9 +20031,9 @@ class ApplicationMessageReport : public Message
 public:
    ApplicationMessageReport() : Message(ctx(), _msgtype(), _traits, 7, &_ftha)
    {
-      _groups.insert(Groups::value_type(1351, new NoApplIDs));
+      _groups.insert({1351, new NoApplIDs });
    }
-   ~ApplicationMessageReport() {}
+   ~ApplicationMessageReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19840,7 +20050,7 @@ public:
       enum { _fnum = 1351 };
 
       NoApplIDs() : GroupBase(_fnum) {}
-      ~NoApplIDs() {}
+      ~NoApplIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19858,19 +20068,21 @@ class OrderMassActionReport : public Message
 public:
    OrderMassActionReport() : Message(ctx(), _msgtype(), _traits, 181, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(534, new NoAffectedOrders));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1370, new NoNotAffectedOrders));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 534, new NoAffectedOrders },
+         { 864, new NoEvents },
+         { 887, new NoUnderlyingStips },
+         { 1018, new NoInstrumentParties },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1370, new NoNotAffectedOrders },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderMassActionReport() {}
+   ~OrderMassActionReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -19887,11 +20099,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -19909,7 +20121,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -19928,7 +20140,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19946,7 +20158,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19964,7 +20176,7 @@ public:
       enum { _fnum = 534 };
 
       NoAffectedOrders() : GroupBase(_fnum) {}
-      ~NoAffectedOrders() {}
+      ~NoAffectedOrders() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -19982,7 +20194,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20000,7 +20212,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20018,11 +20230,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -20040,7 +20252,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20059,11 +20271,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -20081,7 +20293,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20100,7 +20312,7 @@ public:
       enum { _fnum = 1370 };
 
       NoNotAffectedOrders() : GroupBase(_fnum) {}
-      ~NoNotAffectedOrders() {}
+      ~NoNotAffectedOrders() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20118,7 +20330,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20136,11 +20348,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -20158,11 +20370,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -20180,7 +20392,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -20200,13 +20412,15 @@ class Email : public Message
 public:
    Email() : Message(ctx(), _msgtype(), _traits, 15, &_ftha)
    {
-      _groups.insert(Groups::value_type(33, new NoLinesOfText));
-      _groups.insert(_groups.end(), Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(215, new NoRoutingIDs));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
+      _groups.insert({
+         { 33, new NoLinesOfText },
+         { 146, new NoRelatedSym },
+         { 215, new NoRoutingIDs },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+      });
    }
-   ~Email() {}
+   ~Email() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -20223,7 +20437,7 @@ public:
       enum { _fnum = 33 };
 
       NoLinesOfText() : GroupBase(_fnum) {}
-      ~NoLinesOfText() {}
+      ~NoLinesOfText() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20241,14 +20455,16 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 88, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -20266,7 +20482,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20284,7 +20500,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20302,11 +20518,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -20324,7 +20540,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -20343,11 +20559,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -20365,11 +20581,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -20387,7 +20603,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -20408,7 +20624,7 @@ public:
       enum { _fnum = 215 };
 
       NoRoutingIDs() : GroupBase(_fnum) {}
-      ~NoRoutingIDs() {}
+      ~NoRoutingIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20426,11 +20642,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -20448,7 +20664,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20467,13 +20683,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -20491,7 +20709,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20509,7 +20727,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20527,11 +20745,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -20549,7 +20767,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -20569,17 +20787,19 @@ class OrderMassActionRequest : public Message
 public:
    OrderMassActionRequest() : Message(ctx(), _msgtype(), _traits, 175, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 864, new NoEvents },
+         { 887, new NoUnderlyingStips },
+         { 1018, new NoInstrumentParties },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderMassActionRequest() {}
+   ~OrderMassActionRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -20596,11 +20816,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -20618,7 +20838,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20637,7 +20857,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20655,7 +20875,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20673,7 +20893,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20691,7 +20911,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20709,11 +20929,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -20731,7 +20951,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20750,11 +20970,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -20772,7 +20992,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -20791,7 +21011,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -20809,11 +21029,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -20831,11 +21051,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -20853,7 +21073,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -20872,7 +21092,7 @@ class UserNotification : public Message
 
 public:
    UserNotification() : Message(ctx(), _msgtype(), _traits, 5, &_ftha) {}
-   ~UserNotification() {}
+   ~UserNotification() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -20889,9 +21109,9 @@ class StreamAssignmentRequest : public Message
 public:
    StreamAssignmentRequest() : Message(ctx(), _msgtype(), _traits, 3, &_ftha)
    {
-      _groups.insert(Groups::value_type(1499, new NoAsgnReqs));
+      _groups.insert({1499, new NoAsgnReqs });
    }
-   ~StreamAssignmentRequest() {}
+   ~StreamAssignmentRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -20908,12 +21128,14 @@ public:
       enum { _fnum = 1499 };
 
       NoAsgnReqs() : GroupBase(_fnum) {}
-      ~NoAsgnReqs() {}
+      ~NoAsgnReqs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha));
-         mb->append_group(new NoRelatedSym); // 146
-         mb->append_group(new NoPartyIDs); // 453
+         mb->get_groups().insert({
+            { 146, new NoRelatedSym },
+            { 453, new NoPartyIDs },
+         });
          return mb;
       }
 
@@ -20931,14 +21153,16 @@ public:
          enum { _fnum = 146 };
 
          NoRelatedSym() : GroupBase(_fnum) {}
-         ~NoRelatedSym() {}
+         ~NoRelatedSym() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 91, &_ftha));
-            mb->append_group(new NoSecurityAltID); // 454
-            mb->append_group(new NoEvents); // 864
-            mb->append_group(new NoInstrumentParties); // 1018
-            mb->append_group(new NoComplexEvents); // 1483
+            mb->get_groups().insert({
+               { 454, new NoSecurityAltID },
+               { 864, new NoEvents },
+               { 1018, new NoInstrumentParties },
+               { 1483, new NoComplexEvents },
+            });
             return mb;
          }
 
@@ -20956,7 +21180,7 @@ public:
             enum { _fnum = 454 };
 
             NoSecurityAltID() : GroupBase(_fnum) {}
-            ~NoSecurityAltID() {}
+            ~NoSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -20974,7 +21198,7 @@ public:
             enum { _fnum = 864 };
 
             NoEvents() : GroupBase(_fnum) {}
-            ~NoEvents() {}
+            ~NoEvents() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -20992,11 +21216,11 @@ public:
             enum { _fnum = 1018 };
 
             NoInstrumentParties() : GroupBase(_fnum) {}
-            ~NoInstrumentParties() {}
+            ~NoInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoInstrumentPartySubIDs); // 1052
+               mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
                return mb;
             }
 
@@ -21014,7 +21238,7 @@ public:
                enum { _fnum = 1052 };
 
                NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoInstrumentPartySubIDs() {}
+               ~NoInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -21033,11 +21257,11 @@ public:
             enum { _fnum = 1483 };
 
             NoComplexEvents() : GroupBase(_fnum) {}
-            ~NoComplexEvents() {}
+            ~NoComplexEvents() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-               mb->append_group(new NoComplexEventDates); // 1491
+               mb->get_groups().insert({1491, new NoComplexEventDates });
                return mb;
             }
 
@@ -21055,11 +21279,11 @@ public:
                enum { _fnum = 1491 };
 
                NoComplexEventDates() : GroupBase(_fnum) {}
-               ~NoComplexEventDates() {}
+               ~NoComplexEventDates() = default;
                MessageBase *create_group() const
                {
                   MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-                  mb->append_group(new NoComplexEventTimes); // 1494
+                  mb->get_groups().insert({1494, new NoComplexEventTimes });
                   return mb;
                }
 
@@ -21077,7 +21301,7 @@ public:
                   enum { _fnum = 1494 };
 
                   NoComplexEventTimes() : GroupBase(_fnum) {}
-                  ~NoComplexEventTimes() {}
+                  ~NoComplexEventTimes() = default;
                   MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                   static const MsgType& get_msgtype() { return _msgtype; }
@@ -21098,11 +21322,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -21120,7 +21344,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21140,9 +21364,9 @@ class StreamAssignmentReport : public Message
 public:
    StreamAssignmentReport() : Message(ctx(), _msgtype(), _traits, 4, &_ftha)
    {
-      _groups.insert(Groups::value_type(1499, new NoAsgnReqs));
+      _groups.insert({1499, new NoAsgnReqs });
    }
-   ~StreamAssignmentReport() {}
+   ~StreamAssignmentReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -21159,12 +21383,14 @@ public:
       enum { _fnum = 1499 };
 
       NoAsgnReqs() : GroupBase(_fnum) {}
-      ~NoAsgnReqs() {}
+      ~NoAsgnReqs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha));
-         mb->append_group(new NoRelatedSym); // 146
-         mb->append_group(new NoPartyIDs); // 453
+         mb->get_groups().insert({
+            { 146, new NoRelatedSym },
+            { 453, new NoPartyIDs },
+         });
          return mb;
       }
 
@@ -21182,14 +21408,16 @@ public:
          enum { _fnum = 146 };
 
          NoRelatedSym() : GroupBase(_fnum) {}
-         ~NoRelatedSym() {}
+         ~NoRelatedSym() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 95, &_ftha));
-            mb->append_group(new NoSecurityAltID); // 454
-            mb->append_group(new NoEvents); // 864
-            mb->append_group(new NoInstrumentParties); // 1018
-            mb->append_group(new NoComplexEvents); // 1483
+            mb->get_groups().insert({
+               { 454, new NoSecurityAltID },
+               { 864, new NoEvents },
+               { 1018, new NoInstrumentParties },
+               { 1483, new NoComplexEvents },
+            });
             return mb;
          }
 
@@ -21207,7 +21435,7 @@ public:
             enum { _fnum = 454 };
 
             NoSecurityAltID() : GroupBase(_fnum) {}
-            ~NoSecurityAltID() {}
+            ~NoSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21225,7 +21453,7 @@ public:
             enum { _fnum = 864 };
 
             NoEvents() : GroupBase(_fnum) {}
-            ~NoEvents() {}
+            ~NoEvents() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21243,11 +21471,11 @@ public:
             enum { _fnum = 1018 };
 
             NoInstrumentParties() : GroupBase(_fnum) {}
-            ~NoInstrumentParties() {}
+            ~NoInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoInstrumentPartySubIDs); // 1052
+               mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
                return mb;
             }
 
@@ -21265,7 +21493,7 @@ public:
                enum { _fnum = 1052 };
 
                NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoInstrumentPartySubIDs() {}
+               ~NoInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -21284,11 +21512,11 @@ public:
             enum { _fnum = 1483 };
 
             NoComplexEvents() : GroupBase(_fnum) {}
-            ~NoComplexEvents() {}
+            ~NoComplexEvents() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-               mb->append_group(new NoComplexEventDates); // 1491
+               mb->get_groups().insert({1491, new NoComplexEventDates });
                return mb;
             }
 
@@ -21306,11 +21534,11 @@ public:
                enum { _fnum = 1491 };
 
                NoComplexEventDates() : GroupBase(_fnum) {}
-               ~NoComplexEventDates() {}
+               ~NoComplexEventDates() = default;
                MessageBase *create_group() const
                {
                   MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-                  mb->append_group(new NoComplexEventTimes); // 1494
+                  mb->get_groups().insert({1494, new NoComplexEventTimes });
                   return mb;
                }
 
@@ -21328,7 +21556,7 @@ public:
                   enum { _fnum = 1494 };
 
                   NoComplexEventTimes() : GroupBase(_fnum) {}
-                  ~NoComplexEventTimes() {}
+                  ~NoComplexEventTimes() = default;
                   MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                   static const MsgType& get_msgtype() { return _msgtype; }
@@ -21349,11 +21577,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -21371,7 +21599,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21390,7 +21618,7 @@ class StreamAssignmentReportACK : public Message
 
 public:
    StreamAssignmentReportACK() : Message(ctx(), _msgtype(), _traits, 6, &_ftha) {}
-   ~StreamAssignmentReportACK() {}
+   ~StreamAssignmentReportACK() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -21407,12 +21635,14 @@ class PartyDetailsListRequest : public Message
 public:
    PartyDetailsListRequest() : Message(ctx(), _msgtype(), _traits, 9, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1506, new NoPartyListResponseTypes));
-      _groups.insert(_groups.end(), Groups::value_type(1508, new NoRequestedPartyRoles));
-      _groups.insert(_groups.end(), Groups::value_type(1514, new NoPartyRelationships));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 1506, new NoPartyListResponseTypes },
+         { 1508, new NoRequestedPartyRoles },
+         { 1514, new NoPartyRelationships },
+      });
    }
-   ~PartyDetailsListRequest() {}
+   ~PartyDetailsListRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -21429,11 +21659,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -21451,7 +21681,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -21470,7 +21700,7 @@ public:
       enum { _fnum = 1506 };
 
       NoPartyListResponseTypes() : GroupBase(_fnum) {}
-      ~NoPartyListResponseTypes() {}
+      ~NoPartyListResponseTypes() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -21488,7 +21718,7 @@ public:
       enum { _fnum = 1508 };
 
       NoRequestedPartyRoles() : GroupBase(_fnum) {}
-      ~NoRequestedPartyRoles() {}
+      ~NoRequestedPartyRoles() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -21506,7 +21736,7 @@ public:
       enum { _fnum = 1514 };
 
       NoPartyRelationships() : GroupBase(_fnum) {}
-      ~NoPartyRelationships() {}
+      ~NoPartyRelationships() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -21524,9 +21754,9 @@ class PartyDetailsListReport : public Message
 public:
    PartyDetailsListReport() : Message(ctx(), _msgtype(), _traits, 13, &_ftha)
    {
-      _groups.insert(Groups::value_type(1513, new NoPartyList));
+      _groups.insert({1513, new NoPartyList });
    }
-   ~PartyDetailsListReport() {}
+   ~PartyDetailsListReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -21543,15 +21773,17 @@ public:
       enum { _fnum = 1513 };
 
       NoPartyList() : GroupBase(_fnum) {}
-      ~NoPartyList() {}
+      ~NoPartyList() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
-         mb->append_group(new NoPartyAltIDs); // 1516
-         mb->append_group(new NoContextPartyIDs); // 1522
-         mb->append_group(new NoRiskLimits); // 1529
-         mb->append_group(new NoRelatedPartyIDs); // 1562
+         mb->get_groups().insert({
+            { 802, new NoPartySubIDs },
+            { 1516, new NoPartyAltIDs },
+            { 1522, new NoContextPartyIDs },
+            { 1529, new NoRiskLimits },
+            { 1562, new NoRelatedPartyIDs },
+         });
          return mb;
       }
 
@@ -21569,7 +21801,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -21587,11 +21819,11 @@ public:
          enum { _fnum = 1516 };
 
          NoPartyAltIDs() : GroupBase(_fnum) {}
-         ~NoPartyAltIDs() {}
+         ~NoPartyAltIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoPartyAltSubIDs); // 1519
+            mb->get_groups().insert({1519, new NoPartyAltSubIDs });
             return mb;
          }
 
@@ -21609,7 +21841,7 @@ public:
             enum { _fnum = 1519 };
 
             NoPartyAltSubIDs() : GroupBase(_fnum) {}
-            ~NoPartyAltSubIDs() {}
+            ~NoPartyAltSubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21628,11 +21860,11 @@ public:
          enum { _fnum = 1522 };
 
          NoContextPartyIDs() : GroupBase(_fnum) {}
-         ~NoContextPartyIDs() {}
+         ~NoContextPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoContextPartySubIDs); // 1526
+            mb->get_groups().insert({1526, new NoContextPartySubIDs });
             return mb;
          }
 
@@ -21650,7 +21882,7 @@ public:
             enum { _fnum = 1526 };
 
             NoContextPartySubIDs() : GroupBase(_fnum) {}
-            ~NoContextPartySubIDs() {}
+            ~NoContextPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21669,12 +21901,14 @@ public:
          enum { _fnum = 1529 };
 
          NoRiskLimits() : GroupBase(_fnum) {}
-         ~NoRiskLimits() {}
+         ~NoRiskLimits() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoRiskInstruments); // 1534
-            mb->append_group(new NoRiskWarningLevels); // 1559
+            mb->get_groups().insert({
+               { 1534, new NoRiskInstruments },
+               { 1559, new NoRiskWarningLevels },
+            });
             return mb;
          }
 
@@ -21692,11 +21926,11 @@ public:
             enum { _fnum = 1534 };
 
             NoRiskInstruments() : GroupBase(_fnum) {}
-            ~NoRiskInstruments() {}
+            ~NoRiskInstruments() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 25, &_ftha));
-               mb->append_group(new NoRiskSecurityAltID); // 1540
+               mb->get_groups().insert({1540, new NoRiskSecurityAltID });
                return mb;
             }
 
@@ -21714,7 +21948,7 @@ public:
                enum { _fnum = 1540 };
 
                NoRiskSecurityAltID() : GroupBase(_fnum) {}
-               ~NoRiskSecurityAltID() {}
+               ~NoRiskSecurityAltID() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -21733,7 +21967,7 @@ public:
             enum { _fnum = 1559 };
 
             NoRiskWarningLevels() : GroupBase(_fnum) {}
-            ~NoRiskWarningLevels() {}
+            ~NoRiskWarningLevels() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21752,15 +21986,17 @@ public:
          enum { _fnum = 1562 };
 
          NoRelatedPartyIDs() : GroupBase(_fnum) {}
-         ~NoRelatedPartyIDs() {}
+         ~NoRelatedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoPartyRelationships); // 1514
-            mb->append_group(new NoRelatedPartySubIDs); // 1566
-            mb->append_group(new NoRelatedPartyAltIDs); // 1569
-            mb->append_group(new NoRelatedContextPartyIDs); // 1575
-            mb->append_group(new NoRelationshipRiskLimits); // 1582
+            mb->get_groups().insert({
+               { 1514, new NoPartyRelationships },
+               { 1566, new NoRelatedPartySubIDs },
+               { 1569, new NoRelatedPartyAltIDs },
+               { 1575, new NoRelatedContextPartyIDs },
+               { 1582, new NoRelationshipRiskLimits },
+            });
             return mb;
          }
 
@@ -21778,7 +22014,7 @@ public:
             enum { _fnum = 1514 };
 
             NoPartyRelationships() : GroupBase(_fnum) {}
-            ~NoPartyRelationships() {}
+            ~NoPartyRelationships() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21796,7 +22032,7 @@ public:
             enum { _fnum = 1566 };
 
             NoRelatedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoRelatedPartySubIDs() {}
+            ~NoRelatedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -21814,11 +22050,11 @@ public:
             enum { _fnum = 1569 };
 
             NoRelatedPartyAltIDs() : GroupBase(_fnum) {}
-            ~NoRelatedPartyAltIDs() {}
+            ~NoRelatedPartyAltIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoRelatedPartyAltSubIDs); // 1572
+               mb->get_groups().insert({1572, new NoRelatedPartyAltSubIDs });
                return mb;
             }
 
@@ -21836,7 +22072,7 @@ public:
                enum { _fnum = 1572 };
 
                NoRelatedPartyAltSubIDs() : GroupBase(_fnum) {}
-               ~NoRelatedPartyAltSubIDs() {}
+               ~NoRelatedPartyAltSubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -21855,11 +22091,11 @@ public:
             enum { _fnum = 1575 };
 
             NoRelatedContextPartyIDs() : GroupBase(_fnum) {}
-            ~NoRelatedContextPartyIDs() {}
+            ~NoRelatedContextPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoRelatedContextPartySubIDs); // 1579
+               mb->get_groups().insert({1579, new NoRelatedContextPartySubIDs });
                return mb;
             }
 
@@ -21877,7 +22113,7 @@ public:
                enum { _fnum = 1579 };
 
                NoRelatedContextPartySubIDs() : GroupBase(_fnum) {}
-               ~NoRelatedContextPartySubIDs() {}
+               ~NoRelatedContextPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -21896,12 +22132,14 @@ public:
             enum { _fnum = 1582 };
 
             NoRelationshipRiskLimits() : GroupBase(_fnum) {}
-            ~NoRelationshipRiskLimits() {}
+            ~NoRelationshipRiskLimits() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-               mb->append_group(new NoRelationshipRiskInstruments); // 1587
-               mb->append_group(new NoRelationshipRiskWarningLevels); // 1613
+               mb->get_groups().insert({
+                  { 1587, new NoRelationshipRiskInstruments },
+                  { 1613, new NoRelationshipRiskWarningLevels },
+               });
                return mb;
             }
 
@@ -21919,11 +22157,11 @@ public:
                enum { _fnum = 1587 };
 
                NoRelationshipRiskInstruments() : GroupBase(_fnum) {}
-               ~NoRelationshipRiskInstruments() {}
+               ~NoRelationshipRiskInstruments() = default;
                MessageBase *create_group() const
                {
                   MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 25, &_ftha));
-                  mb->append_group(new NoRelationshipRiskSecurityAltID); // 1593
+                  mb->get_groups().insert({1593, new NoRelationshipRiskSecurityAltID });
                   return mb;
                }
 
@@ -21941,7 +22179,7 @@ public:
                   enum { _fnum = 1593 };
 
                   NoRelationshipRiskSecurityAltID() : GroupBase(_fnum) {}
-                  ~NoRelationshipRiskSecurityAltID() {}
+                  ~NoRelationshipRiskSecurityAltID() = default;
                   MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                   static const MsgType& get_msgtype() { return _msgtype; }
@@ -21960,7 +22198,7 @@ public:
                enum { _fnum = 1613 };
 
                NoRelationshipRiskWarningLevels() : GroupBase(_fnum) {}
-               ~NoRelationshipRiskWarningLevels() {}
+               ~NoRelationshipRiskWarningLevels() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -21981,19 +22219,21 @@ class NewOrderSingle : public Message
 public:
    NewOrderSingle() : Message(ctx(), _msgtype(), _traits, 243, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 232, new NoStipulations },
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~NewOrderSingle() {}
+   ~NewOrderSingle() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -22010,11 +22250,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -22032,11 +22272,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -22054,7 +22294,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22074,7 +22314,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -22092,7 +22332,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -22110,11 +22350,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -22132,7 +22372,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22151,7 +22391,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -22169,13 +22409,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -22193,7 +22435,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22211,7 +22453,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22229,11 +22471,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -22251,7 +22493,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22271,7 +22513,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -22289,7 +22531,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -22307,7 +22549,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -22325,11 +22567,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -22347,7 +22589,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22366,11 +22608,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -22388,11 +22630,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -22410,7 +22652,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22430,10 +22672,12 @@ class NewOrderList : public Message
 public:
    NewOrderList() : Message(ctx(), _msgtype(), _traits, 21, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
+      _groups.insert({
+         { 73, new NoOrders },
+         { 1116, new NoRootPartyIDs },
+      });
    }
-   ~NewOrderList() {}
+   ~NewOrderList() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -22450,20 +22694,22 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 228, &_ftha));
-         mb->append_group(new NoAllocs); // 78
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoTradingSessions); // 386
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoStrategyParameters); // 957
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 78, new NoAllocs },
+            { 232, new NoStipulations },
+            { 386, new NoTradingSessions },
+            { 453, new NoPartyIDs },
+            { 454, new NoSecurityAltID },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 957, new NoStrategyParameters },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -22481,11 +22727,11 @@ public:
          enum { _fnum = 78 };
 
          NoAllocs() : GroupBase(_fnum) {}
-         ~NoAllocs() {}
+         ~NoAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoNestedPartyIDs); // 539
+            mb->get_groups().insert({539, new NoNestedPartyIDs });
             return mb;
          }
 
@@ -22503,11 +22749,11 @@ public:
             enum { _fnum = 539 };
 
             NoNestedPartyIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartyIDs() {}
+            ~NoNestedPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNestedPartySubIDs); // 804
+               mb->get_groups().insert({804, new NoNestedPartySubIDs });
                return mb;
             }
 
@@ -22525,7 +22771,7 @@ public:
                enum { _fnum = 804 };
 
                NoNestedPartySubIDs() : GroupBase(_fnum) {}
-               ~NoNestedPartySubIDs() {}
+               ~NoNestedPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -22545,7 +22791,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22563,7 +22809,7 @@ public:
          enum { _fnum = 386 };
 
          NoTradingSessions() : GroupBase(_fnum) {}
-         ~NoTradingSessions() {}
+         ~NoTradingSessions() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22581,11 +22827,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -22603,7 +22849,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22622,7 +22868,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22640,13 +22886,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -22664,7 +22912,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22682,7 +22930,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22700,11 +22948,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -22722,7 +22970,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -22742,7 +22990,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22760,7 +23008,7 @@ public:
          enum { _fnum = 957 };
 
          NoStrategyParameters() : GroupBase(_fnum) {}
-         ~NoStrategyParameters() {}
+         ~NoStrategyParameters() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22778,11 +23026,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -22800,7 +23048,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -22819,11 +23067,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -22841,11 +23089,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -22863,7 +23111,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -22884,11 +23132,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -22906,7 +23154,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22925,14 +23173,16 @@ class OrderCancelRequest : public Message
 public:
    OrderCancelRequest() : Message(ctx(), _msgtype(), _traits, 120, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderCancelRequest() {}
+   ~OrderCancelRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -22949,11 +23199,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -22971,7 +23221,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -22990,7 +23240,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23008,13 +23258,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -23032,7 +23284,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23050,7 +23302,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23068,11 +23320,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -23090,7 +23342,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23110,7 +23362,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23128,11 +23380,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -23150,7 +23402,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23169,11 +23421,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -23191,11 +23443,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -23213,7 +23465,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23233,18 +23485,20 @@ class OrderCancelReplaceRequest : public Message
 public:
    OrderCancelReplaceRequest() : Message(ctx(), _msgtype(), _traits, 240, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(768, new NoTrdRegTimestamps));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 711, new NoUnderlyings },
+         { 768, new NoTrdRegTimestamps },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderCancelReplaceRequest() {}
+   ~OrderCancelReplaceRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -23261,11 +23515,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -23283,11 +23537,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -23305,7 +23559,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23325,7 +23579,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23343,11 +23597,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -23365,7 +23619,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23384,7 +23638,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23402,13 +23656,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -23426,7 +23682,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23444,7 +23700,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23462,11 +23718,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -23484,7 +23740,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23504,7 +23760,7 @@ public:
       enum { _fnum = 768 };
 
       NoTrdRegTimestamps() : GroupBase(_fnum) {}
-      ~NoTrdRegTimestamps() {}
+      ~NoTrdRegTimestamps() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23522,7 +23778,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23540,7 +23796,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23558,11 +23814,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -23580,7 +23836,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23599,11 +23855,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -23621,11 +23877,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -23643,7 +23899,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23663,14 +23919,16 @@ class OrderStatusRequest : public Message
 public:
    OrderStatusRequest() : Message(ctx(), _msgtype(), _traits, 107, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderStatusRequest() {}
+   ~OrderStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -23687,11 +23945,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -23709,7 +23967,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23728,7 +23986,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23746,13 +24004,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -23770,7 +24030,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23788,7 +24048,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23806,11 +24066,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -23828,7 +24088,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23848,7 +24108,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -23866,11 +24126,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -23888,7 +24148,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -23907,11 +24167,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -23929,11 +24189,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -23951,7 +24211,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -23971,22 +24231,24 @@ class AllocationInstruction : public Message
 public:
    AllocationInstruction() : Message(ctx(), _msgtype(), _traits, 183, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
-      _groups.insert(_groups.end(), Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(124, new NoExecs));
-      _groups.insert(_groups.end(), Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(753, new NoPosAmt));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1445, new NoRateSources));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 73, new NoOrders },
+         { 78, new NoAllocs },
+         { 124, new NoExecs },
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 753, new NoPosAmt },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1445, new NoRateSources },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~AllocationInstruction() {}
+   ~AllocationInstruction() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24003,11 +24265,11 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 9, &_ftha));
-         mb->append_group(new NoNested2PartyIDs); // 756
+         mb->get_groups().insert({756, new NoNested2PartyIDs });
          return mb;
       }
 
@@ -24025,11 +24287,11 @@ public:
          enum { _fnum = 756 };
 
          NoNested2PartyIDs() : GroupBase(_fnum) {}
-         ~NoNested2PartyIDs() {}
+         ~NoNested2PartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNested2PartySubIDs); // 806
+            mb->get_groups().insert({806, new NoNested2PartySubIDs });
             return mb;
          }
 
@@ -24047,7 +24309,7 @@ public:
             enum { _fnum = 806 };
 
             NoNested2PartySubIDs() : GroupBase(_fnum) {}
-            ~NoNested2PartySubIDs() {}
+            ~NoNested2PartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -24067,14 +24329,16 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 41, &_ftha));
-         mb->append_group(new NoDlvyInst); // 85
-         mb->append_group(new NoMiscFees); // 136
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoClearingInstructions); // 576
+         mb->get_groups().insert({
+            { 85, new NoDlvyInst },
+            { 136, new NoMiscFees },
+            { 539, new NoNestedPartyIDs },
+            { 576, new NoClearingInstructions },
+         });
          return mb;
       }
 
@@ -24092,11 +24356,11 @@ public:
          enum { _fnum = 85 };
 
          NoDlvyInst() : GroupBase(_fnum) {}
-         ~NoDlvyInst() {}
+         ~NoDlvyInst() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -24114,11 +24378,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -24136,7 +24400,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -24156,7 +24420,7 @@ public:
          enum { _fnum = 136 };
 
          NoMiscFees() : GroupBase(_fnum) {}
-         ~NoMiscFees() {}
+         ~NoMiscFees() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24174,11 +24438,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -24196,7 +24460,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -24215,7 +24479,7 @@ public:
          enum { _fnum = 576 };
 
          NoClearingInstructions() : GroupBase(_fnum) {}
-         ~NoClearingInstructions() {}
+         ~NoClearingInstructions() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24234,7 +24498,7 @@ public:
       enum { _fnum = 124 };
 
       NoExecs() : GroupBase(_fnum) {}
-      ~NoExecs() {}
+      ~NoExecs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24252,7 +24516,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24270,11 +24534,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -24292,7 +24556,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24311,7 +24575,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24329,11 +24593,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -24351,7 +24615,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24370,13 +24634,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -24394,7 +24660,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24412,7 +24678,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24430,11 +24696,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -24452,7 +24718,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -24472,7 +24738,7 @@ public:
       enum { _fnum = 753 };
 
       NoPosAmt() : GroupBase(_fnum) {}
-      ~NoPosAmt() {}
+      ~NoPosAmt() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24490,7 +24756,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24508,7 +24774,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24526,11 +24792,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -24548,7 +24814,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24567,7 +24833,7 @@ public:
       enum { _fnum = 1445 };
 
       NoRateSources() : GroupBase(_fnum) {}
-      ~NoRateSources() {}
+      ~NoRateSources() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24585,11 +24851,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -24607,11 +24873,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -24629,7 +24895,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -24649,9 +24915,9 @@ class ListCancelRequest : public Message
 public:
    ListCancelRequest() : Message(ctx(), _msgtype(), _traits, 8, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({453, new NoPartyIDs });
    }
-   ~ListCancelRequest() {}
+   ~ListCancelRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24668,11 +24934,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -24690,7 +24956,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24708,7 +24974,7 @@ class ListExecute : public Message
 
 public:
    ListExecute() : Message(ctx(), _msgtype(), _traits, 7, &_ftha) {}
-   ~ListExecute() {}
+   ~ListExecute() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24724,7 +24990,7 @@ class ListStatusRequest : public Message
 
 public:
    ListStatusRequest() : Message(ctx(), _msgtype(), _traits, 4, &_ftha) {}
-   ~ListStatusRequest() {}
+   ~ListStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24741,9 +25007,9 @@ class ListStatus : public Message
 public:
    ListStatus() : Message(ctx(), _msgtype(), _traits, 14, &_ftha)
    {
-      _groups.insert(Groups::value_type(73, new NoOrders));
+      _groups.insert({73, new NoOrders });
    }
-   ~ListStatus() {}
+   ~ListStatus() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24760,7 +25026,7 @@ public:
       enum { _fnum = 73 };
 
       NoOrders() : GroupBase(_fnum) {}
-      ~NoOrders() {}
+      ~NoOrders() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 13, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24778,10 +25044,12 @@ class AllocationInstructionAck : public Message
 public:
    AllocationInstructionAck() : Message(ctx(), _msgtype(), _traits, 16, &_ftha)
    {
-      _groups.insert(Groups::value_type(78, new NoAllocs));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({
+         { 78, new NoAllocs },
+         { 453, new NoPartyIDs },
+      });
    }
-   ~AllocationInstructionAck() {}
+   ~AllocationInstructionAck() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24798,11 +25066,11 @@ public:
       enum { _fnum = 78 };
 
       NoAllocs() : GroupBase(_fnum) {}
-      ~NoAllocs() {}
+      ~NoAllocs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 14, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -24820,11 +25088,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -24842,7 +25110,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -24862,11 +25130,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -24884,7 +25152,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24903,14 +25171,16 @@ class DontKnowTrade : public Message
 public:
    DontKnowTrade() : Message(ctx(), _msgtype(), _traits, 105, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~DontKnowTrade() {}
+   ~DontKnowTrade() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -24927,7 +25197,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -24945,11 +25215,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -24967,7 +25237,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -24986,13 +25256,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -25010,7 +25282,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25028,7 +25300,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25046,11 +25318,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -25068,7 +25340,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25088,7 +25360,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -25106,11 +25378,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -25128,7 +25400,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25147,11 +25419,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -25169,11 +25441,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -25191,7 +25463,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25211,10 +25483,12 @@ class QuoteRequest : public Message
 public:
    QuoteRequest() : Message(ctx(), _msgtype(), _traits, 14, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 1116, new NoRootPartyIDs },
+      });
    }
-   ~QuoteRequest() {}
+   ~QuoteRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -25231,20 +25505,22 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 148, &_ftha));
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoQuoteQualifiers); // 735
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoRateSources); // 1445
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 232, new NoStipulations },
+            { 453, new NoPartyIDs },
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 735, new NoQuoteQualifiers },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1445, new NoRateSources },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -25262,7 +25538,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25280,11 +25556,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -25302,7 +25578,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25321,7 +25597,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25339,13 +25615,15 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 67, &_ftha));
-            mb->append_group(new NoNestedPartyIDs); // 539
-            mb->append_group(new NoLegSecurityAltID); // 604
-            mb->append_group(new NoLegStipulations); // 683
+            mb->get_groups().insert({
+               { 539, new NoNestedPartyIDs },
+               { 604, new NoLegSecurityAltID },
+               { 683, new NoLegStipulations },
+            });
             return mb;
          }
 
@@ -25363,11 +25641,11 @@ public:
             enum { _fnum = 539 };
 
             NoNestedPartyIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartyIDs() {}
+            ~NoNestedPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNestedPartySubIDs); // 804
+               mb->get_groups().insert({804, new NoNestedPartySubIDs });
                return mb;
             }
 
@@ -25385,7 +25663,7 @@ public:
                enum { _fnum = 804 };
 
                NoNestedPartySubIDs() : GroupBase(_fnum) {}
-               ~NoNestedPartySubIDs() {}
+               ~NoNestedPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -25404,7 +25682,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25422,7 +25700,7 @@ public:
             enum { _fnum = 683 };
 
             NoLegStipulations() : GroupBase(_fnum) {}
-            ~NoLegStipulations() {}
+            ~NoLegStipulations() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25441,13 +25719,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -25465,7 +25745,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25483,7 +25763,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25501,11 +25781,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -25523,7 +25803,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -25543,7 +25823,7 @@ public:
          enum { _fnum = 735 };
 
          NoQuoteQualifiers() : GroupBase(_fnum) {}
-         ~NoQuoteQualifiers() {}
+         ~NoQuoteQualifiers() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25561,7 +25841,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25579,11 +25859,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -25601,7 +25881,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25620,7 +25900,7 @@ public:
          enum { _fnum = 1445 };
 
          NoRateSources() : GroupBase(_fnum) {}
-         ~NoRateSources() {}
+         ~NoRateSources() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25638,11 +25918,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -25660,11 +25940,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -25682,7 +25962,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -25703,11 +25983,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -25725,7 +26005,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25744,18 +26024,20 @@ class Quote : public Message
 public:
    Quote() : Message(ctx(), _msgtype(), _traits, 180, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(735, new NoQuoteQualifiers));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1445, new NoRateSources));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 735, new NoQuoteQualifiers },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1445, new NoRateSources },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~Quote() {}
+   ~Quote() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -25772,7 +26054,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -25790,11 +26072,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -25812,7 +26094,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25831,7 +26113,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -25849,13 +26131,15 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
-         mb->append_group(new NoLegSecurityAltID); // 604
-         mb->append_group(new NoLegStipulations); // 683
+         mb->get_groups().insert({
+            { 539, new NoNestedPartyIDs },
+            { 604, new NoLegSecurityAltID },
+            { 683, new NoLegStipulations },
+         });
          return mb;
       }
 
@@ -25873,11 +26157,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -25895,7 +26179,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -25914,7 +26198,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25932,7 +26216,7 @@ public:
          enum { _fnum = 683 };
 
          NoLegStipulations() : GroupBase(_fnum) {}
-         ~NoLegStipulations() {}
+         ~NoLegStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25951,13 +26235,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -25975,7 +26261,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -25993,7 +26279,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26011,11 +26297,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -26033,7 +26319,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26053,7 +26339,7 @@ public:
       enum { _fnum = 735 };
 
       NoQuoteQualifiers() : GroupBase(_fnum) {}
-      ~NoQuoteQualifiers() {}
+      ~NoQuoteQualifiers() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26071,7 +26357,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26089,11 +26375,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -26111,7 +26397,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26130,7 +26416,7 @@ public:
       enum { _fnum = 1445 };
 
       NoRateSources() : GroupBase(_fnum) {}
-      ~NoRateSources() {}
+      ~NoRateSources() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26148,11 +26434,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -26170,11 +26456,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -26192,7 +26478,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26212,9 +26498,9 @@ class SettlementInstructions : public Message
 public:
    SettlementInstructions() : Message(ctx(), _msgtype(), _traits, 10, &_ftha)
    {
-      _groups.insert(Groups::value_type(778, new NoSettlInst));
+      _groups.insert({778, new NoSettlInst });
    }
-   ~SettlementInstructions() {}
+   ~SettlementInstructions() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -26231,12 +26517,14 @@ public:
       enum { _fnum = 778 };
 
       NoSettlInst() : GroupBase(_fnum) {}
-      ~NoSettlInst() {}
+      ~NoSettlInst() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 26, &_ftha));
-         mb->append_group(new NoDlvyInst); // 85
-         mb->append_group(new NoPartyIDs); // 453
+         mb->get_groups().insert({
+            { 85, new NoDlvyInst },
+            { 453, new NoPartyIDs },
+         });
          return mb;
       }
 
@@ -26254,11 +26542,11 @@ public:
          enum { _fnum = 85 };
 
          NoDlvyInst() : GroupBase(_fnum) {}
-         ~NoDlvyInst() {}
+         ~NoDlvyInst() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoSettlPartyIDs); // 781
+            mb->get_groups().insert({781, new NoSettlPartyIDs });
             return mb;
          }
 
@@ -26276,11 +26564,11 @@ public:
             enum { _fnum = 781 };
 
             NoSettlPartyIDs() : GroupBase(_fnum) {}
-            ~NoSettlPartyIDs() {}
+            ~NoSettlPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoSettlPartySubIDs); // 801
+               mb->get_groups().insert({801, new NoSettlPartySubIDs });
                return mb;
             }
 
@@ -26298,7 +26586,7 @@ public:
                enum { _fnum = 801 };
 
                NoSettlPartySubIDs() : GroupBase(_fnum) {}
-               ~NoSettlPartySubIDs() {}
+               ~NoSettlPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -26318,11 +26606,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -26340,7 +26628,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26360,12 +26648,14 @@ class MarketDataRequest : public Message
 public:
    MarketDataRequest() : Message(ctx(), _msgtype(), _traits, 15, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
-      _groups.insert(_groups.end(), Groups::value_type(267, new NoMDEntryTypes));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({
+         { 146, new NoRelatedSym },
+         { 267, new NoMDEntryTypes },
+         { 386, new NoTradingSessions },
+         { 453, new NoPartyIDs },
+      });
    }
-   ~MarketDataRequest() {}
+   ~MarketDataRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -26382,16 +26672,18 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 96, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -26409,7 +26701,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26427,11 +26719,11 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
+            mb->get_groups().insert({604, new NoLegSecurityAltID });
             return mb;
          }
 
@@ -26449,7 +26741,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26468,13 +26760,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -26492,7 +26786,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26510,7 +26804,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26528,11 +26822,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -26550,7 +26844,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -26570,7 +26864,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26588,11 +26882,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -26610,7 +26904,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26629,11 +26923,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -26651,11 +26945,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -26673,7 +26967,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -26694,7 +26988,7 @@ public:
       enum { _fnum = 267 };
 
       NoMDEntryTypes() : GroupBase(_fnum) {}
-      ~NoMDEntryTypes() {}
+      ~NoMDEntryTypes() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26712,7 +27006,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26730,11 +27024,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -26752,7 +27046,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26771,16 +27065,18 @@ class MarketDataSnapshotFullRefresh : public Message
 public:
    MarketDataSnapshotFullRefresh() : Message(ctx(), _msgtype(), _traits, 112, &_ftha)
    {
-      _groups.insert(Groups::value_type(215, new NoRoutingIDs));
-      _groups.insert(_groups.end(), Groups::value_type(268, new NoMDEntries));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 215, new NoRoutingIDs },
+         { 268, new NoMDEntries },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~MarketDataSnapshotFullRefresh() {}
+   ~MarketDataSnapshotFullRefresh() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -26797,7 +27093,7 @@ public:
       enum { _fnum = 215 };
 
       NoRoutingIDs() : GroupBase(_fnum) {}
-      ~NoRoutingIDs() {}
+      ~NoRoutingIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26815,13 +27111,15 @@ public:
       enum { _fnum = 268 };
 
       NoMDEntries() : GroupBase(_fnum) {}
-      ~NoMDEntries() {}
+      ~NoMDEntries() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 74, &_ftha));
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoOfSecSizes); // 1177
-         mb->append_group(new NoRateSources); // 1445
+         mb->get_groups().insert({
+            { 453, new NoPartyIDs },
+            { 1177, new NoOfSecSizes },
+            { 1445, new NoRateSources },
+         });
          return mb;
       }
 
@@ -26839,11 +27137,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -26861,7 +27159,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -26880,7 +27178,7 @@ public:
          enum { _fnum = 1177 };
 
          NoOfSecSizes() : GroupBase(_fnum) {}
-         ~NoOfSecSizes() {}
+         ~NoOfSecSizes() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26898,7 +27196,7 @@ public:
          enum { _fnum = 1445 };
 
          NoRateSources() : GroupBase(_fnum) {}
-         ~NoRateSources() {}
+         ~NoRateSources() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26917,7 +27215,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -26935,11 +27233,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -26957,7 +27255,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -26976,13 +27274,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -27000,7 +27300,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27018,7 +27318,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27036,11 +27336,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -27058,7 +27358,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27078,7 +27378,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -27096,11 +27396,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -27118,7 +27418,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27137,11 +27437,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -27159,11 +27459,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -27181,7 +27481,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27201,10 +27501,12 @@ class MarketDataIncrementalRefresh : public Message
 public:
    MarketDataIncrementalRefresh() : Message(ctx(), _msgtype(), _traits, 12, &_ftha)
    {
-      _groups.insert(Groups::value_type(215, new NoRoutingIDs));
-      _groups.insert(_groups.end(), Groups::value_type(268, new NoMDEntries));
+      _groups.insert({
+         { 215, new NoRoutingIDs },
+         { 268, new NoMDEntries },
+      });
    }
-   ~MarketDataIncrementalRefresh() {}
+   ~MarketDataIncrementalRefresh() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -27221,7 +27523,7 @@ public:
       enum { _fnum = 215 };
 
       NoRoutingIDs() : GroupBase(_fnum) {}
-      ~NoRoutingIDs() {}
+      ~NoRoutingIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -27239,20 +27541,22 @@ public:
       enum { _fnum = 268 };
 
       NoMDEntries() : GroupBase(_fnum) {}
-      ~NoMDEntries() {}
+      ~NoMDEntries() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 178, &_ftha));
-         mb->append_group(new NoPartyIDs); // 453
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoStatsIndicators); // 1175
-         mb->append_group(new NoOfSecSizes); // 1177
-         mb->append_group(new NoRateSources); // 1445
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 453, new NoPartyIDs },
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1175, new NoStatsIndicators },
+            { 1177, new NoOfSecSizes },
+            { 1445, new NoRateSources },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -27270,11 +27574,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -27292,7 +27596,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27311,7 +27615,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27329,11 +27633,11 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
+            mb->get_groups().insert({604, new NoLegSecurityAltID });
             return mb;
          }
 
@@ -27351,7 +27655,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27370,13 +27674,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -27394,7 +27700,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27412,7 +27718,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27430,11 +27736,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -27452,7 +27758,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -27472,7 +27778,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27490,11 +27796,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -27512,7 +27818,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27531,7 +27837,7 @@ public:
          enum { _fnum = 1175 };
 
          NoStatsIndicators() : GroupBase(_fnum) {}
-         ~NoStatsIndicators() {}
+         ~NoStatsIndicators() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27549,7 +27855,7 @@ public:
          enum { _fnum = 1177 };
 
          NoOfSecSizes() : GroupBase(_fnum) {}
-         ~NoOfSecSizes() {}
+         ~NoOfSecSizes() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27567,7 +27873,7 @@ public:
          enum { _fnum = 1445 };
 
          NoRateSources() : GroupBase(_fnum) {}
-         ~NoRateSources() {}
+         ~NoRateSources() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27585,11 +27891,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -27607,11 +27913,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -27629,7 +27935,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -27650,10 +27956,12 @@ class MarketDataRequestReject : public Message
 public:
    MarketDataRequestReject() : Message(ctx(), _msgtype(), _traits, 7, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(816, new NoAltMDSource));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 816, new NoAltMDSource },
+      });
    }
-   ~MarketDataRequestReject() {}
+   ~MarketDataRequestReject() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -27670,11 +27978,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -27692,7 +28000,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27711,7 +28019,7 @@ public:
       enum { _fnum = 816 };
 
       NoAltMDSource() : GroupBase(_fnum) {}
-      ~NoAltMDSource() {}
+      ~NoAltMDSource() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -27729,11 +28037,13 @@ class QuoteCancel : public Message
 public:
    QuoteCancel() : Message(ctx(), _msgtype(), _traits, 14, &_ftha)
    {
-      _groups.insert(Groups::value_type(295, new NoQuoteEntries));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
+      _groups.insert({
+         { 295, new NoQuoteEntries },
+         { 453, new NoPartyIDs },
+         { 1461, new NoTargetPartyIDs },
+      });
    }
-   ~QuoteCancel() {}
+   ~QuoteCancel() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -27750,16 +28060,18 @@ public:
       enum { _fnum = 295 };
 
       NoQuoteEntries() : GroupBase(_fnum) {}
-      ~NoQuoteEntries() {}
+      ~NoQuoteEntries() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 99, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -27777,7 +28089,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27795,11 +28107,11 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
+            mb->get_groups().insert({604, new NoLegSecurityAltID });
             return mb;
          }
 
@@ -27817,7 +28129,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27836,13 +28148,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -27860,7 +28174,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27878,7 +28192,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27896,11 +28210,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -27918,7 +28232,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -27938,7 +28252,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -27956,11 +28270,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -27978,7 +28292,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -27997,11 +28311,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -28019,11 +28333,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -28041,7 +28355,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -28062,11 +28376,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -28084,7 +28398,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28103,7 +28417,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28121,16 +28435,18 @@ class QuoteStatusRequest : public Message
 public:
    QuoteStatusRequest() : Message(ctx(), _msgtype(), _traits, 109, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~QuoteStatusRequest() {}
+   ~QuoteStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -28147,11 +28463,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -28169,7 +28485,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28188,7 +28504,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28206,11 +28522,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -28228,7 +28544,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28247,13 +28563,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -28271,7 +28589,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28289,7 +28607,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28307,11 +28625,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -28329,7 +28647,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -28349,7 +28667,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28367,11 +28685,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -28389,7 +28707,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28408,7 +28726,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28426,11 +28744,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -28448,11 +28766,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -28470,7 +28788,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -28490,11 +28808,13 @@ class MassQuoteAcknowledgement : public Message
 public:
    MassQuoteAcknowledgement() : Message(ctx(), _msgtype(), _traits, 16, &_ftha)
    {
-      _groups.insert(Groups::value_type(296, new NoQuoteSets));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
+      _groups.insert({
+         { 296, new NoQuoteSets },
+         { 453, new NoPartyIDs },
+         { 1461, new NoTargetPartyIDs },
+      });
    }
-   ~MassQuoteAcknowledgement() {}
+   ~MassQuoteAcknowledgement() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -28511,14 +28831,16 @@ public:
       enum { _fnum = 296 };
 
       NoQuoteSets() : GroupBase(_fnum) {}
-      ~NoQuoteSets() {}
+      ~NoQuoteSets() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 80, &_ftha));
-         mb->append_group(new NoQuoteEntries); // 295
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 295, new NoQuoteEntries },
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -28536,15 +28858,17 @@ public:
          enum { _fnum = 295 };
 
          NoQuoteEntries() : GroupBase(_fnum) {}
-         ~NoQuoteEntries() {}
+         ~NoQuoteEntries() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 118, &_ftha));
-            mb->append_group(new NoSecurityAltID); // 454
-            mb->append_group(new NoLegs); // 555
-            mb->append_group(new NoEvents); // 864
-            mb->append_group(new NoInstrumentParties); // 1018
-            mb->append_group(new NoComplexEvents); // 1483
+            mb->get_groups().insert({
+               { 454, new NoSecurityAltID },
+               { 555, new NoLegs },
+               { 864, new NoEvents },
+               { 1018, new NoInstrumentParties },
+               { 1483, new NoComplexEvents },
+            });
             return mb;
          }
 
@@ -28562,7 +28886,7 @@ public:
             enum { _fnum = 454 };
 
             NoSecurityAltID() : GroupBase(_fnum) {}
-            ~NoSecurityAltID() {}
+            ~NoSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -28580,11 +28904,11 @@ public:
             enum { _fnum = 555 };
 
             NoLegs() : GroupBase(_fnum) {}
-            ~NoLegs() {}
+            ~NoLegs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-               mb->append_group(new NoLegSecurityAltID); // 604
+               mb->get_groups().insert({604, new NoLegSecurityAltID });
                return mb;
             }
 
@@ -28602,7 +28926,7 @@ public:
                enum { _fnum = 604 };
 
                NoLegSecurityAltID() : GroupBase(_fnum) {}
-               ~NoLegSecurityAltID() {}
+               ~NoLegSecurityAltID() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -28621,7 +28945,7 @@ public:
             enum { _fnum = 864 };
 
             NoEvents() : GroupBase(_fnum) {}
-            ~NoEvents() {}
+            ~NoEvents() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -28639,11 +28963,11 @@ public:
             enum { _fnum = 1018 };
 
             NoInstrumentParties() : GroupBase(_fnum) {}
-            ~NoInstrumentParties() {}
+            ~NoInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoInstrumentPartySubIDs); // 1052
+               mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
                return mb;
             }
 
@@ -28661,7 +28985,7 @@ public:
                enum { _fnum = 1052 };
 
                NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoInstrumentPartySubIDs() {}
+               ~NoInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -28680,11 +29004,11 @@ public:
             enum { _fnum = 1483 };
 
             NoComplexEvents() : GroupBase(_fnum) {}
-            ~NoComplexEvents() {}
+            ~NoComplexEvents() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-               mb->append_group(new NoComplexEventDates); // 1491
+               mb->get_groups().insert({1491, new NoComplexEventDates });
                return mb;
             }
 
@@ -28702,11 +29026,11 @@ public:
                enum { _fnum = 1491 };
 
                NoComplexEventDates() : GroupBase(_fnum) {}
-               ~NoComplexEventDates() {}
+               ~NoComplexEventDates() = default;
                MessageBase *create_group() const
                {
                   MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-                  mb->append_group(new NoComplexEventTimes); // 1494
+                  mb->get_groups().insert({1494, new NoComplexEventTimes });
                   return mb;
                }
 
@@ -28724,7 +29048,7 @@ public:
                   enum { _fnum = 1494 };
 
                   NoComplexEventTimes() : GroupBase(_fnum) {}
-                  ~NoComplexEventTimes() {}
+                  ~NoComplexEventTimes() = default;
                   MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                   static const MsgType& get_msgtype() { return _msgtype; }
@@ -28745,7 +29069,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28763,7 +29087,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28781,11 +29105,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -28803,7 +29127,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -28823,11 +29147,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -28845,7 +29169,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28864,7 +29188,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28882,16 +29206,18 @@ class SecurityDefinitionRequest : public Message
 public:
    SecurityDefinitionRequest() : Message(ctx(), _msgtype(), _traits, 120, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~SecurityDefinitionRequest() {}
+   ~SecurityDefinitionRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -28908,7 +29234,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28926,7 +29252,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -28944,11 +29270,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -28966,7 +29292,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -28985,13 +29311,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -29009,7 +29337,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29027,7 +29355,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29045,11 +29373,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -29067,7 +29395,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29087,7 +29415,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29105,7 +29433,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29123,11 +29451,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -29145,7 +29473,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29164,11 +29492,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -29186,11 +29514,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -29208,7 +29536,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29228,17 +29556,19 @@ class SecurityDefinition : public Message
 public:
    SecurityDefinition() : Message(ctx(), _msgtype(), _traits, 124, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1310, new NoMarketSegments));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1310, new NoMarketSegments },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~SecurityDefinition() {}
+   ~SecurityDefinition() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -29255,7 +29585,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29273,7 +29603,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29291,11 +29621,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -29313,7 +29643,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29332,13 +29662,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -29356,7 +29688,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29374,7 +29706,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29392,11 +29724,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -29414,7 +29746,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29434,7 +29766,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29452,7 +29784,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29470,11 +29802,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -29492,7 +29824,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29511,15 +29843,17 @@ public:
       enum { _fnum = 1310 };
 
       NoMarketSegments() : GroupBase(_fnum) {}
-      ~NoMarketSegments() {}
+      ~NoMarketSegments() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 21, &_ftha));
-         mb->append_group(new NoStrikeRules); // 1201
-         mb->append_group(new NoTickRules); // 1205
-         mb->append_group(new NoLotTypeRules); // 1234
-         mb->append_group(new NoTradingSessionRules); // 1309
-         mb->append_group(new NoNestedInstrAttrib); // 1312
+         mb->get_groups().insert({
+            { 1201, new NoStrikeRules },
+            { 1205, new NoTickRules },
+            { 1234, new NoLotTypeRules },
+            { 1309, new NoTradingSessionRules },
+            { 1312, new NoNestedInstrAttrib },
+         });
          return mb;
       }
 
@@ -29537,11 +29871,11 @@ public:
          enum { _fnum = 1201 };
 
          NoStrikeRules() : GroupBase(_fnum) {}
-         ~NoStrikeRules() {}
+         ~NoStrikeRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoMaturityRules); // 1236
+            mb->get_groups().insert({1236, new NoMaturityRules });
             return mb;
          }
 
@@ -29559,7 +29893,7 @@ public:
             enum { _fnum = 1236 };
 
             NoMaturityRules() : GroupBase(_fnum) {}
-            ~NoMaturityRules() {}
+            ~NoMaturityRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29578,7 +29912,7 @@ public:
          enum { _fnum = 1205 };
 
          NoTickRules() : GroupBase(_fnum) {}
-         ~NoTickRules() {}
+         ~NoTickRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29596,7 +29930,7 @@ public:
          enum { _fnum = 1234 };
 
          NoLotTypeRules() : GroupBase(_fnum) {}
-         ~NoLotTypeRules() {}
+         ~NoLotTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29614,15 +29948,17 @@ public:
          enum { _fnum = 1309 };
 
          NoTradingSessionRules() : GroupBase(_fnum) {}
-         ~NoTradingSessionRules() {}
+         ~NoTradingSessionRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-            mb->append_group(new NoMDFeedTypes); // 1141
-            mb->append_group(new NoExecInstRules); // 1232
-            mb->append_group(new NoMatchRules); // 1235
-            mb->append_group(new NoOrdTypeRules); // 1237
-            mb->append_group(new NoTimeInForceRules); // 1239
+            mb->get_groups().insert({
+               { 1141, new NoMDFeedTypes },
+               { 1232, new NoExecInstRules },
+               { 1235, new NoMatchRules },
+               { 1237, new NoOrdTypeRules },
+               { 1239, new NoTimeInForceRules },
+            });
             return mb;
          }
 
@@ -29640,7 +29976,7 @@ public:
             enum { _fnum = 1141 };
 
             NoMDFeedTypes() : GroupBase(_fnum) {}
-            ~NoMDFeedTypes() {}
+            ~NoMDFeedTypes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29658,7 +29994,7 @@ public:
             enum { _fnum = 1232 };
 
             NoExecInstRules() : GroupBase(_fnum) {}
-            ~NoExecInstRules() {}
+            ~NoExecInstRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29676,7 +30012,7 @@ public:
             enum { _fnum = 1235 };
 
             NoMatchRules() : GroupBase(_fnum) {}
-            ~NoMatchRules() {}
+            ~NoMatchRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29694,7 +30030,7 @@ public:
             enum { _fnum = 1237 };
 
             NoOrdTypeRules() : GroupBase(_fnum) {}
-            ~NoOrdTypeRules() {}
+            ~NoOrdTypeRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29712,7 +30048,7 @@ public:
             enum { _fnum = 1239 };
 
             NoTimeInForceRules() : GroupBase(_fnum) {}
-            ~NoTimeInForceRules() {}
+            ~NoTimeInForceRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29731,7 +30067,7 @@ public:
          enum { _fnum = 1312 };
 
          NoNestedInstrAttrib() : GroupBase(_fnum) {}
-         ~NoNestedInstrAttrib() {}
+         ~NoNestedInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29750,11 +30086,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -29772,11 +30108,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -29794,7 +30130,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -29814,15 +30150,17 @@ class SecurityStatusRequest : public Message
 public:
    SecurityStatusRequest() : Message(ctx(), _msgtype(), _traits, 100, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~SecurityStatusRequest() {}
+   ~SecurityStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -29839,7 +30177,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -29857,11 +30195,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -29879,7 +30217,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29898,13 +30236,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -29922,7 +30262,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29940,7 +30280,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -29958,11 +30298,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -29980,7 +30320,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30000,7 +30340,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30018,7 +30358,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30036,11 +30376,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -30058,7 +30398,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30077,11 +30417,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -30099,11 +30439,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -30121,7 +30461,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30141,15 +30481,17 @@ class SecurityStatus : public Message
 public:
    SecurityStatus() : Message(ctx(), _msgtype(), _traits, 124, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~SecurityStatus() {}
+   ~SecurityStatus() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -30166,7 +30508,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30184,11 +30526,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -30206,7 +30548,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30225,13 +30567,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -30249,7 +30593,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30267,7 +30611,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30285,11 +30629,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -30307,7 +30651,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30327,7 +30671,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30345,7 +30689,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30363,11 +30707,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -30385,7 +30729,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30404,11 +30748,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -30426,11 +30770,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -30448,7 +30792,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30467,7 +30811,7 @@ class TradingSessionStatusRequest : public Message
 
 public:
    TradingSessionStatusRequest() : Message(ctx(), _msgtype(), _traits, 9, &_ftha) {}
-   ~TradingSessionStatusRequest() {}
+   ~TradingSessionStatusRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -30484,12 +30828,14 @@ class TradingSessionStatus : public Message
 public:
    TradingSessionStatus() : Message(ctx(), _msgtype(), _traits, 112, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~TradingSessionStatus() {}
+   ~TradingSessionStatus() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -30506,7 +30852,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30524,7 +30870,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30542,11 +30888,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -30564,7 +30910,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30583,11 +30929,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -30605,11 +30951,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -30627,7 +30973,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30651,7 +30997,7 @@ class header : public MessageBase
 public:
    header() : MessageBase(ctx(), _msgtype(), _traits, 29, &_ftha),
       _begin_string(new begin_string(ctx()._beginStr)), _body_length(new body_length), _msg_type(new msg_type) { add_preamble(); }
-   ~header() {}
+   ~header() = default;
 
    static const MsgType& get_msgtype() { return _msgtype; }
 
@@ -30678,7 +31024,7 @@ public:
       enum { _fnum = 627 };
 
       NoHops() : GroupBase(_fnum) {}
-      ~NoHops() {}
+      ~NoHops() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -30696,10 +31042,12 @@ class MassQuote : public Message
 public:
    MassQuote() : Message(ctx(), _msgtype(), _traits, 11, &_ftha)
    {
-      _groups.insert(Groups::value_type(296, new NoQuoteSets));
-      _groups.insert(_groups.end(), Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({
+         { 296, new NoQuoteSets },
+         { 453, new NoPartyIDs },
+      });
    }
-   ~MassQuote() {}
+   ~MassQuote() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -30716,14 +31064,16 @@ public:
       enum { _fnum = 296 };
 
       NoQuoteSets() : GroupBase(_fnum) {}
-      ~NoQuoteSets() {}
+      ~NoQuoteSets() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 77, &_ftha));
-         mb->append_group(new NoQuoteEntries); // 295
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 295, new NoQuoteEntries },
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -30741,15 +31091,17 @@ public:
          enum { _fnum = 295 };
 
          NoQuoteEntries() : GroupBase(_fnum) {}
-         ~NoQuoteEntries() {}
+         ~NoQuoteEntries() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 116, &_ftha));
-            mb->append_group(new NoSecurityAltID); // 454
-            mb->append_group(new NoLegs); // 555
-            mb->append_group(new NoEvents); // 864
-            mb->append_group(new NoInstrumentParties); // 1018
-            mb->append_group(new NoComplexEvents); // 1483
+            mb->get_groups().insert({
+               { 454, new NoSecurityAltID },
+               { 555, new NoLegs },
+               { 864, new NoEvents },
+               { 1018, new NoInstrumentParties },
+               { 1483, new NoComplexEvents },
+            });
             return mb;
          }
 
@@ -30767,7 +31119,7 @@ public:
             enum { _fnum = 454 };
 
             NoSecurityAltID() : GroupBase(_fnum) {}
-            ~NoSecurityAltID() {}
+            ~NoSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30785,11 +31137,11 @@ public:
             enum { _fnum = 555 };
 
             NoLegs() : GroupBase(_fnum) {}
-            ~NoLegs() {}
+            ~NoLegs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-               mb->append_group(new NoLegSecurityAltID); // 604
+               mb->get_groups().insert({604, new NoLegSecurityAltID });
                return mb;
             }
 
@@ -30807,7 +31159,7 @@ public:
                enum { _fnum = 604 };
 
                NoLegSecurityAltID() : GroupBase(_fnum) {}
-               ~NoLegSecurityAltID() {}
+               ~NoLegSecurityAltID() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -30826,7 +31178,7 @@ public:
             enum { _fnum = 864 };
 
             NoEvents() : GroupBase(_fnum) {}
-            ~NoEvents() {}
+            ~NoEvents() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -30844,11 +31196,11 @@ public:
             enum { _fnum = 1018 };
 
             NoInstrumentParties() : GroupBase(_fnum) {}
-            ~NoInstrumentParties() {}
+            ~NoInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoInstrumentPartySubIDs); // 1052
+               mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
                return mb;
             }
 
@@ -30866,7 +31218,7 @@ public:
                enum { _fnum = 1052 };
 
                NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoInstrumentPartySubIDs() {}
+               ~NoInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -30885,11 +31237,11 @@ public:
             enum { _fnum = 1483 };
 
             NoComplexEvents() : GroupBase(_fnum) {}
-            ~NoComplexEvents() {}
+            ~NoComplexEvents() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-               mb->append_group(new NoComplexEventDates); // 1491
+               mb->get_groups().insert({1491, new NoComplexEventDates });
                return mb;
             }
 
@@ -30907,11 +31259,11 @@ public:
                enum { _fnum = 1491 };
 
                NoComplexEventDates() : GroupBase(_fnum) {}
-               ~NoComplexEventDates() {}
+               ~NoComplexEventDates() = default;
                MessageBase *create_group() const
                {
                   MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-                  mb->append_group(new NoComplexEventTimes); // 1494
+                  mb->get_groups().insert({1494, new NoComplexEventTimes });
                   return mb;
                }
 
@@ -30929,7 +31281,7 @@ public:
                   enum { _fnum = 1494 };
 
                   NoComplexEventTimes() : GroupBase(_fnum) {}
-                  ~NoComplexEventTimes() {}
+                  ~NoComplexEventTimes() = default;
                   MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                   static const MsgType& get_msgtype() { return _msgtype; }
@@ -30950,7 +31302,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30968,7 +31320,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -30986,11 +31338,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -31008,7 +31360,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -31028,11 +31380,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -31050,7 +31402,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31068,7 +31420,7 @@ class BusinessMessageReject : public Message
 
 public:
    BusinessMessageReject() : Message(ctx(), _msgtype(), _traits, 10, &_ftha) {}
-   ~BusinessMessageReject() {}
+   ~BusinessMessageReject() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31085,10 +31437,12 @@ class BidRequest : public Message
 public:
    BidRequest() : Message(ctx(), _msgtype(), _traits, 29, &_ftha)
    {
-      _groups.insert(Groups::value_type(398, new NoBidDescriptors));
-      _groups.insert(_groups.end(), Groups::value_type(420, new NoBidComponents));
+      _groups.insert({
+         { 398, new NoBidDescriptors },
+         { 420, new NoBidComponents },
+      });
    }
-   ~BidRequest() {}
+   ~BidRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31105,7 +31459,7 @@ public:
       enum { _fnum = 398 };
 
       NoBidDescriptors() : GroupBase(_fnum) {}
-      ~NoBidDescriptors() {}
+      ~NoBidDescriptors() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 11, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31123,7 +31477,7 @@ public:
       enum { _fnum = 420 };
 
       NoBidComponents() : GroupBase(_fnum) {}
-      ~NoBidComponents() {}
+      ~NoBidComponents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 9, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31141,9 +31495,9 @@ class BidResponse : public Message
 public:
    BidResponse() : Message(ctx(), _msgtype(), _traits, 3, &_ftha)
    {
-      _groups.insert(Groups::value_type(420, new NoBidComponents));
+      _groups.insert({420, new NoBidComponents });
    }
-   ~BidResponse() {}
+   ~BidResponse() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31160,7 +31514,7 @@ public:
       enum { _fnum = 420 };
 
       NoBidComponents() : GroupBase(_fnum) {}
-      ~NoBidComponents() {}
+      ~NoBidComponents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 18, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31178,9 +31532,9 @@ class ListStrikePrice : public Message
 public:
    ListStrikePrice() : Message(ctx(), _msgtype(), _traits, 4, &_ftha)
    {
-      _groups.insert(Groups::value_type(428, new NoStrikes));
+      _groups.insert({428, new NoStrikes });
    }
-   ~ListStrikePrice() {}
+   ~ListStrikePrice() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31197,15 +31551,17 @@ public:
       enum { _fnum = 428 };
 
       NoStrikes() : GroupBase(_fnum) {}
-      ~NoStrikes() {}
+      ~NoStrikes() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 98, &_ftha));
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 454, new NoSecurityAltID },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 1018, new NoInstrumentParties },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -31223,7 +31579,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31241,13 +31597,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -31265,7 +31623,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -31283,7 +31641,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -31301,11 +31659,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -31323,7 +31681,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -31343,7 +31701,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31361,11 +31719,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -31383,7 +31741,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -31402,11 +31760,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -31424,11 +31782,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -31446,7 +31804,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -31467,11 +31825,13 @@ class RegistrationInstructions : public Message
 public:
    RegistrationInstructions() : Message(ctx(), _msgtype(), _traits, 12, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(473, new NoRegistDtls));
-      _groups.insert(_groups.end(), Groups::value_type(510, new NoDistribInsts));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 473, new NoRegistDtls },
+         { 510, new NoDistribInsts },
+      });
    }
-   ~RegistrationInstructions() {}
+   ~RegistrationInstructions() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31488,11 +31848,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -31510,7 +31870,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31529,11 +31889,11 @@ public:
       enum { _fnum = 473 };
 
       NoRegistDtls() : GroupBase(_fnum) {}
-      ~NoRegistDtls() {}
+      ~NoRegistDtls() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoNestedPartyIDs); // 539
+         mb->get_groups().insert({539, new NoNestedPartyIDs });
          return mb;
       }
 
@@ -31551,11 +31911,11 @@ public:
          enum { _fnum = 539 };
 
          NoNestedPartyIDs() : GroupBase(_fnum) {}
-         ~NoNestedPartyIDs() {}
+         ~NoNestedPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoNestedPartySubIDs); // 804
+            mb->get_groups().insert({804, new NoNestedPartySubIDs });
             return mb;
          }
 
@@ -31573,7 +31933,7 @@ public:
             enum { _fnum = 804 };
 
             NoNestedPartySubIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartySubIDs() {}
+            ~NoNestedPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -31593,7 +31953,7 @@ public:
       enum { _fnum = 510 };
 
       NoDistribInsts() : GroupBase(_fnum) {}
-      ~NoDistribInsts() {}
+      ~NoDistribInsts() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31611,9 +31971,9 @@ class RegistrationInstructionsResponse : public Message
 public:
    RegistrationInstructionsResponse() : Message(ctx(), _msgtype(), _traits, 10, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
+      _groups.insert({453, new NoPartyIDs });
    }
-   ~RegistrationInstructionsResponse() {}
+   ~RegistrationInstructionsResponse() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31630,11 +31990,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -31652,7 +32012,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31671,17 +32031,19 @@ class OrderMassCancelRequest : public Message
 public:
    OrderMassCancelRequest() : Message(ctx(), _msgtype(), _traits, 174, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 864, new NoEvents },
+         { 887, new NoUnderlyingStips },
+         { 1018, new NoInstrumentParties },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderMassCancelRequest() {}
+   ~OrderMassCancelRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -31698,11 +32060,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -31720,7 +32082,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31739,7 +32101,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31757,7 +32119,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31775,7 +32137,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31793,7 +32155,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31811,11 +32173,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -31833,7 +32195,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31852,11 +32214,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -31874,7 +32236,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -31893,7 +32255,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -31911,11 +32273,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -31933,11 +32295,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -31955,7 +32317,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -31975,19 +32337,21 @@ class OrderMassCancelReport : public Message
 public:
    OrderMassCancelReport() : Message(ctx(), _msgtype(), _traits, 182, &_ftha)
    {
-      _groups.insert(Groups::value_type(453, new NoPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(534, new NoAffectedOrders));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1370, new NoNotAffectedOrders));
-      _groups.insert(_groups.end(), Groups::value_type(1461, new NoTargetPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 453, new NoPartyIDs },
+         { 454, new NoSecurityAltID },
+         { 457, new NoUnderlyingSecurityAltID },
+         { 534, new NoAffectedOrders },
+         { 864, new NoEvents },
+         { 887, new NoUnderlyingStips },
+         { 1018, new NoInstrumentParties },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1370, new NoNotAffectedOrders },
+         { 1461, new NoTargetPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~OrderMassCancelReport() {}
+   ~OrderMassCancelReport() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -32004,11 +32368,11 @@ public:
       enum { _fnum = 453 };
 
       NoPartyIDs() : GroupBase(_fnum) {}
-      ~NoPartyIDs() {}
+      ~NoPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoPartySubIDs); // 802
+         mb->get_groups().insert({802, new NoPartySubIDs });
          return mb;
       }
 
@@ -32026,7 +32390,7 @@ public:
          enum { _fnum = 802 };
 
          NoPartySubIDs() : GroupBase(_fnum) {}
-         ~NoPartySubIDs() {}
+         ~NoPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32045,7 +32409,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32063,7 +32427,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32081,7 +32445,7 @@ public:
       enum { _fnum = 534 };
 
       NoAffectedOrders() : GroupBase(_fnum) {}
-      ~NoAffectedOrders() {}
+      ~NoAffectedOrders() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32099,7 +32463,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32117,7 +32481,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32135,11 +32499,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -32157,7 +32521,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32176,11 +32540,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -32198,7 +32562,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32217,7 +32581,7 @@ public:
       enum { _fnum = 1370 };
 
       NoNotAffectedOrders() : GroupBase(_fnum) {}
-      ~NoNotAffectedOrders() {}
+      ~NoNotAffectedOrders() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32235,7 +32599,7 @@ public:
       enum { _fnum = 1461 };
 
       NoTargetPartyIDs() : GroupBase(_fnum) {}
-      ~NoTargetPartyIDs() {}
+      ~NoTargetPartyIDs() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32253,11 +32617,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -32275,11 +32639,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -32297,7 +32661,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -32317,19 +32681,21 @@ class NewOrderCross : public Message
 public:
    NewOrderCross() : Message(ctx(), _msgtype(), _traits, 190, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(552, new NoSides));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 386, new NoTradingSessions },
+         { 454, new NoSecurityAltID },
+         { 552, new NoSides },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1116, new NoRootPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~NewOrderCross() {}
+   ~NewOrderCross() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -32346,7 +32712,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32364,7 +32730,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32382,7 +32748,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32400,12 +32766,14 @@ public:
       enum { _fnum = 552 };
 
       NoSides() : GroupBase(_fnum) {}
-      ~NoSides() {}
+      ~NoSides() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 43, &_ftha));
-         mb->append_group(new NoAllocs); // 78
-         mb->append_group(new NoPartyIDs); // 453
+         mb->get_groups().insert({
+            { 78, new NoAllocs },
+            { 453, new NoPartyIDs },
+         });
          return mb;
       }
 
@@ -32423,11 +32791,11 @@ public:
          enum { _fnum = 78 };
 
          NoAllocs() : GroupBase(_fnum) {}
-         ~NoAllocs() {}
+         ~NoAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoNestedPartyIDs); // 539
+            mb->get_groups().insert({539, new NoNestedPartyIDs });
             return mb;
          }
 
@@ -32445,11 +32813,11 @@ public:
             enum { _fnum = 539 };
 
             NoNestedPartyIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartyIDs() {}
+            ~NoNestedPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNestedPartySubIDs); // 804
+               mb->get_groups().insert({804, new NoNestedPartySubIDs });
                return mb;
             }
 
@@ -32467,7 +32835,7 @@ public:
                enum { _fnum = 804 };
 
                NoNestedPartySubIDs() : GroupBase(_fnum) {}
-               ~NoNestedPartySubIDs() {}
+               ~NoNestedPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -32487,11 +32855,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -32509,7 +32877,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -32529,11 +32897,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -32551,7 +32919,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32570,13 +32938,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -32594,7 +32964,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32612,7 +32982,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32630,11 +33000,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -32652,7 +33022,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -32672,7 +33042,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32690,7 +33060,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32708,11 +33078,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -32730,7 +33100,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32749,11 +33119,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -32771,7 +33141,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -32790,11 +33160,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -32812,11 +33182,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -32834,7 +33204,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -32854,19 +33224,21 @@ class CrossOrderCancelReplaceRequest : public Message
 public:
    CrossOrderCancelReplaceRequest() : Message(ctx(), _msgtype(), _traits, 193, &_ftha)
    {
-      _groups.insert(Groups::value_type(232, new NoStipulations));
-      _groups.insert(_groups.end(), Groups::value_type(386, new NoTradingSessions));
-      _groups.insert(_groups.end(), Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(552, new NoSides));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(957, new NoStrategyParameters));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 232, new NoStipulations },
+         { 386, new NoTradingSessions },
+         { 454, new NoSecurityAltID },
+         { 552, new NoSides },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 957, new NoStrategyParameters },
+         { 1018, new NoInstrumentParties },
+         { 1116, new NoRootPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CrossOrderCancelReplaceRequest() {}
+   ~CrossOrderCancelReplaceRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -32883,7 +33255,7 @@ public:
       enum { _fnum = 232 };
 
       NoStipulations() : GroupBase(_fnum) {}
-      ~NoStipulations() {}
+      ~NoStipulations() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32901,7 +33273,7 @@ public:
       enum { _fnum = 386 };
 
       NoTradingSessions() : GroupBase(_fnum) {}
-      ~NoTradingSessions() {}
+      ~NoTradingSessions() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32919,7 +33291,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -32937,12 +33309,14 @@ public:
       enum { _fnum = 552 };
 
       NoSides() : GroupBase(_fnum) {}
-      ~NoSides() {}
+      ~NoSides() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 43, &_ftha));
-         mb->append_group(new NoAllocs); // 78
-         mb->append_group(new NoPartyIDs); // 453
+         mb->get_groups().insert({
+            { 78, new NoAllocs },
+            { 453, new NoPartyIDs },
+         });
          return mb;
       }
 
@@ -32960,11 +33334,11 @@ public:
          enum { _fnum = 78 };
 
          NoAllocs() : GroupBase(_fnum) {}
-         ~NoAllocs() {}
+         ~NoAllocs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoNestedPartyIDs); // 539
+            mb->get_groups().insert({539, new NoNestedPartyIDs });
             return mb;
          }
 
@@ -32982,11 +33356,11 @@ public:
             enum { _fnum = 539 };
 
             NoNestedPartyIDs() : GroupBase(_fnum) {}
-            ~NoNestedPartyIDs() {}
+            ~NoNestedPartyIDs() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoNestedPartySubIDs); // 804
+               mb->get_groups().insert({804, new NoNestedPartySubIDs });
                return mb;
             }
 
@@ -33004,7 +33378,7 @@ public:
                enum { _fnum = 804 };
 
                NoNestedPartySubIDs() : GroupBase(_fnum) {}
-               ~NoNestedPartySubIDs() {}
+               ~NoNestedPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -33024,11 +33398,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -33046,7 +33420,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -33066,11 +33440,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -33088,7 +33462,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33107,13 +33481,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -33131,7 +33507,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33149,7 +33525,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33167,11 +33543,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -33189,7 +33565,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -33209,7 +33585,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -33227,7 +33603,7 @@ public:
       enum { _fnum = 957 };
 
       NoStrategyParameters() : GroupBase(_fnum) {}
-      ~NoStrategyParameters() {}
+      ~NoStrategyParameters() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -33245,11 +33621,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -33267,7 +33643,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33286,11 +33662,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -33308,7 +33684,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33327,11 +33703,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -33349,11 +33725,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -33371,7 +33747,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -33393,7 +33769,7 @@ class trailer : public MessageBase
 public:
    trailer() : MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha),
       _check_sum(new check_sum) { add_preamble(); }
-   ~trailer() {}
+   ~trailer() = default;
 
    static const MsgType& get_msgtype() { return _msgtype; }
 
@@ -33416,16 +33792,18 @@ class CrossOrderCancelRequest : public Message
 public:
    CrossOrderCancelRequest() : Message(ctx(), _msgtype(), _traits, 99, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(552, new NoSides));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1116, new NoRootPartyIDs));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 552, new NoSides },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 1018, new NoInstrumentParties },
+         { 1116, new NoRootPartyIDs },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~CrossOrderCancelRequest() {}
+   ~CrossOrderCancelRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -33442,7 +33820,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -33460,11 +33838,11 @@ public:
       enum { _fnum = 552 };
 
       NoSides() : GroupBase(_fnum) {}
-      ~NoSides() {}
+      ~NoSides() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 18, &_ftha));
-         mb->append_group(new NoPartyIDs); // 453
+         mb->get_groups().insert({453, new NoPartyIDs });
          return mb;
       }
 
@@ -33482,11 +33860,11 @@ public:
          enum { _fnum = 453 };
 
          NoPartyIDs() : GroupBase(_fnum) {}
-         ~NoPartyIDs() {}
+         ~NoPartyIDs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoPartySubIDs); // 802
+            mb->get_groups().insert({802, new NoPartySubIDs });
             return mb;
          }
 
@@ -33504,7 +33882,7 @@ public:
             enum { _fnum = 802 };
 
             NoPartySubIDs() : GroupBase(_fnum) {}
-            ~NoPartySubIDs() {}
+            ~NoPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -33524,11 +33902,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -33546,7 +33924,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33565,13 +33943,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -33589,7 +33969,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33607,7 +33987,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33625,11 +34005,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -33647,7 +34027,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -33667,7 +34047,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -33685,11 +34065,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -33707,7 +34087,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33726,11 +34106,11 @@ public:
       enum { _fnum = 1116 };
 
       NoRootPartyIDs() : GroupBase(_fnum) {}
-      ~NoRootPartyIDs() {}
+      ~NoRootPartyIDs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoRootPartySubIDs); // 1120
+         mb->get_groups().insert({1120, new NoRootPartySubIDs });
          return mb;
       }
 
@@ -33748,7 +34128,7 @@ public:
          enum { _fnum = 1120 };
 
          NoRootPartySubIDs() : GroupBase(_fnum) {}
-         ~NoRootPartySubIDs() {}
+         ~NoRootPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33767,11 +34147,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -33789,11 +34169,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -33811,7 +34191,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -33830,7 +34210,7 @@ class SecurityTypeRequest : public Message
 
 public:
    SecurityTypeRequest() : Message(ctx(), _msgtype(), _traits, 11, &_ftha) {}
-   ~SecurityTypeRequest() {}
+   ~SecurityTypeRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -33847,9 +34227,9 @@ class SecurityTypes : public Message
 public:
    SecurityTypes() : Message(ctx(), _msgtype(), _traits, 18, &_ftha)
    {
-      _groups.insert(Groups::value_type(558, new NoSecurityTypes));
+      _groups.insert({558, new NoSecurityTypes });
    }
-   ~SecurityTypes() {}
+   ~SecurityTypes() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -33866,7 +34246,7 @@ public:
       enum { _fnum = 558 };
 
       NoSecurityTypes() : GroupBase(_fnum) {}
-      ~NoSecurityTypes() {}
+      ~NoSecurityTypes() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -33884,15 +34264,17 @@ class SecurityListRequest : public Message
 public:
    SecurityListRequest() : Message(ctx(), _msgtype(), _traits, 116, &_ftha)
    {
-      _groups.insert(Groups::value_type(454, new NoSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(555, new NoLegs));
-      _groups.insert(_groups.end(), Groups::value_type(711, new NoUnderlyings));
-      _groups.insert(_groups.end(), Groups::value_type(864, new NoEvents));
-      _groups.insert(_groups.end(), Groups::value_type(870, new NoInstrAttrib));
-      _groups.insert(_groups.end(), Groups::value_type(1018, new NoInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1483, new NoComplexEvents));
+      _groups.insert({
+         { 454, new NoSecurityAltID },
+         { 555, new NoLegs },
+         { 711, new NoUnderlyings },
+         { 864, new NoEvents },
+         { 870, new NoInstrAttrib },
+         { 1018, new NoInstrumentParties },
+         { 1483, new NoComplexEvents },
+      });
    }
-   ~SecurityListRequest() {}
+   ~SecurityListRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -33909,7 +34291,7 @@ public:
       enum { _fnum = 454 };
 
       NoSecurityAltID() : GroupBase(_fnum) {}
-      ~NoSecurityAltID() {}
+      ~NoSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -33927,11 +34309,11 @@ public:
       enum { _fnum = 555 };
 
       NoLegs() : GroupBase(_fnum) {}
-      ~NoLegs() {}
+      ~NoLegs() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 54, &_ftha));
-         mb->append_group(new NoLegSecurityAltID); // 604
+         mb->get_groups().insert({604, new NoLegSecurityAltID });
          return mb;
       }
 
@@ -33949,7 +34331,7 @@ public:
          enum { _fnum = 604 };
 
          NoLegSecurityAltID() : GroupBase(_fnum) {}
-         ~NoLegSecurityAltID() {}
+         ~NoLegSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -33968,13 +34350,15 @@ public:
       enum { _fnum = 711 };
 
       NoUnderlyings() : GroupBase(_fnum) {}
-      ~NoUnderlyings() {}
+      ~NoUnderlyings() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-         mb->append_group(new NoUnderlyingSecurityAltID); // 457
-         mb->append_group(new NoUnderlyingStips); // 887
-         mb->append_group(new NoUndlyInstrumentParties); // 1058
+         mb->get_groups().insert({
+            { 457, new NoUnderlyingSecurityAltID },
+            { 887, new NoUnderlyingStips },
+            { 1058, new NoUndlyInstrumentParties },
+         });
          return mb;
       }
 
@@ -33992,7 +34376,7 @@ public:
          enum { _fnum = 457 };
 
          NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-         ~NoUnderlyingSecurityAltID() {}
+         ~NoUnderlyingSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34010,7 +34394,7 @@ public:
          enum { _fnum = 887 };
 
          NoUnderlyingStips() : GroupBase(_fnum) {}
-         ~NoUnderlyingStips() {}
+         ~NoUnderlyingStips() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34028,11 +34412,11 @@ public:
          enum { _fnum = 1058 };
 
          NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentParties() {}
+         ~NoUndlyInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+            mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
             return mb;
          }
 
@@ -34050,7 +34434,7 @@ public:
             enum { _fnum = 1062 };
 
             NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentPartySubIDs() {}
+            ~NoUndlyInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34070,7 +34454,7 @@ public:
       enum { _fnum = 864 };
 
       NoEvents() : GroupBase(_fnum) {}
-      ~NoEvents() {}
+      ~NoEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -34088,7 +34472,7 @@ public:
       enum { _fnum = 870 };
 
       NoInstrAttrib() : GroupBase(_fnum) {}
-      ~NoInstrAttrib() {}
+      ~NoInstrAttrib() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -34106,11 +34490,11 @@ public:
       enum { _fnum = 1018 };
 
       NoInstrumentParties() : GroupBase(_fnum) {}
-      ~NoInstrumentParties() {}
+      ~NoInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoInstrumentPartySubIDs); // 1052
+         mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
          return mb;
       }
 
@@ -34128,7 +34512,7 @@ public:
          enum { _fnum = 1052 };
 
          NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoInstrumentPartySubIDs() {}
+         ~NoInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34147,11 +34531,11 @@ public:
       enum { _fnum = 1483 };
 
       NoComplexEvents() : GroupBase(_fnum) {}
-      ~NoComplexEvents() {}
+      ~NoComplexEvents() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-         mb->append_group(new NoComplexEventDates); // 1491
+         mb->get_groups().insert({1491, new NoComplexEventDates });
          return mb;
       }
 
@@ -34169,11 +34553,11 @@ public:
          enum { _fnum = 1491 };
 
          NoComplexEventDates() : GroupBase(_fnum) {}
-         ~NoComplexEventDates() {}
+         ~NoComplexEventDates() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-            mb->append_group(new NoComplexEventTimes); // 1494
+            mb->get_groups().insert({1494, new NoComplexEventTimes });
             return mb;
          }
 
@@ -34191,7 +34575,7 @@ public:
             enum { _fnum = 1494 };
 
             NoComplexEventTimes() : GroupBase(_fnum) {}
-            ~NoComplexEventTimes() {}
+            ~NoComplexEventTimes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34211,9 +34595,9 @@ class SecurityList : public Message
 public:
    SecurityList() : Message(ctx(), _msgtype(), _traits, 22, &_ftha)
    {
-      _groups.insert(Groups::value_type(146, new NoRelatedSym));
+      _groups.insert({146, new NoRelatedSym });
    }
-   ~SecurityList() {}
+   ~SecurityList() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -34230,23 +34614,25 @@ public:
       enum { _fnum = 146 };
 
       NoRelatedSym() : GroupBase(_fnum) {}
-      ~NoRelatedSym() {}
+      ~NoRelatedSym() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 141, &_ftha));
-         mb->append_group(new NoStipulations); // 232
-         mb->append_group(new NoSecurityAltID); // 454
-         mb->append_group(new NoLegs); // 555
-         mb->append_group(new NoUnderlyings); // 711
-         mb->append_group(new NoEvents); // 864
-         mb->append_group(new NoInstrAttrib); // 870
-         mb->append_group(new NoInstrumentParties); // 1018
-         mb->append_group(new NoStrikeRules); // 1201
-         mb->append_group(new NoTickRules); // 1205
-         mb->append_group(new NoLotTypeRules); // 1234
-         mb->append_group(new NoTradingSessionRules); // 1309
-         mb->append_group(new NoNestedInstrAttrib); // 1312
-         mb->append_group(new NoComplexEvents); // 1483
+         mb->get_groups().insert({
+            { 232, new NoStipulations },
+            { 454, new NoSecurityAltID },
+            { 555, new NoLegs },
+            { 711, new NoUnderlyings },
+            { 864, new NoEvents },
+            { 870, new NoInstrAttrib },
+            { 1018, new NoInstrumentParties },
+            { 1201, new NoStrikeRules },
+            { 1205, new NoTickRules },
+            { 1234, new NoLotTypeRules },
+            { 1309, new NoTradingSessionRules },
+            { 1312, new NoNestedInstrAttrib },
+            { 1483, new NoComplexEvents },
+         });
          return mb;
       }
 
@@ -34264,7 +34650,7 @@ public:
          enum { _fnum = 232 };
 
          NoStipulations() : GroupBase(_fnum) {}
-         ~NoStipulations() {}
+         ~NoStipulations() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34282,7 +34668,7 @@ public:
          enum { _fnum = 454 };
 
          NoSecurityAltID() : GroupBase(_fnum) {}
-         ~NoSecurityAltID() {}
+         ~NoSecurityAltID() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34300,12 +34686,14 @@ public:
          enum { _fnum = 555 };
 
          NoLegs() : GroupBase(_fnum) {}
-         ~NoLegs() {}
+         ~NoLegs() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 62, &_ftha));
-            mb->append_group(new NoLegSecurityAltID); // 604
-            mb->append_group(new NoLegStipulations); // 683
+            mb->get_groups().insert({
+               { 604, new NoLegSecurityAltID },
+               { 683, new NoLegStipulations },
+            });
             return mb;
          }
 
@@ -34323,7 +34711,7 @@ public:
             enum { _fnum = 604 };
 
             NoLegSecurityAltID() : GroupBase(_fnum) {}
-            ~NoLegSecurityAltID() {}
+            ~NoLegSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34341,7 +34729,7 @@ public:
             enum { _fnum = 683 };
 
             NoLegStipulations() : GroupBase(_fnum) {}
-            ~NoLegStipulations() {}
+            ~NoLegStipulations() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34360,13 +34748,15 @@ public:
          enum { _fnum = 711 };
 
          NoUnderlyings() : GroupBase(_fnum) {}
-         ~NoUnderlyings() {}
+         ~NoUnderlyings() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 72, &_ftha));
-            mb->append_group(new NoUnderlyingSecurityAltID); // 457
-            mb->append_group(new NoUnderlyingStips); // 887
-            mb->append_group(new NoUndlyInstrumentParties); // 1058
+            mb->get_groups().insert({
+               { 457, new NoUnderlyingSecurityAltID },
+               { 887, new NoUnderlyingStips },
+               { 1058, new NoUndlyInstrumentParties },
+            });
             return mb;
          }
 
@@ -34384,7 +34774,7 @@ public:
             enum { _fnum = 457 };
 
             NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-            ~NoUnderlyingSecurityAltID() {}
+            ~NoUnderlyingSecurityAltID() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34402,7 +34792,7 @@ public:
             enum { _fnum = 887 };
 
             NoUnderlyingStips() : GroupBase(_fnum) {}
-            ~NoUnderlyingStips() {}
+            ~NoUnderlyingStips() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34420,11 +34810,11 @@ public:
             enum { _fnum = 1058 };
 
             NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-            ~NoUndlyInstrumentParties() {}
+            ~NoUndlyInstrumentParties() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-               mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+               mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
                return mb;
             }
 
@@ -34442,7 +34832,7 @@ public:
                enum { _fnum = 1062 };
 
                NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-               ~NoUndlyInstrumentPartySubIDs() {}
+               ~NoUndlyInstrumentPartySubIDs() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -34462,7 +34852,7 @@ public:
          enum { _fnum = 864 };
 
          NoEvents() : GroupBase(_fnum) {}
-         ~NoEvents() {}
+         ~NoEvents() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34480,7 +34870,7 @@ public:
          enum { _fnum = 870 };
 
          NoInstrAttrib() : GroupBase(_fnum) {}
-         ~NoInstrAttrib() {}
+         ~NoInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34498,11 +34888,11 @@ public:
          enum { _fnum = 1018 };
 
          NoInstrumentParties() : GroupBase(_fnum) {}
-         ~NoInstrumentParties() {}
+         ~NoInstrumentParties() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-            mb->append_group(new NoInstrumentPartySubIDs); // 1052
+            mb->get_groups().insert({1052, new NoInstrumentPartySubIDs });
             return mb;
          }
 
@@ -34520,7 +34910,7 @@ public:
             enum { _fnum = 1052 };
 
             NoInstrumentPartySubIDs() : GroupBase(_fnum) {}
-            ~NoInstrumentPartySubIDs() {}
+            ~NoInstrumentPartySubIDs() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34539,11 +34929,11 @@ public:
          enum { _fnum = 1201 };
 
          NoStrikeRules() : GroupBase(_fnum) {}
-         ~NoStrikeRules() {}
+         ~NoStrikeRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha));
-            mb->append_group(new NoMaturityRules); // 1236
+            mb->get_groups().insert({1236, new NoMaturityRules });
             return mb;
          }
 
@@ -34561,7 +34951,7 @@ public:
             enum { _fnum = 1236 };
 
             NoMaturityRules() : GroupBase(_fnum) {}
-            ~NoMaturityRules() {}
+            ~NoMaturityRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 6, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34580,7 +34970,7 @@ public:
          enum { _fnum = 1205 };
 
          NoTickRules() : GroupBase(_fnum) {}
-         ~NoTickRules() {}
+         ~NoTickRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34598,7 +34988,7 @@ public:
          enum { _fnum = 1234 };
 
          NoLotTypeRules() : GroupBase(_fnum) {}
-         ~NoLotTypeRules() {}
+         ~NoLotTypeRules() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34616,15 +35006,17 @@ public:
          enum { _fnum = 1309 };
 
          NoTradingSessionRules() : GroupBase(_fnum) {}
-         ~NoTradingSessionRules() {}
+         ~NoTradingSessionRules() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 7, &_ftha));
-            mb->append_group(new NoMDFeedTypes); // 1141
-            mb->append_group(new NoExecInstRules); // 1232
-            mb->append_group(new NoMatchRules); // 1235
-            mb->append_group(new NoOrdTypeRules); // 1237
-            mb->append_group(new NoTimeInForceRules); // 1239
+            mb->get_groups().insert({
+               { 1141, new NoMDFeedTypes },
+               { 1232, new NoExecInstRules },
+               { 1235, new NoMatchRules },
+               { 1237, new NoOrdTypeRules },
+               { 1239, new NoTimeInForceRules },
+            });
             return mb;
          }
 
@@ -34642,7 +35034,7 @@ public:
             enum { _fnum = 1141 };
 
             NoMDFeedTypes() : GroupBase(_fnum) {}
-            ~NoMDFeedTypes() {}
+            ~NoMDFeedTypes() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34660,7 +35052,7 @@ public:
             enum { _fnum = 1232 };
 
             NoExecInstRules() : GroupBase(_fnum) {}
-            ~NoExecInstRules() {}
+            ~NoExecInstRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34678,7 +35070,7 @@ public:
             enum { _fnum = 1235 };
 
             NoMatchRules() : GroupBase(_fnum) {}
-            ~NoMatchRules() {}
+            ~NoMatchRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34696,7 +35088,7 @@ public:
             enum { _fnum = 1237 };
 
             NoOrdTypeRules() : GroupBase(_fnum) {}
-            ~NoOrdTypeRules() {}
+            ~NoOrdTypeRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34714,7 +35106,7 @@ public:
             enum { _fnum = 1239 };
 
             NoTimeInForceRules() : GroupBase(_fnum) {}
-            ~NoTimeInForceRules() {}
+            ~NoTimeInForceRules() = default;
             MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 1, &_ftha); }
 
             static const MsgType& get_msgtype() { return _msgtype; }
@@ -34733,7 +35125,7 @@ public:
          enum { _fnum = 1312 };
 
          NoNestedInstrAttrib() : GroupBase(_fnum) {}
-         ~NoNestedInstrAttrib() {}
+         ~NoNestedInstrAttrib() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34751,11 +35143,11 @@ public:
          enum { _fnum = 1483 };
 
          NoComplexEvents() : GroupBase(_fnum) {}
-         ~NoComplexEvents() {}
+         ~NoComplexEvents() = default;
          MessageBase *create_group() const
          {
             MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 8, &_ftha));
-            mb->append_group(new NoComplexEventDates); // 1491
+            mb->get_groups().insert({1491, new NoComplexEventDates });
             return mb;
          }
 
@@ -34773,11 +35165,11 @@ public:
             enum { _fnum = 1491 };
 
             NoComplexEventDates() : GroupBase(_fnum) {}
-            ~NoComplexEventDates() {}
+            ~NoComplexEventDates() = default;
             MessageBase *create_group() const
             {
                MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 3, &_ftha));
-               mb->append_group(new NoComplexEventTimes); // 1494
+               mb->get_groups().insert({1494, new NoComplexEventTimes });
                return mb;
             }
 
@@ -34795,7 +35187,7 @@ public:
                enum { _fnum = 1494 };
 
                NoComplexEventTimes() : GroupBase(_fnum) {}
-               ~NoComplexEventTimes() {}
+               ~NoComplexEventTimes() = default;
                MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
                static const MsgType& get_msgtype() { return _msgtype; }
@@ -34816,14 +35208,16 @@ class DerivativeSecurityListRequest : public Message
 public:
    DerivativeSecurityListRequest() : Message(ctx(), _msgtype(), _traits, 146, &_ftha)
    {
-      _groups.insert(Groups::value_type(457, new NoUnderlyingSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(887, new NoUnderlyingStips));
-      _groups.insert(_groups.end(), Groups::value_type(1058, new NoUndlyInstrumentParties));
-      _groups.insert(_groups.end(), Groups::value_type(1218, new NoDerivativeSecurityAltID));
-      _groups.insert(_groups.end(), Groups::value_type(1286, new NoDerivativeEvents));
-      _groups.insert(_groups.end(), Groups::value_type(1292, new NoDerivativeInstrumentParties));
+      _groups.insert({
+         { 457, new NoUnderlyingSecurityAltID },
+         { 887, new NoUnderlyingStips },
+         { 1058, new NoUndlyInstrumentParties },
+         { 1218, new NoDerivativeSecurityAltID },
+         { 1286, new NoDerivativeEvents },
+         { 1292, new NoDerivativeInstrumentParties },
+      });
    }
-   ~DerivativeSecurityListRequest() {}
+   ~DerivativeSecurityListRequest() = default;
    bool process(Router& rt) const { return (static_cast<Myfix_Router&>(rt))(this); }
 
    static const MsgType& get_msgtype() { return _msgtype; }
@@ -34840,7 +35234,7 @@ public:
       enum { _fnum = 457 };
 
       NoUnderlyingSecurityAltID() : GroupBase(_fnum) {}
-      ~NoUnderlyingSecurityAltID() {}
+      ~NoUnderlyingSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -34858,7 +35252,7 @@ public:
       enum { _fnum = 887 };
 
       NoUnderlyingStips() : GroupBase(_fnum) {}
-      ~NoUnderlyingStips() {}
+      ~NoUnderlyingStips() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -34876,11 +35270,11 @@ public:
       enum { _fnum = 1058 };
 
       NoUndlyInstrumentParties() : GroupBase(_fnum) {}
-      ~NoUndlyInstrumentParties() {}
+      ~NoUndlyInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoUndlyInstrumentPartySubIDs); // 1062
+         mb->get_groups().insert({1062, new NoUndlyInstrumentPartySubIDs });
          return mb;
       }
 
@@ -34898,7 +35292,7 @@ public:
          enum { _fnum = 1062 };
 
          NoUndlyInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoUndlyInstrumentPartySubIDs() {}
+         ~NoUndlyInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
@@ -34917,7 +35311,7 @@ public:
       enum { _fnum = 1218 };
 
       NoDerivativeSecurityAltID() : GroupBase(_fnum) {}
-      ~NoDerivativeSecurityAltID() {}
+      ~NoDerivativeSecurityAltID() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -34935,7 +35329,7 @@ public:
       enum { _fnum = 1286 };
 
       NoDerivativeEvents() : GroupBase(_fnum) {}
-      ~NoDerivativeEvents() {}
+      ~NoDerivativeEvents() = default;
       MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 5, &_ftha); }
 
       static const MsgType& get_msgtype() { return _msgtype; }
@@ -34953,11 +35347,11 @@ public:
       enum { _fnum = 1292 };
 
       NoDerivativeInstrumentParties() : GroupBase(_fnum) {}
-      ~NoDerivativeInstrumentParties() {}
+      ~NoDerivativeInstrumentParties() = default;
       MessageBase *create_group() const
       {
          MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, 4, &_ftha));
-         mb->append_group(new NoDerivativeInstrumentPartySubIDs); // 1296
+         mb->get_groups().insert({1296, new NoDerivativeInstrumentPartySubIDs });
          return mb;
       }
 
@@ -34975,7 +35369,7 @@ public:
          enum { _fnum = 1296 };
 
          NoDerivativeInstrumentPartySubIDs() : GroupBase(_fnum) {}
-         ~NoDerivativeInstrumentPartySubIDs() {}
+         ~NoDerivativeInstrumentPartySubIDs() = default;
          MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, 2, &_ftha); }
 
          static const MsgType& get_msgtype() { return _msgtype; }
