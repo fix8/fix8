@@ -37,15 +37,15 @@ if F8TEST
 bin_PROGRAMS += f8test f8print harness
 lib_LTLIBRARIES += libmyfix.la
 endif
-f8test_SOURCES = myfix.cpp myfix.hpp precomp.cpp
-f8print_SOURCES = myprint.cpp myfix.hpp precomp.cpp
-harness_SOURCES = harness.cpp myfix.hpp precomp.cpp
-hftest_SOURCES = hftest.cpp hftest.hpp precomp.cpp
-hfprint_SOURCES = hfprint.cpp hftest.hpp precomp.cpp
+f8test_SOURCES = myfix.cpp myfix.hpp
+f8print_SOURCES = myprint.cpp myfix.hpp
+harness_SOURCES = harness.cpp myfix.hpp
+hftest_SOURCES = hftest.cpp hftest.hpp
+hfprint_SOURCES = hfprint.cpp hftest.hpp
 libmyfix_la_SOURCES = Myfix_classes.cpp Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
-                      Myfix_router.hpp Myfix_classes.hpp  precomp.cpp
+                      Myfix_router.hpp Myfix_classes.hpp
 libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
-                       Perf_router.hpp Perf_classes.hpp Perf_classes.cpp  precomp.cpp
+                       Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
 
 CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
 libmyfix_la_CXXFLAGS = -I$(top_srcdir)/include

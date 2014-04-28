@@ -87,8 +87,8 @@ if %needBuild% == 1 (
 
 echo ************going to generate************
 
-		%F8C% -rVn TEX "-Hprecomp.hpp" %XML_SCHEMA% -x %XML_FIXT_SCHEMA%
-		%F8C% -sVUp Perf -n TEX "-Hprecomp.hpp" %XML_HF_SCHEMA%
+		%F8C% -rVn TEX %XML_SCHEMA% -x %XML_FIXT_SCHEMA%
+		%F8C% -sVUp Perf -n TEX %XML_HF_SCHEMA%
 
 echo ************  generate done  ************
 

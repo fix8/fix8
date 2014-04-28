@@ -88,7 +88,32 @@ Usage: f8test [-NRScdhlmoqrsv]\n
 */
 
 //-----------------------------------------------------------------------------------------
-#include "precomp.hpp"
+#include <iostream>
+#include <memory>
+#include <fstream>
+#include <iomanip>
+#include <sstream>
+#include <vector>
+#include <map>
+#include <list>
+#include <set>
+#include <vector>
+#include <iterator>
+#include <algorithm>
+#include <typeinfo>
+#include <thread>
+#ifdef _MSC_VER
+#include <signal.h>
+#include <conio.h>
+#else
+#include <sys/ioctl.h>
+#include <signal.h>
+#include <termios.h>
+#endif
+
+#include <errno.h>
+#include <string.h>
+
 // f8 headers
 #include <fix8/f8includes.hpp>
 //#include <fix8/zeromq_mbus.hpp>
@@ -246,7 +271,7 @@ int main(int argc, char **argv)
 					if (srv)
 					{
 						thrds.push_back(thread ([&]() { server_process(srv, ++scnt, true); }));
-						sleep(1);
+                        this_thread::sleep_for(chrono::milliseconds(1));
 					}
 				}
 				for_each(thrds.begin(), thrds.end(), [](thread& tt) { if (tt.joinable()) tt.join(); });
@@ -296,7 +321,7 @@ int main(int argc, char **argv)
 					thrds.push_back(thread ([=]()		// use copy closure
 					{
 						MyMenu mymenu(*pp->session_ptr(), 0, cout);
-						sleep(1 + RandDev::getrandom(10));
+                        this_thread::sleep_for( chrono::milliseconds( 1 + RandDev::getrandom( 10 ) ) );
 						mymenu.new_order_single();	// send an order and then logout
 						mymenu.do_logout();
 					}));

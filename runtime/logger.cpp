@@ -57,7 +57,7 @@ namespace FIX8
     {
         static f8_spin_lock mutex;
         f8_scoped_spin_lock guard(mutex);
-        if (_instance == 0)
+        if (_instance.load() == 0)
         {
             SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
             _instance = p;

@@ -2,9 +2,5 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\test\hfprint.cpp" />
-    <ClCompile Include="..\test\precomp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\test\precomp.hpp" />
   </ItemGroup>
 </Project>

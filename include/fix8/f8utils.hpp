@@ -1030,7 +1030,7 @@ public:
 	    \return the instance */
 	static T *instance()
 	{
-		if (_instance) // cast operator performs atomic load with acquire
+		if (_instance.load()) // cast operator performs atomic load with acquire, [ss]:cast is not working under msvc
 			return _instance;
 		return create_instance();
 	}

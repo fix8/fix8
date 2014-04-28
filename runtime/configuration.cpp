@@ -179,7 +179,7 @@ Schedule Configuration::create_login_schedule(const XmlElement *from) const
 	string name;
 	const XmlElement *which;
 	return from_or_default(from, "login", name) && (which = find_group(g_logins, name))
-		? create_schedule(which) : Schedule{};
+		? create_schedule(which) : Schedule();
 }
 
 //-------------------------------------------------------------------------------------------------
