@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     databaseWorksheets.cpp \
     fix8logDataFile.cpp \
     messageitem.cpp \
-    fixHeaderView.cpp
+    fixHeaderView.cpp \
+    dateTimeDelegate.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     windowdata.h \
     worksheetdata.h \
     messageitem.h \
-    fixHeaderView.h
+    fixHeaderView.h \
+    dateTimeDelegate.h
 
 RESOURCES += \
     resources.qrc

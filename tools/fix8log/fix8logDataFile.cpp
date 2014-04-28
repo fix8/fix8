@@ -146,6 +146,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
             QDateTime dt = QDateTime::fromTime_t(tv.secs());
             sendTimeItem = new QStandardItem(dt.toString());
             sendTimeItem->setData(userDataVar);
+            sendTimeItem->setData(dt,Qt::UserRole+2);
             model->setItem(rowPosition,colPosition,sendTimeItem);
             colPosition++;
 

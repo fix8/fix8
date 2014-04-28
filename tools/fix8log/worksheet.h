@@ -14,6 +14,7 @@ class QSplitter;
 class QStackedLayout;
 class QStandardItem;
 class QStandardItemModel;
+class DateTimeDelegate;
 class FixTable;
 class MessageArea;
 #define OK             0x0000
@@ -72,6 +73,7 @@ private:
     bool cancelLoad;
     int linecount;
     WorkSheetData origWSD;
+    DateTimeDelegate *dateTimeDelegate;
 };
 
 #endif // WORKSHEET_H

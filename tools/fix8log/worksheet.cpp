@@ -1,6 +1,7 @@
 #include <memory>
 #include "messagefield.h"
 #include "worksheet.h"
+#include "dateTimeDelegate.h"
 #include "fixHeaderView.h"
 #include "fixtable.h"
 #include "globals.h"
@@ -37,7 +38,9 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linec
         if (i==WorkSheet::SendingTime)
             headerItem[i]->setToolTip("Right click to select time format");
     }
-
+    dateTimeDelegate = new DateTimeDelegate(this);
+    fixTable->setItemDelegateForColumn(FixTable::SendingTime,
+                                       dateTimeDelegate);
     FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
@@ -50,11 +53,13 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     QWidget(parent),cancelLoad(false),linecount(0)
 {
     build();
-
     QStandardItemModel *oldModel;
     _model = oldws.getModel();
     fixFileName = oldws.getFileName();
     fixTable->setModel(_model);
+    dateTimeDelegate = new DateTimeDelegate(this);
+    fixTable->setItemDelegateForColumn(FixTable::SendingTime,
+                                       dateTimeDelegate);
     FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
@@ -70,6 +75,11 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
     build();
     _model = model;
     fixTable->setModel(model);
+    dateTimeDelegate = new DateTimeDelegate(this);
+    fixTable->setItemDelegateForColumn(FixTable::SendingTime,
+                                       dateTimeDelegate);
+
+
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
     for(int i=0;i<NumColumns;i++) {
@@ -104,6 +114,7 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
 }
 void WorkSheet::build()
 {
+
     timeFormatMenu = new QMenu(this);
     timeActionGroup = new QActionGroup(this);
     connect(timeActionGroup,SIGNAL(triggered (QAction *)),
@@ -257,6 +268,7 @@ bool WorkSheet::loadFileName(QString &fileName,
             qstr = QString::fromStdString(scID());
             senderItem =  new QStandardItem(qstr);
             senderItem->setData(userDataVar);
+
             _model->setItem(rowPosition,colPosition,senderItem);
             colPosition++;
 
@@ -272,6 +284,7 @@ bool WorkSheet::loadFileName(QString &fileName,
             QDateTime dt = QDateTime::fromTime_t(tv.secs());
             sendTimeItem = new QStandardItem(dt.toString());
             sendTimeItem->setData(userDataVar);
+            sendTimeItem->setData(dt,Qt::UserRole+2);
             _model->setItem(rowPosition,colPosition,sendTimeItem);
             colPosition++;
 
@@ -450,5 +463,7 @@ void WorkSheet::timeFormatSelectedSlot(QAction *action)
 }
 void WorkSheet::setTimeFormat(GUI::Globals::TimeFormat tf)
 {
-
+    qDebug() << "WORK SHEET SET TIME FORMAT TO " << tf << __FILE__ << __LINE__;
+    dateTimeDelegate->setTimeFormat(tf);
+    fixTable->repaint();
 }
