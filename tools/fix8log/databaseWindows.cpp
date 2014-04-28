@@ -59,8 +59,8 @@ bool Database::addWindow(WindowData &wd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO windows (id, red, green, blue, geometry, restoreState, isVisible)"
-                            "VALUES(NULL, :red, :green, :blue, :geometry, :restoreState, :isVisible)");
+    bstatus = query.prepare("INSERT INTO windows (id, red, green, blue, geometry, restoreState, isVisible, currentTab)"
+                            "VALUES(NULL, :red, :green, :blue, :geometry, :restoreState, :isVisible, :currentTab)");
     if (bstatus == 0) {
         qWarning("Error database - add window failed in prepare statement...");
         sqlError = query.lastError();
@@ -73,6 +73,7 @@ bool Database::addWindow(WindowData &wd)
     query.bindValue(":blue",wd.color.blue());
     query.bindValue(":geometry",wd.geometry);
     query.bindValue(":restoreState",wd.state);
+    query.bindValue(":currentTab",wd.currentTab);
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("\tDatabase - Add window failed in exec statement...");

@@ -19,13 +19,15 @@ class Globals
 {
 public:
     static Globals* Instance();
+    typedef enum {DAYMONYRHHMMSS,DAYMMMHHMMSS,HHMMSS,HHMM,NumOfTimeFormats} TimeFormat;
+    static QString timeFormats[NumOfTimeFormats];
     static float   version;
     static QString versionStr;
     static QSize smallIconSize;
     static QSize regIconSize;
     static QSize largeIconSize;
     static QColor menubarDefaultColor;
-
+    static TimeFormat timeFormat;
 private:
     Globals(){};
     Globals(Globals const&){};

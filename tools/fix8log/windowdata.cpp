@@ -1,5 +1,5 @@
 #include "windowdata.h"
-WindowData::WindowData()
+WindowData::WindowData():currentTab(0)
 {
 
 }
@@ -9,5 +9,6 @@ WindowData::WindowData(const WindowData &w)
     geometry = w.geometry;
     state    = w.state;
     color    = w.color;
+    currentTab = w.currentTab;
 }
 

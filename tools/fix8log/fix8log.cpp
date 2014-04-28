@@ -41,18 +41,31 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
     connect(mw,SIGNAL(autoSaveOn(bool)),this,SLOT(autoSaveOnSlot(bool)));
     connect(mw,SIGNAL(cancelSessionRestore()),this,SLOT(cancelSessionRestoreSlot()));
+    connect(mw,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+            this,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
+    connect(this,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+            mw,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
     if (mainWindows.count() == 1)  {
-        if (autoSaveOn)
+
+        if (autoSaveOn) {
+            qDebug() << "Save session" << __FILE__ << __LINE__;
             saveSession();
+            qDebug() << "After Save Session" << __FILE__ << __LINE__;
+        }
     }
+
     mainWindows.removeOne(mw);
+    qDebug() << "Delete Window Slot" << __FILE__ << __LINE__;
     mw->deleteLater();
+    qDebug() << "\tAfter deleteLater...." << __FILE__ << __LINE__;
     if (mainWindows.count() < 1) {
+        qDebug() << "\tFix8 Write Settings" << __FILE__ << __LINE__;
         writeSettings();
+        qDebug() << "\tFix8 call app exit" << __FILE__ << __LINE__;
         qApp->exit();
     }
 }
@@ -184,6 +197,8 @@ bool Fix8Log::init()
                     newMW->setLoading(false);
                     if (model) {
                         newMW->addWorkSheet(model,wsd);
+                        newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
+
                     }
                 }
             }
@@ -214,27 +229,42 @@ void Fix8Log::saveSession()
     MainWindow *mw;
     WorkSheetData wsd;
     bool bstatus;
-
+    qDebug() << "\tFix8 Write Settings" << __FILE__ << __LINE__;
     bstatus = database->deleteAllWindows();
+    qDebug() << "\tFix8 Status Deleta All Windows" << bstatus << __FILE__ << __LINE__;
+
     if (!bstatus)
         qWarning() << "Delete all windows from database failed" << __FILE__ << __LINE__;
+
     bstatus = database->deleteAllWorkSheets();
     if (!bstatus)
         qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
+
+    qDebug() << "Num of windows to save:" << mainWindows.count() << __FILE__ << __LINE__;
     QListIterator <MainWindow *> iter(mainWindows);
     while(iter.hasNext()) {
+        qDebug()  << "\tIter on window" << __FILE__ << __LINE__;
         mw = iter.next();
         WindowData wd = mw->getWindowData();
+        qDebug() << "\tSave Window to DB" << __LINE__;
         bstatus = database->addWindow(wd);
-        if (!bstatus)
+        qDebug() << "\tStatus of save window to database = " << bstatus << __LINE__;
+        if (!bstatus) {
+            qDebug() << "\tDisplay Console Message" << __LINE__;
             displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
+            qDebug() << "\tAfter display console message";
+        }
         else {
+            qDebug() << "\tGet WorksSheet Data " << wd.id << __LINE__;
             QList<WorkSheetData> wsdList = mw->getWorksheetData(wd.id);
-            qDebug() << "Save worksheet data one at a time, later do batch for speed" << __FILE__ << __LINE__;
+            qDebug() << "\tSave worksheet data one at a time, later do batch for speed" << __FILE__ << __LINE__;
             QListIterator <WorkSheetData> wsdIter(wsdList);
+            int i = 0;
             while(wsdIter.hasNext()) {
+                qDebug() << "\tSave work sheet:" << i << __FILE__ << __LINE__;
                 wsd = wsdIter.next();
                 bstatus = database->addWorkSheet(wsd);
+                i++;
             }
         }
     }
@@ -274,4 +304,11 @@ void Fix8Log::cancelSessionRestoreSlot()
     qDebug() << "Fix Log Cancel Session Restore";
     cancelSessionRestore = true;
     displayConsoleMessage("Session Restore Cancelled");
+}
+void  Fix8Log::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
+{
+    qDebug() << "SET TIME FORMAT" << __FILE__ << __LINE__;
+    GUI::Globals::timeFormat = tf;
+    // tell all main windows that format changed
+    emit notifyTimeFormatChanged(tf);
 }

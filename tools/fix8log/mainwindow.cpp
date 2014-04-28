@@ -32,6 +32,8 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
             WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (mw.tabW->widget(i));
             QByteArray ba = oldWorkSheet->splitter->saveState();
             WorkSheet *newWorkSheet = new WorkSheet(*oldWorkSheet,this);
+            connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+                    this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
             newWorkSheet->splitter->restoreState(ba);
             tabW->addTab(newWorkSheet,mw.tabW->tabText(i));
         }
@@ -403,6 +405,7 @@ WindowData MainWindow::getWindowData()
     wd.geometry = this->saveGeometry();
     wd.state    = this->saveState();
     wd.id       = this->windowDataID;
+    wd.currentTab = tabW->currentIndex();
     return wd;
 }
 void MainWindow::setWindowData(const WindowData &wd)
@@ -412,16 +415,19 @@ void MainWindow::setWindowData(const WindowData &wd)
     restoreState(wd.state);
     setColorSlot(wd.color);
 }
-QList <WorkSheetData> MainWindow::getWorksheetData(qint32 windowID)
+QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {
     QList <WorkSheetData> wsdList;
     WorkSheetData  wsd;
+    qDebug() << "MAINWINDOW:: GET WORK SHEET DATA: count = " << tabW->count() << __FILE__ << __LINE__;
     if (tabW->count() > 0) {
-        WorkSheet *ws =  qobject_cast <WorkSheet *> (tabW->widget(0));
-        if (ws) {
-            wsd  = ws->getWorksheetData();
-            wsd.id = windowID;
-            wsdList.append(wsd);
+        for (int i=0; i < tabW->count();i++) {
+            WorkSheet *ws =  qobject_cast <WorkSheet *> (tabW->widget(i));
+            if (ws) {
+                wsd  = ws->getWorksheetData();
+                wsd.id = windowID;
+                wsdList.append(wsd);
+            }
         }
     }
     return wsdList;
@@ -437,6 +443,8 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
         return;
     }
     newWorkSheet = new WorkSheet(model,wsd,this);
+    connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+            this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;
@@ -453,4 +461,11 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
 void MainWindow::setAutoSaveOn(bool on)
 {
     autoSaveA->setChecked(on);
+}
+void MainWindow::setCurrentTabAndSelectedRow(int currentTab, int currentRow)
+{
+    qDebug() << "MainWIndow::setCurrent Tab to " << currentTab << __FILE__ << __LINE__;
+    if ((tabW->count() < 1) || (tabW->count() < currentTab))
+        return;
+    tabW->setCurrentIndex(currentTab);
 }

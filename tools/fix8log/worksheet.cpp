@@ -1,5 +1,6 @@
 #include "messagefield.h"
 #include "worksheet.h"
+#include "fixHeaderView.h"
 #include "fixtable.h"
 #include "globals.h"
 #include "intItem.h"
@@ -11,9 +12,7 @@
 #include <string.h>
 #include <fix8/f8includes.hpp>
 #include <field.hpp>
-
 #include <message.hpp>
-
 #include <Myfix_types.hpp>
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
@@ -22,6 +21,7 @@ QString WorkSheet::headerLabel[] =
 {tr("SeqNum"),tr("SenderCompID"),tr("TargetCompID"),tr("SendTime"),
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
  tr("HeartBtInt"),tr("Message Type")};
+
 
 WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linecount(0)
 {
@@ -33,47 +33,87 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linec
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
         _model->setHorizontalHeaderItem(i,headerItem[i]);
+        if (i==WorkSheet::SendingTime)
+            headerItem[i]->setToolTip("Right click to select time format");
     }
-    QHeaderView *horHeader = fixTable->horizontalHeader();
-    horHeader->setSectionResizeMode(QHeaderView::Interactive);
-    horHeader->setStretchLastSection(true);
-    horHeader->setSectionsMovable(true);
-    horHeader->setSortIndicatorShown(true);
+
+    FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
+    connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
+            this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
+    fixHeader->setSectionResizeMode(QHeaderView::Interactive);
+    fixHeader->setStretchLastSection(true);
+    fixHeader->setSectionsMovable(true);
+    fixHeader->setSortIndicatorShown(true);
 }
 WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     QWidget(parent),cancelLoad(false),linecount(0)
 {
     build();
+
     QStandardItemModel *oldModel;
     _model = oldws.getModel();
     fixFileName = oldws.getFileName();
     fixTable->setModel(_model);
-    QHeaderView *horHeader = fixTable->horizontalHeader();
-    horHeader->setSectionResizeMode(QHeaderView::Interactive);
-    horHeader->setStretchLastSection(true);
-    horHeader->setSectionsMovable(true);
-    horHeader->setSortIndicatorShown(true);
+    FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
+    connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
+            this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
+    fixHeader->setSectionResizeMode(QHeaderView::Interactive);
+    fixHeader->setStretchLastSection(true);
+    fixHeader->setSectionsMovable(true);
+    fixHeader->setSortIndicatorShown(true);
 }
 WorkSheet::WorkSheet(QStandardItemModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
-    QWidget(parent),cancelLoad(false),linecount(0)
+    QWidget(parent),cancelLoad(false),linecount(0),origWSD(wsd)
 {
     build();
+    _model = model;
     fixTable->setModel(model);
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
-    for(int i=0;i<NumColumns;i++)
+    for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
-    QHeaderView *horHeader = fixTable->horizontalHeader();
-    horHeader->setSectionResizeMode(QHeaderView::Interactive);
-    horHeader->setStretchLastSection(true);
-    horHeader->setSectionsMovable(true);
-    horHeader->setSortIndicatorShown(true);
-    horHeader->restoreState(wsd.headerState);
+        if (i==WorkSheet::SendingTime)
+            headerItem[i]->setToolTip("Right click to select time format");
+    }
+    FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
+    connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
+            this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
+    fixHeader->setSectionResizeMode(QHeaderView::Interactive);
+    fixHeader->setStretchLastSection(true);
+    fixHeader->setSectionsMovable(true);
+    fixHeader->setSortIndicatorShown(true);
+    fixHeader->restoreState(wsd.headerState);
     fixFileName = wsd.fileName;
+    int selectedRow = wsd.selectedRow;
+    if (selectedRow < 0)
+        selectedRow = 1;
+    fixTable->selectRow(selectedRow);
+    QModelIndex mi = _model->index(selectedRow,0);
+    QModelIndex otherIndex = _model->index(selectedRow,MsgSeqNum);
+    QVariant var = mi.data(Qt::UserRole+1);
+    QString str =  _model->data(otherIndex).toString();
+    int seqN = str.toInt();
+    MessageFieldList *mfl = (MessageFieldList *) var.value<void *>();
+    if (!mfl)
+        qWarning() << "No Message Fields Found for row" << __FILE__ << __LINE__;
+    otherIndex = _model->index(selectedRow,MessageType);
+    str =  _model->data(otherIndex).toString();
+    messageArea->setMessageFieldList(mfl,seqN,str);
 }
 void WorkSheet::build()
 {
+    timeFormatMenu = new QMenu(this);
+    timeActionGroup = new QActionGroup(this);
+    connect(timeActionGroup,SIGNAL(triggered (QAction *)),
+            this,SLOT(timeFormatSelectedSlot(QAction *)));
+    for(int i = 0;i<GUI::Globals::NumOfTimeFormats;i++) {
+        timeFormatActions[i] = new QAction(GUI::Globals::timeFormats[i],this);
+        timeFormatActions[i]->setCheckable(true);
+        timeActionGroup->addAction(timeFormatActions[i]);
+        timeFormatMenu->addAction(timeFormatActions[i]);
+    }
+
     stackLayout = new QStackedLayout(this);
     setLayout(stackLayout);
     progressView = new QQuickView(QUrl("qrc:qml/loadProgress.qml"));
@@ -98,7 +138,7 @@ void WorkSheet::build()
 }
 WorkSheet::~WorkSheet()
 {
-    qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
+    //qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
 }
 
 bool WorkSheet::loadFileName(QString &fileName,
@@ -321,6 +361,10 @@ void  WorkSheet::rowSelectedSlot(QModelIndex mi)
 {
     QVariant var = mi.data(Qt::UserRole+1);
     int row = mi.row();
+    if (!_model) {
+        qWarning() << "ERROR - MODEL IS NULL" << __FILE__ << __LINE__;
+        return;
+    }
     QModelIndex otherIndex = _model->index(row,MsgSeqNum);
     QString str =  _model->data(otherIndex).toString();
     int seqN = str.toInt();
@@ -340,13 +384,24 @@ void WorkSheet::setAlias(QString &str)
 WorkSheetData WorkSheet::getWorksheetData()
 {
     WorkSheetData wsd;
+    qDebug() << "************** GET WORK SHEET DATA *************" << __FILE__;
     wsd.fileName = fixFileName;
     QHeaderView *horHeader = fixTable->horizontalHeader();
     wsd.headerState = horHeader->saveState();
     wsd.splitterState = splitter->saveState();
     wsd.tabAlias = alias;
+    QItemSelectionModel *select = fixTable->selectionModel();
+    if (select && select->hasSelection()) {
+        QModelIndexList indexList = select->selectedRows();
+        if (indexList.count() > 0) { // always true because hasSelection == true
+            QModelIndex index = indexList.first();
+            wsd.selectedRow = index.row();
+            qDebug() << "Selected Row to Save = " << wsd.selectedRow << __FILE__ << __LINE__;
+        }
+    }
     return wsd;
 }
+
 void WorkSheet::cancelLoadSlot()
 {
     cancelLoad = true;
@@ -372,5 +427,23 @@ void WorkSheet::showLoadProcess(bool isBeingLoaded)
     }
     else
         stackLayout->setCurrentIndex(0);
-
+}
+void WorkSheet::popupHeaderMenuSlot(int col,const QPoint &pt)
+{
+    if (col == FixTable::SendingTime) {
+        timeFormatMenu->popup(pt);
+        qDebug() << "\tSending Time Col Selected"<< __FILE__ << __LINE__;
+    }
+}
+void WorkSheet::timeFormatSelectedSlot(QAction *action)
+{
+    GUI::Globals::TimeFormat tf = GUI::Globals::HHMMSS;
+    qDebug() << "WORK SHEET TIME FORMAT CHANGED..." << __FILE__ << __LINE__;
+    if (action == timeFormatActions[GUI::Globals::DAYMONYRHHMMSS])
+        tf = GUI::Globals::DAYMONYRHHMMSS;
+    else if (action == timeFormatActions[GUI::Globals::DAYMMMHHMMSS])
+        tf = GUI::Globals::DAYMMMHHMMSS;
+    else if (action == timeFormatActions[GUI::Globals::HHMM])
+        tf = GUI::Globals::HHMM;
+    emit notifyTimeFormatChanged(tf);
 }

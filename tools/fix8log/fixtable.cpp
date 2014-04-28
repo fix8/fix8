@@ -1,3 +1,4 @@
+#include "fixHeaderView.h"
 #include "fixtable.h"
 #include <QDate>
 #include <QDebug>
@@ -75,7 +76,8 @@ FixTable::FixTable(QWidget *p):
     emptyFont.setBold(true);
     emptyFont.setPointSize(emptyFont.pointSize() + 8);
     emptyStrColor.setRgb(239,237,213);
-
+    fixHeader = new FixHeaderView();
+    setHorizontalHeader(fixHeader);
     setMouseTracking(true);
     QStringList strList;
 

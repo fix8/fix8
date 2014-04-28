@@ -36,7 +36,8 @@ public:
     ~MainWindow();
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     WindowData getWindowData();
-    QList <WorkSheetData> getWorksheetData(qint32 windowID);
+    QList <WorkSheetData> getWorksheetData(int windowID);
+    void setCurrentTabAndSelectedRow(int currentTab, int selectedRow);
     void setLoading(bool);
     void setLoadMessage(QString);
     void setWindowData(const WindowData &wd);
@@ -60,6 +61,9 @@ public:
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
     void quitSlot();
+    // time format travels up from work sheet
+    void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
+    void setTimeFormatSlot(GUI::Globals::TimeFormat);
     QSize sizeHint() const;
     void setColorSlot(QColor color);
     void showMessageArea(bool);
@@ -142,6 +146,7 @@ signals:
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
     void exitApp();
+    void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
     void buildHideColumnMenu();
     QByteArray fileDirState;

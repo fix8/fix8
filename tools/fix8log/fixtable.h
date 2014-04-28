@@ -10,6 +10,7 @@ class QKeyEvent;
 #include <QRadialGradient>
 #include <QTableView>
 class QHeaderView;
+class FixHeaderView;
 class QStandardItem;
 class QStandardItemModel;
 
@@ -45,6 +46,7 @@ class FixTable: public QTableView {
   //QStandardItemModel *_model;
   //QStandardItem *headerItem[NumColumns];
   QFile *dataFile;
+  FixHeaderView *fixHeader;
   
 };
 #endif

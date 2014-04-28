@@ -10,6 +10,9 @@ QSize Globals::regIconSize;
 QSize Globals::largeIconSize;
 QColor Globals::menubarDefaultColor;
 Globals* Globals::m_pInstance = NULL;
+QString Globals::timeFormats[] {
+    "Day-Mon-YY hh:min:sec", "Day Mon hh:min:sec", "hh:min:sec","hh:min"};
+Globals::TimeFormat Globals::timeFormat = Globals::HHMM;
 Globals* Globals::Instance()
 {
     if (!m_pInstance)   {// Only allow one instance of class to be generated.

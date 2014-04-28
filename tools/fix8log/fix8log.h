@@ -27,6 +27,7 @@ public slots:
     void displayConsoleMessage(QString, GUI::Message::MessageType = GUI::Message::InfoMsg);
     void exitAppSlot();
     void lastWindowClosedSlot();
+    void  setTimeFormatSlot(GUI::Globals::TimeFormat);
 protected:
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);
     void saveSession();
@@ -37,6 +38,8 @@ protected:
     bool autoSaveOn;
     QMap <QString, QStandardItemModel *> fileNameModelMap;
     bool cancelSessionRestore;
+signals:
+    void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };
 
 #endif // FIX8LOG_H

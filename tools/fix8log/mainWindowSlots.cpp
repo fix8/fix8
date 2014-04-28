@@ -170,3 +170,11 @@ void MainWindow::cancelSessionRestoreSlot()
     qDebug()  << "Cancel Session Restore Slot " << __FILE__ << __LINE__;
     emit cancelSessionRestore();
 }
+void MainWindow::setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat tf)
+{
+    emit notifyTimeFormatChanged(tf);
+}
+void MainWindow::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
+{
+   qDebug() << "MainWindow::setTimeFormat Slot " << tf << __FILE__ << __LINE__;
+}

@@ -11,5 +11,6 @@ public:
     QByteArray geometry;
     QByteArray state;
     QColor     color;
+    qint32     currentTab;
 };
 #endif // WINDOWDATA_H

@@ -173,6 +173,7 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
 }
 void MainWindow::closeSlot()
 {
+    qDebug() << "Close Slot" << __FILE__ << __LINE__;
     writeSettings();
     emit deleteWindow(this);
 }

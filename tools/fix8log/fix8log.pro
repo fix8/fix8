@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     worksheetdata.cpp \
     databaseWorksheets.cpp \
     fix8logDataFile.cpp \
-    messageitem.cpp
+    messageitem.cpp \
+    fixHeaderView.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     database.h \
     windowdata.h \
     worksheetdata.h \
-    messageitem.h
+    messageitem.h \
+    fixHeaderView.h
 
 RESOURCES += \
     resources.qrc
@@ -61,6 +63,10 @@ INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ./f8
 DEPENDPATH += /usr/local/include
 
 OTHER_FILES += \
-    qml/loadProgress.qml
+    qml/loadProgress.qml \
+    fix8log \
+    fix8log.o \
+    fix8log.pro.user \
+    fix8log.pro.user.7112d3e
 
 

@@ -8,7 +8,7 @@
 QString Database::tableNames[] = {"windows","worksheets"};
 QString Database::arguments[] = {
     // windows
-    "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1",
+    "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1, currentTab integer default 0",
     //worksheets
     "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB",
 };

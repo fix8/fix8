@@ -3,10 +3,12 @@
 #include <QQuickItem>
 #include <QWidget>
 #include <QModelIndex>
+#include "fixHeaderView.h"
 #include "globals.h"
 #include "worksheetdata.h"
 class QFile;
 class QLabel;
+class QMenu;
 class QQuickView;
 class QSplitter;
 class QStackedLayout;
@@ -19,7 +21,6 @@ class MessageArea;
 #define READ_ERROR     0x0002
 #define FILE_NOT_FOUND 0x0004
 #define OPEN_FAILED    0x0080
-
 class WorkSheet : public QWidget
 {
     friend class MainWindow;
@@ -41,19 +42,25 @@ public:
     void setAlias(QString &);
     void showLoadProcess(bool isBeingLoaded);
 signals:
+    void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
     void sendMessage(GUI::Message);
     void sendMessages(QList < GUI::Message>);
 public slots:
     void cancelLoadSlot();
+    void popupHeaderMenuSlot(int col,const QPoint &);
     void rowSelectedSlot(QModelIndex);
+    void timeFormatSelectedSlot(QAction *);
 protected:
     QSplitter *splitter;
     FixTable *fixTable;
     MessageArea   *messageArea; // temp for now - pace holder
     void build();
 private:
+    QActionGroup *timeActionGroup;
+    QAction *timeFormatActions[GUI::Globals::NumOfTimeFormats];
     QStackedLayout *stackLayout;
     QFile *fixFile;
+    QMenu *timeFormatMenu;
     QQuickView *progressView;
     QString fixFileName;
     QStandardItemModel *_model;
@@ -63,7 +70,7 @@ private:
     QQuickItem  *qmlObject;
     bool cancelLoad;
     int linecount;
-
+    WorkSheetData origWSD;
 };
 
 #endif // WORKSHEET_H

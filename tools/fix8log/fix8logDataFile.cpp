@@ -55,6 +55,8 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     QStandardItem *headerItem[WorkSheet::NumColumns];
     for(int i=0;i<WorkSheet::NumColumns;i++) {
         headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
+        if (i==WorkSheet::SendingTime)
+            headerItem[i]->setToolTip("Right click to select time format");
         model->setHorizontalHeaderItem(i,headerItem[i]);
     }
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
