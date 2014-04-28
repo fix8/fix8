@@ -177,4 +177,10 @@ void MainWindow::setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat tf)
 void MainWindow::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
 {
    qDebug() << "MainWindow::setTimeFormat Slot " << tf << __FILE__ << __LINE__;
+   WorkSheet *workSheet;
+   for(int i=0;i < tabW->count();i++) {
+       workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
+       if (workSheet)
+           workSheet->setTimeFormat(tf);
+   }
 }

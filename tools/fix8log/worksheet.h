@@ -41,6 +41,7 @@ public:
     void hideColumn(int colNum, bool hideCol);
     void setAlias(QString &);
     void showLoadProcess(bool isBeingLoaded);
+    void setTimeFormat(GUI::Globals::TimeFormat);
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
     void sendMessage(GUI::Message);

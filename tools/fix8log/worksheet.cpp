@@ -447,3 +447,7 @@ void WorkSheet::timeFormatSelectedSlot(QAction *action)
         tf = GUI::Globals::HHMM;
     emit notifyTimeFormatChanged(tf);
 }
+void WorkSheet::setTimeFormat(GUI::Globals::TimeFormat tf)
+{
+
+}
