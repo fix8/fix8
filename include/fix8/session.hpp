@@ -159,16 +159,22 @@ namespace States
 		st_resend_request_sent, st_resend_request_received, st_num_states
 	};
 
+#ifdef _MSC_VER
+#define CONSTEXPR
+#else
+#define CONSTEXPR constexpr
+#endif
+
 	/*! Determine if this session is live
 	  \param ss SessateState to test
 	  \return true if live */
-	static /*constexpr*/ bool is_live(SessionStates ss)
+	static CONSTEXPR bool is_live(SessionStates ss)
 		{ return ss != st_none && ss != st_session_terminated; }
 
 	/*! Determine if this session is in an established state
 	  \param ss SessateState to test
 	  \return true if established */
-	static /*constexpr*/ bool is_established(SessionStates ss)
+	static CONSTEXPR bool is_established(SessionStates ss)
 		{ return ss != st_wait_for_logon && ss != st_not_logged_in && ss != st_logon_sent && is_live(ss); }
 }
 
