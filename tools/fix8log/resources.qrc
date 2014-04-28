@@ -1,0 +1,45 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/32x32/application-exit.png</file>
+        <file>images/48x48/application-exit.png</file>
+        <file>images/64x64/application-exit.png</file>
+        <file>images/128x128/application-exit.png</file>
+        <file>images/32x32/folder-favorites.png</file>
+        <file>images/32x32/background.png</file>
+        <file>images/32x32/system-file-manager.png</file>
+        <file>images/48x48/system-file-manager.png</file>
+        <file>images/48x48/folder-favorites.png</file>
+        <file>images/64x64/folder-favorites.png</file>
+        <file>images/64x64/system-file-manager.png</file>
+        <file>images/128x128/folder-favorites.png</file>
+        <file>images/128x128/system-file-manager.png</file>
+        <file>images/128x128/copyWindow.png</file>
+        <file>images/64x64/copyWindow.png</file>
+        <file>images/48x48/copyWindow.png</file>
+        <file>images/32x32/copyWindow.png</file>
+        <file>fix8log.qss</file>
+        <file>images/32x32/gnome-window-manager.svg</file>
+        <file>images/32x32/copywindow.svg</file>
+        <file>images/32x32/newwindow.svg</file>
+        <file>images/svg/newspreadsheet.svg</file>
+        <file>images/svg/newspreadsheetwizard.svg</file>
+        <file>images/32x32/exit.svg</file>
+        <file>images/svg/spreadsheetCopy.svg</file>
+        <file>images/svg/config.svg</file>
+        <file>images/svg/preferences-color.svg</file>
+        <file>images/svg/edittabname.svg</file>
+        <file>images/svg/cancel.svg</file>
+        <file>images/svg/checkmark.svg</file>
+        <file>images/svg/showMessageArea.svg</file>
+        <file>images/svg/hideMessageArea.svg</file>
+        <file>images/svg/led green.svg</file>
+        <file>images/svg/led off.svg</file>
+        <file>images/svg/back.svg</file>
+        <file>images/svg/begining.svg</file>
+        <file>images/svg/end.svg</file>
+        <file>images/svg/forward.svg</file>
+        <file>images/svg/saveOff.svg</file>
+        <file>images/svg/saveOn.svg</file>
+        <file>qml/loadProgress.qml</file>
+    </qresource>
+</RCC>
