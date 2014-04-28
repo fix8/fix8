@@ -176,7 +176,7 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 //-----------------------------------------------------------------------------------------
 void filter_unique(XmlElement::XmlSet& fldlist)
 {
-	typedef map<string, const XmlElement *> UniqueFieldMap;
+	using UniqueFieldMap = map<string, const XmlElement *>;
 	UniqueFieldMap ufm;
 	unsigned dupls(0);
 	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)

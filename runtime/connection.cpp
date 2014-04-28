@@ -222,7 +222,7 @@ void FIXReader::set_preamble_sz()
 //-------------------------------------------------------------------------------------------------
 bool FIXReader::read(f8String& to)	// read a complete FIX message
 {
-	char msg_buf[_max_msg_len] = {};
+	char msg_buf[_max_msg_len] {};
 	int result(sockRead(msg_buf, _bg_sz));
 
 	if (result == static_cast<int>(_bg_sz))

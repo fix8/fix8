@@ -54,10 +54,6 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 #include <numeric>
 #include <fix8/f8config.h>
 
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
-
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>
 #endif

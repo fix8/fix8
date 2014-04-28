@@ -57,7 +57,7 @@ namespace FIX8 {
 
 inline LARGE_INTEGER getFILETIMEoffset()
 {
-	SYSTEMTIME s = { 1970, 1, 1, 0, 0, 0, 0 };
+	SYSTEMTIME s { 1970, 1, 1, 0, 0, 0, 0 };
 	FILETIME f;
 	LARGE_INTEGER t;
 
@@ -139,8 +139,8 @@ inline void current_utc_time(struct timespec *ts)
 class Tickval
 {
 public:
-	typedef unsigned long long ticks; // unsigned ticks
-	typedef long long sticks; // signed ticks
+	using ticks = unsigned long long;
+	using sticks = long long;
 	static const ticks noticks = 0ULL;
 	static const sticks nosticks = 0LL;
 	static const ticks errorticks = ULLONG_MAX;
@@ -292,7 +292,7 @@ public:
 	  \return result */
 	struct timespec as_ts() const
 	{
-		const timespec ts = { secs(), static_cast<long>(nsecs()) };
+		const timespec ts { secs(), static_cast<long>(nsecs()) };
 		return ts;
 	}
 

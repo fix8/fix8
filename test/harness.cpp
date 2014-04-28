@@ -135,17 +135,17 @@ const string GETARGLIST("hl:svqc:R:S:rp:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('c', "Create messages"), &MyMenu::create_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('e', "Edit messages"), &MyMenu::edit_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('d', "Delete messages"), &MyMenu::delete_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Print messages"), &MyMenu::print_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('s', "Send messages"), &MyMenu::send_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "Read messages from disk"), &MyMenu::read_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'c', "Create messages" }, &MyMenu::create_msgs },
+	{ { 'e', "Edit messages" }, &MyMenu::edit_msgs },
+	{ { 'd', "Delete messages" }, &MyMenu::delete_msgs },
+	{ { 'p', "Print messages" }, &MyMenu::print_msgs },
+	{ { 's', "Send messages" }, &MyMenu::send_msgs },
+	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
 	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },

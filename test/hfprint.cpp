@@ -99,7 +99,7 @@ void print_usage();
 const string GETARGLIST("hsvo:c");
 bool term_received(false), summary(false);
 
-typedef map<string, unsigned> MessageCount;
+using MessageCount = map<string, unsigned>;
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 	int val, offset(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
 		{ "offset",			1,	0,	'o' },

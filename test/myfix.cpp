@@ -111,6 +111,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // f8 headers
 #include <fix8/f8includes.hpp>
+//#include <fix8/zeromq_mbus.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
@@ -134,17 +135,17 @@ const string GETARGLIST("hl:svqc:R:S:rdo");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "New Order Single Recycled - 1st use send as normal then will send recycled message"),
-			&MyMenu::new_order_single_recycled),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
+	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
+		&MyMenu::new_order_single_recycled },
+	{ { 'N', "50 New Order Singles" }, &MyMenu::new_order_single_50 },
+	{ { 'T', "1000 New Order Singles" }, &MyMenu::new_order_single_1000 },
+	{ { 'R', "Resend request" }, &MyMenu::resend_request },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
 	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
@@ -161,9 +162,9 @@ void sig_handler(int sig)
 #ifndef _MSC_VER
    case SIGQUIT:
 #endif
-       term_received = true;
-      signal(sig, sig_handler);
-      break;
+		term_received = true;
+		signal(sig, sig_handler);
+		break;
    }
 }
 
@@ -176,7 +177,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
@@ -265,8 +266,8 @@ int main(int argc, char **argv)
 				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
 
 				const ProcessModel pm(ms->get_process_model(ms->_ses));
-				inst->start(pm == pm_pipeline, next_send, next_receive);
 				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				inst->start(pm == pm_pipeline, next_send, next_receive);
 				if (inst->session_ptr()->get_connection()->is_secure())
 					cout << "Session is secure (SSL)" << endl;
 				if (pm != pm_pipeline)
@@ -292,6 +293,7 @@ int main(int argc, char **argv)
 				mc->start(false, next_send, next_receive);
 
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			cout << "Menu started. Press '?' for help..." << endl;
 			char ch(0);
 			mymenu.get_tty().set_raw_mode();
 			save_tty = mymenu.get_tty();
@@ -309,16 +311,19 @@ int main(int argc, char **argv)
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
+		GlobalLogger::log(e.what());
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
+		GlobalLogger::log(e.what());
 	}
 	catch (...)
 	{
 		cerr << "unknown exception" << endl;
 		restore_tty = true;
+		GlobalLogger::log("unknown exception");
 	}
 
 	if (restore_tty && !server)
@@ -402,7 +407,7 @@ Message *MyMenu::generate_new_order_single()
 	*gr5 << new TEX::UnderlyingSymbol("BOOM");
 	// nested repeating groups
 	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
-	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+	static const char *secIDs[] { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
 	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
 	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
 	{
@@ -465,7 +470,7 @@ bool MyMenu::new_order_single_recycled()
 bool MyMenu::new_order_single_50()
 {
 	vector<Message *> msgs;
-	for (int ii(0); ii < 50; ++ii)
+	for (auto ii(0); ii < 50; ++ii)
 		msgs.push_back(generate_new_order_single());
 
 	_session.send_batch(msgs);
@@ -476,7 +481,7 @@ bool MyMenu::new_order_single_50()
 bool MyMenu::new_order_single_1000()
 {
 	vector<Message *> msgs;
-	for (int ii(0); ii < 1000; ++ii)
+	for (auto ii(0); ii < 1000; ++ii)
 		msgs.push_back(generate_new_order_single());
 
 	_session.send_batch(msgs);
@@ -489,7 +494,7 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
+	for (auto itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
 		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
 	get_ostr() << endl;
 	return true;

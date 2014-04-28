@@ -675,7 +675,7 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 /// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
-   static const int mon_days[] = {0,
+   static const int mon_days[] {0,
       31,
       31 + 28,
       31 + 28 + 31,
@@ -756,7 +756,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -793,7 +793,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 {
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
@@ -820,7 +820,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 
 inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -832,7 +832,7 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 }
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
+using UTCTimestamp = EnumType<FieldTrait::ft_UTCTimestamp>;
 
 /// Partial specialisation for UTCTimestamp field type.
 /*! \tparam field field number (fix tag) */
@@ -908,7 +908,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -920,7 +920,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
+using UTCTimeOnly = EnumType<FieldTrait::ft_UTCTimeOnly>;
 
 /// Partial specialisation for UTCTimeOnly field type.
 /*! \tparam field field number (fix tag) */
@@ -989,7 +989,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1001,7 +1001,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_UTCDateOnly> UTCDateOnly;
+using UTCDateOnly = EnumType<FieldTrait::ft_UTCDateOnly>;
 
 /// Partial specialisation for UTCDateOnly field type.
 /*! \tparam field field number (fix tag) */
@@ -1070,7 +1070,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1082,7 +1082,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_LocalMktDate> LocalMktDate;
+using LocalMktDate = EnumType<FieldTrait::ft_LocalMktDate>;
 
 /// Partial specialisation for LocalMktDate field type.
 /*! \tparam field field number (fix tag) */
@@ -1151,7 +1151,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1163,7 +1163,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
+using MonthYear = EnumType<FieldTrait::ft_MonthYear>;
 
 /// Partial specialisation for MonthYear field type.
 /*! \tparam field field number (fix tag) */
@@ -1233,7 +1233,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1245,7 +1245,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_TZTimeOnly> TZTimeOnly;
+using TZTimeOnly = EnumType<FieldTrait::ft_TZTimeOnly>;
 
 /// Partial specialisation for TZTimeOnly field type.
 /*! \tparam field field number (fix tag) */
@@ -1316,7 +1316,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_TZTimestamp> TZTimestamp;
+using TZTimestamp = EnumType<FieldTrait::ft_TZTimestamp>;
 
 /// Partial specialisation for TZTimestamp field type.
 /*! \tparam field field number (fix tag) */
@@ -1387,7 +1387,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_Length> Length;
+using Length = EnumType<FieldTrait::ft_Length>;
 
 /// Partial specialisation for Length field type.
 /*! \tparam field field number (fix tag) */
@@ -1422,7 +1422,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_TagNum> TagNum;
+using TagNum = EnumType<FieldTrait::ft_TagNum>;
 
 /// Partial specialisation for TagNum field type.
 /*! \tparam field field number (fix tag) */
@@ -1457,7 +1457,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_SeqNum> SeqNum;
+using SeqNum = EnumType<FieldTrait::ft_SeqNum>;
 
 /// Partial specialisation for SeqNum field type.
 /*! \tparam field field number (fix tag) */
@@ -1492,7 +1492,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_NumInGroup> NumInGroup;
+using NumInGroup = EnumType<FieldTrait::ft_NumInGroup>;
 
 /// Partial specialisation for NumInGroup field type.
 /*! \tparam field field number (fix tag) */
@@ -1527,7 +1527,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_DayOfMonth> DayOfMonth;
+using DayOfMonth = EnumType<FieldTrait::ft_DayOfMonth>;
 
 /// Partial specialisation for DayOfMonth field type.
 /*! \tparam field field number (fix tag) */
@@ -1562,7 +1562,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_Boolean> Boolean;
+using Boolean = EnumType<FieldTrait::ft_Boolean>;
 
 /// Partial specialisation for Boolean field type.
 /*! \tparam field field number (fix tag) */
@@ -1659,11 +1659,11 @@ public:
 // typedef EnumType<FieldTrait::ft_float> PriceOffset;
 // typedef EnumType<FieldTrait::ft_float> Percentage;
 
-typedef double Qty;
-typedef double Amt;
-typedef double price;
-typedef double PriceOffset;
-typedef double Percentage;
+using Qty = double;
+using Amt = double;
+using price = double;
+using PriceOffset = double;
+using Percentage = double;
 
 //-------------------------------------------------------------------------------------------------
 // C++11 will permit proper type aliasing
@@ -1676,14 +1676,14 @@ typedef double Percentage;
 // typedef EnumType<FieldTrait::ft_string> XMLData;
 // typedef EnumType<FieldTrait::ft_data> data;
 
-typedef f8String MultipleCharValue;
-typedef f8String MultipleStringValue;
-typedef f8String country;
-typedef f8String currency;
-typedef f8String Exchange;
-typedef f8String Language;
-typedef f8String XMLData;
-typedef f8String data;
+using MultipleCharValue = f8String;
+using MultipleStringValue = f8String;
+using country = f8String;
+using currency = f8String;
+using Exchange = f8String;
+using Language = f8String;
+using XMLData = f8String;
+using data = f8String;
 
 //-------------------------------------------------------------------------------------------------
 /// Field metadata structures
@@ -1787,39 +1787,39 @@ const unsigned short Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 //-------------------------------------------------------------------------------------------------
 // Common FIX fields
 
-typedef Field<SeqNum, Common_MsgSeqNum> msg_seq_num;
-typedef Field<SeqNum, Common_BeginSeqNo> begin_seq_num;
-typedef Field<SeqNum, Common_EndSeqNo> end_seq_num;
-typedef Field<SeqNum, Common_NewSeqNo> new_seq_num;
-typedef Field<SeqNum, Common_RefSeqNum> ref_seq_num;
+using msg_seq_num = Field<SeqNum, Common_MsgSeqNum>;
+using begin_seq_num = Field<SeqNum, Common_BeginSeqNo>;
+using end_seq_num = Field<SeqNum, Common_EndSeqNo>;
+using new_seq_num = Field<SeqNum, Common_NewSeqNo>;
+using ref_seq_num = Field<SeqNum, Common_RefSeqNum>;
 
-typedef Field<Length, Common_BodyLength> body_length;
+using body_length = Field<Length, Common_BodyLength>;
 
-typedef Field<f8String, Common_SenderCompID> sender_comp_id;
-typedef Field<f8String, Common_TargetCompID> target_comp_id;
-typedef Field<f8String, Common_MsgType> msg_type;
-typedef Field<f8String, Common_CheckSum> check_sum;
-typedef Field<f8String, Common_BeginString> begin_string;
-typedef Field<f8String, Common_TestReqID> test_request_id;
-typedef Field<f8String, Common_Text> text;
-typedef Field<f8String, Common_DefaultApplVerID> default_appl_ver_id;
-typedef Field<f8String, Common_RefMsgType> ref_msg_type;
+using sender_comp_id = Field<f8String, Common_SenderCompID>;
+using target_comp_id = Field<f8String, Common_TargetCompID>;
+using msg_type = Field<f8String, Common_MsgType>;
+using check_sum = Field<f8String, Common_CheckSum>;
+using begin_string = Field<f8String, Common_BeginString>;
+using test_request_id = Field<f8String, Common_TestReqID>;
+using text = Field<f8String, Common_Text>;
+using default_appl_ver_id = Field<f8String, Common_DefaultApplVerID>;
+using ref_msg_type = Field<f8String, Common_RefMsgType>;
 
-typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
-typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;
+using sending_time = Field<UTCTimestamp, Common_SendingTime>;
+using orig_sending_time = Field<UTCTimestamp, Common_OrigSendingTime>;
 
-typedef Field<Boolean, Common_GapFillFlag> gap_fill_flag;
-typedef Field<Boolean, Common_PossDupFlag> poss_dup_flag;
-typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
+using gap_fill_flag = Field<Boolean, Common_GapFillFlag>;
+using poss_dup_flag = Field<Boolean, Common_PossDupFlag>;
+using reset_seqnum_flag = Field<Boolean, Common_ResetSeqNumFlag>;
 
-typedef Field<int, Common_HeartBtInt> heartbeat_interval;
-typedef Field<int, Common_EncryptMethod> encrypt_method;
-typedef Field<int, Common_BusinessRejectReason> business_reject_reason;
+using heartbeat_interval = Field<int, Common_HeartBtInt>;
+using encrypt_method = Field<int, Common_EncryptMethod>;
+using business_reject_reason = Field<int, Common_BusinessRejectReason>;
 
-typedef Field<f8String, Common_OnBehalfOfCompID> onbehalfof_comp_id;
-typedef Field<f8String, Common_OnBehalfOfSubID> onbehalfof_sub_id;
-typedef Field<f8String, Common_OnBehalfOfLocationID> onbehalfof_location_id;
-typedef Field<UTCTimestamp, Common_OnBehalfOfSendingTime> onbehalfof_sending_time;
+using onbehalfof_comp_id = Field<f8String, Common_OnBehalfOfCompID>;
+using onbehalfof_sub_id = Field<f8String, Common_OnBehalfOfSubID>;
+using onbehalfof_location_id = Field<f8String, Common_OnBehalfOfLocationID>;
+using onbehalfof_sending_time = Field<UTCTimestamp, Common_OnBehalfOfSendingTime>;
 
 //-------------------------------------------------------------------------------------------------
 
