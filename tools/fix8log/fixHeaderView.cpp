@@ -2,10 +2,12 @@
 #include "fixHeaderView.h"
 
 FixHeaderView::FixHeaderView(QWidget * parent):
-  QHeaderView(Qt::Horizontal,parent)
+  QHeaderView(Qt::Horizontal,parent),startTimeCol(1)
 {
+
   _model = (QStandardItemModel *) model();
-  filterPixmap = QPixmap(":/images/filter.png").scaled(20,20);
+  //filterPixmap = QPixmap(":/images/filter.png").scaled(20,20);
+  configurePixmap = QPixmap(":/images/svg/config.svg");
   styleOption = new QStyleOptionHeader();
   initStyleOption(styleOption);
   setSectionsClickable(true);
@@ -14,6 +16,26 @@ FixHeaderView::~FixHeaderView()
 {
   //delete styleOtion;
 }
+void FixHeaderView::setStartTimeCol(int stc)
+{
+    startTimeCol = stc;
+}
+/* no worky, cant get pixmap to draw before or after painSection
+void FixHeaderView::paintSection(QPainter * painter, const QRect & rect, int index) const
+{
+    QPixmap pm = configurePixmap.scaledToHeight(rect.height()*.80);
+    int x = rect.x() + 2;
+    int y = rect.y() + (rect.height() - pm.height())/2;
+    if (index == startTimeCol) {
+        qDebug() << "\tDRAW CONFIG PM at: " << x << y << pm.height();
+        //QHeaderView::paintSection(painter,rect,index);
+        painter->drawPixmap(rect,pm);
+    }
+    else
+        QHeaderView::paintSection(painter,rect,index);
+
+}
+*/
 void FixHeaderView::setFilterModeOn(bool on)
 {
   filterModeOn = on;

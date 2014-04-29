@@ -20,7 +20,7 @@
 #include <Myfix_classes.hpp>
 using namespace FIX8;
 QString WorkSheet::headerLabel[] =
-{tr("SeqNum"),tr("SenderCompID"),tr("TargetCompID"),tr("SendTime"),
+{tr("SeqNum"),tr("SenderCompID "),tr("TargetCompID"), QString(QChar(0x2935)) + "  SendTime"  ,
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
  tr("HeartBtInt"),tr("Message Type")};
 
@@ -48,6 +48,8 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linec
     fixHeader->setStretchLastSection(true);
     fixHeader->setSectionsMovable(true);
     fixHeader->setSortIndicatorShown(true);
+    setTimeFormat(GUI::Globals::timeFormat);
+
 }
 WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     QWidget(parent),cancelLoad(false),linecount(0)
@@ -67,6 +69,8 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     fixHeader->setStretchLastSection(true);
     fixHeader->setSectionsMovable(true);
     fixHeader->setSortIndicatorShown(true);
+    setTimeFormat(GUI::Globals::timeFormat);
+
 }
 WorkSheet::WorkSheet(QStandardItemModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
@@ -111,6 +115,8 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
     otherIndex = _model->index(selectedRow,MessageType);
     str =  _model->data(otherIndex).toString();
     messageArea->setMessageFieldList(mfl,seqN,str);
+    // update to get time format displayed
+    setTimeFormat(GUI::Globals::timeFormat);
 }
 void WorkSheet::build()
 {
@@ -125,6 +131,7 @@ void WorkSheet::build()
         timeActionGroup->addAction(timeFormatActions[i]);
         timeFormatMenu->addAction(timeFormatActions[i]);
     }
+    timeFormatActions[GUI::Globals::timeFormat]->setChecked(true);
 
     stackLayout = new QStackedLayout(this);
     setLayout(stackLayout);
@@ -463,7 +470,8 @@ void WorkSheet::timeFormatSelectedSlot(QAction *action)
 }
 void WorkSheet::setTimeFormat(GUI::Globals::TimeFormat tf)
 {
-    qDebug() << "WORK SHEET SET TIME FORMAT TO " << tf << __FILE__ << __LINE__;
+    qDebug() << "\tWORK SHEET SET TIME FORMAT TO " << tf << __FILE__ << __LINE__;
     dateTimeDelegate->setTimeFormat(tf);
     fixTable->repaint();
+    fixTable->update();
 }

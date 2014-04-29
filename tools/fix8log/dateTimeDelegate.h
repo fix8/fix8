@@ -26,11 +26,12 @@ public:
   DateTimeDelegate(QObject *parent = 0);
   static void setTimeFormat(GUI::Globals::TimeFormat);
   QSize	sizeHint ( const QStyleOptionViewItem & option, 
-		   const QModelIndex & index ); 
+           const QModelIndex & index ) const;
     void paint(QPainter *painter,
                const QStyleOptionViewItem &option,
                const QModelIndex &index) const;
    static GUI::Globals::TimeFormat timeFormat;
+   QPixmap configPixmap;
 };
 
 #endif 

@@ -11,8 +11,10 @@ class FixHeaderView : public QHeaderView
  public:
    FixHeaderView(QWidget * parent = 0);
   ~FixHeaderView();
+   void setStartTimeCol(int);
   void setFilterModeOn(bool);
  protected:
+  //void paintSection(QPainter * painter, const QRect & rect, int) const ;
   void mousePressEvent(QMouseEvent *);
   void mouseDoubleClickEvent(QMouseEvent *);
   //void resizeEvent(QResizeEvent *e);
@@ -23,8 +25,9 @@ class FixHeaderView : public QHeaderView
  private:
   QStandardItemModel *_model;
   bool filterModeOn;
-  QPixmap filterPixmap;
+  QPixmap configurePixmap;
   QIcon   filterIcon;
   QStyleOptionHeader *styleOption;
+  int startTimeCol;
 };
 #endif

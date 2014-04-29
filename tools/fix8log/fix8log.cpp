@@ -289,6 +289,8 @@ void Fix8Log::readSettings()
 {
     QSettings settings("fix8","logviewer");
     autoSaveOn = (bool) settings.value("AutoSave",false).toBool();
+    GUI::Globals::timeFormat  = (GUI::Globals::TimeFormat) settings.value("StartTimeFormat",GUI::Globals::HHMMSS).toInt();
+    emit notifyTimeFormatChanged(GUI::Globals::timeFormat);
 }
 void Fix8Log::writeSettings()
 {
@@ -307,8 +309,9 @@ void Fix8Log::cancelSessionRestoreSlot()
 }
 void  Fix8Log::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
 {
-    qDebug() << "SET TIME FORMAT" << __FILE__ << __LINE__;
     GUI::Globals::timeFormat = tf;
     // tell all main windows that format changed
     emit notifyTimeFormatChanged(tf);
+    QSettings settings("fix8","logviewer");
+    settings.setValue("StartTimeFormat",tf);
 }

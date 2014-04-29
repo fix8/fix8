@@ -467,7 +467,6 @@ void MainWindow::setAutoSaveOn(bool on)
 }
 void MainWindow::setCurrentTabAndSelectedRow(int currentTab, int currentRow)
 {
-    qDebug() << "MainWIndow::setCurrent Tab to " << currentTab << __FILE__ << __LINE__;
     if ((tabW->count() < 1) || (tabW->count() < currentTab))
         return;
     tabW->setCurrentIndex(currentTab);

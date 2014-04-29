@@ -183,4 +183,5 @@ void MainWindow::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
        if (workSheet)
            workSheet->setTimeFormat(tf);
    }
+   repaint();
 }
