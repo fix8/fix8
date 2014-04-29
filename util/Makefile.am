@@ -32,7 +32,7 @@
 #
 #############################################################################################
 bin_PROGRAMS = seqedit
-seqedit_SOURCES = seqedit.cpp
+seqedit_SOURCES = seqedit.cpp precomp.cpp
 
 CLEANFILES =
 AM_CPPFLAGS = -I$(top_srcdir)/include

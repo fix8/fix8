@@ -33,23 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <time.h>
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -73,7 +57,7 @@ namespace FIX8
     {
         static f8_spin_lock mutex;
         f8_scoped_spin_lock guard(mutex);
-        if (_instance == 0)
+        if (_instance.load() == 0)
         {
             SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
             _instance = p;
