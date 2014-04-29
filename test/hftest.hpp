@@ -130,6 +130,7 @@ class hf_session_server : public FIX8::Session
 public:
 	/*! Ctor. Acceptor.
 	    \param ctx reference to generated metadata
+	    \param sci sender comp id of hosting session
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */

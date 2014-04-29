@@ -271,7 +271,7 @@ int main(int argc, char **argv)
 					if (srv)
 					{
 						thrds.push_back(thread ([&]() { server_process(srv, ++scnt, true); }));
-                        this_thread::sleep_for(chrono::milliseconds(1));
+						hypersleep<h_seconds>(1);
 					}
 				}
 				for_each(thrds.begin(), thrds.end(), [](thread& tt) { if (tt.joinable()) tt.join(); });
@@ -321,7 +321,7 @@ int main(int argc, char **argv)
 					thrds.push_back(thread ([=]()		// use copy closure
 					{
 						MyMenu mymenu(*pp->session_ptr(), 0, cout);
-                        this_thread::sleep_for( chrono::milliseconds( 1 + RandDev::getrandom( 10 ) ) );
+						hypersleep<h_seconds>(1 + RandDev::getrandom(10));
 						mymenu.new_order_single();	// send an order and then logout
 						mymenu.do_logout();
 					}));
