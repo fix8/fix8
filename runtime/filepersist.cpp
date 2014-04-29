@@ -34,33 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <list>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-#include <cerrno>
-#include <stdint.h>
-#ifdef _MSC_VER
-#include <io.h>
-#define ssize_t int
-#else
-#include <unistd.h>
-#endif
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------

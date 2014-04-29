@@ -34,27 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <list>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#include <cerrno>
-#include <stdint.h>
-#if !defined(_MSC_VER)
-#include <unistd.h>
-#endif
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 #if defined HAVE_LIBHIREDIS
