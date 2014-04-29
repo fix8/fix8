@@ -219,8 +219,8 @@ char Logger::get_thread_code(_dthreadcore::thread_id_t tid)
 		RevThreadCodes::const_iterator itr(_rev_thread_codes.find(acode));
 		if (itr == _rev_thread_codes.end())
 		{
-			_thread_codes.insert(ThreadCodes::value_type(tid, acode));
-			_rev_thread_codes.insert(RevThreadCodes::value_type(acode, tid));
+			_thread_codes.insert({tid, acode});
+			_rev_thread_codes.insert({acode, tid});
 			return acode;
 		}
 	}

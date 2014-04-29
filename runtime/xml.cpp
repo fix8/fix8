@@ -188,7 +188,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 	if (rootAttr)
 	{
 		attrs_ = new XmlAttrs;
-		attrs_->insert(XmlAttrs::value_type("docpath", rootAttr));
+		attrs_->insert({"docpath", rootAttr});
 	}
 
 	if (root_->maxdepth_ < depth)
@@ -332,7 +332,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 									itr != child->children_->begin()->second->children_->end(); ++itr)
 								{
 									--itr->second->depth_;
-									children_->insert(XmlSubEls::value_type(itr->first, itr->second));
+									children_->insert({itr->first, itr->second});
 									ordchildren_->insert(itr->second);
 								}
 
@@ -342,7 +342,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 							else
 							{
 								++chldcnt_;
-								children_->insert(XmlSubEls::value_type(child->GetTag(), child));
+								children_->insert({child->GetTag(), child});
 								ordchildren_->insert(child);
 							}
 						}
@@ -446,7 +446,7 @@ bool XmlElement::Insert(XmlElement *what)
 	}
 
 	++chldcnt_;
-	children_->insert(XmlSubEls::value_type(what->GetTag(), what));
+	children_->insert({what->GetTag(), what});
 	ordchildren_->insert(what);
 
 	return true;
@@ -541,7 +541,7 @@ illegal_char:
 				{
 					if (!attrs_)
 						attrs_ = new XmlAttrs;
-					if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
+					if (!attrs_->insert({tmptag, InplaceXlate(tmpval)}).second)
 					{
 						++root_->errors_;
 						ostringstream ostr;

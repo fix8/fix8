@@ -126,8 +126,7 @@ public:
 		if (!what)
 			throw f8Exception("bad or missing session");
 		f8_scoped_lock guard(_mutex);
-		_sessionmap.insert({name, what});
-		return true;
+		return _sessionmap.insert({name, what}).second;
 	}
 
 	/*! Call supplied function on each T* in the manager

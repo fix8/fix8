@@ -328,7 +328,7 @@ Clients Configuration::create_clients(const XmlElement *from) const
 				string name, tci;
 				const Poco::Net::IPAddress addr(get_ip(pp));
 				if (pp->GetAttr("name", name) && pp->GetAttr("target_comp_id", tci) && pp->FindAttr("active", true))
-					if (!clients.insert(Clients::value_type(tci, Client(name, addr))).second)
+					if (!clients.insert({tci, Client(name, addr)}).second)
 						throw ConfigurationError("Failed to add client from client_group", tci);
 			}
 		}

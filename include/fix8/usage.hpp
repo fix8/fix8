@@ -72,8 +72,7 @@ public:
 	  \return true on success */
 	bool add(const char sw, const std::string& lsw, const std::string& help)
 	{
-		return optels_.insert(OPTEL::value_type(sw,
-			std::pair<const std::string, const std::string>(lsw, help))).second;
+		return optels_.insert({sw, std::pair<const std::string, const std::string>(lsw, help)}).second;
 	}
 
 	/*! Add an extra help line. Lines prefixed with '@' are indented one tabstop.

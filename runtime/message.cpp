@@ -506,7 +506,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 				break;
 			}
 		}
-		_pos.insert(Positions::value_type(pos, with));
+		_pos.insert({pos, with});
 		itr->second = with;
 		_fp.set(fnum, FieldTrait::present);
 	}
@@ -531,7 +531,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_itera
 				break;
 			}
 		}
-		_pos.insert(Positions::value_type(pos, with));
+		_pos.insert({pos, with});
 		itr->second = with;
 		_fp.set(fnum, fitr, FieldTrait::present);
 	}

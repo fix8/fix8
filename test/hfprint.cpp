@@ -191,7 +191,7 @@ int main(int argc, char **argv)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));
 					if (mitr == mc->end())
-						mc->insert(MessageCount::value_type(msg->get_msgtype(), 1));
+						mc->insert({msg->get_msgtype(), 1});
 					else
 						mitr->second++;
 				}

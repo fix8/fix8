@@ -118,7 +118,15 @@ libraries) being installed to build properly:
 
 - Poco C++ Libraries [basic edition](http://pocoproject.org/download/index.html)
 
-Additional libraries are needed for building on Windows, [see here](https://fix8engine.atlassian.net/wiki/display/FX/Building).
+Additional libraries are needed for building on Windows, [see here](https://fix8engine.atlassian.net/wiki/x/EICW).
+
+## C++11
+
+Fix8 now **requires C++11 compiler support**. If you are using clang or gcc make sure you have the
+
+	-std=c++11
+
+flag on your compiler command line. Some earlier compiler versions may no longer be supported. Sorry.
 
 ## Optional Dependencies
 
@@ -155,8 +163,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.1.0.tar.gz
-	% cd fix8-1.1.0
+	% tar xvzf 1.2.0.tar.gz
+	% cd fix8-1.2.0
 	% ./bootstrap
 	% ./configure
 	% make
@@ -170,8 +178,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.1.0.tar.gz
-	% cd fix8-1.1.0
+	% tar xvzf 1.2.0.tar.gz
+	% cd fix8-1.2.0
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
@@ -182,9 +190,11 @@ If you are using clang and it complains about no-var-tracking compiler switches,
 
 	% ./configure --enable-toggleassignmentvars=no
 
+Please see [this document](https://fix8engine.atlassian.net/wiki/x/B4AtAQ) for more instructions for building on OSX.
+
 ## Building on Windows
 
-Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building+and+running+on+Windows) for detailed instructions for building on Windows.
+Please see [this document](https://fix8engine.atlassian.net/wiki/x/EICW) for detailed instructions for building on Windows.
 
 ## Support
 

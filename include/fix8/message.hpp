@@ -362,8 +362,8 @@ public:
 	    \param what pointer to field */
 	void add_field_decoder(const unsigned short fnum, const unsigned pos, BaseField *what)
 	{
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert({fnum, what});
+		_pos.insert({pos, what});
 	}
 
 	/*! Add fix field to this message.
@@ -381,8 +381,8 @@ public:
 			return;
 		}
 
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert({fnum, what});
+		_pos.insert({pos, what});
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
@@ -402,8 +402,8 @@ public:
 			return;
 		}
 
-		_fields.insert(fitr, Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert(fitr, {fnum, what});
+		_pos.insert({pos, what});
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
@@ -422,8 +422,8 @@ public:
 			return;
 		}
 
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert({fnum, what});
+		_pos.insert({pos, what});
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
@@ -597,11 +597,11 @@ public:
 	    \tparam T type of grop being appended
 	    \param what pointer to group to add */
 	template<typename T>
-	void append_group(T *what) { _groups.insert(_groups.end(), Groups::value_type(T::_fnum, what)); }
+	void append_group(T *what) { _groups.insert(_groups.end(), {T::_fnum, what}); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
-	void add_group(GroupBase *what) { _groups.insert(Groups::value_type(what->_fnum, what)); }
+	void add_group(GroupBase *what) { _groups.insert({what->_fnum, what}); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to field

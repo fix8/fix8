@@ -410,14 +410,13 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 bool MemoryPersister::put(const unsigned sender_seqnum, const unsigned target_seqnum)
 {
 	const unsigned arr[2] { sender_seqnum, target_seqnum };
-	return _store.insert(Store::value_type(0,
-		f8String(reinterpret_cast<const char *>(arr), sizeof(arr)))).second;
+	return _store.insert({0, f8String(reinterpret_cast<const char *>(arr), sizeof(arr))}).second;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool MemoryPersister::put(const unsigned seqnum, const f8String& what)
 {
-	return !seqnum ? false : _store.insert(Store::value_type(seqnum, what)).second;
+	return !seqnum ? false : _store.insert({seqnum, what}).second;
 }
 
 //-------------------------------------------------------------------------------------------------

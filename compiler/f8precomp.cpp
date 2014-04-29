@@ -183,7 +183,7 @@ void filter_unique(XmlElement::XmlSet& fldlist)
 	{
 		string name;
 		(*itr)->GetAttr("name", name);
-		if (!ufm.insert(UniqueFieldMap::value_type(name, *itr)).second)
+		if (!ufm.insert({name, *itr}).second)
 			++dupls; // cerr << "Duplicate field: " << name << endl;
 	}
 
@@ -199,7 +199,7 @@ void load_components(const XmlElement::XmlSet& comlist, Components& components)
 	{
 		string name;
 		if ((*itr)->GetAttr("name", name))
-			components.insert(Components::value_type(name, *itr));
+			components.insert({name, *itr});
 	}
 }
 

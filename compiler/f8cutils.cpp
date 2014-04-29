@@ -309,7 +309,7 @@ void process_ordering(MessageSpecMap& mspec)
 		FieldTraitOrder mo;
 		for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
 			flitr != mitr->second._fields.get_presence().end(); ++flitr)
-				mo.insert(FieldTraitOrder::value_type(&*flitr));
+				mo.insert({&*flitr});
 
 		unsigned cnt(0);
 		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
@@ -325,7 +325,7 @@ void process_message_group_ordering(const GroupMap& gm)
 		FieldTraitOrder go;
 		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
 			flitr != gitr->second._fields.get_presence().end(); ++flitr)
-				go.insert(FieldTraitOrder::value_type(&*flitr));
+				go.insert({&*flitr});
 
 		unsigned gcnt(0);
 		for (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)

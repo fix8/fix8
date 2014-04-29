@@ -167,7 +167,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 				GlobalLogger::log(FILE_LINE, eostr.str());
 			}
 
-			if (!_index.insert(Index::value_type(iprec._seq, iprec._prec)).second)
+			if (!_index.insert({iprec._seq, iprec._prec}).second)
 			{
 				ostringstream eostr;
 				eostr << "Warning: inserting index record into database index: " << _dbIname << " (" << iprec << "). Ignoring.";
@@ -278,7 +278,7 @@ bool FilePersister::put(const unsigned sender_seqnum, const unsigned target_seqn
 	IPrec iprec(0, sender_seqnum, target_seqnum);
 	Index::iterator itr(_index.find(0));
 	if (itr == _index.end())
-		_index.insert(Index::value_type(0, iprec._prec));
+		_index.insert({0, iprec._prec});
 	else
 		itr->second = iprec._prec;
 
@@ -336,7 +336,7 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 		return false;
 	}
 
-	return _index.insert(Index::value_type(seqnum, iprec._prec)).second;
+	return _index.insert({seqnum, iprec._prec}).second;
 }
 
 //-------------------------------------------------------------------------------------------------

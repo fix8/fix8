@@ -192,7 +192,7 @@ private:
 				std::string name;
 				if (pp->GetAttr("name", name) && is_session ? pp->FindAttr("active", false) : true)
 				{
-					map_name.insert(ConfigMap::value_type(name, pp));
+					map_name.insert({name, pp});
 					if (is_session)
 						_allsessions.push_back(pp);
 				}

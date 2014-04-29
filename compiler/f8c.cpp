@@ -500,7 +500,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.find_value(type));
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
-				result = fspec.insert(FieldSpecMap::value_type(get_value<unsigned>(number), FieldSpec(name, ft)));
+				result = fspec.insert({get_value<unsigned>(number), FieldSpec(name, ft)});
 			else
 			{
             if (!nowarn)
@@ -533,7 +533,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 						if (isRange)
 							result.first->second._dtype = RealmBase::dt_range;
 						if (realmval)
-							result.first->second._dvals->insert(RealmMap::value_type(realmval, description));
+							result.first->second._dvals->insert({realmval, description});
 					}
 					else
 					{
@@ -619,8 +619,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 			continue;
 		}
 
-		pair<MessageSpecMap::iterator, bool> result(
-			mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name, msgcat % "admin"))));
+		pair<MessageSpecMap::iterator, bool> result(mspec.insert({msgtype, MessageSpec(name, msgcat % "admin")}));
 		if (!result.second)
 		{
 			cerr << shortName << ':' << recover_line(**itr) << ": error: Could not add message '" << name << "' (" << msgtype << ")" << endl;
@@ -676,8 +675,7 @@ unsigned parse_groups(MessageSpec& ritr, const string& name,
 				else
 				{
 					fs_itr->second._used = true; 	// we always assume group count fields are used
-					pair<GroupMap::iterator, bool> gresult(
-						ritr._groups.insert(GroupMap::value_type(fs_itr->first, MessageSpec(gname))));
+					pair<GroupMap::iterator, bool> gresult(ritr._groups.insert({fs_itr->first, MessageSpec(gname)}));
                if (gresult.second)
                {
                   process_message_fields("group/field", *gitr, gresult.first->second._fields, ftonSpec, fspec, compon);
@@ -915,7 +913,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	FieldToNumMap ftonSpec;
 	for (FieldSpecMap::const_iterator fs_itr(fspec.begin()); fs_itr != fspec.end(); ++fs_itr)
-		ftonSpec.insert(FieldToNumMap::value_type(fs_itr->second._name, fs_itr->first));
+		ftonSpec.insert({fs_itr->second._name, fs_itr->first});
 
 	XmlElement::XmlSet comlist;
 	Components components;
