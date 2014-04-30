@@ -215,7 +215,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 			if (opt == '.')
 				return 0;
 
-			if (static_cast<size_t>((idx = _opt_keys.find_first_of(opt))) != f8String::npos)
+			if (static_cast<size_t>((idx = (static_cast<int>(_opt_keys.find_first_of(opt))))) != f8String::npos)
 			{
 				idx += (page * _lpp);
 				if (idx < rb->_sz)
@@ -295,7 +295,7 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 			lst.push_back(msg);
 	}
 
-	return lst.size();
+	return static_cast<int>(lst.size());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -357,7 +357,7 @@ int ConsoleMenu::EditMsgs(tty_save_state& tty, MsgList& lst) const
 		_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
 	}
 
-	return lst.size();
+	return static_cast<int>(lst.size());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -382,6 +382,6 @@ int ConsoleMenu::DeleteMsgs(tty_save_state& tty, MsgList& lst) const
 		}
 	}
 
-	return lst.size();
+	return static_cast<int>(lst.size());
 }
 

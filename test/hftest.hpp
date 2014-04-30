@@ -96,7 +96,7 @@ public:
 	}
 
 	bool cached() const { return !_nos_queue.empty(); }
-	int size() const { return _nos_queue.size(); }
+	int size() const { return static_cast<int>(_nos_queue.size()); }
 };
 
 //-----------------------------------------------------------------------------------------

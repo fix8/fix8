@@ -15,7 +15,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
       <ClCompile>
-        <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>Use</PrecompiledHeader>
         <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
       </ClCompile>
