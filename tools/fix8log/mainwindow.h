@@ -8,9 +8,10 @@
 #include "windowdata.h"
 #include "worksheetdata.h"
 #include <QList>
+class FixToolBar;
+class SearchLineEdit;
 class QAction;
 class QActionGroup;
-class QComboBox;
 class QDockWidget;
 class QFileDialog;
 class QLabel;
@@ -71,6 +72,7 @@ public:
     void tabCurentChangedSlot(int);
     void tabNameModifiedSlot(QString);
     void tabNameReturnKeySlot();
+    void toolbarOrientationChangedSlot(Qt::Orientation);
 protected:
     enum {ShowNoDataLabel,ShowTab,ShowProgress};
     QAction  *autoSaveA;
@@ -102,10 +104,11 @@ protected:
     QActionGroup *iconsStyleGroup;
     QByteArray messageSplitterSettings;
     QColor menubarColor;
-    QComboBox *searchCB;
+    SearchLineEdit *searchLineEdit;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
     QLabel   *searchL;
+    QLabel   *searchLV; // searchLagle to show when vertical
     QLabel   *noDataL;
     QLineEdit *tabNameLineEdit;
     QMenu    *fileMenu;
@@ -128,7 +131,7 @@ protected:
     //QToggleButton editTabNamePB;
 
     QToolBar *mainToolBar;
-    QToolBar *searchToolBar;
+    FixToolBar *searchToolBar;
     QList <FixTable *> fixTableLists;
     QWidget *progressWidget;
     QWidget *searchArea;

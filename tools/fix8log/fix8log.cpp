@@ -219,10 +219,12 @@ done:
 }
 void Fix8Log::exitAppSlot()
 {
+    qDebug() << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>EXIT APP SLOT !!!!" << __FILE__ ;
     if (autoSaveOn)
         saveSession();
-    writeSettings();
-    qApp->exit();
+    //writeSettings();
+    qApp->closeAllWindows();
+    qApp->quit();
 }
 void Fix8Log::saveSession()
 {

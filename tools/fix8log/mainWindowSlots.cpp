@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "messagearea.h"
+#include "fixtoolbar.h"
 #include "globals.h"
 #include "worksheet.h"
 #include <QDebug>
@@ -184,4 +185,16 @@ void MainWindow::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
            workSheet->setTimeFormat(tf);
    }
    repaint();
+}
+void MainWindow::toolbarOrientationChangedSlot(Qt::Orientation orient)
+{
+    if (orient == Qt::Vertical) {
+        searchL->setText("");
+        searchLV->setText("Search");
+    }
+    else {
+        searchL->setText("Search");
+        searchLV->setText("");
+
+    }
 }

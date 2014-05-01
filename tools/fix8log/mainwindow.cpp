@@ -1,6 +1,8 @@
+#include "fixtoolbar.h"
 #include "mainwindow.h"
 #include "worksheet.h"
 #include "globals.h"
+#include "searchlineedit.h"
 #include <QQuickView>
 #include <QtWidgets>
 #include <QStandardItemModel>
@@ -73,18 +75,21 @@ void MainWindow::setLoadMessage(QString str)
 
 void MainWindow::buildMainWindow()
 {
+    setAnimated(true);
     mainMenuBar = menuBar();
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
     mainToolBar = new QToolBar("Main Toolbar",this);
+
     mainToolBar->setObjectName("MainToolBar");
-    searchToolBar = new QToolBar("Search Toolbar",this);
+    searchToolBar = new FixToolBar("Search Toolbar",this);
+    connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
+            this,SLOT(toolbarOrientationChangedSlot(Qt::Orientation)));
     searchToolBar->setObjectName("SearchToolBar");
     hideToolBarA = mainToolBar->toggleViewAction();
     hideSearchToolBarA = searchToolBar->toggleViewAction();
     mainToolBar->setMovable(true);
     searchToolBar->setMovable(true);
-
     addToolBar(Qt::TopToolBarArea,mainToolBar);
     addToolBar(Qt::TopToolBarArea,searchToolBar);
 
@@ -142,19 +147,17 @@ void MainWindow::buildMainWindow()
     searchNextA->setIcon((QIcon(":/images/svg/forward.svg")));
     searchEditA  = new QAction(tr("Edit"),this);
     searchEditA->setIcon(QIcon(":/images/svg/edittabname.svg"));
-
+    searchLV = new QLabel(searchToolBar);// only show when toobar is vertial
     searchArea = new QWidget(this);
     QHBoxLayout *searchBox = new QHBoxLayout();
     searchBox->setMargin(0);
     searchArea->setLayout(searchBox);
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
-    searchCB = new QComboBox(searchArea);
-    searchCB->setEditable(true);
-
+    searchLineEdit = new SearchLineEdit(searchArea);
     searchBox->addWidget(searchL,0);
-    searchBox->addWidget(searchCB,1);
-
+    searchBox->addWidget(searchLineEdit,1);
+    searchToolBar->addWidget(searchLV);
     searchToolBar->addWidget(searchArea);
     searchToolBar->addAction(searchEditA);
     searchToolBar->addAction(searchBeginA);

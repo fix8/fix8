@@ -1,4 +1,4 @@
-
+#include "fixtoolbar.h"
 #include "mainwindow.h"
 #include "globals.h"
 #include "worksheet.h"
