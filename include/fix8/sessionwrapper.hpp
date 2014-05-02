@@ -161,9 +161,8 @@ class ClientSessionBase : public SessionConfig
 {
 public:
 #ifdef _MSC_VER
-    ClientSessionBase( const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name )
-        : SessionConfig( ctx, conf_file, session_name )
-    { }
+	ClientSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
+		: SessionConfig(ctx, conf_file, session_name) {}
 #else
     using SessionConfig::SessionConfig;
 #endif
@@ -492,9 +491,8 @@ protected:
 
 public:
 #ifdef _MSC_VER
-    ServerSessionBase( const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name ) 
-        : SessionConfig( ctx, conf_file, session_name )
-    { }
+	ServerSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
+		: SessionConfig(ctx, conf_file, session_name) {}
 #else
     /// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	using SessionConfig::SessionConfig;

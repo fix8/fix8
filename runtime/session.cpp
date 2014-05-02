@@ -149,7 +149,7 @@ Session::~Session()
 		_logger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
-	if (_connection->get_role() == Connection::cn_acceptor)
+	if (_connection && _connection->get_role() == Connection::cn_acceptor)
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
 	delete _schedule;
 }
@@ -223,18 +223,21 @@ void Session::stop()
 {
 	if (_control & shutdown)
 		return;
-
 	_control |= shutdown;
-	if (_connection->get_role() == Connection::cn_initiator)
-		_timer.clear();
-	else
+
+	if (_connection)
 	{
-		_timer.schedule(_hb_processor, 0);
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-		if (_persist)
-			_persist->stop();
+		if (_connection->get_role() == Connection::cn_initiator)
+			_timer.clear();
+		else
+		{
+			_timer.schedule(_hb_processor, 0);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			if (_persist)
+				_persist->stop();
+		}
+		_connection->stop();
 	}
-	_connection->stop();
 	hypersleep<h_milliseconds>(250);
 }
 
@@ -918,7 +921,7 @@ bool Session::send(Message *tosend, bool destroy, const unsigned custom_seqnum, 
 		tosend->set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend->set_no_increment(no_increment);
-	return _connection->write(tosend, destroy);
+	return _connection && _connection->write(tosend, destroy);
 }
 
 bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
@@ -927,7 +930,7 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 		tosend.set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend.set_no_increment(no_increment);
-	return _connection->write(tosend);
+	return _connection && _connection->write(tosend);
 }
 
 //-------------------------------------------------------------------------------------------------
