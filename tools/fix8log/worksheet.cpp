@@ -417,7 +417,6 @@ WorkSheetData WorkSheet::getWorksheetData()
         if (indexList.count() > 0) { // always true because hasSelection == true
             QModelIndex index = indexList.first();
             wsd.selectedRow = index.row();
-            qDebug() << "Selected Row to Save = " << wsd.selectedRow << __FILE__ << __LINE__;
         }
     }
     return wsd;
@@ -459,7 +458,6 @@ void WorkSheet::popupHeaderMenuSlot(int col,const QPoint &pt)
 void WorkSheet::timeFormatSelectedSlot(QAction *action)
 {
     GUI::Globals::TimeFormat tf = GUI::Globals::HHMMSS;
-    qDebug() << "WORK SHEET TIME FORMAT CHANGED..." << __FILE__ << __LINE__;
     if (action == timeFormatActions[GUI::Globals::DAYMONYRHHMMSS])
         tf = GUI::Globals::DAYMONYRHHMMSS;
     else if (action == timeFormatActions[GUI::Globals::DAYMMMHHMMSS])
@@ -470,7 +468,6 @@ void WorkSheet::timeFormatSelectedSlot(QAction *action)
 }
 void WorkSheet::setTimeFormat(GUI::Globals::TimeFormat tf)
 {
-    qDebug() << "\tWORK SHEET SET TIME FORMAT TO " << tf << __FILE__ << __LINE__;
     dateTimeDelegate->setTimeFormat(tf);
     fixTable->repaint();
     fixTable->update();

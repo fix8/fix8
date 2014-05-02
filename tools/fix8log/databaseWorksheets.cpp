@@ -13,13 +13,15 @@ QList <WorkSheetData> Database::getWorkSheets(int windowID)
     bool ok;
     int red,green,blue;
     QString str;
+    QString filter;
     if (!handle) {
         errorMessage = tr("Error in get worksheets  - handle is not initialized");
         qWarning() << errorMessage;
         return wsdList;
     }
     QSqlQuery query(*handle);
-    str = "select * from worksheets";
+    filter = "windowID = " + QString::number(windowID);
+    str =  "select * from worksheets where " + filter;
     bstatus = query.prepare(str);
     if (bstatus == 0) {
         qWarning("Error in get worksheets in prepare statement...");
@@ -68,6 +70,7 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
         qWarning() << errorMessage;
         return false;
     }
+    qDebug() << "Database save work sheet with window id = " << wsd.windowID << __FILE__ << __LINE__;
     query.bindValue(":windowID",wsd.windowID);
     query.bindValue(":alias",wsd.tabAlias);
     query.bindValue(":file",wsd.fileName);

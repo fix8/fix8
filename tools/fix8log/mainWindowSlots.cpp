@@ -64,6 +64,8 @@ void MainWindow::configSlot()
     colorDialog->setCustomColor(0,GUI::Globals::menubarDefaultColor);
     connect(colorDialog,SIGNAL(colorSelected(QColor)),this,SLOT(setColorSlot(QColor)));
     connect(colorDialog,SIGNAL(currentColorChanged(QColor)),this,SLOT(currentColorChangedSlot(QColor)));
+    // need this for Ubuntu
+    colorDialog->raise();
     status = colorDialog->exec();
     if (status != QDialog::Accepted) {
         pal.setColor(QPalette::Background,menubarColor);
@@ -75,12 +77,18 @@ void MainWindow::configSlot()
 
     colorDialog->deleteLater();
 }
-void MainWindow::setColorSlot(QColor color)
+void MainWindow::setColorSlot(QColor  color)
 {
+    // does not work on ubuntu
     QPalette pal = mainMenuBar->palette();
     pal.setColor(QPalette::Background,color);
+    pal.setColor(QPalette::Window,color);
     //pal.setColor(QPalette::Base,color);
     mainMenuBar->setPalette(pal);
+    //QString ss("QMenuBar::item { background-color: red; color: black }"); // Use background-color instead of background
+    // mainMenuBar->setStyleSheet(ss);
+
+
     menubarColor = color;
 }
 void MainWindow::currentColorChangedSlot(QColor color)

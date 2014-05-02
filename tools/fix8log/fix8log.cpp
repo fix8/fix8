@@ -138,9 +138,7 @@ bool Fix8Log::init()
     }
 
     // initial screeen
-    MainWindow  *initialMainWindow = new MainWindow(true);
 
-    initialMainWindow->show();
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
 
     QList <WindowData> windowDataList = database->getWindows();
@@ -156,23 +154,15 @@ bool Fix8Log::init()
         while(iter.hasNext()) {
             WindowData wd = iter.next();
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-
             if (wsdList.count() > 0) {
-                if (isInitial) {
-                    newMW = initialMainWindow;
-                    isInitial = false;
-                }
-                else
-                    newMW  =new MainWindow(true);
+                newMW  =new MainWindow(true);
                 newMW->setWindowData(wd);
                 wireSignalAndSlots(newMW);
                 mainWindows.append(newMW);
                 newMW->setAutoSaveOn(autoSaveOn);
                 newMW->show();
-
                 QListIterator <WorkSheetData> iter2(wsdList);
                 while(iter2.hasNext()) {
                     model = 0;
@@ -203,12 +193,15 @@ bool Fix8Log::init()
                 }
             }
         }
+
         qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
         displayConsoleMessage("Session restored from autosave");
     }
 done:
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
+        qDebug() << "Num of windows = 0 , so create one..." << __FILE__ << __LINE__;
+
         newMW = new MainWindow();
         wireSignalAndSlots(newMW);
         newMW->show();
@@ -245,25 +238,17 @@ void Fix8Log::saveSession()
     qDebug() << "Num of windows to save:" << mainWindows.count() << __FILE__ << __LINE__;
     QListIterator <MainWindow *> iter(mainWindows);
     while(iter.hasNext()) {
-        qDebug()  << "\tIter on window" << __FILE__ << __LINE__;
         mw = iter.next();
         WindowData wd = mw->getWindowData();
-        qDebug() << "\tSave Window to DB" << __LINE__;
         bstatus = database->addWindow(wd);
-        qDebug() << "\tStatus of save window to database = " << bstatus << __LINE__;
         if (!bstatus) {
-            qDebug() << "\tDisplay Console Message" << __LINE__;
             displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
-            qDebug() << "\tAfter display console message";
         }
         else {
-            qDebug() << "\tGet WorksSheet Data " << wd.id << __LINE__;
             QList<WorkSheetData> wsdList = mw->getWorksheetData(wd.id);
-            qDebug() << "\tSave worksheet data one at a time, later do batch for speed" << __FILE__ << __LINE__;
             QListIterator <WorkSheetData> wsdIter(wsdList);
             int i = 0;
             while(wsdIter.hasNext()) {
-                qDebug() << "\tSave work sheet:" << i << __FILE__ << __LINE__;
                 wsd = wsdIter.next();
                 bstatus = database->addWorkSheet(wsd);
                 i++;

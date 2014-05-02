@@ -425,13 +425,12 @@ QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {
     QList <WorkSheetData> wsdList;
     WorkSheetData  wsd;
-    qDebug() << "MAINWINDOW:: GET WORK SHEET DATA: count = " << tabW->count() << __FILE__ << __LINE__;
     if (tabW->count() > 0) {
         for (int i=0; i < tabW->count();i++) {
             WorkSheet *ws =  qobject_cast <WorkSheet *> (tabW->widget(i));
             if (ws) {
                 wsd  = ws->getWorksheetData();
-                wsd.id = windowID;
+                wsd.windowID = windowID;
                 wsdList.append(wsd);
             }
         }

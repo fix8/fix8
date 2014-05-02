@@ -15,6 +15,8 @@ public:
     int        selectedRow;
     QByteArray splitterState;
     QByteArray headerState;
+    WorkSheetData      &operator=( const WorkSheetData &s);
+
 };
 
 #endif // WORKSHEETDATA_H
