@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('packages\openssl.1.0.1.24\build\native\openssl.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -23,6 +24,8 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>fix8</RootNamespace>
     <ProjectName>fix8</ProjectName>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -58,7 +61,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="root.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <NuGetPackageImportStamp>4605b152</NuGetPackageImportStamp>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
@@ -230,7 +235,50 @@
     <ClInclude Include="..\runtime\precomp.hpp" />
     <ClInclude Include="f8config_msvc.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+    <Import Project="packages\zlib.redist.1.2.8.1\build\native\zlib.redist.targets" Condition="Exists('packages\zlib.redist.1.2.8.1\build\native\zlib.redist.targets')" />
+    <Import Project="packages\zlib.1.2.8.1\build\native\zlib.targets" Condition="Exists('packages\zlib.1.2.8.1\build\native\zlib.targets')" />
+    <Import Project="packages\openssl.redist.1.0.1.24\build\native\openssl.redist.targets" Condition="Exists('packages\openssl.redist.1.0.1.24\build\native\openssl.redist.targets')" />
+    <Import Project="packages\openssl.1.0.1.24\build\native\openssl.targets" Condition="Exists('packages\openssl.1.0.1.24\build\native\openssl.targets')" />
+    <Import Project="packages\tbb.redist.4.2.3.1\build\native\tbb.redist.targets" Condition="Exists('packages\tbb.redist.4.2.3.1\build\native\tbb.redist.targets')" />
+    <Import Project="packages\tbb.4.2.3.1\build\native\tbb.targets" Condition="Exists('packages\tbb.4.2.3.1\build\native\tbb.targets')" />
+    <Import Project="packages\poco.foundation.redist.1.4.6-p4\build\native\poco.foundation.redist.targets" Condition="Exists('packages\poco.foundation.redist.1.4.6-p4\build\native\poco.foundation.redist.targets')" />
+    <Import Project="packages\poco.foundation.1.4.6-p4\build\native\poco.foundation.targets" Condition="Exists('packages\poco.foundation.1.4.6-p4\build\native\poco.foundation.targets')" />
+    <Import Project="packages\poco.xml.1.4.6-p4\build\native\poco.xml.targets" Condition="Exists('packages\poco.xml.1.4.6-p4\build\native\poco.xml.targets')" />
+    <Import Project="packages\poco.xml.redist.1.4.6-p4\build\native\poco.xml.redist.targets" Condition="Exists('packages\poco.xml.redist.1.4.6-p4\build\native\poco.xml.redist.targets')" />
+    <Import Project="packages\poco.net.redist.1.4.6-p4\build\native\poco.net.redist.targets" Condition="Exists('packages\poco.net.redist.1.4.6-p4\build\native\poco.net.redist.targets')" />
+    <Import Project="packages\poco.net.1.4.6-p4\build\native\poco.net.targets" Condition="Exists('packages\poco.net.1.4.6-p4\build\native\poco.net.targets')" />
+    <Import Project="packages\poco.util.1.4.6-p4\build\native\poco.util.targets" Condition="Exists('packages\poco.util.1.4.6-p4\build\native\poco.util.targets')" />
+    <Import Project="packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets" Condition="Exists('packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets')" />
+    <Import Project="packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets" Condition="Exists('packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets')" />
+    <Import Project="packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets" Condition="Exists('packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('packages\zlib.redist.1.2.8.1\build\native\zlib.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\zlib.redist.1.2.8.1\build\native\zlib.redist.targets'))" />
+    <Error Condition="!Exists('packages\zlib.1.2.8.1\build\native\zlib.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\zlib.1.2.8.1\build\native\zlib.targets'))" />
+    <Error Condition="!Exists('packages\openssl.redist.1.0.1.24\build\native\openssl.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\openssl.redist.1.0.1.24\build\native\openssl.redist.targets'))" />
+    <Error Condition="!Exists('packages\openssl.1.0.1.24\build\native\openssl.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\openssl.1.0.1.24\build\native\openssl.props'))" />
+    <Error Condition="!Exists('packages\openssl.1.0.1.24\build\native\openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\openssl.1.0.1.24\build\native\openssl.targets'))" />
+    <Error Condition="!Exists('packages\tbb.redist.4.2.3.1\build\native\tbb.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\tbb.redist.4.2.3.1\build\native\tbb.redist.targets'))" />
+    <Error Condition="!Exists('packages\tbb.4.2.3.1\build\native\tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\tbb.4.2.3.1\build\native\tbb.targets'))" />
+    <Error Condition="!Exists('packages\poco.foundation.redist.1.4.6-p4\build\native\poco.foundation.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.foundation.redist.1.4.6-p4\build\native\poco.foundation.redist.targets'))" />
+    <Error Condition="!Exists('packages\poco.foundation.1.4.6-p4\build\native\poco.foundation.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.foundation.1.4.6-p4\build\native\poco.foundation.targets'))" />
+    <Error Condition="!Exists('packages\poco.xml.1.4.6-p4\build\native\poco.xml.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.xml.1.4.6-p4\build\native\poco.xml.targets'))" />
+    <Error Condition="!Exists('packages\poco.xml.redist.1.4.6-p4\build\native\poco.xml.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.xml.redist.1.4.6-p4\build\native\poco.xml.redist.targets'))" />
+    <Error Condition="!Exists('packages\poco.net.redist.1.4.6-p4\build\native\poco.net.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.net.redist.1.4.6-p4\build\native\poco.net.redist.targets'))" />
+    <Error Condition="!Exists('packages\poco.net.1.4.6-p4\build\native\poco.net.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.net.1.4.6-p4\build\native\poco.net.targets'))" />
+    <Error Condition="!Exists('packages\poco.util.1.4.6-p4\build\native\poco.util.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.util.1.4.6-p4\build\native\poco.util.targets'))" />
+    <Error Condition="!Exists('packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets'))" />
+    <Error Condition="!Exists('packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets'))" />
+    <Error Condition="!Exists('packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets'))" />
+  </Target>
 </Project>
