@@ -51,7 +51,7 @@
     <Import Project="root.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>7dbb9811</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>4d6a34db</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <NMakeOutput>
