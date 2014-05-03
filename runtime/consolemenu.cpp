@@ -79,7 +79,7 @@ const BaseMsgEntry *ConsoleMenu::SelectMsg() const
 		if (opt)
 		{
 			if (opt == '.')
-				return 0;
+				return nullptr;
 
 			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
 			{
@@ -94,7 +94,7 @@ const BaseMsgEntry *ConsoleMenu::SelectMsg() const
 		}
    }
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		if (opt)
 		{
 			if (opt == '.')
-				return 0;
+				return nullptr;
 
 			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
 			{
@@ -164,7 +164,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -231,7 +231,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 {
 	if (lst.empty())
-		return 0;
+		return nullptr;
 
    for(;;)
    {
@@ -264,7 +264,7 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 		if (opt)
 		{
 			if (opt == '.')
-				return 0;
+				return nullptr;
 
 			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
 			{
@@ -275,7 +275,7 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------

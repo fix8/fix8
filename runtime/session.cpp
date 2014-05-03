@@ -848,7 +848,7 @@ Message *Session::generate_business_reject(const unsigned seqnum, const Message 
 	catch (InvalidMetadata<f8String>&)
 	{
 		// since this is an application message, it may not be supported in supplied schema
-		return 0;
+		return nullptr;
 	}
 
 	*msg << new ref_seq_num(seqnum);

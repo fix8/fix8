@@ -78,7 +78,7 @@ namespace
 ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
 	if (!exist(odir))
-		return 0;
+		return nullptr;
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
@@ -91,7 +91,7 @@ ostream *open_ofile(const string& odir, const string& fname, string& target)
 			cerr << " (" << strerror(errno) << ')';
 		cerr << endl;
 
-		return 0;
+		return nullptr;
 	}
 
 	return os.release();
@@ -380,7 +380,7 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 		return new TypedRealm<double>(get_value<double>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------

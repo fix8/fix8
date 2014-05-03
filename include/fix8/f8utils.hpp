@@ -1000,7 +1000,7 @@ inline void split_path(const std::string& source, std::string& filepart, std::st
 inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
    if (!target)
-      return 0;
+      return nullptr;
    const unsigned sz(limit && static_cast<unsigned>(src.size()) > limit ? limit : (unsigned)src.size() + 1);
    src.copy(target, sz - 1);
    target[sz - 1] = 0;

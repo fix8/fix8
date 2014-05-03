@@ -1132,9 +1132,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_cpp << ',' << endl;
 		osc_cpp << spacer << "{ \"" << mitr->first << "\", { ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-         osc_cpp << "Minst(Type2Types<" << ctxt._fixns << "::" << mitr->second._name << ", bool>())";
+         osc_cpp << "Type2Types<" << ctxt._fixns << "::" << mitr->second._name << ", bool>()";
       else
-         osc_cpp << "Minst(Type2Type<" << ctxt._fixns << "::" << mitr->second._name << ">())";
+         osc_cpp << "Type2Type<" << ctxt._fixns << "::" << mitr->second._name << ">()";
 		osc_cpp << ", \"" << mitr->second._name << '"';
 		if (!mitr->second._comment.empty())
 			osc_cpp << ',' << endl << spacer << spacer << '"' << mitr->second._comment << "\" }";
@@ -1152,10 +1152,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << endl << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl << endl
       << "/// Compiler generated metadata object, accessed through this function" << endl
       << "const F8MetaCntx& ctx() // avoid SIOF" << endl << '{' << endl
-      << spacer << "static const BaseMsgEntry nvbme { Minst(Type2Type<void *>()) };" << endl
+      << spacer << "static const BaseMsgEntry nvbme { Type2Type<void *>() };" << endl
       << spacer << "static const " << ctxt._clname << "_BaseMsgEntry "
          << "bme(msgpairs, " << mspec.size() << ", nvbme);" << endl
-      << spacer << "static const BaseEntry nvbe { Inst(Type2Type<void *>()) };" << endl
+      << spacer << "static const BaseEntry nvbe { Type2Type<void *>() };" << endl
       << spacer << "static const " << ctxt._clname << "_BaseEntry "
          << "be(fldpairs, " << fields_generated << ", nvbe);" << endl
       << spacer << "static const F8MetaCntx _ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\");" << endl
@@ -1347,7 +1347,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		ost_cpp << spacer << "{ " << fitr->first << ", { ";
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{
-			ost_cpp << "Inst(Type2Types<" << ctxt._fixns << "::" << fitr->second._name << ", ";
+			ost_cpp << "Type2Types<" << ctxt._fixns << "::" << fitr->second._name << ", ";
 			if (FieldTrait::is_int(fitr->second._ftype))
 				ost_cpp << "int";
 			else if (FieldTrait::is_char(fitr->second._ftype))
@@ -1364,8 +1364,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			}
       }
       else
-			ost_cpp << "Inst(Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
-      ost_cpp << ">()), ";
+			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
+      ost_cpp << ">(), ";
 
 		if (fitr->second._dvals)
 			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
@@ -1450,10 +1450,10 @@ const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned
 {
    CommonGroupMap::const_iterator tp_result(globmap.find(tp));
    if (tp_result == globmap.end())
-      return 0;
+      return nullptr;
    CommonGroups::const_iterator key_result(tp_result->second.find(key));
    if (key_result == tp_result->second.end())
-      return 0;
+      return nullptr;
    vers = 1 + distance(tp_result->second.begin(), key_result);
    return &key_result->second;
 }

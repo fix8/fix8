@@ -100,7 +100,7 @@ public:
 	virtual bool subscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
 
 	/*! Creates a subscription for the given topic, returns new subscriber */
-	virtual MessageBusSubscriber *subscribe(const f8String& topic) { return 0; }
+	virtual MessageBusSubscriber *subscribe(const f8String& topic) { return nullptr; }
 
 	/*! Removes a subscription for a given subscriber */
 	virtual bool unsubscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }

@@ -50,11 +50,11 @@ namespace GZSTREAM_NAMESPACE {
 gzstreambuf* gzstreambuf::open(const char* name, int open_mode)
 {
     if (is_open())
-        return 0;
+        return nullptr;
     mode = open_mode;
     // no input append nor read/write mode
     if ((mode & std::ios::ate) || ((mode & std::ios::in) && (mode & std::ios::out)))
-        return 0;
+        return nullptr;
     char fmode[10], *fmodeptr = fmode;
     if (mode & std::ios::in)
         *fmodeptr++ = 'r';
@@ -65,7 +65,7 @@ gzstreambuf* gzstreambuf::open(const char* name, int open_mode)
     *fmodeptr++ = 'b';
     *fmodeptr = 0;
     if ((file = gzopen( name, fmode)) == 0)
-        return 0;
+        return nullptr;
     opened = 1;
     return this;
 }
@@ -79,7 +79,7 @@ gzstreambuf *gzstreambuf::close()
         if (gzclose( file) == Z_OK)
             return this;
     }
-    return 0;
+    return nullptr;
 }
 
 int gzstreambuf::underflow()
