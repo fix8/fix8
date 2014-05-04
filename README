@@ -92,6 +92,9 @@ Directory    Description
      util/
              additional utilities source
 
+     pro/
+             Fix8Pro extensions (commercial verson only)
+
      schema/
              quickfix FIX xml schemas
 
@@ -119,7 +122,7 @@ libraries) being installed to build properly:
 Additional libraries are needed for building on Windows, see https://fix8engine.atlassian.net/wiki/display/FX/Building
 
 C++11
-====
+=====
 
 Fix8 now **requires C++11 compiler support**. If you are using clang or gcc make sure you have the
 

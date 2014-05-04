@@ -91,6 +91,10 @@ and framework; and a set of complete client/server test applications.
              <td>Microsoft Visual Studio project files</td>
           </tr>
           <tr>
+             <td>pro/</td>
+             <td>Fix8Pro extensions (commercial verson only)</td>
+          </tr>
+          <tr>
              <td>schema/</td>
              <td>quickfix FIX xml schemas</td>
           </tr>
@@ -220,7 +224,7 @@ If you cannot find any help there **create a new topic and ask the support group
 - Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
 
 - If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
-register and create an issue.** Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
+register and create an issue.** Provide as much detail as possible. If you have already implemented a fix, and wish to make a pull
 request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
 
 ## License

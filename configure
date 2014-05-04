@@ -19726,44 +19726,24 @@ fi
 
 
 oktopro=no
+PRODIRFILE=./pro/buildcheck
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pro build" >&5
 $as_echo_n "checking for pro build... " >&6; }
-PRODIRFILE=./pro/buildcheck
-as_ac_File=`$as_echo "ac_cv_file_"$PRODIRFILE"" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for \"$PRODIRFILE\"" >&5
-$as_echo_n "checking for \"$PRODIRFILE\"... " >&6; }
-if eval \${$as_ac_File+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r ""$PRODIRFILE""; then
-  eval "$as_ac_File=yes"
-else
-  eval "$as_ac_File=no"
-fi
-fi
-eval ac_res=\$$as_ac_File
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_File"\" = x"yes"; then :
-
+if test -a "$PRODIRFILE"; then
 
 cat >>confdefs.h <<_ACEOF
 #define HAVE_PRO_BUILD 1
 _ACEOF
 
-		oktopro=yes
-		ac_config_files="$ac_config_files pro/Makefile"
+   oktopro=yes
+   ac_config_files="$ac_config_files pro/Makefile"
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-
-	 { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-
 fi
-
  if test $oktopro = yes; then
   PROBUILD_TRUE=
   PROBUILD_FALSE='#'
