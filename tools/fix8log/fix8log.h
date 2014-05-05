@@ -8,10 +8,10 @@
 #include <globals.h>
 
 #include "mainwindow.h"
-
 class QStandardItemModel;
 class Database;
 class FutureReadData;
+class FixMimeData;
 
 FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr);
 
@@ -35,6 +35,7 @@ public slots:
     void exitAppSlot();
      void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();
+    void modelDroppedSlot(FixMimeData *);
     void  setTimeFormatSlot(GUI::Globals::TimeFormat);
 protected:
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);

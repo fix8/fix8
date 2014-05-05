@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "messagearea.h"
+#include "fixmimedata.h"
 #include "fixtoolbar.h"
 #include "globals.h"
+#include "nodatalabel.h"
 #include "worksheet.h"
 #include <QDebug>
 #include "globals.h"
@@ -205,4 +207,12 @@ void MainWindow::toolbarOrientationChangedSlot(Qt::Orientation orient)
         searchLV->setText("");
 
     }
+}
+void MainWindow::modelDroppedSlot(FixMimeData *m)
+{
+    if (!m)
+        return;
+    qDebug() << "HERE IN MAIN WINDOW, data dropped< from window id " << m->windowID << __FILE__;
+    qDebug() << "Work sheet id " << m->worksheetID;
+    emit modelDropped(m);
 }

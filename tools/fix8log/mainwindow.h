@@ -8,7 +8,10 @@
 #include "windowdata.h"
 #include "worksheetdata.h"
 #include <QList>
+#include <QUuid>
+class FixMimeData;
 class FixToolBar;
+class NoDataLabel;
 class SearchLineEdit;
 class QAction;
 class QActionGroup;
@@ -36,8 +39,11 @@ public:
     MainWindow(const MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
+    void finishDrop(WorkSheetData &wsd, FixMimeData *);
+    const QUuid &getUuid();
     WindowData getWindowData();
     QList <WorkSheetData> getWorksheetData(int windowID);
+    WorkSheetData getWorksheetData(QUuid &workSheetID,bool *ok);
     void setCurrentTabAndSelectedRow(int currentTab, int selectedRow);
     void setLoading(bool);
     void setLoadMessage(QString);
@@ -61,6 +67,8 @@ public:
     void fileSelectionFinishedSlot(int returnCode);
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
+    void modelDroppedSlot(FixMimeData *);
+    void popupMenuSlot(const QModelIndex &,const QPoint &);
     void quitSlot();
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
@@ -91,6 +99,8 @@ protected:
     QAction  *newWindowA;
     QAction  *newTabA;
     QAction  *copyTabA;
+    QAction  *cutTabA;
+    QAction  *pasteTabA;
     QAction  *quitA;
     QAction  *saveA;
     QAction  *searchBackA;
@@ -109,14 +119,16 @@ protected:
     QFileDialog *fileDialog;
     QLabel   *searchL;
     QLabel   *searchLV; // searchLagle to show when vertical
-    QLabel   *noDataL;
+    NoDataLabel   *noDataL;
     QLineEdit *tabNameLineEdit;
     QMenu    *fileMenu;
     QMenu    *hideColumMenu;
     QMenu    *configureIconsMenu;
     QMenu    *iconSizeMenu;
     QMenu    *iconStyleMenu;
+
     QMenu    *optionMenu;
+    QMenu    *poupMenu;
     QMenuBar *mainMenuBar;
     QPushButton *cancelEditTabNamePB;
     QPushButton *configPB;
@@ -149,6 +161,7 @@ signals:
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
     void exitApp();
+    void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
     void buildHideColumnMenu();
@@ -157,6 +170,7 @@ private:
     QString fileFilter;
     int windowDataID;
     bool loadingActive;
+    QUuid  uuid;
 
 };
 

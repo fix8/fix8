@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     dateTimeDelegate.cpp \
     futurereaddata.cpp \
     searchlineedit.cpp \
-    fixtoolbar.cpp
+    fixtoolbar.cpp \
+    fixmimedata.cpp \
+    nodatalabel.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -59,7 +61,9 @@ HEADERS  += mainwindow.h \
     dateTimeDelegate.h \
     futurereaddata.h \
     searchlineedit.h \
-    fixtoolbar.h
+    fixtoolbar.h \
+    fixmimedata.h \
+    nodatalabel.h
 
 RESOURCES += \
     resources.qrc

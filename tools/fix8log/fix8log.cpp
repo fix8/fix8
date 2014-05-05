@@ -1,6 +1,8 @@
 #include "database.h"
 #include "fix8log.h"
+#include "fixmimedata.h"
 #include "globals.h"
+#include "mainwindow.h"
 #include "windowdata.h"
 #include <QApplication>
 #include <QDebug>
@@ -45,6 +47,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
             this,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
     connect(this,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             mw,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
+     connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
@@ -200,8 +203,6 @@ bool Fix8Log::init()
 done:
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
-        qDebug() << "Num of windows = 0 , so create one..." << __FILE__ << __LINE__;
-
         newMW = new MainWindow();
         wireSignalAndSlots(newMW);
         newMW->show();
@@ -212,7 +213,6 @@ done:
 }
 void Fix8Log::exitAppSlot()
 {
-    qDebug() << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>EXIT APP SLOT !!!!" << __FILE__ ;
     if (autoSaveOn)
         saveSession();
     //writeSettings();
@@ -301,4 +301,24 @@ void  Fix8Log::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
     emit notifyTimeFormatChanged(tf);
     QSettings settings("fix8","logviewer");
     settings.setValue("StartTimeFormat",tf);
+}
+void  Fix8Log::modelDroppedSlot(FixMimeData* fmd)
+{
+    bool ok = false;
+    WorkSheetData wsd;
+    MainWindow *mw;
+    MainWindow *mwSender = qobject_cast <MainWindow *> (sender());
+    if (!mwSender) {
+        qWarning() << "Invalid sender, drop failed " << __FILE__ << __LINE__;
+    }
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        if (mw->getUuid() == fmd->windowID) {
+            qDebug() << "HEY FOUND WINDOW FROM DRAG ORIGIN" << __FILE__ << __LINE__;
+            wsd = mw->getWorksheetData(fmd->worksheetID, &ok);
+            mwSender->finishDrop(wsd,fmd);
+            break;
+        }
+    }
 }

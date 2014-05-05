@@ -3,6 +3,7 @@
 #include "worksheet.h"
 #include "dateTimeDelegate.h"
 #include "fixHeaderView.h"
+#include "fixmimedata.h"
 #include "fixtable.h"
 #include "globals.h"
 #include "intItem.h"
@@ -31,7 +32,7 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linec
     _model = new QStandardItemModel();
     fixTable->setModel(_model);
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
         _model->setHorizontalHeaderItem(i,headerItem[i]);
@@ -120,7 +121,8 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
 }
 void WorkSheet::build()
 {
-
+    setAcceptDrops(true);
+    uuid = QUuid::createUuid();
     timeFormatMenu = new QMenu(this);
     timeActionGroup = new QActionGroup(this);
     connect(timeActionGroup,SIGNAL(triggered (QAction *)),
@@ -146,7 +148,10 @@ void WorkSheet::build()
         connect(qmlObject,SIGNAL(cancel()),this,SLOT(cancelLoadSlot()));
     splitter = new QSplitter(Qt::Horizontal,this);
     splitter->setObjectName("messageSplitter");
-    fixTable = new FixTable();
+    fixTable = new FixTable(windowID,uuid,this);
+    connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+    connect(fixTable,SIGNAL(modelDropped(FixMimeData*)),
+            this,SLOT(modelDroppedSlot(FixMimeData *)));
     messageArea = new MessageArea(this);
     splitter->addWidget(fixTable);
     splitter->addWidget(messageArea);
@@ -159,7 +164,10 @@ WorkSheet::~WorkSheet()
 {
     //qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
 }
-
+QUuid WorkSheet::getID()
+{
+    return uuid;
+}
 bool WorkSheet::loadFileName(QString &fileName,
                              QList <GUI::Message> &msgList,
                              quint32 &returnCode)
@@ -471,4 +479,14 @@ void WorkSheet::setTimeFormat(GUI::Globals::TimeFormat tf)
     dateTimeDelegate->setTimeFormat(tf);
     fixTable->repaint();
     fixTable->update();
+}
+void WorkSheet::setWindowID( QUuid &uuid)
+{
+    windowID = uuid;
+    fixTable->setWindowID(windowID);
+    qDebug() << "WINDOW ID SET TO " << windowID << __FILE__ << __LINE__;
+}
+void WorkSheet::modelDroppedSlot(FixMimeData *m)
+{
+    emit modelDropped(m);
 }

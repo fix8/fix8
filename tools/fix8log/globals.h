@@ -1,8 +1,12 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 #include <QColor>
+#include <QDataStream>
 #include <QString>
 #include <QSize>
+#include <QUuid>
+
+class QDesktopWidget;
 
 namespace GUI {
 class Message {
@@ -34,5 +38,13 @@ private:
     static Globals* m_pInstance;
 };
 };
+struct fix8logdata {
+    QUuid  windowID;
+    QUuid  worksheetID;
+};
+
+QDataStream &operator<<(QDataStream &out, const fix8logdata &data);
+QDataStream &operator>>(QDataStream &in, fix8logdata &data);
+Q_DECLARE_METATYPE(fix8logdata);
 
 #endif // GLOBALS_H

@@ -1,5 +1,7 @@
 #include "globals.h"
+#include <QApplication>
 #include <QDebug>
+#include <QDesktopWidget>
 #include <QPalette>
 #include <QToolBar>
 using namespace GUI;
@@ -17,6 +19,7 @@ Globals* Globals::Instance()
 {
     if (!m_pInstance)   {// Only allow one instance of class to be generated.
         m_pInstance = new Globals;
+
      QToolBar *toolbar = new QToolBar();
      QPalette pal = toolbar->palette();
      menubarDefaultColor = pal.color(QPalette::Background);
@@ -26,7 +29,6 @@ Globals* Globals::Instance()
      delete toolbar;
     }
     return m_pInstance;
-
 }
 Message::Message(QString str, MessageType mt):msg(str),messageType(mt)
 {
@@ -41,3 +43,17 @@ Message::Message()
 {
 
 }
+QDataStream &operator<<(QDataStream &ds, const fix8logdata &data)
+{
+    ds << data.windowID;
+    ds << data.worksheetID;
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, fix8logdata &data)
+{
+   ds >> data.windowID;
+   ds >> data.worksheetID;
+   return ds;
+}
+

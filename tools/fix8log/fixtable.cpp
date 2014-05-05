@@ -1,5 +1,7 @@
 #include "fixHeaderView.h"
+#include "fixmimedata.h"
 #include "fixtable.h"
+#include "globals.h"
 #include <QDate>
 #include <QDebug>
 #include <QFile>
@@ -64,10 +66,14 @@ FixTable::FixTable(const FixTable &ft):QTableView(),dataFile(0)
     horHeader->setSortIndicatorShown(true);
 }
 */
-FixTable::FixTable(QWidget *p):
-    QTableView(p)
+FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
+    QTableView(p),windowID(wid),worksheetID(wsid)
 
 {
+    qDebug() << ">>>>>>>>>>>>  WINDOW ID SET TO " << windowID << __FILE__ << __LINE__;
+    setAcceptDrops(true);
+    setDropIndicatorShown(true);
+    viewport()->setAcceptDrops(true);
     bgColorStart.setRgb(0,0,114);
     bgColorEnd.setRgb(13,13,15);
     emptyStr1 = tr("No");
@@ -89,10 +95,14 @@ FixTable::FixTable(QWidget *p):
     resize(sizeHint());
 
 }
+void FixTable::setWindowID(QUuid &uuid)
+{
+    windowID = uuid;
+}
 /******************************************************************/
 FixTable::~FixTable()
 {
- qDebug() << "Delte Fix Table" << __FILE__ << __LINE__;
+    qDebug() << "Delte Fix Table" << __FILE__ << __LINE__;
 }
 /******************************************************************/
 void FixTable::resizeEvent(QResizeEvent *re)
@@ -120,7 +130,7 @@ void FixTable::resizeEvent(QResizeEvent *re)
 
 }
 /******************************************************************/
-void FixTable::mousePressEvent(QMouseEvent *me)
+void  FixTable::mousePressEvent(QMouseEvent *me)
 {
     QModelIndex index;
     if (me->button() == Qt::RightButton) {
@@ -130,9 +140,42 @@ void FixTable::mousePressEvent(QMouseEvent *me)
             emit doPopup(index,me->globalPos());
         }
     }
+    else if (me->button() == Qt::LeftButton) {
+        Qt::KeyboardModifiers km = me->modifiers();
+        if (km && Qt::ControlModifier)
+            dragStartPosition = me->pos();
+        else
+            QTableView::mousePressEvent(me);
+    }
     else
         QTableView::mousePressEvent(me);
 }
+void  FixTable::mouseMoveEvent(QMouseEvent *event)
+{
+    Qt::KeyboardModifiers km = event->modifiers();
+    if (!(event->buttons() & Qt::LeftButton) || !(km && Qt::ControlModifier))
+        return;
+    if ((event->pos() - dragStartPosition).manhattanLength()
+            < QApplication::startDragDistance())
+        return;
+
+    QDrag *drag = new QDrag(this);
+    drag->setPixmap(QPixmap(":/images/svg/spreadsheetCopy.svg"));
+    QFileInfo fileInfo("/home/david/hello.txt");
+    QUrl url = QUrl::fromLocalFile(fileInfo.absoluteFilePath());
+
+    FixMimeData *fmd = new FixMimeData();
+    fmd->windowID = windowID;
+    fmd->worksheetID = worksheetID;
+    fmd->setUrls(QList<QUrl>() << url);
+    //QMimeData *mimeData = new QMimeData;
+
+    fmd->model = (QStandardItemModel *) model();
+    drag->setMimeData(fmd);
+
+    Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+}
+
 /******************************************************************/
 void FixTable::paintEvent(QPaintEvent *pe)
 {
@@ -159,10 +202,39 @@ void FixTable::paintEvent(QPaintEvent *pe)
 
 
 }
-
 /******************************************************************/
 QSize FixTable::sizeHint () const
 {
     QSize s(800,700);
     return s;
 }
+void FixTable::dragEnterEvent(QDragEnterEvent *event)
+{
+    if ( event->source() == this ) // same table, move entry
+    {
+        //event->setDropAction( Qt::MoveAction );
+        event->ignore();
+    }
+    else // different table, add entry
+    {
+        printf("Different table\n");
+        event->acceptProposedAction();
+    }
+
+}
+void FixTable::dragMoveEvent(QDragMoveEvent *event)
+{
+    event->acceptProposedAction();
+    //event->accept();
+
+}
+
+void FixTable::dropEvent(QDropEvent *event)
+{
+    qDebug() << "Drop Event " << __FILE__ << __LINE__;
+    FixMimeData *mimeData =  (FixMimeData *) event->mimeData();
+    if (mimeData) {
+        emit modelDropped(mimeData);
+    }
+}
+

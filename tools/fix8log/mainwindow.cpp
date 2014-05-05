@@ -1,5 +1,7 @@
+#include "fixmimedata.h"
 #include "fixtoolbar.h"
 #include "mainwindow.h"
+#include "nodatalabel.h"
 #include "worksheet.h"
 #include "globals.h"
 #include "searchlineedit.h"
@@ -24,6 +26,7 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
       loadingActive(false)
 {
     buildMainWindow();
+    setAcceptDrops(true);
     QRect rect = mw.geometry();
     setGeometry(rect);
     int x = mw.x();
@@ -34,8 +37,11 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
             WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (mw.tabW->widget(i));
             QByteArray ba = oldWorkSheet->splitter->saveState();
             WorkSheet *newWorkSheet = new WorkSheet(*oldWorkSheet,this);
+            newWorkSheet->setWindowID(uuid);
             connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
                     this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
+            connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData*)),
+                    this,SLOT(modelDroppedSlot(FixMimeData*)));
             newWorkSheet->splitter->restoreState(ba);
             tabW->addTab(newWorkSheet,mw.tabW->tabText(i));
         }
@@ -75,6 +81,8 @@ void MainWindow::setLoadMessage(QString str)
 
 void MainWindow::buildMainWindow()
 {
+    setAcceptDrops(true);
+    uuid = QUuid::createUuid();
     setAnimated(true);
     mainMenuBar = menuBar();
     fileMenu = mainMenuBar->addMenu(tr("&File"));
@@ -119,6 +127,9 @@ void MainWindow::buildMainWindow()
     copyTabA->setToolTip(tr("Create New Tab From Current Tab"));
     connect(copyTabA,SIGNAL(triggered()),this,SLOT(copyTabSlot()));
 
+    cutTabA = new QAction(tr("Cut Tab"),this);
+    cutTabA->setIcon((QIcon(":/images/svg/spreadsheetCopy.svg")));
+    cutTabA->setToolTip(tr("Cut Tab For Pasting To Other Window"));
     newWindowA = new QAction("New &Window",this);
     newWindowA->setIcon((QIcon(":/images/32x32/newwindow.svg")));
     newWindowA->setToolTip(tr("Open New Window"));
@@ -284,13 +295,11 @@ void MainWindow::buildMainWindow()
     configPB->setFlat(true);
     menuBar()->setCornerWidget(configPB);
     connect(configPB,SIGNAL(clicked()),this,SLOT(configSlot()));
-
     // restore should be in settings but must come after
-
-
     stackW = new QStackedWidget(this);
     setCentralWidget(stackW);
-    noDataL = new QLabel("No Data Files\nLoaded");
+    noDataL = new NoDataLabel("No Data Files\nLoaded");
+    connect(noDataL,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
     fnt = noDataL->font();
     fnt.setBold(true);
     fnt.setPointSize(fnt.pointSize() + 4);
@@ -302,7 +311,6 @@ void MainWindow::buildMainWindow()
     noDataL->setPalette(pal);
     noDataL->setObjectName("No_Data_Label");
     noDataL->setAlignment(Qt::AlignCenter);
-
     progressView = new QQuickView(QUrl("qrc:qml/loadProgress.qml"));
     qmlObject = progressView->rootObject();
     if (!qmlObject) {
@@ -310,7 +318,6 @@ void MainWindow::buildMainWindow()
     }
     else
         connect(qmlObject,SIGNAL(cancel()),this,SLOT(cancelSessionRestoreSlot()));
-
     progressView->setResizeMode(QQuickView::SizeRootObjectToView);
     progressWidget = QWidget::createWindowContainer(progressView,this);
 
@@ -383,6 +390,11 @@ void MainWindow::buildHideColumnMenu()
         hideColActionGroup->addAction(hideA);
     }
 }
+const QUuid &MainWindow::getUuid()
+{
+    return uuid;
+}
+
 void MainWindow::showEvent(QShowEvent *se)
 {
     if (!loadingActive)  {
@@ -437,6 +449,22 @@ QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
     }
     return wsdList;
 }
+WorkSheetData MainWindow::getWorksheetData(QUuid &workSheetID, bool *ok)
+{
+    WorkSheetData  wsd;
+    *ok = false;
+    if (tabW->count() > 0) {
+        for (int i=0; i < tabW->count();i++) {
+            WorkSheet *ws =  qobject_cast <WorkSheet *> (tabW->widget(i));
+            if (ws && (ws->getID() == workSheetID)) {
+                wsd  = ws->getWorksheetData();
+                *ok = true;
+                break;
+            }
+        }
+    }
+    return wsd;
+}
 void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
 {
     int currentIndex = stackW->currentIndex();
@@ -448,8 +476,11 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
         return;
     }
     newWorkSheet = new WorkSheet(model,wsd,this);
+    newWorkSheet->setWindowID(uuid);
     connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
+    connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),
+            this,SLOT(modelDroppedSlot(FixMimeData *)));
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;
@@ -472,4 +503,16 @@ void MainWindow::setCurrentTabAndSelectedRow(int currentTab, int currentRow)
     if ((tabW->count() < 1) || (tabW->count() < currentTab))
         return;
     tabW->setCurrentIndex(currentTab);
+}
+void MainWindow::popupMenuSlot(const QModelIndex &,const QPoint &)
+{
+
+}
+void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
+{
+    qDebug() << "MainWindow::finishDrop" << __FILE__ << __LINE__;
+    if (!fmd) {
+        qWarning() << "Failed to finish drop, fmd = 0" << __FILE__ << __LINE__;
+    }
+    addWorkSheet(fmd->model,wsd);
 }

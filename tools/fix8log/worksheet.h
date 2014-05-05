@@ -3,6 +3,7 @@
 #include <QQuickItem>
 #include <QWidget>
 #include <QModelIndex>
+#include <QUuid>
 #include "fixHeaderView.h"
 #include "globals.h"
 #include "worksheetdata.h"
@@ -16,6 +17,7 @@ class QStandardItem;
 class QStandardItemModel;
 class DateTimeDelegate;
 class FixTable;
+class FixMimeData;
 class MessageArea;
 #define OK             0x0000
 #define CANCEL         0x0001
@@ -30,6 +32,8 @@ public:
     explicit WorkSheet(QWidget *parent = 0);
     WorkSheet(QStandardItemModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
+    void setWindowID( QUuid &);
+    QUuid getID();
     ~WorkSheet();
     enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
     static QString headerLabel[NumColumns];
@@ -44,6 +48,7 @@ public:
     void showLoadProcess(bool isBeingLoaded);
     void setTimeFormat(GUI::Globals::TimeFormat);
 signals:
+    void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
     void sendMessage(GUI::Message);
     void sendMessages(QList < GUI::Message>);
@@ -52,6 +57,7 @@ public slots:
     void popupHeaderMenuSlot(int col,const QPoint &);
     void rowSelectedSlot(QModelIndex);
     void timeFormatSelectedSlot(QAction *);
+    void modelDroppedSlot(FixMimeData *);
 protected:
     QSplitter *splitter;
     FixTable *fixTable;
@@ -74,6 +80,8 @@ private:
     int linecount;
     WorkSheetData origWSD;
     DateTimeDelegate *dateTimeDelegate;
+    QUuid windowID;
+    QUuid uuid;
 };
 
 #endif // WORKSHEET_H

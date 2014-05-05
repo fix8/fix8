@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "messagearea.h"
+#include "fixmimedata.h"
 #include "globals.h"
 #include "intItem.h"
+#include "nodatalabel.h"
 #include "worksheet.h"
 #include <QDebug>
 #include <QtWidgets>
@@ -86,6 +88,11 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         fileName = iter.next();
         QFileInfo fi(fileName);
         WorkSheet *workSheet = new WorkSheet(this);
+        connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+                this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
+        connect(workSheet,SIGNAL(modelDropped(FixMimeData *)),
+                this,SLOT(modelDroppedSlot(FixMimeData *)));
+        workSheet->setWindowID(uuid);
         workSheet->splitter->restoreState(messageSplitterSettings);
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
@@ -195,6 +202,11 @@ void MainWindow::copyTabSlot()
         return;
     }
     newWorkSheet = new WorkSheet(*workSheet);
+    connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+            this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
+    connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),
+            this,SLOT(modelDroppedSlot(FixMimeData *)));
+    newWorkSheet->setWindowID(uuid);
     QString fileName = workSheet->getFileName();
     QFileInfo fi(fileName);
     int index = tabW->addTab(newWorkSheet,fi.fileName());
