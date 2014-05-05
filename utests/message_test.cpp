@@ -142,29 +142,29 @@ TEST(message, neworder_decode)
 
     MessageBase * header = neworder->Header();
 
-    EXPECT_TRUE(header->has<UTEST::BeginString>());
-    EXPECT_TRUE(header->has<UTEST::SendingTime>());
-    EXPECT_TRUE(header->has<UTEST::MsgSeqNum>());
-    EXPECT_TRUE(header->has<UTEST::SenderCompID>());
-    EXPECT_TRUE(header->has<UTEST::TargetCompID>());
-    EXPECT_TRUE(header->has<UTEST::SenderSubID>());
-    EXPECT_TRUE(header->has<UTEST::SenderLocationID>());
-    EXPECT_TRUE(header->has<UTEST::TargetSubID>());
+    EXPECT_TRUE(header->has<BeginString>());
+    EXPECT_TRUE(header->has<SendingTime>());
+    EXPECT_TRUE(header->has<MsgSeqNum>());
+    EXPECT_TRUE(header->has<SenderCompID>());
+    EXPECT_TRUE(header->has<TargetCompID>());
+    EXPECT_TRUE(header->has<SenderSubID>());
+    EXPECT_TRUE(header->has<SenderLocationID>());
+    EXPECT_TRUE(header->has<TargetSubID>());
 
-    EXPECT_TRUE(neworder->has<UTEST::ClOrdID>());
-    EXPECT_TRUE(neworder->has<UTEST::Account>());
-    EXPECT_TRUE(neworder->has<UTEST::Symbol>());
-    EXPECT_TRUE(neworder->has<UTEST::SecurityType>());
-    EXPECT_TRUE(neworder->has<UTEST::SecurityDesc>());
-    EXPECT_TRUE(neworder->has<UTEST::Side>());
-    EXPECT_TRUE(neworder->has<UTEST::OrderQty>());
-    EXPECT_TRUE(neworder->has<UTEST::OrdType>());
-    EXPECT_TRUE(neworder->has<UTEST::Price>());
-    EXPECT_TRUE(neworder->has<UTEST::TimeInForce>());
+    EXPECT_TRUE(neworder->has<ClOrdID>());
+    EXPECT_TRUE(neworder->has<Account>());
+    EXPECT_TRUE(neworder->has<Symbol>());
+    EXPECT_TRUE(neworder->has<SecurityType>());
+    EXPECT_TRUE(neworder->has<SecurityDesc>());
+    EXPECT_TRUE(neworder->has<Side>());
+    EXPECT_TRUE(neworder->has<OrderQty>());
+    EXPECT_TRUE(neworder->has<OrdType>());
+    EXPECT_TRUE(neworder->has<Price>());
+    EXPECT_TRUE(neworder->has<TimeInForce>());
 
-    EXPECT_TRUE(neworder->has<UTEST::TotalVolumeTradedDate>());
-    EXPECT_TRUE(neworder->has<UTEST::TotalVolumeTradedTime>());
-    EXPECT_TRUE(neworder->has<UTEST::DeliveryDate>());
+    EXPECT_TRUE(neworder->has<TotalVolumeTradedDate>());
+    EXPECT_TRUE(neworder->has<TotalVolumeTradedTime>());
+    EXPECT_TRUE(neworder->has<DeliveryDate>());
 
     FIELD_TEST(BeginString, "FIX.4.2", header, EXPECT_EQ);
     //FIELD_TEST(SendingTime, Poco::DateTime(2013, 3, 4, 5, 6, 14), header, EXPECT_EQ);
@@ -223,7 +223,7 @@ TEST(message, neworder_custom_decode)
 		 "52=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\001"
 		 "60=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\0019999=HELLO\00110=231\001");
 
-    EXPECT_TRUE(neworder->has<UTEST::SampleUserField>());
+    EXPECT_TRUE(neworder->has<SampleUserField>());
     delete neworder;
     neworder = 0;
 }
@@ -249,7 +249,7 @@ TEST(message, neworder_custom_encode)
          << new Side(Side_BUY)
          << new Symbol("OC")
          << new TimeInForce(TimeInForce_DAY)
-			<< new UTEST::SampleUserField("HELLO");
+			<< new SampleUserField("HELLO");
 
     f8String output;
     nos->encode(output);

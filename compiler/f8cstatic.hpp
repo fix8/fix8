@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-const BaseTypeMap::TypePair bt_valueTable[]
+const BaseTypeMap FieldSpec::_baseTypeMap
 {
 	{"INT", FieldTrait::ft_int},
 	{"LENGTH", FieldTrait::ft_Length},
@@ -80,11 +80,9 @@ const BaseTypeMap::TypePair bt_valueTable[]
 	{"RESERVED1000PLUS", FieldTrait::ft_Reserved1000Plus},
 	{"RESERVED4000PLUS", FieldTrait::ft_Reserved4000Plus}
 };
-const BaseTypeMap FieldSpec::_baseTypeMap(bt_valueTable, sizeof(bt_valueTable)/sizeof(BaseTypeMap::TypePair),
-		FieldTrait::ft_untyped);
 
 //-------------------------------------------------------------------------------------------------
-const TypeToCPP::TypePair tc_valueTable[]
+const TypeToCPP FieldSpec::_typeToCPP
 {
 	{ FieldTrait::ft_int, "int"},
 	{ FieldTrait::ft_Length, "Length"},
@@ -122,11 +120,9 @@ const TypeToCPP::TypePair tc_valueTable[]
 	{ FieldTrait::ft_Reserved4000Plus, "f8String"},
 	{ FieldTrait::ft_Language, "Language"}
 };
-const TypeToCPP FieldSpec::_typeToCPP(tc_valueTable, sizeof(tc_valueTable)/sizeof(TypeToCPP::TypePair),
-	"Unknown");
 
 //-------------------------------------------------------------------------------------------------
-const CSMap::TypePair cs_valueTable[]
+const CSMap _csMap
 {
 	{ cs_do_not_edit, "// *** f8c generated file: DO NOT EDIT! Created: "},
 	{ cs_start_namespace, "namespace FIX8 {"},

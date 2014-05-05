@@ -120,8 +120,8 @@ using FieldToNumMap = std::map<std::string, unsigned>;
 using GroupMap = std::map<unsigned, struct MessageSpec>;
 
 //-------------------------------------------------------------------------------------------------
-using BaseTypeMap = StaticTable<std::string, FieldTrait::FieldType>;
-using TypeToCPP = StaticTable<FieldTrait::FieldType, std::string>;
+using BaseTypeMap = std::map<std::string, FieldTrait::FieldType>;
+using TypeToCPP = std::map<FieldTrait::FieldType, std::string>;
 
 /// f8c internal field representation.
 struct FieldSpec
@@ -200,7 +200,7 @@ enum comp_str
 	cs_trailer_preamble,
 };
 
-using CSMap = StaticTable<comp_str, std::string>;
+using CSMap = std::map<comp_str, std::string>;
 
 //-----------------------------------------------------------------------------------------
 inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.GetLine()); }
@@ -209,8 +209,6 @@ inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.Ge
 class push_dir
 {
 	char _cwd[MAX_FLD_LENGTH];
-
-	push_dir();
 
 public:
 	push_dir(const std::string& to) : _cwd()
@@ -232,6 +230,8 @@ public:
 			throw f8Exception(ostr.str());
 		}
 	}
+
+	push_dir() = delete;
 
 	~push_dir()
 	{

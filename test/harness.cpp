@@ -135,7 +135,7 @@ const string GETARGLIST("hl:svqc:R:S:rp:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
+const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'c', "Create messages" }, &MyMenu::create_msgs },
 	{ { 'e', "Edit messages" }, &MyMenu::edit_msgs },
@@ -147,8 +147,6 @@ const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
 
@@ -321,8 +319,8 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
 	return true;
 }

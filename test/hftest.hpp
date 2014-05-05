@@ -155,11 +155,11 @@ class MyMenu
 	/// Individual menu item.
 	struct MenuItem
 	{
-		const char _key;
+		const char _key = 0;
 		const std::string _help;
 
-		MenuItem(const char key, const std::string& help) : _key(key), _help(help) {}
-		MenuItem() : _key(), _help() {}
+		MenuItem(char key, const std::string help=std::string()) : _key(key), _help(help) {}
+		MenuItem() = default;
 		bool operator() (const MenuItem& a, const MenuItem& b) const { return a._key < b._key; }
 	};
 
@@ -167,9 +167,8 @@ class MyMenu
 	std::istream _istr;
 	std::ostream& _ostr;
 
-	using Handlers = FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
+	using Handlers = std::map<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 	static const Handlers _handlers;
-	static const Handlers::TypePair _valueTable[];
 
 public:
 	MyMenu(FIX8::Session& session, int infd, std::ostream& ostr)
@@ -179,7 +178,11 @@ public:
 
 	std::istream& get_istr() { return _istr; }
 	std::ostream& get_ostr() { return _ostr; }
-	bool process(const char ch) { return (this->*_handlers.find_ref(MenuItem(ch, std::string())))(); }
+	bool process(char ch)
+	{
+		auto itr(_handlers.find({ch}));
+		return itr == _handlers.end() ? true : (this->*itr->second)();
+	}
 
 	bool new_order_single();
 	bool preload_new_order_single();
@@ -188,13 +191,10 @@ public:
 	bool send_all_preloaded();
 	bool send_all_preloaded(coroutine& coro, FIX8::Session *ses);
 	bool help();
-	bool nothing() { return true; }
 	bool do_exit() { return false; }
 	bool do_logout();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
-
-	friend struct FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 };
 
 //-----------------------------------------------------------------------------------------

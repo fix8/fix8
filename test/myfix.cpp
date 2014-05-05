@@ -143,7 +143,7 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti=false), clien
 FIX8::tty_save_state save_tty(0);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
+const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
 	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
@@ -155,8 +155,6 @@ const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
 unsigned next_send(0), next_receive(0);
@@ -374,7 +372,7 @@ int main(int argc, char **argv)
 void client_process(ClientSessionBase *mc)
 {
 	MyMenu mymenu(*mc->session_ptr(), 0, cout);
-	cout << "Menu started. Press '?' for help..." << endl;
+	cout << endl << "Menu started. Press '?' for help..." << endl << endl;
 	char ch(0);
 	mymenu.get_tty().set_raw_mode();
 	save_tty = mymenu.get_tty();
@@ -575,8 +573,8 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (auto itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
 	return true;
 }

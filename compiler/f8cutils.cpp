@@ -49,7 +49,6 @@ extern string shortName, odir, prefix;
 extern bool verbose, nocheck, nowarn, incpath;
 extern string spacer, precompHdr;
 extern const string GETARGLIST;
-extern const CSMap _csMap;
 extern unsigned glob_errors, glob_warnings;
 
 //-----------------------------------------------------------------------------------------
@@ -399,39 +398,6 @@ string insert_year()
 	ostringstream ostr;
 	ostr << setw(2) << (ptim->tm_year - 100);
 	return ostr.str();
-}
-
-//-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to, const string& fname, bool isheader, bool donotedit)
-{
-	to << _csMap.find_ref(cs_divider) << endl;
-	string result;
-	if (donotedit)
-	{
-		to << _csMap.find_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
-		to << _csMap.find_ref(cs_divider) << endl;
-	}
-	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
-	if (!precompHdr.empty() && !isheader)
-	{
-		to << "#include ";
-		if (precompHdr[0] == '<')
-			to << precompHdr;
-		else
-			to << '"' << precompHdr << '"';
-		to << endl;
-	}
-	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
-	if (!nocheck)
-	{
-		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
-		to << "#endif" << endl;
-	}
-	to << _csMap.find_ref(cs_divider) << endl;
-	to << "// " << fname << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
 }
 
 //-------------------------------------------------------------------------------------------------

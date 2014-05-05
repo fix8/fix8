@@ -49,7 +49,7 @@ RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 
 //----------------------------------------------------------------------------------------
-const Str2Chr::TypePair valueTable[]
+const Str2Chr XmlElement::stringtochar_
 {
 	{"amp", '&'},		{"lt", '<'},		{"gt", '>'},
 	{"apos", '\''},	{"quot", '"'},		{"nbsp", 160},
@@ -65,7 +65,6 @@ const Str2Chr::TypePair valueTable[]
 	{"frac14", 188},	{"frac12", 189},	{"frac34", 190},
 	{"iquest", 191}
 };
-const Str2Chr XmlElement::stringtochar_(valueTable, sizeof(valueTable)/sizeof(Str2Chr::TypePair), '?');
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -655,7 +654,8 @@ const string& XmlElement::InplaceXlate (string& what)
 	{
 		string whatv;
 		rCX_.SubExpr(match, what, whatv, 0, 1);
-		rCX_.Replace(match, what, stringtochar_.find_value(whatv)); // not found character entity replaces string with '?'
+		const auto sitr(stringtochar_.find(whatv));
+		rCX_.Replace(match, what, sitr == stringtochar_.cend() ? '?' : sitr->second); // not found character entity replaces string with '?'
 	}
 
 	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;

@@ -41,7 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 
 //----------------------------------------------------------------------------------------
-using Str2Chr = FIX8::StaticTable<std::string, unsigned char>;
+using Str2Chr = std::map<std::string, unsigned char>;
 
 //----------------------------------------------------------------------------------------
 /// A simple xml parser with Xpath style lookup.
