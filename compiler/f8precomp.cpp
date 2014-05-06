@@ -34,21 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <algorithm>
-
-#include <errno.h>
-#include <string.h>
-#include <cctype>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
 #include <f8c.hpp>
@@ -176,14 +162,14 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 //-----------------------------------------------------------------------------------------
 void filter_unique(XmlElement::XmlSet& fldlist)
 {
-	typedef map<string, const XmlElement *> UniqueFieldMap;
+	using UniqueFieldMap = map<string, const XmlElement *>;
 	UniqueFieldMap ufm;
 	unsigned dupls(0);
 	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)
 	{
 		string name;
 		(*itr)->GetAttr("name", name);
-		if (!ufm.insert(UniqueFieldMap::value_type(name, *itr)).second)
+		if (!ufm.insert({name, *itr}).second)
 			++dupls; // cerr << "Duplicate field: " << name << endl;
 	}
 
@@ -199,7 +185,7 @@ void load_components(const XmlElement::XmlSet& comlist, Components& components)
 	{
 		string name;
 		if ((*itr)->GetAttr("name", name))
-			components.insert(Components::value_type(name, *itr));
+			components.insert({name, *itr});
 	}
 }
 

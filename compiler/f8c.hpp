@@ -46,9 +46,9 @@ struct Ctxt
 {
 	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp,
 		classes_hpp, router_hpp, session_hpp, count };
-	typedef std::pair<std::pair<std::string, std::string>, std::ostream *> Output;
+	using Output = std::pair<std::pair<std::string, std::string>, std::ostream *>;
 	Output _out[count];
-	static const std::string _exts[count];
+	static const std::string _exts[count], _exts_ver[2];
 	unsigned _version;
 	std::string _clname, _fixns, _systemns, _beginstr;
 };
@@ -112,16 +112,16 @@ struct CharRealm : public TypedRealm<char>
 	void print(std::ostream& os) { os << '\'' << _obj << '\''; }
 };
 
-typedef std::map<RealmObject *, std::string, RealmObject::less> RealmMap;
+using RealmMap = std::map<RealmObject *, std::string, RealmObject::less>;
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned, struct FieldSpec> FieldSpecMap;
-typedef std::map<std::string, unsigned> FieldToNumMap;
-typedef std::map<unsigned, struct MessageSpec> GroupMap;
+using FieldSpecMap = std::map<unsigned, struct FieldSpec>;
+using FieldToNumMap = std::map<std::string, unsigned>;
+using GroupMap = std::map<unsigned, struct MessageSpec>;
 
 //-------------------------------------------------------------------------------------------------
-typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;
-typedef StaticTable<FieldTrait::FieldType, std::string> TypeToCPP;
+using BaseTypeMap = std::map<std::string, FieldTrait::FieldType>;
+using TypeToCPP = std::map<FieldTrait::FieldType, std::string>;
 
 /// f8c internal field representation.
 struct FieldSpec
@@ -143,7 +143,7 @@ struct FieldSpec
 	virtual ~FieldSpec()
 	{
 		if (_dvals)
-			std::for_each(_dvals->begin(), _dvals->end(), free_ptr<Delete1stPairObject<> >());
+			std::for_each(_dvals->begin(), _dvals->end(), [](RealmMap::value_type& pp) { delete pp.first; });
 		delete _dvals;
 	}
 
@@ -160,21 +160,27 @@ struct MessageSpec
 	std::string _name, _description, _comment;
 	bool _is_admin;
 
+	/// Ctor
 	MessageSpec(const std::string& name, bool admin=false) : _group_refcnt(), _hash(), _name(name), _is_admin(admin) {}
+	/// Dtor
 	virtual ~MessageSpec() {}
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what MessageSpec
+	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);
 };
 
-typedef std::map<const std::string, MessageSpec> MessageSpecMap;
-typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
+using MessageSpecMap = std::map<const std::string, MessageSpec>;
+using FieldTraitOrder = std::multiset<const FieldTrait *, FieldTrait::PosCompare>;
 
 //-----------------------------------------------------------------------------------------
-typedef std::map<uint32_t, struct MessageSpec> CommonGroups;
-typedef std::map<unsigned, CommonGroups> CommonGroupMap;
+using CommonGroups = std::map<uint32_t, struct MessageSpec>;
+using CommonGroupMap = std::map<unsigned, CommonGroups>;
 
 //-----------------------------------------------------------------------------------------
-typedef std::map<std::string, const XmlElement *> Components;
+using Components = std::map<std::string, const XmlElement *>;
 
 //-------------------------------------------------------------------------------------------------
 enum comp_str
@@ -194,7 +200,7 @@ enum comp_str
 	cs_trailer_preamble,
 };
 
-typedef StaticTable<comp_str, std::string> CSMap;
+using CSMap = std::map<comp_str, std::string>;
 
 //-----------------------------------------------------------------------------------------
 inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.GetLine()); }
@@ -203,8 +209,6 @@ inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.Ge
 class push_dir
 {
 	char _cwd[MAX_FLD_LENGTH];
-
-	push_dir();
 
 public:
 	push_dir(const std::string& to) : _cwd()
@@ -226,6 +230,8 @@ public:
 			throw f8Exception(ostr.str());
 		}
 	}
+
+	push_dir() = delete;
 
 	~push_dir()
 	{

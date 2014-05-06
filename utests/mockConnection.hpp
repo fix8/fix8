@@ -163,7 +163,7 @@ public:
           \return return the message length*/
     int send(const f8String& msg)
     {
-        return msg.length();
+        return static_cast<int>(msg.length());
     }
 
     ///empty function
@@ -273,7 +273,7 @@ public:
     int send(const f8String& from)
     {
         _output.push_back(from);
-        return from.length();
+        return static_cast<int>(from.length());
     }
 
     /*!helper to unit test, cache the message in string format
@@ -283,7 +283,7 @@ public:
     int send(const char *from, size_t sz)
     {
         _output.push_back(f8String(from, sz));
-        return sz;
+        return static_cast<int>(sz);
     }
 
     /*! Set the heartbeat interval for this connection.

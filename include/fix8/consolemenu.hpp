@@ -41,14 +41,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-typedef std::deque<FIX8::Message *> MsgList;
+using MsgList = std::deque<FIX8::Message *>;
 
 //-------------------------------------------------------------------------------------------------
 /// Console test harness menu
 class ConsoleMenu
 {
 	const F8MetaCntx& _ctx;
-	Session *_ses;
 	std::istream& _is;
 	std::ostream& _os;
 	const int _lpp;
@@ -57,24 +56,23 @@ class ConsoleMenu
 public:
 	/*! Ctor
 	 \param ctx - reference to generated metadata
-	 \param ses - pointer to session
 	 \param is - reference to input stream
 	 \param os - reference to output stream
 	 \param lpp - lines to print per page */
-	ConsoleMenu (const F8MetaCntx& ctx, Session *ses, std::istream& is=std::cin, std::ostream& os=std::cout, const int lpp=20)
-		: _ctx(ctx), _ses(ses), _is(is), _os(os), _lpp(lpp) {}
+	ConsoleMenu (const F8MetaCntx& ctx, std::istream& is=std::cin, std::ostream& os=std::cout, const int lpp=20)
+		: _ctx(ctx), _is(is), _os(os), _lpp(lpp) {}
 
 	/// Dtor.
 	virtual ~ConsoleMenu () {}
 
-	virtual const BaseMsgEntry *SelectMsg() const;
-	virtual const FieldTable::Pair *SelectField(const Message *msg, int groupid=0) const;
-	virtual int SelectRealm(const unsigned short fnum, const RealmBase *rb) const;
-	Message *SelectFromMsg(MsgList& lst) const;
-	virtual int CreateMsgs(tty_save_state& tty, MsgList& lst) const;
-	void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
-	virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
-	virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API virtual const BaseMsgEntry *SelectMsg() const;
+	F8API virtual const FieldTable::Pair *SelectField( const Message *msg, int groupid = 0 ) const;
+	F8API virtual int SelectRealm( const unsigned short fnum, const RealmBase *rb ) const;
+	F8API Message *SelectFromMsg( MsgList& lst ) const;
+	F8API virtual int CreateMsgs( tty_save_state& tty, MsgList& lst ) const;
+	F8API void EditMsg( tty_save_state& tty, const FieldTable::Pair *fld, Message *msg ) const;
+	F8API virtual int EditMsgs( tty_save_state& tty, MsgList& lst ) const;
+	F8API virtual int DeleteMsgs( tty_save_state& tty, MsgList& lst ) const;
 
 	bool get_yn(const f8String& prompt, bool echo=false) const { return toupper(get_key(prompt, echo)) == 'Y'; }
 	char get_key(const f8String& prompt=std::string(), bool echo=false) const
@@ -92,7 +90,7 @@ public:
 		}
 		return 0;
 	}
-	f8String& GetString(tty_save_state& tty, f8String& to) const;
+	F8API f8String& GetString( tty_save_state& tty, f8String& to ) const;
 };
 
 //-------------------------------------------------------------------------------------------------

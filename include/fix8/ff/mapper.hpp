@@ -34,6 +34,10 @@
 #include <ff/utils.hpp>
 #include <ff/mapping_utils.hpp>
 
+#if defined(FF_CUDA) 
+#include <cuda.h>
+#endif
+
 namespace ff {
 
 /*!
@@ -194,6 +198,18 @@ public:
     inline bool checkCPUId(const int cpuId) const {
         return ((unsigned)cpuId < num_cores);
     }
+
+#if defined(FF_CUDA) 
+    inline int getNumCUDADevices() const {
+        int deviceCount=0;
+        cudaError_t error_id = cudaGetDeviceCount(&deviceCount);
+        if (error_id != cudaSuccess) {
+            error("getNumCUDADevices: cannot get the number of cuda devices\n");
+            return -1;
+        }
+        return deviceCount;
+    }
+#endif
 
 protected:
     long rrcnt;

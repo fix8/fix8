@@ -69,7 +69,7 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _sock(sock), _session(session), _pmodel(pmodel), _thread(FIX8::ref(*this))
+		: _sock(sock), _session(session), _pmodel(pmodel), _thread(std::ref(*this))
 	{
 	}
 
@@ -127,7 +127,7 @@ class FIXReader : public AsyncSocket<f8String>
 
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
-	int callback_processor();
+	F8API int callback_processor();
 
 	size_t _bg_sz; // 8=FIXx.x^A9=x
 
@@ -197,7 +197,7 @@ class FIXReader : public AsyncSocket<f8String>
 		 \return number of bytes read */
 	int sockRead(char *where, const size_t sz)
 	{
-		unsigned remaining(sz), rddone(0);
+		unsigned remaining(static_cast<unsigned>(sz)), rddone(0);
 		while (remaining > 0)
 		{
 			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
@@ -224,7 +224,7 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(std::ref(*this), &FIXReader::callback_processor)
 #if EXPERIMENTAL_BUFFERED_SOCKET_READ
 		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
 #endif
@@ -280,14 +280,14 @@ public:
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-   virtual int execute(dthread_cancellation_token& cancellation_token);
+	F8API virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
 		 \return 0 on success */
 	int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
-	void set_preamble_sz();
+	F8API void set_preamble_sz();
 
 	/*! Check to see if the socket is in error
 	    \return true if there was a socket error */
@@ -335,7 +335,7 @@ public:
 		f8_scoped_spin_lock guard(_con_spl);
 		if (destroy)
 		{
-			scoped_ptr<Message> msg(from);
+			std::unique_ptr<Message> msg(from);
 			return _session.send_process(msg.get());
 		}
 		return _session.send_process(from);
@@ -370,7 +370,7 @@ public:
 		{
 			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
 			{
-				scoped_ptr<Message> smsg(*itr);
+				std::unique_ptr<Message> smsg(*itr);
 			}
 		}
 		///@todo: need assert on result==msgs.size()
@@ -410,7 +410,7 @@ public:
 
 		while (remaining > 0)
 		{
-			const int wrtSz(_sock->sendBytes(data + wrdone, remaining));
+			const int wrtSz(_sock->sendBytes(data + wrdone, static_cast<int>(remaining)));
 			if (wrtSz < 0)
 			{
 				if (errno == EAGAIN
@@ -450,7 +450,7 @@ public:
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-    virtual int execute(dthread_cancellation_token& cancellation_token);
+	F8API virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/// Stop the processing threads and quit.
 	virtual void quit()
@@ -534,10 +534,10 @@ public:
 	bool is_secure() const { return _secured; }
 
 	/// Start the reader and writer threads.
-	void start();
+	F8API void start();
 
 	/// Stop the reader and writer threads.
-	void stop();
+	F8API void stop();
 
 	/*! Get the connection state.
 	    \return true if connected */
@@ -549,6 +549,7 @@ public:
 
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	virtual bool write(Message *from, bool destroy=true) { return _writer.write(from, destroy); }
 
@@ -558,7 +559,8 @@ public:
 	virtual bool write(Message& from) { return _writer.write(from); }
 
 	/*! Write messages to the underlying socket as a single batch.
-	    \param from Message to write
+	    \param msgs vector of Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
@@ -680,7 +682,7 @@ public:
 		 \param secured true for ssl connection
 	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 							bool secured=false)
 		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
@@ -689,7 +691,7 @@ public:
 
 	/*! Establish connection.
 	    \return true on success */
-	bool connect();
+	F8API bool connect();
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -704,15 +706,20 @@ public:
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket
+	    \param reuse_addr set or clear the resueaddr flag on the socket
+	    \param linger set the tcp linger value (secs) on the socket, -1=disable
+	    \param keepalive set or clear the tcp keepalive flag on the socket
 		 \param secured true for ssl connection
 	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
-						  bool secured=false	) :
+						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+						  bool reuse_addr=false, int linger=-1, bool keepalive=false, bool secured=false) :
 		Connection(sock, addr, session, hb_interval, pmodel, secured)
 	{
-		_sock->setLinger(false, 0);
+		_sock->setLinger(linger >= 0, linger);
 		_sock->setNoDelay(no_delay);
+		_sock->setReuseAddress(reuse_addr);
+		_sock->setKeepAlive(keepalive);
 	}
 
 	/// Dtor.

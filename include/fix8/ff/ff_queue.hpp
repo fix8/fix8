@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef __FF_QUEUE__HPP_
-#define __FF_QUEUE__HPP_
+#ifndef FF_QUEUE_HPP
+#define FF_QUEUE_HPP
 
 /*!
  *
@@ -288,5 +288,4 @@ private:
     void operator = (ff_queue const&);
 };
 
-
-#endif /* __FF_QUEUE__HPP_ */
+#endif /* FF_QUEUE_HPP */

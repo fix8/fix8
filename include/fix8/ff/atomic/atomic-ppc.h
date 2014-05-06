@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-powerpc/atomic.h
  *
  */
-#ifndef _ASM_POWERPC_ATOMIC_H_
-#define _ASM_POWERPC_ATOMIC_H_
+#ifndef FF_ASM_POWERPC_ATOMIC_H
+#define FF_ASM_POWERPC_ATOMIC_H
 
 
 /* some defines taken from: */
@@ -561,4 +561,4 @@ __cmpxchg_u64(volatile unsigned long *p, unsigned long old, unsigned long _new)
 #endif /* __powerpc64__ */
 
 
-#endif /* _ASM_POWERPC_ATOMIC_H_ */
+#endif /* FF_ASM_POWERPC_ATOMIC_H */

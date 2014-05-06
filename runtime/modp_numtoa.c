@@ -54,7 +54,7 @@
  * Powers of 10
  * 10^0 to 10^9
  */
-static const double pow10[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
+static const double pow10_[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
                                10000000, 100000000, 1000000000};
 
 static void strreverse(char* begin, char* end)
@@ -65,7 +65,7 @@ static void strreverse(char* begin, char* end)
 }
 
 // slighly modified by DD to return target length
-size_t modp_dtoa(double value, char* str, int prec) // DD
+F8API size_t modp_dtoa(double value, char* str, int prec) // DD
 {
 	/* if input is larger than thres_max, revert to exponential */
     const double thres_max = (double)(0x7FFFFFFF);
@@ -103,14 +103,14 @@ size_t modp_dtoa(double value, char* str, int prec) // DD
     }
 
     whole = (int) value;
-    tmp = (value - whole) * pow10[prec];
+    tmp = (value - whole) * pow10_[prec];
     frac = (uint32_t)(tmp);
     diff = tmp - frac;
 
     if (diff > 0.5) {
         ++frac;
         /* handle rollover, e.g.  case 0.99 with prec 1 is 1.0  */
-        if (frac >= pow10[prec]) {
+        if (frac >= pow10_[prec]) {
             frac = 0;
             ++whole;
         }

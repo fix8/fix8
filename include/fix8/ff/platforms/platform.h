@@ -1,6 +1,4 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-#ifndef _FF_PLATFORM_HPP_
-#define _FF_PLATFORM_HPP_
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 
@@ -18,6 +16,9 @@
  *
  ****************************************************************************
  */
+
+#ifndef FF_PLATFORM_HPP
+#define FF_PLATFORM_HPP
 
 // APPLE specific backward compatibility 
 
@@ -207,7 +208,7 @@ struct iovec
 //#if (!defined(_FF_SYSTEM_HAVE_WIN_PTHREAD))
 //#endif
 #include<algorithm>
-#elif defined(__GNUC__) && (defined(__linux) || defined(__APPLE__))
+#elif defined(__GNUC__) && (defined(__linux__) || defined(__APPLE__))
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -223,6 +224,6 @@ inline static void posix_memalign_free(void* mem)
 #   error "unknown platform"
 #endif
 
-#endif //_FF_PLATFORM_HPP_
+#endif /* FF_PLATFORM_HPP */
 
 

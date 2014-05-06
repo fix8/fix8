@@ -1,5 +1,3 @@
-#ifndef _FF_MINPORT_WIN_H_
-#define _FF_MINPORT_WIN_H_
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 
@@ -24,6 +22,11 @@ Ultra-minimal and incomplete compatibility layer for pthreads on Windows platfor
 March 2011 - Ver 0: Basic functional port, tested on Win 7 x64 - Performance not yet extensively tested.
 
 */
+
+#ifndef FF_MINPORT_WIN_H
+#define FF_MINPORT_WIN_H
+
+
 //#define WIN32_LEAN_AND_MEAN
 #pragma once
 //#include <WinSock2.h>
@@ -302,4 +305,4 @@ INLINE int pthread_cond_destroy(pthread_cond_t *cond) {
 
 #endif
 
-#endif // _FF_MINPORT_WIN_H_
+#endif /* FF_MINPORT_WIN_H */

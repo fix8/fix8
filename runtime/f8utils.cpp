@@ -34,43 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <sys/types.h>
-#ifndef _MSC_VER
-#include <sys/time.h>
-#endif
-#include <sys/stat.h>
-#include <time.h>
-#include <errno.h>
-#ifndef _MSC_VER
-#include <netdb.h>
-#endif
-#include <cstdlib>
-#include <signal.h>
-#ifndef _MSC_VER
-#include <syslog.h>
-#include <strings.h>
-#endif
-#include <string.h>
-#include <fcntl.h>
-#include <time.h>
-#ifndef _MSC_VER
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#endif
-#ifndef _MSC_VER
-#include <alloca.h>
-#endif
-#include <map>
-#include <set>
-#include <list>
-#include <vector>
-#include <algorithm>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
@@ -134,9 +98,10 @@ string& CheckAddTrailingSlash(string& src)
 //-----------------------------------------------------------------------------------------
 string& InPlaceStrToUpper(string& src)
 {
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (islower(*itr))
-			*itr = toupper(*itr);
+	//for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
+	for (auto& itr : src)
+		if (islower(itr))
+			itr = toupper(itr);
 	return src;
 }
 
@@ -152,9 +117,9 @@ string& InPlaceReplaceInSet(const string& iset, string& src, const char repl)
 //-----------------------------------------------------------------------------------------
 string& InPlaceStrToLower(string& src)
 {
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (isupper(*itr))
-			*itr = tolower(*itr);
+	for (auto& itr : src)
+		if (isupper(itr))
+			itr = tolower(itr);
 	return src;
 }
 
@@ -169,9 +134,9 @@ string StrToLower(const string& src)
 string Str_error(const int err, const char *str)
 {
 	const size_t max_str(256);
-	char buf[max_str] = {};
+	char buf[max_str] {};
 #ifdef _MSC_VER
-    ignore_value(strerror_s(buf, max_str - 1, err));
+	ignore_value(strerror_s(buf, max_str - 1, err));
 #else
 	ignore_value(strerror_r(err, buf, max_str - 1));
 #endif
@@ -185,6 +150,37 @@ string Str_error(const int err, const char *str)
 }
 
 //----------------------------------------------------------------------------------------
+int get_umask()
+{
+#ifdef _MSC_VER
+	const int mask(_umask(0));
+	_umask(mask);
+#else
+	const int mask(umask(0));
+	umask(mask);
+#endif
+	return mask;
+}
+
+//----------------------------------------------------------------------------------------
+void create_path(const string& path)
+{
+	string new_path;
+	for(string::const_iterator pos(path.begin()); pos != path.end(); ++pos)
+	{
+		new_path += *pos;
+		if(*pos == '/' || *pos == '\\' || pos + 1 == path.end())
+		{
+#ifdef _MSC_VER
+			_mkdir(new_path.c_str());
+#else
+			mkdir(new_path.c_str(), 0777); // umask applied after
+#endif
+		}
+	}
+}
+
+//----------------------------------------------------------------------------------------
 const string& trim(string& source, const string& ws)
 {
     const size_t bgstr(source.find_first_not_of(ws));
@@ -195,10 +191,10 @@ const string& trim(string& source, const string& ws)
 //----------------------------------------------------------------------------------------
 namespace
 {
-	typedef pair<char, int> Day;
-	typedef multimap<char, int> Daymap;
-	static const string day_names[] = { "su", "mo", "tu", "we", "th", "fr", "sa" };
-	static const Day days[] = { Day('s',0), Day('m',1), Day('t',2), Day('w',3), Day('t',4), Day('f',5), Day('s', 6) };
+	using Day = pair<char, int>;
+	using Daymap = multimap<char, int>;
+	static const string day_names[] { "su", "mo", "tu", "we", "th", "fr", "sa" };
+	static const Day days[] { {'s',0}, {'m',1}, {'t',2}, {'w',3}, {'t',4}, {'f',5}, {'s', 6} };
 	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
 };
 

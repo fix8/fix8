@@ -34,22 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <list>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -222,7 +207,7 @@ void FIXReader::set_preamble_sz()
 //-------------------------------------------------------------------------------------------------
 bool FIXReader::read(f8String& to)	// read a complete FIX message
 {
-	char msg_buf[_max_msg_len] = {};
+	char msg_buf[_max_msg_len] {};
 	int result(sockRead(msg_buf, _bg_sz));
 
 	if (result == static_cast<int>(_bg_sz))
@@ -242,7 +227,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 
 		char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 		unsigned result;
-		if ((result = MessageBase::extract_element(to.data(), to.size(), tag, val)))
+		if ((result = MessageBase::extract_element(to.data(), static_cast<unsigned>(to.size()), tag, val)))
 		{
 			if (*tag != '8')
 				throw IllegalMessage(to);
@@ -250,7 +235,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if (_session.get_ctx()._beginStr.compare(val))	// invalid FIX version
 				throw InvalidVersion(string(val));
 
-			if ((result = MessageBase::extract_element(to.data() + result, to.size() - result, tag, val)))
+			if ((result = MessageBase::extract_element(to.data() + result, static_cast<unsigned>(to.size()) - result, tag, val)))
 			{
 				if (*tag != '9')
 					throw IllegalMessage(to);
@@ -294,7 +279,7 @@ int FIXWriter::execute(dthread_cancellation_token& cancellation_token)
 			_msg_queue.pop (inmsg); // will block
 			if (!inmsg)
 				break;
-			scoped_ptr<Message> msg(inmsg);
+			unique_ptr<Message> msg(inmsg);
 			_session.send_process(msg.get());
 			++processed;
 		}

@@ -7,9 +7,7 @@
  *
  *  \brief This file contains the spin lock(s) used in FastFlow
  */
- 
-#ifndef _FF_SPINLOCK_HPP_
-#define _FF_SPINLOCK_HPP_
+
 /* ***************************************************************************
  *  
  *  This program is free software; you can redistribute it and/or modify it
@@ -27,6 +25,17 @@
  *
  ****************************************************************************
  */
+/* 
+ *   Author: 
+ *      Massimo Torquati <torquati@di.unipi.it> or <massimotor@gmail.com>    
+ * 
+ *    - April 2013 added CLHSpinLock 
+ *    - February 2014 added AtomicFlagWrapper-based spin-lock
+ *
+ */
+ 
+#ifndef FF_SPINLOCK_HPP
+#define FF_SPINLOCK_HPP
  
 // REW -- documentation
 //#include <iostream>
@@ -34,6 +43,13 @@
 #include <ff/platforms/platform.h>
 #include <ff/config.hpp>
 #include <ff/atomic/abstraction_dcas.h>
+
+// NOTE: A better check would be needed !
+// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used 
+// (icpc -E -dM -std=c++11 -x c++ /dev/null | grep GXX_EX)
+#if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_VARIADIC_TEMPLATES))
+#include <atomic>
+#endif
 
 #ifdef __cplusplus
 namespace ff {
@@ -174,6 +190,39 @@ _INLINE void spin_unlock(clh_lock_t l, const int pid) { l->spin_unlock(pid); }
 
 #endif 
 
+// NOTE: A better check would be needed !
+// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used 
+// (icpc -E -dM -std=c++11 -x c++ /dev/null | grep GXX_EX)
+#if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_VARIADIC_TEMPLATES))
+
+ALIGN_TO_PRE(CACHE_LINE_SIZE) struct AtomicFlagWrapper {
+    AtomicFlagWrapper():F(ATOMIC_FLAG_INIT) {}
+    
+    // std::atomic_flag isn't copy-constructible, nor copy-assignable
+    
+    bool test_and_set(std::memory_order mo) {
+        return F.test_and_set(mo);
+    }
+    void clear(std::memory_order mo) {
+        F.clear(mo);
+    }
+    
+    union {
+        std::atomic_flag F;
+        char padding[64];
+    };    
+}ALIGN_TO_POST(CACHE_LINE_SIZE);
+
+typedef AtomicFlagWrapper lock_t[1];
+
+_INLINE void init_unlocked(lock_t l) { }
+_INLINE void init_locked(lock_t l)   { abort(); }
+_INLINE void spin_lock(lock_t l) { 
+    while(l->test_and_set(std::memory_order_acquire)) ;
+}
+_INLINE void spin_unlock(lock_t l) { l->clear(std::memory_order_release);}
+
+#else  // non C++11
 
 /* -------- XCHG-based spin-lock --------- */
     
@@ -225,7 +274,7 @@ _INLINE void spin_unlock(lock_t l) {
     l[0]=UNLOCKED;
 }
 #endif // windows platform spin_lock
-
+#endif // C++11 check
 #endif // TICKET_LOCK
 
 
@@ -239,4 +288,4 @@ _INLINE void spin_unlock(lock_t l) {
  * \endlink
  */
 
-#endif /* _FF_SPINLOCK_HPP_ */
+#endif /* FF_SPINLOCK_HPP */

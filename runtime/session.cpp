@@ -34,23 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <list>
-#include <vector>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -61,20 +45,21 @@ using namespace std;
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
 //-------------------------------------------------------------------------------------------------
-#ifndef _MSC_VER
-const Tickval::ticks Tickval::noticks;
-const Tickval::sticks Tickval::nosticks;
-const Tickval::ticks Tickval::errorticks;
-const Tickval::ticks Tickval::thousand;
-const Tickval::ticks Tickval::million;
-const Tickval::ticks Tickval::billion;
-const Tickval::ticks Tickval::second;
-const Tickval::ticks Tickval::minute;
-const Tickval::ticks Tickval::hour;
-const Tickval::ticks Tickval::day;
-const Tickval::ticks Tickval::week;
+#if defined(_MSC_VER) && !defined(BUILD_F8API)
+// no need in definition since it is in dll already
+#else
+const vector<f8String> Session::_state_names
+{
+	"none", "continuous", "session_terminated",
+	"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",
+	"logoff_received", "test_request_sent", "sequence_reset_sent",
+	"sequence_reset_received", "resend_request_sent", "resend_request_received"
+};
 #endif
-
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4273)
+#endif
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
 {
@@ -113,11 +98,33 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 {
 	_timer.start();
 	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
+
+	ostringstream ostr;
+	if (!_logger)
+	{
+		ostr.str("");
+		ostr << "Warning: no session logger defined for " << _sid;
+		GlobalLogger::log(ostr.str());
+	}
+
+	if (!_plogger)
+	{
+		ostr.str("");
+		ostr << "Warning: no protocol logger defined for " << _sid;
+		GlobalLogger::log(ostr.str());
+	}
+
+	if (!_persist)
+	{
+		ostr.str("");
+		ostr << "Warning: no persister defined for " << _sid;
+		GlobalLogger::log(ostr.str());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, Logger *logger, Logger *plogger) :
+	_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
@@ -129,7 +136,7 @@ Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logg
 //-------------------------------------------------------------------------------------------------
 void Session::atomic_init(States::SessionStates st)
 {
-	_state = st;
+	state_change(States::st_none, _state = st);
 	_next_send_seq = _next_receive_seq = 1;
 	_active = true;
 }
@@ -142,7 +149,7 @@ Session::~Session()
 		_logger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
-	if (_connection->get_role() == Connection::cn_acceptor)
+	if (_connection && _connection->get_role() == Connection::cn_acceptor)
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
 	delete _schedule;
 }
@@ -182,7 +189,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 		}
 
 		send(generate_logon(_connection->get_hb_interval(), davi));
-		_state = States::st_logon_sent;
+		do_state_change(States::st_logon_sent);
 	}
 	else
 	{
@@ -216,18 +223,21 @@ void Session::stop()
 {
 	if (_control & shutdown)
 		return;
-
 	_control |= shutdown;
-	if (_connection->get_role() == Connection::cn_initiator)
-		_timer.clear();
-	else
+
+	if (_connection)
 	{
-		_timer.schedule(_hb_processor, 0);
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-		if (_persist)
-			_persist->stop();
+		if (_connection->get_role() == Connection::cn_initiator)
+			_timer.clear();
+		else
+		{
+			_timer.schedule(_hb_processor, 0);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			if (_persist)
+				_persist->stop();
+		}
+		_connection->stop();
 	}
-	_connection->stop();
 	hypersleep<h_milliseconds>(250);
 }
 
@@ -237,7 +247,7 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 	if (States::is_established(_state))
 	{
 		if (_state != States::st_logon_received)
-			compid_check(seqnum, msg);
+			compid_check(seqnum, msg, _sid);
 		if (msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET && sequence_check(seqnum, msg))
 			return false;
 	}
@@ -282,7 +292,7 @@ bool Session::process(const f8String& from)
 		else if (_control & print)
 			cout << *msg << endl;
 
-		bool result, admin_result(msg->is_admin() ? handle_admin(seqnum, msg) : true);
+		bool result(false), admin_result(msg->is_admin() ? handle_admin(seqnum, msg) : true);
 		if (msg->get_msgtype().size() > 1)
 			goto application_call;
 		else switch(msg->get_msgtype()[0])
@@ -341,7 +351,7 @@ application_call:
 			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
 				send(generate_logout(e.what()), true, 0, true); // so it won't increment
-				_state = States::st_logoff_sent;
+				do_state_change(States::st_logoff_sent);
 			}
 			stop();
 		}
@@ -361,12 +371,15 @@ application_call:
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::compid_check(const unsigned seqnum, const Message *msg)
+void Session::compid_check(const unsigned seqnum, const Message *msg, const SessionID& id) const
 {
-	if (!_sid.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
-		throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
-	if (!_sid.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
-		throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
+	if (_loginParameters._enforce_compids)
+	{
+		if (!id.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
+			throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
+		if (!id.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
+			throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -382,7 +395,7 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 		if (_state == States::st_continuous)
 		{
 			send(generate_resend_request(_next_receive_seq));
-			_state = States::st_resend_request_sent;
+			do_state_change(States::st_resend_request_sent);
 		}
 		// If SessionConfig has *not* been set, assume wrong logon sequence is checked.
 		else if (!_sf || !_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
@@ -413,17 +426,36 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
-	_state = States::st_logon_received;
+	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
+	ostringstream ostr;
+	sender_comp_id sci; // so this should be our tci
+	msg->Header()->get(sci);
+	target_comp_id tci; // so this should be our sci
+	msg->Header()->get(tci);
+	SessionID id(_ctx._beginStr, tci(), sci());
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
+		if (id != _sid)
+		{
+			ostr.str("");
+			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
+			GlobalLogger::log(ostr.str());
+			if (_loginParameters._enforce_compids)
+			{
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+		}
+
 		enforce(seqnum, msg);
 		heartbeat_interval hbi;
 		msg->get(hbi);
 		_connection->set_hb_interval(hbi());
-		_state = States::st_continuous;
-		ostringstream ostr;
+		do_state_change(States::st_continuous);
+		ostr.str("");
 		ostr << "Client setting heartbeat interval to " << hbi();
 		log(ostr.str());
 	}
@@ -432,38 +464,94 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		default_appl_ver_id davi;
 		msg->get(davi);
 
-		sender_comp_id sci;
-		msg->Header()->get(sci);
-		target_comp_id tci;
-		msg->Header()->get(tci);
-		SessionID id(_ctx._beginStr, tci(), sci());
+		if (_sci() != tci())
+		{
+			ostr.str("");
+			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
+			GlobalLogger::log(ostr.str());
+			if (_loginParameters._enforce_compids)
+			{
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+		}
+
+		if (!_loginParameters._clients.empty())
+		{
+			auto itr(_loginParameters._clients.find(sci()));
+			bool iserr(false);
+			if (itr == _loginParameters._clients.cend())
+			{
+				ostr.str("");
+				ostr << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
+				iserr = true;
+			}
+
+			if (!iserr && get<1>(itr->second) != Poco::Net::IPAddress()
+				&& get<1>(itr->second) != _connection->get_peer_socket_address().host())
+			{
+				ostr.str("");
+				ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
+					<< _connection->get_peer_socket_address().toString() << ").";
+				iserr = true;
+			}
+
+			if (iserr)
+			{
+				GlobalLogger::log(ostr.str());
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+
+			ostr.str("");
+			ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
+				<< _connection->get_peer_socket_address().toString() << ").";
+			GlobalLogger::log(ostr.str());
+		}
 
 		// important - these objects can't be created until we have a valid SessionID
 		if (_sf)
 		{
-			if (!_logger)
-				_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+			if (!_logger && !(_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id)))
+			{
+				ostr.str("");
+				ostr << "Warning: no session logger defined for " << id;
+				GlobalLogger::log(ostr.str());
+			}
 
-			if (!_plogger)
-				_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+			if (!_plogger && !(_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id)))
+			{
+				ostr.str("");
+				ostr << "Warning: no protocol logger defined for " << id;
+				GlobalLogger::log(ostr.str());
+			}
 
 			if (!_persist)
 			{
 				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-				_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+				if (!(_persist = _sf->create_persister(_sf->_ses, &id, reset_given)))
+				{
+					ostr.str("");
+					ostr << "Warning: no persister defined for " << id;
+					GlobalLogger::log(ostr.str());
+				}
 			}
 
+#if 0
 			if (_schedule)
 			{
-				ostringstream ostr;
+				ostr.str("");
 				ostr << *_schedule;
 				log(ostr.str());
 			}
+#endif
 		}
 		else
 			GlobalLogger::log("Error: SessionConfig object missing in session");
 
-		ostringstream ostr;
+		ostr.str("");
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
 		log(ostr.str());
 
@@ -486,30 +574,30 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 			_sid = id;
 			enforce(seqnum, msg);
 			send(generate_logon(_connection->get_hb_interval(), davi()));
-			_state = States::st_continuous;
+			do_state_change(States::st_continuous);
 		}
 		else
 		{
-			ostringstream ostr;
+			ostr.str("");
 			ostr << id << " failed authentication";
 			log(ostr.str());
 			stop();
-			_state = States::st_session_terminated;
+			do_state_change(States::st_session_terminated);
 			return false;
 		}
 
 		if (_loginParameters._login_schedule.is_valid() && !_loginParameters._login_schedule.test())
 		{
-			ostringstream ostr;
+			ostr.str("");
 			ostr << id << " Session unavailable. Login not accepted.";
 			log(ostr.str());
 			stop();
-			_state = States::st_session_terminated;
+			do_state_change(States::st_session_terminated);
 			return false;
 		}
 	}
 
-	ostringstream ostr;
+	ostr.str("");
 	ostr << "Heartbeat interval is " << _connection->get_hb_interval();
 	log(ostr.str());
 
@@ -546,7 +634,7 @@ bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 	}
 
 	if (_state == States::st_resend_request_sent)
-		_state = States::st_continuous;
+		do_state_change(States::st_continuous);
 
 	return true;
 }
@@ -568,8 +656,8 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
-			_state = States::st_resend_request_received;
-			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			do_state_change(States::st_resend_request_received);
+			//f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // no no nanette!
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
 	}
@@ -596,7 +684,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 			send(generate_sequence_reset(rctx._interrupted_seqnum, true), true, rctx._begin);
 			//cout << "#4" << endl;
 		}
-		_state = States::st_continuous;
+		do_state_change(States::st_continuous);
 		return true;
 	}
 
@@ -681,7 +769,7 @@ bool Session::heartbeat_service()
 				ostringstream ostr;
 				ostr << "Remote has ignored my test request. Aborting session...";
 				send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
-				_state = States::st_logoff_sent;
+				do_state_change(States::st_logoff_sent);
 				log(ostr.str());
 				try
 				{
@@ -709,7 +797,7 @@ bool Session::heartbeat_service()
 				log(ostr.str());
 				const f8String testReqID("TEST");
 				send(generate_test_request(testReqID));
-				_state = States::st_test_request_sent;
+				do_state_change(States::st_test_request_sent);
 			}
 		}
 	}
@@ -724,7 +812,7 @@ bool Session::handle_heartbeat(const unsigned seqnum, const Message *msg)
 	enforce(seqnum, msg);
 
 	if (_state == States::st_test_request_sent)
-		_state = States::st_continuous;
+		do_state_change(States::st_continuous);
 	return true;
 }
 
@@ -757,10 +845,10 @@ Message *Session::generate_business_reject(const unsigned seqnum, const Message 
 	{
 		msg = create_msg(Common_MsgType_BUSINESS_REJECT);
 	}
-	catch (InvalidMetadata<f8String>& e)
+	catch (InvalidMetadata<f8String>&)
 	{
 		// since this is an application message, it may not be supported in supplied schema
-		return 0;
+		return nullptr;
 	}
 
 	*msg << new ref_seq_num(seqnum);
@@ -787,7 +875,7 @@ Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 	Message *msg(create_msg(Common_MsgType_LOGON));
 	*msg << new heartbeat_interval(heartbtint)
 		  << new encrypt_method(0); // FIXME
-	if (!davi.empty())
+	if (!davi.empty() && msg->has<default_appl_ver_id>())
 		*msg << new default_appl_ver_id(davi);
 	if (_loginParameters._reset_sequence_numbers)
 		*msg << new reset_seqnum_flag(true);
@@ -833,7 +921,7 @@ bool Session::send(Message *tosend, bool destroy, const unsigned custom_seqnum, 
 		tosend->set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend->set_no_increment(no_increment);
-	return _connection->write(tosend, destroy);
+	return _connection && _connection->write(tosend, destroy);
 }
 
 bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
@@ -842,7 +930,7 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 		tosend.set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend.set_no_increment(no_increment);
-	return _connection->write(tosend);
+	return _connection && _connection->write(tosend);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -898,6 +986,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		modify_outbound(msg);
 		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		size_t enclen(msg->encode(&ptr));
+		const char *optr(ptr);
 		if (msg->get_end_of_batch())
 		{
 			if (!_batchmsgs_buffer.empty())
@@ -917,7 +1006,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 			_last_sent.now();
 
 			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(ptr);
+				plog(optr);
 
 			//cout << "send_process" << endl;
 
@@ -942,6 +1031,9 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		else
 		{
 			_batchmsgs_buffer.append(ptr);
+			if (_plogger && _plogger->has_flag(Logger::outbound))
+				plog(ptr);
+
 			if (!is_dup)
 			{
 				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
@@ -985,13 +1077,12 @@ void Session::recover_seqnums()
 }
 
 //-------------------------------------------------------------------------------------------------
-#if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 {
    int policy;
 	ostringstream ostr;
-   sched_param param = {};
+   sched_param param {};
    if (!pthread_getschedparam(id,  &policy, &param))
 		return policy == SCHED_OTHER ? "SCHED_OTHER" : policy == SCHED_RR ? "SCHED_RR"
 			  : policy == SCHED_FIFO ? "SCHED_FIFO" : "UNKNOWN";
@@ -1004,7 +1095,7 @@ f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 void Session::set_scheduler(int priority)
 {
    pthread_t thread(pthread_self());
-   sched_param param = { priority };
+   sched_param param { priority };
 
 	ostringstream ostr;
 	ostr << "Current scheduler policy: " << get_thread_policy_string(thread);
@@ -1046,7 +1137,18 @@ void Session::set_affinity(int core_id)
 		ostr << "Set thread affinity to " << core_id << " core for thread " << pthread_self();
 	log(ostr.str());
 }
-#endif
+#else
+//-------------------------------------------------------------------------------------------------
+void Session::set_scheduler(int priority)
+{
+	log("set_scheduler: not implemented");
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::set_affinity(int core_id)
+{
+	log("set_affinity: not implemented");
+}
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -1071,5 +1173,7 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 }
 
 #endif // HAVE_OPENSSL
-
 //-------------------------------------------------------------------------------------------------
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif

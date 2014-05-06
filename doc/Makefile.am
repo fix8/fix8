@@ -40,7 +40,8 @@ doxyfile.stamp:
 CLEANFILES = doxyfile.stamp man/*.xml man/*.gz
 
 all-local: doxyfile.stamp
+
 clean-local:
 	rm -rf $(top_srcdir)/doc/html
-
 endif
+

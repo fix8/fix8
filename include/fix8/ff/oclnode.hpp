@@ -39,8 +39,8 @@
  ****************************************************************************
   Mehdi Goli: m.goli@rgu.ac.uk*/
 
-#ifndef _FF_OCLNODE_HPP_
-#define _FF_OCLNODE_HPP_
+#ifndef FF_OCLNODE_HPP
+#define FF_OCLNODE_HPP
 
 #include <ff/ocl/clEnvironment.hpp>
 #include <ff/node.hpp>
@@ -133,7 +133,7 @@ protected:
             if (initOCLInstance()){
                 svc_SetUpOclObjects(baseclass_ocl_node_deviceId);
             }else{
-                error("ERROR: Instantiating the Device: Failed to instatiate the device!\n");
+                error("FATAL ERROR: Instantiating the Device: Failed to instatiate the device!\n");
                 abort();
             }
         }
@@ -178,4 +178,4 @@ private:
  * \endlink
  */
 }
-#endif
+#endif /* FF_OCLNODE_HPP */

@@ -99,7 +99,7 @@ void print_usage();
 const string GETARGLIST("hsvo:c");
 bool term_received(false), summary(false);
 
-typedef map<string, unsigned> MessageCount;
+using MessageCount = map<string, unsigned>;
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -114,27 +114,13 @@ void sig_handler(int sig)
    }
 }
 
-//----------------------------------------------------------------------------------------
-/// Abstract file or stdin input.
-class filestdin
-{
-   std::istream *ifs_;
-   bool nodel_;
-
-public:
-   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
-   ~filestdin() { if (!nodel_) delete ifs_; }
-
-   std::istream& operator()() { return *ifs_; }
-};
-
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val, offset(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
 		{ "offset",			1,	0,	'o' },
@@ -190,22 +176,21 @@ int main(int argc, char **argv)
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
-	const int bufsz(4096);
-	char buffer[bufsz];
+	char buffer[MAX_MSG_LENGTH];
 
 	try
 	{
 		while (!ifs().eof() && !term_received)
 		{
-			ifs().getline(buffer, bufsz);
+			ifs().getline(buffer, MAX_MSG_LENGTH);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
+				unique_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));
 					if (mitr == mc->end())
-						mc->insert(MessageCount::value_type(msg->get_msgtype(), 1));
+						mc->insert({msg->get_msgtype(), 1});
 					else
 						mitr->second++;
 				}
@@ -248,6 +233,7 @@ void print_usage()
 	um.add('v', "version", "print version then exit");
 	um.add('o', "offset", "bytes to skip on each line before parsing FIX message");
 	um.add('s', "summary", "summary, generate message summary");
+	um.add('c', "context", "print the f8c generated beginstring and version. Use this to check which FIX version this build will work with.");
 	um.add("e.g.");
 	um.add("@f8print myfix_server_protocol.log");
 	um.add("@f8print f8print -s -o 12 myfix_client_protocol.log");

@@ -43,9 +43,9 @@ harness_SOURCES = harness.cpp myfix.hpp
 hftest_SOURCES = hftest.cpp hftest.hpp
 hfprint_SOURCES = hfprint.cpp hftest.hpp
 libmyfix_la_SOURCES = Myfix_classes.cpp Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
-					 		 Myfix_router.hpp Myfix_classes.hpp
+                      Myfix_router.hpp Myfix_classes.hpp
 libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
-					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
+                       Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
 
 CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
 libmyfix_la_CXXFLAGS = -I$(top_srcdir)/include
@@ -75,16 +75,26 @@ endif
 if TBBSUPPORT
 GEN_LIBS += -ltbb
 endif
+if LIBMEMCACHEDSUPPORT
+GEN_LIBS += -lmemcached
+endif
+if LIBHIREDISSUPPORT
+GEN_LIBS += -lhiredis
+endif
+
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
+if !USEOSX
+ALL_LIBS += -rdynamic
+endif
 
 if TOGGLETRACKINGASSIGNMENTS
 libmyfix_la_CXXFLAGS += -fno-var-tracking -fno-var-tracking-assignments
 endif
-f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
-f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
-hftest_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
-hfprint_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
-harness_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
+f8test_LDFLAGS = $(ALL_LIBS) -lmyfix
+f8print_LDFLAGS = $(ALL_LIBS) -lmyfix
+hftest_LDFLAGS = $(ALL_LIBS) -lhftest
+hfprint_LDFLAGS = $(ALL_LIBS) -lhftest
+harness_LDFLAGS = $(ALL_LIBS) -lmyfix
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz

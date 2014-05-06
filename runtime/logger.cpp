@@ -33,23 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <time.h>
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -59,25 +43,21 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
-	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
+	char glob_log0[max_global_filename_length] { "global_filename_not_set.log" };
 
 #ifdef _MSC_VER
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance;
+	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0>>::_instance;
 #else
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
-		= f8_atomic<SingleLogger<glob_log0> *>();
+	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance{};
 #endif
-    //template<>
-    //f8_spin_lock Singleton<SingleLogger<glob_log0> >::_mutex;
-
     template<>
-    SingleLogger<glob_log0>* Singleton<SingleLogger<glob_log0> >::create_instance()
+    SingleLogger<glob_log0> *Singleton<SingleLogger<glob_log0>>::create_instance()
     {
         static f8_spin_lock mutex;
         f8_scoped_spin_lock guard(mutex);
-        if (_instance == 0)
+        if (_instance.load() == 0)
         {
             SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
             _instance = p;
@@ -85,8 +65,8 @@ namespace FIX8
         return _instance;
     }
 
-	const string Logger::_bit_names[] =
-		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound" };
+	const vector<string> Logger::_bit_names
+		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound", "nolf", };
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -158,7 +138,11 @@ int Logger::operator()()
 			else
 			{
 				f8_scoped_lock guard(_mutex);
-				get_stream() << ostr.str() << msg_ptr->_str << endl;
+				get_stream() << ostr.str() << msg_ptr->_str;
+				if (_flags & nolf)
+					get_stream().flush();
+				else
+					get_stream() << endl;
 			}
 		}
 #if (MPMC_SYSTEM == MPMC_FF)
@@ -182,11 +166,11 @@ void Logger::flush()
 //-------------------------------------------------------------------------------------------------
 void Logger::purge_thread_codes()
 {
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 	f8_scoped_lock guard(_mutex);
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
 #if defined _MSC_VER || defined __APPLE__
 		// If ESRCH then thread is definitely dead.  Otherwise, we're unsure.
 		if (pthread_kill(itr->first, 0) == ESRCH)
@@ -194,17 +178,15 @@ void Logger::purge_thread_codes()
 		// a little trick to see if a thread is still alive
 		clockid_t clock_id;
 		if (pthread_getcpuclockid(itr->first, &clock_id) == ESRCH)
+#endif
 		{
 			_rev_thread_codes.erase(itr->second);
 			_thread_codes.erase(itr++); // post inc, takes copy before incr;
 		}
 		else
 			++itr;
-#endif
-#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
-		++itr;
-#endif
 	}
+#endif
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -221,8 +203,8 @@ char Logger::get_thread_code(_dthreadcore::thread_id_t tid)
 		RevThreadCodes::const_iterator itr(_rev_thread_codes.find(acode));
 		if (itr == _rev_thread_codes.end())
 		{
-			_thread_codes.insert(ThreadCodes::value_type(tid, acode));
-			_rev_thread_codes.insert(RevThreadCodes::value_type(acode, tid));
+			_thread_codes.insert({tid, acode});
+			_rev_thread_codes.insert({acode, tid});
 			return acode;
 		}
 	}
@@ -248,7 +230,11 @@ bool FileLogger::rotate(bool force)
 
 	delete _ofs;
 
-	string thislFile(_pathname);
+	string thislFile(_pathname), filepart, dirpart;
+	split_path(thislFile, filepart, dirpart);
+	if (!dirpart.empty() && !exist(dirpart))
+		create_path(dirpart);
+
 #ifdef HAVE_COMPRESSION
 	if (_flags & compress)
 		thislFile += ".gz";

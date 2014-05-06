@@ -73,6 +73,9 @@ BRAND_DESCRIPTION='Modern fast FIX Framework'
 BRAND_COMPANY_SHORTNAME='fix8'
 BRAND_COMPANY_LONGNAME='fix8 by David L. Dight'
 
+# Check for C++11
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+
 # Checks for programs.
 LT_INIT
 AC_PROG_CXX
@@ -123,19 +126,33 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # check what version of gcc we're using
 
-# test for gcc >= 4.2
-is_late_gcc=no
+# compiler specific settings
 case "$CXX" in
+  *clang*)
+		LIBS="$LIBS -lstdc++ -lm " ;;
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
-		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
-			is_late_gcc=yes
-		fi ;;
-	*clang*)
-		LIBS="$LIBS -lstdc++ -lm " ;;
+		gcc_minor=`echo $GCC_VERSION | cut -d. -f2` ;;
+	*) ;;
 esac
+
+m4_include(m4/ax_check_compile_flag.m4)
+has_assignmentvars=no
+AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
+
+oktopro=no
+PRODIRFILE=./pro/buildcheck
+AC_MSG_CHECKING(for pro build)
+if test -a "$PRODIRFILE"; then
+   AC_DEFINE_UNQUOTED(HAVE_PRO_BUILD, 1, [Define to 1 if this is a pro build. NOT available in the open source version.])
+   oktopro=yes
+   AC_CONFIG_FILES([pro/Makefile])
+   AC_MSG_RESULT(yes)
+else
+   AC_MSG_RESULT(no)
+fi
+AM_CONDITIONAL([PROBUILD], [test $oktopro = yes])
 
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
@@ -146,8 +163,8 @@ AC_ARG_ENABLE([toggleassignmentvars],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-toggleassignmentvars) ;;
 esac])
 
-# use -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
+# use -fvar-tracking-assignments
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$has_assignmentvars = xyes && test x$oktotogglevar = xyes])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
@@ -160,9 +177,8 @@ AC_ARG_ENABLE([doxygen],
 	no)  oktodox=no;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
 esac])
-
-AM_CONDITIONAL([USEDOXYGEN],
-	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+AM_CONDITIONAL([USEDOXYGEN], [test -n "$DOXYGEN" && test $oktodox = yes])
+AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
 DOXYGEN_WARNINGS=YES
 AC_ARG_ENABLE([doxygen-warnings],
@@ -361,12 +377,20 @@ AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
 AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
 AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
 
+AC_DEFINE(MALLOC_TBB, 1, [TBB malloc])
+AC_DEFINE(MALLOC_TCMALLOC, 2, [tcmalloc])
+AC_DEFINE(MALLOC_STD, 3, [std malloc])
+AC_DEFINE(MALLOC_SYSTEM, MALLOC_STD, [malloc system to use])
+
 if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
 	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TBB, [malloc system to use])
 else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc_minimal"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
 else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
 fi
 fi
 fi
@@ -408,6 +432,19 @@ AC_MSG_CHECKING(for Poco)
 
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+
+#Check for OSX
+AC_MSG_CHECKING([for OSX/Darwin])
+have_osx=no
+case `uname -s` in
+	Darwin) LIBTOOLIZE=glibtoolize
+				have_osx=yes;;
+	*) LIBTOOLIZE=libtoolize;;
+esac
+AC_MSG_RESULT([$have_osx])
+
+AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
 
 regex_set=no
 using_poco_regex=no
@@ -504,20 +541,6 @@ AC_MSG_CHECKING(for gtest)
     fi
 AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes && test "$oktogtest" = yes])
 
-
-AC_MSG_CHECKING(for tr1/unordered_map)
-	AC_TRY_COMPILE([
-	#include <tr1/unordered_map>
-	#include <string>
-		],[std::tr1::unordered_map<std::string, std::string> uom; uom["blah"]="blather";],
-		have_tr1_unordered_map=yes, have_tr1_unordered_map=no)
-	if test "$have_tr1_unordered_map" = yes; then
-	    AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAS_TR1_UNORDERED_MAP, 1, [Define to 1 if TR1 hashmaps are available])
-	else
-	    AC_MSG_RESULT(no)
-	fi
-
 AC_CHECK_LIB(crypt, crypt, [
 	AC_CHECK_HEADERS([crypt.h],
 	[
@@ -541,6 +564,48 @@ esac])
 
 AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
 
+oktomemcached=no
+AC_ARG_ENABLE([libmemcached],
+[AS_HELP_STRING([--enable-libmemcached],[enable memcached C API support via libmemcached (default=no)])],
+[case "${enableval}" in
+	yes) oktomemcached=yes
+			AC_MSG_CHECKING(for libmemcached)
+			AC_TRY_COMPILE([
+					#include <libmemcached/memcached.h>
+				],,
+				have_libmemcached=yes,have_libmemcached=no)
+		 if test "$have_libmemcached" = yes && test "$oktomemcached" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBMEMCACHED, 1, [Define to 1 if you have libmemcached])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libmemcached) ;;
+esac])
+AM_CONDITIONAL(LIBMEMCACHEDSUPPORT, [test x$oktomemcached = xyes])
+
+oktohiredis=no
+AC_ARG_ENABLE([libhiredis],
+[AS_HELP_STRING([--enable-libhiredis],[enable redis C API support via libhiredis (default=no)])],
+[case "${enableval}" in
+	yes) oktohiredis=yes
+			AC_MSG_CHECKING(for libhiredis)
+			AC_TRY_COMPILE([
+					#include <hiredis/hiredis.h>
+				],,
+				have_libhiredis=yes,have_libhiredis=no)
+		 if test "$have_libhiredis" = yes && test "$oktohiredis" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBHIREDIS, 1, [Define to 1 if you have libhiredis])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libhiredis) ;;
+esac])
+AM_CONDITIONAL(LIBHIREDISSUPPORT, [test x$oktohiredis = xyes])
+
 oktobdb=no
 AC_ARG_ENABLE([bdb],
 [AS_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
@@ -551,8 +616,28 @@ AC_ARG_ENABLE([bdb],
 	no) ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
 esac])
-
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
+
+oktozeromq=no
+AC_ARG_ENABLE([zeromq],
+[AS_HELP_STRING([--enable-zeromq],[enable zeromq messagebus support (default=no)])],
+[case "${enableval}" in
+	yes) oktozeromq=yes
+			AC_MSG_CHECKING(for zeromq)
+			AC_TRY_COMPILE([
+					#include <zmq.hpp>
+				],,
+				have_zeromq=yes,have_zeromq=no)
+		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAS_ZEROMQ_MBUS, 1, [Define to 1 if you have zeromq])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-zeromq) ;;
+esac])
+AM_CONDITIONAL(ZEROMQSUPPORT, [test x$oktozeromq = xyes])
 
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],

@@ -34,21 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <algorithm>
-
-#include <errno.h>
-#include <string.h>
-#include <cctype>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
 #include <fix8/usage.hpp>
@@ -61,9 +47,8 @@ using namespace FIX8;
 //-----------------------------------------------------------------------------------------
 extern string shortName, odir, prefix;
 extern bool verbose, nocheck, nowarn, incpath;
-extern string spacer;
+extern string spacer, precompHdr;
 extern const string GETARGLIST;
-extern const CSMap _csMap;
 extern unsigned glob_errors, glob_warnings;
 
 //-----------------------------------------------------------------------------------------
@@ -92,12 +77,12 @@ namespace
 ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
 	if (!exist(odir))
-		return 0;
+		return nullptr;
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
 	target = ofs.str();
-	scoped_ptr<ofstream> os(new ofstream(target.c_str()));
+	unique_ptr<ofstream> os(new ofstream(target.c_str()));
 	if (!*os)
 	{
 		cerr << "Error opening file \'" << target << '\'';
@@ -105,7 +90,7 @@ ostream *open_ofile(const string& odir, const string& fname, string& target)
 			cerr << " (" << strerror(errno) << ')';
 		cerr << endl;
 
-		return 0;
+		return nullptr;
 	}
 
 	return os.release();
@@ -202,7 +187,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 	else
 		return;
 
-	ost_cpp << typestr << itr->second._name << "_realm[] = " << endl << spacer << "{ ";
+	ost_cpp << typestr << itr->second._name << "_realm[]  " << endl << spacer << "{ ";
 	unsigned cnt(0);
 	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
@@ -230,7 +215,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 	ost_hpp << "const size_t " << itr->second._name << "_realm_els(" << itr->second._dvals->size() << ");" << endl;
 	ost_cpp << " };" << endl;
 
-	ost_cpp << "const char *" << itr->second._name << "_descriptions[] = " << endl << spacer << "{ ";
+	ost_cpp << "const char *" << itr->second._name << "_descriptions[]  " << endl << spacer << "{ ";
 	cnt = 0;
 	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
@@ -296,8 +281,8 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 string bintoaschex(const string& from)
 {
 	ostringstream result;
-	for (string::const_iterator itr(from.begin()); itr != from.end(); ++itr)
-		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(*itr);
+	for (const auto& cc : from)
+		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(cc);
 	return "FIX8_" + result.str() + '_';
 }
 
@@ -309,7 +294,7 @@ void process_ordering(MessageSpecMap& mspec)
 		FieldTraitOrder mo;
 		for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
 			flitr != mitr->second._fields.get_presence().end(); ++flitr)
-				mo.insert(FieldTraitOrder::value_type(&*flitr));
+				mo.insert({&*flitr});
 
 		unsigned cnt(0);
 		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
@@ -325,7 +310,7 @@ void process_message_group_ordering(const GroupMap& gm)
 		FieldTraitOrder go;
 		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
 			flitr != gitr->second._fields.get_presence().end(); ++flitr)
-				go.insert(FieldTraitOrder::value_type(&*flitr));
+				go.insert({&*flitr});
 
 		unsigned gcnt(0);
 		for (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
@@ -351,7 +336,9 @@ void print_usage()
 	um.setdesc("f8c -- compile FIX xml schema");
 	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
+	um.add('H', "pch <filename>", "use specified precompiled header name for Windows (default none)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
+	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
 	um.add('F', "xfields", "specify additional fields with associated messages (see documentation for details)");
 	um.add('h', "help", "help, this screen");
@@ -392,7 +379,7 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 		return new TypedRealm<double>(get_value<double>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -414,33 +401,9 @@ string insert_year()
 }
 
 //-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to, const string& fname, bool donotedit)
-{
-	to << _csMap.find_ref(cs_divider) << endl;
-	string result;
-	if (donotedit)
-	{
-		to << _csMap.find_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
-		to << _csMap.find_ref(cs_divider) << endl;
-	}
-	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
-	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
-	if (!nocheck)
-	{
-		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
-		to << "#endif" << endl;
-	}
-	to << _csMap.find_ref(cs_divider) << endl;
-	to << "// " << fname << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
-}
-
-//-------------------------------------------------------------------------------------------------
 void generate_includes(ostream& to)
 {
-	static const string incfiles[] =
+	static const string incfiles[]
 	{
         "f8includes.hpp"
 	};

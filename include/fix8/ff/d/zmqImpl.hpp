@@ -9,9 +9,6 @@
  *  FastFlow using ØMQ.
  */
  
-#ifndef _FF_zmqIMPL_HPP_
-#define _FF_zmqIMPL_HPP_
-
 /* ***************************************************************************
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -29,6 +26,10 @@
  *
  ****************************************************************************
  */
+
+#ifndef FF_ZMQIMPL_HPP
+#define FF_ZMQIMPL_HPP
+
 
 #include <cstdlib>
 #include <cstdio>
@@ -2083,4 +2084,4 @@ protected:
  * \endlink
  */
 }
-#endif // _FF_zmqIMPL_HPP_
+#endif /* FF_zmqIMPL_HPP */

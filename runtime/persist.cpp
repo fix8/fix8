@@ -34,23 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <list>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-#include <cerrno>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -87,7 +71,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
 			{
 				ostringstream ostr;
 				ostr << _dbFname << ": Last sequence is " << last;
-				GlobalLogger::log(ostr.str());
+				GlobalLogger::log(FILE_LINE, ostr.str());
 			}
 		}
 		catch(DbException& dbe)
@@ -102,7 +86,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
 				{
 					ostringstream ostr;
 					ostr << "Error: opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
-					GlobalLogger::log(ostr.str());
+					GlobalLogger::log(FILE_LINE, ostr.str());
 				}
 				return false;
 			}
@@ -117,14 +101,14 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
 			if (purge)
 			{
 				_db->truncate(0, 0, 0);
-				GlobalLogger::log("Purged perist db");
+				GlobalLogger::log(FILE_LINE, "Purged perist db");
 			}
       }
       catch(DbException& dbe)
       {
 			ostringstream ostr;
          ostr << "Error: creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
-			GlobalLogger::log(ostr.str());
+			GlobalLogger::log(FILE_LINE, ostr.str());
          return false;
       }
 
@@ -162,7 +146,7 @@ unsigned BDBPersister::get_last_seqnum(unsigned& sequence) const
    {
 		ostringstream ostr;
       ostr << "last record not found (" << db_strerror(retval) << ')';
-		GlobalLogger::log(ostr.str());
+		GlobalLogger::log(FILE_LINE, ostr.str());
       return 0;
    }
    return sequence = buffer.keyBuf_.int_;
@@ -180,7 +164,7 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 
 	if (!startSeqNum || from > finish)
 	{
-		GlobalLogger::log("No records found");
+		GlobalLogger::log(FILE_LINE, "No records found");
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -213,7 +197,7 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 	{
 		ostringstream ostr;
 		ostr << "record not found (" << db_strerror(retval) << ')';
-		GlobalLogger::log(ostr.str());
+		GlobalLogger::log(FILE_LINE, ostr.str());
 	}
 	cursorp->close();
 
@@ -250,7 +234,7 @@ bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
    {
 		ostringstream ostr;
 		ostr << "Could not get control 0 " << '(' << db_strerror(retval) << ')';
-		GlobalLogger::log(ostr.str());
+		GlobalLogger::log(FILE_LINE, ostr.str());
       return false;
    }
 	unsigned *loc(reinterpret_cast<unsigned *>(buffer.dataBuf_));
@@ -271,7 +255,7 @@ bool BDBPersister::get(const unsigned seqnum, f8String& to) const
    {
 		ostringstream ostr;
 		ostr << "Could not get " << seqnum << '(' << db_strerror(retval) << ')';
-		GlobalLogger::log(ostr.str());
+		GlobalLogger::log(FILE_LINE, ostr.str());
       return false;
    }
    to.assign(buffer.dataBuf_);
@@ -338,7 +322,7 @@ int BDBPersister::operator()()
 			{
 				ostringstream ostr;
 				ostr << "Could not add" << '(' << db_strerror(retval) << ')';
-				GlobalLogger::log(ostr.str());
+				GlobalLogger::log(FILE_LINE, ostr.str());
 			}
 			else
 				++persisted;
@@ -352,7 +336,7 @@ int BDBPersister::operator()()
 
 	ostringstream ostr;
 	ostr << received << " messages received, " << persisted << " messages persisted";
-	GlobalLogger::log(ostr.str());
+	GlobalLogger::log(FILE_LINE, ostr.str());
 
    return 0;
 }
@@ -372,7 +356,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 
 	if (!startSeqNum || from > finish)
 	{
-		GlobalLogger::log("No records found");
+		GlobalLogger::log(FILE_LINE, "No records found");
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -400,7 +384,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 	{
 		ostringstream ostr;
 		ostr << "record not found (" << startSeqNum << ')';
-		GlobalLogger::log(ostr.str());
+		GlobalLogger::log(FILE_LINE, ostr.str());
 	}
 
 	return recs_sent;
@@ -409,15 +393,14 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 //-------------------------------------------------------------------------------------------------
 bool MemoryPersister::put(const unsigned sender_seqnum, const unsigned target_seqnum)
 {
-	const unsigned arr[2] = { sender_seqnum, target_seqnum };
-	return _store.insert(Store::value_type(0,
-		f8String(reinterpret_cast<const char *>(arr), sizeof(arr)))).second;
+	const unsigned arr[2] { sender_seqnum, target_seqnum };
+	return _store.insert({0, f8String(reinterpret_cast<const char *>(arr), sizeof(arr))}).second;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool MemoryPersister::put(const unsigned seqnum, const f8String& what)
 {
-	return !seqnum ? false : _store.insert(Store::value_type(seqnum, what)).second;
+	return !seqnum ? false : _store.insert({seqnum, what}).second;
 }
 
 //-------------------------------------------------------------------------------------------------
