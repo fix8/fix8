@@ -697,6 +697,8 @@ USEDOXYGEN_FALSE
 USEDOXYGEN_TRUE
 TOGGLETRACKINGASSIGNMENTS_FALSE
 TOGGLETRACKINGASSIGNMENTS_TRUE
+PROBUILD_FALSE
+PROBUILD_TRUE
 DOXYGEN
 ALLOCA
 LIBOBJS
@@ -19729,6 +19731,34 @@ else
 fi
 
 
+oktopro=no
+PRODIRFILE=./pro/buildcheck
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pro build" >&5
+$as_echo_n "checking for pro build... " >&6; }
+if test -a "$PRODIRFILE"; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_PRO_BUILD 1
+_ACEOF
+
+   oktopro=yes
+   ac_config_files="$ac_config_files pro/Makefile"
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+ if test $oktopro = yes; then
+  PROBUILD_TRUE=
+  PROBUILD_FALSE='#'
+else
+  PROBUILD_TRUE='#'
+  PROBUILD_FALSE=
+fi
+
+
 oktotogglevar=yes
 # Check whether --enable-toggleassignmentvars was given.
 if test "${enable_toggleassignmentvars+set}" = set; then :
@@ -19763,7 +19793,6 @@ if test "${enable_doxygen+set}" = set; then :
 	*) as_fn_error $? "bad value ${enableval} for --enable-doxygen" "$LINENO" 5 ;;
 esac
 fi
-
 
  if test -n "$DOXYGEN" && test $oktodox = yes; then
   USEDOXYGEN_TRUE=
@@ -24440,6 +24469,10 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
+if test -z "${PROBUILD_TRUE}" && test -z "${PROBUILD_FALSE}"; then
+  as_fn_error $? "conditional \"PROBUILD\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
 if test -z "${TOGGLETRACKINGASSIGNMENTS_TRUE}" && test -z "${TOGGLETRACKINGASSIGNMENTS_FALSE}"; then
   as_fn_error $? "conditional \"TOGGLETRACKINGASSIGNMENTS\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
@@ -25470,6 +25503,7 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
+    "pro/Makefile") CONFIG_FILES="$CONFIG_FILES pro/Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "runtime/Makefile") CONFIG_FILES="$CONFIG_FILES runtime/Makefile" ;;

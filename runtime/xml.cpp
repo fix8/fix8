@@ -34,34 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <algorithm>
-
-#ifndef _MSC_VER
-# include <strings.h>
-# include <sys/time.h>
-# include <unistd.h>
-# include <netdb.h>
-# include <syslog.h>
-#endif
-
-#include <string.h>
-#include <time.h>
-#include <errno.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <time.h>
-
-#include <map>
-#include <set>
-#include <list>
-#include <vector>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
@@ -76,7 +49,7 @@ RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 
 //----------------------------------------------------------------------------------------
-const Str2Chr::TypePair valueTable[]
+const Str2Chr XmlElement::stringtochar_
 {
 	{"amp", '&'},		{"lt", '<'},		{"gt", '>'},
 	{"apos", '\''},	{"quot", '"'},		{"nbsp", 160},
@@ -92,7 +65,6 @@ const Str2Chr::TypePair valueTable[]
 	{"frac14", 188},	{"frac12", 189},	{"frac34", 190},
 	{"iquest", 191}
 };
-const Str2Chr XmlElement::stringtochar_(valueTable, sizeof(valueTable)/sizeof(Str2Chr::TypePair), '?');
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -188,7 +160,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 	if (rootAttr)
 	{
 		attrs_ = new XmlAttrs;
-		attrs_->insert(XmlAttrs::value_type("docpath", rootAttr));
+		attrs_->insert({"docpath", rootAttr});
 	}
 
 	if (root_->maxdepth_ < depth)
@@ -332,7 +304,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 									itr != child->children_->begin()->second->children_->end(); ++itr)
 								{
 									--itr->second->depth_;
-									children_->insert(XmlSubEls::value_type(itr->first, itr->second));
+									children_->insert({itr->first, itr->second});
 									ordchildren_->insert(itr->second);
 								}
 
@@ -342,7 +314,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 							else
 							{
 								++chldcnt_;
-								children_->insert(XmlSubEls::value_type(child->GetTag(), child));
+								children_->insert({child->GetTag(), child});
 								ordchildren_->insert(child);
 							}
 						}
@@ -446,7 +418,7 @@ bool XmlElement::Insert(XmlElement *what)
 	}
 
 	++chldcnt_;
-	children_->insert(XmlSubEls::value_type(what->GetTag(), what));
+	children_->insert({what->GetTag(), what});
 	ordchildren_->insert(what);
 
 	return true;
@@ -541,7 +513,7 @@ illegal_char:
 				{
 					if (!attrs_)
 						attrs_ = new XmlAttrs;
-					if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
+					if (!attrs_->insert({tmptag, InplaceXlate(tmpval)}).second)
 					{
 						++root_->errors_;
 						ostringstream ostr;
@@ -562,7 +534,7 @@ illegal_char:
 		}
 	}
 
-	return attrs_ ? attrs_->size() : 0;
+	return attrs_ ? static_cast<int>(attrs_->size()) : 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -623,7 +595,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 		if (atag && aval && !findAttrByValue(*atag, *aval))
 			return 0;
 		eset.insert(this);
-		return eset.size();
+		return static_cast<int>(eset.size());
 	}
 
 	if (children_)
@@ -639,7 +611,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
 				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval, delim);
-			return eset.size();
+			return static_cast<int>(eset.size());
 		}
 	}
 
@@ -682,7 +654,8 @@ const string& XmlElement::InplaceXlate (string& what)
 	{
 		string whatv;
 		rCX_.SubExpr(match, what, whatv, 0, 1);
-		rCX_.Replace(match, what, stringtochar_.find_value(whatv)); // not found character entity replaces string with '?'
+		const auto sitr(stringtochar_.find(whatv));
+		rCX_.Replace(match, what, sitr == stringtochar_.cend() ? '?' : sitr->second); // not found character entity replaces string with '?'
 	}
 
 	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;

@@ -197,7 +197,7 @@ class FIXReader : public AsyncSocket<f8String>
 		 \return number of bytes read */
 	int sockRead(char *where, const size_t sz)
 	{
-		unsigned remaining(sz), rddone(0);
+		unsigned remaining(static_cast<unsigned>(sz)), rddone(0);
 		while (remaining > 0)
 		{
 			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
@@ -410,7 +410,7 @@ public:
 
 		while (remaining > 0)
 		{
-			const int wrtSz(_sock->sendBytes(data + wrdone, remaining));
+			const int wrtSz(_sock->sendBytes(data + wrdone, static_cast<int>(remaining)));
 			if (wrtSz < 0)
 			{
 				if (errno == EAGAIN

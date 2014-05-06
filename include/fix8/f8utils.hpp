@@ -1000,8 +1000,8 @@ inline void split_path(const std::string& source, std::string& filepart, std::st
 inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
    if (!target)
-      return 0;
-   const unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
+      return nullptr;
+   const unsigned sz(limit && static_cast<unsigned>(src.size()) > limit ? limit : (unsigned)src.size() + 1);
    src.copy(target, sz - 1);
    target[sz - 1] = 0;
    return target;
@@ -1030,7 +1030,7 @@ public:
 	    \return the instance */
 	static T *instance()
 	{
-		if (_instance) // cast operator performs atomic load with acquire
+		if (_instance.load()) // cast operator performs atomic load with acquire, [ss]:cast is not working under msvc
 			return _instance;
 		return create_instance();
 	}

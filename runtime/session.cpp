@@ -34,24 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <list>
-#include <vector>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <tuple>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -72,6 +55,10 @@ const vector<f8String> Session::_state_names
 	"logoff_received", "test_request_sent", "sequence_reset_sent",
 	"sequence_reset_received", "resend_request_sent", "resend_request_received"
 };
+#endif
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4273)
 #endif
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
@@ -162,7 +149,7 @@ Session::~Session()
 		_logger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
-	if (_connection->get_role() == Connection::cn_acceptor)
+	if (_connection && _connection->get_role() == Connection::cn_acceptor)
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
 	delete _schedule;
 }
@@ -236,18 +223,21 @@ void Session::stop()
 {
 	if (_control & shutdown)
 		return;
-
 	_control |= shutdown;
-	if (_connection->get_role() == Connection::cn_initiator)
-		_timer.clear();
-	else
+
+	if (_connection)
 	{
-		_timer.schedule(_hb_processor, 0);
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-		if (_persist)
-			_persist->stop();
+		if (_connection->get_role() == Connection::cn_initiator)
+			_timer.clear();
+		else
+		{
+			_timer.schedule(_hb_processor, 0);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			if (_persist)
+				_persist->stop();
+		}
+		_connection->stop();
 	}
-	_connection->stop();
 	hypersleep<h_milliseconds>(250);
 }
 
@@ -855,10 +845,10 @@ Message *Session::generate_business_reject(const unsigned seqnum, const Message 
 	{
 		msg = create_msg(Common_MsgType_BUSINESS_REJECT);
 	}
-	catch (InvalidMetadata<f8String>& e)
+	catch (InvalidMetadata<f8String>&)
 	{
 		// since this is an application message, it may not be supported in supplied schema
-		return 0;
+		return nullptr;
 	}
 
 	*msg << new ref_seq_num(seqnum);
@@ -931,7 +921,7 @@ bool Session::send(Message *tosend, bool destroy, const unsigned custom_seqnum, 
 		tosend->set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend->set_no_increment(no_increment);
-	return _connection->write(tosend, destroy);
+	return _connection && _connection->write(tosend, destroy);
 }
 
 bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
@@ -940,7 +930,7 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 		tosend.set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend.set_no_increment(no_increment);
-	return _connection->write(tosend);
+	return _connection && _connection->write(tosend);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1184,3 +1174,6 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 
 #endif // HAVE_OPENSSL
 //-------------------------------------------------------------------------------------------------
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif

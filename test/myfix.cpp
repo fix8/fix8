@@ -143,7 +143,7 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti=false), clien
 FIX8::tty_save_state save_tty(0);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
+const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
 	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
@@ -155,8 +155,6 @@ const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
 unsigned next_send(0), next_receive(0);
@@ -271,7 +269,7 @@ int main(int argc, char **argv)
 					if (srv)
 					{
 						thrds.push_back(thread ([&]() { server_process(srv, ++scnt, true); }));
-						sleep(1);
+						hypersleep<h_seconds>(1);
 					}
 				}
 				for_each(thrds.begin(), thrds.end(), [](thread& tt) { if (tt.joinable()) tt.join(); });
@@ -321,7 +319,7 @@ int main(int argc, char **argv)
 					thrds.push_back(thread ([=]()		// use copy closure
 					{
 						MyMenu mymenu(*pp->session_ptr(), 0, cout);
-						sleep(1 + RandDev::getrandom(10));
+						hypersleep<h_seconds>(1 + RandDev::getrandom(10));
 						mymenu.new_order_single();	// send an order and then logout
 						mymenu.do_logout();
 					}));
@@ -374,7 +372,7 @@ int main(int argc, char **argv)
 void client_process(ClientSessionBase *mc)
 {
 	MyMenu mymenu(*mc->session_ptr(), 0, cout);
-	cout << "Menu started. Press '?' for help..." << endl;
+	cout << endl << "Menu started. Press '?' for help..." << endl << endl;
 	char ch(0);
 	mymenu.get_tty().set_raw_mode();
 	save_tty = mymenu.get_tty();
@@ -575,8 +573,8 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (auto itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
 	return true;
 }
@@ -683,7 +681,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
 			{
 				TEX::UnderlyingSymbol unsym;
-				MessageBase *me(grnoul->get_element(cnt));
+				MessageBase *me(grnoul->get_element(static_cast<unsigned>(cnt)));
 				me->get(unsym);
 				cout << "Underlying symbol:" << unsym() << endl;
 				// This is how you extract values from a nested repeating group
@@ -693,7 +691,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 					for (size_t cnt(0); cnt < nus->size(); ++cnt)
 					{
 						TEX::UnderlyingStipType stipType;
-						MessageBase *me(nus->get_element(cnt));
+						MessageBase *me(nus->get_element(static_cast<unsigned>(cnt)));
 						me->get(stipType);
 						cout << "Underlying StipType:" << stipType() << endl;
 					}
@@ -707,7 +705,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			for (size_t cnt(0); cnt < grallocs->size(); ++cnt)
 			{
 				TEX::AllocAccount acc;
-				MessageBase *me(grallocs->get_element(cnt));
+				MessageBase *me(grallocs->get_element(static_cast<unsigned>(cnt)));
 				me->get(acc);
 				cout << "TEX::NewOrderSingle::NoAllocs Account:" << acc() << endl;
 				// This is how you extract values from a nested repeating group
@@ -717,7 +715,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 					for (size_t cnt(0); cnt < nnpi->size(); ++cnt)
 					{
 						TEX::NestedPartyID npi;
-						MessageBase *me(nnpi->get_element(cnt));
+						MessageBase *me(nnpi->get_element(static_cast<unsigned>(cnt)));
 						me->get(npi);
 						cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs NestedPartyID:" << npi() << endl;
 						// This is how you extract values from a nested nested repeating group
@@ -727,7 +725,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 							for (size_t cnt(0); cnt < nnpsi->size(); ++cnt)
 							{
 								TEX::NestedPartySubID npsi;
-								MessageBase *me(nnpsi->get_element(cnt));
+								MessageBase *me(nnpsi->get_element(static_cast<unsigned>(cnt)));
 								me->get(npsi);
 								cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs NestedPartySubID:" << npsi() << endl;
 							}

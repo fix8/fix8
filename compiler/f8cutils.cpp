@@ -34,21 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <algorithm>
-
-#include <errno.h>
-#include <string.h>
-#include <cctype>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
 #include <fix8/usage.hpp>
@@ -63,7 +49,6 @@ extern string shortName, odir, prefix;
 extern bool verbose, nocheck, nowarn, incpath;
 extern string spacer, precompHdr;
 extern const string GETARGLIST;
-extern const CSMap _csMap;
 extern unsigned glob_errors, glob_warnings;
 
 //-----------------------------------------------------------------------------------------
@@ -92,7 +77,7 @@ namespace
 ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
 	if (!exist(odir))
-		return 0;
+		return nullptr;
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
@@ -105,7 +90,7 @@ ostream *open_ofile(const string& odir, const string& fname, string& target)
 			cerr << " (" << strerror(errno) << ')';
 		cerr << endl;
 
-		return 0;
+		return nullptr;
 	}
 
 	return os.release();
@@ -309,7 +294,7 @@ void process_ordering(MessageSpecMap& mspec)
 		FieldTraitOrder mo;
 		for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
 			flitr != mitr->second._fields.get_presence().end(); ++flitr)
-				mo.insert(FieldTraitOrder::value_type(&*flitr));
+				mo.insert({&*flitr});
 
 		unsigned cnt(0);
 		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
@@ -325,7 +310,7 @@ void process_message_group_ordering(const GroupMap& gm)
 		FieldTraitOrder go;
 		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
 			flitr != gitr->second._fields.get_presence().end(); ++flitr)
-				go.insert(FieldTraitOrder::value_type(&*flitr));
+				go.insert({&*flitr});
 
 		unsigned gcnt(0);
 		for (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
@@ -394,7 +379,7 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 		return new TypedRealm<double>(get_value<double>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -413,39 +398,6 @@ string insert_year()
 	ostringstream ostr;
 	ostr << setw(2) << (ptim->tm_year - 100);
 	return ostr.str();
-}
-
-//-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to, const string& fname, bool isheader, bool donotedit)
-{
-	to << _csMap.find_ref(cs_divider) << endl;
-	string result;
-	if (donotedit)
-	{
-		to << _csMap.find_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
-		to << _csMap.find_ref(cs_divider) << endl;
-	}
-	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
-	if (!precompHdr.empty() && !isheader)
-	{
-		to << "#include ";
-		if (precompHdr[0] == '<')
-			to << precompHdr;
-		else
-			to << '"' << precompHdr << '"';
-		to << endl;
-	}
-	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
-	if (!nocheck)
-	{
-		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
-		to << "#endif" << endl;
-	}
-	to << _csMap.find_ref(cs_divider) << endl;
-	to << "// " << fname << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
 }
 
 //-------------------------------------------------------------------------------------------------

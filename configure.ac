@@ -141,6 +141,19 @@ m4_include(m4/ax_check_compile_flag.m4)
 has_assignmentvars=no
 AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
 
+oktopro=no
+PRODIRFILE=./pro/buildcheck
+AC_MSG_CHECKING(for pro build)
+if test -a "$PRODIRFILE"; then
+   AC_DEFINE_UNQUOTED(HAVE_PRO_BUILD, 1, [Define to 1 if this is a pro build. NOT available in the open source version.])
+   oktopro=yes
+   AC_CONFIG_FILES([pro/Makefile])
+   AC_MSG_RESULT(yes)
+else
+   AC_MSG_RESULT(no)
+fi
+AM_CONDITIONAL([PROBUILD], [test $oktopro = yes])
+
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
 [AS_HELP_STRING([--enable-toggleassignmentvars],[enable toggleassignmentvars for gcc (default=yes if available)])],
@@ -164,7 +177,6 @@ AC_ARG_ENABLE([doxygen],
 	no)  oktodox=no;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
 esac])
-
 AM_CONDITIONAL([USEDOXYGEN], [test -n "$DOXYGEN" && test $oktodox = yes])
 AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 

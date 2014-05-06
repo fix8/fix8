@@ -34,7 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-------------------------------------------------------------------------------------------------
 #if (defined(_MSC_VER) && _MSC_VER < 1700) || (!defined(_MSC_VER) && __cplusplus < 201103L)
-#error Fix8 requires C++11 support.
+#error Fix8 requires C++11 compiler support.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef FIX8_INCLUDES_HPP_
