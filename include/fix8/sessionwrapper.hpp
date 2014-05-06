@@ -66,7 +66,7 @@ public:
 
 	/// Prints the certificate to stdout and waits for user input on the console
 	/// to decide if a certificate should be accepted/rejected.
-   void onInvalidCertificate(const void* pSender, Poco::Net::VerificationErrorArgs& errorCert);
+	F8API void onInvalidCertificate(const void* pSender, Poco::Net::VerificationErrorArgs& errorCert);
 };
 
 /// An implementation of PrivateKeyPassphraseHandler that
@@ -81,7 +81,7 @@ public:
 	/// Destroys the Fix8PassPhraseHandler.
    ~Fix8PassPhraseHandler() {}
 
-   void onPrivateKeyRequested(const void* pSender, std::string& privateKey);
+	F8API void onPrivateKeyRequested(const void* pSender, std::string& privateKey);
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -128,19 +128,23 @@ struct SessionConfig : public Configuration
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
-		Configuration(conf_file, true), _ctx(ctx), _ses(find_session(session_name)), _session_name(session_name)
+		Configuration(conf_file, true), _ctx(ctx), _ses(find_group(g_sessions, session_name)), _session_name(session_name)
 	{
 		if (!_ses)
 			throw InvalidConfiguration(session_name);
 
-		const LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
+		_loginParameters =
+		{
+			get_retry_interval(_ses), get_retry_count(_ses),
 			get_default_appl_ver_id(_ses), get_connect_timeout(_ses),
 			get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
-			get_no_chksum_flag(_ses), get_permissive_mode_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
-			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses), create_login_schedule(_ses));
-
-		_loginParameters = lparam;
+			get_no_chksum_flag(_ses), get_permissive_mode_flag(_ses), false,
+			get_enforce_compids_flag(_ses),
+			get_tcp_recvbuf_sz(_ses),
+			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses),
+			create_login_schedule(_ses), create_clients(_ses)
+		};
 	}
 
 	/// Dtor.
@@ -152,21 +156,52 @@ struct SessionConfig : public Configuration
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Base Client wrapper.
+class ClientSessionBase : public SessionConfig
+{
+public:
+#ifdef _MSC_VER
+	ClientSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
+		: SessionConfig(ctx, conf_file, session_name) {}
+#else
+    using SessionConfig::SessionConfig;
+#endif
+
+	/*! If reliable, determine if the maximum no. of reties has been reached
+	  \return false for default clientsession */
+	virtual bool has_given_up() const { return false; }
+
+	/// Dtor.
+	virtual ~ClientSessionBase () {}
+
+	/*! Get a pointer to the session
+	  \return the session pointer */
+	virtual Session *session_ptr() = 0;
+
+	/*! Start the session - initiate the connection, logon and start heartbeating.
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
+	  \param davi default appl version id (FIXT) */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String()) = 0;
+};
+
+//-------------------------------------------------------------------------------------------------
 /// Client wrapper.
-/*!  \tparam T your derived session class */
+/*!  \tparam T specialised with your derived session class */
 template<typename T>
-class ClientSession : public SessionConfig
+class ClientSession : public ClientSessionBase
 {
 protected:
-	Logger *_log, *_plog;
 	sender_comp_id _sci;
 	target_comp_id _tci;
 	const SessionID _id;
+	Logger *_log, *_plog;
 	Persister *_persist;
 	T *_session;
-	Poco::Net::StreamSocket *_sock;
+	Poco::Net::StreamSocket *_sock = nullptr;
 	Poco::Net::SocketAddress _addr;
-	ClientConnection *_cc;
+	ClientConnection *_cc = nullptr;
 #ifdef HAVE_OPENSSL
 	PocoSslContext _ssl;
 #endif
@@ -175,16 +210,14 @@ public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
 		const std::string& session_name, bool init_con_later=false) :
-		SessionConfig(ctx, conf_file, session_name),
-		_log(create_logger(_ses, session_log)),
-		_plog(create_logger(_ses, protocol_log)),
+		ClientSessionBase(ctx, conf_file, session_name),
 		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
 		_id(_ctx._beginStr, _sci, _tci),
-		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
+		_log(create_logger(_ses, session_log, &_id)),
+		_plog(create_logger(_ses, protocol_log, &_id)),
+		_persist(create_persister(_ses, nullptr, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
-		_sock(),
-		_addr(get_address(_ses)),
-		_cc()
+		_addr(get_address(_ses))
 #ifdef HAVE_OPENSSL
 		,_ssl(get_ssl_context(_ses), true)
 #endif
@@ -193,10 +226,9 @@ public:
 		{
 #ifdef HAVE_OPENSSL
 			bool secured(_ssl.is_secure());
-			_sock =
-				secured
-					? new Poco::Net::SecureStreamSocket(_ssl._context)
-					: new Poco::Net::StreamSocket;
+			_sock = secured
+				? new Poco::Net::SecureStreamSocket(_ssl._context)
+				: new Poco::Net::StreamSocket;
 #else
 			bool secured(false);
 			_sock = new Poco::Net::StreamSocket;
@@ -207,10 +239,6 @@ public:
 		_session->set_login_parameters(this->_loginParameters);
 		_session->set_session_config(this);
 	}
-
-	/*! If reliable, determine if the maximum no. of reties has been reached
-	  \return false for default clientsession */
-	virtual bool has_given_up() const { return false; }
 
 	/// Dtor.
 	virtual ~ClientSession ()
@@ -234,17 +262,17 @@ public:
 		{ _session->start(_cc, wait, send_seqnum, recv_seqnum, davi); }
 
 	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ClientSession<T> > Client_ptr;
+	using ClientSession_ptr = std::unique_ptr<ClientSession<T>>;
 };
 
 //-------------------------------------------------------------------------------------------------
 /// Reliable Client wrapper. This client attempts to recover from disconnects and login rejects.
-/*! \tparam T your derived session class */
+/*! \tparam T specialised with your derived session class */
 template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
-	dthread<ReliableClientSession<T> > _thread;
-	unsigned _send_seqnum, _recv_seqnum, _current, _attempts;
+	dthread<ReliableClientSession<T>> _thread;
+	unsigned _send_seqnum = 0, _recv_seqnum = 0, _current = 0, _attempts = 0;
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
@@ -253,8 +281,7 @@ class ReliableClientSession : public ClientSession<T>
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)),
-		_send_seqnum(), _recv_seqnum(), _current(), _attempts(),
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(std::ref(*this)),
 		_failover_cnt(this->get_addresses(this->_ses, _servers))
 	{
 		_giving_up = false;
@@ -303,7 +330,7 @@ public:
 	const Server *get_server(unsigned idx=no_servers_configured) const
 	{
 		return idx == no_servers_configured && _failover_cnt ? &_servers[_current]
-			: idx < _failover_cnt ? &_servers[idx] : 0;
+			: idx < _failover_cnt ? &_servers[idx] : nullptr;
 	}
 
 	/*! The reliability thread entry point.
@@ -329,10 +356,9 @@ public:
 				//std::cout << "operator()():try" << std::endl;
 #ifdef HAVE_OPENSSL
 				bool secured(this->_ssl.is_secure());
-				this->_sock =
-					secured
-						? new Poco::Net::SecureStreamSocket(this->_ssl._context)
-						: new Poco::Net::StreamSocket;
+				this->_sock = secured
+					? new Poco::Net::SecureStreamSocket(this->_ssl._context)
+					: new Poco::Net::StreamSocket;
 #else
 				bool secured(false);
 				this->_sock = new Poco::Net::StreamSocket;
@@ -419,8 +445,9 @@ public:
 			}
 
 			delete this->_cc;
-			this->_cc = 0;
+			this->_cc = nullptr;
 			delete this->_sock;
+			this->_sock = nullptr;
 
 			if (!excepted || (_failover_cnt == 0 && _attempts > this->_loginParameters._login_retries))
 				break;
@@ -429,7 +456,7 @@ public:
 			{
 				++_servers[_current]._retries;
 
-				for (; !_cancellation_token; ) // FIXME possible endless loop condition
+				while (!_cancellation_token) // FIXME possible endless loop condition
 				{
 					if (_servers[_current]._max_retries && _servers[_current]._retries < _servers[_current]._max_retries)
 						break;
@@ -448,19 +475,66 @@ public:
 
 	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 
-
 	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ReliableClientSession<T> > ReliableClient_ptr;
+	using ReliableClientSession_ptr = std::unique_ptr<ReliableClientSession<T>>;
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Server wrapper.
-/*! \tparam T your derived session class */
+class SessionInstanceBase;
+template<typename T> class SessionInstance;
+
+/// Base Server Session.
+class ServerSessionBase : public SessionConfig
+{
+protected:
+	Poco::Net::ServerSocket *_server_sock = nullptr;
+
+public:
+#ifdef _MSC_VER
+	ServerSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
+		: SessionConfig(ctx, conf_file, session_name) {}
+#else
+    /// Ctor. Prepares session for receiving inbbound connections (acceptor).
+	using SessionConfig::SessionConfig;
+#endif
+
+	/// Dtor.
+	virtual ~ServerSessionBase ()
+	{
+		delete _server_sock;
+		_server_sock = nullptr;
+	}
+
+	/*! Create a SessionInstance for the associated Session
+	  \return base pointer to new SessionInstance */
+	virtual SessionInstanceBase *create_server_instance() = 0;
+
+	/*! Check to see if there are any waiting inbound connections.
+	  \param span timespan (us, default 250 ms) to wait before returning (will return immediately if connection available)
+	  \return true if a connection is avaialble */
+	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const
+		{ return _server_sock->poll(span, Poco::Net::Socket::SELECT_READ); }
+
+	/*! Accept an inbound connection and obtain a connected socket
+	  \param claddr location to store address of remote connection
+	  \return the connected socket */
+	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr)
+		{ return _server_sock->acceptConnection(claddr); }
+
+	/*! Check if this server session supports secure connections
+	  \return true if supported */
+	virtual bool is_secure() const { return false; }
+
+	friend class ServerManager;
+};
+
+//-------------------------------------------------------------------------------------------------
+// Server wrapper.
+/*! \tparam T specialised with your derived session class */
 template<typename T>
-class ServerSession : public SessionConfig
+class ServerSession : public ServerSessionBase
 {
 	Poco::Net::SocketAddress _addr;
-	Poco::Net::ServerSocket * _server_sock;
 #ifdef HAVE_OPENSSL
 	PocoSslContext _ssl;
 #endif
@@ -468,19 +542,18 @@ class ServerSession : public SessionConfig
 public:
 	/// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	ServerSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
-		SessionConfig(ctx, conf_file, session_name),
+		ServerSessionBase(ctx, conf_file, session_name),
 		_addr(get_address(_ses))
 #ifdef HAVE_OPENSSL
 		,_ssl(get_ssl_context(_ses), false)
 #endif
 	{
+		_server_sock =
 #ifdef HAVE_OPENSSL
-		_server_sock = _ssl.is_secure()
-			? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context)
-			: new Poco::Net::ServerSocket(_addr);
-#else
-		_server_sock = new Poco::Net::ServerSocket(_addr);
+			_ssl.is_secure() ? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context) :
 #endif
+			new Poco::Net::ServerSocket(_addr);
+
 		if (_loginParameters._recv_buf_sz)
 			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, _server_sock);
 		if (_loginParameters._send_buf_sz)
@@ -488,36 +561,55 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~ServerSession ()
-	{
-		delete _server_sock;
-	}
+	virtual ~ServerSession () {}
 
-	/*! Check to see if there are any waiting inbound connections.
-	  \param span timespan (us, default 250 ms) to wait before returning (will return immediately if connection available)
-	  \return true if a connection is avaialble */
-	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock->poll(span, Poco::Net::Socket::SELECT_READ); }
-
-	/*! Accept an inbound connection and obtain a connected socket
-	  \param claddr location to store address of remote connection
-	  \return the connected socket */
-	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr) { return _server_sock->acceptConnection(claddr); }
+	/*! Create a SessionInstance for the associated Session
+	  \return base pointer to new SessionInstance */
+	virtual SessionInstanceBase *create_server_instance();
 
 	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ServerSession<T> > Server_ptr;
+	using ServerSession_ptr = std::unique_ptr<ServerSession<T>>;
 
+	virtual bool is_secure() const
 #ifdef HAVE_OPENSSL
-	bool is_secure() const { return _ssl.is_secure(); }
+		{ return _ssl.is_secure(); }
 #else
-	bool is_secure() const { return false; }
+		{ return false; }
 #endif
 };
 
-/// Server session instance.
-/*! \tparam T your derived session class */
-template<typename T>
-class SessionInstance
+//-------------------------------------------------------------------------------------------------
+/// Base Server session instance.
+class SessionInstanceBase
 {
+public:
+	/// Ctor. Prepares session instance with inbound connection.
+	SessionInstanceBase () = default;
+
+	/// Dtor.
+	virtual ~SessionInstanceBase () {}
+
+	/*! Get a pointer to the session
+	  \return the session pointer */
+	virtual Session *session_ptr() = 0;
+
+	/*! Start the session - accept the connection, logon and start heartbeating.
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) {}
+
+	/// Stop the session. Cleanup.
+	virtual void stop() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+/// Server session instance.
+/*! \tparam T specialised with your derived session class */
+template<typename T>
+class SessionInstance : public SessionInstanceBase
+{
+	ServerSession<T>& _sf;
 	Poco::Net::SocketAddress _claddr;
 	Poco::Net::StreamSocket *_sock;
 	T *_session;
@@ -526,16 +618,21 @@ class SessionInstance
 public:
 	/// Ctor. Prepares session instance with inbound connection.
 	SessionInstance (ServerSession<T>& sf) :
-		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
-		_session(new T(sf._ctx)),
+		_sf(sf),
+		_sock(new Poco::Net::StreamSocket(_sf.accept(_claddr))),
+		_session(new T(_sf._ctx, _sf.get_sender_comp_id(_sf._ses))),
+		_sc(_sock, _claddr, *_session, _sf.get_heartbeat_interval(_sf._ses), _sf.get_process_model(_sf._ses),
+		_sf.get_tcp_nodelay(_sf._ses), _sf.get_tcp_reuseaddr(_sf._ses), _sf.get_tcp_linger(_sf._ses),
+		_sf.get_tcp_keepalive(_sf._ses),
 #ifdef HAVE_OPENSSL
-		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), sf.is_secure())
+		_sf.is_secure()
 #else
-		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), false)
+		false
 #endif
+			)
 	{
-		_session->set_login_parameters(sf._loginParameters);
-		_session->set_session_config(&sf);
+		_session->set_login_parameters(_sf._loginParameters);
+		_session->set_session_config(&_sf);
 	}
 
 	/// Dtor.
@@ -543,26 +640,30 @@ public:
 	{
 		delete _session;
 		delete _sock;
+		_sock = nullptr;
 	}
 
 	/*! Get a pointer to the session
 	  \return the session pointer */
-	T *session_ptr() { return _session; }
+	virtual T *session_ptr() override { return _session; }
 
 	/*! Start the session - accept the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) override
 		{ _session->start(&_sc, wait, send_seqnum, recv_seqnum); }
 
 	/// Stop the session. Cleanup.
-	void stop() { _session->stop(); }
+	virtual void stop() override { _session->stop(); }
 
 	/// Convenient scoped pointer for your session instance.
-	typedef scoped_ptr<SessionInstance<T> > Instance_ptr;
+	using SessionInstance_ptr = std::unique_ptr<SessionInstance<T>>;
 };
+
+template<typename T>
+SessionInstanceBase *ServerSession<T>::create_server_instance() { return new SessionInstance<T>(*this); }
 
 } // FIX8
 
-#endif // _FIX8_SESSIONWRAPPER_HPP_
+#endif // FIX8_SESSIONWRAPPER_HPP_

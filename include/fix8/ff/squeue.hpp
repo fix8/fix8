@@ -1,8 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef _FF_SQUEUE_HPP_
-#define _FF_SQUEUE_HPP_
-
 /*!
  * \link
  * \file squeue.hpp
@@ -34,6 +31,8 @@
  *
  ****************************************************************************
  */
+#ifndef FF_SQUEUE_HPP
+#define FF_SQUEUE_HPP
 
 #include <stdlib.h>
 
@@ -245,7 +244,7 @@ private:
 
 } // namespace ff
 
-#endif /* _FF_SQUEUE_HPP_ */
+#endif /* FF_SQUEUE_HPP */
 
 #if 0
 
@@ -291,4 +290,4 @@ int main() {
     return 0;
 }
 
-#endif 
+#endif

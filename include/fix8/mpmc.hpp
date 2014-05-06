@@ -38,26 +38,26 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_MPMC_HPP_
 
 //-------------------------------------------------------------------------------------------------
-// provide generic names to Multi Producer Multi Consumer queues, mutexes and atomic from
+// provide generic names to Multi Producer Multi Consumer queues and mutexes from
 // different libraries
+
+//-------------------------------------------------------------------------------------------------
+# include <atomic>
+template<typename T> using f8_atomic = std::atomic<T>;
 
 //-------------------------------------------------------------------------------------------------
 #if (MPMC_SYSTEM == MPMC_TBB)
 
 # include <tbb/concurrent_queue.h>
-# include <tbb/atomic.h>
 # include <tbb/mutex.h>
 
-// when we move to c++11 we will use proper template type aliases
-# define f8_atomic tbb::atomic
-# define f8_mutex tbb::mutex
-# define f8_spin_lock tbb::spin_mutex
-# define f8_concurrent_queue tbb::concurrent_bounded_queue
+using f8_mutex = tbb::mutex;
+using f8_spin_lock = tbb::spin_mutex;
+template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
 #elif (MPMC_SYSTEM == MPMC_FF)
 
-# include <ff/atomic/atomic.h>
 # include <ff/allocator.hpp>
 # include <ff/buffer.hpp>
 # include <ff/MPMCqueues.hpp>
@@ -66,8 +66,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // std wrappers for ff
 # include <ff_wrapper.hpp>
 
-# define f8_atomic FIX8::ff_atomic
-# define f8_concurrent_queue FIX8::ff_unbounded_queue
+template<typename T> using f8_concurrent_queue = FIX8::ff_unbounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
 #endif // MPMC_SYSTEM
@@ -79,15 +78,12 @@ namespace FIX8 {
 template<typename T>
 class f8_scoped_lock_impl
 {
-	T *_local_mutex;
-	bool _disabled;
-
-	f8_scoped_lock_impl(const f8_scoped_lock_impl&);
-	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&);
+	T *_local_mutex = nullptr;
+	bool _disabled = false;
 
 public:
-	f8_scoped_lock_impl() : _local_mutex(), _disabled() {}
-	f8_scoped_lock_impl(T& mutex) : _disabled() { acquire(mutex); }
+	f8_scoped_lock_impl() = default;
+	f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
 	f8_scoped_lock_impl(T& mutex, bool disable) : _disabled(disable)
 	{
 		if (!_disabled)
@@ -95,6 +91,9 @@ public:
 	}
 
 	~f8_scoped_lock_impl() { release(); }
+
+	f8_scoped_lock_impl(const f8_scoped_lock_impl&) = delete;
+	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&) = delete;
 
 	void acquire(T& mutex)
 	{
@@ -115,13 +114,13 @@ public:
 		if (!_disabled && _local_mutex)
 		{
 			_local_mutex->unlock();
-			_local_mutex = 0;
+			_local_mutex = nullptr;
 		}
 	}
 };
 
-typedef f8_scoped_lock_impl<f8_mutex> f8_scoped_lock;
-typedef f8_scoped_lock_impl<f8_spin_lock> f8_scoped_spin_lock;
+using f8_scoped_lock = f8_scoped_lock_impl<f8_mutex>;
+using f8_scoped_spin_lock = f8_scoped_lock_impl<f8_spin_lock>;
 
 } // namespace
 

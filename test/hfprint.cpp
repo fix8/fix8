@@ -99,7 +99,7 @@ void print_usage();
 const string GETARGLIST("hsvo:c");
 bool term_received(false), summary(false);
 
-typedef map<string, unsigned> MessageCount;
+using MessageCount = map<string, unsigned>;
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -114,27 +114,13 @@ void sig_handler(int sig)
    }
 }
 
-//----------------------------------------------------------------------------------------
-/// Abstract file or stdin input.
-class filestdin
-{
-   std::istream *ifs_;
-   bool nodel_;
-
-public:
-   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
-   ~filestdin() { if (!nodel_) delete ifs_; }
-
-   std::istream& operator()() { return *ifs_; }
-};
-
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val, offset(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
 		{ "offset",			1,	0,	'o' },
@@ -200,12 +186,12 @@ int main(int argc, char **argv)
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
+				unique_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));
 					if (mitr == mc->end())
-						mc->insert(MessageCount::value_type(msg->get_msgtype(), 1));
+						mc->insert({msg->get_msgtype(), 1});
 					else
 						mitr->second++;
 				}

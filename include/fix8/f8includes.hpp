@@ -33,15 +33,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#if (defined(_MSC_VER) && _MSC_VER < 1700) || (!defined(_MSC_VER) && __cplusplus < 201103L)
+#error Fix8 requires C++11 compiler support.
+#endif
+//-------------------------------------------------------------------------------------------------
 #ifndef FIX8_INCLUDES_HPP_
 #define FIX8_INCLUDES_HPP_
-
+//-------------------------------------------------------------------------------------------------
 #include <fix8/f8dll.h>
 #include <fix8/f8config.h>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>
@@ -72,6 +72,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 #endif
 
+#include <unordered_map>
+#include <functional>
 #include <errno.h>
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>
@@ -99,5 +101,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/configuration.hpp>
 #include <fix8/persist.hpp>
 #include <fix8/sessionwrapper.hpp>
+#include <fix8/multisession.hpp>
 
 #endif // _FIX8_INCLUDES_HPP_

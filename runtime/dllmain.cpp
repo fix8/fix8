@@ -1,4 +1,5 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
+#include "precomp.hpp"
 #ifdef _MSC_VER
 #include <fix8/f8config.h>
 

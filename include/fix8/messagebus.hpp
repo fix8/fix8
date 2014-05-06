@@ -95,6 +95,9 @@ public:
 	/*! Creates a subscription for the given topic */
 	virtual bool subscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
 
+	/*! Creates a subscription for the given topic, returns new subscriber */
+	virtual MessageBusSubscriber *subscribe(const f8String& topic) { return nullptr; }
+
 	/*! Removes a subscription for a given subscriber */
 	virtual bool unsubscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
 };
@@ -104,4 +107,4 @@ public:
 } // MBUS
 } // FIX8
 
-#endif // _FIX8_MESSAGEBUS_HPP_
+#endif // FIX8_MESSAGEBUS_HPP_

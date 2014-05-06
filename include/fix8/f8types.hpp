@@ -44,7 +44,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-typedef std::string f8String;
+using f8String = std::string;
 
 //-------------------------------------------------------------------------------------------------
 /// Supported session process models
@@ -89,43 +89,45 @@ template<typename Key, typename Val>
 class GeneratedTable
 {
 public:
-	typedef _pair<Key, Val> Pair;
+	using Pair = _pair<Key, Val>;
+	using iterator = Pair*;
+	using const_iterator = const Pair*;
 
 #ifndef _MSC_VER
 private:
 #endif
 	/// The actual data set
-	const Pair *_pairs;
+	const_iterator _pairs;
 
 	/// The number of elements in the data set
 	const size_t _pairsz;
 
-	typedef Val NotFoundType;
+	using NotFoundType = Val;
 	/// The value to return when the key is not found
 	const NotFoundType& _noval;
 
 	/*! Find a key; complexity log2(N)+2
 	  \param key the key to find
 	  \return Pair * if found, 0 if not found */
-   const Pair *_find(const Key& key) const
+   const_iterator _find(const Key& key) const
    {
-		const Pair *res(std::lower_bound (begin(), end(), reinterpret_cast<const Pair&>(key), Pair::Less));
+		const_iterator res(std::lower_bound (begin(), end(), reinterpret_cast<const Pair&>(key), Pair::Less));
       /// res != end && key >= res
-      return res != end() && !Pair::Less(reinterpret_cast<const Pair&>(key), *res) ? res : 0;
+      return res != end() && !Pair::Less(reinterpret_cast<const Pair&>(key), *res) ? res : nullptr;
    }
 
 public:
 	///Ctor.
-	GeneratedTable(const Pair *pairs, const size_t pairsz, const NotFoundType& noval)
+	GeneratedTable(const_iterator pairs, const size_t pairsz, const NotFoundType& noval)
 		: _pairs(pairs), _pairsz(pairsz), _noval(noval) {}
 
 	/*! Get iterator to start of Pairs
 	  \return pointer to first pair */
-	const Pair *begin() const { return _pairs; }
+	const_iterator begin() const { return _pairs; }
 
 	/*! Get iterator to last + 1 of Pairs
 	  \return pointer to last + 1 pair */
-	const Pair *end() const { return _pairs + _pairsz; }
+	const_iterator end() const { return _pairs + _pairsz; }
 
 	/*! Find a key (reference). If not found, throw InvalidMetadata.
 	  Ye Olde Binary Chop
@@ -133,7 +135,7 @@ public:
 	  \return value found (reference) */
 	const Val& find_ref(const Key& key) const
 	{
-		const Pair *res(_find(key));
+		const_iterator res(_find(key));
 		if (res)
 			return res->_value;
 		throw InvalidMetadata<Key>(key);
@@ -144,7 +146,7 @@ public:
 	  \return value found (value) or _noval if not found */
 	const Val find_val(const Key& key) const
 	{
-		const Pair *res(_find(key));
+		const_iterator res(_find(key));
 		return res ? res->_value : _noval;
 	}
 
@@ -153,81 +155,27 @@ public:
 	  \return value found (pointer) or 0 if not found */
 	const Val *find_ptr(const Key& key) const
 	{
-		const Pair *res(_find(key));
-		return res ? &res->_value : 0;
+		const_iterator res(_find(key));
+		return res ? &res->_value : nullptr;
 	}
 
 	/*! Find a key pair record (pointer).
 	  \param key the key to find
 	  \return key/value pair (pointer) or 0 if not found */
-	const Pair *find_pair_ptr(const Key& key) const
+	const_iterator find_pair_ptr(const Key& key) const
 	{
-		const Pair *res(_find(key));
-		return res ? res : 0;
+		const_iterator res(_find(key));
+		return res ? res : nullptr;
 	}
 
 	/*! Get the pair at index location
 	  \param idx of the pair to retrieve
 	  \return reference to pair or _noval if not found */
-	const Pair *at(const size_t idx) const { return idx < _pairsz ? _pairs + idx : 0; }
+	const_iterator at(const size_t idx) const { return idx < _pairsz ? _pairs + idx : nullptr; }
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */
 	size_t size() const { return _pairsz; }
-};
-
-//-------------------------------------------------------------------------------------------------
-/// A specialised map to enable native static initalisation.
-/*! \tparam Key the key
-   \tparam Val the value
-   \tparam Compare the comparitor */
-template<typename Key, typename Val, typename Compare=std::less<Key> >
-struct StaticTable
-{
-	typedef typename std::map<Key, Val, Compare> TypeMap;
-	typedef typename TypeMap::value_type TypePair;
-	typedef Val NotFoundType;
-
-	/// The container
-	const TypeMap _valuemap;
-
-	/// The value to return when the key is not found
-	const NotFoundType _noval;
-
-	/// Ctor.
-	StaticTable(const TypePair *valueTable, size_t valueTableSz, const NotFoundType& noval)
-		: _valuemap(valueTable, valueTable + valueTableSz), _noval(noval) {}
-
-	/*! Find a key (value).
-	  \param key the key to find
-	  \return value found (value) or _noval if not found */
-	Val find_value(const Key& key) const
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? itr->second : _noval;
-	}
-
-	/*! Find a key (reference).
-	  \param key the key to find
-	  \return value found (reference) or _noval if not found */
-	const Val& find_ref(const Key& key) const
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? itr->second : _noval;
-	}
-
-	/*! Find a key (pointer).
-	  \param key the key to find
-	  \return value found (pointer) or 0 if not found */
-	const Val *find_ptr(const Key& key) const
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? &itr->second : 0;
-	}
-
-	/*! Get the number of elements in the data set.
-	  \return number of elements */
-	size_t get_count() const { return _valuemap.size(); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -240,17 +188,17 @@ template<typename K, typename T, typename Comp>
 class presorted_set
 {
 public:
-	typedef T* iterator;
-	typedef const T* const_iterator;
-	typedef std::pair<iterator, bool> result;
+	using iterator = T*;
+	using const_iterator = const T*;
+	using result = std::pair<iterator, bool>;
 
 private:
 	const size_t _reserve;
 	size_t _sz, _rsz;
 	T *_arr;
 
-	typedef std::pair<iterator, iterator> internal_result;
-	typedef std::pair<const_iterator, const_iterator> const_internal_result;
+	using internal_result = std::pair<iterator, iterator>;
+	using const_internal_result = std::pair<const_iterator, const_iterator>;
 
 	/*! Calculate the amount of space to reserve in set
 	  \param sz number of elements currently in set; if 0 retun reserve elements as size to reserve
@@ -431,14 +379,14 @@ public:
 template<typename T>
 struct Type2Type
 {
-	typedef T type;
+	using type = T;
 };
 
 template<typename T, typename R>
 struct Type2Types
 {
-	typedef T type;
-	typedef R rtype;
+	using type = T;
+	using rtype = R;
 };
 
 } // FIX8

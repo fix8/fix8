@@ -34,8 +34,8 @@
  ****************************************************************************
  Mehdi Goli: m.goli@rgu.ac.uk*/
 
-#ifndef _FF_OCLENVIRONMENT_HPP
-#define _FF_OCLENVIRONMENT_HPP
+#ifndef FF_OCLENVIRONMENT_HPP
+#define FF_OCLENVIRONMENT_HPP
 
 #include <vector>
 #include <pthread.h>
@@ -90,4 +90,4 @@ public:
  * @}
  * \endlink
  */
-#endif /*Environment define*/
+#endif /* FF_OCLENVIRONMENT_HPP */

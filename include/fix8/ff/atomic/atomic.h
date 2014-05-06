@@ -4,8 +4,8 @@
  *
  */
 
-#ifndef _ASM_GENERIC_ATOMIC_H
-#define _ASM_GENERIC_ATOMIC_H
+#ifndef FF_ASM_GENERIC_ATOMIC_H
+#define FF_ASM_GENERIC_ATOMIC_H
 /*
  * Copyright (C) 2005 Silicon Graphics, Inc.
  *  Christoph Lameter <clameter@sgi.com>
@@ -230,6 +230,6 @@ static inline long atomic_long_inc_return(atomic_long_t *v) {
 
 #endif
 
-#endif
+#endif /* FF_ASM_GENERIC_ATOMIC_H */
 
 

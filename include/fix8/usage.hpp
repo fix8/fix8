@@ -43,7 +43,7 @@ class UsageMan
 {
 	const std::string prognm_, params_;
 	std::string argstr_, description_;
-	typedef std::map<const char, const std::pair<const std::string, const std::string> > OPTEL;
+	using OPTEL = std::map<const char, const std::pair<const std::string, const std::string>>;
 	OPTEL optels_;
 	std::list<std::string> xtrlines_;
 	const int splen_, argoptlen_;
@@ -72,8 +72,7 @@ public:
 	  \return true on success */
 	bool add(const char sw, const std::string& lsw, const std::string& help)
 	{
-		return optels_.insert(OPTEL::value_type(sw,
-			std::pair<const std::string, const std::string>(lsw, help))).second;
+		return optels_.insert({sw, std::pair<const std::string, const std::string>(lsw, help)}).second;
 	}
 
 	/*! Add an extra help line. Lines prefixed with '@' are indented one tabstop.
