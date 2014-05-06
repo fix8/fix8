@@ -875,7 +875,7 @@ Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 	Message *msg(create_msg(Common_MsgType_LOGON));
 	*msg << new heartbeat_interval(heartbtint)
 		  << new encrypt_method(0); // FIXME
-	if (!davi.empty())
+	if (!davi.empty() && msg->has<default_appl_ver_id>())
 		*msg << new default_appl_ver_id(davi);
 	if (_loginParameters._reset_sequence_numbers)
 		*msg << new reset_seqnum_flag(true);

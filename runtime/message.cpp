@@ -119,7 +119,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		{
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
-				throw InvalidField(tv);
+				throw UnknownField(tv);
 			BaseField *bf(be->_create._do(val, be->_rlm, -1));
 			add_field_decoder(tv, ++pos, bf);
 			itr->_field_traits.set(FieldTrait::present);
