@@ -138,7 +138,9 @@ void MainWindow::buildMainWindow()
     copyWindowA->setIcon((QIcon(":/images/32x32/copywindow.svg")));
     copyWindowA->setToolTip(tr("Copy Window"));
     connect(copyWindowA,SIGNAL(triggered()),this,SLOT(copyWindowSlot()));
-
+    editSchemaA= new QAction("&Schema",this);
+    editSchemaA->setIcon((QIcon(":/images/svg/editSchema.svg")));
+     connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
     showMessageA = new QAction(tr("Show/Hide Msgs"),this);
     showMessageA->setToolTip(tr("Show/Hide Message Area"));
     showMessageA->setCheckable(true);
@@ -266,6 +268,7 @@ void MainWindow::buildMainWindow()
     optionMenu->addAction(hideToolBarA);
     optionMenu->addAction(hideSearchToolBarA);
     optionMenu->addAction(hideConsoleA);
+    optionMenu->addAction(editSchemaA);
     optionMenu->addAction(showMessageA);
     optionMenu->setTearOffEnabled(true);
     optionMenu->addMenu(hideColumMenu);
@@ -287,7 +290,9 @@ void MainWindow::buildMainWindow()
     mainToolBar->addAction(newTabA);
     mainToolBar->addAction(copyTabA);
     mainToolBar->addSeparator();
+    mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(showMessageA);
+
     mainToolBar->addAction(autoSaveA);
     configPB = new QPushButton(this);
     configPB->setIcon(QIcon(":/images/svg/preferences-color.svg"));

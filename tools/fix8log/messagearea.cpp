@@ -45,15 +45,11 @@ MessageArea::MessageArea(QWidget *parent) :
     messageTypeV->setAlignment(Qt::AlignCenter);
     infoForm->addRow("Seq Num",seqNumV);
     infoForm->addRow("Mesg Type",messageTypeV);
-
     wBox->addWidget(tableView,1);
     wBox->addWidget(infoArea,0,Qt::AlignBottom);
-
     stackLayout->insertWidget(0,workArea);
 }
 void MessageArea::setMessageFieldList(MessageFieldList *mfl,int seqNum, QString &msgType)
-
-
 {
     seqNumV->setText(QString::number(seqNum));
     messageTypeV->setText(msgType);

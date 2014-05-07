@@ -15,7 +15,6 @@
 #include <QStyleOptionViewItemV4>
 #include <string.h>
 #include <time.h>
-
 #include <iostream>
 #include <fix8/f8includes.hpp>
 #include <message.hpp>
@@ -70,7 +69,6 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     QTableView(p),windowID(wid),worksheetID(wsid)
 
 {
-    qDebug() << ">>>>>>>>>>>>  WINDOW ID SET TO " << windowID << __FILE__ << __LINE__;
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     viewport()->setAcceptDrops(true);
@@ -86,14 +84,11 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setHorizontalHeader(fixHeader);
     setMouseTracking(true);
     QStringList strList;
-
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSortingEnabled(true);
     setAlternatingRowColors(true);
-
     resize(sizeHint());
-
 }
 void FixTable::setWindowID(QUuid &uuid)
 {
@@ -169,14 +164,10 @@ void  FixTable::mouseMoveEvent(QMouseEvent *event)
     fmd->worksheetID = worksheetID;
     fmd->setUrls(QList<QUrl>() << url);
     //QMimeData *mimeData = new QMimeData;
-
     fmd->model = (QStandardItemModel *) model();
     drag->setMimeData(fmd);
-
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
 }
-
-/******************************************************************/
 void FixTable::paintEvent(QPaintEvent *pe)
 {
     QTableView::paintEvent(pe);
@@ -199,10 +190,7 @@ void FixTable::paintEvent(QPaintEvent *pe)
         painter.drawText(emptyX1,emptyY1,emptyStr1);
         painter.drawText(emptyX2,emptyY2,emptyStr2);
     }
-
-
 }
-/******************************************************************/
 QSize FixTable::sizeHint () const
 {
     QSize s(800,700);
@@ -220,18 +208,14 @@ void FixTable::dragEnterEvent(QDragEnterEvent *event)
         printf("Different table\n");
         event->acceptProposedAction();
     }
-
 }
 void FixTable::dragMoveEvent(QDragMoveEvent *event)
 {
     event->acceptProposedAction();
     //event->accept();
-
 }
-
 void FixTable::dropEvent(QDropEvent *event)
 {
-    qDebug() << "Drop Event " << __FILE__ << __LINE__;
     FixMimeData *mimeData =  (FixMimeData *) event->mimeData();
     if (mimeData) {
         emit modelDropped(mimeData);

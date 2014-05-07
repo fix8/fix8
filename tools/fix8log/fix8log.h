@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 class QStandardItemModel;
 class Database;
+class SchemaEditorDialog;
 class FutureReadData;
 class FixMimeData;
 
@@ -32,6 +33,7 @@ public slots:
     void deleteMainWindowSlot(MainWindow *mw);
     void displayConsoleMessage(GUI::Message);
     void displayConsoleMessage(QString, GUI::Message::MessageType = GUI::Message::InfoMsg);
+    void editSchemaSlot(MainWindow *,QUuid workSheetID);
     void exitAppSlot();
      void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();
@@ -47,6 +49,8 @@ protected:
     bool autoSaveOn;
     QMap <QString, QStandardItemModel *> fileNameModelMap;
     bool cancelSessionRestore;
+    SchemaEditorDialog *schemaEditorDialog;
+
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };

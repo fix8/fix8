@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     searchlineedit.cpp \
     fixtoolbar.cpp \
     fixmimedata.cpp \
-    nodatalabel.cpp
+    nodatalabel.cpp \
+    schemaeditordialog.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -63,7 +64,8 @@ HEADERS  += mainwindow.h \
     searchlineedit.h \
     fixtoolbar.h \
     fixmimedata.h \
-    nodatalabel.h
+    nodatalabel.h \
+    schemaeditordialog.h
 
 RESOURCES += \
     resources.qrc
@@ -79,6 +81,7 @@ OTHER_FILES += \
     fix8log \
     fix8log.o \
     fix8log.pro.user \
-    fix8log.pro.user.7112d3e
+    fix8log.pro.user.7112d3e \
+    images/svg/editSchema.svg
 
 

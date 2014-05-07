@@ -4,6 +4,7 @@
 #include <QDesktopWidget>
 #include <QPalette>
 #include <QToolBar>
+#include <QVector>
 using namespace GUI;
 float   Globals::version = 0.0;
 QString Globals::versionStr;
@@ -15,6 +16,7 @@ Globals* Globals::m_pInstance = NULL;
 QString Globals::timeFormats[] {
     "Day-Mon-YY hh:min:sec", "Day Mon hh:min:sec", "hh:min:sec","hh:min"};
 Globals::TimeFormat Globals::timeFormat = Globals::HHMM;
+QVector <Globals::MessagePair> * Globals::messagePairs=0;
 Globals* Globals::Instance()
 {
     if (!m_pInstance)   {// Only allow one instance of class to be generated.

@@ -3,15 +3,26 @@
 #include "fixmimedata.h"
 #include "globals.h"
 #include "mainwindow.h"
+#include "schemaeditordialog.h"
 #include "windowdata.h"
 #include <QApplication>
 #include <QDebug>
 #include <QtWidgets>
-
+#include <fix8/f8includes.hpp>
+#include <field.hpp>
+#include <message.hpp>
+#include <f8types.hpp>
+#include <Myfix_types.hpp>
+#include <Myfix_router.hpp>
+#include <Myfix_classes.hpp>
+#include <iostream>
+#include <string.h>
 using namespace GUI;
+using namespace FIX8;
+
 Fix8Log::Fix8Log(QObject *parent) :
     QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
-    cancelSessionRestore(false)
+    cancelSessionRestore(false),schemaEditorDialog(0)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
@@ -23,6 +34,9 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
     wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
+
+    //const GeneratedTable<const char *, BaseMsgEntry>::Pair *p = TEX::ctx()._bme.at(1);
+
 }
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
@@ -48,27 +62,20 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(this,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             mw,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
      connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
+     connect(mw,SIGNAL(editSchema(MainWindow*,QUuid)),this,SLOT(editSchemaSlot(MainWindow*,QUuid)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
     if (mainWindows.count() == 1)  {
-
         if (autoSaveOn) {
-            qDebug() << "Save session" << __FILE__ << __LINE__;
             saveSession();
-            qDebug() << "After Save Session" << __FILE__ << __LINE__;
         }
     }
-
     mainWindows.removeOne(mw);
-    qDebug() << "Delete Window Slot" << __FILE__ << __LINE__;
     mw->deleteLater();
-    qDebug() << "\tAfter deleteLater...." << __FILE__ << __LINE__;
     if (mainWindows.count() < 1) {
-        qDebug() << "\tFix8 Write Settings" << __FILE__ << __LINE__;
         writeSettings();
-        qDebug() << "\tFix8 call app exit" << __FILE__ << __LINE__;
         qApp->exit();
     }
 }
@@ -95,7 +102,6 @@ bool Fix8Log::init()
     QStandardItemModel *model = 0;
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
-
     readSettings();
     if (!dir.exists()) {
         bstatus = dir.mkdir(dbPath);
@@ -139,14 +145,20 @@ bool Fix8Log::init()
             displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
     }
-
+    QString key;
+    QString value;
+    Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
+    for(int ii=0;ii < TEX::ctx()._bme.size();ii++)
+    {
+        key =
+             QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
+        value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
+        Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
+    }
     // initial screeen
-
-    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
-
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QList <WindowData> windowDataList = database->getWindows();
-    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
-
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QListIterator <WindowData> iter(windowDataList);
     QStringList errorStrList;
     MainWindow *newMW;
@@ -191,12 +203,10 @@ bool Fix8Log::init()
                     if (model) {
                         newMW->addWorkSheet(model,wsd);
                         newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
-
                     }
                 }
             }
         }
-
         qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
         displayConsoleMessage("Session restored from autosave");
     }
@@ -224,18 +234,12 @@ void Fix8Log::saveSession()
     MainWindow *mw;
     WorkSheetData wsd;
     bool bstatus;
-    qDebug() << "\tFix8 Write Settings" << __FILE__ << __LINE__;
     bstatus = database->deleteAllWindows();
-    qDebug() << "\tFix8 Status Deleta All Windows" << bstatus << __FILE__ << __LINE__;
-
     if (!bstatus)
         qWarning() << "Delete all windows from database failed" << __FILE__ << __LINE__;
-
     bstatus = database->deleteAllWorkSheets();
     if (!bstatus)
         qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
-
-    qDebug() << "Num of windows to save:" << mainWindows.count() << __FILE__ << __LINE__;
     QListIterator <MainWindow *> iter(mainWindows);
     while(iter.hasNext()) {
         mw = iter.next();
@@ -290,7 +294,6 @@ void Fix8Log::lastWindowClosedSlot()
 }
 void Fix8Log::cancelSessionRestoreSlot()
 {
-    qDebug() << "Fix Log Cancel Session Restore";
     cancelSessionRestore = true;
     displayConsoleMessage("Session Restore Cancelled");
 }
@@ -315,10 +318,15 @@ void  Fix8Log::modelDroppedSlot(FixMimeData* fmd)
     while(iter.hasNext()) {
         mw = iter.next();
         if (mw->getUuid() == fmd->windowID) {
-            qDebug() << "HEY FOUND WINDOW FROM DRAG ORIGIN" << __FILE__ << __LINE__;
             wsd = mw->getWorksheetData(fmd->worksheetID, &ok);
             mwSender->finishDrop(wsd,fmd);
             break;
         }
     }
+}
+void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
+{
+    if (!schemaEditorDialog)
+        schemaEditorDialog = new SchemaEditorDialog();
+    schemaEditorDialog->show();
 }

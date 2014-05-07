@@ -16,6 +16,15 @@ void MainWindow::quitSlot()
     emit exitApp();
     //qApp->quit();
 }
+void MainWindow::editSchemaSlot()
+{
+    QUuid workSheetID;
+     WorkSheet *ws = qobject_cast <WorkSheet *> (tabW->currentWidget());
+     if (ws)
+         workSheetID = ws->getID();
+    emit editSchema(this,workSheetID);
+}
+
 void MainWindow::hideColumnActionSlot(QAction *action)
 {
     WorkSheet *workSheet;

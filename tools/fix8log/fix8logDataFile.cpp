@@ -98,6 +98,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
             std::unique_ptr <Message> msg(Message::factory(TEX::ctx(),ba.data()));
             msg->Header()->get(snum);
             const Presence& pre(msg->get_fp().get_presence());
+
             MessageFieldList *mlf = new MessageFieldList();
             colPosition = 0;
             for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
@@ -119,7 +120,6 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
                     return 0;
                 }
             }
-
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();
@@ -317,8 +317,6 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
                 MessageField mf(itr->first,name,var);
                 mlf->append(mf);
             }
-
-
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();

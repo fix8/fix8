@@ -5,7 +5,8 @@
 #include <QString>
 #include <QSize>
 #include <QUuid>
-
+#include <QVector>
+#include <QPair>
 class QDesktopWidget;
 
 namespace GUI {
@@ -24,6 +25,7 @@ class Globals
 public:
     static Globals* Instance();
     typedef enum {DAYMONYRHHMMSS,DAYMMMHHMMSS,HHMMSS,HHMM,NumOfTimeFormats} TimeFormat;
+    typedef QPair <QString, QString> MessagePair;
     static QString timeFormats[NumOfTimeFormats];
     static float   version;
     static QString versionStr;
@@ -32,6 +34,7 @@ public:
     static QSize largeIconSize;
     static QColor menubarDefaultColor;
     static TimeFormat timeFormat;
+    static QVector <MessagePair> *messagePairs;
 private:
     Globals(){};
     Globals(Globals const&){};

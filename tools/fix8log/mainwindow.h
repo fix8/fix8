@@ -61,6 +61,7 @@ public:
     void copyTabSlot();
     void copyWindowSlot();
     void createTabSlot();
+    void editSchemaSlot();
     void editTabNameSlot(bool isOn);
     void fileDirChangedSlot(const QString &);
     void fileFilterSelectedSlot(QString);
@@ -86,6 +87,7 @@ protected:
     QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
+    QAction  *editSchemaA;
     QAction  *filterOnA;
     QAction  *hideConsoleA;
     QAction  *hideToolBarA;
@@ -126,7 +128,6 @@ protected:
     QMenu    *configureIconsMenu;
     QMenu    *iconSizeMenu;
     QMenu    *iconStyleMenu;
-
     QMenu    *optionMenu;
     QMenu    *poupMenu;
     QMenuBar *mainMenuBar;
@@ -141,7 +142,6 @@ protected:
     QTabWidget *tabW;
     QTextBrowser *consoleArea;
     //QToggleButton editTabNamePB;
-
     QToolBar *mainToolBar;
     FixToolBar *searchToolBar;
     QList <FixTable *> fixTableLists;
@@ -160,6 +160,7 @@ signals:
     void createWindow(MainWindow *);
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
+    void editSchema(MainWindow *, QUuid uuid);
     void exitApp();
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);

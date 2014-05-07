@@ -40,5 +40,6 @@
         <file>images/svg/saveOff.svg</file>
         <file>images/svg/saveOn.svg</file>
         <file>qml/loadProgress.qml</file>
+        <file>images/svg/editSchema.svg</file>
     </qresource>
 </RCC>
