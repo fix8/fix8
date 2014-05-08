@@ -2,8 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-      <Poco>C:\Users\User\src\secure\repos\fix8-win-deps\poco-develop</Poco>
-      <TBB>C:\Users\User\src\secure\repos\fix8-win-deps\tbb42_20131003oss</TBB>
       <GetOpt>C:\Users\User\src\secure\repos\fix8-win-deps\getopt_mb_uni_vc10</GetOpt>
       <gtest>C:\Users\User\src\secure\repos\fix8-win-deps\gtest-1.7.0</gtest>
       <OpenSSL32>c:\OpenSSL-Win32</OpenSSL32>
@@ -20,28 +18,28 @@
         <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
       </ClCompile>
       <ClCompile Condition="'$(Platform)'=='x64'">
-        <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(Poco)/NetSSL_OpenSSL/include;$(Poco)/Crypto/include;$(Poco)/Util/include;$(TBB)/include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL64)/include</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL64)/include</AdditionalIncludeDirectories>
       </ClCompile>
       <ClCompile Condition="'$(Platform)'=='Win32'">
-        <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(Poco)/NetSSL_OpenSSL/include;$(Poco)/Crypto/include;$(Poco)/Util/include;$(TBB)/include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL32)/include</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL32)/include</AdditionalIncludeDirectories>
       </ClCompile>
       <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-          <AdditionalLibraryDirectories>$(tbb)/build/vs2013/intel64/$(Configuration);$(poco)/lib64;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+          <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
           <AdditionalDependencies>getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
           <ForceSymbolReferences>__TBB_malloc_proxy</ForceSymbolReferences>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-          <AdditionalLibraryDirectories>$(tbb)/build/vs2013/intel64/$(Configuration);$(poco)/lib64;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+          <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
           <AdditionalDependencies>getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
           <ForceSymbolReferences>__TBB_malloc_proxy</ForceSymbolReferences>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-          <AdditionalLibraryDirectories>$(tbb)/build/vs2013/ia32/$(Configuration);$(poco)/lib;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+          <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
           <AdditionalDependencies>getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
           <ForceSymbolReferences>___TBB_malloc_proxy</ForceSymbolReferences>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-          <AdditionalLibraryDirectories>$(tbb)/build/vs2013/ia32/$(Configuration);$(poco)/lib;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+          <AdditionalLibraryDirectories>$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
           <AdditionalDependencies>getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
           <ForceSymbolReferences>___TBB_malloc_proxy</ForceSymbolReferences>
       </Link>

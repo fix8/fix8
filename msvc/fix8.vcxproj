@@ -62,7 +62,7 @@
     <Import Project="root.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>700222ab</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>2714c7dc</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)d</TargetName>
@@ -257,6 +257,8 @@
     <Import Project="packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets" Condition="Exists('packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets')" />
     <Import Project="packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets" Condition="Exists('packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets')" />
     <Import Project="packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets" Condition="Exists('packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets')" />
+    <Import Project="packages\poco.crypto.redist.1.4.6-p4\build\native\poco.crypto.redist.targets" Condition="Exists('packages\poco.crypto.redist.1.4.6-p4\build\native\poco.crypto.redist.targets')" />
+    <Import Project="packages\poco.crypto.1.4.6-p4\build\native\poco.crypto.targets" Condition="Exists('packages\poco.crypto.1.4.6-p4\build\native\poco.crypto.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -280,5 +282,7 @@
     <Error Condition="!Exists('packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.util.redist.1.4.6-p4\build\native\poco.util.redist.targets'))" />
     <Error Condition="!Exists('packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.netssl.1.4.6-p4\build\native\poco.netssl.targets'))" />
     <Error Condition="!Exists('packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.netssl.redist.1.4.6-p4\build\native\poco.netssl.redist.targets'))" />
+    <Error Condition="!Exists('packages\poco.crypto.redist.1.4.6-p4\build\native\poco.crypto.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.crypto.redist.1.4.6-p4\build\native\poco.crypto.redist.targets'))" />
+    <Error Condition="!Exists('packages\poco.crypto.1.4.6-p4\build\native\poco.crypto.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\poco.crypto.1.4.6-p4\build\native\poco.crypto.targets'))" />
   </Target>
 </Project>
