@@ -147,14 +147,30 @@ bool Fix8Log::init()
     }
     QString key;
     QString value;
+    quint32 ikey;
+    FieldTrait::FieldType ft;
     Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
-    for(int ii=0;ii < TEX::ctx()._bme.size();ii++)
+    for(unsigned int ii=0;ii < TEX::ctx()._bme.size();ii++)
     {
         key =
              QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
         value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
         Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
     }
+   int sizeofFieldTable = TEX::ctx()._be.size();
+   qDebug() << "SIZE OF FIELD TABLE = " << sizeofFieldTable << __FILE__ << __LINE__;
+   for(unsigned int ii=0;ii < TEX::ctx()._be.size();ii++)  {
+       ikey = TEX::ctx()._be.at(ii)->_key;
+       const BaseEntry be = TEX::ctx()._be.at(ii)->_value;
+       const RealmBase *rb = be._rlm;
+       FieldTrait::FieldType trait( (FieldTrait::FieldType) ikey);
+      // qDebug() << "\tKey of field =" << ikey;
+       qDebug() << "\tBaseEntry:" << be._name;
+       QVariant var = trait;
+       //qDebug() << "\t Type = " << var.typeName();
+       //if (rb)  rb is always null
+      // qDebug() << "\tRealm Base ftype:" << rb->_ftype << ", dtype:" << rb->_dtype;
+   }
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QList <WindowData> windowDataList = database->getWindows();
@@ -326,7 +342,28 @@ void  Fix8Log::modelDroppedSlot(FixMimeData* fmd)
 }
 void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
 {
-    if (!schemaEditorDialog)
+    bool ok;
+    QString tabName;
+    qDebug() << "EDIT SCHEMA SLOT" << __FILE__ << __LINE__;
+    if (!schemaEditorDialog) {
+        qDebug() << "\tcreate new scheme edit dialog";
         schemaEditorDialog = new SchemaEditorDialog();
+    }
+    qDebug() << "\tshow schema editor dialog...";
+    QString windowName = mw->windowTitle();
+    if (windowName.length() < 1)
+        windowName = qApp->applicationName();
+    qDebug() << "WINDOW NAME " << windowName << __FILE__;
+    if (!workSheetID.isNull()) {
+        WorkSheetData wsd = mw->getWorksheetData(workSheetID,&ok);
+        if (ok) {
+            if (wsd.tabAlias.length() >= 1)
+                tabName = wsd.tabAlias;
+            else
+                tabName = wsd.fileName;
+        }
+    }
+    schemaEditorDialog->setCurrentTarget(windowName,tabName);
     schemaEditorDialog->show();
+
 }

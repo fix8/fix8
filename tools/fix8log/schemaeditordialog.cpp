@@ -15,12 +15,9 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     titleArea->setLayout(titleBox);
 
     iconL = new QLabel(titleArea);
-    iconL->setPixmap(QPixmap(":/images/editSchema.svg").scaled(42,42));
-    // iconL->setFixedSize(48,48);
+    iconL->setPixmap(QPixmap(":/images/svg/editSchema.svg").scaled(42,42));
 
     QString str = tr("Table Schema Editor");
-
-
     titleL = new QLabel(str,titleArea);
     QFont fnt = titleL->font();
     fnt.setBold(true);
@@ -33,17 +30,54 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     QFrame *hrLine = new QFrame(this);
     hrLine->setFrameStyle(QFrame::HLine);
 
-
+    applyBG = new QButtonGroup(this);
+    applyBG->setExclusive(true);
     applyOnlyToCurrentRB = new QRadioButton("Apply To Tab",this);
     applyToWindowRB = new QRadioButton("Apply To Window",this);
     applyToAllRB = new QRadioButton("Apply To All",this);
-
+    applyBG->addButton(applyOnlyToCurrentRB);
+    applyBG->addButton(applyToWindowRB);
+    applyBG->addButton(applyToAllRB);
+    connect(applyBG,SIGNAL(buttonClicked(QAbstractButton*)),
+            this,SLOT(applyButtonSlot(QAbstractButton*)));
+    QHBoxLayout *topBox = new QHBoxLayout();
     QWidget *applyArea = new QWidget(this);
+
+
     QHBoxLayout *applyBox = new QHBoxLayout();
     applyArea->setLayout(applyBox);
-    applyBox->addWidget(applyToAllRB);
-    applyBox->addWidget(applyToWindowRB);
-    applyBox->addWidget(applyOnlyToCurrentRB);
+    applyBox->addWidget(applyToAllRB,0,Qt::AlignLeft);
+    applyBox->addWidget(applyToWindowRB,0,Qt::AlignLeft);
+    applyBox->addWidget(applyOnlyToCurrentRB,0,Qt::AlignLeft);
+
+    targetArea = new QWidget();
+    QHBoxLayout *tarBox = new QHBoxLayout();
+    targetArea->setLayout(tarBox);
+    fnt = targetArea->font();
+    fnt.setBold(true);
+    targetArea->setFont(fnt);
+
+    windowL = new QLabel("Window:");
+    windowL->setFont(fnt);
+    windowV = new QLabel("");
+
+    tabL = new QLabel("Tab:");
+    tabL->setFont(fnt);
+    tabV = new QLabel("");
+    fnt.setPointSize(fnt.pointSize()+2);
+    fnt.setItalic(true);
+    windowV->setFont(fnt);
+    tabV->setFont(fnt);
+    tarBox->addWidget(windowL,0,Qt::AlignLeft);
+    tarBox->addWidget(windowV,1,Qt::AlignLeft);
+    tarBox->addSpacing(22);
+    tarBox->addWidget(tabL,0);
+    tarBox->addWidget(tabV,1,Qt::AlignLeft);
+
+    topBox->addWidget(applyArea,0,Qt::AlignLeft);
+    topBox->addWidget(targetArea,0,Qt::AlignLeft);
+    topBox->addStretch(1);
+
 
     QWidget *workWidget = new QWidget();
     QGridLayout *wgrid = new QGridLayout();
@@ -111,7 +145,7 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
 
     vbox->addWidget(titleArea,0);
     vbox->addWidget(hrLine,0);
-    vbox->addWidget(applyArea,0,Qt::AlignLeft);
+    vbox->addLayout(topBox,0);
     vbox->addSpacing(22);
     vbox->addWidget(workWidget,2);
     vbox->addStretch(1);
@@ -130,4 +164,30 @@ void SchemaEditorDialog::populateMessageList()
        messageModel->setItem(i,item);
     }
 
+}
+void SchemaEditorDialog::applyButtonSlot(QAbstractButton *button)
+{
+    if (button == applyOnlyToCurrentRB) {
+        windowL->show();
+        windowV->show();
+        tabL->show();
+        tabV->show();
+    }
+    else if (button == applyToWindowRB) {
+        windowL->show();
+        windowV->show();
+        tabL->hide();
+        tabV->hide();
+    }
+    else { // must be apply to all
+        windowL->hide();
+        windowV->hide();
+        tabL->hide();
+        tabV->hide();
+    }
+}
+void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
+{
+    windowV->setText(windowName);
+    tabV->setText(tabName);
 }

@@ -8,20 +8,26 @@ class SchemaEditorDialog : public QDialog
     Q_OBJECT
 public:
     explicit SchemaEditorDialog(QWidget *parent = 0);
+    void setCurrentTarget(QString &windowName, QString &tabName);
 
 signals:
 
 public slots:
-
+    void applyButtonSlot(QAbstractButton*);
 private:
     void populateMessageList();
     //SchemaEditorWidget *schemaWidget;
     QWidget *schemaArea;
+    QButtonGroup *applyBG;
     QDialogButtonBox *buttonBox;
     QPushButton *applyB;
     QPushButton *closeB;
     QLabel  *iconL;
     QLabel  *titleL;
+    QLabel  *windowL;
+    QLabel  *windowV;
+    QLabel  *tabL;
+    QLabel  *tabV;
     QListView *availableSchemasListView;
     QListView *messageListView;
     QListView *availableListView;
@@ -38,7 +44,7 @@ private:
     QPushButton *editSchemaPB;
     QPushButton *deleteSchemaPB;
     QStandardItemModel *messageModel;
-
+    QWidget *targetArea;
 
 
 
