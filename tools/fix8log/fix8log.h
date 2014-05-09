@@ -38,7 +38,8 @@ public slots:
      void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();
     void modelDroppedSlot(FixMimeData *);
-    void  setTimeFormatSlot(GUI::Globals::TimeFormat);
+    void setTimeFormatSlot(GUI::Globals::TimeFormat);
+    void schemaEditorFinishedSlot(int);
 protected:
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);
     void saveSession();

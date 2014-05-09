@@ -348,6 +348,8 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     if (!schemaEditorDialog) {
         qDebug() << "\tcreate new scheme edit dialog";
         schemaEditorDialog = new SchemaEditorDialog();
+        connect(schemaEditorDialog,SIGNAL(finished(int)),
+                this,SLOT(schemaEditorFinishedSlot(int)));
     }
     qDebug() << "\tshow schema editor dialog...";
     QString windowName = mw->windowTitle();
@@ -357,13 +359,22 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     if (!workSheetID.isNull()) {
         WorkSheetData wsd = mw->getWorksheetData(workSheetID,&ok);
         if (ok) {
+            qDebug() << "OK" << __FILE__ << __LINE__;
             if (wsd.tabAlias.length() >= 1)
                 tabName = wsd.tabAlias;
             else
                 tabName = wsd.fileName;
         }
     }
+    qDebug() << "Set Current Target " << __FILE__ << __LINE__;
     schemaEditorDialog->setCurrentTarget(windowName,tabName);
+    qDebug() << "Do Show " << __FILE__ << __LINE__;
+
     schemaEditorDialog->show();
 
+}
+void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
+{
+    if (returnCode == QDialogButtonBox::Close)
+      schemaEditorDialog->close();
 }

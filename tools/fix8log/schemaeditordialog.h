@@ -9,19 +9,23 @@ class SchemaEditorDialog : public QDialog
 public:
     explicit SchemaEditorDialog(QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
-
 signals:
-
 public slots:
+    void actionButtonSlot(QAbstractButton *button );
     void applyButtonSlot(QAbstractButton*);
+    void cancelNewSlot();
+    void nameEditedSlot(const QString &);
+    void newSchemaSlot();
 private:
+    typedef enum {RegMode,NewMode,EditMode} ViewMode;
     void populateMessageList();
+    bool validate();
     //SchemaEditorWidget *schemaWidget;
-    QWidget *schemaArea;
     QButtonGroup *applyBG;
+    QColor editColor;
+    QColor regularColor;
     QDialogButtonBox *buttonBox;
-    QPushButton *applyB;
-    QPushButton *closeB;
+    QGroupBox *descriptionBox;
     QLabel  *iconL;
     QLabel  *titleL;
     QLabel  *windowL;
@@ -34,8 +38,12 @@ private:
     QListView *selectedListView;
     QLabel *availableSchemasL;
     QLabel *messageListL;
+    QLabel *newSchemaL;
     QLabel *availableListL;
     QLabel *selectedListL;
+    QLineEdit *newSchemaLine;
+    QPushButton *applyB;
+    QPushButton *closeB;
     QRadioButton *applyOnlyToCurrentRB;
     QRadioButton *applyToWindowRB;
     QRadioButton *applyToAllRB;
@@ -43,11 +51,18 @@ private:
     QPushButton *copySchemaPB;
     QPushButton *editSchemaPB;
     QPushButton *deleteSchemaPB;
+    QPushButton *cancelEditPB;
+    QPushButton *saveEditPB;
+    QStackedWidget *buttonStackArea;
+    QStackedWidget *newSchemaStackArea;
     QStandardItemModel *messageModel;
+    QStandardItemModel *schemaModel;
+    QTextEdit *descriptionE;
+    QWidget *newSchemaArea;
+    QWidget *schemaArea;
     QWidget *targetArea;
-
-
-
+    ViewMode viewMode;
+    bool haveChanges;
 };
 
 #endif // SCHEMAEDITORDIALOG_H
