@@ -8,8 +8,6 @@
  *  \brief This file contains general settings for the FastFlow framework.
  */
 
-#ifndef _FF_CONFIG_HPP_
-#define _FF_CONFIG_HPP_
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -28,6 +26,9 @@
  ****************************************************************************
  */
 
+#ifndef FF_CONFIG_HPP
+#define FF_CONFIG_HPP
+
 #include <limits.h>
 
 #if !defined(CACHE_LINE_SIZE)
@@ -45,20 +46,26 @@
 #endif
 
 namespace ff {
-     /*!
-     *  \ingroup shared_memory_fastflow
-     *
-     *  @{
-     */
-//    enum { FF_EOS=ULONG_MAX, FF_EOS_NOFREEZE=(FF_EOS-0x1) , FF_GO_ON=(FF_EOS-0x2)};
-static const unsigned long FF_EOS           = (ULONG_MAX);
-static const unsigned long FF_EOS_NOFREEZE  = (FF_EOS-0x1);
-static const unsigned long FF_GO_ON         = (FF_EOS-0x2);
-}
+/*!
+ *  \ingroup shared_memory_fastflow
+ *
+ *  \brief These are reserved pointer addresses 
+ *  @{
+ */
+static const size_t FF_EOS           = (ULONG_MAX);  /// automatically propagated
+static const size_t FF_EOS_NOFREEZE  = (FF_EOS-0x1); /// non automatically propagated
+static const size_t FF_GO_ON         = (FF_EOS-0x2); /// non automatically propagated
+static const size_t FF_GO_OUT        = (FF_EOS-0x3); /// non automatically propagated
+// The FF_GO_OUT is quite similar to the FF_EOS_NOFREEZE, both are not propagated automatically but while 
+// the first one is used to exit the main computation loop and in case being freezed, the second one is used 
+// to exit the computation loop and keep spinning on the input queue for a new task without being freezed.
 
+}
 #define GO_ON         (void*)ff::FF_GO_ON
+#define GO_OUT        (void*)ff::FF_GO_OUT
 #define EOS_NOFREEZE  (void*)ff::FF_EOS_NOFREEZE
 #define EOS           (void*)ff::FF_EOS
+
 
 #if defined(TRACE_FASTFLOW)
 #define FFTRACE(x) x
@@ -110,9 +117,13 @@ static const unsigned long FF_GO_ON         = (FF_EOS-0x2);
 //#include <ff/config.h>
 //#endif // NO_CMAKE_CONFIG
 
+#if defined(USE_CMAKE_CONFIG)
+#include <cmake.modules/ffconfig.h>
+#endif
+
 /*!
  *  @}
  *  \endlink
  */
 
-#endif /* _FF_CONFIG_HPP_ */
+#endif /* FF_CONFIG_HPP */

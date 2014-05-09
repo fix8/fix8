@@ -135,7 +135,7 @@ bool term_received(false);
 unsigned batch_size(1000), preload_count(0), update_count(5000);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
+const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'n', "Send a NewOrderSingle msg" }, &MyMenu::new_order_single },
 	{ { 'p', "Preload n NewOrderSingle msgs" }, &MyMenu::preload_new_order_single },
@@ -146,8 +146,6 @@ const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(true);
 
@@ -239,8 +237,7 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			FIX8::ServerSession<hf_session_server>::Server_ptr
-				ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
+			unique_ptr<FIX8::ServerSessionBase> ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
 
 			XmlElement::XmlSet eset;
 
@@ -248,8 +245,7 @@ int main(int argc, char **argv)
 			{
 				if (!ms->poll())
 					continue;
-				FIX8::SessionInstance<hf_session_server>::Instance_ptr
-					inst(new FIX8::SessionInstance<hf_session_server>(*ms));
+				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= FIX8::Session::print;
 				ostringstream sostr;
@@ -274,7 +270,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			FIX8::scoped_ptr<FIX8::ClientSession<hf_session_client> >
+			unique_ptr<FIX8::ClientSessionBase>
 				mc(reliable ? new FIX8::ReliableClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1")
 							   : new FIX8::ClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
@@ -287,6 +283,7 @@ int main(int argc, char **argv)
 				mc->start(false, next_send, next_receive);
 
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			cout << endl << "Menu started. Press '?' for help..." << endl << endl;
 			if (mc->session_ptr()->get_connection()->is_secure())
 				cout << "Session is secure (SSL)" << endl;
 			if (preload_count)
@@ -539,8 +536,8 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
 	return true;
 }

@@ -74,8 +74,8 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	hf_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
-		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
+	hf_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=nullptr,
+		FIX8::Logger *logger=nullptr, FIX8::Logger *plogger=nullptr) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
 
 	/*! Application message callback.
 	    This method is called by the framework when an application message has been received and decoded. You
@@ -96,7 +96,7 @@ public:
 	}
 
 	bool cached() const { return !_nos_queue.empty(); }
-	int size() const { return _nos_queue.size(); }
+	int size() const { return static_cast<int>(_nos_queue.size()); }
 };
 
 //-----------------------------------------------------------------------------------------
@@ -130,11 +130,12 @@ class hf_session_server : public FIX8::Session
 public:
 	/*! Ctor. Acceptor.
 	    \param ctx reference to generated metadata
+	    \param sci sender comp id of hosting session
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	hf_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0,
-		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, persist, logger, plogger),
+	hf_session_server(const FIX8::F8MetaCntx& ctx, const FIX8::sender_comp_id& sci, FIX8::Persister *persist=nullptr,
+		FIX8::Logger *logger=nullptr, FIX8::Logger *plogger=nullptr) : Session(ctx, sci, persist, logger, plogger),
 		_router(*this) {}
 
 	/*! Application message callback. This method is called by the framework when an application message has been received and decoded.
@@ -154,11 +155,11 @@ class MyMenu
 	/// Individual menu item.
 	struct MenuItem
 	{
-		const char _key;
+		const char _key = 0;
 		const std::string _help;
 
-		MenuItem(const char key, const std::string& help) : _key(key), _help(help) {}
-		MenuItem() : _key(), _help() {}
+		MenuItem(char key, const std::string help=std::string()) : _key(key), _help(help) {}
+		MenuItem() = default;
 		bool operator() (const MenuItem& a, const MenuItem& b) const { return a._key < b._key; }
 	};
 
@@ -166,18 +167,22 @@ class MyMenu
 	std::istream _istr;
 	std::ostream& _ostr;
 
-	using Handlers = FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
+	using Handlers = std::map<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 	static const Handlers _handlers;
-	static const Handlers::TypePair _valueTable[];
 
 public:
-	MyMenu(hf_session_client& session, int infd, std::ostream& ostr)
-		: _tty(infd), _session(session), _istr(new FIX8::fdinbuf(infd)), _ostr(ostr) {}
+	MyMenu(FIX8::Session& session, int infd, std::ostream& ostr)
+		: _tty(infd), _session(static_cast<hf_session_client&>(session)),
+		_istr(new FIX8::fdinbuf(infd)), _ostr(ostr) {}
 	virtual ~MyMenu() {}
 
 	std::istream& get_istr() { return _istr; }
 	std::ostream& get_ostr() { return _ostr; }
-	bool process(const char ch) { return (this->*_handlers.find_ref(MenuItem(ch, std::string())))(); }
+	bool process(char ch)
+	{
+		auto itr(_handlers.find({ch}));
+		return itr == _handlers.end() ? true : (this->*itr->second)();
+	}
 
 	bool new_order_single();
 	bool preload_new_order_single();
@@ -186,13 +191,10 @@ public:
 	bool send_all_preloaded();
 	bool send_all_preloaded(coroutine& coro, FIX8::Session *ses);
 	bool help();
-	bool nothing() { return true; }
 	bool do_exit() { return false; }
 	bool do_logout();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
-
-	friend struct FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 };
 
 //-----------------------------------------------------------------------------------------

@@ -1,23 +1,35 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <fix8>
-	<session name="TEX1"
-				role="acceptor"
+	<default role="acceptor"
 				fix_version="1100"
-				active="true"
 				heartbeat_interval="10"
+				ip="0.0.0.0"
 				session_log="session_log_file"
 				protocol_log="protocol_log"
-				ip="0.0.0.0" port="11001"
-				sender_comp_id="TEX_DLD"
 				tcp_recv_buffer="100663296"
 				tcp_send_buffer="100663296"
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
 				process_model="threaded"
+				enforce_compids="false"
 				silent_disconnect="false"
-				target_comp_id="client_Group0"
 				persist="file0"/>
+
+	<session name="TEX"
+				port="11001"
+				active="true"
+				sender_comp_id="TEX_DLD" />
+
+	<session name="TEX1"
+				port="11001"
+				active="true"
+				sender_comp_id="TEX1_DLD" />
+
+	<session name="TEX2"
+				port="11002"
+				active="true"
+				sender_comp_id="TEX2_DLD2" />
 
 	<schedule name="test_schedule0"
 				start_time="22:00:00"

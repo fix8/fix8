@@ -34,24 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <tuple>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
+#include <fix8/f8config.h>
 #ifdef HAVE_OPENSSL
 #include <Poco/Net/Context.h>
 #endif
@@ -67,22 +51,23 @@ RegExp Configuration::_ipexp("^([^:]+):([0-9]+)$");
 //-------------------------------------------------------------------------------------------------
 int Configuration::process()
 {
-	if (!exist(_xmlfile))
-		throw ConfigurationError("server config file not found", _xmlfile);
 	if (!_root)
 		throw ConfigurationError("could not create root xml entity");
-	if (!load_map("fix8/session", _sessions, true))
-		throw ConfigurationError("could not locate server session in config file", _xmlfile);
 
-	load_map("fix8/persist", _persisters);
-	load_map("fix8/log", _loggers);
-	load_map("fix8/server_group", _server_group);
-	load_map("fix8/client_group", _client_group);
-	load_map("fix8/ssl_context", _ssl_context);
-	load_map("fix8/schedule", _schedules);
-	load_map("fix8/login", _logins);
+	using item = tuple<f8String, group_types, bool>;
+	static const item items[]
+	{
+		{ item("session", g_sessions, true) },					{ item("log", g_loggers, false) },
+		{ item("server_group", g_server_group, false) },	{ item("client_group", g_client_group, false) },
+		{ item("ssl_context", g_ssl_context, false) },		{ item("schedule", g_schedules, false) },
+		{ item("login", g_logins, false) },						{ item("persist", g_persisters, false) }
+	};
 
-	return _sessions.size();
+	for (auto &pp : items)
+		if (!load_map("fix8/" + get<0>(pp), _groups[get<1>(pp)], get<2>(pp)) && get<2>(pp))
+			throw ConfigurationError("could not locate server session in configuration", get<0>(pp));
+
+	return static_cast<int>(_groups[g_sessions].size());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -121,7 +106,7 @@ size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& targ
 {
 	string name;
 	const XmlElement *which;
-	if (from_or_default(from, "server_group", name) && (which = find_server_group(name)))
+	if (from_or_default(from, "server_group", name) && (which = find_group(g_server_group, name)))
 	{
 		XmlElement::XmlSet slist;
 		if (which->find("server_group/server", slist))
@@ -176,7 +161,7 @@ Session_Schedule *Configuration::create_session_schedule(const XmlElement *from)
 {
 	string name;
 	const XmlElement *which(0);
-	if (from_or_default(from, "schedule", name) && (which = find_schedule(name)))
+	if (from_or_default(from, "schedule", name) && (which = find_group(g_schedules, name)))
 	{
 		Schedule sch(create_schedule(which));
 		f8String reject_text("Business messages are not accepted now.");
@@ -193,8 +178,8 @@ Schedule Configuration::create_login_schedule(const XmlElement *from) const
 {
 	string name;
 	const XmlElement *which;
-	return from_or_default(from, "login", name) && (which = find_login_schedule(name))
-		? create_schedule(which) : Schedule{};
+	return from_or_default(from, "login", name) && (which = find_group(g_logins, name))
+		? create_schedule(which) : Schedule();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -202,7 +187,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 {
 	string name, type;
 	const XmlElement *which;
-	if (from_or_default(from, "persist", name) && (which = find_persister(name)) && which->GetAttr("type", type))
+	if (from_or_default(from, "persist", name) && (which = find_group(g_persisters, name)) && which->GetAttr("type", type))
 	{
 		if (type == "mem")
 			return new MemoryPersister;
@@ -222,7 +207,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 			string config_str;
 			if (which->GetAttr("config_string", config_str))
 			{
-				scoped_ptr<MemcachedPersister> result(new MemcachedPersister);
+				unique_ptr<MemcachedPersister> result(new MemcachedPersister);
 				if (result->initialise(config_str, db, flag))
 					return result.release();
 			}
@@ -237,7 +222,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 			string host_str;
 			if (which->GetAttr("host", host_str))
 			{
-				scoped_ptr<HiredisPersister> result(new HiredisPersister);
+				unique_ptr<HiredisPersister> result(new HiredisPersister);
 				if (result->initialise(host_str, which->FindAttr("port", 6379),
 					which->FindAttr("connect_timeout", static_cast<unsigned>(defaults::connect_timeout)), db, flag))
 						return result.release();
@@ -250,7 +235,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 #if defined HAVE_BDB
 		if (type == "bdb")
 		{
-			scoped_ptr<BDBPersister> result(new BDBPersister);
+			unique_ptr<BDBPersister> result(new BDBPersister);
 			if (result->initialise(dir, db, flag))
 				return result.release();
 		}
@@ -258,7 +243,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 #endif
 		if (type == "file")
 		{
-			scoped_ptr<FilePersister> result(new FilePersister(which->FindAttr("rotation", 0)));
+			unique_ptr<FilePersister> result(new FilePersister(which->FindAttr("rotation", 0)));
 			if (result->initialise(dir, db, flag))
 				return result.release();
 		}
@@ -273,7 +258,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 	string name;
 	if (from_or_default(from, ltype == session_log ? "session_log" : "protocol_log", name))
 	{
-		const XmlElement *which(find_logger(name));
+		const XmlElement *which(find_group(g_loggers, name));
 		if (which)
 		{
 			string type;
@@ -316,7 +301,7 @@ Clients Configuration::create_clients(const XmlElement *from) const
 	string name;
 	const XmlElement *which;
 	Clients clients;
-	if (from_or_default(from, "target_comp_id", name) && (which = find_client_group(name)))
+	if (from_or_default(from, "target_comp_id", name) && (which = find_group(g_client_group, name)))
 	{
 		XmlElement::XmlSet slist;
 		if (which->find("client_group/client", slist))
@@ -327,7 +312,7 @@ Clients Configuration::create_clients(const XmlElement *from) const
 				string name, tci;
 				const Poco::Net::IPAddress addr(get_ip(pp));
 				if (pp->GetAttr("name", name) && pp->GetAttr("target_comp_id", tci) && pp->FindAttr("active", true))
-					if (!clients.insert(Clients::value_type(tci, Client(name, addr))).second)
+					if (!clients.insert({tci, Client(name, addr)}).second)
 						throw ConfigurationError("Failed to add client from client_group", tci);
 			}
 		}
@@ -371,7 +356,7 @@ unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, con
 	for (const auto *pp : _allsessions)
 		if (role == Connection::cn_unknown || get_role(pp) == role)
 			target.push_back(pp);
-	return target.size();
+	return static_cast<unsigned>(target.size());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -390,7 +375,7 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 	SslContext target;
 	string name;
 	const XmlElement *which;
-	if (from_or_default(from, "ssl_context", name) && (which = find_ssl_context(name)))
+	if (from_or_default(from, "ssl_context", name) && (which = find_group(g_ssl_context, name)))
 	{
 		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
 		target._private_key_file = which->FindAttrRef("private_key_file", empty);

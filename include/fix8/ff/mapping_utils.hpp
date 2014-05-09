@@ -12,9 +12,6 @@
  *  MacOS.
  *
  */
- 
-#ifndef __MAPPING_UTILS_HPP_
-#define __MAPPING_UTILS_HPP_
 
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify it
@@ -41,6 +38,10 @@
  * Date: Mar 27, 2011: some win platform support
  *
  */
+ 
+#ifndef FF_MAPPING_UTILS_HPP
+#define FF_MAPPING_UTILS_HPP
+
 
 #include <iostream>
 #include <errno.h>
@@ -99,7 +100,7 @@ static inline long ff_getThreadID() {
  *  
  *  \return An integer value showing the frequency of the core.
  */
-static inline unsigned long ff_getCpuFreq() { // MA
+static inline unsigned long ff_getCpuFreq() {
     unsigned long  t = 0;
 #if defined(__linux__)
     FILE       *f;
@@ -127,7 +128,7 @@ static inline unsigned long ff_getCpuFreq() { // MA
  *  \brief Returns the number of cores in the system
  *
  *  It returns the number of cores present in the system. (Note that it does
- *  not take into account hyper threadings). It works on Linux OS, Apple OS and
+ *  take into account hyperthreading). It works on Linux OS, Apple OS and
  *  Windows.
  *
  *  \return An integer value showing the number of cores.
@@ -152,6 +153,49 @@ static inline int ff_numCores() {
 #endif
     return n;
 }
+
+
+/**
+ *  \brief Returns the real number of cores in the system without considering 
+ *  HT or HMT
+ *
+ *  It returns the number of cores present in the system. It works on Linux OS
+ *
+ *  \return An integer value showing the number of cores.
+ */
+static inline int ff_realNumCores() {
+    int  n=-1;
+#if defined(__linux__)
+    FILE       *f;    
+    f = popen("cat /proc/cpuinfo|egrep 'core id|physical id'|tr -d '\n'|sed 's/physical/\\nphysical/g'|grep -v ^$|sort|uniq|wc -l", "r");
+    if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
+    pclose(f);
+#else
+#warning "ff_realNumCores not supported on this platform"
+#endif
+    return n;
+}
+
+/**
+ *  \brief Returns the number of CPUs (physical sockets) on the system.
+ *
+ *  It returns the number physical sockets on the system. It works on Linux OS.
+ *
+ *  \return An integer value showing the number of sockets.
+ */
+static inline int ff_numSockets() {
+    int  n=-1;
+#if defined(__linux__)
+    FILE       *f;    
+    f = popen("cat /proc/cpuinfo|grep 'physical id'|sort|uniq|wc -l", "r");
+    if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
+    pclose(f);
+#else
+#warning "ff_numSockets not supported on this platform"
+#endif
+    return n;
+}
+
 
 /**
  * \brief Sets the scheduling priority
@@ -219,15 +263,15 @@ if (ret!=0) perror("ff_setPriority");
 }
 
 /** 
- *  \brief Returns the ID of the CPU
+ *  \brief Returns the ID of the core 
  *
- *  It returns the ID of the CPU where the calling thread is running. It works
+ *  It returns the ID of the core where the calling thread is running. It works
  *  on Linux OS and Apple OS.
  * 
  *  \return An integer value showing the ID of the core. If the ID of the core
  *  is not found, then -1 is returned.
  */
-static inline int ff_getMyCpu() {
+static inline int ff_getMyCore() {
 #if defined(__linux__) && defined(CPU_SET)
     cpu_set_t mask;
     CPU_ZERO(&mask);
@@ -257,6 +301,8 @@ std::cerr << "---> ff_getMyCpu not supported\n";
 #endif
 return -1;
 }
+// NOTE: this function will be discarded, please use ff_getMyCore() instead
+static inline int ff_getMyCpu() { return ff_getMyCore(); }
 
 /** 
  *  \brief Maps the calling thread to the given CPU.
@@ -346,6 +392,7 @@ static inline size_t cache_line_size() {
     size_t sizeof_line_size = sizeof(line_size);
     if (sysctlbyname("hw.cachelinesize", &line_size, &sizeof_line_size, NULL, 0) !=0) {
         perror("cachelinesize:");
+        line_size=0;
     }
     return line_size;
 }
@@ -398,8 +445,15 @@ static inline size_t cache_line_size() {
     p = fopen("/sys/devices/system/cpu/cpu0/cache/index0/coherency_line_size", "r");
     unsigned int i = 0;
     if (p) {
-        if (fscanf(p, "%ud", &i) == EOF) { pclose(p); return 0;}
-        fclose(p);
+        if (fscanf(p, "%ud", &i) == EOF) { 
+            perror("fscanf");
+            if (fclose(p) != 0) perror("fclose"); 
+            return 0;
+        }
+        if (fclose(p) != 0) {
+            perror("fclose");
+            return 0;
+        }
     }
     return i;
 }
@@ -413,4 +467,4 @@ static inline size_t cache_line_size() {
  * \endlink
  */
 
-#endif // __MAPPING_UTILS_HPP_
+#endif /* FF_MAPPING_UTILS_HPP */

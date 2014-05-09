@@ -1,8 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef __SWSR_PTR_BUFFER_HPP_
-#define __SWSR_PTR_BUFFER_HPP_
-
 /*!
  *  \link
  *  \file buffer.hpp
@@ -44,6 +41,12 @@
  *
  ****************************************************************************
  */
+/* Author: Massimo Torquati
+ *
+ */
+
+#ifndef FF_SWSR_PTR_BUFFER_HPP
+#define FF_SWSR_PTR_BUFFER_HPP
 
 #include <stdlib.h>
 #include <string.h>
@@ -125,6 +128,9 @@ public:
      */
     SWSR_Ptr_Buffer(unsigned long n, const bool=true):
         pread(0),pwrite(0),size(n),buf(0) {
+        // Avoid unused private field warning on padding1, padding2
+        (void)padding1;
+        (void)padding2;
     }
     
     /** 
@@ -333,18 +339,22 @@ public:
         }
 #if defined(SWSR_MULTIPUSH)        
         mcnt   = 0;
-#endif        
-        memset(buf,0,size*sizeof(void*));
+#endif  
+        if (size<=512) for(unsigned long i=0;i<size;++i) buf[i]=0;
+        else memset(buf,0,size*sizeof(void*));
     }
 
     /** 
-     * It returns the length of the buffer (i.e. the actual number of elements
-     * it contains) 
+     * It returns the length of the buffer 
+     * (i.e. the actual number of elements it contains) 
      */
     inline unsigned long length() const {
-        long len = pwrite-pread;
-        if (len>=0) return len;
-        return size+len;
+        long tpread=pread, tpwrite=pwrite;
+        long len = tpwrite-tpread;
+        if (len>0) return (unsigned long)len;
+        if (len<0) return (unsigned long)(size+len);
+        if (buf[tpwrite]==NULL) return 0;
+        return size;  
     }
 
 };
@@ -377,6 +387,9 @@ public:
      */
     Lamport_Buffer(unsigned long n, const bool=true):
         pread(0),pwrite(0),size(n),buf(0) {
+        // Avoid unused private field warning on padding1, padding2
+        (void)padding1;
+        (void)padding2;
     }
     
     /**
@@ -455,16 +468,23 @@ public:
      */
     inline void reset() { 
         pread=pwrite=0; 
-        memset(buf,0,size*sizeof(void*));
+        if (size<=512) for(unsigned long i=0;i<size;++i) buf[i]=0;
+        else memset(buf,0,size*sizeof(void*));
     }
 
     /**
      * TODO
      */
     inline unsigned long length() const {
-        long len = pwrite-pread;
-        if (len>=0) return len;
-        return size+len;
+        // long len = pwrite-pread;
+        // if (len>=0) return len;
+        //return size+len;
+        long tpread=pread, tpwrite=pwrite;
+        long len = tpwrite-tpread;
+        if (len>0) return (unsigned long)len;
+        if (len<0) return (unsigned long)(size+len);
+        if (buf[tpwrite]==NULL) return 0;
+        return size;  
     }
 };
 
@@ -475,4 +495,4 @@ public:
 
 } // namespace ff
 
-#endif /* __SWSR_PTR_BUFFER_HPP_ */
+#endif /* FF_SWSR_PTR_BUFFER_HPP */

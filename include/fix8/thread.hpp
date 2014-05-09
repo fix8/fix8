@@ -71,7 +71,7 @@ private:
 public:
 	using thread_id_t = tbb::tbb_thread::id;
 private:
-	scoped_ptr< tbb::tbb_thread > _thread;
+	std::unique_ptr<tbb::tbb_thread> _thread;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -97,7 +97,7 @@ protected:
 		_thread.start(_run<T>, sub);
 		return 0;
 #elif (THREAD_SYSTEM == THREAD_TBB)
-		_thread.Reset(new tbb::tbb_thread(_run<T>, sub));
+		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
 		return 0;
 #endif
 	}

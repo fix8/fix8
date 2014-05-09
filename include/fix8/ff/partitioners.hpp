@@ -7,9 +7,6 @@
  *  \brief This file describes the partitioner used in the map skeleton.
  */
  
-#ifndef _FF_PART_HPP_
-#define _FF_PART_HPP_
-
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -28,6 +25,11 @@
  *
  ****************************************************************************
  */
+
+#ifndef FF_PARTITIONER_HPP
+#define FF_PARTITIONER_HPP
+
+
 
 #include <ff/svector.hpp>
 
@@ -210,4 +212,4 @@ protected:
 
 } // namespace ff
 
-#endif /* _FF_PART_HPP_ */
+#endif /* FF_PARTITIONER_HPP */

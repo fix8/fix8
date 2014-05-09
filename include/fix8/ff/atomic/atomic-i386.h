@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-x86/atomic_32.h
  *
  */
-#ifndef __ARCH_I386_ATOMIC__
-#define __ARCH_I386_ATOMIC__
+#ifndef FF_ARCH_I386_ATOMIC_H
+#define FF_ARCH_I386_ATOMIC_H
 
 #if !defined(likely)
 #define likely(x)	__builtin_expect(!!(x), 1)
@@ -265,5 +265,4 @@ static inline unsigned long atomic_add_unless(atomic_t *v, unsigned long a, unsi
 	return c != (u);
 }
 
-
-#endif
+#endif /* FF_ARCH_I386_ATOMIC_H */

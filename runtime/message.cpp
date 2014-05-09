@@ -34,22 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -65,7 +50,7 @@ codec_timings Message::_encode_timings, Message::_decode_timings;
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data());
-	const size_t flen(from.size());
+	const unsigned flen(static_cast<unsigned>(from.size()));
 	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
 
@@ -100,8 +85,8 @@ unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore, bool permissive_mode)
 {
-	const unsigned fsize(from.size() - ignore), npos(0xffffffff);
-	unsigned pos(_pos.size()), last_valid_pos(npos);
+	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore), npos(0xffffffff);
+	unsigned pos(static_cast<unsigned>(_pos.size())), last_valid_pos(npos);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 	size_t last_valid_offset(0);
@@ -134,7 +119,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		{
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
-				throw InvalidField(tv);
+				throw UnknownField(tv);
 			BaseField *bf(be->_create._do(val, be->_rlm, -1));
 			add_field_decoder(tv, ++pos, bf);
 			itr->_field_traits.set(FieldTrait::present);
@@ -153,7 +138,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		throw MissingMandatoryField(ostr.str());
 	}
 
-	return permissive_mode && last_valid_pos == pos ? last_valid_offset : s_offset;
+	return permissive_mode && last_valid_pos == pos ? static_cast<unsigned>(last_valid_offset) : s_offset;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -163,13 +148,13 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
-	const unsigned fsize(from.size() - ignore);
+	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
-		scoped_ptr<MessageBase> grp(grpbase->create_group());
+		unique_ptr<MessageBase> grp(grpbase->create_group());
 
 		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 		{
@@ -216,7 +201,7 @@ unsigned MessageBase::check_positions()
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum, bool permissive_mode)
 {
 	char mtype[MAX_MSGTYPE_FIELD_LEN] {}, len[MAX_MSGTYPE_FIELD_LEN] {};
-	const size_t hlen(extract_header(from, len, mtype));
+	const unsigned hlen(extract_header(from, len, mtype));
 
 	if (!hlen)
 	{
@@ -251,7 +236,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 	{
 		const f8String chksum(pp + 3, 3);
 		msg->_trailer->get_check_sum()->set(chksum);
-		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
+		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, static_cast<unsigned>(from.size()) - 7));
 		if (chkval != mchkval)
 			throw BadCheckSum(mchkval);
 	}
@@ -398,7 +383,7 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
 
-	_header->get_body_length()->set(msgLen);
+	_header->get_body_length()->set(static_cast<int>(msgLen));
 	hmsg += _header->get_body_length()->encode(hmsg);
 
 	if (!_trailer->get_check_sum())
@@ -506,7 +491,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 				break;
 			}
 		}
-		_pos.insert(Positions::value_type(pos, with));
+		_pos.insert({pos, with});
 		itr->second = with;
 		_fp.set(fnum, FieldTrait::present);
 	}
@@ -531,7 +516,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_itera
 				break;
 			}
 		}
-		_pos.insert(Positions::value_type(pos, with));
+		_pos.insert({pos, with});
 		itr->second = with;
 		_fp.set(fnum, fitr, FieldTrait::present);
 	}

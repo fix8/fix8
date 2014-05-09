@@ -104,21 +104,41 @@ public:
 	    \return target_comp_id */
 	const f8String& get_id() const { return _id; }
 
-	/*! Targetcompid equivalence function..
-	    \return true if both Targetcompids are the same */
+	/*! Sendercompid equivalence function..
+	  \param targetCompID compid to check
+	  \return true if both Targetcompids are the same */
 	bool same_sender_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _senderCompID(); }
 
 	/*! Sendercompid equivalence function..
-	    \return true if both Sendercompids are the same */
+	  \param senderCompID compid to check
+	  \return true if both Sendercompids are the same */
 	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
-	/*! Sendercompid equivalence function..
-	    \return true if both Sendercompids are the same, on the same session side */
+	/*! targetcompid equivalence function..
+	  \param targetCompID compid to check
+	  \return true if both Sendercompids are the same, on the same session side */
 	bool same_side_target_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _targetCompID(); }
 
 	/*! Targetcompid equivalence function..
-	    \return true if both Targetcompids are the same, on the same session side */
+	  \param senderCompID compid to check
+	  \return true if both Targetcompids are the same, on the same session side */
 	bool same_side_sender_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _senderCompID(); }
+
+	/*! SessionID equivalence operator
+	  \param that SessionID to check
+	  \return true if SessionIDS are equal */
+	bool operator==(const SessionID& that)
+	{
+		return this != &that ? that._senderCompID() == _senderCompID() && that._targetCompID() == _targetCompID() : true;
+	}
+
+	/*! SessionID inequivalence operator
+	  \param that SessionID to check
+	  \return true if SessionIDS are not equal */
+	bool operator!=(const SessionID& that)
+	{
+		return this != &that ? that._senderCompID() != _senderCompID() && that._targetCompID() != _targetCompID() : false;
+	}
 
 	/*! Inserter friend.
 	    \param os stream to send to
@@ -131,11 +151,6 @@ public:
 /// Session states and semantics.
 namespace States
 {
-	enum Tests
-	{
-		pr_begin_str, pr_logged_in, pr_low, pr_high, pr_comp_id, pr_target_id, pr_logon_timeout, pr_resend,
-	};
-
 	enum SessionStates
 	{
 		st_none, st_continuous, st_session_terminated,
@@ -144,8 +159,17 @@ namespace States
 		st_resend_request_sent, st_resend_request_received, st_num_states
 	};
 
-	static inline bool is_established(const SessionStates& ss)
-		{ return ss != st_wait_for_logon && ss != st_not_logged_in && ss != st_logon_sent; }
+	/*! Determine if this session is live
+	  \param ss SessateState to test
+	  \return true if live */
+	static inline bool is_live(SessionStates ss)
+		{ return ss != st_none && ss != st_session_terminated; }
+
+	/*! Determine if this session is in an established state
+	  \param ss SessateState to test
+	  \return true if established */
+	static inline bool is_established(SessionStates ss)
+		{ return ss != st_wait_for_logon && ss != st_not_logged_in && ss != st_logon_sent && is_live(ss); }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -177,7 +201,8 @@ struct Schedule
 	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
-    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration = 0/*Tickval::noticks*/, int utc_offset = 0, int start_day = -1, int end_day = -1) :
+    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration=0/*Tickval::noticks*/, int utc_offset=0,
+			 int start_day=-1, int end_day=-1) :
 		_start(start), _end(end), _duration(duration),
 		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
 		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
@@ -276,13 +301,13 @@ struct LoginParameters
 	LoginParameters(unsigned login_retry_interval, unsigned login_retries,
 		const default_appl_ver_id& davi, unsigned connect_timeout, bool reset_seqnum=false,
 		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false,
-		bool permissive_mode_flag=false, bool reliable=false,
+		bool permissive_mode_flag=false, bool reliable=false, bool enforce_compids=true,
 		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval,
 		const Schedule& sch=Schedule(), const Clients& clients=Clients(), const f8String& pem_path=f8String()) :
 			_login_retry_interval(login_retry_interval), _login_retries(login_retries), _connect_timeout(connect_timeout),
 			_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
 			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
-			_permissive_mode_flag(permissive_mode_flag), _reliable(reliable),
+			_permissive_mode_flag(permissive_mode_flag), _reliable(reliable), _enforce_compids(enforce_compids),
 			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(hb_int),
 			_login_schedule(sch), _clients(clients), _pem_path(pem_path) {}
 
@@ -291,7 +316,7 @@ struct LoginParameters
 		_connect_timeout(from._connect_timeout), _reset_sequence_numbers(from._reset_sequence_numbers),
 		_always_seqnum_assign(from._always_seqnum_assign), _silent_disconnect(from._silent_disconnect),
 		_no_chksum_flag(from._no_chksum_flag), _permissive_mode_flag(from._permissive_mode_flag),
-		_reliable(from._reliable), _davi(from._davi),
+		_reliable(from._reliable), _enforce_compids(from._enforce_compids), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int),
 		_login_schedule(from._login_schedule), _clients(from._clients), _pem_path(from._pem_path)
 	{}
@@ -309,6 +334,7 @@ struct LoginParameters
 			_no_chksum_flag = that._no_chksum_flag;
 			_permissive_mode_flag = that._permissive_mode_flag;
 			_reliable = that._reliable;
+			_enforce_compids = that._enforce_compids;
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
@@ -323,7 +349,7 @@ struct LoginParameters
 	unsigned _login_retry_interval = defaults::retry_interval, _login_retries = defaults::login_retries,
 				_connect_timeout = defaults::connect_timeout;
 	bool _reset_sequence_numbers = false, _always_seqnum_assign, _silent_disconnect = false, _no_chksum_flag = false,
-		  _permissive_mode_flag = false, _reliable = false;
+		  _permissive_mode_flag = false, _reliable = false, _enforce_compids=true;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz = 0, _send_buf_sz = 0, _hb_int = defaults::hb_interval;
 	Schedule _login_schedule;
@@ -379,6 +405,7 @@ protected:
 	f8_atomic<bool> _active;
 	Tickval _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
+	sender_comp_id _sci; // used by acceptor
 	Connection *_connection;
 	unsigned _req_next_send_seq, _req_next_receive_seq;
 	SessionID _sid;
@@ -408,43 +435,43 @@ protected:
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API virtual bool handle_logon( const unsigned seqnum, const Message *msg );
+	F8API virtual bool handle_logon(const unsigned seqnum, const Message *msg);
 
 	/*! Generate a logon message.
 	    \param heartbeat_interval heartbeat interval
 	    \param davi default appl version id (FIXT)
 	    \return new Message */
-	F8API virtual Message *generate_logon( const unsigned heartbeat_interval, const f8String davi = f8String() );
+	F8API virtual Message *generate_logon(const unsigned heartbeat_interval, const f8String davi=f8String());
 
 	/*! Logout callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API virtual bool handle_logout( const unsigned seqnum, const Message *msg );
+	F8API virtual bool handle_logout(const unsigned seqnum, const Message *msg);
 
 	/*! Heartbeat callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API virtual bool handle_heartbeat( const unsigned seqnum, const Message *msg );
+	F8API virtual bool handle_heartbeat(const unsigned seqnum, const Message *msg);
 
 	/*! Resend request callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API virtual bool handle_resend_request( const unsigned seqnum, const Message *msg );
+	F8API virtual bool handle_resend_request(const unsigned seqnum, const Message *msg);
 
 	/*! Sequence reset callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API virtual bool handle_sequence_reset( const unsigned seqnum, const Message *msg );
+	F8API virtual bool handle_sequence_reset(const unsigned seqnum, const Message *msg);
 
 	/*! Test request callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API virtual bool handle_test_request( const unsigned seqnum, const Message *msg );
+	F8API virtual bool handle_test_request(const unsigned seqnum, const Message *msg);
 
 	/*! Reject callback.
 	    \param seqnum message sequence number
@@ -518,14 +545,17 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	F8API Session( const F8MetaCntx& ctx, const SessionID& sid, Persister *persist = 0, Logger *logger = 0, Logger *plogger = 0 );
+	F8API Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist=nullptr,
+		Logger *logger=nullptr, Logger *plogger=nullptr);
 
 	/*! Ctor. Acceptor.
 	    \param ctx reference to generated metadata
+	    \param sci sender comp id of hosting session
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	F8API Session( const F8MetaCntx& ctx, Persister *persist = 0, Logger *logger = 0, Logger *plogger = 0 );
+	F8API Session(const F8MetaCntx& ctx, const sender_comp_id& sci=sender_comp_id(), Persister *persist=nullptr,
+		Logger *logger=nullptr, Logger *plogger=nullptr);
 
 	/// Dtor.
 	F8API virtual ~Session();
@@ -537,13 +567,13 @@ public:
 	    \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
 	    \param davi default appl version id (FIXT)
 	    \return -1 on error, 0 on success */
-	F8API int start( Connection *connection, bool wait = true, const unsigned send_seqnum = 0,
+	F8API int start(Connection *connection, bool wait=true, const unsigned send_seqnum=0,
 		const unsigned recv_seqnum=0, const f8String davi=f8String());
 
 	/*! Process inbound messages. Called by connection object.
 	    \param from raw fix message
 	    \return true on success */
-	F8API virtual bool process( const f8String& from );
+	F8API virtual bool process(const f8String& from);
 
 	/// Provides context to your retrans handler.
 	struct RetransmissionContext
@@ -569,7 +599,7 @@ public:
 	    \param with pair of sequence number and raw fix message
 	    \param rctx retransmission context
 	    \return true on success */
-	F8API virtual bool retrans_callback( const SequencePair& with, RetransmissionContext& rctx );
+	F8API virtual bool retrans_callback(const SequencePair& with, RetransmissionContext& rctx);
 
 	/*! Send message.
 	    \param msg Message
@@ -577,7 +607,7 @@ public:
 	    \param custom_seqnum override sequence number with this value
 	    \param no_increment if true, don't increment the seqnum after sending
 	    \return true on success */
-	F8API virtual bool send( Message *msg, bool destroy = true, const unsigned custom_seqnum = 0, const bool no_increment = false );
+	F8API virtual bool send(Message *msg, bool destroy=true, const unsigned custom_seqnum=0, const bool no_increment=false);
 
 	/*! Send message - non-pipelined version.
 		 WARNING: be sure you don't inadvertently use this method. Symptoms will be out of sequence messages (seqnum==1)
@@ -586,19 +616,19 @@ public:
 	    \param custom_seqnum override sequence number with this value
 	    \param no_increment if true, don't increment the seqnum after sending
 	    \return true on success */
-	F8API virtual bool send( Message& msg, const unsigned custom_seqnum = 0, const bool no_increment = false );
+	F8API virtual bool send(Message& msg, const unsigned custom_seqnum=0, const bool no_increment=false);
 
 	/*! Send a batch of messages. During this call HB and test requests are suspended.
 	    \param msgs vector of Message ptrs
 	    \param destroy if true, destroy message after send
 	    \return size_t number of messages sent - if destroy was true those sent messages will have been destroyed
 	 			with the reamining messages in the vector still allocated */
-	F8API virtual size_t send_batch( const std::vector<Message *>& msgs, bool destroy = true );
+	F8API virtual size_t send_batch(const std::vector<Message *>& msgs, bool destroy=true);
 
 	/*! Process message (encode) and send.
 	    \param msg Message
 	    \return true on success */
-	F8API bool send_process( Message *msg );
+	F8API bool send_process(Message *msg);
 
 	/// stop the session.
 	F8API void stop();
@@ -619,19 +649,15 @@ public:
 	    \param what string to log
 	    \param value optional value for the logger to use
 	    \return true on success */
-	bool log(const std::string& what, const unsigned value=0)
-	{
-		return _logger ? _logger->send(what, value) : false;
-	}
+	bool log(const std::string& what, const unsigned value=0) const
+		{ return _logger ? _logger->send(what, value) : false; }
 
 	/*! Log a message to the protocol logger.
 	    \param what Fix message (string) to log
 	    \param direction 0=out, 1=in
 	    \return true on success */
-	bool plog(const std::string& what, const unsigned direction=0)
-	{
-		return _plogger ? _plogger->send(what, direction) : false;
-	}
+	bool plog(const std::string& what, const unsigned direction=0) const
+		{ return _plogger ? _plogger->send(what, direction) : false; }
 
 	/*! Return the last received timstamp
 	    \return Tickval on success */
@@ -649,14 +675,15 @@ public:
 
 	/*! Check that a message has the correct sender/target compid for this session. Throws BadCompidId on error.
 	    \param seqnum message sequence number
-	    \param msg Message */
-	F8API void compid_check( const unsigned seqnum, const Message *msg );
+	    \param msg Message
+	    \param id Session id of inbound connection */
+	F8API void compid_check(const unsigned seqnum, const Message *msg, const SessionID& id) const;
 
 	/*! Check that a message is in the correct sequence for this session. Will generated resend request if required. Throws InvalidMsgSequence, MissingMandatoryField, BadSendingTime.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	F8API bool sequence_check( const unsigned seqnum, const Message *msg );
+	F8API bool sequence_check(const unsigned seqnum, const Message *msg);
 
 	/*! Check that the session is active for this application message
 	    \param seqnum message sequence number
@@ -667,8 +694,8 @@ public:
 	/*! Enforce session semantics. Checks compids, sequence numbers.
 	    \param seqnum message sequence number
 	    \param msg Message
-	    \return true if message FAILS enforce ruless */
-	F8API bool enforce( const unsigned seqnum, const Message *msg );
+	    \return true if message FAILS enforce rules */
+	F8API bool enforce(const unsigned seqnum, const Message *msg);
 
 	/*! Get the session id for this session.
 	    \return the session id */
@@ -708,35 +735,35 @@ public:
 
 	/*! Generate a logout message.
 	    \return new Message */
-	F8API virtual Message *generate_logout( const char *msgstr = 0 );
+	F8API virtual Message *generate_logout(const char *msgstr=nullptr);
 
 	/*! Generate a heartbeat message.
 	    \param testReqID test request id
 	    \return new Message */
-	F8API virtual Message *generate_heartbeat( const f8String& testReqID );
+	F8API virtual Message *generate_heartbeat(const f8String& testReqID);
 
 	/*! Generate a resend request message.
 	    \param begin begin sequence number
 	    \param end sequence number
 	    \return new Message */
-	F8API virtual Message *generate_resend_request( const unsigned begin, const unsigned end = 0 );
+	F8API virtual Message *generate_resend_request(const unsigned begin, const unsigned end=0);
 
 	/*! Generate a sequence reset message.
 	    \param newseqnum new sequence number
 	    \param gapfillflag gap fill flag
 	    \return new Message */
-	F8API virtual Message *generate_sequence_reset( const unsigned newseqnum, const bool gapfillflag = false );
+	F8API virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
 
 	/*! Generate a test request message.
 	    \param testReqID test request id
 	    \return new Message */
-	F8API virtual Message *generate_test_request( const f8String& testReqID );
+	F8API virtual Message *generate_test_request(const f8String& testReqID);
 
 	/*! Generate a reject message.
 	    \param seqnum message sequence number
 	    \param what rejection text
 	    \return new Message */
-	F8API virtual Message *generate_reject( const unsigned seqnum, const char *what );
+	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what);
 
 	/*! Generate a business_reject message.
 	    \param seqnum message sequence number
@@ -744,7 +771,7 @@ public:
 	    \param reason rejection reason code
 	    \param what rejection text
 	    \return new Message */
-	F8API virtual Message *generate_business_reject( const unsigned seqnum, const Message *msg, const int reason, const char *what );
+	F8API virtual Message *generate_business_reject(const unsigned seqnum, const Message *msg, const int reason, const char *what);
 
 	/*! Call the virtual state_change method with before and after, then set the new state
 	    \param new_state new session state to set */
@@ -754,8 +781,12 @@ public:
 		_state = new_state;
 	}
 
+	/*! Get the current session state enumeration
+	    \return States::SessionStates value */
+	States::SessionStates get_session_state() const { return _state; }
+
 	/*! Detach message passed to handle_application. Will set source to 0;
-	    Not thread safe however this method should never be called across threads. It should
+	    Not thread safe and should never be called across threads. It should
 		 only be called from Session::handle_application().
 	    \param msg ref to ptr containing message
 	    \return detached Message * */

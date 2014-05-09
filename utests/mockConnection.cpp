@@ -41,17 +41,7 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 //-------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <list>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
+#include "precomp.hpp"
 #include <fix8/f8config.h>
 
 #ifdef PROFILING_BUILD
@@ -59,7 +49,7 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 #endif
 
 #ifndef _MSC_VER
-	#include <strings.h>
+#include <strings.h>
 #endif
 
 #include <errno.h>

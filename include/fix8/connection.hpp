@@ -197,7 +197,7 @@ class FIXReader : public AsyncSocket<f8String>
 		 \return number of bytes read */
 	int sockRead(char *where, const size_t sz)
 	{
-		unsigned remaining(sz), rddone(0);
+		unsigned remaining(static_cast<unsigned>(sz)), rddone(0);
 		while (remaining > 0)
 		{
 			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
@@ -335,7 +335,7 @@ public:
 		f8_scoped_spin_lock guard(_con_spl);
 		if (destroy)
 		{
-			scoped_ptr<Message> msg(from);
+			std::unique_ptr<Message> msg(from);
 			return _session.send_process(msg.get());
 		}
 		return _session.send_process(from);
@@ -370,7 +370,7 @@ public:
 		{
 			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
 			{
-				scoped_ptr<Message> smsg(*itr);
+				std::unique_ptr<Message> smsg(*itr);
 			}
 		}
 		///@todo: need assert on result==msgs.size()
@@ -410,7 +410,7 @@ public:
 
 		while (remaining > 0)
 		{
-			const int wrtSz(_sock->sendBytes(data + wrdone, remaining));
+			const int wrtSz(_sock->sendBytes(data + wrdone, static_cast<int>(remaining)));
 			if (wrtSz < 0)
 			{
 				if (errno == EAGAIN

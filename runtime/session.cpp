@@ -34,24 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <list>
-#include <vector>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <tuple>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -72,6 +55,10 @@ const vector<f8String> Session::_state_names
 	"logoff_received", "test_request_sent", "sequence_reset_sent",
 	"sequence_reset_received", "resend_request_sent", "resend_request_received"
 };
+#endif
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4273)
 #endif
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
@@ -136,8 +123,8 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 }
 
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, Logger *logger, Logger *plogger) :
+	_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
@@ -162,7 +149,7 @@ Session::~Session()
 		_logger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
-	if (_connection->get_role() == Connection::cn_acceptor)
+	if (_connection && _connection->get_role() == Connection::cn_acceptor)
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
 	delete _schedule;
 }
@@ -236,18 +223,21 @@ void Session::stop()
 {
 	if (_control & shutdown)
 		return;
-
 	_control |= shutdown;
-	if (_connection->get_role() == Connection::cn_initiator)
-		_timer.clear();
-	else
+
+	if (_connection)
 	{
-		_timer.schedule(_hb_processor, 0);
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-		if (_persist)
-			_persist->stop();
+		if (_connection->get_role() == Connection::cn_initiator)
+			_timer.clear();
+		else
+		{
+			_timer.schedule(_hb_processor, 0);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			if (_persist)
+				_persist->stop();
+		}
+		_connection->stop();
 	}
-	_connection->stop();
 	hypersleep<h_milliseconds>(250);
 }
 
@@ -257,7 +247,7 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 	if (States::is_established(_state))
 	{
 		if (_state != States::st_logon_received)
-			compid_check(seqnum, msg);
+			compid_check(seqnum, msg, _sid);
 		if (msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET && sequence_check(seqnum, msg))
 			return false;
 	}
@@ -381,12 +371,15 @@ application_call:
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::compid_check(const unsigned seqnum, const Message *msg)
+void Session::compid_check(const unsigned seqnum, const Message *msg, const SessionID& id) const
 {
-	if (!_sid.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
-		throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
-	if (!_sid.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
-		throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
+	if (_loginParameters._enforce_compids)
+	{
+		if (!id.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
+			throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
+		if (!id.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
+			throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -436,9 +429,27 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
 	ostringstream ostr;
+	sender_comp_id sci; // so this should be our tci
+	msg->Header()->get(sci);
+	target_comp_id tci; // so this should be our sci
+	msg->Header()->get(tci);
+	SessionID id(_ctx._beginStr, tci(), sci());
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
+		if (id != _sid)
+		{
+			ostr.str("");
+			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
+			GlobalLogger::log(ostr.str());
+			if (_loginParameters._enforce_compids)
+			{
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+		}
+
 		enforce(seqnum, msg);
 		heartbeat_interval hbi;
 		msg->get(hbi);
@@ -453,11 +464,18 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		default_appl_ver_id davi;
 		msg->get(davi);
 
-		sender_comp_id sci; // so this is our tci
-		msg->Header()->get(sci);
-		target_comp_id tci; // so this is our sci
-		msg->Header()->get(tci);
-		SessionID id(_ctx._beginStr, tci(), sci());
+		if (_sci() != tci())
+		{
+			ostr.str("");
+			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
+			GlobalLogger::log(ostr.str());
+			if (_loginParameters._enforce_compids)
+			{
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+		}
 
 		if (!_loginParameters._clients.empty())
 		{
@@ -827,10 +845,10 @@ Message *Session::generate_business_reject(const unsigned seqnum, const Message 
 	{
 		msg = create_msg(Common_MsgType_BUSINESS_REJECT);
 	}
-	catch (InvalidMetadata<f8String>& e)
+	catch (InvalidMetadata<f8String>&)
 	{
 		// since this is an application message, it may not be supported in supplied schema
-		return 0;
+		return nullptr;
 	}
 
 	*msg << new ref_seq_num(seqnum);
@@ -857,7 +875,7 @@ Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 	Message *msg(create_msg(Common_MsgType_LOGON));
 	*msg << new heartbeat_interval(heartbtint)
 		  << new encrypt_method(0); // FIXME
-	if (!davi.empty())
+	if (!davi.empty() && msg->has<default_appl_ver_id>())
 		*msg << new default_appl_ver_id(davi);
 	if (_loginParameters._reset_sequence_numbers)
 		*msg << new reset_seqnum_flag(true);
@@ -903,7 +921,7 @@ bool Session::send(Message *tosend, bool destroy, const unsigned custom_seqnum, 
 		tosend->set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend->set_no_increment(no_increment);
-	return _connection->write(tosend, destroy);
+	return _connection && _connection->write(tosend, destroy);
 }
 
 bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
@@ -912,7 +930,7 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 		tosend.set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend.set_no_increment(no_increment);
-	return _connection->write(tosend);
+	return _connection && _connection->write(tosend);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1156,3 +1174,6 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 
 #endif // HAVE_OPENSSL
 //-------------------------------------------------------------------------------------------------
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif

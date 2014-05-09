@@ -7,10 +7,6 @@
  *  
  *  \brief Implementations of the FastFlow's lock-free allocator.
  */
- 
-#ifndef _FF_ALLOCATOR_HPP_
-#define _FF_ALLOCATOR_HPP_
-
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -72,6 +68,10 @@
  *                - statistics cleanup
  *
  */
+
+ 
+#ifndef FF_ALLOCATOR_HPP
+#define FF_ALLOCATOR_HPP
 
 
 #include <assert.h>
@@ -1439,7 +1439,7 @@ private:
 struct FFAxThreadData {
     FFAxThreadData(ffa_wrapper * f): f(f) { }
     ffa_wrapper * f;
-    long padding[longxCacheLine-sizeof(ffa_wrapper*)];
+    long padding[longxCacheLine-(sizeof(ffa_wrapper*)/sizeof(long))];
 };
 
 /*!
@@ -1859,4 +1859,4 @@ static inline int    ff_posix_memalign(void **memptr, size_t alignment, size_t s
 
 } // namespace ff
 
-#endif /* _SLAB_ALLOCATOR_HPP_ */
+#endif /* FF_ALLOCATOR_HPP */

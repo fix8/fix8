@@ -9,8 +9,8 @@
  * No lock is needed around pop and push methods.
  *
  */
-#ifndef __FF_DYNLINKEDLIST_HPP_ 
-#define __FF_DYNLINKEDLIST_HPP_ 
+#ifndef FF_DYNLINKEDLIST_HPP
+#define FF_DYNLINKEDLIST_HPP
 
 /* ***************************************************************************
  *
@@ -69,13 +69,13 @@ private:
         void        * data;
         struct Node * next;
         void        * next_data;
-        long padding[longxCacheLine-sizeof(void*)*3];
+        long padding[longxCacheLine-((sizeof(void*)*3)/sizeof(long))]; 
     };
 
     volatile Node *    head;
-    long padding1[longxCacheLxine-sizeof(Node *)];
+    long padding1[longxCacheLxine-(sizeof(Node *)/sizeof(long))];
     volatile Node *    tail;
-    long padding2[longxCacheLine-sizeof(Node*)];
+    long padding2[longxCacheLine-(sizeof(Node*)/sizeof(long))];
     //SWSR_Ptr_Buffer    cache;
     /*
       This is a vector of Node elemens.  
@@ -194,4 +194,4 @@ public:
 
 } // namespace ff
 
-#endif /* __FF_DYNQUEUE_HPP_ */
+#endif /* FF_DYNLINKEDLIST_HPP */

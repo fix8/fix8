@@ -9,8 +9,6 @@
  *  workers.
  */
 
-#ifndef _FF_GT_HPP_
-#define _FF_GT_HPP_
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -29,6 +27,9 @@
  *
  ****************************************************************************
  */
+
+#ifndef FF_GT_HPP
+#define FF_GT_HPP
 
 #include <iostream>
 #include <deque>
@@ -83,7 +84,8 @@ protected:
      *
      */
     virtual inline int selectworker() { 
-        do nextr = (nextr+1) % nworkers;
+        do 
+            nextr = (nextr+1) % running;
         while(offline[nextr]);
         return nextr;
     }
@@ -100,7 +102,7 @@ protected:
      *
      * The number of tentative before wasting some times and than retry 
      */
-    virtual inline unsigned int ntentative() { return nworkers;}
+    virtual inline size_t ntentative() { return getnworkers();}
 
     /**
      * \brief Loses the time out.
@@ -149,42 +151,6 @@ protected:
 
         // not reached
         return -1;
-    }
-
-
-    /**
-     *
-     * \brief It gathers all tasks.
-     *
-     * It is a virtual function, and gathers results from the workers. 
-     *
-     * \return It returns 0 if the tasks from all the workers are collected.
-     * Otherwise a negative value is returned.
-     *
-     */
-    virtual int all_gather(void *task, void **V) {
-        V[channelid]=task;
-        int nw=getnworkers();
-        svector<ff_node*> _workers(nw);
-        for(int i=0;i<nworkers;++i) 
-            if (!offline[i]) _workers.push_back(workers[i]);
-        svector<int> retry(nw);
-
-        for(register int i=0;i<nw;++i) {
-            if(i!=channelid && !_workers[i]->get(&V[i]))
-                retry.push_back(i);
-        }
-        while(retry.size()) {
-            channelid = retry.back();
-            if(_workers[channelid]->get(&V[channelid]))
-                retry.pop_back();
-            else losetime_in();
-        }
-        for(register int i=0;i<nw;++i)
-            if (V[i] == (void *)FF_EOS || V[i] == (void*)FF_EOS_NOFREEZE)
-                return -1;
-        FFTRACE(taskcnt+=nw-1);
-        return 0;
     }
 
     /**
@@ -252,7 +218,7 @@ public:
      *  It creates \p max_num_workers and \p NULL pointers to worker objects.
      */
     ff_gatherer(int max_num_workers):
-        max_nworkers(max_num_workers),nworkers(0),nextr(0),
+        running(-1),max_nworkers(max_num_workers), nextr(0),
         neos(0),neosnofreeze(0),channelid(-1),
         filter(NULL), workers(max_nworkers), offline(max_nworkers), buffer(NULL),
         skip1pop(false) {
@@ -292,7 +258,7 @@ public:
      *
      * \return The \p channelid is returned.
      */
-    int get_channel_id() const { return channelid;}
+    ssize_t get_channel_id() const { return channelid;}
 
     /**
      * \brief Gets the number of worker threads currently running.
@@ -301,8 +267,18 @@ public:
      *
      * \return Number of worker threads
      */
-    inline int getnworkers() const { return (int) workers.size()-neos-neosnofreeze; }
+    inline size_t getnworkers() const { return (size_t)(running-neos-neosnofreeze); }
     
+    /**
+     * \brief Get the number of workers
+     *
+     * It returns the number of total workers registered
+     *
+     * \return Number of worker
+     */
+    inline size_t getNWorkers() const { return workers.size();}
+
+
     /**
      * \brief Skips the first pop
      *
@@ -329,12 +305,11 @@ public:
      * \return 0 if successful, or -1 if not successful.
      */
     int  register_worker(ff_node * w) {
-        if (nworkers>=max_nworkers) {
-            error("GT, max number of workers reached (max=%d)\n",max_nworkers);
+        if (workers.size()>=max_nworkers) {
+            error("GT, max number of workers reached (max=%ld)\n",max_nworkers);
             return -1;
         }
         workers.push_back(w);
-        ++nworkers;
         return 0;
     }
 
@@ -378,12 +353,12 @@ public:
                 nextr = gather_task(&task); 
             else skipfirstpop=false;
 
-            if (task == (void *)FF_EOS) {
+            if (task == EOS) {
                 if (filter) filter->eosnotify(workers[nextr]->get_my_id());
                 offline[nextr]=true;
                 ++neos;
                 ret=task;
-            } else if (task == (void *)FF_EOS_NOFREEZE) {
+            } else if (task == EOS_NOFREEZE) {
                 if (filter) filter->eosnotify(workers[nextr]->get_my_id());
                 offline[nextr]=true;
                 ++neosnofreeze;
@@ -405,25 +380,19 @@ public:
 
                 // if the filter returns NULL we exit immediatly
                 if (task == GO_ON) continue;
-                
-                // if the filter returns NULL we exit immediatly
-                if (task ==(void*)FF_EOS_NOFREEZE) { 
+                if ((task == GO_OUT) || (task == EOS_NOFREEZE) ) {
                     ret = task;
-                    break; 
+                    break;   // exiting from the loop without sending the task
                 }
-                if (!task || task==(void*)FF_EOS) {
-                    ret = (void*)FF_EOS;
+                if (!task || (task == EOS)) {
+                    ret = EOS;
                     break;
                 }                
-                if (outpresent) {
-                    //if (filter) filter->push(task);
-                    //else 
-                    push(task);
-                }
+                if (outpresent) push(task);
             }
-        } while((neos<nworkers) && (neosnofreeze<nworkers));
+        } while((neos<(size_t)running) && (neosnofreeze<(size_t)running));
 
-        if (outpresent) {
+        if (outpresent && (ret != GO_OUT && ret != EOS_NOFREEZE)) {
             // push EOS
             task = ret;
             push(task);
@@ -431,8 +400,8 @@ public:
 
         gettimeofday(&wtstop,NULL);
         wttime+=diffmsec(wtstop,wtstart);
-        if (neos>=nworkers) neos=0;
-        if (neosnofreeze>=nworkers) neosnofreeze=0;
+        if (neos>=(size_t)running) neos=0;
+        if (neosnofreeze>=(size_t)running) neosnofreeze=0;
 
         return ret;
     }
@@ -460,8 +429,71 @@ public:
             error("GT, spawning GT thread\n");
             return -1; 
         }
+        running = workers.size();
         return 0;
     }
+
+
+    inline int wait_freezing() {
+        int r = ff_thread::wait_freezing();
+        running = -1;
+        return r;
+    }
+
+    /**
+     *
+     * \brief It gathers all tasks.
+     *
+     * It is a virtual function, and gathers results from the workers. 
+     *
+     * \return It returns 0 if the tasks from all the workers are collected.
+     * Otherwise a negative value is returned.
+     *
+     */
+    virtual int all_gather(void *task, void **V) {
+        V[channelid]=task;
+        size_t nw=getnworkers();
+        svector<ff_node*> _workers(nw);
+        for(ssize_t i=0;i<running;++i) 
+            if (!offline[i]) _workers.push_back(workers[i]);
+        svector<int> retry(nw);
+
+        for(register size_t i=0;i<nw;++i) {
+            if(i!=(size_t)channelid && !_workers[i]->get(&V[i]))
+                retry.push_back(i);
+        }
+        while(retry.size()) {
+            channelid = retry.back();
+            if(_workers[channelid]->get(&V[channelid]))
+                retry.pop_back();
+            else losetime_in();
+        }
+        for(register size_t i=0;i<nw;++i)
+            if (V[i] == EOS || V[i] == EOS_NOFREEZE)
+                return -1;
+        FFTRACE(taskcnt+=nw-1);
+        return 0;
+    }
+
+    /**
+     * \brief Thaws all threads register with the gt and the gt itself
+     *
+     * 
+     */
+    inline void thaw(bool _freeze=false, ssize_t nw=-1) {
+        assert(running==-1);
+        if (nw == -1 || (size_t)nw > workers.size()) running = workers.size();
+        else running = nw;
+        ff_thread::thaw(_freeze); // NOTE:start scheduler first
+    }
+
+    /**
+     *  \brief Resets output buffer
+     *  
+     *   Warning resetting the buffer while the node is running may produce unexpected results.
+     */
+    void reset() { if (buffer) buffer->reset();}
+
 
     /**
      * \brief Start counting time
@@ -508,13 +540,13 @@ public:
 #endif
 
 private:
-    int               max_nworkers;
-    int               nworkers; // this is the # of workers initially registered
-    int               nextr;
+    ssize_t           running;       /// Number of workers running
+    size_t            max_nworkers;
+    ssize_t           nextr;
 
-    int               neos;
-    int               neosnofreeze;
-    int               channelid;
+    size_t            neos;
+    size_t            neosnofreeze;
+    ssize_t           channelid;
 
     ff_node         * filter;
     svector<ff_node*> workers;
@@ -548,4 +580,4 @@ private:
 
 } // namespace ff
 
-#endif /*  _FF_GT_HPP_ */
+#endif /* FF_GT_HPP */

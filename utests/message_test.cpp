@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-----------------------------------------------------------------------------------------
 // f8 headers
-#include "f8headers.hpp"
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 #include "gtest/gtest.h"
 #include "utest_types.hpp"
@@ -142,29 +142,29 @@ TEST(message, neworder_decode)
 
     MessageBase * header = neworder->Header();
 
-    EXPECT_TRUE(header->has<UTEST::BeginString>());
-    EXPECT_TRUE(header->has<UTEST::SendingTime>());
-    EXPECT_TRUE(header->has<UTEST::MsgSeqNum>());
-    EXPECT_TRUE(header->has<UTEST::SenderCompID>());
-    EXPECT_TRUE(header->has<UTEST::TargetCompID>());
-    EXPECT_TRUE(header->has<UTEST::SenderSubID>());
-    EXPECT_TRUE(header->has<UTEST::SenderLocationID>());
-    EXPECT_TRUE(header->has<UTEST::TargetSubID>());
+    EXPECT_TRUE(header->has<BeginString>());
+    EXPECT_TRUE(header->has<SendingTime>());
+    EXPECT_TRUE(header->has<MsgSeqNum>());
+    EXPECT_TRUE(header->has<SenderCompID>());
+    EXPECT_TRUE(header->has<TargetCompID>());
+    EXPECT_TRUE(header->has<SenderSubID>());
+    EXPECT_TRUE(header->has<SenderLocationID>());
+    EXPECT_TRUE(header->has<TargetSubID>());
 
-    EXPECT_TRUE(neworder->has<UTEST::ClOrdID>());
-    EXPECT_TRUE(neworder->has<UTEST::Account>());
-    EXPECT_TRUE(neworder->has<UTEST::Symbol>());
-    EXPECT_TRUE(neworder->has<UTEST::SecurityType>());
-    EXPECT_TRUE(neworder->has<UTEST::SecurityDesc>());
-    EXPECT_TRUE(neworder->has<UTEST::Side>());
-    EXPECT_TRUE(neworder->has<UTEST::OrderQty>());
-    EXPECT_TRUE(neworder->has<UTEST::OrdType>());
-    EXPECT_TRUE(neworder->has<UTEST::Price>());
-    EXPECT_TRUE(neworder->has<UTEST::TimeInForce>());
+    EXPECT_TRUE(neworder->has<ClOrdID>());
+    EXPECT_TRUE(neworder->has<Account>());
+    EXPECT_TRUE(neworder->has<Symbol>());
+    EXPECT_TRUE(neworder->has<SecurityType>());
+    EXPECT_TRUE(neworder->has<SecurityDesc>());
+    EXPECT_TRUE(neworder->has<Side>());
+    EXPECT_TRUE(neworder->has<OrderQty>());
+    EXPECT_TRUE(neworder->has<OrdType>());
+    EXPECT_TRUE(neworder->has<Price>());
+    EXPECT_TRUE(neworder->has<TimeInForce>());
 
-    EXPECT_TRUE(neworder->has<UTEST::TotalVolumeTradedDate>());
-    EXPECT_TRUE(neworder->has<UTEST::TotalVolumeTradedTime>());
-    EXPECT_TRUE(neworder->has<UTEST::DeliveryDate>());
+    EXPECT_TRUE(neworder->has<TotalVolumeTradedDate>());
+    EXPECT_TRUE(neworder->has<TotalVolumeTradedTime>());
+    EXPECT_TRUE(neworder->has<DeliveryDate>());
 
     FIELD_TEST(BeginString, "FIX.4.2", header, EXPECT_EQ);
     //FIELD_TEST(SendingTime, Poco::DateTime(2013, 3, 4, 5, 6, 14), header, EXPECT_EQ);
@@ -223,7 +223,7 @@ TEST(message, neworder_custom_decode)
 		 "52=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\001"
 		 "60=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\0019999=HELLO\00110=231\001");
 
-    EXPECT_TRUE(neworder->has<UTEST::SampleUserField>());
+    EXPECT_TRUE(neworder->has<SampleUserField>());
     delete neworder;
     neworder = 0;
 }
@@ -249,7 +249,7 @@ TEST(message, neworder_custom_encode)
          << new Side(Side_BUY)
          << new Symbol("OC")
          << new TimeInForce(TimeInForce_DAY)
-			<< new UTEST::SampleUserField("HELLO");
+			<< new SampleUserField("HELLO");
 
     f8String output;
     nos->encode(output);
@@ -302,17 +302,17 @@ TEST(message, calc_chksum)
 		 "49=CME\00150=G\00156=1G9125N\00157=ADMIN\001143=US,IL\00158=Logout confirmed.\001789=618\00110=121\001");
 
     EXPECT_EQ(unsigned(172), Message::calc_chksum(msg));
-    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg, 0, msg.length()-7));
+    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg, 0, static_cast<int>(msg.length()-7)));
     EXPECT_EQ(unsigned(15), Message::calc_chksum(msg, 10, 5));
     EXPECT_EQ(unsigned(16), Message::calc_chksum(msg, 10, 6));
 
     f8String empty;
     EXPECT_EQ(unsigned(0),Message::calc_chksum(empty));
 
-    EXPECT_EQ(unsigned(172), Message::calc_chksum(msg.c_str(), msg.length()));
-    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg.c_str(), msg.length(), 0, msg.length()-7));
-    EXPECT_EQ(unsigned(15), Message::calc_chksum(msg.c_str(), msg.length(), 10, 5));
-    EXPECT_EQ(unsigned(16), Message::calc_chksum(msg.c_str(), msg.length(), 10, 6));
+    EXPECT_EQ(unsigned(172), Message::calc_chksum(msg.c_str(), static_cast<int>(msg.length())));
+    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg.c_str(), static_cast<unsigned>(msg.length()), 0, static_cast<int>(msg.length())-7));
+    EXPECT_EQ(unsigned(15), Message::calc_chksum(msg.c_str(), static_cast<unsigned>(msg.length()), 10, 5));
+    EXPECT_EQ(unsigned(16), Message::calc_chksum(msg.c_str(), static_cast<unsigned>(msg.length()), 10, 6));
     EXPECT_EQ(unsigned(0), Message::calc_chksum(empty.c_str()));
 }
 
@@ -337,13 +337,13 @@ void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val
 {
     char cVal[MAX_FLD_LENGTH];
     char cTag[MAX_FLD_LENGTH];
-    MessageBase::extract_element(msg.c_str(), msg.length(), cTag, cVal);
+    MessageBase::extract_element(msg.c_str(), static_cast<unsigned>(msg.length()), cTag, cVal);
     EXPECT_EQ(expect_val, f8String(cVal));
     EXPECT_EQ(expect_tag, f8String(cTag));
 
     f8String sVal;
     f8String sTag;
-    MessageBase::extract_element(msg.c_str(), msg.length(), sTag, sVal);
+    MessageBase::extract_element(msg.c_str(), static_cast<unsigned>(msg.length()), sTag, sVal);
     EXPECT_EQ(expect_val, sVal);
     EXPECT_EQ(expect_tag, sTag);
 }

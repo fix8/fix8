@@ -179,60 +179,6 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// A specialised map to enable native static initalisation.
-/*! \tparam Key the key
-   \tparam Val the value
-   \tparam Compare the comparitor */
-template<typename Key, typename Val, typename Compare=std::less<Key>>
-struct StaticTable
-{
-	using TypeMap = typename std::map<Key, Val, Compare>;
-	using TypePair = typename TypeMap::value_type;
-	using NotFoundType = Val;
-
-	/// The container
-	const TypeMap _valuemap;
-
-	/// The value to return when the key is not found
-	const NotFoundType _noval;
-
-	/// Ctor.
-	StaticTable(const TypePair *valueTable, size_t valueTableSz, const NotFoundType& noval)
-		: _valuemap(valueTable, valueTable + valueTableSz), _noval(noval) {}
-
-	/*! Find a key (value).
-	  \param key the key to find
-	  \return value found (value) or _noval if not found */
-	Val find_value(const Key& key) const
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? itr->second : _noval;
-	}
-
-	/*! Find a key (reference).
-	  \param key the key to find
-	  \return value found (reference) or _noval if not found */
-	const Val& find_ref(const Key& key) const
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? itr->second : _noval;
-	}
-
-	/*! Find a key (pointer).
-	  \param key the key to find
-	  \return value found (pointer) or 0 if not found */
-	const Val *find_ptr(const Key& key) const
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? &itr->second : 0;
-	}
-
-	/*! Get the number of elements in the data set.
-	  \return number of elements */
-	size_t get_count() const { return _valuemap.size(); }
-};
-
-//-------------------------------------------------------------------------------------------------
 /// Presorted set designed for infrequent insertions but super fast initialisation from a sorted static array.
 /// Search complexity is O(logN), ctor complexity approaches O(1), insert is O(N).
 /*! \tparam K the key

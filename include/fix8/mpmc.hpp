@@ -38,17 +38,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_MPMC_HPP_
 
 //-------------------------------------------------------------------------------------------------
-// provide generic names to Multi Producer Multi Consumer queues, mutexes and atomic from
+// provide generic names to Multi Producer Multi Consumer queues and mutexes from
 // different libraries
+
+//-------------------------------------------------------------------------------------------------
+# include <atomic>
+template<typename T> using f8_atomic = std::atomic<T>;
 
 //-------------------------------------------------------------------------------------------------
 #if (MPMC_SYSTEM == MPMC_TBB)
 
 # include <tbb/concurrent_queue.h>
-# include <tbb/atomic.h>
 # include <tbb/mutex.h>
 
-template<typename T> using f8_atomic = tbb::atomic<T>;
 using f8_mutex = tbb::mutex;
 using f8_spin_lock = tbb::spin_mutex;
 template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T>;
@@ -56,7 +58,6 @@ template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T
 //-------------------------------------------------------------------------------------------------
 #elif (MPMC_SYSTEM == MPMC_FF)
 
-# include <ff/atomic/atomic.h>
 # include <ff/allocator.hpp>
 # include <ff/buffer.hpp>
 # include <ff/MPMCqueues.hpp>
@@ -65,7 +66,6 @@ template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T
 // std wrappers for ff
 # include <ff_wrapper.hpp>
 
-template<typename T> using f8_atomic = FIX8::ff_atomic<T>;
 template<typename T> using f8_concurrent_queue = FIX8::ff_unbounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------

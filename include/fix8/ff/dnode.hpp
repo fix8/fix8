@@ -12,9 +12,7 @@
  *  distributed systems.
  *
  */
- 
-#ifndef _FF_DNODE_HPP_
-#define _FF_DNODE_HPP_
+
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -32,6 +30,10 @@
  *
  ****************************************************************************
  */
+
+ 
+#ifndef FF_DNODE_HPP
+#define FF_DNODE_HPP
 
 //#include <sys/uio.h>
 
@@ -565,4 +567,4 @@ protected:
 
 } // namespace ff
 
-#endif /* _FF_NODE_HPP_ */
+#endif /* FF_DNODE_HPP */
