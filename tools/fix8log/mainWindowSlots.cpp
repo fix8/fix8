@@ -225,3 +225,14 @@ void MainWindow::modelDroppedSlot(FixMimeData *m)
     qDebug() << "Work sheet id " << m->worksheetID;
     emit modelDropped(m);
 }
+void MainWindow::setWindowNameSlot()
+{
+    bool ok;
+    QString str =
+            QInputDialog::getText(this,"Fix8LogView","Window Title",
+                                  QLineEdit::Normal,windowTitle(),&ok);
+    if (ok && str.length() > 0) {
+        setWindowTitle(str);
+        name = str;
+    }
+}

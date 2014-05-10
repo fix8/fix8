@@ -28,6 +28,7 @@ public:
     typedef QPair <QString, QString> MessagePair;
     static QString timeFormats[NumOfTimeFormats];
     static float   version;
+    static int     databaseVersion;
     static QString versionStr;
     static QSize smallIconSize;
     static QSize regIconSize;

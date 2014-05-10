@@ -237,6 +237,33 @@ done:
     }
     return bstatus;
 }
+bool Fix8Log::init(QString fileNameToLoad)
+{
+    QStandardItemModel *model = 0;
+    MainWindow *newMW  =new MainWindow(true);
+    WindowData wd;
+    WorkSheetData wsd;
+    QString errorStr;
+    wsd.fileName = fileNameToLoad;
+    wd.isVisible = true;
+    wd.name = "Fix8LogViewer";
+    wd.color = Globals::menubarDefaultColor;
+    wireSignalAndSlots(newMW);
+    newMW->setWindowData(wd);
+    wireSignalAndSlots(newMW);
+    mainWindows.append(newMW);
+    newMW->setLoadMessage("Loading File " + wsd.fileName);
+    model = readLogFile(wsd.fileName,errorStr);
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,4);
+
+    if (model) {
+        fileNameModelMap.insert(wsd.fileName,model);
+        newMW->setLoading(false);
+        newMW->addWorkSheet(model,wsd);
+        newMW->show();
+    }
+    return true;
+}
 void Fix8Log::exitAppSlot()
 {
     if (autoSaveOn)

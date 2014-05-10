@@ -5,10 +5,12 @@
 #include <QSqlTableModel>
 #include <QVariant>
 
-QString Database::tableNames[] = {"windows","worksheets"};
+QString Database::tableNames[] = {"sqlinfo","windows","worksheets"};
 QString Database::arguments[] = {
+    // sqlinfo
+    "version integer",
     // windows
-    "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1, currentTab integer default 0",
+    "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32)",
     //worksheets
     "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB",
 };
@@ -149,4 +151,47 @@ bool Database::createTable(TableType tt)
     }
 done:
     return bstatus;
+}
+int Database::getVersion()
+{
+    int version = -1;
+    bool bstatus;
+    bool ok;
+    QString str;
+    if (!handle) {
+        errorMessage = tr("Error in get database version  - handle is not initialized");
+        qWarning() << errorMessage;
+        return -1;
+    }
+    QSqlQuery query(*handle);
+    str = "select * from sqlinfo";
+    bstatus = query.prepare(str);
+    if (bstatus == 0) {
+        qWarning("Error in get sql version in prepare statement...");
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return -1;
+    }
+
+    bstatus = query.exec();
+    if (bstatus == false) {
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return -1;
+    }
+    while (query.next()) {
+        version = query.value(0).toInt(&ok);
+        if (!ok) {
+            errorMessage = "Invalid database version found";
+            return  -1;
+        }
+        break;
+    }
+    return version;
+}
+bool Database::setVersion(int nweVersion)
+{
+    // to be done
 }

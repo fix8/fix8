@@ -22,6 +22,7 @@ class Fix8Log : public QObject
 public:
     explicit Fix8Log(QObject *parent = 0);
     bool init();
+    bool init(QString fileNameToLoad);
     void readFileInAnotherThread(const QString &fileName,QString &errorStr);
     void readSettings();
     void writeSettings();

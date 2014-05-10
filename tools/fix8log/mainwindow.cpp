@@ -112,6 +112,7 @@ void MainWindow::buildMainWindow()
     closeA = new QAction(tr("&Close Window"),this);
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
+    connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
 
     quitA = new QAction(tr("&Quit"),this);
     quitA->setIcon(QIcon(":/images/32x32/exit.svg"));
@@ -133,6 +134,10 @@ void MainWindow::buildMainWindow()
     newWindowA = new QAction("New &Window",this);
     newWindowA->setIcon((QIcon(":/images/32x32/newwindow.svg")));
     newWindowA->setToolTip(tr("Open New Window"));
+
+    windowNameA = new QAction("Window Name",this);
+    windowNameA->setToolTip("Set Window Name");
+    connect(windowNameA,SIGNAL(triggered()),this,SLOT(setWindowNameSlot()));
 
     copyWindowA = new QAction("&Copy Window",this);
     copyWindowA->setIcon((QIcon(":/images/32x32/copywindow.svg")));
@@ -274,7 +279,8 @@ void MainWindow::buildMainWindow()
     optionMenu->addMenu(hideColumMenu);
     optionMenu->addMenu(configureIconsMenu);
 
-    connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
+
+    fileMenu->addAction(windowNameA);
     fileMenu->addAction(autoSaveA);
     fileMenu->addAction(copyTabA);
     fileMenu->addAction(newTabA);
@@ -346,6 +352,10 @@ void MainWindow::buildMainWindow()
     connect(cancelEditTabNamePB,SIGNAL(clicked()),this,SLOT(cancelTabNameSlot()));
     cancelEditTabNamePB->setIcon(QIcon(":/images/svg/cancel.svg"));
     tabNameLineEdit = new QLineEdit(this);
+    tabNameLineEdit->setMaxLength(120);
+    QRegExp regExp("^[a-z,A-Z,0-9]+\\s?[a-z,A-Z,0-9]+$");
+    QValidator *val = new QRegExpValidator(regExp,this);
+    tabNameLineEdit->setValidator(val);
     editTabNamePB = new QPushButton(this);
     connect(editTabNamePB,SIGNAL(clicked(bool)),this,SLOT(editTabNameSlot(bool)));
     editTabNamePB->setCheckable(true);
@@ -374,7 +384,6 @@ void MainWindow::buildMainWindow()
     stackW->insertWidget(ShowProgress,progressWidget);
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
-    connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
     buildHideColumnMenu();
 }
 MainWindow::~MainWindow()
@@ -428,7 +437,9 @@ WindowData MainWindow::getWindowData()
     wd.geometry = this->saveGeometry();
     wd.state    = this->saveState();
     wd.id       = this->windowDataID;
+    wd.isVisible = this->isVisible();
     wd.currentTab = tabW->currentIndex();
+    wd.name     = name;
     return wd;
 }
 void MainWindow::setWindowData(const WindowData &wd)
@@ -437,6 +448,9 @@ void MainWindow::setWindowData(const WindowData &wd)
     restoreGeometry(wd.geometry);
     restoreState(wd.state);
     setColorSlot(wd.color);
+    setVisible(wd.isVisible);
+    setWindowTitle(wd.name);
+    name = wd.name;
 }
 QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {

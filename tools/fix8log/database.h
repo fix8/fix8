@@ -18,12 +18,14 @@ class Database :public QObject
 public:
     Database(QString fileName,QObject *parent);
     ~Database();
-    typedef  enum {Windows,WorkSheet,NumOfTables} TableType;
+    typedef  enum {SqlInfo,Windows,WorkSheet,NumOfTables} TableType;
     static QString tableNames[NumOfTables];
     static QString arguments[NumOfTables];
     bool createTable(TableType);
     QSqlDatabase *getHandle();
     QString getLastError();
+    int getVersion();
+    bool setVersion(int);
     bool isOpen();
     bool open();
     bool tableIsValid(TableType);

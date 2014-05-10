@@ -74,6 +74,7 @@ public:
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
+    void setWindowNameSlot();
     QSize sizeHint() const;
     void setColorSlot(QColor color);
     void showMessageArea(bool);
@@ -111,6 +112,7 @@ protected:
     QAction  *searchNextA;
     QAction  *searchEditA;
     QAction  *showMessageA;
+    QAction  *windowNameA;
     QActionGroup *hideColActionGroup;
     QActionGroup *iconSizeActionGroup;
     QActionGroup *iconsStyleGroup;
@@ -172,6 +174,8 @@ private:
     int windowDataID;
     bool loadingActive;
     QUuid  uuid;
+    QString name;
+
 
 };
 

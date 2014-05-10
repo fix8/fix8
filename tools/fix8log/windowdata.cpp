@@ -9,6 +9,8 @@ WindowData::WindowData(const WindowData &w)
     geometry = w.geometry;
     state    = w.state;
     color    = w.color;
+    isVisible = w.isVisible;
     currentTab = w.currentTab;
+    name       = w.name;
 }
 
