@@ -1,0 +1,72 @@
+nuget {
+	nuspec {
+		id = fix8-tbb;
+		version : 4.2.20140416.1;
+		title: TBB;
+		authors: {Intel Corporation};
+		owners: {Fix8, Sergey Sedreev};
+		licenseUrl: "http://www.apache.org/licenses/LICENSE-2.0";
+		projectUrl: "https://www.threadingbuildingblocks.org/";
+		iconUrl: "http://www.gnu.org/licenses/gpl-2.0.html";
+		requireLicenseAcceptance:false;
+		summary: ddd;
+		
+		// if you need to span several lines you can prefix a string with an @ symbol (exactly like c# does).
+		description: @"ddd
+		";
+		releaseNotes: "";
+		copyright: Copyright 2005-2014;
+		tags: { TBB, native, CoApp };
+	};
+
+	// the files that go into the content folders
+	files {
+	
+		#defines {
+			TBB 	 = tbb42_20140416oss\;
+		}
+	
+		// grab all the files in the include folder
+		// the folder that contains all the .h files will 
+		// automatically get added to the Includes path.
+		include: { "${TBB}include\**\*" };
+
+		// Documents that we want to ship with the package. 
+		docs: {  "${TBB}doc\**\*" };
+    
+		// these declarations of lib, symbols and bin folders only apply
+		// to the project when:
+		// 		$(Platform) == x64
+		//  	$(PlatformToolset) == v100 
+		//		$(Configuration) == Debug
+		[x64,v120,debug,desktop] { 
+			lib: { ${TBB}lib\intel64\vc12\tbb_debug.lib; ${TBB}lib\intel64\vc12\tbbmalloc_debug.lib; ${TBB}lib\intel64\vc12\tbbmalloc_proxy_debug.lib; };
+			symbols: { ${TBB}bin\intel64\vc12\tbb_debug.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_debug.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_proxy_debug.pdb; };
+			bin: { ${TBB}bin\intel64\vc12\tbb_debug.dll; ${TBB}bin\intel64\vc12\tbbmalloc_debug.dll; ${TBB}bin\intel64\vc12\tbbmalloc_proxy_debug.dll; };
+		}
+/*		
+		[x64,v120,release,desktop] { 
+			lib: ${SDK_2012}lib\x64\Release\casablanca110.lib;
+			symbols: ${SDK_2012}bin\x64\Release\casablanca110.pdb;
+			bin: ${SDK_2012}bin\x64\Release\casablanca110.dll;
+		}
+			
+		[x86,v120,debug,desktop] { 
+			lib: ${SDK_2012}lib\x86\Debug\casablanca110.lib;
+			symbols: ${SDK_2012}bin\x86\Debug\casablanca110.pdb;
+			bin: ${SDK_2012}bin\x86\Debug\casablanca110.dll;
+		}
+		
+		[x86,v120,release,desktop] { 
+			lib: ${SDK_2012}lib\x86\Release\casablanca110.lib;
+			symbols: ${SDK_2012}bin\x86\Release\casablanca110.pdb;
+			bin: ${SDK_2012}bin\x86\Release\casablanca110.dll;
+		}
+		*/
+	};
+	
+	targets {
+		// We're trying to be standard about these sorts of thing. (Will help with config.h later :D)
+		Defines += HAS_TBB;
+	};
+}
