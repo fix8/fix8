@@ -3,7 +3,7 @@
 #include "globals.h"
 using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
-    QDialog(parent)
+    QDialog(parent),tableSchemaList(0),defaultTableSchema(0),defaultSchemaItem(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Fix8 LogViewer"));
@@ -81,21 +81,15 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     tarBox->addSpacing(22);
     tarBox->addWidget(tabL,0);
     tarBox->addWidget(tabV,1);
-
     topBox->addWidget(applyArea,0,Qt::AlignLeft);
     topBox->addWidget(targetArea,1);
-
     topBox->addStretch(1);
-
-
     splitter = new QSplitter(Qt::Horizontal,this);
     //schemaScrollArea = new QScrollArea();
     //schemaScrollArea->setFrameStyle(QFrame::NoFrame);
     schemaArea = buildSchemaArea();
     //schemaScrollArea->setWidget(schemaArea);
     //schemaScrollArea->verticalScrollBar()->set
-
-
     QWidget *workWidget = new QWidget();
     QGridLayout *wgrid = new QGridLayout();
     workWidget->setLayout(wgrid);
@@ -114,23 +108,18 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     messageListL->setAlignment(Qt::AlignHCenter);
     availableListL->setAlignment(Qt::AlignHCenter);
     selectedListL->setAlignment(Qt::AlignHCenter);
-
-
     messageListView = new QListView();
     availableListView = new QListView();
     selectedListView = new QListView();
-    //wgrid->addWidget(schemaScrollArea,0,0,2,1);
 
     wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(availableListL,0,1,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(selectedListL,0,2,Qt::AlignHCenter|Qt::AlignBottom);
-
     wgrid->addWidget(messageListView,1,0);
     wgrid->addWidget(availableListView,1,1);
     wgrid->addWidget(selectedListView,1,2);
     wgrid->setMargin(3);
     wgrid->setSpacing(4);
-
     wgrid->setRowStretch(0,0);
     wgrid->setRowStretch(1,1);
     wgrid->setColumnStretch(0,0);
@@ -151,34 +140,26 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     vbox->addWidget(splitter,1);
     vbox->addSpacing(24);
     vbox->addWidget(buttonBox,0);
-    qDebug() << "SCMEMA 80";
 
     populateMessageList();
     newSchemaStackArea->setCurrentIndex(RegMode);
     buttonStackArea->setCurrentIndex(RegMode);
     viewMode = RegMode;
-    qDebug() << "SCMEMA 81";
-
 }
 QWidget *SchemaEditorDialog::buildSchemaArea()
 {
     QWidget *widget = new QWidget(this);
     QVBoxLayout *sbox = new QVBoxLayout(widget);
     widget->setLayout(sbox);
-
     newSchemaArea = new QWidget(widget);
     QVBoxLayout  *newBox = new QVBoxLayout(newSchemaArea);
     newSchemaArea->setLayout(newBox);
     newBox->setMargin(0);
     newBox->setSpacing(5);
-
     ///QWidget *schemaInner = QWidget();
     availableSchemasListView = new QListView(newSchemaArea);
     schemaModel = new QStandardItemModel(availableSchemasListView);
     availableSchemasListView->setModel(schemaModel);
-
-
-
     newSchemaL = new QLabel("Name",newSchemaArea);
     newSchemaLine = new QLineEdit(newSchemaArea);
     newSchemaLine->setMaxLength(24);
@@ -190,11 +171,9 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
         this,SLOT(nameEditedSlot(const QString &)));
     newBox->addWidget(newSchemaL,0,Qt::AlignBottom);
     newBox->addWidget(newSchemaLine,0,Qt::AlignTop);
-
     newSchemaStackArea = new QStackedWidget(widget);
     newSchemaStackArea->insertWidget(RegMode,availableSchemasListView);
     newSchemaStackArea->insertWidget(NewMode,newSchemaArea);
-
     descriptionBox = new QGroupBox("Description",widget);
     descriptionBox->setFlat(true);
     QVBoxLayout *dbox = new QVBoxLayout();
@@ -202,8 +181,6 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     descriptionBox->setLayout(dbox);
     descriptionE = new QTextEdit(descriptionBox);
     descriptionE->setToolTip("Optional Field");
-
-
     QPalette pal = descriptionE->palette();
     regularColor = pal.color(QPalette::Base);
     editColor = QColor(174,184,203,180);
@@ -213,7 +190,6 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     QFontMetrics fm(descriptionE->font());
     descriptionE->setMaximumHeight(fm.height()*3);
     availableSchemasL = new QLabel("Available Schemas");
-
     descriptionE->setReadOnly(true);
     dbox->addWidget(descriptionE);
     buttonStackArea = new QStackedWidget(this);
@@ -225,24 +201,26 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     saveEditPB->setIcon(QIcon(":/images/svg/checkmark.svg"));
     cancelEditPB = new QPushButton("Cancel",schemaButtonEditArea);
     cancelEditPB->setToolTip("Cancel the creation or editing of a schema");
-
     cancelEditPB->setIcon(QIcon(":/images/svg/cancel.svg"));
     connect(saveEditPB,SIGNAL(clicked()),this,SLOT(saveNewEditSlot()));
     connect(cancelEditPB,SIGNAL(clicked()),this,SLOT(cancelNewSlot()));
     schemaButtonEditBox->addWidget(cancelEditPB,0);
     schemaButtonEditBox->addWidget(saveEditPB,0);
-
     QWidget *schemaButtonArea = new QWidget(widget);
     QGridLayout *schemaGrid = new QGridLayout();
     schemaButtonArea->setLayout(schemaGrid);
     newSchemaPB = new QPushButton("New",schemaButtonArea);
+    newSchemaPB->setIcon(QIcon(":/images/svg/newspreadsheet.svg"));
     newSchemaPB->setToolTip("Create a new schema");
     connect(newSchemaPB,SIGNAL(clicked()),this,SLOT(newSchemaSlot()));
     copySchemaPB = new QPushButton("Copy",schemaButtonArea);
+    copySchemaPB->setIcon(QIcon(":/images/svg/spreadsheetCopy.svg"));
     copySchemaPB->setToolTip("Create a copy of the selected schema");
     editSchemaPB = new QPushButton("Edit",schemaButtonArea);
+    editSchemaPB->setIcon(QIcon(":/images/svg/editSchema.svg"));
     editSchemaPB->setToolTip("Modify given name and or description of selected schema");
     deleteSchemaPB = new QPushButton("Delete",schemaButtonArea);
+    deleteSchemaPB->setIcon(QIcon(":/images/svg/editdelete.svg"));
     deleteSchemaPB->setToolTip("Delete selected schema");
     schemaGrid->addWidget(newSchemaPB,0,0);
     schemaGrid->addWidget(copySchemaPB,0,1);
@@ -250,40 +228,57 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     schemaGrid->addWidget(deleteSchemaPB,1,1);
     schemaGrid->setColumnStretch(0,0);
     schemaGrid->setColumnStretch(1,0);
-
-
     sbox->setMargin(0);
     sbox->setSpacing(0);
     sbox->addWidget(availableSchemasL,0);
     sbox->addWidget(newSchemaStackArea,1);
     sbox->addWidget(descriptionBox,0);
-
     buttonStackArea->insertWidget(RegMode,schemaButtonArea);
     buttonStackArea->insertWidget(NewMode,schemaButtonEditArea);
     sbox->addWidget(buttonStackArea,0,Qt::AlignBottom);
     return (widget);
 }
-
 void SchemaEditorDialog::populateMessageList()
 {
     QStandardItem *item;
-    qDebug() << "SCMEMA 100";
-
     messageModel = new QStandardItemModel();
     messageListView->setModel(messageModel);
     int count = Globals::messagePairs->count();
     messageModel->setRowCount(count);
-    qDebug() << "SCMEMA 130";
-
     for(int i= 0;i< count;i++) {
-        qDebug() << "Create item I = " << i << "total = " << count;
+        //qDebug() << "Create item I = " << i << "total = " << count;
        item = new QStandardItem(Globals::messagePairs->at(i).second);
        messageModel->setItem(i,item);
     }
-    qDebug() << "SCMEMA 150";
-
-
 }
+void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
+{
+    tableSchemaList = tsl;
+    defaultTableSchema = dts;
+    if (defaultTableSchema) {
+        defaultSchemaItem = new SchemaItem(*defaultTableSchema);
+         schemaModel->appendRow(defaultSchemaItem);
+    }
+    else {
+        qWarning() << "NO Default Table Schema  For Scema Edtior" << __FILE__ << __LINE__;
+    }
+    if (!tsl) {
+        qWarning() << "NO Default Table Schema List  For Scema Edtior" << __FILE__ << __LINE__;
+        return;
+    }
+    tableSchemaList = tsl;
+    TableSchema *tableSchema;
+    SchemaItem *schemaItem;
+    QListIterator <TableSchema *> iter(*tableSchemaList);
+    while(iter.hasNext()) {
+        tableSchema = iter.next();
+        if (tableSchema != defaultTableSchema) {
+            schemaItem = new SchemaItem(*tableSchema);
+            schemaModel->appendRow(schemaItem);
+        }
+    }
+}
+
 void SchemaEditorDialog::applyButtonSlot(QAbstractButton *button)
 {
     if (button == applyOnlyToCurrentRB) {
@@ -375,4 +370,17 @@ bool SchemaEditorDialog::validate()
 void SchemaEditorDialog::nameEditedSlot(const QString &)
 {
     validate();
+}
+void SchemaEditorDialog::saveSettings()
+{
+     QSettings settings("fix8","logviewer");
+     settings.setValue("ScehmaEditorGeometry",saveGeometry());
+     settings.setValue("ScehmaEditorSpliiter",splitter->saveState());
+}
+
+void SchemaEditorDialog::restoreSettings()
+{
+    QSettings settings("fix8","logviewer");
+    restoreGeometry(settings.value("ScehmaEditorGeometry").toByteArray());
+    splitter->restoreState(settings.value("ScehmaEditorSpliiter").toByteArray());
 }

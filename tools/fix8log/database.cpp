@@ -5,7 +5,7 @@
 #include <QSqlTableModel>
 #include <QVariant>
 
-QString Database::tableNames[] = {"sqlinfo","windows","worksheets"};
+QString Database::tableNames[] = {"sqlinfo","windows","worksheets","tableschemas"};
 QString Database::arguments[] = {
     // sqlinfo
     "version integer",
@@ -13,6 +13,9 @@ QString Database::arguments[] = {
     "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32)",
     //worksheets
     "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB",
+    // tableSchemas
+    //worksheets
+    "id INTEGER primary key, name char(32), description char(120),locked integer default 0",
 };
 
 Database::Database(QString fileName,QObject *parent):QObject(parent),name(fileName),handle(0)

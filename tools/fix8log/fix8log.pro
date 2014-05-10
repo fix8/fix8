@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     fixmimedata.cpp \
     nodatalabel.cpp \
     schemaeditordialog.cpp \
-    schemaitem.cpp
+    schemaitem.cpp \
+    databaseTableSchemas.cpp \
+    tableschema.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -67,7 +69,8 @@ HEADERS  += mainwindow.h \
     fixmimedata.h \
     nodatalabel.h \
     schemaeditordialog.h \
-    schemaitem.h
+    schemaitem.h \
+    tableschema.h
 
 RESOURCES += \
     resources.qrc

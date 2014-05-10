@@ -6,8 +6,8 @@
 #include <QMap>
 #include <QString>
 #include <globals.h>
-
 #include "mainwindow.h"
+#include "tableschema.h"
 class QStandardItemModel;
 class Database;
 class SchemaEditorDialog;
@@ -52,6 +52,9 @@ protected:
     QMap <QString, QStandardItemModel *> fileNameModelMap;
     bool cancelSessionRestore;
     SchemaEditorDialog *schemaEditorDialog;
+    TableSchemaList *tableSchemaList;
+    TableSchema *defaultTableSchema;
+    TableSchema *worldTableSchema;
 
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);

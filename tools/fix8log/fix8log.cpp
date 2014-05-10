@@ -22,7 +22,8 @@ using namespace FIX8;
 
 Fix8Log::Fix8Log(QObject *parent) :
     QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
-    cancelSessionRestore(false),schemaEditorDialog(0)
+    cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
+    defaultTableSchema(0),worldTableSchema(0)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
@@ -34,9 +35,7 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
     wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
-
     //const GeneratedTable<const char *, BaseMsgEntry>::Pair *p = TEX::ctx()._bme.at(1);
-
 }
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
@@ -145,6 +144,67 @@ bool Fix8Log::init()
             displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
     }
+    bstatus = database->tableIsValid(Database::TableSchemas);
+    if (!bstatus) {
+        bstatus = database->createTable(Database::TableSchemas);
+        if (!bstatus) {
+            errorStr = "Failed to create table  table.";
+            displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+        }
+        else {
+            // create default schema ...
+            TableSchema *ts = new TableSchema("Default","Default Table Schema",true);
+            if (ts) {
+                bstatus = database->addTableSchema(*ts);
+                if (!bstatus) {
+                     errorStr = "Failed to create default table schema";
+                     displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+                }
+                else {
+                    tableSchemaList = database->getTableSchemas();
+                    if (!tableSchemaList) {
+                        errorStr = "Error - no table schemas found in database";
+                        displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+                    }
+                }
+            }
+        }
+    }
+    else {
+        tableSchemaList = database->getTableSchemas();
+        if (!tableSchemaList) {
+            errorStr = "Error - no table schemas found in database, creating default....";
+            displayConsoleMessage(GUI::Message(errorStr,GUI::Message::WarningMsg));
+            defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
+
+            bstatus = database->addTableSchema(*defaultTableSchema);
+            if (!bstatus) {
+                 errorStr = "Failed to add default table schema to database";
+                 displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            }
+            else {
+                tableSchemaList = new TableSchemaList();
+                tableSchemaList->append(defaultTableSchema);
+            }
+        }
+        else { // lets make sure we have default table schema, else create it
+           defaultTableSchema = tableSchemaList->findByName("Default");
+           if(!defaultTableSchema) {
+               errorStr = "Failed to find default table schema, creating it...";
+               displayConsoleMessage(GUI::Message(errorStr,GUI::Message::WarningMsg));
+               defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
+               tableSchemaList->append(defaultTableSchema);
+               bstatus = database->addTableSchema(*defaultTableSchema);
+               if (!bstatus) {
+                   errorStr = "Failed to add default table schema to database 2";
+                   displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+               }
+           }
+        }
+
+    }
+    if (tableSchemaList)
+        qDebug() << "NUM OF TABLE SCHEMAS FOUND IN DB ARE:" << tableSchemaList->count() << __FILE__ << __LINE__;
     QString key;
     QString value;
     quint32 ikey;
@@ -165,7 +225,7 @@ bool Fix8Log::init()
        const RealmBase *rb = be._rlm;
        FieldTrait::FieldType trait( (FieldTrait::FieldType) ikey);
       // qDebug() << "\tKey of field =" << ikey;
-       qDebug() << "\tBaseEntry:" << be._name;
+       //qDebug() << "\tBaseEntry:" << be._name;
        QVariant var = trait;
        //qDebug() << "\t Type = " << var.typeName();
        //if (rb)  rb is always null
@@ -375,8 +435,10 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     if (!schemaEditorDialog) {
         qDebug() << "\tcreate new scheme edit dialog";
         schemaEditorDialog = new SchemaEditorDialog();
+        schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));
+        schemaEditorDialog->restoreSettings();
     }
     qDebug() << "\tshow schema editor dialog...";
     QString windowName = mw->windowTitle();
@@ -404,4 +466,6 @@ void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 {
     if (returnCode == QDialogButtonBox::Close)
       schemaEditorDialog->close();
+    schemaEditorDialog->saveSettings();
+
 }

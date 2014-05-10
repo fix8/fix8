@@ -7,6 +7,7 @@
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include "tableschema.h"
 #include "windowdata.h"
 #include "worksheetdata.h"
 
@@ -18,7 +19,7 @@ class Database :public QObject
 public:
     Database(QString fileName,QObject *parent);
     ~Database();
-    typedef  enum {SqlInfo,Windows,WorkSheet,NumOfTables} TableType;
+    typedef  enum {SqlInfo,Windows,WorkSheet,TableSchemas,NumOfTables} TableType;
     static QString tableNames[NumOfTables];
     static QString arguments[NumOfTables];
     bool createTable(TableType);
@@ -40,6 +41,11 @@ public:
     bool deleteAllWorkSheets();
     bool deleteWorkSheetByWindowID(int windowID);
     bool deleteWorkSheet(int workSheetID);
+    // Table Schema Methods
+    TableSchemaList *getTableSchemas();
+    bool addTableSchema(TableSchema &);
+    bool updateTableSchema(TableSchema &);
+    bool deleteTableSchema(qint32 tableSchemaID);
 private:
     QString name;
     QSqlDatabase *handle;

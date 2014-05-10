@@ -3,12 +3,17 @@
 
 #include <QDialog>
 #include <QtWidgets>
+#include "schemaitem.h"
+#include "tableschema.h"
 class SchemaEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit SchemaEditorDialog(QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
+    void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
+    void saveSettings();
+    void restoreSettings();
 signals:
 public slots:
     void actionButtonSlot(QAbstractButton *button );
@@ -67,6 +72,10 @@ private:
     QWidget *targetArea;
     ViewMode viewMode;
     bool haveChanges;
+    TableSchemaList *tableSchemaList;
+    TableSchema *defaultTableSchema;
+    SchemaItem *defaultSchemaItem ;
+
 };
 
 #endif // SCHEMAEDITORDIALOG_H
