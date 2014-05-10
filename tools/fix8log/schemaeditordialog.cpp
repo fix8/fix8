@@ -133,12 +133,24 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     applyB = buttonBox->addButton(QDialogButtonBox::Apply);
     connect(buttonBox,SIGNAL(clicked(QAbstractButton*)),
                 this,SLOT(actionButtonSlot(QAbstractButton*)));
+    messageL = new QLabel(this);
+    messageL->setAlignment(Qt::AlignCenter);
+    fnt = messageL->font();
+    fnt.setPointSize(fnt.pointSize()+2);
+    fnt.setBold(true);
+    messageL->setFont(fnt);
+    QPalette pal = messageL->palette();
+    regMesssgeColor = pal.color(QPalette::WindowText);
+    errorMessageColor = Qt::red;
+
     vbox->addWidget(titleArea,0);
     vbox->addWidget(hrLine,0);
     vbox->addLayout(topBox,0);
     vbox->addSpacing(22);
     vbox->addWidget(splitter,1);
-    vbox->addSpacing(24);
+    vbox->addSpacing(12);
+    vbox->addWidget(messageL,0);
+    vbox->addSpacing(12);
     vbox->addWidget(buttonBox,0);
 
     populateMessageList();
@@ -317,20 +329,34 @@ void SchemaEditorDialog::newSchemaSlot()
     newSchemaStackArea->setCurrentIndex(NewMode);
     QPalette pal = descriptionE->palette();
     pal.setColor(QPalette::Base,editColor);
-    qDebug() << "NEw ITEM 2";
     descriptionE->setPalette(pal);
     descriptionE->setReadOnly(false);
     availableSchemasL->setText("New Schema");
+    newSchemaLine->setFocus();
     validate();
-    qDebug() << "NEW ITEM 5";
 }
 void SchemaEditorDialog::saveNewEditSlot()
 {// called for both save new and edit
     SchemaItem *si;
-
+    TableSchema *tableSchema;
+    QString name = newSchemaLine->text();
     if(viewMode == NewMode) {
-        si = new SchemaItem(newSchemaLine->text());
-        //si->descritption = descriptionE->tex
+        if (tableSchemaList) {
+            tableSchema = tableSchemaList->findByName(name);
+            if (tableSchema) {
+                    setMessage("Error - Name already in use",true);
+                    return;
+            }
+        }
+        else {
+            qWarning() << "table schema list is null" << __FILE__ << __LINE__;
+            setMessage("Prgramming Error - Schema List Is Null",true);
+            return;
+        }
+        messageL->setText("");
+        newSchemaLine->setText("");
+        tableSchema = new TableSchema(name,descriptionE->toPlainText(),false);
+        si = new SchemaItem(*tableSchema);
         schemaModel->appendRow(si);
         viewMode = RegMode;
         newSchemaStackArea->setCurrentIndex(RegMode);
@@ -347,6 +373,7 @@ void SchemaEditorDialog::saveNewEditSlot()
 void SchemaEditorDialog::cancelNewSlot()
 {
     viewMode = RegMode;
+    messageL->setText("");
     newSchemaStackArea->setCurrentIndex(RegMode);
     buttonStackArea->setCurrentIndex(RegMode);
     QPalette pal = descriptionE->palette();
@@ -369,6 +396,7 @@ bool SchemaEditorDialog::validate()
 }
 void SchemaEditorDialog::nameEditedSlot(const QString &)
 {
+    messageL->setText("");
     validate();
 }
 void SchemaEditorDialog::saveSettings()
@@ -383,4 +411,14 @@ void SchemaEditorDialog::restoreSettings()
     QSettings settings("fix8","logviewer");
     restoreGeometry(settings.value("ScehmaEditorGeometry").toByteArray());
     splitter->restoreState(settings.value("ScehmaEditorSpliiter").toByteArray());
+}
+void SchemaEditorDialog::setMessage(QString str, bool isError)
+{
+    QPalette pal = messageL->palette();
+    if (isError)
+        pal.setColor(QPalette::WindowText,errorMessageColor);
+    else
+        pal.setColor(QPalette::WindowText,regMesssgeColor);
+    messageL->setPalette(pal);
+    messageL->setText(str);
 }

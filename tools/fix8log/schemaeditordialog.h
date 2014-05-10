@@ -26,11 +26,14 @@ private:
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
     QWidget  * buildSchemaArea();
     void populateMessageList();
+    void setMessage(QString str, bool isError);
     bool validate();
     //SchemaEditorWidget *schemaWidget;
     QButtonGroup *applyBG;
     QColor editColor;
     QColor regularColor;
+    QColor regMesssgeColor;
+    QColor errorMessageColor;
     QDialogButtonBox *buttonBox;
     QGroupBox *descriptionBox;
     QLabel  *iconL;
@@ -70,6 +73,7 @@ private:
     QWidget *newSchemaArea;
     QWidget *schemaArea;
     QWidget *targetArea;
+    QLabel  *messageL;
     ViewMode viewMode;
     bool haveChanges;
     TableSchemaList *tableSchemaList;
