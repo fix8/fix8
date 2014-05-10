@@ -142,10 +142,17 @@ struct InvalidDomainValue : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
-/// An invalid field was requested or decoded.
+/// An invalid field was requested or added
 struct InvalidField : f8Exception
 {
-	InvalidField(const unsigned field) { format("Invalid Field", field); }
+	InvalidField(const unsigned field) { format("Invalid Field Added", field); }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// An invalid field was decoded.
+struct UnknownField : f8Exception
+{
+	UnknownField(const unsigned field) { format("Unknown Field Decoded", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
