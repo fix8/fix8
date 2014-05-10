@@ -44,25 +44,24 @@ nuget {
 			symbols: { ${TBB}bin\intel64\vc12\tbb_debug.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_debug.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_proxy_debug.pdb; };
 			bin: { ${TBB}bin\intel64\vc12\tbb_debug.dll; ${TBB}bin\intel64\vc12\tbbmalloc_debug.dll; ${TBB}bin\intel64\vc12\tbbmalloc_proxy_debug.dll; };
 		}
-/*		
+		
 		[x64,v120,release,desktop] { 
-			lib: ${SDK_2012}lib\x64\Release\casablanca110.lib;
-			symbols: ${SDK_2012}bin\x64\Release\casablanca110.pdb;
-			bin: ${SDK_2012}bin\x64\Release\casablanca110.dll;
+			lib: { ${TBB}lib\intel64\vc12\tbb.lib; ${TBB}lib\intel64\vc12\tbbmalloc.lib; ${TBB}lib\intel64\vc12\tbbmalloc_proxy.lib; };
+			symbols: { ${TBB}bin\intel64\vc12\tbb.pdb; ${TBB}bin\intel64\vc12\tbbmalloc.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_proxy.pdb; };
+			bin: { ${TBB}bin\intel64\vc12\tbb.dll; ${TBB}bin\intel64\vc12\tbbmalloc.dll; ${TBB}bin\intel64\vc12\tbbmalloc_proxy.dll; };
 		}
 			
 		[x86,v120,debug,desktop] { 
-			lib: ${SDK_2012}lib\x86\Debug\casablanca110.lib;
-			symbols: ${SDK_2012}bin\x86\Debug\casablanca110.pdb;
-			bin: ${SDK_2012}bin\x86\Debug\casablanca110.dll;
+			lib: { ${TBB}lib\ia32\vc12\tbb_debug.lib; ${TBB}lib\ia32\vc12\tbbmalloc_debug.lib; ${TBB}lib\ia32\vc12\tbbmalloc_proxy_debug.lib; };
+			symbols: { ${TBB}bin\ia32\vc12\tbb_debug.pdb; ${TBB}bin\ia32\vc12\tbbmalloc_debug.pdb; ${TBB}bin\ia32\vc12\tbbmalloc_proxy_debug.pdb; };
+			bin: { ${TBB}bin\ia32\vc12\tbb_debug.dll; ${TBB}bin\ia32\vc12\tbbmalloc_debug.dll; ${TBB}bin\ia32\vc12\tbbmalloc_proxy_debug.dll; };
 		}
 		
 		[x86,v120,release,desktop] { 
-			lib: ${SDK_2012}lib\x86\Release\casablanca110.lib;
-			symbols: ${SDK_2012}bin\x86\Release\casablanca110.pdb;
-			bin: ${SDK_2012}bin\x86\Release\casablanca110.dll;
+			lib: { ${TBB}lib\ia32\vc12\tbb.lib; ${TBB}lib\ia32\vc12\tbbmalloc.lib; ${TBB}lib\ia32\vc12\tbbmalloc_proxy.lib; };
+			symbols: { ${TBB}bin\ia32\vc12\tbb.pdb; ${TBB}bin\ia32\vc12\tbbmalloc.pdb; ${TBB}bin\ia32\vc12\tbbmalloc_proxy.pdb; };
+			bin: { ${TBB}bin\ia32\vc12\tbb.dll; ${TBB}bin\ia32\vc12\tbbmalloc.dll; ${TBB}bin\ia32\vc12\tbbmalloc_proxy.dll; };
 		}
-		*/
 	};
 	
 	targets {
