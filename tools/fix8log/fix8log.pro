@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     fixtoolbar.cpp \
     fixmimedata.cpp \
     nodatalabel.cpp \
-    schemaeditordialog.cpp
+    schemaeditordialog.cpp \
+    schemaitem.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     fixtoolbar.h \
     fixmimedata.h \
     nodatalabel.h \
-    schemaeditordialog.h
+    schemaeditordialog.h \
+    schemaitem.h
 
 RESOURCES += \
     resources.qrc

@@ -16,8 +16,10 @@ public slots:
     void cancelNewSlot();
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
+    void saveNewEditSlot();
 private:
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
+    QWidget  * buildSchemaArea();
     void populateMessageList();
     bool validate();
     //SchemaEditorWidget *schemaWidget;
@@ -29,9 +31,9 @@ private:
     QLabel  *iconL;
     QLabel  *titleL;
     QLabel  *windowL;
-    QLabel  *windowV;
     QLabel  *tabL;
-    QLabel  *tabV;
+    QLineEdit  *tabV;
+    QLineEdit  *windowV;
     QListView *availableSchemasListView;
     QListView *messageListView;
     QListView *availableListView;
@@ -53,6 +55,8 @@ private:
     QPushButton *deleteSchemaPB;
     QPushButton *cancelEditPB;
     QPushButton *saveEditPB;
+    QSplitter   *splitter;
+    QScrollArea *schemaScrollArea;
     QStackedWidget *buttonStackArea;
     QStackedWidget *newSchemaStackArea;
     QStandardItemModel *messageModel;

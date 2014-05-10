@@ -111,6 +111,7 @@ void MainWindow::currentColorChangedSlot(QColor color)
 void MainWindow::editTabNameSlot(bool isOn)
 {
     QString tabName;
+    WorkSheet *workSheet;
     int index = tabW->currentIndex();
     if (isOn) {
         tabName =  tabW->tabText(index);
@@ -127,6 +128,9 @@ void MainWindow::editTabNameSlot(bool isOn)
         editTabNamePB->setToolTip("Edit current tab name");
         tabName = tabNameLineEdit->text();
         tabW->setTabText(index,tabName);
+        workSheet = qobject_cast <WorkSheet *> (tabW->widget(index));
+        if (workSheet)
+            workSheet->setAlias(tabName);
     }
 }
 void MainWindow::cancelTabNameSlot()

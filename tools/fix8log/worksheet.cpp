@@ -419,6 +419,7 @@ WorkSheetData WorkSheet::getWorksheetData()
     wsd.headerState = horHeader->saveState();
     wsd.splitterState = splitter->saveState();
     wsd.tabAlias = alias;
+    qDebug() << "ALIAS SET TO " << alias << __FILE__ << __LINE__;
     QItemSelectionModel *select = fixTable->selectionModel();
     if (select && select->hasSelection()) {
         QModelIndexList indexList = select->selectedRows();
