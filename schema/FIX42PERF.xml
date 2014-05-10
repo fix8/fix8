@@ -282,14 +282,14 @@
    <value enum='N' description='NEW' />
    <value enum='R' description='REPLACE' />
   </field>
-  <field number='29' name='LastCapacity' type='CHAR'>
+  <field number='29' name='LastCapacity' type='CHAR' comment='Last capacity'>
    <value enum='1' description='AGENT' />
    <value enum='2' description='CROSS_AS_AGENT' />
    <value enum='3' description='CROSS_AS_PRINCIPAL' />
    <value enum='4' description='PRINCIPAL' />
   </field>
   <field number='30' name='LastMkt' type='EXCHANGE' />
-  <field number='31' name='LastPx' type='PRICE' />
+  <field number='31' name='LastPx' type='PRICE' comment='Last price'/>
   <field number='32' name='LastShares' type='QTY' />
   <field number='33' name='LinesOfText' type='INT' />
   <field number='34' name='MsgSeqNum' type='INT' />

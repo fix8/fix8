@@ -153,6 +153,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { 'R', "Resend request" }, &MyMenu::resend_request },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 't', "Examine static message traits" }, &MyMenu::static_probe },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 
@@ -542,6 +543,43 @@ bool MyMenu::new_order_single_recycled()
 		cout << "Sending recycled new_order_single" << endl;
 		_session.send(msg, false);
 	}
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::static_probe()
+{
+#if defined HAVE_EXTENDED_METADATA
+	(cout << "Enter message tag:").flush();
+	f8String result;
+	const BaseMsgEntry *tbme;
+	if (!get_string(result).empty() && (tbme = _session.get_ctx()._bme.find_ptr(result.c_str())))
+	{
+		function<void (const TraitHelper&, int)> print_traits([&print_traits, this](const TraitHelper& tr, int depth)
+		{
+			const string spacer(depth * 3, ' ');
+			for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
+			{
+				const BaseEntry *be(_session.get_ctx().find_be(itr->_fnum));
+				cout << spacer << be->_name;
+				if (be->_rlm)
+					cout << " Realm:" << (be->_rlm->_dtype == RealmBase::dt_range ? "range" : "set")
+						<< '(' << be->_rlm->_sz << ") ";
+				cout << *itr << endl;
+				if (itr->_field_traits.has(FieldTrait::group))
+					print_traits(itr->_group, depth + 1);
+			}
+		});
+
+		cout << tbme->_name << endl;
+		print_traits(tbme->_create._get_traits(), 1);
+	}
+	else
+		cout << "Unknown message tag: " << result << endl;
+#else
+	cout << "Extended metadata not available (try ./configure --enable-extended-metadata=yes)." << endl;
+#endif
+
 	return true;
 }
 
