@@ -1,19 +1,18 @@
 nuget {
 	nuspec {
-		id = fix8-tbb;
+		id = fix8.dependencies.tbb;
 		version : 4.2.20140416.1;
-		title: TBB;
+		title: FIX8 TBB dependency;
 		authors: {Intel Corporation};
 		owners: {Fix8, Sergey Sedreev};
 		licenseUrl: "http://www.apache.org/licenses/LICENSE-2.0";
 		projectUrl: "https://www.threadingbuildingblocks.org/";
 		iconUrl: "http://www.gnu.org/licenses/gpl-2.0.html";
 		requireLicenseAcceptance:false;
-		summary: ddd;
+		summary: Prebuilt TBB libraries for FIX8 build;
 		
 		// if you need to span several lines you can prefix a string with an @ symbol (exactly like c# does).
-		description: @"ddd
-		";
+		description: @"Official Threading Building Blocks binaries";
 		releaseNotes: "";
 		copyright: Copyright 2005-2014;
 		tags: { TBB, native, CoApp };
