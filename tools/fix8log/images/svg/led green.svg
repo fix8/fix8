@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>led green</title>
+ <defs>
+  <linearGradient y2="0.154184" y1="1.14599" xlink:href="#linearGradient6506" x2="0.567019" x1="0.577658" id="linearGradient7452"/>
+  <linearGradient id="linearGradient6688">
+   <stop stop-color="#0f6900" offset="0" id="stop6690"/>
+   <stop stop-color="#a3ff87" offset="1" id="stop6692"/>
+  </linearGradient>
+  <linearGradient y2="1" y1="0.045983" xlink:href="#linearGradient6688" x2="0.408925" x1="0.419563" id="linearGradient7450"/>
+  <linearGradient y2="0.847627" y1="0.057144" xlink:href="#linearGradient5756" x2="0.609527" x1="0.533336" id="linearGradient7448"/>
+  <linearGradient y2="1" y1="0.018268" xlink:href="#linearGradient5742" x2="0.500001" x1="0.495689" id="linearGradient7446"/>
+  <linearGradient id="linearGradient6506">
+   <stop stop-color="#ffffff" stop-opacity="0" offset="0" id="stop6508"/>
+   <stop stop-color="#ffffff" stop-opacity="0.87451" offset="1" id="stop6510"/>
+  </linearGradient>
+  <linearGradient y2="42.883698" y1="44.066776" xlink:href="#linearGradient6506" x2="23.389874" x1="23.402565" id="linearGradient7498" gradientUnits="userSpaceOnUse"/>
+  <linearGradient id="linearGradient7464">
+   <stop stop-color="#00039a" offset="0" id="stop7466"/>
+   <stop stop-color="#afa5ff" offset="1" id="stop7468"/>
+  </linearGradient>
+  <linearGradient y2="43.892632" y1="42.754631" xlink:href="#linearGradient7464" x2="23.20129" x1="23.21398" id="linearGradient7496" gradientUnits="userSpaceOnUse"/>
+  <linearGradient id="linearGradient5756">
+   <stop stop-color="#828282" offset="0" id="stop5758"/>
+   <stop stop-color="#929292" stop-opacity="0.352941" offset="1" id="stop5760"/>
+  </linearGradient>
+  <linearGradient y2="43.892632" y1="42.699776" xlink:href="#linearGradient5756" x2="23.662106" x1="22.93503" id="linearGradient9321" gradientUnits="userSpaceOnUse"/>
+  <linearGradient id="linearGradient5742">
+   <stop stop-color="#adadad" offset="0" id="stop5744"/>
+   <stop stop-color="#f0f0f0" offset="1" id="stop5746"/>
+  </linearGradient>
+  <linearGradient y2="44" y1="42.42923" xlink:href="#linearGradient5742" x2="23.200001" x1="23.193102" id="linearGradient7492" gradientUnits="userSpaceOnUse"/>
+  <linearGradient y2="44" y1="42.42923" xlink:href="#linearGradient5742" x2="23.200001" x1="23.193102" id="linearGradient9527" gradientUnits="userSpaceOnUse"/>
+  <linearGradient y2="43.892632" y1="42.699776" xlink:href="#linearGradient5756" x2="23.662106" x1="22.93503" id="linearGradient9529" gradientUnits="userSpaceOnUse"/>
+  <linearGradient y2="43.892632" y1="42.754631" xlink:href="#linearGradient7464" x2="23.20129" x1="23.21398" id="linearGradient9531" gradientUnits="userSpaceOnUse"/>
+  <linearGradient y2="42.883698" y1="44.066776" xlink:href="#linearGradient6506" x2="23.389874" x1="23.402565" id="linearGradient9533" gradientUnits="userSpaceOnUse"/>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <g id="layer1">
+   <g transform="matrix(31.25,0,0,31.25,-700,-1400) " id="g9477">
+    <path fill="url(#linearGradient7446)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" id="path7424" d="m23.999998,45.599998c0,0.441601 -0.3584,0.799999 -0.799999,0.799999c-0.441601,0 -0.800001,-0.358398 -0.800001,-0.799999c0,-0.441601 0.3584,-0.799999 0.800001,-0.799999c0.441599,0 0.799999,0.358398 0.799999,0.799999z"/>
+    <path fill="url(#linearGradient7448)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" id="path7426" d="m23.845621,45.599995c0,0.356384 -0.289236,0.645622 -0.645618,0.645622c-0.356384,0 -0.645622,-0.289238 -0.645622,-0.645622c0,-0.356373 0.289238,-0.645607 0.645622,-0.645607c0.356382,0 0.645618,0.289234 0.645618,0.645607z"/>
+    <path fill="#00ff00" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" id="path7428" d="m23.777987,45.599995c0,0.31905 -0.258938,0.577988 -0.577984,0.577988c-0.31905,0 -0.577986,-0.258938 -0.577986,-0.577988c0,-0.319035 0.258936,-0.577972 0.577986,-0.577972c0.319046,0 0.577984,0.258938 0.577984,0.577972z"/>
+    <path fill="url(#linearGradient7452)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" id="path7430" d="m23.660416,45.407204c0,0.196857 -0.206598,0.356628 -0.461157,0.356628c-0.25456,0 -0.461159,-0.159771 -0.461159,-0.356628c0,-0.196854 0.206598,-0.356625 0.461159,-0.356625c0.254559,0 0.461157,0.159771 0.461157,0.356625z"/>
+   </g>
+  </g>
+ </g>
+</svg>
