@@ -37,18 +37,22 @@ nuget {
 		//		$(Configuration) == Debug
 		[x64,v120,debug,desktop] { 
 			lib: { ${GTEST}msvc\x64\Debug\gtestd.lib; ${GTEST}msvc\x64\Debug\gtest_main-mdd.lib; };
+			symbols: ${GTEST}msvc\x64\Debug\vc120.pdb;
 		}
 		
 		[x64,v120,release,desktop] { 
 			lib: { ${GTEST}msvc\x64\Release\gtest.lib; ${GTEST}msvc\x64\Release\gtest_main-md.lib; };
+			symbols: ${GTEST}msvc\x64\Release\vc120.pdb;
 		}
 			
 		[x86,v120,debug,desktop] { 
 			lib: { ${GTEST}msvc\Win32\Debug\gtestd.lib; ${GTEST}msvc\Win32\Debug\gtest_main-mdd.lib; };
+			symbols: ${GTEST}msvc\Win32\Debug\vc120.pdb;
 		}
 		
 		[x86,v120,release,desktop] { 
 			lib: { ${GTEST}msvc\Win32\Release\gtest.lib; ${GTEST}msvc\Win32\Release\gtest_main-md.lib; };
+			symbols: ${GTEST}msvc\Win32\Release\vc120.pdb;
 		}
 	};
 	
