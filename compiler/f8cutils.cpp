@@ -347,6 +347,7 @@ void print_usage()
 	um.add('v', "version", "print version, exit");
 	um.add('I', "info", "print package info, exit");
 	um.add('s', "second", "2nd pass only, no precompile (default both)");
+	um.add('S', "noshared", "Treat every group as unique and expose all static traits. Do not share metadata in message classes (default shared)");
 	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
 	um.add('R', "norealm", "do not generate realm constructed field instantiators (default false)");
 	um.add('W', "nowarn", "suppress warning messages (default false)");

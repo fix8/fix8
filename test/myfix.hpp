@@ -191,6 +191,7 @@ public:
 	bool send_msgs();
 	bool write_msgs();
 	bool read_msgs();
+	bool static_probe();
 	bool new_order_single_recycled();
 
 	bool load_msgs(const std::string& fname);
@@ -198,6 +199,15 @@ public:
 	void send_lst();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
+
+	FIX8::f8String& get_string(FIX8::f8String& to)
+	{
+		char buff[128] {};
+		_tty.unset_raw_mode();
+		_istr.getline(buff, sizeof(buff));
+		_tty.set_raw_mode();
+		return to = buff;
+	}
 };
 
 //-----------------------------------------------------------------------------------------

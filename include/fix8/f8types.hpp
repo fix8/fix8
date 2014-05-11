@@ -102,10 +102,6 @@ private:
 	/// The number of elements in the data set
 	const size_t _pairsz;
 
-	using NotFoundType = Val;
-	/// The value to return when the key is not found
-	const NotFoundType& _noval;
-
 	/*! Find a key; complexity log2(N)+2
 	  \param key the key to find
 	  \return Pair * if found, 0 if not found */
@@ -118,8 +114,8 @@ private:
 
 public:
 	///Ctor.
-	GeneratedTable(const_iterator pairs, const size_t pairsz, const NotFoundType& noval)
-		: _pairs(pairs), _pairsz(pairsz), _noval(noval) {}
+	GeneratedTable(const_iterator pairs, const size_t pairsz)
+		: _pairs(pairs), _pairsz(pairsz) {}
 
 	/*! Get iterator to start of Pairs
 	  \return pointer to first pair */
@@ -139,15 +135,6 @@ public:
 		if (res)
 			return res->_value;
 		throw InvalidMetadata<Key>(key);
-	}
-
-	/*! Find a key (value).
-	  \param key the key to find
-	  \return value found (value) or _noval if not found */
-	const Val find_val(const Key& key) const
-	{
-		const_iterator res(_find(key));
-		return res ? res->_value : _noval;
 	}
 
 	/*! Find a key (pointer).
@@ -170,7 +157,7 @@ public:
 
 	/*! Get the pair at index location
 	  \param idx of the pair to retrieve
-	  \return reference to pair or _noval if not found */
+	  \return pointer to pair or nullptr if not found */
 	const_iterator at(const size_t idx) const { return idx < _pairsz ? _pairs + idx : nullptr; }
 
 	/*! Get the number of elements in the data set.

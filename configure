@@ -677,6 +677,8 @@ LIBHIREDISSUPPORT_FALSE
 LIBHIREDISSUPPORT_TRUE
 LIBMEMCACHEDSUPPORT_FALSE
 LIBMEMCACHEDSUPPORT_TRUE
+F8TESTSTATIC_FALSE
+F8TESTSTATIC_TRUE
 F8TEST_FALSE
 F8TEST_TRUE
 USECCRYPT_FALSE
@@ -757,6 +759,7 @@ CPPFLAGS
 LDFLAGS
 CXXFLAGS
 CXX
+libfix8_la_version_info
 AM_BACKSLASH
 AM_DEFAULT_VERBOSITY
 AM_DEFAULT_V
@@ -855,6 +858,7 @@ with_regex
 with_thread
 enable_gtest
 enable_f8test
+enable_extended_metadata
 enable_libmemcached
 enable_libhiredis
 enable_bdb
@@ -1525,6 +1529,9 @@ Optional Features:
                           (default=yes if available)
   --enable-f8test         permit f8test client/server to be built
                           (default=yes)
+  --enable-extended-metadata
+                          enable extended metadata generation and support
+                          (default=no)
   --enable-libmemcached   enable memcached C API support via libmemcached
                           (default=no)
   --enable-libhiredis     enable redis C API support via libhiredis
@@ -3469,6 +3476,9 @@ _ACEOF
 cat >>confdefs.h <<_ACEOF
 #define CONFIGURE_OPTIONS "$ac_configure_args"
 _ACEOF
+
+
+libfix8_la_version_info=$MAJOR_VERSION_NUM:$MINOR_VERSION_NUM:0
 
 
 UNAME_S=`uname -s 2>/dev/null || echo unknown`
@@ -21145,6 +21155,29 @@ else
 fi
 
 
+oktoextendmetadata=no
+# Check whether --enable-extended-metadata was given.
+if test "${enable_extended_metadata+set}" = set; then :
+  enableval=$enable_extended_metadata; case "${enableval}" in
+	yes)	oktoextendmetadata=yes
+
+$as_echo "#define HAVE_EXTENDED_METADATA 1" >>confdefs.h
+;;
+	no) ;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-extended-metadata" "$LINENO" 5 ;;
+esac
+fi
+
+
+ if test x$oktof8test = xyes && test x$oktoextendmetadata = xyes; then
+  F8TESTSTATIC_TRUE=
+  F8TESTSTATIC_FALSE='#'
+else
+  F8TESTSTATIC_TRUE='#'
+  F8TESTSTATIC_FALSE=
+fi
+
+
 oktomemcached=no
 # Check whether --enable-libmemcached was given.
 if test "${enable_libmemcached+set}" = set; then :
@@ -24503,6 +24536,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${F8TEST_TRUE}" && test -z "${F8TEST_FALSE}"; then
   as_fn_error $? "conditional \"F8TEST\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${F8TESTSTATIC_TRUE}" && test -z "${F8TESTSTATIC_FALSE}"; then
+  as_fn_error $? "conditional \"F8TESTSTATIC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${LIBMEMCACHEDSUPPORT_TRUE}" && test -z "${LIBMEMCACHEDSUPPORT_FALSE}"; then

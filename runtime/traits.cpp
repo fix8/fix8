@@ -44,7 +44,20 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 ostream& FIX8::operator<<(ostream& os, const FieldTrait& what)
 {
-	return os << "Tag: " << what._fnum << " Type: " << what._ftype << " Flags: " << what._field_traits.get();
+	static const vector<string> bts { "mandatory", "present", "position", "group", "component", "suppress", "automatic" };
+	os << "Tag:" << what._fnum << " Type:" << what._ftype << " (";
+	if (FieldTrait::is_int(what._ftype)) os << "int";
+	else if (FieldTrait::is_char(what._ftype)) os << "char";
+	else if (FieldTrait::is_string(what._ftype)) os << "string";
+	else if (FieldTrait::is_float(what._ftype)) os << "float";
+	os << ") Pos:" << what._pos;
+	if (what._component)
+		os << " Component:" << what._component;
+	os << " Flags:";
+	for (unsigned ii(what._field_traits.get()), pos(0); pos < FieldTrait::count; ++pos)
+		if (ii >> pos & 0x1)
+			os << bts[pos] << ' ';
+	return os;
 }
 
 //-------------------------------------------------------------------------------------------------

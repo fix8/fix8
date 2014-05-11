@@ -40,7 +40,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   This is a complete working example of a FIX client/server using FIX8.\n
 \n
 <tt>
-	Usage: harness [-RSchlqrsv]\n
+Usage: harness [-LRSchlpqrsv] \n
+      -L,--lines              set number of screen lines in the console menu (default 50)\n
 		-R,--receive            set next expected receive sequence number\n
 		-S,--send               set next send sequence number\n
 		-c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
@@ -131,7 +132,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rp:");
+const string GETARGLIST("hl:svqc:R:S:rp:L:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -169,7 +170,7 @@ void sig_handler(int sig)
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	int val;
+	int val, lines(50);
 	bool server(false), reliable(false);
 	string clcf, replay_file;
 	unsigned next_send(0), next_receive(0);
@@ -185,6 +186,7 @@ int main(int argc, char **argv)
 		{ "server",		0,	0,	's' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
+		{ "lines",		1,	0,	'L' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
 		{ 0 },
@@ -209,6 +211,7 @@ int main(int argc, char **argv)
 		case 's': server = true; break;
 		case 'S': next_send = get_value<unsigned>(optarg); break;
 		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'L': lines = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -262,7 +265,7 @@ int main(int argc, char **argv)
 			else
 				mc->start(false);
 
-			ConsoleMenu cm(TEX::ctx(), cin, cout, 50);
+			ConsoleMenu cm(TEX::ctx(), cin, cout, lines);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
@@ -329,7 +332,10 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	if (!_session.is_shutdown())
+	{
 		_session.send(new TEX::Logout);
+		get_ostr() << "logout..." << endl;
+	}
 	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
@@ -347,6 +353,7 @@ void print_usage()
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
+	um.add('L', "lines", "set number of screen lines in the console menu (default 50)");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
 	um.print(cerr);

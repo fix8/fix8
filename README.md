@@ -92,7 +92,7 @@ and framework; and a set of complete client/server test applications.
           </tr>
           <tr>
              <td>pro/</td>
-             <td>Fix8Pro extensions (commercial verson only)</td>
+             <td>Fix8Pro extensions (commercial version only)</td>
           </tr>
           <tr>
              <td>schema/</td>
@@ -224,13 +224,17 @@ If you cannot find any help there **create a new topic and ask the support group
 - Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
 
 - If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
-register and create an issue.** Provide *as much detail as possible*. If you have already implemented a fix, and wish to make a pull
+register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
+sample configuruation files, config.log, etc. If you have already implemented a fix, and wish to make a pull
 request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
 
-- When considering submitting a problem report, make sure you have identified a potential problem with Fix8 and not a problem with your application.
+- When considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
 These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes, some of which will relate
-to your build, your code and your configuration, and may not be a consequence of the framework implementation. Make sure you have eliminated
-these possibilities and that you have reviewed topics in the support group and developer group, *before* submitting a problem report.
+to your build, your code and your configuration and are not a problem with the framework implementation. Make sure you have eliminated
+these possibilities and that you have reviewed topics in the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
+the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
+
+- We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
 
 ## License
 

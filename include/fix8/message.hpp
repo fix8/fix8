@@ -124,8 +124,7 @@ public:
 	virtual bool operator()(const Message *msg) { return false; }
 };
 
-//-------------------------------------------------------------------------------------------------
-/// Structures for framework generated message creation table
+/// Structures for framework generated message creation and static trait interrogation
 class Minst
 {
    template<typename T>
@@ -133,26 +132,34 @@ class Minst
 	{
 		static Message *_make() { return new T; }
 		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
+#if defined HAVE_EXTENDED_METADATA
+		static const TraitHelper& _make_traits()
+		{
+			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
+			return _helper;
+		}
+#endif
 	};
 
-	static Message *dummy() { return nullptr; }
-
 public:
-	Minst() : _do(dummy) {}
-
 	Message *(&_do)();
+#if defined HAVE_EXTENDED_METADATA
+	const TraitHelper& (&_get_traits)();
+#endif
 
    template<typename T>
-   Minst(Type2Type<T>) : _do(_gen<T>::_make) {}
+   Minst(Type2Type<T>) : _do(_gen<T>::_make)
+#if defined HAVE_EXTENDED_METADATA
+		 , _get_traits(_gen<T>::_make_traits)
+#endif
+	{}
 
    template<typename T, typename R>
-   Minst(Type2Types<T, R>) : _do(_gen<T>::_make_cast) {}
-};
-
-template<>
-struct Minst::_gen<void *>
-{
-	static Message *_make() { return nullptr; }
+   Minst(Type2Types<T, R>) : _do(_gen<T>::_make_cast)
+#if defined HAVE_EXTENDED_METADATA
+		 , _get_traits(_gen<T>::_make_traits)
+#endif
+	{}
 };
 
 struct BaseMsgEntry
@@ -222,6 +229,23 @@ struct F8MetaCntx
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	  \return version */
 	unsigned version() const { return _version; }
+
+#if defined HAVE_EXTENDED_METADATA
+	//----------------------------------------------------------------------------------------------
+	// The following methods can be used to iterate and interrogate static traits
+	//----------------------------------------------------------------------------------------------
+	using const_iterator = const FieldTrait*;
+	using const_internal_result = std::pair<const_iterator, const_iterator>;
+	static const_iterator find(unsigned short fnum, const TraitHelper& from)
+	{
+		const const_internal_result res(std::equal_range (from._traits, from._traits + from._fieldcnt,
+			FieldTrait(fnum), FieldTrait::Compare()));
+		return res.first != res.second ? res.first : nullptr;
+	}
+
+	static const_iterator begin(const TraitHelper& from) { return from._traits; }
+	static const_iterator end(const TraitHelper& from) { return from._traits + from._fieldcnt; }
+#endif
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -503,6 +527,17 @@ public:
 	    \return true if present */
 	template<typename T>
 	bool has() const { return _fp.get(T::get_field_id()); }
+
+	/*! Check if a field is legal in a message.
+	    \param fnum field number
+	    \return true if present */
+	bool is_legal(unsigned short fnum) const { return _fp.has(fnum); }
+
+	/*! Check if a field is legal.
+	    \tparam T type of field to check
+	    \return true if present */
+	template<typename T>
+	bool is_legal() const { return _fp.has(T::get_field_id()); }
 
 	/*! Get a pointer to a field. Inplace, 0 copy.
 	    \tparam T type of field to get

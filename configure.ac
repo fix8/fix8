@@ -61,6 +61,8 @@ AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
 AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
+AC_SUBST(libfix8_la_version_info, $MAJOR_VERSION_NUM:$MINOR_VERSION_NUM:0)
+
 UNAME_S=`uname -s 2>/dev/null || echo unknown`
 UNAME_M=`uname -m 2>/dev/null || echo unknown`
 UNAME_O=`uname -o 2>/dev/null || echo unknown`
@@ -563,6 +565,18 @@ AC_ARG_ENABLE([f8test],
 esac])
 
 AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
+
+oktoextendmetadata=no
+AC_ARG_ENABLE([extended-metadata],
+[AS_HELP_STRING([--enable-extended-metadata],[enable extended metadata generation and support (default=no)])],
+[case "${enableval}" in
+	yes)	oktoextendmetadata=yes
+			AC_DEFINE(HAVE_EXTENDED_METADATA, 1, [Define to 1 if you have extended Fix8 metadata enabled]);;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-extended-metadata) ;;
+esac])
+
+AM_CONDITIONAL(F8TESTSTATIC, [test x$oktof8test = xyes && test x$oktoextendmetadata = xyes])
 
 oktomemcached=no
 AC_ARG_ENABLE([libmemcached],
