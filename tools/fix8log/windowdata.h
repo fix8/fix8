@@ -14,5 +14,6 @@ public:
     bool       isVisible;
     qint32     currentTab;
     QString    name;
+    qint32     tableSchemaID;
 };
 #endif // WINDOWDATA_H

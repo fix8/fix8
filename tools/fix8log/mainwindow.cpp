@@ -5,13 +5,16 @@
 #include "worksheet.h"
 #include "globals.h"
 #include "searchlineedit.h"
+#include "tableschema.h"
 #include <QQuickView>
 #include <QtWidgets>
 #include <QStandardItemModel>
 
+TableSchema *MainWindow::defaultTableSchema = 0;
+
 MainWindow::MainWindow(bool showLoading)
     : QMainWindow(0),fileDialog(0),qmlObject(0),windowDataID(-1),
-      loadingActive(showLoading)
+      loadingActive(showLoading),tableSchema(0)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -295,16 +298,29 @@ void MainWindow::buildMainWindow()
     mainToolBar->addAction(copyWindowA);
     mainToolBar->addAction(newTabA);
     mainToolBar->addAction(copyTabA);
+    mainToolBar->addAction(showMessageA);
+    mainToolBar->addAction(autoSaveA);
     mainToolBar->addSeparator();
     mainToolBar->addAction(editSchemaA);
-    mainToolBar->addAction(showMessageA);
 
-    mainToolBar->addAction(autoSaveA);
+
     configPB = new QPushButton(this);
     configPB->setIcon(QIcon(":/images/svg/preferences-color.svg"));
     configPB->setToolTip(tr("Set Menubar Color"));
     configPB->setFlat(true);
     menuBar()->setCornerWidget(configPB);
+    QWidget *schemaArea = new QWidget(this);
+    QHBoxLayout *schemaBox = new QHBoxLayout(schemaArea);
+    schemaBox->setMargin(0);
+    schemaBox->setSpacing(0);
+    schemaArea->setLayout(schemaBox);
+    schemaL = new QLabel("Schema: ",this);
+    schemaL->setToolTip("Current Schema");
+    schemaV = new QLabel("Default",this);
+    schemaBox->addWidget(schemaL);
+    schemaBox->addWidget(schemaV);
+    schemaV->setToolTip("Current Schema");
+    statusBar()->addWidget(schemaArea);
     connect(configPB,SIGNAL(clicked()),this,SLOT(configSlot()));
     // restore should be in settings but must come after
     stackW = new QStackedWidget(this);
@@ -384,6 +400,7 @@ void MainWindow::buildMainWindow()
     stackW->insertWidget(ShowProgress,progressWidget);
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
+
     buildHideColumnMenu();
 }
 MainWindow::~MainWindow()
@@ -394,6 +411,11 @@ void MainWindow::createWindowSlot()
 {
     emit createWindow(this);
 }
+void MainWindow::showFileDialog()
+{
+    createTabSlot();
+}
+
 void MainWindow::buildHideColumnMenu()
 {
     for (int i=0;i<FixTable::NumColumns;i++) {
@@ -534,4 +556,12 @@ void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
         qWarning() << "Failed to finish drop, fmd = 0" << __FILE__ << __LINE__;
     }
     addWorkSheet(fmd->model,wsd);
+}
+void MainWindow::setTableSchema(TableSchema *ts)
+{
+    tableSchema = ts;
+}
+TableSchema * MainWindow::getTableSchema()
+{
+    return tableSchema;
 }

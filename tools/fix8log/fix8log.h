@@ -26,6 +26,7 @@ public:
     void readFileInAnotherThread(const QString &fileName,QString &errorStr);
     void readSettings();
     void writeSettings();
+    bool isGlobalSchemaOn();
 public slots:
     void autoSaveOnSlot(bool);
     void cancelSessionRestoreSlot();
@@ -39,6 +40,7 @@ public slots:
      void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();
     void modelDroppedSlot(FixMimeData *);
+    void setGlobalSchemaOnSlot(bool);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void schemaEditorFinishedSlot(int);
 protected:
@@ -55,6 +57,7 @@ protected:
     TableSchemaList *tableSchemaList;
     TableSchema *defaultTableSchema;
     TableSchema *worldTableSchema;
+    bool globalSchemaOn;
 
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);

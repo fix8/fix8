@@ -10,7 +10,7 @@ QString Database::arguments[] = {
     // sqlinfo
     "version integer",
     // windows
-    "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32)",
+    "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32),tableSchemaID integer",
     //worksheets
     "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB",
     // tableSchemas
@@ -194,7 +194,8 @@ int Database::getVersion()
     }
     return version;
 }
-bool Database::setVersion(int nweVersion)
+bool Database::setVersion(int nwVersion)
 {
     // to be done
+    return true;
 }

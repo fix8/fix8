@@ -1,5 +1,5 @@
 #include "windowdata.h"
-WindowData::WindowData():currentTab(0)
+WindowData::WindowData():currentTab(0),tableSchemaID(-1)
 {
 
 }
@@ -12,5 +12,6 @@ WindowData::WindowData(const WindowData &w)
     isVisible = w.isVisible;
     currentTab = w.currentTab;
     name       = w.name;
+    tableSchemaID = w.tableSchemaID;
 }
 

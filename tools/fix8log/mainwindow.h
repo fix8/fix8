@@ -13,6 +13,7 @@ class FixMimeData;
 class FixToolBar;
 class NoDataLabel;
 class SearchLineEdit;
+class TableSchema;
 class QAction;
 class QActionGroup;
 class QDockWidget;
@@ -40,6 +41,8 @@ public:
     ~MainWindow();
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
+    void showFileDialog();
+    TableSchema* getTableSchema();
     const QUuid &getUuid();
     WindowData getWindowData();
     QList <WorkSheetData> getWorksheetData(int windowID);
@@ -48,7 +51,7 @@ public:
     void setLoading(bool);
     void setLoadMessage(QString);
     void setWindowData(const WindowData &wd);
-
+    void setTableSchema(TableSchema *);
     protected slots:
     void autoSaveOnSlot(bool);
     void cancelSessionRestoreSlot();
@@ -121,6 +124,8 @@ protected:
     SearchLineEdit *searchLineEdit;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
+    QLabel   *schemaL;
+    QLabel   *schemaV;
     QLabel   *searchL;
     QLabel   *searchLV; // searchLagle to show when vertical
     NoDataLabel   *noDataL;
@@ -146,6 +151,7 @@ protected:
     //QToggleButton editTabNamePB;
     QToolBar *mainToolBar;
     FixToolBar *searchToolBar;
+    static TableSchema *defaultTableSchema;
     QList <FixTable *> fixTableLists;
     QWidget *progressWidget;
     QWidget *searchArea;
@@ -175,8 +181,7 @@ private:
     bool loadingActive;
     QUuid  uuid;
     QString name;
-
-
+    TableSchema *tableSchema;
 };
 
 #endif // MAINWINDOW_H

@@ -23,7 +23,7 @@ using namespace FIX8;
 Fix8Log::Fix8Log(QObject *parent) :
     QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
-    defaultTableSchema(0),worldTableSchema(0)
+    defaultTableSchema(0),worldTableSchema(0),globalSchemaOn(false)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
@@ -34,6 +34,7 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
     MainWindow *newMW  =new MainWindow(*mw);
     wireSignalAndSlots(newMW);
     newMW->show();
+    newMW->showFileDialog();
     mainWindows.append(newMW);
     //const GeneratedTable<const char *, BaseMsgEntry>::Pair *p = TEX::ctx()._bme.at(1);
 }
@@ -201,7 +202,7 @@ bool Fix8Log::init()
                }
            }
         }
-
+    MainWindow::defaultTableSchema = defaultTableSchema;
     }
     if (tableSchemaList)
         qDebug() << "NUM OF TABLE SCHEMAS FOUND IN DB ARE:" << tableSchemaList->count() << __FILE__ << __LINE__;
@@ -384,12 +385,15 @@ void Fix8Log::readSettings()
     QSettings settings("fix8","logviewer");
     autoSaveOn = (bool) settings.value("AutoSave",false).toBool();
     GUI::Globals::timeFormat  = (GUI::Globals::TimeFormat) settings.value("StartTimeFormat",GUI::Globals::HHMMSS).toInt();
+    globalSchemaOn = settings.value("GlobalSchemaOn",false).toBool();
     emit notifyTimeFormatChanged(GUI::Globals::timeFormat);
+
 }
 void Fix8Log::writeSettings()
 {
     QSettings settings("fix8","logviewer");
-    settings.setValue("AutoSave",autoSaveOn);
+
+
 }
 void Fix8Log::lastWindowClosedSlot()
 {
@@ -434,7 +438,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     qDebug() << "EDIT SCHEMA SLOT" << __FILE__ << __LINE__;
     if (!schemaEditorDialog) {
         qDebug() << "\tcreate new scheme edit dialog";
-        schemaEditorDialog = new SchemaEditorDialog(database);
+        schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));
@@ -464,4 +468,15 @@ void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
       schemaEditorDialog->close();
     schemaEditorDialog->saveSettings();
 
+}
+void Fix8Log::setGlobalSchemaOnSlot(bool b)
+{
+    QSettings settings("fix8","logviewer");
+    globalSchemaOn = b;
+    settings.setValue("GlobalSchemaOn",b);
+}
+
+bool Fix8Log::isGlobalSchemaOn()
+{
+    return globalSchemaOn;
 }

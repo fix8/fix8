@@ -3,10 +3,11 @@
 #include "database.h"
 #include "globals.h"
 using namespace GUI;
-SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
+SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
     QDialog(parent),tableSchemaList(0),defaultTableSchema(0),
-    currentSchemaItem(0),defaultSchemaItem(0),database(db)
+    currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn)
 {
+
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Fix8 LogViewer"));
     QVBoxLayout *vbox = new QVBoxLayout(this);
@@ -43,6 +44,10 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     applyBG->addButton(applyOnlyToCurrentRB);
     applyBG->addButton(applyToWindowRB);
     applyBG->addButton(applyToAllRB);
+    if (globalSchemaOn)
+        applyToAllRB->setChecked(true);
+    else
+        applyToWindowRB->setChecked(true);
     connect(applyBG,SIGNAL(buttonClicked(QAbstractButton*)),
             this,SLOT(applyButtonSlot(QAbstractButton*)));
     QHBoxLayout *topBox = new QHBoxLayout();
@@ -323,6 +328,10 @@ void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
 {
     windowV->setText(windowName);
     tabV->setText(tabName);
+    if (tabName.length() < 1)
+        applyToWindowRB->setChecked(true);
+    else
+        applyOnlyToCurrentRB->setChecked(true);
 }
 void SchemaEditorDialog::actionButtonSlot(QAbstractButton *button )
 {

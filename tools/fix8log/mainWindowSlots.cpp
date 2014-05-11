@@ -225,8 +225,6 @@ void MainWindow::modelDroppedSlot(FixMimeData *m)
 {
     if (!m)
         return;
-    qDebug() << "HERE IN MAIN WINDOW, data dropped< from window id " << m->windowID << __FILE__;
-    qDebug() << "Work sheet id " << m->worksheetID;
     emit modelDropped(m);
 }
 void MainWindow::setWindowNameSlot()

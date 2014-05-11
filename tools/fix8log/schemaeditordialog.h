@@ -11,7 +11,7 @@ class SchemaEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SchemaEditorDialog(Database *database,QWidget *parent = 0);
+    explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void saveSettings();
@@ -87,7 +87,7 @@ private:
     SchemaItem *defaultSchemaItem ;
 
     Database *database;
-
+    bool globalSchemaOn;
 };
 
 #endif // SCHEMAEDITORDIALOG_H
