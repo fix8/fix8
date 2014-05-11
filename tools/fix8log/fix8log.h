@@ -40,6 +40,7 @@ public slots:
      void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();
     void modelDroppedSlot(FixMimeData *);
+    void newSchemaCreatedSlot(TableSchema *);
     void setGlobalSchemaOnSlot(bool);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void schemaEditorFinishedSlot(int);

@@ -397,6 +397,8 @@ void SchemaEditorDialog::saveNewEditSlot()
         descriptionE->setReadOnly(true);
         availableSchemasL->setText("Available Schemas");
         validate();
+        tableSchemaList->append(tableSchema);
+        emit newSchemaCreated(tableSchema);
     }
 }
 

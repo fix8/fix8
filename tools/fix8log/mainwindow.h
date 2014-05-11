@@ -14,6 +14,7 @@ class FixToolBar;
 class NoDataLabel;
 class SearchLineEdit;
 class TableSchema;
+class TableSchemaList;
 class QAction;
 class QActionGroup;
 class QDockWidget;
@@ -39,6 +40,7 @@ public:
     MainWindow(bool showLoading=false);
     MainWindow(const MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
+    void addNewSchema(TableSchema *);
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
     void showFileDialog();
@@ -109,6 +111,9 @@ protected:
     QAction  *pasteTabA;
     QAction  *quitA;
     QAction  *saveA;
+    QAction  *schemaApplyTabA;
+    QAction  *schemaApplyWindowA;
+    QAction  *schemaApplyAllA;
     QAction  *searchBackA;
     QAction  *searchBeginA;
     QAction  *searchEndA;
@@ -116,6 +121,8 @@ protected:
     QAction  *searchEditA;
     QAction  *showMessageA;
     QAction  *windowNameA;
+    QActionGroup *schemaActionGroup;
+    QActionGroup *schemaScopeGroup;
     QActionGroup *hideColActionGroup;
     QActionGroup *iconSizeActionGroup;
     QActionGroup *iconsStyleGroup;
@@ -136,6 +143,8 @@ protected:
     QMenu    *iconSizeMenu;
     QMenu    *iconStyleMenu;
     QMenu    *optionMenu;
+    QMenu    *schemaMenu;
+    QMenu    *schemaScopeMenu;
     QMenu    *poupMenu;
     QMenuBar *mainMenuBar;
     QPushButton *cancelEditTabNamePB;
@@ -152,6 +161,7 @@ protected:
     QToolBar *mainToolBar;
     FixToolBar *searchToolBar;
     static TableSchema *defaultTableSchema;
+    static TableSchemaList *schemaList;
     QList <FixTable *> fixTableLists;
     QWidget *progressWidget;
     QWidget *searchArea;
@@ -174,6 +184,7 @@ signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
     void buildHideColumnMenu();
+    void buildSchemaMenu();
     QByteArray fileDirState;
     QString  lastSelectedDir;
     QString fileFilter;

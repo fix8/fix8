@@ -11,6 +11,7 @@
 #include <QStandardItemModel>
 
 TableSchema *MainWindow::defaultTableSchema = 0;
+TableSchemaList *MainWindow::schemaList = 0;
 
 MainWindow::MainWindow(bool showLoading)
     : QMainWindow(0),fileDialog(0),qmlObject(0),windowDataID(-1),
@@ -90,6 +91,8 @@ void MainWindow::buildMainWindow()
     mainMenuBar = menuBar();
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
+    schemaMenu = mainMenuBar->addMenu("&Schema");
+
     mainToolBar = new QToolBar("Main Toolbar",this);
 
     mainToolBar->setObjectName("MainToolBar");
@@ -146,7 +149,8 @@ void MainWindow::buildMainWindow()
     copyWindowA->setIcon((QIcon(":/images/32x32/copywindow.svg")));
     copyWindowA->setToolTip(tr("Copy Window"));
     connect(copyWindowA,SIGNAL(triggered()),this,SLOT(copyWindowSlot()));
-    editSchemaA= new QAction("&Schema",this);
+    editSchemaA= new QAction("&Schema Editor",this);
+    editSchemaA->setIconText("Edit");
     editSchemaA->setIcon((QIcon(":/images/svg/editSchema.svg")));
      connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
     showMessageA = new QAction(tr("Show/Hide Msgs"),this);
@@ -292,7 +296,7 @@ void MainWindow::buildMainWindow()
     fileMenu->addAction(closeA);
     fileMenu->addSeparator();
     fileMenu->addAction(quitA);
-
+    schemaMenu->addAction(editSchemaA);
     mainToolBar->addAction(closeA);
     mainToolBar->addAction(newWindowA);
     mainToolBar->addAction(copyWindowA);
@@ -400,9 +404,52 @@ void MainWindow::buildMainWindow()
     stackW->insertWidget(ShowProgress,progressWidget);
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
-
+    buildSchemaMenu();
     buildHideColumnMenu();
 }
+void MainWindow::buildSchemaMenu()
+{
+
+    schemaScopeGroup = new QActionGroup(this);
+    schemaScopeGroup->setExclusive(true);
+    schemaScopeMenu = schemaMenu->addMenu("Scope");
+    schemaApplyAllA = new QAction("Apply Globally",this);
+    schemaApplyWindowA = new QAction("Apply To Window",this);
+    schemaApplyTabA = new QAction("Apply To Worksheet",this);
+    schemaApplyAllA->setCheckable(true);
+    schemaApplyWindowA->setCheckable(true);
+    schemaApplyTabA->setCheckable(true);
+    schemaScopeMenu->addAction(schemaApplyTabA);
+    schemaScopeMenu->addAction(schemaApplyWindowA);
+    schemaScopeMenu->addAction(schemaApplyAllA);
+
+    schemaScopeGroup->addAction(schemaApplyTabA);
+    schemaScopeGroup->addAction(schemaApplyWindowA);
+    schemaScopeGroup->addAction(schemaApplyAllA);
+    schemaMenu->addSeparator();
+    TableSchema *tableSchema;
+    if (!schemaList) {
+        qDebug() << "Schema List is null " << __FILE__ << __LINE__;
+        return;
+    }
+    qDebug() << "NUM of schema items = " << schemaList->count() << __FILE__ << __LINE__;
+    schemaActionGroup = new QActionGroup(this);
+    schemaActionGroup->setExclusive(true);
+
+    QListIterator <TableSchema *> iter(*schemaList);
+    while(iter.hasNext()) {
+        tableSchema = iter.next();
+        QAction *action = new QAction(tableSchema->name,this);
+        action->setCheckable(true);
+        QVariant var;
+        var.setValue((void *) action);
+        action->setData(var);
+        schemaMenu->addAction(action);
+        schemaActionGroup->addAction(action);
+
+    }
+}
+
 MainWindow::~MainWindow()
 {
 
@@ -561,6 +608,20 @@ void MainWindow::setTableSchema(TableSchema *ts)
 {
     tableSchema = ts;
 }
+void MainWindow::addNewSchema(TableSchema *ts)
+{
+    qDebug() << "HERE IN MAIN WINDOW ADD NEW SCHEA" << __FILE__ << __LINE__;
+    if (!ts)
+        return;
+    QAction *action = new QAction(ts->name,this);
+    action->setCheckable(true);
+    QVariant var;
+    var.setValue((void *) action);
+    action->setData(var);
+    schemaMenu->addAction(action);
+    schemaActionGroup->addAction(action);
+}
+
 TableSchema * MainWindow::getTableSchema()
 {
     return tableSchema;

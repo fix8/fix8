@@ -17,6 +17,8 @@ public:
     void saveSettings();
     void restoreSettings();
 signals:
+    void newSchemaCreated(TableSchema *);
+    void schemaDeleted(int schemaID);
 public slots:
     void actionButtonSlot(QAbstractButton *button );
     void availableSchemasClickedSlot(QModelIndex);

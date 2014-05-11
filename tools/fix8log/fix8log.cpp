@@ -288,6 +288,8 @@ bool Fix8Log::init()
         displayConsoleMessage("Session restored from autosave");
     }
 done:
+    MainWindow::schemaList = tableSchemaList;
+
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
@@ -442,6 +444,8 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));
+        connect(schemaEditorDialog,SIGNAL(newSchemaCreated(TableSchema*)),
+                this,SLOT(newSchemaCreatedSlot(TableSchema *)));
         schemaEditorDialog->restoreSettings();
     }
     qDebug() << "\tshow schema editor dialog...";
@@ -461,6 +465,16 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     }
     schemaEditorDialog->setCurrentTarget(windowName,tabName);
     schemaEditorDialog->show();
+}
+void  Fix8Log::newSchemaCreatedSlot(TableSchema *ts)
+{
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        mw->addNewSchema(ts);
+    }
+
 }
 void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 {
