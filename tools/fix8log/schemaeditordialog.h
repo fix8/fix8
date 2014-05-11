@@ -5,11 +5,13 @@
 #include <QtWidgets>
 #include "schemaitem.h"
 #include "tableschema.h"
+
+class Database;
 class SchemaEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SchemaEditorDialog(QWidget *parent = 0);
+    explicit SchemaEditorDialog(Database *database,QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void saveSettings();
@@ -17,11 +19,14 @@ public:
 signals:
 public slots:
     void actionButtonSlot(QAbstractButton *button );
+    void availableSchemasClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
     void cancelNewSlot();
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
     void saveNewEditSlot();
+protected:
+    void showEvent(QShowEvent *);
 private:
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
     QWidget  * buildSchemaArea();
@@ -76,9 +81,12 @@ private:
     QLabel  *messageL;
     ViewMode viewMode;
     bool haveChanges;
-    TableSchemaList *tableSchemaList;
+    TableSchemaList *tableSchemaList;    
     TableSchema *defaultTableSchema;
+    SchemaItem *currentSchemaItem;
     SchemaItem *defaultSchemaItem ;
+
+    Database *database;
 
 };
 

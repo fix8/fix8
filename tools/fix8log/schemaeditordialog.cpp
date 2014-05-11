@@ -1,9 +1,11 @@
 #include "schemaeditordialog.h"
 #include "schemaitem.h"
+#include "database.h"
 #include "globals.h"
 using namespace GUI;
-SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
-    QDialog(parent),tableSchemaList(0),defaultTableSchema(0),defaultSchemaItem(0)
+SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
+    QDialog(parent),tableSchemaList(0),defaultTableSchema(0),
+    currentSchemaItem(0),defaultSchemaItem(0),database(db)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Fix8 LogViewer"));
@@ -85,18 +87,15 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     topBox->addWidget(targetArea,1);
     topBox->addStretch(1);
     splitter = new QSplitter(Qt::Horizontal,this);
-    //schemaScrollArea = new QScrollArea();
-    //schemaScrollArea->setFrameStyle(QFrame::NoFrame);
     schemaArea = buildSchemaArea();
-    //schemaScrollArea->setWidget(schemaArea);
-    //schemaScrollArea->verticalScrollBar()->set
+
     QWidget *workWidget = new QWidget();
     QGridLayout *wgrid = new QGridLayout();
     workWidget->setLayout(wgrid);
 
-   splitter->insertWidget(0,schemaArea);
-   splitter->insertWidget(1,workWidget);
-   splitter->setChildrenCollapsible(true);
+    splitter->insertWidget(0,schemaArea);
+    splitter->insertWidget(1,workWidget);
+    splitter->setChildrenCollapsible(true);
 
     messageListL  = new QLabel("Messages");
     messageListL->setToolTip("All possible FIX messages");
@@ -132,7 +131,7 @@ SchemaEditorDialog::SchemaEditorDialog(QWidget *parent) :
     closeB = buttonBox->addButton(QDialogButtonBox::Close);
     applyB = buttonBox->addButton(QDialogButtonBox::Apply);
     connect(buttonBox,SIGNAL(clicked(QAbstractButton*)),
-                this,SLOT(actionButtonSlot(QAbstractButton*)));
+            this,SLOT(actionButtonSlot(QAbstractButton*)));
     messageL = new QLabel(this);
     messageL->setAlignment(Qt::AlignCenter);
     fnt = messageL->font();
@@ -170,6 +169,8 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     newBox->setSpacing(5);
     ///QWidget *schemaInner = QWidget();
     availableSchemasListView = new QListView(newSchemaArea);
+    connect(availableSchemasListView,SIGNAL(clicked(QModelIndex)),
+            this,SLOT(availableSchemasClickedSlot(QModelIndex)));
     schemaModel = new QStandardItemModel(availableSchemasListView);
     availableSchemasListView->setModel(schemaModel);
     newSchemaL = new QLabel("Name",newSchemaArea);
@@ -180,7 +181,7 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     QValidator *val = new QRegExpValidator(regExp,this);
     newSchemaLine->setValidator(val);
     connect(newSchemaLine,SIGNAL(textEdited(const QString &)),
-        this,SLOT(nameEditedSlot(const QString &)));
+            this,SLOT(nameEditedSlot(const QString &)));
     newBox->addWidget(newSchemaL,0,Qt::AlignBottom);
     newBox->addWidget(newSchemaLine,0,Qt::AlignTop);
     newSchemaStackArea = new QStackedWidget(widget);
@@ -250,6 +251,12 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     sbox->addWidget(buttonStackArea,0,Qt::AlignBottom);
     return (widget);
 }
+void SchemaEditorDialog::showEvent(QShowEvent *se)
+{
+    validate();
+    QDialog::showEvent(se);
+}
+
 void SchemaEditorDialog::populateMessageList()
 {
     QStandardItem *item;
@@ -259,8 +266,8 @@ void SchemaEditorDialog::populateMessageList()
     messageModel->setRowCount(count);
     for(int i= 0;i< count;i++) {
         //qDebug() << "Create item I = " << i << "total = " << count;
-       item = new QStandardItem(Globals::messagePairs->at(i).second);
-       messageModel->setItem(i,item);
+        item = new QStandardItem(Globals::messagePairs->at(i).second);
+        messageModel->setItem(i,item);
     }
 }
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
@@ -269,7 +276,7 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
     defaultTableSchema = dts;
     if (defaultTableSchema) {
         defaultSchemaItem = new SchemaItem(*defaultTableSchema);
-         schemaModel->appendRow(defaultSchemaItem);
+        schemaModel->appendRow(defaultSchemaItem);
     }
     else {
         qWarning() << "NO Default Table Schema  For Scema Edtior" << __FILE__ << __LINE__;
@@ -319,11 +326,12 @@ void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
 }
 void SchemaEditorDialog::actionButtonSlot(QAbstractButton *button )
 {
- if (button == closeB)
-     emit finished(QDialogButtonBox::Close);
+    if (button == closeB)
+        emit finished(QDialogButtonBox::Close);
 }
 void SchemaEditorDialog::newSchemaSlot()
 {
+    bool bstatus;
     viewMode = NewMode;
     buttonStackArea->setCurrentIndex(NewMode);
     newSchemaStackArea->setCurrentIndex(NewMode);
@@ -332,20 +340,23 @@ void SchemaEditorDialog::newSchemaSlot()
     descriptionE->setPalette(pal);
     descriptionE->setReadOnly(false);
     availableSchemasL->setText("New Schema");
+    newSchemaLine->setText("");
+    descriptionE->setText("");
     newSchemaLine->setFocus();
     validate();
 }
 void SchemaEditorDialog::saveNewEditSlot()
 {// called for both save new and edit
     SchemaItem *si;
+    bool bstatus;
     TableSchema *tableSchema;
     QString name = newSchemaLine->text();
     if(viewMode == NewMode) {
         if (tableSchemaList) {
             tableSchema = tableSchemaList->findByName(name);
             if (tableSchema) {
-                    setMessage("Error - Name already in use",true);
-                    return;
+                setMessage("Error - Name already in use",true);
+                return;
             }
         }
         else {
@@ -353,9 +364,19 @@ void SchemaEditorDialog::saveNewEditSlot()
             setMessage("Prgramming Error - Schema List Is Null",true);
             return;
         }
+        if (!database) {
+            qWarning() << "Error in saving shema - database is null" << __FILE__ << __LINE__;
+            setMessage("Prgramming Error - Database is not defined",true);
+            return;
+        }
         messageL->setText("");
         newSchemaLine->setText("");
         tableSchema = new TableSchema(name,descriptionE->toPlainText(),false);
+        bstatus = database->addTableSchema(*tableSchema);
+        if (!bstatus) {
+            setMessage("Error - save to database failed",true);
+            return;
+        }
         si = new SchemaItem(*tableSchema);
         schemaModel->appendRow(si);
         viewMode = RegMode;
@@ -387,10 +408,37 @@ void SchemaEditorDialog::cancelNewSlot()
 bool SchemaEditorDialog::validate()
 {
     bool isValid = false;
-    if (viewMode == NewMode) {
+    if (viewMode == NewMode || viewMode == EditMode) {
         if (newSchemaLine->text().length() > 1)
             isValid = true;
+        newSchemaPB->setEnabled(false);
         saveEditPB->setEnabled(isValid);
+        editSchemaPB->setEnabled(false);
+        deleteSchemaPB->setEnabled(false);
+        copySchemaPB->setEnabled(false);
+
+    }
+    else {
+        newSchemaPB->setEnabled(true);
+        saveEditPB->setEnabled(false);
+
+        if (currentSchemaItem) {
+            if (currentSchemaItem == defaultSchemaItem) {
+                deleteSchemaPB->setEnabled(false);
+                editSchemaPB->setEnabled(false);
+            }
+            else {
+                deleteSchemaPB->setEnabled(true);
+                editSchemaPB->setEnabled(true);
+            }
+            copySchemaPB->setEnabled(true);
+
+        }
+        else {
+            editSchemaPB->setEnabled(false);
+            deleteSchemaPB->setEnabled(false);
+            copySchemaPB->setEnabled(false);
+        }
     }
     return isValid;
 }
@@ -401,9 +449,9 @@ void SchemaEditorDialog::nameEditedSlot(const QString &)
 }
 void SchemaEditorDialog::saveSettings()
 {
-     QSettings settings("fix8","logviewer");
-     settings.setValue("ScehmaEditorGeometry",saveGeometry());
-     settings.setValue("ScehmaEditorSpliiter",splitter->saveState());
+    QSettings settings("fix8","logviewer");
+    settings.setValue("ScehmaEditorGeometry",saveGeometry());
+    settings.setValue("ScehmaEditorSpliiter",splitter->saveState());
 }
 
 void SchemaEditorDialog::restoreSettings()
@@ -421,4 +469,20 @@ void SchemaEditorDialog::setMessage(QString str, bool isError)
         pal.setColor(QPalette::WindowText,regMesssgeColor);
     messageL->setPalette(pal);
     messageL->setText(str);
+}
+void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
+{
+    currentSchemaItem = (SchemaItem *) schemaModel->itemFromIndex(index);
+    if (!currentSchemaItem)  {
+        qWarning() << "Curent SchemaItem is null" << __FILE__ << __LINE__;
+        return;
+    }
+    TableSchema *currentTableSchema = currentSchemaItem->tableSchema;
+    if (!currentTableSchema) {
+        qWarning() << "No Current Table Schema Found" << __FILE__ << __LINE__;
+        return;
+    }
+    newSchemaLine->setText(currentTableSchema->name);
+    descriptionE->setText(currentTableSchema->description);
+    validate();
 }
