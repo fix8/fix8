@@ -113,6 +113,7 @@ public:
     void modelDroppedSlot(FixMimeData *);
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void quitSlot();
+    void setSchemaScopeSlot(QAction *);
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
@@ -168,6 +169,7 @@ protected:
     SearchLineEdit *searchLineEdit;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
+    QLabel   *scopeV;
     QLabel   *schemaL;
     QLabel   *schemaV;
     QLabel   *searchL;

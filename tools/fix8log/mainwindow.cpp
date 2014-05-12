@@ -354,9 +354,14 @@ void MainWindow::buildMainWindow()
     schemaBox->setMargin(0);
     schemaBox->setSpacing(0);
     schemaArea->setLayout(schemaBox);
+    scopeV = new QLabel();
+    scopeV->setPixmap(QPixmap(":/images/svg/worldwWthTwoTabs.svg").scaledToHeight(24));
     schemaL = new QLabel("Schema: ",this);
     schemaL->setToolTip("Current Schema");
     schemaV = new QLabel("Default",this);
+    schemaV->setToolTip("Schema Scope");
+    schemaBox->addWidget(scopeV);
+    schemaBox->addSpacing(15);
     schemaBox->addWidget(schemaL);
     schemaBox->addWidget(schemaV);
     schemaV->setToolTip("Current Schema");
@@ -447,11 +452,15 @@ void MainWindow::buildSchemaMenu()
 {
 
     schemaScopeGroup = new QActionGroup(this);
+    connect(schemaScopeGroup,SIGNAL(triggered(QAction*)),this,SLOT(setSchemaScopeSlot(QAction*)));
     schemaScopeGroup->setExclusive(true);
-    schemaScopeMenu = schemaMenu->addMenu("Scope");
+    schemaScopeMenu = schemaMenu->addMenu("Schema Scope");
     schemaApplyAllA = new QAction("Apply Globally",this);
+    schemaApplyAllA->setIcon(QIcon(":/images/svg/worldwWthTwoTabs.svg"));
     schemaApplyWindowA = new QAction("Apply To Window",this);
+    schemaApplyWindowA->setIcon(QIcon(":/images/svg/spreadsheetTwoTabs.svg"));
     schemaApplyTabA = new QAction("Apply To Worksheet",this);
+    schemaApplyTabA->setIcon(QIcon(":/images/svg/spreadsheetOneTabs.svg"));
     schemaApplyAllA->setCheckable(true);
     schemaApplyWindowA->setCheckable(true);
     schemaApplyTabA->setCheckable(true);
@@ -462,16 +471,14 @@ void MainWindow::buildSchemaMenu()
     schemaScopeGroup->addAction(schemaApplyTabA);
     schemaScopeGroup->addAction(schemaApplyWindowA);
     schemaScopeGroup->addAction(schemaApplyAllA);
-    schemaMenu->addSeparator();
     TableSchema *tableSchema;
     if (!schemaList) {
         qDebug() << "Schema List is null " << __FILE__ << __LINE__;
         return;
     }
-    qDebug() << "NUM of schema items = " << schemaList->count() << __FILE__ << __LINE__;
     schemaActionGroup = new QActionGroup(this);
     schemaActionGroup->setExclusive(true);
-
+    schemaMenu->addSection("Available Schemas");
     QListIterator <TableSchema *> iter(*schemaList);
     while(iter.hasNext()) {
         tableSchema = iter.next();

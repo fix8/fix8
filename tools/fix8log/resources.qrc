@@ -42,5 +42,8 @@
         <file>qml/loadProgress.qml</file>
         <file>images/svg/editSchema.svg</file>
         <file>images/svg/editdelete.svg</file>
+        <file>images/svg/worldwWthTwoTabs.svg</file>
+        <file>images/svg/spreadsheetTwoTabs.svg</file>
+        <file>images/svg/spreadsheetOneTabs.svg</file>
     </qresource>
 </RCC>
