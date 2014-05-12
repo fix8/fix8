@@ -5,3 +5,5 @@ Win32
 *.sdf
 *.suo
 ipch
+packages/*
+!packages/repositories.config
