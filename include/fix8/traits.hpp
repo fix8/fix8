@@ -43,6 +43,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+/// Used for static trait interrogation
+#if defined HAVE_EXTENDED_METADATA
+struct TraitHelper
+{
+	const struct FieldTrait *_traits;
+	const unsigned _fieldcnt;
+};
+#endif
+
+//-------------------------------------------------------------------------------------------------
 /// FIX field traits - hold specific traits for each field.
 struct FieldTrait
 {
@@ -99,9 +109,18 @@ struct FieldTrait
 	  \param ftype field type
 	  \param pos field position (in FIX message)
 	  \param compon component idx
-	  \param field_traits bitmap of TraitTypes */
-	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits)
-		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)  {}
+	  \param field_traits bitmap of TraitTypes
+	  \param tgroup ptr ot traits if group */
+	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits
+#if defined HAVE_EXTENDED_METADATA
+		, const FieldTrait *group=nullptr, unsigned fieldcnt=0
+#endif
+		)
+		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)
+#if defined HAVE_EXTENDED_METADATA
+		, _group{group, fieldcnt}
+#endif
+	{}
 
 	/*! Ctor.
 	  \param field field num (tag number) */
@@ -125,6 +144,9 @@ struct FieldTrait
 	FieldType _ftype;
 	mutable unsigned short _pos, _component;
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
+#if defined HAVE_EXTENDED_METADATA
+	const TraitHelper _group {nullptr, 0};
+#endif
 
 	/// Binary comparitor functor.
 	struct Compare
@@ -153,7 +175,8 @@ struct FieldTrait
 	    \return stream */
 	friend F8API std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 };
-F8API std::ostream& operator<<( std::ostream& os, const FieldTrait& what );
+
+F8API std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 
 //-------------------------------------------------------------------------------------------------
 /// Fast index lookup for FieldTrait
@@ -163,10 +186,10 @@ struct FieldTrait_Hash_Array
    unsigned short *_arr;
 
    FieldTrait_Hash_Array(const FieldTrait *from, const size_t els)
-      : _els(els), _sz((from + _els - 1)->_fnum + 1), _arr(new unsigned short [_sz])
+      : _els(static_cast<unsigned>(els)), _sz((from + _els - 1)->_fnum + 1), _arr(new unsigned short [_sz])
    {
 		std::fill(_arr, _arr + _sz, 0);
-      for (unsigned offset(0); offset < _els; ++offset)
+		for (unsigned offset(0); offset < _els; ++offset)
 			*(_arr + (from + offset)->_fnum) = offset;
    }
 
@@ -180,9 +203,9 @@ template<>
 class presorted_set<unsigned short, FieldTrait, FieldTrait::Compare>
 {
 public:
-	typedef FieldTrait* iterator;
-	typedef const FieldTrait* const_iterator;
-	typedef std::pair<iterator, bool> result;
+	using iterator = FieldTrait*;
+	using const_iterator = const FieldTrait*;
+	using result = std::pair<iterator, bool>;
 
 	/*! Calculate the amount of space to reserve in set
 	  \param sz number of elements currently in set; if 0 retun reserve elements as size to reserve
@@ -202,8 +225,8 @@ private:
 	FieldTrait *_arr;
 	const FieldTrait_Hash_Array *_ftha;
 
-	typedef std::pair<iterator, iterator> internal_result;
-	typedef std::pair<const_iterator, const_iterator> const_internal_result;
+	using internal_result = std::pair<iterator, iterator>;
+	using const_internal_result = std::pair<const_iterator, const_iterator>;
 
 public:
 	/*! ctor - initialise from static sorted set. Used by Message encoder/decoder.
@@ -393,7 +416,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef presorted_set<unsigned short, FieldTrait, FieldTrait::Compare> Presence;
+using Presence = presorted_set<unsigned short, FieldTrait, FieldTrait::Compare>;
 
 /// A collection of FieldTraits for a message. Which fields are required, which are present.
 class FieldTraits
@@ -625,7 +648,8 @@ public:
 	    \return stream */
 	friend F8API std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 };
-F8API std::ostream& operator<<( std::ostream& os, const FieldTraits& what );
+
+F8API std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 
 } // FIX8
 

@@ -47,13 +47,13 @@ class ff_unbounded_queue
 	ff::uMPMC_Ptr_Queue _queue;
 
 public:
-	typedef T value_type;
+	using value_type = T;
 
 	//! Reference type
-	typedef T& reference;
+	using reference = T&;
 
 	//! Const reference type
-	typedef const T& const_reference;
+	using const_reference = const T&;
 
 	explicit ff_unbounded_queue() { _queue.init(); }
 	~ff_unbounded_queue() {}
@@ -92,13 +92,13 @@ class ff_unbounded_queue<T*>
 	ff::uMPMC_Ptr_Queue _queue;
 
 public:
-	typedef T value_type;
+	using value_type = T;
 
 	//! Reference type
-	typedef T &reference;
+	using reference = T&;
 
 	//! Const reference type
-	typedef const T &const_reference;
+	using const_reference = const T&;
 
 	explicit ff_unbounded_queue() { _queue.init(); }
 	~ff_unbounded_queue() {}
@@ -126,65 +126,6 @@ public:
 
 		return false;
 	}
-};
-
-//----------------------------------------------------------------------------------------
-// C++ wrapper around fastflow atomic
-template<typename T>
-class ff_atomic
-{
-	mutable atomic_long_t _rep;
-
-public:
-	typedef T value_type;
-
-	value_type operator=(const value_type rhs)
-		{ atomic_long_set(&_rep, rhs); return rhs; }
-
-	ff_atomic<value_type>& operator=(const ff_atomic<value_type>& rhs)
-		{ atomic_long_set(&_rep, atomic_long_read(&rhs._rep)); return *this; }
-
-	value_type operator++(int) // postfix
-		{ value_type v(atomic_long_read(&_rep)); atomic_long_inc(&_rep); return v; }
-	value_type operator--(int) // postfix
-		{ value_type v(atomic_long_read(&_rep)); atomic_long_dec(&_rep); return v; }
-	value_type operator++() // prefix
-		{ return atomic_long_inc_return(&_rep); }
-	value_type operator--() // prefix
-		{ return atomic_long_dec_return(&_rep); }
-	value_type operator+=(value_type value)
-		{ atomic_long_add(value, &_rep); return atomic_long_read(&_rep); }
-	value_type operator-=(value_type value)
-		{ atomic_long_sub(value, &_rep); return atomic_long_read(&_rep); }
-
-	operator value_type() { return static_cast<T>(atomic_long_read(&_rep)); }
-	operator value_type() const { return static_cast<T>(atomic_long_read(&_rep)); }
-};
-
-//----------------------------------------------------------------------------------------
-// pointer specialisation of above
-template<typename T>
-class ff_atomic<T*>
-{
-	atomic_long_t _rep;
-
-public:
-	typedef T* value_type;
-
-	T* operator=(T* rhs)
-	{
-		atomic_long_set(&_rep, reinterpret_cast<long>(rhs));
-		return reinterpret_cast<T*>(atomic_long_read(&_rep));
-	}
-
-	ff_atomic<T*>& operator=(const ff_atomic<T*>& rhs)
-		{ atomic_long_set(&_rep, atomic_long_read(rhs._rep)); return *this; }
-
-	T* operator->() const { return reinterpret_cast<T*>(atomic_long_read(&_rep)); }
-	T operator*() { return *reinterpret_cast<T*>(atomic_long_read(&_rep)); }
-
-	operator value_type() { return reinterpret_cast<T*>(atomic_long_read(&_rep)); }
-	operator value_type() const { return reinterpret_cast<T*>(atomic_long_read(&_rep)); }
 };
 
 //----------------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('packages\openssl.1.0.1.24\build\native\openssl.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -23,6 +24,8 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>fix8</RootNamespace>
     <ProjectName>fix8</ProjectName>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -58,7 +61,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="root.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <NuGetPackageImportStamp>dc79ba31</NuGetPackageImportStamp>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
@@ -71,7 +76,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;BUILD_F8API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -90,7 +94,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;BUILD_F8API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -110,7 +113,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -140,7 +142,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -171,6 +172,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\runtime\memcachedpersist.cpp" />
+    <ClCompile Include="..\runtime\precomp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\redispersist.cpp" />
     <ClCompile Include="..\runtime\xml.cpp" />
     <ClCompile Include="..\runtime\configuration.cpp" />
     <ClCompile Include="..\runtime\connection.cpp" />
@@ -188,6 +197,8 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
       <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Cdecl</CallingConvention>
       <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Cdecl</CallingConvention>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\runtime\persist.cpp" />
     <ClCompile Include="..\runtime\session.cpp" />
@@ -221,9 +232,36 @@
     <ClInclude Include="..\include\fix8\usage.hpp" />
     <ClInclude Include="..\include\fix8\xml.hpp" />
     <ClInclude Include="..\include\fix8\yield.hpp" />
+    <ClInclude Include="..\runtime\precomp.hpp" />
     <ClInclude Include="f8config_msvc.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+    <Import Project="packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets" Condition="Exists('packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets')" />
+    <Import Project="packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets" Condition="Exists('packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets')" />
+    <Import Project="packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets" Condition="Exists('packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets')" />
+    <Import Project="packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets" Condition="Exists('packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets')" />
+    <Import Project="packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets" Condition="Exists('packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets')" />
+    <Import Project="packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets" Condition="Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" />
+    <Import Project="packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets" Condition="Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" />
+    <Import Project="packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets" Condition="Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets'))" />
+  </Target>
 </Project>

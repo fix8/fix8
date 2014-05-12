@@ -1,6 +1,3 @@
-#ifndef _SPIN_SYSDEP_H
-#define _SPIN_SYSDEP_H
-
 
 /*
  * The following has been taken from Cilk (version 5.4.6) file cilk-sysdep.h. 
@@ -36,6 +33,9 @@
  * The compiler-specific dependencies were originally written by Eitan Ben Amos.
  * Modified by Bradley.
  */
+
+#ifndef FF_SPIN_SYSDEP_H
+#define FF_SPIN_SYSDEP_H
 
 #if defined(__APPLE__)
 #include <AvailabilityMacros.h>
@@ -219,4 +219,4 @@ static inline void freeAlignedMemory(void* ptr) {
 
 
 
-#endif /* _SPIN_SYSDEP_H */
+#endif /* FF_SPIN_SYSDEP_H */

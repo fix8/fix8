@@ -33,23 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <time.h>
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -59,25 +43,21 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
-	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
+	char glob_log0[max_global_filename_length] { "global_filename_not_set.log" };
 
 #ifdef _MSC_VER
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance;
+	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0>>::_instance;
 #else
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
-		= f8_atomic<SingleLogger<glob_log0> *>();
+	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance{};
 #endif
-    //template<>
-    //f8_spin_lock Singleton<SingleLogger<glob_log0> >::_mutex;
-
     template<>
-    SingleLogger<glob_log0>* Singleton<SingleLogger<glob_log0> >::create_instance()
+    SingleLogger<glob_log0> *Singleton<SingleLogger<glob_log0>>::create_instance()
     {
         static f8_spin_lock mutex;
         f8_scoped_spin_lock guard(mutex);
-        if (_instance == 0)
+        if (_instance.load() == 0)
         {
             SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
             _instance = p;
@@ -85,7 +65,7 @@ namespace FIX8
         return _instance;
     }
 
-	const string Logger::_bit_names[] =
+	const vector<string> Logger::_bit_names
 		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound", "nolf", };
 }
 
@@ -223,8 +203,8 @@ char Logger::get_thread_code(_dthreadcore::thread_id_t tid)
 		RevThreadCodes::const_iterator itr(_rev_thread_codes.find(acode));
 		if (itr == _rev_thread_codes.end())
 		{
-			_thread_codes.insert(ThreadCodes::value_type(tid, acode));
-			_rev_thread_codes.insert(RevThreadCodes::value_type(acode, tid));
+			_thread_codes.insert({tid, acode});
+			_rev_thread_codes.insert({acode, tid});
 			return acode;
 		}
 	}

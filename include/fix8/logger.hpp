@@ -158,8 +158,8 @@ class Logger
 
 public:
 	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, nolf, num_flags };
-	enum { rotation_default = 5, max_rotation = 64} ;
-	typedef ebitset<Flags> LogFlags;
+	enum { rotation_default = 5, max_rotation = 64};
+	using LogFlags = ebitset<Flags>;
 
 protected:
 	f8_mutex _mutex;
@@ -195,16 +195,16 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-	typedef std::map<_dthreadcore::thread_id_t, char> ThreadCodes;
+	using ThreadCodes = std::map<_dthreadcore::thread_id_t, char>;
 	ThreadCodes _thread_codes;
 
-	typedef std::map<char, _dthreadcore::thread_id_t> RevThreadCodes;
+	using RevThreadCodes = std::map<char, _dthreadcore::thread_id_t>;
 	RevThreadCodes _rev_thread_codes;
 
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
+	Logger(const LogFlags flags) : _thread(std::ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
 	{
 		_thread.start();
 	}
@@ -231,7 +231,7 @@ public:
 	}
 
 	/// Stop the logging thread.
-	void stop() {  _stopping.request_stop(); send(std::string()); _thread.join(); }
+	void stop() { _stopping.request_stop(); send(std::string()); _thread.join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)
@@ -240,10 +240,10 @@ public:
 
 	/*! The logging thread entry point.
 	    \return 0 on success */
-    F8API int operator()();
+	F8API int operator()();
 
 	/// string representation of logflags
-	static const std::string _bit_names[];
+	static const std::vector<std::string> _bit_names;
 
 	/*! Check if the given log flag is set
 		\param flg flag bit to check
@@ -252,13 +252,13 @@ public:
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */
-    F8API char get_thread_code( _dthreadcore::thread_id_t tid );
+	F8API char get_thread_code( _dthreadcore::thread_id_t tid );
 
 	/// Remove dead threads from the thread code cache.
-    F8API void purge_thread_codes();
+	F8API void purge_thread_codes();
 
 	/// Flush the buffer
-    F8API virtual void flush();
+	F8API virtual void flush();
 
 	/*! Get the thread cancellation token
 		\return reference to the cancellation token */
@@ -285,7 +285,7 @@ public:
 	/*! Perform logfile rotation
 	    \param force force the rotation (even if the file is set ti append)
 	    \return true on success */
-    F8API virtual bool rotate( bool force = false );
+	F8API virtual bool rotate( bool force = false );
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -335,7 +335,7 @@ const size_t max_global_filename_length(1024);
 /*! \tparam fn actual pathname of logfile
     \details Create a static instance of this template and set the template parameter to the desired logfile pathname */
 template<char *fn>
-class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
+class SingleLogger : public Singleton<SingleLogger<fn>>, public FileLogger
 {
 public:
 	/// Ctor.
@@ -358,7 +358,7 @@ public:
 	  \return true on success */
 	static bool log(const std::string& prefix, const std::string& what)
 	{
-		return Singleton<SingleLogger<fn> >::instance()->send(prefix + ' ' + what);
+		return Singleton<SingleLogger<fn>>::instance()->send(prefix + ' ' + what);
 	}
 
 	/*! Send a message to the logger.
@@ -366,23 +366,23 @@ public:
 	  \return true on success */
 	static bool log(const std::string& what)
 	{
-		return Singleton<SingleLogger<fn> >::instance()->send(what);
+		return Singleton<SingleLogger<fn>>::instance()->send(what);
 	}
 
 	static void flush_log()
 	{
-		Singleton<SingleLogger<fn> >::instance()->flush();
+		Singleton<SingleLogger<fn>>::instance()->flush();
 	}
 
 	static void stop()
 	{
-		Singleton<SingleLogger<fn> >::instance()->stop();
+		Singleton<SingleLogger<fn>>::instance()->stop();
 	}
 };
 
 //-----------------------------------------------------------------------------------------
 F8API extern char glob_log0[max_global_filename_length];
-typedef SingleLogger<glob_log0> GlobalLogger;
+using GlobalLogger = SingleLogger<glob_log0>;
 
 //-------------------------------------------------------------------------------------------------
 

@@ -43,9 +43,9 @@ harness_SOURCES = harness.cpp myfix.hpp
 hftest_SOURCES = hftest.cpp hftest.hpp
 hfprint_SOURCES = hfprint.cpp hftest.hpp
 libmyfix_la_SOURCES = Myfix_classes.cpp Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
-					 		 Myfix_router.hpp Myfix_classes.hpp
+                      Myfix_router.hpp Myfix_classes.hpp
 libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
-					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
+                       Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
 
 CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
 libmyfix_la_CXXFLAGS = -I$(top_srcdir)/include
@@ -59,10 +59,14 @@ XML_FIXT_SCHEMA = $(top_srcdir)/schema/FIXT11.xml
 .NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 
 $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVUp Perf -R -n TEX $(XML_HF_SCHEMA)
+	$(top_srcdir)/compiler/f8c --second --verbose --noconst --prefix Perf --norealm --namespace TEX $(XML_HF_SCHEMA)
 
+LIBMYFIXFLAGS = --verbose --retain
+if F8TESTSTATIC
+LIBMYFIXFLAGS += --noshared
+endif
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)
+	$(top_srcdir)/compiler/f8c $(LIBMYFIXFLAGS) --namespace TEX $(XML_SCHEMA) --fixt $(XML_FIXT_SCHEMA)
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML
 GEN_LIBS = -lfix8 -lpthread

@@ -40,6 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
@@ -244,89 +245,6 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 /*! Create a full path, including nested directories
     \param path path to create */
 F8API void create_path( const std::string& path );
-
-//----------------------------------------------------------------------------------------
-/// C++11 inspired scoped pointer.
-/*! \tparam T typename */
-template <typename T>
-class scoped_ptr
-{
-	T *ptr_;
-
-	/// Copy Ctor. Non-copyable.
-	scoped_ptr(const scoped_ptr&);
-
-	/// Assignment operator. Non-copyable.
-	void operator=(const scoped_ptr&);
-
-public:
-	/*! Ctor.
-	  \param p pointer to T */
-	explicit scoped_ptr(T *p=0) : ptr_(p) {}
-
-	/// Dtor. Destroys object.
-	~scoped_ptr() { delete ptr_; }
-
-	/*! Equivalence operator (other is scoped_ptr)
-	  \tparam U type of that object
-	  \return true if objects are equivalent */
-	template <typename U>
-	bool operator==(const scoped_ptr<U>& that) const { return ptr_ == that.get(); }
-
-	/*! Equivalence operator (other is ptr)
-	  \tparam U type of that object
-	  \return true if objects are equivalent */
-	template <typename U>
-	bool operator==(const scoped_ptr<U> *that) const { return ptr_ == that; }
-
-	/*! Non-equivalence operator (other is scoped_ptr)
-	  \tparam U type of that object
-	  \return true if objects are not equal */
-	template <typename U>
-	bool operator!=(const scoped_ptr<U>& that) const { return ptr_ != that.get(); }
-
-	/*! Non-equivalence operator (other is scoped_ptr)
-	  \tparam U type of that object
-	  \return true if objects are not equal */
-	template <typename U>
-	bool operator!=(const scoped_ptr<U> *that) const { return ptr_ != that; }
-
-	/*! Equivalence operator (other is scoped_ptr)
-	  \return true if objects are equivalent */
-	bool operator==(const scoped_ptr<T>& that) const { return ptr_ == that.get(); }
-
-	/*! Equivalence operator (other is ptr)
-	  \return true if objects are equivalent */
-	bool operator==(const T *that) const { return (ptr_ == that); }
-
-	/*! Non-equivalence operator (other is scoped_ptr)
-	  \return true if objects are not equal */
-	bool operator!=(const scoped_ptr<T>& that) const { return ptr_ != that.get(); }
-
-	/*! Non-equivalence operator (other is ptr)
-	  \return true if objects are not equal */
-	bool operator!=(const T *that) const { return ptr_ != that; }
-
-	/*! Member selection operator.
-	  \return pointer to object */
-	T *operator->() const { return ptr_; }
-
-	/*! Member dereference operator.
-	  \return object */
-	T& operator*() const { return *ptr_; }
-
-	/*! Member dereference operator.
-	  \return object */
-	T *release() { T *tmp(ptr_); ptr_ = 0; return tmp; }
-
-	/*! Replace the pointer with the supplied pointer.
-	  \return the original pointer */
-	T *Reset(T *p=0) { delete ptr_; return ptr_ = p; }
-
-	/*! Get the object pointer.
-	  \return object */
-	T *get() const { return ptr_; }
-};
 
 //----------------------------------------------------------------------------------------
 /// A class to contain regex matches using RegExp.
@@ -835,7 +753,7 @@ extern "C" { size_t modp_dtoa( double value, char* str, int prec ); }
 template<typename T, typename B=unsigned int>
 class ebitset
 {
-	typedef B integral_type;
+	using integral_type = B;
 	integral_type a_;
 
 public:
@@ -884,17 +802,16 @@ public:
 	void set(const integral_type bset) { a_ = bset; }
 
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
-	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
 	    \param on set or clear the found bit
 	    \return true if found and set */
-	bool set(const unsigned els, const std::string *sset, const std::string& what, bool on=true)
+	bool set(const std::vector<std::string>& sset, const std::string& what, bool on=true)
 	{
-		const std::string *last(sset + els), *result(std::find(sset, last, what));
-		if (result == last)
+		auto itr(std::find(sset.cbegin(), sset.cend(), what));
+		if (itr == sset.cend())
 			return false;
-		set(static_cast<T>(std::distance(sset, result)), on);
+		set(static_cast<T>(std::distance(sset.cbegin(), itr)), on);
 		return true;
 	}
 
@@ -930,7 +847,7 @@ public:
 template<typename T, typename B=unsigned int>
 class ebitset_r
 {
-	typedef B integral_type;
+	using integral_type = B;
 	f8_atomic<integral_type> a_;
 
 public:
@@ -1026,18 +943,17 @@ public:
 /*! From a set of strings representing the names of an enumeration in order,
   return the enum of the given string.
 	 \tparam T enum return type
-	 \param els number of elements in set; if 0 return default value
 	 \param sset the set of strings; if null return default value
 	 \param what the string to find
 	 \param def the default value to return if not found
 	 \return enum value or default */
 template<typename T>
-T enum_str_get(const unsigned els, const std::string *sset, const std::string& what, const T def)
+T enum_str_get(const std::vector<std::string>& sset, const std::string& what, const T def)
 {
-	if (!sset || !els)
+	if (sset.empty())
 		return def;
-	const std::string *last(sset + els), *result(std::find(sset, last, what));
-	return result == last ? def : static_cast<T>(std::distance(sset, result));
+	auto itr(std::find(sset.cbegin(), sset.cend(), what));
+	return itr == sset.cend() ? def : static_cast<T>(std::distance(sset.begin(), itr));
 }
 
 //----------------------------------------------------------------------------------------
@@ -1084,68 +1000,12 @@ inline void split_path(const std::string& source, std::string& filepart, std::st
 inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
    if (!target)
-      return 0;
-   const unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
+      return nullptr;
+   const unsigned sz(limit && static_cast<unsigned>(src.size()) > limit ? limit : (unsigned)src.size() + 1);
    src.copy(target, sz - 1);
    target[sz - 1] = 0;
    return target;
 }
-
-
-//----------------------------------------------------------------------------------------
-/// Delete ptr.
-struct DeleteObject
-{
-	/*! delete ptr operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename T>
-	void operator()(const T& m) const { delete m; }
-};
-
-/// Delete array.
-struct DeleteArrayObject
-{
-	/*! delete array operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename T>
-	void operator()(const T& m) const { delete[] m; }
-};
-
-/// Delete 1st of pair.
-template <typename Deleter = DeleteObject>
-struct Delete1stPairObject
-{
-	/*! delete 1st of a std::pair operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename A, typename B>
-	void operator()(const std::pair<A, B>& m) const { Deleter()(m.first); }
-};
-
-/// Delete 2nd of pair.
-template <typename Deleter = DeleteObject>
-struct Delete2ndPairObject
-{
-	/*! delete 2nd of a std::pair operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename A, typename B>
-	void operator()(const std::pair<A, B>& m) const { Deleter()(m.second); }
-};
-
-/// Parameterisable deleter functor.
-/*! \tparam Deleter the desired deleter (see above) */
-template <typename Deleter = DeleteObject>
-struct free_ptr
-{
-	/*! function operator
-		 \tparam T typename
-		 \param ptr object to delete */
-	template<typename T>
-	void operator()(const T& ptr) const { Deleter()(ptr); }
-};
 
 //----------------------------------------------------------------------------------------
 /// A lockfree Singleton.
@@ -1159,38 +1019,18 @@ class Singleton
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
 
-	static T *_replace(const T* with)
-	{
-#if (MPMC_SYSTEM == MPMC_TBB)
-		return _instance.fetch_and_store(with);
-#else
-		T *was(_instance);
-		_instance = with;
-		return was;
-#endif
-	}
-
 public:
 	/// Ctor.
 	Singleton() {}
 
 	/// Dtor.
-	virtual ~Singleton()
-	{
-#if (MPMC_SYSTEM == MPMC_TBB)
-		delete _instance.fetch_and_store(0);
-#else
-		T *was(_instance);
-		delete was;
-		_instance = 0;
-#endif
-	}
+	virtual ~Singleton() { delete _instance.exchange(nullptr); }
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
 	static T *instance()
 	{
-		if (_instance) // cast operator performs atomic load with acquire
+		if (_instance.load()) // cast operator performs atomic load with acquire, [ss]:cast is not working under msvc
 			return _instance;
 		return create_instance();
 	}
@@ -1205,11 +1045,11 @@ public:
 	/*! Replace the instance object with a new instance.
 	    \param what the new instance
 	    \return the original instance */
-	static T *reset(T *what) { return _replace(what); }
+	static T *reset(T *what) { return _instance.exchange(what); }
 
 	/*! Get the instance of the underlying object removing it from the singleton.
 	    \return the instance */
-	static T *release() { return _replace(0); }
+	static T *release() { return _instance.exchange(nullptr); }
 };
 
 //---------------------------------------------------------------------------------------------------
@@ -1326,13 +1166,30 @@ public:
 	}
 };
 
+//----------------------------------------------------------------------------------------
+/// Abstract file or stdin input.
+class filestdin
+{
+   std::istream *ifs_;
+   bool nodel_;
+
+public:
+   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
+   ~filestdin() { if (!nodel_) delete ifs_; }
+
+   std::istream& operator()() { return *ifs_; }
+};
+
+//----------------------------------------------------------------------------------------
 #if defined POCO_VERSION && POCO_VERSION <= 0x01040100
-inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
-    return a.host() == b.host() && a.port() == b.port();
+inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b)
+{
+	return a.host() == b.host() && a.port() == b.port();
 }
 
-inline bool operator!=(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
-    return !(a == b);
+inline bool operator!=(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b)
+{
+	return !(a == b);
 }
 #endif
 

@@ -35,7 +35,7 @@
 bin_PROGRAMS = f8c
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
-f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp
+f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp precomp.cpp
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 if USESSL

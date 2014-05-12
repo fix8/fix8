@@ -8,9 +8,6 @@
  * \brief This file describes the pipeline skeleton.
  *
  */
-
-#ifndef _FF_PIPELINE_HPP_
-#define _FF_PIPELINE_HPP_
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 
@@ -29,8 +26,12 @@
  ****************************************************************************
  */
 
-#include <vector>
+#ifndef FF_PIPELINE_HPP
+#define FF_PIPELINE_HPP
+
+#include <functional>
 #include <ff/node.hpp>
+#include <ff/svector.hpp>
 
 #if defined( HAS_CXX11_VARIADIC_TEMPLATES )
 #include <tuple>
@@ -128,14 +129,31 @@ protected:
         // create input FFBUFFER
         int nstages=static_cast<int>(nodes_list.size());
         for(int i=1;i<nstages;++i) {
-            if (nodes_list[i]->create_input_buffer(in_buffer_entries, fixedsize)<0) {
-                error("PIPE, creating input buffer for node %d\n", i);
-                return -1;
+            if (nodes_list[i]->isMultiInput()) {
+                if (nodes_list[i-1]->create_output_buffer(out_buffer_entries, 
+                                                          fixedsize)<0)
+                    return -1;
+                svector<ff_node*> w(256);
+                nodes_list[i-1]->get_out_nodes(w);
+                if (w.size() == 0)
+                    nodes_list[i]->set_input(nodes_list[i-1]);
+                else
+                    nodes_list[i]->set_input(w);
+            } else {
+                if (nodes_list[i]->create_input_buffer(in_buffer_entries, fixedsize)<0) {
+                    error("PIPE, creating input buffer for node %d\n", i);
+                    return -1;
+                }
             }
         }
         
         // set output buffer
         for(int i=0;i<(nstages-1);++i) {
+            if (nodes_list[i+1]->isMultiInput()) continue;
+            if (nodes_list[i]->isMultiOutput()) {
+                nodes_list[i]->set_output(nodes_list[i+1]);
+                continue;
+            }
             if (nodes_list[i]->set_output_buffer(nodes_list[i+1]->get_in_buffer())<0) {
                 error("PIPE, setting output buffer to node %d\n", i);
                 return -1;
@@ -171,12 +189,22 @@ protected:
      *
      *  \return TODO
      */
-    int freeze_and_run(bool=false) {
-        freeze();
+    int freeze_and_run(bool skip_init=false) {
         int nstages=static_cast<int>(nodes_list.size());
+        if (!skip_init) {            
+            // set the initial value for the barrier 
+            if (!barrier)  barrier = new BARRIER_T;
+            const int nthreads = cardinality(barrier);
+            if (nthreads > MAX_NUM_THREADS) {
+                error("PIPE, too much threads, increase MAX_NUM_THREADS !\n");
+                return -1;
+            }
+            barrier->barrierSetup(nthreads);
+        }
         if (!prepared) if (prepare()<0) return -1;
+        int startid = (get_my_id()>0)?get_my_id():0;
         for(int i=0;i<nstages;++i) {
-            nodes_list[i]->set_id(i);
+            nodes_list[i]->set_id(i+startid);
             if (nodes_list[i]->freeze_and_run(true)<0) {
                 error("ERROR: PIPE, (freezing and) running stage %d\n", i);
                 return -1;
@@ -213,6 +241,7 @@ public:
      * Destructor
      */
     ~ff_pipeline() {
+        if (end_callback) end_callback(end_callback_param);
         if (barrier) delete barrier;
         if (node_cleanup) {
             while(nodes_list.size()>0) {
@@ -221,7 +250,18 @@ public:
                 delete n;
             }
         }
+        for(size_t i=0;i<internalSupportNodes.size();++i) {
+            delete internalSupportNodes.back();
+            internalSupportNodes.pop_back();
+        }
     }
+
+    /** WARNING: if these methods are called after prepare (i.e. after having called
+     *  run_and_wait_end/run_then_freeze/run/....) they have no effect.
+     *
+     */
+    void setXNodeInputQueueLength(int sz) { in_buffer_entries = sz; }
+    void setXNodeOutputQueueLength(int sz) { out_buffer_entries = sz;}
 
     /**
      *  It adds a stage to the Pipeline
@@ -229,30 +269,59 @@ public:
      *  \param s a ff_node that is the stage to be added to the skeleton. The
      *  stage contains the task that has to be executed.
      */
-    int add_stage(ff_node * s) {        
-        nodes_list.push_back(s);
+    int add_stage(ff_node * s) {
+        if (nodes_list.size()==0 && s->isMultiInput())
+            ff_node::setMultiInput();
+        nodes_list.push_back(s);        
         return 0;
     }
+
+    inline void setMultiOutput() { 
+        ff_node::setMultiOutput();        
+    }
+
 
     /**
      * The last stage output queue will be connected 
      * to the first stage input queue (feedback channel).
      */
-    int wrap_around() {
+    int wrap_around(bool multi_input=false) {
         if (nodes_list.size()<2) {
             error("PIPE, too few pipeline nodes\n");
             return -1;
         }
 
-        fixedsize=false; // NOTE: force unbounded size for the queues!
+        fixedsize=false; // NOTE: forces unbounded size for the queues!
+        int last = static_cast<int>(nodes_list.size())-1;
+        if (nodes_list[0]->isMultiInput()) {
+            if (nodes_list[last]->isMultiOutput()) {
+                ff_node *t = new ff_buffernode(out_buffer_entries,fixedsize);
+                if (!t) return -1;
+                t->set_id(last); // NOTE: that's not the real node id !
+                internalSupportNodes.push_back(t);
+                nodes_list[0]->set_input(t);
+                nodes_list[last]->set_output(t);
+            } else {
+                if (create_output_buffer(out_buffer_entries, fixedsize)<0)
+                    return -1;
+                svector<ff_node*> w(256);
+                this->get_out_nodes(w);
+                nodes_list[0]->set_input(w);
+            }
+            if (!multi_input) nodes_list[0]->skipfirstpop(true);
 
-        if (create_input_buffer(out_buffer_entries, fixedsize)<0)
-            return -1;
-        
-        if (set_output_buffer(get_in_buffer())<0)
-            return -1;
-
-        nodes_list[0]->skip1pop = true;
+        } else {
+            if (create_input_buffer(out_buffer_entries, fixedsize)<0)
+                return -1;
+            
+            if (nodes_list[last]->isMultiOutput()) 
+                nodes_list[last]->set_output(nodes_list[0]);
+            else 
+                if (set_output_buffer(get_in_buffer())<0)
+                    return -1;            
+            
+            nodes_list[0]->skipfirstpop(true);
+        }
 
         return 0;
     }
@@ -261,7 +330,17 @@ public:
      * \brief Delete nodes when the destructor is called.
      *
      */
-    void cleanup_nodes() { node_cleanup = true; }
+    inline void cleanup_nodes() { node_cleanup = true; }
+
+
+    inline void get_out_nodes(svector<ff_node*>&w) {
+        assert(nodes_list.size()>0);
+        int last = static_cast<int>(nodes_list.size())-1;
+        nodes_list[last]->get_out_nodes(w);
+        if (w.size()==0) 
+            w.push_back(nodes_list[last]);
+    }
+
 
     /**
      * It run the Pipeline skeleton.
@@ -281,29 +360,14 @@ public:
         }
         if (!prepared) if (prepare()<0) return -1;
 
-        if (has_input_channel) {
-            /* freeze_and_run is required because in the pipeline 
-             * where there are not any manager threads,
-             * which allow to freeze other threads before starting the 
-             * computation
-             */
-            for(int i=0;i<nstages;++i) {
-                nodes_list[i]->set_id(i);
-                if (nodes_list[i]->freeze_and_run(true)<0) {
+        int startid = (get_my_id()>0)?get_my_id():0;
+        for(int i=0;i<nstages;++i) {
+            nodes_list[i]->set_id(i+startid);
+            if (nodes_list[i]->run(true)<0) {
                 error("ERROR: PIPE, running stage %d\n", i);
                 return -1;
-                }
             }
-        }  else {
-            for(int i=0;i<nstages;++i) {
-                nodes_list[i]->set_id(i);
-                if (nodes_list[i]->run(true)<0) {
-                    error("ERROR: PIPE, running stage %d\n", i);
-                    return -1;
-                }
-            }
-        }
-
+        }        
         return 0;
     }
 
@@ -311,7 +375,10 @@ public:
      * It run and wait all threads to finish.
      */
     int run_and_wait_end() {
-        if (isfrozen()) return -1; // FIX !!!!
+        if (isfrozen()) {  // TODO 
+            error("PIPE: Error: feature not yet supported\n");
+            return -1;
+        } 
         stop();
         if (run()<0) return -1;           
         if (wait()<0) return -1;
@@ -321,15 +388,20 @@ public:
     /**
      * It run and then freeze.
      */
-    int run_then_freeze() {
+    virtual int run_then_freeze() {
         if (isfrozen()) {
             // true means that next time threads are frozen again
             thaw(true);
             return 0;
         }
         if (!prepared) if (prepare()<0) return -1;
-        freeze();
-        return run();
+        //freeze();
+        //return run();
+        /* freeze_and_run is required because in the pipeline 
+         * there isn't no manager thread, which allows to freeze other 
+         * threads before starting the computation
+         */
+        return freeze_and_run();
     }
     
     /**
@@ -349,7 +421,7 @@ public:
     /**
      * It waits for freezing.
      */
-    int wait_freezing(/* timeval */ ) {
+    inline int wait_freezing(/* timeval */ ) {
         int ret=0;
         for(unsigned int i=0;i<nodes_list.size();++i)
             if (nodes_list[i]->wait_freezing()<0) {
@@ -364,28 +436,28 @@ public:
     /**
      * It stops all stages.
      */
-    void stop() {
+    inline void stop() {
         for(unsigned int i=0;i<nodes_list.size();++i) nodes_list[i]->stop();
     }
 
     /**
      * It freeze all stages.
      */
-    void freeze() {
+    inline void freeze() {
         for(unsigned int i=0;i<nodes_list.size();++i) nodes_list[i]->freeze();
     }
     /**
      * It Thaws all frozen stages.
      * if _freeze is true at next step all threads are frozen again
      */
-    void thaw(bool _freeze=false) {
+    inline void thaw(bool _freeze=false) {
         for(unsigned int i=0;i<nodes_list.size();++i) nodes_list[i]->thaw(_freeze);
     }
     
     /** 
      * It checks if the pipeline is frozen 
      */
-    bool isfrozen() { 
+    inline bool isfrozen() const { 
         int nstages=static_cast<int>(nodes_list.size());
         for(int i=0;i<nstages;++i) 
             if (!nodes_list[i]->isfrozen()) return false;
@@ -548,12 +620,15 @@ protected:
      * TODO
      */
     int create_input_buffer(int nentries, bool fixedsize) { 
-        if (in) return -1;
+        if (in) return -1;  
+
         if (nodes_list[0]->create_input_buffer(nentries, fixedsize)<0) {
             error("PIPE, creating input buffer for node 0\n");
             return -1;
         }
-        ff_node::set_input_buffer(nodes_list[0]->get_in_buffer());
+        if (!nodes_list[0]->isMultiInput()) 
+            ff_node::set_input_buffer(nodes_list[0]->get_in_buffer());
+
         return 0;
     }
     
@@ -586,6 +661,15 @@ protected:
         return 0;
     }
 
+    inline int set_input(ff_node *node) { 
+        return nodes_list[0]->set_input(node);
+    }
+
+    inline int set_output(ff_node *node) {
+        int last = static_cast<int>(nodes_list.size())-1;
+        return nodes_list[last]->set_output(node);
+    }
+
 private:
     bool has_input_channel; // for accelerator
     bool prepared;
@@ -593,24 +677,35 @@ private:
     bool fixedsize;
     int in_buffer_entries;
     int out_buffer_entries;
-    std::vector<ff_node *> nodes_list;
+    svector<ff_node *> nodes_list;
+    svector<ff_node*>  internalSupportNodes;
 };
 
 
 /* ------------------------ high-level (simpler) pipeline -------------------------------- */
 
 // generic ff_node stage. It is built around the function F ( F: T* -> T* )
-template<typename T>
-class Fstage: public ff_node {
-public:
-    typedef T*(*F_t)(T*);
-    Fstage(F_t F):F(F) {}
-    inline void* svc(void *t) {	 return F((T*)t); }    
-protected:
-    F_t F;
-};
+// template<typename T>
+// class Fstage: public ff_node {
+// public:
+//     typedef T*(*F_t)(T*);
+//     Fstage(F_t F):F(F) {}
+//     inline void* svc(void *t) {	 return F((T*)t); }    
+// protected:
+//     F_t F;
+// };
 
 #if defined( HAS_CXX11_VARIADIC_TEMPLATES )
+
+// NOTE: std::function can introduce a bit of extra overhead. Think about on how to avoid functionals.
+template<typename T>
+class Fstage2: public ff_node {
+public:
+    Fstage2(const std::function<T*(T*,ff_node*const)> &F):F(F) {}
+    inline void* svc(void *t) {	 return F((T*)t, this); }
+protected:
+    std::function<T*(T*,ff_node*const)> F;
+};
 
 template<typename TaskType>
 class ff_pipe: public ff_pipeline {
@@ -627,9 +722,11 @@ private:
         f(std::get<I>(t));
         for_each<I + 1, FuncT, Tp...>(t, f);  // all but the first
     }
-        
+      
+  
     inline void add2pipe(ff_node *node) { ff_pipeline::add_stage(node); }
-    inline void add2pipe(F_t F) { ff_pipeline::add_stage(new Fstage<TaskType>(F));  }
+    //    inline void add2pipe(F_t F) { ff_pipeline::add_stage(new Fstage<TaskType>(F));  }
+    inline void add2pipe(std::function<TaskType*(TaskType*,ff_node*const)> F) { ff_pipeline::add_stage(new Fstage2<TaskType>(F));  }
 
     struct add_to_pipe {
         ff_pipe *const P;
@@ -705,4 +802,4 @@ ff_node* toffnode(T& p) { return (ff_node*)p;}
 
 } // namespace ff
 
-#endif /* _FF_PIPELINE_HPP_ */
+#endif /* FF_PIPELINE_HPP */

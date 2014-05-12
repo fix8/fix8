@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-x86/atomic_64.h
  *
  */
-#ifndef __ARCH_X86_64_ATOMIC__
-#define __ARCH_X86_64_ATOMIC__
+#ifndef FF_ARCH_X86_64_ATOMIC_H
+#define FF_ARCH_X86_64_ATOMIC_H
 
 
 /* atomic_t should be 32 bit signed type */
@@ -229,4 +229,4 @@ static inline unsigned long atomic64_add_unless(atomic64_t *v, unsigned long a, 
 	}
 	return c != (u);
 }
-#endif
+#endif /* FF_ARCH_X86_64_ATOMIC_H */

@@ -116,7 +116,7 @@ public:
 	/*! Ctor.
 	  \param fnum field num for this field
 	  \param rlm pointer to the realmbase for this field (if available) */
-	BaseField(const unsigned short fnum, const RealmBase *rlm=0) : _fnum(fnum), _rlm(rlm) {}
+	BaseField(const unsigned short fnum, const RealmBase *rlm=nullptr) : _fnum(fnum), _rlm(rlm) {}
 
 	/// Dtor.
 	virtual ~BaseField() {}
@@ -134,6 +134,10 @@ public:
 	  \param to buffer to print to
 	  \return number bytes encoded */
 	virtual size_t print(char *to) const = 0;
+
+	/*! Get the underlying FieldType for this field
+	  \return field type */
+	virtual FieldTrait::FieldType get_underlying_type() const = 0;
 
 	/*! Copy this field.
 	  \return the copy */
@@ -201,10 +205,14 @@ class Field<int, field> : public BaseField
 {
 protected:
 	int _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_int;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -216,17 +224,17 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const int val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
+	Field (const int val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from.c_str())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atoi<int>(from.c_str())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atoi<int>(from)) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -290,10 +298,14 @@ class Field<char *, field> : public BaseField
 {
 protected:
 	const char *_value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_data;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -305,7 +317,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -379,10 +391,14 @@ class Field<f8String, field> : public BaseField
 {
 protected:
 	f8String _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_data;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -394,12 +410,12 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -464,10 +480,14 @@ class Field<double, field> : public BaseField
 protected:
 	double _value;
 	int _precision;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_float;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value(), _precision(DEFAULT_PRECISION) {}
@@ -479,23 +499,23 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+	Field (const double& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
 
 	/*! Value ctor.
 	  \param val value to set
 	  \param prec precision digits
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const int prec, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(prec) {}
+	Field (const double& val, const int prec, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(prec) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -562,10 +582,14 @@ template<const unsigned short field>
 class Field<char, field> : public BaseField
 {
 	char _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_char;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -577,17 +601,17 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
+	Field (const char& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from[0]) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(*from) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(*from) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -675,7 +699,7 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 /// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
-   static const int mon_days[] = {0,
+   static const int mon_days[] {0,
       31,
       31 + 28,
       31 + 28 + 31,
@@ -754,9 +778,12 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
+	if (*ptr == '!')	// special case initialise to 'now'
+		return Tickval(true).get_ticks();
+
 	Tickval::ticks result(Tickval::noticks);
-   int millisecond(0);
-   tm tms = {};
+	int millisecond(0);
+	tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -769,31 +796,34 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 	ptr += parse_decimal(ptr, 2, tms.tm_min);
 	++ptr;
 	ptr += parse_decimal(ptr, 2, tms.tm_sec);
-   switch(len)
-   {
+	switch(len)
+	{
 	case 21: //_with_ms: // 19981231-23:59:59.123
-      parse_decimal(++ptr, 3, millisecond);
-      result = millisecond * Tickval::million; // drop through
-   case 17: //: // 19981231-23:59:59
-      result += time_to_epoch(tms) * Tickval::billion;
-      break;
-   default:
-      break;
-   }
+		parse_decimal(++ptr, 3, millisecond);
+		result = millisecond * Tickval::million; // drop through
+	case 17: //: // 19981231-23:59:59
+		result += time_to_epoch(tms) * Tickval::billion;
+		break;
+	default:
+		break;
+	}
 
-   return result;
+	return result;
 }
 
-/*! Decode a DateTime string into ticks
-  \param ptr input DateTime string
+/*! Decode a Time string into ticks
+  \param ptr input time string
   \param len length of string
   \param timeonly if true, only calculate ticks for today
   \return ticks decoded */
 inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
+	if (*ptr == '!')	// special case initialise to 'now'
+		return Tickval(true).get_ticks();
+
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
@@ -820,7 +850,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 
 inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -832,7 +862,7 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 }
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
+using UTCTimestamp = EnumType<FieldTrait::ft_UTCTimestamp>;
 
 /// Partial specialisation for UTCTimestamp field type.
 /*! \tparam field field number (fix tag) */
@@ -840,10 +870,14 @@ template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value(true) {}
@@ -855,22 +889,22 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const Tickval& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
+	Field (const Tickval& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_time_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from, ::strlen(from))) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -908,7 +942,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -920,7 +954,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
+using UTCTimeOnly = EnumType<FieldTrait::ft_UTCTimeOnly>;
 
 /// Partial specialisation for UTCTimeOnly field type.
 /*! \tparam field field number (fix tag) */
@@ -928,10 +962,14 @@ template<const unsigned short field>
 class Field<UTCTimeOnly, field> : public BaseField
 {
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -943,17 +981,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(time_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, ::strlen(from))) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -989,7 +1027,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1001,7 +1039,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_UTCDateOnly> UTCDateOnly;
+using UTCDateOnly = EnumType<FieldTrait::ft_UTCDateOnly>;
 
 /// Partial specialisation for UTCDateOnly field type.
 /*! \tparam field field number (fix tag) */
@@ -1009,10 +1047,14 @@ template<const unsigned short field>
 class Field<UTCDateOnly, field> : public BaseField
 {
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1024,17 +1066,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1070,7 +1112,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1082,7 +1124,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_LocalMktDate> LocalMktDate;
+using LocalMktDate = EnumType<FieldTrait::ft_LocalMktDate>;
 
 /// Partial specialisation for LocalMktDate field type.
 /*! \tparam field field number (fix tag) */
@@ -1090,10 +1132,14 @@ template<const unsigned short field>
 class Field<LocalMktDate, field> : public BaseField
 {
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1105,17 +1151,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1151,7 +1197,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1163,7 +1209,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
+using MonthYear = EnumType<FieldTrait::ft_MonthYear>;
 
 /// Partial specialisation for MonthYear field type.
 /*! \tparam field field number (fix tag) */
@@ -1172,10 +1218,14 @@ class Field<MonthYear, field> : public BaseField
 {
 	size_t _sz;
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1187,17 +1237,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1233,7 +1283,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1245,7 +1295,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_TZTimeOnly> TZTimeOnly;
+using TZTimeOnly = EnumType<FieldTrait::ft_TZTimeOnly>;
 
 /// Partial specialisation for TZTimeOnly field type.
 /*! \tparam field field number (fix tag) */
@@ -1253,10 +1303,14 @@ template<const unsigned short field>
 class Field<TZTimeOnly, field> : public BaseField
 {
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1268,12 +1322,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1316,7 +1370,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_TZTimestamp> TZTimestamp;
+using TZTimestamp = EnumType<FieldTrait::ft_TZTimestamp>;
 
 /// Partial specialisation for TZTimestamp field type.
 /*! \tparam field field number (fix tag) */
@@ -1324,10 +1378,14 @@ template<const unsigned short field>
 class Field<TZTimestamp, field> : public BaseField
 {
 	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1339,12 +1397,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1387,7 +1445,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_Length> Length;
+using Length = EnumType<FieldTrait::ft_Length>;
 
 /// Partial specialisation for Length field type.
 /*! \tparam field field number (fix tag) */
@@ -1401,7 +1459,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
+	Field (const unsigned val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1410,19 +1468,19 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from.c_str(), rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : Field<int, field>(from.c_str(), rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_TagNum> TagNum;
+using TagNum = EnumType<FieldTrait::ft_TagNum>;
 
 /// Partial specialisation for TagNum field type.
 /*! \tparam field field number (fix tag) */
@@ -1436,7 +1494,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
+	Field (const unsigned& val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1445,19 +1503,19 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_SeqNum> SeqNum;
+using SeqNum = EnumType<FieldTrait::ft_SeqNum>;
 
 /// Partial specialisation for SeqNum field type.
 /*! \tparam field field number (fix tag) */
@@ -1471,7 +1529,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
+	Field (const unsigned& val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1480,19 +1538,19 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_NumInGroup> NumInGroup;
+using NumInGroup = EnumType<FieldTrait::ft_NumInGroup>;
 
 /// Partial specialisation for NumInGroup field type.
 /*! \tparam field field number (fix tag) */
@@ -1506,7 +1564,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
+	Field (const unsigned& val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1515,19 +1573,19 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_DayOfMonth> DayOfMonth;
+using DayOfMonth = EnumType<FieldTrait::ft_DayOfMonth>;
 
 /// Partial specialisation for DayOfMonth field type.
 /*! \tparam field field number (fix tag) */
@@ -1541,7 +1599,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
+	Field (const unsigned& val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1550,19 +1608,19 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_Boolean> Boolean;
+using Boolean = EnumType<FieldTrait::ft_Boolean>;
 
 /// Partial specialisation for Boolean field type.
 /*! \tparam field field number (fix tag) */
@@ -1570,10 +1628,14 @@ template<const unsigned short field>
 class Field<Boolean, field> : public BaseField
 {
 	bool _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_char;
 
 public:
-	/// The FIX fieldID (tag number).
+	/// Get the FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1581,7 +1643,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(val) == 'Y') {}
+	Field (const char val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(toupper(val) == 'Y') {}
 
 	/*! Value ctor.
 	  \param val value to set */
@@ -1594,12 +1656,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(from[0]) == 'Y') {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(toupper(from[0]) == 'Y') {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(*from) == 'Y') {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(toupper(*from) == 'Y') {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1659,31 +1721,21 @@ public:
 // typedef EnumType<FieldTrait::ft_float> PriceOffset;
 // typedef EnumType<FieldTrait::ft_float> Percentage;
 
-typedef double Qty;
-typedef double Amt;
-typedef double price;
-typedef double PriceOffset;
-typedef double Percentage;
+using Qty = double;
+using Amt = double;
+using price = double;
+using PriceOffset = double;
+using Percentage = double;
 
 //-------------------------------------------------------------------------------------------------
-// C++11 will permit proper type aliasing
-// typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
-// typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
-// typedef EnumType<FieldTrait::ft_string> country;
-// typedef EnumType<FieldTrait::ft_string> currency;
-// typedef EnumType<FieldTrait::ft_string> Exchange;
-// typedef EnumType<FieldTrait::ft_string> Language;
-// typedef EnumType<FieldTrait::ft_string> XMLData;
-// typedef EnumType<FieldTrait::ft_data> data;
-
-typedef f8String MultipleCharValue;
-typedef f8String MultipleStringValue;
-typedef f8String country;
-typedef f8String currency;
-typedef f8String Exchange;
-typedef f8String Language;
-typedef f8String XMLData;
-typedef f8String data;
+using MultipleCharValue = f8String;
+using MultipleStringValue = f8String;
+using country = f8String;
+using currency = f8String;
+using Exchange = f8String;
+using Language = f8String;
+using XMLData = f8String;
+using data = f8String;
 
 //-------------------------------------------------------------------------------------------------
 /// Field metadata structures
@@ -1706,11 +1758,7 @@ class Inst
 		}
 	};
 
-	static BaseField *dummy(const char *from, const RealmBase *db, const int) { return 0; }
-
 public:
-	Inst() : _do(dummy) {}
-
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
    template<typename T>
@@ -1720,18 +1768,12 @@ public:
    Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
 };
 
-template<>
-struct Inst::_gen<void *>
-{
-	static BaseField *_make(const char *from, const RealmBase *db, const int)
-		{ return 0; }
-};
-
 struct BaseEntry
 {
    const Inst _create;
+	const char *_name;
 	const RealmBase *_rlm;
-	const char *_name, *_comment;
+	const char *_comment;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1787,39 +1829,39 @@ const unsigned short Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 //-------------------------------------------------------------------------------------------------
 // Common FIX fields
 
-typedef Field<SeqNum, Common_MsgSeqNum> msg_seq_num;
-typedef Field<SeqNum, Common_BeginSeqNo> begin_seq_num;
-typedef Field<SeqNum, Common_EndSeqNo> end_seq_num;
-typedef Field<SeqNum, Common_NewSeqNo> new_seq_num;
-typedef Field<SeqNum, Common_RefSeqNum> ref_seq_num;
+using msg_seq_num = Field<SeqNum, Common_MsgSeqNum>;
+using begin_seq_num = Field<SeqNum, Common_BeginSeqNo>;
+using end_seq_num = Field<SeqNum, Common_EndSeqNo>;
+using new_seq_num = Field<SeqNum, Common_NewSeqNo>;
+using ref_seq_num = Field<SeqNum, Common_RefSeqNum>;
 
-typedef Field<Length, Common_BodyLength> body_length;
+using body_length = Field<Length, Common_BodyLength>;
 
-typedef Field<f8String, Common_SenderCompID> sender_comp_id;
-typedef Field<f8String, Common_TargetCompID> target_comp_id;
-typedef Field<f8String, Common_MsgType> msg_type;
-typedef Field<f8String, Common_CheckSum> check_sum;
-typedef Field<f8String, Common_BeginString> begin_string;
-typedef Field<f8String, Common_TestReqID> test_request_id;
-typedef Field<f8String, Common_Text> text;
-typedef Field<f8String, Common_DefaultApplVerID> default_appl_ver_id;
-typedef Field<f8String, Common_RefMsgType> ref_msg_type;
+using sender_comp_id = Field<f8String, Common_SenderCompID>;
+using target_comp_id = Field<f8String, Common_TargetCompID>;
+using msg_type = Field<f8String, Common_MsgType>;
+using check_sum = Field<f8String, Common_CheckSum>;
+using begin_string = Field<f8String, Common_BeginString>;
+using test_request_id = Field<f8String, Common_TestReqID>;
+using text = Field<f8String, Common_Text>;
+using default_appl_ver_id = Field<f8String, Common_DefaultApplVerID>;
+using ref_msg_type = Field<f8String, Common_RefMsgType>;
 
-typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
-typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;
+using sending_time = Field<UTCTimestamp, Common_SendingTime>;
+using orig_sending_time = Field<UTCTimestamp, Common_OrigSendingTime>;
 
-typedef Field<Boolean, Common_GapFillFlag> gap_fill_flag;
-typedef Field<Boolean, Common_PossDupFlag> poss_dup_flag;
-typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
+using gap_fill_flag = Field<Boolean, Common_GapFillFlag>;
+using poss_dup_flag = Field<Boolean, Common_PossDupFlag>;
+using reset_seqnum_flag = Field<Boolean, Common_ResetSeqNumFlag>;
 
-typedef Field<int, Common_HeartBtInt> heartbeat_interval;
-typedef Field<int, Common_EncryptMethod> encrypt_method;
-typedef Field<int, Common_BusinessRejectReason> business_reject_reason;
+using heartbeat_interval = Field<int, Common_HeartBtInt>;
+using encrypt_method = Field<int, Common_EncryptMethod>;
+using business_reject_reason = Field<int, Common_BusinessRejectReason>;
 
-typedef Field<f8String, Common_OnBehalfOfCompID> onbehalfof_comp_id;
-typedef Field<f8String, Common_OnBehalfOfSubID> onbehalfof_sub_id;
-typedef Field<f8String, Common_OnBehalfOfLocationID> onbehalfof_location_id;
-typedef Field<UTCTimestamp, Common_OnBehalfOfSendingTime> onbehalfof_sending_time;
+using onbehalfof_comp_id = Field<f8String, Common_OnBehalfOfCompID>;
+using onbehalfof_sub_id = Field<f8String, Common_OnBehalfOfSubID>;
+using onbehalfof_location_id = Field<f8String, Common_OnBehalfOfLocationID>;
+using onbehalfof_sending_time = Field<UTCTimestamp, Common_OnBehalfOfSendingTime>;
 
 //-------------------------------------------------------------------------------------------------
 

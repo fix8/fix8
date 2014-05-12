@@ -40,16 +40,20 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   This is a complete working example of a FIX client/server using FIX8.\n
 \n
 <tt>
-	Usage: f8test [-RSchlqrsv]\n
-		-R,--receive            set next expected receive sequence number\n
-		-S,--send               set next send sequence number\n
-		-c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
-		-h,--help               help, this screen\n
-		-l,--log                global log filename\n
-		-q,--quiet              do not print fix output\n
-		-r,--reliable           start in reliable mode\n
-		-s,--server             run in server mode (default client mode)\n
-		-v,--version            print version then exit\n
+Usage: f8test [-NRScdhlmoqrsv]\n
+   -N,--session            for client, select session to use from configuration (default none)\n
+   -R,--receive            set next expected receive sequence number\n
+   -S,--send               set next send sequence number\n
+   -c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
+   -d,--dump               dump parsed XML config file, exit\n
+   -h,--help               help, this screen\n
+   -l,--log                global log filename\n
+   -m,--multi              run multiple server mode (default single server session at a time)\n
+   -o,--once               for server, allow one client session then exit\n
+   -q,--quiet              do not print fix output\n
+   -r,--reliable           start in reliable mode\n
+   -s,--server             run in server mode (default client mode)\n
+   -v,--version            print version, exit\n
 </tt>
 \n
 \n
@@ -97,6 +101,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 #include <typeinfo>
+#include <thread>
 #ifdef _MSC_VER
 #include <signal.h>
 #include <conio.h>
@@ -111,7 +116,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // f8 headers
 #include <fix8/f8includes.hpp>
-#include <fix8/zeromq_mbus.hpp>
+//#include <fix8/zeromq_mbus.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
@@ -119,6 +124,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include <fix8/usage.hpp>
 #include <fix8/consolemenu.hpp>
+#include <fix8/multisession.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -131,26 +137,28 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rdo");
-bool term_received(false);
+const string GETARGLIST("hl:svqc:R:S:rdomN:");
+f8_atomic<bool> term_received(false);
+void server_process(ServerSessionBase *srv, int scnt, bool ismulti=false), client_process(ClientSessionBase *mc);
+FIX8::tty_save_state save_tty(0);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers MyMenu::_handlers
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "New Order Single Recycled - 1st use send as normal then will send recycled message"),
-			&MyMenu::new_order_single_recycled),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
+	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
+		&MyMenu::new_order_single_recycled },
+	{ { 'N', "50 New Order Singles" }, &MyMenu::new_order_single_50 },
+	{ { 'T', "1000 New Order Singles" }, &MyMenu::new_order_single_1000 },
+	{ { 'R', "Resend request" }, &MyMenu::resend_request },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 't', "Examine static message traits" }, &MyMenu::static_probe },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
+unsigned next_send(0), next_receive(0);
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -162,9 +170,9 @@ void sig_handler(int sig)
 #ifndef _MSC_VER
    case SIGQUIT:
 #endif
-       term_received = true;
-      signal(sig, sig_handler);
-      break;
+		term_received = true;
+		signal(sig, sig_handler);
+		break;
    }
 }
 
@@ -172,19 +180,20 @@ void sig_handler(int sig)
 int main(int argc, char **argv)
 {
 	int val;
-	bool server(false), reliable(false), once(false), dump(false);
-	string clcf;
-	unsigned next_send(0), next_receive(0);
+	bool server(false), reliable(false), once(false), dump(false), multi(false);
+	string clcf, session;
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
 		{ "log",			1,	0,	'l' },
 		{ "config",		1,	0,	'c' },
+		{ "session",	1,	0,	'N' },
 		{ "once",	   0,	0,	'o' },
 		{ "server",		0,	0,	's' },
+		{ "multi",		0,	0,	'm' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
@@ -209,6 +218,8 @@ int main(int argc, char **argv)
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
+		case 'N': session = optarg; break;
+		case 'm': multi = true; break;
 		case 'o': once = true; break;
 		case 'S': next_send = get_value<unsigned>(optarg); break;
 		case 'R': next_receive = get_value<unsigned>(optarg); break;
@@ -224,15 +235,15 @@ int main(int argc, char **argv)
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
 #ifndef _MSC_VER
-    signal(SIGQUIT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 #endif
 
-	FIX8::tty_save_state save_tty(0);
 	bool restore_tty(false);
 
 	try
 	{
 		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
+		f8_atomic<unsigned> scnt(0);
 
 		if (dump)
 		{
@@ -246,88 +257,161 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
-
-			for (unsigned scnt(0); !term_received; )
+			if (multi)	// demonstrate use of multi session server manager
 			{
-				if (!ms->poll())
-					continue;
-				SessionInstance<myfix_session_server>::Instance_ptr
-					inst(new SessionInstance<myfix_session_server>(*ms));
-				if (!quiet)
-					inst->session_ptr()->control() |= Session::print;
-				ostringstream sostr;
-				sostr << "client(" << ++scnt << ") connection established.";
-				GlobalLogger::log(sostr.str());
+				unique_ptr<ServerManager> sm(new ServerManager);
+				sm->add(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
+				sm->add(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX2"));
 
-				// an example of how to use the scheduler
-				TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
-				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
+				vector<thread> thrds;
+				while (!term_received)
+				{
+					ServerSessionBase *srv(sm->select());
+					if (srv)
+					{
+						thrds.push_back(thread ([&]() { server_process(srv, ++scnt, true); }));
+						hypersleep<h_seconds>(1);
+					}
+				}
+				for_each(thrds.begin(), thrds.end(), [](thread& tt) { if (tt.joinable()) tt.join(); });
+			}
+			else	// serial server instances only
+			{
+				unique_ptr<ServerSessionBase> srv(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX"));
 
-				const ProcessModel pm(ms->get_process_model(ms->_ses));
-				inst->start(pm == pm_pipeline, next_send, next_receive);
-				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
-				if (inst->session_ptr()->get_connection()->is_secure())
-					cout << "Session is secure (SSL)" << endl;
-				if (pm != pm_pipeline)
-					while (!inst->session_ptr()->is_shutdown())
-						FIX8::hypersleep<h_milliseconds>(100);
-				cout << "Session(" << scnt << ") finished." << endl;
-				inst->stop();
-            if (once)
-               break;
+				while (!term_received)
+				{
+					if (!srv->poll())
+						continue;
+					server_process(srv.get(), ++scnt);
+					if (once)
+						break;
+				}
 			}
 		}
 		else
 		{
-			scoped_ptr<ClientSession<myfix_session_client> >
-				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
-							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
-			if (!quiet)
-				mc->session_ptr()->control() |= Session::printnohb;
+			if (multi)	// demonstrate use of multi session client manager
+			{
+				const f8String cl1("DLD1"), cl2("DLD2");
+				ClientManager cm;
+				cm.add(cl1, reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, cl1)
+											: new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, cl1));
+				cm.add(cl2, reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, cl2)
+											: new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, cl2));
 
-			if (!reliable)
+				ClientSessionBase *csb(cm.for_each_if([&](ClientSessionBase *pp)
+				{
+					if (!quiet)
+						pp->session_ptr()->control() |= Session::printnohb;
+					pp->start(false, next_send, next_receive, pp->session_ptr()->get_login_parameters()._davi());
+					// if you use ReliableClientSession, you need to return true here always
+					return reliable ? true : States::is_live(pp->session_ptr()->get_session_state());
+				}));
+
+				if (csb)
+					cerr << csb->_session_name << " failed to start" << endl;
+
+				vector<thread> thrds;
+				cm.for_each_if([&](ClientSessionBase *pp)
+				{
+					// we should be running client_process however this won't work
+					// since two threads can't share the same console
+					thrds.push_back(thread ([=]()		// use copy closure
+					{
+						MyMenu mymenu(*pp->session_ptr(), 0, cout);
+						hypersleep<h_seconds>(1 + RandDev::getrandom(10));
+						mymenu.new_order_single();	// send an order and then logout
+						mymenu.do_logout();
+					}));
+					return true;
+				});
+
+				for_each(thrds.begin(), thrds.end(), [](thread& tt) { if (tt.joinable()) tt.join(); });
+			}
+			else	// single client only
+			{
+				const string my_session(session.empty() ? "DLD1" : session);
+				unique_ptr<ClientSessionBase>
+					mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, my_session)
+									: new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, my_session));
+				if (!quiet)
+					mc->session_ptr()->control() |= Session::printnohb;
 				mc->start(false, next_send, next_receive, mc->session_ptr()->get_login_parameters()._davi());
-			else
-				mc->start(false, next_send, next_receive);
-
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			char ch(0);
-			mymenu.get_tty().set_raw_mode();
-			save_tty = mymenu.get_tty();
-			while(!mymenu.get_istr().get(ch).bad() && !mc->has_given_up() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
-			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
-			// before checking if the session is already shutdown - the framework will generally do this for you
-			if (!mc->session_ptr()->is_shutdown())
-				mc->session_ptr()->stop();
-
-			mymenu.get_tty().unset_raw_mode();
+				client_process(mc.get());
+			}
 		}
 	}
 	catch (f8Exception& e)
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
+		GlobalLogger::log(e.what());
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
+		GlobalLogger::log(e.what());
 	}
 	catch (...)
 	{
 		cerr << "unknown exception" << endl;
 		restore_tty = true;
+		GlobalLogger::log("unknown exception");
 	}
 
 	if (restore_tty && !server)
 		save_tty.unset_raw_mode();
 
 	if (term_received)
-		cout << "terminated." << endl;
+		cout << endl << "terminated." << endl;
 	return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+void client_process(ClientSessionBase *mc)
+{
+	MyMenu mymenu(*mc->session_ptr(), 0, cout);
+	cout << endl << "Menu started. Press '?' for help..." << endl << endl;
+	char ch(0);
+	mymenu.get_tty().set_raw_mode();
+	save_tty = mymenu.get_tty();
+	while(!mymenu.get_istr().get(ch).bad() && !mc->has_given_up() && !term_received && ch != 0x3 && mymenu.process(ch))
+		;
+	// don't explicitly call mc->session_ptr()->stop() with reliable sessions
+	// before checking if the session is already shutdown - the framework will generally do this for you
+	if (!mc->session_ptr()->is_shutdown())
+		mc->session_ptr()->stop();
+
+	mymenu.get_tty().unset_raw_mode();
+}
+
+//-----------------------------------------------------------------------------------------
+void server_process(ServerSessionBase *srv, int scnt, bool ismulti)
+{
+	unique_ptr<SessionInstanceBase> inst(srv->create_server_instance());
+	if (!quiet)
+		inst->session_ptr()->control() |= Session::print;
+	ostringstream sostr;
+	sostr << "client(" << scnt << ") connection established.";
+	GlobalLogger::log(sostr.str());
+
+	const ProcessModel pm(srv->get_process_model(srv->_ses));
+	cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+	inst->start(pm == pm_pipeline, next_send, next_receive);
+	if (inst->session_ptr()->get_connection()->is_secure())
+		cout << "Session is secure (SSL)" << endl;
+	if (!ismulti)	// demonstrate use of timer events
+	{
+		TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
+		inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
+	}
+	if (pm != pm_pipeline)
+		while (!inst->session_ptr()->is_shutdown())
+			FIX8::hypersleep<h_milliseconds>(100);
+	cout << "Session(" << scnt << ") finished." << endl;
+	inst->stop();
 }
 
 //-----------------------------------------------------------------------------------------
@@ -346,11 +430,11 @@ void myfix_session_client::state_change(const FIX8::States::SessionStates before
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	if (enforce(seqnum, msg))
-		return true;
+		return false;
 	// this is how you take ownership of the message from the framework
 	if (!msg->process(_router)) // false means I have taken ownership of the message
 		detach(msg);
-	return false;
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -403,7 +487,7 @@ Message *MyMenu::generate_new_order_single()
 	*gr5 << new TEX::UnderlyingSymbol("BOOM");
 	// nested repeating groups
 	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
-	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+	static const char *secIDs[] { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
 	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
 	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
 	{
@@ -463,10 +547,47 @@ bool MyMenu::new_order_single_recycled()
 }
 
 //-----------------------------------------------------------------------------------------
+bool MyMenu::static_probe()
+{
+#if defined HAVE_EXTENDED_METADATA
+	(cout << "Enter message tag:").flush();
+	f8String result;
+	const BaseMsgEntry *tbme;
+	if (!get_string(result).empty() && (tbme = _session.get_ctx()._bme.find_ptr(result.c_str())))
+	{
+		function<void (const TraitHelper&, int)> print_traits([&print_traits, this](const TraitHelper& tr, int depth)
+		{
+			const string spacer(depth * 3, ' ');
+			for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
+			{
+				const BaseEntry *be(_session.get_ctx().find_be(itr->_fnum));
+				cout << spacer << be->_name;
+				if (be->_rlm)
+					cout << " Realm:" << (be->_rlm->_dtype == RealmBase::dt_range ? "range" : "set")
+						<< '(' << be->_rlm->_sz << ") ";
+				cout << *itr << endl;
+				if (itr->_field_traits.has(FieldTrait::group))
+					print_traits(itr->_group, depth + 1);
+			}
+		});
+
+		cout << tbme->_name << endl;
+		print_traits(tbme->_create._get_traits(), 1);
+	}
+	else
+		cout << "Unknown message tag: " << result << endl;
+#else
+	cout << "Extended metadata not available (try ./configure --enable-extended-metadata=yes)." << endl;
+#endif
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single_50()
 {
 	vector<Message *> msgs;
-	for (int ii(0); ii < 50; ++ii)
+	for (auto ii(0); ii < 50; ++ii)
 		msgs.push_back(generate_new_order_single());
 
 	_session.send_batch(msgs);
@@ -477,7 +598,7 @@ bool MyMenu::new_order_single_50()
 bool MyMenu::new_order_single_1000()
 {
 	vector<Message *> msgs;
-	for (int ii(0); ii < 1000; ++ii)
+	for (auto ii(0); ii < 1000; ++ii)
 		msgs.push_back(generate_new_order_single());
 
 	_session.send_batch(msgs);
@@ -490,8 +611,8 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
 	return true;
 }
@@ -500,7 +621,10 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	if (!_session.is_shutdown())
+	{
 		_session.send(new TEX::Logout);
+		get_ostr() << "logout..." << endl;
+	}
 	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
@@ -528,6 +652,7 @@ void print_usage()
 	UsageMan um("f8test", GETARGLIST, "");
 	um.setdesc("f8test -- f8 test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
+	um.add('m', "multi", "run in multiple server or client mode (default serial server or single client session at a time)");
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version, exit");
 	um.add('l', "log", "global log filename");
@@ -536,14 +661,39 @@ void print_usage()
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
+	um.add('N', "session", "for client, select session to use from configuration (default DLD1)");
 	um.add('r', "reliable", "start in reliable mode");
 	um.add('d', "dump", "dump parsed XML config file, exit");
+	um.add("e.g.");
+	um.add("@f8test -sml server_log");
+	um.add("@f8test -rl client_log");
+	um.add("@f8test -rl server -S 124");
 	um.print(cerr);
 }
 
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
+#if 0
+	const Presence& pre(msg->get_fp().get_presence());
+   for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
+   {
+      const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
+      cout << itr->first << " is ";
+      if (FieldTrait::is_int(trait))
+         cout << "int";
+      else if (FieldTrait::is_char(trait))
+         cout << "char";
+      else if (FieldTrait::is_string(trait))
+         cout << "string";
+      else if (FieldTrait::is_float(trait))
+         cout << "float";
+      else
+         cout << "unknown";
+		cout << '\t' << _session.get_ctx().find_be(itr->first)->_name << '\t' << *itr->second << endl;
+   }
+#endif
+
 	static unsigned oid(0), eoid(0);
 
 	TEX::OrderQty qty;
@@ -569,7 +719,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
 			{
 				TEX::UnderlyingSymbol unsym;
-				MessageBase *me(grnoul->get_element(cnt));
+				MessageBase *me(grnoul->get_element(static_cast<unsigned>(cnt)));
 				me->get(unsym);
 				cout << "Underlying symbol:" << unsym() << endl;
 				// This is how you extract values from a nested repeating group
@@ -579,7 +729,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 					for (size_t cnt(0); cnt < nus->size(); ++cnt)
 					{
 						TEX::UnderlyingStipType stipType;
-						MessageBase *me(nus->get_element(cnt));
+						MessageBase *me(nus->get_element(static_cast<unsigned>(cnt)));
 						me->get(stipType);
 						cout << "Underlying StipType:" << stipType() << endl;
 					}
@@ -593,7 +743,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			for (size_t cnt(0); cnt < grallocs->size(); ++cnt)
 			{
 				TEX::AllocAccount acc;
-				MessageBase *me(grallocs->get_element(cnt));
+				MessageBase *me(grallocs->get_element(static_cast<unsigned>(cnt)));
 				me->get(acc);
 				cout << "TEX::NewOrderSingle::NoAllocs Account:" << acc() << endl;
 				// This is how you extract values from a nested repeating group
@@ -603,7 +753,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 					for (size_t cnt(0); cnt < nnpi->size(); ++cnt)
 					{
 						TEX::NestedPartyID npi;
-						MessageBase *me(nnpi->get_element(cnt));
+						MessageBase *me(nnpi->get_element(static_cast<unsigned>(cnt)));
 						me->get(npi);
 						cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs NestedPartyID:" << npi() << endl;
 						// This is how you extract values from a nested nested repeating group
@@ -613,7 +763,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 							for (size_t cnt(0); cnt < nnpsi->size(); ++cnt)
 							{
 								TEX::NestedPartySubID npsi;
-								MessageBase *me(nnpsi->get_element(cnt));
+								MessageBase *me(nnpsi->get_element(static_cast<unsigned>(cnt)));
 								me->get(npsi);
 								cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs NestedPartySubID:" << npsi() << endl;
 							}

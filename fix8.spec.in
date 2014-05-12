@@ -37,6 +37,9 @@ Fix8 is a complete C++ FIX framework, with client/server session and connection 
 the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
 Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the
 pain out of using repeating groups.
+Leverage standard components. Fix8 optionally uses industry recognised components for many important functions,
+including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen
+and more. We didn't reinvent the wheel.
 Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 2.1us, and
 ExecutionReport decode 3.2us. Without the framework overhead, NewOrderSingle encode latency is 1.4us. This is being continually improved.
 Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 provides a
@@ -70,8 +73,8 @@ and *OSX*. Other *NIX variants may work too.
 %{_bindir}/hftest
 %{_libdir}/libfix8.la
 %{_libdir}/libfix8.so
-%{_libdir}/libfix8.so.0
-%{_libdir}/libfix8.so.0.0.0
+%{_libdir}/libfix8.so.1
+%{_libdir}/libfix8.so.1.0.2
 %{_libdir}/libhftest.la
 %{_libdir}/libhftest.so
 %{_libdir}/libhftest.so.0
