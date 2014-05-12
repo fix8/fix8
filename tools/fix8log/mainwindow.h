@@ -42,6 +42,7 @@ public:
     ~MainWindow();
     void addNewSchema(TableSchema *);
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
+    void deletedSchema(int schemaID);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
     void showFileDialog();
     TableSchema* getTableSchema();
@@ -137,6 +138,7 @@ protected:
     QLabel   *searchLV; // searchLagle to show when vertical
     NoDataLabel   *noDataL;
     QLineEdit *tabNameLineEdit;
+    QMap     <int,QAction *> schemaActionMap;
     QMenu    *fileMenu;
     QMenu    *hideColumMenu;
     QMenu    *configureIconsMenu;

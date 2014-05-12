@@ -24,6 +24,7 @@ public slots:
     void availableSchemasClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
     void cancelNewSlot();
+    void deleteSchemaSlot();
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
     void saveNewEditSlot();

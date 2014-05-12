@@ -7,7 +7,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     QDialog(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn)
 {
-
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Fix8 LogViewer"));
     QVBoxLayout *vbox = new QVBoxLayout(this);
@@ -240,6 +239,7 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     deleteSchemaPB = new QPushButton("Delete",schemaButtonArea);
     deleteSchemaPB->setIcon(QIcon(":/images/svg/editdelete.svg"));
     deleteSchemaPB->setToolTip("Delete selected schema");
+    connect(deleteSchemaPB,SIGNAL(clicked()),this,SLOT(deleteSchemaSlot()));
     schemaGrid->addWidget(newSchemaPB,0,0);
     schemaGrid->addWidget(copySchemaPB,0,1);
     schemaGrid->addWidget(editSchemaPB,1,0);
@@ -302,119 +302,20 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
         }
     }
 }
-
-void SchemaEditorDialog::applyButtonSlot(QAbstractButton *button)
-{
-    if (button == applyOnlyToCurrentRB) {
-        windowL->show();
-        windowV->show();
-        tabL->show();
-        tabV->show();
-    }
-    else if (button == applyToWindowRB) {
-        windowL->show();
-        windowV->show();
-        tabL->hide();
-        tabV->hide();
-    }
-    else { // must be apply to all
-        windowL->hide();
-        windowV->hide();
-        tabL->hide();
-        tabV->hide();
-    }
-}
 void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
 {
     windowV->setText(windowName);
     tabV->setText(tabName);
-    if (tabName.length() < 1)
+    if (tabName.length() < 1) {
         applyToWindowRB->setChecked(true);
-    else
-        applyOnlyToCurrentRB->setChecked(true);
-}
-void SchemaEditorDialog::actionButtonSlot(QAbstractButton *button )
-{
-    if (button == closeB)
-        emit finished(QDialogButtonBox::Close);
-}
-void SchemaEditorDialog::newSchemaSlot()
-{
-    bool bstatus;
-    viewMode = NewMode;
-    buttonStackArea->setCurrentIndex(NewMode);
-    newSchemaStackArea->setCurrentIndex(NewMode);
-    QPalette pal = descriptionE->palette();
-    pal.setColor(QPalette::Base,editColor);
-    descriptionE->setPalette(pal);
-    descriptionE->setReadOnly(false);
-    availableSchemasL->setText("New Schema");
-    newSchemaLine->setText("");
-    descriptionE->setText("");
-    newSchemaLine->setFocus();
-    validate();
-}
-void SchemaEditorDialog::saveNewEditSlot()
-{// called for both save new and edit
-    SchemaItem *si;
-    bool bstatus;
-    TableSchema *tableSchema;
-    QString name = newSchemaLine->text();
-    if(viewMode == NewMode) {
-        if (tableSchemaList) {
-            tableSchema = tableSchemaList->findByName(name);
-            if (tableSchema) {
-                setMessage("Error - Name already in use",true);
-                return;
-            }
-        }
-        else {
-            qWarning() << "table schema list is null" << __FILE__ << __LINE__;
-            setMessage("Prgramming Error - Schema List Is Null",true);
-            return;
-        }
-        if (!database) {
-            qWarning() << "Error in saving shema - database is null" << __FILE__ << __LINE__;
-            setMessage("Prgramming Error - Database is not defined",true);
-            return;
-        }
-        messageL->setText("");
-        newSchemaLine->setText("");
-        tableSchema = new TableSchema(name,descriptionE->toPlainText(),false);
-        bstatus = database->addTableSchema(*tableSchema);
-        if (!bstatus) {
-            setMessage("Error - save to database failed",true);
-            return;
-        }
-        si = new SchemaItem(*tableSchema);
-        schemaModel->appendRow(si);
-        viewMode = RegMode;
-        newSchemaStackArea->setCurrentIndex(RegMode);
-        buttonStackArea->setCurrentIndex(RegMode);
-        QPalette pal = descriptionE->palette();
-        pal.setColor(QPalette::Base,regularColor);
-        descriptionE->setPalette(pal);
-        descriptionE->setReadOnly(true);
-        availableSchemasL->setText("Available Schemas");
-        validate();
-        tableSchemaList->append(tableSchema);
-        emit newSchemaCreated(tableSchema);
+        applyOnlyToCurrentRB->setEnabled(false);
+        tabV->setVisible(false);
     }
-}
-
-void SchemaEditorDialog::cancelNewSlot()
-{
-    viewMode = RegMode;
-    messageL->setText("");
-    newSchemaStackArea->setCurrentIndex(RegMode);
-    buttonStackArea->setCurrentIndex(RegMode);
-    QPalette pal = descriptionE->palette();
-    pal.setColor(QPalette::Base,regularColor);
-    descriptionE->setPalette(pal);
-    descriptionE->setText("");
-    descriptionE->setReadOnly(true);
-    availableSchemasL->setText("Available Schemas");
-    validate();
+    else {
+        applyOnlyToCurrentRB->setChecked(true);
+        applyOnlyToCurrentRB->setEnabled(true);
+        tabV->setVisible(true);
+     }
 }
 bool SchemaEditorDialog::validate()
 {
@@ -427,12 +328,10 @@ bool SchemaEditorDialog::validate()
         editSchemaPB->setEnabled(false);
         deleteSchemaPB->setEnabled(false);
         copySchemaPB->setEnabled(false);
-
     }
     else {
         newSchemaPB->setEnabled(true);
         saveEditPB->setEnabled(false);
-
         if (currentSchemaItem) {
             if (currentSchemaItem == defaultSchemaItem) {
                 deleteSchemaPB->setEnabled(false);
@@ -443,7 +342,6 @@ bool SchemaEditorDialog::validate()
                 editSchemaPB->setEnabled(true);
             }
             copySchemaPB->setEnabled(true);
-
         }
         else {
             editSchemaPB->setEnabled(false);
@@ -452,11 +350,6 @@ bool SchemaEditorDialog::validate()
         }
     }
     return isValid;
-}
-void SchemaEditorDialog::nameEditedSlot(const QString &)
-{
-    messageL->setText("");
-    validate();
 }
 void SchemaEditorDialog::saveSettings()
 {
@@ -480,20 +373,4 @@ void SchemaEditorDialog::setMessage(QString str, bool isError)
         pal.setColor(QPalette::WindowText,regMesssgeColor);
     messageL->setPalette(pal);
     messageL->setText(str);
-}
-void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
-{
-    currentSchemaItem = (SchemaItem *) schemaModel->itemFromIndex(index);
-    if (!currentSchemaItem)  {
-        qWarning() << "Curent SchemaItem is null" << __FILE__ << __LINE__;
-        return;
-    }
-    TableSchema *currentTableSchema = currentSchemaItem->tableSchema;
-    if (!currentTableSchema) {
-        qWarning() << "No Current Table Schema Found" << __FILE__ << __LINE__;
-        return;
-    }
-    newSchemaLine->setText(currentTableSchema->name);
-    descriptionE->setText(currentTableSchema->description);
-    validate();
 }

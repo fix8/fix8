@@ -43,6 +43,7 @@ public slots:
     void newSchemaCreatedSlot(TableSchema *);
     void setGlobalSchemaOnSlot(bool);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
+    void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
 protected:
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);

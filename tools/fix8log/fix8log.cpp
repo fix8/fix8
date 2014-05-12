@@ -439,24 +439,22 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     QString tabName;
     qDebug() << "EDIT SCHEMA SLOT" << __FILE__ << __LINE__;
     if (!schemaEditorDialog) {
-        qDebug() << "\tcreate new scheme edit dialog";
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));
         connect(schemaEditorDialog,SIGNAL(newSchemaCreated(TableSchema*)),
                 this,SLOT(newSchemaCreatedSlot(TableSchema *)));
+        connect(schemaEditorDialog,SIGNAL(schemaDeleted(int)),
+                this,SLOT(schemaDeletedSlot(int)));
         schemaEditorDialog->restoreSettings();
     }
-    qDebug() << "\tshow schema editor dialog...";
     QString windowName = mw->windowTitle();
     if (windowName.length() < 1)
         windowName = qApp->applicationName();
-    qDebug() << "WINDOW NAME " << windowName << __FILE__;
     if (!workSheetID.isNull()) {
         WorkSheetData wsd = mw->getWorksheetData(workSheetID,&ok);
         if (ok) {
-            qDebug() << "OK" << __FILE__ << __LINE__;
             if (wsd.tabAlias.length() >= 1)
                 tabName = wsd.tabAlias;
             else
@@ -466,7 +464,8 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     schemaEditorDialog->setCurrentTarget(windowName,tabName);
     schemaEditorDialog->show();
 }
-void  Fix8Log::newSchemaCreatedSlot(TableSchema *ts)
+
+void Fix8Log::newSchemaCreatedSlot(TableSchema *ts)
 {
     MainWindow *mw;
     QListIterator <MainWindow *> iter(mainWindows);
@@ -474,7 +473,23 @@ void  Fix8Log::newSchemaCreatedSlot(TableSchema *ts)
         mw = iter.next();
         mw->addNewSchema(ts);
     }
-
+}
+void Fix8Log::schemaDeletedSlot(int schemaID)
+{
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        mw->deletedSchema(schemaID);
+    }
+    TableSchema *ts = tableSchemaList->findByID(schemaID);
+    qDebug() << "REMOVE TS FROM LIST" << __FILE__ << __LINE__;
+    if (ts) {
+        tableSchemaList->removeOne(ts);
+        qDebug() << "\tDelete It";
+        delete ts;
+        qDebug() << "\tAfter Delete";
+    }
 }
 void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 {

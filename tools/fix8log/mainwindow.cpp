@@ -62,7 +62,7 @@ void MainWindow::setLoading(bool bstatus)
     loadingActive = bstatus;
     if (bstatus) {
         stackW->setCurrentIndex(ShowProgress);
-     }
+    }
     else {
         if (tabW->count() > 0) {
             stackW->setCurrentIndex(ShowTab);
@@ -152,7 +152,7 @@ void MainWindow::buildMainWindow()
     editSchemaA= new QAction("&Schema Editor",this);
     editSchemaA->setIconText("Edit");
     editSchemaA->setIcon((QIcon(":/images/svg/editSchema.svg")));
-     connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
+    connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
     showMessageA = new QAction(tr("Show/Hide Msgs"),this);
     showMessageA->setToolTip(tr("Show/Hide Message Area"));
     showMessageA->setCheckable(true);
@@ -444,6 +444,7 @@ void MainWindow::buildSchemaMenu()
         QVariant var;
         var.setValue((void *) action);
         action->setData(var);
+        schemaActionMap.insert(tableSchema->id,action);
         schemaMenu->addAction(action);
         schemaActionGroup->addAction(action);
 
@@ -610,7 +611,6 @@ void MainWindow::setTableSchema(TableSchema *ts)
 }
 void MainWindow::addNewSchema(TableSchema *ts)
 {
-    qDebug() << "HERE IN MAIN WINDOW ADD NEW SCHEA" << __FILE__ << __LINE__;
     if (!ts)
         return;
     QAction *action = new QAction(ts->name,this);
@@ -619,9 +619,19 @@ void MainWindow::addNewSchema(TableSchema *ts)
     var.setValue((void *) action);
     action->setData(var);
     schemaMenu->addAction(action);
+    schemaActionMap.insert(ts->id,action);
     schemaActionGroup->addAction(action);
 }
-
+void MainWindow::deletedSchema(int schemaID)
+{
+    QAction *schemaAction;
+    QMap<int, QAction *>::const_iterator i = schemaActionMap.find(schemaID);
+    schemaAction = i.value();
+    if (schemaAction) {
+        schemaMenu->removeAction(schemaAction);
+        schemaActionGroup->removeAction(schemaAction);
+    }
+}
 TableSchema * MainWindow::getTableSchema()
 {
     return tableSchema;
