@@ -175,17 +175,11 @@ void process_special_traits(const unsigned short field, FieldTraits& fts)
 //-----------------------------------------------------------------------------------------
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp)
 {
-	string typestr("const ");
-	if (FieldTrait::is_int(itr->second._ftype))
-		typestr += "int ";
-	else if (FieldTrait::is_char(itr->second._ftype))
-		typestr += "char ";
-	else if (FieldTrait::is_float(itr->second._ftype))
-		typestr += "double ";
-	else if (FieldTrait::is_string(itr->second._ftype))
-		typestr += "f8String ";
-	else
+	string typestr;
+	if (FieldTrait::get_type_string(itr->second._ftype, typestr).empty())
 		return;
+	typestr.insert(0, "const ");
+	typestr += ' ';
 
 	ost_cpp << typestr << itr->second._name << "_realm[]  " << endl << spacer << "{ ";
 	unsigned cnt(0);
@@ -198,17 +192,12 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 		// replace any illegal c++ identifier characters
 		InPlaceReplaceInSet(ident_set, transdesc, '_');
 		ost_hpp << typestr << itr->second._name << '_';
-		if (transdesc.empty())
+		if (ditr->first->is_range())
+			ost_hpp << (cnt == 0 ? "lower" : "upper");
+		else if (transdesc.empty())
 			ost_hpp << *ditr->first;
 		else
 			ost_hpp << transdesc;
-		if (ditr->first->is_range())
-		{
-			if (cnt == 0)
-				ost_hpp << "_lower";
-			else if (cnt == 1)
-				ost_hpp << "_upper";
-		}
 		ost_hpp << '(' << *ditr->first << ");" << endl;
 		++cnt;
 	}
@@ -429,3 +418,4 @@ ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 
 	return os;
 }
+

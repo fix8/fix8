@@ -225,8 +225,10 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 
 If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
 register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
-sample configuruation files, config.log, etc. If you have already implemented a fix, and wish to make a pull
-request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
+sample configuruation files, config.log, etc.
+
+If you have already implemented a fix, and wish to make a pull request on Github please create an issue in Jira first.
+This will help us track the problem and ensure that the solution is properly tested.
 
 When considering submitting a problem report, make sure you have identified a potential problem with Fix8 and not a problem with your application.
 These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes, some of which will relate
