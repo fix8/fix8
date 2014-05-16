@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui sql qml quick
-QMAKE_CXXFLAGS += -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
+QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = fix8log

@@ -43,17 +43,22 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QUuid>
 #include <QVector>
 #include <QPair>
+#include "messagefield.h"
+
 class QDesktopWidget;
 
 namespace GUI {
-class Message {
+
+class ConsoleMessage {
 public:
-    typedef enum {ErrorMsg,WarningMsg,InfoMsg} MessageType;
-    Message(QString, MessageType mt= InfoMsg);
-    Message(const Message &);
-    Message();
+    typedef enum {ErrorMsg,WarningMsg,InfoMsg} ConsoleMessageType;
+    ConsoleMessage(QString, ConsoleMessageType mt= InfoMsg);
+    ConsoleMessage(const ConsoleMessage &);
+    ConsoleMessage();
     QString msg;
-    MessageType messageType;
+    ConsoleMessageType messageType;
+    QBaseEntryList *qbaseEntryList;
+
 };
 
 class Globals
@@ -61,7 +66,7 @@ class Globals
 public:
     static Globals* Instance();
     typedef enum {DAYMONYRHHMMSS,DAYMMMHHMMSS,HHMMSS,HHMM,NumOfTimeFormats} TimeFormat;
-    typedef QPair <QString, QString> MessagePair;
+    typedef QPair <QString, QString> ConsoleMessagePair;
     static QString timeFormats[NumOfTimeFormats];
     static float   version;
     static int     databaseVersion;
@@ -71,13 +76,13 @@ public:
     static QSize largeIconSize;
     static QColor menubarDefaultColor;
     static TimeFormat timeFormat;
-    static QVector <MessagePair> *messagePairs;
+    //  static QVector <MessagePair> *ConsoleMessagePairs;
 private:
     Globals(){};
     Globals(Globals const&){};
     static Globals* m_pInstance;
 };
-};
+}
 struct fix8logdata {
     QUuid  windowID;
     QUuid  worksheetID;
@@ -85,6 +90,7 @@ struct fix8logdata {
 
 QDataStream &operator<<(QDataStream &out, const fix8logdata &data);
 QDataStream &operator>>(QDataStream &in, fix8logdata &data);
+
 Q_DECLARE_METATYPE(fix8logdata);
 
 #endif // GLOBALS_H

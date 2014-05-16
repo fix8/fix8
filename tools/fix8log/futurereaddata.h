@@ -44,7 +44,7 @@ class FutureReadData
 public:
     FutureReadData();
     QStandardItemModel *model;
-    QList <GUI::Message> msgList;
+    QList <GUI::ConsoleMessage> msgList;
     quint32 returnCode;
 };
 

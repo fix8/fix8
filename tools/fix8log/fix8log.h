@@ -69,8 +69,8 @@ public slots:
     void createNewWindowSlot(MainWindow *mw=0);
     void copyWindowSlot(MainWindow *mw);
     void deleteMainWindowSlot(MainWindow *mw);
-    void displayConsoleMessage(GUI::Message);
-    void displayConsoleMessage(QString, GUI::Message::MessageType = GUI::Message::InfoMsg);
+    void displayConsoleMessage(GUI::ConsoleMessage);
+    void displayConsoleMessage(QString, GUI::ConsoleMessage::ConsoleMessageType = GUI::ConsoleMessage::InfoMsg);
     void editSchemaSlot(MainWindow *,QUuid workSheetID);
     void exitAppSlot();
      void finishedReadingDataFileSlot();
@@ -96,6 +96,7 @@ protected:
     TableSchema *defaultTableSchema;
     TableSchema *worldTableSchema;
     bool globalSchemaOn;
+    MessageFieldList *messageFieldList;
 
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);

@@ -196,3 +196,32 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
 
     validate();
 }
+void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
+{
+    availableFieldModel->clear();
+    qDebug() << "MEssage Item Clicked " << __FILE__ << __LINE__;
+    QStandardItem *item = messageModel->itemFromIndex(mi);
+    if (!item) {
+        qWarning() << "Item is null " << __FILE__ << __LINE__;
+        return;
+    }
+    QVariant var = item->data();
+    MessageField *mf = (MessageField *) var.value<void *>();
+    if (!mf) {
+        qWarning() << "Error - MessageField = null" << __FILE__ << __LINE__;
+        return;
+    }
+    int i=0;
+    if (mf->qbel) {
+        availableFieldModel->setRowCount(mf->qbel->count());
+        qDebug() << "Numver of field items = " << mf->qbel->count();
+        QListIterator <QBaseEntry *> iter(*(mf->qbel));
+        while(iter.hasNext()) {
+            QBaseEntry *qbe = iter.next();
+            QStandardItem *item = new QStandardItem(qbe->name);
+            item->setCheckable(true);
+            availableFieldModel->setItem(i,item);
+            i++;
+        }
+    }
+}

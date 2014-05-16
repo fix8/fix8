@@ -88,6 +88,8 @@ MessageArea::MessageArea(QWidget *parent) :
 void MessageArea::setMessageFieldList(MessageFieldList *mfl,int seqNum, QString &msgType)
 {
     seqNumV->setText(QString::number(seqNum));
+    qDebug() << "FIX MESSAGE AREA...." << __FILE__ << __LINE__;
+    /*
     messageTypeV->setText(msgType);
     model->removeRows(0,model->rowCount());
     if (!mfl || (mfl->count() < 1))
@@ -122,4 +124,5 @@ void MessageArea::setMessageFieldList(MessageFieldList *mfl,int seqNum, QString 
         itemList.append(item3);
         model->appendRow(itemList);
     }
+    */
 }

@@ -208,7 +208,7 @@ protected:
     QWidget *tabNameEditArea;
     void setAutoSaveOn(bool);
     void buildMainWindow();
-    void displayConsoleMessage(GUI::Message);
+    void displayConsoleMessage(GUI::ConsoleMessage);
     void showEvent(QShowEvent *);
     void readSettings();
     void writeSettings();

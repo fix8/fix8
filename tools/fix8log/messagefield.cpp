@@ -36,12 +36,22 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include "messagefield.h"
 
-MessageField::MessageField(qint32 ID, QString &Name,QVariant Var) :
-    id(ID),name(Name),variant(Var)
+QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0)
+{
+    name = QString::fromLatin1(be._name);
+}
+
+
+QBaseEntryList::QBaseEntryList() :QList <QBaseEntry *>()
 {
 
 }
-MessageFieldList::MessageFieldList() : QList<MessageField>()
+MessageField::MessageField(QString &Key, QString &Name,QBaseEntryList *QBEL):
+    key(Key),name(Name),qbel(QBEL)
+{
+
+}
+MessageFieldList::MessageFieldList() : QList<MessageField*>()
 {
 
 }

@@ -148,7 +148,11 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     availableListL->setAlignment(Qt::AlignHCenter);
     selectedListL->setAlignment(Qt::AlignHCenter);
     messageListView = new QListView();
+    connect(messageListView,SIGNAL(clicked(QModelIndex)),
+            this,SLOT(messageListClickedSlot(QModelIndex)));
     availableListView = new QListView();
+    availableFieldModel = new QStandardItemModel(availableListView);
+    availableListView->setModel(availableFieldModel);
     selectedListView = new QListView();
 
     wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
@@ -192,7 +196,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     vbox->addSpacing(12);
     vbox->addWidget(buttonBox,0);
 
-    populateMessageList();
+    //populateMessageList();
     newSchemaStackArea->setCurrentIndex(RegMode);
     buttonStackArea->setCurrentIndex(RegMode);
     viewMode = RegMode;
@@ -298,18 +302,33 @@ void SchemaEditorDialog::showEvent(QShowEvent *se)
     QDialog::showEvent(se);
 }
 
-void SchemaEditorDialog::populateMessageList()
+void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
 {
+    messageFieldList = mfl;
+    MessageField *mf;
     QStandardItem *item;
     messageModel = new QStandardItemModel();
     messageListView->setModel(messageModel);
-    int count = Globals::messagePairs->count();
-    messageModel->setRowCount(count);
-    for(int i= 0;i< count;i++) {
-        //qDebug() << "Create item I = " << i << "total = " << count;
-        item = new QStandardItem(Globals::messagePairs->at(i).second);
-        messageModel->setItem(i,item);
+    qDebug() << "FIX POPULATE MESSAE LIST FOR ShemeEditorDialog" << __FILE__ << __LINE__;
+    if (!messageFieldList) {
+        qWarning() << "Error - messageFieldList is null" << __FILE__ << __LINE__;
+        messageModel->setRowCount(0);
+        return;
     }
+    QListIterator <MessageField *> iter(*messageFieldList);
+    messageModel->setRowCount(messageFieldList->count());
+    int i = 0;
+    while(iter.hasNext()) {
+        mf = iter.next();
+        QVariant var;
+        var.setValue((void *) mf);
+        item = new QStandardItem(mf->name);
+        item->setData(var);
+        qDebug() << i << "Create Item name = " << item->text();
+        messageModel->setItem(i,item);
+        i++;
+    }
+
 }
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
 {

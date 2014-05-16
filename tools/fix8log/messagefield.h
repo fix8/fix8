@@ -40,19 +40,37 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QPair>
 #include <QVariant>
 #include <QList>
+#include <fix8/f8includes.hpp>
+#include <f8types.hpp>
+#include <Myfix_types.hpp>
+using namespace FIX8;
+
+class QBaseEntry
+{
+public:
+    QBaseEntry(const BaseEntry &);
+    QString name;
+    FieldTrait *ft;
+};
+
+class QBaseEntryList : public  QList <QBaseEntry *>
+{
+public:
+    explicit QBaseEntryList();
+};
 
 class MessageField
 {
 public:
-    explicit MessageField(qint32,QString &,QVariant);
-qint32 id;
-QString name;
-QVariant variant;
+    explicit MessageField(QString  &key,QString &name,QBaseEntryList *);
+    QString key;
+    QString name;
+    QBaseEntryList *qbel;
 
 };
-class MessageFieldList : public QList<MessageField>
+class MessageFieldList : public QList<MessageField *>
 {
 public:
-explicit MessageFieldList();
+    explicit MessageFieldList();
 };
 #endif // MESSAGEFIELD_H

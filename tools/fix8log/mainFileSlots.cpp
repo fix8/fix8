@@ -132,7 +132,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         workSheet->splitter->restoreState(messageSplitterSettings);
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
-        QList <GUI::Message> messageList;
+        QList <GUI::ConsoleMessage> messageList;
         index = tabW->addTab(workSheet,fi.fileName());
         tabW->setToolTip(fileName);
         tabW->setCurrentWidget(workSheet);
@@ -145,20 +145,20 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
 
         if (!bstatus) {
             if (returnStatus == CANCEL) {
-                GUI::Message msg("Canceled Loading File: " + fileName);
+                GUI::ConsoleMessage msg("Canceled Loading File: " + fileName);
                 messageList.append(msg);
                 tabW->removeTab(index);
                 delete workSheet;
             }
             else {
-                GUI::Message msg("Loading File: " + fileName + " Failed",GUI::Message::ErrorMsg);
+                GUI::ConsoleMessage msg("Loading File: " + fileName + " Failed",GUI::ConsoleMessage::ErrorMsg);
                 messageList.append(msg);
             }
         }
         if (messageList.count() > 0) {
-            QListIterator <GUI::Message> messageIter(messageList);
+            QListIterator <GUI::ConsoleMessage> messageIter(messageList);
             while(messageIter.hasNext()) {
-                GUI::Message message = messageIter.next();
+                GUI::ConsoleMessage message = messageIter.next();
                 displayConsoleMessage(message);
             }
         }
@@ -177,16 +177,16 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         showMessageA->setEnabled(false);
     }
 }
-void MainWindow::displayConsoleMessage(GUI::Message message)
+void MainWindow::displayConsoleMessage(GUI::ConsoleMessage message)
 {
     QString str;
     QString timeStr = QTime::currentTime().toString() +
             " - " + message.msg;
     switch (message.messageType) {
-    case GUI::Message::ErrorMsg:
+    case GUI::ConsoleMessage::ErrorMsg:
         str = "<FONT COLOR=\"red\">" + timeStr + "</FONT>";
         break;
-    case GUI::Message::WarningMsg:
+    case GUI::ConsoleMessage::WarningMsg:
         str = "<FONT COLOR=\"gold\">" + timeStr + "</FONT>";
         break;
     default:

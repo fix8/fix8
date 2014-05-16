@@ -88,7 +88,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     QFile dataFile(fileName);
     QList<QStandardItem *> itemList;
     QStandardItemModel *model = new QStandardItemModel();
-     model->setColumnCount(WorkSheet::NumColumns);
+    model->setColumnCount(WorkSheet::NumColumns);
     QStandardItem *headerItem[WorkSheet::NumColumns];
     for(int i=0;i<WorkSheet::NumColumns;i++) {
         headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
@@ -98,10 +98,10 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     }
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
 
-    QList <GUI::Message> msgList;
+    QList <GUI::ConsoleMessage> msgList;
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
-        GUI::Message message(tr("Failed to open file: ") + fileName);
+        GUI::ConsoleMessage message(tr("Failed to open file: ") + fileName);
         msgList.append(message);
         delete model;
         return 0;
@@ -126,6 +126,8 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     int rowPosition = 0;
     myTimer.start();
     messgeTypeItem = new QStandardItem(qstr);
+    qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;
+    /*
     while(!dataFile.atEnd()) {
         itemList.clear();
         try {
@@ -242,25 +244,26 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::Message(qstr));
+*/
     dataFile.close();
     return model;
 }
 void Fix8Log::readFileInAnotherThread(const QString &fileName,QString &errorStr)
 {
     QFutureWatcher <FutureReadData *> *watcher = new
-       QFutureWatcher <FutureReadData *>();
+            QFutureWatcher <FutureReadData *>();
     connect(watcher,SIGNAL(finished()),this,SLOT(finishedReadingDataFileSlot()));
     QFuture<FutureReadData *> future =
 
-       QtConcurrent::run(readLogFileInThread,fileName,errorStr);
+            QtConcurrent::run(readLogFileInThread,fileName,errorStr);
     watcher->setFuture(future);
 }
-    void Fix8Log::finishedReadingDataFileSlot()
+void Fix8Log::finishedReadingDataFileSlot()
 {
     qDebug() << "Finishded future reading..";
     QFutureWatcher<FutureReadData *> *watcher =
-       (QFutureWatcher<FutureReadData *> *)sender();
-     FutureReadData *frd = watcher->result();
+            (QFutureWatcher<FutureReadData *> *)sender();
+    FutureReadData *frd = watcher->result();
 }
 
 FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
@@ -297,7 +300,7 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     QList<QStandardItem *> itemList;
     FutureReadData *frd = new FutureReadData();
     QStandardItemModel *model = new QStandardItemModel();
-     model->setColumnCount(WorkSheet::NumColumns);
+    model->setColumnCount(WorkSheet::NumColumns);
     QStandardItem *headerItem[WorkSheet::NumColumns];
     for(int i=0;i<WorkSheet::NumColumns;i++) {
         headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
@@ -306,10 +309,10 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
         model->setHorizontalHeaderItem(i,headerItem[i]);
     }
 
-    QList <GUI::Message> msgList;
+    QList <GUI::ConsoleMessage> msgList;
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
-        GUI::Message message("Failed to open file: " + fileName);
+        GUI::ConsoleMessage message("Failed to open file: " + fileName);
         msgList.append(message);
         delete model;
         return frd;
@@ -334,6 +337,8 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     int rowPosition = 0;
     myTimer.start();
     messgeTypeItem = new QStandardItem(qstr);
+    qDebug() << "FIX THIS < DATA  GETTING READ IN..." << __FILE__ << __LINE__;
+    /*
     while(!dataFile.atEnd()) {
         itemList.clear();
         try {
@@ -431,14 +436,15 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
             errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
             qWarning() << "exception, row " << i;
             qWarning() << "Error - " << e.what();
-            msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            msgList.append(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
         i++;
     }
+    */
     nMilliseconds = myTimer.elapsed();
     qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(model->rowCount()) + " Messages were read from file: " + fileName;
-    msgList.append(GUI::Message(qstr));
+    msgList.append(GUI::ConsoleMessage(qstr));
     dataFile.close();
     return frd;
 }

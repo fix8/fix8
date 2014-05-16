@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fixmimedata.h"
 #include "globals.h"
 #include "mainwindow.h"
+#include "messagefield.h"
 #include "schemaeditordialog.h"
 #include "windowdata.h"
 #include <QApplication>
@@ -55,7 +56,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <string.h>
 using namespace GUI;
 using namespace FIX8;
-
+using namespace std;
 Fix8Log::Fix8Log(QObject *parent) :
     QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
@@ -97,8 +98,8 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
             this,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
     connect(this,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             mw,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
-     connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
-     connect(mw,SIGNAL(editSchema(MainWindow*,QUuid)),this,SLOT(editSchemaSlot(MainWindow*,QUuid)));
+    connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
+    connect(mw,SIGNAL(editSchema(MainWindow*,QUuid)),this,SLOT(editSchemaSlot(MainWindow*,QUuid)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
@@ -115,7 +116,7 @@ void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
         qApp->exit();
     }
 }
-void Fix8Log::displayConsoleMessage(GUI::Message msg)
+void Fix8Log::displayConsoleMessage(GUI::ConsoleMessage msg)
 {
     MainWindow *mw;
     QListIterator <MainWindow *> iter(mainWindows);
@@ -124,11 +125,36 @@ void Fix8Log::displayConsoleMessage(GUI::Message msg)
         mw->displayConsoleMessage(msg);
     }
 }
-void Fix8Log::displayConsoleMessage(QString str, GUI::Message::MessageType mt)
+void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMessageType mt)
 {
-    GUI::Message m(str,mt);
+    GUI::ConsoleMessage m(str,mt);
     displayConsoleMessage(m);
 }
+void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryList)
+{
+    const string spacer(depth * 3, ' ');
+    int ii = 0;
+    for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
+    {
+        const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
+        if(qbaseEntryList) {
+            QBaseEntry *qbe  = new QBaseEntry(*be);
+            qbaseEntryList->append(qbe);
+
+        //cout << spacer << ii << ", Name:" << be->_name << endl; // print field name
+       // if (be->_rlm)  // will be null if no realm is defined for this field
+            // cout << spacer << "\tRealm:" << (be->_rlm->_dtype == RealmBase::dt_range ? "range" : "set")
+            //    << '(' << be->_rlm->_sz << ") " << endl;
+            qbe->ft = new FieldTrait(*itr);
+        }
+            //cout << "Field Type: " << ft._ftype << endl;
+        //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
+        if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
+            print_traits(itr->_group, depth + 1,0); // descend into repeating groups
+        ii++;
+    }
+}
+
 bool Fix8Log::init()
 {
     bool bstatus;
@@ -148,14 +174,14 @@ bool Fix8Log::init()
             qApp->exit();
         }
         else {
-            displayConsoleMessage(GUI::Message("Created Database Directory:" + dbPath));
+            displayConsoleMessage(GUI::ConsoleMessage("Created Database Directory:" + dbPath));
         }
     }
     dbFileName = dbPath + QDir::separator() + dbFileName;
     QFile dbFile(dbFileName);
     if (!dbFile.exists()) {
         firstTimeToUse = true;
-        displayConsoleMessage(GUI::Message("Creating Database..."));
+        displayConsoleMessage(GUI::ConsoleMessage("Creating Database..."));
     }
     database = new Database(dbFileName,this);
     bstatus = database->open();
@@ -170,7 +196,7 @@ bool Fix8Log::init()
         bstatus = database->createTable(Database::Windows);
         if (!bstatus) {
             errorStr =  "Failed to create windows table.";
-            displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
     }
     bstatus = database->tableIsValid(Database::WorkSheet);
@@ -178,7 +204,7 @@ bool Fix8Log::init()
         bstatus = database->createTable(Database::WorkSheet);
         if (!bstatus) {
             errorStr = "Failed to create worksheet table.";
-            displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
     }
     bstatus = database->tableIsValid(Database::TableSchemas);
@@ -186,7 +212,7 @@ bool Fix8Log::init()
         bstatus = database->createTable(Database::TableSchemas);
         if (!bstatus) {
             errorStr = "Failed to create table  table.";
-            displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
         else {
             // create default schema ...
@@ -194,14 +220,14 @@ bool Fix8Log::init()
             if (ts) {
                 bstatus = database->addTableSchema(*ts);
                 if (!bstatus) {
-                     errorStr = "Failed to create default table schema";
-                     displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+                    errorStr = "Failed to create default table schema";
+                    displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
                 }
                 else {
                     tableSchemaList = database->getTableSchemas();
                     if (!tableSchemaList) {
                         errorStr = "Error - no table schemas found in database";
-                        displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+                        displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
                     }
                 }
             }
@@ -211,13 +237,13 @@ bool Fix8Log::init()
         tableSchemaList = database->getTableSchemas();
         if (!tableSchemaList) {
             errorStr = "Error - no table schemas found in database, creating default....";
-            displayConsoleMessage(GUI::Message(errorStr,GUI::Message::WarningMsg));
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
             defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
 
             bstatus = database->addTableSchema(*defaultTableSchema);
             if (!bstatus) {
-                 errorStr = "Failed to add default table schema to database";
-                 displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+                errorStr = "Failed to add default table schema to database";
+                displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
             }
             else {
                 tableSchemaList = new TableSchemaList();
@@ -225,49 +251,58 @@ bool Fix8Log::init()
             }
         }
         else { // lets make sure we have default table schema, else create it
-           defaultTableSchema = tableSchemaList->findByName("Default");
-           if(!defaultTableSchema) {
-               errorStr = "Failed to find default table schema, creating it...";
-               displayConsoleMessage(GUI::Message(errorStr,GUI::Message::WarningMsg));
-               defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
-               tableSchemaList->append(defaultTableSchema);
-               bstatus = database->addTableSchema(*defaultTableSchema);
-               if (!bstatus) {
-                   errorStr = "Failed to add default table schema to database 2";
-                   displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
-               }
-           }
+            defaultTableSchema = tableSchemaList->findByName("Default");
+            if(!defaultTableSchema) {
+                errorStr = "Failed to find default table schema, creating it...";
+                displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
+                defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
+                tableSchemaList->append(defaultTableSchema);
+                bstatus = database->addTableSchema(*defaultTableSchema);
+                if (!bstatus) {
+                    errorStr = "Failed to add default table schema to database 2";
+                    displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+                }
+            }
         }
-    MainWindow::defaultTableSchema = defaultTableSchema;
+        MainWindow::defaultTableSchema = defaultTableSchema;
     }
+    /*
     if (tableSchemaList)
-        qDebug() << "NUM OF TABLE SCHEMAS FOUND IN DB ARE:" << tableSchemaList->count() << __FILE__ << __LINE__;
+        cout << "NUM OF TABLE SCHEMAS FOUND IN DB ARE:" << tableSchemaList->count() << endl;
+    */
     QString key;
     QString value;
     quint32 ikey;
     FieldTrait::FieldType ft;
-    Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
-    for(unsigned int ii=0;ii < TEX::ctx()._bme.size();ii++)
+    const BaseMsgEntry *tbme;
+    //Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
+    //Globals::messagePairs = new QVector<Globals::MessagePair>();
+    cout.flush();
+    int messageCount = TEX::ctx()._bme.size();
+    qDebug() << "SIZE OF MESSAGE TABLE = " << messageCount ;
+    const BaseEntry *tbe;
+    messageFieldList = new MessageFieldList();
+    MessageField *messageField;
+    for(int ii=0;ii < messageCount; ii++)
     {
-        key =
-             QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
+        const char *kk = TEX::ctx()._bme.at(ii)->_key;
+        const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
+        //cout << ">>>>> " << TEX::ctx()._bme.at(ii)->_value._name << endl;
+        QBaseEntryList *qbaseEntryList = new QBaseEntryList();
+
+        print_traits(tr, 0,qbaseEntryList); // print message traits
+        qDebug() << "Num of Entries in QBaseEntryList = " << qbaseEntryList->count();
         value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
-        Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
+        qDebug() << "Name:" << value;
+        key =
+                QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
+        //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
+        messageField = new MessageField(key,value,qbaseEntryList);
+        messageFieldList->append(messageField);
+
     }
-   int sizeofFieldTable = TEX::ctx()._be.size();
-   qDebug() << "SIZE OF FIELD TABLE = " << sizeofFieldTable << __FILE__ << __LINE__;
-   for(unsigned int ii=0;ii < TEX::ctx()._be.size();ii++)  {
-       ikey = TEX::ctx()._be.at(ii)->_key;
-       const BaseEntry be = TEX::ctx()._be.at(ii)->_value;
-       const RealmBase *rb = be._rlm;
-       FieldTrait::FieldType trait( (FieldTrait::FieldType) ikey);
-      // qDebug() << "\tKey of field =" << ikey;
-       //qDebug() << "\tBaseEntry:" << be._name;
-       QVariant var = trait;
-       //qDebug() << "\t Type = " << var.typeName();
-       //if (rb)  rb is always null
-      // qDebug() << "\tRealm Base ftype:" << rb->_ftype << ", dtype:" << rb->_dtype;
-   }
+    int sizeofFieldTable = TEX::ctx()._be.size();
+    // qDebug() << "SIZE OF FIELD TABLE = " << sizeofFieldTable << __FILE__ << __LINE__ ;
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QList <WindowData> windowDataList = database->getWindows();
@@ -320,7 +355,7 @@ bool Fix8Log::init()
                 }
             }
         }
-        qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
+        //qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
         displayConsoleMessage("Session restored from autosave");
     }
 done:
@@ -388,7 +423,7 @@ void Fix8Log::saveSession()
         WindowData wd = mw->getWindowData();
         bstatus = database->addWindow(wd);
         if (!bstatus) {
-            displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
+            displayConsoleMessage("Error failed saving window to database",GUI::ConsoleMessage::ErrorMsg);
         }
         else {
             QList<WorkSheetData> wsdList = mw->getWorksheetData(wd.id);
@@ -476,6 +511,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     qDebug() << "EDIT SCHEMA SLOT" << __FILE__ << __LINE__;
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
+        schemaEditorDialog->populateMessageList(messageFieldList);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));
@@ -530,7 +566,7 @@ void Fix8Log::schemaDeletedSlot(int schemaID)
 void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 {
     if (returnCode == QDialogButtonBox::Close)
-      schemaEditorDialog->close();
+        schemaEditorDialog->close();
     schemaEditorDialog->saveSettings();
 
 }

@@ -77,7 +77,7 @@ public:
     QStandardItemModel *getModel();
     WorkSheetData getWorksheetData();
     bool loadFileName(QString &fileName,
-                      QList <GUI::Message> &returnMessageList,
+                      QList <GUI::ConsoleMessage> &returnMessageList,
                       quint32 &returnCode);
     void hideColumn(int colNum, bool hideCol);
     void setAlias(QString &);
@@ -86,8 +86,8 @@ public:
 signals:
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
-    void sendMessage(GUI::Message);
-    void sendMessages(QList < GUI::Message>);
+    void sendMessage(GUI::ConsoleMessage);
+    void sendMessages(QList < GUI::ConsoleMessage>);
 public slots:
     void cancelLoadSlot();
     void popupHeaderMenuSlot(int col,const QPoint &);

@@ -54,7 +54,7 @@ Globals* Globals::m_pInstance = NULL;
 QString Globals::timeFormats[] {
     "Day-Mon-YY hh:min:sec", "Day Mon hh:min:sec", "hh:min:sec","hh:min"};
 Globals::TimeFormat Globals::timeFormat = Globals::HHMM;
-QVector <Globals::MessagePair> * Globals::messagePairs=0;
+//QVector <Globals::MessagePair> * Globals::messagePairs=0;
 Globals* Globals::Instance()
 {
     if (!m_pInstance)   {// Only allow one instance of class to be generated.
@@ -70,19 +70,21 @@ Globals* Globals::Instance()
     }
     return m_pInstance;
 }
-Message::Message(QString str, MessageType mt):msg(str),messageType(mt)
+
+ConsoleMessage::ConsoleMessage(QString str, ConsoleMessageType mt):msg(str),messageType(mt)
 {
 
 }
 
-Message::Message(const Message &m): msg(m.msg), messageType(m.messageType)
+ConsoleMessage::ConsoleMessage(const ConsoleMessage &m): msg(m.msg), messageType(m.messageType)
 {
 
 }
-Message::Message()
+ConsoleMessage::ConsoleMessage()
 {
 
 }
+
 QDataStream &operator<<(QDataStream &ds, const fix8logdata &data)
 {
     ds << data.windowID;

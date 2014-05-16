@@ -121,6 +121,7 @@ void MainWindow::setLoadMessage(QString str)
 
 void MainWindow::buildMainWindow()
 {
+    setWindowIcon(QIcon(":/images/svg/logo.svg"));
     setAcceptDrops(true);
     uuid = QUuid::createUuid();
     setAnimated(true);

@@ -205,7 +205,7 @@ QUuid WorkSheet::getID()
     return uuid;
 }
 bool WorkSheet::loadFileName(QString &fileName,
-                             QList <GUI::Message> &msgList,
+                             QList <GUI::ConsoleMessage> &msgList,
                              quint32 &returnCode)
 {
 
@@ -235,6 +235,7 @@ bool WorkSheet::loadFileName(QString &fileName,
     TEX::TargetCompID tcID;
     TEX::SendingTime  sendTime;
     std::string sstr;
+    QString key;
     QString qstr;
     QString seqNumStr;
     QString senderID;
@@ -244,7 +245,7 @@ bool WorkSheet::loadFileName(QString &fileName,
     QList<QStandardItem *> itemList;
     bstatus =  dataFile->open(QIODevice::ReadOnly);
     if (!bstatus) {
-        GUI::Message message(tr("Failed to open file: ") + fileName);
+        GUI::ConsoleMessage message(tr("Failed to open file: ") + fileName);
         msgList.append(message);
         delete dataFile;
         showLoadProcess(false);
@@ -290,13 +291,17 @@ bool WorkSheet::loadFileName(QString &fileName,
             const Presence& pre(msg->get_fp().get_presence());
             MessageFieldList *mlf = new MessageFieldList();
             colPosition = 0;
+            /*
             for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
             {
                 const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
                 name =
                         QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+
+                //key = QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
                 QVariant var = trait;
-                MessageField mf(itr->first,name,var);
+                //MessageField mf(itr->first,name,var);
+                  MessageField mf(itr->first,name,0);
                 mlf->append(mf);
             }
             if (i%100 == 0) { // every 100 iterations allow gui to process events
@@ -381,19 +386,20 @@ bool WorkSheet::loadFileName(QString &fileName,
             messgeTypeItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,messgeTypeItem);
             rowPosition++;
+            */
         }
         catch (f8Exception&  e){
             errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
             qWarning() << "exception, row " << i;
             qWarning() << "Error - " << e.what();
-            msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            msgList.append(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
         i++;
     }
     nMilliseconds = myTimer.elapsed();
     qDebug() << "TIME TO LOAD (milliseconds) " << nMilliseconds;
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
-    msgList.append(GUI::Message(qstr));
+    msgList.append(GUI::ConsoleMessage(qstr));
     showLoadProcess(false);
     returnCode = OK;
     return true;

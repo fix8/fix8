@@ -41,6 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtWidgets>
 #include "schemaitem.h"
 #include "tableschema.h"
+#include "messagefield.h"
 
 class Database;
 class SchemaEditorDialog : public QDialog
@@ -50,6 +51,7 @@ public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
+    void populateMessageList(MessageFieldList *);
     void saveSettings();
     void restoreSettings();
 signals:
@@ -58,6 +60,7 @@ signals:
 public slots:
     void actionButtonSlot(QAbstractButton *button );
     void availableSchemasClickedSlot(QModelIndex);
+    void messageListClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
     void cancelNewSlot();
     void deleteSchemaSlot();
@@ -69,7 +72,6 @@ protected:
 private:
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
     QWidget  * buildSchemaArea();
-    void populateMessageList();
     void setMessage(QString str, bool isError);
     bool validate();
     //SchemaEditorWidget *schemaWidget;
@@ -113,6 +115,7 @@ private:
     QStackedWidget *newSchemaStackArea;
     QStandardItemModel *messageModel;
     QStandardItemModel *schemaModel;
+    QStandardItemModel *availableFieldModel;
     QTextEdit *descriptionE;
     QWidget *newSchemaArea;
     QWidget *schemaArea;
@@ -124,9 +127,9 @@ private:
     TableSchema *defaultTableSchema;
     SchemaItem *currentSchemaItem;
     SchemaItem *defaultSchemaItem ;
-
     Database *database;
     bool globalSchemaOn;
+    MessageFieldList *messageFieldList;
 };
 
 #endif // SCHEMAEDITORDIALOG_H
