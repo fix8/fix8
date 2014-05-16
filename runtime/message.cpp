@@ -180,7 +180,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			s_offset += result;
 			grp->add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
-			if (grp->_fp.is_group(tv, itr)) // nested group
+			if (grp->_fp.is_group(tv, itr) && fast_atoi<unsigned>(val) > 0) // nested group (check if not zero elements)
 				s_offset = grp->decode_group(tv, from, s_offset, ignore);
 		}
 

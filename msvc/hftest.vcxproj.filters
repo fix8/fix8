@@ -6,4 +6,7 @@
   <ItemGroup>
     <ClCompile Include="..\test\hftest.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

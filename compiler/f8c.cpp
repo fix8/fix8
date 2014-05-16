@@ -40,7 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-CFHINPRUVWbcdefhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CFHINPRSUVWbcdefhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
    -F,--xfields            specify additional fields with associated messages (see documentation for details)\n
    -H,--pch <filename>     use specified precompiled header name for Windows (default none)\n
@@ -49,6 +49,7 @@ Usage: f8c [-CFHINPRUVWbcdefhiknoprstvx] \<input xml schema\>\n
    -P,--incpath            prefix system include path with "fix8" in generated compilation units (default yes)\n
    -R,--norealm            do not generate realm constructed field instantiators (default false)\n
    -U,--noconst            Generate non-const Router method declarations (default false, const)")\n
+   -S,--noshared           Treat every group as unique and expose all static traits. Do not share metadata in message classes (default shared)\n
    -W,--nowarn             suppress warning messages (default false)\n
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
@@ -95,10 +96,10 @@ const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
-     incpath(true), nconst_router(false);
+     incpath(true), nconst_router(false), no_shared_groups(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:S");
 extern string spacer, shortName, precompHdr;
 
 //-----------------------------------------------------------------------------------------
@@ -138,7 +139,7 @@ void binary_report();
 string bintoaschex(const string& from);
 uint32_t group_hash(const MessageSpec& p1);
 const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key);
-void generate_group_traits(const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
+void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -172,6 +173,7 @@ int main(int argc, char **argv)
 		{ "classes",		1,	0,	'c' },
 		{ "pch",		      1,	0,	'H' },
 		{ "second",			0,	0,	's' },
+		{ "noshared",		0,	0,	'S' },
 		{ "prefix",			1,	0,	'p' },
 		{ "namespace",		1,	0,	'n' },
 		{ "tabsize",		1,	0,	't' },
@@ -236,6 +238,7 @@ int main(int argc, char **argv)
 		case 'k': keep_failed = true; break;
 		case 'r': retain_precomp = true; break;
 		case 's': second_only = true; break;
+		case 'S': no_shared_groups = true; break;
 		case 't': tabsize = get_value<unsigned>(optarg); break;
 		case 'p': prefix = optarg; break;
 		case 'H': precompHdr = optarg; break;
@@ -511,8 +514,8 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 
 						if (!result.first->second._dvals)
 							result.first->second._dvals = new RealmMap;
-						string lower, upper;
-						bool isRange((*ditr)->GetAttr("range", lower) && (lower == "lower" || upper == "upper"));
+						string rangeend;
+						bool isRange((*ditr)->GetAttr("range", rangeend) && (rangeend == "lower" || rangeend == "upper"));
 						RealmObject *realmval(RealmObject::create(enum_str, ft, isRange));
 						if (isRange)
 							result.first->second._dtype = RealmBase::dt_range;
@@ -748,7 +751,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
          outp << "const FieldTrait *" << prefix << ms._name << "::" << gsitr->second._name << "::_traits("
             << rnme.str() << "_traits);" << endl;
       else
-         generate_group_traits(*tgroup, rnme.str(), prefix + ms._name + "::", outp);
+         generate_group_traits(fspec, *tgroup, rnme.str(), prefix + ms._name + "::", outp);
 
       if (tgroup->_group_refcnt > 1)
       {
@@ -775,29 +778,25 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
       {
          outh << d2spacer << "static const FieldTrait *_traits;" << endl;
          outh << d2spacer << "static const FieldTrait_Hash_Array& _ftha;" << endl;
-         outh << d2spacer << "static const MsgType& _msgtype;" << endl << endl;
+         outh << d2spacer << "static const MsgType& _msgtype;" << endl;
       }
       else
       {
          outh << d2spacer << "static const FieldTrait _traits[];" << endl;
          outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-         outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
+         outh << d2spacer << "static const MsgType _msgtype;" << endl;
       }
+      outh << d2spacer << "static const unsigned _fieldcnt = " << tgroup->_fields.get_presence().size() << ';' << endl << endl;
 		outh << dspacer << "public:" << endl;
       outh << d2spacer << "enum { _fnum = " << gsitr->first << " };" << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
 		outh << d2spacer << "~" << gsitr->second._name << "() = default;" << endl;
 		if (tgroup->_groups.empty())
-			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, "
-				<< tgroup->_fields.get_presence().size()
-				<< ", &_ftha); }" << endl;
+			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, _fieldcnt, &_ftha); }" << endl;
 		else
 		{
 			outh << d2spacer << "MessageBase *create_group() const" << endl << d2spacer << '{' << endl;
-			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, "
-				<< tgroup->_fields.get_presence().size()
-				<< ", &_ftha));" << endl;
-
+			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, _fieldcnt, &_ftha));" << endl;
          outh << d2spacer << spacer << "mb->get_groups().insert({";
          if (tgroup->_groups.size() == 1)
             outh << tgroup->_groups.begin()->first << ", new " << tgroup->_groups.begin()->second._name << " });" << endl;
@@ -813,6 +812,10 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			outh << d2spacer << '}' << endl;
 		}
 		outh << endl << d2spacer << "static const " << msname << "& get_msgtype() { return _msgtype; }" << endl;
+#if defined HAVE_EXTENDED_METADATA
+      outh << d2spacer << "static const FieldTrait *get_traits() { return _traits; };" << endl;
+      outh << d2spacer << "static const unsigned get_fieldcnt() { return _fieldcnt; };" << endl;
+#endif
 
 		// process nested groups
 		if (!tgroup->_groups.empty())
@@ -823,21 +826,22 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_group_traits(const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
+void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
 {
    if (prefix.empty())
       outp << "const FieldTrait " << gname << "_traits[]"
          << " // refs:" << ms._group_refcnt << endl << '{' << endl;
    else
       outp << "const FieldTrait " << prefix << gname << "::_traits[]" << endl << '{' << endl;
+   int felpos(0);
    for (Presence::const_iterator flitr(ms._fields.get_presence().begin());
-      flitr != ms._fields.get_presence().end(); ++flitr)
+      flitr != ms._fields.get_presence().end(); ++flitr, ++felpos)
    {
       bool spaceme(true);
       if (flitr != ms._fields.get_presence().begin())
       {
          outp << ',';
-         if (Presence::distance(ms._fields.get_presence().begin(), flitr) % 4 == 0)
+         if (felpos % 4 == 0)
             outp << endl;
          else
             spaceme = false;
@@ -848,7 +852,19 @@ void generate_group_traits(const MessageSpec& ms, const string& gname, const str
       outp << (spaceme ? spacer : " ");
       outp << '{' << setw(4) << right << flitr->_fnum << ',' << setw(2)
          << right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
-         ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << '}';
+         ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
+#if defined HAVE_EXTENDED_METADATA
+      if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
+      {
+         outp << ", " << endl << spacer << spacer;
+         FieldSpecMap::const_iterator gsitr(fspec.find(flitr->_fnum));
+         outp << gsitr->second._name << "::get_traits(), " << gsitr->second._name << "::get_fieldcnt()";
+         outp << endl << spacer << '}';
+         felpos = -1;
+      }
+      else
+#endif
+         outp << '}';
    }
    outp << endl << "};" << endl;
    if (prefix.empty())
@@ -877,7 +893,7 @@ void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, Comm
          ostringstream gostr;
          gostr << gsitr->second._name << 'V' << vers;
 
-         generate_group_traits(gitr->second, gostr.str(), string(), outp);
+         generate_group_traits(fspec, gitr->second, gostr.str(), string(), outp);
       }
    }
 }
@@ -993,11 +1009,22 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 // =============================== Message class definitions ==============================
 
-	osr_cpp << "// Common group traits" << endl;
-	osr_cpp << "namespace {" << endl;
-	generate_common_group_bodies(fspec, osr_cpp, globmap);
-	osr_cpp << "} // namespace" << endl << endl;
-	osr_cpp << _csMap.find(cs_divider)->second << endl;
+   if (!no_shared_groups)
+   {
+      osr_cpp << "// Common group traits" << endl;
+      osr_cpp << "namespace {" << endl;
+      generate_common_group_bodies(fspec, osr_cpp, globmap);
+      osr_cpp << "} // namespace" << endl << endl;
+   }
+#if defined HAVE_EXTENDED_METADATA
+   else
+   {
+      osr_cpp << "//" << endl;
+      osr_cpp << "// Shared groups disabled (--noshared). Static traits are now exposed." << endl;
+      osr_cpp << "//" << endl;
+   }
+#endif
+   osr_cpp << _csMap.find(cs_divider)->second << endl;
 	osr_cpp << "// Message traits" << endl;
 
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
@@ -1021,14 +1048,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osr_cpp << _csMap.find(cs_divider)->second << endl;
 			osr_cpp << "const FieldTrait " << mitr->second._name << "::_traits[]"
 				<< endl << '{' << endl;
+         int felpos(0);
 			for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
-				flitr != mitr->second._fields.get_presence().end(); ++flitr)
+				flitr != mitr->second._fields.get_presence().end(); ++flitr, ++felpos)
 			{
 				bool spaceme(true);
 				if (flitr != mitr->second._fields.get_presence().begin())
 				{
 					osr_cpp << ',';
-					if (Presence::distance(mitr->second._fields.get_presence().begin(), flitr) % 4 == 0)
+               if (felpos % 4 == 0)
 						osr_cpp << endl;
 					else
 						spaceme = false;
@@ -1039,7 +1067,19 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				osr_cpp << (spaceme ? spacer : " ");
 				osr_cpp << '{' << setw(4) << right << flitr->_fnum << ','
 					<< setw(2) << right << flitr->_ftype << ',' << setw(3) << right
-					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << '}';
+					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
+#if defined HAVE_EXTENDED_METADATA
+            if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
+            {
+               osr_cpp << ", " << endl << spacer << spacer;
+               FieldSpecMap::const_iterator gsitr(fspec.find(flitr->_fnum));
+               osr_cpp << gsitr->second._name << "::get_traits(), " << gsitr->second._name << "::get_fieldcnt()";
+               osr_cpp << endl << spacer << '}';
+               felpos = -1;
+            }
+            else
+#endif
+               osr_cpp << '}';
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const FieldTrait_Hash_Array " << mitr->second._name << "::_ftha(" << mitr->second._name << "::_traits, "
@@ -1048,6 +1088,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_hpp << spacer << "static const FieldTrait _traits[];" << endl;
 			osc_hpp << spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
 			osc_hpp << spacer << "static const MsgType _msgtype;" << endl;
+			osc_hpp << spacer << "static const unsigned _fieldcnt = " << mitr->second._fields.get_presence().size() << ';' << endl;
 		}
 
 		if (isHeader)
@@ -1061,12 +1102,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 		osc_hpp << endl;
 
-		osc_hpp << "public:" << endl;
+      osc_hpp << "public:" << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx(), _msgtype(), _traits, " << mitr->second._fields.get_presence().size()
-				<< ", &_ftha)";
+				<< "(ctx(), _msgtype(), _traits, _fieldcnt, &_ftha)";
 		if (isHeader || isTrailer)
 		{
 			osc_hpp << ',' << endl << spacer << spacer;
@@ -1106,6 +1146,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		}
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << "& get_msgtype() { return _msgtype; }" << endl;
+#if defined HAVE_EXTENDED_METADATA
+      osc_hpp << spacer << "static const FieldTrait *get_traits() { return _traits; };" << endl;
+      osc_hpp << spacer << "static const unsigned get_fieldcnt() { return _fieldcnt; };" << endl;
+#endif
 		if (isHeader)
 			osc_hpp << endl << _csMap.find(cs_header_preamble)->second << endl;
 		else if (isTrailer)
@@ -1160,12 +1204,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << endl << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl << endl
       << "/// Compiler generated metadata object, accessed through this function" << endl
       << "const F8MetaCntx& ctx() // avoid SIOF" << endl << '{' << endl
-      << spacer << "static const BaseMsgEntry nvbme { Type2Type<void *>() };" << endl
       << spacer << "static const " << ctxt._clname << "_BaseMsgEntry "
-         << "bme(msgpairs, " << mspec.size() << ", nvbme);" << endl
-      << spacer << "static const BaseEntry nvbe { Type2Type<void *>() };" << endl
+         << "bme(msgpairs, " << mspec.size() << ");" << endl
       << spacer << "static const " << ctxt._clname << "_BaseEntry "
-         << "be(fldpairs, " << fields_generated << ", nvbe);" << endl
+         << "be(fldpairs, " << fields_generated << ");" << endl
       << spacer << "static const F8MetaCntx _ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\");" << endl
       << spacer << "return _ctx;" << endl << '}' << endl;
 	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
@@ -1314,7 +1356,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			ost_hpp << "// " << fitr->second._comment << endl;
       const auto tyitr(FieldSpec::_typeToCPP.find(fitr->second._ftype));
 		ost_hpp << "using " << fitr->second._name << " = Field<"
-         << (tyitr == FieldSpec::_typeToCPP.end() ? "unknown" : tyitr->second) << ", " << fitr->first << ">;" << endl;
+         << (tyitr == FieldSpec::_typeToCPP.end() ? "unknown" : tyitr->second.first) << ", " << fitr->first << ">;" << endl;
 		if (fitr->second._dvals)
 			process_value_enums(fitr, ost_hpp, ost_cpp);
 		ost_hpp << _csMap.find(cs_divider)->second << endl;
@@ -1328,9 +1370,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		if ((!fitr->second._used && !gen_fields) || !fitr->second._dvals)
 			continue;
+      const auto tyitr(FieldSpec::_typeToCPP.find(fitr->second._ftype));
 		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_realm), "
-			<< "RealmBase::RealmType(" << fitr->second._dtype << "), "
-			<< "FieldTrait::FieldType(" << fitr->second._ftype << "), "
+			<< "RealmBase::" << (fitr->second._dtype == RealmBase::dt_set ? "dt_set" : "dt_range") << ", "
+			<< "FieldTrait::" << tyitr->second.second << ", "
 			<< fitr->second._dvals->size() << ", " << fitr->second._name << "_descriptions }," << endl;
 		fitr->second._doffset = dcnt++;
 	}
@@ -1357,14 +1400,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{
 			ost_cpp << "Type2Types<" << ctxt._fixns << "::" << fitr->second._name << ", ";
-			if (FieldTrait::is_int(fitr->second._ftype))
-				ost_cpp << "int";
-			else if (FieldTrait::is_char(fitr->second._ftype))
-				ost_cpp << "char";
-			else if (FieldTrait::is_float(fitr->second._ftype))
-				ost_cpp << "double";
-			else if (FieldTrait::is_string(fitr->second._ftype))
-				ost_cpp << "f8String";
+         string ttype;
+         if (!FieldTrait::get_type_string(fitr->second._ftype, ttype).empty())
+				ost_cpp << ttype;
 			else
 			{
 				ost_cpp << "unknown";
@@ -1374,15 +1412,16 @@ int process(XmlElement& xf, Ctxt& ctxt)
       }
       else
 			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
-      ost_cpp << ">(), ";
-
+      ost_cpp << ">(), \"" << fitr->second._name << '\"';
 		if (fitr->second._dvals)
-			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
-		else
-			ost_cpp << "nullptr";
-		ost_cpp << ", \"" << fitr->second._name << '\"';
+			ost_cpp << ", &" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
 		if (!fitr->second._comment.empty())
-			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
+      {
+			ost_cpp << ", ";
+         if (!fitr->second._dvals)
+            ost_cpp << "nullptr, ";
+			ost_cpp << endl << spacer << spacer << '"' << fitr->second._comment << '"';
+      }
 		ost_cpp << " } }";
 	}
 	ost_cpp << endl << "}; // " << fields_generated << endl;
@@ -1443,6 +1482,12 @@ unsigned lookup_component(const Components& compon, const f8String& name)
 //-------------------------------------------------------------------------------------------------
 uint32_t group_hash(const MessageSpec& p1)
 {
+   if (no_shared_groups)   // hack so every group hash is unique
+   {
+      static uint32_t result(0);
+      return ++result;
+   }
+
    uint32_t result(0);
 
 	for (Presence::const_iterator flitr(p1._fields.get_presence().begin());

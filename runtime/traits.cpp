@@ -44,7 +44,18 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 ostream& FIX8::operator<<(ostream& os, const FieldTrait& what)
 {
-	return os << "Tag: " << what._fnum << " Type: " << what._ftype << " Flags: " << what._field_traits.get();
+	static const vector<string> bts { "mandatory", "present", "position", "group", "component", "suppress", "automatic" };
+	os << "Tag:" << what._fnum << " Type:" << what._ftype << " (";
+	string strtype;
+	os << FieldTrait::get_type_string(what._ftype, strtype);
+	os << ") Pos:" << what._pos;
+	if (what._component)
+		os << " Component:" << what._component;
+	os << " Flags:";
+	for (unsigned ii(what._field_traits.get()), pos(0); pos < FieldTrait::count; ++pos)
+		if (ii >> pos & 0x1)
+			os << bts[pos] << ' ';
+	return os;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -52,5 +63,12 @@ ostream& FIX8::operator<<(ostream& os, const FieldTraits& what)
 {
 	copy(what.get_presence().begin(), what.get_presence().end(), ostream_iterator<FieldTrait>(os, "\n"));
 	return os;
+}
+
+//-------------------------------------------------------------------------------------------------
+string& FieldTrait::get_type_string(FieldTrait::FieldType ftype, string& to)
+{
+	return to = FieldTrait::is_int(ftype) ? "int" : FieldTrait::is_char(ftype) ? "char"
+		: FieldTrait::is_float(ftype) ? "double" : FieldTrait::is_string(ftype) ? "f8String" : f8String();
 }
 

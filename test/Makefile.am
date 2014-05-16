@@ -59,10 +59,14 @@ XML_FIXT_SCHEMA = $(top_srcdir)/schema/FIXT11.xml
 .NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 
 $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVUp Perf -R -n TEX $(XML_HF_SCHEMA)
+	$(top_srcdir)/compiler/f8c --second --verbose --noconst --prefix Perf --norealm --namespace TEX $(XML_HF_SCHEMA)
 
+LIBMYFIXFLAGS = --verbose --retain
+if F8TESTSTATIC
+LIBMYFIXFLAGS += --noshared
+endif
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)
+	$(top_srcdir)/compiler/f8c $(LIBMYFIXFLAGS) --namespace TEX $(XML_SCHEMA) --fixt $(XML_FIXT_SCHEMA)
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML
 GEN_LIBS = -lfix8 -lpthread

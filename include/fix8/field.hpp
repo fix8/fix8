@@ -69,6 +69,9 @@ struct RealmBase
 	const int _sz;
 	const char * const *_descriptions;
 
+	RealmBase(const void *range, RealmType dtype, FieldTrait::FieldType ftype, int sz, const char * const *descriptions)
+		: _range(range), _dtype(dtype), _ftype(ftype), _sz(sz), _descriptions(descriptions) {}
+
 	/*! Check if this value is a member/in range of the domain set.
 	  \tparam T domain type
 	  \param what the value to check
@@ -100,6 +103,26 @@ struct RealmBase
 			return res != rng + _sz ? res - rng : -1;
 		}
 		return 0;
+	}
+
+	/*! Printer helper
+	  \tparam T target type
+	  \param os output stream
+	  \param idx index of value in range
+	  \return the output stream */
+	template<typename T>
+	std::ostream& _print(std::ostream& os, int idx) const { return os << *((static_cast<const T *>(_range) + idx)); }
+
+	/*! Print the given value by index to the supplied stream
+	  \param os output stream
+	  \param idx index of value in range
+	  \return the output stream */
+	std::ostream& print(std::ostream& os, int idx) const
+	{
+		return FieldTrait::is_int(_ftype) ? _print<int>(os, idx)
+			: FieldTrait::is_char(_ftype) ? _print<char>(os, idx)
+			: FieldTrait::is_float(_ftype) ? _print<double>(os, idx)
+			: FieldTrait::is_string(_ftype) ? _print<f8String>(os, idx) : os;
 	}
 };
 
@@ -195,6 +218,9 @@ public:
 template<typename T, const unsigned short field>
 class Field : public BaseField
 {
+	Field () = delete;
+	Field (const Field& from) = delete;
+	Field (const f8String& from, const RealmBase *rlm=nullptr) = delete;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -778,9 +804,12 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
+	if (*ptr == '!')	// special case initialise to 'now'
+		return Tickval(true).get_ticks();
+
 	Tickval::ticks result(Tickval::noticks);
-   int millisecond(0);
-   tm tms {};
+	int millisecond(0);
+	tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -793,28 +822,31 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 	ptr += parse_decimal(ptr, 2, tms.tm_min);
 	++ptr;
 	ptr += parse_decimal(ptr, 2, tms.tm_sec);
-   switch(len)
-   {
+	switch(len)
+	{
 	case 21: //_with_ms: // 19981231-23:59:59.123
-      parse_decimal(++ptr, 3, millisecond);
-      result = millisecond * Tickval::million; // drop through
-   case 17: //: // 19981231-23:59:59
-      result += time_to_epoch(tms) * Tickval::billion;
-      break;
-   default:
-      break;
-   }
+		parse_decimal(++ptr, 3, millisecond);
+		result = millisecond * Tickval::million; // drop through
+	case 17: //: // 19981231-23:59:59
+		result += time_to_epoch(tms) * Tickval::billion;
+		break;
+	default:
+		break;
+	}
 
-   return result;
+	return result;
 }
 
-/*! Decode a DateTime string into ticks
-  \param ptr input DateTime string
+/*! Decode a Time string into ticks
+  \param ptr input time string
   \param len length of string
   \param timeonly if true, only calculate ticks for today
   \return ticks decoded */
 inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
+	if (*ptr == '!')	// special case initialise to 'now'
+		return Tickval(true).get_ticks();
+
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
    tm tms {};
@@ -1722,16 +1754,6 @@ using PriceOffset = double;
 using Percentage = double;
 
 //-------------------------------------------------------------------------------------------------
-// C++11 will permit proper type aliasing
-// typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
-// typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
-// typedef EnumType<FieldTrait::ft_string> country;
-// typedef EnumType<FieldTrait::ft_string> currency;
-// typedef EnumType<FieldTrait::ft_string> Exchange;
-// typedef EnumType<FieldTrait::ft_string> Language;
-// typedef EnumType<FieldTrait::ft_string> XMLData;
-// typedef EnumType<FieldTrait::ft_data> data;
-
 using MultipleCharValue = f8String;
 using MultipleStringValue = f8String;
 using country = f8String;
@@ -1762,11 +1784,7 @@ class Inst
 		}
 	};
 
-	static BaseField *dummy(const char *from, const RealmBase *db, const int) { return 0; }
-
 public:
-	Inst() : _do(dummy) {}
-
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
    template<typename T>
@@ -1776,18 +1794,12 @@ public:
    Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
 };
 
-template<>
-struct Inst::_gen<void *>
-{
-	static BaseField *_make(const char *from, const RealmBase *db, const int)
-		{ return 0; }
-};
-
 struct BaseEntry
 {
    const Inst _create;
+	const char *_name;
 	const RealmBase *_rlm;
-	const char *_name, *_comment;
+	const char *_comment;
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -121,7 +121,7 @@ using GroupMap = std::map<unsigned, struct MessageSpec>;
 
 //-------------------------------------------------------------------------------------------------
 using BaseTypeMap = std::map<std::string, FieldTrait::FieldType>;
-using TypeToCPP = std::map<FieldTrait::FieldType, std::string>;
+using TypeToCPP = std::map<FieldTrait::FieldType, std::pair<std::string, std::string>>;
 
 /// f8c internal field representation.
 struct FieldSpec

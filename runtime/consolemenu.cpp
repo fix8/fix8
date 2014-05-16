@@ -112,7 +112,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		char opt(0);
 		_os << endl;
 		_os << "--------------------------------------------------" << endl;
-		_os << ' ' << ostr.str() << ": Select field to add" << endl;
+		_os << ' ' << ostr.str() << ": Select field to add (*:mandatory +:present)" << endl;
 		_os << "--------------------------------------------------" << endl;
 
 		int page(0);
@@ -127,13 +127,8 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 				_os << endl;
 			}
 			else
-			{
-				if (msg->get_fp().is_mandatory(itr->_fnum))
-					_os << '*';
-				else
-					_os << ' ';
-				_os << tbe->_name << '(' << itr->_fnum << ')' << endl;
-			}
+				_os << (msg->get_fp().is_mandatory(itr->_fnum) ? '*' : ' ')
+					<< tbe->_name << '(' << itr->_fnum << ')' << endl;
 
 			++nlines;
 
@@ -186,15 +181,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 		for (int nlines(0); pp < rb->_sz; ++pp)
 		{
 			_os << '[' << _opt_keys[nlines] << "]  " << *(rb->_descriptions + pp) << " (";
-			if (FieldTrait::is_int(rb->_ftype))
-				_os << *((static_cast<const int *>(rb->_range) + pp));
-			else if (FieldTrait::is_char(rb->_ftype))
-				_os << *((static_cast<const char *>(rb->_range) + pp));
-			else if (FieldTrait::is_float(rb->_ftype))
-				_os << *((static_cast<const double *>(rb->_range) + pp));
-			else if (FieldTrait::is_string(rb->_ftype))
-				_os << *((static_cast<const f8String *>(rb->_range) + pp));
-
+			rb->print(_os, pp);
 			_os << ')' << endl;
 
 			++nlines;

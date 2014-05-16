@@ -43,6 +43,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+/// Used for static trait interrogation
+#if defined HAVE_EXTENDED_METADATA
+struct TraitHelper
+{
+	const struct FieldTrait *_traits;
+	const unsigned _fieldcnt;
+};
+#endif
+
+//-------------------------------------------------------------------------------------------------
 /// FIX field traits - hold specific traits for each field.
 struct FieldTrait
 {
@@ -99,9 +109,18 @@ struct FieldTrait
 	  \param ftype field type
 	  \param pos field position (in FIX message)
 	  \param compon component idx
-	  \param field_traits bitmap of TraitTypes */
-	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits)
-		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)  {}
+	  \param field_traits bitmap of TraitTypes
+	  \param tgroup ptr ot traits if group */
+	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits
+#if defined HAVE_EXTENDED_METADATA
+		, const FieldTrait *group=nullptr, unsigned fieldcnt=0
+#endif
+		)
+		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)
+#if defined HAVE_EXTENDED_METADATA
+		, _group{group, fieldcnt}
+#endif
+	{}
 
 	/*! Ctor.
 	  \param field field num (tag number) */
@@ -125,6 +144,9 @@ struct FieldTrait
 	FieldType _ftype;
 	mutable unsigned short _pos, _component;
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
+#if defined HAVE_EXTENDED_METADATA
+	const TraitHelper _group {nullptr, 0};
+#endif
 
 	/// Binary comparitor functor.
 	struct Compare
@@ -146,6 +168,12 @@ struct FieldTrait
 		bool operator()(const FieldTrait* p1, const FieldTrait* p2) const
 			{ return p1->_pos < p2->_pos; }
 	};
+
+	/*! Print the FieldType to the supplied string
+	  \param ftype FieldType
+	  \param to target string
+	  \return reference to target string */
+	static F8API std::string& get_type_string(FieldType ftype, std::string& to);
 
 	/*! Inserter friend.
 	    \param os stream to send to
