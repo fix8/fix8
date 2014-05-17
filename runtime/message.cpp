@@ -171,9 +171,11 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 				break;
 			}
 			s_offset += result;
-			grp->add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
+			BaseField *bf(be->_create._do(val, be->_rlm, -1));
+			grp->add_field(tv, itr, ++pos, bf, false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
-			if (grp->_fp.is_group(tv, itr) && fast_atoi<unsigned>(val) > 0) // nested group (check if not zero elements)
+			// nested group (check if not zero elements)
+			if (grp->_fp.is_group(tv, itr) && static_cast<Field<int, 0> *>(bf)->get() > 0)
 				s_offset = grp->decode_group(tv, from, s_offset, ignore);
 		}
 
@@ -444,12 +446,13 @@ void MessageBase::print_group(const unsigned short fnum, ostream& os, int depth)
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
 
-	const string dspacer((depth + 1) * 3, ' ');
+	++depth;
+	const string dspacer(depth * 3, ' ');
 	size_t cnt(1);
 	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr, ++cnt)
 	{
 		os << dspacer << (*itr)->_msgType << " (Repeating group " << cnt << '/' << grpbase->_msgs.size() << ')' << endl;
-		(*itr)->print(os, depth + 1);
+		(*itr)->print(os, depth);
 	}
 }
 

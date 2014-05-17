@@ -209,9 +209,7 @@ Please refer to the following pages for help:
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
-- [Fix8 Market Technologies](http://www.fix8mt.com/) develops and maintains the Fix8 open source Framework, and has developers in Australia, China, Canada,
-USA and the Russian Federation. Fix8MT is responsible for providing and managing professional support and consultancy services, and works closely with the
-Fix8 open source community to grow commercial support services through 3rd party ISVs.
+- [Wiki](https://fix8engine.atlassian.net/wiki)
 
 ## Downloads
 
@@ -245,6 +243,12 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 
 Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
 See [License](http://fix8.org/faq.html#license) for more information.
+
+## Fix8 Market Technologies
+
+[Fix8 Market Technologies](http://www.fix8mt.com/) develops and maintains the Fix8 open source Framework, and has developers in Australia, China, Canada,
+USA and the Russian Federation. Fix8MT is responsible for providing and managing professional support and consultancy services, and works closely with the
+Fix8 open source community to grow commercial support services through 3rd party ISVs.
 
 ## More Information
 
