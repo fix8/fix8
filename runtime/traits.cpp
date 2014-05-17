@@ -46,10 +46,8 @@ ostream& FIX8::operator<<(ostream& os, const FieldTrait& what)
 {
 	static const vector<string> bts { "mandatory", "present", "position", "group", "component", "suppress", "automatic" };
 	os << "Tag:" << what._fnum << " Type:" << what._ftype << " (";
-	if (FieldTrait::is_int(what._ftype)) os << "int";
-	else if (FieldTrait::is_char(what._ftype)) os << "char";
-	else if (FieldTrait::is_string(what._ftype)) os << "string";
-	else if (FieldTrait::is_float(what._ftype)) os << "float";
+	string strtype;
+	os << FieldTrait::get_type_string(what._ftype, strtype);
 	os << ") Pos:" << what._pos;
 	if (what._component)
 		os << " Component:" << what._component;
@@ -65,5 +63,12 @@ ostream& FIX8::operator<<(ostream& os, const FieldTraits& what)
 {
 	copy(what.get_presence().begin(), what.get_presence().end(), ostream_iterator<FieldTrait>(os, "\n"));
 	return os;
+}
+
+//-------------------------------------------------------------------------------------------------
+string& FieldTrait::get_type_string(FieldTrait::FieldType ftype, string& to)
+{
+	return to = FieldTrait::is_int(ftype) ? "int" : FieldTrait::is_char(ftype) ? "char"
+		: FieldTrait::is_float(ftype) ? "double" : FieldTrait::is_string(ftype) ? "f8String" : f8String();
 }
 

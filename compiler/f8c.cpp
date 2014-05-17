@@ -514,8 +514,8 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 
 						if (!result.first->second._dvals)
 							result.first->second._dvals = new RealmMap;
-						string lower, upper;
-						bool isRange((*ditr)->GetAttr("range", lower) && (lower == "lower" || upper == "upper"));
+						string rangeend;
+						bool isRange((*ditr)->GetAttr("range", rangeend) && (rangeend == "lower" || rangeend == "upper"));
 						RealmObject *realmval(RealmObject::create(enum_str, ft, isRange));
 						if (isRange)
 							result.first->second._dtype = RealmBase::dt_range;
@@ -1391,14 +1391,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{
 			ost_cpp << "Type2Types<" << ctxt._fixns << "::" << fitr->second._name << ", ";
-			if (FieldTrait::is_int(fitr->second._ftype))
-				ost_cpp << "int";
-			else if (FieldTrait::is_char(fitr->second._ftype))
-				ost_cpp << "char";
-			else if (FieldTrait::is_float(fitr->second._ftype))
-				ost_cpp << "double";
-			else if (FieldTrait::is_string(fitr->second._ftype))
-				ost_cpp << "f8String";
+         string ttype;
+         if (!FieldTrait::get_type_string(fitr->second._ftype, ttype).empty())
+				ost_cpp << ttype;
 			else
 			{
 				ost_cpp << "unknown";

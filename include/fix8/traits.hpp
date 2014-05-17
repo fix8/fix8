@@ -169,6 +169,12 @@ struct FieldTrait
 			{ return p1->_pos < p2->_pos; }
 	};
 
+	/*! Print the FieldType to the supplied string
+	  \param ftype FieldType
+	  \param to target string
+	  \return reference to target string */
+	static F8API std::string& get_type_string(FieldType ftype, std::string& to);
+
 	/*! Inserter friend.
 	    \param os stream to send to
 	    \param what FieldTrait

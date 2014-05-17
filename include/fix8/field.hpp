@@ -69,6 +69,9 @@ struct RealmBase
 	const int _sz;
 	const char * const *_descriptions;
 
+	RealmBase(const void *range, RealmType dtype, FieldTrait::FieldType ftype, int sz, const char * const *descriptions)
+		: _range(range), _dtype(dtype), _ftype(ftype), _sz(sz), _descriptions(descriptions) {}
+
 	/*! Check if this value is a member/in range of the domain set.
 	  \tparam T domain type
 	  \param what the value to check
@@ -100,6 +103,26 @@ struct RealmBase
 			return res != rng + _sz ? res - rng : -1;
 		}
 		return 0;
+	}
+
+	/*! Printer helper
+	  \tparam T target type
+	  \param os output stream
+	  \param idx index of value in range
+	  \return the output stream */
+	template<typename T>
+	std::ostream& _print(std::ostream& os, int idx) const { return os << *((static_cast<const T *>(_range) + idx)); }
+
+	/*! Print the given value by index to the supplied stream
+	  \param os output stream
+	  \param idx index of value in range
+	  \return the output stream */
+	std::ostream& print(std::ostream& os, int idx) const
+	{
+		return FieldTrait::is_int(_ftype) ? _print<int>(os, idx)
+			: FieldTrait::is_char(_ftype) ? _print<char>(os, idx)
+			: FieldTrait::is_float(_ftype) ? _print<double>(os, idx)
+			: FieldTrait::is_string(_ftype) ? _print<f8String>(os, idx) : os;
 	}
 };
 
@@ -195,6 +218,9 @@ public:
 template<typename T, const unsigned short field>
 class Field : public BaseField
 {
+	Field () = delete;
+	Field (const Field& from) = delete;
+	Field (const f8String& from, const RealmBase *rlm=nullptr) = delete;
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -210,6 +210,7 @@ Please refer to the following pages for help:
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
+- [Wiki](https://fix8engine.atlassian.net/wiki)
 
 Downloads
 =========
@@ -225,8 +226,10 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 
 If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
 register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
-sample configuruation files, config.log, etc. If you have already implemented a fix, and wish to make a pull
-request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
+sample configuruation files, config.log, etc.
+
+If you have already implemented a fix, and wish to make a pull request on Github please create an issue in Jira first.
+This will help us track the problem and ensure that the solution is properly tested.
 
 When considering submitting a problem report, make sure you have identified a potential problem with Fix8 and not a problem with your application.
 These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes, some of which will relate
@@ -245,4 +248,12 @@ More Information
 ================
 
 For more information, see the [Fix8 website.](http://www.fix8.org)
+
+Fix8 Market Technologies
+========================
+
+[Fix8 Market Technologies](http://www.fix8mt.com/) develops and maintains the Fix8 open source Framework, and has developers
+in Australia, China, Canada, USA and the Russian Federation. Fix8MT is responsible for providing and managing professional
+support and consultancy services, and works closely with the Fix8 open source community to grow commercial support
+services through 3rd party ISVs.
 
