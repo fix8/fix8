@@ -127,12 +127,20 @@ public:
 /// Structures for framework generated message creation and static trait interrogation
 class Minst
 {
+	/*! Generate a message instantiator
+	  \tparam T type to instantiate */
    template<typename T>
 	struct _gen
 	{
+		/*! Instantiate a message
+		  \return new message */
 		static Message *_make() { return new T; }
+		/*! Instantiate a message cast to Message
+		  \return new message */
 		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
 #if defined HAVE_EXTENDED_METADATA
+		/*! SIOF static TraitHelper
+		  \return ref to static TraitHelper */
 		static const TraitHelper& _make_traits()
 		{
 			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
@@ -147,6 +155,8 @@ public:
 	const TraitHelper& (&_get_traits)();
 #endif
 
+	/*! Ctor
+	  \tparam T type to instantiate */
    template<typename T>
    Minst(Type2Type<T>) : _do(_gen<T>::_make)
 #if defined HAVE_EXTENDED_METADATA
@@ -154,8 +164,10 @@ public:
 #endif
 	{}
 
-   template<typename T, typename R>
-   Minst(Type2Types<T, R>) : _do(_gen<T>::_make_cast)
+	/*! Ctor with extended traits
+	  \tparam T type to instantiate */
+   template<typename T>
+   Minst(Type2Types<T, bool>) : _do(_gen<T>::_make_cast)
 #if defined HAVE_EXTENDED_METADATA
 		 , _get_traits(_gen<T>::_make_traits)
 #endif
