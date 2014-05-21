@@ -244,7 +244,7 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
                     QStandardItem *item2 = new QStandardItem(qbe2->name);
                     QVariant var2;
                     var2.setValue((void *) qbe2);
-                    item->setData(var2);
+                    item2->setData(var2);
                     item2->setCheckable(true);
                     item->appendRow(item2);
                 }
@@ -283,8 +283,9 @@ void SchemaEditorDialog::availableTreeViewClickedSlot(QModelIndex mi)
         if(parentItem) {
             addItemToSelected(item,item->checkState());
             if (item->checkState() != Qt::Checked)
-            parentItem->setCheckState(Qt::Unchecked);
+                parentItem->setCheckState(Qt::Unchecked);
         }
+        addItemToSelected(item,item->checkState());
     }
     validate();
 }
@@ -303,4 +304,15 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         qWarning() << "Item is null" << __FILE__ << __LINE__;
         return;
     }
+    qDebug() << "ITEM TO ADD:" << availItem->text();
+    QVariant var = availItem->data();
+    QBaseEntry *be = (QBaseEntry *) var.value<void *>();
+    if (!be) {
+        qWarning() << "Base Entry not found for item" << __FILE__ << __LINE__;
+        return;
+    }
+    QStandardItem *selectItem = new QStandardItem(be->name);
+    selectItem->setData(var);
+    selectedModel->appendRow(selectItem);
+    qDebug() << "STill to be worked out on how add items and save them" << __FILE__ <<__LINE__;
 }
