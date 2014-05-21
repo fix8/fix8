@@ -200,6 +200,9 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
 }
 void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
 {
+    disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+
     Qt::SortOrder so = availableTreeView->header()->sortIndicatorOrder();
     availableTreeView->setUpdatesEnabled(false);
     if (availableFieldModel->rowCount() >0)
@@ -214,6 +217,8 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
         availableTreeView->setUpdatesEnabled(true);
+        connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
         return;
     }
     QVariant var = item->data();
@@ -222,6 +227,9 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
     if (!mf) {
         qWarning() << "Error - MessageField = null" << __FILE__ << __LINE__;
         availableTreeView->setUpdatesEnabled(true);
+        connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+
         return;
     }
     int i=0;
@@ -255,14 +263,17 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
     availableFieldModel->sort(0,so);
     availableTreeView->setUpdatesEnabled(true);
     validate();
+    connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+
 
 }
-void SchemaEditorDialog::availableTreeViewClickedSlot(QModelIndex mi)
+void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
 {
     int i;
     int numOfChildren;
     QStandardItem *child=0;
-    QStandardItem *item = availableFieldModel->itemFromIndex(mi);
+
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
         return;
@@ -298,21 +309,41 @@ void SchemaEditorDialog::collapseAllSlot()
 {
     availableTreeView->collapseAll();
 }
+void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)
+{
+    validate();
+}
 void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckState cs)
 {
+    QStandardItem *selectItem ;
     if (!availItem) {
         qWarning() << "Item is null" << __FILE__ << __LINE__;
         return;
     }
-    qDebug() << "ITEM TO ADD:" << availItem->text();
     QVariant var = availItem->data();
     QBaseEntry *be = (QBaseEntry *) var.value<void *>();
     if (!be) {
         qWarning() << "Base Entry not found for item" << __FILE__ << __LINE__;
         return;
     }
-    QStandardItem *selectItem = new QStandardItem(be->name);
-    selectItem->setData(var);
-    selectedModel->appendRow(selectItem);
+    QMap<QBaseEntry *,QStandardItem *>::iterator  iter  = selectedMap.find(be);
+    if (iter == selectedMap.end()) {
+     if (availItem->checkState() == Qt::Checked)    {
+         selectItem = new QStandardItem(be->name);
+         selectItem->setData(var);
+         selectedModel->appendRow(selectItem);
+         selectedMap.insert(be,selectItem);
+        }
+    }
+    else if (availItem->checkState() == Qt::Unchecked) {
+            selectItem = (QStandardItem *) iter.value();
+            if (selectItem) {
+                selectedModel->removeRow(selectItem->row());
+            }
+            selectedMap.remove(be);
+    }
+    else {
+        qDebug() << "\tNothing to do, item in list ?";
+    }
     qDebug() << "STill to be worked out on how add items and save them" << __FILE__ <<__LINE__;
 }

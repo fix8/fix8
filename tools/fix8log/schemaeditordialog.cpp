@@ -178,9 +178,12 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     abox->addWidget(collapsePB,0);
     avbox->addWidget(availableTreeView,1);
     avbox->addWidget(availableButtonArea,0,Qt::AlignRight);
-    connect(availableTreeView,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(availableTreeViewClickedSlot(QModelIndex)));
+    //connect(availableTreeView,SIGNAL(clicked(QModelIndex)),
+    //        this,SLOT(availableTreeViewClickedSlot(QModelIndex)));
+
     availableFieldModel = new QStandardItemModel(availableTreeView);
+    connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
 
     availableFieldModel->setColumnCount(1);
     availableFieldHeaderItem = new QStandardItem("Fields");
@@ -194,6 +197,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectArea->setLayout(selectBox);
 
     selectedListView = new QTreeView(selectArea);
+    connect(selectedListView,SIGNAL(clicked(QModelIndex)),this,SLOT(selectedListClickedSlot(QModelIndex)));
     selectedListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     selectedModel = new QStandardItemModel(selectedListView);
     selectedModel->setColumnCount(1);
@@ -477,6 +481,19 @@ bool SchemaEditorDialog::validate()
             copySchemaPB->setEnabled(false);
         }
     }
+    bool enableClear = false;
+    QItemSelectionModel *selectedSelModel =  selectedListView->selectionModel();
+    if (selectedSelModel) {
+        if (selectedSelModel->hasSelection())
+                enableClear = true;
+    }
+    clearPB->setEnabled(enableClear);
+    enableClear = false;
+    if (selectedModel->rowCount() > 0)
+        enableClear = true;
+    clearAllPB->setEnabled(enableClear);
+
+
     return isValid;
 }
 void SchemaEditorDialog::saveSettings()
