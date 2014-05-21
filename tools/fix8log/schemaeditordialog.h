@@ -61,6 +61,8 @@ public slots:
     void actionButtonSlot(QAbstractButton *button );
     void availableSchemasClickedSlot(QModelIndex);
     void availableTreeViewClickedSlot(QModelIndex);
+    void expandAllSlot();
+    void collapseAllSlot();
     void messageListClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
     void cancelNewSlot();

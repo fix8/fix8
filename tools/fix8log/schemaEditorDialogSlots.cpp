@@ -271,6 +271,13 @@ void SchemaEditorDialog::availableTreeViewClickedSlot(QModelIndex mi)
                 child->setCheckState(item->checkState());
         }
     }
+}
+void SchemaEditorDialog::expandAllSlot()
+{
+    availableTreeView->expandAll();
+}
 
-
+void SchemaEditorDialog::collapseAllSlot()
+{
+    availableTreeView->collapseAll();
 }

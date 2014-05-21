@@ -170,6 +170,9 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     collapsePB = new QPushButton("Collapse",availableButtonArea);
     expandPB->setToolTip("Expand All Tree Items");
     collapsePB->setToolTip("Collapse All Tree Items");
+    connect(expandPB,SIGNAL(clicked()),this,SLOT(expandAllSlot()));
+    connect(collapsePB,SIGNAL(clicked()),this,SLOT(collapseAllSlot()));
+
     abox->addWidget(expandPB,0);
     abox->addWidget(collapsePB,0);
     avbox->addWidget(availableTreeView,1);
