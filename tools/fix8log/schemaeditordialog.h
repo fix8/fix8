@@ -60,7 +60,8 @@ signals:
 public slots:
     void actionButtonSlot(QAbstractButton *button );
     void availableSchemasClickedSlot(QModelIndex);
-    void availableTreeViewClickedSlot(QModelIndex);
+    //void availableTreeViewClickedSlot(QModelIndex);
+    void availableTreeItemChangedSlot(QStandardItem*);
     void expandAllSlot();
     void collapseAllSlot();
     void messageListClickedSlot(QModelIndex);
@@ -70,6 +71,7 @@ public slots:
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
     void saveNewEditSlot();
+    void selectedListClickedSlot(QModelIndex);
 protected:
     void showEvent(QShowEvent *);
 private: 
@@ -102,7 +104,7 @@ private:
     QLabel *availableListL;
     QLabel *selectedListL;
     QLineEdit *newSchemaLine;
-    QMultiMap <QStandardItem *,QStandardItem *> selectedMap; //<avail,selected>
+    QMultiMap <QBaseEntry *,QStandardItem *> selectedMap; //<avail,selected>
     QPushButton *applyB;
     QPushButton *closeB;
     QRadioButton *applyOnlyToCurrentRB;
