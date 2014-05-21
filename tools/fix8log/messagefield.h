@@ -51,6 +51,7 @@ public:
     QBaseEntry(const BaseEntry &);
     QString name;
     FieldTrait *ft;
+    QList<QBaseEntry *> *baseEntryList;
 };
 
 class QBaseEntryList : public  QList <QBaseEntry *>

@@ -130,15 +130,16 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     GUI::ConsoleMessage m(str,mt);
     displayConsoleMessage(m);
 }
-void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryList)
+void print_traits(const TraitHelper& tr, int depth,QList <QBaseEntry *> *qbaseEntryList)
 {
     const string spacer(depth * 3, ' ');
     int ii = 0;
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
     {
+         QBaseEntry *qbe;
         const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
         if(qbaseEntryList) {
-            QBaseEntry *qbe  = new QBaseEntry(*be);
+            qbe  = new QBaseEntry(*be);
             qbaseEntryList->append(qbe);
 
         //cout << spacer << ii << ", Name:" << be->_name << endl; // print field name
@@ -150,7 +151,34 @@ void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryLis
             //cout << "Field Type: " << ft._ftype << endl;
         //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
-            print_traits(itr->_group, depth + 1,0); // descend into repeating groups
+            qbe->baseEntryList = new QList<QBaseEntry *>();
+            print_traits(itr->_group, depth + 1,qbe->baseEntryList); // descend into repeating groups
+        ii++;
+    }
+}
+void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryList)
+{
+    const string spacer(depth * 3, ' ');
+    int ii = 0;
+    for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
+    {
+         QBaseEntry *qbe;
+        const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
+        if(qbaseEntryList) {
+            qbe  = new QBaseEntry(*be);
+            qbaseEntryList->append(qbe);
+
+        //cout << spacer << ii << ", Name:" << be->_name << endl; // print field name
+       // if (be->_rlm)  // will be null if no realm is defined for this field
+            // cout << spacer << "\tRealm:" << (be->_rlm->_dtype == RealmBase::dt_range ? "range" : "set")
+            //    << '(' << be->_rlm->_sz << ") " << endl;
+            qbe->ft = new FieldTrait(*itr);
+        }
+            //cout << "Field Type: " << ft._ftype << endl;
+        //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
+        if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
+            qbe->baseEntryList = new QList<QBaseEntry *>();
+            print_traits(itr->_group, depth + 1,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }

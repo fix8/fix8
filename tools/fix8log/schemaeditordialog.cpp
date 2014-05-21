@@ -148,19 +148,71 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     availableListL->setAlignment(Qt::AlignHCenter);
     selectedListL->setAlignment(Qt::AlignHCenter);
     messageListView = new QListView();
+    messageModel = new QStandardItemModel();
+    messageListView->setModel(messageModel);
+    QStringList messageListHeaders;
+    messageListHeaders << "Name";
+    messageModel->setHorizontalHeaderLabels(messageListHeaders);
+
     connect(messageListView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(messageListClickedSlot(QModelIndex)));
-    availableListView = new QListView();
-    availableFieldModel = new QStandardItemModel(availableListView);
-    availableListView->setModel(availableFieldModel);
-    selectedListView = new QListView();
+    QWidget *availableArea = new QWidget(this);
+    QVBoxLayout *avbox = new QVBoxLayout(availableArea);
+    avbox->setMargin(0);
+    availableArea->setLayout(avbox);
+
+    availableTreeView = new QTreeView(this);
+    QWidget *availableButtonArea = new QWidget(availableArea);
+    QHBoxLayout *abox = new QHBoxLayout(availableButtonArea);
+    availableButtonArea->setLayout(abox);
+    abox->setMargin(0);
+    expandPB = new QPushButton("Expand",availableButtonArea);
+    collapsePB = new QPushButton("Collapse",availableButtonArea);
+    expandPB->setToolTip("Expand All Tree Items");
+    collapsePB->setToolTip("Collapse All Tree Items");
+    abox->addWidget(expandPB,0);
+    abox->addWidget(collapsePB,0);
+    avbox->addWidget(availableTreeView,1);
+    avbox->addWidget(availableButtonArea,0);
+    connect(availableTreeView,SIGNAL(clicked(QModelIndex)),
+            this,SLOT(availableTreeViewClickedSlot(QModelIndex)));
+    availableFieldModel = new QStandardItemModel(availableTreeView);
+    availableFieldModel->setColumnCount(1);
+    availableFieldHeaderItem = new QStandardItem("Fields");
+    availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
+    availableTreeView->setSortingEnabled(true);
+    availableTreeView->setModel(availableFieldModel);
+
+    QWidget *selectArea = new QWidget(this);
+    QVBoxLayout *selectBox = new QVBoxLayout(selectArea);
+    selectBox->setMargin(0);
+    selectArea->setLayout(selectBox);
+
+    selectedListView = new QTreeView(selectArea);
+    selectedModel = new QStandardItemModel(selectedListView);
+    selectedModel->setColumnCount(1);
+    selectedHeaderItem = new QStandardItem("");
+    selectedModel->setHorizontalHeaderItem(0,selectedHeaderItem);
+    selectedListView->setSortingEnabled(true);
+    selectedListView->setModel(selectedModel);
+
+    clearPB = new QPushButton("Clear");
+    clearAllPB  = new QPushButton("Clear All");
+    QWidget *selectButonArea = new QWidget(this);
+    QHBoxLayout *selectBBox = new QHBoxLayout(selectButonArea);
+    selectBBox->setMargin(0);
+    selectButonArea->setLayout(selectBBox);
+    selectBBox->addWidget(clearPB,0);
+    selectBBox->addWidget(clearAllPB,0);
+    selectBox->addWidget(selectedListView,1);
+    selectBox->addWidget(selectButonArea,0);
 
     wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(availableListL,0,1,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(selectedListL,0,2,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(messageListView,1,0);
-    wgrid->addWidget(availableListView,1,1);
-    wgrid->addWidget(selectedListView,1,2);
+    wgrid->addWidget(availableArea,1,1);
+    wgrid->addWidget(selectArea,1,2);
     wgrid->setMargin(3);
     wgrid->setSpacing(4);
     wgrid->setRowStretch(0,0);
@@ -216,6 +268,8 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     connect(availableSchemasListView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(availableSchemasClickedSlot(QModelIndex)));
     schemaModel = new QStandardItemModel(availableSchemasListView);
+    //availableSchemasListView->setSortingEnabled(true);
+
     availableSchemasListView->setModel(schemaModel);
     newSchemaL = new QLabel("Name",newSchemaArea);
     newSchemaLine = new QLineEdit(newSchemaArea);
@@ -307,8 +361,7 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
     messageFieldList = mfl;
     MessageField *mf;
     QStandardItem *item;
-    messageModel = new QStandardItemModel();
-    messageListView->setModel(messageModel);
+
     qDebug() << "FIX POPULATE MESSAE LIST FOR ShemeEditorDialog" << __FILE__ << __LINE__;
     if (!messageFieldList) {
         qWarning() << "Error - messageFieldList is null" << __FILE__ << __LINE__;
@@ -328,7 +381,7 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
         messageModel->setItem(i,item);
         i++;
     }
-
+    messageModel->sort(0);
 }
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
 {

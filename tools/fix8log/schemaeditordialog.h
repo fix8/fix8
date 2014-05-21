@@ -60,6 +60,7 @@ signals:
 public slots:
     void actionButtonSlot(QAbstractButton *button );
     void availableSchemasClickedSlot(QModelIndex);
+    void availableTreeViewClickedSlot(QModelIndex);
     void messageListClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
     void cancelNewSlot();
@@ -90,8 +91,8 @@ private:
     QLineEdit  *windowV;
     QListView *availableSchemasListView;
     QListView *messageListView;
-    QListView *availableListView;
-    QListView *selectedListView;
+    QTreeView *availableTreeView;
+    QTreeView *selectedListView;
     QLabel *availableSchemasL;
     QLabel *messageListL;
     QLabel *newSchemaL;
@@ -109,13 +110,22 @@ private:
     QPushButton *deleteSchemaPB;
     QPushButton *cancelEditPB;
     QPushButton *saveEditPB;
+    QPushButton *clearPB;
+    QPushButton *clearAllPB;
+    QPushButton *expandPB;
+    QPushButton *collapsePB;
     QSplitter   *splitter;
     QScrollArea *schemaScrollArea;
     QStackedWidget *buttonStackArea;
     QStackedWidget *newSchemaStackArea;
+    QStandardItem  *availableFieldHeaderItem;
+    QStandardItem  *selectedHeaderItem;
     QStandardItemModel *messageModel;
     QStandardItemModel *schemaModel;
     QStandardItemModel *availableFieldModel;
+    QStandardItemModel *selectedModel;
+
+
     QTextEdit *descriptionE;
     QWidget *newSchemaArea;
     QWidget *schemaArea;

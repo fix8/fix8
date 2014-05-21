@@ -186,6 +186,8 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
         qWarning() << "Curent SchemaItem is null" << __FILE__ << __LINE__;
         return;
     }
+    selectedHeaderItem->setText(currentSchemaItem->text());
+
     TableSchema *currentTableSchema = currentSchemaItem->tableSchema;
     if (!currentTableSchema) {
         qWarning() << "No Current Table Schema Found" << __FILE__ << __LINE__;
@@ -198,30 +200,77 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
 }
 void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
 {
-    availableFieldModel->clear();
+    Qt::SortOrder so = availableTreeView->header()->sortIndicatorOrder();
+    availableTreeView->setUpdatesEnabled(false);
+    if (availableFieldModel->rowCount() >0)
+        availableFieldModel->removeRows(0,availableFieldModel->rowCount() -1);
+   //vailableFieldHeaderItem = new QStandardItem("Fields");
+
+   //vailableFieldModel->setColumnCount(1);
+   // availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
+
     qDebug() << "MEssage Item Clicked " << __FILE__ << __LINE__;
     QStandardItem *item = messageModel->itemFromIndex(mi);
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
+        availableTreeView->setUpdatesEnabled(true);
         return;
     }
     QVariant var = item->data();
     MessageField *mf = (MessageField *) var.value<void *>();
+
     if (!mf) {
         qWarning() << "Error - MessageField = null" << __FILE__ << __LINE__;
+        availableTreeView->setUpdatesEnabled(true);
         return;
     }
     int i=0;
     if (mf->qbel) {
+        availableFieldHeaderItem->setText(item->text());
         availableFieldModel->setRowCount(mf->qbel->count());
-        qDebug() << "Numver of field items = " << mf->qbel->count();
         QListIterator <QBaseEntry *> iter(*(mf->qbel));
         while(iter.hasNext()) {
             QBaseEntry *qbe = iter.next();
             QStandardItem *item = new QStandardItem(qbe->name);
             item->setCheckable(true);
             availableFieldModel->setItem(i,item);
+            if (qbe->baseEntryList) {
+                QListIterator <QBaseEntry *> iter2(*qbe->baseEntryList);
+                while(iter2.hasNext()) {
+                    QBaseEntry *qbe2 = iter2.next();
+                    QStandardItem *item2 = new QStandardItem(qbe2->name);
+                    item2->setCheckable(true);
+                    item->appendRow(item2);
+                }
+            }
             i++;
         }
     }
+
+    availableFieldModel->sort(0,so);
+    availableTreeView->setUpdatesEnabled(true);
+}
+void SchemaEditorDialog::availableTreeViewClickedSlot(QModelIndex mi)
+{
+    int i;
+    int numOfChildren;
+    QStandardItem *child;
+    qDebug() << "ITEM CLICKED IN AVAILABLE" << __FILE__ << __LINE__;
+    QStandardItem *item = availableFieldModel->itemFromIndex(mi);
+    if (!item) {
+        qWarning() << "Item is null " << __FILE__ << __LINE__;
+        return;
+    }
+    qDebug() << "ITEM IS CHECKED " << item->checkState() << __FILE__ << __LINE__;
+    qDebug() << "Item has chidren:" << item->hasChildren();
+    if (item->hasChildren()) {
+        numOfChildren = item->rowCount();
+        for(i=0;i<numOfChildren;i++) {
+            child = item->child(i,0);
+            if (child)
+                child->setCheckState(item->checkState());
+        }
+    }
+
+
 }

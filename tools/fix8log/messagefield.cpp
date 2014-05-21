@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0)
 {
     name = QString::fromLatin1(be._name);
+    baseEntryList = 0;
 }
 
 
