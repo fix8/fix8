@@ -162,6 +162,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     availableArea->setLayout(avbox);
 
     availableTreeView = new QTreeView(this);
+    availableTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QWidget *availableButtonArea = new QWidget(availableArea);
     QHBoxLayout *abox = new QHBoxLayout(availableButtonArea);
     availableButtonArea->setLayout(abox);
@@ -176,10 +177,11 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     abox->addWidget(expandPB,0);
     abox->addWidget(collapsePB,0);
     avbox->addWidget(availableTreeView,1);
-    avbox->addWidget(availableButtonArea,0);
+    avbox->addWidget(availableButtonArea,0,Qt::AlignRight);
     connect(availableTreeView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(availableTreeViewClickedSlot(QModelIndex)));
     availableFieldModel = new QStandardItemModel(availableTreeView);
+
     availableFieldModel->setColumnCount(1);
     availableFieldHeaderItem = new QStandardItem("Fields");
     availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
@@ -192,6 +194,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectArea->setLayout(selectBox);
 
     selectedListView = new QTreeView(selectArea);
+    selectedListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     selectedModel = new QStandardItemModel(selectedListView);
     selectedModel->setColumnCount(1);
     selectedHeaderItem = new QStandardItem("");
@@ -208,7 +211,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectBBox->addWidget(clearPB,0);
     selectBBox->addWidget(clearAllPB,0);
     selectBox->addWidget(selectedListView,1);
-    selectBox->addWidget(selectButonArea,0);
+    selectBox->addWidget(selectButonArea,0,Qt::AlignRight);
 
     wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(availableListL,0,1,Qt::AlignHCenter|Qt::AlignBottom);
@@ -431,6 +434,8 @@ void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
 bool SchemaEditorDialog::validate()
 {
     bool isValid = false;
+   // QItemSelectionModel *availSelModel =  availableTreeView->selectionModel();
+
     if (viewMode == NewMode || viewMode == EditMode) {
         if (newSchemaLine->text().length() > 1)
             isValid = true;
@@ -439,8 +444,20 @@ bool SchemaEditorDialog::validate()
         editSchemaPB->setEnabled(false);
         deleteSchemaPB->setEnabled(false);
         copySchemaPB->setEnabled(false);
+        applyB->setEnabled(false);
+        expandPB->setEnabled(false);
+        collapsePB->setEnabled(false);
     }
     else {
+        applyB->setEnabled(true);
+        if (availableFieldModel->rowCount() > 0) {
+            expandPB->setEnabled(true);
+            collapsePB->setEnabled(true);
+        }
+        else {
+            expandPB->setEnabled(false);
+            collapsePB->setEnabled(false);
+        }
         newSchemaPB->setEnabled(true);
         saveEditPB->setEnabled(false);
         if (currentSchemaItem) {

@@ -232,6 +232,9 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
         while(iter.hasNext()) {
             QBaseEntry *qbe = iter.next();
             QStandardItem *item = new QStandardItem(qbe->name);
+            QVariant var;
+            var.setValue((void *) qbe);
+            item->setData(var);
             item->setCheckable(true);
             availableFieldModel->setItem(i,item);
             if (qbe->baseEntryList) {
@@ -239,6 +242,9 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
                 while(iter2.hasNext()) {
                     QBaseEntry *qbe2 = iter2.next();
                     QStandardItem *item2 = new QStandardItem(qbe2->name);
+                    QVariant var2;
+                    var2.setValue((void *) qbe2);
+                    item->setData(var2);
                     item2->setCheckable(true);
                     item->appendRow(item2);
                 }
@@ -246,31 +252,41 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
             i++;
         }
     }
-
     availableFieldModel->sort(0,so);
     availableTreeView->setUpdatesEnabled(true);
+    validate();
+
 }
 void SchemaEditorDialog::availableTreeViewClickedSlot(QModelIndex mi)
 {
     int i;
     int numOfChildren;
-    QStandardItem *child;
-    qDebug() << "ITEM CLICKED IN AVAILABLE" << __FILE__ << __LINE__;
+    QStandardItem *child=0;
     QStandardItem *item = availableFieldModel->itemFromIndex(mi);
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
         return;
     }
-    qDebug() << "ITEM IS CHECKED " << item->checkState() << __FILE__ << __LINE__;
-    qDebug() << "Item has chidren:" << item->hasChildren();
+
     if (item->hasChildren()) {
         numOfChildren = item->rowCount();
         for(i=0;i<numOfChildren;i++) {
             child = item->child(i,0);
-            if (child)
+            if (child) {
                 child->setCheckState(item->checkState());
+                addItemToSelected(child,item->checkState());
+            }
         }
     }
+    else {
+        QStandardItem *parentItem = item->parent();
+        if(parentItem) {
+            addItemToSelected(item,item->checkState());
+            if (item->checkState() != Qt::Checked)
+            parentItem->setCheckState(Qt::Unchecked);
+        }
+    }
+    validate();
 }
 void SchemaEditorDialog::expandAllSlot()
 {
@@ -280,4 +296,11 @@ void SchemaEditorDialog::expandAllSlot()
 void SchemaEditorDialog::collapseAllSlot()
 {
     availableTreeView->collapseAll();
+}
+void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckState cs)
+{
+    if (!availItem) {
+        qWarning() << "Item is null" << __FILE__ << __LINE__;
+        return;
+    }
 }

@@ -72,8 +72,9 @@ public slots:
     void saveNewEditSlot();
 protected:
     void showEvent(QShowEvent *);
-private:
+private: 
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
+    void addItemToSelected(QStandardItem *,Qt::CheckState);
     QWidget  * buildSchemaArea();
     void setMessage(QString str, bool isError);
     bool validate();
@@ -101,6 +102,7 @@ private:
     QLabel *availableListL;
     QLabel *selectedListL;
     QLineEdit *newSchemaLine;
+    QMultiMap <QStandardItem *,QStandardItem *> selectedMap; //<avail,selected>
     QPushButton *applyB;
     QPushButton *closeB;
     QRadioButton *applyOnlyToCurrentRB;
