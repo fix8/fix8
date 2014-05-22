@@ -148,7 +148,15 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     messageListL->setAlignment(Qt::AlignHCenter);
     availableListL->setAlignment(Qt::AlignHCenter);
     selectedListL->setAlignment(Qt::AlignHCenter);
+    QWidget *messageArea = new QWidget(this);
+    QVBoxLayout *mbox = new QVBoxLayout(messageArea);
+    messageArea->setLayout(mbox);
+    mbox->setMargin(0);
     messageListView = new QListView();
+    messageSpacerItem = new QSpacerItem(22,32);
+    mbox->addWidget(messageListView,1);
+    mbox->addSpacerItem(messageSpacerItem);
+
     messageModel = new QStandardItemModel();
     messageListView->setModel(messageModel);
     QStringList messageListHeaders;
@@ -171,6 +179,12 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     expandBG = new QButtonGroup(this);
     expandBG->setExclusive(false);
     expandPB = new QPushButton("Expand",availableButtonArea);
+    QRect rect;
+    rect.setX(0);
+    rect.setY(0);
+    rect.setWidth(10);
+    rect.setHeight(expandPB->height());
+    messageSpacerItem->setGeometry(rect);
     collapsePB = new QPushButton("Collapse",availableButtonArea);
     expandPB->setCheckable(true);
     collapsePB->setCheckable(true);
@@ -185,7 +199,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     abox->addWidget(expandPB,0);
     abox->addWidget(collapsePB,0);
     avbox->addWidget(availableTreeView,1);
-    avbox->addWidget(availableButtonArea,0,Qt::AlignRight);
+    avbox->addWidget(availableButtonArea,0,Qt::AlignLeft);
     //connect(availableTreeView,SIGNAL(clicked(QModelIndex)),
     //        this,SLOT(availableTreeViewClickedSlot(QModelIndex)));
 
@@ -214,22 +228,27 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectedListView->setSortingEnabled(true);
     selectedListView->setModel(selectedModel);
 
-    clearPB = new QPushButton("Clear");
+    clearPB = new QPushButton("Clear",this);
     connect(clearPB,SIGNAL(clicked()),this,SLOT(clearSelectedSlot()));
-    clearAllPB  = new QPushButton("Clear All");
+    clearAllPB  = new QPushButton("Clear All",this);
+
+    defaultPB = new QPushButton("Default",this);
+    defaultPB->setToolTip("Add Default Fields");
     QWidget *selectButonArea = new QWidget(this);
     QHBoxLayout *selectBBox = new QHBoxLayout(selectButonArea);
     selectBBox->setMargin(0);
     selectButonArea->setLayout(selectBBox);
-    selectBBox->addWidget(clearPB,0);
-    selectBBox->addWidget(clearAllPB,0);
+    selectBBox->addWidget(clearPB,0,Qt::AlignLeft);
+    selectBBox->addWidget(clearAllPB,0,Qt::AlignLeft);
+    selectBBox->addStretch(1);
+    selectBBox->addWidget(defaultPB,0);
     selectBox->addWidget(selectedListView,1);
-    selectBox->addWidget(selectButonArea,0,Qt::AlignRight);
+    selectBox->addWidget(selectButonArea,0);
 
     wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(availableListL,0,1,Qt::AlignHCenter|Qt::AlignBottom);
     wgrid->addWidget(selectedListL,0,2,Qt::AlignHCenter|Qt::AlignBottom);
-    wgrid->addWidget(messageListView,1,0);
+    wgrid->addWidget(messageArea,1,0);
     wgrid->addWidget(availableArea,1,1);
     wgrid->addWidget(selectArea,1,2);
     wgrid->setMargin(3);

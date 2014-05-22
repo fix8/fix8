@@ -77,7 +77,7 @@ RESOURCES += \
     resources.qrc
 
 
-LIBS += -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
+LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
 
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ./f8
 DEPENDPATH += /usr/local/include

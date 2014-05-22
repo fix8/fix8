@@ -113,21 +113,23 @@ private:
     QMultiMap <QString ,QStandardItem *> availableMap; //<fieldName,selected>
     QPushButton *applyB;
     QPushButton *closeB;
-    QRadioButton *applyOnlyToCurrentRB;
-    QRadioButton *applyToWindowRB;
-    QRadioButton *applyToAllRB;
     QPushButton *newSchemaPB;
     QPushButton *copySchemaPB;
     QPushButton *editSchemaPB;
     QPushButton *deleteSchemaPB;
+    QPushButton  *defaultPB;
     QPushButton *cancelEditPB;
     QPushButton *saveEditPB;
     QPushButton *clearPB;
     QPushButton *clearAllPB;
     QPushButton *expandPB;
     QPushButton *collapsePB;
+    QRadioButton *applyOnlyToCurrentRB;
+    QRadioButton *applyToWindowRB;
+    QRadioButton *applyToAllRB;
     QSplitter   *splitter;
     QScrollArea *schemaScrollArea;
+    QSpacerItem *messageSpacerItem;
     QStackedWidget *buttonStackArea;
     QStackedWidget *newSchemaStackArea;
     QStandardItem  *availableFieldHeaderItem;
