@@ -160,6 +160,8 @@ void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryLis
 {
     const string spacer(depth * 3, ' ');
     int ii = 0;
+
+
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
     {
          QBaseEntry *qbe;
@@ -311,6 +313,13 @@ bool Fix8Log::init()
     const BaseEntry *tbe;
     messageFieldList = new MessageFieldList();
     MessageField *messageField;
+    fieldTraitV.resize( TEX::ctx()._be.size());
+    /* dnb
+    for(int i=0;i<fieldTraitV.size();i++) {
+        FieldTrait *ft = TEX::ctx()._be.at(i);
+    }
+    */
+    qDebug() << "FieldTrait Size = " << fieldTraitV.size() << __FILE__ << __LINE__;
     for(int ii=0;ii < messageCount; ii++)
     {
         const char *kk = TEX::ctx()._bme.at(ii)->_key;
@@ -319,9 +328,7 @@ bool Fix8Log::init()
         QBaseEntryList *qbaseEntryList = new QBaseEntryList();
 
         print_traits(tr, 0,qbaseEntryList); // print message traits
-        qDebug() << "Num of Entries in QBaseEntryList = " << qbaseEntryList->count();
         value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
-        qDebug() << "Name:" << value;
         key =
                 QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
         //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));

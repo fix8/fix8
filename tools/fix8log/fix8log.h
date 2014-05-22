@@ -97,7 +97,7 @@ protected:
     TableSchema *worldTableSchema;
     bool globalSchemaOn;
     MessageFieldList *messageFieldList;
-
+    FieldTraitVector fieldTraitV;
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };

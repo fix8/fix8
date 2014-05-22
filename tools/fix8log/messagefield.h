@@ -40,10 +40,20 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QPair>
 #include <QVariant>
 #include <QList>
+#include <QVector>
 #include <fix8/f8includes.hpp>
 #include <f8types.hpp>
 #include <Myfix_types.hpp>
 using namespace FIX8;
+
+class FieldTraitVector : public QVector <FieldTrait>
+{
+  public:
+    FieldTraitVector() : QVector <FieldTrait>()
+    {
+
+    }
+};
 
 class QBaseEntry
 {
@@ -53,7 +63,6 @@ public:
     FieldTrait *ft;
     QList<QBaseEntry *> *baseEntryList;
 };
-
 class QBaseEntryList : public  QList <QBaseEntry *>
 {
 public:
