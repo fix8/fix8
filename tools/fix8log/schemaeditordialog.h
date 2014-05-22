@@ -50,6 +50,7 @@ class SchemaEditorDialog : public QDialog
 public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
+    void setFieldMaps(QMap<QString, FieldTrait *>  &fieldMap,QMultiMap <QString,FieldTrait *> &fieldsInUseMap);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void populateMessageList(MessageFieldList *);
     void saveSettings();
@@ -155,6 +156,8 @@ private:
     bool globalSchemaOn;
     MessageFieldList *messageFieldList;
     ExpandMode expandMode;
+    QMap<QString, FieldTrait *> *fieldMap;
+    QMultiMap <QString,FieldTrait *> *fieldsInUseMap;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

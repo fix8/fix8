@@ -393,6 +393,11 @@ void SchemaEditorDialog::showEvent(QShowEvent *se)
     validate();
     QDialog::showEvent(se);
 }
+void SchemaEditorDialog::setFieldMaps(QMap<QString, FieldTrait *>  &FieldMap,QMultiMap <QString,FieldTrait *> &FieldsInUseMap)
+{
+    fieldMap = &FieldMap;
+    fieldsInUseMap = &FieldsInUseMap;
+}
 
 void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
 {

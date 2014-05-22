@@ -130,9 +130,8 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     GUI::ConsoleMessage m(str,mt);
     displayConsoleMessage(m);
 }
-void print_traits(const TraitHelper& tr, int depth,QList <QBaseEntry *> *qbaseEntryList)
+void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,QList <QBaseEntry *> *qbaseEntryList)
 {
-    const string spacer(depth * 3, ' ');
     int ii = 0;
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
     {
@@ -141,24 +140,21 @@ void print_traits(const TraitHelper& tr, int depth,QList <QBaseEntry *> *qbaseEn
         if(qbaseEntryList) {
             qbe  = new QBaseEntry(*be);
             qbaseEntryList->append(qbe);
-
-        //cout << spacer << ii << ", Name:" << be->_name << endl; // print field name
-       // if (be->_rlm)  // will be null if no realm is defined for this field
-            // cout << spacer << "\tRealm:" << (be->_rlm->_dtype == RealmBase::dt_range ? "range" : "set")
-            //    << '(' << be->_rlm->_sz << ") " << endl;
             qbe->ft = new FieldTrait(*itr);
+            if (!fieldMap.contains(qbe->name)) {
+                fieldMap.insert(qbe->name,qbe->ft);
+            }
         }
             //cout << "Field Type: " << ft._ftype << endl;
         //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-            print_traits(itr->_group, depth + 1,qbe->baseEntryList); // descend into repeating groups
+            print_traits(itr->_group,fieldMap,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }
-void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryList)
+void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,QBaseEntryList *qbaseEntryList)
 {
-    const string spacer(depth * 3, ' ');
     int ii = 0;
 
 
@@ -169,18 +165,14 @@ void print_traits(const TraitHelper& tr, int depth,QBaseEntryList *qbaseEntryLis
         if(qbaseEntryList) {
             qbe  = new QBaseEntry(*be);
             qbaseEntryList->append(qbe);
-
-        //cout << spacer << ii << ", Name:" << be->_name << endl; // print field name
-       // if (be->_rlm)  // will be null if no realm is defined for this field
-            // cout << spacer << "\tRealm:" << (be->_rlm->_dtype == RealmBase::dt_range ? "range" : "set")
-            //    << '(' << be->_rlm->_sz << ") " << endl;
             qbe->ft = new FieldTrait(*itr);
-        }
-            //cout << "Field Type: " << ft._ftype << endl;
-        //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
+            if (!fieldMap.contains(qbe->name)) {
+                fieldMap.insert(qbe->name,qbe->ft);
+            }
+         }
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-            print_traits(itr->_group, depth + 1,qbe->baseEntryList); // descend into repeating groups
+            print_traits(itr->_group,fieldMap,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }
@@ -309,17 +301,16 @@ bool Fix8Log::init()
     //Globals::messagePairs = new QVector<Globals::MessagePair>();
     cout.flush();
     int messageCount = TEX::ctx()._bme.size();
-    qDebug() << "SIZE OF MESSAGE TABLE = " << messageCount ;
+   // qDebug() << "SIZE OF MESSAGE TABLE = " << messageCount ;
     const BaseEntry *tbe;
     messageFieldList = new MessageFieldList();
     MessageField *messageField;
     fieldTraitV.resize( TEX::ctx()._be.size());
-    /* dnb
-    for(int i=0;i<fieldTraitV.size();i++) {
-        FieldTrait *ft = TEX::ctx()._be.at(i);
-    }
-    */
-    qDebug() << "FieldTrait Size = " << fieldTraitV.size() << __FILE__ << __LINE__;
+    ///dnb
+    QString fieldName;
+
+
+   // qDebug() << "FieldTrait Size = " << fieldTraitV.size() << __FILE__ << __LINE__;
     for(int ii=0;ii < messageCount; ii++)
     {
         const char *kk = TEX::ctx()._bme.at(ii)->_key;
@@ -327,7 +318,7 @@ bool Fix8Log::init()
         //cout << ">>>>> " << TEX::ctx()._bme.at(ii)->_value._name << endl;
         QBaseEntryList *qbaseEntryList = new QBaseEntryList();
 
-        print_traits(tr, 0,qbaseEntryList); // print message traits
+        print_traits(tr,fieldMap,qbaseEntryList); // print message traits
         value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
         key =
                 QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
@@ -336,8 +327,9 @@ bool Fix8Log::init()
         messageFieldList->append(messageField);
 
     }
+
     int sizeofFieldTable = TEX::ctx()._be.size();
-    // qDebug() << "SIZE OF FIELD TABLE = " << sizeofFieldTable << __FILE__ << __LINE__ ;
+
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QList <WindowData> windowDataList = database->getWindows();
@@ -547,6 +539,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->populateMessageList(messageFieldList);
+        schemaEditorDialog->setFieldMaps(fieldMap,fieldsInUseMap);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));

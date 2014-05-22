@@ -98,6 +98,8 @@ protected:
     bool globalSchemaOn;
     MessageFieldList *messageFieldList;
     FieldTraitVector fieldTraitV;
+    QMap<QString, FieldTrait *> fieldMap;
+    QMultiMap <QString,FieldTrait *> fieldsInUseMap;
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };

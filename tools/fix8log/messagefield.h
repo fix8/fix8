@@ -46,6 +46,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Myfix_types.hpp>
 using namespace FIX8;
 
+class QFieldTrait {
+public:
+    QFieldTrait() {};
+    QString name;
+    FieldTrait::FieldType ft;
+    QString desciption;
+    QVariant::Type type;
+};
+
 class FieldTraitVector : public QVector <FieldTrait>
 {
   public:
