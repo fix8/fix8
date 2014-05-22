@@ -215,6 +215,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectedListView->setModel(selectedModel);
 
     clearPB = new QPushButton("Clear");
+    connect(clearPB,SIGNAL(clicked()),this,SLOT(clearSelectedSlot()));
     clearAllPB  = new QPushButton("Clear All");
     QWidget *selectButonArea = new QWidget(this);
     QHBoxLayout *selectBBox = new QHBoxLayout(selectButonArea);
@@ -395,7 +396,6 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
         var.setValue((void *) mf);
         item = new QStandardItem(mf->name);
         item->setData(var);
-        qDebug() << i << "Create Item name = " << item->text();
         messageModel->setItem(i,item);
         i++;
     }

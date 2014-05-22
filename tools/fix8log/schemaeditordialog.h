@@ -63,6 +63,7 @@ public slots:
     //void availableTreeViewClickedSlot(QModelIndex);
     void availableTreeItemChangedSlot(QStandardItem*);
     void expandAllSlot(bool);
+    void clearSelectedSlot();
     void collapseAllSlot(bool);
     void messageListClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
@@ -108,7 +109,8 @@ private:
     QLabel *availableListL;
     QLabel *selectedListL;
     QLineEdit *newSchemaLine;
-    QMultiMap <QBaseEntry *,QStandardItem *> selectedMap; //<avail,selected>
+    QMultiMap <QString ,QStandardItem *> selectedMap; //<fieldName,selected>
+    QMultiMap <QString ,QStandardItem *> availableMap; //<fieldName,selected>
     QPushButton *applyB;
     QPushButton *closeB;
     QRadioButton *applyOnlyToCurrentRB;

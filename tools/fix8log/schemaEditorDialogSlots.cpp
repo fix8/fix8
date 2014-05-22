@@ -201,7 +201,7 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
 void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
 {
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
 
     Qt::SortOrder so = availableTreeView->header()->sortIndicatorOrder();
     availableTreeView->setUpdatesEnabled(false);
@@ -232,33 +232,52 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
         availableFieldHeaderItem->setText(item->text());
         availableFieldModel->setRowCount(mf->qbel->count());
         QListIterator <QBaseEntry *> iter(*(mf->qbel));
+        availableMap.clear();
         while(iter.hasNext()) {
             QBaseEntry *qbe = iter.next();
             QStandardItem *item = new QStandardItem(qbe->name);
+            availableMap.insert(qbe->name,item);
             QVariant var;
             var.setValue((void *) qbe);
             item->setData(var);
             item->setCheckable(true);
+            QMap<QString,QStandardItem *>::iterator  siter  = selectedMap.find(qbe->name);
+            if (siter != selectedMap.end()) {
+                item->setCheckState(Qt::Checked);
+            }
+            // redo this code make it recursive
             availableFieldModel->setItem(i,item);
             if (qbe->baseEntryList) {
                 QListIterator <QBaseEntry *> iter2(*qbe->baseEntryList);
                 while(iter2.hasNext()) {
                     QBaseEntry *qbe2 = iter2.next();
                     QStandardItem *item2 = new QStandardItem(qbe2->name);
+                    availableMap.insert(qbe2->name,item2);
+
                     QVariant var2;
                     var2.setValue((void *) qbe2);
                     item2->setData(var2);
                     item2->setCheckable(true);
+                    siter = selectedMap.find(qbe2->name);
+                    if (siter != selectedMap.end()) {
+                        item2->setCheckState(Qt::Checked);
+                    }
                     item->appendRow(item2);
                     if (qbe2->baseEntryList) {
                         QListIterator <QBaseEntry *> iter3(*qbe2->baseEntryList);
                         while(iter3.hasNext()) {
                             QBaseEntry *qbe3 = iter3.next();
                             QStandardItem *item3 = new QStandardItem(qbe3->name);
+                            availableMap.insert(qbe3->name,item3);
+
                             QVariant var3;
                             var3.setValue((void *) qbe3);
                             item3->setData(var2);
                             item3->setCheckable(true);
+                            siter = selectedMap.find(qbe3->name);
+                            if (siter != selectedMap.end()) {
+                                item3->setCheckState(Qt::Checked);
+                            }
                             item2->appendRow(item3);
                         }
                     }
@@ -284,7 +303,7 @@ void SchemaEditorDialog::setCheckState(QStandardItem *item,Qt::CheckState cs)
         return;
     }
     if (!item->hasChildren()) {
-            addItemToSelected(item,cs);
+        addItemToSelected(item,cs);
         return;
     }
     int numOfChildren = item->rowCount();
@@ -321,7 +340,7 @@ void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
     QStandardItem *parentItem = item->parent();
     if (item->checkState()  == Qt::Unchecked) {
         disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+                   this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
         setUncheckedStateParent(parentItem);
         connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                 this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
@@ -349,11 +368,11 @@ void SchemaEditorDialog::collapseAllSlot(bool on)
 
     if (on) {
         expandMode = CollapseAll;
-     availableTreeView->collapseAll();
-     expandPB->setChecked(false);
+        availableTreeView->collapseAll();
+        expandPB->setChecked(false);
     }
     else
-      expandMode = Anything;
+        expandMode = Anything;
 }
 void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)
 {
@@ -372,25 +391,63 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         qWarning() << "Base Entry not found for item" << __FILE__ << __LINE__;
         return;
     }
-    QMap<QBaseEntry *,QStandardItem *>::iterator  iter  = selectedMap.find(be);
+    QMap<QString,QStandardItem *>::iterator  iter  = selectedMap.find(be->name);
     if (iter == selectedMap.end()) {
-     if (availItem->checkState() == Qt::Checked)    {
-         selectItem = new QStandardItem(be->name);
-         selectItem->setData(var);
-         selectedModel->appendRow(selectItem);
-         selectedMap.insert(be,selectItem);
+        if (availItem->checkState() == Qt::Checked)    {
+            selectItem = new QStandardItem(be->name);
+            selectItem->setData(var);
+            selectedModel->appendRow(selectItem);
+            selectedMap.insert(be->name,selectItem);
         }
     }
     else if (availItem->checkState() == Qt::Unchecked) {
-            selectItem = (QStandardItem *) iter.value();
-            if (selectItem) {
-                selectedModel->removeRow(selectItem->row());
-            }
-            selectedMap.remove(be);
+        selectItem = (QStandardItem *) iter.value();
+        if (selectItem) {
+            selectedModel->removeRow(selectItem->row());
+        }
+        selectedMap.remove(be->name);
     }
     else {
         qDebug() << "\tNothing to do, item in list ?";
     }
+
+
+
     Qt::SortOrder so = selectedListView->header()->sortIndicatorOrder();
     selectedModel->sort(0,so);
+}
+void SchemaEditorDialog::clearSelectedSlot()
+{
+    QModelIndex mi;
+    QStandardItem *item;
+    QStandardItem *availableItem;
+
+    QVariant var;
+    QItemSelectionModel *selectedSelModel =  selectedListView->selectionModel();
+    QModelIndexList selectedList = selectedSelModel->selectedRows();
+    qDebug() << "NUM OF ROWS SELECTED = " << selectedList.count();
+    QListIterator <QModelIndex> iter(selectedList);
+    while(iter.hasNext()) {
+
+        mi = iter.next();
+        item = selectedModel->itemFromIndex(mi);
+        if (item) {
+            var = item->data();
+
+            qDebug() << "\tRemove item.."<< __FILE__ << __LINE__;
+            selectedModel->removeRow(item->row());
+            QBaseEntry *be = (QBaseEntry *) var.value<void *>();
+            selectedMap.remove(be->name);
+            qDebug() << "\tAfter remove from map...";
+            QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.find(be->name);
+            while (aiter != availableMap.end() && aiter.key() == be->name) {
+                availableItem = aiter.value();
+                qDebug() << "UNCHECK AVAILABLE ITEM";
+                availableItem->setCheckState(Qt::Unchecked);
+                aiter++;
+            }
+            break;
+        }
+
+    }
 }
