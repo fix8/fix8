@@ -41,7 +41,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
     QDialog(parent),tableSchemaList(0),defaultTableSchema(0),
-    currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn)
+    currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
+    expandMode(Anything)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Fix8 LogViewer"));
@@ -167,12 +168,19 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     QHBoxLayout *abox = new QHBoxLayout(availableButtonArea);
     availableButtonArea->setLayout(abox);
     abox->setMargin(0);
+    expandBG = new QButtonGroup(this);
+    expandBG->setExclusive(false);
     expandPB = new QPushButton("Expand",availableButtonArea);
     collapsePB = new QPushButton("Collapse",availableButtonArea);
+    expandPB->setCheckable(true);
+    collapsePB->setCheckable(true);
+
     expandPB->setToolTip("Expand All Tree Items");
     collapsePB->setToolTip("Collapse All Tree Items");
-    connect(expandPB,SIGNAL(clicked()),this,SLOT(expandAllSlot()));
-    connect(collapsePB,SIGNAL(clicked()),this,SLOT(collapseAllSlot()));
+    expandBG->addButton(expandPB);
+    expandBG->addButton(collapsePB);
+    connect(expandPB,SIGNAL(toggled(bool)),this,SLOT(expandAllSlot(bool)));
+    connect(collapsePB,SIGNAL(toggled(bool)),this,SLOT(collapseAllSlot(bool)));
 
     abox->addWidget(expandPB,0);
     abox->addWidget(collapsePB,0);

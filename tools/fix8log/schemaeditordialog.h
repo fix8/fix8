@@ -62,8 +62,8 @@ public slots:
     void availableSchemasClickedSlot(QModelIndex);
     //void availableTreeViewClickedSlot(QModelIndex);
     void availableTreeItemChangedSlot(QStandardItem*);
-    void expandAllSlot();
-    void collapseAllSlot();
+    void expandAllSlot(bool);
+    void collapseAllSlot(bool);
     void messageListClickedSlot(QModelIndex);
     void applyButtonSlot(QAbstractButton*);
     void cancelNewSlot();
@@ -76,12 +76,16 @@ protected:
     void showEvent(QShowEvent *);
 private: 
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
+    typedef enum {ExpandAll,CollapseAll,Anything} ExpandMode;
     void addItemToSelected(QStandardItem *,Qt::CheckState);
+    void setCheckState(QStandardItem *item,Qt::CheckState cs);
+    void setUncheckedStateParent(QStandardItem *parentItem);
     QWidget  * buildSchemaArea();
     void setMessage(QString str, bool isError);
     bool validate();
     //SchemaEditorWidget *schemaWidget;
     QButtonGroup *applyBG;
+    QButtonGroup *expandBG;
     QColor editColor;
     QColor regularColor;
     QColor regMesssgeColor;
@@ -146,6 +150,7 @@ private:
     Database *database;
     bool globalSchemaOn;
     MessageFieldList *messageFieldList;
+    ExpandMode expandMode;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

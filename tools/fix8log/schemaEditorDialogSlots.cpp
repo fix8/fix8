@@ -207,12 +207,7 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
     availableTreeView->setUpdatesEnabled(false);
     if (availableFieldModel->rowCount() >0)
         availableFieldModel->removeRows(0,availableFieldModel->rowCount() -1);
-   //vailableFieldHeaderItem = new QStandardItem("Fields");
 
-   //vailableFieldModel->setColumnCount(1);
-   // availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
-
-    qDebug() << "MEssage Item Clicked " << __FILE__ << __LINE__;
     QStandardItem *item = messageModel->itemFromIndex(mi);
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
@@ -255,19 +250,62 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
                     item2->setData(var2);
                     item2->setCheckable(true);
                     item->appendRow(item2);
+                    if (qbe2->baseEntryList) {
+                        QListIterator <QBaseEntry *> iter3(*qbe2->baseEntryList);
+                        while(iter3.hasNext()) {
+                            QBaseEntry *qbe3 = iter3.next();
+                            QStandardItem *item3 = new QStandardItem(qbe3->name);
+                            QVariant var3;
+                            var3.setValue((void *) qbe3);
+                            item3->setData(var2);
+                            item3->setCheckable(true);
+                            item2->appendRow(item3);
+                        }
+                    }
                 }
             }
             i++;
         }
     }
     availableFieldModel->sort(0,so);
+    if (expandMode == ExpandAll)
+        availableTreeView->expandAll();
+    else if (expandMode == CollapseAll)
+        availableTreeView->collapseAll();
     availableTreeView->setUpdatesEnabled(true);
     validate();
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-
+}
+void SchemaEditorDialog::setCheckState(QStandardItem *item,Qt::CheckState cs)
+{
+    QStandardItem *child;
+    if (!item) {
+        return;
+    }
+    if (!item->hasChildren()) {
+            addItemToSelected(item,cs);
+        return;
+    }
+    int numOfChildren = item->rowCount();
+    for(int i=0;i<numOfChildren;i++) {
+        child = item->child(i,0);
+        if (child) {
+            child->setCheckState(cs);
+            addItemToSelected(child,cs);
+            setCheckState(child,cs);
+        }
+    }
+}
+void SchemaEditorDialog::setUncheckedStateParent(QStandardItem *parentItem)
+{
+    if (!parentItem)
+        return;
+    parentItem->setCheckState(Qt::Unchecked);
+    setUncheckedStateParent(parentItem->parent());
 
 }
+
 void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
 {
     int i;
@@ -279,35 +317,43 @@ void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
         return;
     }
 
-    if (item->hasChildren()) {
-        numOfChildren = item->rowCount();
-        for(i=0;i<numOfChildren;i++) {
-            child = item->child(i,0);
-            if (child) {
-                child->setCheckState(item->checkState());
-                addItemToSelected(child,item->checkState());
-            }
-        }
+    setCheckState(item,item->checkState());
+    QStandardItem *parentItem = item->parent();
+    if (item->checkState()  == Qt::Unchecked) {
+        disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+        setUncheckedStateParent(parentItem);
+        connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     }
-    else {
-        QStandardItem *parentItem = item->parent();
-        if(parentItem) {
-            addItemToSelected(item,item->checkState());
-            if (item->checkState() != Qt::Checked)
-                parentItem->setCheckState(Qt::Unchecked);
-        }
-        addItemToSelected(item,item->checkState());
-    }
+
     validate();
 }
-void SchemaEditorDialog::expandAllSlot()
+
+
+void SchemaEditorDialog::expandAllSlot(bool on)
 {
-    availableTreeView->expandAll();
+    qDebug() << "EXPAND ALL :" << on << __FILE__;
+    if (on) {
+        expandMode = ExpandAll;
+        availableTreeView->expandAll();
+        collapsePB->setChecked(false);
+    }
+    else
+        expandMode = Anything;
 }
 
-void SchemaEditorDialog::collapseAllSlot()
+void SchemaEditorDialog::collapseAllSlot(bool on)
 {
-    availableTreeView->collapseAll();
+    qDebug() << "Collapse ALL :" << on << __FILE__;
+
+    if (on) {
+        expandMode = CollapseAll;
+     availableTreeView->collapseAll();
+     expandPB->setChecked(false);
+    }
+    else
+      expandMode = Anything;
 }
 void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)
 {
@@ -345,5 +391,6 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
     else {
         qDebug() << "\tNothing to do, item in list ?";
     }
-    qDebug() << "STill to be worked out on how add items and save them" << __FILE__ <<__LINE__;
+    Qt::SortOrder so = selectedListView->header()->sortIndicatorOrder();
+    selectedModel->sort(0,so);
 }
