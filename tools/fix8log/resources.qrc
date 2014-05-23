@@ -46,5 +46,6 @@
         <file>images/svg/spreadsheetTwoTabs.svg</file>
         <file>images/svg/spreadsheetOneTabs.svg</file>
         <file>images/svg/logo.svg</file>
+        <file>images/svg/empty.svg</file>
     </qresource>
 </RCC>

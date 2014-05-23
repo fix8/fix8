@@ -162,7 +162,6 @@ void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,F
         //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-
         print_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
@@ -183,6 +182,7 @@ void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,F
             fieldUse = ful.findByName(qbe->name);
             if (!fieldUse) {
                 fieldUse = new FieldUse();
+
                 fieldUse->name = qbe->name;
                 fieldUse->field = qbe->ft;
                 ful.append(fieldUse);
@@ -333,8 +333,8 @@ bool Fix8Log::init()
     FIX8::TEX::NewOrderSingle nos;
     MessageBase *_header = nos.Header();
     for (Fields::const_iterator hiter = _header->fields_begin();
-          hiter != _header->fields_end();
-          hiter++) {
+         hiter != _header->fields_end();
+         hiter++) {
         qDebug() << "HEY HAVE THIS FIELD FROM HEADER" ;
     }
 
@@ -346,12 +346,13 @@ bool Fix8Log::init()
         const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
         //cout << ">>>>> " << TEX::ctx()._bme.at(ii)->_value._name << endl;
         QBaseEntryList *qbaseEntryList = new QBaseEntryList();
-        messageField = new MessageField(key,value);
-
-        print_traits(tr,fieldMap,fieldUseList,messageField,qbaseEntryList); // print message traits
         value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
         key =
                 QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
+        messageField = new MessageField(key,value);
+
+        print_traits(tr,fieldMap,fieldUseList,messageField,qbaseEntryList); // print message traits
+
         //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);

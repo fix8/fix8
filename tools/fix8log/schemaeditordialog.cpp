@@ -177,6 +177,13 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     availableButtonArea->setLayout(abox);
     abox->setMargin(0);
     expandBG = new QButtonGroup(this);
+    QIcon expandIcon;
+    expandIcon.addPixmap(QPixmap(":/images/svg/checkmark.svg"),
+                         QIcon::Normal,
+                         QIcon::On);
+    expandIcon.addPixmap(QPixmap(":/images/svg/empty.svg"),
+                         QIcon::Normal,
+                         QIcon::Off);
     expandBG->setExclusive(false);
     expandPB = new QPushButton("Expand",availableButtonArea);
     QRect rect;
@@ -186,6 +193,10 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     rect.setHeight(expandPB->height());
     messageSpacerItem->setGeometry(rect);
     collapsePB = new QPushButton("Collapse",availableButtonArea);
+
+    expandPB->setIcon(expandIcon);
+    collapsePB->setIcon(expandIcon);
+
     expandPB->setCheckable(true);
     collapsePB->setCheckable(true);
 
