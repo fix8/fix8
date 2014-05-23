@@ -46,6 +46,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Myfix_types.hpp>
 using namespace FIX8;
 
+
+
+
 class QFieldTrait {
 public:
     QFieldTrait() {};
@@ -57,7 +60,7 @@ public:
 
 class FieldTraitVector : public QVector <FieldTrait>
 {
-  public:
+public:
     FieldTraitVector() : QVector <FieldTrait>()
     {
 
@@ -82,6 +85,7 @@ class MessageField
 {
 public:
     explicit MessageField(QString  &key,QString &name,QBaseEntryList *);
+    explicit MessageField(QString  &key,QString &name);
     QString key;
     QString name;
     QBaseEntryList *qbel;
@@ -91,5 +95,21 @@ class MessageFieldList : public QList<MessageField *>
 {
 public:
     explicit MessageFieldList();
+};
+
+class FieldUse {
+public:
+    FieldUse();
+    QString name;
+    MessageFieldList messageFieldList;
+    FieldTrait *field;
+    bool isDefault;
+};
+
+class FieldUseList : public QList <FieldUse *>
+{
+ public:
+    FieldUseList();
+    FieldUse * findByName(QString &);
 };
 #endif // MESSAGEFIELD_H

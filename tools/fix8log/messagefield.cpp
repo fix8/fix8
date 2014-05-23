@@ -36,6 +36,26 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include "messagefield.h"
 
+FieldUse::FieldUse():isDefault(false)
+{
+
+}
+FieldUseList::FieldUseList() : QList<FieldUse *> ()
+{
+
+}
+FieldUse *FieldUseList::findByName(QString &name)
+{
+    FieldUse *fe = 0;
+    QListIterator<FieldUse *>iter(*this);
+    while(iter.hasNext()) {
+        fe = iter.next();
+        if (fe->name == name)
+            return fe;
+    }
+    return 0;
+}
+
 QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0)
 {
     name = QString::fromLatin1(be._name);
@@ -49,6 +69,11 @@ QBaseEntryList::QBaseEntryList() :QList <QBaseEntry *>()
 }
 MessageField::MessageField(QString &Key, QString &Name,QBaseEntryList *QBEL):
     key(Key),name(Name),qbel(QBEL)
+{
+
+}
+MessageField::MessageField(QString &Key, QString &Name):
+    key(Key),name(Name),qbel(0)
 {
 
 }

@@ -380,6 +380,10 @@ void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)
 }
 void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckState cs)
 {
+    QStringList messageNameList;
+    QString tooltipStr;
+    FieldUse *fieldUse;
+    MessageField *messageField;
     QStandardItem *selectItem ;
     if (!availItem) {
         qWarning() << "Item is null" << __FILE__ << __LINE__;
@@ -395,6 +399,25 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
     if (iter == selectedMap.end()) {
         if (availItem->checkState() == Qt::Checked)    {
             selectItem = new QStandardItem(be->name);
+            if (fieldUseList) {
+                fieldUse = fieldUseList->findByName(be->name);
+                if (fieldUse) {
+                    qDebug() << "FOUND FIELD IN USE" << __FILE__ << __LINE__;
+                    QListIterator <MessageField *> iter(fieldUse->messageFieldList);
+                    while(iter.hasNext()) {
+                        messageField = iter.next();
+                        messageNameList << messageField->name;
+                    }
+                }
+             if (messageNameList.count() == 1)
+                 tooltipStr = "Used in one message" ;
+             else if(messageNameList.count() > 1)
+                 tooltipStr = "Used in " +
+                         QString::number(messageNameList.count()) + " messages";
+             else
+                 tooltipStr = "Not used in any messages";
+             selectItem->setToolTip(tooltipStr);
+            }
             selectItem->setData(var);
             selectedModel->appendRow(selectItem);
             selectedMap.insert(be->name,selectItem);

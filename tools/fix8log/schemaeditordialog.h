@@ -51,6 +51,7 @@ public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
     void setFieldMaps(QMap<QString, FieldTrait *>  &fieldMap,QMultiMap <QString,FieldTrait *> &fieldsInUseMap);
+    void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void populateMessageList(MessageFieldList *);
     void saveSettings();
@@ -158,6 +159,7 @@ private:
     ExpandMode expandMode;
     QMap<QString, FieldTrait *> *fieldMap;
     QMultiMap <QString,FieldTrait *> *fieldsInUseMap;
+    FieldUseList *fieldUseList;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

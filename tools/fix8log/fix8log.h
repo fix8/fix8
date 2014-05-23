@@ -100,6 +100,7 @@ protected:
     FieldTraitVector fieldTraitV;
     QMap<QString, FieldTrait *> fieldMap;
     QMultiMap <QString,FieldTrait *> fieldsInUseMap;
+    FieldUseList fieldUseList;
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };

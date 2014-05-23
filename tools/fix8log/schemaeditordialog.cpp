@@ -398,6 +398,10 @@ void SchemaEditorDialog::setFieldMaps(QMap<QString, FieldTrait *>  &FieldMap,QMu
     fieldMap = &FieldMap;
     fieldsInUseMap = &FieldsInUseMap;
 }
+void SchemaEditorDialog::setFieldUseList(FieldUseList &ful)
+{
+    fieldUseList = &ful;
+}
 
 void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
 {
