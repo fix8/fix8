@@ -65,6 +65,7 @@ Fix8Log::Fix8Log(QObject *parent) :
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
     connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
+    defaultHeaderStrs << "MsgSeqNum" << "MsgType" << "SendingTime" << "SenderCompID" << "TargetCompID";
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
@@ -130,7 +131,7 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     GUI::ConsoleMessage m(str,mt);
     displayConsoleMessage(m);
 }
-void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
                   MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
 {
     int ii = 0;
@@ -138,19 +139,24 @@ void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,F
     {
         QBaseEntry *qbe;
         FieldUse *fieldUse = 0;
-
+    QString name;
         const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
         if(qbaseEntryList) {
             qbe  = new QBaseEntry(*be);
             qbaseEntryList->append(qbe);
             qbe->ft = new FieldTrait(*itr);
-            if (!fieldMap.contains(qbe->name)) {
-                fieldMap.insert(qbe->name,qbe->ft);
+            name = qbe->name;
+            if (defaultHeaderStrs.contains(name)) {
+                    if (!defaultHeaderItems.findByName(name))
+                        defaultHeaderItems.append(qbe);
             }
-            fieldUse = ful.findByName(qbe->name);
+            if (!fieldMap.contains(name)) {
+                fieldMap.insert(name,qbe->ft);
+            }
+            fieldUse = ful.findByName(name);
             if (!fieldUse) {
                 fieldUse = new FieldUse();
-                fieldUse->name = qbe->name;
+                fieldUse->name = name;
                 fieldUse->field = qbe->ft;
                 ful.append(fieldUse);
             }
@@ -166,10 +172,11 @@ void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,F
         ii++;
     }
 }
-void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
                   MessageField *mf,QBaseEntryList *qbaseEntryList)
 {
     int ii = 0;
+    QString name;
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
     {
         QBaseEntry *qbe;
@@ -179,17 +186,23 @@ void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,F
             qbe  = new QBaseEntry(*be);
             qbaseEntryList->append(qbe);
             qbe->ft = new FieldTrait(*itr);
-            fieldUse = ful.findByName(qbe->name);
+            name = qbe->name;
+            fieldUse = ful.findByName(name);
+
             if (!fieldUse) {
                 fieldUse = new FieldUse();
 
-                fieldUse->name = qbe->name;
+                fieldUse->name = name;
                 fieldUse->field = qbe->ft;
                 ful.append(fieldUse);
             }
             fieldUse->messageFieldList.append(mf);
-            if (!fieldMap.contains(qbe->name)) {
-                fieldMap.insert(qbe->name,qbe->ft);
+            if (!fieldMap.contains(name)) {
+                fieldMap.insert(name,qbe->ft);
+            }
+            if (defaultHeaderStrs.contains(name)) {
+                    if (!defaultHeaderItems.findByName(name))
+                        defaultHeaderItems.append(qbe);
             }
         }
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
@@ -566,12 +579,12 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
 {
     bool ok;
     QString tabName;
-    qDebug() << "EDIT SCHEMA SLOT" << __FILE__ << __LINE__;
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->populateMessageList(messageFieldList);
         schemaEditorDialog->setFieldMaps(fieldMap,fieldsInUseMap);
         schemaEditorDialog->setFieldUseList(fieldUseList);
+        schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));

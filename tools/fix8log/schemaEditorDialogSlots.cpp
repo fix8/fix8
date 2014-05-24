@@ -202,12 +202,10 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
 {
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-
     Qt::SortOrder so = availableTreeView->header()->sortIndicatorOrder();
     availableTreeView->setUpdatesEnabled(false);
     if (availableFieldModel->rowCount() >0)
         availableFieldModel->removeRows(0,availableFieldModel->rowCount() -1);
-
     QStandardItem *item = messageModel->itemFromIndex(mi);
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
@@ -352,7 +350,6 @@ void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
 
 void SchemaEditorDialog::expandAllSlot(bool on)
 {
-    qDebug() << "EXPAND ALL :" << on << __FILE__;
     if (on) {
         expandMode = ExpandAll;
         availableTreeView->expandAll();
@@ -361,11 +358,8 @@ void SchemaEditorDialog::expandAllSlot(bool on)
     else
         expandMode = Anything;
 }
-
 void SchemaEditorDialog::collapseAllSlot(bool on)
 {
-    qDebug() << "Collapse ALL :" << on << __FILE__;
-
     if (on) {
         expandMode = CollapseAll;
         availableTreeView->collapseAll();
@@ -373,6 +367,70 @@ void SchemaEditorDialog::collapseAllSlot(bool on)
     }
     else
         expandMode = Anything;
+}
+void SchemaEditorDialog::defaultSlot()
+{
+    if (!defaultHeaderItems) {
+        qWarning() << "ERROR- DEFAULT HEADER ITEMS IS NULL" << __FILE__ << __LINE__;
+        return;
+    }
+    setUpdatesEnabled(false);
+
+    disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    QStringList messageNameList;
+    QString tooltipStr;
+    FieldUse *fieldUse;
+    MessageField *messageField;
+    QBaseEntry *qbe;
+    QVariant var;
+    QStandardItem *selectItem;
+    QStandardItem *availItem;
+    QMap<QString,QStandardItem *>::iterator  iter;
+    QListIterator <QBaseEntry *> iter2(*defaultHeaderItems);
+    while(iter2.hasNext()) {
+        qbe = iter2.next();
+        iter  = selectedMap.find(qbe->name);
+        if (iter == selectedMap.end()) { // not found
+             // see if in available and if so mark it checked
+             QMultiMap<QString,QStandardItem *>::iterator availIter = availableMap.find(qbe->name);
+            if (availIter != availableMap.end()) {
+                availItem = availIter.value();
+                availItem->setCheckState(Qt::Checked);
+            }
+            selectItem = new QStandardItem(qbe->name);
+            if (fieldUseList) {
+                fieldUse = fieldUseList->findByName(qbe->name);
+                if (fieldUse) {
+                    QListIterator <MessageField *> iter(fieldUse->messageFieldList);
+                    while(iter.hasNext()) {
+                        messageField = iter.next();
+                        messageNameList << messageField->name;
+                    }
+                }
+                if (messageNameList.count() == 0)
+                    tooltipStr = "Not used in any messages";
+
+                if (messageNameList.count() == 1)
+                    tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
+                else if(messageNameList.count() < 5)
+                    tooltipStr = "Used in: " + messageNameList.join("\n\t");
+                else
+                    tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
+
+                selectItem->setToolTip(tooltipStr);
+            }
+            var.setValue((void *) qbe);
+            selectItem->setData(var);
+            selectedModel->appendRow(selectItem);
+            selectedMap.insert(qbe->name,selectItem);
+
+        }
+    }
+    connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    setUpdatesEnabled(true);
+    validate();
 }
 void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)
 {
@@ -402,21 +460,22 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
             if (fieldUseList) {
                 fieldUse = fieldUseList->findByName(be->name);
                 if (fieldUse) {
-                    qDebug() << "FOUND FIELD IN USE" << __FILE__ << __LINE__;
                     QListIterator <MessageField *> iter(fieldUse->messageFieldList);
                     while(iter.hasNext()) {
                         messageField = iter.next();
                         messageNameList << messageField->name;
                     }
                 }
-             if (messageNameList.count() == 1)
-                 tooltipStr = "Used in one message" ;
-             else if(messageNameList.count() > 1)
-                 tooltipStr = "Used in " +
-                         QString::number(messageNameList.count()) + " messages";
-             else
-                 tooltipStr = "Not used in any messages";
-             selectItem->setToolTip(tooltipStr);
+                if (messageNameList.count() == 0)
+                    tooltipStr = "Not used in any messages";
+                else if (messageNameList.count() == 1)
+                    tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
+                else if(messageNameList.count() < 5)
+                    tooltipStr = "Used in: " + messageNameList.join("\n\t");
+                else
+                    tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
+
+                selectItem->setToolTip(tooltipStr);
             }
             selectItem->setData(var);
             selectedModel->appendRow(selectItem);
@@ -430,12 +489,6 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         }
         selectedMap.remove(be->name);
     }
-    else {
-        qDebug() << "\tNothing to do, item in list ?";
-    }
-
-
-
     Qt::SortOrder so = selectedListView->header()->sortIndicatorOrder();
     selectedModel->sort(0,so);
 }
@@ -444,11 +497,9 @@ void SchemaEditorDialog::clearSelectedSlot()
     QModelIndex mi;
     QStandardItem *item;
     QStandardItem *availableItem;
-
     QVariant var;
     QItemSelectionModel *selectedSelModel =  selectedListView->selectionModel();
     QModelIndexList selectedList = selectedSelModel->selectedRows();
-    qDebug() << "NUM OF ROWS SELECTED = " << selectedList.count();
     QListIterator <QModelIndex> iter(selectedList);
     while(iter.hasNext()) {
 
@@ -456,12 +507,9 @@ void SchemaEditorDialog::clearSelectedSlot()
         item = selectedModel->itemFromIndex(mi);
         if (item) {
             var = item->data();
-
-            qDebug() << "\tRemove item.."<< __FILE__ << __LINE__;
             selectedModel->removeRow(item->row());
             QBaseEntry *be = (QBaseEntry *) var.value<void *>();
             selectedMap.remove(be->name);
-            qDebug() << "\tAfter remove from map...";
             QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.find(be->name);
             while (aiter != availableMap.end() && aiter.key() == be->name) {
                 availableItem = aiter.value();
@@ -471,6 +519,19 @@ void SchemaEditorDialog::clearSelectedSlot()
             }
             break;
         }
-
     }
+}
+void SchemaEditorDialog::clearAllSlot()
+{
+  int numOfRows = selectedModel->rowCount();
+  QStandardItem *selectedItem;
+  QStandardItem *availableItem;
+  selectedMap.clear();
+  selectedModel->removeRows(0,numOfRows);
+  QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.begin();
+  while (aiter != availableMap.end()) {
+      availableItem = aiter.value();
+      availableItem->setCheckState(Qt::Unchecked);
+      aiter++;
+  }
 }

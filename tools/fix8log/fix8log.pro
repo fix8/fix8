@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     schemaitem.cpp \
     databaseTableSchemas.cpp \
     tableschema.cpp \
-    schemaEditorDialogSlots.cpp
+    schemaEditorDialogSlots.cpp \
+    databaseSchemaFields.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

@@ -53,6 +53,7 @@ public:
     void setFieldMaps(QMap<QString, FieldTrait *>  &fieldMap,QMultiMap <QString,FieldTrait *> &fieldsInUseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
+    void setDefaultHeaderItems( QBaseEntryList &defaultHeaderItems);
     void populateMessageList(MessageFieldList *);
     void saveSettings();
     void restoreSettings();
@@ -61,16 +62,17 @@ signals:
     void schemaDeleted(int schemaID);
 public slots:
     void actionButtonSlot(QAbstractButton *button );
+    void applyButtonSlot(QAbstractButton*);
     void availableSchemasClickedSlot(QModelIndex);
-    //void availableTreeViewClickedSlot(QModelIndex);
     void availableTreeItemChangedSlot(QStandardItem*);
-    void expandAllSlot(bool);
+    void cancelNewSlot();
+    void clearAllSlot();
     void clearSelectedSlot();
     void collapseAllSlot(bool);
-    void messageListClickedSlot(QModelIndex);
-    void applyButtonSlot(QAbstractButton*);
-    void cancelNewSlot();
+    void defaultSlot();
     void deleteSchemaSlot();
+    void expandAllSlot(bool);
+    void messageListClickedSlot(QModelIndex);
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
     void saveNewEditSlot();
@@ -160,6 +162,7 @@ private:
     QMap<QString, FieldTrait *> *fieldMap;
     QMultiMap <QString,FieldTrait *> *fieldsInUseMap;
     FieldUseList *fieldUseList;
+    QBaseEntryList *defaultHeaderItems;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

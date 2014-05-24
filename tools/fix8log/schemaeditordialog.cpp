@@ -42,7 +42,7 @@ using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
     QDialog(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
-    expandMode(Anything)
+    expandMode(Anything),defaultHeaderItems(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Fix8 LogViewer"));
@@ -178,12 +178,13 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     abox->setMargin(0);
     expandBG = new QButtonGroup(this);
     QIcon expandIcon;
-    expandIcon.addPixmap(QPixmap(":/images/svg/checkmark.svg"),
+    expandIcon.addPixmap(QPixmap(":/images/svg/buttonOn.svg"),
                          QIcon::Normal,
                          QIcon::On);
     expandIcon.addPixmap(QPixmap(":/images/svg/empty.svg"),
                          QIcon::Normal,
                          QIcon::Off);
+
     expandBG->setExclusive(false);
     expandPB = new QPushButton("Expand",availableButtonArea);
     QRect rect;
@@ -242,8 +243,9 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     clearPB = new QPushButton("Clear",this);
     connect(clearPB,SIGNAL(clicked()),this,SLOT(clearSelectedSlot()));
     clearAllPB  = new QPushButton("Clear All",this);
-
+    connect(clearAllPB,SIGNAL(clicked()),this,SLOT(clearAllSlot()));
     defaultPB = new QPushButton("Default",this);
+    connect(defaultPB,SIGNAL(clicked()),this,SLOT(defaultSlot()));
     defaultPB->setToolTip("Add Default Fields");
     QWidget *selectButonArea = new QWidget(this);
     QHBoxLayout *selectBBox = new QHBoxLayout(selectButonArea);
@@ -296,8 +298,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     vbox->addWidget(messageL,0);
     vbox->addSpacing(12);
     vbox->addWidget(buttonBox,0);
-
-    //populateMessageList();
     newSchemaStackArea->setCurrentIndex(RegMode);
     buttonStackArea->setCurrentIndex(RegMode);
     viewMode = RegMode;
@@ -317,7 +317,6 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     connect(availableSchemasListView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(availableSchemasClickedSlot(QModelIndex)));
     schemaModel = new QStandardItemModel(availableSchemasListView);
-    //availableSchemasListView->setSortingEnabled(true);
 
     availableSchemasListView->setModel(schemaModel);
     newSchemaL = new QLabel("Name",newSchemaArea);
@@ -404,6 +403,10 @@ void SchemaEditorDialog::showEvent(QShowEvent *se)
     validate();
     QDialog::showEvent(se);
 }
+void SchemaEditorDialog::setDefaultHeaderItems( QBaseEntryList &DefaultHeaderItems)
+{
+    defaultHeaderItems = &DefaultHeaderItems;
+}
 void SchemaEditorDialog::setFieldMaps(QMap<QString, FieldTrait *>  &FieldMap,QMultiMap <QString,FieldTrait *> &FieldsInUseMap)
 {
     fieldMap = &FieldMap;
@@ -413,14 +416,11 @@ void SchemaEditorDialog::setFieldUseList(FieldUseList &ful)
 {
     fieldUseList = &ful;
 }
-
 void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
 {
     messageFieldList = mfl;
     MessageField *mf;
     QStandardItem *item;
-
-    qDebug() << "FIX POPULATE MESSAE LIST FOR ShemeEditorDialog" << __FILE__ << __LINE__;
     if (!messageFieldList) {
         qWarning() << "Error - messageFieldList is null" << __FILE__ << __LINE__;
         messageModel->setRowCount(0);

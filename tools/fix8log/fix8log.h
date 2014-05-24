@@ -101,6 +101,13 @@ protected:
     QMap<QString, FieldTrait *> fieldMap;
     QMultiMap <QString,FieldTrait *> fieldsInUseMap;
     FieldUseList fieldUseList;
+    QStringList defaultHeaderStrs;
+    QBaseEntryList defaultHeaderItems;
+private:
+    void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+                      MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
+    void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+                      MessageField *mf,QBaseEntryList *qbaseEntryList);
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };

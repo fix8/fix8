@@ -67,6 +67,18 @@ QBaseEntryList::QBaseEntryList() :QList <QBaseEntry *>()
 {
 
 }
+QBaseEntry * QBaseEntryList::findByName(QString &name)
+{
+    QBaseEntry *qbe;
+    QListIterator <QBaseEntry *> iter(*this);
+    while(iter.hasNext()) {
+        qbe = iter.next();
+        if (qbe->name == name)
+            return qbe;
+    }
+    return 0;
+}
+
 MessageField::MessageField(QString &Key, QString &Name,QBaseEntryList *QBEL):
     key(Key),name(Name),qbel(QBEL)
 {

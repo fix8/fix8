@@ -34,83 +34,83 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-------------------------------------------------------------------------------------------------
 
-#ifndef MESSAGEFIELD_H
-#define MESSAGEFIELD_H
-
-#include <QPair>
+#include "database.h"
+#include "tableschema.h"
+#include <QDebug>
+#include <QSqlQuery>
+#include <QSqlDatabase>
+#include <QSqlTableModel>
 #include <QVariant>
-#include <QList>
-#include <QVector>
-#include <fix8/f8includes.hpp>
-#include <f8types.hpp>
-#include <Myfix_types.hpp>
-using namespace FIX8;
 
-
-
-
-class QFieldTrait {
-public:
-    QFieldTrait() {};
-    QString name;
-    FieldTrait::FieldType ft;
-    QString desciption;
-    QVariant::Type type;
-};
-
-class FieldTraitVector : public QVector <FieldTrait>
+QStringList Database::getSchemaFields(int schemaID)
 {
-public:
-    FieldTraitVector() : QVector <FieldTrait>()
-    {
-
+    QStringList fieldList;
+    bool bstatus;
+    bool ok;
+    QString str;
+    QString filter;
+    if (!handle) {
+        errorMessage = tr("Error in get schema fields  - handle is not initialized");
+        qWarning() << errorMessage;
+        return fieldList;
     }
-};
+    QSqlQuery query(*handle);
+    filter = "schemaID = " + QString::number(schemaID);
+    str =  "select * from schemafields where " + filter;
+    bstatus = query.prepare(str);
+    if (bstatus == 0) {
+        qWarning("Error in get schema fields in prepare statement...");
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return fieldList;
+    }
 
-class QBaseEntry
-{
-public:
-    QBaseEntry(const BaseEntry &);
-    QString name;
-    FieldTrait *ft;
-    QList<QBaseEntry *> *baseEntryList;
-};
-class QBaseEntryList : public  QList <QBaseEntry *>
-{
-public:
-    explicit QBaseEntryList();
-    QBaseEntry *findByName(QString &);
-};
+    bstatus = query.exec();
+    if (bstatus == false) {
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return fieldList;
+    }
+    while (query.next()) {
+       str = query.value(1).toString();
+       fieldList.append(str);
+    }
+    return fieldList;
+}
 
-class MessageField
+bool Database::addSchemaFields(int schemaID, QStringList fieldNames)
 {
-public:
-    explicit MessageField(QString  &key,QString &name,QBaseEntryList *);
-    explicit MessageField(QString  &key,QString &name);
-    QString key;
-    QString name;
-    QBaseEntryList *qbel;
+    bool bstatus = false;
 
-};
-class MessageFieldList : public QList<MessageField *>
+    return bstatus;
+}
+bool Database::removeSchemaFields(int schemaID)
 {
-public:
-    explicit MessageFieldList();
-};
-
-class FieldUse {
-public:
-    FieldUse();
-    QString name;
-    MessageFieldList messageFieldList;
-    FieldTrait *field;
-    bool isDefault;
-};
-
-class FieldUseList : public QList <FieldUse *>
-{
- public:
-    FieldUseList();
-    FieldUse * findByName(QString &);
-};
-#endif // MESSAGEFIELD_H
+    bool bstatus = false;
+    QString filter;
+    QString str;
+    if (!handle) {
+        errorMessage = tr("Error - remove schema fields  - handle is not initialized");
+        qWarning() << errorMessage;
+        return false;
+    }
+    QSqlQuery query(*handle);
+    filter = "schemaID=\'" + QString::number(schemaID) + "\'";
+    str  = "delete from schemafields where " + filter;
+    bstatus = query.prepare(str);
+    if (bstatus == false) {
+        qWarning() << "Delete schemafields failed in prepare " << __FILE__ << __LINE__;
+        sqlError = query.lastError();
+        goto done;
+    }
+    bstatus = query.exec();
+    if (bstatus == false) {
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+    }
+done:
+    return bstatus;
+}
