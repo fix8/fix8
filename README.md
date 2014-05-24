@@ -239,16 +239,21 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 
 - We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
 
+- If you are on <a href="http://linkedin.com">Linkedin</a> join the Linked-in group <b>Fix8 Users and Developers</b>
+for more help and information about the Fix8 project.
+
 ## License
 
 Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
 See [License](http://fix8.org/faq.html#license) for more information.
 
-## Fix8 Market Technologies
+## Fix8Pro and Fix8 Market Technologies
 
-[Fix8 Market Technologies](http://www.fix8mt.com/) develops and maintains the Fix8 open source Framework, and has developers in Australia, China, Canada,
-USA and the Russian Federation. Fix8MT is responsible for providing and managing professional support and consultancy services, and works closely with the
-Fix8 open source community to grow commercial support services through 3rd party ISVs.
+[Fix8Pro](http://www.fix8pro.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
+develops and maintains both Fix8Pro and the Fix8 open source versions.
+Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
+Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
+Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
 
 ## More Information
 
