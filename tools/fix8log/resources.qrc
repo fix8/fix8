@@ -48,5 +48,8 @@
         <file>images/svg/logo.svg</file>
         <file>images/svg/empty.svg</file>
         <file>images/svg/buttonOn.svg</file>
+        <file>images/svg/apply.svg</file>
+        <file>images/svg/document-save.svg</file>
+        <file>images/svg/edit-undo.svg</file>
     </qresource>
 </RCC>

@@ -40,33 +40,44 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
-    QDialog(parent),tableSchemaList(0),defaultTableSchema(0),
+    QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
     expandMode(Anything),defaultHeaderItems(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
-    setWindowTitle(tr("Fix8 LogViewer"));
+    setWindowTitle(tr("Table Schema Editor"));
+    setAnimated(true);
+    mainMenuBar = menuBar();
+    fileMenu = mainMenuBar->addMenu(tr("&File"));
+    mainToolBar = new QToolBar("Main Toolbar",this);
+     mainToolBar->setObjectName("SchemaToolBar");
+    mainToolBar->setMovable(true);
+    addToolBar(Qt::TopToolBarArea,mainToolBar);
+
+    closeA = new QAction(tr("&Close Window"),this);
+    connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
+    closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
+    closeA->setToolTip(tr("Close This Window"));
+
+    applyA = new QAction(tr("&Apply"),this);
+    applyA->setIcon(QIcon(":/images/svg/apply.svg"));
+    applyA->setToolTip(tr("Apply Schema"));
+
+    saveA = new QAction(tr("&Save"),this);
+    saveA->setIcon(QIcon(":/images/svg/document-save.svg"));
+    saveA->setToolTip(tr("Save"));
+    fileMenu->addAction(applyA);
+    fileMenu->addAction(saveA);
+
+    fileMenu->addAction(closeA);
+     mainToolBar->addAction(closeA);
+     mainToolBar->addAction(applyA);
+    mainToolBar->addAction(saveA);
+    QWidget *cWidget = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout(this);
-    setLayout(vbox);
-    QWidget *titleArea = new QWidget(this);
-    QHBoxLayout *titleBox = new QHBoxLayout(titleArea);
-    titleArea->setLayout(titleBox);
+    cWidget->setLayout(vbox);
+    setCentralWidget(cWidget);
 
-    iconL = new QLabel(titleArea);
-    iconL->setPixmap(QPixmap(":/images/svg/editSchema.svg").scaled(42,42));
-
-    QString str = tr("Table Schema Editor");
-    titleL = new QLabel(str,titleArea);
-    QFont fnt = titleL->font();
-    fnt.setBold(true);
-    fnt.setPointSize(fnt.pointSize() + 2);
-    fnt.setItalic(true);
-    titleL->setFont(fnt);
-    titleBox->addWidget(iconL,0);
-    titleBox->addWidget(titleL,1,Qt::AlignCenter);
-    titleL->setAlignment(Qt::AlignCenter);
-    QFrame *hrLine = new QFrame(this);
-    hrLine->setFrameStyle(QFrame::HLine);
 
     applyBG = new QButtonGroup(this);
     applyBG->setExclusive(true);
@@ -98,7 +109,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     targetArea = new QWidget();
     QHBoxLayout *tarBox = new QHBoxLayout();
     targetArea->setLayout(tarBox);
-    fnt = targetArea->font();
+    QFont fnt = targetArea->font();
     fnt.setBold(true);
     targetArea->setFont(fnt);
 
@@ -272,13 +283,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     wgrid->setColumnStretch(1,1);
     wgrid->setColumnStretch(2,1);
 
-    buttonBox = new QDialogButtonBox(this);
-    buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-    buttonBox->setOrientation(Qt::Horizontal);
-    closeB = buttonBox->addButton(QDialogButtonBox::Close);
-    applyB = buttonBox->addButton(QDialogButtonBox::Apply);
-    connect(buttonBox,SIGNAL(clicked(QAbstractButton*)),
-            this,SLOT(actionButtonSlot(QAbstractButton*)));
     messageL = new QLabel(this);
     messageL->setAlignment(Qt::AlignCenter);
     fnt = messageL->font();
@@ -289,15 +293,11 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     regMesssgeColor = pal.color(QPalette::WindowText);
     errorMessageColor = Qt::red;
 
-    vbox->addWidget(titleArea,0);
-    vbox->addWidget(hrLine,0);
     vbox->addLayout(topBox,0);
     vbox->addSpacing(22);
     vbox->addWidget(splitter,1);
     vbox->addSpacing(12);
     vbox->addWidget(messageL,0);
-    vbox->addSpacing(12);
-    vbox->addWidget(buttonBox,0);
     newSchemaStackArea->setCurrentIndex(RegMode);
     buttonStackArea->setCurrentIndex(RegMode);
     viewMode = RegMode;
@@ -401,7 +401,7 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
     validate();
-    QDialog::showEvent(se);
+    QMainWindow::showEvent(se);
 }
 void SchemaEditorDialog::setDefaultHeaderItems( QBaseEntryList &DefaultHeaderItems)
 {
@@ -495,12 +495,12 @@ bool SchemaEditorDialog::validate()
         editSchemaPB->setEnabled(false);
         deleteSchemaPB->setEnabled(false);
         copySchemaPB->setEnabled(false);
-        applyB->setEnabled(false);
+        applyA->setEnabled(false);
         expandPB->setEnabled(false);
         collapsePB->setEnabled(false);
     }
     else {
-        applyB->setEnabled(true);
+        applyA->setEnabled(true);
         if (availableFieldModel->rowCount() > 0) {
             expandPB->setEnabled(true);
             collapsePB->setEnabled(true);
@@ -546,15 +546,17 @@ bool SchemaEditorDialog::validate()
 void SchemaEditorDialog::saveSettings()
 {
     QSettings settings("fix8","logviewer");
-    settings.setValue("ScehmaEditorGeometry",saveGeometry());
-    settings.setValue("ScehmaEditorSpliiter",splitter->saveState());
+    settings.setValue("SchemaEditorGeometry",saveGeometry());
+    settings.setValue("SchemaEditorState",saveState());
+    settings.setValue("SchemaEditorSplitter",splitter->saveState());
 }
 
 void SchemaEditorDialog::restoreSettings()
 {
     QSettings settings("fix8","logviewer");
-    restoreGeometry(settings.value("ScehmaEditorGeometry").toByteArray());
-    splitter->restoreState(settings.value("ScehmaEditorSpliiter").toByteArray());
+    restoreGeometry(settings.value("SchemaEditorGeometry").toByteArray());
+    restoreState(settings.value("SchemaEditorState").toByteArray());
+    splitter->restoreState(settings.value("SchemaEditorSplitter").toByteArray());
 }
 void SchemaEditorDialog::setMessage(QString str, bool isError)
 {

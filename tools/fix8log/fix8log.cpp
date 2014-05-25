@@ -89,6 +89,8 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
         qWarning() << "Error - wire signals and slots, window is null" << __FILE__ << __LINE__;
         return;
     }
+    connect(mw,SIGNAL(toolButtonStyleModified(Qt::ToolButtonStyle)),
+            this,SLOT(toolButtonStyleModfiedSlot(Qt::ToolButtonStyle)));
     connect(mw,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
@@ -132,14 +134,14 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     displayConsoleMessage(m);
 }
 void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
-                  MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
+                           MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
 {
     int ii = 0;
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
     {
         QBaseEntry *qbe;
         FieldUse *fieldUse = 0;
-    QString name;
+        QString name;
         const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
         if(qbaseEntryList) {
             qbe  = new QBaseEntry(*be);
@@ -147,8 +149,8 @@ void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &f
             qbe->ft = new FieldTrait(*itr);
             name = qbe->name;
             if (defaultHeaderStrs.contains(name)) {
-                    if (!defaultHeaderItems.findByName(name))
-                        defaultHeaderItems.append(qbe);
+                if (!defaultHeaderItems.findByName(name))
+                    defaultHeaderItems.append(qbe);
             }
             if (!fieldMap.contains(name)) {
                 fieldMap.insert(name,qbe->ft);
@@ -173,7 +175,7 @@ void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &f
     }
 }
 void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
-                  MessageField *mf,QBaseEntryList *qbaseEntryList)
+                           MessageField *mf,QBaseEntryList *qbaseEntryList)
 {
     int ii = 0;
     QString name;
@@ -201,8 +203,8 @@ void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &f
                 fieldMap.insert(name,qbe->ft);
             }
             if (defaultHeaderStrs.contains(name)) {
-                    if (!defaultHeaderItems.findByName(name))
-                        defaultHeaderItems.append(qbe);
+                if (!defaultHeaderItems.findByName(name))
+                    defaultHeaderItems.append(qbe);
             }
         }
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
@@ -508,6 +510,18 @@ void Fix8Log::saveSession()
         }
     }
 }
+void Fix8Log::toolButtonStyleModfiedSlot(Qt::ToolButtonStyle tbs)
+{
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        mw->setToolButtonStyle(tbs);
+    }
+    if (schemaEditorDialog)
+        schemaEditorDialog->setToolButtonStyle(tbs);
+}
+
 void Fix8Log::autoSaveOnSlot(bool on)
 {
     MainWindow *mw;
@@ -582,6 +596,11 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->populateMessageList(messageFieldList);
+        QListIterator <MainWindow *> iter(mainWindows);
+        if (iter.hasNext()) {
+            MainWindow *mw = iter.next();
+            schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
+        }
         schemaEditorDialog->setFieldMaps(fieldMap,fieldsInUseMap);
         schemaEditorDialog->setFieldUseList(fieldUseList);
         schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
@@ -594,6 +613,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
                 this,SLOT(schemaDeletedSlot(int)));
         schemaEditorDialog->restoreSettings();
     }
+
     QString windowName = mw->windowTitle();
     if (windowName.length() < 1)
         windowName = qApp->applicationName();
@@ -608,6 +628,10 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     }
     schemaEditorDialog->setCurrentTarget(windowName,tabName);
     schemaEditorDialog->show();
+    schemaEditorDialog->setVisible(true);
+     schemaEditorDialog->showNormal();
+    schemaEditorDialog->raise();
+
 }
 
 void Fix8Log::newSchemaCreatedSlot(TableSchema *ts)

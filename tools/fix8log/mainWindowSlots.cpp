@@ -84,7 +84,8 @@ void MainWindow::iconStyleSlot(QAction *action)
         tbs = Qt::ToolButtonIconOnly;
     else if (action == iconsWithTextA)
         tbs = Qt::ToolButtonTextUnderIcon;
-    setToolButtonStyle(tbs);
+    //setToolButtonStyle(tbs);
+    emit toolButtonStyleModified(tbs);
     settings.setValue("ToolButtonStyle",tbs);
 }
 void MainWindow::iconSizeSlot(QAction *action)

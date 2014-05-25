@@ -38,13 +38,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define SCHEMAEDITORDIALOG_H
 
 #include <QDialog>
+#include <QMainWindow>
 #include <QtWidgets>
 #include "schemaitem.h"
 #include "tableschema.h"
 #include "messagefield.h"
 
 class Database;
-class SchemaEditorDialog : public QDialog
+class SchemaEditorDialog : public QMainWindow
 {
     Q_OBJECT
 public:
@@ -58,16 +59,17 @@ public:
     void saveSettings();
     void restoreSettings();
 signals:
+    void finished(int);
     void newSchemaCreated(TableSchema *);
     void schemaDeleted(int schemaID);
 public slots:
-    void actionButtonSlot(QAbstractButton *button );
     void applyButtonSlot(QAbstractButton*);
     void availableSchemasClickedSlot(QModelIndex);
     void availableTreeItemChangedSlot(QStandardItem*);
     void cancelNewSlot();
     void clearAllSlot();
     void clearSelectedSlot();
+    void closeSlot();
     void collapseAllSlot(bool);
     void defaultSlot();
     void deleteSchemaSlot();
@@ -89,16 +91,17 @@ private:
     void setMessage(QString str, bool isError);
     bool validate();
     //SchemaEditorWidget *schemaWidget;
+    QAction  *closeA;
+    QAction  *saveA;
+    QAction  *undoA;
+    QAction  *applyA;
     QButtonGroup *applyBG;
     QButtonGroup *expandBG;
     QColor editColor;
     QColor regularColor;
     QColor regMesssgeColor;
     QColor errorMessageColor;
-    QDialogButtonBox *buttonBox;
     QGroupBox *descriptionBox;
-    QLabel  *iconL;
-    QLabel  *titleL;
     QLabel  *windowL;
     QLabel  *tabL;
     QLineEdit  *tabV;
@@ -113,10 +116,11 @@ private:
     QLabel *availableListL;
     QLabel *selectedListL;
     QLineEdit *newSchemaLine;
+    QMenu    *fileMenu;
+    QMenuBar *mainMenuBar;
     QMultiMap <QString ,QStandardItem *> selectedMap; //<fieldName,selected>
     QMultiMap <QString ,QStandardItem *> availableMap; //<fieldName,selected>
-    QPushButton *applyB;
-    QPushButton *closeB;
+
     QPushButton *newSchemaPB;
     QPushButton *copySchemaPB;
     QPushButton *editSchemaPB;
@@ -142,16 +146,15 @@ private:
     QStandardItemModel *schemaModel;
     QStandardItemModel *availableFieldModel;
     QStandardItemModel *selectedModel;
-
-
     QTextEdit *descriptionE;
+    QToolBar *mainToolBar;
     QWidget *newSchemaArea;
     QWidget *schemaArea;
     QWidget *targetArea;
     QLabel  *messageL;
     ViewMode viewMode;
     bool haveChanges;
-    TableSchemaList *tableSchemaList;    
+    TableSchemaList *tableSchemaList;
     TableSchema *defaultTableSchema;
     SchemaItem *currentSchemaItem;
     SchemaItem *defaultSchemaItem ;

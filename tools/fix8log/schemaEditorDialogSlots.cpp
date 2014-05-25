@@ -61,12 +61,17 @@ void SchemaEditorDialog::applyButtonSlot(QAbstractButton *button)
         tabV->hide();
     }
 }
-
-void SchemaEditorDialog::actionButtonSlot(QAbstractButton *button )
+void SchemaEditorDialog::closeSlot()
 {
-    if (button == closeB)
-        emit finished(QDialogButtonBox::Close);
+    QSettings settings("fix8","logviewer");
+    settings.setValue("SchemaEditorGeometry",saveGeometry());
+    settings.setValue("SchemaEditorState",saveState());
+    settings.setValue("SchemaEditorSplitter",splitter->saveState());
+
+   emit finished(QDialogButtonBox::Close);
 }
+
+
 void SchemaEditorDialog::newSchemaSlot()
 {
     bool bstatus;

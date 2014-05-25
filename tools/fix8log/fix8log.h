@@ -81,6 +81,7 @@ public slots:
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
+    void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
 protected:
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);
     void saveSession();

@@ -222,6 +222,7 @@ signals:
     void exitApp();
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
+    void toolButtonStyleModified(Qt::ToolButtonStyle);
 private:
     void buildHideColumnMenu();
     void buildSchemaMenu();

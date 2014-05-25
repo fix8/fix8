@@ -74,16 +74,51 @@ QStringList Database::getSchemaFields(int schemaID)
         return fieldList;
     }
     while (query.next()) {
-       str = query.value(1).toString();
-       fieldList.append(str);
+        str = query.value(1).toString();
+        fieldList.append(str);
     }
     return fieldList;
 }
 
-bool Database::addSchemaFields(int schemaID, QStringList fieldNames)
+bool Database::addSchemaFields(int schemaID, QStringList FieldNames)
 {
     bool bstatus = false;
+    QString filter;
+    filter = "schemaID=\'" + QString::number(schemaID) + "\'";
+    if (!handle) {
+        errorMessage = tr("Error addSchemaFields  - handle is not initialized");
+        qWarning() << errorMessage;
+        return false;
+    }
+    QSqlQuery query(*handle);
 
+    // delete old ones
+    QString str  = "delete from schemafields where " + filter;
+    bstatus = query.prepare(str);
+    if (bstatus == 0) {
+        qWarning("addSchemaFields failed in prepare statement of delete fields");
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return false;
+    }
+    QVariantList nullIDs;
+    QVariantList schemaIDs;
+    QVariantList fieldNames;
+    QStringListIterator iter(FieldNames);
+    query.prepare("insert into schemafields values (?, ?)");
+    while(iter.hasNext()) {
+        nullIDs << QVariant(QVariant::Int);
+        schemaIDs << schemaID;
+        fieldNames << iter.next();
+    }
+    query.addBindValue(nullIDs);
+    query.addBindValue(schemaIDs);
+    query.addBindValue(fieldNames);
+    if (!query.execBatch()) {
+        qWarning() << query.lastError();
+        return false;
+    }
     return bstatus;
 }
 bool Database::removeSchemaFields(int schemaID)
