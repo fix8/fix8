@@ -66,7 +66,12 @@ public:
 
     }
 };
-
+class BaseEntryList : public  QList <BaseEntry *>
+{
+public:
+    explicit BaseEntryList();
+    BaseEntry *findByName(QString &);
+};
 class QBaseEntry
 {
 public:
@@ -79,6 +84,7 @@ class QBaseEntryList : public  QList <QBaseEntry *>
 {
 public:
     explicit QBaseEntryList();
+    QBaseEntryList(const QBaseEntryList &);
     QBaseEntry *findByName(QString &);
 };
 
@@ -90,7 +96,6 @@ public:
     QString key;
     QString name;
     QBaseEntryList *qbel;
-
 };
 class MessageFieldList : public QList<MessageField *>
 {

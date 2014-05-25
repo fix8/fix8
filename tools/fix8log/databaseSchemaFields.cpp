@@ -106,15 +106,16 @@ bool Database::addSchemaFields(int schemaID, QStringList FieldNames)
     QVariantList schemaIDs;
     QVariantList fieldNames;
     QStringListIterator iter(FieldNames);
-    query.prepare("insert into schemafields values (?, ?)");
+    query.prepare("insert into schemafields values (?, ?, ?)");
     while(iter.hasNext()) {
         nullIDs << QVariant(QVariant::Int);
         schemaIDs << schemaID;
         fieldNames << iter.next();
     }
     query.addBindValue(nullIDs);
-    query.addBindValue(schemaIDs);
     query.addBindValue(fieldNames);
+    query.addBindValue(schemaIDs);
+
     if (!query.execBatch()) {
         qWarning() << query.lastError();
         return false;
@@ -135,6 +136,7 @@ bool Database::removeSchemaFields(int schemaID)
     filter = "schemaID=\'" + QString::number(schemaID) + "\'";
     str  = "delete from schemafields where " + filter;
     bstatus = query.prepare(str);
+    qDebug() << "DETE STR = :" << str;
     if (bstatus == false) {
         qWarning() << "Delete schemafields failed in prepare " << __FILE__ << __LINE__;
         sqlError = query.lastError();
@@ -148,4 +150,27 @@ bool Database::removeSchemaFields(int schemaID)
     }
 done:
     return bstatus;
+}
+bool Database::saveTableSchemaFields(TableSchema &ts)
+{
+   bool bstatus;
+   QString fieldName;
+   QStringList fieldNames;
+   QBaseEntry *qbe;
+   bstatus = removeSchemaFields(ts.id);
+   qDebug() << "Status of remove shema fields " << bstatus << __FILE__;
+   if (! ts.fieldList || ts.fieldList->count() < 1) {
+       qDebug() << "No fields to add for schema " << __FILE__ << __LINE__;
+       return true;
+   }
+   if (bstatus) {
+       QListIterator <QBaseEntry *> iter(*ts.fieldList);
+       while(iter.hasNext()) {
+          qbe = iter.next();
+          fieldNames << qbe->name;
+       }
+   }
+   qDebug() << "updates table schema to have this many fields:" << fieldNames.count();
+   bstatus =   addSchemaFields(ts.id,fieldNames);
+   return bstatus;
 }

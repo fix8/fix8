@@ -36,11 +36,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include "tableschema.h"
 #include <QDebug>
-TableSchema::TableSchema():id(-1),locked(false)
+TableSchema::TableSchema():id(-1),locked(false),fieldList(0)
 {
 }
 TableSchema::TableSchema(QString Name, QString Description,bool Locked):id(-1),
-    name(Name),description(Description),locked(Locked)
+    name(Name),description(Description),locked(Locked),fieldList(0)
 {
 }
 TableSchema::TableSchema(const TableSchema &ts)
@@ -58,6 +58,16 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
     locked      = rhs.locked;
     return *this;
 }
+void TableSchema::setFields(QBaseEntryList * qel)
+{
+    fieldList = qel;
+}
+
+QBaseEntryList *TableSchema::getFields()
+{
+    return fieldList;
+}
+
 TableSchemaList::TableSchemaList():QList <TableSchema *>()
 {
 

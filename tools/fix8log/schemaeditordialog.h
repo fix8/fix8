@@ -51,7 +51,7 @@ class SchemaEditorDialog : public QMainWindow
 public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTarget(QString &windowName, QString &tabName);
-    void setFieldMaps(QMap<QString, FieldTrait *>  &fieldMap,QMultiMap <QString,FieldTrait *> &fieldsInUseMap);
+    //void setFieldMaps(QMap<QString, FieldTrait *>  &fieldMap,QMultiMap <QString,FieldTrait *> &fieldsInUseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void setDefaultHeaderItems( QBaseEntryList &defaultHeaderItems);
@@ -78,6 +78,7 @@ public slots:
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
     void saveNewEditSlot();
+    void saveSchemaSlot();
     void selectedListClickedSlot(QModelIndex);
 protected:
     void showEvent(QShowEvent *);
@@ -166,6 +167,7 @@ private:
     QMultiMap <QString,FieldTrait *> *fieldsInUseMap;
     FieldUseList *fieldUseList;
     QBaseEntryList *defaultHeaderItems;
+    QBaseEntryList selectedBaseEntryList;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

@@ -52,7 +52,7 @@ QString Database::arguments[] = {
     // tableschemas
     "id INTEGER primary key, name char(32), description char(120),locked integer default 0, xmlSchema char(36)",
     // schemafields
-    "id INTEGER primary key,name char(60),schemaID int"
+    "id INTEGER primary key,name char(60),schemaID integer"
 };
 
 Database::Database(QString fileName,QObject *parent):QObject(parent),name(fileName),handle(0)

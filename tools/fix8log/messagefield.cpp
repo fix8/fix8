@@ -55,6 +55,21 @@ FieldUse *FieldUseList::findByName(QString &name)
     }
     return 0;
 }
+BaseEntryList::BaseEntryList():QList <BaseEntry *>()
+{
+
+}
+BaseEntry *BaseEntryList::findByName(QString &name)
+{
+    BaseEntry *be = 0;
+    QListIterator <BaseEntry *> iter(*this);
+    while(iter.hasNext()) {
+        be = iter.next();
+        if (be->_name == name)
+            return be;
+    }
+    return 0;
+}
 
 QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0)
 {
@@ -67,6 +82,16 @@ QBaseEntryList::QBaseEntryList() :QList <QBaseEntry *>()
 {
 
 }
+QBaseEntryList::QBaseEntryList(const QBaseEntryList &bel):QList <QBaseEntry *>()
+{
+    QBaseEntry *be;
+    QListIterator <QBaseEntry *> iter(bel);
+    while(iter.hasNext()) {
+        be = iter.next();
+        append(be);
+    }
+}
+
 QBaseEntry * QBaseEntryList::findByName(QString &name)
 {
     QBaseEntry *qbe;

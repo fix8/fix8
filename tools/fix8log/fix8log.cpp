@@ -103,7 +103,7 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     GUI::ConsoleMessage m(str,mt);
     displayConsoleMessage(m);
 }
-void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
                            MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
 {
     int ii = 0;
@@ -137,14 +137,14 @@ void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &f
         }
         //MessageBase *header =  new Message::Header();
         //cout << "Field Type: " << ft._ftype << endl;
-        //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. Print out traits.
+        //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. g out traits.
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-        print_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
+        generate_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }
-void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
                            MessageField *mf,QBaseEntryList *qbaseEntryList)
 {
     int ii = 0;
@@ -179,10 +179,11 @@ void Fix8Log::print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &f
         }
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-        print_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
+        generate_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }
+
 
 bool Fix8Log::init()
 {
@@ -233,6 +234,14 @@ bool Fix8Log::init()
         bstatus = database->createTable(Database::WorkSheet);
         if (!bstatus) {
             errorStr = "Failed to create worksheet table.";
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+        }
+    }
+    bstatus = database->tableIsValid(Database::SchemaFields);
+    if (!bstatus) {
+        bstatus = database->createTable(Database::SchemaFields);
+        if (!bstatus) {
+            errorStr = "Failed to create table  fields table.";
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
     }
@@ -322,9 +331,6 @@ bool Fix8Log::init()
          hiter++) {
         qDebug() << "HEY HAVE THIS FIELD FROM HEADER" ;
     }
-
-    //nos
-    // qDebug() << "FieldTrait Size = " << fieldTraitV.size() << __FILE__ << __LINE__;
     for(int ii=0;ii < messageCount; ii++)
     {
         const char *kk = TEX::ctx()._bme.at(ii)->_key;
@@ -336,16 +342,12 @@ bool Fix8Log::init()
                 QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
         messageField = new MessageField(key,value);
 
-        print_traits(tr,fieldMap,fieldUseList,messageField,qbaseEntryList); // print message traits
-
+        generate_traits(tr,fieldMap,fieldUseList,messageField,qbaseEntryList);
         //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);
-
     }
-
     int sizeofFieldTable = TEX::ctx()._be.size();
-
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QList <WindowData> windowDataList = database->getWindows();

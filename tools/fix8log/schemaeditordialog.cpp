@@ -64,6 +64,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     applyA->setToolTip(tr("Apply Schema"));
 
     saveA = new QAction(tr("&Save"),this);
+    connect(saveA,SIGNAL(triggered()),this,SLOT(saveSchemaSlot()));
     saveA->setIcon(QIcon(":/images/svg/document-save.svg"));
     saveA->setToolTip(tr("Save"));
     fileMenu->addAction(applyA);
@@ -407,11 +408,13 @@ void SchemaEditorDialog::setDefaultHeaderItems( QBaseEntryList &DefaultHeaderIte
 {
     defaultHeaderItems = &DefaultHeaderItems;
 }
+/*
 void SchemaEditorDialog::setFieldMaps(QMap<QString, FieldTrait *>  &FieldMap,QMultiMap <QString,FieldTrait *> &FieldsInUseMap)
 {
     fieldMap = &FieldMap;
     fieldsInUseMap = &FieldsInUseMap;
 }
+*/
 void SchemaEditorDialog::setFieldUseList(FieldUseList &ful)
 {
     fieldUseList = &ful;

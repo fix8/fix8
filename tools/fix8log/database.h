@@ -83,6 +83,7 @@ public:
     bool updateTableSchema(TableSchema &);
     bool deleteTableSchema(qint32 tableSchemaID);
     // SchemaFields
+    bool saveTableSchemaFields(TableSchema &ts);
     QStringList getSchemaFields(int schemaID);
     bool addSchemaFields(int schemaID, QStringList fieldNames);
     bool removeSchemaFields(int schemaID);

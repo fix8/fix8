@@ -105,10 +105,11 @@ protected:
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
 private:
-    void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+    void generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
                       MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
-    void print_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+    void generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
                       MessageField *mf,QBaseEntryList *qbaseEntryList);
+
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 };

@@ -38,6 +38,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define TABLESCHEMA_H
 #include <QString>
 #include <QList>
+#include <QPointer>
+#include "messagefield.h"
 class TableSchema
 {
 public:
@@ -45,10 +47,13 @@ public:
     TableSchema(QString name, QString description,bool isLocked);
     TableSchema(const TableSchema &);
     TableSchema & operator=( const TableSchema &rhs);
+    void setFields(QBaseEntryList *);
+    QBaseEntryList * getFields();
     qint32 id;
     QString name;
     QString description;
     bool locked;
+    QBaseEntryList  *fieldList;
 };
 
 class TableSchemaList : public QList <TableSchema *>
