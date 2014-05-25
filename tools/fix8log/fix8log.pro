@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     databaseTableSchemas.cpp \
     tableschema.cpp \
     schemaEditorDialogSlots.cpp \
-    databaseSchemaFields.cpp
+    databaseSchemaFields.cpp \
+    fix8logSlots.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

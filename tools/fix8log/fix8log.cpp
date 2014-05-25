@@ -67,15 +67,7 @@ Fix8Log::Fix8Log(QObject *parent) :
     connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
     defaultHeaderStrs << "MsgSeqNum" << "MsgType" << "SendingTime" << "SenderCompID" << "TargetCompID";
 }
-void Fix8Log::createNewWindowSlot(MainWindow *mw)
-{
-    MainWindow *newMW  =new MainWindow(*mw);
-    wireSignalAndSlots(newMW);
-    newMW->show();
-    newMW->showFileDialog();
-    mainWindows.append(newMW);
-    //const GeneratedTable<const char *, BaseMsgEntry>::Pair *p = TEX::ctx()._bme.at(1);
-}
+
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,true);
@@ -105,29 +97,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(editSchema(MainWindow*,QUuid)),this,SLOT(editSchemaSlot(MainWindow*,QUuid)));
     mw->setAutoSaveOn(autoSaveOn);
 }
-void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
-{
-    if (mainWindows.count() == 1)  {
-        if (autoSaveOn) {
-            saveSession();
-        }
-    }
-    mainWindows.removeOne(mw);
-    mw->deleteLater();
-    if (mainWindows.count() < 1) {
-        writeSettings();
-        qApp->exit();
-    }
-}
-void Fix8Log::displayConsoleMessage(GUI::ConsoleMessage msg)
-{
-    MainWindow *mw;
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        mw->displayConsoleMessage(msg);
-    }
-}
+
 void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMessageType mt)
 {
     GUI::ConsoleMessage m(str,mt);
@@ -471,14 +441,7 @@ bool Fix8Log::init(QString fileNameToLoad)
     }
     return true;
 }
-void Fix8Log::exitAppSlot()
-{
-    if (autoSaveOn)
-        saveSession();
-    //writeSettings();
-    qApp->closeAllWindows();
-    qApp->quit();
-}
+
 void Fix8Log::saveSession()
 {
     MainWindow *mw;
@@ -510,34 +473,9 @@ void Fix8Log::saveSession()
         }
     }
 }
-void Fix8Log::toolButtonStyleModfiedSlot(Qt::ToolButtonStyle tbs)
-{
-    MainWindow *mw;
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        mw->setToolButtonStyle(tbs);
-    }
-    if (schemaEditorDialog)
-        schemaEditorDialog->setToolButtonStyle(tbs);
-}
 
-void Fix8Log::autoSaveOnSlot(bool on)
-{
-    MainWindow *mw;
-    QListIterator <MainWindow *> iter(mainWindows);
-    autoSaveOn = on;
-    QString str = "on";
-    if (!autoSaveOn)
-        str = "off";
-    displayConsoleMessage("Autosave turned " + str);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        mw->setAutoSaveOn(autoSaveOn);
-    }
-    QSettings settings("fix8","logviewer");
-    settings.setValue("AutoSave",autoSaveOn);
-}
+
+
 void Fix8Log::readSettings()
 {
     QSettings settings("fix8","logviewer");
@@ -552,126 +490,6 @@ void Fix8Log::writeSettings()
     QSettings settings("fix8","logviewer");
 
 
-}
-void Fix8Log::lastWindowClosedSlot()
-{
-    qDebug() << "Last Window closed";
-}
-void Fix8Log::cancelSessionRestoreSlot()
-{
-    cancelSessionRestore = true;
-    displayConsoleMessage("Session Restore Cancelled");
-}
-void  Fix8Log::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
-{
-    GUI::Globals::timeFormat = tf;
-    // tell all main windows that format changed
-    emit notifyTimeFormatChanged(tf);
-    QSettings settings("fix8","logviewer");
-    settings.setValue("StartTimeFormat",tf);
-}
-void  Fix8Log::modelDroppedSlot(FixMimeData* fmd)
-{
-    bool ok = false;
-    WorkSheetData wsd;
-    MainWindow *mw;
-    MainWindow *mwSender = qobject_cast <MainWindow *> (sender());
-    if (!mwSender) {
-        qWarning() << "Invalid sender, drop failed " << __FILE__ << __LINE__;
-    }
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        if (mw->getUuid() == fmd->windowID) {
-            wsd = mw->getWorksheetData(fmd->worksheetID, &ok);
-            mwSender->finishDrop(wsd,fmd);
-            break;
-        }
-    }
-}
-void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
-{
-    bool ok;
-    QString tabName;
-    if (!schemaEditorDialog) {
-        schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
-        schemaEditorDialog->populateMessageList(messageFieldList);
-        QListIterator <MainWindow *> iter(mainWindows);
-        if (iter.hasNext()) {
-            MainWindow *mw = iter.next();
-            schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
-        }
-        schemaEditorDialog->setFieldMaps(fieldMap,fieldsInUseMap);
-        schemaEditorDialog->setFieldUseList(fieldUseList);
-        schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
-        schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
-        connect(schemaEditorDialog,SIGNAL(finished(int)),
-                this,SLOT(schemaEditorFinishedSlot(int)));
-        connect(schemaEditorDialog,SIGNAL(newSchemaCreated(TableSchema*)),
-                this,SLOT(newSchemaCreatedSlot(TableSchema *)));
-        connect(schemaEditorDialog,SIGNAL(schemaDeleted(int)),
-                this,SLOT(schemaDeletedSlot(int)));
-        schemaEditorDialog->restoreSettings();
-    }
-
-    QString windowName = mw->windowTitle();
-    if (windowName.length() < 1)
-        windowName = qApp->applicationName();
-    if (!workSheetID.isNull()) {
-        WorkSheetData wsd = mw->getWorksheetData(workSheetID,&ok);
-        if (ok) {
-            if (wsd.tabAlias.length() >= 1)
-                tabName = wsd.tabAlias;
-            else
-                tabName = wsd.fileName;
-        }
-    }
-    schemaEditorDialog->setCurrentTarget(windowName,tabName);
-    schemaEditorDialog->show();
-    schemaEditorDialog->setVisible(true);
-     schemaEditorDialog->showNormal();
-    schemaEditorDialog->raise();
-
-}
-
-void Fix8Log::newSchemaCreatedSlot(TableSchema *ts)
-{
-    MainWindow *mw;
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        mw->addNewSchema(ts);
-    }
-}
-void Fix8Log::schemaDeletedSlot(int schemaID)
-{
-    MainWindow *mw;
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        mw->deletedSchema(schemaID);
-    }
-    TableSchema *ts = tableSchemaList->findByID(schemaID);
-    qDebug() << "REMOVE TS FROM LIST" << __FILE__ << __LINE__;
-    if (ts) {
-        tableSchemaList->removeOne(ts);
-        qDebug() << "\tDelete It";
-        delete ts;
-        qDebug() << "\tAfter Delete";
-    }
-}
-void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
-{
-    if (returnCode == QDialogButtonBox::Close)
-        schemaEditorDialog->close();
-    schemaEditorDialog->saveSettings();
-
-}
-void Fix8Log::setGlobalSchemaOnSlot(bool b)
-{
-    QSettings settings("fix8","logviewer");
-    globalSchemaOn = b;
-    settings.setValue("GlobalSchemaOn",b);
 }
 
 bool Fix8Log::isGlobalSchemaOn()
