@@ -172,7 +172,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
             MainWindow *mw = iter.next();
             schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
         }
-       // schemaEditorDialog->setFieldMaps(fieldMap,fieldsInUseMap);
+        schemaEditorDialog->setBaseMaps(baseMap);
         schemaEditorDialog->setFieldUseList(fieldUseList);
         schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);

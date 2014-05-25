@@ -48,6 +48,7 @@ TableSchema::TableSchema(const TableSchema &ts)
     name = ts.name;
     description = ts.description;
     locked = ts.locked;
+    fieldNames = ts.fieldNames;
 }
 TableSchema & TableSchema::operator=( const TableSchema &rhs)
 {
@@ -56,6 +57,7 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
     name        = rhs.name;
     description = rhs.description;
     locked      = rhs.locked;
+    fieldNames  = rhs.fieldNames;
     return *this;
 }
 void TableSchema::setFields(QBaseEntryList * qel)

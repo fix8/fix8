@@ -99,15 +99,15 @@ protected:
     bool globalSchemaOn;
     MessageFieldList *messageFieldList;
     FieldTraitVector fieldTraitV;
-    QMap<QString, FieldTrait *> fieldMap;
+    QMap<QString, QBaseEntry *> baseMap;
     QMultiMap <QString,FieldTrait *> fieldsInUseMap;
     FieldUseList fieldUseList;
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
 private:
-    void generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+    void generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
-    void generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
+    void generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QBaseEntryList *qbaseEntryList);
 
 signals:

@@ -103,8 +103,8 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     GUI::ConsoleMessage m(str,mt);
     displayConsoleMessage(m);
 }
-void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
-                           MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
+void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
+                              MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
 {
     int ii = 0;
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
@@ -114,17 +114,20 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *>
         QString name;
         const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
         if(qbaseEntryList) {
-            qbe  = new QBaseEntry(*be);
-            qbaseEntryList->append(qbe);
-            qbe->ft = new FieldTrait(*itr);
+            qbe = baseMap.value(be->_name);
+            if (!qbe) {
+                qbe  = new QBaseEntry(*be);
+                qbe->ft = new FieldTrait(*itr);
+                baseMap.insert(qbe->name,qbe);
+            }
             name = qbe->name;
+            qbaseEntryList->append(qbe);
+
             if (defaultHeaderStrs.contains(name)) {
                 if (!defaultHeaderItems.findByName(name))
                     defaultHeaderItems.append(qbe);
             }
-            if (!fieldMap.contains(name)) {
-                fieldMap.insert(name,qbe->ft);
-            }
+
             fieldUse = ful.findByName(name);
             if (!fieldUse) {
                 fieldUse = new FieldUse();
@@ -140,12 +143,12 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *>
         //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. g out traits.
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-        generate_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
+        generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }
-void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *> &fieldMap,FieldUseList &ful,
-                           MessageField *mf,QBaseEntryList *qbaseEntryList)
+void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
+                              MessageField *mf,QBaseEntryList *qbaseEntryList)
 {
     int ii = 0;
     QString name;
@@ -155,23 +158,23 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *>
         FieldUse *fieldUse = 0;
         const BaseEntry *be(TEX::ctx().find_be(itr->_fnum)); // lookup the field
         if(qbaseEntryList) {
-            qbe  = new QBaseEntry(*be);
-            qbaseEntryList->append(qbe);
-            qbe->ft = new FieldTrait(*itr);
+            qbe = baseMap.value(be->_name);
+            if (!qbe) {
+                qbe  = new QBaseEntry(*be);
+                qbe->ft = new FieldTrait(*itr);
+                baseMap.insert(qbe->name,qbe);
+            }
             name = qbe->name;
+            qbaseEntryList->append(qbe);
             fieldUse = ful.findByName(name);
-
             if (!fieldUse) {
                 fieldUse = new FieldUse();
-
                 fieldUse->name = name;
                 fieldUse->field = qbe->ft;
                 ful.append(fieldUse);
             }
             fieldUse->messageFieldList.append(mf);
-            if (!fieldMap.contains(name)) {
-                fieldMap.insert(name,qbe->ft);
-            }
+
             if (defaultHeaderStrs.contains(name)) {
                 if (!defaultHeaderItems.findByName(name))
                     defaultHeaderItems.append(qbe);
@@ -179,7 +182,7 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, FieldTrait *>
         }
         if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-        generate_traits(itr->_group,fieldMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
+        generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
         ii++;
     }
 }
@@ -304,10 +307,14 @@ bool Fix8Log::init()
         }
         MainWindow::defaultTableSchema = defaultTableSchema;
     }
-    /*
-    if (tableSchemaList)
-        cout << "NUM OF TABLE SCHEMAS FOUND IN DB ARE:" << tableSchemaList->count() << endl;
-    */
+
+    if (tableSchemaList) {
+        QListIterator <TableSchema *> tsIter(*tableSchemaList);
+        while(tsIter.hasNext()) {
+            TableSchema *ts = tsIter.next();
+            ts->fieldNames = database->getSchemaFields(ts->id);
+        }
+    }
     QString key;
     QString value;
     quint32 ikey;
@@ -342,10 +349,27 @@ bool Fix8Log::init()
                 QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
         messageField = new MessageField(key,value);
 
-        generate_traits(tr,fieldMap,fieldUseList,messageField,qbaseEntryList);
+        generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList);
         //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);
+    }
+
+    // generate fieldList from names;
+    if (tableSchemaList) {
+        QListIterator <TableSchema *> tsIter(*tableSchemaList);
+        while(tsIter.hasNext()) {
+            TableSchema *ts = tsIter.next();
+            ts->fieldList  = new QBaseEntryList();
+            QStringListIterator fieldNameIter(ts->fieldNames);
+            while(fieldNameIter.hasNext()) {
+                fieldName = fieldNameIter.next();
+                QBaseEntry *qbe = baseMap.value(fieldName);
+                if (qbe) {
+                    ts->fieldList->append(qbe);
+                }
+            }
+        }
     }
     int sizeofFieldTable = TEX::ctx()._be.size();
     // initial screeen
@@ -361,6 +385,12 @@ bool Fix8Log::init()
     if (autoSaveOn){
         while(iter.hasNext()) {
             WindowData wd = iter.next();
+            wd.tableSchema = tableSchemaList->findByID(wd.tableSchemaID);
+            if (!wd.tableSchema) {
+                qWarning() << "Table Schema Not Found, setting to default";
+                wd.tableSchema = defaultTableSchema;
+                wd.tableSchemaID = defaultTableSchema->id;
+            }
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);

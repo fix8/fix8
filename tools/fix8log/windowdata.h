@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define WINDOWDATA_H
 #include <QByteArray>
 #include <QColor>
+class TableSchema;
 
 class WindowData {
 public:
@@ -51,5 +52,6 @@ public:
     qint32     currentTab;
     QString    name;
     qint32     tableSchemaID;
+    TableSchema *tableSchema;
 };
 #endif // WINDOWDATA_H

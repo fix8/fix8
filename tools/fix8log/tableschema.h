@@ -54,6 +54,7 @@ public:
     QString description;
     bool locked;
     QBaseEntryList  *fieldList;
+    QStringList fieldNames; // stored in database
 };
 
 class TableSchemaList : public QList <TableSchema *>

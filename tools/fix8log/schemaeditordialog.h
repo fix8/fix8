@@ -50,8 +50,9 @@ class SchemaEditorDialog : public QMainWindow
     Q_OBJECT
 public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
+    void setCurrentTableSchema(int schemaID);
     void setCurrentTarget(QString &windowName, QString &tabName);
-    //void setFieldMaps(QMap<QString, FieldTrait *>  &fieldMap,QMultiMap <QString,FieldTrait *> &fieldsInUseMap);
+    void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void setDefaultHeaderItems( QBaseEntryList &defaultHeaderItems);
@@ -90,6 +91,7 @@ private:
     void setUncheckedStateParent(QStandardItem *parentItem);
     QWidget  * buildSchemaArea();
     void setMessage(QString str, bool isError);
+    void buildSelectedListFromCurrentSchema();
     bool validate();
     //SchemaEditorWidget *schemaWidget;
     QAction  *closeA;
@@ -163,11 +165,12 @@ private:
     bool globalSchemaOn;
     MessageFieldList *messageFieldList;
     ExpandMode expandMode;
-    QMap<QString, FieldTrait *> *fieldMap;
+    QMap<QString, QBaseEntry *> *baseMap;
     QMultiMap <QString,FieldTrait *> *fieldsInUseMap;
     FieldUseList *fieldUseList;
     QBaseEntryList *defaultHeaderItems;
     QBaseEntryList selectedBaseEntryList;
+    TableSchema *currentTableSchema;
 };
 
 #endif // SCHEMAEDITORDIALOG_H
