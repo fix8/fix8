@@ -319,6 +319,13 @@ public:
 	unsigned get_version(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "fix_version", def); }
 
+	/*! Extract the Message printer tabsize from a session entity.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return the tabsize version or defaults::tabsize if not found */
+	unsigned get_tabsize(const XmlElement *from, const unsigned def=defaults::tabsize) const
+		{ return find_or_default(from, "tabsize", def); }
+
 	/*! Extract the logfile rotation count.
 	  \param from xml entity to search
 	  \param def default value if not found

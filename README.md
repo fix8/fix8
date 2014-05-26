@@ -209,6 +209,7 @@ Please refer to the following pages for help:
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
+- [Wiki](https://fix8engine.atlassian.net/wiki)
 
 ## Downloads
 
@@ -221,25 +222,38 @@ Please refer to the following page:
 the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
 If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
+- Please refrain from emailing us directly. **Support questions sent directly to us will be redirected to the support group.**
 
 - If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
 register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
-sample configuruation files, config.log, etc. If you have already implemented a fix, and wish to make a pull
-request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
+sample configuruation files, config.log, etc.
+
+- If you have already implemented a fix, and wish to make a pull request on Github please create an issue in Jira first.
+This will help us track the problem and ensure that the solution is properly tested.
 
 - When considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
-These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes, some of which will relate
-to your build, your code and your configuration and are not a problem with the framework implementation. Make sure you have eliminated
+These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes and some will relate
+to your build, your code and your configuration and will not be a problem with the framework implementation. Make sure you have eliminated
 these possibilities and that you have reviewed topics in the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
 the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
 
 - We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
 
+- If you are on [LinkedIn](http://linkedin.com) join the LinkedIn group **Fix8 Users and Developers**
+for more help and information about the Fix8 project.
+
 ## License
 
 Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
 See [License](http://fix8.org/faq.html#license) for more information.
+
+## Fix8Pro and Fix8 Market Technologies
+
+[Fix8Pro](http://www.fix8pro.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
+(Fix8MT) develops and maintains both Fix8Pro and the Fix8 open source versions.
+Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
+Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
+Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
 
 ## More Information
 

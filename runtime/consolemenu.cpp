@@ -181,15 +181,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 		for (int nlines(0); pp < rb->_sz; ++pp)
 		{
 			_os << '[' << _opt_keys[nlines] << "]  " << *(rb->_descriptions + pp) << " (";
-			if (FieldTrait::is_int(rb->_ftype))
-				_os << *((static_cast<const int *>(rb->_range) + pp));
-			else if (FieldTrait::is_char(rb->_ftype))
-				_os << *((static_cast<const char *>(rb->_range) + pp));
-			else if (FieldTrait::is_float(rb->_ftype))
-				_os << *((static_cast<const double *>(rb->_range) + pp));
-			else if (FieldTrait::is_string(rb->_ftype))
-				_os << *((static_cast<const f8String *>(rb->_range) + pp));
-
+			rb->print(_os, pp);
 			_os << ')' << endl;
 
 			++nlines;

@@ -69,6 +69,9 @@ struct RealmBase
 	const int _sz;
 	const char * const *_descriptions;
 
+	RealmBase(const void *range, RealmType dtype, FieldTrait::FieldType ftype, int sz, const char * const *descriptions)
+		: _range(range), _dtype(dtype), _ftype(ftype), _sz(sz), _descriptions(descriptions) {}
+
 	/*! Check if this value is a member/in range of the domain set.
 	  \tparam T domain type
 	  \param what the value to check
@@ -100,6 +103,26 @@ struct RealmBase
 			return res != rng + _sz ? res - rng : -1;
 		}
 		return 0;
+	}
+
+	/*! Printer helper
+	  \tparam T target type
+	  \param os output stream
+	  \param idx index of value in range
+	  \return the output stream */
+	template<typename T>
+	std::ostream& _print(std::ostream& os, int idx) const { return os << *((static_cast<const T *>(_range) + idx)); }
+
+	/*! Print the given value by index to the supplied stream
+	  \param os output stream
+	  \param idx index of value in range
+	  \return the output stream */
+	std::ostream& print(std::ostream& os, int idx) const
+	{
+		return FieldTrait::is_int(_ftype) ? _print<int>(os, idx)
+			: FieldTrait::is_char(_ftype) ? _print<char>(os, idx)
+			: FieldTrait::is_float(_ftype) ? _print<double>(os, idx)
+			: FieldTrait::is_string(_ftype) ? _print<f8String>(os, idx) : os;
 	}
 };
 
@@ -195,6 +218,9 @@ public:
 template<typename T, const unsigned short field>
 class Field : public BaseField
 {
+	Field () = delete;
+	Field (const Field& from) = delete;
+	Field (const f8String& from, const RealmBase *rlm=nullptr) = delete;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -722,15 +748,15 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
 
 /*! Format Tickval into a string.
+  \param tickval input Tickval object
+  \param to output buffer, should make sure there is enough space reserved
+  \param ind indicating whether need millisecond or not
 	_time_only, the format string will be "HH:MM:SS"
 	_time_with_ms, the format string will be "HH:MM:SS.mmm"
 	_short_date_only, the format string will be "YYYYMM"
 	_date_only, the format string will be "YYYYMMDD"
 	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
 	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
-  \param tickval input Tickval object
-  \param to output buffer, should make sure there is enough space reserved
-  \param ind indicating whether need millisecond or not
   \return length of formatted string */
 inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndicator ind)
 {
@@ -773,7 +799,7 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
 }
 
 /*! Decode a DateTime string into ticks
-  \param ptr input DateTime string
+  \param ptr input DateTime string, if *ptr == '!' return current time
   \param len length of string
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
@@ -812,7 +838,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 }
 
 /*! Decode a Time string into ticks
-  \param ptr input time string
+  \param ptr input time string, if *ptr == '!' return current time
   \param len length of string
   \param timeonly if true, only calculate ticks for today
   \return ticks decoded */
@@ -912,9 +938,7 @@ public:
 	Field& operator=(const Field& that)
 	{
 		if (this != &that)
-		{
 			_value = that._value;
-		}
 		return *this;
 	}
 
@@ -1741,16 +1765,30 @@ using data = f8String;
 /// Field metadata structures
 class Inst
 {
+	/*! Generate a field instantiator
+	  \tparam T type to instantiate */
    template<typename T>
 	struct _gen
 	{
-		static BaseField *_make(const char *from, const RealmBase *db, const int)
-			{ return new T(from, db); }
+		/*! Instantiate a field (no realm)
+		  \param from source string
+		  \param db realm base for this type
+		  \param rv realm value
+		  \return new field */
+		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+			{ return new T{from, db}; }
 	};
 
+	/*! Generate a field instantiator with realm
+	  \tparam T type to instantiate */
    template<typename T, typename R>
 	struct _gen_realm
 	{
+		/*! Instantiate a field
+		  \param from source string
+		  \param db realm base for this type
+		  \param rv realm value
+		  \return new field */
 		static BaseField *_make_realm(const char *from, const RealmBase *db, const int rv)
 		{
 			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
@@ -1761,9 +1799,14 @@ class Inst
 public:
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
+	/*! Ctor
+	  \tparam T type to instantiate */
    template<typename T>
    Inst(Type2Type<T>) : _do(_gen<T>::_make) {}
 
+	/*! Ctor with realm
+	  \tparam T type to instantiate
+	  \tparam R realm type to instantiate */
    template<typename T, typename R>
    Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
 };

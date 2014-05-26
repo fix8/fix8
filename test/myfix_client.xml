@@ -16,6 +16,7 @@
 				process_model="threaded"
 				enforce_compids="false"
 				login_retries="5"
+				tabsize="3"
 				persist="file0" />
 
 	<session name="DLD1"

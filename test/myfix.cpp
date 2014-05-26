@@ -557,7 +557,7 @@ bool MyMenu::static_probe()
 	{
 		function<void (const TraitHelper&, int)> print_traits([&print_traits, this](const TraitHelper& tr, int depth)
 		{
-			const string spacer(depth * 3, ' ');
+			const string spacer(depth * MessageBase::get_tabsize(), ' ');
 			for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
 			{
 				const BaseEntry *be(_session.get_ctx().find_be(itr->_fnum));
