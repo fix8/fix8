@@ -162,14 +162,8 @@ void SchemaEditorDialog::cancelNewSlot()
 {
     viewMode = RegMode;
     messageL->setText("");
-    newSchemaStackArea->setCurrentIndex(RegMode);
-    buttonStackArea->setCurrentIndex(RegMode);
-    QPalette pal = descriptionE->palette();
-    pal.setColor(QPalette::Base,regularColor);
-    descriptionE->setPalette(pal);
-    descriptionE->setText("");
-    descriptionE->setReadOnly(true);
-    availableSchemasL->setText("Available Schemas");
+    schemaArea->setCurrentIndex(RegMode);
+
     validate();
 }
 void SchemaEditorDialog::clearSelectedSlot()
@@ -436,15 +430,15 @@ void SchemaEditorDialog::newSchemaSlot()
 {
     bool bstatus;
     viewMode = NewMode;
-    buttonStackArea->setCurrentIndex(NewMode);
-    newSchemaStackArea->setCurrentIndex(NewMode);
+
+    schemaArea->setCurrentIndex(NewMode);
     QPalette pal = descriptionE->palette();
     pal.setColor(QPalette::Base,editColor);
     descriptionE->setPalette(pal);
     descriptionE->setReadOnly(false);
-    availableSchemasL->setText("New Schema");
+
     newSchemaLine->setText("");
-    descriptionE->setText("");
+    newDescriptionE->setText("");
     newSchemaLine->setFocus();
     validate();
 }
@@ -477,7 +471,7 @@ void SchemaEditorDialog::saveNewEditSlot()
         }
         messageL->setText("");
         newSchemaLine->setText("");
-        tableSchema = new TableSchema(name,descriptionE->toPlainText(),false);
+        tableSchema = new TableSchema(name,newDescriptionE->toPlainText(),false);
         bstatus = database->addTableSchema(*tableSchema);
         if (!bstatus) {
             setMessage("Error - save to database failed",true);
@@ -486,13 +480,7 @@ void SchemaEditorDialog::saveNewEditSlot()
         si = new SchemaItem(*tableSchema);
         schemaModel->appendRow(si);
         viewMode = RegMode;
-        newSchemaStackArea->setCurrentIndex(RegMode);
-        buttonStackArea->setCurrentIndex(RegMode);
-        QPalette pal = descriptionE->palette();
-        pal.setColor(QPalette::Base,regularColor);
-        descriptionE->setPalette(pal);
-        descriptionE->setReadOnly(true);
-        availableSchemasL->setText("Available Schemas");
+        schemaArea->setCurrentIndex(RegMode);
         validate();
         tableSchemaList->append(tableSchema);
         emit newSchemaCreated(tableSchema);

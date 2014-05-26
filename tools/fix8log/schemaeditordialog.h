@@ -89,7 +89,7 @@ private:
     void addItemToSelected(QStandardItem *,Qt::CheckState);
     void setCheckState(QStandardItem *item,Qt::CheckState cs);
     void setUncheckedStateParent(QStandardItem *parentItem);
-    QWidget  * buildSchemaArea();
+    void buildSchemaArea();
     void setMessage(QString str, bool isError);
     void buildSelectedListFromCurrentSchema();
     bool validate();
@@ -105,6 +105,7 @@ private:
     QColor regMesssgeColor;
     QColor errorMessageColor;
     QGroupBox *descriptionBox;
+    QGroupBox *newDescriptionBox;
     QLabel  *windowL;
     QLabel  *tabL;
     QLineEdit  *tabV;
@@ -115,6 +116,7 @@ private:
     QTreeView *selectedListView;
     QLabel *availableSchemasL;
     QLabel *messageListL;
+    QLabel *newAvailableSchemasL;
     QLabel *newSchemaL;
     QLabel *availableListL;
     QLabel *selectedListL;
@@ -141,8 +143,7 @@ private:
     QSplitter   *splitter;
     QScrollArea *schemaScrollArea;
     QSpacerItem *messageSpacerItem;
-    QStackedWidget *buttonStackArea;
-    QStackedWidget *newSchemaStackArea;
+    QStackedWidget *schemaArea;
     QStandardItem  *availableFieldHeaderItem;
     QStandardItem  *selectedHeaderItem;
     QStandardItemModel *messageModel;
@@ -150,9 +151,10 @@ private:
     QStandardItemModel *availableFieldModel;
     QStandardItemModel *selectedModel;
     QTextEdit *descriptionE;
+    QTextEdit *newDescriptionE;
     QToolBar *mainToolBar;
+    QWidget *availableArea;
     QWidget *newSchemaArea;
-    QWidget *schemaArea;
     QWidget *targetArea;
     QLabel  *messageL;
     ViewMode viewMode;

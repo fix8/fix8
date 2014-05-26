@@ -53,7 +53,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
      mainToolBar->setObjectName("SchemaToolBar");
     mainToolBar->setMovable(true);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
-
     closeA = new QAction(tr("&Close Window"),this);
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
@@ -140,8 +139,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     topBox->addWidget(targetArea,1);
     topBox->addStretch(1);
     splitter = new QSplitter(Qt::Horizontal,this);
-    schemaArea = buildSchemaArea();
-
+    buildSchemaArea();
     QWidget *workWidget = new QWidget();
     QGridLayout *wgrid = new QGridLayout();
     workWidget->setLayout(wgrid);
@@ -293,81 +291,39 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     QPalette pal = messageL->palette();
     regMesssgeColor = pal.color(QPalette::WindowText);
     errorMessageColor = Qt::red;
-
     vbox->addLayout(topBox,0);
     vbox->addSpacing(22);
     vbox->addWidget(splitter,1);
     vbox->addSpacing(12);
     vbox->addWidget(messageL,0);
-    newSchemaStackArea->setCurrentIndex(RegMode);
-    buttonStackArea->setCurrentIndex(RegMode);
     viewMode = RegMode;
 }
-QWidget *SchemaEditorDialog::buildSchemaArea()
+void SchemaEditorDialog::buildSchemaArea()
 {
-    QWidget *widget = new QWidget(this);
-    QVBoxLayout *sbox = new QVBoxLayout(widget);
-    widget->setLayout(sbox);
-    newSchemaArea = new QWidget(widget);
-    QVBoxLayout  *newBox = new QVBoxLayout(newSchemaArea);
-    newSchemaArea->setLayout(newBox);
-    newBox->setMargin(0);
-    newBox->setSpacing(5);
-    ///QWidget *schemaInner = QWidget();
-    availableSchemasListView = new QListView(newSchemaArea);
+    schemaArea = new QStackedWidget(this);
+    availableArea = new QWidget(schemaArea);
+    QVBoxLayout *abox = new QVBoxLayout(availableArea);
+    abox->setMargin(0);
+    availableArea->setLayout(abox);
+    availableSchemasL = new QLabel("Schemas",availableArea);
+    availableSchemasListView = new QListView(availableArea);
     connect(availableSchemasListView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(availableSchemasClickedSlot(QModelIndex)));
     schemaModel = new QStandardItemModel(availableSchemasListView);
-
     availableSchemasListView->setModel(schemaModel);
-    newSchemaL = new QLabel("Name",newSchemaArea);
-    newSchemaLine = new QLineEdit(newSchemaArea);
-    newSchemaLine->setMaxLength(24);
-    newSchemaLine->setToolTip("Name of Schema");
-    QRegExp regExp("^[a-z,A-Z,0-9]+\\s?[a-z,A-Z,0-9]+$");
-    QValidator *val = new QRegExpValidator(regExp,this);
-    newSchemaLine->setValidator(val);
-    connect(newSchemaLine,SIGNAL(textEdited(const QString &)),
-            this,SLOT(nameEditedSlot(const QString &)));
-    newBox->addWidget(newSchemaL,0,Qt::AlignBottom);
-    newBox->addWidget(newSchemaLine,0,Qt::AlignTop);
-    newSchemaStackArea = new QStackedWidget(widget);
-    newSchemaStackArea->insertWidget(RegMode,availableSchemasListView);
-    newSchemaStackArea->insertWidget(NewMode,newSchemaArea);
-    descriptionBox = new QGroupBox("Description",widget);
+    descriptionBox = new QGroupBox("Description",availableArea);
     descriptionBox->setFlat(true);
     QVBoxLayout *dbox = new QVBoxLayout();
     dbox->setMargin(4);
     descriptionBox->setLayout(dbox);
     descriptionE = new QTextEdit(descriptionBox);
-    descriptionE->setToolTip("Optional Field");
-    QPalette pal = descriptionE->palette();
-    regularColor = pal.color(QPalette::Base);
-    editColor = QColor(174,184,203,180);
-    pal = newSchemaLine->palette();
-    pal.setColor(QPalette::Base,editColor);
-    newSchemaLine->setPalette(pal);
     QFontMetrics fm(descriptionE->font());
-    descriptionE->setMaximumHeight(fm.height()*3);
-    availableSchemasL = new QLabel("Available Schemas");
+    descriptionE->setToolTip("Optional Field");
+    descriptionE->setMaximumHeight(fm.height()*4);
     descriptionE->setReadOnly(true);
     dbox->addWidget(descriptionE);
-    buttonStackArea = new QStackedWidget(this);
-    QWidget *schemaButtonEditArea = new QWidget(this);
-    QHBoxLayout *schemaButtonEditBox = new QHBoxLayout();
-    schemaButtonEditArea->setLayout(schemaButtonEditBox);
-    saveEditPB = new QPushButton("Save",schemaButtonEditArea);
-    saveEditPB->setToolTip("Save schema");
-    saveEditPB->setIcon(QIcon(":/images/svg/checkmark.svg"));
-    cancelEditPB = new QPushButton("Cancel",schemaButtonEditArea);
-    cancelEditPB->setToolTip("Cancel the creation or editing of a schema");
-    cancelEditPB->setIcon(QIcon(":/images/svg/cancel.svg"));
-    connect(saveEditPB,SIGNAL(clicked()),this,SLOT(saveNewEditSlot()));
-    connect(cancelEditPB,SIGNAL(clicked()),this,SLOT(cancelNewSlot()));
-    schemaButtonEditBox->addWidget(cancelEditPB,0);
-    schemaButtonEditBox->addWidget(saveEditPB,0);
-    QWidget *schemaButtonArea = new QWidget(widget);
-    QGridLayout *schemaGrid = new QGridLayout();
+    QWidget *schemaButtonArea = new QWidget(availableArea);
+    QGridLayout *schemaGrid = new QGridLayout(schemaButtonArea);
     schemaButtonArea->setLayout(schemaGrid);
     newSchemaPB = new QPushButton("New",schemaButtonArea);
     newSchemaPB->setIcon(QIcon(":/images/svg/newspreadsheet.svg"));
@@ -389,15 +345,64 @@ QWidget *SchemaEditorDialog::buildSchemaArea()
     schemaGrid->addWidget(deleteSchemaPB,1,1);
     schemaGrid->setColumnStretch(0,0);
     schemaGrid->setColumnStretch(1,0);
-    sbox->setMargin(0);
-    sbox->setSpacing(0);
-    sbox->addWidget(availableSchemasL,0);
-    sbox->addWidget(newSchemaStackArea,1);
-    sbox->addWidget(descriptionBox,0);
-    buttonStackArea->insertWidget(RegMode,schemaButtonArea);
-    buttonStackArea->insertWidget(NewMode,schemaButtonEditArea);
-    sbox->addWidget(buttonStackArea,0,Qt::AlignBottom);
-    return (widget);
+    abox->addWidget(availableSchemasL,0);
+    abox->addWidget(availableSchemasListView,1);
+    abox->addWidget(descriptionBox,0);
+    abox->addWidget(schemaButtonArea);
+    newSchemaArea = new QWidget(schemaArea);
+    QVBoxLayout  *newBox = new QVBoxLayout(newSchemaArea);
+    newSchemaArea->setLayout(newBox);
+    newBox->setMargin(0);
+    newBox->setSpacing(5);
+    newAvailableSchemasL = new QLabel("Create New Schema",newSchemaArea);
+    newSchemaL = new QLabel("Name",newSchemaArea);
+    newSchemaLine = new QLineEdit(newSchemaArea);
+    newSchemaLine->setMaxLength(24);
+    newSchemaLine->setToolTip("Name of Schema");
+    QRegExp regExp("^[a-z,A-Z,0-9]+\\s?[a-z,A-Z,0-9]+$");
+    QValidator *val = new QRegExpValidator(regExp,this);
+    newSchemaLine->setValidator(val);
+    connect(newSchemaLine,SIGNAL(textEdited(const QString &)),
+            this,SLOT(nameEditedSlot(const QString &)));
+    newDescriptionBox = new QGroupBox("Description",newSchemaArea);
+    newDescriptionBox->setFlat(true);
+    QVBoxLayout *ndbox = new QVBoxLayout(newDescriptionBox);
+    ndbox->setMargin(4);
+    newDescriptionBox->setLayout(ndbox);
+    newDescriptionE = new QTextEdit(newDescriptionBox);
+    newDescriptionE->setToolTip("Optional Field");
+    ndbox->addWidget(newDescriptionE);
+
+    QWidget *schemaButtonEditArea = new QWidget(newSchemaArea);
+    QHBoxLayout *schemaButtonEditBox = new QHBoxLayout(schemaButtonEditArea);
+    schemaButtonEditArea->setLayout(schemaButtonEditBox);
+    saveEditPB = new QPushButton("Save",schemaButtonEditArea);
+    saveEditPB->setToolTip("Save schema");
+    saveEditPB->setIcon(QIcon(":/images/svg/checkmark.svg"));
+    cancelEditPB = new QPushButton("Cancel",schemaButtonEditArea);
+    cancelEditPB->setToolTip("Cancel the creation or editing of a schema");
+    cancelEditPB->setIcon(QIcon(":/images/svg/cancel.svg"));
+    connect(saveEditPB,SIGNAL(clicked()),this,SLOT(saveNewEditSlot()));
+    connect(cancelEditPB,SIGNAL(clicked()),this,SLOT(cancelNewSlot()));
+    schemaButtonEditBox->addWidget(cancelEditPB,0);
+    schemaButtonEditBox->addWidget(saveEditPB,0);
+    newBox->addWidget(newAvailableSchemasL,0);
+    newBox->addSpacing(32);
+    newBox->addWidget(newSchemaL,0,Qt::AlignBottom);
+    newBox->addWidget(newSchemaLine,0,Qt::AlignTop);
+    newBox->addWidget(newDescriptionBox,0,Qt::AlignTop);
+    newBox->addWidget(schemaButtonEditArea,0,Qt::AlignTop);
+    newBox->addStretch(1);
+    QPalette pal = descriptionE->palette();
+    regularColor = pal.color(QPalette::Base);
+    editColor = QColor(174,184,203,180);
+    pal = newSchemaLine->palette();
+    pal.setColor(QPalette::Base,editColor);
+    newSchemaLine->setPalette(pal);
+    newDescriptionE->setPalette(pal);
+    schemaArea->insertWidget(RegMode,availableArea);
+    schemaArea->insertWidget(EditMode,newSchemaArea);
+    schemaArea->setCurrentIndex(RegMode);
 }
 void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
 {
@@ -413,7 +418,6 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
       qDebug() << "\tTo do - clear current selection" << __FILE__ << __LINE__;
       return;
   }
-
   int numOfSchemas = schemaModel->rowCount();
   for(int i = 0;i< numOfSchemas;i++) {
       schemaItem = (SchemaItem *) schemaModel->item(i);
@@ -479,6 +483,9 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
           selectedMap.insert(qbe->name,selectItem);
           selectedBaseEntryList.append(qbe);
       }
+      selectionModel = messageListView->selectionModel();
+     selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
+     messageListClickedSlot(messageModel->index(0,0));
   }
   connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
              this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
