@@ -222,7 +222,7 @@ Please refer to the following page:
 the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
 If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
+- Please refrain from emailing us directly. **Support questions sent directly to us will be redirected to the support group.**
 
 - If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
 register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
@@ -239,7 +239,7 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 
 - We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
 
-- If you are on <a href="http://linkedin.com">Linkedin</a> join the Linked-in group <b>Fix8 Users and Developers</b>
+- If you are on [LinkedIn](http://linkedin.com) join the LinkedIn group **Fix8 Users and Developers**
 for more help and information about the Fix8 project.
 
 ## License
@@ -250,7 +250,7 @@ See [License](http://fix8.org/faq.html#license) for more information.
 ## Fix8Pro and Fix8 Market Technologies
 
 [Fix8Pro](http://www.fix8pro.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
-develops and maintains both Fix8Pro and the Fix8 open source versions.
+(Fix8MT) develops and maintains both Fix8Pro and the Fix8 open source versions.
 Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
 Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
 Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.

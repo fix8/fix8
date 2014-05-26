@@ -145,6 +145,10 @@ struct SessionConfig : public Configuration
 			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses),
 			create_login_schedule(_ses), create_clients(_ses)
 		};
+
+		const unsigned ts(get_tabsize(_ses));
+		if (ts != defaults::tabsize)	// only set if not default
+			MessageBase::set_tabsize(ts);
 	}
 
 	/// Dtor.

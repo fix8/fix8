@@ -93,11 +93,10 @@ protected:
 		return pthread_create(&_tid, &_attr, _run<T>, sub);
 #elif (THREAD_SYSTEM == THREAD_POCO)
 		_thread.start(_run<T>, sub);
-		return 0;
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
-		return 0;
 #endif
+		return 0;
 	}
 
 public:
@@ -189,11 +188,10 @@ public:
 		return pthread_yield();
 #elif (THREAD_SYSTEM == THREAD_POCO)
 		Poco::Thread::yield();
-		return 0;
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		tbb::this_tbb_thread::yield();
-		return 0;
 #endif
+		return 0;
 	}
 #endif
 #endif
@@ -359,9 +357,8 @@ public:
 	int join(int timeoutInMs=0)
 	{
 		const int ts(_sub.cancellation_token().thread_state());
-		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
-			return _exitval;
-		return _dthreadcore::join(timeoutInMs);
+		return ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped
+			? _exitval : _dthreadcore::join(timeoutInMs);
 	}
 #endif
 };

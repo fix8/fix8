@@ -288,6 +288,10 @@ protected:
 	    \return number of bytes consumed */
 	static unsigned extract_trailer(const f8String& from, f8String& chksum);
 
+protected:
+	// used by the printer
+	static unsigned _tabsize;
+
 public:
 	/*! Ctor.
 	    \tparam InputIterator input iterator type
@@ -775,6 +779,14 @@ public:
 	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const MessageBase& what) { what.print(os); return os; }
 	friend class Message;
+
+	/*! Set the tabsize used by the printer
+	    \param tabsize number of spaces in a tab */
+	static void set_tabsize (unsigned tabsize) { _tabsize = tabsize; }
+
+	/*! get the tabsize used by the printer
+	    \return tabsize of spaces in a tab */
+	static unsigned get_tabsize () { return _tabsize; }
 
 	/*! Presence printer
 	    \param os stream to send to */
