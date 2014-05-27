@@ -51,5 +51,7 @@
         <file>images/svg/apply.svg</file>
         <file>images/svg/document-save.svg</file>
         <file>images/svg/edit-undo.svg</file>
+        <file>images/svg/greenPlus.svg</file>
+        <file>images/svg/xred.svg</file>
     </qresource>
 </RCC>

@@ -60,6 +60,36 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
     fieldNames  = rhs.fieldNames;
     return *this;
 }
+bool   TableSchema::operator==( const TableSchema &ts) const
+{
+    bool ok = true;
+    if ((ts.name != name) && (ts.description != description))
+        return false;
+    if (ts.fieldNames != fieldNames)
+        return false;
+    if (ts.fieldList && !fieldList)
+        return false;
+    if (!ts.fieldList && fieldList)
+        return false;
+    if (ts.fieldList->count() != fieldList->count())
+        return false;
+    QListIterator <QBaseEntry *> iter(*ts.fieldList);
+    QBaseEntry *be;
+    while (iter.hasNext()) {
+        be = iter.next();
+        if (!fieldList->findByName(be->name))
+            return false;
+    }
+    return true;
+}
+TableSchema *TableSchema::clone()
+{
+    TableSchema *ts = new TableSchema(*this);
+    if (fieldList)
+        ts->fieldList = fieldList->clone();
+    return ts;
+}
+
 void TableSchema::setFields(QBaseEntryList * qel)
 {
     fieldList = qel;

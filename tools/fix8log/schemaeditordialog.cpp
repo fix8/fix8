@@ -35,6 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "schemaeditordialog.h"
+#include "schemadelegate.h"
 #include "schemaitem.h"
 #include "database.h"
 #include "globals.h"
@@ -307,6 +308,8 @@ void SchemaEditorDialog::buildSchemaArea()
     availableArea->setLayout(abox);
     availableSchemasL = new QLabel("Schemas",availableArea);
     availableSchemasListView = new QListView(availableArea);
+    SchemaDelegate *schemaDelegate = new SchemaDelegate(availableSchemasListView);
+    availableSchemasListView->setItemDelegate(schemaDelegate);
     connect(availableSchemasListView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(availableSchemasClickedSlot(QModelIndex)));
     schemaModel = new QStandardItemModel(availableSchemasListView);
@@ -543,6 +546,7 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
     defaultTableSchema = dts;
     if (defaultTableSchema) {
         defaultSchemaItem = new SchemaItem(*defaultTableSchema);
+        defaultSchemaItem->setModified(false);
         schemaModel->appendRow(defaultSchemaItem);
     }
     else {
@@ -564,6 +568,8 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
         }
     }
     currentTableSchema = defaultTableSchema;
+    if (currentTableSchema)
+        tempTableSchema = currentTableSchema->clone();
     buildSelectedListFromCurrentSchema();
 
 }
@@ -588,8 +594,14 @@ void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
 bool SchemaEditorDialog::validate()
 {
     bool isValid = false;
+    bool schemaModified = true;
    // QItemSelectionModel *availSelModel =  availableTreeView->selectionModel();
+    if (selectedBaseEntryList == *tempTableSchema->fieldList)
+            schemaModified = false;
+    if (currentSchemaItem)
+        currentSchemaItem->setModified(schemaModified);
 
+        qDebug() << "They are different";
     if (viewMode == NewMode || viewMode == EditMode) {
         if (newSchemaLine->text().length() > 1)
             isValid = true;
@@ -643,7 +655,8 @@ bool SchemaEditorDialog::validate()
         enableClear = true;
     clearAllPB->setEnabled(enableClear);
 
-
+    update();
+    repaint();
     return isValid;
 }
 void SchemaEditorDialog::saveSettings()

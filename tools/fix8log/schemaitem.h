@@ -45,9 +45,13 @@ class SchemaItem : public QStandardItem
 public:
     SchemaItem(QString str);
     SchemaItem(TableSchema &ts);
+    void setEmpty(bool);
+    void setModified(bool);
     QString descritption;
     bool locked; // cant erase
     TableSchema *tableSchema;
+    bool empty;
+    bool modified;
 };
 
 #endif // SCHEMAITEM_H

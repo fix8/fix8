@@ -85,7 +85,9 @@ class QBaseEntryList : public  QList <QBaseEntry *>
 public:
     explicit QBaseEntryList();
     QBaseEntryList(const QBaseEntryList &);
+    bool   operator==( const QBaseEntryList &);
     QBaseEntry *findByName(QString &);
+    QBaseEntryList *clone();
 };
 
 class MessageField

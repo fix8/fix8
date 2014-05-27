@@ -173,6 +173,7 @@ private:
     QBaseEntryList *defaultHeaderItems;
     QBaseEntryList selectedBaseEntryList;
     TableSchema *currentTableSchema;
+    TableSchema *tempTableSchema;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

@@ -91,7 +91,35 @@ QBaseEntryList::QBaseEntryList(const QBaseEntryList &bel):QList <QBaseEntry *>()
         append(be);
     }
 }
+bool   QBaseEntryList::operator==( const QBaseEntryList &qbel)
+{
+    QBaseEntry *qbe;
+    QBaseEntry *oldQBE;
+    if (qbel.count() != count())
+        return false;
+    QListIterator<QBaseEntry *> iter(qbel);
+    while(iter.hasNext()) {
+        qbe = iter.next();
+        oldQBE = findByName(qbe->name);
+        if (!oldQBE)
+            return false;
+    }
+    return true;
+}
 
+QBaseEntryList *QBaseEntryList::clone()
+{
+    QBaseEntry *qbe;
+    QBaseEntry *nqbe;
+    QBaseEntryList *qbel = new QBaseEntryList();
+    QListIterator <QBaseEntry *> iter(*this);
+    while(iter.hasNext()) {
+        qbe = iter.next();
+        nqbe = new QBaseEntry(*qbe);
+        qbel->append(nqbe);
+    }
+    return qbel;
+}
 QBaseEntry * QBaseEntryList::findByName(QString &name)
 {
     QBaseEntry *qbe;

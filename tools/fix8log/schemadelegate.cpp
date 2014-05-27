@@ -1,5 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 /*
+
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8logviewer Open Source FIX Log Viewer.
@@ -33,25 +34,58 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-
+#include "schemadelegate.h"
 #include "schemaitem.h"
+#include <QDebug>
+#include <QPainter>
+#include <QPixmap>
+#include <QStandardItemModel>
+#include <QStyleOptionViewItem>
 
-SchemaItem::SchemaItem(QString text):QStandardItem(text),locked(false),tableSchema(0),
-    empty(false),modified(false)
+SchemaDelegate::SchemaDelegate(QObject *parent):
+    QStyledItemDelegate(parent)
 {
+    saveNeededPixmap = QPixmap(":/images/svg/greenPlus.svg").scaledToHeight(24);
+    emptyPixmap = QPixmap(":/images/svg/xred.svg").scaledToHeight(24);
 }
-SchemaItem::SchemaItem(TableSchema &ts):QStandardItem(ts.name),empty(false),modified(false)
+void SchemaDelegate::paint(QPainter *painter,
+                           const QStyleOptionViewItem &option,
+                           const QModelIndex &index) const
 {
-    descritption = ts.description;
-    locked = ts.locked;
-    tableSchema = &ts;
+    QStyleOptionViewItem itemOption(option);
+    if (!index.isValid()) {
+        qWarning() << "Invalid index" << __FILE__ << __LINE__;
+        return;
+    }
+    QStyledItemDelegate::paint(painter,option,index);
+    QStandardItemModel *m = (QStandardItemModel *) index.model();
+    if (!m) {
+        qWarning() << "Invalid model item" << __FILE__ << __LINE__;
+        return;
+    }
+    SchemaItem *si = (SchemaItem  *) m->itemFromIndex(index);
+    QRect rect = option.rect;
+    if (!si) {
+        qWarning() << "State item is invalid...." << __FILE__ << __LINE__;
+        return;
+    }
+    QSize s = QStyledItemDelegate::sizeHint(option,index);
+    int x,y;
+    if (si->empty) {
+        x     = rect.x() +  rect.width()- 5 - emptyPixmap.width();
+        y = (rect.y() + rect.height() - emptyPixmap.height())/2;
+        painter->drawPixmap(x,y,emptyPixmap);
+    }
+    else if (si->modified) {
+        x     = rect.x() +  rect.width()- 5 -saveNeededPixmap.width() ;
+        y = (rect.y() + rect.height() - saveNeededPixmap.height())/2;
+        painter->drawPixmap(x,y,saveNeededPixmap);
+    }
 }
-void SchemaItem::setEmpty(bool b)
+QSize SchemaDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
 {
-    empty = b;
+    QSize s = QStyledItemDelegate::sizeHint(option,index);
+    s.setHeight(saveNeededPixmap.height()  + (saveNeededPixmap.height()*.12));
+    return s;
 }
 
-void SchemaItem::setModified(bool b)
-{
-    modified = b;
-}

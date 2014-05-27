@@ -133,6 +133,12 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
         qWarning() << "No Current Table Schema Found" << __FILE__ << __LINE__;
         return;
     }
+    if (tempTableSchema) {
+        //tempTableSchema->clear();
+        qDebug() << "MEMORY LEAK NEED TO CLEAR ITEMS OUT OF FIELD LIST HERE" << __FILE__ << __LINE__;
+        delete tempTableSchema;
+    }
+    tempTableSchema = currentTableSchema->clone();
     newSchemaLine->setText(currentTableSchema->name);
     descriptionE->setText(currentTableSchema->description);
 
@@ -303,6 +309,11 @@ void SchemaEditorDialog::deleteSchemaSlot()
     }
     if (currentTableSchema == defaultTableSchema)
         return;
+    if (tempTableSchema) {
+        qDebug() << "FIX THIS MEMORY LEAK HERE, DELETE LIST ITEMS" << __FILE__ << __LINE__;
+        delete tempTableSchema;
+        tempTableSchema = 0;
+    }
     bstatus = database->deleteTableSchema(currentTableSchema->id);
     if (bstatus) {
         setMessage("Schema " + currentTableSchema->name + " deleted.",false);
@@ -316,6 +327,7 @@ void SchemaEditorDialog::deleteSchemaSlot()
     else {
         setMessage("Unable in removing schema: " + currentTableSchema->name + " from database.",false);
     }
+    validate();
 }
 void SchemaEditorDialog::expandAllSlot(bool on)
 {
@@ -430,13 +442,7 @@ void SchemaEditorDialog::newSchemaSlot()
 {
     bool bstatus;
     viewMode = NewMode;
-
     schemaArea->setCurrentIndex(NewMode);
-    QPalette pal = descriptionE->palette();
-    pal.setColor(QPalette::Base,editColor);
-    descriptionE->setPalette(pal);
-    descriptionE->setReadOnly(false);
-
     newSchemaLine->setText("");
     newDescriptionE->setText("");
     newSchemaLine->setFocus();
@@ -483,6 +489,14 @@ void SchemaEditorDialog::saveNewEditSlot()
         schemaArea->setCurrentIndex(RegMode);
         validate();
         tableSchemaList->append(tableSchema);
+        QItemSelectionModel *selectedSelModel =  availableSchemasListView->selectionModel();
+        selectedSelModel->setCurrentIndex(si->index(),QItemSelectionModel::ClearAndSelect);
+         descriptionE->setText(tableSchema->description);
+         currentSchemaItem = si;
+         currentTableSchema = tableSchema;
+         clearAllSlot();
+         validate();
+
         emit newSchemaCreated(tableSchema);
     }
 }

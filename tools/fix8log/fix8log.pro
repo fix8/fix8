@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     tableschema.cpp \
     schemaEditorDialogSlots.cpp \
     databaseSchemaFields.cpp \
-    fix8logSlots.cpp
+    fix8logSlots.cpp \
+    schemadelegate.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -73,7 +74,8 @@ HEADERS  += mainwindow.h \
     nodatalabel.h \
     schemaeditordialog.h \
     schemaitem.h \
-    tableschema.h
+    tableschema.h \
+    schemadelegate.h
 
 RESOURCES += \
     resources.qrc

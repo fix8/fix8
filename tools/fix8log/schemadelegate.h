@@ -1,5 +1,7 @@
+
 //-------------------------------------------------------------------------------------------------
 /*
+
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8logviewer Open Source FIX Log Viewer.
@@ -33,25 +35,30 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#ifndef SCHEMA_DELEGATE_H
+#define SCHEMA_DELEGATE_H
+#include <QStyledItemDelegate>
 
-#include "schemaitem.h"
+class SchemaDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+  SchemaDelegate(QObject *parent = 0);
 
-SchemaItem::SchemaItem(QString text):QStandardItem(text),locked(false),tableSchema(0),
-    empty(false),modified(false)
-{
-}
-SchemaItem::SchemaItem(TableSchema &ts):QStandardItem(ts.name),empty(false),modified(false)
-{
-    descritption = ts.description;
-    locked = ts.locked;
-    tableSchema = &ts;
-}
-void SchemaItem::setEmpty(bool b)
-{
-    empty = b;
-}
+  QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+  void paint(QPainter *painter,
+	     const QStyleOptionViewItem &option,
+	     const QModelIndex &index) const;
+    QPixmap saveNeededPixmap;
+    QPixmap emptyPixmap;
+    int pixmapWidth;
+    int onOffStrX;
+    int onOffPixmapX;
+    int visiblePixmapX;
+    int broadcastPixmapX;
+    int spacing;
+    int margin;
+    bool recalculatePositions;
+};
 
-void SchemaItem::setModified(bool b)
-{
-    modified = b;
-}
+#endif 

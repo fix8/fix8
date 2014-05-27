@@ -47,6 +47,8 @@ public:
     TableSchema(QString name, QString description,bool isLocked);
     TableSchema(const TableSchema &);
     TableSchema & operator=( const TableSchema &rhs);
+    bool   operator==( const TableSchema &) const;
+    TableSchema *clone();
     void setFields(QBaseEntryList *);
     QBaseEntryList * getFields();
     qint32 id;
