@@ -601,6 +601,7 @@ bool SchemaEditorDialog::validate()
     bool schemaModified = true;
    // QItemSelectionModel *availSelModel =  availableTreeView->selectionModel();
     qDebug() << "Selected COUNT = " << selectedBaseEntryList.count();
+    qDebug() << "TEMP  COUNT = " << tempTableSchema->fieldList->count();
     if(tempTableSchema && tempTableSchema->fieldList) {
         if (selectedBaseEntryList == *tempTableSchema->fieldList) {
             schemaModified = false;
