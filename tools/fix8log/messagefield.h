@@ -87,6 +87,7 @@ public:
     QBaseEntryList(const QBaseEntryList &);
     bool   operator==( const QBaseEntryList &);
     QBaseEntry *findByName(QString &);
+    void removeByName(QString &name);
     QBaseEntryList *clone();
 };
 

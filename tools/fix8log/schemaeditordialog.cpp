@@ -43,7 +43,7 @@ using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
-    expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0)
+    expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),tableSchemaStatus(NoMods)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Table Schema Editor"));
@@ -486,21 +486,25 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
           selectedMap.insert(qbe->name,selectItem);
           selectedBaseEntryList.append(qbe);
       }
-      selectionModel = messageListView->selectionModel();
-     selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
-     messageListClickedSlot(messageModel->index(0,0));
+
   }
+  selectionModel = messageListView->selectionModel();
+ selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
+ disconnect(messageListView,SIGNAL(clicked(QModelIndex)),
+         this,SLOT(messageListClickedSlot(QModelIndex)));
+ messageListClickedSlot(messageModel->index(0,0));
+ connect(messageListView,SIGNAL(clicked(QModelIndex)),
+         this,SLOT(messageListClickedSlot(QModelIndex)));
   connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
              this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
   setUpdatesEnabled(true);
+  qDebug() << "11 Call Validate " << __FILE__ << __LINE__;
+
   validate();
-
-
 }
-
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
-    validate();
+
     QMainWindow::showEvent(se);
 }
 void SchemaEditorDialog::setDefaultHeaderItems( QBaseEntryList &DefaultHeaderItems)
@@ -546,7 +550,7 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
     defaultTableSchema = dts;
     if (defaultTableSchema) {
         defaultSchemaItem = new SchemaItem(*defaultTableSchema);
-        defaultSchemaItem->setModified(false);
+        currentSchemaItem = defaultSchemaItem;
         schemaModel->appendRow(defaultSchemaItem);
     }
     else {
@@ -596,12 +600,35 @@ bool SchemaEditorDialog::validate()
     bool isValid = false;
     bool schemaModified = true;
    // QItemSelectionModel *availSelModel =  availableTreeView->selectionModel();
-    if (selectedBaseEntryList == *tempTableSchema->fieldList)
+    qDebug() << "Selected COUNT = " << selectedBaseEntryList.count();
+    if(tempTableSchema && tempTableSchema->fieldList) {
+        if (selectedBaseEntryList == *tempTableSchema->fieldList) {
             schemaModified = false;
-    if (currentSchemaItem)
-        currentSchemaItem->setModified(schemaModified);
+            qDebug() <<"\t1 Have NO MODS" << __FILE__ << __LINE__;
 
-        qDebug() << "They are different";
+            tableSchemaStatus = NoMods;
+        }
+        else {
+            qDebug() <<"\t2 Have MODS" << __FILE__ << __LINE__;
+            tableSchemaStatus = HaveMods;
+        }
+    }
+    else if(selectedBaseEntryList.count() == 0) {
+        schemaModified = false;
+        tableSchemaStatus = NoMods;
+        qDebug() <<"\t3 Have NO MODS" << __FILE__ << __LINE__;
+
+    }
+    else {
+        qDebug() << "4 HAVE MODS TO SCHEMA" << __FILE__<< __LINE__;
+        tableSchemaStatus = HaveMods;
+    }
+    if (currentSchemaItem) {
+        currentSchemaItem->setModified(schemaModified);
+        availableSchemasListView->viewport()->update();
+        qDebug() << "SET CURRENT SCHEMA ITEM MOFIED" << currentSchemaItem->text() << __FILE__ << __LINE__;
+        qDebug() << "\tModified = " << schemaModified << __FILE__ << __LINE__;
+    }
     if (viewMode == NewMode || viewMode == EditMode) {
         if (newSchemaLine->text().length() > 1)
             isValid = true;

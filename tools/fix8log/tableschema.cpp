@@ -49,7 +49,13 @@ TableSchema::TableSchema(const TableSchema &ts)
     description = ts.description;
     locked = ts.locked;
     fieldNames = ts.fieldNames;
+    fieldList = 0;
 }
+TableSchema::~TableSchema()
+{
+    qDebug() << "DELETE TABLE SCHEMA" << __FILE__ << __LINE__;
+}
+
 TableSchema & TableSchema::operator=( const TableSchema &rhs)
 {
     if (this == &rhs)
@@ -58,6 +64,7 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
     description = rhs.description;
     locked      = rhs.locked;
     fieldNames  = rhs.fieldNames;
+    fieldList = 0;
     return *this;
 }
 bool   TableSchema::operator==( const TableSchema &ts) const
@@ -98,6 +105,33 @@ void TableSchema::setFields(QBaseEntryList * qel)
 QBaseEntryList *TableSchema::getFields()
 {
     return fieldList;
+}
+void TableSchema::removeFieldByName(QString &name)
+{
+    if(fieldList)
+        fieldList->removeByName(name);
+}
+void TableSchema::removeAllFields()
+{
+    qDebug() << "A) REMOVE ALL FIELDS" << __FILE__ << __LINE__;
+    if (fieldList) {
+        qDebug() << "\t1) BEGIN REMOVE ALL FIELDS" << __FILE__ << __LINE__;
+        qDebug() << "\t Num of fields to clear " << fieldList->count();
+        fieldList->clear();
+        //qDeleteAll(fieldList->begin(),fieldList->end());
+    }
+    //delete fieldList;
+    //fieldList = 0;
+    qDebug() << "B) REMOVE ALL FIELDS" << __FILE__ << __LINE__;
+
+}
+void TableSchema::addField(QBaseEntry *qbe)
+{
+    if (!qbe)
+        return;
+    if (!fieldList)
+        fieldList = new QBaseEntryList();
+    fieldList->append(qbe);
 }
 
 TableSchemaList::TableSchemaList():QList <TableSchema *>()

@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "messagefield.h"
-
+#include <QDebug>
 FieldUse::FieldUse():isDefault(false)
 {
 
@@ -70,6 +70,7 @@ BaseEntry *BaseEntryList::findByName(QString &name)
     }
     return 0;
 }
+
 
 QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0)
 {
@@ -131,7 +132,20 @@ QBaseEntry * QBaseEntryList::findByName(QString &name)
     }
     return 0;
 }
+void QBaseEntryList::removeByName(QString &name)
+{
+    QBaseEntry *be;
+    QList<QBaseEntry *>::iterator iter;
 
+     for (iter = this->begin(); iter != this->end();++iter) {
+       be = *iter;
+       if (be->name == name) {
+            qDebug() << "REMVE BY NAME" << __FILE__ << __LINE__;
+           erase(iter);
+         break;
+       }
+     }
+}
 MessageField::MessageField(QString &Key, QString &Name,QBaseEntryList *QBEL):
     key(Key),name(Name),qbel(QBEL)
 {

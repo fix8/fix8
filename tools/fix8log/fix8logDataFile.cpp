@@ -71,7 +71,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     IntItem  *checkSumItem;
     QStandardItem  *encryptMethodItem;
     IntItem  *heartBeatIntItem;
-    QStandardItem  *messgeTypeItem;
+    //QStandardItem  *messgeTypeItem;
 
     TEX::BeginString beginStr;
     TEX::BodyLength  bodyLength;
@@ -125,9 +125,9 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();
-    messgeTypeItem = new QStandardItem(qstr);
+    /* messgeTypeItem = new QStandardItem(qstr);
     qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;
-    /*
+
     while(!dataFile.atEnd()) {
         itemList.clear();
         try {

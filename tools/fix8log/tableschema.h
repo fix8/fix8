@@ -46,10 +46,14 @@ public:
     TableSchema();
     TableSchema(QString name, QString description,bool isLocked);
     TableSchema(const TableSchema &);
+    ~TableSchema();
     TableSchema & operator=( const TableSchema &rhs);
     bool   operator==( const TableSchema &) const;
     TableSchema *clone();
     void setFields(QBaseEntryList *);
+    void addField(QBaseEntry *);
+    void removeFieldByName(QString &name);
+    void removeAllFields();
     QBaseEntryList * getFields();
     qint32 id;
     QString name;

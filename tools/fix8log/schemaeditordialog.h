@@ -83,7 +83,9 @@ public slots:
     void selectedListClickedSlot(QModelIndex);
 protected:
     void showEvent(QShowEvent *);
-private: 
+
+private:
+    enum {NoMods=0x00,HaveMods=0x01,Empty=0x02};
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
     typedef enum {ExpandAll,CollapseAll,Anything} ExpandMode;
     void addItemToSelected(QStandardItem *,Qt::CheckState);
@@ -174,6 +176,7 @@ private:
     QBaseEntryList selectedBaseEntryList;
     TableSchema *currentTableSchema;
     TableSchema *tempTableSchema;
+    unsigned int tableSchemaStatus;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

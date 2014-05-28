@@ -35,11 +35,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "schemaitem.h"
-
+#include <QDebug>
 SchemaItem::SchemaItem(QString text):QStandardItem(text),locked(false),tableSchema(0),
     empty(false),modified(false)
 {
 }
+SchemaItem::~SchemaItem()
+{
+    qDebug() << "Delete Schema ITEM" << __FILE__ << __LINE__;
+}
+
 SchemaItem::SchemaItem(TableSchema &ts):QStandardItem(ts.name),empty(false),modified(false)
 {
     descritption = ts.description;

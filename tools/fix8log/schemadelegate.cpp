@@ -57,6 +57,8 @@ void SchemaDelegate::paint(QPainter *painter,
         qWarning() << "Invalid index" << __FILE__ << __LINE__;
         return;
     }
+    painter->save();
+    painter->setClipRect(option.rect);
     QStyledItemDelegate::paint(painter,option,index);
     QStandardItemModel *m = (QStandardItemModel *) index.model();
     if (!m) {
@@ -69,7 +71,7 @@ void SchemaDelegate::paint(QPainter *painter,
         qWarning() << "State item is invalid...." << __FILE__ << __LINE__;
         return;
     }
-    QSize s = QStyledItemDelegate::sizeHint(option,index);
+//    QSize s = QStyledItemDelegate::sizeHint(option,index);
     int x,y;
     if (si->empty) {
         x     = rect.x() +  rect.width()- 5 - emptyPixmap.width();
@@ -78,9 +80,10 @@ void SchemaDelegate::paint(QPainter *painter,
     }
     else if (si->modified) {
         x     = rect.x() +  rect.width()- 5 -saveNeededPixmap.width() ;
-        y = (rect.y() + rect.height() - saveNeededPixmap.height())/2;
+        y = rect.y() + (rect.height() - saveNeededPixmap.height())/2;
         painter->drawPixmap(x,y,saveNeededPixmap);
     }
+    painter->restore();
 }
 QSize SchemaDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
 {

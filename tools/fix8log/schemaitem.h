@@ -45,6 +45,7 @@ class SchemaItem : public QStandardItem
 public:
     SchemaItem(QString str);
     SchemaItem(TableSchema &ts);
+    ~SchemaItem();
     void setEmpty(bool);
     void setModified(bool);
     QString descritption;
