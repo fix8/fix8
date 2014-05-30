@@ -266,6 +266,7 @@ bool Fix8Log::init()
                 }
                 else {
                     tableSchemaList = database->getTableSchemas();
+                    defaultTableSchema = tableSchemaList->findByName("Default");
                     if (!tableSchemaList) {
                         errorStr = "Error - no table schemas found in database";
                         displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
@@ -280,7 +281,7 @@ bool Fix8Log::init()
             errorStr = "Error - no table schemas found in database, creating default....";
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
             defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
-
+            qDebug() << "ADDED DEFAULT TABLE TO DATABSE, ID = " << defaultTableSchema->id << __FILE__ << __LINE__;
             bstatus = database->addTableSchema(*defaultTableSchema);
             if (!bstatus) {
                 errorStr = "Failed to add default table schema to database";
@@ -298,12 +299,15 @@ bool Fix8Log::init()
                 displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
                 defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
                 tableSchemaList->append(defaultTableSchema);
+                qDebug() << "ADDING DEFAULT TABLE TO DATABASE..."<< __FILE__ << __LINE__;
                 bstatus = database->addTableSchema(*defaultTableSchema);
                 if (!bstatus) {
                     errorStr = "Failed to add default table schema to database 2";
                     displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
                 }
             }
+            else
+                qDebug() << "FOUND DEFAULT TABLE " << __FILE__ << __LINE__;
         }
         MainWindow::defaultTableSchema = defaultTableSchema;
     }
@@ -313,6 +317,7 @@ bool Fix8Log::init()
         while(tsIter.hasNext()) {
             TableSchema *ts = tsIter.next();
             ts->fieldNames = database->getSchemaFields(ts->id);
+            qDebug() << "FIELDS FOUND = " << ts->fieldNames;
         }
     }
     QString key;

@@ -51,7 +51,7 @@ class SchemaEditorDialog : public QMainWindow
 public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTableSchema(int schemaID);
-    void setCurrentTarget(QString &windowName, QString &tabName);
+    void setCurrentTarget(QString &windowName);
     void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
@@ -81,18 +81,21 @@ public slots:
     void saveNewEditSlot();
     void saveSchemaSlot();
     void selectedListClickedSlot(QModelIndex);
+    void undoSchemaSlot();
 protected:
     void showEvent(QShowEvent *);
 
 private:
-    enum {NoMods=0x00,HaveMods=0x01,Empty=0x02};
+    enum {NoMods,HaveMods,Empty};
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
+    typedef enum {Ok,SaveNeeded,EmptyFields} StatusType;
     typedef enum {ExpandAll,CollapseAll,Anything} ExpandMode;
     void addItemToSelected(QStandardItem *,Qt::CheckState);
     void setCheckState(QStandardItem *item,Qt::CheckState cs);
     void setUncheckedStateParent(QStandardItem *parentItem);
     void buildSchemaArea();
     void setMessage(QString str, bool isError);
+    void setStatus(StatusType);
     void buildSelectedListFromCurrentSchema();
     bool validate();
     //SchemaEditorWidget *schemaWidget;
@@ -109,13 +112,11 @@ private:
     QGroupBox *descriptionBox;
     QGroupBox *newDescriptionBox;
     QLabel  *windowL;
-    QLabel  *tabL;
-    QLineEdit  *tabV;
     QLineEdit  *windowV;
     QListView *availableSchemasListView;
     QListView *messageListView;
-    QTreeView *availableTreeView;
-    QTreeView *selectedListView;
+    QTreeView *availableFieldsTreeView;
+    QTreeView *selectedFieldsTreeView;
     QLabel *availableSchemasL;
     QLabel *messageListL;
     QLabel *newAvailableSchemasL;
@@ -139,7 +140,6 @@ private:
     QPushButton *clearAllPB;
     QPushButton *expandPB;
     QPushButton *collapsePB;
-    QRadioButton *applyOnlyToCurrentRB;
     QRadioButton *applyToWindowRB;
     QRadioButton *applyToAllRB;
     QSplitter   *splitter;
@@ -149,12 +149,13 @@ private:
     QStandardItem  *availableFieldHeaderItem;
     QStandardItem  *selectedHeaderItem;
     QStandardItemModel *messageModel;
-    QStandardItemModel *schemaModel;
+    QStandardItemModel *availableSchemaModel;
     QStandardItemModel *availableFieldModel;
-    QStandardItemModel *selectedModel;
+    QStandardItemModel *selectedFieldModel;
     QTextEdit *descriptionE;
     QTextEdit *newDescriptionE;
     QToolBar *mainToolBar;
+    QWidget *statusArea;
     QWidget *availableArea;
     QWidget *newSchemaArea;
     QWidget *targetArea;
@@ -177,6 +178,10 @@ private:
     TableSchema *currentTableSchema;
     TableSchema *tempTableSchema;
     unsigned int tableSchemaStatus;
+    QLabel *statusL;
+    QLabel *statusI;
+    StatusType statusValue;
+    bool undoBuild;  // set and unset in undoSlot
 };
 
 #endif // SCHEMAEDITORDIALOG_H

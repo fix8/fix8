@@ -49,6 +49,7 @@ public:
     ~TableSchema();
     TableSchema & operator=( const TableSchema &rhs);
     bool   operator==( const TableSchema &) const;
+    bool   operator!=( const TableSchema &) const;
     TableSchema *clone();
     void setFields(QBaseEntryList *);
     void addField(QBaseEntry *);

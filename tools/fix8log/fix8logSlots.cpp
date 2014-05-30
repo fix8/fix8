@@ -197,7 +197,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
                 tabName = wsd.fileName;
         }
     }
-    schemaEditorDialog->setCurrentTarget(windowName,tabName);
+    schemaEditorDialog->setCurrentTarget(windowName);
     schemaEditorDialog->show();
     schemaEditorDialog->setVisible(true);
      schemaEditorDialog->showNormal();

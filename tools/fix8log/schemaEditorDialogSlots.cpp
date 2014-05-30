@@ -84,7 +84,7 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
             selectItem->setData(var);
             if (tempTableSchema)
                 tempTableSchema->addField(be);
-            selectedModel->appendRow(selectItem);
+            selectedFieldModel->appendRow(selectItem);
             selectedMap.insert(be->name,selectItem);
             //selectedBaseEntryList.append(be);
         }
@@ -92,59 +92,60 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
     else if (availItem->checkState() == Qt::Unchecked) {
         selectItem = (QStandardItem *) iter.value();
         if (selectItem) {
-            selectedModel->removeRow(selectItem->row());
-            if(tempTableSchema)
+            selectedFieldModel->removeRow(selectItem->row());
+            if(tempTableSchema) {
                 tempTableSchema->removeFieldByName(be->name);
+            }
+            else
             qWarning() << "Error - tempTableSchema is null" << __FILE__ << __LINE__;
         }
         selectedMap.remove(be->name);
         selectedBaseEntryList.removeOne(be);
     }
-    Qt::SortOrder so = selectedListView->header()->sortIndicatorOrder();
-    selectedModel->sort(0,so);
+    Qt::SortOrder so = selectedFieldsTreeView->header()->sortIndicatorOrder();
+    selectedFieldModel->sort(0,so);
 }
 void SchemaEditorDialog::applyButtonSlot(QAbstractButton *button)
 {
-    if (button == applyOnlyToCurrentRB) {
+
+    if (button == applyToWindowRB) {
         windowL->show();
         windowV->show();
-        tabL->show();
-        tabV->show();
-    }
-    else if (button == applyToWindowRB) {
-        windowL->show();
-        windowV->show();
-        tabL->hide();
-        tabV->hide();
     }
     else { // must be apply to all
         windowL->hide();
         windowV->hide();
-        tabL->hide();
-        tabV->hide();
     }
 }
 void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
 {
-    messageL->setText("");
-    if (currentSchemaItem) {
-        if (tableSchemaStatus && HaveMods) {
-            messageL->setText("Save or Undo Modifications To Curent Schema");
-        QItemSelectionModel *selectionModel = availableSchemasListView->selectionModel();
-        selectionModel->select(currentSchemaItem->index(),QItemSelectionModel::SelectCurrent);
-        return;
+    QStringList messageNameList;
+    QString tooltipStr;
+    FieldUse *fieldUse;
+    MessageField *messageField;
+    QBaseEntry *qbe;
+    QVariant var;
+    QStandardItem *selectItem;
+    QStandardItem *availItem;
+    QMap<QString,QStandardItem *>::iterator  iter;
+    qDebug() << "***** AVAILABLE CLICKED SLOT" << __FILE__ << __LINE__;
+    if (currentSchemaItem ) {
+        if (*currentTableSchema != *tempTableSchema) {
+            qDebug() << "\tHave MODS" << __FILE__ << __LINE__;
+            QItemSelectionModel *selectionModel = availableSchemasListView->selectionModel();
+            selectionModel->select(currentSchemaItem->index(),QItemSelectionModel::SelectCurrent);
+            qDebug() << "\tDOne, after select old one" << __FILE__ << __LINE__;
+            return;
         }
-
-
     }
-    currentSchemaItem = (SchemaItem *) schemaModel->itemFromIndex(index);
+    currentSchemaItem = (SchemaItem *) availableSchemaModel->itemFromIndex(index);
     if (!currentSchemaItem)  {
         qWarning() << "Curent SchemaItem is null" << __FILE__ << __LINE__;
         return;
     }
     selectedHeaderItem->setText(currentSchemaItem->text());
 
-    TableSchema *currentTableSchema = currentSchemaItem->tableSchema;
+    currentTableSchema = currentSchemaItem->tableSchema;
     if (!currentTableSchema) {
         qWarning() << "No Current Table Schema Found" << __FILE__ << __LINE__;
         return;
@@ -155,10 +156,77 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
         delete tempTableSchema;
     }
     tempTableSchema = currentTableSchema->clone();
+    qDebug() << "<<<<<<<<<  CREATED  NEW TEMP TABLE SCHEMA " << __FILE__ << __LINE__;
+    if (tempTableSchema->fieldList)
+        selectedBaseEntryList = *(tempTableSchema->fieldList);
+    else
+        selectedBaseEntryList.clear();
+    selectedFieldModel->clear();
+
     newSchemaLine->setText(currentTableSchema->name);
     descriptionE->setText(currentTableSchema->description);
-    qDebug() << "1 Call Validate " << __FILE__ << __LINE__;
+    qDebug() << "1 buildSelectedFromCurrentSchema " << __FILE__ << __LINE__;
+
+    QList <QBaseEntry *> *bel = currentTableSchema->getFields();
+    if (!bel) {
+        qWarning() << "NO Field list found for current schema " << __FILE__ << __LINE__;
+        return;
+    }
+    QListIterator <QBaseEntry *> iter2(*bel);
+    while(iter2.hasNext()) {
+        qbe = iter2.next();
+        iter  = selectedMap.find(qbe->name);
+        if (iter == selectedMap.end()) { // not found
+            // see if in available and if so mark it checked
+            QMultiMap<QString,QStandardItem *>::iterator availIter = availableMap.find(qbe->name);
+            if (availIter != availableMap.end()) {
+                availItem = availIter.value();
+                availItem->setCheckState(Qt::Checked);
+            }
+            selectItem = new QStandardItem(qbe->name);
+            if (fieldUseList) {
+                fieldUse = fieldUseList->findByName(qbe->name);
+                if (fieldUse) {
+                    QListIterator <MessageField *> iter(fieldUse->messageFieldList);
+                    while(iter.hasNext()) {
+                        messageField = iter.next();
+                        messageNameList << messageField->name;
+                    }
+                }
+                if (messageNameList.count() == 0)
+                    tooltipStr = "Not used in any messages";
+
+                if (messageNameList.count() == 1)
+                    tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
+                else if(messageNameList.count() < 5)
+                    tooltipStr = "Used in: " + messageNameList.join("\n\t");
+                else
+                    tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
+
+                selectItem->setToolTip(tooltipStr);
+            }
+            var.setValue((void *) qbe);
+            selectItem->setData(var);
+            selectedFieldModel->appendRow(selectItem);
+            selectedMap.insert(qbe->name,selectItem);
+            selectedBaseEntryList.append(qbe);
+        }
+    }
+     QItemSelectionModel *selectionModel;
+    selectionModel = messageListView->selectionModel();
+    selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
+    disconnect(messageListView,SIGNAL(clicked(QModelIndex)),
+               this,SLOT(messageListClickedSlot(QModelIndex)));
+    messageListClickedSlot(messageModel->index(0,0));
+    connect(messageListView,SIGNAL(clicked(QModelIndex)),
+            this,SLOT(messageListClickedSlot(QModelIndex)));
+    connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    setUpdatesEnabled(true);
+    qDebug() << "11 Call Validate " << __FILE__ << __LINE__;
     validate();
+
+    qDebug() << "2 Call validate" << __FILE__ << __LINE__;
 }
 void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
 {
@@ -175,7 +243,7 @@ void SchemaEditorDialog::availableTreeItemChangedSlot(QStandardItem* item)
     qDebug() << "2 Available Tree Item Changed" << __FILE__ << __LINE__;
 
     setCheckState(item,item->checkState());
-   qDebug() << "3 Available Tree Item Changed" << __FILE__ << __LINE__;
+    qDebug() << "3 Available Tree Item Changed" << __FILE__ << __LINE__;
 
     QStandardItem *parentItem = item->parent();
     if (item->checkState()  == Qt::Unchecked) {
@@ -205,20 +273,20 @@ void SchemaEditorDialog::clearSelectedSlot()
     QStandardItem *item;
     QStandardItem *availableItem;
     QVariant var;
-    QItemSelectionModel *selectedSelModel =  selectedListView->selectionModel();
+    QItemSelectionModel *selectedSelModel =  selectedFieldsTreeView->selectionModel();
     QModelIndexList selectedList = selectedSelModel->selectedRows();
     QListIterator <QModelIndex> iter(selectedList);
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     while(iter.hasNext()) {
         mi = iter.next();
-        item = selectedModel->itemFromIndex(mi);
+        item = selectedFieldModel->itemFromIndex(mi);
         if (item) {
             var = item->data();
-            selectedModel->removeRow(item->row());
+            selectedFieldModel->removeRow(item->row());
             QBaseEntry *be = (QBaseEntry *) var.value<void *>();
             selectedMap.remove(be->name);
-           // selectedBaseEntryList.removeOne(be);
+            // selectedBaseEntryList.removeOne(be);
             tempTableSchema->removeFieldByName(be->name);
             QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.find(be->name);
             while (aiter != availableMap.end() && aiter.key() == be->name) {
@@ -230,45 +298,31 @@ void SchemaEditorDialog::clearSelectedSlot()
         }
     }
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-    qDebug() << "4 Call Validate " << __FILE__ << __LINE__;
-
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     validate();
 }
 void SchemaEditorDialog::clearAllSlot()
 {
-  int numOfRows = selectedModel->rowCount();
-  QStandardItem *selectedItem;
-  QStandardItem *availableItem;
-  qDebug() << "CLEAR ALL 1" << __FILE__ << __LINE__;
-  selectedMap.clear();
-  qDebug() << "CLEAR ALL 2" << __FILE__ << __LINE__;
-
-  selectedModel->removeRows(0,numOfRows);
-  qDebug() << "CLEAR ALL 4" << __FILE__ << __LINE__;
-   if (tempTableSchema)
-    tempTableSchema->removeAllFields();
-  qDebug() << "CLEAR ALL 5" << __FILE__ << __LINE__;
-
-  disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-  QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.begin();
-  while (aiter != availableMap.end()) {
-      availableItem = aiter.value();
-      qDebug() << "\tCLEAR ALL A" << __FILE__ << __LINE__;
-
-      availableItem->setCheckState(Qt::Unchecked);
-      qDebug() << "\tCLEAR ALL B" << __FILE__ << __LINE__;
-
-      aiter++;
-  }
-  qDebug() << "CLEAR ALL 6" << __FILE__ << __LINE__;
-
-  connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-  qDebug() << "Call Validate... " << __FILE__ << __LINE__;
-
-  validate();
+    int numOfRows = selectedFieldModel->rowCount();
+    QStandardItem *selectedItem;
+    QStandardItem *availableItem;
+    selectedMap.clear();
+    selectedFieldModel->removeRows(0,numOfRows);
+    if (tempTableSchema)
+        tempTableSchema->removeAllFields();
+    disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.begin();
+    while (aiter != availableMap.end()) {
+        availableItem = aiter.value();
+        availableItem->setCheckState(Qt::Unchecked);
+        aiter++;
+    }
+    connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    selectedBaseEntryList.clear();
+    qDebug() << "Call Validate... " << __FILE__ << __LINE__;
+    validate();
 }
 void SchemaEditorDialog::closeSlot()
 {
@@ -277,13 +331,13 @@ void SchemaEditorDialog::closeSlot()
     settings.setValue("SchemaEditorState",saveState());
     settings.setValue("SchemaEditorSplitter",splitter->saveState());
 
-   emit finished(QDialogButtonBox::Close);
+    emit finished(QDialogButtonBox::Close);
 }
 void SchemaEditorDialog::collapseAllSlot(bool on)
 {
     if (on) {
         expandMode = CollapseAll;
-        availableTreeView->collapseAll();
+        availableFieldsTreeView->collapseAll();
         expandPB->setChecked(false);
     }
     else
@@ -312,8 +366,8 @@ void SchemaEditorDialog::defaultSlot()
         qbe = iter2.next();
         iter  = selectedMap.find(qbe->name);
         if (iter == selectedMap.end()) { // not found
-             // see if in available and if so mark it checked
-             QMultiMap<QString,QStandardItem *>::iterator availIter = availableMap.find(qbe->name);
+            // see if in available and if so mark it checked
+            QMultiMap<QString,QStandardItem *>::iterator availIter = availableMap.find(qbe->name);
             if (availIter != availableMap.end()) {
                 availItem = availIter.value();
                 availItem->setCheckState(Qt::Checked);
@@ -341,13 +395,13 @@ void SchemaEditorDialog::defaultSlot()
             }
             var.setValue((void *) qbe);
             selectItem->setData(var);
-            selectedModel->appendRow(selectItem);
+            selectedFieldModel->appendRow(selectItem);
             selectedMap.insert(qbe->name,selectItem);
             //selectedBaseEntryList.append(qbe);
         }
     }
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     setUpdatesEnabled(true);
     qDebug() << "6 Call Validate " << __FILE__ << __LINE__;
 
@@ -374,7 +428,7 @@ void SchemaEditorDialog::deleteSchemaSlot()
     if (bstatus) {
         setMessage("Schema " + currentTableSchema->name + " deleted.",false);
         int id = currentTableSchema->id;
-        schemaModel->takeRow(currentSchemaItem->row());
+        availableSchemaModel->takeRow(currentSchemaItem->row());
         currentSchemaItem = 0;
         currentTableSchema = 0;
         emit schemaDeleted(id);
@@ -390,7 +444,7 @@ void SchemaEditorDialog::expandAllSlot(bool on)
 {
     if (on) {
         expandMode = ExpandAll;
-        availableTreeView->expandAll();
+        availableFieldsTreeView->expandAll();
         collapsePB->setChecked(false);
     }
     else
@@ -400,14 +454,14 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
 {
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-    Qt::SortOrder so = availableTreeView->header()->sortIndicatorOrder();
-    availableTreeView->setUpdatesEnabled(false);
+    Qt::SortOrder so = availableFieldsTreeView->header()->sortIndicatorOrder();
+    availableFieldsTreeView->setUpdatesEnabled(false);
     if (availableFieldModel->rowCount() >0)
-        availableFieldModel->removeRows(0,availableFieldModel->rowCount() -1);
+        availableFieldModel->removeRows(0,availableFieldModel->rowCount());
     QStandardItem *item = messageModel->itemFromIndex(mi);
     if (!item) {
         qWarning() << "Item is null " << __FILE__ << __LINE__;
-        availableTreeView->setUpdatesEnabled(true);
+        availableFieldsTreeView->setUpdatesEnabled(true);
         connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                 this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
         return;
@@ -417,7 +471,7 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
 
     if (!mf) {
         qWarning() << "Error - MessageField = null" << __FILE__ << __LINE__;
-        availableTreeView->setUpdatesEnabled(true);
+        availableFieldsTreeView->setUpdatesEnabled(true);
         connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                 this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
         return;
@@ -486,10 +540,10 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
     }
     availableFieldModel->sort(0,so);
     if (expandMode == ExpandAll)
-        availableTreeView->expandAll();
+        availableFieldsTreeView->expandAll();
     else if (expandMode == CollapseAll)
-        availableTreeView->collapseAll();
-    availableTreeView->setUpdatesEnabled(true);
+        availableFieldsTreeView->collapseAll();
+    availableFieldsTreeView->setUpdatesEnabled(true);
     qDebug() << "8 Call Validate " << __FILE__ << __LINE__;
 
     validate();
@@ -518,6 +572,7 @@ void SchemaEditorDialog::saveNewEditSlot()
     SchemaItem *si;
     bool bstatus;
     TableSchema *tableSchema;
+    tableSchemaStatus = NoMods;
     QString name = newSchemaLine->text();
     descriptionE->setText("");
     if(viewMode == NewMode) {
@@ -549,24 +604,27 @@ void SchemaEditorDialog::saveNewEditSlot()
             return;
         }
         si = new SchemaItem(*tableSchema);
-        schemaModel->appendRow(si);
+        availableSchemaModel->appendRow(si);
         viewMode = RegMode;
         schemaArea->setCurrentIndex(RegMode);
         tableSchemaList->append(tableSchema);
         QItemSelectionModel *selectedSelModel =  availableSchemasListView->selectionModel();
         selectedSelModel->setCurrentIndex(si->index(),QItemSelectionModel::ClearAndSelect);
-        if (tempTableSchema)
+        if (tempTableSchema) {
             tempTableSchema->removeAllFields();
-        delete tempTableSchema;
+            delete tempTableSchema;
+        }
         tempTableSchema = tableSchema->clone();
-         descriptionE->setText(tableSchema->description);
-         currentSchemaItem = si;
-         currentTableSchema = tableSchema;
-         clearAllSlot();
-         qDebug() << "9 Call Validate " << __FILE__ << __LINE__;
+        qDebug() << "<<<**<<< CREATED NEW TEMP TABLE SCHeMA" << __FILE__ << __LINE__;
+        descriptionE->setText(tableSchema->description);
+        currentSchemaItem = si;
+        currentTableSchema = tableSchema;
+        qDebug() << "\tClear All Slot" << __FILE__ << __LINE__;
+        clearAllSlot();
+        //qDebug() << "9 Call Validate " << __FILE__ << __LINE__;
 
         // validate();
-
+        qDebug() << "EMIT NEW SCHEMA CREATED" << __FILE__ << __LINE__;
         emit newSchemaCreated(tableSchema);
     }
 }
@@ -581,17 +639,21 @@ void SchemaEditorDialog::saveSchemaSlot()
         qWarning() << "Save failed, current schema is null " << __FILE__ << __LINE__;
         return;
     }
+    /*
     TableSchema * tableSchema = tempTableSchema->clone();// currentSchemaItem->tableSchema;
     if (!tableSchema) {
         qWarning() << "Save failed, current table schema is null " << __FILE__ << __LINE__;
         return;
     }
+    */
     if (currentSchemaItem)
         currentSchemaItem->tableSchema = tempTableSchema;
     //tableSchema->fieldList = new  QBaseEntryList(selectedBaseEntryList);
 
     //tempTableSchema = tableSchema->clone();
-    database->saveTableSchemaFields(*tableSchema);
+    //database->saveTableSchemaFields(*tableSchema);
+    database->saveTableSchemaFields(*tempTableSchema);
+
     qDebug() << "10 Call Validate " << __FILE__ << __LINE__;
 
     validate();
@@ -607,22 +669,30 @@ void SchemaEditorDialog::setCheckState(QStandardItem *item,Qt::CheckState cs)
 {
     QStandardItem *child;
     if (!item) {
+        qWarning() << "ITEM IS NULL IN setCheckState" << __FILE__ << __LINE__;
         return;
     }
+    qDebug() << "Check if items has children " << __FILE__ << __LINE__;
     if (!item->hasChildren()) {
+        qDebug() << "\tNo - so add to list...";
         addItemToSelected(item,cs);
+        qDebug() << "return to caller..." << __FILE__ << __LINE__;
         return;
     }
     int numOfChildren = item->rowCount();
     for(int i=0;i<numOfChildren;i++) {
+        qDebug() << "\t\tGet Child ITEM ";
         child = item->child(i,0);
         if (child) {
+            qDebug() << "\tHave child, so set its check state" << __FILE__ << __LINE__;
             child->setCheckState(cs);
+            qDebug() << "\tAdd Child to select list";
             addItemToSelected(child,cs);
+            qDebug() << "\t\trecursive call to set checkstate" << __FILE__ << __LINE__;
             setCheckState(child,cs);
         }
     }
-   //validate();
+    //validate();
 }
 void SchemaEditorDialog::setUncheckedStateParent(QStandardItem *parentItem)
 {
@@ -632,3 +702,10 @@ void SchemaEditorDialog::setUncheckedStateParent(QStandardItem *parentItem)
     setUncheckedStateParent(parentItem->parent());
 }
 
+void SchemaEditorDialog::undoSchemaSlot()
+{
+    qDebug() << "UNDO " << __FILE__ << __LINE__;
+    undoBuild = true;
+    buildSelectedListFromCurrentSchema();
+    undoBuild = false;
+}

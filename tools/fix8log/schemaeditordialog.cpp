@@ -43,7 +43,9 @@ using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
-    expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),tableSchemaStatus(NoMods)
+    expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),tempTableSchema(0),
+    tableSchemaStatus(NoMods),
+    undoBuild(false)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Table Schema Editor"));
@@ -51,7 +53,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     mainMenuBar = menuBar();
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     mainToolBar = new QToolBar("Main Toolbar",this);
-     mainToolBar->setObjectName("SchemaToolBar");
+    mainToolBar->setObjectName("SchemaToolBar");
     mainToolBar->setMovable(true);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
     closeA = new QAction(tr("&Close Window"),this);
@@ -67,13 +69,23 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     connect(saveA,SIGNAL(triggered()),this,SLOT(saveSchemaSlot()));
     saveA->setIcon(QIcon(":/images/svg/document-save.svg"));
     saveA->setToolTip(tr("Save"));
+
+    undoA = new QAction(tr("&Undo"),this);
+    connect(undoA,SIGNAL(triggered()),this,SLOT(undoSchemaSlot()));
+    undoA->setIcon(QIcon(":/images/svg/edit-undo.svg"));
+    undoA->setToolTip(tr("Undo and rest to last saved value"));
+
+
     fileMenu->addAction(applyA);
     fileMenu->addAction(saveA);
+    fileMenu->addAction(undoA);
 
     fileMenu->addAction(closeA);
-     mainToolBar->addAction(closeA);
-     mainToolBar->addAction(applyA);
+    mainToolBar->addAction(closeA);
+    mainToolBar->addAction(applyA);
     mainToolBar->addAction(saveA);
+    mainToolBar->addAction(undoA);
+
     QWidget *cWidget = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout(this);
     cWidget->setLayout(vbox);
@@ -82,14 +94,12 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
 
     applyBG = new QButtonGroup(this);
     applyBG->setExclusive(true);
-    applyOnlyToCurrentRB = new QRadioButton("Apply To Tab",this);
-    applyOnlyToCurrentRB->setToolTip("Only apply to tab at left");
+
     applyToWindowRB = new QRadioButton("Apply To Window",this);
     applyToWindowRB->setToolTip("Apply only to the tabs in the given window");
 
     applyToAllRB = new QRadioButton("Apply To All",this);
     applyToAllRB->setToolTip("Apply selected schema to all windows and all tabs");
-    applyBG->addButton(applyOnlyToCurrentRB);
     applyBG->addButton(applyToWindowRB);
     applyBG->addButton(applyToAllRB);
     if (globalSchemaOn)
@@ -105,7 +115,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     applyArea->setLayout(applyBox);
     applyBox->addWidget(applyToAllRB,0,Qt::AlignLeft);
     applyBox->addWidget(applyToWindowRB,0,Qt::AlignLeft);
-    applyBox->addWidget(applyOnlyToCurrentRB,0,Qt::AlignLeft);
 
     targetArea = new QWidget();
     QHBoxLayout *tarBox = new QHBoxLayout();
@@ -119,26 +128,29 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     windowV = new QLineEdit("");
     windowV->setReadOnly(true);
 
-    tabL = new QLabel("Tab:");
-    tabL->setFont(fnt);
-    tabV = new QLineEdit("");
-    tabV->setReadOnly(true);
-
     fnt.setPointSize(fnt.pointSize()+2);
     fnt.setItalic(true);
     windowV->setFont(fnt);
-    tabV->setFont(fnt);
     QFontMetrics fm1(fnt);
-    tabV->setMinimumWidth(fm1.maxWidth()*15);
     windowV->setMinimumWidth(fm1.maxWidth()*8);
+    windowV->setMaxLength(32);
     tarBox->addWidget(windowL,0,Qt::AlignLeft);
     tarBox->addWidget(windowV,1);
-    tarBox->addSpacing(22);
-    tarBox->addWidget(tabL,0);
-    tarBox->addWidget(tabV,1);
     topBox->addWidget(applyArea,0,Qt::AlignLeft);
-    topBox->addWidget(targetArea,1);
-    topBox->addStretch(1);
+    topBox->addWidget(targetArea,2);
+    statusArea = new QWidget(targetArea);
+    QHBoxLayout *sbox = new QHBoxLayout(statusArea);
+    statusArea->setLayout(sbox);
+    sbox->setMargin(0);
+    statusI = new QLabel(targetArea);
+    statusL = new QLabel(targetArea);
+    statusL->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+    statusL->setFont(fnt);
+    statusL->setText("");
+    sbox->addWidget(statusI);
+    sbox->addWidget(statusL);
+
+    topBox->addWidget(statusArea,1,Qt::AlignRight);
     splitter = new QSplitter(Qt::Horizontal,this);
     buildSchemaArea();
     QWidget *workWidget = new QWidget();
@@ -181,8 +193,8 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     avbox->setMargin(0);
     availableArea->setLayout(avbox);
 
-    availableTreeView = new QTreeView(this);
-    availableTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    availableFieldsTreeView = new QTreeView(this);
+    availableFieldsTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QWidget *availableButtonArea = new QWidget(availableArea);
     QHBoxLayout *abox = new QHBoxLayout(availableButtonArea);
     availableButtonArea->setLayout(abox);
@@ -221,35 +233,35 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
 
     abox->addWidget(expandPB,0);
     abox->addWidget(collapsePB,0);
-    avbox->addWidget(availableTreeView,1);
+    avbox->addWidget(availableFieldsTreeView,1);
     avbox->addWidget(availableButtonArea,0,Qt::AlignLeft);
-    //connect(availableTreeView,SIGNAL(clicked(QModelIndex)),
-    //        this,SLOT(availableTreeViewClickedSlot(QModelIndex)));
+    //connect(availableFieldsTreeView,SIGNAL(clicked(QModelIndex)),
+    //        this,SLOT(availableFieldsTreeViewClickedSlot(QModelIndex)));
 
-    availableFieldModel = new QStandardItemModel(availableTreeView);
+    availableFieldModel = new QStandardItemModel(availableFieldsTreeView);
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
 
     availableFieldModel->setColumnCount(1);
     availableFieldHeaderItem = new QStandardItem("Fields");
     availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
-    availableTreeView->setSortingEnabled(true);
-    availableTreeView->setModel(availableFieldModel);
+    availableFieldsTreeView->setSortingEnabled(true);
+    availableFieldsTreeView->setModel(availableFieldModel);
 
     QWidget *selectArea = new QWidget(this);
     QVBoxLayout *selectBox = new QVBoxLayout(selectArea);
     selectBox->setMargin(0);
     selectArea->setLayout(selectBox);
 
-    selectedListView = new QTreeView(selectArea);
-    connect(selectedListView,SIGNAL(clicked(QModelIndex)),this,SLOT(selectedListClickedSlot(QModelIndex)));
-    selectedListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    selectedModel = new QStandardItemModel(selectedListView);
-    selectedModel->setColumnCount(1);
+    selectedFieldsTreeView = new QTreeView(selectArea);
+    connect(selectedFieldsTreeView,SIGNAL(clicked(QModelIndex)),this,SLOT(selectedListClickedSlot(QModelIndex)));
+    selectedFieldsTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    selectedFieldModel = new QStandardItemModel(selectedFieldsTreeView);
+    selectedFieldModel->setColumnCount(1);
     selectedHeaderItem = new QStandardItem("");
-    selectedModel->setHorizontalHeaderItem(0,selectedHeaderItem);
-    selectedListView->setSortingEnabled(true);
-    selectedListView->setModel(selectedModel);
+    selectedFieldModel->setHorizontalHeaderItem(0,selectedHeaderItem);
+    selectedFieldsTreeView->setSortingEnabled(true);
+    selectedFieldsTreeView->setModel(selectedFieldModel);
 
     clearPB = new QPushButton("Clear",this);
     connect(clearPB,SIGNAL(clicked()),this,SLOT(clearSelectedSlot()));
@@ -266,7 +278,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectBBox->addWidget(clearAllPB,0,Qt::AlignLeft);
     selectBBox->addStretch(1);
     selectBBox->addWidget(defaultPB,0);
-    selectBox->addWidget(selectedListView,1);
+    selectBox->addWidget(selectedFieldsTreeView,1);
     selectBox->addWidget(selectButonArea,0);
 
     wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
@@ -293,7 +305,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     regMesssgeColor = pal.color(QPalette::WindowText);
     errorMessageColor = Qt::red;
     vbox->addLayout(topBox,0);
-    vbox->addSpacing(22);
+    vbox->addSpacing(10);
     vbox->addWidget(splitter,1);
     vbox->addSpacing(12);
     vbox->addWidget(messageL,0);
@@ -312,8 +324,8 @@ void SchemaEditorDialog::buildSchemaArea()
     availableSchemasListView->setItemDelegate(schemaDelegate);
     connect(availableSchemasListView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(availableSchemasClickedSlot(QModelIndex)));
-    schemaModel = new QStandardItemModel(availableSchemasListView);
-    availableSchemasListView->setModel(schemaModel);
+    availableSchemaModel = new QStandardItemModel(availableSchemasListView);
+    availableSchemasListView->setModel(availableSchemaModel);
     descriptionBox = new QGroupBox("Description",availableArea);
     descriptionBox->setFlat(true);
     QVBoxLayout *dbox = new QVBoxLayout();
@@ -410,97 +422,105 @@ void SchemaEditorDialog::buildSchemaArea()
 void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
 {
     SchemaItem *schemaItem;
+
     QItemSelectionModel *selectionModel = availableSchemasListView->selectionModel();
+
     selectionModel->clear();
     if (!currentTableSchema) {
         qWarning() << "No current table schema selected" << __FILE__ << __LINE__;
         return;
     }
-  if (!currentTableSchema->fieldList) {
-      qWarning() << "No Fields in current table" << __FILE__ << __FILE__;
-      qDebug() << "\tTo do - clear current selection" << __FILE__ << __LINE__;
-      return;
-  }
-  int numOfSchemas = schemaModel->rowCount();
-  for(int i = 0;i< numOfSchemas;i++) {
-      schemaItem = (SchemaItem *) schemaModel->item(i);
-      if (schemaItem->tableSchema == currentTableSchema) {
-        qDebug() << "Set current selection to schema item...." << __FILE__ << __LINE__;
-        selectionModel->select(schemaItem->index(),QItemSelectionModel::Select);
-        break;
-      }
-  }
-  setUpdatesEnabled(false);
-  disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-  QStringList messageNameList;
-  QString tooltipStr;
-  FieldUse *fieldUse;
-  MessageField *messageField;
-  QBaseEntry *qbe;
-  QVariant var;
-  QStandardItem *selectItem;
-  QStandardItem *availItem;
-  QMap<QString,QStandardItem *>::iterator  iter;
-  QList <QBaseEntry *> *bel = currentTableSchema->getFields();
-  if (!bel) {
-      qWarning() << "NO Field list found for current schema " << __FILE__ << __LINE__;
-      return;
-  }
-  QListIterator <QBaseEntry *> iter2(*bel);
-  while(iter2.hasNext()) {
-      qbe = iter2.next();
-      iter  = selectedMap.find(qbe->name);
-      if (iter == selectedMap.end()) { // not found
-           // see if in available and if so mark it checked
-           QMultiMap<QString,QStandardItem *>::iterator availIter = availableMap.find(qbe->name);
-          if (availIter != availableMap.end()) {
-              availItem = availIter.value();
-              availItem->setCheckState(Qt::Checked);
-          }
-          selectItem = new QStandardItem(qbe->name);
-          if (fieldUseList) {
-              fieldUse = fieldUseList->findByName(qbe->name);
-              if (fieldUse) {
-                  QListIterator <MessageField *> iter(fieldUse->messageFieldList);
-                  while(iter.hasNext()) {
-                      messageField = iter.next();
-                      messageNameList << messageField->name;
-                  }
-              }
-              if (messageNameList.count() == 0)
-                  tooltipStr = "Not used in any messages";
+    if (!currentTableSchema->fieldList) {
+        qWarning() << "No Fields in current table" << __FILE__ << __FILE__;
+        qDebug() << "\tTo do - clear current selection" << __FILE__ << __LINE__;
+        return;
+    }
+    int numOfSchemas = availableSchemaModel->rowCount();
+    for(int i = 0;i< numOfSchemas;i++) {
+        schemaItem = (SchemaItem *) availableSchemaModel->item(i);
+        if (schemaItem->tableSchema == currentTableSchema) {
+            qDebug() << "Set current selection to schema item...." << __FILE__ << __LINE__;
+            selectionModel->select(schemaItem->index(),QItemSelectionModel::Select);
+            break;
+        }
+    }
 
-              if (messageNameList.count() == 1)
-                  tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
-              else if(messageNameList.count() < 5)
-                  tooltipStr = "Used in: " + messageNameList.join("\n\t");
-              else
-                  tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
+    setUpdatesEnabled(false);
+    disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    QStringList messageNameList;
+    QString tooltipStr;
+    FieldUse *fieldUse;
+    MessageField *messageField;
+    QBaseEntry *qbe;
+    QVariant var;
+    QStandardItem *selectItem;
+    QStandardItem *availItem;
+    QMap<QString,QStandardItem *>::iterator  iter;
+    QList <QBaseEntry *> *bel = currentTableSchema->getFields();
+    if (!bel) {
+        qWarning() << "NO Field list found for current schema " << __FILE__ << __LINE__;
+        return;
+    }
+    QListIterator <QBaseEntry *> iter2(*bel);
+    if (selectedFieldModel->rowCount() > 0) {
+        selectedFieldModel->removeRows(0,selectedFieldModel->rowCount());
+        qDebug() << "REMOVED OLD SELECTED FIELDS" << __FILE__ << __LINE__;
+    }
+    while(iter2.hasNext()) {
+        qbe = iter2.next();
+        iter  = selectedMap.find(qbe->name);
+        if (iter == selectedMap.end()) { // not found
+            // see if in available and if so mark it checked
+            QMultiMap<QString,QStandardItem *>::iterator availIter = availableMap.find(qbe->name);
+            if (availIter != availableMap.end()) {
+                availItem = availIter.value();
+                availItem->setCheckState(Qt::Checked);
+            }
+            selectItem = new QStandardItem(qbe->name);
+            if (fieldUseList) {
+                fieldUse = fieldUseList->findByName(qbe->name);
+                if (fieldUse) {
+                    QListIterator <MessageField *> iter(fieldUse->messageFieldList);
+                    while(iter.hasNext()) {
+                        messageField = iter.next();
+                        messageNameList << messageField->name;
+                    }
+                }
+                if (messageNameList.count() == 0)
+                    tooltipStr = "Not used in any messages";
 
-              selectItem->setToolTip(tooltipStr);
-          }
-          var.setValue((void *) qbe);
-          selectItem->setData(var);
-          selectedModel->appendRow(selectItem);
-          selectedMap.insert(qbe->name,selectItem);
-          selectedBaseEntryList.append(qbe);
-      }
+                if (messageNameList.count() == 1)
+                    tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
+                else if(messageNameList.count() < 5)
+                    tooltipStr = "Used in: " + messageNameList.join("\n\t");
+                else
+                    tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
 
-  }
-  selectionModel = messageListView->selectionModel();
- selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
- disconnect(messageListView,SIGNAL(clicked(QModelIndex)),
-         this,SLOT(messageListClickedSlot(QModelIndex)));
- messageListClickedSlot(messageModel->index(0,0));
- connect(messageListView,SIGNAL(clicked(QModelIndex)),
-         this,SLOT(messageListClickedSlot(QModelIndex)));
-  connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
-             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-  setUpdatesEnabled(true);
-  qDebug() << "11 Call Validate " << __FILE__ << __LINE__;
+                selectItem->setToolTip(tooltipStr);
+            }
+            var.setValue((void *) qbe);
+            selectItem->setData(var);
+            selectedFieldModel->appendRow(selectItem);
+            selectedMap.insert(qbe->name,selectItem);
+            selectedBaseEntryList.append(qbe);
+        }
+    }
+    selectionModel = messageListView->selectionModel();
+    selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
+   /*
+    disconnect(messageListView,SIGNAL(clicked(QModelIndex)),
+               this,SLOT(messageListClickedSlot(QModelIndex)));
+    //messageListClickedSlot(messageModel->index(0,0));
+    connect(messageListView,SIGNAL(clicked(QModelIndex)),
+            this,SLOT(messageListClickedSlot(QModelIndex)));
+ */
+ connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    setUpdatesEnabled(true);
+    //qDebug() << "11 Call Validate " << __FILE__ << __LINE__;
 
-  validate();
+   // validate();
 }
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
@@ -547,20 +567,26 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
 {
     tableSchemaList = tsl;
+    if (availableSchemaModel->rowCount() > 0) {
+        availableSchemaModel->removeRows(0,availableSchemaModel->rowCount() -1);
+    }
     defaultTableSchema = dts;
     if (defaultTableSchema) {
+        currentTableSchema = defaultTableSchema;
         defaultSchemaItem = new SchemaItem(*defaultTableSchema);
         currentSchemaItem = defaultSchemaItem;
-        schemaModel->appendRow(defaultSchemaItem);
+        availableSchemaModel->appendRow(defaultSchemaItem);
     }
     else {
+        defaultSchemaItem = 0;
+        currentTableSchema = 0;
+        currentSchemaItem = 0;
         qWarning() << "NO Default Table Schema  For Scema Edtior" << __FILE__ << __LINE__;
     }
-    if (!tsl) {
+    if (!tableSchemaList) {
         qWarning() << "NO Default Table Schema List  For Scema Edtior" << __FILE__ << __LINE__;
         return;
     }
-    tableSchemaList = tsl;
     TableSchema *tableSchema;
     SchemaItem *schemaItem;
     QListIterator <TableSchema *> iter(*tableSchemaList);
@@ -568,67 +594,59 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
         tableSchema = iter.next();
         if (tableSchema != defaultTableSchema) {
             schemaItem = new SchemaItem(*tableSchema);
-            schemaModel->appendRow(schemaItem);
+            availableSchemaModel->appendRow(schemaItem);
         }
     }
-    currentTableSchema = defaultTableSchema;
-    if (currentTableSchema)
+
+    if (currentTableSchema) {
         tempTableSchema = currentTableSchema->clone();
+    }
     buildSelectedListFromCurrentSchema();
 
 }
 void SchemaEditorDialog::setCurrentTableSchema(int scheamID)
 {
 }
-void SchemaEditorDialog::setCurrentTarget(QString &windowName, QString &tabName)
+void SchemaEditorDialog::setCurrentTarget(QString &windowName)
 {
     windowV->setText(windowName);
-    tabV->setText(tabName);
-    if (tabName.length() < 1) {
-        applyToWindowRB->setChecked(true);
-        applyOnlyToCurrentRB->setEnabled(false);
-        tabV->setVisible(false);
-    }
-    else {
-        applyOnlyToCurrentRB->setChecked(true);
-        applyOnlyToCurrentRB->setEnabled(true);
-        tabV->setVisible(true);
-     }
+
 }
 bool SchemaEditorDialog::validate()
 {
     bool isValid = false;
-    bool schemaModified = true;
-   // QItemSelectionModel *availSelModel =  availableTreeView->selectionModel();
-    qDebug() << "Selected COUNT = " << selectedBaseEntryList.count();
-    qDebug() << "TEMP  COUNT = " << tempTableSchema->fieldList->count();
-    if(tempTableSchema && tempTableSchema->fieldList) {
-        if (selectedBaseEntryList == *tempTableSchema->fieldList) {
-            schemaModified = false;
-            qDebug() <<"\t1 Have NO MODS" << __FILE__ << __LINE__;
-
-            tableSchemaStatus = NoMods;
-        }
-        else {
-            qDebug() <<"\t2 Have MODS" << __FILE__ << __LINE__;
-            tableSchemaStatus = HaveMods;
+    bool schemaModified = false;
+    tableSchemaStatus = HaveMods;
+    // QItemSelectionModel *availSelModel =  availableFieldsTreeView->selectionModel();
+    if (currentTableSchema) {
+        qDebug() << "HAVE CURRENT SCHEMA TABLE" << __FILE__ << __LINE__;
+        if (tempTableSchema) {
+            qDebug() << "HAVE TEMP SCHEMA TABLE" << __FILE__ << __LINE__;
+            if (*currentTableSchema == *tempTableSchema) {
+                qDebug() << "* 1 NO MODS" << __FILE__ << __LINE__;
+                tableSchemaStatus = NoMods;
+            }
+            else
+                qDebug() << "HAVE MODS 1" << __FILE__ << __LINE__;
         }
     }
-    else if(selectedBaseEntryList.count() == 0) {
-        schemaModified = false;
+    else if (!tempTableSchema)
         tableSchemaStatus = NoMods;
-        qDebug() <<"\t3 Have NO MODS" << __FILE__ << __LINE__;
 
+    else
+        qDebug() << "HAVE MODS 2" << __FILE__ << __LINE__;
+    qDebug() << "TABLE SCHEMA STATUS = " << tableSchemaStatus << "HaveMods" << HaveMods;
+    if (tableSchemaStatus == HaveMods) {
+        schemaModified = true;
+        setStatus(SaveNeeded);
     }
-    else {
-        qDebug() << "4 HAVE MODS TO SCHEMA" << __FILE__<< __LINE__;
-        tableSchemaStatus = HaveMods;
-    }
+    else
+        setStatus(Ok);
+    saveA->setEnabled(schemaModified);
+    undoA->setEnabled(schemaModified);
     if (currentSchemaItem) {
         currentSchemaItem->setModified(schemaModified);
         availableSchemasListView->viewport()->update();
-        qDebug() << "SET CURRENT SCHEMA ITEM MOFIED" << currentSchemaItem->text() << __FILE__ << __LINE__;
-        qDebug() << "\tModified = " << schemaModified << __FILE__ << __LINE__;
     }
     if (viewMode == NewMode || viewMode == EditMode) {
         if (newSchemaLine->text().length() > 1)
@@ -672,14 +690,14 @@ bool SchemaEditorDialog::validate()
         }
     }
     bool enableClear = false;
-    QItemSelectionModel *selectedSelModel =  selectedListView->selectionModel();
+    QItemSelectionModel *selectedSelModel =  selectedFieldsTreeView->selectionModel();
     if (selectedSelModel) {
         if (selectedSelModel->hasSelection())
-                enableClear = true;
+            enableClear = true;
     }
     clearPB->setEnabled(enableClear);
     enableClear = false;
-    if (selectedModel->rowCount() > 0)
+    if (selectedFieldModel->rowCount() > 0)
         enableClear = true;
     clearAllPB->setEnabled(enableClear);
 
@@ -711,4 +729,26 @@ void SchemaEditorDialog::setMessage(QString str, bool isError)
         pal.setColor(QPalette::WindowText,regMesssgeColor);
     messageL->setPalette(pal);
     messageL->setText(str);
+}
+void SchemaEditorDialog::setStatus(StatusType st)
+{
+    statusValue = st;
+    if (statusValue == SaveNeeded) {
+        statusI->setPixmap(QPixmap(":/images/svg/greenPlus.svg"));
+        statusL->setText("Save Needed");
+        statusBar()->showMessage("Save Needed");
+    }
+
+    else if (statusValue == EmptyFields) {
+        statusI->setPixmap(QPixmap(":/images/svg/xred.svg"));
+        statusL->setText("No Fields");
+        statusBar()->showMessage("Fields Needed");
+        //statusArea->show();
+    }
+
+    else {
+        statusI->setPixmap(QPixmap());
+        statusL->setText("");
+    }
+
 }
