@@ -365,8 +365,13 @@ size_t Message::encode(char **hmsg_store) const
 	if (!_header)
 		throw MissingMessageComponent("header");
 	_header->get_msg_type()->set(_msgType);
+#if defined RAW_MSG_SUPPORT
+	msg += (_begin_payload = _header->encode(msg)); // start
+	msg += (_payload_len = MessageBase::encode(msg));
+#else
 	msg += _header->encode(msg); // start
 	msg += MessageBase::encode(msg);
+#endif
 	if (!_trailer)
 		throw MissingMessageComponent("trailer");
 	msg += _trailer->encode(msg);
@@ -401,6 +406,9 @@ size_t Message::encode(char **hmsg_store) const
 #endif
 
 	*msg = 0;
+#if defined RAW_MSG_SUPPORT
+	_rawmsg.assign(*hmsg_store, msg - *hmsg_store);
+#endif
 	return msg - *hmsg_store;
 }
 

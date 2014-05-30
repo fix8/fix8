@@ -840,6 +840,11 @@ protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment, _end_of_batch;
+#if defined RAW_MSG_SUPPORT
+	mutable f8String _rawmsg;
+	mutable int _begin_payload = -1;
+	mutable unsigned _payload_len = 0;
+#endif
 
 public:
 	/*! Ctor.
@@ -877,6 +882,11 @@ public:
 	{
 		const unsigned hlen(_header->decode(from, offset, 0, permissive_mode));
 		const unsigned blen(MessageBase::decode(from, hlen, 0, permissive_mode));
+#if defined RAW_MSG_SUPPORT
+		_begin_payload = hlen;
+		_payload_len = blen;
+		_rawmsg = from;
+#endif
 		return _trailer->decode(from, blen, ignore, permissive_mode);
 	}
 
@@ -1010,6 +1020,28 @@ public:
 		if (_trailer)
 			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
 	}
+
+#if defined RAW_MSG_SUPPORT
+	/*! Get the raw FIX message that this message was decoded from
+	    \return reference to FIX message string */
+	const f8String& get_rawmsg() const { return _rawmsg; }
+
+	/*! Get iterator to begin of message payload
+	    \return const_iterator to start of payload */
+	f8String::const_iterator begin_payload() const { return f8String::const_iterator(_rawmsg.data() + _begin_payload); }
+
+	/*! Get iterator to end of message payload
+	    \return const_iterator to end of payload */
+	f8String::const_iterator end_payload() const { return f8String::const_iterator(_rawmsg.data() + _begin_payload + _payload_len); }
+
+	/*! Get the payload length
+	    \return payload length */
+	unsigned get_payload_len() const { return _payload_len; }
+
+	/*! Get the offset of payload begin
+	    \return offset of payload begin */
+	unsigned get_payload_begin() const { return _begin_payload; }
+#endif
 
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
