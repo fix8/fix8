@@ -460,16 +460,12 @@ void MainWindow::buildSchemaMenu()
     schemaApplyAllA->setIcon(QIcon(":/images/svg/worldwWthTwoTabs.svg"));
     schemaApplyWindowA = new QAction("Apply To Window",this);
     schemaApplyWindowA->setIcon(QIcon(":/images/svg/spreadsheetTwoTabs.svg"));
-    schemaApplyTabA = new QAction("Apply To Worksheet",this);
-    schemaApplyTabA->setIcon(QIcon(":/images/svg/spreadsheetOneTabs.svg"));
+
     schemaApplyAllA->setCheckable(true);
     schemaApplyWindowA->setCheckable(true);
-    schemaApplyTabA->setCheckable(true);
-    schemaScopeMenu->addAction(schemaApplyTabA);
     schemaScopeMenu->addAction(schemaApplyWindowA);
     schemaScopeMenu->addAction(schemaApplyAllA);
 
-    schemaScopeGroup->addAction(schemaApplyTabA);
     schemaScopeGroup->addAction(schemaApplyWindowA);
     schemaScopeGroup->addAction(schemaApplyAllA);
     TableSchema *tableSchema;

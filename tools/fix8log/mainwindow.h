@@ -149,7 +149,6 @@ protected:
     QAction  *pasteTabA;
     QAction  *quitA;
     QAction  *saveA;
-    QAction  *schemaApplyTabA;
     QAction  *schemaApplyWindowA;
     QAction  *schemaApplyAllA;
     QAction  *searchBackA;

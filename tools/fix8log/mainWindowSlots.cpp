@@ -276,11 +276,8 @@ void MainWindow::setWindowNameSlot()
     }
 }
 void MainWindow::setSchemaScopeSlot(QAction *action)
-{
-    qDebug() << "SET PIXMAP FOR SCOPE";
-  if (action == schemaApplyTabA)
-      scopeV->setPixmap(QPixmap(":/images/svg/spreadsheetOneTabs.svg").scaledToHeight(24));
-  else if (action == schemaApplyWindowA)
+{  
+  if (action == schemaApplyWindowA)
        scopeV->setPixmap(QPixmap(":/images/svg/spreadsheetTwoTabs.svg").scaledToHeight(24));
   else
        scopeV->setPixmap(QPixmap(":/images/svg/worldwWthTwoTabs.svg").scaledToHeight(24));
