@@ -300,15 +300,12 @@ bool Fix8Log::init()
                 displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
                 defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
                 tableSchemaList->append(defaultTableSchema);
-                qDebug() << "ADDING DEFAULT TABLE TO DATABASE..."<< __FILE__ << __LINE__;
                 bstatus = database->addTableSchema(*defaultTableSchema);
                 if (!bstatus) {
                     errorStr = "Failed to add default table schema to database 2";
                     displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
                 }
             }
-            else
-                qDebug() << "FOUND DEFAULT TABLE " << __FILE__ << __LINE__;
         }
         MainWindow::defaultTableSchema = defaultTableSchema;
     }
@@ -318,7 +315,6 @@ bool Fix8Log::init()
         while(tsIter.hasNext()) {
             TableSchema *ts = tsIter.next();
             ts->fieldNames = database->getSchemaFields(ts->id);
-            qDebug() << "FIELDS FOUND = " << ts->fieldNames;
         }
     }
     QString key;
@@ -342,7 +338,6 @@ bool Fix8Log::init()
     for (Fields::const_iterator hiter = _header->fields_begin();
          hiter != _header->fields_end();
          hiter++) {
-        qDebug() << "HEY HAVE THIS FIELD FROM HEADER" ;
     }
     for(int ii=0;ii < messageCount; ii++)
     {

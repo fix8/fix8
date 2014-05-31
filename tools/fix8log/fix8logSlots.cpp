@@ -166,11 +166,8 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->populateMessageList(messageFieldList);
-        QListIterator <MainWindow *> iter(mainWindows);
-        if (iter.hasNext()) {
-            MainWindow *mw = iter.next();
-            schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
-        }
+
+        schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
         schemaEditorDialog->setBaseMaps(baseMap);
         schemaEditorDialog->setFieldUseList(fieldUseList);
         schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
@@ -187,8 +184,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
     QString windowName = mw->windowTitle();
     if (windowName.length() < 1)
         windowName = qApp->applicationName();
-
-    schemaEditorDialog->setCurrentTarget(globalSchemaOn, windowName);
+    schemaEditorDialog->setCurrentTarget(globalSchemaOn, mw,true);
     schemaEditorDialog->show();
     schemaEditorDialog->setVisible(true);
      schemaEditorDialog->showNormal();
@@ -231,17 +227,23 @@ void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 }
 void Fix8Log::setGlobalSchemaOnSlot(bool b)
 {
+    qDebug() << "FIX * GLOBAL SCHEMA SET ON " << b << __FILE__ << __LINE__;
+    MainWindow *senderMW = (MainWindow *) sender();
+    bool bstatus;
     QSettings settings("fix8","logviewer");
-    globalSchemaOn = b;
-    settings.setValue("GlobalSchemaOn",b);
     MainWindow *mw;
+    if (schemaEditorDialog)
+            bstatus = schemaEditorDialog->setCurrentTarget(b,senderMW);
+    if (!bstatus) {
+        senderMW->setGlobalSchemaOn(globalSchemaOn);
+        return;
+    }
+    globalSchemaOn = b;
+    settings.setValue("GlobalSchemaOn",globalSchemaOn);
     QListIterator <MainWindow *> iter(mainWindows);
     while(iter.hasNext()) {
         mw = iter.next();
-        if(mw != (MainWindow *) sender())
+        if(mw != senderMW)
             mw->setGlobalSchemaOn(b);
     }
-    if (schemaEditorDialog)
-            schemaEditorDialog->setCurrentTarget(b,mw->getName());
 }
-

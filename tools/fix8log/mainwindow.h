@@ -79,8 +79,10 @@ public:
     void addNewSchema(TableSchema *);
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     void deletedSchema(int schemaID);
+    void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
     void showFileDialog();
+    QString getName();
     TableSchema* getTableSchema();
     const QUuid &getUuid();
     WindowData getWindowData();
@@ -108,7 +110,6 @@ public:
     void fileDirChangedSlot(const QString &);
     void fileFilterSelectedSlot(QString);
     void fileSelectionFinishedSlot(int returnCode);
-    QString getName();
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
     void modelDroppedSlot(FixMimeData *);

@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtWidgets>
 #include "schemaitem.h"
 #include "tableschema.h"
+#include "mainwindow.h"
 #include "messagefield.h"
 #include "selectedfieldstreeview.h"
 class Database;
@@ -51,7 +52,7 @@ class SchemaEditorDialog : public QMainWindow
 public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTableSchema(int schemaID);
-    void setCurrentTarget(bool isGlobal,QString windowName = QString::null);
+    bool setCurrentTarget(bool isGlobal,MainWindow *mainWindow,bool isEditRequest=false);
     void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
@@ -93,12 +94,13 @@ private:
     typedef enum {Ok,SaveNeeded,EmptyFields} StatusType;
     typedef enum {ExpandAll,CollapseAll,Anything} ExpandMode;
     void addItemToSelected(QStandardItem *,Qt::CheckState);
-    void setCheckState(QStandardItem *item,Qt::CheckState cs);
-    void setUncheckedStateParent(QStandardItem *parentItem);
     void buildSchemaArea();
+    void buildSelectedListFromCurrentSchema();
+    void setCheckState(QStandardItem *item,Qt::CheckState cs);
     void setMessage(QString str, bool isError);
     void setStatus(StatusType);
-    void buildSelectedListFromCurrentSchema();
+    void setUncheckedStateParent(QStandardItem *parentItem);
+    void showWindowArea(bool b, QString windowName);
     bool validate();
     //SchemaEditorWidget *schemaWidget;
     QAction  *closeA;
@@ -136,11 +138,6 @@ private:
     QMenuBar *mainMenuBar;
     QMultiMap <QString ,QStandardItem *> selectedMap; //<fieldName,selected>
     QMultiMap <QString ,QStandardItem *> availableMap; //<fieldName,selected>
-
-    //QPushButton *newSchemaPB;
-   // QPushButton *copySchemaPB;
-    //QPushButton *editSchemaPB;
-    //QPushButton *deleteSchemaPB;
     QPushButton  *defaultPB;
     QPushButton *cancelEditPB;
     QPushButton *saveEditPB;
@@ -190,6 +187,7 @@ private:
     QLabel *statusI;
     StatusType statusValue;
     bool undoBuild;  // set and unset in undoSlot
+    MainWindow *currentMainWindow;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

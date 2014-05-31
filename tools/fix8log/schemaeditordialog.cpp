@@ -44,8 +44,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
     expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),tempTableSchema(0),
-    tableSchemaStatus(NoMods),
-    undoBuild(false)
+    tableSchemaStatus(NoMods),undoBuild(false),currentMainWindow(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Table Schema Editor"));
@@ -79,7 +78,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
                               this);
     copySchemaA->setToolTip("Create a copy of the selected schema");
     editSchemaA = new QAction(QIcon(":/images/svg/editSchema.svg"),"Edit",
-                                  this);
+                              this);
     connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
     editSchemaA->setToolTip("Modify given name and or description of selected schema");
     deleteSchemaA = new QAction(QIcon(":/images/svg/editdelete.svg"),"Delete",
@@ -401,7 +400,7 @@ void SchemaEditorDialog::buildSchemaArea()
     connect(newSchemaLine,SIGNAL(textEdited(const QString &)),
             this,SLOT(nameEditedSlot(const QString &)));
     connect(newSchemaLine,SIGNAL(returnPressed()),
-          this,SLOT(saveNewEditSlot()));
+            this,SLOT(saveNewEditSlot()));
     newDescriptionBox = new QGroupBox("Description",newSchemaArea);
     newDescriptionBox->setFlat(true);
     QVBoxLayout *ndbox = new QVBoxLayout(newDescriptionBox);
@@ -531,12 +530,12 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
     }
     selectionModel = messageListTreeView->selectionModel();
     selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
- connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
+    connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     setUpdatesEnabled(true);
     //qDebug() << "11 Call Validate " << __FILE__ << __LINE__;
 
-   // validate();
+    // validate();
 }
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
@@ -623,20 +622,101 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
 void SchemaEditorDialog::setCurrentTableSchema(int scheamID)
 {
 }
-void SchemaEditorDialog::setCurrentTarget(bool isGlobal, QString windowName)
+bool SchemaEditorDialog::setCurrentTarget(bool isGlobal, MainWindow *mainWindow,bool editRequest)
 {
-    if (isGlobal) {
-        windowL->hide();
-        windowV->hide();
-       applyToAllRB->setChecked(true);
+    QString str;
+    if (!mainWindow) {
+        qWarning() << "Error, mainwindow is null" << __FILE__ <<__LINE__;
+        return false;
+    }
+
+    qDebug() << "SET CURRENT TARGET..." << __FILE__ << __LINE__;
+    if (editRequest) {
+        if (mainWindow == currentMainWindow) {
+            qDebug() << "Windows are the same, return" << __FILE__ << __LINE__;
+            return false;
+        }
+        else if (currentMainWindow && (tableSchemaStatus == HaveMods)) {
+            qDebug() << "EDITOR BUSY WITH OTHER SCHEMA EDIT" << __FILE__ << __LINE__;
+            str = "Schema Editor Locked By Window " + currentMainWindow->getName();
+            str.append("\nSave or Cancel Changes To Unlock");
+            mainWindow->displayMessageDialog(str);
+            return false;
+        }
+    }
+    if (currentMainWindow) {
+        qDebug() << "HAVE MAIN WINDOW..." << __FILE__ << __LINE__;
+        if (currentMainWindow != mainWindow) {
+            if (tableSchemaStatus == HaveMods) {
+                qDebug() << "\tHAVE MODS" << __FILE__ << __LINE__;
+                if (isGlobal != globalSchemaOn) {
+                    qDebug() << "\tisGlboals !=" << __FILE__ << __LINE__;
+                    str = "Schema Editor Locked By Window " + currentMainWindow->getName();
+                    str.append("\nSave or Cancel Changes To Unlock");
+                    mainWindow->displayMessageDialog(str);
+                    return false;
+                }
+            }
+            qDebug() << "\tKEEP GOING..." << __FILE__ << __LINE__;
+            currentMainWindow = mainWindow;
+            globalSchemaOn = isGlobal;
+            str = mainWindow->getName();
+            if (str.length() < 1) {
+                qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
+                str = qApp->applicationDisplayName();
+            }
+            showWindowArea(globalSchemaOn,mainWindow->getName());
+        }
+        else { // currentWindow == mainWindow
+            qDebug() << "\tWINDOWS MATCH..." << __FILE__ << __LINE__;
+
+            if (tableSchemaStatus == HaveMods) {
+                qDebug() << "\tHave MODS..." << __FILE__ << __LINE__;
+
+                if (isGlobal != globalSchemaOn) {
+                    str = "Save Needed For Current Schema " + currentTableSchema->name;
+                    str.append("\nFirst Save or Cancel Changes In Schema Editor");
+                    mainWindow->displayMessageDialog(str);
+                    return false;
+                }
+            }
+            globalSchemaOn = isGlobal;
+            str = mainWindow->getName();
+            if (str.length() < 1) {
+                qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
+                str = qApp->applicationDisplayName();
+            }
+            showWindowArea(globalSchemaOn,str);
+        }
     }
     else {
+        qDebug() << "CURRENT MW IS NULL, setting..." << __FILE__ << __LINE__;
+        currentMainWindow = mainWindow;
+        globalSchemaOn = isGlobal;
+        str = mainWindow->getName();
+        if (str.length() < 1) {
+            qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
+            str = qApp->applicationDisplayName();
+        }
+        showWindowArea(globalSchemaOn,str);
+    }
+    return true;
+}
+void SchemaEditorDialog::showWindowArea(bool isGlobal, QString windowName)
+{
+    if (!isGlobal) {
         windowV->setText(windowName);
         windowL->show();
         windowV->show();
         applyToWindowRB->setChecked(true);
     }
+    else {
+        windowL->hide();
+        windowV->hide();
+        applyToAllRB->setChecked(true);
+    }
 }
+
 bool SchemaEditorDialog::validate()
 {
     bool isValid = false;
@@ -644,23 +724,16 @@ bool SchemaEditorDialog::validate()
     tableSchemaStatus = HaveMods;
     // QItemSelectionModel *availSelModel =  availableFieldsTreeView->selectionModel();
     if (currentTableSchema) {
-        qDebug() << "HAVE CURRENT SCHEMA TABLE" << __FILE__ << __LINE__;
         if (tempTableSchema) {
-            qDebug() << "HAVE TEMP SCHEMA TABLE" << __FILE__ << __LINE__;
             if (*currentTableSchema == *tempTableSchema) {
-                qDebug() << "* 1 NO MODS" << __FILE__ << __LINE__;
                 tableSchemaStatus = NoMods;
             }
-            else
-                qDebug() << "HAVE MODS 1" << __FILE__ << __LINE__;
+
         }
     }
     else if (!tempTableSchema)
         tableSchemaStatus = NoMods;
 
-    else
-        qDebug() << "HAVE MODS 2" << __FILE__ << __LINE__;
-    qDebug() << "TABLE SCHEMA STATUS = " << tableSchemaStatus << "HaveMods" << HaveMods;
     if (tableSchemaStatus == HaveMods) {
         schemaModified = true;
         setStatus(SaveNeeded);

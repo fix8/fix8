@@ -527,16 +527,22 @@ void MainWindow::buildHideColumnMenu()
         hideColActionGroup->addAction(hideA);
     }
 }
+void MainWindow::displayMessageDialog(QString &message)
+{
+    QString title;
+    if (name.length() < 0) {
+        title  = qApp->applicationDisplayName();
+    }
+    QMessageBox::information(this,title,message);
+}
 QString MainWindow::getName()
 {
     return name;
 }
-
 const QUuid &MainWindow::getUuid()
 {
     return uuid;
 }
-
 void MainWindow::showEvent(QShowEvent *se)
 {
     if (!loadingActive)  {
