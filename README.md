@@ -115,6 +115,41 @@ and framework; and a set of complete client/server test applications.
 See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8. Access to this documentation is free but a
 login is required. For our complete API Documentation see [here](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
+## Branch Layout
+
+<table>
+    <thead>
+         <tr>
+            <th>Branch</th>
+            <th>github path</th>
+            <th>Description</th>
+          </tr>
+    </thead>
+    <tbody>
+          <tr>
+             <td>master</td>
+             <td>https://github.com/fix8/fix8/tree/master</td>
+             <td>This is the default branch. All stable releases are made here.</td>
+          </tr>
+          <tr>
+             <td>dev/</td>
+             <td>https://github.com/fix8/fix8/tree/dev</td>
+             <td>This is the development stream and is updated continually. Features and bug fixes scheduled for release are developed and tested here.</td>
+          </tr>
+          <tr>
+             <td>dev-premain/</td>
+             <td>https://github.com/fix8/fix8/tree/dev-premain/</td>
+             <td>This branch is used to marshall development changes that are ready for release. When significant changes are made to the dev branch, this branch will be used to keep other changes separate.</td>
+          </tr>
+          <tr>
+             <td>gh-pages/</td>
+             <td>https://github.com/fix8/fix8/tree/gh-pages/</td>
+             <td>This branch contains the static html for the Fix8 website.</td>
+          </tr>
+    </tbody>
+</table>
+
+
 ## C++11
 
 Fix8 now **requires C++11 compiler support**. Fix8 will refuse to build without it. If you are using clang or gcc make sure you have the
