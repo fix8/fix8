@@ -132,18 +132,18 @@ login is required. For our complete API Documentation see [here](http://fix8.org
              <td>This is the default branch. All stable releases are made here.</td>
           </tr>
           <tr>
-             <td>dev/</td>
+             <td>dev</td>
              <td>https://github.com/fix8/fix8/tree/dev</td>
              <td>This is the development stream and is updated continually. Features and bug fixes scheduled for release are developed and tested here.</td>
           </tr>
           <tr>
-             <td>dev-premain/</td>
-             <td>https://github.com/fix8/fix8/tree/dev-premain/</td>
+             <td>dev-premain</td>
+             <td>https://github.com/fix8/fix8/tree/dev-premain</td>
              <td>This branch is used to marshall development changes that are ready for release. When significant changes are made to the dev branch, this branch will be used to keep other changes separate.</td>
           </tr>
           <tr>
-             <td>gh-pages/</td>
-             <td>https://github.com/fix8/fix8/tree/gh-pages/</td>
+             <td>gh-pages</td>
+             <td>https://github.com/fix8/fix8/tree/gh-pages</td>
              <td>This branch contains the static html for the Fix8 website.</td>
           </tr>
     </tbody>
