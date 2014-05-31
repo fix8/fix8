@@ -623,10 +623,19 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
 void SchemaEditorDialog::setCurrentTableSchema(int scheamID)
 {
 }
-void SchemaEditorDialog::setCurrentTarget(QString &windowName)
+void SchemaEditorDialog::setCurrentTarget(bool isGlobal, QString windowName)
 {
-    windowV->setText(windowName);
-
+    if (isGlobal) {
+        windowL->hide();
+        windowV->hide();
+       applyToAllRB->setChecked(true);
+    }
+    else {
+        windowV->setText(windowName);
+        windowL->show();
+        windowV->show();
+        applyToWindowRB->setChecked(true);
+    }
 }
 bool SchemaEditorDialog::validate()
 {

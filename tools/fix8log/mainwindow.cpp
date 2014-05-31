@@ -93,6 +93,19 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
     readSettings();
     move(x+100,y+90); // offset from window copied
 }
+void MainWindow::setGlobalSchemaOn(bool b)
+{
+    if (b) {
+        schemaApplyGlobalA->setChecked(true);
+        scopeV->setPixmap(QPixmap(":/images/svg/worldwWthTwoTabs.svg").scaledToHeight(24));
+    }
+    else {
+        schemaApplyWindowA->setChecked(true);
+         scopeV->setPixmap(QPixmap(":/images/svg/spreadsheetTwoTabs.svg").scaledToHeight(24));
+
+    }
+
+}
 void MainWindow::setLoading(bool bstatus)
 {
     loadingActive = bstatus;
@@ -456,18 +469,18 @@ void MainWindow::buildSchemaMenu()
     connect(schemaScopeGroup,SIGNAL(triggered(QAction*)),this,SLOT(setSchemaScopeSlot(QAction*)));
     schemaScopeGroup->setExclusive(true);
     schemaScopeMenu = schemaMenu->addMenu("Schema Scope");
-    schemaApplyAllA = new QAction("Apply Globally",this);
-    schemaApplyAllA->setIcon(QIcon(":/images/svg/worldwWthTwoTabs.svg"));
+    schemaApplyGlobalA = new QAction("Apply Globally",this);
+    //schemaApplyGlobalA->setIcon(QIcon(":/images/svg/worldwWthTwoTabs.svg"));
     schemaApplyWindowA = new QAction("Apply To Window",this);
-    schemaApplyWindowA->setIcon(QIcon(":/images/svg/spreadsheetTwoTabs.svg"));
+    //schemaApplyWindowA->setIcon(QIcon(":/images/svg/spreadsheetTwoTabs.svg"));
 
-    schemaApplyAllA->setCheckable(true);
+    schemaApplyGlobalA->setCheckable(true);
     schemaApplyWindowA->setCheckable(true);
     schemaScopeMenu->addAction(schemaApplyWindowA);
-    schemaScopeMenu->addAction(schemaApplyAllA);
+    schemaScopeMenu->addAction(schemaApplyGlobalA);
 
     schemaScopeGroup->addAction(schemaApplyWindowA);
-    schemaScopeGroup->addAction(schemaApplyAllA);
+    schemaScopeGroup->addAction(schemaApplyGlobalA);
     TableSchema *tableSchema;
     if (!schemaList) {
         qDebug() << "Schema List is null " << __FILE__ << __LINE__;
@@ -514,6 +527,11 @@ void MainWindow::buildHideColumnMenu()
         hideColActionGroup->addAction(hideA);
     }
 }
+QString MainWindow::getName()
+{
+    return name;
+}
+
 const QUuid &MainWindow::getUuid()
 {
     return uuid;

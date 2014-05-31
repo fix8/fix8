@@ -108,11 +108,13 @@ public:
     void fileDirChangedSlot(const QString &);
     void fileFilterSelectedSlot(QString);
     void fileSelectionFinishedSlot(int returnCode);
+    QString getName();
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
     void modelDroppedSlot(FixMimeData *);
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void quitSlot();
+    void setGlobalSchemaOn(bool);
     void setSchemaScopeSlot(QAction *);
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
@@ -150,7 +152,7 @@ protected:
     QAction  *quitA;
     QAction  *saveA;
     QAction  *schemaApplyWindowA;
-    QAction  *schemaApplyAllA;
+    QAction  *schemaApplyGlobalA;
     QAction  *searchBackA;
     QAction  *searchBeginA;
     QAction  *searchEndA;
@@ -217,10 +219,11 @@ signals:
     void createWindow(MainWindow *);
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
-    void editSchema(MainWindow *, QUuid uuid);
+    void editSchema(MainWindow *);
     void exitApp();
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
+    void setSchemaScopeGlobal(bool);
     void toolButtonStyleModified(Qt::ToolButtonStyle);
 private:
     void buildHideColumnMenu();

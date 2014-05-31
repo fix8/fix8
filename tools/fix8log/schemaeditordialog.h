@@ -51,7 +51,7 @@ class SchemaEditorDialog : public QMainWindow
 public:
     explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
     void setCurrentTableSchema(int schemaID);
-    void setCurrentTarget(QString &windowName);
+    void setCurrentTarget(bool isGlobal,QString windowName = QString::null);
     void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);

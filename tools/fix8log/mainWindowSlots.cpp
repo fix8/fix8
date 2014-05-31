@@ -58,7 +58,7 @@ void MainWindow::editSchemaSlot()
      WorkSheet *ws = qobject_cast <WorkSheet *> (tabW->currentWidget());
      if (ws)
          workSheetID = ws->getID();
-    emit editSchema(this,workSheetID);
+    emit editSchema(this);
 }
 
 void MainWindow::hideColumnActionSlot(QAction *action)
@@ -277,8 +277,12 @@ void MainWindow::setWindowNameSlot()
 }
 void MainWindow::setSchemaScopeSlot(QAction *action)
 {  
-  if (action == schemaApplyWindowA)
+    bool isGlobal = true;
+  if (action == schemaApplyWindowA) {
        scopeV->setPixmap(QPixmap(":/images/svg/spreadsheetTwoTabs.svg").scaledToHeight(24));
+       isGlobal = false;
+  }
   else
        scopeV->setPixmap(QPixmap(":/images/svg/worldwWthTwoTabs.svg").scaledToHeight(24));
+  emit setSchemaScopeGlobal(isGlobal);
 }

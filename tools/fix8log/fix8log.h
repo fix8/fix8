@@ -71,7 +71,7 @@ public slots:
     void deleteMainWindowSlot(MainWindow *mw);
     void displayConsoleMessage(GUI::ConsoleMessage);
     void displayConsoleMessage(QString, GUI::ConsoleMessage::ConsoleMessageType = GUI::ConsoleMessage::InfoMsg);
-    void editSchemaSlot(MainWindow *,QUuid workSheetID);
+    void editSchemaSlot(MainWindow *);
     void exitAppSlot();
      void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();

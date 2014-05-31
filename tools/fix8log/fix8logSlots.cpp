@@ -160,10 +160,9 @@ void  Fix8Log::modelDroppedSlot(FixMimeData* fmd)
         }
     }
 }
-void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
+void  Fix8Log::editSchemaSlot(MainWindow *mw)
 {
     bool ok;
-    QString tabName;
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
         schemaEditorDialog->populateMessageList(messageFieldList);
@@ -188,16 +187,8 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw, QUuid workSheetID)
     QString windowName = mw->windowTitle();
     if (windowName.length() < 1)
         windowName = qApp->applicationName();
-    if (!workSheetID.isNull()) {
-        WorkSheetData wsd = mw->getWorksheetData(workSheetID,&ok);
-        if (ok) {
-            if (wsd.tabAlias.length() >= 1)
-                tabName = wsd.tabAlias;
-            else
-                tabName = wsd.fileName;
-        }
-    }
-    schemaEditorDialog->setCurrentTarget(windowName);
+
+    schemaEditorDialog->setCurrentTarget(globalSchemaOn, windowName);
     schemaEditorDialog->show();
     schemaEditorDialog->setVisible(true);
      schemaEditorDialog->showNormal();
@@ -243,5 +234,14 @@ void Fix8Log::setGlobalSchemaOnSlot(bool b)
     QSettings settings("fix8","logviewer");
     globalSchemaOn = b;
     settings.setValue("GlobalSchemaOn",b);
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        if(mw != (MainWindow *) sender())
+            mw->setGlobalSchemaOn(b);
+    }
+    if (schemaEditorDialog)
+            schemaEditorDialog->setCurrentTarget(b,mw->getName());
 }
 

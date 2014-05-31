@@ -94,7 +94,8 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(this,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             mw,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
     connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
-    connect(mw,SIGNAL(editSchema(MainWindow*,QUuid)),this,SLOT(editSchemaSlot(MainWindow*,QUuid)));
+    connect(mw,SIGNAL(editSchema(MainWindow*)),this,SLOT(editSchemaSlot(MainWindow  *)));
+    connect(mw,SIGNAL(setSchemaScopeGlobal(bool)),this,SLOT(setGlobalSchemaOnSlot(bool)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 
