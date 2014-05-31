@@ -8,6 +8,26 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
+## Contents
+
+1. [Contents](#contents)
+1. [Features](#features)
+1. [Directory Layout](#directory-layout)
+1. [Documentation](#documentation)
+1. [Branch Layout](#branch-layout)
+1. [C++11](#c11)
+1. [External Dependencies (required)](#external-dependencies-required)
+1. [Optional Dependencies](#optional-dependencies)
+1. [Building on Linux/UNIX](#building-on-linuxunix)
+1. [Building on OSX](#building-on-osx)
+1. [Building on Windows](#building-on-windows)
+1. [Support](#support)
+1. [Downloads](#downloads)
+1. [Getting help or reporting problems](#getting-help-or-reporting-problems)
+1. [License](#license)
+1. [Fix8Pro and Fix8 Market Technologies](#fix8pro-and-fix8-market-technologies)
+1. [More Information](#more-information)
+
 ## Features
 
 * [Fix8](http://www.fix8.org) helps you get your [FIX protocol](http://www.fixprotocol.org/) client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.
