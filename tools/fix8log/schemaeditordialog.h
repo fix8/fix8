@@ -43,7 +43,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "schemaitem.h"
 #include "tableschema.h"
 #include "messagefield.h"
-
+#include "selectedfieldstreeview.h"
 class Database;
 class SchemaEditorDialog : public QMainWindow
 {
@@ -63,6 +63,7 @@ signals:
     void finished(int);
     void newSchemaCreated(TableSchema *);
     void schemaDeleted(int schemaID);
+    void tableSchemaUpdated(TableSchema *,bool onlyNameOrDescription);
 public slots:
     void applyButtonSlot(QAbstractButton*);
     void availableSchemasClickedSlot(QModelIndex);
@@ -74,6 +75,7 @@ public slots:
     void collapseAllSlot(bool);
     void defaultSlot();
     void deleteSchemaSlot();
+    void editSchemaSlot();
     void expandAllSlot(bool);
     void messageListClickedSlot(QModelIndex);
     void nameEditedSlot(const QString &);
@@ -103,6 +105,10 @@ private:
     QAction  *saveA;
     QAction  *undoA;
     QAction  *applyA;
+    QAction *newSchemaA;
+    QAction *copySchemaA;
+    QAction *editSchemaA;
+    QAction *deleteSchemaA;
     QButtonGroup *applyBG;
     QButtonGroup *expandBG;
     QColor editColor;
@@ -114,9 +120,11 @@ private:
     QLabel  *windowL;
     QLineEdit  *windowV;
     QListView *availableSchemasListView;
-    QListView *messageListView;
+    //QListView *messageListView;
+    QTreeView *messageListTreeView;
+
     QTreeView *availableFieldsTreeView;
-    QTreeView *selectedFieldsTreeView;
+    SelectedFieldsTreeView *selectedFieldsTreeView;
     QLabel *availableSchemasL;
     QLabel *messageListL;
     QLabel *newAvailableSchemasL;
@@ -129,10 +137,10 @@ private:
     QMultiMap <QString ,QStandardItem *> selectedMap; //<fieldName,selected>
     QMultiMap <QString ,QStandardItem *> availableMap; //<fieldName,selected>
 
-    QPushButton *newSchemaPB;
-    QPushButton *copySchemaPB;
-    QPushButton *editSchemaPB;
-    QPushButton *deleteSchemaPB;
+    //QPushButton *newSchemaPB;
+   // QPushButton *copySchemaPB;
+    //QPushButton *editSchemaPB;
+    //QPushButton *deleteSchemaPB;
     QPushButton  *defaultPB;
     QPushButton *cancelEditPB;
     QPushButton *saveEditPB;

@@ -72,10 +72,13 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
 bool   TableSchema::operator!=( const TableSchema &ts) const
 {
     bool ok = false;
-    if ((ts.name != name) && (ts.description != description))
+    if ((ts.name != name) && (ts.description != description)) {
         return true;
-    if (ts.fieldNames != fieldNames)
+    }
+    if (ts.fieldNames != fieldNames) {
+        qDebug() << "0 CHECK TS != " << __FILE__ << __LINE__;
         return true;
+    }
     //
     if (ts.fieldList && !fieldList) {
         if (ts.fieldList->count() != 0)
@@ -83,11 +86,16 @@ bool   TableSchema::operator!=( const TableSchema &ts) const
         else
             return false;
     }
+    if (!ts.fieldList && !fieldList)
+        return false;
+
     if (!ts.fieldList && fieldList) {
-        if (fieldList->count() != 0)
-          return false;
-        else
+        if (fieldList->count() != 0) {
             return true;
+        }
+        else {
+            return false;
+        }
     }
     if (ts.fieldList->count() != fieldList->count())
         return true;
@@ -104,43 +112,37 @@ bool   TableSchema::operator==( const TableSchema &ts) const
 {
     bool ok = true;
     if ((ts.name != name) && (ts.description != description)) {
-        qDebug() << "\tNames !=" << __FILE__ << __LINE__;
         return false;
     }
     if (ts.fieldNames != fieldNames) {
-        qDebug() << "\tField Names !=" << __FILE__ << __LINE__;
         return false;
     }
     if (ts.fieldList && !fieldList) {
-        qDebug() << "\t 1 FieldList !=" << __FILE__ << __LINE__;
         if (ts.fieldList->count() == 0)
             return true;
         else
             return false;
     }
+    if (!ts.fieldList && !fieldList)
+        return true;
+
     if (!ts.fieldList && fieldList) {
-        qDebug() << "\t 2 Field List !=" << __FILE__ << __LINE__;
         if (fieldList->count() == 0)
             return true;
         else
             return false;
     }
-    qDebug() << "SE IF BITH SETS FIELDS LIST = 0";
     if (!ts.fieldList && !fieldList)
         return true;
 
-    qDebug() << "CHECK FIELD LIST COUNT" << __FILE__ << __LINE__;
     if (ts.fieldList->count() != fieldList->count()) {
-        qDebug() << "\tField Count  !=" << __FILE__ << __LINE__;
         return false;
     }
-    qDebug() << "CHECK OVER ALL FIELDS" << __FILE__ << __LINE__;
     QListIterator <QBaseEntry *> iter(*ts.fieldList);
     QBaseEntry *be;
     while (iter.hasNext()) {
         be = iter.next();
         if (!fieldList->findByName(be->name)) {
-            qDebug() << "\tfield name not found !=" << __FILE__ << __LINE__;
             return false;
         }
     }
@@ -170,19 +172,12 @@ void TableSchema::removeFieldByName(QString &name)
 }
 void TableSchema::removeAllFields()
 {
-    qDebug() << "A)FIX THIS< NEED TO ISSUE A DELETE ALL,  REMOVE ALL FIELDS" << __FILE__ << __LINE__;
     if (fieldList) {
-        qDebug() << "\t1) BEGIN REMOVE ALL FIELDS" << __FILE__ << __LINE__;
-        qDebug() << "\t Num of fields to clear " << fieldList->count();
         fieldList->clear();
         qDeleteAll(fieldList->begin(),fieldList->end());
         delete fieldList;
         fieldList = 0;
     }
-    //delete fieldList;
-    //fieldList = 0;
-    qDebug() << "B) REMOVE ALL FIELDS" << __FILE__ << __LINE__;
-
 }
 void TableSchema::addField(QBaseEntry *qbe)
 {

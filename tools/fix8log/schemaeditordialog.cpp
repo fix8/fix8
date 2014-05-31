@@ -60,31 +60,45 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
-
     applyA = new QAction(tr("&Apply"),this);
     applyA->setIcon(QIcon(":/images/svg/apply.svg"));
     applyA->setToolTip(tr("Apply Schema"));
-
     saveA = new QAction(tr("&Save"),this);
     connect(saveA,SIGNAL(triggered()),this,SLOT(saveSchemaSlot()));
     saveA->setIcon(QIcon(":/images/svg/document-save.svg"));
     saveA->setToolTip(tr("Save"));
-
     undoA = new QAction(tr("&Undo"),this);
     connect(undoA,SIGNAL(triggered()),this,SLOT(undoSchemaSlot()));
     undoA->setIcon(QIcon(":/images/svg/edit-undo.svg"));
     undoA->setToolTip(tr("Undo and rest to last saved value"));
-
-
+    newSchemaA = new QAction(QIcon(":/images/svg/newspreadsheet.svg"),"New",
+                             this);
+    newSchemaA->setToolTip("Create a new schema");
+    connect(newSchemaA,SIGNAL(triggered()),this,SLOT(newSchemaSlot()));
+    copySchemaA = new QAction(QIcon(":/images/svg/spreadsheetCopy.svg"),"Copy",
+                              this);
+    copySchemaA->setToolTip("Create a copy of the selected schema");
+    editSchemaA = new QAction(QIcon(":/images/svg/editSchema.svg"),"Edit",
+                                  this);
+    connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
+    editSchemaA->setToolTip("Modify given name and or description of selected schema");
+    deleteSchemaA = new QAction(QIcon(":/images/svg/editdelete.svg"),"Delete",
+                                this);
+    deleteSchemaA->setToolTip("Delete selected schema");
+    connect(deleteSchemaA,SIGNAL(triggered()),this,SLOT(deleteSchemaSlot()));
     fileMenu->addAction(applyA);
     fileMenu->addAction(saveA);
     fileMenu->addAction(undoA);
-
     fileMenu->addAction(closeA);
     mainToolBar->addAction(closeA);
     mainToolBar->addAction(applyA);
     mainToolBar->addAction(saveA);
     mainToolBar->addAction(undoA);
+    mainToolBar->addSeparator();
+    mainToolBar->addAction(newSchemaA);
+    mainToolBar->addAction(copySchemaA);
+    mainToolBar->addAction(editSchemaA);
+    mainToolBar->addAction(deleteSchemaA);
 
     QWidget *cWidget = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout(this);
@@ -163,10 +177,10 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
 
     messageListL  = new QLabel("Messages");
     messageListL->setToolTip("All possible FIX messages");
-    availableListL = new QLabel("Available Columns");
+    availableListL = new QLabel("Available Fields");
     availableListL->setToolTip("All fields associated with selected message");
-    selectedListL = new QLabel("Selected Columns");
-    selectedListL->setToolTip("Table columns (schema)");
+    selectedListL = new QLabel("Selected Fields");
+    selectedListL->setToolTip("Fields that define table(s) headers");
     selectedListL->setAlignment(Qt::AlignHCenter);
     messageListL->setAlignment(Qt::AlignHCenter);
     availableListL->setAlignment(Qt::AlignHCenter);
@@ -175,18 +189,20 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     QVBoxLayout *mbox = new QVBoxLayout(messageArea);
     messageArea->setLayout(mbox);
     mbox->setMargin(0);
-    messageListView = new QListView();
+    //messageListView = new QListView();
+    messageListTreeView = new QTreeView(this);
     messageSpacerItem = new QSpacerItem(22,32);
-    mbox->addWidget(messageListView,1);
+    mbox->addWidget(messageListTreeView,1);
     mbox->addSpacerItem(messageSpacerItem);
 
     messageModel = new QStandardItemModel();
-    messageListView->setModel(messageModel);
+    messageListTreeView->setModel(messageModel);
     QStringList messageListHeaders;
     messageListHeaders << "Name";
     messageModel->setHorizontalHeaderLabels(messageListHeaders);
-
-    connect(messageListView,SIGNAL(clicked(QModelIndex)),
+    messageListTreeView->setSortingEnabled(true);
+    messageListTreeView->setUniformRowHeights(true);
+    connect(messageListTreeView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(messageListClickedSlot(QModelIndex)));
     QWidget *availableArea = new QWidget(this);
     QVBoxLayout *avbox = new QVBoxLayout(availableArea);
@@ -253,7 +269,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     selectBox->setMargin(0);
     selectArea->setLayout(selectBox);
 
-    selectedFieldsTreeView = new QTreeView(selectArea);
+    selectedFieldsTreeView = new SelectedFieldsTreeView(selectArea);
     connect(selectedFieldsTreeView,SIGNAL(clicked(QModelIndex)),this,SLOT(selectedListClickedSlot(QModelIndex)));
     selectedFieldsTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     selectedFieldModel = new QStandardItemModel(selectedFieldsTreeView);
@@ -337,13 +353,16 @@ void SchemaEditorDialog::buildSchemaArea()
     descriptionE->setMaximumHeight(fm.height()*4);
     descriptionE->setReadOnly(true);
     dbox->addWidget(descriptionE);
+    /*
     QWidget *schemaButtonArea = new QWidget(availableArea);
     QGridLayout *schemaGrid = new QGridLayout(schemaButtonArea);
     schemaButtonArea->setLayout(schemaGrid);
     newSchemaPB = new QPushButton("New",schemaButtonArea);
     newSchemaPB->setIcon(QIcon(":/images/svg/newspreadsheet.svg"));
     newSchemaPB->setToolTip("Create a new schema");
-    connect(newSchemaPB,SIGNAL(clicked()),this,SLOT(newSchemaSlot()));
+    newSchemaPB->addAction(newSchemaA);
+   // connect(newSchemaPB,SIGNAL(clicked()),this,SLOT(newSchemaSlot()));
+
     copySchemaPB = new QPushButton("Copy",schemaButtonArea);
     copySchemaPB->setIcon(QIcon(":/images/svg/spreadsheetCopy.svg"));
     copySchemaPB->setToolTip("Create a copy of the selected schema");
@@ -360,10 +379,11 @@ void SchemaEditorDialog::buildSchemaArea()
     schemaGrid->addWidget(deleteSchemaPB,1,1);
     schemaGrid->setColumnStretch(0,0);
     schemaGrid->setColumnStretch(1,0);
+    */
     abox->addWidget(availableSchemasL,0);
     abox->addWidget(availableSchemasListView,1);
     abox->addWidget(descriptionBox,0);
-    abox->addWidget(schemaButtonArea);
+    //abox->addWidget(schemaButtonArea);
     newSchemaArea = new QWidget(schemaArea);
     QVBoxLayout  *newBox = new QVBoxLayout(newSchemaArea);
     newSchemaArea->setLayout(newBox);
@@ -374,11 +394,14 @@ void SchemaEditorDialog::buildSchemaArea()
     newSchemaLine = new QLineEdit(newSchemaArea);
     newSchemaLine->setMaxLength(24);
     newSchemaLine->setToolTip("Name of Schema");
+    newSchemaLine->setToolTip("Type name of new schema\n(Can also use \'Enter\' key to save)");
     QRegExp regExp("^[a-z,A-Z,0-9]+\\s?[a-z,A-Z,0-9]+$");
     QValidator *val = new QRegExpValidator(regExp,this);
     newSchemaLine->setValidator(val);
     connect(newSchemaLine,SIGNAL(textEdited(const QString &)),
             this,SLOT(nameEditedSlot(const QString &)));
+    connect(newSchemaLine,SIGNAL(returnPressed()),
+          this,SLOT(saveNewEditSlot()));
     newDescriptionBox = new QGroupBox("Description",newSchemaArea);
     newDescriptionBox->setFlat(true);
     QVBoxLayout *ndbox = new QVBoxLayout(newDescriptionBox);
@@ -506,15 +529,8 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
             selectedBaseEntryList.append(qbe);
         }
     }
-    selectionModel = messageListView->selectionModel();
+    selectionModel = messageListTreeView->selectionModel();
     selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
-   /*
-    disconnect(messageListView,SIGNAL(clicked(QModelIndex)),
-               this,SLOT(messageListClickedSlot(QModelIndex)));
-    //messageListClickedSlot(messageModel->index(0,0));
-    connect(messageListView,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(messageListClickedSlot(QModelIndex)));
- */
  connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     setUpdatesEnabled(true);
@@ -524,7 +540,7 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
 }
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
-
+    validate();
     QMainWindow::showEvent(se);
 }
 void SchemaEditorDialog::setDefaultHeaderItems( QBaseEntryList &DefaultHeaderItems)
@@ -651,11 +667,11 @@ bool SchemaEditorDialog::validate()
     if (viewMode == NewMode || viewMode == EditMode) {
         if (newSchemaLine->text().length() > 1)
             isValid = true;
-        newSchemaPB->setEnabled(false);
+        newSchemaA->setEnabled(false);
         saveEditPB->setEnabled(isValid);
-        editSchemaPB->setEnabled(false);
-        deleteSchemaPB->setEnabled(false);
-        copySchemaPB->setEnabled(false);
+        editSchemaA->setEnabled(false);
+        deleteSchemaA->setEnabled(false);
+        copySchemaA->setEnabled(false);
         applyA->setEnabled(false);
         expandPB->setEnabled(false);
         collapsePB->setEnabled(false);
@@ -670,23 +686,23 @@ bool SchemaEditorDialog::validate()
             expandPB->setEnabled(false);
             collapsePB->setEnabled(false);
         }
-        newSchemaPB->setEnabled(true);
+        newSchemaA->setEnabled(true);
         saveEditPB->setEnabled(false);
         if (currentSchemaItem) {
             if (currentSchemaItem == defaultSchemaItem) {
-                deleteSchemaPB->setEnabled(false);
-                editSchemaPB->setEnabled(false);
+                deleteSchemaA->setEnabled(false);
+                editSchemaA->setEnabled(false);
             }
             else {
-                deleteSchemaPB->setEnabled(true);
-                editSchemaPB->setEnabled(true);
+                deleteSchemaA->setEnabled(true);
+                editSchemaA->setEnabled(true);
             }
-            copySchemaPB->setEnabled(true);
+            copySchemaA->setEnabled(true);
         }
         else {
-            editSchemaPB->setEnabled(false);
-            deleteSchemaPB->setEnabled(false);
-            copySchemaPB->setEnabled(false);
+            editSchemaA->setEnabled(false);
+            deleteSchemaA->setEnabled(false);
+            copySchemaA->setEnabled(false);
         }
     }
     bool enableClear = false;

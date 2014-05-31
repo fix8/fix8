@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     schemaEditorDialogSlots.cpp \
     databaseSchemaFields.cpp \
     fix8logSlots.cpp \
-    schemadelegate.cpp
+    schemadelegate.cpp \
+    selectedfieldstreeview.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -75,7 +76,8 @@ HEADERS  += mainwindow.h \
     schemaeditordialog.h \
     schemaitem.h \
     tableschema.h \
-    schemadelegate.h
+    schemadelegate.h \
+    selectedfieldstreeview.h
 
 RESOURCES += \
     resources.qrc
