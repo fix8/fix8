@@ -71,6 +71,7 @@ Fix8Log::Fix8Log(QObject *parent) :
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,true);
+    newMW->setGlobalSchemaOn(globalSchemaOn);
     wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
@@ -398,6 +399,7 @@ bool Fix8Log::init()
             if (wsdList.count() > 0) {
                 newMW  =new MainWindow(true);
                 newMW->setWindowData(wd);
+                newMW->setGlobalSchemaOn(globalSchemaOn);
                 wireSignalAndSlots(newMW);
                 mainWindows.append(newMW);
                 newMW->setAutoSaveOn(autoSaveOn);
@@ -440,6 +442,7 @@ done:
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
+        newMW->setGlobalSchemaOn(globalSchemaOn);
         wireSignalAndSlots(newMW);
         newMW->show();
         newMW->setAutoSaveOn(autoSaveOn);
@@ -506,9 +509,6 @@ void Fix8Log::saveSession()
         }
     }
 }
-
-
-
 void Fix8Log::readSettings()
 {
     QSettings settings("fix8","logviewer");
@@ -521,10 +521,8 @@ void Fix8Log::readSettings()
 void Fix8Log::writeSettings()
 {
     QSettings settings("fix8","logviewer");
-
-
+    settings.setValue("GlobalSchemaOn",globalSchemaOn);
 }
-
 bool Fix8Log::isGlobalSchemaOn()
 {
     return globalSchemaOn;

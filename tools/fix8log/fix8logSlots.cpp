@@ -187,7 +187,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
     schemaEditorDialog->setCurrentTarget(globalSchemaOn, mw,true);
     schemaEditorDialog->show();
     schemaEditorDialog->setVisible(true);
-     schemaEditorDialog->showNormal();
+    schemaEditorDialog->showNormal();
     schemaEditorDialog->raise();
 
 }
@@ -227,16 +227,16 @@ void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 }
 void Fix8Log::setGlobalSchemaOnSlot(bool b)
 {
-    qDebug() << "FIX * GLOBAL SCHEMA SET ON " << b << __FILE__ << __LINE__;
     MainWindow *senderMW = (MainWindow *) sender();
     bool bstatus;
     QSettings settings("fix8","logviewer");
     MainWindow *mw;
-    if (schemaEditorDialog)
-            bstatus = schemaEditorDialog->setCurrentTarget(b,senderMW);
-    if (!bstatus) {
-        senderMW->setGlobalSchemaOn(globalSchemaOn);
-        return;
+    if (schemaEditorDialog) {
+        bstatus = schemaEditorDialog->setCurrentTarget(b,senderMW);
+        if (!bstatus) {
+            senderMW->setGlobalSchemaOn(globalSchemaOn);
+            return;
+        }
     }
     globalSchemaOn = b;
     settings.setValue("GlobalSchemaOn",globalSchemaOn);
