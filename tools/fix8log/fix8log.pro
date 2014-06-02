@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql qml quick
-QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui sql qml quick widgets
 
 TARGET = fix8log
 TEMPLATE = app
@@ -82,18 +80,23 @@ HEADERS  += mainwindow.h \
 RESOURCES += \
     resources.qrc
 
-
+unix {
+QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
 LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
-
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ./f8
 DEPENDPATH += /usr/local/include
-
+}
+win32 {
+    message("Windows Compile")
+    MOC_DIR = moc
+    UI_DIR = ui
+    OBJECTS_DIR = obj
+    INCLUDEPATH += $$(HOME)/include
+    LIBS +=
+}
 OTHER_FILES += \
-    qml/loadProgress.qml \
-    fix8log \
-    fix8log.o \
+    qml/loadProgress.qml \    
     fix8log.pro.user \
     fix8log.pro.user.7112d3e \
-    images/svg/editSchema.svg
 
 
