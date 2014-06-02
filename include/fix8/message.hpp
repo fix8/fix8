@@ -290,7 +290,7 @@ protected:
 
 protected:
 	// used by the printer
-	static unsigned _tabsize;
+	F8API static unsigned _tabsize;
 
 public:
 	/*! Ctor.
