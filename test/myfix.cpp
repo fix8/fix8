@@ -562,7 +562,8 @@ bool MyMenu::static_probe()
 	const BaseMsgEntry *tbme;
 	if (!get_string(result).empty() && (tbme = _session.get_ctx()._bme.find_ptr(result.c_str())))
 	{
-		function<void (const TraitHelper&, int)> print_traits([&print_traits, this](const TraitHelper& tr, int depth)
+        function<void( const TraitHelper&, int )> print_traits;
+		print_traits = ([&print_traits, this](const TraitHelper& tr, int depth)
 		{
 			const string spacer(depth * MessageBase::get_tabsize(), ' ');
 			for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
