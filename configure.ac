@@ -451,7 +451,7 @@ AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],
-[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=regex)])],
 [case "${withval}" in
 	regex) AC_MSG_CHECKING(for regex)
 				AC_TRY_COMPILE([
@@ -478,9 +478,14 @@ esac])
 
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
-if test "$regex_set" = no; then
-	using_poco_regex=yes
-	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+if test "$using_poco_regex" = no && test "$regex_set" = no; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+else if test "$using_poco_regex" = yes; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
+else if test "$regex_set" = yes; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+fi
+fi
 fi
 
 thread_set=no
