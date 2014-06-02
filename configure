@@ -20501,20 +20501,14 @@ $as_echo "#define REGEX_POCO 1" >>confdefs.h
 
 $as_echo "#define REGEX_REGEX_H 2" >>confdefs.h
 
-if test "$using_poco_regex" = no && test "$regex_set" = no; then
-
-$as_echo "#define REGEX_SYSTEM REGEX_REGEX_H" >>confdefs.h
-
-else if test "$using_poco_regex" = yes; then
+if test "$using_poco_regex" = yes; then
 
 $as_echo "#define REGEX_SYSTEM REGEX_POCO" >>confdefs.h
 
-else if test "$regex_set" = yes; then
+else
 
 $as_echo "#define REGEX_SYSTEM REGEX_REGEX_H" >>confdefs.h
 
-fi
-fi
 fi
 
 thread_set=no
@@ -24291,7 +24285,7 @@ cat >>confdefs.h <<_ACEOF
 #define CONFIGURE_TIME "`date`"
 _ACEOF
 
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 

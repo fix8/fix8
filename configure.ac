@@ -478,14 +478,10 @@ esac])
 
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
-if test "$using_poco_regex" = no && test "$regex_set" = no; then
-	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
-else if test "$using_poco_regex" = yes; then
+if test "$using_poco_regex" = yes; then
 	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
-else if test "$regex_set" = yes; then
+else
 	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
-fi
-fi
 fi
 
 thread_set=no
@@ -825,7 +821,7 @@ else
 fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])
