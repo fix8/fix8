@@ -696,6 +696,14 @@ AC_ARG_ENABLE([xmlstrictbool],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
 esac])
 
+AC_ARG_ENABLE([rawmsgsupport],
+[AS_HELP_STRING([--enable-rawmsgsupport],[enable raw FIX message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(RAW_MSG_SUPPORT, 1, [Define to 1 if you wish to enable raw FIX message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
+esac])
+
 AC_ARG_ENABLE([bufgloblogging],
 [AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
 [case "${enableval}" in

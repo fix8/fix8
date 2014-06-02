@@ -865,6 +865,7 @@ enable_bdb
 with_bdb
 enable_zeromq
 enable_xmlstrictbool
+enable_rawmsgsupport
 enable_bufgloblogging
 enable_valgrind
 enable_gprof
@@ -1540,6 +1541,7 @@ Optional Features:
                           (default=no)
   --enable-zeromq         enable zeromq messagebus support (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
+  --enable-rawmsgsupport  enable raw FIX message support (default=no)
   --enable-bufgloblogging enable buffered global logging behaviour
                           (default=no)
   --enable-valgrind       enable internal support for valgrind (default=no)
@@ -24033,6 +24035,18 @@ $as_echo "#define XMLENTITY_STRICT_BOOL 1" >>confdefs.h
  ;;
 	no)  ;;
 	*) as_fn_error $? "bad value ${enableval} for --enable-xmlstrictbool" "$LINENO" 5 ;;
+esac
+fi
+
+
+# Check whether --enable-rawmsgsupport was given.
+if test "${enable_rawmsgsupport+set}" = set; then :
+  enableval=$enable_rawmsgsupport; case "${enableval}" in
+	yes)
+$as_echo "#define RAW_MSG_SUPPORT 1" >>confdefs.h
+ ;;
+	no)  ;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-rawmsgsupport" "$LINENO" 5 ;;
 esac
 fi
 

@@ -543,6 +543,13 @@ bool MyMenu::new_order_single_recycled()
 		cout << "Sending recycled new_order_single" << endl;
 		_session.send(msg, false);
 	}
+#if defined RAW_MSG_SUPPORT
+	// demonstrate access to outbound raw fix message and payload
+	cout << msg->get_rawmsg() << endl;
+	copy(msg->begin_payload(), msg->end_payload(), ostream_iterator<char>(cout, ""));
+	cout << endl;
+	cout << "payload begin=" << msg->get_payload_begin() << " payload len=" << msg->get_payload_len() << endl;
+#endif
 	return true;
 }
 
@@ -674,6 +681,13 @@ void print_usage()
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
+#if defined RAW_MSG_SUPPORT
+	// demonstrate access to inbound raw fix message and payload
+	cout << msg->get_rawmsg() << endl;
+	copy(msg->begin_payload(), msg->end_payload(), ostream_iterator<char>(cout, ""));
+	cout << endl;
+	cout << "payload begin=" << msg->get_payload_begin() << " payload len=" << msg->get_payload_len() << endl;
+#endif
 #if 0
 	const Presence& pre(msg->get_fp().get_presence());
    for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
