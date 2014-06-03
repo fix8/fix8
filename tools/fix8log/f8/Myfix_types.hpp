@@ -49,7 +49,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #include <fix8/f8config.h>
 #if defined MAGIC_NUM && MAGIC_NUM > 16777216L
-#error Myfix_types.hpp version 1.0.0 is out of date. Please regenerate with f8c.
+//#error Myfix_types.hpp version 1.0.0 is out of date. Please regenerate with f8c.
 #endif
 //-------------------------------------------------------------------------------------------------
 // Myfix_types.hpp

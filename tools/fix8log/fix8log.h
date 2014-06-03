@@ -116,7 +116,6 @@ private:
                       MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
     void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QBaseEntryList *qbaseEntryList);
-                      *
 
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
