@@ -2,7 +2,7 @@ nuget {
 	nuspec {
 		id = fix8.dev.tests;
 		version : 1.1.20140603.1;
-		title: FIX8 library tests (development);
+		title: FIX8 library tests (stable);
 		authors: {Fix8};
 		owners: {Fix8, Sergey Sedreev};
 		licenseUrl: "https://www.gnu.org/licenses/lgpl.html";
