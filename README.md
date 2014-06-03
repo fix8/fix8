@@ -292,6 +292,8 @@ to your build, your code and your configuration and will not be a problem with t
 these possibilities and that you have reviewed topics in the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
 the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
 
+- We also provide commercial support and help. See [below](#fix8pro-and-fix8-market-technologies).
+
 - We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
 
 - If you are on [LinkedIn](http://linkedin.com) join the LinkedIn group **Fix8 Users and Developers**

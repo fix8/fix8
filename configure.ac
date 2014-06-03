@@ -451,7 +451,7 @@ AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],
-[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=regex)])],
 [case "${withval}" in
 	regex) AC_MSG_CHECKING(for regex)
 				AC_TRY_COMPILE([
@@ -478,9 +478,10 @@ esac])
 
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
-if test "$regex_set" = no; then
-	using_poco_regex=yes
-	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+if test "$using_poco_regex" = yes; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
+else
+	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
 fi
 
 thread_set=no
@@ -820,7 +821,7 @@ else
 fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])

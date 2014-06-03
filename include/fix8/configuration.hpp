@@ -163,7 +163,7 @@ private:
 	  \param from the xml entity to search
 	  \param tag the tag to find
 	  \param def the default value if not found
-	  \return the found attribute vakue or the default value if not found */
+	  \return the found attribute value or the default value if not found */
 	template<typename T>
 	T find_or_default(const XmlElement *from, const std::string& tag, const T def) const
 	{
