@@ -34,22 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 #include <fix8/consolemenu.hpp>
 
@@ -94,7 +79,7 @@ const BaseMsgEntry *ConsoleMenu::SelectMsg() const
 		if (opt)
 		{
 			if (opt == '.')
-				return 0;
+				return nullptr;
 
 			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
 			{
@@ -109,7 +94,7 @@ const BaseMsgEntry *ConsoleMenu::SelectMsg() const
 		}
    }
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -127,7 +112,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		char opt(0);
 		_os << endl;
 		_os << "--------------------------------------------------" << endl;
-		_os << ' ' << ostr.str() << ": Select field to add" << endl;
+		_os << ' ' << ostr.str() << ": Select field to add (*:mandatory +:present)" << endl;
 		_os << "--------------------------------------------------" << endl;
 
 		int page(0);
@@ -142,13 +127,8 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 				_os << endl;
 			}
 			else
-			{
-				if (msg->get_fp().is_mandatory(itr->_fnum))
-					_os << '*';
-				else
-					_os << ' ';
-				_os << tbe->_name << '(' << itr->_fnum << ')' << endl;
-			}
+				_os << (msg->get_fp().is_mandatory(itr->_fnum) ? '*' : ' ')
+					<< tbe->_name << '(' << itr->_fnum << ')' << endl;
 
 			++nlines;
 
@@ -167,7 +147,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		if (opt)
 		{
 			if (opt == '.')
-				return 0;
+				return nullptr;
 
 			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
 			{
@@ -179,7 +159,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -201,15 +181,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 		for (int nlines(0); pp < rb->_sz; ++pp)
 		{
 			_os << '[' << _opt_keys[nlines] << "]  " << *(rb->_descriptions + pp) << " (";
-			if (FieldTrait::is_int(rb->_ftype))
-				_os << *((static_cast<const int *>(rb->_range) + pp));
-			else if (FieldTrait::is_char(rb->_ftype))
-				_os << *((static_cast<const char *>(rb->_range) + pp));
-			else if (FieldTrait::is_float(rb->_ftype))
-				_os << *((static_cast<const double *>(rb->_range) + pp));
-			else if (FieldTrait::is_string(rb->_ftype))
-				_os << *((static_cast<const f8String *>(rb->_range) + pp));
-
+			rb->print(_os, pp);
 			_os << ')' << endl;
 
 			++nlines;
@@ -230,7 +202,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 			if (opt == '.')
 				return 0;
 
-			if (static_cast<size_t>((idx = _opt_keys.find_first_of(opt))) != f8String::npos)
+			if (static_cast<size_t>((idx = (static_cast<int>(_opt_keys.find_first_of(opt))))) != f8String::npos)
 			{
 				idx += (page * _lpp);
 				if (idx < rb->_sz)
@@ -246,7 +218,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 {
 	if (lst.empty())
-		return 0;
+		return nullptr;
 
    for(;;)
    {
@@ -279,7 +251,7 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 		if (opt)
 		{
 			if (opt == '.')
-				return 0;
+				return nullptr;
 
 			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
 			{
@@ -290,7 +262,7 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -310,13 +282,13 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 			lst.push_back(msg);
 	}
 
-	return lst.size();
+	return static_cast<int>(lst.size());
 }
 
 //-------------------------------------------------------------------------------------------------
 f8String& ConsoleMenu::GetString(tty_save_state& tty, f8String& to) const
 {
-	char buff[128] = {};
+	char buff[128] {};
 	tty.unset_raw_mode();
 	_is.getline(buff, sizeof(buff));
 	tty.set_raw_mode();
@@ -372,7 +344,7 @@ int ConsoleMenu::EditMsgs(tty_save_state& tty, MsgList& lst) const
 		_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
 	}
 
-	return lst.size();
+	return static_cast<int>(lst.size());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -397,6 +369,6 @@ int ConsoleMenu::DeleteMsgs(tty_save_state& tty, MsgList& lst) const
 		}
 	}
 
-	return lst.size();
+	return static_cast<int>(lst.size());
 }
 

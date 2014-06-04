@@ -8,6 +8,26 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
+## Contents
+
+1. [Contents](#contents)
+1. [Features](#features)
+1. [Directory Layout](#directory-layout)
+1. [Documentation](#documentation)
+1. [Branch Layout](#branch-layout)
+1. [C++11](#c11)
+1. [External Dependencies (required)](#external-dependencies-required)
+1. [Optional Dependencies](#optional-dependencies)
+1. [Building on Linux/UNIX](#building-on-linuxunix)
+1. [Building on OSX](#building-on-osx)
+1. [Building on Windows](#building-on-windows)
+1. [Support](#support)
+1. [Downloads](#downloads)
+1. [Getting help or reporting problems](#getting-help-or-reporting-problems)
+1. [License](#license)
+1. [Fix8Pro and Fix8 Market Technologies](#fix8pro-and-fix8-market-technologies)
+1. [More Information](#more-information)
+
 ## Features
 
 * [Fix8](http://www.fix8.org) helps you get your [FIX protocol](http://www.fixprotocol.org/) client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.
@@ -91,6 +111,10 @@ and framework; and a set of complete client/server test applications.
              <td>Microsoft Visual Studio project files</td>
           </tr>
           <tr>
+             <td>pro/</td>
+             <td>Fix8Pro extensions (commercial version only)</td>
+          </tr>
+          <tr>
              <td>schema/</td>
              <td>quickfix FIX xml schemas</td>
           </tr>
@@ -111,6 +135,49 @@ and framework; and a set of complete client/server test applications.
 See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8. Access to this documentation is free but a
 login is required. For our complete API Documentation see [here](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
+## Branch Layout
+
+<table>
+    <thead>
+         <tr>
+            <th>Branch</th>
+            <th>github path</th>
+            <th>Description</th>
+         </tr>
+    </thead>
+    <tbody>
+          <tr>
+             <td><pre>master</pre></td>
+             <td>https://github.com/fix8/fix8/tree/master</td>
+             <td>This is the default branch. All stable releases are made here.</td>
+          </tr>
+          <tr>
+             <td><pre>dev</pre></td>
+             <td>https://github.com/fix8/fix8/tree/dev</td>
+             <td>This is the development stream and is updated continually. Features and bug fixes scheduled for release are developed and tested here.</td>
+          </tr>
+          <tr>
+             <td><pre>dev-premain</pre></td>
+             <td>https://github.com/fix8/fix8/tree/dev-premain</td>
+             <td>This branch is used to marshall development changes that are ready for release. When significant changes are made to the dev branch, this branch will be used to keep other changes separate.</td>
+          </tr>
+          <tr>
+             <td><pre>gh-pages</pre></td>
+             <td>https://github.com/fix8/fix8/tree/gh-pages</td>
+             <td>This branch contains the static html for the Fix8 website.</td>
+          </tr>
+    </tbody>
+</table>
+
+
+## C++11
+
+Fix8 now **requires C++11 compiler support**. Fix8 will refuse to build without it. If you are using clang or gcc make sure you have the
+
+	-std=c++11
+
+flag on your compiler command line. Some older compiler versions may no longer be supported. Sorry.
+
 ## External Dependencies (required)
 
 Fix8 requires the following third-party software (header files and
@@ -118,7 +185,7 @@ libraries) being installed to build properly:
 
 - Poco C++ Libraries [basic edition](http://pocoproject.org/download/index.html)
 
-Additional libraries are needed for building on Windows, [see here](https://fix8engine.atlassian.net/wiki/display/FX/Building).
+Additional libraries are needed for building on Windows, [see here](https://fix8engine.atlassian.net/wiki/x/EICW).
 
 ## Optional Dependencies
 
@@ -155,8 +222,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.1.0.tar.gz
-	% cd fix8-1.1.0
+	% tar xvzf 1.2.0.tar.gz
+	% cd fix8-1.2.0
 	% ./bootstrap
 	% ./configure
 	% make
@@ -170,8 +237,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.1.0.tar.gz
-	% cd fix8-1.1.0
+	% tar xvzf 1.2.0.tar.gz
+	% cd fix8-1.2.0
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
@@ -182,9 +249,11 @@ If you are using clang and it complains about no-var-tracking compiler switches,
 
 	% ./configure --enable-toggleassignmentvars=no
 
+Please see [this document](https://fix8engine.atlassian.net/wiki/x/B4AtAQ) for more instructions for building on OSX.
+
 ## Building on Windows
 
-Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building+and+running+on+Windows) for detailed instructions for building on Windows.
+Please see [this document](https://fix8engine.atlassian.net/wiki/x/EICW) for detailed instructions for building on Windows.
 
 ## Support
 
@@ -195,6 +264,7 @@ Please refer to the following pages for help:
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
+- [Wiki](https://fix8engine.atlassian.net/wiki)
 
 ## Downloads
 
@@ -207,16 +277,40 @@ Please refer to the following page:
 the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
 If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
+- Please refrain from emailing us directly. **Support questions sent directly to us will be redirected to the support group.**
 
 - If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
-register and create an issue.** Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
-request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
+register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
+sample configuruation files, config.log, etc.
+
+- If you have already implemented a fix, and wish to make a pull request on Github please create an issue in Jira first.
+This will help us track the problem and ensure that the solution is properly tested.
+
+- When considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
+These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes and some will relate
+to your build, your code and your configuration and will not be a problem with the framework implementation. Make sure you have eliminated
+these possibilities and that you have reviewed topics in the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
+the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
+
+- We also provide commercial support and help. See [below](#fix8pro-and-fix8-market-technologies).
+
+- We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
+
+- If you are on [LinkedIn](http://linkedin.com) join the LinkedIn group **Fix8 Users and Developers**
+for more help and information about the Fix8 project.
 
 ## License
 
 Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
 See [License](http://fix8.org/faq.html#license) for more information.
+
+## Fix8Pro and Fix8 Market Technologies
+
+[Fix8Pro](http://www.fix8pro.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
+(Fix8MT) develops and maintains both Fix8Pro and the Fix8 open source versions.
+Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
+Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
+Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
 
 ## More Information
 

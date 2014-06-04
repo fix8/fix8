@@ -4,3 +4,6 @@ Win32
 *.opensdf
 *.sdf
 *.suo
+ipch
+packages/*
+!packages/repositories.config

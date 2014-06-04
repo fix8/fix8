@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-arm/atomic.h
  *
  */
-#ifndef __ASM_ARM_ATOMIC_H
-#define __ASM_ARM_ATOMIC_H
+#ifndef FF_ASM_ARM_ATOMIC_H
+#define FF_ASM_ARM_ATOMIC_H
 
 typedef struct { volatile int counter; } atomic_t;
 
@@ -125,4 +125,4 @@ static inline int atomic_add_unless(atomic_t *v, int a, int u)
 #define smp_mb__before_atomic_inc()     barrier()
 #define smp_mb__after_atomic_inc()      barrier()
 
-#endif
+#endif /* FF_ASM_ARM_ATOMIC_H */

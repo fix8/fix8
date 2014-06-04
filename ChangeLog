@@ -1,3 +1,62 @@
+* Wed Jun 04 2014 David L. Dight <fix@fix8.org> 1.2.0
+- Fixed Jira tickets FX-278, FX-276, FX-275, FX-274, FX-273, FX-272, FX-271, FX-270, FX-269,
+							FX-268, FX-267, FX-266, FX-265, FX-264, FX-263, FX-228, FX-261, FX-260,
+							FX-259, FX-258, FX-257, FX-256, FX-253, FX-252, FX-251, FX-250, FX-249,
+							FX-248, FX-247, FX-246, FX-245, FX-244, FX-243, FX-242, FX-241, FX-240,
+							FX-239, FX-238, FX-237, FX-236, FX-235, FX-233, FX-232, FX-231, FX-230,
+							FX-229, FX-282, FX-280, FX-279, FX-283, FX-285, FX-176, FX-220, FX-195,
+							FX-217
+- Provide access to raw inbound and outbound FIX message text
+- Make --enable-extended-metadata work in windows
+- Provide a session configuration option to enable or disable retransmission
+- Provide tabsize setting to customise fix printer
+- Update wiki with instruction of building NuGet packages
+- On Mac OS X Maverick, clang generates lots of warnings
+- building with --enable-tbb-malloc=yes on OS X gives error
+- poco error under OS X Maverics
+- Realm range not working as expected
+- Poco On Windows
+- Add a few helper methods to BaseEntry and BaseMsgEntry
+- Mandatory fields not propagating through compiler with FIXT
+- MarketDataRequest with certain fields throws exception invalid field
+- default_appl_ver_id (1137) applied if configured, regardless of FIX version
+- Example of how to subscribe to MarketData
+- Distinguish between invalid and unknown field exceptions in message
+- Replace StaticTable with std::map
+- Facilitate Fix8Pro and open source common build
+- Segfault in ~Session::Session/Session:stop
+- Create FIX8 NuGet package
+- Create a .net port of fix8
+- Upgrade bundled FastFlow from 2.0.2 to 2.0.4
+- Replace FIX8::f8_atomic with std::atomic
+- FX-242 Write Fix8 1.1 to 1.2 migration guide
+- Replace all the sizes from unsigned to size_t
+- OSX g++-4.2.1 on mac does not support -fno-var-tracking-assignments.
+- Invalid inbound acceptor SenderCompID ignored
+- Create OSX HOWTO in Confluence
+- Acceptor SenderCompID not configurable
+- Provide test example for multi-session support
+- Provide support for underlying FieldType introspection
+- Support optional CompID enforcement
+- Replace FIX8::scoped_ptr with std::unique_ptr
+- Client logs should be created with SessionID suffix
+- Restructure Session wrapper classes to support non-templated base classes
+- Allow user to set SO_KEEPALIVE option from config
+- Complete confluence documentation for 1.1.0 and 1.2.0 features
+- Provide support and management for multiple ServerInstances
+- Server support for predefined set of remote SenderCompIDs
+- Allow user to set SO_REUSEADDR option from config
+- Allow user to set SO_LINGER option from config
+- Support defaults section in Session xml configuration
+- FX-41 Replace FIX8::dthread with std::thread
+- Add option to FIX8::logger to suppress LF on logline
+- Windows build fails when configured w/o TBB
+- Linux End-of-Line Charactor not handled by Message::factory
+- hftest server exits when sending preloaded messages under windows
+- f8print will not decode f8test runs properly
+- Cmd line scripts do not like spaces in path when building fix8 under Windows
+- Move compilation to use precompiled header
+
 * Sun Apr 06 2014 David L. Dight <fix@fix8.org> 1.1.0
 - Fixed Jira tickets FX-223, FX-222, FX-221, FX-219, FX-216, FX-214, FX-213, FX-212, FX-211, FX-209,
 							FX-206, FX-205, FX-204, FX-200, FX-198, FX-193, FX-192, FX-191, FX-189, FX-187,

@@ -53,76 +53,38 @@ namespace FIX8
 {
 
 //----------------------------------------------------------------------------------------
-/// This is a modified and stripped down version of c++11 reference_wrapper.
-/*!  \tparam T class to reference wrap */
-template<typename T>
-class reference_wrapper
-{
-	T *_data;
-
-public:
-	/*! Ctor.
-	  \param _indata instance of object to wrapper */
-	reference_wrapper(T& _indata) : _data(&_indata) {}
-
-	/*! Cast to enclosed type operator
-	  \return reference to object */
-	operator T&() const { return this->get(); }
-
-	/*! Accessor.
-	  \return reference to object */
-	T& get() const { return *_data; }
-};
-
-/// Denotes a reference should be taken to a variable.
-/*! \tparam T class to wrapper
-   \param _t instance of class
-   \return reference_wrappered object */
-template<typename T>
-inline reference_wrapper<T> ref(T& _t) { return reference_wrapper<T>(_t); }
-
-/// Denotes a const reference should be taken to a variable.
-/*! \tparam T class to wrapper
-    \param _t instance of class
-    \return const reference_wrappered object */
-template<typename T>
-inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T>(_t); }
-
-//----------------------------------------------------------------------------------------
 /// pthread wrapper abstract base
 class _dthreadcore
 {
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 public:
-	typedef pthread_t thread_id_t;
+	using thread_id_t = pthread_t;
 private:
 	pthread_attr_t _attr;
 	pthread_t _tid;
 #elif (THREAD_SYSTEM == THREAD_POCO)
 public:
-	typedef Poco::Thread::TID thread_id_t;
+	using thread_id_t = Poco::Thread::TID;
 private:
 	Poco::Thread _thread;
 #elif (THREAD_SYSTEM == THREAD_TBB)
 public:
-	typedef tbb::tbb_thread::id thread_id_t;
+	using thread_id_t = tbb::tbb_thread::id;
 private:
-	scoped_ptr< tbb::tbb_thread > _thread;
+	std::unique_ptr<tbb::tbb_thread> _thread;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 	template<typename T>
-	static void *_run(void *what)
-		{ return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
+	static void *_run(void *what) { return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
 #elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
 	template<typename T>
-	static void _run(void *what)
-		{ (*static_cast<T *>(what))(); }
+	static void _run(void *what) { (*static_cast<T *>(what))(); }
 #endif
 	_dthreadcore& operator=(const _dthreadcore&);
 
 protected:
-	int _exitval;
+	int _exitval = 0;
 
 	template<typename T>
 	int _start(void *sub)
@@ -131,11 +93,10 @@ protected:
 		return pthread_create(&_tid, &_attr, _run<T>, sub);
 #elif (THREAD_SYSTEM == THREAD_POCO)
 		_thread.start(_run<T>, sub);
-		return 0;
 #elif (THREAD_SYSTEM == THREAD_TBB)
-		_thread.Reset(new tbb::tbb_thread(_run<T>, sub));
-		return 0;
+		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
 #endif
+		return 0;
 	}
 
 public:
@@ -144,11 +105,9 @@ public:
 	  \param stacksize default thread stacksize */
 	_dthreadcore(const bool detach, const size_t stacksize)
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
-		: _attr(), _tid(), _exitval()
+		: _attr(), _tid()
 #elif (THREAD_SYSTEM == THREAD_POCO)
-		: _thread(), _exitval()
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		: _exitval()
+		: _thread()
 #endif
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -211,7 +170,7 @@ public:
 		}
 		return _exitval;
 #elif (THREAD_SYSTEM == THREAD_TBB)
-		if ( _thread.get() && _thread->joinable() )
+		if (_thread.get() && _thread->joinable())
 			_thread->join();
 		return _exitval;
 #endif
@@ -229,11 +188,10 @@ public:
 		return pthread_yield();
 #elif (THREAD_SYSTEM == THREAD_POCO)
 		Poco::Thread::yield();
-		return 0;
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		tbb::this_tbb_thread::yield();
-		return 0;
 #endif
+		return 0;
 	}
 #endif
 #endif
@@ -271,9 +229,7 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_equal(_tid, that._tid);
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		return getdthreadid() == that.getdthreadid();
-#elif (THREAD_SYSTEM == THREAD_TBB)
+#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
 		return getdthreadid() == that.getdthreadid();
 #endif
 	}
@@ -285,9 +241,7 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return !pthread_equal(_tid, that._tid);
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		return getdthreadid() != that.getdthreadid();
-#elif (THREAD_SYSTEM == THREAD_TBB)
+#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
 		return getdthreadid() != that.getdthreadid();
 #endif
 	}
@@ -316,7 +270,7 @@ struct dthread_cancellation_token
 	bool operator!() const  { return !stop_requested(); }
 
 	/// Thread state enumerations
-	enum ThreadState { Unknown = 0, Running, Stopping, Stopped };
+	enum ThreadState { Unknown, Running, Stopping, Stopped };
 
 	/*! Get the current thread state
 	  \return thread state enumeration */
@@ -327,14 +281,13 @@ struct dthread_cancellation_token
 	void thread_state(ThreadState state) { _thread_state = state; }
 
 private:
-	f8_atomic<int> _stop_requested;
-	f8_atomic<int> _thread_state;
+	f8_atomic<int> _stop_requested, _thread_state;
 };
 
 //----------------------------------------------------------------------------------------
 /// POSIX pthread wrapper. dthread by pointer to member function.  Ctor provides T instance and specifies ptr to member to call or defaults to operator()
 /*! \tparam T class call thread entry functor */
-template<typename T=void *>
+template<typename T>
 class dthread : public _dthreadcore
 {
 	class _helper
@@ -351,7 +304,7 @@ class dthread : public _dthreadcore
 			try
 			{
 				cancellation_token().thread_state(dthread_cancellation_token::Running);
-				int ret = (_what.*_method)();
+				const int ret((_what.*_method)());
 				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
 				return ret;
 			}
@@ -372,7 +325,8 @@ public:
 	  \param cancellation_token_method pointer to cancellation_token
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(T what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+	dthread(T what, int (T::*method)()=&T::operator(),
+		dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
 		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/*! Ctor. Reference to object, functor version.
@@ -381,7 +335,8 @@ public:
 	  \param cancellation_token_method pointer to cancellation_token
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+	dthread(std::reference_wrapper<T> what, int (T::*method)()=&T::operator(),
+		dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
 		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/// Dtor.
@@ -401,80 +356,13 @@ public:
 	  \return result of join */
 	int join(int timeoutInMs=0)
 	{
-		int ts = _sub.cancellation_token().thread_state();
-		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
-			return _exitval;
-		return _dthreadcore::join(timeoutInMs);
-	}
-#endif
-};
-
-//----------------------------------------------------------------------------------------
-/// POSIX pthread wrapper. Conventional thread started by ptr to non member function with void * args
-template<>
-class dthread<> : public _dthreadcore
-{
-	class _helper
-	{
-		int (*_func)(void *, dthread_cancellation_token&);
-		void *_args;
-		dthread_cancellation_token& _cancellation_token;
-
-	public:
-		_helper(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token) : _func(func), _args(args), _cancellation_token(cancellation_token) {}
-		int operator()()
-		{
-			try
-			{
-				cancellation_token().thread_state(dthread_cancellation_token::Running);
-				int ret = (_func)(_args, _cancellation_token);
-				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
-				return ret;
-			}
-			catch(const std::exception&)
-			{
-				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
-				throw;
-			}
-		}
-		dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
-	}
-	_sub;
-
-public:
-	/*! Ctor.
-	  \param func pointer to thread function entry point
-	  \param args pointer to function arguments
-	  \param cancellation_token pointer to cancellation_token
-	  \param detach detach thread if true
-	  \param stacksize default thread stacksize */
-	dthread(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token, const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(func, args, cancellation_token) {}
-
-	/// Dtor.
-	virtual ~dthread() {}
-
-	/*! start thread.
-	  \return function result */
-	int start() { return _start<_helper>(static_cast<void *>(&_sub)); }
-
-	/*! request thread stop.
-	  \return function result */
-	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
-
-#if (THREAD_SYSTEM == THREAD_POCO)
-	/*! Join the thread.
-	  \return result of join */
-	int join(int timeoutInMs = 0)
-	{
-		int ts = _sub.cancellation_token().thread_state();
-		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
-			return _exitval;
-		return _dthreadcore::join(timeoutInMs);
+		const int ts(_sub.cancellation_token().thread_state());
+		return ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped
+			? _exitval : _dthreadcore::join(timeoutInMs);
 	}
 #endif
 };
 
 } // FIX8
 
-#endif // _FIX8_THREAD_HPP_
+#endif // FIX8_THREAD_HPP_

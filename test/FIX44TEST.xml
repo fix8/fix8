@@ -16,6 +16,7 @@
       <field name="RawData" required="N" />
 		<component name="OrderQtyDataEmbed" required="N" />
       <field name="ResetSeqNumFlag" required="N" />
+    <field name='ExampleRange' required='N'/>
     </message>
   </messages>
   <components>
@@ -25,9 +26,6 @@
       <field name="OrderPercent" required="N" />
       <field name="RoundingDirection" required="N" />
       <field name="RoundingModulus" required="N" />
-		<group name='NoUnderlyings' required='N'>
-			<component name='UnderlyingInstrument' required='N' />
-		</group>
     </component>
     <component name="OrderQtyDataEmbed">
 		<component name="OrderQtyData" required="N" />
@@ -196,5 +194,9 @@
 	 <field number='458' name='UnderlyingSecurityAltID' type='STRING' />
 	 <field number='459' name='UnderlyingSecurityAltIDSource' type='STRING' />
     <field number='711' name='NoUnderlyings' type='NUMINGROUP' />
+    <field number='7110' name='ExampleRange' type='INT'>
+      <value enum="1" range="lower" description="minimum value"/>
+      <value enum="1000" range="upper" description="maximum value"/>
+    </field>
   </fields>
 </fix>

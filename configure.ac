@@ -61,6 +61,8 @@ AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
 AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
+AC_SUBST(libfix8_la_version_info, $MAJOR_VERSION_NUM:$MINOR_VERSION_NUM:0)
+
 UNAME_S=`uname -s 2>/dev/null || echo unknown`
 UNAME_M=`uname -m 2>/dev/null || echo unknown`
 UNAME_O=`uname -o 2>/dev/null || echo unknown`
@@ -72,6 +74,9 @@ BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
 BRAND_COMPANY_SHORTNAME='fix8'
 BRAND_COMPANY_LONGNAME='fix8 by David L. Dight'
+
+# Check for C++11
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
 # Checks for programs.
 LT_INIT
@@ -123,22 +128,33 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # check what version of gcc we're using
 
-# test for gcc >= 4.2
-is_late_gcc=no
-is_clang=no
+# compiler specific settings
 case "$CXX" in
   *clang*)
-		is_clang=yes
 		LIBS="$LIBS -lstdc++ -lm " ;;
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
-		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
-			is_late_gcc=yes
-		fi ;;
+		gcc_minor=`echo $GCC_VERSION | cut -d. -f2` ;;
 	*) ;;
 esac
+
+m4_include(m4/ax_check_compile_flag.m4)
+has_assignmentvars=no
+AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
+
+oktopro=no
+PRODIRFILE=./pro/buildcheck
+AC_MSG_CHECKING(for pro build)
+if test -a "$PRODIRFILE"; then
+   AC_DEFINE_UNQUOTED(HAVE_PRO_BUILD, 1, [Define to 1 if this is a pro build. NOT available in the open source version.])
+   oktopro=yes
+   AC_CONFIG_FILES([pro/Makefile])
+   AC_MSG_RESULT(yes)
+else
+   AC_MSG_RESULT(no)
+fi
+AM_CONDITIONAL([PROBUILD], [test $oktopro = yes])
 
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
@@ -149,8 +165,8 @@ AC_ARG_ENABLE([toggleassignmentvars],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-toggleassignmentvars) ;;
 esac])
 
-# use -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_clang = xno && test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
+# use -fvar-tracking-assignments
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$has_assignmentvars = xyes && test x$oktotogglevar = xyes])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
@@ -163,7 +179,6 @@ AC_ARG_ENABLE([doxygen],
 	no)  oktodox=no;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
 esac])
-
 AM_CONDITIONAL([USEDOXYGEN], [test -n "$DOXYGEN" && test $oktodox = yes])
 AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
@@ -436,7 +451,7 @@ AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],
-[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=regex)])],
 [case "${withval}" in
 	regex) AC_MSG_CHECKING(for regex)
 				AC_TRY_COMPILE([
@@ -463,9 +478,10 @@ esac])
 
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
-if test "$regex_set" = no; then
-	using_poco_regex=yes
-	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+if test "$using_poco_regex" = yes; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
+else
+	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
 fi
 
 thread_set=no
@@ -528,20 +544,6 @@ AC_MSG_CHECKING(for gtest)
     fi
 AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes && test "$oktogtest" = yes])
 
-
-AC_MSG_CHECKING(for tr1/unordered_map)
-	AC_TRY_COMPILE([
-	#include <tr1/unordered_map>
-	#include <string>
-		],[std::tr1::unordered_map<std::string, std::string> uom; uom["blah"]="blather";],
-		have_tr1_unordered_map=yes, have_tr1_unordered_map=no)
-	if test "$have_tr1_unordered_map" = yes; then
-	    AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAS_TR1_UNORDERED_MAP, 1, [Define to 1 if TR1 hashmaps are available])
-	else
-	    AC_MSG_RESULT(no)
-	fi
-
 AC_CHECK_LIB(crypt, crypt, [
 	AC_CHECK_HEADERS([crypt.h],
 	[
@@ -564,6 +566,18 @@ AC_ARG_ENABLE([f8test],
 esac])
 
 AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
+
+oktoextendmetadata=no
+AC_ARG_ENABLE([extended-metadata],
+[AS_HELP_STRING([--enable-extended-metadata],[enable extended metadata generation and support (default=no)])],
+[case "${enableval}" in
+	yes)	oktoextendmetadata=yes
+			AC_DEFINE(HAVE_EXTENDED_METADATA, 1, [Define to 1 if you have extended Fix8 metadata enabled]);;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-extended-metadata) ;;
+esac])
+
+AM_CONDITIONAL(F8TESTSTATIC, [test x$oktof8test = xyes && test x$oktoextendmetadata = xyes])
 
 oktomemcached=no
 AC_ARG_ENABLE([libmemcached],
@@ -619,6 +633,27 @@ AC_ARG_ENABLE([bdb],
 esac])
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
+oktozeromq=no
+AC_ARG_ENABLE([zeromq],
+[AS_HELP_STRING([--enable-zeromq],[enable zeromq messagebus support (default=no)])],
+[case "${enableval}" in
+	yes) oktozeromq=yes
+			AC_MSG_CHECKING(for zeromq)
+			AC_TRY_COMPILE([
+					#include <zmq.hpp>
+				],,
+				have_zeromq=yes,have_zeromq=no)
+		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAS_ZEROMQ_MBUS, 1, [Define to 1 if you have zeromq])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-zeromq) ;;
+esac])
+AM_CONDITIONAL(ZEROMQSUPPORT, [test x$oktozeromq = xyes])
+
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
 	[
@@ -660,6 +695,14 @@ AC_ARG_ENABLE([xmlstrictbool],
 	yes) AC_DEFINE(XMLENTITY_STRICT_BOOL, 1, [Define to 1 if you wish to enforce strict bool ]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
+esac])
+
+AC_ARG_ENABLE([rawmsgsupport],
+[AS_HELP_STRING([--enable-rawmsgsupport],[enable raw FIX message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(RAW_MSG_SUPPORT, 1, [Define to 1 if you wish to enable raw FIX message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
 esac])
 
 AC_ARG_ENABLE([bufgloblogging],
@@ -778,7 +821,7 @@ else
 fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])

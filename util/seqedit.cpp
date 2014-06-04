@@ -57,22 +57,7 @@ e.g.\n
 \n
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <algorithm>
-
-#include <errno.h>
-#include <string.h>
-#include <cctype>
-#include <fcntl.h>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
 #include <fix8/usage.hpp>
@@ -103,7 +88,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	const option long_options[] =
+	const option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "dump",		0,	0,	'd' },
@@ -225,7 +210,7 @@ int main(int argc, char **argv)
 		if (iprec._seq == 0)
 			continue;
 
-		char buff[MAX_MSG_LENGTH] = {};
+		char buff[MAX_MSG_LENGTH] {};
 
 		if (lseek(fds.fod, iprec._prec._offset, SEEK_SET) < 0)
 		{
