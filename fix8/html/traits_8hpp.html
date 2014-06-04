@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -108,7 +108,8 @@ $(document).ready(function(){initNavTree('traits_8hpp.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">traits.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -120,7 +121,7 @@ $(document).ready(function(){initNavTree('traits_8hpp.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html">FIX8::FieldTrait</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIX field traits - hold specific traits for each field.  <a href="structFIX8_1_1FieldTrait.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for static trait interrogation.  <a href="structFIX8_1_1FieldTrait.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FIX8::FieldTrait::Compare</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary comparitor functor.  <a href="structFIX8_1_1FieldTrait_1_1Compare.html#details">More...</a><br/></td></tr>
@@ -129,7 +130,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary position comparitor functor.  <a href="structFIX8_1_1FieldTrait_1_1PosCompare.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait__Hash__Array.html">FIX8::FieldTrait_Hash_Array</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast index lookup for <a class="el" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field. ">FieldTrait</a>.  <a href="structFIX8_1_1FieldTrait__Hash__Array.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast index lookup for <a class="el" href="structFIX8_1_1FieldTrait.html" title="Used for static trait interrogation. ">FieldTrait</a>.  <a href="structFIX8_1_1FieldTrait__Hash__Array.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,15 +146,20 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ac20c8163c641bb0ba62d1e9924d2a8bd"><td class="memItemLeft" align="right" valign="top">typedef presorted_set<br class="typebreak"/>
-&lt; unsigned short, FieldTrait, <br class="typebreak"/>
-FieldTrait::Compare &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac20c8163c641bb0ba62d1e9924d2a8bd">FIX8::Presence</a></td></tr>
-<tr class="separator:ac20c8163c641bb0ba62d1e9924d2a8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a9a6865f721deb27da7eed007feea8b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9a9a6865f721deb27da7eed007feea8b">FIX8::Presence</a> = presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</td></tr>
+<tr class="separator:a9a9a6865f721deb27da7eed007feea8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:af710a5253b046cb3aac2c40dca4ff292"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af710a5253b046cb3aac2c40dca4ff292">FIX8::operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a> &amp;what)</td></tr>
+<tr class="separator:af710a5253b046cb3aac2c40dca4ff292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2385354f75d5c8198f90fdb7eedf6dc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a2385354f75d5c8198f90fdb7eedf6dc6">FIX8::operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="classFIX8_1_1FieldTraits.html">FieldTraits</a> &amp;what)</td></tr>
+<tr class="separator:a2385354f75d5c8198f90fdb7eedf6dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

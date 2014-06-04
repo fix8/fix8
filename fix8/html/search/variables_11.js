@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['second',['second',['../classFIX8_1_1Tickval.html#ac55dee415b418a9def90e7b8f9ccac74',1,'FIX8::Tickval']]],
+  ['save_5ftty',['save_tty',['../myfix_8cpp.html#a3a866e05f1c5f1190d2de5ba81bbba0e',1,'myfix.cpp']]],
+  ['second',['second',['../classFIX8_1_1Tickval.html#ab867bfc94e4b81925d047ff0d2de56ed',1,'FIX8::Tickval']]],
   ['seq_5f',['seq_',['../classXmlElement.html#ad3bf155ed5555c2dbb725d7c41baee8d',1,'XmlElement']]],
   ['sequence_5f',['sequence_',['../classXmlElement.html#a4663b3e9a3a67d46d0d9f332b938588c',1,'XmlElement']]],
   ['shortname',['shortName',['../f8c_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9',1,'shortName():&#160;f8c.cpp'],['../f8cutils_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9',1,'shortName():&#160;f8c.cpp'],['../f8precomp_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9',1,'shortName():&#160;f8c.cpp']]],

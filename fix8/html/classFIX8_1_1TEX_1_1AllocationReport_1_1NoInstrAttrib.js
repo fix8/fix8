@@ -2,9 +2,10 @@ var classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib =
 [
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#afa9e65285e95878e121eb4d6d22ff731ae15c1523ff00921ed0803e2e9afbda16", null ],
     [ "NoInstrAttrib", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a8573c827c1e48bf8664e109e11eed1d1", null ],
-    [ "~NoInstrAttrib", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a2542e3000e031aa860d5aeb1b08dfa76", null ],
+    [ "~NoInstrAttrib", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#aa5a70c8d680279c920ac688b67598ab5", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a0b09498017cf050c6dab1a0cde625397", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a94bfc50627b9f1c11f20200bfcee14f2", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a8e212859d6eacb6dbb64389934faea3e", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a0780f81816352d5bf5d915e4dd70af2f", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#ae6dcb97de2e52f45ae54b9fd6f84421f", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a94ef36f70cdb864baf958ebd9cbdb938", null ]

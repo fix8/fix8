@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -175,7 +175,6 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 : <a class="el" href="classFIX8_1_1AsyncSocket.html#af2c4b1c43aa4762995893566b161fc51">FIX8::AsyncSocket&lt; T &gt;</a>
 , <a class="el" href="classFIX8_1_1BDBPersister.html#aeb50566539ef37aad593b2b1cfdb70dc">FIX8::BDBPersister</a>
 , <a class="el" href="classFIX8_1_1dthread_1_1__helper.html#a0f1ecc20cce0cbd45fa2e2b8dc66eef6">FIX8::dthread&lt; T &gt;::_helper</a>
-, <a class="el" href="classFIX8_1_1dthread_3_4_1_1__helper.html#ab541025513dfc262e5127bc6ae882154">FIX8::dthread&lt;&gt;::_helper</a>
 , <a class="el" href="classFIX8_1_1Logger.html#a6692c3153c508de64be236e735f4cbe2">FIX8::Logger</a>
 , <a class="el" href="classFIX8_1_1ReliableClientSession.html#a992e1c0d0481073f91b58c21ae25a932">FIX8::ReliableClientSession&lt; T &gt;</a>
 , <a class="el" href="classFIX8_1_1Timer.html#a1373bbe8d7c1a646cb759ec8e1f56265">FIX8::Timer&lt; T &gt;</a>
@@ -208,7 +207,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 , <a class="el" href="classFIX8_1_1ebitset__r.html#ae8a562673df34fac973560ee54c0de6e">FIX8::ebitset_r&lt; T, B &gt;</a>
 </li>
 <li>ClientConnection()
-: <a class="el" href="classFIX8_1_1ClientConnection.html#a345870c70013fcb6697c266531613855">FIX8::ClientConnection</a>
+: <a class="el" href="classFIX8_1_1ClientConnection.html#a561cb2c5140a439bfb14bb5b8b518be7">FIX8::ClientConnection</a>
 </li>
 <li>ClientSession()
 : <a class="el" href="classFIX8_1_1ClientSession.html#a612e21e2688547c14cd09d1ec0e7df5e">FIX8::ClientSession&lt; T &gt;</a>
@@ -239,10 +238,13 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 , <a class="el" href="classFIX8_1_1TypedRealm.html#a4fe77602f2db516d848e785e2420a4c1">FIX8::TypedRealm&lt; T &gt;</a>
 </li>
 <li>compid_check()
-: <a class="el" href="classFIX8_1_1Session.html#abda2e814594f4238b9a6ee303f7fae93">FIX8::Session</a>
+: <a class="el" href="classFIX8_1_1Session.html#a15d8b3a3cd190eb296805c357a721d66">FIX8::Session</a>
 </li>
 <li>Configuration()
 : <a class="el" href="classFIX8_1_1Configuration.html#a16a94169784d5c3c98092ddc0edf552a">FIX8::Configuration</a>
+</li>
+<li>ConfigurationError()
+: <a class="el" href="structFIX8_1_1ConfigurationError.html#afad864bbf559046afec733507c394db1">FIX8::ConfigurationError</a>
 </li>
 <li>Confirmation()
 : <a class="el" href="classFIX8_1_1TEX_1_1Confirmation.html#ae57de6959e94f87036fba6fcdf557e38">FIX8::TEX::Confirmation</a>
@@ -296,6 +298,9 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 </li>
 <li>create()
 : <a class="el" href="classFIX8_1_1RealmObject.html#aeb3c4c3d0605c2902f63c2be68e54f29">FIX8::RealmObject</a>
+</li>
+<li>create_clients()
+: <a class="el" href="classFIX8_1_1Configuration.html#adf8bc9c154550f547ec52ebf0587ba1b">FIX8::Configuration</a>
 </li>
 <li>create_group()
 : <a class="el" href="classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6">FIX8::GroupBase</a>
@@ -1897,7 +1902,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 : <a class="el" href="classFIX8_1_1Singleton.html#a374555c436cbfa2998d055085154c6a1">FIX8::Singleton&lt; T &gt;</a>
 </li>
 <li>create_logger()
-: <a class="el" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">FIX8::Configuration</a>
+: <a class="el" href="classFIX8_1_1Configuration.html#a0409bf7e5bbda164b8472f5ff373921e">FIX8::Configuration</a>
 </li>
 <li>create_login_schedule()
 : <a class="el" href="classFIX8_1_1Configuration.html#ac9c48dbb58b6377ec7d93f49255da329">FIX8::Configuration</a>
@@ -1909,10 +1914,14 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 : <a class="el" href="classMyMenu.html#a942c0edc0e2fef9839279ada4d3c6925">MyMenu</a>
 </li>
 <li>create_persister()
-: <a class="el" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">FIX8::Configuration</a>
+: <a class="el" href="classFIX8_1_1Configuration.html#a2f72d7f3142ef58665604a344be86f51">FIX8::Configuration</a>
 </li>
 <li>create_schedule()
 : <a class="el" href="classFIX8_1_1Configuration.html#a59abc2898e3921698839436e58acd130">FIX8::Configuration</a>
+</li>
+<li>create_server_instance()
+: <a class="el" href="classFIX8_1_1ServerSession.html#a763603167d2a4046cda0603d4546ed9e">FIX8::ServerSession&lt; T &gt;</a>
+, <a class="el" href="classFIX8_1_1ServerSessionBase.html#af85fbb6b0258b5de8546fefe317e9688">FIX8::ServerSessionBase</a>
 </li>
 <li>create_session_schedule()
 : <a class="el" href="classFIX8_1_1Configuration.html#a1d32840b8a49cc0337f8d8892910ebf3">FIX8::Configuration</a>
@@ -1930,7 +1939,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html','');});
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:41:05. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:16:16. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

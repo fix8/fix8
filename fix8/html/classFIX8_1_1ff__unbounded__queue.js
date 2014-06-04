@@ -1,8 +1,8 @@
 var classFIX8_1_1ff__unbounded__queue =
 [
-    [ "const_reference", "classFIX8_1_1ff__unbounded__queue.html#a058a46a61102333f7d2c92a08e977a61", null ],
-    [ "reference", "classFIX8_1_1ff__unbounded__queue.html#aef1aa9f508e2fa435bf24ee0015c8b19", null ],
-    [ "value_type", "classFIX8_1_1ff__unbounded__queue.html#a7461e16bdf2b84dfb7ef39f260a9c2dc", null ],
+    [ "const_reference", "classFIX8_1_1ff__unbounded__queue.html#a7229c852b023de130d8c7bf63059fe38", null ],
+    [ "reference", "classFIX8_1_1ff__unbounded__queue.html#a8a65710cfb38bff640ea9b2074999dd6", null ],
+    [ "value_type", "classFIX8_1_1ff__unbounded__queue.html#adef01facc4acf497252a31b4bc1481c2", null ],
     [ "ff_unbounded_queue", "classFIX8_1_1ff__unbounded__queue.html#a0373f0cb8217930ba30a98bd13191165", null ],
     [ "~ff_unbounded_queue", "classFIX8_1_1ff__unbounded__queue.html#af9dead1da34450f204b52041ff8bd659", null ],
     [ "pop", "classFIX8_1_1ff__unbounded__queue.html#aa42a2e0b8dd6c111c9d8746916db914f", null ],

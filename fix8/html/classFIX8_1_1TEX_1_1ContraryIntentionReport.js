@@ -8,9 +8,10 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport =
     [ "NoSecurityAltID", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID" ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings.html", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings" ],
     [ "ContraryIntentionReport", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#a7891948c385ff56f52b4ab30293ced03", null ],
-    [ "~ContraryIntentionReport", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#af128f70c2324e46824e0cf25b11c6862", null ],
+    [ "~ContraryIntentionReport", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#a9bf03789006ddbbb75e52a3c5c49b21d", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#ac40316e025f502bedc8f10cb2ca32347", null ],
     [ "process", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#ae5355f0a270f30d14b20443ceaeec594", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#ac430275c031050d62177dea10097e471", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#a72e71d1972297917e6a64a200e4788e2", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#adfc9b39e552aeca12b26ebe4bbbc4a65", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport.html#a0ec03f1eb0e7e19972555bb2f0603d94", null ]

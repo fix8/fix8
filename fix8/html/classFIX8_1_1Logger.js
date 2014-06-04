@@ -1,9 +1,9 @@
 var classFIX8_1_1Logger =
 [
     [ "LogElement", "structFIX8_1_1Logger_1_1LogElement.html", "structFIX8_1_1Logger_1_1LogElement" ],
-    [ "LogFlags", "classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4", null ],
-    [ "RevThreadCodes", "classFIX8_1_1Logger.html#a4dc8c2daa42efce7dc755dea4d3e7db0", null ],
-    [ "ThreadCodes", "classFIX8_1_1Logger.html#a5adf41b0cd8a8d9ecc6092509edd4cdc", null ],
+    [ "LogFlags", "classFIX8_1_1Logger.html#a39576be7bfa1854ff96a50ef0a4c8a6c", null ],
+    [ "RevThreadCodes", "classFIX8_1_1Logger.html#a28eb381100ddd300f715638eeb9d0127", null ],
+    [ "ThreadCodes", "classFIX8_1_1Logger.html#a5bd7c004417d477f8d39cbeb642c6fd6", null ],
     [ "rotation_default", "classFIX8_1_1Logger.html#a869e3057ba0856fb3780b4621486c6cbac734d9dd38106ba8e9b80a243b251fe2", null ],
     [ "max_rotation", "classFIX8_1_1Logger.html#a869e3057ba0856fb3780b4621486c6cbaca181bd419c261d0dde6df584a079025", null ],
     [ "Flags", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c", [
@@ -18,6 +18,7 @@ var classFIX8_1_1Logger =
       [ "buffer", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6", null ],
       [ "inbound", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade63fafe68f6e03d7c9ad188a375517b", null ],
       [ "outbound", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade9399235e0a4da18201678a86433d25", null ],
+      [ "nolf", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cabbc52b4f631e1af0c25fb2d36783e051", null ],
       [ "num_flags", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755", null ]
     ] ],
     [ "Logger", "classFIX8_1_1Logger.html#a6898b6f924a43a1bcec5ea0a1ae8fcde", null ],
@@ -32,7 +33,7 @@ var classFIX8_1_1Logger =
     [ "rotate", "classFIX8_1_1Logger.html#a96598126c3eb87a72b3581a223b7b489", null ],
     [ "send", "classFIX8_1_1Logger.html#a41aff49ccaf67b09eee5e2991949b98b", null ],
     [ "stop", "classFIX8_1_1Logger.html#a858c1ea1f37e54d330c5ab05b4fb80a3", null ],
-    [ "_bit_names", "classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c", null ],
+    [ "_bit_names", "classFIX8_1_1Logger.html#a65a4f4f3a3934a7b0ab691e372479fb7", null ],
     [ "_buffer", "classFIX8_1_1Logger.html#a24892c6b55cde6cd91e97e0180ddfa39", null ],
     [ "_flags", "classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387", null ],
     [ "_lines", "classFIX8_1_1Logger.html#aa61df4b32128917a7a26e9af8163e67b", null ],

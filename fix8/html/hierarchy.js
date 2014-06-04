@@ -11,7 +11,6 @@ var hierarchy =
     [ "FIX8::ebitset< Flags >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset< TraitTypes, unsigned short >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset_r< SessionControl >", "classFIX8_1_1ebitset__r.html", null ],
-    [ "filestdin", "classfilestdin.html", null ],
     [ "FIX8::_dthreadcore", "classFIX8_1_1__dthreadcore.html", [
       [ "FIX8::dthread< FIX8::AsyncSocket >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< FIX8::BDBPersister >", "classFIX8_1_1dthread.html", null ],
@@ -19,8 +18,7 @@ var hierarchy =
       [ "FIX8::dthread< FIX8::Logger >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< FIX8::ReliableClientSession< T > >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< FIX8::Timer >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< T >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread<>", "classFIX8_1_1dthread_3_4.html", null ]
+      [ "FIX8::dthread< T >", "classFIX8_1_1dthread.html", null ]
     ] ],
     [ "FIX8::_pair< Key, Val >", "structFIX8_1_1__pair.html", null ],
     [ "FIX8::_pair< const char *, Val >", "structFIX8_1_1__pair_3_01const_01char_01_5_00_01Val_01_4.html", null ],
@@ -58,10 +56,14 @@ var hierarchy =
     [ "FIX8::BDBPersister::KeyDataPair", "structFIX8_1_1BDBPersister_1_1KeyDataPair.html", null ],
     [ "FIX8::Configuration", "classFIX8_1_1Configuration.html", [
       [ "FIX8::SessionConfig", "structFIX8_1_1SessionConfig.html", [
-        [ "FIX8::ClientSession< T >", "classFIX8_1_1ClientSession.html", [
-          [ "FIX8::ReliableClientSession< T >", "classFIX8_1_1ReliableClientSession.html", null ]
+        [ "FIX8::ClientSessionBase", "classFIX8_1_1ClientSessionBase.html", [
+          [ "FIX8::ClientSession< T >", "classFIX8_1_1ClientSession.html", [
+            [ "FIX8::ReliableClientSession< T >", "classFIX8_1_1ReliableClientSession.html", null ]
+          ] ]
         ] ],
-        [ "FIX8::ServerSession< T >", "classFIX8_1_1ServerSession.html", null ]
+        [ "FIX8::ServerSessionBase", "classFIX8_1_1ServerSessionBase.html", [
+          [ "FIX8::ServerSession< T >", "classFIX8_1_1ServerSession.html", null ]
+        ] ]
       ] ]
     ] ],
     [ "FIX8::Connection", "classFIX8_1_1Connection.html", [
@@ -70,12 +72,7 @@ var hierarchy =
     ] ],
     [ "FIX8::ConsoleMenu", "classFIX8_1_1ConsoleMenu.html", null ],
     [ "FIX8::Ctxt", "structFIX8_1_1Ctxt.html", null ],
-    [ "FIX8::Delete1stPairObject< Deleter >", "structFIX8_1_1Delete1stPairObject.html", null ],
-    [ "FIX8::Delete2ndPairObject< Deleter >", "structFIX8_1_1Delete2ndPairObject.html", null ],
-    [ "FIX8::DeleteArrayObject", "structFIX8_1_1DeleteArrayObject.html", null ],
-    [ "FIX8::DeleteObject", "structFIX8_1_1DeleteObject.html", null ],
     [ "FIX8::dthread< T >::_helper", "classFIX8_1_1dthread_1_1__helper.html", null ],
-    [ "FIX8::dthread<>::_helper", "classFIX8_1_1dthread_3_4_1_1__helper.html", null ],
     [ "FIX8::dthread_cancellation_token", "structFIX8_1_1dthread__cancellation__token.html", null ],
     [ "FIX8::ebitset< T, B >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset_r< T, B >", "classFIX8_1_1ebitset__r.html", null ],
@@ -84,8 +81,6 @@ var hierarchy =
     [ "FIX8::f8_scoped_lock_impl< T >", "classFIX8_1_1f8__scoped__lock__impl.html", null ],
     [ "FIX8::f8_spin_lock", "classFIX8_1_1f8__spin__lock.html", null ],
     [ "FIX8::F8MetaCntx", "structFIX8_1_1F8MetaCntx.html", null ],
-    [ "FIX8::ff_atomic< T >", "classFIX8_1_1ff__atomic.html", null ],
-    [ "FIX8::ff_atomic< T * >", "classFIX8_1_1ff__atomic_3_01T_01_5_01_4.html", null ],
     [ "FIX8::ff_unbounded_queue< T >", "classFIX8_1_1ff__unbounded__queue.html", null ],
     [ "FIX8::ff_unbounded_queue< T * >", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html", null ],
     [ "FIX8::FieldSpec", "structFIX8_1_1FieldSpec.html", null ],
@@ -94,7 +89,7 @@ var hierarchy =
     [ "FIX8::FieldTrait::PosCompare", "structFIX8_1_1FieldTrait_1_1PosCompare.html", null ],
     [ "FIX8::FieldTrait_Hash_Array", "structFIX8_1_1FieldTrait__Hash__Array.html", null ],
     [ "FIX8::FieldTraits", "classFIX8_1_1FieldTraits.html", null ],
-    [ "FIX8::free_ptr< Deleter >", "structFIX8_1_1free__ptr.html", null ],
+    [ "FIX8::filestdin", "classFIX8_1_1filestdin.html", null ],
     [ "FIX8::GeneratedTable< Key, Val >", "classFIX8_1_1GeneratedTable.html", null ],
     [ "FIX8::GroupBase", "classFIX8_1_1GroupBase.html", [
       [ "FIX8::TEX::AdjustedPositionReport::NoPartyIDs", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoPartyIDs.html", null ],
@@ -1694,7 +1689,6 @@ var hierarchy =
     ] ],
     [ "FIX8::Inst", "classFIX8_1_1Inst.html", null ],
     [ "FIX8::Inst::_gen< T >", "structFIX8_1_1Inst_1_1__gen.html", null ],
-    [ "FIX8::Inst::_gen< void * >", "structFIX8_1_1Inst_1_1__gen_3_01void_01_5_01_4.html", null ],
     [ "FIX8::Inst::_gen_realm< T, R >", "structFIX8_1_1Inst_1_1__gen__realm.html", null ],
     [ "FIX8::IntervalTimer", "classFIX8_1_1IntervalTimer.html", null ],
     [ "FIX8::IPrec", "structFIX8_1_1IPrec.html", null ],
@@ -1847,7 +1841,6 @@ var hierarchy =
     [ "FIX8::MessageSpec", "structFIX8_1_1MessageSpec.html", null ],
     [ "FIX8::Minst", "classFIX8_1_1Minst.html", null ],
     [ "FIX8::Minst::_gen< T >", "structFIX8_1_1Minst_1_1__gen.html", null ],
-    [ "FIX8::Minst::_gen< void * >", "structFIX8_1_1Minst_1_1__gen_3_01void_01_5_01_4.html", null ],
     [ "FIX8::Persister", "classFIX8_1_1Persister.html", [
       [ "FIX8::BDBPersister", "classFIX8_1_1BDBPersister.html", null ],
       [ "FIX8::FilePersister", "classFIX8_1_1FilePersister.html", null ],
@@ -1868,7 +1861,6 @@ var hierarchy =
       ] ]
     ] ],
     [ "FIX8::RealmObject::less", "structFIX8_1_1RealmObject_1_1less.html", null ],
-    [ "FIX8::reference_wrapper< T >", "classFIX8_1_1reference__wrapper.html", null ],
     [ "FIX8::RegExp", "classFIX8_1_1RegExp.html", null ],
     [ "FIX8::RegMatch", "classFIX8_1_1RegMatch.html", null ],
     [ "FIX8::Router", "classFIX8_1_1Router.html", [
@@ -1882,8 +1874,8 @@ var hierarchy =
       ] ]
     ] ],
     [ "FIX8::Schedule", "structFIX8_1_1Schedule.html", null ],
-    [ "FIX8::scoped_ptr< T >", "classFIX8_1_1scoped__ptr.html", null ],
     [ "FIX8::Server", "structFIX8_1_1Server.html", null ],
+    [ "FIX8::ServerManager", "classFIX8_1_1ServerManager.html", null ],
     [ "FIX8::Session", "classFIX8_1_1Session.html", [
       [ "hf_session_client", "classhf__session__client.html", null ],
       [ "hf_session_server", "classhf__session__server.html", null ],
@@ -1893,10 +1885,12 @@ var hierarchy =
     [ "FIX8::Session::RetransmissionContext", "structFIX8_1_1Session_1_1RetransmissionContext.html", null ],
     [ "FIX8::Session_Schedule", "structFIX8_1_1Session__Schedule.html", null ],
     [ "FIX8::SessionID", "classFIX8_1_1SessionID.html", null ],
-    [ "FIX8::SessionInstance< T >", "classFIX8_1_1SessionInstance.html", null ],
+    [ "FIX8::SessionInstanceBase", "classFIX8_1_1SessionInstanceBase.html", [
+      [ "FIX8::SessionInstance< T >", "classFIX8_1_1SessionInstance.html", null ]
+    ] ],
+    [ "FIX8::SessionManager< T >", "classFIX8_1_1SessionManager.html", null ],
     [ "FIX8::Singleton< T >", "classFIX8_1_1Singleton.html", null ],
     [ "FIX8::SslContext", "structFIX8_1_1SslContext.html", null ],
-    [ "FIX8::StaticTable< Key, Val, Compare >", "structFIX8_1_1StaticTable.html", null ],
     [ "FIX8::StringLessThanNoCase", "structFIX8_1_1StringLessThanNoCase.html", null ],
     [ "FIX8::StringPtrLessThan", "structFIX8_1_1StringPtrLessThan.html", null ],
     [ "FIX8::StringPtrLessThanNoCase", "structFIX8_1_1StringPtrLessThanNoCase.html", null ],
@@ -1917,6 +1911,7 @@ var hierarchy =
         [ "FIX8::BadCheckSum", "structFIX8_1_1BadCheckSum.html", null ],
         [ "FIX8::BadCompidId", "structFIX8_1_1BadCompidId.html", null ],
         [ "FIX8::BadSendingTime", "structFIX8_1_1BadSendingTime.html", null ],
+        [ "FIX8::ConfigurationError", "structFIX8_1_1ConfigurationError.html", null ],
         [ "FIX8::dthreadException", "structFIX8_1_1dthreadException.html", null ],
         [ "FIX8::DuplicateField", "structFIX8_1_1DuplicateField.html", null ],
         [ "FIX8::IllegalMessage", "structFIX8_1_1IllegalMessage.html", null ],
@@ -1935,6 +1930,7 @@ var hierarchy =
         [ "FIX8::MissingRepeatingGroupField", "structFIX8_1_1MissingRepeatingGroupField.html", null ],
         [ "FIX8::MsgSequenceTooLow", "structFIX8_1_1MsgSequenceTooLow.html", null ],
         [ "FIX8::PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", null ],
+        [ "FIX8::UnknownField", "structFIX8_1_1UnknownField.html", null ],
         [ "FIX8::XMLError", "structFIX8_1_1XMLError.html", null ]
       ] ]
     ] ],

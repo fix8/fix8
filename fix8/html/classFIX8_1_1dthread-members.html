@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1dthread.html','');});
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a67172e364140d3ab379c2fa79bfcda37">_start</a>(void *sub)</td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#aef29a403f66569d4c83c1f881eecbd06">_sub</a></td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#a73ac58f9458ff6f2ffea9219718a1e80">dthread</a>(T what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#a54b561289ed3031b843eeb684233168f">dthread</a>(reference_wrapper&lt; T &gt; what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#a2158aa73d84badd56258483cb75eadf1">dthread</a>(std::reference_wrapper&lt; T &gt; what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a9b3c1071bff67fd1c6a3d1f26e725f0d">getdthreadid</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a361ec4386ee89141a9559e3cf6f2961a">getid</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#a70efbfdb049d6e276157895f3a34f844">join</a>(int timeoutInMs=0)</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
@@ -127,14 +127,14 @@ $(document).ready(function(){initNavTree('classFIX8_1_1dthread.html','');});
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a2d298a90cfec7a01fdccd5a3e8f54247">operator==</a>(const _dthreadcore &amp;that) const </td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#ad5114e72043779c1ee9de0b9821a3fe2">request_stop</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#a823143e50af903d40a43f1f11372ad61">start</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a445fefd722810a6de2d6796c70c24a1c">thread_id_t</a> typedef</td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a2e11a60d4c60bdbdca66b9a3998e48dc">thread_id_t</a> typedef</td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a2fdf35ddc7e3d7ccaa324b37018bea3e">yield</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html#a29f5fc4d4d03bf0695ed96a3f028c9a6">~_dthreadcore</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1__dthreadcore.html">FIX8::_dthreadcore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1dthread.html#ab17b5176970cc5bbe39533fae2353f19">~dthread</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1dthread.html">FIX8::dthread&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:51. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:16:00. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

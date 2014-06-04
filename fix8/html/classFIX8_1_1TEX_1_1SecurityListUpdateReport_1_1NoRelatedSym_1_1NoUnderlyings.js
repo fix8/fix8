@@ -5,9 +5,10 @@ var classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlying
     [ "NoUndlyInstrumentParties", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties" ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a9d2789e96416464d88ce16065bf0bfc3af9f08190a0866d85b4a103d510a5fb83", null ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a0815657d546c498b3f0e27a05904121c", null ],
-    [ "~NoUnderlyings", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a131d93483cb8d53eb6eb9e146e896df8", null ],
+    [ "~NoUnderlyings", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a99d8fcc1291800d53106fb7fd46f7162", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a6300276ae1202cf0c898d3b69165ed77", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a342f68a969130558f38a76272205178f", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a57af4a5167b803bc6c031ee5976443c5", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a28f8e1160c6e55cf836b8c75efce953d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#a88334201264bcb66500c8e9a357f278c", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoUnderlyings.html#ac62a902c7132b5c7331fccf9fd01c0c3", null ]

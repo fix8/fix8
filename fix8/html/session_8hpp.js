@@ -6,8 +6,11 @@ var session_8hpp =
     [ "Session_Schedule", "structFIX8_1_1Session__Schedule.html", "structFIX8_1_1Session__Schedule" ],
     [ "Session", "classFIX8_1_1Session.html", "classFIX8_1_1Session" ],
     [ "RetransmissionContext", "structFIX8_1_1Session_1_1RetransmissionContext.html", "structFIX8_1_1Session_1_1RetransmissionContext" ],
+    [ "Client", "session_8hpp.html#a51db1a0f3a664d6f5c25160733aa085b", null ],
+    [ "Clients", "session_8hpp.html#a3840e22ddd64d782c24a7d628123d6a9", null ],
     [ "retry_interval", "session_8hpp.html#a482d7b9d7d9b6344906d08bed3dd43d4a082f393bb721ce305cff63393277a69f", null ],
     [ "login_retries", "session_8hpp.html#a482d7b9d7d9b6344906d08bed3dd43d4af78f674b2d9c9588437cb5e5fc0080c0", null ],
+    [ "tabsize", "session_8hpp.html#a482d7b9d7d9b6344906d08bed3dd43d4a98df95cefb439f79e7f5336e8926ffe5", null ],
     [ "hb_interval", "session_8hpp.html#a482d7b9d7d9b6344906d08bed3dd43d4af1d4c6432ba99d5c6420ba4bbe5b166d", null ],
     [ "connect_timeout", "session_8hpp.html#a482d7b9d7d9b6344906d08bed3dd43d4ab864df22ce5f157831c3aee711be5e5c", null ],
     [ "log_rotation", "session_8hpp.html#a482d7b9d7d9b6344906d08bed3dd43d4afe4cec891e5ae67b5b1e37dbe7cb9a32", null ],
@@ -29,15 +32,6 @@ var session_8hpp =
       [ "st_resend_request_received", "session_8hpp.html#a95240585037fdfcc9ac6ee61133cd4e8a0dd43ce91b6bb7552dc5361e88e58425", null ],
       [ "st_num_states", "session_8hpp.html#a95240585037fdfcc9ac6ee61133cd4e8aeaedc5512fa06acb00379bb93e2dbf3d", null ]
     ] ],
-    [ "Tests", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9", [
-      [ "pr_begin_str", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9adaea9b41b36dab69d40f65af96f8e881", null ],
-      [ "pr_logged_in", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9a0d904566e84cb6a7824b5f9b5c162bf6", null ],
-      [ "pr_low", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9a81985cba9da5c298a78f7e5efc09279b", null ],
-      [ "pr_high", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9a8af95cd1f8049f09cf3afda65a5256e6", null ],
-      [ "pr_comp_id", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9a389aa3d865547ea4364ad05c77e5796a", null ],
-      [ "pr_target_id", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9a2fe12b40d150c8efe127006ffcd09bdd", null ],
-      [ "pr_logon_timeout", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9afe79ab19e74191a439dca55eda4225ec", null ],
-      [ "pr_resend", "session_8hpp.html#a8164e8453dc8c6156fad3494285933c9a8fd2d2c1eade4ea19c8a732c859e86f2", null ]
-    ] ],
-    [ "is_established", "session_8hpp.html#a1739254b6600e1982fbdf7b49baf8b79", null ]
+    [ "is_established", "session_8hpp.html#abde29b2bf6e562b5b087b3b963141ea5", null ],
+    [ "is_live", "session_8hpp.html#a4249f49d9b50e9b1fe1c9b1fbee3289d", null ]
 ];

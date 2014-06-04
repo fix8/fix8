@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -137,14 +137,12 @@ Public Types</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:a543540fdfa08a4b524ecc436da83ae66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8049023890510e0f82e481d078d9abbf"><td class="memItemLeft" align="right" valign="top">typedef std::pair&lt; std::pair<br class="typebreak"/>
-&lt; std::string, std::string &gt;<br class="typebreak"/>
-, std::ostream * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#a8049023890510e0f82e481d078d9abbf">Output</a></td></tr>
-<tr class="separator:a8049023890510e0f82e481d078d9abbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36371bdda49f05c26304164b172f8114"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#a36371bdda49f05c26304164b172f8114">Output</a> = std::pair&lt; std::pair&lt; std::string, std::string &gt;, std::ostream * &gt;</td></tr>
+<tr class="separator:a36371bdda49f05c26304164b172f8114"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad67c746fcd5eed32e939098a87367974"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1Ctxt.html#a8049023890510e0f82e481d078d9abbf">Output</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#ad67c746fcd5eed32e939098a87367974">_out</a> [<a class="el" href="structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66ab57f5ec490b230d90195bcecbd3c3c8c">count</a>]</td></tr>
+<tr class="memitem:ad67c746fcd5eed32e939098a87367974"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1Ctxt.html#a36371bdda49f05c26304164b172f8114">Output</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#ad67c746fcd5eed32e939098a87367974">_out</a> [<a class="el" href="structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66ab57f5ec490b230d90195bcecbd3c3c8c">count</a>]</td></tr>
 <tr class="separator:ad67c746fcd5eed32e939098a87367974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16631b17fae1d4512a9613a43912c4e0"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#a16631b17fae1d4512a9613a43912c4e0">_version</a></td></tr>
 <tr class="separator:a16631b17fae1d4512a9613a43912c4e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,7 +159,7 @@ Public Attributes</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a543a5bbcea671d5e180f8fd2c534ab72"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#a543a5bbcea671d5e180f8fd2c534ab72">_exts</a> [<a class="el" href="structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66ab57f5ec490b230d90195bcecbd3c3c8c">count</a>]</td></tr>
 <tr class="separator:a543a5bbcea671d5e180f8fd2c534ab72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a933055fbdee88f620128570dc6149d24"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#a933055fbdee88f620128570dc6149d24">_exts_ver</a> [2] = { &quot;pp&quot;, &quot;xx&quot; }</td></tr>
+<tr class="memitem:a933055fbdee88f620128570dc6149d24"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Ctxt.html#a933055fbdee88f620128570dc6149d24">_exts_ver</a> [2] { &quot;pp&quot;, &quot;xx&quot; }</td></tr>
 <tr class="separator:a933055fbdee88f620128570dc6149d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -169,12 +167,12 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00045">45</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a8049023890510e0f82e481d078d9abbf"></a>
+<a class="anchor" id="a36371bdda49f05c26304164b172f8114"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::pair&lt;std::pair&lt;std::string, std::string&gt;, std::ostream *&gt; <a class="el" href="structFIX8_1_1Ctxt.html#a8049023890510e0f82e481d078d9abbf">FIX8::Ctxt::Output</a></td>
+          <td class="memname">using <a class="el" href="structFIX8_1_1Ctxt.html#a36371bdda49f05c26304164b172f8114">FIX8::Ctxt::Output</a> =  std::pair&lt;std::pair&lt;std::string, std::string&gt;, std::ostream *&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -229,7 +227,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00053">53</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00130">load_fix_version()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00115">load_fix_version()</a>.</p>
 
 </div>
 </div>
@@ -245,7 +243,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00053">53</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00130">load_fix_version()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00115">load_fix_version()</a>.</p>
 
 </div>
 </div>
@@ -266,12 +264,12 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= { <span class="stringliteral">&quot;_types.c&quot;</span>, <span class="stringliteral">&quot;_types.h&quot;</span>, <span class="stringliteral">&quot;_traits.c&quot;</span>, <span class="stringliteral">&quot;_classes.c&quot;</span>,</div>
+<b>Initial value:</b><div class="fragment"><div class="line">{ <span class="stringliteral">&quot;_types.c&quot;</span>, <span class="stringliteral">&quot;_types.h&quot;</span>, <span class="stringliteral">&quot;_traits.c&quot;</span>, <span class="stringliteral">&quot;_classes.c&quot;</span>,</div>
 <div class="line">                                    <span class="stringliteral">&quot;_classes.h&quot;</span>, <span class="stringliteral">&quot;_router.h&quot;</span>, <span class="stringliteral">&quot;_session.h&quot;</span> }</div>
 </div><!-- fragment -->
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00051">51</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>.</p>
 
 </div>
 </div>
@@ -283,7 +281,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const string Ctxt::_exts_ver = { &quot;pp&quot;, &quot;xx&quot; }</td>
+          <td class="memname">const string Ctxt::_exts_ver { &quot;pp&quot;, &quot;xx&quot; }</td>
         </tr>
       </table>
   </td>
@@ -295,7 +293,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00051">51</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>.</p>
 
 </div>
 </div>
@@ -311,7 +309,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00053">53</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00130">load_fix_version()</a>, <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00115">load_fix_version()</a>, and <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>.</p>
 
 </div>
 </div>
@@ -320,14 +318,14 @@ Static Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structFIX8_1_1Ctxt.html#a8049023890510e0f82e481d078d9abbf">Output</a> FIX8::Ctxt::_out[<a class="el" href="structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66ab57f5ec490b230d90195bcecbd3c3c8c">count</a>]</td>
+          <td class="memname"><a class="el" href="structFIX8_1_1Ctxt.html#a36371bdda49f05c26304164b172f8114">Output</a> FIX8::Ctxt::_out[<a class="el" href="structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66ab57f5ec490b230d90195bcecbd3c3c8c">count</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00050">50</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00896">process()</a>.</p>
 
 </div>
 </div>
@@ -343,7 +341,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00053">53</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00130">load_fix_version()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00115">load_fix_version()</a>.</p>
 
 </div>
 </div>
@@ -359,7 +357,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00052">52</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00130">load_fix_version()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00115">load_fix_version()</a>.</p>
 
 </div>
 </div>
@@ -370,7 +368,7 @@ Static Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:51. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:16:00. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

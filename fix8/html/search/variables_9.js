@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ifs_5f',['ifs_',['../classfilestdin.html#a86fbadd7d547440b22767475373083a8',1,'filestdin']]],
+  ['ifs_5f',['ifs_',['../classFIX8_1_1filestdin.html#a2a38379d8cdb20bc3696e11274333c83',1,'FIX8::filestdin']]],
   ['incline_5f',['incline_',['../classXmlElement.html#a0a78b830e7a2fb36a6bd00911c99477b',1,'XmlElement']]],
   ['inclusion_5f',['inclusion_',['../classXmlElement.html#ae63ad6521a7bbbc9868b7155b1d0bfbe',1,'XmlElement']]],
   ['incpath',['incpath',['../f8cutils_8cpp.html#a9601bada5266e32af5f83d45099f4558',1,'f8cutils.cpp']]],

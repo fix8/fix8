@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -145,428 +145,396 @@ $(document).ready(function(){initNavTree('consolemenu_8cpp_source.html','');});
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="runtime_2precomp_8hpp.html">precomp.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">fix8/f8includes.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="consolemenu_8hpp.html">fix8/consolemenu.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">ConsoleMenu::_opt_keys</a>(<span class="stringliteral">&quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&amp;*()_+-={}[]:\&quot;;&#39;&lt;&gt;,?/|&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">ConsoleMenu::_fld_prompt</a>(<span class="stringliteral">&quot;Press ENTER for next page, &#39;.&#39; to Quit or type an option&gt; &quot;</span>);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">fix8/f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="consolemenu_8hpp.html">fix8/consolemenu.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">ConsoleMenu::_opt_keys</a>(<span class="stringliteral">&quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&amp;*()_+-={}[]:\&quot;;&#39;&lt;&gt;,?/|&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">ConsoleMenu::_fld_prompt</a>(<span class="stringliteral">&quot;Press ENTER for next page, &#39;.&#39; to Quit or type an option&gt; &quot;</span>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">   65</a></span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *<a class="code" href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">ConsoleMenu::SelectMsg</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *pp(_ctx._bme.begin());</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot; Select message to create&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); pp != _ctx._bme.end(); ++pp)</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; pp-&gt;_value._name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; pp-&gt;_key &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;         ++nlines;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == _ctx._bme.size())</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;         {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (_ctx._bme.size() / _lpp)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt)))</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            ++page;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            nlines = 0;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;         }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;         {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            idx += (page * _lpp);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">if</span> (idx &lt; _ctx._bme.size())</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;               <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *pr(_ctx._bme.at(idx));</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;               <span class="keywordflow">if</span> (pr)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                  <span class="keywordflow">return</span> &amp;pr-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;         }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   }</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">  116</a></span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *<a class="code" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">ConsoleMenu::SelectField</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg, <span class="keywordtype">int</span> grpid)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   ostringstream ostr;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   <span class="keywordflow">if</span> (grpid)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      ostr &lt;&lt; msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; grpid &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      ostr &lt;&lt; _ctx._bme.find_ptr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>().c_str())-&gt;_name;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;   {</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <a class="code" href="structFIX8_1_1FieldTrait.html">Presence::const_iterator</a> itr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>());</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      _os &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; ostr.str() &lt;&lt; <span class="stringliteral">&quot;: Select field to add&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">   50</a></span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *<a class="code" href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">ConsoleMenu::SelectMsg</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;   {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *pp(_ctx._bme.begin());</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot; Select message to create&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); pp != _ctx._bme.end(); ++pp)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; pp-&gt;_value._name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; pp-&gt;_key &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == _ctx._bme.size())</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;         {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (_ctx._bme.size() / _lpp)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt)))</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            ++page;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;         }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;         {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            idx += (page * _lpp);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">if</span> (idx &lt; _ctx._bme.size())</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;               <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *pr(_ctx._bme.at(idx));</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;               <span class="keywordflow">if</span> (pr)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                  <span class="keywordflow">return</span> &amp;pr-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;         }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">  101</a></span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *<a class="code" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">ConsoleMenu::SelectField</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg, <span class="keywordtype">int</span> grpid)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   ostringstream ostr;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordflow">if</span> (grpid)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      ostr &lt;&lt; msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; grpid &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      ostr &lt;&lt; _ctx._bme.find_ptr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>().c_str())-&gt;_name;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <a class="code" href="structFIX8_1_1FieldTrait.html">Presence::const_iterator</a> itr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>());</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      _os &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; ostr.str() &lt;&lt; <span class="stringliteral">&quot;: Select field to add (*:mandatory +:present)&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); itr != msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(); ++itr)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseEntry.html">BaseEntry</a> *tbe(_ctx.find_be(itr-&gt;_fnum));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;] &quot;</span>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;         <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0">have</a>(itr-&gt;_fnum))</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;         {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            _os &lt;&lt; <span class="charliteral">&#39;+&#39;</span>;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39">print_field</a>(itr-&gt;_fnum, _os);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;         }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            _os &lt;&lt; (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2">is_mandatory</a>(itr-&gt;_fnum) ? <span class="charliteral">&#39;*&#39;</span> : <span class="charliteral">&#39; &#39;</span>)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;               &lt;&lt; tbe-&gt;_name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; itr-&gt;_fnum &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); itr != msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(); ++itr)</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseEntry.html">BaseEntry</a> *tbe(_ctx.find_be(itr-&gt;_fnum));</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;] &quot;</span>;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;         <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0">have</a>(itr-&gt;_fnum))</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;         {</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            _os &lt;&lt; <span class="charliteral">&#39;+&#39;</span>;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39">print_field</a>(itr-&gt;_fnum, _os);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;         if (nlines % _lpp == 0 || (nlines + _lpp * page) == msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">size</a>())</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;         {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">size</a>() / _lpp)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt)))</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            ++page;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            nlines = 0;</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            _os &lt;&lt; endl;</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;         }</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;         {</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2">is_mandatory</a>(itr-&gt;_fnum))</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;               _os &lt;&lt; <span class="charliteral">&#39;*&#39;</span>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;               _os &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            _os &lt;&lt; tbe-&gt;_name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; itr-&gt;_fnum &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;         }</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;         ++nlines;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">size</a>())</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;         {</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">size</a>() / _lpp)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt)))</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            ++page;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            nlines = 0;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;         }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      {</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;         {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            idx += (page * _lpp);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <a class="code" href="structFIX8_1_1FieldTrait.html">Presence::const_iterator</a> fitr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75">at</a>(idx));</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <span class="keywordflow">if</span> (fitr != msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>())</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;               <span class="keywordflow">return</span> _ctx._be.find_pair_ptr(fitr-&gt;_fnum);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;         }</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;   }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">  186</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">ConsoleMenu::SelectRealm</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> fnum, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1RealmBase.html">RealmBase</a> *rb)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseEntry.html">BaseEntry</a> *be(_ctx.find_be(fnum));</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      <span class="keywordtype">int</span> pp(0);</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      _os &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; be-&gt;_name &lt;&lt; <span class="stringliteral">&quot;: Select realm value to add&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> nlines(0); pp &lt; rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a>; ++pp)</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      {</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; *(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a6c2cd88cb11e690cced3022e6d2a618b">_descriptions</a> + pp) &lt;&lt; <span class="stringliteral">&quot; (&quot;</span>;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#abd4c514c4bca06aa8fbeda03fa056ebe">FieldTrait::is_int</a>(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a8b29b6af60c6832cf9fd756821a02430">_ftype</a>))</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            _os &lt;&lt; *((static_cast&lt;const int *&gt;(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a50ea4126b04d276c0d3067c5d63d8bfb">_range</a>) + pp));</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#a80e16274daadef511f70f23668f9070f">FieldTrait::is_char</a>(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a8b29b6af60c6832cf9fd756821a02430">_ftype</a>))</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            _os &lt;&lt; *((static_cast&lt;const char *&gt;(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a50ea4126b04d276c0d3067c5d63d8bfb">_range</a>) + pp));</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#abed859f080e54c91ef5584e8902092cc">FieldTrait::is_float</a>(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a8b29b6af60c6832cf9fd756821a02430">_ftype</a>))</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            _os &lt;&lt; *((static_cast&lt;const double *&gt;(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a50ea4126b04d276c0d3067c5d63d8bfb">_range</a>) + pp));</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#a7ed482ef813060151fdd6e6a27cc9528">FieldTrait::is_string</a>(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a8b29b6af60c6832cf9fd756821a02430">_ftype</a>))</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            _os &lt;&lt; *((static_cast&lt;const f8String *&gt;(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a50ea4126b04d276c0d3067c5d63d8bfb">_range</a>) + pp));</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;         ++nlines;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a>)</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;         {</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a> / _lpp)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt, <span class="keyword">true</span>)))</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            ++page;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            nlines = 0;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;            _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;         }</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      }</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      <span class="keywordtype">int</span> idx;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;         <span class="keywordflow">if</span> (static_cast&lt;size_t&gt;((idx = _opt_keys.find_first_of(opt))) != f8String::npos)</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;         {</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            idx += (page * _lpp);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            <span class="keywordflow">if</span> (idx &lt; rb-&gt;_sz)</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;               <span class="keywordflow">return</span> idx;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;         }</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      }</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;   }</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;}</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">  246</a></span>&#160;<a class="code" href="classFIX8_1_1Message.html">Message</a> *<a class="code" href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">ConsoleMenu::SelectFromMsg</a>(<a class="code" href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;   <span class="keywordflow">if</span> (lst.empty())</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;   {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      MsgList::const_iterator itr(lst.begin());</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;Select from &quot;</span> &lt;&lt; lst.size() &lt;&lt; <span class="stringliteral">&quot; messages&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); itr != lst.end(); ++itr)</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *tbme(_ctx._bme.find_pair_ptr((*itr)-&gt;get_msgtype().c_str()));</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; tbme-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; tbme-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a> &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;         ++nlines;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == lst.size())</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;         {</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt)))</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            ++page;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            nlines = 0;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            _os &lt;&lt; endl;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;         }</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      }</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      {</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;         {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            idx += (page * _lpp);</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;            <span class="keywordflow">if</span> (idx &lt; lst.size())</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;               <span class="keywordflow">return</span> lst[idx];</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;         }</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      }</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   }</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;}</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75">  297</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75">ConsoleMenu::CreateMsgs</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   {</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *mc(SelectMsg());</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      <span class="keywordflow">if</span> (!mc)</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(mc-&gt;<a class="code" href="structFIX8_1_1BaseMsgEntry.html#abc7e5a99bd59f8380541ed256bc5ec16">_create</a>.<a class="code" href="classFIX8_1_1Minst.html#a8a761247a07067a0ce089a90afe8a26b">_do</a>());</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <span class="keywordflow">while</span>((fld = SelectField(msg)))</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;         EditMsg(tty, fld, msg);</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(msg) &lt;&lt; endl;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <span class="keywordflow">if</span> (get_yn(<span class="stringliteral">&quot;Add to list? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;         lst.push_back(msg);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   }</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   <span class="keywordflow">return</span> lst.size();</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">  317</a></span>&#160;<a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp; <a class="code" href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">ConsoleMenu::GetString</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp; to)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   <span class="keywordtype">char</span> buff[128] = {};</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   tty.<a class="code" href="classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899">unset_raw_mode</a>();</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   _is.getline(buff, <span class="keyword">sizeof</span>(buff));</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   tty.<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   <span class="keywordflow">return</span> to = buff;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;}</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">  327</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">ConsoleMenu::EditMsg</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld, <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <span class="keywordtype">string</span> txt;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="keywordtype">int</span> rval(-1);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keywordflow">if</span> (fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm)</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      rval = SelectRealm(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>, fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   {</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      _os &lt;&lt; endl &lt;&lt; fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._name &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; flush;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      GetString(tty, txt);</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">is_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>))</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;         <span class="keywordtype">int</span> cnt(get_value&lt;int&gt;(txt));</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;         <a class="code" href="classFIX8_1_1GroupBase.html">GroupBase</a> *gb(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>));</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;         <span class="keywordflow">if</span> (gb &amp;&amp; cnt)</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;         {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ii(0); ii &lt; cnt; ++ii)</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            {</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;               <a class="code" href="classFIX8_1_1Message.html">Message</a> *gmsg(static_cast&lt;Message *&gt;(gb-&gt;create_group()));</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;               <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;               <span class="keywordflow">while</span>((fld = SelectField(gmsg, ii + 1)))</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;                  EditMsg(tty, fld, gmsg);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;               _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(gmsg) &lt;&lt; endl;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;               <span class="keywordflow">if</span> (get_yn(<span class="stringliteral">&quot;Add group to msg? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                  *gb += gmsg;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;         }</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      }</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;   }</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   <a class="code" href="classFIX8_1_1BaseField.html">BaseField</a> *bf(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._create._do(txt.c_str(), fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm, rval));</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19">add_field</a>(bf-&gt;<a class="code" href="classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5">get_tag</a>(), msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), 0, bf, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;}</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00362"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#ac5659cc05eda4c1260bfd7bce88361a5">  362</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac5659cc05eda4c1260bfd7bce88361a5">ConsoleMenu::EditMsgs</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   {</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(SelectFromMsg(lst));</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;      <span class="keywordflow">if</span> (!msg)</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      <span class="keywordflow">while</span>((fld = SelectField(msg)))</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;         EditMsg(tty, fld, msg);</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(msg) &lt;&lt; endl;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   }</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;         {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            idx += (page * _lpp);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <a class="code" href="structFIX8_1_1FieldTrait.html">Presence::const_iterator</a> fitr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75">at</a>(idx));</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            <span class="keywordflow">if</span> (fitr != msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>())</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;               <span class="keywordflow">return</span> _ctx._be.find_pair_ptr(fitr-&gt;_fnum);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;         }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">  166</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">ConsoleMenu::SelectRealm</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> fnum, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1RealmBase.html">RealmBase</a> *rb)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseEntry.html">BaseEntry</a> *be(_ctx.find_be(fnum));</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordtype">int</span> pp(0);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      _os &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; be-&gt;_name &lt;&lt; <span class="stringliteral">&quot;: Select realm value to add&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> nlines(0); pp &lt; rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a>; ++pp)</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      {</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; *(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a6c2cd88cb11e690cced3022e6d2a618b">_descriptions</a> + pp) &lt;&lt; <span class="stringliteral">&quot; (&quot;</span>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;         rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a10be4df36c6edcd7a8aeb0b79183ca4c">print</a>(_os, pp);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a>)</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;         {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a> / _lpp)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt, <span class="keyword">true</span>)))</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            ++page;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;         }</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      }</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      <span class="keywordtype">int</span> idx;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;         <span class="keywordflow">if</span> (static_cast&lt;size_t&gt;((idx = (static_cast&lt;int&gt;(_opt_keys.find_first_of(opt))))) != f8String::npos)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;         {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            idx += (page * _lpp);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            <span class="keywordflow">if</span> (idx &lt; rb-&gt;_sz)</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;               <span class="keywordflow">return</span> idx;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;         }</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      }</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">  218</a></span>&#160;<a class="code" href="classFIX8_1_1Message.html">Message</a> *<a class="code" href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">ConsoleMenu::SelectFromMsg</a>(<a class="code" href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   <span class="keywordflow">if</span> (lst.empty())</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   {</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      MsgList::const_iterator itr(lst.begin());</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;Select from &quot;</span> &lt;&lt; lst.size() &lt;&lt; <span class="stringliteral">&quot; messages&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      _os &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); itr != lst.end(); ++itr)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *tbme(_ctx._bme.find_pair_ptr((*itr)-&gt;get_msgtype().c_str()));</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;         _os &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; _opt_keys[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; tbme-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; tbme-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a> &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;         <span class="keywordflow">if</span> (nlines % _lpp == 0 || (nlines + _lpp * page) == lst.size())</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;         {</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            _os &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <span class="keywordflow">if</span> ((opt = get_key(_fld_prompt)))</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            ++page;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            _os &lt;&lt; endl;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;         }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      }</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      {</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;         {</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            idx += (page * _lpp);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            <span class="keywordflow">if</span> (idx &lt; lst.size())</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;               <span class="keywordflow">return</span> lst[idx];</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;         }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75">  269</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75">ConsoleMenu::CreateMsgs</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *mc(SelectMsg());</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keywordflow">if</span> (!mc)</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(mc-&gt;<a class="code" href="structFIX8_1_1BaseMsgEntry.html#abc7e5a99bd59f8380541ed256bc5ec16">_create</a>.<a class="code" href="classFIX8_1_1Minst.html#a8a761247a07067a0ce089a90afe8a26b">_do</a>());</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <span class="keywordflow">while</span>((fld = SelectField(msg)))</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;         EditMsg(tty, fld, msg);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(msg) &lt;&lt; endl;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      <span class="keywordflow">if</span> (get_yn(<span class="stringliteral">&quot;Add to list? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;         lst.push_back(msg);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   }</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(lst.size());</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;}</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">  289</a></span>&#160;<a class="code" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>&amp; <a class="code" href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">ConsoleMenu::GetString</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>&amp; to)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   <span class="keywordtype">char</span> buff[128] {};</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   tty.<a class="code" href="classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899">unset_raw_mode</a>();</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   _is.getline(buff, <span class="keyword">sizeof</span>(buff));</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   tty.<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   <span class="keywordflow">return</span> to = buff;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">  299</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">ConsoleMenu::EditMsg</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld, <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   <span class="keywordtype">string</span> txt;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   <span class="keywordtype">int</span> rval(-1);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <span class="keywordflow">if</span> (fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm)</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      rval = SelectRealm(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>, fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   {</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      _os &lt;&lt; endl &lt;&lt; fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._name &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; flush;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      GetString(tty, txt);</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">is_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>))</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      {</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;         <span class="keywordtype">int</span> cnt(get_value&lt;int&gt;(txt));</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;         <a class="code" href="classFIX8_1_1GroupBase.html">GroupBase</a> *gb(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>));</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;         <span class="keywordflow">if</span> (gb &amp;&amp; cnt)</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;         {</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ii(0); ii &lt; cnt; ++ii)</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;               <a class="code" href="classFIX8_1_1Message.html">Message</a> *gmsg(static_cast&lt;Message *&gt;(gb-&gt;create_group()));</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;               <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;               <span class="keywordflow">while</span>((fld = SelectField(gmsg, ii + 1)))</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                  EditMsg(tty, fld, gmsg);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;               _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(gmsg) &lt;&lt; endl;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;               <span class="keywordflow">if</span> (get_yn(<span class="stringliteral">&quot;Add group to msg? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                  *gb += gmsg;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;         }</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   }</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <a class="code" href="classFIX8_1_1BaseField.html">BaseField</a> *bf(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._create._do(txt.c_str(), fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm, rval));</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19">add_field</a>(bf-&gt;<a class="code" href="classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5">get_tag</a>(), msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), 0, bf, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;}</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#ac5659cc05eda4c1260bfd7bce88361a5">  334</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac5659cc05eda4c1260bfd7bce88361a5">ConsoleMenu::EditMsgs</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   {</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(SelectFromMsg(lst));</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      <span class="keywordflow">if</span> (!msg)</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="keywordflow">while</span>((fld = SelectField(msg)))</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;         EditMsg(tty, fld, msg);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(msg) &lt;&lt; endl;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   }</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(lst.size());</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;}</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992">  351</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992">ConsoleMenu::DeleteMsgs</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   {</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(SelectFromMsg(lst));</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      <span class="keywordflow">if</span> (!msg)</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">for</span> (MsgList::iterator itr(lst.begin()); itr != lst.end(); ++itr)</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      {</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;         <span class="keywordflow">if</span> (*itr == msg)</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;         {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;            <span class="keywordflow">if</span> (get_yn(<span class="stringliteral">&quot;Delete msg? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;            {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;               <span class="keyword">delete</span> *itr;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;               lst.erase(itr);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;            }</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;         }</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      }</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   }</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(lst.size());</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;   <span class="keywordflow">return</span> lst.size();</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;}</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992">  379</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992">ConsoleMenu::DeleteMsgs</a>(<a class="code" href="classFIX8_1_1tty__save__state.html">tty_save_state</a>&amp; tty, <a class="code" href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">MsgList</a>&amp; lst)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   {</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(SelectFromMsg(lst));</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;      <span class="keywordflow">if</span> (!msg)</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      <span class="keywordflow">for</span> (MsgList::iterator itr(lst.begin()); itr != lst.end(); ++itr)</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      {</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;         <span class="keywordflow">if</span> (*itr == msg)</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;         {</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;            <span class="keywordflow">if</span> (get_yn(<span class="stringliteral">&quot;Delete msg? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;            {</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;               <span class="keyword">delete</span> *itr;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;               lst.erase(itr);</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;            }</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;         }</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      }</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;   }</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;   <span class="keywordflow">return</span> lst.size();</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
-<div class="ttc" id="classFIX8_1_1MessageBase_html_a3552b4cf9b335f3d60ab579c27df12f0"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0">FIX8::MessageBase::have</a></div><div class="ttdeci">bool have(const unsigned short fnum) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00539">message.hpp:539</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a907a9fa546c6d3bf53e725b6e918abf8"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">FIX8::ConsoleMenu::GetString</a></div><div class="ttdeci">f8String &amp; GetString(tty_save_state &amp;tty, f8String &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00317">consolemenu.cpp:317</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a6dd88a2896940d8d1994e0ed7cc1eefd"><div class="ttname"><a href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">FIX8::MsgList</a></div><div class="ttdeci">std::deque&lt; FIX8::Message * &gt; MsgList</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00044">consolemenu.hpp:44</a></div></div>
-<div class="ttc" id="classFIX8_1_1MessageBase_html_acfd0463dcfa622305a755f171dc1cd39"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39">FIX8::MessageBase::print_field</a></div><div class="ttdeci">virtual void print_field(const unsigned short fnum, std::ostream &amp;os) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8cpp_source.html#l00472">message.cpp:472</a></div></div>
-<div class="ttc" id="structFIX8_1_1BaseMsgEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html">FIX8::BaseMsgEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00166">message.hpp:166</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a3552b4cf9b335f3d60ab579c27df12f0"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0">FIX8::MessageBase::have</a></div><div class="ttdeci">bool have(const unsigned short fnum) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00584">message.hpp:584</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a907a9fa546c6d3bf53e725b6e918abf8"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">FIX8::ConsoleMenu::GetString</a></div><div class="ttdeci">F8API f8String &amp; GetString(tty_save_state &amp;tty, f8String &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00289">consolemenu.cpp:289</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_acfd0463dcfa622305a755f171dc1cd39"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39">FIX8::MessageBase::print_field</a></div><div class="ttdeci">virtual F8API void print_field(const unsigned short fnum, std::ostream &amp;os) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8cpp_source.html#l00469">message.cpp:469</a></div></div>
+<div class="ttc" id="structFIX8_1_1BaseMsgEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html">FIX8::BaseMsgEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00177">message.hpp:177</a></div></div>
 <div class="ttc" id="structFIX8_1_1__pair_html"><div class="ttname"><a href="structFIX8_1_1__pair.html">FIX8::_pair</a></div><div class="ttdoc">Pair abstraction for use with GeneratedTable. </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00064">f8types.hpp:64</a></div></div>
-<div class="ttc" id="classFIX8_1_1MessageBase_html_a223669d4050b4c6c4003caf9cff32223"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">FIX8::MessageBase::find_group</a></div><div class="ttdeci">GroupBase * find_group() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00591">message.hpp:591</a></div></div>
-<div class="ttc" id="structFIX8_1_1RealmBase_html_a50ea4126b04d276c0d3067c5d63d8bfb"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a50ea4126b04d276c0d3067c5d63d8bfb">FIX8::RealmBase::_range</a></div><div class="ttdeci">const void * _range</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00066">field.hpp:66</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a223669d4050b4c6c4003caf9cff32223"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">FIX8::MessageBase::find_group</a></div><div class="ttdeci">GroupBase * find_group() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00636">message.hpp:636</a></div></div>
 <div class="ttc" id="structFIX8_1_1__pair_html_a915567f5488096bc7cc777a4f532dd61"><div class="ttname"><a href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">FIX8::_pair::_value</a></div><div class="ttdeci">Val _value</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00067">f8types.hpp:67</a></div></div>
 <div class="ttc" id="f8includes_8hpp_html"><div class="ttname"><a href="f8includes_8hpp.html">f8includes.hpp</a></div></div>
 <div class="ttc" id="consolemenu_8hpp_html"><div class="ttname"><a href="consolemenu_8hpp.html">consolemenu.hpp</a></div></div>
-<div class="ttc" id="classFIX8_1_1FieldTraits_html_aee670bbc6f3e6f1a460e261789a36dd2"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2">FIX8::FieldTraits::is_mandatory</a></div><div class="ttdeci">bool is_mandatory(const unsigned short field) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00557">traits.hpp:557</a></div></div>
-<div class="ttc" id="classFIX8_1_1tty__save__state_html"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html">FIX8::tty_save_state</a></div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01247">f8utils.hpp:1247</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ae692e3799138928c0694ad8828d60405"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">FIX8::ConsoleMenu::EditMsg</a></div><div class="ttdeci">void EditMsg(tty_save_state &amp;tty, const FieldTable::Pair *fld, Message *msg) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00327">consolemenu.cpp:327</a></div></div>
-<div class="ttc" id="classFIX8_1_1FieldTraits_html_af4c20474cbeb7688bc65a5527d0210fa"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">FIX8::FieldTraits::get_presence</a></div><div class="ttdeci">const Presence &amp; get_presence() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00619">traits.hpp:619</a></div></div>
-<div class="ttc" id="classFIX8_1_1tty__save__state_html_a64dbe0f3a2b970a69308bb187909e12a"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">FIX8::tty_save_state::set_raw_mode</a></div><div class="ttdeci">void set_raw_mode()</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01292">f8utils.hpp:1292</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a4ae3d8ee9fe65df88792bcacdd375508"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">FIX8::ConsoleMenu::SelectRealm</a></div><div class="ttdeci">virtual int SelectRealm(const unsigned short fnum, const RealmBase *rb) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00186">consolemenu.cpp:186</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_aee670bbc6f3e6f1a460e261789a36dd2"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2">FIX8::FieldTraits::is_mandatory</a></div><div class="ttdeci">bool is_mandatory(const unsigned short field) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00588">traits.hpp:588</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html">FIX8::tty_save_state</a></div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01089">f8utils.hpp:1089</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ae692e3799138928c0694ad8828d60405"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">FIX8::ConsoleMenu::EditMsg</a></div><div class="ttdeci">F8API void EditMsg(tty_save_state &amp;tty, const FieldTable::Pair *fld, Message *msg) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00299">consolemenu.cpp:299</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_af4c20474cbeb7688bc65a5527d0210fa"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">FIX8::FieldTraits::get_presence</a></div><div class="ttdeci">const Presence &amp; get_presence() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00650">traits.hpp:650</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a42d5b790eba94a688535bfd5ae13ff93"><div class="ttname"><a href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">FIX8::MsgList</a></div><div class="ttdeci">std::deque&lt; FIX8::Message * &gt; MsgList</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00044">consolemenu.hpp:44</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_a64dbe0f3a2b970a69308bb187909e12a"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">FIX8::tty_save_state::set_raw_mode</a></div><div class="ttdeci">void set_raw_mode()</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01134">f8utils.hpp:1134</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a4ae3d8ee9fe65df88792bcacdd375508"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">FIX8::ConsoleMenu::SelectRealm</a></div><div class="ttdeci">virtual F8API int SelectRealm(const unsigned short fnum, const RealmBase *rb) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00166">consolemenu.cpp:166</a></div></div>
 <div class="ttc" id="structFIX8_1_1RealmBase_html"><div class="ttname"><a href="structFIX8_1_1RealmBase.html">FIX8::RealmBase</a></div><div class="ttdoc">Domain range/set static metadata base class. </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00062">field.hpp:62</a></div></div>
-<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_af76f7d71c7a01ff071449bb54329ce05"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::begin</a></div><div class="ttdeci">iterator begin()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00379">traits.hpp:379</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac5659cc05eda4c1260bfd7bce88361a5"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac5659cc05eda4c1260bfd7bce88361a5">FIX8::ConsoleMenu::EditMsgs</a></div><div class="ttdeci">virtual int EditMsgs(tty_save_state &amp;tty, MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00362">consolemenu.cpp:362</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_af76f7d71c7a01ff071449bb54329ce05"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::begin</a></div><div class="ttdeci">iterator begin()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00410">traits.hpp:410</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac5659cc05eda4c1260bfd7bce88361a5"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac5659cc05eda4c1260bfd7bce88361a5">FIX8::ConsoleMenu::EditMsgs</a></div><div class="ttdeci">virtual F8API int EditMsgs(tty_save_state &amp;tty, MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00334">consolemenu.cpp:334</a></div></div>
 <div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab1de34dd2ce3443ea557640054cb1abb"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">FIX8::ConsoleMenu::_fld_prompt</a></div><div class="ttdeci">static const f8String _fld_prompt</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
-<div class="ttc" id="classFIX8_1_1GroupBase_html"><div class="ttname"><a href="classFIX8_1_1GroupBase.html">FIX8::GroupBase</a></div><div class="ttdoc">Abstract base class for all repeating groups. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00058">message.hpp:58</a></div></div>
-<div class="ttc" id="structFIX8_1_1RealmBase_html_a8b29b6af60c6832cf9fd756821a02430"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a8b29b6af60c6832cf9fd756821a02430">FIX8::RealmBase::_ftype</a></div><div class="ttdeci">FieldTrait::FieldType _ftype</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00068">field.hpp:68</a></div></div>
-<div class="ttc" id="structFIX8_1_1FieldTrait_html"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html">FIX8::FieldTrait</a></div><div class="ttdoc">FIX field traits - hold specific traits for each field. </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00047">traits.hpp:47</a></div></div>
-<div class="ttc" id="classFIX8_1_1Minst_html_a8a761247a07067a0ce089a90afe8a26b"><div class="ttname"><a href="classFIX8_1_1Minst.html#a8a761247a07067a0ce089a90afe8a26b">FIX8::Minst::_do</a></div><div class="ttdeci">Message *(&amp;) _do()</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00151">message.hpp:151</a></div></div>
+<div class="ttc" id="classFIX8_1_1GroupBase_html"><div class="ttname"><a href="classFIX8_1_1GroupBase.html">FIX8::GroupBase</a></div><div class="ttdoc">Abstract base class for all repeating groups. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00055">message.hpp:55</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait_html"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html">FIX8::FieldTrait</a></div><div class="ttdoc">Used for static trait interrogation. </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00057">traits.hpp:57</a></div></div>
+<div class="ttc" id="classFIX8_1_1Minst_html_a8a761247a07067a0ce089a90afe8a26b"><div class="ttname"><a href="classFIX8_1_1Minst.html#a8a761247a07067a0ce089a90afe8a26b">FIX8::Minst::_do</a></div><div class="ttdeci">Message *(&amp;) _do()</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00153">message.hpp:153</a></div></div>
 <div class="ttc" id="structFIX8_1_1RealmBase_html_ac46bffe960fc8075257b6b85327f64af"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">FIX8::RealmBase::_sz</a></div><div class="ttdeci">const int _sz</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00069">field.hpp:69</a></div></div>
-<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a1ba1d5c6e34f997efa4e384d60f61f75"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::at</a></div><div class="ttdeci">const_iterator at(const size_t idx) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00305">traits.hpp:305</a></div></div>
-<div class="ttc" id="classFIX8_1_1MessageBase_html_afdb890848e89e7f3b0b941f20c02a1f1"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">FIX8::MessageBase::get_msgtype</a></div><div class="ttdeci">const f8String &amp; get_msgtype() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00365">message.hpp:365</a></div></div>
-<div class="ttc" id="structFIX8_1_1FieldTrait_html_abd4c514c4bca06aa8fbeda03fa056ebe"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#abd4c514c4bca06aa8fbeda03fa056ebe">FIX8::FieldTrait::is_int</a></div><div class="ttdeci">static bool is_int(const FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00073">traits.hpp:73</a></div></div>
-<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a6ea491f605d31ff936c4001f32d0d400"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00383">traits.hpp:383</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a1ba1d5c6e34f997efa4e384d60f61f75"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::at</a></div><div class="ttdeci">const_iterator at(const size_t idx) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00336">traits.hpp:336</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_afdb890848e89e7f3b0b941f20c02a1f1"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">FIX8::MessageBase::get_msgtype</a></div><div class="ttdeci">const f8String &amp; get_msgtype() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00397">message.hpp:397</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a6ea491f605d31ff936c4001f32d0d400"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00414">traits.hpp:414</a></div></div>
 <div class="ttc" id="structFIX8_1_1__pair_html_aafc9b182e594f6d4ab97d686cf880d74"><div class="ttname"><a href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">FIX8::_pair::_key</a></div><div class="ttdeci">Key _key</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00066">f8types.hpp:66</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a20384bd6310b1a907449579ec0df8abd"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">FIX8::ConsoleMenu::SelectFromMsg</a></div><div class="ttdeci">Message * SelectFromMsg(MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00246">consolemenu.cpp:246</a></div></div>
-<div class="ttc" id="structFIX8_1_1BaseEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseEntry.html">FIX8::BaseEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l01730">field.hpp:1730</a></div></div>
-<div class="ttc" id="classFIX8_1_1Message_html"><div class="ttname"><a href="classFIX8_1_1Message.html">FIX8::Message</a></div><div class="ttdoc">A complete Fix message with header, body and trailer. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00772">message.hpp:772</a></div></div>
-<div class="ttc" id="classFIX8_1_1FieldTraits_html_a1f2657879503207b0c1a43b4fd181603"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">FIX8::FieldTraits::is_group</a></div><div class="ttdeci">bool is_group(const unsigned short field, Presence::const_iterator &amp;itr) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00563">traits.hpp:563</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aa793a1886b1691b5f636a0204f5a6a75"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75">FIX8::ConsoleMenu::CreateMsgs</a></div><div class="ttdeci">virtual int CreateMsgs(tty_save_state &amp;tty, MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00297">consolemenu.cpp:297</a></div></div>
-<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaecaabf5b98750e1a62a093bea443899"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899">FIX8::tty_save_state::unset_raw_mode</a></div><div class="ttdeci">void unset_raw_mode()</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01275">f8utils.hpp:1275</a></div></div>
-<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a9d41259e89ee0a82a038b14c2e2d13ac"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00367">traits.hpp:367</a></div></div>
-<div class="ttc" id="classFIX8_1_1MessageBase_html_a1c3a817c478e0dcb8a373206d4fef58f"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">FIX8::MessageBase::get_fp</a></div><div class="ttdeci">const FieldTraits &amp; get_fp() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00656">message.hpp:656</a></div></div>
-<div class="ttc" id="classFIX8_1_1MessageBase_html_af9a792a046a67021b4f77e79c59edc19"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19">FIX8::MessageBase::add_field</a></div><div class="ttdeci">void add_field(const unsigned short fnum, Presence::const_iterator itr, const unsigned pos, BaseField *what, bool check)</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00383">message.hpp:383</a></div></div>
-<div class="ttc" id="classFIX8_1_1BaseField_html"><div class="ttname"><a href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></div><div class="ttdoc">The base field class (ABC) for all fields. </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00108">field.hpp:108</a></div></div>
-<div class="ttc" id="structFIX8_1_1FieldTrait_html_a7ed482ef813060151fdd6e6a27cc9528"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#a7ed482ef813060151fdd6e6a27cc9528">FIX8::FieldTrait::is_string</a></div><div class="ttdeci">static bool is_string(const FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00083">traits.hpp:83</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a653abc4baa49d96ad764ffc8f3dce148"><div class="ttname"><a href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">FIX8::f8String</a></div><div class="ttdeci">std::string f8String</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00047">f8types.hpp:47</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a7ca30ac342ef4e3d4d2d14255b3ad93f"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">FIX8::ConsoleMenu::SelectField</a></div><div class="ttdeci">virtual const FieldTable::Pair * SelectField(const Message *msg, int groupid=0) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00116">consolemenu.cpp:116</a></div></div>
-<div class="ttc" id="structFIX8_1_1BaseMsgEntry_html_abc7e5a99bd59f8380541ed256bc5ec16"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html#abc7e5a99bd59f8380541ed256bc5ec16">FIX8::BaseMsgEntry::_create</a></div><div class="ttdeci">const Minst _create</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00168">message.hpp:168</a></div></div>
-<div class="ttc" id="structFIX8_1_1FieldTrait_html_a80e16274daadef511f70f23668f9070f"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#a80e16274daadef511f70f23668f9070f">FIX8::FieldTrait::is_char</a></div><div class="ttdeci">static bool is_char(const FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00078">traits.hpp:78</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac66df1e977b51e2e3dcb831250ab2588"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">FIX8::ConsoleMenu::SelectMsg</a></div><div class="ttdeci">virtual const BaseMsgEntry * SelectMsg() const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00065">consolemenu.cpp:65</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a20384bd6310b1a907449579ec0df8abd"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">FIX8::ConsoleMenu::SelectFromMsg</a></div><div class="ttdeci">F8API Message * SelectFromMsg(MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00218">consolemenu.cpp:218</a></div></div>
+<div class="ttc" id="structFIX8_1_1BaseEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseEntry.html">FIX8::BaseEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l01814">field.hpp:1814</a></div></div>
+<div class="ttc" id="runtime_2precomp_8hpp_html"><div class="ttname"><a href="runtime_2precomp_8hpp.html">precomp.hpp</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html"><div class="ttname"><a href="classFIX8_1_1Message.html">FIX8::Message</a></div><div class="ttdoc">A complete Fix message with header, body and trailer. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00833">message.hpp:833</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_a1f2657879503207b0c1a43b4fd181603"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">FIX8::FieldTraits::is_group</a></div><div class="ttdeci">bool is_group(const unsigned short field, Presence::const_iterator &amp;itr) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00594">traits.hpp:594</a></div></div>
+<div class="ttc" id="structFIX8_1_1RealmBase_html_a10be4df36c6edcd7a8aeb0b79183ca4c"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a10be4df36c6edcd7a8aeb0b79183ca4c">FIX8::RealmBase::print</a></div><div class="ttdeci">std::ostream &amp; print(std::ostream &amp;os, int idx) const </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00120">field.hpp:120</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aa793a1886b1691b5f636a0204f5a6a75"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75">FIX8::ConsoleMenu::CreateMsgs</a></div><div class="ttdeci">virtual F8API int CreateMsgs(tty_save_state &amp;tty, MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00269">consolemenu.cpp:269</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaecaabf5b98750e1a62a093bea443899"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899">FIX8::tty_save_state::unset_raw_mode</a></div><div class="ttdeci">void unset_raw_mode()</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01117">f8utils.hpp:1117</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a9d41259e89ee0a82a038b14c2e2d13ac"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00398">traits.hpp:398</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a1c3a817c478e0dcb8a373206d4fef58f"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">FIX8::MessageBase::get_fp</a></div><div class="ttdeci">const FieldTraits &amp; get_fp() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00701">message.hpp:701</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_af9a792a046a67021b4f77e79c59edc19"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19">FIX8::MessageBase::add_field</a></div><div class="ttdeci">void add_field(const unsigned short fnum, Presence::const_iterator itr, const unsigned pos, BaseField *what, bool check)</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00415">message.hpp:415</a></div></div>
+<div class="ttc" id="classFIX8_1_1BaseField_html"><div class="ttname"><a href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></div><div class="ttdoc">The base field class (ABC) for all fields. </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00131">field.hpp:131</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a7ca30ac342ef4e3d4d2d14255b3ad93f"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">FIX8::ConsoleMenu::SelectField</a></div><div class="ttdeci">virtual F8API const FieldTable::Pair * SelectField(const Message *msg, int groupid=0) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00101">consolemenu.cpp:101</a></div></div>
+<div class="ttc" id="structFIX8_1_1BaseMsgEntry_html_abc7e5a99bd59f8380541ed256bc5ec16"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html#abc7e5a99bd59f8380541ed256bc5ec16">FIX8::BaseMsgEntry::_create</a></div><div class="ttdeci">const Minst _create</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00179">message.hpp:179</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac66df1e977b51e2e3dcb831250ab2588"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">FIX8::ConsoleMenu::SelectMsg</a></div><div class="ttdeci">virtual F8API const BaseMsgEntry * SelectMsg() const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00050">consolemenu.cpp:50</a></div></div>
 <div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac4bb9b67f1a8607d86a8c23ce61883c4"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">FIX8::ConsoleMenu::_opt_keys</a></div><div class="ttdeci">static const f8String _opt_keys</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
-<div class="ttc" id="classFIX8_1_1BaseField_html_a767309ea0f4ea6e1451f5498bbede1c5"><div class="ttname"><a href="classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5">FIX8::BaseField::get_tag</a></div><div class="ttdeci">unsigned short get_tag() const </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00126">field.hpp:126</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a7cbf407f589cdbbbdb925ef3ae76c539"><div class="ttname"><a href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">FIX8::f8String</a></div><div class="ttdeci">std::string f8String</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00047">f8types.hpp:47</a></div></div>
+<div class="ttc" id="classFIX8_1_1BaseField_html_a767309ea0f4ea6e1451f5498bbede1c5"><div class="ttname"><a href="classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5">FIX8::BaseField::get_tag</a></div><div class="ttdeci">unsigned short get_tag() const </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00149">field.hpp:149</a></div></div>
 <div class="ttc" id="structFIX8_1_1RealmBase_html_a6c2cd88cb11e690cced3022e6d2a618b"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a6c2cd88cb11e690cced3022e6d2a618b">FIX8::RealmBase::_descriptions</a></div><div class="ttdeci">const char *const * _descriptions</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00070">field.hpp:70</a></div></div>
-<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a5ea6b1ab9375c4ecc4c88e07458a5992"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992">FIX8::ConsoleMenu::DeleteMsgs</a></div><div class="ttdeci">virtual int DeleteMsgs(tty_save_state &amp;tty, MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00379">consolemenu.cpp:379</a></div></div>
-<div class="ttc" id="structFIX8_1_1FieldTrait_html_abed859f080e54c91ef5584e8902092cc"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#abed859f080e54c91ef5584e8902092cc">FIX8::FieldTrait::is_float</a></div><div class="ttdeci">static bool is_float(const FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00088">traits.hpp:88</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a5ea6b1ab9375c4ecc4c88e07458a5992"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992">FIX8::ConsoleMenu::DeleteMsgs</a></div><div class="ttdeci">virtual F8API int DeleteMsgs(tty_save_state &amp;tty, MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00351">consolemenu.cpp:351</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:39. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

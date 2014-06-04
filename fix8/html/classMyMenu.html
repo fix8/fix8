@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -113,7 +113,6 @@ $(document).ready(function(){initNavTree('classMyMenu.html','');});
 <a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classMyMenu-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">MyMenu Class Reference</div>  </div>
@@ -133,16 +132,16 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad7a4c4452d5c8ef780190c91c5d86d50"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ad7a4c4452d5c8ef780190c91c5d86d50">MyMenu</a> (<a class="el" href="classhf__session__client.html">hf_session_client</a> &amp;session, int infd, std::ostream &amp;ostr)</td></tr>
-<tr class="separator:ad7a4c4452d5c8ef780190c91c5d86d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b7d9b003f7ee6aa011ac25536923425"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a3b7d9b003f7ee6aa011ac25536923425">MyMenu</a> (<a class="el" href="classFIX8_1_1Session.html">FIX8::Session</a> &amp;session, int infd, std::ostream &amp;ostr)</td></tr>
+<tr class="separator:a3b7d9b003f7ee6aa011ac25536923425"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace5e06b94d9eb3c19a1d27f97d32b1cf"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ace5e06b94d9eb3c19a1d27f97d32b1cf">~MyMenu</a> ()</td></tr>
 <tr class="separator:ace5e06b94d9eb3c19a1d27f97d32b1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4101b8c2b9630547e9791f6d9b6b373b"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a4101b8c2b9630547e9791f6d9b6b373b">get_istr</a> ()</td></tr>
 <tr class="separator:a4101b8c2b9630547e9791f6d9b6b373b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80cd0d96336dcc982f76feee799c4b8f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a80cd0d96336dcc982f76feee799c4b8f">get_ostr</a> ()</td></tr>
 <tr class="separator:a80cd0d96336dcc982f76feee799c4b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e125c2bc030fed0d595357c9a9590d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d">process</a> (const char ch)</td></tr>
-<tr class="separator:a37e125c2bc030fed0d595357c9a9590d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfbd71b56f857ac402a39921b957de2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#acfbd71b56f857ac402a39921b957de2a">process</a> (char ch)</td></tr>
+<tr class="separator:acfbd71b56f857ac402a39921b957de2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d3b0ca23e9ef99df200bc80e841f2ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a1d3b0ca23e9ef99df200bc80e841f2ff">new_order_single</a> ()</td></tr>
 <tr class="separator:a1d3b0ca23e9ef99df200bc80e841f2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6794c45cab27418705bc3baf3b82fe5c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a6794c45cab27418705bc3baf3b82fe5c">preload_new_order_single</a> ()</td></tr>
@@ -157,24 +156,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab0d8e772475771ac243a584df3f06eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af92fcc82b1b1f684b2ca6c6ebb8e5b1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f">help</a> ()</td></tr>
 <tr class="separator:af92fcc82b1b1f684b2ca6c6ebb8e5b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2d8310db7e2730d0e72643a17f3a586"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#aa2d8310db7e2730d0e72643a17f3a586">nothing</a> ()</td></tr>
-<tr class="separator:aa2d8310db7e2730d0e72643a17f3a586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8da079c148b5dd56b2d5a424fb6e83a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ad8da079c148b5dd56b2d5a424fb6e83a">do_exit</a> ()</td></tr>
 <tr class="separator:ad8da079c148b5dd56b2d5a424fb6e83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2db3de9a9680bfe1b042eb12933b79e8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">do_logout</a> ()</td></tr>
 <tr class="separator:a2db3de9a9680bfe1b042eb12933b79e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a381663b9838cf71aee2307913e1caf04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1tty__save__state.html">FIX8::tty_save_state</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a381663b9838cf71aee2307913e1caf04">get_tty</a> ()</td></tr>
 <tr class="separator:a381663b9838cf71aee2307913e1caf04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedb573336525ac4d06564c0e1ec95ace"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#aedb573336525ac4d06564c0e1ec95ace">MyMenu</a> (<a class="el" href="classmyfix__session__client.html">myfix_session_client</a> &amp;session, int infd, std::ostream &amp;ostr, <a class="el" href="classFIX8_1_1ConsoleMenu.html">FIX8::ConsoleMenu</a> *cm=0)</td></tr>
-<tr class="separator:aedb573336525ac4d06564c0e1ec95ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7fcd2117652cbbddc0d405cf5651187"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#aa7fcd2117652cbbddc0d405cf5651187">MyMenu</a> (<a class="el" href="classFIX8_1_1Session.html">FIX8::Session</a> &amp;session, int infd, std::ostream &amp;ostr, <a class="el" href="classFIX8_1_1ConsoleMenu.html">FIX8::ConsoleMenu</a> *cm=nullptr)</td></tr>
+<tr class="separator:aa7fcd2117652cbbddc0d405cf5651187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace5e06b94d9eb3c19a1d27f97d32b1cf"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ace5e06b94d9eb3c19a1d27f97d32b1cf">~MyMenu</a> ()</td></tr>
 <tr class="separator:ace5e06b94d9eb3c19a1d27f97d32b1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4101b8c2b9630547e9791f6d9b6b373b"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a4101b8c2b9630547e9791f6d9b6b373b">get_istr</a> ()</td></tr>
 <tr class="separator:a4101b8c2b9630547e9791f6d9b6b373b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80cd0d96336dcc982f76feee799c4b8f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a80cd0d96336dcc982f76feee799c4b8f">get_ostr</a> ()</td></tr>
 <tr class="separator:a80cd0d96336dcc982f76feee799c4b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e125c2bc030fed0d595357c9a9590d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d">process</a> (const char ch)</td></tr>
-<tr class="separator:a37e125c2bc030fed0d595357c9a9590d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfbd71b56f857ac402a39921b957de2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#acfbd71b56f857ac402a39921b957de2a">process</a> (char ch)</td></tr>
+<tr class="separator:acfbd71b56f857ac402a39921b957de2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d3b0ca23e9ef99df200bc80e841f2ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a1d3b0ca23e9ef99df200bc80e841f2ff">new_order_single</a> ()</td></tr>
 <tr class="separator:a1d3b0ca23e9ef99df200bc80e841f2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0bda1a05f1378cc4b8fe6e93fa065cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ad0bda1a05f1378cc4b8fe6e93fa065cf">new_order_single_50</a> ()</td></tr>
@@ -185,8 +182,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9a33db2a1336cd06ce895d574e7ed579"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af92fcc82b1b1f684b2ca6c6ebb8e5b1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f">help</a> ()</td></tr>
 <tr class="separator:af92fcc82b1b1f684b2ca6c6ebb8e5b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2d8310db7e2730d0e72643a17f3a586"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#aa2d8310db7e2730d0e72643a17f3a586">nothing</a> ()</td></tr>
-<tr class="separator:aa2d8310db7e2730d0e72643a17f3a586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8da079c148b5dd56b2d5a424fb6e83a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ad8da079c148b5dd56b2d5a424fb6e83a">do_exit</a> ()</td></tr>
 <tr class="separator:ad8da079c148b5dd56b2d5a424fb6e83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2db3de9a9680bfe1b042eb12933b79e8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">do_logout</a> ()</td></tr>
@@ -205,6 +200,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa702d8304303510898b9938e1dc15c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab64647226fa0f4566edcdb477c90cbdf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ab64647226fa0f4566edcdb477c90cbdf">read_msgs</a> ()</td></tr>
 <tr class="separator:ab64647226fa0f4566edcdb477c90cbdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53469ed29a061b14aec50a974311db50"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a53469ed29a061b14aec50a974311db50">static_probe</a> ()</td></tr>
+<tr class="separator:a53469ed29a061b14aec50a974311db50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9fdd17da9b78726ebc37e5aa2bae3a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ad9fdd17da9b78726ebc37e5aa2bae3a1">new_order_single_recycled</a> ()</td></tr>
 <tr class="separator:ad9fdd17da9b78726ebc37e5aa2bae3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6cb159017f1fd60ab522d6e6d9cdc21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#aa6cb159017f1fd60ab522d6e6d9cdc21">load_msgs</a> (const std::string &amp;fname)</td></tr>
@@ -215,17 +212,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1ac18be56e314f876643a39b8b011a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a381663b9838cf71aee2307913e1caf04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1tty__save__state.html">FIX8::tty_save_state</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a381663b9838cf71aee2307913e1caf04">get_tty</a> ()</td></tr>
 <tr class="separator:a381663b9838cf71aee2307913e1caf04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd3641095671dc8a3763925037fb3e43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">FIX8::f8String</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#abd3641095671dc8a3763925037fb3e43">get_string</a> (<a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">FIX8::f8String</a> &amp;to)</td></tr>
+<tr class="separator:abd3641095671dc8a3763925037fb3e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a49d110a2efa43096fd11df0607b7c6a5"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a><br class="typebreak"/>
-&lt; const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool(MyMenu::*)(), <br class="typebreak"/>
-<a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a49d110a2efa43096fd11df0607b7c6a5">Handlers</a></td></tr>
-<tr class="separator:a49d110a2efa43096fd11df0607b7c6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49d110a2efa43096fd11df0607b7c6a5"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a><br class="typebreak"/>
-&lt; const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool(MyMenu::*)(), <br class="typebreak"/>
-<a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a49d110a2efa43096fd11df0607b7c6a5">Handlers</a></td></tr>
-<tr class="separator:a49d110a2efa43096fd11df0607b7c6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac751a091fb84bd195b8805674ce8a476"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ac751a091fb84bd195b8805674ce8a476">Handlers</a> = std::map&lt; const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool(MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a> &gt;</td></tr>
+<tr class="separator:ac751a091fb84bd195b8805674ce8a476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac751a091fb84bd195b8805674ce8a476"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#ac751a091fb84bd195b8805674ce8a476">Handlers</a> = std::map&lt; const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool(MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a> &gt;</td></tr>
+<tr class="separator:ac751a091fb84bd195b8805674ce8a476"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -237,7 +232,7 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a055f1c3989a51d8c3ddbbb6419fba9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54cc0c6893d0882490a635b6953e7b14"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a54cc0c6893d0882490a635b6953e7b14">_ostr</a></td></tr>
 <tr class="separator:a54cc0c6893d0882490a635b6953e7b14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8558e3322b5a4b12304370f29c3560fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">FIX8::MsgList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a8558e3322b5a4b12304370f29c3560fa">_lst</a></td></tr>
+<tr class="memitem:a8558e3322b5a4b12304370f29c3560fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">FIX8::MsgList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a8558e3322b5a4b12304370f29c3560fa">_lst</a></td></tr>
 <tr class="separator:a8558e3322b5a4b12304370f29c3560fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3be5a89b79d4d00d3edfbc3e30da8d20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1ConsoleMenu.html">FIX8::ConsoleMenu</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a3be5a89b79d4d00d3edfbc3e30da8d20">_cm</a></td></tr>
 <tr class="separator:a3be5a89b79d4d00d3edfbc3e30da8d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,22 +241,15 @@ Private Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr class="memitem:a8e39a3aa13bcc19c50c49fed5293373e"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classMyMenu.html#a49d110a2efa43096fd11df0607b7c6a5">Handlers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a8e39a3aa13bcc19c50c49fed5293373e">_handlers</a></td></tr>
+<tr class="memitem:a8e39a3aa13bcc19c50c49fed5293373e"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classMyMenu.html#ac751a091fb84bd195b8805674ce8a476">Handlers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a8e39a3aa13bcc19c50c49fed5293373e">_handlers</a></td></tr>
 <tr class="separator:a8e39a3aa13bcc19c50c49fed5293373e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97eb24f469103b13b6a5c0fa78a3c932"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Handlers::TypePair</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#a97eb24f469103b13b6a5c0fa78a3c932">_valueTable</a> []</td></tr>
-<tr class="separator:a97eb24f469103b13b6a5c0fa78a3c932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:aed7525c78af0f64c017c25f387505aa3"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMyMenu.html#aed7525c78af0f64c017c25f387505aa3">FIX8::StaticTable&lt; const MenuItem, bool(MyMenu::*)(), MenuItem &gt;</a></td></tr>
-<tr class="separator:aed7525c78af0f64c017c25f387505aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple menu system that will work with most term types. </p>
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00150">150</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00151">151</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a49d110a2efa43096fd11df0607b7c6a5"></a>
+<a class="anchor" id="ac751a091fb84bd195b8805674ce8a476"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -269,7 +257,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt;const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool (MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>&gt; <a class="el" href="classMyMenu.html#a49d110a2efa43096fd11df0607b7c6a5">MyMenu::Handlers</a></td>
+          <td class="memname">using <a class="el" href="classMyMenu.html#ac751a091fb84bd195b8805674ce8a476">MyMenu::Handlers</a> =  std::map&lt;const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool (MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>&gt;</td>
         </tr>
       </table>
   </td>
@@ -279,11 +267,11 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00162">162</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00163">163</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a49d110a2efa43096fd11df0607b7c6a5"></a>
+<a class="anchor" id="ac751a091fb84bd195b8805674ce8a476"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -291,7 +279,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt;const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool (MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>&gt; <a class="el" href="classMyMenu.html#a49d110a2efa43096fd11df0607b7c6a5">MyMenu::Handlers</a></td>
+          <td class="memname">using <a class="el" href="classMyMenu.html#ac751a091fb84bd195b8805674ce8a476">MyMenu::Handlers</a> =  std::map&lt;const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool (MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>&gt;</td>
         </tr>
       </table>
   </td>
@@ -301,12 +289,12 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00169">169</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00170">170</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ad7a4c4452d5c8ef780190c91c5d86d50"></a>
+<a class="anchor" id="a3b7d9b003f7ee6aa011ac25536923425"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -316,7 +304,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">MyMenu::MyMenu </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classhf__session__client.html">hf_session_client</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classFIX8_1_1Session.html">FIX8::Session</a> &amp;&#160;</td>
           <td class="paramname"><em>session</em>, </td>
         </tr>
         <tr>
@@ -369,11 +357,11 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00176">176</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00177">177</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aedb573336525ac4d06564c0e1ec95ace"></a>
+<a class="anchor" id="aa7fcd2117652cbbddc0d405cf5651187"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -383,7 +371,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">MyMenu::MyMenu </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmyfix__session__client.html">myfix_session_client</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classFIX8_1_1Session.html">FIX8::Session</a> &amp;&#160;</td>
           <td class="paramname"><em>session</em>, </td>
         </tr>
         <tr>
@@ -402,7 +390,7 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFIX8_1_1ConsoleMenu.html">FIX8::ConsoleMenu</a> *&#160;</td>
-          <td class="paramname"><em>cm</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>cm</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -442,7 +430,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00169">169</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00170">170</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -460,9 +448,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00361">361</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00358">358</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8cpp.html#aa5018caf4a3a83165b8605a65d8fd537">batch_size()</a>, <a class="el" href="hftest_8hpp_source.html#l00217">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="hftest_8cpp.html#a10ee98cffd7bfb7fdd6d915d65ac5e25">preload_count()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
+<p>References <a class="el" href="hftest_8cpp.html#aa5018caf4a3a83165b8605a65d8fd537">batch_size()</a>, <a class="el" href="hftest_8hpp_source.html#l00219">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="hftest_8cpp.html#a10ee98cffd7bfb7fdd6d915d65ac5e25">preload_count()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
 
 </div>
 </div>
@@ -479,7 +467,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00372">372</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00375">375</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
@@ -496,7 +484,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00386">386</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00389">389</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
@@ -521,7 +509,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00181">181</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00185">185</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -546,7 +534,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00190">190</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00194">194</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 </div>
 </div>
@@ -578,7 +566,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00333">333</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00332">332</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 <p>References <a class="el" href="hypersleep_8hpp_source.html#l00083">FIX8::hypersleep&lt; h_seconds &gt;()</a>.</p>
 
@@ -597,7 +585,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00379">379</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00382">382</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
@@ -614,36 +602,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00363">363</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00448">448</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
-<p>References <a class="el" href="classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6">FIX8::GroupBase::create_group()</a>, <a class="el" href="message_8hpp_source.html#l00591">FIX8::MessageBase::find_group()</a>, <a class="el" href="hftest_8hpp_source.html#l00217">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4101b8c2b9630547e9791f6d9b6b373b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::istream&amp; MyMenu::get_istr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00171">171</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
-<p>References <a class="el" href="hftest_8hpp_source.html#l00166">_istr</a>.</p>
+<p>References <a class="el" href="classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6">FIX8::GroupBase::create_group()</a>, <a class="el" href="message_8hpp_source.html#l00636">FIX8::MessageBase::find_group()</a>, <a class="el" href="hftest_8hpp_source.html#l00219">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
 
 </div>
 </div>
@@ -656,33 +617,6 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::istream&amp; MyMenu::get_istr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00178">178</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
-
-<p>References <a class="el" href="hftest_8hpp_source.html#l00166">_istr</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a80cd0d96336dcc982f76feee799c4b8f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; MyMenu::get_ostr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -697,7 +631,34 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00172">172</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00167">_ostr</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00167">_istr</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4101b8c2b9630547e9791f6d9b6b373b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::istream&amp; MyMenu::get_istr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00179">179</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+
+<p>References <a class="el" href="hftest_8hpp_source.html#l00167">_istr</a>.</p>
 
 </div>
 </div>
@@ -722,9 +683,62 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00179">179</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00173">173</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00167">_ostr</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00168">_ostr</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a80cd0d96336dcc982f76feee799c4b8f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; MyMenu::get_ostr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00180">180</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+
+<p>References <a class="el" href="hftest_8hpp_source.html#l00168">_ostr</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abd3641095671dc8a3763925037fb3e43"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">FIX8::f8String</a>&amp; MyMenu::get_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">FIX8::f8String</a> &amp;&#160;</td>
+          <td class="paramname"><em>to</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00203">203</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -749,11 +763,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00193">193</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00197">197</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00152">_tty</a>.</p>
-
-<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00172">main()</a>.</p>
+<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -778,9 +790,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00196">196</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
-<p>References <a class="el" href="hftest_8hpp_source.html#l00152">_tty</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00201">201</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -812,7 +822,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00321">321</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00320">320</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
@@ -830,9 +840,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00417">417</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00420">420</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00417">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00496">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00843">FIX8::Message::is_admin()</a>, <a class="el" href="f8config_8h_source.html#l00398">MAX_MSG_LENGTH</a>, and <a class="el" href="f8utils_8cpp_source.html#l00169">FIX8::Str_error()</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00414">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00530">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00869">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00914">FIX8::Message::is_admin()</a>, <a class="el" href="f8config_8h_source.html#l00411">MAX_MSG_LENGTH</a>, and <a class="el" href="f8utils_8cpp_source.html#l00134">FIX8::Str_error()</a>.</p>
 
 </div>
 </div>
@@ -849,7 +859,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00406">406</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00403">403</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
 </div>
 </div>
@@ -881,9 +891,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00422">422</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00419">419</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00217">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00219">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
 
 </div>
 </div>
@@ -900,7 +910,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00476">476</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00606">606</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
 </div>
 </div>
@@ -917,7 +927,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00465">465</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00595">595</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
 </div>
 </div>
@@ -934,59 +944,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00443">443</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00528">528</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00941">FIX8::Message::setup_reuse()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa2d8310db7e2730d0e72643a17f3a586"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool MyMenu::nothing </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00180">180</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa2d8310db7e2730d0e72643a17f3a586"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool MyMenu::nothing </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00189">189</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l01012">FIX8::Message::setup_reuse()</a>.</p>
 
 </div>
 </div>
@@ -1003,11 +963,11 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00494">494</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00491">491</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00217">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="hftest_8cpp.html#a10ee98cffd7bfb7fdd6d915d65ac5e25">preload_count()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00219">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="hftest_8cpp.html#a10ee98cffd7bfb7fdd6d915d65ac5e25">preload_count()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">FIX8::TEX::TimeInForce_FILL_OR_KILL()</a>.</p>
 
-<p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00174">main()</a>.</p>
+<p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00172">main()</a>.</p>
 
 </div>
 </div>
@@ -1024,11 +984,11 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00409">409</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00412">412</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a37e125c2bc030fed0d595357c9a9590d"></a>
+<a class="anchor" id="acfbd71b56f857ac402a39921b957de2a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1038,7 +998,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">bool MyMenu::process </td>
           <td>(</td>
-          <td class="paramtype">const char&#160;</td>
+          <td class="paramtype">char&#160;</td>
           <td class="paramname"><em>ch</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1050,13 +1010,13 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00173">173</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00174">174</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00170">_handlers</a>, and <a class="el" href="f8types_8hpp_source.html#l00213">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00171">_handlers</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a37e125c2bc030fed0d595357c9a9590d"></a>
+<a class="anchor" id="acfbd71b56f857ac402a39921b957de2a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1066,7 +1026,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">bool MyMenu::process </td>
           <td>(</td>
-          <td class="paramtype">const char&#160;</td>
+          <td class="paramtype">char&#160;</td>
           <td class="paramname"><em>ch</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1078,9 +1038,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00180">180</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00181">181</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8hpp_source.html#l00170">_handlers</a>, and <a class="el" href="f8types_8hpp_source.html#l00213">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00171">_handlers</a>.</p>
 
 </div>
 </div>
@@ -1097,7 +1057,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00455">455</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00458">458</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
@@ -1114,7 +1074,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00508">508</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00641">641</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
 </div>
 </div>
@@ -1131,7 +1091,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00445">445</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00442">442</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
 <p>References <a class="el" href="hftest_8cpp.html#a2f55ce207b64d7019dc74b39cdecd058">update_count()</a>.</p>
 
@@ -1161,9 +1121,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00467">467</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00464">464</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="hftest_8cpp.html#aa5018caf4a3a83165b8605a65d8fd537">batch_size()</a>, <a class="el" href="yield_8hpp_source.html#l00016">coro_yield</a>, <a class="el" href="session_8hpp_source.html#l00602">FIX8::Session::get_connection()</a>, <a class="el" href="yield_8hpp_source.html#l00012">reenter</a>, <a class="el" href="connection_8hpp_source.html#l00640">FIX8::Connection::set_tcp_cork_flag()</a>, and <a class="el" href="connection_8hpp_source.html#l00665">FIX8::Connection::writer_poll()</a>.</p>
+<p>References <a class="el" href="hftest_8cpp.html#aa5018caf4a3a83165b8605a65d8fd537">batch_size()</a>, <a class="el" href="yield_8hpp_source.html#l00016">coro_yield</a>, <a class="el" href="session_8hpp_source.html#l00639">FIX8::Session::get_connection()</a>, <a class="el" href="yield_8hpp_source.html#l00012">reenter</a>, <a class="el" href="connection_8hpp_source.html#l00640">FIX8::Connection::set_tcp_cork_flag()</a>, and <a class="el" href="connection_8hpp_source.html#l00665">FIX8::Connection::writer_poll()</a>.</p>
 
 </div>
 </div>
@@ -1180,7 +1140,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00393">393</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00396">396</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 </div>
 </div>
@@ -1197,7 +1157,26 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00401">401</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00404">404</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a53469ed29a061b14aec50a974311db50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MyMenu::static_probe </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00557">557</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+
+<p>References <a class="el" href="message_8hpp_source.html#l00179">FIX8::BaseMsgEntry::_create</a>, <a class="el" href="message_8hpp_source.html#l00180">FIX8::BaseMsgEntry::_name</a>, <a class="el" href="field_8hpp_source.html#l01817">FIX8::BaseEntry::_name</a>, and <a class="el" href="f8c_8cpp_source.html#l00096">spacer</a>.</p>
 
 </div>
 </div>
@@ -1213,29 +1192,6 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a class="anchor" id="aed7525c78af0f64c017c25f387505aa3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend struct <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; const <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a>, bool(MyMenu::*)(), <a class="el" href="structMyMenu_1_1MenuItem.html">MenuItem</a> &gt;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00195">195</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1258,7 +1214,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00145">145</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00146">146</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -1270,7 +1226,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static const <a class="el" href="classMyMenu.html#a49d110a2efa43096fd11df0607b7c6a5">Handlers</a> MyMenu::_handlers</td>
+          <td class="memname">static const <a class="el" href="classMyMenu.html#ac751a091fb84bd195b8805674ce8a476">Handlers</a> MyMenu::_handlers</td>
         </tr>
       </table>
   </td>
@@ -1279,10 +1235,21 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">   { { <span class="charliteral">&#39;c&#39;</span>, <span class="stringliteral">&quot;Create messages&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#a942c0edc0e2fef9839279ada4d3c6925">MyMenu::create_msgs</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;e&#39;</span>, <span class="stringliteral">&quot;Edit messages&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#a4a2d294d88e9d5cfda98d502f32da302">MyMenu::edit_msgs</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;d&#39;</span>, <span class="stringliteral">&quot;Delete messages&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#a7141f6ab024c7661fae129b9b050e116">MyMenu::delete_msgs</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;p&#39;</span>, <span class="stringliteral">&quot;Print messages&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#a948a7696182af22fd7aa6a88e7b8a2fd">MyMenu::print_msgs</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;s&#39;</span>, <span class="stringliteral">&quot;Send messages&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#a7e584e8b4c1ed049712cdd31bdfa6d8d">MyMenu::send_msgs</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;r&#39;</span>, <span class="stringliteral">&quot;Read messages from disk&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#ab64647226fa0f4566edcdb477c90cbdf">MyMenu::read_msgs</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;?&#39;</span>, <span class="stringliteral">&quot;Help&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f">MyMenu::help</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;l&#39;</span>, <span class="stringliteral">&quot;Logout&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">MyMenu::do_logout</a> },</div>
+<div class="line">   { { <span class="charliteral">&#39;x&#39;</span>, <span class="stringliteral">&quot;Exit&quot;</span> }, &amp;<a class="code" href="classMyMenu.html#ad8da079c148b5dd56b2d5a424fb6e83a">MyMenu::do_exit</a> },</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00171">171</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00170">170</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00180">process()</a>.</p>
+<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00181">process()</a>.</p>
 
 </div>
 </div>
@@ -1304,9 +1271,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00166">166</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00167">167</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00178">get_istr()</a>.</p>
+<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00179">get_istr()</a>.</p>
 
 </div>
 </div>
@@ -1318,7 +1285,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd">FIX8::MsgList</a> MyMenu::_lst</td>
+          <td class="memname"><a class="el" href="namespaceFIX8.html#a42d5b790eba94a688535bfd5ae13ff93">FIX8::MsgList</a> MyMenu::_lst</td>
         </tr>
       </table>
   </td>
@@ -1328,7 +1295,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00144">144</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00145">145</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -1350,9 +1317,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00167">167</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00168">168</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00179">get_ostr()</a>.</p>
+<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00180">get_ostr()</a>.</p>
 
 </div>
 </div>
@@ -1374,7 +1341,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00158">158</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00159">159</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -1396,7 +1363,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00165">165</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00166">166</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1418,43 +1385,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00152">152</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00193">get_tty()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a97eb24f469103b13b6a5c0fa78a3c932"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Handlers::TypePair</a> MyMenu::_valueTable</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">{</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;c&#39;</span>, <span class="stringliteral">&quot;Create messages&quot;</span>), &amp;<a class="code" href="classMyMenu.html#a942c0edc0e2fef9839279ada4d3c6925">MyMenu::create_msgs</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;e&#39;</span>, <span class="stringliteral">&quot;Edit messages&quot;</span>), &amp;<a class="code" href="classMyMenu.html#a4a2d294d88e9d5cfda98d502f32da302">MyMenu::edit_msgs</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;d&#39;</span>, <span class="stringliteral">&quot;Delete messages&quot;</span>), &amp;<a class="code" href="classMyMenu.html#a7141f6ab024c7661fae129b9b050e116">MyMenu::delete_msgs</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;p&#39;</span>, <span class="stringliteral">&quot;Print messages&quot;</span>), &amp;<a class="code" href="classMyMenu.html#a948a7696182af22fd7aa6a88e7b8a2fd">MyMenu::print_msgs</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;s&#39;</span>, <span class="stringliteral">&quot;Send messages&quot;</span>), &amp;<a class="code" href="classMyMenu.html#a7e584e8b4c1ed049712cdd31bdfa6d8d">MyMenu::send_msgs</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;r&#39;</span>, <span class="stringliteral">&quot;Read messages from disk&quot;</span>), &amp;<a class="code" href="classMyMenu.html#ab64647226fa0f4566edcdb477c90cbdf">MyMenu::read_msgs</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;?&#39;</span>, <span class="stringliteral">&quot;Help&quot;</span>), &amp;<a class="code" href="classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f">MyMenu::help</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;l&#39;</span>, <span class="stringliteral">&quot;Logout&quot;</span>), &amp;<a class="code" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">MyMenu::do_logout</a>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">MyMenu::Handlers::TypePair</a>(<a class="code" href="structMyMenu_1_1MenuItem.html">MyMenu::MenuItem</a>(<span class="charliteral">&#39;x&#39;</span>, <span class="stringliteral">&quot;Exit&quot;</span>), &amp;<a class="code" href="classMyMenu.html#ad8da079c148b5dd56b2d5a424fb6e83a">MyMenu::do_exit</a>),</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00171">171</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00153">153</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1468,7 +1399,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

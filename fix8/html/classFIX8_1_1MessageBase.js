@@ -1,7 +1,7 @@
 var classFIX8_1_1MessageBase =
 [
     [ "MessageBase", "classFIX8_1_1MessageBase.html#ab9a9383222840d67734eea13bf39f276", null ],
-    [ "MessageBase", "classFIX8_1_1MessageBase.html#a4af07392a04a883594f674a7d2929473", null ],
+    [ "MessageBase", "classFIX8_1_1MessageBase.html#aabc1ffa892c998aedcdc8d449159c7c2", null ],
     [ "~MessageBase", "classFIX8_1_1MessageBase.html#ad427dadfefc45b8222ad53217df02c1b", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#a701704400f62988e25a157deced9a3fe", null ],
@@ -39,18 +39,22 @@ var classFIX8_1_1MessageBase =
     [ "get_check_sum", "classFIX8_1_1MessageBase.html#a471dd951ea346f8323d26767654d4533", null ],
     [ "get_field", "classFIX8_1_1MessageBase.html#a846252f7822c3503a40d4515f16b10cf", null ],
     [ "get_fp", "classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f", null ],
+    [ "get_groups", "classFIX8_1_1MessageBase.html#aa0b2d8ebea27760a7e783590654c6dc9", null ],
     [ "get_msg_type", "classFIX8_1_1MessageBase.html#a5863b1f7a81cdd4a85a4564ba17acbb8", null ],
     [ "get_msgtype", "classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1", null ],
+    [ "get_tabsize", "classFIX8_1_1MessageBase.html#afc451fffcf838b38a86978c93342fc3c", null ],
     [ "getPos", "classFIX8_1_1MessageBase.html#adebde87a04fcd450f02d8da6ea920ed8", null ],
     [ "has", "classFIX8_1_1MessageBase.html#a92e5f4ef7aaf54495165ebe3d188270f", null ],
     [ "have", "classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0", null ],
+    [ "is_legal", "classFIX8_1_1MessageBase.html#ab447a1e330fece00ffa0c3ca29de90a1", null ],
+    [ "is_legal", "classFIX8_1_1MessageBase.html#a5cad6bb935b15d1713edace67dbd0fc7", null ],
     [ "operator()", "classFIX8_1_1MessageBase.html#a4f73a677552f5df1303f5e7575aca36f", null ],
     [ "operator()", "classFIX8_1_1MessageBase.html#a84a30255481d3e79dcd002b1fa50fee2", null ],
     [ "operator+=", "classFIX8_1_1MessageBase.html#afcb4fc4d4f699d3a1c94fda58498a6a0", null ],
     [ "operator+=", "classFIX8_1_1MessageBase.html#adb40629ec7d49f1c2d766b5fe5fd33b2", null ],
     [ "operator<<", "classFIX8_1_1MessageBase.html#a294504a276bd2b9ed6de7809cddf37d0", null ],
     [ "operator<<", "classFIX8_1_1MessageBase.html#a2a901d927c886a8d86330cfc3bbf3875", null ],
-    [ "operator=", "classFIX8_1_1MessageBase.html#a67f8dd289ec80c52818b01a2dbe9f6b6", null ],
+    [ "operator=", "classFIX8_1_1MessageBase.html#ab468620a426ace68eb2774f3de767888", null ],
     [ "print", "classFIX8_1_1MessageBase.html#a15cb2983a5279e25870ab7d1a846874f", null ],
     [ "print_field", "classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39", null ],
     [ "print_fp", "classFIX8_1_1MessageBase.html#a8bbd16816e5a9a85edd6b8f5cbe68c60", null ],
@@ -60,6 +64,7 @@ var classFIX8_1_1MessageBase =
     [ "replace", "classFIX8_1_1MessageBase.html#aceade72cef37bba640504c761e4633f8", null ],
     [ "replace", "classFIX8_1_1MessageBase.html#a78e2456ccddb523513dc124605f401f4", null ],
     [ "set", "classFIX8_1_1MessageBase.html#a9b24a0a320d461e1b5c4dd47d7904df1", null ],
+    [ "set_tabsize", "classFIX8_1_1MessageBase.html#a6bb3ae416ad189373c475b230c5c8d9b", null ],
     [ "size", "classFIX8_1_1MessageBase.html#ae1a93afaced692db2ca748d613162230", null ],
     [ "Message", "classFIX8_1_1MessageBase.html#a658ef47bd757fd5e0f13adab5a417ced", null ],
     [ "operator<<", "classFIX8_1_1MessageBase.html#aed833b7ec5d49364562bb77dc261cf16", null ],
@@ -68,5 +73,6 @@ var classFIX8_1_1MessageBase =
     [ "_fp", "classFIX8_1_1MessageBase.html#a431cb6682a191a0031729a2bcee83ad6", null ],
     [ "_groups", "classFIX8_1_1MessageBase.html#adfc39cbae7b491807361cbe3e5a9c472", null ],
     [ "_msgType", "classFIX8_1_1MessageBase.html#a617a169934dba1343ea90f09b5e37d4a", null ],
-    [ "_pos", "classFIX8_1_1MessageBase.html#a2e5d3ff698ab8de59fdeee75d0ccd2f1", null ]
+    [ "_pos", "classFIX8_1_1MessageBase.html#a2e5d3ff698ab8de59fdeee75d0ccd2f1", null ],
+    [ "_tabsize", "classFIX8_1_1MessageBase.html#a1863753df0364862d7c2277bbbfc95fe", null ]
 ];

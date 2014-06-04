@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -115,21 +115,25 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Field.html','');});
 <p>This is the complete list of members for <a class="el" href="classFIX8_1_1Field.html">FIX8::Field&lt; T, field &gt;</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#abdc03b61d2235bc5e610a6c6ab8f6995">_rlm</a></td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a90be0d13ed9a58ce88a17c0be7796174">BaseField</a>(const unsigned short fnum, const RealmBase *rlm=0)</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a0c30a2ade639a49b882e45c9f9eebc0e">BaseField</a>(const unsigned short fnum, const RealmBase *rlm=nullptr)</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840">copy</a>()=0</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#afd80e9008687fd420a6e85a416dde11e">encode</a>(std::ostream &amp;os) const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a15111906b582376fd97799fb33dba2ca">encode</a>(char *to) const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a9e5a7244732c369e72ae46bec3b5995e">get_realm</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a374451d87d0136e4ef8dc733122cadf8">get_rlm_idx</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5">get_tag</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Field.html#a6fef05808c06425f9749a337bef094e5">Field</a>()=delete</td><td class="entry"><a class="el" href="classFIX8_1_1Field.html">FIX8::Field&lt; T, field &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Field.html#a65a32073444ee618c941c62b0bbd0ed7">Field</a>(const Field &amp;from)=delete</td><td class="entry"><a class="el" href="classFIX8_1_1Field.html">FIX8::Field&lt; T, field &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Field.html#aa663ffe7b423b56ad2899e446c878ffc">Field</a>(const f8String &amp;from, const RealmBase *rlm=nullptr)=delete</td><td class="entry"><a class="el" href="classFIX8_1_1Field.html">FIX8::Field&lt; T, field &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a9e5a7244732c369e72ae46bec3b5995e">get_realm</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a374451d87d0136e4ef8dc733122cadf8">get_rlm_idx</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5">get_tag</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#ad9a9f7a4624aff90343fd5240c88a9e0">get_underlying_type</a>() const =0</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">print</a>(std::ostream &amp;os) const =0</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a2c7b143aae868a9be93b3d735f14ec0a">print</a>(char *to) const =0</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html#a10ed2f79aa2bb273414e63e2b2ce0358">~BaseField</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:57. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

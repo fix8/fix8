@@ -10,9 +10,10 @@ var classFIX8_1_1TEX_1_1SecurityDefinition =
     [ "NoStipulations", "classFIX8_1_1TEX_1_1SecurityDefinition_1_1NoStipulations.html", "classFIX8_1_1TEX_1_1SecurityDefinition_1_1NoStipulations" ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1SecurityDefinition_1_1NoUnderlyings.html", "classFIX8_1_1TEX_1_1SecurityDefinition_1_1NoUnderlyings" ],
     [ "SecurityDefinition", "classFIX8_1_1TEX_1_1SecurityDefinition.html#aeecf36af990a7bac8d7794337b616941", null ],
-    [ "~SecurityDefinition", "classFIX8_1_1TEX_1_1SecurityDefinition.html#ad25e358bae27ddc935841961afc157d3", null ],
+    [ "~SecurityDefinition", "classFIX8_1_1TEX_1_1SecurityDefinition.html#a78499e66a8e53bfb7a46e09af2c0de4f", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinition.html#a980d8a85e53290e122299fe65e78c65f", null ],
     [ "process", "classFIX8_1_1TEX_1_1SecurityDefinition.html#acd420b05cd2443f4066740bdce6e2ca5", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SecurityDefinition.html#ac9aee297d711361632393894b3b75c06", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityDefinition.html#a12925ed706926d23df69fdab39ac0fb8", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinition.html#acc790b5308e710d41dc04b318533d000", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinition.html#a7bb2b4913678a1beb1bce4c14ae67b6c", null ]

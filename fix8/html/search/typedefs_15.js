@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['xmlattrs',['XmlAttrs',['../classXmlElement.html#ae85eace076ada6f09b8d40efc60d8d0a',1,'XmlElement']]],
-  ['xmldata',['XmlData',['../namespaceFIX8_1_1TEX.html#a0c638f03e2bcba302136309b8efe575a',1,'FIX8::TEX::XmlData()'],['../namespaceFIX8.html#aaeb4cd13828f0c6a4ed8e92cccda6a2d',1,'FIX8::XMLData()']]],
-  ['xmldatalen',['XmlDataLen',['../namespaceFIX8_1_1TEX.html#a7cf651fd77724491aaa8ba788bd21e17',1,'FIX8::TEX']]],
-  ['xmlset',['XmlSet',['../classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf',1,'XmlElement']]],
-  ['xmlsubels',['XmlSubEls',['../classXmlElement.html#a6a45eea88fecd1c55694985085e90e08',1,'XmlElement']]]
+  ['xmlattrs',['XmlAttrs',['../classXmlElement.html#ae1f3ab640b81c44f5f0e052a2fd6cc79',1,'XmlElement']]],
+  ['xmldata',['XMLData',['../namespaceFIX8.html#a4157e083beafbe0b3f08e3ef7feecc71',1,'FIX8::XMLData()'],['../namespaceFIX8_1_1TEX.html#a668d23cbe4bd4d7eab673281dcd6b60f',1,'FIX8::TEX::XmlData()']]],
+  ['xmldatalen',['XmlDataLen',['../namespaceFIX8_1_1TEX.html#a512825c60e749bef61206ff5191a7c4c',1,'FIX8::TEX']]],
+  ['xmlset',['XmlSet',['../classXmlElement.html#a698efd439f8e23c43a1c955c94d72907',1,'XmlElement']]],
+  ['xmlsubels',['XmlSubEls',['../classXmlElement.html#a6e97777a89a4ed70e8cf830a81763694',1,'XmlElement']]]
 ];

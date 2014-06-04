@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -116,19 +116,18 @@ $(document).ready(function(){initNavTree('f8utils_8hpp.html','');});
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;memory&gt;</code><br/>
 <code>#include &lt;Poco/DateTime.h&gt;</code><br/>
 <code>#include &lt;Poco/Net/SocketAddress.h&gt;</code><br/>
 <code>#include &lt;sys/ioctl.h&gt;</code><br/>
 <code>#include &lt;termios.h&gt;</code><br/>
 <code>#include &lt;regex.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="f8dll_8h_source.html">fix8/f8dll.h</a>&gt;</code><br/>
 </div>
 <p><a href="f8utils_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1scoped__ptr.html">FIX8::scoped_ptr&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">C++11 inspired scoped pointer.  <a href="classFIX8_1_1scoped__ptr.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1RegMatch.html">FIX8::RegMatch</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class to contain regex matches using <a class="el" href="classFIX8_1_1RegExp.html" title="POSIX regex wrapper class. ">RegExp</a>.  <a href="classFIX8_1_1RegMatch.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,21 +149,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ebitset__r.html">FIX8::ebitset_r&lt; T, B &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomic bitset for enums.  <a href="classFIX8_1_1ebitset__r.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1DeleteObject.html">FIX8::DeleteObject</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete ptr.  <a href="structFIX8_1_1DeleteObject.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1DeleteArrayObject.html">FIX8::DeleteArrayObject</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete array.  <a href="structFIX8_1_1DeleteArrayObject.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Delete1stPairObject.html">FIX8::Delete1stPairObject&lt; Deleter &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete 1st of pair.  <a href="structFIX8_1_1Delete1stPairObject.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Delete2ndPairObject.html">FIX8::Delete2ndPairObject&lt; Deleter &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete 2nd of pair.  <a href="structFIX8_1_1Delete2ndPairObject.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1free__ptr.html">FIX8::free_ptr&lt; Deleter &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameterisable deleter functor.  <a href="structFIX8_1_1free__ptr.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lockfree <a class="el" href="classFIX8_1_1Singleton.html" title="A lockfree Singleton. ">Singleton</a>.  <a href="classFIX8_1_1Singleton.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,6 +156,9 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a streambuf from an open file descriptor.  <a href="classFIX8_1_1fdinbuf.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1tty__save__state.html">FIX8::tty_save_state</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1filestdin.html">FIX8::filestdin</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract file or stdin input.  <a href="classFIX8_1_1filestdin.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -191,24 +178,24 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4137a195b29b8ed64119e8f16d040ee9"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a4137a195b29b8ed64119e8f16d040ee9">FIX8::InPlaceStrToUpper</a> (std::string &amp;src)</td></tr>
-<tr class="separator:a4137a195b29b8ed64119e8f16d040ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbbb9f9c65c6cbdf4d5a9d7446db7666"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#adbbb9f9c65c6cbdf4d5a9d7446db7666">FIX8::InPlaceStrToLower</a> (std::string &amp;src)</td></tr>
-<tr class="separator:adbbb9f9c65c6cbdf4d5a9d7446db7666"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89e0f957272d6fc5ea06d2104aae5828"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a89e0f957272d6fc5ea06d2104aae5828">FIX8::StrToLower</a> (const std::string &amp;src)</td></tr>
-<tr class="separator:a89e0f957272d6fc5ea06d2104aae5828"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4d0145e561ea9e28fa69e692bf5413f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af4d0145e561ea9e28fa69e692bf5413f">FIX8::decode_dow</a> (const std::string &amp;from)</td></tr>
-<tr class="separator:af4d0145e561ea9e28fa69e692bf5413f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa425fec2bfd5904c8599debe9e6adc9c"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash</a> (std::string &amp;source)</td></tr>
-<tr class="separator:aa425fec2bfd5904c8599debe9e6adc9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6990067429b01a85d2d95a15675d1e31"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a6990067429b01a85d2d95a15675d1e31">FIX8::InPlaceReplaceInSet</a> (const std::string &amp;iset, std::string &amp;src, const char repl='_')</td></tr>
-<tr class="separator:a6990067429b01a85d2d95a15675d1e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a2717c5631879023e7924bdc42eb235"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a> (const int err, const char *str=0)</td></tr>
+<tr class="memitem:a1e0c6b82ee721a869e1eec46411f9d7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a1e0c6b82ee721a869e1eec46411f9d7c">FIX8::InPlaceStrToUpper</a> (std::string &amp;src)</td></tr>
+<tr class="separator:a1e0c6b82ee721a869e1eec46411f9d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad23d01ba2ccdb27202e73d877c4aa258"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ad23d01ba2ccdb27202e73d877c4aa258">FIX8::InPlaceStrToLower</a> (std::string &amp;src)</td></tr>
+<tr class="separator:ad23d01ba2ccdb27202e73d877c4aa258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d0c90d52c049fa0733b20fd91905ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af0d0c90d52c049fa0733b20fd91905ae">FIX8::StrToLower</a> (const std::string &amp;src)</td></tr>
+<tr class="separator:af0d0c90d52c049fa0733b20fd91905ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f03b022c786be62f4d56108c83e3005"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7f03b022c786be62f4d56108c83e3005">FIX8::decode_dow</a> (const std::string &amp;from)</td></tr>
+<tr class="separator:a7f03b022c786be62f4d56108c83e3005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24a7f99d07b2743c05ea260f53bf986f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a24a7f99d07b2743c05ea260f53bf986f">FIX8::CheckAddTrailingSlash</a> (std::string &amp;source)</td></tr>
+<tr class="separator:a24a7f99d07b2743c05ea260f53bf986f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ac6f41edf695606001beaf7c39c9166"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9ac6f41edf695606001beaf7c39c9166">FIX8::InPlaceReplaceInSet</a> (const std::string &amp;iset, std::string &amp;src, const char repl= '_')</td></tr>
+<tr class="separator:a9ac6f41edf695606001beaf7c39c9166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a2717c5631879023e7924bdc42eb235"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a> (const int err, const char *str=0)</td></tr>
 <tr class="separator:a7a2717c5631879023e7924bdc42eb235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02771b0daaec7dc34820b3c2f22b19ca"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a02771b0daaec7dc34820b3c2f22b19ca">FIX8::GetTimeAsStringMS</a> (std::string &amp;result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false)</td></tr>
-<tr class="separator:a02771b0daaec7dc34820b3c2f22b19ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab83fe73ed9b4e13c4f2c6084f6fbbe20"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim</a> (std::string &amp;source, const std::string &amp;ws=&quot; \t&quot;)</td></tr>
-<tr class="separator:ab83fe73ed9b4e13c4f2c6084f6fbbe20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acefe9c8f986e5fa51b83d2ac142bc5eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#acefe9c8f986e5fa51b83d2ac142bc5eb">FIX8::GetTimeAsStringMS</a> (std::string &amp;result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false)</td></tr>
+<tr class="separator:acefe9c8f986e5fa51b83d2ac142bc5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada162db45def05f1d6b917c88d112a94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ada162db45def05f1d6b917c88d112a94">FIX8::trim</a> (std::string &amp;source, const std::string &amp;ws=&quot; \t&quot;)</td></tr>
+<tr class="separator:ada162db45def05f1d6b917c88d112a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad884c8d50eeee9a07543803c0885759e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ad884c8d50eeee9a07543803c0885759e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ad884c8d50eeee9a07543803c0885759e">FIX8::ignore_value</a> (T val)</td></tr>
 <tr class="separator:ad884c8d50eeee9a07543803c0885759e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,8 +224,8 @@ Functions</h2></td></tr>
 <tr class="memitem:af20f8a9bd055244cf11f235ea220b549"><td class="memTemplParams" colspan="2">template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </td></tr>
 <tr class="memitem:af20f8a9bd055244cf11f235ea220b549"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af20f8a9bd055244cf11f235ea220b549">FIX8::operator^</a> (const std::basic_string&lt; _CharT, _Traits, _Alloc &gt; &amp;__lhs, const std::basic_string&lt; _CharT, _Traits, _Alloc &gt; &amp;__rhs)</td></tr>
 <tr class="separator:af20f8a9bd055244cf11f235ea220b549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36cda7abb400b259af30f15bb6ccfdb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a36cda7abb400b259af30f15bb6ccfdb7">FIX8::create_path</a> (const std::string &amp;path)</td></tr>
-<tr class="separator:a36cda7abb400b259af30f15bb6ccfdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d638a09546069d865455095141c454d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0d638a09546069d865455095141c454d">FIX8::create_path</a> (const std::string &amp;path)</td></tr>
+<tr class="separator:a0d638a09546069d865455095141c454d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8ad3c03260db39cee9eaec3d16f9ff2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af8ad3c03260db39cee9eaec3d16f9ff2"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af8ad3c03260db39cee9eaec3d16f9ff2">FIX8::get_value</a> (const std::string &amp;source, T defval)</td></tr>
 <tr class="separator:af8ad3c03260db39cee9eaec3d16f9ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,10 +251,10 @@ Functions</h2></td></tr>
 <tr class="memitem:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa61ff0a5f826f3c9369d7b27baf295e7">FIX8::modp_dtoa</a> (double value, char *str, int prec)</td></tr>
 <tr class="memdesc:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert double to ascii.  <a href="#aa61ff0a5f826f3c9369d7b27baf295e7">More...</a><br/></td></tr>
 <tr class="separator:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b82747859379a6711d72608db775233"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8b82747859379a6711d72608db775233"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a8b82747859379a6711d72608db775233">FIX8::enum_str_get</a> (const unsigned els, const std::string *sset, const std::string &amp;what, const T def)</td></tr>
-<tr class="separator:a8b82747859379a6711d72608db775233"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace336ffaa63f40aa579f6074a487cf56"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ace336ffaa63f40aa579f6074a487cf56">FIX8::get_umask</a> ()</td></tr>
+<tr class="memitem:a242647abaae31f1971787e4d25921462"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a242647abaae31f1971787e4d25921462"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a242647abaae31f1971787e4d25921462">FIX8::enum_str_get</a> (const std::vector&lt; std::string &gt; &amp;sset, const std::string &amp;what, const T def)</td></tr>
+<tr class="separator:a242647abaae31f1971787e4d25921462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace336ffaa63f40aa579f6074a487cf56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ace336ffaa63f40aa579f6074a487cf56">FIX8::get_umask</a> ()</td></tr>
 <tr class="separator:ace336ffaa63f40aa579f6074a487cf56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4226474a0829e2de4e8025a1a2007f86"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a4226474a0829e2de4e8025a1a2007f86">FIX8::exist</a> (const std::string &amp;fname)</td></tr>
 <tr class="separator:a4226474a0829e2de4e8025a1a2007f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -287,9 +274,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00064">64</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00067">67</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00172">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00364">FIX8::MemoryPersister::get()</a>, <a class="el" href="filepersist_8cpp_source.html#l00211">FIX8::FilePersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00152">FIX8::BDBPersister::get_last_seqnum()</a>, <a class="el" href="persist_8cpp_source.html#l00066">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00071">FIX8::FilePersister::initialise()</a>, <a class="el" href="persist_8cpp_source.html#l00299">FIX8::BDBPersister::operator()()</a>, and <a class="el" href="filepersist_8cpp_source.html#l00274">FIX8::FilePersister::put()</a>.</p>
+<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00156">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00348">FIX8::MemoryPersister::get()</a>, <a class="el" href="filepersist_8cpp_source.html#l00185">FIX8::FilePersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00136">FIX8::BDBPersister::get_last_seqnum()</a>, <a class="el" href="persist_8cpp_source.html#l00050">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00045">FIX8::FilePersister::initialise()</a>, <a class="el" href="persist_8cpp_source.html#l00283">FIX8::BDBPersister::operator()()</a>, and <a class="el" href="filepersist_8cpp_source.html#l00270">FIX8::FilePersister::put()</a>.</p>
 
 </div>
 </div>
@@ -307,7 +294,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00063">63</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00066">66</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -325,14 +312,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00062">62</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00065">65</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

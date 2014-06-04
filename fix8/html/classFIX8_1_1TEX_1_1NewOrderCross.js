@@ -12,9 +12,10 @@ var classFIX8_1_1TEX_1_1NewOrderCross =
     [ "NoTradingSessions", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions" ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoUnderlyings.html", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoUnderlyings" ],
     [ "NewOrderCross", "classFIX8_1_1TEX_1_1NewOrderCross.html#aadfc2fdab283428a466161ce08b425cb", null ],
-    [ "~NewOrderCross", "classFIX8_1_1TEX_1_1NewOrderCross.html#a9e7d2ea4024535db25bee2b579287d05", null ],
+    [ "~NewOrderCross", "classFIX8_1_1TEX_1_1NewOrderCross.html#acd827ef32d2de8676ec958c6eccdf19e", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross.html#ae2bf98425687becc07b9dbca9d1ee86d", null ],
     [ "process", "classFIX8_1_1TEX_1_1NewOrderCross.html#a64ffcce3f64996928034cf733334aca7", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1NewOrderCross.html#a2d340cff6a1107d9936defacfb556c67", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderCross.html#a3f15d9793fceb1a1463d85f37e54b8b0", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross.html#abeba23fe25d07f4ca8ca65bfe1a8024e", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross.html#a5bacb1c1fb574914e7e9e350ae7d8b20", null ]

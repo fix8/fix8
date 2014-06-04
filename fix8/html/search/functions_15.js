@@ -31,6 +31,7 @@ var searchData=
   ['unitofmeasure_5ftons',['UnitOfMeasure_TONS',['../namespaceFIX8_1_1TEX.html#add68f616926d526679674b705fdc8c1d',1,'FIX8::TEX']]],
   ['unitofmeasure_5ftroy_5founces',['UnitOfMeasure_TROY_OUNCES',['../namespaceFIX8_1_1TEX.html#a924ec10b30c8eae6b53fa2a3cb948948',1,'FIX8::TEX']]],
   ['unitofmeasure_5fus_5fdollars',['UnitOfMeasure_US_DOLLARS',['../namespaceFIX8_1_1TEX.html#af782ae02c46a2db71c5f652d00f5db64',1,'FIX8::TEX']]],
+  ['unknownfield',['UnknownField',['../structFIX8_1_1UnknownField.html#aacccc8e1e0cec9bf5e261241f904a7a3',1,'FIX8::UnknownField']]],
   ['unlock',['unlock',['../classFIX8_1_1f8__mutex.html#a225309cc94ff574fdb0e9ce03ac1233d',1,'FIX8::f8_mutex::unlock()'],['../classFIX8_1_1f8__spin__lock.html#ae1c999847592862338458dc1358d6ea2',1,'FIX8::f8_spin_lock::unlock()']]],
   ['unset_5fraw_5fmode',['unset_raw_mode',['../classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899',1,'FIX8::tty_save_state']]],
   ['unsolicitedindicator_5fno',['UnsolicitedIndicator_NO',['../namespaceFIX8_1_1TEX.html#a590c848f03de148e9236457269db1ff2',1,'FIX8::TEX']]],

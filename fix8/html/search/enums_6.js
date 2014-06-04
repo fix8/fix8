@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['realmtype',['RealmType',['../structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843f',1,'FIX8::RealmBase']]],
-  ['role',['Role',['../classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804',1,'FIX8::Connection']]]
+  ['processmodel',['ProcessModel',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83',1,'FIX8']]]
 ];

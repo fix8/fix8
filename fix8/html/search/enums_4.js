@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputfile',['OutputFile',['../structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66',1,'FIX8::Ctxt']]]
+  ['logtype',['Logtype',['../classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2',1,'FIX8::Configuration']]]
 ];

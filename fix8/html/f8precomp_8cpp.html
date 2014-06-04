@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -112,19 +112,7 @@ $(document).ready(function(){initNavTree('f8precomp_8cpp.html','');});
 <div class="title">f8precomp.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br/>
-<code>#include &lt;fstream&gt;</code><br/>
-<code>#include &lt;iomanip&gt;</code><br/>
-<code>#include &lt;sstream&gt;</code><br/>
-<code>#include &lt;vector&gt;</code><br/>
-<code>#include &lt;map&gt;</code><br/>
-<code>#include &lt;list&gt;</code><br/>
-<code>#include &lt;set&gt;</code><br/>
-<code>#include &lt;iterator&gt;</code><br/>
-<code>#include &lt;algorithm&gt;</code><br/>
-<code>#include &lt;errno.h&gt;</code><br/>
-<code>#include &lt;string.h&gt;</code><br/>
-<code>#include &lt;cctype&gt;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="compiler_2precomp_8hpp_source.html">precomp.hpp</a>&quot;</code><br/>
 <code>#include &lt;<a class="el" href="f8includes_8hpp_source.html">fix8/f8includes.hpp</a>&gt;</code><br/>
 <code>#include &lt;<a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>&gt;</code><br/>
 </div>
@@ -134,29 +122,29 @@ $(document).ready(function(){initNavTree('f8precomp_8cpp.html','');});
 Functions</h2></td></tr>
 <tr class="memitem:a678a16a4d9c31d88739418fadb30a8fa"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype</a> (&quot;&lt;?xml version='1.0' encoding='ISO-8859-1'?&gt;&quot;)</td></tr>
 <tr class="separator:a678a16a4d9c31d88739418fadb30a8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25f56eaa4ca6b65085d69b676e96ab0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a25f56eaa4ca6b65085d69b676e96ab0b">output_field</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=false)</td></tr>
-<tr class="separator:a25f56eaa4ca6b65085d69b676e96ab0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2f20b1b0bec8f1fc18d9b1dff11a3dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ae2f20b1b0bec8f1fc18d9b1dff11a3dc">output_attributes</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, ostream &amp;outf, bool required=false)</td></tr>
-<tr class="separator:ae2f20b1b0bec8f1fc18d9b1dff11a3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8231ee772ff7f76d31dcb5cbd7c4957c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a8231ee772ff7f76d31dcb5cbd7c4957c">process_component</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components, const int depth, ostream &amp;outf, bool required=false)</td></tr>
-<tr class="separator:a8231ee772ff7f76d31dcb5cbd7c4957c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24cfca20e802d4544743586389344d87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a24cfca20e802d4544743586389344d87">process_group</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=false)</td></tr>
-<tr class="separator:a24cfca20e802d4544743586389344d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6cc64c4f5bb4f11812fd270162e6891"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ad6cc64c4f5bb4f11812fd270162e6891">process_messages</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components, const string &amp;tag, const int depth, ostream &amp;outf, bool required=false)</td></tr>
-<tr class="separator:ad6cc64c4f5bb4f11812fd270162e6891"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99ff89ddc65d0c878e7996ae53b2c88b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a99ff89ddc65d0c878e7996ae53b2c88b">process_elements</a> (XmlElement::XmlSet::const_iterator itr, const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=false)</td></tr>
-<tr class="separator:a99ff89ddc65d0c878e7996ae53b2c88b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4fd0faed8776c83d9d2eadc81e8c934"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ad4fd0faed8776c83d9d2eadc81e8c934">process_fields</a> (const <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;fldlist, const int depth, ostream &amp;outf, bool required=false)</td></tr>
-<tr class="separator:ad4fd0faed8776c83d9d2eadc81e8c934"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae904cefc9d0304eca29c020df2c9ab1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a> (const <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;comlist, <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components)</td></tr>
+<tr class="memitem:aa394845269eec5ffe625d6c6fadf1107"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#aa394845269eec5ffe625d6c6fadf1107">output_field</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=true)</td></tr>
+<tr class="separator:aa394845269eec5ffe625d6c6fadf1107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60ea16dc30ac209c69bdfad40ad0ec58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, ostream &amp;outf, bool required=true)</td></tr>
+<tr class="separator:a60ea16dc30ac209c69bdfad40ad0ec58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a46590edfab021673f34507b0b2b089"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a2a46590edfab021673f34507b0b2b089">process_component</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;components, const int depth, ostream &amp;outf, bool required=true)</td></tr>
+<tr class="separator:a2a46590edfab021673f34507b0b2b089"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7028b746ea18ea4f1190aca8b9f7036c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a7028b746ea18ea4f1190aca8b9f7036c">process_group</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;components, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=true)</td></tr>
+<tr class="separator:a7028b746ea18ea4f1190aca8b9f7036c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9ea0df9237ed0f8742a4c6f3d8007d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ad9ea0df9237ed0f8742a4c6f3d8007d5">process_messages</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;components, const string &amp;tag, const int depth, ostream &amp;outf, bool required=true)</td></tr>
+<tr class="separator:ad9ea0df9237ed0f8742a4c6f3d8007d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ad5ab8370cc0b48ccf237af7ae82ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ad5ad5ab8370cc0b48ccf237af7ae82ba">process_elements</a> (XmlElement::XmlSet::const_iterator itr, const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;components, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=true)</td></tr>
+<tr class="separator:ad5ad5ab8370cc0b48ccf237af7ae82ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3faf45403728831f040875bfdb0e95c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#af3faf45403728831f040875bfdb0e95c">process_fields</a> (const <a class="el" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> &amp;fldlist, const int depth, ostream &amp;outf, bool required=true)</td></tr>
+<tr class="separator:af3faf45403728831f040875bfdb0e95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae904cefc9d0304eca29c020df2c9ab1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a> (const <a class="el" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> &amp;comlist, <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;components)</td></tr>
 <tr class="separator:ae904cefc9d0304eca29c020df2c9ab1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65faa14e3ce40cdc92fccac9d9b85c87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a65faa14e3ce40cdc92fccac9d9b85c87">dump_components</a> (const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components, ostream &amp;outf)</td></tr>
+<tr class="memitem:a65faa14e3ce40cdc92fccac9d9b85c87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a65faa14e3ce40cdc92fccac9d9b85c87">dump_components</a> (const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;components, ostream &amp;outf)</td></tr>
 <tr class="separator:a65faa14e3ce40cdc92fccac9d9b85c87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a963dbf903d5c9d14bf862bda88d761d8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a963dbf903d5c9d14bf862bda88d761d8">precomp</a> (<a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, ostream &amp;outf)</td></tr>
 <tr class="separator:a963dbf903d5c9d14bf862bda88d761d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72a0107026d73fadd3fab65579797305"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#a72a0107026d73fadd3fab65579797305">precompfixt</a> (<a class="el" href="classXmlElement.html">XmlElement</a> &amp;xft, <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf, ostream &amp;outf, bool nounique)</td></tr>
 <tr class="separator:a72a0107026d73fadd3fab65579797305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa437cee33ac1718a82282129fa8cbc23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#aa437cee33ac1718a82282129fa8cbc23">filter_unique</a> (<a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;fldlist)</td></tr>
+<tr class="memitem:aa437cee33ac1718a82282129fa8cbc23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8precomp_8cpp.html#aa437cee33ac1718a82282129fa8cbc23">filter_unique</a> (<a class="el" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> &amp;fldlist)</td></tr>
 <tr class="separator:aa437cee33ac1718a82282129fa8cbc23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
@@ -181,7 +169,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00085">precomp()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00071">precomp()</a>.</p>
 
 </div>
 </div>
@@ -192,7 +180,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void dump_components </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;&#160;</td>
           <td class="paramname"><em>components</em>, </td>
         </tr>
         <tr>
@@ -209,7 +197,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00313">313</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00299">299</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,14 +208,14 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void filter_unique </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> &amp;&#160;</td>
           <td class="paramname"><em>fldlist</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00177">177</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00163">163</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 </div>
 </div>
@@ -238,13 +226,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void load_components </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> &amp;&#160;</td>
           <td class="paramname"><em>comlist</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;&#160;</td>
           <td class="paramname"><em>components</em>&#160;</td>
         </tr>
         <tr>
@@ -255,13 +243,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00196">196</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00182">182</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00085">precomp()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00071">precomp()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae2f20b1b0bec8f1fc18d9b1dff11a3dc"></a>
+<a class="anchor" id="a60ea16dc30ac209c69bdfad40ad0ec58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -281,7 +269,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -291,15 +279,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00243">243</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00229">229</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00271">XmlElement::abegin()</a>, <a class="el" href="xml_8hpp_source.html#l00275">XmlElement::aend()</a>, and <a class="el" href="xml_8hpp_source.html#l00230">XmlElement::GetLine()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00283">XmlElement::abegin()</a>, <a class="el" href="xml_8hpp_source.html#l00287">XmlElement::aend()</a>, and <a class="el" href="xml_8hpp_source.html#l00236">XmlElement::GetLine()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00085">precomp()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00265">process_messages()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00071">precomp()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00251">process_messages()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a25f56eaa4ca6b65085d69b676e96ab0b"></a>
+<a class="anchor" id="aa394845269eec5ffe625d6c6fadf1107"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -331,7 +319,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -341,9 +329,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00233">233</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00219">219</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00253">process_elements()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00239">process_elements()</a>.</p>
 
 </div>
 </div>
@@ -371,11 +359,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00085">85</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00071">71</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>References <a class="el" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype()</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="xml_8hpp_source.html#l00254">XmlElement::GetTag()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00196">load_components()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00243">output_attributes()</a>.</p>
+<p>References <a class="el" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype()</a>, <a class="el" href="classXmlElement.html#a4076de7ca81c95b09d1bb03b04b3cc5a">XmlElement::find()</a>, <a class="el" href="xml_8hpp_source.html#l00260">XmlElement::GetTag()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00182">load_components()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00229">output_attributes()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>.</p>
 
 </div>
 </div>
@@ -415,13 +403,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00126">126</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00112">112</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8231ee772ff7f76d31dcb5cbd7c4957c"></a>
+<a class="anchor" id="a2a46590edfab021673f34507b0b2b089"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -434,7 +422,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;&#160;</td>
           <td class="paramname"><em>components</em>, </td>
         </tr>
         <tr>
@@ -453,7 +441,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -463,13 +451,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00277">277</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00263">263</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00253">process_elements()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00239">process_elements()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a99ff89ddc65d0c878e7996ae53b2c88b"></a>
+<a class="anchor" id="ad5ad5ab8370cc0b48ccf237af7ae82ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -482,7 +470,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;&#160;</td>
           <td class="paramname"><em>components</em>, </td>
         </tr>
         <tr>
@@ -507,7 +495,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -517,20 +505,20 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00253">253</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00239">239</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>References <a class="el" href="f8precomp_8cpp_source.html#l00233">output_field()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00277">process_component()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00298">process_group()</a>.</p>
+<p>References <a class="el" href="f8precomp_8cpp_source.html#l00219">output_field()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00263">process_component()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00284">process_group()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad4fd0faed8776c83d9d2eadc81e8c934"></a>
+<a class="anchor" id="af3faf45403728831f040875bfdb0e95c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void process_fields </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> &amp;&#160;</td>
           <td class="paramname"><em>fldlist</em>, </td>
         </tr>
         <tr>
@@ -549,7 +537,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -559,11 +547,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00207">207</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00193">193</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a24cfca20e802d4544743586389344d87"></a>
+<a class="anchor" id="a7028b746ea18ea4f1190aca8b9f7036c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -576,7 +564,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;&#160;</td>
           <td class="paramname"><em>components</em>, </td>
         </tr>
         <tr>
@@ -601,7 +589,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -611,13 +599,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00298">298</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00284">284</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00253">process_elements()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00239">process_elements()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad6cc64c4f5bb4f11812fd270162e6891"></a>
+<a class="anchor" id="ad9ea0df9237ed0f8742a4c6f3d8007d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -630,7 +618,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> &amp;&#160;</td>
           <td class="paramname"><em>components</em>, </td>
         </tr>
         <tr>
@@ -655,7 +643,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>required</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -665,9 +653,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00265">265</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00251">251</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>References <a class="el" href="f8precomp_8cpp_source.html#l00243">output_attributes()</a>.</p>
+<p>References <a class="el" href="f8precomp_8cpp_source.html#l00229">output_attributes()</a>.</p>
 
 </div>
 </div>
@@ -694,16 +682,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00109">109</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00096">96</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00479">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00556">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00160">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00649">parse_groups()</a>, and <a class="el" href="f8c_8cpp_source.html#l00885">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00469">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00547">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00145">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00639">parse_groups()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

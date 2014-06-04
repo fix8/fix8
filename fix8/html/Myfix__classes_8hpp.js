@@ -1713,6 +1713,6 @@ var Myfix__classes_8hpp =
     [ "NoDerivativeInstrumentParties", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties" ],
     [ "NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs" ],
     [ "FIX8_4D796669785F636C61737365732E687070_", "Myfix__classes_8hpp.html#a156b262b21de1b0af669a3eebb1919ae", null ],
-    [ "Myfix_BaseMsgEntry", "Myfix__classes_8hpp.html#a6fd3b83148ef6a740fbf08ec8ba81941", null ],
+    [ "Myfix_BaseMsgEntry", "Myfix__classes_8hpp.html#a717b11834053e5608178a73bf8d4da89", null ],
     [ "ctx", "Myfix__classes_8hpp.html#ace47ea6a057b911b89cfe227ae5744c0", null ]
 ];

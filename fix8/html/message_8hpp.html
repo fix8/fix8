@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -126,11 +126,9 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for inbound message routing.  <a href="classFIX8_1_1Router.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Minst.html">FIX8::Minst</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structures for framework generated message creation table.  <a href="classFIX8_1_1Minst.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structures for framework generated message creation and static trait interrogation.  <a href="classFIX8_1_1Minst.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Minst_1_1__gen.html">FIX8::Minst::_gen&lt; T &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Minst_1_1__gen_3_01void_01_5_01_4.html">FIX8::Minst::_gen&lt; void * &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1BaseMsgEntry.html">FIX8::BaseMsgEntry</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,30 +150,24 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:abf2c99f2bfa2523a2df690654e6462aa"><td class="memItemLeft" align="right" valign="top">typedef std::vector<br class="typebreak"/>
-&lt; MessageBase * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#abf2c99f2bfa2523a2df690654e6462aa">FIX8::GroupElement</a></td></tr>
-<tr class="separator:abf2c99f2bfa2523a2df690654e6462aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a655430ffeedc199978850bb8c1fc813e"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; unsigned <br class="typebreak"/>
-short, class GroupBase * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a655430ffeedc199978850bb8c1fc813e">FIX8::Groups</a></td></tr>
-<tr class="separator:a655430ffeedc199978850bb8c1fc813e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f3bd1c25f56cc69d0bc505f9581a295"><td class="memItemLeft" align="right" valign="top">typedef GeneratedTable&lt; const <br class="typebreak"/>
-char *, BaseMsgEntry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0f3bd1c25f56cc69d0bc505f9581a295">FIX8::MsgTable</a></td></tr>
-<tr class="memdesc:a0f3bd1c25f56cc69d0bc505f9581a295"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classFIX8_1_1Field.html" title="Field template. There will ONLY be partial template specialisations of this class. ">Field</a> metadata structure.  <a href="#a0f3bd1c25f56cc69d0bc505f9581a295">More...</a><br/></td></tr>
-<tr class="separator:a0f3bd1c25f56cc69d0bc505f9581a295"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb952d45f30f04ab75c31d53fcc22956"><td class="memItemLeft" align="right" valign="top">typedef GeneratedTable<br class="typebreak"/>
-&lt; unsigned, BaseEntry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#adb952d45f30f04ab75c31d53fcc22956">FIX8::FieldTable</a></td></tr>
-<tr class="separator:adb952d45f30f04ab75c31d53fcc22956"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae954f89a75abad4c7b024390ef297b1e"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; unsigned <br class="typebreak"/>
-short, BaseField * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ae954f89a75abad4c7b024390ef297b1e">FIX8::Fields</a></td></tr>
-<tr class="separator:ae954f89a75abad4c7b024390ef297b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0c8887a36bd17208f8c3fb08f472149"><td class="memItemLeft" align="right" valign="top">typedef std::multimap<br class="typebreak"/>
-&lt; unsigned short, BaseField * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab0c8887a36bd17208f8c3fb08f472149">FIX8::Positions</a></td></tr>
-<tr class="separator:ab0c8887a36bd17208f8c3fb08f472149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee9603f3ad9964c0ea56915eb2d76725"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aee9603f3ad9964c0ea56915eb2d76725">FIX8::GroupElement</a> = std::vector&lt; MessageBase * &gt;</td></tr>
+<tr class="separator:aee9603f3ad9964c0ea56915eb2d76725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf580acba787b903a77dcd3b2865664b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#acf580acba787b903a77dcd3b2865664b">FIX8::Groups</a> = std::map&lt; unsigned short, class GroupBase * &gt;</td></tr>
+<tr class="separator:acf580acba787b903a77dcd3b2865664b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6e7e238259ac99f6229c4f895db780d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ad6e7e238259ac99f6229c4f895db780d">FIX8::MsgTable</a> = GeneratedTable&lt; const char *, BaseMsgEntry &gt;</td></tr>
+<tr class="memdesc:ad6e7e238259ac99f6229c4f895db780d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classFIX8_1_1Field.html" title="Field template. There will ONLY be partial template specialisations of this class. ">Field</a> metadata structure.  <a href="#ad6e7e238259ac99f6229c4f895db780d">More...</a><br/></td></tr>
+<tr class="separator:ad6e7e238259ac99f6229c4f895db780d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1749bea11766edb343256c30c76353d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac1749bea11766edb343256c30c76353d">FIX8::FieldTable</a> = GeneratedTable&lt; unsigned, BaseEntry &gt;</td></tr>
+<tr class="separator:ac1749bea11766edb343256c30c76353d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51e9ed07a47305c2edf73953a56dabaf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a51e9ed07a47305c2edf73953a56dabaf">FIX8::Fields</a> = std::map&lt; unsigned short, BaseField * &gt;</td></tr>
+<tr class="separator:a51e9ed07a47305c2edf73953a56dabaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbffbb10a480487f66c0a3e14cebc40c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#abbffbb10a480487f66c0a3e14cebc40c">FIX8::Positions</a> = std::multimap&lt; unsigned short, BaseField * &gt;</td></tr>
+<tr class="separator:abbffbb10a480487f66c0a3e14cebc40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

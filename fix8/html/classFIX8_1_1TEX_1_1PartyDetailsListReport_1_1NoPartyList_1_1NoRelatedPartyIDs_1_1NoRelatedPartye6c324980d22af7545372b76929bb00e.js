@@ -2,9 +2,10 @@ var classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyI
 [
     [ "_fnum", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a462cc62f281ba4a6475d6e7e61bfe377a207c202e349f7fe8667fd88459b9f14c", null ],
     [ "NoRelatedPartyAltSubIDs", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a4c3244d538cea23e15c55f6b3b4cc4de", null ],
-    [ "~NoRelatedPartyAltSubIDs", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a68234961656965514e73afa70b267e44", null ],
+    [ "~NoRelatedPartyAltSubIDs", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a03f366449ecb6bb7c5045b2a2a221ace", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a1be083f4d5f989d850de64f5f3545486", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#ad609c79f8c6a859a2ac6b5eb0576a617", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a6adc4de8f0198b65b8c12ee3fa3ecc9f", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a5d293292bbf236bbbc3856dad001a50d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#a60d25dbba8b5e0795c1cec41726f2ecb", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartye6c324980d22af7545372b76929bb00e.html#aa5af6459df169dfaad11bb39b7156e29", null ]

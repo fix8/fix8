@@ -1,12 +1,14 @@
 var structFIX8_1_1LoginParameters =
 [
-    [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a73da2512c53dbc0ecdd22f19be05b9b7", null ],
-    [ "LoginParameters", "structFIX8_1_1LoginParameters.html#ab8386a89a75cc9ecbc08921c000f5e94", null ],
+    [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a2bb31e1498cf5662fa81f580518da15e", null ],
+    [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a4b95d2692ef0925b9ee3e26aae630927", null ],
     [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a2aa7085b17417ed3696ebd826dea313a", null ],
     [ "operator=", "structFIX8_1_1LoginParameters.html#ac81740865000459b9496438df2688835", null ],
     [ "_always_seqnum_assign", "structFIX8_1_1LoginParameters.html#aeea540fe15f77a8cb0aa77d2c3885c53", null ],
+    [ "_clients", "structFIX8_1_1LoginParameters.html#a8555e4d6b237991e3e81a742b61a4370", null ],
     [ "_connect_timeout", "structFIX8_1_1LoginParameters.html#a722081772ee138901bcfdb83b8f014ea", null ],
     [ "_davi", "structFIX8_1_1LoginParameters.html#ac74822d5d4e6c79d1fe20d659cfc645d", null ],
+    [ "_enforce_compids", "structFIX8_1_1LoginParameters.html#a35150026e4e97c0fa0bc7f329edca9dd", null ],
     [ "_hb_int", "structFIX8_1_1LoginParameters.html#a2a3eb76e55a5922d31cd373e769fd41c", null ],
     [ "_login_retries", "structFIX8_1_1LoginParameters.html#a655e9cca70befcef8ac0846995ea26a2", null ],
     [ "_login_retry_interval", "structFIX8_1_1LoginParameters.html#ab113e18f1416194169393b6f3224847b", null ],

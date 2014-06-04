@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -107,7 +107,8 @@ $(document).ready(function(){initNavTree('xml_8hpp.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">xml.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -127,17 +128,21 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a20fdb4f2be7cd8760329ab76ff30467a"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a><br class="typebreak"/>
-&lt; std::string, unsigned char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml_8hpp.html#a20fdb4f2be7cd8760329ab76ff30467a">Str2Chr</a></td></tr>
-<tr class="separator:a20fdb4f2be7cd8760329ab76ff30467a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a38b565170b46ca4331b268630d3df9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml_8hpp.html#a7a38b565170b46ca4331b268630d3df9">Str2Chr</a> = std::map&lt; std::string, unsigned char &gt;</td></tr>
+<tr class="separator:a7a38b565170b46ca4331b268630d3df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a3e3827d46cdf89a5346225df99932034"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml_8hpp.html#a3e3827d46cdf89a5346225df99932034">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;en)</td></tr>
+<tr class="separator:a3e3827d46cdf89a5346225df99932034"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="a20fdb4f2be7cd8760329ab76ff30467a"></a>
+<a class="anchor" id="a7a38b565170b46ca4331b268630d3df9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt;std::string, unsigned char&gt; <a class="el" href="xml_8hpp.html#a20fdb4f2be7cd8760329ab76ff30467a">Str2Chr</a></td>
+          <td class="memname">using <a class="el" href="xml_8hpp.html#a7a38b565170b46ca4331b268630d3df9">Str2Chr</a> =  std::map&lt;std::string, unsigned char&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -146,10 +151,50 @@ Typedefs</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a3e3827d46cdf89a5346225df99932034"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;&#160;</td>
+          <td class="paramname"><em>en</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inserter friend. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>stream to send to </td></tr>
+    <tr><td class="paramname">en</td><td><a class="el" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup. ">XmlElement</a> REFErence </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>stream </dd></dl>
+
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00070">70</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+
+<p>References <a class="el" href="xml_8hpp_source.html#l00076">XmlElement::attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00082">XmlElement::children_</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::decl_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::depth_</a>, <a class="el" href="xml_8hpp_source.html#l00086">XmlElement::ordchildren_</a>, <a class="el" href="f8c_8cpp_source.html#l00096">spacer</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::tag_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::txtline_</a>, and <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::value_</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

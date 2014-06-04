@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['statictable_3c_20const_20menuitem_2c_20bool_28mymenu_3a_3a_2a_29_28_29_2c_20menuitem_20_3e',['StaticTable&lt; const MenuItem, bool(MyMenu::*)(), MenuItem &gt;',['../classMyMenu.html#aed7525c78af0f64c017c25f387505aa3',1,'MyMenu']]]
+  ['message',['Message',['../classFIX8_1_1MessageBase.html#a658ef47bd757fd5e0f13adab5a417ced',1,'FIX8::MessageBase']]],
+  ['messagebase',['MessageBase',['../classFIX8_1_1BaseField.html#a139cd168bbc5193327f4459beb465d83',1,'FIX8::BaseField::MessageBase()'],['../classFIX8_1_1GroupBase.html#a139cd168bbc5193327f4459beb465d83',1,'FIX8::GroupBase::MessageBase()']]]
 ];

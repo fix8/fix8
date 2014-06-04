@@ -27,6 +27,7 @@ var files =
       [ "DuplicateField", "structFIX8_1_1DuplicateField.html", "structFIX8_1_1DuplicateField" ],
       [ "InvalidDomainValue", "structFIX8_1_1InvalidDomainValue.html", "structFIX8_1_1InvalidDomainValue" ],
       [ "InvalidField", "structFIX8_1_1InvalidField.html", "structFIX8_1_1InvalidField" ],
+      [ "UnknownField", "structFIX8_1_1UnknownField.html", "structFIX8_1_1UnknownField" ],
       [ "InvalidMsgSequence", "structFIX8_1_1InvalidMsgSequence.html", "structFIX8_1_1InvalidMsgSequence" ],
       [ "MsgSequenceTooLow", "structFIX8_1_1MsgSequenceTooLow.html", "structFIX8_1_1MsgSequenceTooLow" ],
       [ "InvalidBodyLength", "structFIX8_1_1InvalidBodyLength.html", "structFIX8_1_1InvalidBodyLength" ],
@@ -43,6 +44,7 @@ var files =
       [ "dthreadException", "structFIX8_1_1dthreadException.html", "structFIX8_1_1dthreadException" ],
       [ "PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", "structFIX8_1_1PeerResetConnection" ],
       [ "InvalidConfiguration", "structFIX8_1_1InvalidConfiguration.html", "structFIX8_1_1InvalidConfiguration" ],
+      [ "ConfigurationError", "structFIX8_1_1ConfigurationError.html", "structFIX8_1_1ConfigurationError" ],
       [ "LogfileException", "structFIX8_1_1LogfileException.html", "structFIX8_1_1LogfileException" ],
       [ "XMLError", "structFIX8_1_1XMLError.html", "structFIX8_1_1XMLError" ]
     ] ],
@@ -54,8 +56,6 @@ var files =
     [ "ff_wrapper.hpp", "ff__wrapper_8hpp.html", [
       [ "ff_unbounded_queue", "classFIX8_1_1ff__unbounded__queue.html", "classFIX8_1_1ff__unbounded__queue" ],
       [ "ff_unbounded_queue< T * >", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4" ],
-      [ "ff_atomic", "classFIX8_1_1ff__atomic.html", "classFIX8_1_1ff__atomic" ],
-      [ "ff_atomic< T * >", "classFIX8_1_1ff__atomic_3_01T_01_5_01_4.html", "classFIX8_1_1ff__atomic_3_01T_01_5_01_4" ],
       [ "f8_mutex", "classFIX8_1_1f8__mutex.html", "classFIX8_1_1f8__mutex" ],
       [ "f8_spin_lock", "classFIX8_1_1f8__spin__lock.html", "classFIX8_1_1f8__spin__lock" ]
     ] ],
@@ -90,6 +90,7 @@ var files =
     ] ],
     [ "modp_numtoa.c", "modp__numtoa_8c.html", "modp__numtoa_8c" ],
     [ "mpmc.hpp", "mpmc_8hpp.html", "mpmc_8hpp" ],
+    [ "multisession.hpp", "multisession_8hpp.html", "multisession_8hpp" ],
     [ "myfix.cpp", "myfix_8cpp.html", "myfix_8cpp" ],
     [ "myfix.hpp", "myfix_8hpp.html", [
       [ "tex_router_client", "classtex__router__client.html", "classtex__router__client" ],
@@ -125,18 +126,33 @@ var files =
       [ "IPrec", "structFIX8_1_1IPrec.html", "structFIX8_1_1IPrec" ],
       [ "FilePersister", "classFIX8_1_1FilePersister.html", "classFIX8_1_1FilePersister" ]
     ] ],
+    [ "runtime/precomp.cpp", "runtime_2precomp_8cpp.html", null ],
+    [ "compiler/precomp.cpp", "compiler_2precomp_8cpp.html", null ],
+    [ "util/precomp.cpp", "util_2precomp_8cpp.html", null ],
+    [ "runtime/precomp.hpp", "runtime_2precomp_8hpp.html", null ],
+    [ "compiler/precomp.hpp", "compiler_2precomp_8hpp.html", null ],
+    [ "util/precomp.hpp", "util_2precomp_8hpp.html", null ],
     [ "redispersist.cpp", "redispersist_8cpp.html", null ],
     [ "seqedit.cpp", "seqedit_8cpp.html", "seqedit_8cpp" ],
     [ "session.cpp", "session_8cpp.html", null ],
     [ "session.hpp", "session_8hpp.html", "session_8hpp" ],
     [ "sessionwrapper.hpp", "sessionwrapper_8hpp.html", [
       [ "SessionConfig", "structFIX8_1_1SessionConfig.html", "structFIX8_1_1SessionConfig" ],
+      [ "ClientSessionBase", "classFIX8_1_1ClientSessionBase.html", "classFIX8_1_1ClientSessionBase" ],
       [ "ClientSession", "classFIX8_1_1ClientSession.html", "classFIX8_1_1ClientSession" ],
       [ "ReliableClientSession", "classFIX8_1_1ReliableClientSession.html", "classFIX8_1_1ReliableClientSession" ],
+      [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ],
+      [ "ServerSessionBase", "classFIX8_1_1ServerSessionBase.html", "classFIX8_1_1ServerSessionBase" ],
       [ "ServerSession", "classFIX8_1_1ServerSession.html", "classFIX8_1_1ServerSession" ],
+      [ "SessionInstanceBase", "classFIX8_1_1SessionInstanceBase.html", "classFIX8_1_1SessionInstanceBase" ],
       [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ]
     ] ],
-    [ "thread.hpp", "thread_8hpp.html", "thread_8hpp" ],
+    [ "thread.hpp", "thread_8hpp.html", [
+      [ "_dthreadcore", "classFIX8_1_1__dthreadcore.html", "classFIX8_1_1__dthreadcore" ],
+      [ "dthread_cancellation_token", "structFIX8_1_1dthread__cancellation__token.html", "structFIX8_1_1dthread__cancellation__token" ],
+      [ "dthread", "classFIX8_1_1dthread.html", "classFIX8_1_1dthread" ],
+      [ "_helper", "classFIX8_1_1dthread_1_1__helper.html", "classFIX8_1_1dthread_1_1__helper" ]
+    ] ],
     [ "tickval.hpp", "tickval_8hpp.html", "tickval_8hpp" ],
     [ "timer.hpp", "timer_8hpp.html", [
       [ "Timer", "classFIX8_1_1Timer.html", "classFIX8_1_1Timer" ],
@@ -151,5 +167,6 @@ var files =
     ] ],
     [ "xml.cpp", "xml_8cpp.html", "xml_8cpp" ],
     [ "xml.hpp", "xml_8hpp.html", "xml_8hpp" ],
-    [ "yield.hpp", "yield_8hpp.html", "yield_8hpp" ]
+    [ "yield.hpp", "yield_8hpp.html", "yield_8hpp" ],
+    [ "zeromq_mbus.hpp", "zeromq__mbus_8hpp.html", null ]
 ];

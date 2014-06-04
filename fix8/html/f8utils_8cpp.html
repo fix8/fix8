@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -113,31 +113,7 @@ $(document).ready(function(){initNavTree('f8utils_8cpp.html','');});
 <div class="title">f8utils.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br/>
-<code>#include &lt;fstream&gt;</code><br/>
-<code>#include &lt;sstream&gt;</code><br/>
-<code>#include &lt;iomanip&gt;</code><br/>
-<code>#include &lt;sys/types.h&gt;</code><br/>
-<code>#include &lt;sys/time.h&gt;</code><br/>
-<code>#include &lt;sys/stat.h&gt;</code><br/>
-<code>#include &lt;time.h&gt;</code><br/>
-<code>#include &lt;errno.h&gt;</code><br/>
-<code>#include &lt;netdb.h&gt;</code><br/>
-<code>#include &lt;cstdlib&gt;</code><br/>
-<code>#include &lt;signal.h&gt;</code><br/>
-<code>#include &lt;syslog.h&gt;</code><br/>
-<code>#include &lt;strings.h&gt;</code><br/>
-<code>#include &lt;string.h&gt;</code><br/>
-<code>#include &lt;fcntl.h&gt;</code><br/>
-<code>#include &lt;sys/socket.h&gt;</code><br/>
-<code>#include &lt;netinet/in.h&gt;</code><br/>
-<code>#include &lt;arpa/inet.h&gt;</code><br/>
-<code>#include &lt;alloca.h&gt;</code><br/>
-<code>#include &lt;map&gt;</code><br/>
-<code>#include &lt;set&gt;</code><br/>
-<code>#include &lt;list&gt;</code><br/>
-<code>#include &lt;vector&gt;</code><br/>
-<code>#include &lt;algorithm&gt;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="runtime_2precomp_8hpp_source.html">precomp.hpp</a>&quot;</code><br/>
 <code>#include &lt;<a class="el" href="f8includes_8hpp_source.html">fix8/f8includes.hpp</a>&gt;</code><br/>
 </div>
 <p><a href="f8utils_8cpp_source.html">Go to the source code of this file.</a></p>
@@ -162,9 +138,9 @@ Functions</h2></td></tr>
 <tr class="separator:a67deae4d62ff85ab68313516c4af00a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c1db287432be0b1c63527f7b0e14b21"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7c1db287432be0b1c63527f7b0e14b21">FIX8::StrToLower</a> (const string &amp;src)</td></tr>
 <tr class="separator:a7c1db287432be0b1c63527f7b0e14b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a2717c5631879023e7924bdc42eb235"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a> (const int err, const char *str=0)</td></tr>
+<tr class="memitem:a7a2717c5631879023e7924bdc42eb235"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a> (const int err, const char *str=0)</td></tr>
 <tr class="separator:a7a2717c5631879023e7924bdc42eb235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace336ffaa63f40aa579f6074a487cf56"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ace336ffaa63f40aa579f6074a487cf56">FIX8::get_umask</a> ()</td></tr>
+<tr class="memitem:ace336ffaa63f40aa579f6074a487cf56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ace336ffaa63f40aa579f6074a487cf56">FIX8::get_umask</a> ()</td></tr>
 <tr class="separator:ace336ffaa63f40aa579f6074a487cf56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a32b3a4642bb7fc1ac888ca6d1bc6b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a2a32b3a4642bb7fc1ac888ca6d1bc6b7">FIX8::create_path</a> (const string &amp;path)</td></tr>
 <tr class="separator:a2a32b3a4642bb7fc1ac888ca6d1bc6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,7 +170,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

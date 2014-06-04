@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['regexp',['RegExp',['../classFIX8_1_1RegMatch.html#a176bf02c0445040859e262531430761f',1,'FIX8::RegMatch']]]
+  ['servermanager',['ServerManager',['../classFIX8_1_1ServerSessionBase.html#abc5c3134c3fccb761ac50196fae92c22',1,'FIX8::ServerSessionBase']]]
 ];

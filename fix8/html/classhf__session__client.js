@@ -1,7 +1,7 @@
 var classhf__session__client =
 [
-    [ "Nos_queue", "classhf__session__client.html#aaf76f9be2003cdbf5a49dd00cbe38e5d", null ],
-    [ "hf_session_client", "classhf__session__client.html#ae4110a42da40c4bf938c299c1bcf3d25", null ],
+    [ "Nos_queue", "classhf__session__client.html#a326b5357a5dfbd87a897dc17c9e3a2e7", null ],
+    [ "hf_session_client", "classhf__session__client.html#af93cc62e3e5711855a7d316da29c6c3e", null ],
     [ "cached", "classhf__session__client.html#a9447a71c6799f820cefff496bc12597c", null ],
     [ "handle_application", "classhf__session__client.html#afdce934c4a5c37565e5859ebb258092f", null ],
     [ "pop", "classhf__session__client.html#a9c13b89344876f8134c5061e5f40a299", null ],

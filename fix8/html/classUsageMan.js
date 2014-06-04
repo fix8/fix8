@@ -1,6 +1,6 @@
 var classUsageMan =
 [
-    [ "OPTEL", "classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0", null ],
+    [ "OPTEL", "classUsageMan.html#a1d01939408e2c1527130c6a80d36dad0", null ],
     [ "UsageMan", "classUsageMan.html#a4f7c623a7a61ace8859b46b7695e5379", null ],
     [ "~UsageMan", "classUsageMan.html#ad77f88bfb1c272c7d898310bff489dd2", null ],
     [ "add", "classUsageMan.html#a300f3be13eec793f815e06549fcafdf9", null ],

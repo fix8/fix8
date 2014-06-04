@@ -1,6 +1,6 @@
 var classFIX8_1_1ReliableClientSession =
 [
-    [ "ReliableClient_ptr", "classFIX8_1_1ReliableClientSession.html#a809d8049d2f78f71c2cf9594fe14bce3", null ],
+    [ "ReliableClientSession_ptr", "classFIX8_1_1ReliableClientSession.html#a08f6e67cb158302825c0083ca3f419f0", null ],
     [ "no_servers_configured", "classFIX8_1_1ReliableClientSession.html#a997c5ce059c0fe1246a9778ab6ffdc58add57a969e02649c81ad4616f70991807", null ],
     [ "ReliableClientSession", "classFIX8_1_1ReliableClientSession.html#a7897d7d0a470638021eb131e9a2624c2", null ],
     [ "~ReliableClientSession", "classFIX8_1_1ReliableClientSession.html#ab17b58b7c0256f847013e4bc23c642b0", null ],

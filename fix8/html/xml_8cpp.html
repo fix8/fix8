@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -106,33 +106,12 @@ $(document).ready(function(){initNavTree('xml_8cpp.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">xml.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br/>
-<code>#include &lt;fstream&gt;</code><br/>
-<code>#include &lt;sstream&gt;</code><br/>
-<code>#include &lt;iomanip&gt;</code><br/>
-<code>#include &lt;sys/stat.h&gt;</code><br/>
-<code>#include &lt;sys/types.h&gt;</code><br/>
-<code>#include &lt;algorithm&gt;</code><br/>
-<code>#include &lt;strings.h&gt;</code><br/>
-<code>#include &lt;sys/time.h&gt;</code><br/>
-<code>#include &lt;unistd.h&gt;</code><br/>
-<code>#include &lt;netdb.h&gt;</code><br/>
-<code>#include &lt;syslog.h&gt;</code><br/>
-<code>#include &lt;string.h&gt;</code><br/>
-<code>#include &lt;time.h&gt;</code><br/>
-<code>#include &lt;errno.h&gt;</code><br/>
-<code>#include &lt;signal.h&gt;</code><br/>
-<code>#include &lt;fcntl.h&gt;</code><br/>
-<code>#include &lt;map&gt;</code><br/>
-<code>#include &lt;set&gt;</code><br/>
-<code>#include &lt;list&gt;</code><br/>
-<code>#include &lt;vector&gt;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="runtime_2precomp_8hpp_source.html">precomp.hpp</a>&quot;</code><br/>
 <code>#include &lt;<a class="el" href="f8includes_8hpp_source.html">fix8/f8includes.hpp</a>&gt;</code><br/>
 </div>
 <p><a href="xml_8cpp_source.html">Go to the source code of this file.</a></p>
@@ -141,11 +120,6 @@ $(document).ready(function(){initNavTree('xml_8cpp.html','');});
 Functions</h2></td></tr>
 <tr class="memitem:a2ceff08c9789c94e8f23af9ce4dc3362"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">operator&lt;&lt;</a> (ostream &amp;os, const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;en)</td></tr>
 <tr class="separator:a2ceff08c9789c94e8f23af9ce4dc3362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a2dcd834ff4be2ca48473019d5a7201e1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml_8cpp.html#a2dcd834ff4be2ca48473019d5a7201e1">valueTable</a> []</td></tr>
-<tr class="separator:a2dcd834ff4be2ca48473019d5a7201e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a2ceff08c9789c94e8f23af9ce4dc3362"></a>
@@ -155,7 +129,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">ostream&amp; operator&lt;&lt; </td>
           <td>(</td>
-          <td class="paramtype">ostream &amp;&#160;</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>os</em>, </td>
         </tr>
         <tr>
@@ -171,49 +145,26 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Inserter friend. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>stream to send to </td></tr>
+    <tr><td class="paramname">en</td><td><a class="el" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup. ">XmlElement</a> REFErence </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>stream </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00098">98</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00070">70</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00076">XmlElement::attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00082">XmlElement::children_</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::decl_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::depth_</a>, <a class="el" href="xml_8hpp_source.html#l00086">XmlElement::ordchildren_</a>, <a class="el" href="f8c_8cpp_source.html#l00109">spacer</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::tag_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::txtline_</a>, and <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::value_</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a2dcd834ff4be2ca48473019d5a7201e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a> valueTable[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">{</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;amp&quot;</span>, <span class="charliteral">&#39;&amp;&#39;</span>),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;lt&quot;</span>, <span class="charliteral">&#39;&lt;&#39;</span>),    <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;gt&quot;</span>, <span class="charliteral">&#39;&gt;&#39;</span>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;apos&quot;</span>, <span class="charliteral">&#39;\&#39;&#39;</span>), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;quot&quot;</span>, <span class="charliteral">&#39;&quot;&#39;</span>),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;nbsp&quot;</span>, 160),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;iexcl&quot;</span>, 161), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;cent&quot;</span>, 162),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;pound&quot;</span>, 163),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;curren&quot;</span>, 164),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;yen&quot;</span>, 165),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;brvbar&quot;</span>, 166),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sect&quot;</span>, 167),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;uml&quot;</span>, 168),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;copy&quot;</span>, 169),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;ordf&quot;</span>, 170),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;laquo&quot;</span>, 171), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;not&quot;</span>, 172),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;shy&quot;</span>, 173),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;reg&quot;</span>, 174),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;macr&quot;</span>, 175),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;deg&quot;</span>, 176),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;plusmn&quot;</span>, 177),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sup2&quot;</span>, 178),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sup3&quot;</span>, 179),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;acute&quot;</span>, 180), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;micro&quot;</span>, 181),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;para&quot;</span>, 182),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;middot&quot;</span>, 183),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;cedil&quot;</span>, 184),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sup1&quot;</span>, 185),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;ordm&quot;</span>, 186),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;raquo&quot;</span>, 187),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;frac14&quot;</span>, 188),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;frac12&quot;</span>, 189),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;frac34&quot;</span>, 190),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;iquest&quot;</span>, 191)</div>
-<div class="line">}</div>
-<div class="ttc" id="structFIX8_1_1StaticTable_html_ac86564eefb2ebdfb77ca8572fd26fb34"><div class="ttname"><a href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">FIX8::StaticTable::TypePair</a></div><div class="ttdeci">TypeMap::value_type TypePair</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00188">f8types.hpp:188</a></div></div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00079">79</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00076">XmlElement::attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00082">XmlElement::children_</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::decl_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::depth_</a>, <a class="el" href="xml_8hpp_source.html#l00086">XmlElement::ordchildren_</a>, <a class="el" href="f8c_8cpp_source.html#l00096">spacer</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::tag_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::txtline_</a>, and <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::value_</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

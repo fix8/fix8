@@ -2,9 +2,10 @@ var classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyIns
 [
     [ "_fnum", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a0d68ab6808e39a2b8ab8e068886a0808a4dc3441625ddec3afb080596d13e6c78", null ],
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#adea0d28c684d1bc9d466518af07bc82c", null ],
-    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ae88c69f133593cfd708743dabeddaaea", null ],
+    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#afd546a3eb0eb4c5290b7c841bb51ddde", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac16ec94f63ca04b1c09fda8412d569f3", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#add8aa2635a8228302c06f902c809884d", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ae46e22e7366e86d9267e0f8ac6157526", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a8376033fd1583b97879dec9c6355a0a2", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a96f904d6c35da76f825633f1864eedfa", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ad9367ec40b29cc18086ee280344064cb", null ]

@@ -1,5 +1,5 @@
 var structFIX8_1_1Type2Types =
 [
-    [ "rtype", "structFIX8_1_1Type2Types.html#ae62acaf7a1ddabcdcd98747ba2bce961", null ],
-    [ "type", "structFIX8_1_1Type2Types.html#a6ad95ea35e164e3d0b078c3236c69b26", null ]
+    [ "rtype", "structFIX8_1_1Type2Types.html#af4839dfdb93efcc5c6cf6358fc52edb3", null ],
+    [ "type", "structFIX8_1_1Type2Types.html#a635991b252fcfd07fab444deba987fc9", null ]
 ];

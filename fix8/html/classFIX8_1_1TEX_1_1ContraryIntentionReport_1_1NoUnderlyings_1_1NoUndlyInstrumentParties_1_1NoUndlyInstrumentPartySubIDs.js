@@ -2,9 +2,10 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstr
 [
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#aae160664b18806620d4fe85b35f9a835a742efa9786ed7c319f7f288f785ca37b", null ],
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a7a64cc516cd6019c29b1b5f6d567312b", null ],
-    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a0db6af787a4fcd03253e4e7d5df3b891", null ],
+    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a422acafc72ee2f293bd33f36fc72849b", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a6c314385f839a351c92fb516d3baf6e5", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ad7c5a4913f58439626da508af640ca83", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a1cbc708f877cc4e7ee9df9f2c6619858", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a4fb1bb61fe6909f4e2057b38eb41c048", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a529aad2ca37030cdeb9823dcee6a60c9", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ae1b0c55f8804fb4a7f6a80d787e3f7ed", null ]

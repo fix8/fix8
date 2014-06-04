@@ -7,8 +7,6 @@ var searchData=
   ['f8metacntx',['F8MetaCntx',['../structFIX8_1_1F8MetaCntx.html',1,'FIX8']]],
   ['fdinbuf',['fdinbuf',['../classFIX8_1_1fdinbuf.html',1,'FIX8']]],
   ['fdoutbuf',['fdoutbuf',['../classFIX8_1_1fdoutbuf.html',1,'FIX8']]],
-  ['ff_5fatomic',['ff_atomic',['../classFIX8_1_1ff__atomic.html',1,'FIX8']]],
-  ['ff_5fatomic_3c_20t_20_2a_20_3e',['ff_atomic&lt; T * &gt;',['../classFIX8_1_1ff__atomic_3_01T_01_5_01_4.html',1,'FIX8']]],
   ['ff_5funbounded_5fqueue',['ff_unbounded_queue',['../classFIX8_1_1ff__unbounded__queue.html',1,'FIX8']]],
   ['ff_5funbounded_5fqueue_3c_20t_20_2a_20_3e',['ff_unbounded_queue&lt; T * &gt;',['../classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html',1,'FIX8']]],
   ['field',['Field',['../classFIX8_1_1Field.html',1,'FIX8']]],
@@ -40,9 +38,8 @@ var searchData=
   ['fieldtraits',['FieldTraits',['../classFIX8_1_1FieldTraits.html',1,'FIX8']]],
   ['filelogger',['FileLogger',['../classFIX8_1_1FileLogger.html',1,'FIX8']]],
   ['filepersister',['FilePersister',['../classFIX8_1_1FilePersister.html',1,'FIX8']]],
-  ['filestdin',['filestdin',['../classfilestdin.html',1,'']]],
+  ['filestdin',['filestdin',['../classFIX8_1_1filestdin.html',1,'FIX8']]],
   ['fixreader',['FIXReader',['../classFIX8_1_1FIXReader.html',1,'FIX8']]],
   ['fixwriter',['FIXWriter',['../classFIX8_1_1FIXWriter.html',1,'FIX8']]],
-  ['fptrostream',['fptrostream',['../classFIX8_1_1fptrostream.html',1,'FIX8']]],
-  ['free_5fptr',['free_ptr',['../structFIX8_1_1free__ptr.html',1,'FIX8']]]
+  ['fptrostream',['fptrostream',['../classFIX8_1_1fptrostream.html',1,'FIX8']]]
 ];

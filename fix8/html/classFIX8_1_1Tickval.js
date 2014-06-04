@@ -1,7 +1,7 @@
 var classFIX8_1_1Tickval =
 [
-    [ "sticks", "classFIX8_1_1Tickval.html#a592935a03e6707e6c24fb2673ab48c41", null ],
-    [ "ticks", "classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa", null ],
+    [ "sticks", "classFIX8_1_1Tickval.html#ae5822f627f73a0cfbe79cb1433ca4005", null ],
+    [ "ticks", "classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024", null ],
     [ "Tickval", "classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27", null ],
     [ "Tickval", "classFIX8_1_1Tickval.html#afe1532639eeef863084c1d6a83f447ce", null ],
     [ "Tickval", "classFIX8_1_1Tickval.html#a25bb2b4255d7a0fbe2308a7f3e90d51a", null ],
@@ -47,15 +47,15 @@ var classFIX8_1_1Tickval =
     [ "operator>=", "classFIX8_1_1Tickval.html#a37fe6a09372d6ff92a73138d9ff53df6", null ],
     [ "operator>>", "classFIX8_1_1Tickval.html#ae8377b93c69d3970266d69b87ce2a9e9", null ],
     [ "_value", "classFIX8_1_1Tickval.html#a587fad30627bd376d2babbe5ea972cee", null ],
-    [ "billion", "classFIX8_1_1Tickval.html#a07b93acdf1d4c89b04549af53a58abc5", null ],
-    [ "day", "classFIX8_1_1Tickval.html#a3efed8b9ea26b54c7861881d5e4e2a0e", null ],
-    [ "errorticks", "classFIX8_1_1Tickval.html#a8d91b66208a9a89cc55974d4a2001edf", null ],
-    [ "hour", "classFIX8_1_1Tickval.html#a505341eaff6e7b6b2e7013db5ab189d1", null ],
-    [ "million", "classFIX8_1_1Tickval.html#ac7b662d53b282e7a1efce137a1c82152", null ],
-    [ "minute", "classFIX8_1_1Tickval.html#a3bb16d853a67b18045c602ce4e65bb59", null ],
-    [ "nosticks", "classFIX8_1_1Tickval.html#a38b9f5e2e13c94fc18b2bfe23649b0a5", null ],
-    [ "noticks", "classFIX8_1_1Tickval.html#a7a56f1507706ad9692d246a05aef2cb8", null ],
-    [ "second", "classFIX8_1_1Tickval.html#ac55dee415b418a9def90e7b8f9ccac74", null ],
-    [ "thousand", "classFIX8_1_1Tickval.html#ac1dc112410dfe3cfa507515fe4b0de2a", null ],
-    [ "week", "classFIX8_1_1Tickval.html#a305c933a20e01394968173870727d748", null ]
+    [ "billion", "classFIX8_1_1Tickval.html#a5e9efb26021d151a48c8947b2301a873", null ],
+    [ "day", "classFIX8_1_1Tickval.html#a0e0b14c14bed8be65dc53b9cc372e753", null ],
+    [ "errorticks", "classFIX8_1_1Tickval.html#a712dda65e790eea5cfbe49121d7b117e", null ],
+    [ "hour", "classFIX8_1_1Tickval.html#aff2e83467599b21e896cb61e2d64eb6b", null ],
+    [ "million", "classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc", null ],
+    [ "minute", "classFIX8_1_1Tickval.html#adc2e06021fad4ebe7a719a5cd58cf982", null ],
+    [ "nosticks", "classFIX8_1_1Tickval.html#ab96fb2f0e732d305acbc1c8f10fc47a8", null ],
+    [ "noticks", "classFIX8_1_1Tickval.html#ada016b0707603b9bc38d38ab51c41951", null ],
+    [ "second", "classFIX8_1_1Tickval.html#ab867bfc94e4b81925d047ff0d2de56ed", null ],
+    [ "thousand", "classFIX8_1_1Tickval.html#aac8c9cd282d4928d496a1e4e5bd02f76", null ],
+    [ "week", "classFIX8_1_1Tickval.html#a44142164547e0e5e860cbdc66fc658bb", null ]
 ];

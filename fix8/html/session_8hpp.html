@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('session_8hpp.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -147,21 +148,16 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceFIX8_1_1defaults"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1defaults.html">FIX8::defaults</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a51db1a0f3a664d6f5c25160733aa085b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a51db1a0f3a664d6f5c25160733aa085b">FIX8::Client</a> = std::tuple&lt; f8String, Poco::Net::IPAddress &gt;</td></tr>
+<tr class="memdesc:a51db1a0f3a664d6f5c25160733aa085b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to hold client info settings for server sessions.  <a href="#a51db1a0f3a664d6f5c25160733aa085b">More...</a><br/></td></tr>
+<tr class="separator:a51db1a0f3a664d6f5c25160733aa085b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3840e22ddd64d782c24a7d628123d6a9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a3840e22ddd64d782c24a7d628123d6a9">FIX8::Clients</a> = std::unordered_map&lt; f8String, Client &gt;</td></tr>
+<tr class="separator:a3840e22ddd64d782c24a7d628123d6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a8164e8453dc8c6156fad3494285933c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9">FIX8::States::Tests</a> { <br/>
-&#160;&#160;<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9adaea9b41b36dab69d40f65af96f8e881">FIX8::States::pr_begin_str</a>, 
-<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a0d904566e84cb6a7824b5f9b5c162bf6">FIX8::States::pr_logged_in</a>, 
-<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a81985cba9da5c298a78f7e5efc09279b">FIX8::States::pr_low</a>, 
-<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a8af95cd1f8049f09cf3afda65a5256e6">FIX8::States::pr_high</a>, 
-<br/>
-&#160;&#160;<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a389aa3d865547ea4364ad05c77e5796a">FIX8::States::pr_comp_id</a>, 
-<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a2fe12b40d150c8efe127006ffcd09bdd">FIX8::States::pr_target_id</a>, 
-<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9afe79ab19e74191a439dca55eda4225ec">FIX8::States::pr_logon_timeout</a>, 
-<a class="el" href="namespaceFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a8fd2d2c1eade4ea19c8a732c859e86f2">FIX8::States::pr_resend</a>
-<br/>
- }</td></tr>
-<tr class="separator:a8164e8453dc8c6156fad3494285933c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95240585037fdfcc9ac6ee61133cd4e8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8">FIX8::States::SessionStates</a> { <br/>
 &#160;&#160;<a class="el" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8a8d0518cbc8f0b071af84a22e6f131ed0">FIX8::States::st_none</a>, 
 <a class="el" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">FIX8::States::st_continuous</a>, 
@@ -187,10 +183,11 @@ Enumerations</h2></td></tr>
 <tr class="memitem:a482d7b9d7d9b6344906d08bed3dd43d4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4a082f393bb721ce305cff63393277a69f">FIX8::defaults::retry_interval</a> =5000, 
 <a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4af78f674b2d9c9588437cb5e5fc0080c0">FIX8::defaults::login_retries</a> =3, 
+<a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4a98df95cefb439f79e7f5336e8926ffe5">FIX8::defaults::tabsize</a> =3, 
 <a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4af1d4c6432ba99d5c6420ba4bbe5b166d">FIX8::defaults::hb_interval</a> =30, 
-<a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4ab864df22ce5f157831c3aee711be5e5c">FIX8::defaults::connect_timeout</a> =10, 
 <br/>
-&#160;&#160;<a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4afe4cec891e5ae67b5b1e37dbe7cb9a32">FIX8::defaults::log_rotation</a> =5, 
+&#160;&#160;<a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4ab864df22ce5f157831c3aee711be5e5c">FIX8::defaults::connect_timeout</a> =10, 
+<a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4afe4cec891e5ae67b5b1e37dbe7cb9a32">FIX8::defaults::log_rotation</a> =5, 
 <a class="el" href="namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4afd2ee3c3dfde91bf4f9bc487f7866bf0">FIX8::defaults::verification_depth</a> =9
 <br/>
  }</td></tr>
@@ -198,13 +195,15 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1739254b6600e1982fbdf7b49baf8b79"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1States.html#a1739254b6600e1982fbdf7b49baf8b79">FIX8::States::is_established</a> (const SessionStates &amp;ss)</td></tr>
-<tr class="separator:a1739254b6600e1982fbdf7b49baf8b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4249f49d9b50e9b1fe1c9b1fbee3289d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1States.html#a4249f49d9b50e9b1fe1c9b1fbee3289d">FIX8::States::is_live</a> (SessionStates ss)</td></tr>
+<tr class="separator:a4249f49d9b50e9b1fe1c9b1fbee3289d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde29b2bf6e562b5b087b3b963141ea5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1States.html#abde29b2bf6e562b5b087b3b963141ea5">FIX8::States::is_established</a> (SessionStates ss)</td></tr>
+<tr class="separator:abde29b2bf6e562b5b087b3b963141ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

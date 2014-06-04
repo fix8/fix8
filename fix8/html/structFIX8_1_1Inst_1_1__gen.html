@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -117,17 +117,24 @@ $(document).ready(function(){initNavTree('structFIX8_1_1Inst_1_1__gen.html','');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0f1ceee8f5181f2157c5f74d1cb5bab2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Inst_1_1__gen.html#a0f1ceee8f5181f2157c5f74d1cb5bab2">_make</a> (const char *from, const <a class="el" href="structFIX8_1_1RealmBase.html">RealmBase</a> *db, const int)</td></tr>
-<tr class="separator:a0f1ceee8f5181f2157c5f74d1cb5bab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41fc9a92fc807dacba696392f7dd431e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Inst_1_1__gen.html#a41fc9a92fc807dacba696392f7dd431e">_make</a> (const char *from, const <a class="el" href="structFIX8_1_1RealmBase.html">RealmBase</a> *db, const int rv)</td></tr>
+<tr class="separator:a41fc9a92fc807dacba696392f7dd431e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br/>
 struct FIX8::Inst::_gen&lt; T &gt;</h3>
 
+<p>Generate a field instantiator </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>type to instantiate </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01693">1693</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01771">1771</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a0f1ceee8f5181f2157c5f74d1cb5bab2"></a>
+<a class="anchor" id="a41fc9a92fc807dacba696392f7dd431e"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -152,7 +159,7 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const int&#160;</td>
-          <td class="paramname">&#160;</td>
+          <td class="paramname"><em>rv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -166,8 +173,18 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Instantiate a field (no realm) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>source string </td></tr>
+    <tr><td class="paramname">db</td><td>realm base for this type </td></tr>
+    <tr><td class="paramname">rv</td><td>realm value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>new field </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01695">1695</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01778">1778</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -177,7 +194,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:57. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

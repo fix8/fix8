@@ -12,7 +12,7 @@ var searchData=
   ['dealingcapacity_5frealm_5fels',['DealingCapacity_realm_els',['../namespaceFIX8_1_1TEX.html#a633be1491ef784070813280888b35258',1,'FIX8::TEX']]],
   ['dealingcapacity_5friskless_5fprincipal',['DealingCapacity_RISKLESS_PRINCIPAL',['../namespaceFIX8_1_1TEX.html#a8dcd01ac586331c71bef40a8d7185f95',1,'FIX8::TEX']]],
   ['decode',['decode',['../classFIX8_1_1MessageBase.html#ace7b1ee5d0b85712809a924b69dd7c4d',1,'FIX8::MessageBase::decode()'],['../classFIX8_1_1Message.html#aff6f603f6f91a868798d7a67d8ab8c44',1,'FIX8::Message::decode()']]],
-  ['decode_5fdow',['decode_dow',['../namespaceFIX8.html#af4d0145e561ea9e28fa69e692bf5413f',1,'FIX8::decode_dow(const std::string &amp;from)'],['../namespaceFIX8.html#aa668a47a575df1612f3dee91d3a4b6ff',1,'FIX8::decode_dow(const string &amp;from)']]],
+  ['decode_5fdow',['decode_dow',['../namespaceFIX8.html#a7f03b022c786be62f4d56108c83e3005',1,'FIX8::decode_dow(const std::string &amp;from)'],['../namespaceFIX8.html#aa668a47a575df1612f3dee91d3a4b6ff',1,'FIX8::decode_dow(const string &amp;from)']]],
   ['decode_5fgroup',['decode_group',['../classFIX8_1_1MessageBase.html#a2bc1d25a3ed42195165b31747e0e71d6',1,'FIX8::MessageBase']]],
   ['default_5fassignment_5fseparator',['default_assignment_separator',['../namespaceFIX8.html#a1962eafa95e5fafa614c0322fd5f8e49',1,'FIX8']]],
   ['default_5ffield_5fseparator',['default_field_separator',['../namespaceFIX8.html#a25dd5007a5a971fe43a58df371e1db34',1,'FIX8']]],
@@ -151,13 +151,12 @@ var searchData=
   ['do_5fstate_5fchange',['do_state_change',['../classFIX8_1_1Session.html#a5a8cd4559b7e696a743a69c1a5b443cf',1,'FIX8::Session']]],
   ['doctype',['doctype',['../f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa',1,'f8precomp.cpp']]],
   ['dontknowtrade',['DontKnowTrade',['../classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c',1,'FIX8::TEX::DontKnowTrade']]],
-  ['dthread',['dthread',['../classFIX8_1_1dthread.html#a73ac58f9458ff6f2ffea9219718a1e80',1,'FIX8::dthread::dthread(T what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)'],['../classFIX8_1_1dthread.html#a54b561289ed3031b843eeb684233168f',1,'FIX8::dthread::dthread(reference_wrapper&lt; T &gt; what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)'],['../classFIX8_1_1dthread_3_4.html#aa300762baea3947a94e0ad0ce266f355',1,'FIX8::dthread&lt;&gt;::dthread()']]],
+  ['dthread',['dthread',['../classFIX8_1_1dthread.html#a73ac58f9458ff6f2ffea9219718a1e80',1,'FIX8::dthread::dthread(T what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)'],['../classFIX8_1_1dthread.html#a2158aa73d84badd56258483cb75eadf1',1,'FIX8::dthread::dthread(std::reference_wrapper&lt; T &gt; what, int(T::*method)()=&amp;T::operator(), dthread_cancellation_token &amp;(T::*cancellation_token_method)()=&amp;T::cancellation_token, const bool detach=false, const size_t stacksize=0)']]],
   ['dthread_5fcancellation_5ftoken',['dthread_cancellation_token',['../structFIX8_1_1dthread__cancellation__token.html#a773d6e859d95564fc42b42b75775c07b',1,'FIX8::dthread_cancellation_token']]],
   ['dthreadexception',['dthreadException',['../structFIX8_1_1dthreadException.html#a86b77a8561a50a67b02209dd583dd9fe',1,'FIX8::dthreadException']]],
   ['duetorelated_5fno',['DueToRelated_NO',['../namespaceFIX8_1_1TEX.html#aa2807312184afc7ff980ff973751b2c4',1,'FIX8::TEX']]],
   ['duetorelated_5frealm_5fels',['DueToRelated_realm_els',['../namespaceFIX8_1_1TEX.html#aafe5060479c6891994139d5a222eefc4',1,'FIX8::TEX']]],
   ['duetorelated_5fyes',['DueToRelated_YES',['../namespaceFIX8_1_1TEX.html#a9014839ff009d1ad965d9a36660a3cfe',1,'FIX8::TEX']]],
-  ['dummy',['dummy',['../classFIX8_1_1Inst.html#a80271ff815f4d2b08f647a8f06b4ab5d',1,'FIX8::Inst::dummy()'],['../classFIX8_1_1Minst.html#a882a0c116e16ef44cbc2c42484c71aea',1,'FIX8::Minst::dummy()']]],
   ['dump_5fcomponents',['dump_components',['../f8precomp_8cpp.html#a65faa14e3ce40cdc92fccac9d9b85c87',1,'f8precomp.cpp']]],
   ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#ab1df1a8ca0df0ef108b6149d6d960d9a',1,'FIX8::DuplicateField']]]
 ];

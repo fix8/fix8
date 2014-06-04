@@ -26,6 +26,6 @@ var classFIX8_1_1FieldTraits =
     [ "set", "classFIX8_1_1FieldTraits.html#af808a86b530b0ad6e8bc275383f6d7e3", null ],
     [ "set", "classFIX8_1_1FieldTraits.html#ae85b3f5d9b6f5b93097c017b01c83bca", null ],
     [ "size", "classFIX8_1_1FieldTraits.html#a846307fa006f68fa382687c0c70f1425", null ],
-    [ "operator<<", "classFIX8_1_1FieldTraits.html#a99605af604e5f98a63716b515bb050a0", null ],
+    [ "operator<<", "classFIX8_1_1FieldTraits.html#a7dab1fb3ddc469cf159d39d7b9ce510c", null ],
     [ "_presence", "classFIX8_1_1FieldTraits.html#aaaf6306cd7117ac56d3bcc09b0a8853e", null ]
 ];

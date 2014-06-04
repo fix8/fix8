@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -154,46 +154,30 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:aaebab02aab2294fd3380fb303f7de7f0"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; RealmObject <br class="typebreak"/>
-*, std::string, <br class="typebreak"/>
-RealmObject::less &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aaebab02aab2294fd3380fb303f7de7f0">FIX8::RealmMap</a></td></tr>
-<tr class="separator:aaebab02aab2294fd3380fb303f7de7f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba98fd7f333103f1c65718ce1d2d1306"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; unsigned, <br class="typebreak"/>
-struct FieldSpec &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aba98fd7f333103f1c65718ce1d2d1306">FIX8::FieldSpecMap</a></td></tr>
-<tr class="separator:aba98fd7f333103f1c65718ce1d2d1306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04724596d2e79ea27a5c57543a516869"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <br class="typebreak"/>
-unsigned &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FIX8::FieldToNumMap</a></td></tr>
-<tr class="separator:a04724596d2e79ea27a5c57543a516869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2f736655c16c802e88bb5772312605d"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; unsigned, <br class="typebreak"/>
-struct MessageSpec &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">FIX8::GroupMap</a></td></tr>
-<tr class="separator:ab2f736655c16c802e88bb5772312605d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbef208b1c28a9bb7b9dfda012b9179c"><td class="memItemLeft" align="right" valign="top">typedef StaticTable<br class="typebreak"/>
-&lt; std::string, <br class="typebreak"/>
-FieldTrait::FieldType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#abbef208b1c28a9bb7b9dfda012b9179c">FIX8::BaseTypeMap</a></td></tr>
-<tr class="separator:abbef208b1c28a9bb7b9dfda012b9179c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdd8f347879c8866714529ce6e5a5a5e"><td class="memItemLeft" align="right" valign="top">typedef StaticTable<br class="typebreak"/>
-&lt; FieldTrait::FieldType, <br class="typebreak"/>
-std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#acdd8f347879c8866714529ce6e5a5a5e">FIX8::TypeToCPP</a></td></tr>
-<tr class="separator:acdd8f347879c8866714529ce6e5a5a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f0e9b48eff49a1efdbe9d63f78502e"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; const <br class="typebreak"/>
-std::string, MessageSpec &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a86f0e9b48eff49a1efdbe9d63f78502e">FIX8::MessageSpecMap</a></td></tr>
-<tr class="separator:a86f0e9b48eff49a1efdbe9d63f78502e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6621e6283079ef70d474341400de4260"><td class="memItemLeft" align="right" valign="top">typedef std::multiset&lt; const <br class="typebreak"/>
-FieldTrait <br class="typebreak"/>
-*, FieldTrait::PosCompare &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a6621e6283079ef70d474341400de4260">FIX8::FieldTraitOrder</a></td></tr>
-<tr class="separator:a6621e6283079ef70d474341400de4260"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a16df9bb622f3595abd0f6eddbe0992"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; uint32_t, <br class="typebreak"/>
-struct MessageSpec &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a3a16df9bb622f3595abd0f6eddbe0992">FIX8::CommonGroups</a></td></tr>
-<tr class="separator:a3a16df9bb622f3595abd0f6eddbe0992"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac782afaace3bf7c54bbbb1f503a8f9a9"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; unsigned, <br class="typebreak"/>
-CommonGroups &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac782afaace3bf7c54bbbb1f503a8f9a9">FIX8::CommonGroupMap</a></td></tr>
-<tr class="separator:ac782afaace3bf7c54bbbb1f503a8f9a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39b9db9bebadb681f3312265f15b6d33"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <br class="typebreak"/>
-const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">FIX8::Components</a></td></tr>
-<tr class="separator:a39b9db9bebadb681f3312265f15b6d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb80f9f92b222aa70c97343ad2922b2d"><td class="memItemLeft" align="right" valign="top">typedef StaticTable&lt; comp_str, <br class="typebreak"/>
-std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aeb80f9f92b222aa70c97343ad2922b2d">FIX8::CSMap</a></td></tr>
-<tr class="separator:aeb80f9f92b222aa70c97343ad2922b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9f0def25fea561ecb82bddfb1b503e0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ae9f0def25fea561ecb82bddfb1b503e0">FIX8::RealmMap</a> = std::map&lt; RealmObject *, std::string, RealmObject::less &gt;</td></tr>
+<tr class="separator:ae9f0def25fea561ecb82bddfb1b503e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0860083d24caca47441dd85e3473d1a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab0860083d24caca47441dd85e3473d1a">FIX8::FieldSpecMap</a> = std::map&lt; unsigned, struct FieldSpec &gt;</td></tr>
+<tr class="separator:ab0860083d24caca47441dd85e3473d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a97191d8d931f5155086344748cd434"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0a97191d8d931f5155086344748cd434">FIX8::FieldToNumMap</a> = std::map&lt; std::string, unsigned &gt;</td></tr>
+<tr class="separator:a0a97191d8d931f5155086344748cd434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accb1c183f64ff49018f64d84590b985d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#accb1c183f64ff49018f64d84590b985d">FIX8::GroupMap</a> = std::map&lt; unsigned, struct MessageSpec &gt;</td></tr>
+<tr class="separator:accb1c183f64ff49018f64d84590b985d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6befec66c1ecce69fa16002c319dc91"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac6befec66c1ecce69fa16002c319dc91">FIX8::BaseTypeMap</a> = std::map&lt; std::string, FieldTrait::FieldType &gt;</td></tr>
+<tr class="separator:ac6befec66c1ecce69fa16002c319dc91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5dad19fa5e3be89ae649bb6c8ab401c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab5dad19fa5e3be89ae649bb6c8ab401c">FIX8::TypeToCPP</a> = std::map&lt; FieldTrait::FieldType, std::pair&lt; std::string, std::string &gt;&gt;</td></tr>
+<tr class="separator:ab5dad19fa5e3be89ae649bb6c8ab401c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fb10e04019974d81fbb1c34f8d52a52"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9fb10e04019974d81fbb1c34f8d52a52">FIX8::MessageSpecMap</a> = std::map&lt; const std::string, MessageSpec &gt;</td></tr>
+<tr class="separator:a9fb10e04019974d81fbb1c34f8d52a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1520460290915c997c7b7c76456fc78"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa1520460290915c997c7b7c76456fc78">FIX8::FieldTraitOrder</a> = std::multiset&lt; const FieldTrait *, FieldTrait::PosCompare &gt;</td></tr>
+<tr class="separator:aa1520460290915c997c7b7c76456fc78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a743c398aeb01c854654d4c242ef96cf8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a743c398aeb01c854654d4c242ef96cf8">FIX8::CommonGroups</a> = std::map&lt; uint32_t, struct MessageSpec &gt;</td></tr>
+<tr class="separator:a743c398aeb01c854654d4c242ef96cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d87f52617831ae29485da7d1e45d7fd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a5d87f52617831ae29485da7d1e45d7fd">FIX8::CommonGroupMap</a> = std::map&lt; unsigned, CommonGroups &gt;</td></tr>
+<tr class="separator:a5d87f52617831ae29485da7d1e45d7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c59ca70c47351be5476e5a54a28ed3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">FIX8::Components</a> = std::map&lt; std::string, const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt;</td></tr>
+<tr class="separator:ac8c59ca70c47351be5476e5a54a28ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b1269655b15be6233c824f00f70f3d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a02b1269655b15be6233c824f00f70f3d">FIX8::CSMap</a> = std::map&lt; comp_str, std::string &gt;</td></tr>
+<tr class="separator:a02b1269655b15be6233c824f00f70f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -226,7 +210,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:47. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:56. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

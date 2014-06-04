@@ -2,9 +2,10 @@ var classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1N
 [
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a947f07bb4ca6c23632b8bdc118e2040ea3a7e43fc85e07480012216a8c27bd787", null ],
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a792e2334cc02c45c5a0ff02655f1dba2", null ],
-    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a0bb2b6903f1afa976804ceab0f88f2bf", null ],
+    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#af6809229d1d62c0f0872328cdf1cecc6", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a8cc8004425a9dfc1ab0056327878f5fc", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#ab68aa1801cde900901515f9cadb912ab", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a17fd7442a5ac1dcb3037eb3964c9f2a3", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a00ea4d893e3d58121e57b4760fbc658d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a73bf0a14769b756bc286c27bc6c87794", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentPartfcecd5cde826690785ea247391b59fba.html#a5706f374f795fa62f90dc8037e793a7c", null ]

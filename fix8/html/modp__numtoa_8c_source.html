@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.1.0</span>
+   &#160;<span id="projectnumber">version  1.2.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('modp__numtoa_8c_source.html','');});
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">// slighly modified by DD to return target length</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="modp__numtoa_8c.html#a53c69f35aa88e5d169f896b4d9a7cf99">   68</a></span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="modp__numtoa_8c.html#a53c69f35aa88e5d169f896b4d9a7cf99">modp_dtoa</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">char</span>* str, <span class="keywordtype">int</span> prec) <span class="comment">// DD</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="modp__numtoa_8c.html#aa4bb9b9276349df9bda5eb726f29335a">   68</a></span>&#160;<a class="code" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> <span class="keywordtype">size_t</span> <a class="code" href="modp__numtoa_8c.html#aa4bb9b9276349df9bda5eb726f29335a">modp_dtoa</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">char</span>* str, <span class="keywordtype">int</span> prec) <span class="comment">// DD</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="comment">/* if input is larger than thres_max, revert to exponential */</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> thres_max = (double)(0x7FFFFFFF);</div>
@@ -272,13 +272,14 @@ $(document).ready(function(){initNavTree('modp__numtoa_8c_source.html','');});
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
 <div class="ttc" id="modp__numtoa_8c_html_ac884408acf9fb0963fcfcb572bb96fa4"><div class="ttname"><a href="modp__numtoa_8c.html#ac884408acf9fb0963fcfcb572bb96fa4">strreverse</a></div><div class="ttdeci">static void strreverse(char *begin, char *end)</div><div class="ttdef"><b>Definition:</b> <a href="modp__numtoa_8c_source.html#l00060">modp_numtoa.c:60</a></div></div>
+<div class="ttc" id="f8dll_8h_html_abf338f67631f8046c09ca9be926bba0c"><div class="ttname"><a href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a></div><div class="ttdeci">#define F8API</div><div class="ttdef"><b>Definition:</b> <a href="f8dll_8h_source.html#l00060">f8dll.h:60</a></div></div>
 <div class="ttc" id="modp__numtoa_8c_html_ac5db8c14b973519ee6de83110e2d1954"><div class="ttname"><a href="modp__numtoa_8c.html#ac5db8c14b973519ee6de83110e2d1954">pow10_</a></div><div class="ttdeci">static const double pow10_[]</div><div class="ttdef"><b>Definition:</b> <a href="modp__numtoa_8c_source.html#l00057">modp_numtoa.c:57</a></div></div>
+<div class="ttc" id="modp__numtoa_8c_html_aa4bb9b9276349df9bda5eb726f29335a"><div class="ttname"><a href="modp__numtoa_8c.html#aa4bb9b9276349df9bda5eb726f29335a">modp_dtoa</a></div><div class="ttdeci">F8API size_t modp_dtoa(double value, char *str, int prec)</div><div class="ttdoc">Convert double to ascii. </div><div class="ttdef"><b>Definition:</b> <a href="modp__numtoa_8c_source.html#l00068">modp_numtoa.c:68</a></div></div>
 <div class="ttc" id="f8dll_8h_html"><div class="ttname"><a href="f8dll_8h.html">f8dll.h</a></div></div>
-<div class="ttc" id="modp__numtoa_8c_html_a53c69f35aa88e5d169f896b4d9a7cf99"><div class="ttname"><a href="modp__numtoa_8c.html#a53c69f35aa88e5d169f896b4d9a7cf99">modp_dtoa</a></div><div class="ttdeci">size_t modp_dtoa(double value, char *str, int prec)</div><div class="ttdoc">Convert double to ascii. </div><div class="ttdef"><b>Definition:</b> <a href="modp__numtoa_8c_source.html#l00068">modp_numtoa.c:68</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 6 2014 20:40:40. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Jun 4 2014 16:15:48. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

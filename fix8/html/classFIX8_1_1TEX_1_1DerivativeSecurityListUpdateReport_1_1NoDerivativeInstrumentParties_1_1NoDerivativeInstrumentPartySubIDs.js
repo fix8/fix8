@@ -2,9 +2,10 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstru
 [
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ad4abe90b4a87b1136f39985ce32cbe6da77215ea0ad7a5f42407e2570703ff9c8", null ],
     [ "NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a3f95087777d3e9ff75ec804fbfee55f7", null ],
-    [ "~NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a2da781f18127c87d3177df4b6bd2870b", null ],
+    [ "~NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ac169318300a183fa7060b007d1ee77d4", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a5f403894cd5de063449132896fa374d0", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ae7221af480db5db196b7b32930f12ba3", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ab17bfc0543e9cb499d67abe30749c46e", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a2f6e28c24571a79ff2dd65187ba7666b", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a74aa5f4c041ae024be70ca188fecb072", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a1826af5089e5d139def8d37b5a517a79", null ]

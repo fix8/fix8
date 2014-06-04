@@ -3,7 +3,6 @@ var searchData=
   ['randdev',['RandDev',['../structRandDev.html',1,'']]],
   ['realmbase',['RealmBase',['../structFIX8_1_1RealmBase.html',1,'FIX8']]],
   ['realmobject',['RealmObject',['../classFIX8_1_1RealmObject.html',1,'FIX8']]],
-  ['reference_5fwrapper',['reference_wrapper',['../classFIX8_1_1reference__wrapper.html',1,'FIX8']]],
   ['regexp',['RegExp',['../classFIX8_1_1RegExp.html',1,'FIX8']]],
   ['registrationinstructions',['RegistrationInstructions',['../classFIX8_1_1TEX_1_1RegistrationInstructions.html',1,'FIX8::TEX']]],
   ['registrationinstructionsresponse',['RegistrationInstructionsResponse',['../classFIX8_1_1TEX_1_1RegistrationInstructionsResponse.html',1,'FIX8::TEX']]],

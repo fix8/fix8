@@ -7,9 +7,10 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1No
     [ "NoTimeInForceRules", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoTimeInForceRules.html", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoTimeInForceRules" ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#ad888394bc3ba09521d93928193d24bc5ae34651bca1ce6954f712a7d9eace8930", null ],
     [ "NoTradingSessionRules", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#af0524993645113704dc29d545b42dbf0", null ],
-    [ "~NoTradingSessionRules", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#ab0c1f6421dd93280a969527484ec6617", null ],
+    [ "~NoTradingSessionRules", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#a49aa0ffdc077d2a5c75b2c562aebe5c0", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#ab00b4cc9cc9243edc96bff50397b0e34", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#a64dc7c6fae8d9dde9070ea2ce26375b0", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#a0745a5e3f675adbd19ded6794f96069e", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#a8f86d7be0f5d437539b5af5f7b59601c", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#ab53670404c3c705bf6be61d4d5cbdb79", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules.html#a10fcfae345e2146d1076ff2419b91b3a", null ]
