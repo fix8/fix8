@@ -41,9 +41,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtConcurrent/QtConcurrent>
 #include <QMap>
 #include <QString>
-#include <globals.h>
+#include "globals.h"
 #include "mainwindow.h"
+#include "messagefield.h"
 #include "tableschema.h"
+#include <fix8/f8includes.hpp>
+#include <fix8/field.hpp>
+#include <fix8/message.hpp>
+#include <fix8/f8types.hpp>
+#include "fix8/traits.hpp"
+
 class QStandardItemModel;
 class Database;
 class SchemaEditorDialog;
@@ -105,10 +112,11 @@ protected:
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
 private:
-    void generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
+    void generate_traits(const TraitHelper &tr, QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
-    void generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
+    void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QBaseEntryList *qbaseEntryList);
+                      *
 
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);

@@ -91,7 +91,14 @@ win32 {
     MOC_DIR = moc
     UI_DIR = ui
     OBJECTS_DIR = obj
-    INCLUDEPATH += $$(HOME)/include
+    INCLUDEPATH += . ./f8 ../../include \
+
+                ../../msvc/packages/fix8.dev.1.1.20140517.1/build/native/include \
+                ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \
+                ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \
+                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/include \
+                ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/include
+
     LIBS +=
 }
 OTHER_FILES += \

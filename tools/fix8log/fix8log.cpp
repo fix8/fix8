@@ -46,8 +46,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QDebug>
 #include <QtWidgets>
 #include <fix8/f8includes.hpp>
-#include <field.hpp>
-#include <message.hpp>
+#include "field.hpp"
+#include "message.hpp"
 #include <f8types.hpp>
 #include <Myfix_types.hpp>
 #include <Myfix_router.hpp>

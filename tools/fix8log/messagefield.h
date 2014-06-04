@@ -42,7 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QList>
 #include <QVector>
 #include <fix8/f8includes.hpp>
-#include <f8types.hpp>
+#include <fix8/f8types.hpp>
 #include <Myfix_types.hpp>
 using namespace FIX8;
 
