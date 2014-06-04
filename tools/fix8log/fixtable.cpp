@@ -52,12 +52,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <string.h>
 #include <time.h>
 #include <iostream>
+/*
 #include <fix8/f8includes.hpp>
 #include <fix8/message.hpp>
 #include <Myfix_types.hpp>
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
 using namespace FIX8;
+*/
 QString FixTable::headerLabel[] =
 {tr("SeqNum"),tr("SenderCompID"),tr("TargetCompID"),tr("SendTime"),
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),

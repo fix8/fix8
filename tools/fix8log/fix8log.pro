@@ -88,10 +88,11 @@ DEPENDPATH += /usr/local/include
 }
 win32 {
     message("Windows Compile")
+QMAKE_CXXFLAGS += /bigobj
     MOC_DIR = moc
     UI_DIR = ui
     OBJECTS_DIR = obj
-    INCLUDEPATH += . ./f8 ../../include \
+    INCLUDEPATH += . ./f8 \
                 ../../msvc/packages/fix8.dev.1.1.20140603.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \
