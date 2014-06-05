@@ -40,6 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fixtoolbar.h"
 #include "globals.h"
 #include "nodatalabel.h"
+#include "tableschema.h"
 #include "worksheet.h"
 #include <QDebug>
 #include "globals.h"
@@ -54,10 +55,12 @@ void MainWindow::quitSlot()
 }
 void MainWindow::editSchemaSlot()
 {
-    QUuid workSheetID;
-     WorkSheet *ws = qobject_cast <WorkSheet *> (tabW->currentWidget());
-     if (ws)
-         workSheetID = ws->getID();
+    qDebug() << "Edit Schema Slot" << __FILE__ << __LINE__;
+    if (tableSchema) {
+        qDebug() << "Current Table Schema = " << tableSchema->name << __FILE__ << __LINE__;
+    }
+    else
+        qDebug() << "We have null table schema";
     emit editSchema(this);
 }
 
@@ -264,6 +267,29 @@ void MainWindow::modelDroppedSlot(FixMimeData *m)
         return;
     emit modelDropped(m);
 }
+void MainWindow::schemaSelectedSlot(QAction *action)
+{
+    TableSchema *ts;
+    qDebug() << "SCHEMA SELECTED " << __FILE__ << __LINE__;
+    QVariant var =  action->data();
+    if (!schemaList) {
+        qWarning() << "ERROR - NO SCHEMA LIST SET" << __FILE__ << __LINE__;
+         return;
+    }
+
+     ts = (TableSchema *) var.value<void *>();
+     if (!ts) {
+         qWarning() << "Error - Table Schema Not Found" << __FILE__ << __LINE__;
+         return;
+    }
+    schemaV->setText(ts->name);
+
+    qDebug() << "Table Schema Set To " << ts->name <<  __FILE__ << __LINE__;
+    tableSchema = ts;
+    emit tableSchemaChanged(ts);
+
+}
+
 void MainWindow::setWindowNameSlot()
 {
     bool ok;
@@ -275,14 +301,4 @@ void MainWindow::setWindowNameSlot()
         name = str;
     }
 }
-void MainWindow::setSchemaScopeSlot(QAction *action)
-{  
-    bool isGlobal = true;
-  if (action == schemaApplyWindowA) {
-       scopeV->setPixmap(QPixmap(":/images/svg/spreadsheetTwoTabs.svg").scaledToHeight(24));
-       isGlobal = false;
-  }
-  else
-       scopeV->setPixmap(QPixmap(":/images/svg/worldwWthTwoTabs.svg").scaledToHeight(24));
-  emit setSchemaScopeGlobal(isGlobal);
-}
+

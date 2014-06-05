@@ -40,10 +40,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "database.h"
 #include "globals.h"
 using namespace GUI;
-SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget *parent) :
+SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
-    currentSchemaItem(0),defaultSchemaItem(0),database(db),globalSchemaOn(GlobalSchemaOn),
-    expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),tempTableSchema(0),
+    currentSchemaItem(0),defaultSchemaItem(0),database(db),
+    expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),inUseTableSchema(0),tempTableSchema(0),
     tableSchemaStatus(NoMods),undoBuild(false),currentMainWindow(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
@@ -62,6 +62,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     applyA = new QAction(tr("&Apply"),this);
     applyA->setIcon(QIcon(":/images/svg/apply.svg"));
     applyA->setToolTip(tr("Apply Schema"));
+    connect(applyA,SIGNAL(triggered()),this,SLOT(applySlot()));
     saveA = new QAction(tr("&Save"),this);
     connect(saveA,SIGNAL(triggered()),this,SLOT(saveSchemaSlot()));
     saveA->setIcon(QIcon(":/images/svg/document-save.svg"));
@@ -105,29 +106,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     setCentralWidget(cWidget);
 
 
-    applyBG = new QButtonGroup(this);
-    applyBG->setExclusive(true);
 
-    applyToWindowRB = new QRadioButton("Apply To Window",this);
-    applyToWindowRB->setToolTip("Apply only to the tabs in the given window");
-
-    applyToAllRB = new QRadioButton("Apply To All",this);
-    applyToAllRB->setToolTip("Apply selected schema to all windows and all tabs");
-    applyBG->addButton(applyToWindowRB);
-    applyBG->addButton(applyToAllRB);
-    if (globalSchemaOn)
-        applyToAllRB->setChecked(true);
-    else
-        applyToWindowRB->setChecked(true);
-    connect(applyBG,SIGNAL(buttonClicked(QAbstractButton*)),
-            this,SLOT(applyButtonSlot(QAbstractButton*)));
-    QHBoxLayout *topBox = new QHBoxLayout();
-    QWidget *applyArea = new QWidget(this);
-
-    QHBoxLayout *applyBox = new QHBoxLayout();
-    applyArea->setLayout(applyBox);
-    applyBox->addWidget(applyToAllRB,0,Qt::AlignLeft);
-    applyBox->addWidget(applyToWindowRB,0,Qt::AlignLeft);
 
     targetArea = new QWidget();
     QHBoxLayout *tarBox = new QHBoxLayout();
@@ -138,18 +117,17 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
 
     windowL = new QLabel("Window:");
     windowL->setFont(fnt);
-    windowV = new QLineEdit("");
-    windowV->setReadOnly(true);
-
+    windowV = new QLabel("");
+    windowV->setAlignment(Qt::AlignLeft);
     fnt.setPointSize(fnt.pointSize()+2);
     fnt.setItalic(true);
     windowV->setFont(fnt);
     QFontMetrics fm1(fnt);
     windowV->setMinimumWidth(fm1.maxWidth()*8);
-    windowV->setMaxLength(32);
     tarBox->addWidget(windowL,0,Qt::AlignLeft);
     tarBox->addWidget(windowV,1);
-    topBox->addWidget(applyArea,0,Qt::AlignLeft);
+
+    QHBoxLayout *topBox = new QHBoxLayout();
     topBox->addWidget(targetArea,2);
     statusArea = new QWidget(targetArea);
     QHBoxLayout *sbox = new QHBoxLayout(statusArea);
@@ -162,7 +140,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,bool GlobalSchemaOn,QWidget 
     statusL->setText("");
     sbox->addWidget(statusI);
     sbox->addWidget(statusL);
-
     topBox->addWidget(statusArea,1,Qt::AlignRight);
     splitter = new QSplitter(Qt::Horizontal,this);
     buildSchemaArea();
@@ -612,17 +589,35 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
             availableSchemaModel->appendRow(schemaItem);
         }
     }
-
+/*
     if (currentTableSchema) {
         tempTableSchema = currentTableSchema->clone();
     }
     buildSelectedListFromCurrentSchema();
+*/
+}
+void SchemaEditorDialog::setTableSchemaInUse(TableSchema *ts)
+{
+    if (tempTableSchema)  {
+        delete tempTableSchema;
+         tempTableSchema = 0;
+    }
+    inUseTableSchema = ts;
+    currentTableSchema = inUseTableSchema;
+    if (currentTableSchema) {
+        tempTableSchema = currentTableSchema->clone();
+
+        qDebug() << "\t Call buildSelecteeListFrom Current Schema" << ts->name << __FILE__ << __LINE__;
+        buildSelectedListFromCurrentSchema();
+    }
+    else {
+        tempTableSchema = 0;
+        qDebug() << "CURRENT SHCEMA IS NULL " << __FILE__ << __LINE__;
+    }
+
 
 }
-void SchemaEditorDialog::setCurrentTableSchema(int scheamID)
-{
-}
-bool SchemaEditorDialog::setCurrentTarget(bool isGlobal, MainWindow *mainWindow,bool editRequest)
+bool SchemaEditorDialog::setCurrentTarget( MainWindow *mainWindow,bool editRequest)
 {
     QString str;
     if (!mainWindow) {
@@ -649,23 +644,22 @@ bool SchemaEditorDialog::setCurrentTarget(bool isGlobal, MainWindow *mainWindow,
         if (currentMainWindow != mainWindow) {
             if (tableSchemaStatus == HaveMods) {
                 qDebug() << "\tHAVE MODS" << __FILE__ << __LINE__;
-                if (isGlobal != globalSchemaOn) {
+
                     qDebug() << "\tisGlboals !=" << __FILE__ << __LINE__;
                     str = "Schema Editor Locked By Window " + currentMainWindow->getName();
                     str.append("\nSave or Cancel Changes To Unlock");
                     mainWindow->displayMessageDialog(str);
                     return false;
-                }
+
             }
             qDebug() << "\tKEEP GOING..." << __FILE__ << __LINE__;
             currentMainWindow = mainWindow;
-            globalSchemaOn = isGlobal;
             str = mainWindow->getName();
             if (str.length() < 1) {
                 qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
                 str = qApp->applicationDisplayName();
             }
-            showWindowArea(globalSchemaOn,mainWindow->getName());
+            showWindowArea(mainWindow->getName());
         }
         else { // currentWindow == mainWindow
             qDebug() << "\tWINDOWS MATCH..." << __FILE__ << __LINE__;
@@ -673,48 +667,37 @@ bool SchemaEditorDialog::setCurrentTarget(bool isGlobal, MainWindow *mainWindow,
             if (tableSchemaStatus == HaveMods) {
                 qDebug() << "\tHave MODS..." << __FILE__ << __LINE__;
 
-                if (isGlobal != globalSchemaOn) {
                     str = "Save Needed For Current Schema " + currentTableSchema->name;
                     str.append("\nFirst Save or Cancel Changes In Schema Editor");
                     mainWindow->displayMessageDialog(str);
                     return false;
-                }
+
             }
-            globalSchemaOn = isGlobal;
             str = mainWindow->getName();
             if (str.length() < 1) {
                 qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
                 str = qApp->applicationDisplayName();
             }
-            showWindowArea(globalSchemaOn,str);
+            showWindowArea(str);
         }
     }
     else {
         qDebug() << "CURRENT MW IS NULL, setting..." << __FILE__ << __LINE__;
         currentMainWindow = mainWindow;
-        globalSchemaOn = isGlobal;
         str = mainWindow->getName();
         if (str.length() < 1) {
             qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
             str = qApp->applicationDisplayName();
         }
-        showWindowArea(globalSchemaOn,str);
+        showWindowArea(str);
     }
     return true;
 }
-void SchemaEditorDialog::showWindowArea(bool isGlobal, QString windowName)
+void SchemaEditorDialog::showWindowArea( QString windowName)
 {
-    if (!isGlobal) {
         windowV->setText(windowName);
-        windowL->show();
-        windowV->show();
-        applyToWindowRB->setChecked(true);
-    }
-    else {
-        windowL->hide();
-        windowV->hide();
-        applyToAllRB->setChecked(true);
-    }
+
+
 }
 
 bool SchemaEditorDialog::validate()
@@ -728,12 +711,10 @@ bool SchemaEditorDialog::validate()
             if (*currentTableSchema == *tempTableSchema) {
                 tableSchemaStatus = NoMods;
             }
-
         }
     }
     else if (!tempTableSchema)
         tableSchemaStatus = NoMods;
-
     if (tableSchemaStatus == HaveMods) {
         schemaModified = true;
         setStatus(SaveNeeded);
@@ -759,7 +740,11 @@ bool SchemaEditorDialog::validate()
         collapsePB->setEnabled(false);
     }
     else {
-        applyA->setEnabled(true);
+        if (currentTableSchema && inUseTableSchema && (currentTableSchema == inUseTableSchema))
+            applyA->setEnabled(false);
+        else
+            applyA->setEnabled(true);
+
         if (availableFieldModel->rowCount() > 0) {
             expandPB->setEnabled(true);
             collapsePB->setEnabled(true);
@@ -849,4 +834,9 @@ void SchemaEditorDialog::setStatus(StatusType st)
         statusL->setText("");
     }
 
+}
+void SchemaEditorDialog::windowDeleted(MainWindow *mw)
+{
+    if (mw == currentMainWindow)
+        closeSlot();
 }

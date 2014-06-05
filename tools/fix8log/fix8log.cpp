@@ -60,18 +60,55 @@ using namespace std;
 Fix8Log::Fix8Log(QObject *parent) :
     QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
-    defaultTableSchema(0),worldTableSchema(0),globalSchemaOn(false)
+    defaultTableSchema(0),worldTableSchema(0)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
     connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
     defaultHeaderStrs << "MsgSeqNum" << "MsgType" << "SendingTime" << "SenderCompID" << "TargetCompID";
 }
+/*  Clean windows data ->verify schema is good */
+void Fix8Log::cleanWindowDataList(QList <WindowData> &windowDataList)
+{
+    WindowData *wd;
+    TableSchema *ts;
+    int tsid;
+    if (windowDataList.count()<1) {
+        qWarning() << "Error - clean window data list failed, list is empty" << __FILE__ << __LINE__;
+        return;
+    }
+    QListIterator <WindowData> iter(windowDataList);
+    while(iter.hasNext()) {
+        wd = (WindowData *)&iter.next();
+        tsid = wd->tableSchemaID;
+        if (!tableSchemaList) {
+            qWarning() << "Table Schema List is NULL " << " so setting  to default" << __FILE__ << __LINE__;
+            wd->tableSchema = defaultTableSchema;
+            if (!defaultTableSchema) {
+                qWarning() << "ERROR - DEFAULT TABLE SCHEMA NOT SET" << __FILE__ << __LINE__;
+            }
+            else
+                wd->tableSchemaID = defaultTableSchema->id;
+        }
+        else  {
+            wd->tableSchema = tableSchemaList->findByID(tsid);
+            if (!wd->tableSchema) {
+                qWarning() << "Could not find table schema for window " << wd->name;
+                qWarning() << "Resetting to default table schema" << __FILE__ << __LINE__;
+                wd->tableSchema = defaultTableSchema;
+                if (!defaultTableSchema) {
+                    qWarning() << "ERROR - DEFAULT TABLE SCHEMA NOT SET" << __FILE__ << __LINE__;
+                }
+                else
+                    wd->tableSchemaID = defaultTableSchema->id;
+            }
+        }
 
+    }
+}
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,true);
-    newMW->setGlobalSchemaOn(globalSchemaOn);
     wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
@@ -96,7 +133,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
             mw,SLOT(setTimeFormatSlot(GUI::Globals::TimeFormat)));
     connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
     connect(mw,SIGNAL(editSchema(MainWindow*)),this,SLOT(editSchemaSlot(MainWindow  *)));
-    connect(mw,SIGNAL(setSchemaScopeGlobal(bool)),this,SLOT(setGlobalSchemaOnSlot(bool)));
+    connect(mw,SIGNAL(tableSchemaChanged(TableSchema*)),this,SLOT(tableSchemaSelectedSlot(TableSchema *)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 
@@ -197,6 +234,8 @@ bool Fix8Log::init()
     QString dbFileName = "fix8log.sql";
     QString errorStr;
     QStandardItemModel *model = 0;
+    QList <WindowData> windowDataList;
+    WindowData wd;
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
     readSettings();
@@ -283,7 +322,6 @@ bool Fix8Log::init()
             errorStr = "Error - no table schemas found in database, creating default....";
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
             defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
-            qDebug() << "ADDED DEFAULT TABLE TO DATABSE, ID = " << defaultTableSchema->id << __FILE__ << __LINE__;
             bstatus = database->addTableSchema(*defaultTableSchema);
             if (!bstatus) {
                 errorStr = "Failed to add default table schema to database";
@@ -307,10 +345,9 @@ bool Fix8Log::init()
                     displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
                 }
             }
+            MainWindow::defaultTableSchema = defaultTableSchema;
         }
-        MainWindow::defaultTableSchema = defaultTableSchema;
     }
-
     if (tableSchemaList) {
         QListIterator <TableSchema *> tsIter(*tableSchemaList);
         while(tsIter.hasNext()) {
@@ -325,7 +362,6 @@ bool Fix8Log::init()
     const BaseMsgEntry *tbme;
     //Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
     //Globals::messagePairs = new QVector<Globals::MessagePair>();
-    cout.flush();
     int messageCount = TEX::ctx()._bme.size();
     // qDebug() << "SIZE OF MESSAGE TABLE = " << messageCount ;
     const BaseEntry *tbe;
@@ -373,10 +409,13 @@ bool Fix8Log::init()
             }
         }
     }
+    MainWindow::setTableSchemaList(tableSchemaList);
     int sizeofFieldTable = TEX::ctx()._be.size();
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
-    QList <WindowData> windowDataList = database->getWindows();
+    // QList <WindowData> windowDataList = database->getWindows();
+    windowDataList = database->getWindows();
+    cleanWindowDataList(windowDataList);
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QListIterator <WindowData> iter(windowDataList);
     QStringList errorStrList;
@@ -386,24 +425,16 @@ bool Fix8Log::init()
     bool isInitial = true;
     if (autoSaveOn){
         while(iter.hasNext()) {
-            WindowData wd = iter.next();
-            wd.tableSchema = tableSchemaList->findByID(wd.tableSchemaID);
-            if (!wd.tableSchema) {
-                qWarning() << "Table Schema Not Found, setting to default";
-                wd.tableSchema = defaultTableSchema;
-                wd.tableSchemaID = defaultTableSchema->id;
-            }
+            wd = iter.next();
+            newMW  = new MainWindow(true);
+            newMW->setWindowData(wd);
+            wireSignalAndSlots(newMW);
+            mainWindows.append(newMW);
+            newMW->setAutoSaveOn(autoSaveOn);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             if (wsdList.count() > 0) {
-                newMW  =new MainWindow(true);
-                newMW->setWindowData(wd);
-                newMW->setGlobalSchemaOn(globalSchemaOn);
-                wireSignalAndSlots(newMW);
-                mainWindows.append(newMW);
-                newMW->setAutoSaveOn(autoSaveOn);
-                newMW->show();
                 QListIterator <WorkSheetData> iter2(wsdList);
                 while(iter2.hasNext()) {
                     model = 0;
@@ -428,21 +459,31 @@ bool Fix8Log::init()
                     newMW->setLoading(false);
                     if (model) {
                         newMW->addWorkSheet(model,wsd);
+                        qDebug() << "FIX THIS HARD CODE ROW SETTING of 2 ?" << __FILE__ << __LINE__;
                         newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
                     }
                 }
             }
+            newMW->show();
         }
-        //qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
         displayConsoleMessage("Session restored from autosave");
     }
+    else
+        qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
 done:
-    MainWindow::schemaList = tableSchemaList;
 
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
-        newMW->setGlobalSchemaOn(globalSchemaOn);
+        if (windowDataList.count() > 0) {
+            wd = windowDataList.at(0);
+            if (!wd.tableSchema) {
+                qWarning() << "No Table schema found for window, setting it to default" << __FILE__ << __LINE__;
+                wd.tableSchema = defaultTableSchema;
+            }
+            newMW->setWindowData(wd);
+        }
+        newMW->setTableSchema(defaultTableSchema);
         wireSignalAndSlots(newMW);
         newMW->show();
         newMW->setAutoSaveOn(autoSaveOn);
@@ -477,7 +518,6 @@ bool Fix8Log::init(QString fileNameToLoad)
     }
     return true;
 }
-
 void Fix8Log::saveSession()
 {
     MainWindow *mw;
@@ -513,17 +553,12 @@ void Fix8Log::readSettings()
 {
     QSettings settings("fix8","logviewer");
     autoSaveOn = (bool) settings.value("AutoSave",false).toBool();
+
     GUI::Globals::timeFormat  = (GUI::Globals::TimeFormat) settings.value("StartTimeFormat",GUI::Globals::HHMMSS).toInt();
-    globalSchemaOn = settings.value("GlobalSchemaOn",false).toBool();
     emit notifyTimeFormatChanged(GUI::Globals::timeFormat);
 
 }
 void Fix8Log::writeSettings()
 {
     QSettings settings("fix8","logviewer");
-    settings.setValue("GlobalSchemaOn",globalSchemaOn);
-}
-bool Fix8Log::isGlobalSchemaOn()
-{
-    return globalSchemaOn;
 }

@@ -50,8 +50,8 @@ TableSchema *MainWindow::defaultTableSchema = 0;
 TableSchemaList *MainWindow::schemaList = 0;
 
 MainWindow::MainWindow(bool showLoading)
-    : QMainWindow(0),fileDialog(0),qmlObject(0),windowDataID(-1),
-      loadingActive(showLoading),tableSchema(0)
+    : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
+      windowDataID(-1),loadingActive(showLoading),tableSchema(0)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -61,13 +61,15 @@ MainWindow::MainWindow(bool showLoading)
     readSettings();
 }
 
-MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
-    : QMainWindow(0),fileDialog(0),qmlObject(0),windowDataID(-1),
-      loadingActive(false)
+MainWindow::MainWindow(MainWindow &mw,bool copyAll)
+    : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
+      windowDataID(-1),loadingActive(false)
 {
     buildMainWindow();
     setAcceptDrops(true);
     QRect rect = mw.geometry();
+    TableSchema *ts = mw.getTableSchema();
+    setTableSchema(ts);
     setGeometry(rect);
     int x = mw.x();
     int y = mw.y();
@@ -93,19 +95,7 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
     readSettings();
     move(x+100,y+90); // offset from window copied
 }
-void MainWindow::setGlobalSchemaOn(bool b)
-{
-    if (b) {
-        schemaApplyGlobalA->setChecked(true);
-        scopeV->setPixmap(QPixmap(":/images/svg/worldwWthTwoTabs.svg").scaledToHeight(24));
-    }
-    else {
-        schemaApplyWindowA->setChecked(true);
-         scopeV->setPixmap(QPixmap(":/images/svg/spreadsheetTwoTabs.svg").scaledToHeight(24));
 
-    }
-
-}
 void MainWindow::setLoading(bool bstatus)
 {
     loadingActive = bstatus;
@@ -464,29 +454,13 @@ void MainWindow::buildMainWindow()
 }
 void MainWindow::buildSchemaMenu()
 {
-
-    schemaScopeGroup = new QActionGroup(this);
-    connect(schemaScopeGroup,SIGNAL(triggered(QAction*)),this,SLOT(setSchemaScopeSlot(QAction*)));
-    schemaScopeGroup->setExclusive(true);
-    schemaScopeMenu = schemaMenu->addMenu("Schema Scope");
-    schemaApplyGlobalA = new QAction("Apply Globally",this);
-    //schemaApplyGlobalA->setIcon(QIcon(":/images/svg/worldwWthTwoTabs.svg"));
-    schemaApplyWindowA = new QAction("Apply To Window",this);
-    //schemaApplyWindowA->setIcon(QIcon(":/images/svg/spreadsheetTwoTabs.svg"));
-
-    schemaApplyGlobalA->setCheckable(true);
-    schemaApplyWindowA->setCheckable(true);
-    schemaScopeMenu->addAction(schemaApplyWindowA);
-    schemaScopeMenu->addAction(schemaApplyGlobalA);
-
-    schemaScopeGroup->addAction(schemaApplyWindowA);
-    schemaScopeGroup->addAction(schemaApplyGlobalA);
     TableSchema *tableSchema;
     if (!schemaList) {
         qDebug() << "Schema List is null " << __FILE__ << __LINE__;
         return;
     }
     schemaActionGroup = new QActionGroup(this);
+    connect(schemaActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(schemaSelectedSlot(QAction *)));
     schemaActionGroup->setExclusive(true);
     schemaMenu->addSection("Available Schemas");
     QListIterator <TableSchema *> iter(*schemaList);
@@ -495,12 +469,11 @@ void MainWindow::buildSchemaMenu()
         QAction *action = new QAction(tableSchema->name,this);
         action->setCheckable(true);
         QVariant var;
-        var.setValue((void *) action);
+        var.setValue((void *) tableSchema);
         action->setData(var);
         schemaActionMap.insert(tableSchema->id,action);
         schemaMenu->addAction(action);
         schemaActionGroup->addAction(action);
-
     }
 }
 
@@ -511,6 +484,10 @@ MainWindow::~MainWindow()
 void MainWindow::createWindowSlot()
 {
     emit createWindow(this);
+}
+void MainWindow::setTableSchemaList(TableSchemaList *tsl)
+{
+    schemaList = tsl;
 }
 void MainWindow::showFileDialog()
 {
@@ -573,11 +550,20 @@ WindowData MainWindow::getWindowData()
     wd.id       = this->windowDataID;
     wd.isVisible = this->isVisible();
     wd.currentTab = tabW->currentIndex();
+    wd.tableSchema = tableSchema;
+    if (tableSchema)
+        wd.tableSchemaID = tableSchema->id;
+    else if(defaultTableSchema)
+        wd.tableSchemaID = defaultTableSchema->id;
     wd.name     = name;
     return wd;
 }
 void MainWindow::setWindowData(const WindowData &wd)
 {
+    QAction *action;
+    QVariant var;
+    TableSchema *ts;
+    QList <QAction *> al;
     windowDataID = wd.id;
     restoreGeometry(wd.geometry);
     restoreState(wd.state);
@@ -585,6 +571,27 @@ void MainWindow::setWindowData(const WindowData &wd)
     setVisible(wd.isVisible);
     setWindowTitle(wd.name);
     name = wd.name;
+    tableSchema  = wd.tableSchema;
+    if (!tableSchema)
+        tableSchema = defaultTableSchema;
+    schemaV->setText(tableSchema->name);
+    if (!schemaActionGroup) {
+        qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
+        return;
+    }
+    al = schemaActionGroup->actions();
+    if (al.count() > 0) {
+        QListIterator <QAction *> iter(al);
+        while(iter.hasNext()) {
+            action = iter.next();
+            var = action->data();
+            ts = (TableSchema *) var.value<void *>();
+            if (ts == tableSchema) {
+                action->setChecked(true);
+                break;
+            }
+        }
+    }
 }
 QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {
@@ -669,9 +676,33 @@ void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
     }
     addWorkSheet(fmd->model,wsd);
 }
-void MainWindow::setTableSchema(TableSchema *ts)
+void MainWindow::setTableSchema(TableSchema *newTableSchema)
 {
-    tableSchema = ts;
+    tableSchema = newTableSchema;
+    QAction *action;
+    QVariant var;
+    TableSchema *ts;
+    QList <QAction *> al;
+    if (!tableSchema)
+        tableSchema = defaultTableSchema;
+    schemaV->setText(tableSchema->name);
+    if (!schemaActionGroup) {
+        qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
+        return;
+    }
+    al = schemaActionGroup->actions();
+    if (al.count() > 0) {
+        QListIterator <QAction *> iter(al);
+        while(iter.hasNext()) {
+            action = iter.next();
+            var = action->data();
+            ts = (TableSchema *) var.value<void *>();
+            if (ts->id == tableSchema->id) {
+                action->setChecked(true);
+                break;
+            }
+        }
+    }
 }
 void MainWindow::addNewSchema(TableSchema *ts)
 {
@@ -680,7 +711,7 @@ void MainWindow::addNewSchema(TableSchema *ts)
     QAction *action = new QAction(ts->name,this);
     action->setCheckable(true);
     QVariant var;
-    var.setValue((void *) action);
+    var.setValue((void *) ts);
     action->setData(var);
     schemaMenu->addAction(action);
     schemaActionMap.insert(ts->id,action);

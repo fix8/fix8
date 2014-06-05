@@ -69,7 +69,6 @@ public:
     void readFileInAnotherThread(const QString &fileName,QString &errorStr);
     void readSettings();
     void writeSettings();
-    bool isGlobalSchemaOn();
 public slots:
     void autoSaveOnSlot(bool);
     void cancelSessionRestoreSlot();
@@ -84,10 +83,10 @@ public slots:
     void lastWindowClosedSlot();
     void modelDroppedSlot(FixMimeData *);
     void newSchemaCreatedSlot(TableSchema *);
-    void setGlobalSchemaOnSlot(bool);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
+    void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
 protected:
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);
@@ -103,7 +102,6 @@ protected:
     TableSchemaList *tableSchemaList;
     TableSchema *defaultTableSchema;
     TableSchema *worldTableSchema;
-    bool globalSchemaOn;
     MessageFieldList *messageFieldList;
     FieldTraitVector fieldTraitV;
     QMap<QString, QBaseEntry *> baseMap;
@@ -112,6 +110,8 @@ protected:
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
 private:
+    void cleanWindowDataList(QList <WindowData> &windowDataList);
+
     void generate_traits(const TraitHelper &tr, QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
     void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,

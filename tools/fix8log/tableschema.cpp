@@ -204,8 +204,10 @@ TableSchema *TableSchemaList::findByID(qint32 id)
     QListIterator <TableSchema *> iter(*this);
     while(iter.hasNext()) {
         ts = iter.next();
-        if (ts->id == id)
+        if (ts->id == id) {
             return ts;
+
+        }
     }
     return 0;
 }

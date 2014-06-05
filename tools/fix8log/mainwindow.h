@@ -74,13 +74,14 @@ class MainWindow : public QMainWindow
     friend class Fix8Log;
 public:
     MainWindow(bool showLoading=false);
-    MainWindow(const MainWindow & sibling,bool copyAll = false);
+    MainWindow(MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
     void addNewSchema(TableSchema *);
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     void deletedSchema(int schemaID);
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
+    static void setTableSchemaList(TableSchemaList *);
     void showFileDialog();
     QString getName();
     TableSchema* getTableSchema();
@@ -115,8 +116,7 @@ public:
     void modelDroppedSlot(FixMimeData *);
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void quitSlot();
-    void setGlobalSchemaOn(bool);
-    void setSchemaScopeSlot(QAction *);
+    void schemaSelectedSlot(QAction *);
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
@@ -152,8 +152,6 @@ protected:
     QAction  *pasteTabA;
     QAction  *quitA;
     QAction  *saveA;
-    QAction  *schemaApplyWindowA;
-    QAction  *schemaApplyGlobalA;
     QAction  *searchBackA;
     QAction  *searchBeginA;
     QAction  *searchEndA;
@@ -221,10 +219,10 @@ signals:
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
     void editSchema(MainWindow *);
+    void tableSchemaChanged(TableSchema *);
     void exitApp();
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
-    void setSchemaScopeGlobal(bool);
     void toolButtonStyleModified(Qt::ToolButtonStyle);
 private:
     void buildHideColumnMenu();

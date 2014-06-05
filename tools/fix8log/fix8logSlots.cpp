@@ -79,6 +79,8 @@ void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
         writeSettings();
         qApp->exit();
     }
+    if (schemaEditorDialog)
+        schemaEditorDialog->windowDeleted(mw);
 }
 void Fix8Log::displayConsoleMessage(GUI::ConsoleMessage msg)
 {
@@ -164,7 +166,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
 {
     bool ok;
     if (!schemaEditorDialog) {
-        schemaEditorDialog = new SchemaEditorDialog(database,globalSchemaOn);
+        schemaEditorDialog = new SchemaEditorDialog(database);
         schemaEditorDialog->populateMessageList(messageFieldList);
 
         schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
@@ -184,7 +186,11 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
     QString windowName = mw->windowTitle();
     if (windowName.length() < 1)
         windowName = qApp->applicationName();
-    schemaEditorDialog->setCurrentTarget(globalSchemaOn, mw,true);
+    schemaEditorDialog->setCurrentTarget(mw,true);
+    if (mw) {
+        qDebug() << "SET TABLE SHCEMA IN USE " << __FILE__ << __LINE__;
+        schemaEditorDialog->setTableSchemaInUse(mw->getTableSchema());
+    }
     schemaEditorDialog->show();
     schemaEditorDialog->setVisible(true);
     schemaEditorDialog->showNormal();
@@ -225,25 +231,12 @@ void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
     schemaEditorDialog->saveSettings();
 
 }
-void Fix8Log::setGlobalSchemaOnSlot(bool b)
+
+void Fix8Log::tableSchemaSelectedSlot(TableSchema *ts)
 {
-    MainWindow *senderMW = (MainWindow *) sender();
-    bool bstatus;
-    QSettings settings("fix8","logviewer");
-    MainWindow *mw;
-    if (schemaEditorDialog) {
-        bstatus = schemaEditorDialog->setCurrentTarget(b,senderMW);
-        if (!bstatus) {
-            senderMW->setGlobalSchemaOn(globalSchemaOn);
-            return;
-        }
+    if (!ts)  {
+        qWarning() << "Error - table schema selected is null" << __FILE__ << __LINE__;
+        return;
     }
-    globalSchemaOn = b;
-    settings.setValue("GlobalSchemaOn",globalSchemaOn);
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        if(mw != senderMW)
-            mw->setGlobalSchemaOn(b);
-    }
+    qDebug() << "TABLE SCHEMA SELECTED " << ts->name << __FILE__ << __LINE__;
 }

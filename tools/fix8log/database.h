@@ -71,6 +71,7 @@ public:
     bool deleteAllWindows();
     bool deleteWindow(int windowID);
     bool addWindow(WindowData &);
+    bool updateWindow(WindowData &);
     // WorkSheets Methods
     QList <WorkSheetData> getWorkSheets(int windowID);
     bool addWorkSheet(WorkSheetData &);

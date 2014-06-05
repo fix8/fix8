@@ -50,9 +50,9 @@ class SchemaEditorDialog : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit SchemaEditorDialog(Database *database,bool globalSchemaOn, QWidget *parent = 0);
-    void setCurrentTableSchema(int schemaID);
-    bool setCurrentTarget(bool isGlobal,MainWindow *mainWindow,bool isEditRequest=false);
+    explicit SchemaEditorDialog(Database *database, QWidget *parent = 0);
+    void setTableSchemaInUse(TableSchema *inUse);
+    bool setCurrentTarget(MainWindow *mainWindow,bool isEditRequest=false);
     void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
@@ -60,13 +60,15 @@ public:
     void populateMessageList(MessageFieldList *);
     void saveSettings();
     void restoreSettings();
+    void windowDeleted(MainWindow *mw);
 signals:
     void finished(int);
     void newSchemaCreated(TableSchema *);
     void schemaDeleted(int schemaID);
     void tableSchemaUpdated(TableSchema *,bool onlyNameOrDescription);
 public slots:
-    void applyButtonSlot(QAbstractButton*);
+    void applySlot();
+    //void applyButtonSlot(QAbstractButton *);
     void availableSchemasClickedSlot(QModelIndex);
     void availableTreeItemChangedSlot(QStandardItem*);
     void cancelNewSlot();
@@ -100,7 +102,7 @@ private:
     void setMessage(QString str, bool isError);
     void setStatus(StatusType);
     void setUncheckedStateParent(QStandardItem *parentItem);
-    void showWindowArea(bool b, QString windowName);
+    void showWindowArea(QString windowName);
     bool validate();
     //SchemaEditorWidget *schemaWidget;
     QAction  *closeA;
@@ -111,7 +113,6 @@ private:
     QAction *copySchemaA;
     QAction *editSchemaA;
     QAction *deleteSchemaA;
-    QButtonGroup *applyBG;
     QButtonGroup *expandBG;
     QColor editColor;
     QColor regularColor;
@@ -120,7 +121,7 @@ private:
     QGroupBox *descriptionBox;
     QGroupBox *newDescriptionBox;
     QLabel  *windowL;
-    QLineEdit  *windowV;
+    QLabel  *windowV;
     QListView *availableSchemasListView;
     //QListView *messageListView;
     QTreeView *messageListTreeView;
@@ -145,8 +146,6 @@ private:
     QPushButton *clearAllPB;
     QPushButton *expandPB;
     QPushButton *collapsePB;
-    QRadioButton *applyToWindowRB;
-    QRadioButton *applyToAllRB;
     QSplitter   *splitter;
     QScrollArea *schemaScrollArea;
     QSpacerItem *messageSpacerItem;
@@ -172,7 +171,6 @@ private:
     SchemaItem *currentSchemaItem;
     SchemaItem *defaultSchemaItem ;
     Database *database;
-    bool globalSchemaOn;
     MessageFieldList *messageFieldList;
     ExpandMode expandMode;
     QMap<QString, QBaseEntry *> *baseMap;
@@ -181,6 +179,7 @@ private:
     QBaseEntryList *defaultHeaderItems;
     QBaseEntryList selectedBaseEntryList;
     TableSchema *currentTableSchema;
+    TableSchema *inUseTableSchema;
     TableSchema *tempTableSchema;
     unsigned int tableSchemaStatus;
     QLabel *statusL;

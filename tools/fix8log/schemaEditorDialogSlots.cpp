@@ -107,18 +107,7 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
     Qt::SortOrder so = selectedFieldsTreeView->header()->sortIndicatorOrder();
     selectedFieldModel->sort(0,so);
 }
-void SchemaEditorDialog::applyButtonSlot(QAbstractButton *button)
-{
 
-    if (button == applyToWindowRB) {
-        windowL->show();
-        windowV->show();
-    }
-    else { // must be apply to all
-        windowL->hide();
-        windowV->hide();
-    }
-}
 void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
 {
     QStringList messageNameList;
@@ -655,6 +644,20 @@ void SchemaEditorDialog::saveNewEditSlot()
         clearAllSlot();
         emit newSchemaCreated(tableSchema);
     }
+}
+void SchemaEditorDialog::applySlot()
+{
+    qDebug() << "Apply Slot" << __FILE__ << __LINE__;
+    *inUseTableSchema = *tempTableSchema;
+    inUseTableSchema->fieldList = tempTableSchema->fieldList;
+    *currentTableSchema = *tempTableSchema;
+    currentTableSchema->fieldList = tempTableSchema->fieldList;
+
+    if (currentMainWindow) {
+        currentMainWindow->setTableSchema(inUseTableSchema);
+    }
+    validate();
+
 }
  // saves field changes
 void SchemaEditorDialog::saveSchemaSlot()

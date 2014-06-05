@@ -133,6 +133,57 @@ bool Database::addWindow(WindowData &wd)
     wd.id = variant.toInt();
     return true;
 }
+bool Database::updateWindow(WindowData &wd)
+{
+    bool bstatus;
+    if (!handle) {
+        errorMessage = tr("Error in update window  - handle is not initialized");
+        qWarning() << errorMessage;
+        return false;
+    }
+
+    QSqlQuery query(*handle);
+    QString str= "update windows set"
+            + QString("  id=:id")
+            + QString(", red=:red")
+            + QString(", green=:green")
+            + QString(", blue=:blue")
+            + QString(", geometry=:geometry")
+            + QString(", restoreState=:restoreState")
+            + QString(", currentTab=:currentTab")
+            + QString(", name=:name")
+            + QString(", tableSchemaID=:tableSchemaID")
+            + QString("  WHERE id='")  + QString::number(wd.id)
+            + QString("'");
+
+    bstatus = query.prepare(str);
+    if (bstatus == 0) {
+        qWarning("Error update window failed in prepare statement...");
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return false;
+    }
+    query.bindValue(":name",wd.name);
+    int red = wd.color.red();
+    int grn = wd.color.green();
+    int blu = wd.color.blue();
+    query.bindValue(":red",red);
+    query.bindValue(":green",grn);
+    query.bindValue(":blue",blu);
+    query.bindValue(":geometry",wd.geometry);
+    query.bindValue(":restoreState",wd.state);
+    query.bindValue(":tableSchemaID",wd.tableSchemaID);
+    query.bindValue(":currentTab",wd.currentTab);
+    bstatus = query.exec();
+    if (bstatus == 0) {
+        qWarning("Error - update window failed in exec statement...");
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+    }
+    return bstatus;
+}
 bool Database::deleteWindow(int windowID)
 {
     bool   bstatus = false;
@@ -162,7 +213,6 @@ done:
     bstatus = deleteWorkSheetByWindowID(windowID);
     return bstatus;
 }
-
 bool Database::deleteAllWindows()
 {
     if (!handle) {
