@@ -184,6 +184,7 @@ namespace defaults
 	{
 		retry_interval=5000,
 		login_retries=3,
+		tabsize=3,
 		hb_interval=30,
 		connect_timeout=10,
 		log_rotation=5,

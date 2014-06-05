@@ -865,6 +865,7 @@ enable_bdb
 with_bdb
 enable_zeromq
 enable_xmlstrictbool
+enable_rawmsgsupport
 enable_bufgloblogging
 enable_valgrind
 enable_gprof
@@ -1540,6 +1541,7 @@ Optional Features:
                           (default=no)
   --enable-zeromq         enable zeromq messagebus support (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
+  --enable-rawmsgsupport  enable raw FIX message support (default=no)
   --enable-bufgloblogging enable buffered global logging behaviour
                           (default=no)
   --enable-valgrind       enable internal support for valgrind (default=no)
@@ -1575,7 +1577,7 @@ Optional Packages:
                           when waiting for input(default=no)
   --with-poco=DIR         location of Poco
   --with-regex=VAL        select which regex system will be used (regex|poco,
-                          default=poco)
+                          default=regex)
   --with-thread=VAL       select which thread system will be used
                           (pthread|poco|tbb, default=pthread)
   --with-bdb=DIR          Berkeley DB installation directory
@@ -20499,10 +20501,13 @@ $as_echo "#define REGEX_POCO 1" >>confdefs.h
 
 $as_echo "#define REGEX_REGEX_H 2" >>confdefs.h
 
-if test "$regex_set" = no; then
-	using_poco_regex=yes
+if test "$using_poco_regex" = yes; then
 
 $as_echo "#define REGEX_SYSTEM REGEX_POCO" >>confdefs.h
+
+else
+
+$as_echo "#define REGEX_SYSTEM REGEX_REGEX_H" >>confdefs.h
 
 fi
 
@@ -24031,6 +24036,18 @@ esac
 fi
 
 
+# Check whether --enable-rawmsgsupport was given.
+if test "${enable_rawmsgsupport+set}" = set; then :
+  enableval=$enable_rawmsgsupport; case "${enableval}" in
+	yes)
+$as_echo "#define RAW_MSG_SUPPORT 1" >>confdefs.h
+ ;;
+	no)  ;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-rawmsgsupport" "$LINENO" 5 ;;
+esac
+fi
+
+
 # Check whether --enable-bufgloblogging was given.
 if test "${enable_bufgloblogging+set}" = set; then :
   enableval=$enable_bufgloblogging; case "${enableval}" in
@@ -24268,7 +24285,7 @@ cat >>confdefs.h <<_ACEOF
 #define CONFIGURE_TIME "`date`"
 _ACEOF
 
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 

@@ -45,6 +45,7 @@ using namespace std;
 #if defined CODECTIMING
 codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
+unsigned MessageBase::_tabsize = defaults::tabsize;
 
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
@@ -252,7 +253,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 // if force, copy all fields regardless, replacing any existing, adding any new
 unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 {
-	unsigned copied(0);
+	unsigned copied{};
 	for (Presence::const_iterator itr(_fp.get_presence().begin()); itr != _fp.get_presence().end(); ++itr)
 	{
 		if (itr->_field_traits & FieldTrait::present && (force || (to->_fp.has(itr->_fnum) && !to->_fp.get(itr->_fnum))))
@@ -264,7 +265,7 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 				for (GroupElement::const_iterator gitr(gb->_msgs.begin()); gitr != gb->_msgs.end(); ++gitr)
 				{
 					MessageBase *grc(gb1->create_group());
-					(*gitr)->copy_legal(grc, force);
+					copied += (*gitr)->copy_legal(grc, force);
 					*gb1 += grc;
 				}
 			}
@@ -364,8 +365,13 @@ size_t Message::encode(char **hmsg_store) const
 	if (!_header)
 		throw MissingMessageComponent("header");
 	_header->get_msg_type()->set(_msgType);
+#if defined RAW_MSG_SUPPORT
+	msg += (_begin_payload = _header->encode(msg)); // start
+	msg += (_payload_len = MessageBase::encode(msg));
+#else
 	msg += _header->encode(msg); // start
 	msg += MessageBase::encode(msg);
+#endif
 	if (!_trailer)
 		throw MissingMessageComponent("trailer");
 	msg += _trailer->encode(msg);
@@ -400,6 +406,9 @@ size_t Message::encode(char **hmsg_store) const
 #endif
 
 	*msg = 0;
+#if defined RAW_MSG_SUPPORT
+	_rawmsg.assign(*hmsg_store, msg - *hmsg_store);
+#endif
 	return msg - *hmsg_store;
 }
 
@@ -415,10 +424,10 @@ size_t Message::encode(f8String& to) const
 //-------------------------------------------------------------------------------------------------
 void MessageBase::print(ostream& os, int depth) const
 {
-	const string dspacer((depth + 1) * 3, ' ');
+	const string dspacer((depth + 1) * _tabsize, ' ');
    const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType.c_str()));
    if (tbme)
-      os << string(depth * 3, ' ') << tbme->_name << " (\"" << _msgType << "\")" << endl;
+      os << string(depth * _tabsize, ' ') << tbme->_name << " (\"" << _msgType << "\")" << endl;
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
 		const BaseEntry *tbe(_ctx.find_be(itr->second->_fnum));
@@ -447,7 +456,7 @@ void MessageBase::print_group(const unsigned short fnum, ostream& os, int depth)
 		throw InvalidRepeatingGroup(fnum);
 
 	++depth;
-	const string dspacer(depth * 3, ' ');
+	const string dspacer(depth * _tabsize, ' ');
 	size_t cnt(1);
 	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr, ++cnt)
 	{

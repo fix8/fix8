@@ -1,12 +1,18 @@
-* Sun Jun 08 2014 David L. Dight <fix@fix8.org> 1.2.0
+* Wed Jun 04 2014 David L. Dight <fix@fix8.org> 1.2.0
 - Fixed Jira tickets FX-278, FX-276, FX-275, FX-274, FX-273, FX-272, FX-271, FX-270, FX-269,
 							FX-268, FX-267, FX-266, FX-265, FX-264, FX-263, FX-228, FX-261, FX-260,
 							FX-259, FX-258, FX-257, FX-256, FX-253, FX-252, FX-251, FX-250, FX-249,
 							FX-248, FX-247, FX-246, FX-245, FX-244, FX-243, FX-242, FX-241, FX-240,
 							FX-239, FX-238, FX-237, FX-236, FX-235, FX-233, FX-232, FX-231, FX-230,
-							FX-229
+							FX-229, FX-282, FX-280, FX-279, FX-283, FX-285, FX-176, FX-220, FX-195,
+							FX-217
+- Provide access to raw inbound and outbound FIX message text
+- Make --enable-extended-metadata work in windows
+- Provide a session configuration option to enable or disable retransmission
+- Provide tabsize setting to customise fix printer
 - Update wiki with instruction of building NuGet packages
 - On Mac OS X Maverick, clang generates lots of warnings
+- building with --enable-tbb-malloc=yes on OS X gives error
 - poco error under OS X Maverics
 - Realm range not working as expected
 - Poco On Windows
@@ -27,6 +33,7 @@
 - Replace all the sizes from unsigned to size_t
 - OSX g++-4.2.1 on mac does not support -fno-var-tracking-assignments.
 - Invalid inbound acceptor SenderCompID ignored
+- Create OSX HOWTO in Confluence
 - Acceptor SenderCompID not configurable
 - Provide test example for multi-session support
 - Provide support for underlying FieldType introspection
