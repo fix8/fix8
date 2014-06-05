@@ -88,6 +88,7 @@ public slots:
     void selectedListClickedSlot(QModelIndex);
     void undoSchemaSlot();
 protected:
+    void closeEvent(QCloseEvent *);
     void showEvent(QShowEvent *);
 
 private:

@@ -476,7 +476,6 @@ void MainWindow::buildSchemaMenu()
         schemaActionGroup->addAction(action);
     }
 }
-
 MainWindow::~MainWindow()
 {
 

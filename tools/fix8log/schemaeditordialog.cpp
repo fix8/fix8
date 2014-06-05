@@ -39,6 +39,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "schemaitem.h"
 #include "database.h"
 #include "globals.h"
+#include <QCloseEvent>
+
 using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
@@ -514,6 +516,17 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
 
     // validate();
 }
+void SchemaEditorDialog::closeEvent(QCloseEvent *ce)
+{
+    if (statusValue == SaveNeeded) {
+        QMessageBox::information(this,"FIX8LogViewer","Save or Undo Changes Before Closing");
+        ce->ignore();
+    }
+    else
+        QMainWindow::closeEvent(ce);
+
+}
+
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
     validate();
