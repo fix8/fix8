@@ -135,6 +135,35 @@ void Fix8Log::cancelSessionRestoreSlot()
     cancelSessionRestore = true;
     displayConsoleMessage("Session Restore Cancelled");
 }
+void Fix8Log::schemaModifiedSlot(TableSchema *tableSchema, bool NameOnly)
+{
+    qDebug() << "Schema Modified Slot " << __FILE__ << __LINE__;
+    MainWindow *mw;
+    TableSchema * ts;
+    bool found = false;
+    if (!tableSchemaList) {
+        qWarning() << "Schema Modfied Error, tble Schema lis t is null" << __FILE__ << __LINE__;
+        return;
+    }
+    QListIterator <TableSchema *> iter(*tableSchemaList);
+    while(iter.hasNext()) {
+        ts = iter.next();
+        if (ts->id == tableSchema->id) {
+            *ts = *tableSchema;
+                found = true;
+            break;
+        }
+    }
+    if (!found) {
+        qWarning() << "Error - update of table schema failed" << __FILE__ << __LINE__;
+        return;
+    }
+    QListIterator <MainWindow *> iter2(mainWindows);
+    while(iter2.hasNext()) {
+        mw = iter2.next();
+        mw->tableSchemaModified(ts);
+    }
+}
 void  Fix8Log::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
 {
     GUI::Globals::timeFormat = tf;
@@ -180,6 +209,8 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
                 this,SLOT(newSchemaCreatedSlot(TableSchema *)));
         connect(schemaEditorDialog,SIGNAL(schemaDeleted(int)),
                 this,SLOT(schemaDeletedSlot(int)));
+        connect(schemaEditorDialog,SIGNAL(tableSchemaUpdated(TableSchema *,bool)),
+                this,SLOT(schemaModifiedSlot(TableSchema *,bool)));
         schemaEditorDialog->restoreSettings();
     }
 
@@ -226,9 +257,13 @@ void Fix8Log::schemaDeletedSlot(int schemaID)
 }
 void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 {
-    if (returnCode == QDialogButtonBox::Close)
+    if (returnCode == QDialogButtonBox::Close) {
         schemaEditorDialog->close();
     schemaEditorDialog->saveSettings();
+    schemaEditorDialog->deleteLater();
+    schemaEditorDialog = 0;
+    }
+
 
 }
 

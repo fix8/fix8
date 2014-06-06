@@ -308,6 +308,14 @@ void SchemaEditorDialog::closeSlot()
     settings.setValue("SchemaEditorGeometry",saveGeometry());
     settings.setValue("SchemaEditorState",saveState());
     settings.setValue("SchemaEditorSplitter",splitter->saveState());
+    if(tempTableSchema) {
+        tempTableSchema->removeAllFields();
+        delete tempTableSchema;
+    }
+    availableFieldModel->clear();
+    messageModel->clear();
+    availableSchemaModel->clear();
+    selectedFieldModel->clear();
     emit finished(QDialogButtonBox::Close);
 }
 void SchemaEditorDialog::collapseAllSlot(bool on)
@@ -662,6 +670,9 @@ void SchemaEditorDialog::applySlot()
  // saves field changes
 void SchemaEditorDialog::saveSchemaSlot()
 {
+
+    QString str;
+    bool bstatus;
     if (!database) {
         qWarning() << "Save failed, as database is null " << __FILE__ << __LINE__;
         return;
@@ -671,12 +682,29 @@ void SchemaEditorDialog::saveSchemaSlot()
         return;
     }
     setCursor(Qt::BusyCursor);
+
+    //currentTableSchema = tempTableSchema->clone();
+    *currentTableSchema = *tempTableSchema;
+    currentTableSchema->fieldList = tempTableSchema->fieldList->clone();
     if (currentSchemaItem)
-        currentSchemaItem->tableSchema = tempTableSchema->clone();
-    currentTableSchema = tempTableSchema->clone();
-    database->saveTableSchemaFields(*tempTableSchema);
+        currentSchemaItem->tableSchema = currentTableSchema;
+        //currentSchemaItem->tableSchema = tempTableSchema->clone();
+    qDebug() << "SAVE SCHEMA TO DATABASE"  << __FILE__ << __LINE__;
+    bstatus = database->saveTableSchemaFields(*tempTableSchema);
+
+    qDebug() << "\tsaved " << tempTableSchema->name << __FILE__ << __LINE__;
+    if (tempTableSchema->fieldList)
+        qDebug() << "\tNum of fields" << tempTableSchema->fieldList->count();
+    else
+        qWarning() << "NO FIELD LIST ITEMS TO SAVE FOR SCHEMA" << __FILE__ << __LINE__;
+    if (!bstatus) {
+        str = "Failed in saving " + tempTableSchema->name + " to database";
+        QMessageBox::warning(this,"Fix8LogViewer Error",str,QMessageBox::Ok,QMessageBox::NoButton);
+
+    }
     validate();
     unsetCursor();
+    emit tableSchemaUpdated(currentTableSchema,false);
 }
 void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)
 {

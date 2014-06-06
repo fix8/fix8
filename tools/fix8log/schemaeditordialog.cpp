@@ -110,16 +110,16 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
 
 
 
-    targetArea = new QWidget();
-    QHBoxLayout *tarBox = new QHBoxLayout();
+    targetArea = new QWidget(this);
+    QHBoxLayout *tarBox = new QHBoxLayout(targetArea);
     targetArea->setLayout(tarBox);
     QFont fnt = targetArea->font();
     fnt.setBold(true);
     targetArea->setFont(fnt);
 
-    windowL = new QLabel("Window:");
+    windowL = new QLabel("Window:",this);
     windowL->setFont(fnt);
-    windowV = new QLabel("");
+    windowV = new QLabel("",this);
     windowV->setAlignment(Qt::AlignLeft);
     fnt.setPointSize(fnt.pointSize()+2);
     fnt.setItalic(true);
@@ -145,8 +145,8 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     topBox->addWidget(statusArea,1,Qt::AlignRight);
     splitter = new QSplitter(Qt::Horizontal,this);
     buildSchemaArea();
-    QWidget *workWidget = new QWidget();
-    QGridLayout *wgrid = new QGridLayout();
+    QWidget *workWidget = new QWidget(splitter);
+    QGridLayout *wgrid = new QGridLayout(workWidget);
     workWidget->setLayout(wgrid);
 
     splitter->insertWidget(0,schemaArea);
@@ -167,13 +167,12 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     QVBoxLayout *mbox = new QVBoxLayout(messageArea);
     messageArea->setLayout(mbox);
     mbox->setMargin(0);
-    //messageListView = new QListView();
     messageListTreeView = new QTreeView(this);
     messageSpacerItem = new QSpacerItem(22,32);
     mbox->addWidget(messageListTreeView,1);
     mbox->addSpacerItem(messageSpacerItem);
 
-    messageModel = new QStandardItemModel();
+    messageModel = new QStandardItemModel(messageListTreeView);
     messageListTreeView->setModel(messageModel);
     QStringList messageListHeaders;
     messageListHeaders << "Name";
@@ -440,6 +439,8 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
     for(int i = 0;i< numOfSchemas;i++) {
         schemaItem = (SchemaItem *) availableSchemaModel->item(i);
         if (schemaItem->tableSchema == currentTableSchema) {
+            currentSchemaItem = schemaItem;
+
             qDebug() << "Set current selection to schema item...." << __FILE__ << __LINE__;
             selectionModel->select(schemaItem->index(),QItemSelectionModel::Select);
             break;

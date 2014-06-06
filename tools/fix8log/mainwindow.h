@@ -68,6 +68,8 @@ class QTabWidget;
 class QTextBrowser;
 class QTogleButton;
 class QToolBar;
+class QWhatsThis;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -94,6 +96,7 @@ public:
     void setLoadMessage(QString);
     void setWindowData(const WindowData &wd);
     void setTableSchema(TableSchema *);
+    void tableSchemaModified(TableSchema *);
     protected slots:
     void autoSaveOnSlot(bool);
     void cancelSessionRestoreSlot();
@@ -131,6 +134,8 @@ public:
     void toolbarOrientationChangedSlot(Qt::Orientation);
 protected:
     enum {ShowNoDataLabel,ShowTab,ShowProgress};
+    QAction  *aboutA;
+    QAction  *aboutQTA;
     QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
@@ -158,6 +163,7 @@ protected:
     QAction  *searchNextA;
     QAction  *searchEditA;
     QAction  *showMessageA;
+    QAction  *whatsThisA;
     QAction  *windowNameA;
     QActionGroup *schemaActionGroup;
     QActionGroup *schemaScopeGroup;
@@ -182,6 +188,7 @@ protected:
     QMenu    *configureIconsMenu;
     QMenu    *iconSizeMenu;
     QMenu    *iconStyleMenu;
+    QMenu    *helpMenu;
     QMenu    *optionMenu;
     QMenu    *schemaMenu;
     QMenu    *schemaScopeMenu;
@@ -206,6 +213,7 @@ protected:
     QWidget *progressWidget;
     QWidget *searchArea;
     QWidget *tabNameEditArea;
+    QWhatsThis *whatsThis;
     void setAutoSaveOn(bool);
     void buildMainWindow();
     void displayConsoleMessage(GUI::ConsoleMessage);

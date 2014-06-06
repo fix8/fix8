@@ -132,7 +132,7 @@ void MainWindow::buildMainWindow()
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
     schemaMenu = mainMenuBar->addMenu("&Schema");
-
+    helpMenu = mainMenuBar->addMenu("&Help");
     mainToolBar = new QToolBar("Main Toolbar",this);
 
     mainToolBar->setObjectName("MainToolBar");
@@ -347,6 +347,14 @@ void MainWindow::buildMainWindow()
     mainToolBar->addSeparator();
     mainToolBar->addAction(editSchemaA);
 
+
+    // helpMenu
+    aboutA = new QAction("About",this);
+    aboutQTA = new QAction("Qt",this);
+    //whatsThis = new QWhatsThis();
+    whatsThisA = QWhatsThis::createAction(this);
+    helpMenu->addAction(whatsThisA);
+    helpMenu->addAction(aboutA);
 
     configPB = new QPushButton(this);
     configPB->setIcon(QIcon(":/images/svg/preferences-color.svg"));
@@ -703,6 +711,31 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
         }
     }
 }
+void MainWindow::tableSchemaModified(TableSchema *ts)
+{
+
+    QAction *action;
+    if (!ts) {
+        qWarning() << "Error MainWindow::tableSchemaModfied" << __FILE__ << __LINE__;
+        return;
+    }
+    qDebug() << "Main Window Table Schema Modified " << __FILE__ << __LINE__;
+    QMap<int,QAction *>::const_iterator iter  = schemaActionMap.find(ts->id);
+    if (iter != schemaActionMap.end()) {
+         action = (QAction *) iter.value();
+         action->setText(ts->name);
+    }
+    if (tableSchema->id == ts->id) {
+        if (tableSchema->fieldList)
+            qDebug() << "OLD TS, field count = " << tableSchema->fieldList->count();
+        if (ts->fieldList)
+              qDebug() << "NEW TS, field count = " << ts->fieldList->count();
+        *tableSchema = *ts;
+        if (tableSchema->fieldList)
+            qDebug() << "OLD TS, after reset field count = " << tableSchema->fieldList->count();
+    }
+}
+
 void MainWindow::addNewSchema(TableSchema *ts)
 {
     if (!ts)

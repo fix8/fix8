@@ -86,6 +86,7 @@ public slots:
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
+    void schemaModifiedSlot(TableSchema *,bool nameAndOrDescriptionOnly);
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
 protected:

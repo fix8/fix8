@@ -92,7 +92,7 @@ QBaseEntryList::QBaseEntryList(const QBaseEntryList &bel):QList <QBaseEntry *>()
         append(be);
     }
 }
-bool   QBaseEntryList::operator==( const QBaseEntryList &qbel)
+bool QBaseEntryList::operator==( const QBaseEntryList &qbel)
 {
     QBaseEntry *qbe;
     QBaseEntry *oldQBE;
@@ -106,6 +106,20 @@ bool   QBaseEntryList::operator==( const QBaseEntryList &qbel)
             return false;
     }
     return true;
+}
+QBaseEntryList & QBaseEntryList::operator=( const QBaseEntryList &rhs)
+{
+    QBaseEntry *qbe;
+    QBaseEntry *newQBE;
+    if (this == &rhs)
+        return *this;
+    QListIterator <QBaseEntry *>iter(rhs);
+    while(iter.hasNext()) {
+        qbe = iter.next();
+        newQBE = new QBaseEntry(*qbe);
+        this->append(newQBE);
+    }
+    return *this;
 }
 
 QBaseEntryList *QBaseEntryList::clone()

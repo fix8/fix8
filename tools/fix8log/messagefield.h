@@ -46,9 +46,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Myfix_types.hpp>
 using namespace FIX8;
 
-
-
-
 class QFieldTrait {
 public:
     QFieldTrait() {};
@@ -86,6 +83,7 @@ public:
     explicit QBaseEntryList();
     QBaseEntryList(const QBaseEntryList &);
     bool   operator==( const QBaseEntryList &);
+    QBaseEntryList & operator=( const QBaseEntryList &rhs);
     QBaseEntry *findByName(QString &);
     void removeByName(QString &name);
     QBaseEntryList *clone();
