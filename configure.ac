@@ -290,11 +290,11 @@ AC_ARG_WITH(maxfldlen,
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
-AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default precision for floating point fields])
-AC_ARG_WITH(precision,
-  AS_HELP_STRING([--with-precision=VALUE],[Default precision for floating point fields (default=2)]),
+AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default number of precision digits for floating point fields])
+AC_ARG_WITH(precision-digits,
+  AS_HELP_STRING([--with-precision-digits=VALUE],[Default number of precision digits for floating point fields (default=2)]),
 [
-	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default precision for floating point fields (default=2)])
+	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default number of precision digits for floating point fields (default=2)])
 ],[])
 
 AC_ARG_WITH(tbb,
@@ -338,6 +338,19 @@ AC_ARG_WITH(gperf,
 
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+using_double_precision=yes
+AC_ARG_WITH([precision],
+[AS_HELP_STRING([--with-precision=VAL],[select whether to use single or double precision (single|double, default=double)])],
+[case "${withval}" in
+   single) using_double_precision=no
+       AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
+   double) using_double_precision=yes ;;
+   *) echo
+      echo "ERROR: Unknown value ${withval} for precision given."
+      echo
+      exit 1
+esac])
 
 mpmc_set=no
 using_ff=no

@@ -366,7 +366,7 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 	if (FieldTrait::is_char(ftype))
 		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))
-		return new TypedRealm<double>(get_value<double>(from), isRange);
+		return new TypedRealm<float>(get_value<fp_type>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
 	return nullptr;

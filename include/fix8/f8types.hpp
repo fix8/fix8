@@ -45,6 +45,11 @@ namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
 using f8String = std::string;
+#if defined USE_SINGLE_PRECISION
+using fp_type = float;
+#else
+using fp_type = double;
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /// Supported session process models

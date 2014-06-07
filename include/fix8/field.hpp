@@ -121,7 +121,7 @@ struct RealmBase
 	{
 		return FieldTrait::is_int(_ftype) ? _print<int>(os, idx)
 			: FieldTrait::is_char(_ftype) ? _print<char>(os, idx)
-			: FieldTrait::is_float(_ftype) ? _print<double>(os, idx)
+			: FieldTrait::is_float(_ftype) ? _print<fp_type>(os, idx)
 			: FieldTrait::is_string(_ftype) ? _print<f8String>(os, idx) : os;
 	}
 };
@@ -498,13 +498,13 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Partial specialisation for double field type.
+/// Partial specialisation for fp_type field type. fp_type is singe or double
 /*! \tparam field field number (fix tag) */
 template<const unsigned short field>
-class Field<double, field> : public BaseField
+class Field<fp_type, field> : public BaseField
 {
 protected:
-	double _value;
+	fp_type _value;
 	int _precision;
 	static const FieldTrait::FieldType _ftype = FieldTrait::ft_float;
 
@@ -525,13 +525,13 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
 
 	/*! Value ctor.
 	  \param val value to set
 	  \param prec precision digits
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const int prec, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(prec) {}
+	Field (const fp_type& val, const int prec, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(prec) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -569,22 +569,22 @@ public:
 	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
-	  \return value (double) */
-	const double& get() const { return _value; }
+	  \return value (fp_type) */
+	const fp_type& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (double) */
-	const double& operator()() const { return _value; }
+	  \return value (fp_type) */
+	const fp_type& operator()() const { return _value; }
 
 	/*! Get field value.
 	  \param from value to set
 	  \return original value (int) */
-	const double& set(const double& from) { return _value = from; }
+	const fp_type& set(const fp_type& from) { return _value = from; }
 
 	/*! Set the value from a string.
 	  \param from value to set
-	  \return original value (double) */
-	const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
+	  \return original value (fp_type) */
+	const fp_type& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -1738,18 +1738,11 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-// C++11 will permit proper type aliasing
-// typedef EnumType<FieldTrait::ft_float> Qty;
-// typedef EnumType<FieldTrait::ft_float> Amt;
-// typedef EnumType<FieldTrait::ft_float> price;
-// typedef EnumType<FieldTrait::ft_float> PriceOffset;
-// typedef EnumType<FieldTrait::ft_float> Percentage;
-
-using Qty = double;
-using Amt = double;
-using price = double;
-using PriceOffset = double;
-using Percentage = double;
+using Qty = fp_type;
+using Amt = fp_type;
+using price = fp_type;
+using PriceOffset = fp_type;
+using Percentage = fp_type;
 
 //-------------------------------------------------------------------------------------------------
 using MultipleCharValue = f8String;
