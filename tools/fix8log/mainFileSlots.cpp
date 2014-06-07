@@ -46,7 +46,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iostream>
 #include <string.h>
 #include <fix8/f8includes.hpp>
-#include <message.hpp>
+#include <fix8/message.hpp>
 #include <Myfix_types.hpp>
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
