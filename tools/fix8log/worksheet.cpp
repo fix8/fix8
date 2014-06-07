@@ -44,6 +44,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "intItem.h"
 #include "messagearea.h"
+#include "tableschema.h"
 #include <QDebug>
 #include <QQuickView>
 #include <QtWidgets>
@@ -62,7 +63,7 @@ QString WorkSheet::headerLabel[] =
  tr("HeartBtInt"),tr("Message Type")};
 
 
-WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linecount(0)
+WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linecount(0),tableSchema(0)
 {
     build();
     _model = new QStandardItemModel();
@@ -95,6 +96,7 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     QStandardItemModel *oldModel;
     _model = oldws.getModel();
     fixFileName = oldws.getFileName();
+    tableSchema = oldws.tableSchema;
     fixTable->setModel(_model);
     dateTimeDelegate = new DateTimeDelegate(this);
     fixTable->setItemDelegateForColumn(FixTable::SendingTime,
@@ -107,15 +109,16 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     fixHeader->setSectionsMovable(true);
     fixHeader->setSortIndicatorShown(true);
     setTimeFormat(GUI::Globals::timeFormat);
+    setTableSchema(tableSchema);
 
 }
 WorkSheet::WorkSheet(QStandardItemModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
-    QWidget(parent),cancelLoad(false),linecount(0),origWSD(wsd)
+    QWidget(parent),cancelLoad(false),linecount(0),origWSD(wsd),tableSchema(0)
 {
     build();
     _model = model;
-    fixTable->setModel(model);
+    fixTable->setModel(_model);
     dateTimeDelegate = new DateTimeDelegate(this);
     fixTable->setItemDelegateForColumn(FixTable::SendingTime,
                                        dateTimeDelegate);
@@ -155,6 +158,56 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
     // update to get time format displayed
     setTimeFormat(GUI::Globals::timeFormat);
 }
+void WorkSheet::setTableSchema(TableSchema *ts)
+{
+    tableSchema = ts;
+    _model->clear();
+    QHeaderView *horHeader =  fixTable->horizontalHeader();
+    QAbstractItemModel * headerModel = horHeader->model();
+    qDebug() << "Num of header items to remove " << headerModel->columnCount() << __FILE__ << __LINE__;
+    headerModel->removeColumns(0,headerModel->columnCount());
+    if (!tableSchema) {
+        qWarning() << "ERROR - Table Schema IS NULL" << __FILE__ << __LINE__;
+        return;
+    }
+    if (!tableSchema->fieldList) {
+        qWarning() << "ERROR - Table Schema Field List IS NULL" << __FILE__ << __LINE__;
+        return;
+    }
+    if (tableSchema->fieldList->count() < 1) {
+        qWarning() << "ERROR - Table Schema Field List has 0 fields" << __FILE__ << __LINE__;
+        return;
+    }
+    _model->setColumnCount(tableSchema->fieldList->count());
+    buildHeader();
+
+}
+void WorkSheet::buildHeader()
+{
+    QStandardItem *hi;
+    QBaseEntryList *fieldList;
+    QBaseEntry *field;
+    if (!tableSchema)
+        return;
+    if (!tableSchema->fieldList)
+        return;
+    if (tableSchema->fieldList->count() < 1)
+        return;
+
+    fieldList = tableSchema->fieldList;
+    headerItems.clear();
+
+    QListIterator <QBaseEntry *> iter(*fieldList);
+    headerItems.resize(fieldList->count());
+    int i = 0;
+    while(iter.hasNext()) {
+        field = iter.next();
+        hi = new QStandardItem(field->name);
+        _model->setHorizontalHeaderItem(i,hi);
+        i++;
+    }
+}
+
 void WorkSheet::build()
 {
     setAcceptDrops(true);
@@ -532,4 +585,25 @@ void WorkSheet::setWindowID( QUuid &uuid)
 void WorkSheet::modelDroppedSlot(FixMimeData *m)
 {
     emit modelDropped(m);
+}
+
+WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()
+{
+
+}
+
+bool WorkSheetList::removeByID(const QUuid &id)
+{
+    WorkSheet *ws;
+    QList<WorkSheet *>::iterator iter;
+
+    for (iter = this->begin(); iter != this->end();++iter) {
+        ws = *iter;
+        if (ws->getID() == id) {
+            qDebug() << "Remove work sheet" << __FILE__ << __LINE__;
+            erase(iter);
+            return true;
+        }
+    }
+    return false;
 }

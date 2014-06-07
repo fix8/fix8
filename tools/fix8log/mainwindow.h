@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fixtable.h"
 #include "globals.h"
 #include "windowdata.h"
+#include "worksheet.h"
 #include "worksheetdata.h"
 #include <QList>
 #include <QUuid>
@@ -243,6 +244,8 @@ private:
     QUuid  uuid;
     QString name;
     TableSchema *tableSchema;
+    WorkSheetList workSheetList;
+
 };
 
 #endif // MAINWINDOW_H

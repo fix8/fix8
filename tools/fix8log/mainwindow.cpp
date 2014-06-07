@@ -80,6 +80,7 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
             QByteArray ba = oldWorkSheet->splitter->saveState();
             WorkSheet *newWorkSheet = new WorkSheet(*oldWorkSheet,this);
             newWorkSheet->setWindowID(uuid);
+            workSheetList.append(newWorkSheet);
             connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
                     this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
             connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData*)),
@@ -95,7 +96,6 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
     readSettings();
     move(x+100,y+90); // offset from window copied
 }
-
 void MainWindow::setLoading(bool bstatus)
 {
     loadingActive = bstatus;
@@ -121,7 +121,6 @@ void MainWindow::setLoadMessage(QString str)
     }
     QMetaObject::invokeMethod (qmlObject, "setMessage", Q_RETURN_ARG(QVariant, returnedValue),  Q_ARG(QVariant,str));
 }
-
 void MainWindow::buildMainWindow()
 {
     setWindowIcon(QIcon(":/images/svg/logo.svg"));
@@ -500,7 +499,6 @@ void MainWindow::showFileDialog()
 {
     createTabSlot();
 }
-
 void MainWindow::buildHideColumnMenu()
 {
     for (int i=0;i<FixTable::NumColumns;i++) {
@@ -599,6 +597,7 @@ void MainWindow::setWindowData(const WindowData &wd)
             }
         }
     }
+    setTableSchema(tableSchema);
 }
 QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {
@@ -643,6 +642,8 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
         return;
     }
     newWorkSheet = new WorkSheet(model,wsd,this);
+    newWorkSheet->setTableSchema(tableSchema);
+    workSheetList.append(newWorkSheet);
     newWorkSheet->setWindowID(uuid);
     connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
@@ -685,6 +686,8 @@ void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
 }
 void MainWindow::setTableSchema(TableSchema *newTableSchema)
 {
+    qDebug() << "*********************  MAINWINDOW::SET TABLE SCHEMA" << __FILE__ << __LINE__;
+    WorkSheet *ws;
     tableSchema = newTableSchema;
     QAction *action;
     QVariant var;
@@ -710,10 +713,17 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
             }
         }
     }
+    QListIterator <WorkSheet *> iter2(workSheetList);
+    while(iter2.hasNext()) {
+        ws = iter2.next();
+        qDebug() << "Set Table Schema For Work SHeet" << __FILE__ << __LINE__;
+        ws->setTableSchema(tableSchema);
+
+    }
 }
 void MainWindow::tableSchemaModified(TableSchema *ts)
 {
-
+    WorkSheet *ws;
     QAction *action;
     if (!ts) {
         qWarning() << "Error MainWindow::tableSchemaModfied" << __FILE__ << __LINE__;
@@ -734,8 +744,12 @@ void MainWindow::tableSchemaModified(TableSchema *ts)
         if (tableSchema->fieldList)
             qDebug() << "OLD TS, after reset field count = " << tableSchema->fieldList->count();
     }
+    QListIterator <WorkSheet *> iter2(workSheetList);
+    while(iter2.hasNext()) {
+        ws = iter2.next();
+        ws->setTableSchema(tableSchema);
+    }
 }
-
 void MainWindow::addNewSchema(TableSchema *ts)
 {
     if (!ts)

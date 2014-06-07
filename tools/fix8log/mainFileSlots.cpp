@@ -142,15 +142,18 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         workSheet->setUpdatesEnabled(false);
         bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
         workSheet->setUpdatesEnabled(true);
-
+        workSheetList.append(workSheet);
+        qDebug() << "NUM OF WORK SHEETS " << workSheetList.count() << __FILE__ << __LINE__;
         if (!bstatus) {
             if (returnStatus == CANCEL) {
                 GUI::ConsoleMessage msg("Canceled Loading File: " + fileName);
                 messageList.append(msg);
                 tabW->removeTab(index);
+                workSheetList.removeOne(workSheet);
                 delete workSheet;
             }
             else {
+
                 GUI::ConsoleMessage msg("Loading File: " + fileName + " Failed",GUI::ConsoleMessage::ErrorMsg);
                 messageList.append(msg);
             }
@@ -209,8 +212,10 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
         copyTabA->setEnabled(false);
         showMessageA->setEnabled(false);
     }
-
+    qDebug() << "Num of work sheets before delete = " << workSheetList.count() << __FILE__ << __LINE__;
     if (worksheet) {
+        workSheetList.removeOne(worksheet);
+        qDebug() << "Num of work sheets after delete = " << workSheetList.count();
         delete worksheet;
     }
 }
@@ -238,6 +243,7 @@ void MainWindow::copyTabSlot()
         return;
     }
     newWorkSheet = new WorkSheet(*workSheet);
+    workSheetList.append(workSheet);
     connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),

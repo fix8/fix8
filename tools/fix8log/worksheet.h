@@ -43,6 +43,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fixHeaderView.h"
 #include "globals.h"
 #include "worksheetdata.h"
+class TableSchema;
 class QFile;
 class QLabel;
 class QMenu;
@@ -69,6 +70,7 @@ public:
     WorkSheet(QStandardItemModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
     void setWindowID( QUuid &);
+    void setTableSchema(TableSchema *);
     QUuid getID();
     ~WorkSheet();
     enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
@@ -99,6 +101,7 @@ protected:
     FixTable *fixTable;
     MessageArea   *messageArea; // temp for now - pace holder
     void build();
+    void buildHeader();
 private:
     QActionGroup *timeActionGroup;
     QAction *timeFormatActions[GUI::Globals::NumOfTimeFormats];
@@ -109,6 +112,7 @@ private:
     QString fixFileName;
     QStandardItemModel *_model;
     QStandardItem *headerItem[NumColumns];
+    QVector <QStandardItem *> headerItems;
     QString alias;
     QWidget *progressWidget;
     QQuickItem  *qmlObject;
@@ -118,6 +122,13 @@ private:
     DateTimeDelegate *dateTimeDelegate;
     QUuid windowID;
     QUuid uuid;
+    TableSchema *tableSchema;
 };
 
+class WorkSheetList : public QList <WorkSheet *>
+{
+  public:
+    WorkSheetList(QWidget *parent = 0);
+    bool removeByID(const QUuid &id);
+};
 #endif // WORKSHEET_H
