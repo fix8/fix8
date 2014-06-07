@@ -85,6 +85,7 @@ int FIXReader::execute(dthread_cancellation_token& cancellation_token)
 		catch (PeerResetConnection& e)
 		{
 			_session.log(e.what());
+			_session.do_state_change(States::st_session_terminated);
 			retval = -1;
 		}
 		catch (exception& e)
@@ -136,6 +137,7 @@ int FIXReader::execute(dthread_cancellation_token& cancellation_token)
 			catch (PeerResetConnection& e)
 			{
 				_session.log(e.what());
+				_session.do_state_change(States::st_session_terminated);
 				retval = -1;
 				break;
 			}
@@ -310,7 +312,6 @@ int FIXWriter::execute(dthread_cancellation_token& cancellation_token)
 	return result;
 }
 
-//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 void Connection::start()
 {
