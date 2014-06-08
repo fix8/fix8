@@ -90,7 +90,7 @@ const TypeToCPP FieldSpec::_typeToCPP
 	{ FieldTrait::ft_SeqNum, { "SeqNum", "ft_SeqNum" } },
 	{ FieldTrait::ft_NumInGroup, { "NumInGroup", "ft_NumInGroup" } },
 	{ FieldTrait::ft_DayOfMonth, { "DayOfMonth", "ft_DayOfMonth" } },
-	{ FieldTrait::ft_float, { "double", "ft_float" } },
+	{ FieldTrait::ft_float, { "fp_type", "ft_float" } },	// either float or double
 	{ FieldTrait::ft_Qty, { "Qty", "ft_Qty" } },
 	{ FieldTrait::ft_Price, { "price", "ft_Price" } },
 	{ FieldTrait::ft_PriceOffset, { "PriceOffset", "ft_PriceOffset" } },

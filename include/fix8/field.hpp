@@ -121,7 +121,7 @@ struct RealmBase
 	{
 		return FieldTrait::is_int(_ftype) ? _print<int>(os, idx)
 			: FieldTrait::is_char(_ftype) ? _print<char>(os, idx)
-			: FieldTrait::is_float(_ftype) ? _print<double>(os, idx)
+			: FieldTrait::is_float(_ftype) ? _print<fp_type>(os, idx)
 			: FieldTrait::is_string(_ftype) ? _print<f8String>(os, idx) : os;
 	}
 };
@@ -498,13 +498,13 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Partial specialisation for double field type.
+/// Partial specialisation for fp_type field type. fp_type is singe or double
 /*! \tparam field field number (fix tag) */
 template<const unsigned short field>
-class Field<double, field> : public BaseField
+class Field<fp_type, field> : public BaseField
 {
 protected:
-	double _value;
+	fp_type _value;
 	int _precision;
 	static const FieldTrait::FieldType _ftype = FieldTrait::ft_float;
 
@@ -525,13 +525,13 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
 
 	/*! Value ctor.
 	  \param val value to set
 	  \param prec precision digits
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const int prec, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(prec) {}
+	Field (const fp_type& val, const int prec, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(prec) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -569,22 +569,22 @@ public:
 	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
-	  \return value (double) */
-	const double& get() const { return _value; }
+	  \return value (fp_type) */
+	const fp_type& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (double) */
-	const double& operator()() const { return _value; }
+	  \return value (fp_type) */
+	const fp_type& operator()() const { return _value; }
 
 	/*! Get field value.
 	  \param from value to set
 	  \return original value (int) */
-	const double& set(const double& from) { return _value = from; }
+	const fp_type& set(const fp_type& from) { return _value = from; }
 
 	/*! Set the value from a string.
 	  \param from value to set
-	  \return original value (double) */
-	const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
+	  \return original value (fp_type) */
+	const fp_type& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -748,15 +748,15 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
 
 /*! Format Tickval into a string.
+  \param tickval input Tickval object
+  \param to output buffer, should make sure there is enough space reserved
+  \param ind indicating whether need millisecond or not
 	_time_only, the format string will be "HH:MM:SS"
 	_time_with_ms, the format string will be "HH:MM:SS.mmm"
 	_short_date_only, the format string will be "YYYYMM"
 	_date_only, the format string will be "YYYYMMDD"
 	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
 	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
-  \param tickval input Tickval object
-  \param to output buffer, should make sure there is enough space reserved
-  \param ind indicating whether need millisecond or not
   \return length of formatted string */
 inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndicator ind)
 {
@@ -799,7 +799,7 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
 }
 
 /*! Decode a DateTime string into ticks
-  \param ptr input DateTime string
+  \param ptr input DateTime string, if *ptr == '!' return current time
   \param len length of string
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
@@ -838,7 +838,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 }
 
 /*! Decode a Time string into ticks
-  \param ptr input time string
+  \param ptr input time string, if *ptr == '!' return current time
   \param len length of string
   \param timeonly if true, only calculate ticks for today
   \return ticks decoded */
@@ -938,9 +938,7 @@ public:
 	Field& operator=(const Field& that)
 	{
 		if (this != &that)
-		{
 			_value = that._value;
-		}
 		return *this;
 	}
 
@@ -1740,18 +1738,11 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-// C++11 will permit proper type aliasing
-// typedef EnumType<FieldTrait::ft_float> Qty;
-// typedef EnumType<FieldTrait::ft_float> Amt;
-// typedef EnumType<FieldTrait::ft_float> price;
-// typedef EnumType<FieldTrait::ft_float> PriceOffset;
-// typedef EnumType<FieldTrait::ft_float> Percentage;
-
-using Qty = double;
-using Amt = double;
-using price = double;
-using PriceOffset = double;
-using Percentage = double;
+using Qty = fp_type;
+using Amt = fp_type;
+using price = fp_type;
+using PriceOffset = fp_type;
+using Percentage = fp_type;
 
 //-------------------------------------------------------------------------------------------------
 using MultipleCharValue = f8String;
@@ -1767,16 +1758,30 @@ using data = f8String;
 /// Field metadata structures
 class Inst
 {
+	/*! Generate a field instantiator
+	  \tparam T type to instantiate */
    template<typename T>
 	struct _gen
 	{
-		static BaseField *_make(const char *from, const RealmBase *db, const int)
-			{ return new T(from, db); }
+		/*! Instantiate a field (no realm)
+		  \param from source string
+		  \param db realm base for this type
+		  \param rv realm value
+		  \return new field */
+		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+			{ return new T{from, db}; }
 	};
 
+	/*! Generate a field instantiator with realm
+	  \tparam T type to instantiate */
    template<typename T, typename R>
 	struct _gen_realm
 	{
+		/*! Instantiate a field
+		  \param from source string
+		  \param db realm base for this type
+		  \param rv realm value
+		  \return new field */
 		static BaseField *_make_realm(const char *from, const RealmBase *db, const int rv)
 		{
 			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
@@ -1787,9 +1792,14 @@ class Inst
 public:
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
+	/*! Ctor
+	  \tparam T type to instantiate */
    template<typename T>
    Inst(Type2Type<T>) : _do(_gen<T>::_make) {}
 
+	/*! Ctor with realm
+	  \tparam T type to instantiate
+	  \tparam R realm type to instantiate */
    template<typename T, typename R>
    Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
 };

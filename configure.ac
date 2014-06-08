@@ -290,11 +290,11 @@ AC_ARG_WITH(maxfldlen,
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
-AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default precision for floating point fields])
-AC_ARG_WITH(precision,
-  AS_HELP_STRING([--with-precision=VALUE],[Default precision for floating point fields (default=2)]),
+AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default number of precision digits for floating point fields])
+AC_ARG_WITH(precision-digits,
+  AS_HELP_STRING([--with-precision-digits=VALUE],[Default number of precision digits for floating point fields (default=2)]),
 [
-	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default precision for floating point fields (default=2)])
+	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default number of precision digits for floating point fields (default=2)])
 ],[])
 
 AC_ARG_WITH(tbb,
@@ -338,6 +338,19 @@ AC_ARG_WITH(gperf,
 
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+using_double_precision=yes
+AC_ARG_WITH([precision],
+[AS_HELP_STRING([--with-precision=VAL],[select whether to use single or double precision (single|double, default=double)])],
+[case "${withval}" in
+   single) using_double_precision=no
+       AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
+   double) using_double_precision=yes ;;
+   *) echo
+      echo "ERROR: Unknown value ${withval} for precision given."
+      echo
+      exit 1
+esac])
 
 mpmc_set=no
 using_ff=no
@@ -451,7 +464,7 @@ AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],
-[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=regex)])],
 [case "${withval}" in
 	regex) AC_MSG_CHECKING(for regex)
 				AC_TRY_COMPILE([
@@ -478,9 +491,10 @@ esac])
 
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
-if test "$regex_set" = no; then
-	using_poco_regex=yes
-	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+if test "$using_poco_regex" = yes; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
+else
+	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
 fi
 
 thread_set=no
@@ -696,6 +710,14 @@ AC_ARG_ENABLE([xmlstrictbool],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
 esac])
 
+AC_ARG_ENABLE([rawmsgsupport],
+[AS_HELP_STRING([--enable-rawmsgsupport],[enable raw FIX message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(RAW_MSG_SUPPORT, 1, [Define to 1 if you wish to enable raw FIX message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
+esac])
+
 AC_ARG_ENABLE([bufgloblogging],
 [AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
 [case "${enableval}" in
@@ -812,7 +834,7 @@ else
 fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])

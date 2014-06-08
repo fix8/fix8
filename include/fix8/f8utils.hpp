@@ -655,10 +655,10 @@ Follows atof() precedent of essentially no error checking.
 09-May-2009 Tom Van Baak (tvb) www.LeapSecond.com
 	\param p source string
 	\return double converted value */
-inline double fast_atof (const char *p)
+inline fp_type fast_atof (const char *p)
 {
 	bool frac(false);
-	double sign(1.), value(0.), scale(1.);
+	fp_type sign(1.), value(0.), scale(1.);
 
 	while (isspace(*p))
 		++p;
@@ -683,11 +683,11 @@ inline double fast_atof (const char *p)
 	if (*p == '.')
 	{
 		++p;
-		double pow10(10.);
+		fp_type mpow10(10.);
 		while (isdigit(*p))
 		{
-			value += (*p - '0') / pow10;
-			pow10 *= 10.;
+			value += (*p - '0') / mpow10;
+			mpow10 *= 10.;
 			++p;
 		}
 	}
@@ -713,6 +713,10 @@ inline double fast_atof (const char *p)
 			expon = expon * 10 + (*p - '0');
 			++p;
 		}
+#if defined USE_SINGLE_PRECISION
+		if (expon > 38)
+			expon = 38;
+#else
 		if (expon > 308)
 			expon = 308;
 
@@ -722,6 +726,8 @@ inline double fast_atof (const char *p)
 			scale *= 1E50;
 			expon -= 50;
 		}
+#endif
+
 		while (expon >= 8)
 		{
 			scale *= 1E8;
@@ -737,7 +743,6 @@ inline double fast_atof (const char *p)
 	// Return signed and scaled floating point result.
 	return sign * (frac ? (value / scale) : (value * scale));
 }
-
 
 //----------------------------------------------------------------------------------------
 /// Convert double to ascii

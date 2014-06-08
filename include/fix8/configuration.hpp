@@ -163,7 +163,7 @@ private:
 	  \param from the xml entity to search
 	  \param tag the tag to find
 	  \param def the default value if not found
-	  \return the found attribute vakue or the default value if not found */
+	  \return the found attribute value or the default value if not found */
 	template<typename T>
 	T find_or_default(const XmlElement *from, const std::string& tag, const T def) const
 	{
@@ -318,6 +318,13 @@ public:
 	  \return the FIX version or 0 if not found */
 	unsigned get_version(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "fix_version", def); }
+
+	/*! Extract the Message printer tabsize from a session entity.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return the tabsize version or defaults::tabsize if not found */
+	unsigned get_tabsize(const XmlElement *from, const unsigned def=defaults::tabsize) const
+		{ return find_or_default(from, "tabsize", def); }
 
 	/*! Extract the logfile rotation count.
 	  \param from xml entity to search

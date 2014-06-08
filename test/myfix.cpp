@@ -558,6 +558,13 @@ bool MyMenu::new_order_single_recycled()
 		cout << "Sending recycled new_order_single" << endl;
 		_session.send(msg, false);
 	}
+#if defined RAW_MSG_SUPPORT
+	// demonstrate access to outbound raw fix message and payload
+	cout << msg->get_rawmsg() << endl;
+	copy(msg->begin_payload(), msg->end_payload(), ostream_iterator<char>(cout, ""));
+	cout << endl;
+	cout << "payload begin=" << msg->get_payload_begin() << " payload len=" << msg->get_payload_len() << endl;
+#endif
 	return true;
 }
 
@@ -570,9 +577,10 @@ bool MyMenu::static_probe()
 	const BaseMsgEntry *tbme;
 	if (!get_string(result).empty() && (tbme = _session.get_ctx()._bme.find_ptr(result.c_str())))
 	{
-		function<void (const TraitHelper&, int)> print_traits([&print_traits, this](const TraitHelper& tr, int depth)
+        function<void( const TraitHelper&, int )> print_traits;
+		print_traits = ([&print_traits, this](const TraitHelper& tr, int depth)
 		{
-			const string spacer(depth * 3, ' ');
+			const string spacer(depth * MessageBase::get_tabsize(), ' ');
 			for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
 			{
 				const BaseEntry *be(_session.get_ctx().find_be(itr->_fnum));
@@ -689,6 +697,13 @@ void print_usage()
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
+#if defined RAW_MSG_SUPPORT
+	// demonstrate access to inbound raw fix message and payload
+	cout << msg->get_rawmsg() << endl;
+	copy(msg->begin_payload(), msg->end_payload(), ostream_iterator<char>(cout, ""));
+	cout << endl;
+	cout << "payload begin=" << msg->get_payload_begin() << " payload len=" << msg->get_payload_len() << endl;
+#endif
 #if 0
 	const Presence& pre(msg->get_fp().get_presence());
    for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)

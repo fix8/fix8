@@ -127,12 +127,20 @@ public:
 /// Structures for framework generated message creation and static trait interrogation
 class Minst
 {
+	/*! Generate a message instantiator
+	  \tparam T type to instantiate */
    template<typename T>
 	struct _gen
 	{
+		/*! Instantiate a message
+		  \return new message */
 		static Message *_make() { return new T; }
+		/*! Instantiate a message cast to Message
+		  \return new message */
 		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
 #if defined HAVE_EXTENDED_METADATA
+		/*! SIOF static TraitHelper
+		  \return ref to static TraitHelper */
 		static const TraitHelper& _make_traits()
 		{
 			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
@@ -147,6 +155,8 @@ public:
 	const TraitHelper& (&_get_traits)();
 #endif
 
+	/*! Ctor
+	  \tparam T type to instantiate */
    template<typename T>
    Minst(Type2Type<T>) : _do(_gen<T>::_make)
 #if defined HAVE_EXTENDED_METADATA
@@ -154,8 +164,10 @@ public:
 #endif
 	{}
 
-   template<typename T, typename R>
-   Minst(Type2Types<T, R>) : _do(_gen<T>::_make_cast)
+	/*! Ctor with extended traits
+	  \tparam T type to instantiate */
+   template<typename T>
+   Minst(Type2Types<T, bool>) : _do(_gen<T>::_make_cast)
 #if defined HAVE_EXTENDED_METADATA
 		 , _get_traits(_gen<T>::_make_traits)
 #endif
@@ -275,6 +287,10 @@ protected:
 	    \param chksum chksum to extract to
 	    \return number of bytes consumed */
 	static unsigned extract_trailer(const f8String& from, f8String& chksum);
+
+protected:
+	// used by the printer
+	F8API static unsigned _tabsize;
 
 public:
 	/*! Ctor.
@@ -764,6 +780,14 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const MessageBase& what) { what.print(os); return os; }
 	friend class Message;
 
+	/*! Set the tabsize used by the printer
+	    \param tabsize number of spaces in a tab */
+	static void set_tabsize (unsigned tabsize) { _tabsize = tabsize; }
+
+	/*! get the tabsize used by the printer
+	    \return tabsize of spaces in a tab */
+	static unsigned get_tabsize () { return _tabsize; }
+
 	/*! Presence printer
 	    \param os stream to send to */
 	void print_fp(std::ostream& os) { os << _fp; }
@@ -816,6 +840,11 @@ protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment, _end_of_batch;
+#if defined RAW_MSG_SUPPORT
+	mutable f8String _rawmsg;
+	mutable int _begin_payload = -1;
+	mutable unsigned _payload_len = 0;
+#endif
 
 public:
 	/*! Ctor.
@@ -853,6 +882,11 @@ public:
 	{
 		const unsigned hlen(_header->decode(from, offset, 0, permissive_mode));
 		const unsigned blen(MessageBase::decode(from, hlen, 0, permissive_mode));
+#if defined RAW_MSG_SUPPORT
+		_begin_payload = hlen;
+		_payload_len = blen;
+		_rawmsg = from;
+#endif
 		return _trailer->decode(from, blen, ignore, permissive_mode);
 	}
 
@@ -986,6 +1020,28 @@ public:
 		if (_trailer)
 			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
 	}
+
+#if defined RAW_MSG_SUPPORT
+	/*! Get the raw FIX message that this message was decoded from
+	    \return reference to FIX message string */
+	const f8String& get_rawmsg() const { return _rawmsg; }
+
+	/*! Get iterator to begin of message payload
+	    \return const_iterator to start of payload */
+	f8String::const_iterator begin_payload() const { return f8String::const_iterator(_rawmsg.data() + _begin_payload); }
+
+	/*! Get iterator to end of message payload
+	    \return const_iterator to end of payload */
+	f8String::const_iterator end_payload() const { return f8String::const_iterator(_rawmsg.data() + _begin_payload + _payload_len); }
+
+	/*! Get the payload length
+	    \return payload length */
+	unsigned get_payload_len() const { return _payload_len; }
+
+	/*! Get the offset of payload begin
+	    \return offset of payload begin */
+	unsigned get_payload_begin() const { return _begin_payload; }
+#endif
 
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to

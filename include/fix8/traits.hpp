@@ -118,7 +118,7 @@ struct FieldTrait
 		)
 		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)
 #if defined HAVE_EXTENDED_METADATA
-		, _group{group, fieldcnt}
+		, _group(TraitHelper{group, fieldcnt})
 #endif
 	{}
 
@@ -145,7 +145,7 @@ struct FieldTrait
 	mutable unsigned short _pos, _component;
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 #if defined HAVE_EXTENDED_METADATA
-	const TraitHelper _group {nullptr, 0};
+    const TraitHelper _group = TraitHelper{ nullptr, 0 };
 #endif
 
 	/// Binary comparitor functor.

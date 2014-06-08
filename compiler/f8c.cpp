@@ -219,6 +219,9 @@ int main(int argc, char **argv)
 #if defined HAVE_OPENSSL
          cout << "HAVE_OPENSSL: " << HAVE_OPENSSL << endl;
 #endif
+#if defined HAVE_EXTENDED_METADATA
+         cout << "HAVE_EXTENDED_METADATA: " << HAVE_EXTENDED_METADATA << endl;
+#endif
 			return 0;
 		case 'V': verbose = true; break;
 		case 'f': gen_fields = true; break;
