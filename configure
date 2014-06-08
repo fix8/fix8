@@ -845,12 +845,13 @@ enable_rdtsc
 with_reservepercent
 with_maxmsglen
 with_maxfldlen
-with_precision
+with_precision_digits
 with_tbb
 with_gtest
 enable_tcmalloc
 enable_tbbmalloc
 with_gperf
+with_precision
 with_mpmc
 with_sleep
 with_poco
@@ -1566,11 +1567,14 @@ Optional Packages:
                           additional fields
   --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
   --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
-  --with-precision=VALUE  Default precision for floating point fields
-                          (default=2)
+  --with-precision-digits=VALUE
+                          Default number of precision digits for floating
+                          point fields (default=2)
   --with-tbb=DIR          location of TBB
   --with-gtest=DIR        location of gtest
   --with-gperf=DIR        location of gperf libraries
+  --with-precision=VAL    select whether to use single or double precision
+                          (single|double, default=double)
   --with-mpmc=VAL         select which mpmc system will be used (tbb|ff,
                           default=ff)
   --with-sleep=VAL        If using fastflow, sleep for VAL ns instead of yield
@@ -20103,9 +20107,9 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-# Check whether --with-precision was given.
-if test "${with_precision+set}" = set; then :
-  withval=$with_precision;
+# Check whether --with-precision-digits was given.
+if test "${with_precision_digits+set}" = set; then :
+  withval=$with_precision_digits;
 
 cat >>confdefs.h <<_ACEOF
 #define DEFAULT_PRECISION ${withval}
@@ -20172,6 +20176,24 @@ $as_echo "#define MPMC_TBB 1" >>confdefs.h
 
 
 $as_echo "#define MPMC_FF 2" >>confdefs.h
+
+
+using_double_precision=yes
+
+# Check whether --with-precision was given.
+if test "${with_precision+set}" = set; then :
+  withval=$with_precision; case "${withval}" in
+   single) using_double_precision=no
+
+$as_echo "#define USE_SINGLE_PRECISION 1" >>confdefs.h
+ ;;
+   double) using_double_precision=yes ;;
+   *) echo
+      echo "ERROR: Unknown value ${withval} for precision given."
+      echo
+      exit 1
+esac
+fi
 
 
 mpmc_set=no
