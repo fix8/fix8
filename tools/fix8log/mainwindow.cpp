@@ -660,6 +660,9 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;
+    if (str.length() > 36) {
+        str = "..." + str.right(33);
+    }
     int index = tabW->addTab(newWorkSheet,str);
     tabW->setToolTip(wsd.fileName);
     if (tabW->count() > 0) {
@@ -669,6 +672,12 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
             tabW->setCurrentIndex(index);
     }
     stackW->setCurrentIndex(ShowTab);
+
+
+if (tabW->count() > 0)
+    stackW->setCurrentWidget(workAreaSplitter);
+else
+    stackW->setCurrentWidget(noDataL);
 }
 void MainWindow::setAutoSaveOn(bool on)
 {

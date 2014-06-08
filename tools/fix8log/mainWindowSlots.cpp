@@ -55,7 +55,6 @@ void MainWindow::quitSlot()
 }
 void MainWindow::editSchemaSlot()
 {
-    qDebug() << "Edit Schema Slot" << __FILE__ << __LINE__;
     if (tableSchema) {
         qDebug() << "Current Table Schema = " << tableSchema->name << __FILE__ << __LINE__;
     }

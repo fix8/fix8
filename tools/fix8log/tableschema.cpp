@@ -152,7 +152,6 @@ TableSchema *TableSchema::clone()
 {
     TableSchema *ts = new TableSchema(*this);
     if (fieldList) {
-        qDebug() << "Table Schema == Clone field list: " << __FILE__ << __LINE__;
         ts->fieldList = fieldList->clone();
     }
     else

@@ -151,7 +151,7 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
     int seqN = str.toInt();
     MessageFieldList *mfl = (MessageFieldList *) var.value<void *>();
     if (!mfl)
-        qWarning() << "No Message Fields Found for row" << __FILE__ << __LINE__;
+        qWarning() << "Warning No Message Fields Found for row" << __FILE__ << __LINE__;
     otherIndex = _model->index(selectedRow,MessageType);
     str =  _model->data(otherIndex).toString();
     messageArea->setMessageFieldList(mfl,seqN,str);
@@ -164,7 +164,6 @@ void WorkSheet::setTableSchema(TableSchema *ts)
     _model->clear();
     QHeaderView *horHeader =  fixTable->horizontalHeader();
     QAbstractItemModel * headerModel = horHeader->model();
-    qDebug() << "Num of header items to remove " << headerModel->columnCount() << __FILE__ << __LINE__;
     headerModel->removeColumns(0,headerModel->columnCount());
     if (!tableSchema) {
         qWarning() << "ERROR - Table Schema IS NULL" << __FILE__ << __LINE__;
@@ -181,7 +180,6 @@ void WorkSheet::setTableSchema(TableSchema *ts)
     _model->setColumnCount(tableSchema->fieldList->count());
     buildHeader();
     fixTable->setAnouncement("Schema Set To: " + tableSchema->name);
-
 }
 void WorkSheet::buildHeader()
 {

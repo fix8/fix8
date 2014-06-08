@@ -69,14 +69,13 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     QTableView(p),windowID(wid),worksheetID(wsid)
 
 {
-    anouncement = "HELLO THERE";
     showAnouncement= false;
     anounceFont = font();
     anounceFont.setBold(true);
     anounceFont.setPointSize(anounceFont.pointSize() + 4);
     anounceFG = Qt::white;
+    emptyAlphaFG = anounceFG;
     anounceBG = Qt::black;
-    anouncement = "Schema Set To: Default";
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     viewport()->setAcceptDrops(true);
@@ -122,7 +121,6 @@ void FixTable::setAnouncement(const QString &message,int interval)
     animationPeriod = interval;
     killTimer(anounceTimerID);
     anounceTimerID = startTimer(90);
-    qDebug() << "START TIMER " << anounceTimerID;
 
 }
 void FixTable::timerEvent(QTimerEvent *te)
@@ -131,17 +129,32 @@ void FixTable::timerEvent(QTimerEvent *te)
         alpha = alpha-10;
         if (alpha < 10) {
             killTimer(anounceTimerID);
+            anounceTimerID  = -1;
             showAnouncement = false;
+            if (model()->rowCount() < 1) {
+                // fade in empty str
+                alpha = 0;
+                emptyAlphaFG = emptyStrColor;
+                emptyAlphaFG.setAlpha(alpha);
+                noDataTimerID = startTimer(90);
+            }
         }
         else {
             anounceAlphaBG.setAlpha(alpha);
             anounceAlphaFG.setAlpha(alpha);
         }
-        viewport()->update();
-
     }
-    else
-        QTableView::timerEvent(te);
+    else if  (te->timerId() == noDataTimerID) {
+        alpha = alpha + 15;
+        if (alpha > 250)
+            killTimer(noDataTimerID);
+        if (alpha > 255)
+            alpha = 255;
+        emptyAlphaFG.setAlpha(alpha);
+    }
+
+    viewport()->update();
+    QTableView::timerEvent(te);
 }
 
 void FixTable::resizeEvent(QResizeEvent *re)
@@ -158,7 +171,6 @@ void FixTable::resizeEvent(QResizeEvent *re)
     emptyY1 = centerY - offset;
     emptyY2 = centerY + offset;
 
-
     QFontMetrics fm1(anounceFont);
     int anounceWidth = fm1.width(anouncement);
     anounceWidth = anounceWidth + (anounceWidth*.15);
@@ -166,7 +178,6 @@ void FixTable::resizeEvent(QResizeEvent *re)
     anounceRect.setY(centerY - (fm1.height())  );
     anounceRect.setWidth(anounceWidth);
     anounceRect.setHeight(fm1.height() *2);
-
     QTableView::resizeEvent(re);
 
 }
@@ -240,18 +251,15 @@ void FixTable::paintEvent(QPaintEvent *pe)
         painter.drawText(anounceRect,anouncement,QTextOption(Qt::AlignCenter));
         return;
     }
-
     if (numRows < 1) {
-
         //QBrush brush(grad);
         QBrush brush(bgColorEnd);
         painter.setBrush(brush);
         QRect r(0,0,width(),height());
         painter.fillRect(r,brush);
-
         // painter.setFont(emptyFont);
         painter.setFont(emptyFont);
-        painter.setPen(emptyStrColor);
+        painter.setPen(emptyAlphaFG);
         painter.drawText(emptyX1,emptyY1,emptyStr1);
         painter.drawText(emptyX2,emptyY2,emptyStr2);
     }

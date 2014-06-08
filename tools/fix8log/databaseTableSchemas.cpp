@@ -76,7 +76,6 @@ TableSchemaList *Database::getTableSchemas()
     while (query.next()) {
         TableSchema *ts = new TableSchema();
         ts->id          = query.value(0).toInt(&ok);
-        qDebug() << "DATABASE::get table schema, id = " << ts->id << __FILE__ << __LINE__;
         ts->name        = query.value(1).toString();
         ts->description = query.value(2).toString();
         ts->locked      = query.value(3).toBool();

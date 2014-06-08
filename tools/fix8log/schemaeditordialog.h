@@ -51,24 +51,18 @@ class SchemaEditorDialog : public QMainWindow
     Q_OBJECT
 public:
     explicit SchemaEditorDialog(Database *database, QWidget *parent = 0);
+     void populateMessageList(MessageFieldList *);
+     void restoreSettings();
+     void saveSettings();
     void setTableSchemaInUse(TableSchema *inUse);
     bool setCurrentTarget(MainWindow *mainWindow,bool isEditRequest=false);
     void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
     void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
     void setDefaultHeaderItems( QBaseEntryList &defaultHeaderItems);
-    void populateMessageList(MessageFieldList *);
-    void saveSettings();
-    void restoreSettings();
     void windowDeleted(MainWindow *mw);
-signals:
-    void finished(int);
-    void newSchemaCreated(TableSchema *);
-    void schemaDeleted(int schemaID);
-    void tableSchemaUpdated(TableSchema *,bool onlyNameOrDescription);
-public slots:
+protected slots:
     void applySlot();
-    //void applyButtonSlot(QAbstractButton *);
     void availableSchemasClickedSlot(QModelIndex);
     void availableTreeItemChangedSlot(QStandardItem*);
     void cancelNewSlot();
@@ -90,7 +84,11 @@ public slots:
 protected:
     void closeEvent(QCloseEvent *);
     void showEvent(QShowEvent *);
-
+signals:
+    void finished(int);
+    void newSchemaCreated(TableSchema *);
+    void schemaDeleted(int schemaID);
+    void tableSchemaUpdated(TableSchema *,bool onlyNameOrDescription);
 private:
     enum {NoMods,HaveMods,Empty};
     typedef enum {RegMode,NewMode,EditMode} ViewMode;
@@ -105,7 +103,6 @@ private:
     void setUncheckedStateParent(QStandardItem *parentItem);
     void showWindowArea(QString windowName);
     bool validate();
-    //SchemaEditorWidget *schemaWidget;
     QAction  *closeA;
     QAction  *saveA;
     QAction  *undoA;

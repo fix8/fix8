@@ -215,12 +215,12 @@ protected:
     QWidget *searchArea;
     QWidget *tabNameEditArea;
     QWhatsThis *whatsThis;
-    void setAutoSaveOn(bool);
     void buildMainWindow();
     void displayConsoleMessage(GUI::ConsoleMessage);
+    void readSettings();
+    void setAutoSaveOn(bool);
     void showEvent(QShowEvent *);
     void timerEvent(QTimerEvent *);
-    void readSettings();
     void writeSettings();
 signals:
     void autoSaveOn(bool);

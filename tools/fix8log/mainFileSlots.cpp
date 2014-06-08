@@ -133,7 +133,10 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
         QList <GUI::ConsoleMessage> messageList;
-        index = tabW->addTab(workSheet,fi.fileName());
+        QString fileNameStr = fi.fileName();
+        if (fileNameStr.length() > 36)
+            fileNameStr = fileNameStr.right(33);
+        index = tabW->addTab(workSheet,fileNameStr);
         tabW->setToolTip(fileName);
         tabW->setCurrentWidget(workSheet);
         workSheet->showLoadProcess(true);
@@ -212,16 +215,13 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
         copyTabA->setEnabled(false);
         showMessageA->setEnabled(false);
     }
-    qDebug() << "Num of work sheets before delete = " << workSheetList.count() << __FILE__ << __LINE__;
     if (worksheet) {
         workSheetList.removeOne(worksheet);
-        qDebug() << "Num of work sheets after delete = " << workSheetList.count();
         delete worksheet;
     }
 }
 void MainWindow::closeSlot()
 {
-    qDebug() << "Close Slot" << __FILE__ << __LINE__;
     writeSettings();
     emit deleteWindow(this);
 }
@@ -251,7 +251,10 @@ void MainWindow::copyTabSlot()
     newWorkSheet->setWindowID(uuid);
     QString fileName = workSheet->getFileName();
     QFileInfo fi(fileName);
-    int index = tabW->addTab(newWorkSheet,fi.fileName());
+    QString fileNameStr = fi.fileName();
+    if (fileNameStr.length() > 36)
+        fileNameStr = fileNameStr.right(33);
+    int index = tabW->addTab(newWorkSheet,fileNameStr);
     tabW->setToolTip(fileName);
     tabW->setCurrentIndex(index);
 }

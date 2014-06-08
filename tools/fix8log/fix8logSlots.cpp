@@ -219,7 +219,6 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
         windowName = qApp->applicationName();
     schemaEditorDialog->setCurrentTarget(mw,true);
     if (mw) {
-        qDebug() << "SET TABLE SHCEMA IN USE " << __FILE__ << __LINE__;
         schemaEditorDialog->setTableSchemaInUse(mw->getTableSchema());
     }
     schemaEditorDialog->show();

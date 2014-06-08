@@ -58,36 +58,40 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     mainToolBar->setMovable(true);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
     closeA = new QAction(tr("&Close Window"),this);
-    connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
+    connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
+
     applyA = new QAction(tr("&Apply"),this);
     applyA->setIcon(QIcon(":/images/svg/apply.svg"));
     applyA->setToolTip(tr("Apply Schema"));
     connect(applyA,SIGNAL(triggered()),this,SLOT(applySlot()));
     saveA = new QAction(tr("&Save"),this);
-    connect(saveA,SIGNAL(triggered()),this,SLOT(saveSchemaSlot()));
     saveA->setIcon(QIcon(":/images/svg/document-save.svg"));
     saveA->setToolTip(tr("Save"));
+    connect(saveA,SIGNAL(triggered()),this,SLOT(saveSchemaSlot()));
+
     undoA = new QAction(tr("&Undo"),this);
     connect(undoA,SIGNAL(triggered()),this,SLOT(undoSchemaSlot()));
     undoA->setIcon(QIcon(":/images/svg/edit-undo.svg"));
     undoA->setToolTip(tr("Undo and rest to last saved value"));
-    newSchemaA = new QAction(QIcon(":/images/svg/newspreadsheet.svg"),"New",
-                             this);
+    connect(undoA,SIGNAL(triggered()),this,SLOT(undoSchemaSlot()));
+
+    newSchemaA = new QAction(QIcon(":/images/svg/newspreadsheet.svg"),"New",this);
     newSchemaA->setToolTip("Create a new schema");
     connect(newSchemaA,SIGNAL(triggered()),this,SLOT(newSchemaSlot()));
-    copySchemaA = new QAction(QIcon(":/images/svg/spreadsheetCopy.svg"),"Copy",
-                              this);
+
+    copySchemaA = new QAction(QIcon(":/images/svg/spreadsheetCopy.svg"),"Copy",this);
     copySchemaA->setToolTip("Create a copy of the selected schema");
-    editSchemaA = new QAction(QIcon(":/images/svg/editSchema.svg"),"Edit",
-                              this);
-    connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
+
+    editSchemaA = new QAction(QIcon(":/images/svg/editSchema.svg"),"Edit",this);
     editSchemaA->setToolTip("Modify given name and or description of selected schema");
-    deleteSchemaA = new QAction(QIcon(":/images/svg/editdelete.svg"),"Delete",
-                                this);
+    connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
+
+    deleteSchemaA = new QAction(QIcon(":/images/svg/editdelete.svg"),"Delete",this);
     deleteSchemaA->setToolTip("Delete selected schema");
     connect(deleteSchemaA,SIGNAL(triggered()),this,SLOT(deleteSchemaSlot()));
+
     fileMenu->addAction(applyA);
     fileMenu->addAction(saveA);
     fileMenu->addAction(undoA);
@@ -102,11 +106,13 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(deleteSchemaA);
 
+    // central widget if schema mainwindow
     QWidget *cWidget = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout(this);
+    QVBoxLayout *vbox = new QVBoxLayout(cWidget);
     cWidget->setLayout(vbox);
     setCentralWidget(cWidget);
 
+    // target window at top of main widget
     targetArea = new QWidget(this);
     QHBoxLayout *tarBox = new QHBoxLayout(targetArea);
     targetArea->setLayout(tarBox);
@@ -140,6 +146,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     sbox->addWidget(statusI);
     sbox->addWidget(statusL);
     topBox->addWidget(statusArea,1,Qt::AlignRight);
+
     splitter = new QSplitter(Qt::Horizontal,this);
     buildSchemaArea();
     QWidget *workWidget = new QWidget(splitter);
@@ -313,7 +320,7 @@ void SchemaEditorDialog::buildSchemaArea()
     availableSchemasListView->setModel(availableSchemaModel);
     descriptionBox = new QGroupBox("Description",availableArea);
     descriptionBox->setFlat(true);
-    QVBoxLayout *dbox = new QVBoxLayout();
+    QVBoxLayout *dbox = new QVBoxLayout(descriptionBox);
     dbox->setMargin(4);
     descriptionBox->setLayout(dbox);
     descriptionE = new QTextEdit(descriptionBox);

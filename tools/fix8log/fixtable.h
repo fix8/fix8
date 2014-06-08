@@ -107,5 +107,7 @@ class FixTable: public QTableView {
    QFont   anounceFont;
    int     animationTime;
    int     animationPeriod;
+   int     noDataTimerID;
+   QColor  emptyAlphaFG;
 };
 #endif
