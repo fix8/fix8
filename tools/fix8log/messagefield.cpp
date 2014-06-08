@@ -71,13 +71,68 @@ BaseEntry *BaseEntryList::findByName(QString &name)
     return 0;
 }
 
-
-QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0)
+QBaseEntry::QBaseEntry():baseEntryList(0)
 {
-    name = QString::fromLatin1(be._name);
-    baseEntryList = 0;
+
 }
 
+QBaseEntry::QBaseEntry(const BaseEntry &be):ft(0),baseEntryList(0)
+{
+    name = QString::fromLatin1(be._name);
+
+}
+QBaseEntry::QBaseEntry(const QBaseEntry *qbe)
+{
+    baseEntryList = 0;
+    if (!qbe)
+        return;
+    name = qbe->name;
+    if (qbe->ft)
+        ft   = new FieldTrait(*(qbe->ft));
+    QBaseEntry *child;
+    if (qbe->baseEntryList) {
+        baseEntryList = new QBaseEntryList();
+        qDebug() << "*** COPY CONSTRUCTEOR QBE ****, coune of list = " << qbe->baseEntryList->count();
+        QListIterator<QBaseEntry *> iter(*(qbe->baseEntryList));
+        while(iter.hasNext()) {
+            child = iter.next();
+            baseEntryList->append(new QBaseEntry(*child));
+        }
+    }
+}
+QBaseEntry::QBaseEntry(const QBaseEntry &qbe)
+{
+    name = qbe.name;
+    if (qbe.ft)
+        ft   = new FieldTrait(*(qbe.ft));
+    QBaseEntry *child;
+    baseEntryList = qbe.baseEntryList;
+    /*
+    if (qbe.baseEntryList) {
+        baseEntryList = new QBaseEntryList();
+        qDebug() << "*** COPY CONSTRUCTEOR QBE ****, coune of list = " << qbe.baseEntryList->count();
+        QListIterator<QBaseEntry *> iter(*(qbe.baseEntryList));
+        while(iter.hasNext()) {
+            child = iter.next();
+            QBaseEntry *qbeNew = new QBaseEntry(child);
+            baseEntryList->append(qbeNew);
+        }
+    }
+    */
+}
+void QBaseEntry::print(QString &str)
+{
+    qDebug() << str << name;
+    QString newStr = str;
+    newStr.append("\t");
+    if (baseEntryList) {
+        QListIterator <QBaseEntry *> iter(*baseEntryList);
+        while (iter.hasNext()) {
+            QBaseEntry *child = iter.next();
+            child->print(newStr);
+        }
+    }
+}
 
 QBaseEntryList::QBaseEntryList() :QList <QBaseEntry *>()
 {
@@ -89,7 +144,8 @@ QBaseEntryList::QBaseEntryList(const QBaseEntryList &bel):QList <QBaseEntry *>()
     QListIterator <QBaseEntry *> iter(bel);
     while(iter.hasNext()) {
         be = iter.next();
-        append(be);
+        QBaseEntry *beNew = new QBaseEntry(*be);
+        append(beNew);
     }
 }
 bool QBaseEntryList::operator==( const QBaseEntryList &qbel)
@@ -113,6 +169,9 @@ QBaseEntryList & QBaseEntryList::operator=( const QBaseEntryList &rhs)
     QBaseEntry *newQBE;
     if (this == &rhs)
         return *this;
+    if (rhs.count() < 1)
+        return *this;
+    //qDebug() << "RHS COUNT = " << rhs.count() << __FILE__ << __LINE__;
     QListIterator <QBaseEntry *>iter(rhs);
     while(iter.hasNext()) {
         qbe = iter.next();
@@ -131,6 +190,15 @@ QBaseEntryList *QBaseEntryList::clone()
     while(iter.hasNext()) {
         qbe = iter.next();
         nqbe = new QBaseEntry(*qbe);
+        if (qbe->baseEntryList) {
+            nqbe->baseEntryList = new QList<QBaseEntry *>();
+            QListIterator <QBaseEntry *> iter2(*qbe->baseEntryList);
+            while(iter2.hasNext()) {
+                QBaseEntry *qbe2 = iter2.next();
+                QBaseEntry *qbe3 = new QBaseEntry(*qbe2);
+                nqbe->baseEntryList->append(qbe3);
+            }
+        }
         qbel->append(nqbe);
     }
     return qbel;
@@ -151,15 +219,26 @@ void QBaseEntryList::removeByName(QString &name)
     QBaseEntry *be;
     QList<QBaseEntry *>::iterator iter;
 
-     for (iter = this->begin(); iter != this->end();++iter) {
-       be = *iter;
-       if (be->name == name) {
-            qDebug() << "REMVE BY NAME" << __FILE__ << __LINE__;
-           erase(iter);
-         break;
-       }
-     }
+    for (iter = this->begin(); iter != this->end();++iter) {
+        be = *iter;
+        if (be->name == name) {
+            //qDebug() << "REMVE BY NAME" << __FILE__ << __LINE__;
+            erase(iter);
+            break;
+        }
+    }
 }
+void QBaseEntryList::print()
+{
+    QBaseEntry *be;
+    QList<QBaseEntry *>::iterator iter;
+    QString str;
+    for (iter = this->begin(); iter != this->end();++iter) {
+        be = *iter;
+        be->print(str);
+    }
+}
+
 MessageField::MessageField(QString &Key, QString &Name,QBaseEntryList *QBEL):
     key(Key),name(Name),qbel(QBEL)
 {

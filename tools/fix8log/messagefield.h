@@ -72,7 +72,11 @@ public:
 class QBaseEntry
 {
 public:
+    QBaseEntry();
     QBaseEntry(const BaseEntry &);
+    QBaseEntry(const QBaseEntry *qbe);
+    QBaseEntry(const QBaseEntry &);
+    void print(QString &str);
     QString name;
     FieldTrait *ft;
     QList<QBaseEntry *> *baseEntryList;
@@ -82,6 +86,7 @@ class QBaseEntryList : public  QList <QBaseEntry *>
 public:
     explicit QBaseEntryList();
     QBaseEntryList(const QBaseEntryList &);
+    void print();
     bool   operator==( const QBaseEntryList &);
     QBaseEntryList & operator=( const QBaseEntryList &rhs);
     QBaseEntry *findByName(QString &);

@@ -151,8 +151,12 @@ bool   TableSchema::operator==( const TableSchema &ts) const
 TableSchema *TableSchema::clone()
 {
     TableSchema *ts = new TableSchema(*this);
-    if (fieldList)
+    if (fieldList) {
+        qDebug() << "Table Schema == Clone field list: " << __FILE__ << __LINE__;
         ts->fieldList = fieldList->clone();
+    }
+    else
+        ts->fieldList = 0;
     return ts;
 }
 

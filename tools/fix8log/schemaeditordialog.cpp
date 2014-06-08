@@ -107,9 +107,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     cWidget->setLayout(vbox);
     setCentralWidget(cWidget);
 
-
-
-
     targetArea = new QWidget(this);
     QHBoxLayout *tarBox = new QHBoxLayout(targetArea);
     targetArea->setLayout(tarBox);
@@ -200,7 +197,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     expandIcon.addPixmap(QPixmap(":/images/svg/empty.svg"),
                          QIcon::Normal,
                          QIcon::Off);
-
     expandBG->setExclusive(false);
     expandPB = new QPushButton("Expand",availableButtonArea);
     QRect rect;
@@ -210,13 +206,10 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     rect.setHeight(expandPB->height());
     messageSpacerItem->setGeometry(rect);
     collapsePB = new QPushButton("Collapse",availableButtonArea);
-
     expandPB->setIcon(expandIcon);
     collapsePB->setIcon(expandIcon);
-
     expandPB->setCheckable(true);
     collapsePB->setCheckable(true);
-
     expandPB->setToolTip("Expand All Tree Items");
     collapsePB->setToolTip("Collapse All Tree Items");
     expandBG->addButton(expandPB);
@@ -234,7 +227,6 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     availableFieldModel = new QStandardItemModel(availableFieldsTreeView);
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
-
     availableFieldModel->setColumnCount(1);
     availableFieldHeaderItem = new QStandardItem("Fields");
     availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
@@ -330,33 +322,7 @@ void SchemaEditorDialog::buildSchemaArea()
     descriptionE->setMaximumHeight(fm.height()*4);
     descriptionE->setReadOnly(true);
     dbox->addWidget(descriptionE);
-    /*
-    QWidget *schemaButtonArea = new QWidget(availableArea);
-    QGridLayout *schemaGrid = new QGridLayout(schemaButtonArea);
-    schemaButtonArea->setLayout(schemaGrid);
-    newSchemaPB = new QPushButton("New",schemaButtonArea);
-    newSchemaPB->setIcon(QIcon(":/images/svg/newspreadsheet.svg"));
-    newSchemaPB->setToolTip("Create a new schema");
-    newSchemaPB->addAction(newSchemaA);
-   // connect(newSchemaPB,SIGNAL(clicked()),this,SLOT(newSchemaSlot()));
 
-    copySchemaPB = new QPushButton("Copy",schemaButtonArea);
-    copySchemaPB->setIcon(QIcon(":/images/svg/spreadsheetCopy.svg"));
-    copySchemaPB->setToolTip("Create a copy of the selected schema");
-    editSchemaPB = new QPushButton("Edit",schemaButtonArea);
-    editSchemaPB->setIcon(QIcon(":/images/svg/editSchema.svg"));
-    editSchemaPB->setToolTip("Modify given name and or description of selected schema");
-    deleteSchemaPB = new QPushButton("Delete",schemaButtonArea);
-    deleteSchemaPB->setIcon(QIcon(":/images/svg/editdelete.svg"));
-    deleteSchemaPB->setToolTip("Delete selected schema");
-    connect(deleteSchemaPB,SIGNAL(clicked()),this,SLOT(deleteSchemaSlot()));
-    schemaGrid->addWidget(newSchemaPB,0,0);
-    schemaGrid->addWidget(copySchemaPB,0,1);
-    schemaGrid->addWidget(editSchemaPB,1,0);
-    schemaGrid->addWidget(deleteSchemaPB,1,1);
-    schemaGrid->setColumnStretch(0,0);
-    schemaGrid->setColumnStretch(1,0);
-    */
     abox->addWidget(availableSchemasL,0);
     abox->addWidget(availableSchemasListView,1);
     abox->addWidget(descriptionBox,0);
@@ -432,7 +398,6 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
     }
     if (!currentTableSchema->fieldList) {
         qWarning() << "No Fields in current table" << __FILE__ << __FILE__;
-        qDebug() << "\tTo do - clear current selection" << __FILE__ << __LINE__;
         return;
     }
     int numOfSchemas = availableSchemaModel->rowCount();
@@ -440,13 +405,10 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
         schemaItem = (SchemaItem *) availableSchemaModel->item(i);
         if (schemaItem->tableSchema == currentTableSchema) {
             currentSchemaItem = schemaItem;
-
-            qDebug() << "Set current selection to schema item...." << __FILE__ << __LINE__;
             selectionModel->select(schemaItem->index(),QItemSelectionModel::Select);
             break;
         }
     }
-
     setUpdatesEnabled(false);
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
@@ -467,7 +429,6 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
     QListIterator <QBaseEntry *> iter2(*bel);
     if (selectedFieldModel->rowCount() > 0) {
         selectedFieldModel->removeRows(0,selectedFieldModel->rowCount());
-        qDebug() << "REMOVED OLD SELECTED FIELDS" << __FILE__ << __LINE__;
     }
     while(iter2.hasNext()) {
         qbe = iter2.next();
@@ -491,7 +452,6 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
                 }
                 if (messageNameList.count() == 0)
                     tooltipStr = "Not used in any messages";
-
                 if (messageNameList.count() == 1)
                     tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
                 else if(messageNameList.count() < 5)
@@ -620,16 +580,11 @@ void SchemaEditorDialog::setTableSchemaInUse(TableSchema *ts)
     currentTableSchema = inUseTableSchema;
     if (currentTableSchema) {
         tempTableSchema = currentTableSchema->clone();
-
-        qDebug() << "\t Call buildSelecteeListFrom Current Schema" << ts->name << __FILE__ << __LINE__;
         buildSelectedListFromCurrentSchema();
     }
     else {
         tempTableSchema = 0;
-        qDebug() << "CURRENT SHCEMA IS NULL " << __FILE__ << __LINE__;
     }
-
-
 }
 bool SchemaEditorDialog::setCurrentTarget( MainWindow *mainWindow,bool editRequest)
 {
@@ -638,15 +593,12 @@ bool SchemaEditorDialog::setCurrentTarget( MainWindow *mainWindow,bool editReque
         qWarning() << "Error, mainwindow is null" << __FILE__ <<__LINE__;
         return false;
     }
-
-    qDebug() << "SET CURRENT TARGET..." << __FILE__ << __LINE__;
     if (editRequest) {
         if (mainWindow == currentMainWindow) {
             qDebug() << "Windows are the same, return" << __FILE__ << __LINE__;
             return false;
         }
         else if (currentMainWindow && (tableSchemaStatus == HaveMods)) {
-            qDebug() << "EDITOR BUSY WITH OTHER SCHEMA EDIT" << __FILE__ << __LINE__;
             str = "Schema Editor Locked By Window " + currentMainWindow->getName();
             str.append("\nSave or Cancel Changes To Unlock");
             mainWindow->displayMessageDialog(str);
@@ -654,33 +606,23 @@ bool SchemaEditorDialog::setCurrentTarget( MainWindow *mainWindow,bool editReque
         }
     }
     if (currentMainWindow) {
-        qDebug() << "HAVE MAIN WINDOW..." << __FILE__ << __LINE__;
         if (currentMainWindow != mainWindow) {
             if (tableSchemaStatus == HaveMods) {
-                qDebug() << "\tHAVE MODS" << __FILE__ << __LINE__;
-
-                    qDebug() << "\tisGlboals !=" << __FILE__ << __LINE__;
                     str = "Schema Editor Locked By Window " + currentMainWindow->getName();
                     str.append("\nSave or Cancel Changes To Unlock");
                     mainWindow->displayMessageDialog(str);
                     return false;
 
             }
-            qDebug() << "\tKEEP GOING..." << __FILE__ << __LINE__;
             currentMainWindow = mainWindow;
             str = mainWindow->getName();
             if (str.length() < 1) {
-                qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
                 str = qApp->applicationDisplayName();
             }
             showWindowArea(mainWindow->getName());
         }
         else { // currentWindow == mainWindow
-            qDebug() << "\tWINDOWS MATCH..." << __FILE__ << __LINE__;
-
             if (tableSchemaStatus == HaveMods) {
-                qDebug() << "\tHave MODS..." << __FILE__ << __LINE__;
-
                     str = "Save Needed For Current Schema " + currentTableSchema->name;
                     str.append("\nFirst Save or Cancel Changes In Schema Editor");
                     mainWindow->displayMessageDialog(str);
@@ -689,18 +631,15 @@ bool SchemaEditorDialog::setCurrentTarget( MainWindow *mainWindow,bool editReque
             }
             str = mainWindow->getName();
             if (str.length() < 1) {
-                qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
                 str = qApp->applicationDisplayName();
             }
             showWindowArea(str);
         }
     }
     else {
-        qDebug() << "CURRENT MW IS NULL, setting..." << __FILE__ << __LINE__;
         currentMainWindow = mainWindow;
         str = mainWindow->getName();
         if (str.length() < 1) {
-            qDebug() << "***** MAIN WINDOW HAS NO NAME......" << __FILE__ << __LINE__;
             str = qApp->applicationDisplayName();
         }
         showWindowArea(str);
@@ -754,8 +693,9 @@ bool SchemaEditorDialog::validate()
         collapsePB->setEnabled(false);
     }
     else {
-        if (currentTableSchema && inUseTableSchema && (currentTableSchema == inUseTableSchema))
+        if (currentTableSchema && inUseTableSchema && (*currentTableSchema == *inUseTableSchema)) {
             applyA->setEnabled(false);
+        }
         else
             applyA->setEnabled(true);
 

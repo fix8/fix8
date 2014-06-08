@@ -180,6 +180,7 @@ void WorkSheet::setTableSchema(TableSchema *ts)
     }
     _model->setColumnCount(tableSchema->fieldList->count());
     buildHeader();
+    fixTable->setAnouncement("Schema Set To: " + tableSchema->name);
 
 }
 void WorkSheet::buildHeader()
@@ -207,7 +208,6 @@ void WorkSheet::buildHeader()
         i++;
     }
 }
-
 void WorkSheet::build()
 {
     setAcceptDrops(true);
@@ -247,7 +247,6 @@ void WorkSheet::build()
     stackLayout->insertWidget(0,splitter);
     stackLayout->insertWidget(1,progressWidget);
     stackLayout->setCurrentIndex(0);
-
 }
 WorkSheet::~WorkSheet()
 {
@@ -322,9 +321,6 @@ bool WorkSheet::loadFileName(QString &fileName,
         linecount++;
     }
     showLoadProcess(true);
-
-    qDebug() << "NUM OF LINES:" <<  linecount  << __FILE__ << __LINE__;
-
     dataFile->seek(0);
     myTimer.start();
     _model->setRowCount(linecount);
@@ -498,8 +494,6 @@ void  WorkSheet::rowSelectedSlot(QModelIndex mi)
     otherIndex = _model->index(row,MessageType);
     str =  _model->data(otherIndex).toString();
     messageArea->setMessageFieldList(mfl,seqN,str);
-
-
 }
 void WorkSheet::setAlias(QString &str)
 {
@@ -508,13 +502,11 @@ void WorkSheet::setAlias(QString &str)
 WorkSheetData WorkSheet::getWorksheetData()
 {
     WorkSheetData wsd;
-    qDebug() << "************** GET WORK SHEET DATA *************" << __FILE__;
     wsd.fileName = fixFileName;
     QHeaderView *horHeader = fixTable->horizontalHeader();
     wsd.headerState = horHeader->saveState();
     wsd.splitterState = splitter->saveState();
     wsd.tabAlias = alias;
-    qDebug() << "ALIAS SET TO " << alias << __FILE__ << __LINE__;
     QItemSelectionModel *select = fixTable->selectionModel();
     if (select && select->hasSelection()) {
         QModelIndexList indexList = select->selectedRows();
@@ -525,7 +517,6 @@ WorkSheetData WorkSheet::getWorksheetData()
     }
     return wsd;
 }
-
 void WorkSheet::cancelLoadSlot()
 {
     cancelLoad = true;
@@ -556,7 +547,6 @@ void WorkSheet::popupHeaderMenuSlot(int col,const QPoint &pt)
 {
     if (col == FixTable::SendingTime) {
         timeFormatMenu->popup(pt);
-        qDebug() << "\tSending Time Col Selected"<< __FILE__ << __LINE__;
     }
 }
 void WorkSheet::timeFormatSelectedSlot(QAction *action)
@@ -580,27 +570,22 @@ void WorkSheet::setWindowID( QUuid &uuid)
 {
     windowID = uuid;
     fixTable->setWindowID(windowID);
-    qDebug() << "WINDOW ID SET TO " << windowID << __FILE__ << __LINE__;
 }
 void WorkSheet::modelDroppedSlot(FixMimeData *m)
 {
     emit modelDropped(m);
 }
-
 WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()
 {
 
 }
-
 bool WorkSheetList::removeByID(const QUuid &id)
 {
     WorkSheet *ws;
     QList<WorkSheet *>::iterator iter;
-
     for (iter = this->begin(); iter != this->end();++iter) {
         ws = *iter;
         if (ws->getID() == id) {
-            qDebug() << "Remove work sheet" << __FILE__ << __LINE__;
             erase(iter);
             return true;
         }

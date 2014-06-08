@@ -114,9 +114,9 @@ private:
     void cleanWindowDataList(QList <WindowData> &windowDataList);
 
     void generate_traits(const TraitHelper &tr, QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
-                      MessageField *mf,QList <QBaseEntry *> *qbaseEntryList);
+                      MessageField *mf,QList <QBaseEntry *> *qbaseEntryList, int *level);
     void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
-                      MessageField *mf,QBaseEntryList *qbaseEntryList);
+                      MessageField *mf,QBaseEntryList *qbaseEntryList,int *level);
 
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);

@@ -58,6 +58,7 @@ class FixTable: public QTableView {
   enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
   FixTable(QUuid &windowID, QUuid &workSheetID,QWidget * parent = 0);
   //FixTable(const FixTable &);
+  void setAnouncement(const QString &message,int interval=3000); // milisec
   void setWindowID(QUuid &uuid);
   ~FixTable();
   static QString headerLabel[NumColumns];
@@ -70,6 +71,7 @@ class FixTable: public QTableView {
   void mouseMoveEvent(QMouseEvent *event);
   void paintEvent(QPaintEvent *);
   void resizeEvent(QResizeEvent *);
+  void timerEvent(QTimerEvent *);
  signals:
   void doPopup(const QModelIndex &,const QPoint &);
   void modelDropped(FixMimeData  *);
@@ -92,5 +94,18 @@ class FixTable: public QTableView {
   QPoint dragStartPosition;
   QUuid windowID;
   QUuid worksheetID;
+  QRect   anounceRect;
+  QColor  anounceFG;
+  QColor  anounceAlphaFG;
+  int alpha;
+  QColor  anounceBG;
+  QColor  anounceAlphaBG;
+   bool    showAnouncement;
+   int     anounceTimerID;
+   int     anounceStrX,anounceStrY;
+   QString anouncement;
+   QFont   anounceFont;
+   int     animationTime;
+   int     animationPeriod;
 };
 #endif

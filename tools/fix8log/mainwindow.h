@@ -219,6 +219,7 @@ protected:
     void buildMainWindow();
     void displayConsoleMessage(GUI::ConsoleMessage);
     void showEvent(QShowEvent *);
+    void timerEvent(QTimerEvent *);
     void readSettings();
     void writeSettings();
 signals:

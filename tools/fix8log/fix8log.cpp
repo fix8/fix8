@@ -143,7 +143,7 @@ void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMes
     displayConsoleMessage(m);
 }
 void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
-                              MessageField *mf,QList <QBaseEntry *> *qbaseEntryList)
+                              MessageField *mf,QList <QBaseEntry *> *qbaseEntryList,int *level)
 {
     int ii = 0;
     for (F8MetaCntx::const_iterator itr(F8MetaCntx::begin(tr)); itr != F8MetaCntx::end(tr); ++itr)
@@ -177,17 +177,22 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
             fieldUse->messageFieldList.append(mf);
 
         }
+       else
+            qWarning() << "\t\tERROR QBASELIST = 0" ;
+
         //MessageBase *header =  new Message::Header();
         //cout << "Field Type: " << ft._ftype << endl;
         //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. g out traits.
-        if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
+        if (itr->_field_traits.has(FieldTrait::group)) {// any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-        generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
+            generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList,level); // descend into repeating groups
+        }
         ii++;
     }
+
 }
 void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
-                              MessageField *mf,QBaseEntryList *qbaseEntryList)
+                              MessageField *mf,QBaseEntryList *qbaseEntryList,int *level)
 {
     int ii = 0;
     QString name;
@@ -219,10 +224,14 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
                     defaultHeaderItems.append(qbe);
             }
         }
-        if (itr->_field_traits.has(FieldTrait::group)) // any nested repeating groups?
+        if (itr->_field_traits.has(FieldTrait::group)) {// any nested repeating groups?
             qbe->baseEntryList = new QList<QBaseEntry *>();
-        generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList); // descend into repeating groups
-        ii++;
+            (*level)++;
+            generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList,level); // descend into repeating groups
+
+        }
+
+            ii++;
     }
 }
 
@@ -386,8 +395,9 @@ bool Fix8Log::init()
         key =
                 QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
         messageField = new MessageField(key,value);
-
-        generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList);
+        int level = 0;
+        generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
+        // qbaseEntryList->print();
         //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);

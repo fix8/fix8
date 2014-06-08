@@ -132,6 +132,7 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
         }
     }
     currentSchemaItem = (SchemaItem *) availableSchemaModel->itemFromIndex(index);
+
     if (!currentSchemaItem)  {
         qWarning() << "Curent SchemaItem is null" << __FILE__ << __LINE__;
         return;
@@ -149,8 +150,9 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
         delete tempTableSchema;
     }
     tempTableSchema = currentTableSchema->clone();
-    if (tempTableSchema->fieldList)
+    if (tempTableSchema->fieldList) {
         selectedBaseEntryList = *(tempTableSchema->fieldList);
+    }
     int rowCount = selectedFieldModel->rowCount();
     if (rowCount > 0)
         selectedFieldModel->removeRows(0,rowCount);
@@ -159,6 +161,7 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
     QList <QBaseEntry *> *bel = currentTableSchema->getFields();
     if (!bel) {
         qWarning() << "NO Field list found for current schema " << __FILE__ << __LINE__;
+        validate();
         return;
     }
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
@@ -481,7 +484,9 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
             // redo this code make it recursive
             availableFieldModel->setItem(i,item);
             if (qbe->baseEntryList) {
-                QListIterator <QBaseEntry *> iter2(*qbe->baseEntryList);
+                //qDebug() << "!!!!!!!!!!!!!! HAVE LEVEL TWO" << __FILE__ << __LINE__;
+                //qDebug() << "\tcount = " << qbe->baseEntryList->count();
+                QListIterator <QBaseEntry *> iter2(*(qbe->baseEntryList));
                 while(iter2.hasNext()) {
                     QBaseEntry *qbe2 = iter2.next();
                     QStandardItem *item2 = new QStandardItem(qbe2->name);
@@ -494,6 +499,7 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
                     if (siter != selectedMap.end()) {
                         item2->setCheckState(Qt::Checked);
                     }
+                    //qDebug() << "APPEND ITEM 2 TO ROW " << item->text() << __FILE__ << __LINE__;
                     item->appendRow(item2);
                     if (qbe2->baseEntryList) {
                         QListIterator <QBaseEntry *> iter3(*qbe2->baseEntryList);
@@ -510,7 +516,7 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
                                 item3->setCheckState(Qt::Checked);
                             }
                             item2->appendRow(item3);
-                        }
+                        }                        
                     }
                 }
             }
@@ -579,7 +585,6 @@ void SchemaEditorDialog::saveNewEditSlot()
     }
     descriptionE->setText("");
     if (viewMode == EditMode) {
-        qDebug() << "TO DO SAVE EDIT MODE";
         if (!currentSchemaItem) {
             return;
         }
@@ -598,7 +603,6 @@ void SchemaEditorDialog::saveNewEditSlot()
                 return;
             }
         }
-
         descriptionE->setText(description);
         currentSchemaItem->setText(name);
         currentSchemaItem->tableSchema->name = name;
@@ -655,12 +659,11 @@ void SchemaEditorDialog::saveNewEditSlot()
 }
 void SchemaEditorDialog::applySlot()
 {
-    qDebug() << "Apply Slot" << __FILE__ << __LINE__;
-    *inUseTableSchema = *tempTableSchema;
-    inUseTableSchema->fieldList = tempTableSchema->fieldList;
-    *currentTableSchema = *tempTableSchema;
-    currentTableSchema->fieldList = tempTableSchema->fieldList;
-
+    inUseTableSchema = tempTableSchema->clone();
+    //inUseTableSchema->fieldList = tempTableSchema->fieldList;
+    //currentTableSchema = tempTableSchema->clone();
+    //currentTableSchema->fieldList = tempTableSchema->fieldList;
+    //qDebug() << "*****CURRENT SCHEMA AFTER ASSIGN = " << currentTableSchema->name;
     if (currentMainWindow) {
         currentMainWindow->setTableSchema(inUseTableSchema);
     }
@@ -685,7 +688,11 @@ void SchemaEditorDialog::saveSchemaSlot()
 
     //currentTableSchema = tempTableSchema->clone();
     *currentTableSchema = *tempTableSchema;
-    currentTableSchema->fieldList = tempTableSchema->fieldList->clone();
+
+    if (tempTableSchema->fieldList) {
+        currentTableSchema->fieldList = tempTableSchema->fieldList->clone();
+    }
+
     if (currentSchemaItem)
         currentSchemaItem->tableSchema = currentTableSchema;
         //currentSchemaItem->tableSchema = tempTableSchema->clone();

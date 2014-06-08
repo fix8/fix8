@@ -231,7 +231,6 @@ void MainWindow::autoSaveOnSlot(bool isOn)
 }
 void MainWindow::cancelSessionRestoreSlot()
 {
-    qDebug()  << "Cancel Session Restore Slot " << __FILE__ << __LINE__;
     emit cancelSessionRestore();
 }
 void MainWindow::setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat tf)
@@ -240,7 +239,6 @@ void MainWindow::setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat tf)
 }
 void MainWindow::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
 {
-   qDebug() << "MainWindow::setTimeFormat Slot " << tf << __FILE__ << __LINE__;
    WorkSheet *workSheet;
    for(int i=0;i < tabW->count();i++) {
        workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
@@ -258,7 +256,6 @@ void MainWindow::toolbarOrientationChangedSlot(Qt::Orientation orient)
     else {
         searchL->setText("Search");
         searchLV->setText("");
-
     }
 }
 void MainWindow::modelDroppedSlot(FixMimeData *m)
@@ -270,7 +267,8 @@ void MainWindow::modelDroppedSlot(FixMimeData *m)
 void MainWindow::schemaSelectedSlot(QAction *action)
 {
     TableSchema *ts;
-    qDebug() << "SCHEMA SELECTED " << __FILE__ << __LINE__;
+    WorkSheet *ws;
+
     QVariant var =  action->data();
     if (!schemaList) {
         qWarning() << "ERROR - NO SCHEMA LIST SET" << __FILE__ << __LINE__;
@@ -283,13 +281,14 @@ void MainWindow::schemaSelectedSlot(QAction *action)
          return;
     }
     schemaV->setText(ts->name);
-
-    qDebug() << "Table Schema Set To " << ts->name <<  __FILE__ << __LINE__;
     tableSchema = ts;
+    QListIterator <WorkSheet *> iter2(workSheetList);
+    while(iter2.hasNext()) {
+        ws = iter2.next();
+        ws->setTableSchema(tableSchema);
+    }
     emit tableSchemaChanged(ts);
-
 }
-
 void MainWindow::setWindowNameSlot()
 {
     bool ok;

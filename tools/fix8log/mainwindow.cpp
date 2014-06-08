@@ -123,6 +123,8 @@ void MainWindow::setLoadMessage(QString str)
 }
 void MainWindow::buildMainWindow()
 {
+    setAutoFillBackground(true);
+
     setWindowIcon(QIcon(":/images/svg/logo.svg"));
     setAcceptDrops(true);
     uuid = QUuid::createUuid();
@@ -456,6 +458,7 @@ void MainWindow::buildMainWindow()
     stackW->insertWidget(ShowProgress,progressWidget);
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
+
     buildSchemaMenu();
     buildHideColumnMenu();
 }
@@ -525,6 +528,7 @@ const QUuid &MainWindow::getUuid()
 {
     return uuid;
 }
+
 void MainWindow::showEvent(QShowEvent *se)
 {
     if (!loadingActive)  {
@@ -540,6 +544,10 @@ void MainWindow::showEvent(QShowEvent *se)
         }
     }
     QMainWindow::showEvent(se);
+}
+void MainWindow::timerEvent(QTimerEvent *te)
+{
+
 }
 QSize MainWindow::sizeHint() const
 {
@@ -686,7 +694,6 @@ void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
 }
 void MainWindow::setTableSchema(TableSchema *newTableSchema)
 {
-    qDebug() << "*********************  MAINWINDOW::SET TABLE SCHEMA" << __FILE__ << __LINE__;
     WorkSheet *ws;
     tableSchema = newTableSchema;
     QAction *action;
@@ -716,9 +723,7 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
     QListIterator <WorkSheet *> iter2(workSheetList);
     while(iter2.hasNext()) {
         ws = iter2.next();
-        qDebug() << "Set Table Schema For Work SHeet" << __FILE__ << __LINE__;
         ws->setTableSchema(tableSchema);
-
     }
 }
 void MainWindow::tableSchemaModified(TableSchema *ts)
@@ -729,20 +734,13 @@ void MainWindow::tableSchemaModified(TableSchema *ts)
         qWarning() << "Error MainWindow::tableSchemaModfied" << __FILE__ << __LINE__;
         return;
     }
-    qDebug() << "Main Window Table Schema Modified " << __FILE__ << __LINE__;
     QMap<int,QAction *>::const_iterator iter  = schemaActionMap.find(ts->id);
     if (iter != schemaActionMap.end()) {
-         action = (QAction *) iter.value();
-         action->setText(ts->name);
+        action = (QAction *) iter.value();
+        action->setText(ts->name);
     }
     if (tableSchema->id == ts->id) {
-        if (tableSchema->fieldList)
-            qDebug() << "OLD TS, field count = " << tableSchema->fieldList->count();
-        if (ts->fieldList)
-              qDebug() << "NEW TS, field count = " << ts->fieldList->count();
         *tableSchema = *ts;
-        if (tableSchema->fieldList)
-            qDebug() << "OLD TS, after reset field count = " << tableSchema->fieldList->count();
     }
     QListIterator <WorkSheet *> iter2(workSheetList);
     while(iter2.hasNext()) {

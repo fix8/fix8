@@ -65,53 +65,23 @@ QString FixTable::headerLabel[] =
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
  tr("HeartBtInt"),tr("Message Type")};
 
-/*
-FixTable::FixTable(const FixTable &ft):QTableView(),dataFile(0)
-{
-    bgColorStart.setRgb(251,185,6);
-    bgColorEnd.setRgb(244,211,122);
-    emptyStr1 = tr("No");
-    emptyStr2 = tr("File Loaded");
-    emptyFont   = font();
-    emptyFont.setBold(true);
-    emptyFont.setPointSize(emptyFont.pointSize() + 8);
-    emptyStrColor.setRgb(239,237,213);
-
-    setMouseTracking(true);
-    QStringList strList;
-    _model = new QStandardItemModel(this);
-    setModel(_model);
-    for(int i=0;i<NumColumns;i++) {
-        headerItem[i] = new QStandardItem(headerLabel[i]);
-        _model->setHorizontalHeaderItem(i,headerItem[i]);
-    }
-    setShowGrid(true);
-    setGridStyle(Qt::SolidLine);
-    setAlternatingRowColors(true);
-    setSelectionMode(QAbstractItemView::SingleSelection);
-    setSelectionBehavior(QAbstractItemView::SelectRows);
-    setSortingEnabled(true);
-    //QPalette pal = palette();
-    //pal.setColor(QPalette::AlternateBase,QColor(10,40,220,75));
-    //setPalette(pal);
-
-    resize(sizeHint());
-    QHeaderView *horHeader = horizontalHeader();
-    horHeader->setSectionResizeMode(QHeaderView::Interactive);
-    horHeader->setStretchLastSection(true);
-    horHeader->setSectionsMovable(true);
-    horHeader->setSortIndicatorShown(true);
-}
-*/
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     QTableView(p),windowID(wid),worksheetID(wsid)
 
 {
+    anouncement = "HELLO THERE";
+    showAnouncement= false;
+    anounceFont = font();
+    anounceFont.setBold(true);
+    anounceFont.setPointSize(anounceFont.pointSize() + 4);
+    anounceFG = Qt::white;
+    anounceBG = Qt::black;
+    anouncement = "Schema Set To: Default";
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     viewport()->setAcceptDrops(true);
-    bgColorStart.setRgb(0,0,114);
-    bgColorEnd.setRgb(13,13,15);
+    bgColorStart.setRgb(2,19,39);
+    bgColorEnd.setRgb(10,10,10);
     emptyStr1 = tr("No");
     emptyStr2 = tr("Data");
     emptyFont   = font();
@@ -132,12 +102,48 @@ void FixTable::setWindowID(QUuid &uuid)
 {
     windowID = uuid;
 }
-/******************************************************************/
 FixTable::~FixTable()
 {
     qDebug() << "Delte Fix Table" << __FILE__ << __LINE__;
 }
-/******************************************************************/
+void FixTable::setAnouncement(const QString &message,int interval)
+{
+    showAnouncement = true;
+    anouncement = message;
+    alpha = 255;
+    if (model()->rowCount() > 0) {
+        anounceAlphaBG = anounceBG;
+        anounceAlphaFG = anounceFG;
+    }
+    else {
+        anounceAlphaBG = anounceFG;
+        anounceAlphaFG = anounceBG;
+    }
+    animationPeriod = interval;
+    killTimer(anounceTimerID);
+    anounceTimerID = startTimer(90);
+    qDebug() << "START TIMER " << anounceTimerID;
+
+}
+void FixTable::timerEvent(QTimerEvent *te)
+{
+    if (te->timerId() == anounceTimerID) {
+        alpha = alpha-10;
+        if (alpha < 10) {
+            killTimer(anounceTimerID);
+            showAnouncement = false;
+        }
+        else {
+            anounceAlphaBG.setAlpha(alpha);
+            anounceAlphaFG.setAlpha(alpha);
+        }
+        viewport()->update();
+
+    }
+    else
+        QTableView::timerEvent(te);
+}
+
 void FixTable::resizeEvent(QResizeEvent *re)
 {
     int offset;
@@ -151,13 +157,15 @@ void FixTable::resizeEvent(QResizeEvent *re)
     offset = fm.height()/2;
     emptyY1 = centerY - offset;
     emptyY2 = centerY + offset;
-    center.setX((int) (s.width()/2));
-    center.setY((int) (s.height()/2));
-    grad.setFocalPoint(center);
-    grad.setCenter(center);
-    grad.setColorAt(0,bgColorStart);
-    grad.setColorAt(1,bgColorEnd);
-    grad.setRadius(s.height()*.55);
+
+
+    QFontMetrics fm1(anounceFont);
+    int anounceWidth = fm1.width(anouncement);
+    anounceWidth = anounceWidth + (anounceWidth*.15);
+    anounceRect.setX((centerX -  anounceWidth)/2);//(fm1.width(anouncement)/2));
+    anounceRect.setY(centerY - (fm1.height())  );
+    anounceRect.setWidth(anounceWidth);
+    anounceRect.setHeight(fm1.height() *2);
 
     QTableView::resizeEvent(re);
 
@@ -213,11 +221,30 @@ void FixTable::paintEvent(QPaintEvent *pe)
         qWarning() << "no model" << __FILE__;
         return;
     }
+    QPainter painter(viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
     int numRows = model()->rowCount();
 
+    if (showAnouncement) {
+        if (numRows < 1) {
+            QBrush brush(bgColorEnd);
+            painter.setBrush(brush);
+            QRect r(0,0,width(),height());
+            painter.fillRect(r,brush);
+        }
+        painter.setBrush(anounceAlphaBG);
+        painter.setPen(anounceAlphaBG);
+        painter.drawRoundedRect(anounceRect,14,14);
+        painter.setFont(anounceFont);
+        painter.setPen(anounceAlphaFG);
+        painter.drawText(anounceRect,anouncement,QTextOption(Qt::AlignCenter));
+        return;
+    }
+
     if (numRows < 1) {
-        QPainter painter(viewport());
-        QBrush brush(grad);
+
+        //QBrush brush(grad);
+        QBrush brush(bgColorEnd);
         painter.setBrush(brush);
         QRect r(0,0,width(),height());
         painter.fillRect(r,brush);
