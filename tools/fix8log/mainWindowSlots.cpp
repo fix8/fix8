@@ -230,6 +230,17 @@ void MainWindow::autoSaveOnSlot(bool isOn)
 }
 void MainWindow::cancelSessionRestoreSlot()
 {
+    loadingActive = false;
+    if (tabW->count() > 0) {
+        stackW->setCurrentIndex(ShowTab);
+        copyTabA->setEnabled(true);
+        showMessageA->setEnabled(true);
+    }
+    else {
+        stackW->setCurrentIndex(ShowNoDataLabel);
+        copyTabA->setEnabled(false);
+        showMessageA->setEnabled(false);
+    }
     emit cancelSessionRestore();
 }
 void MainWindow::setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat tf)

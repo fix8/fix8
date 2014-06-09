@@ -231,8 +231,9 @@ void WorkSheet::build()
     if (!qmlObject) {
         qWarning() << "qml root object not found" << __FILE__ << __LINE__ ;
     }
-    else
+    else {
         connect(qmlObject,SIGNAL(cancel()),this,SLOT(cancelLoadSlot()));
+    }
     splitter = new QSplitter(Qt::Horizontal,this);
     splitter->setObjectName("messageSplitter");
     fixTable = new FixTable(windowID,uuid,this);
@@ -518,6 +519,7 @@ WorkSheetData WorkSheet::getWorksheetData()
 void WorkSheet::cancelLoadSlot()
 {
     cancelLoad = true;
+    stackLayout->setCurrentIndex(0);
 }
 void WorkSheet::showLoadProcess(bool isBeingLoaded)
 {

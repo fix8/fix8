@@ -42,8 +42,9 @@ Rectangle {
     height:400
     color:"black"
     state: "loading"
-    signal cancel()
+    signal cancel();
     function doCancel() {
+        console.log("YES A CANCEL")
         cancel()
     }
     function  setLoadFile(str1,str2)

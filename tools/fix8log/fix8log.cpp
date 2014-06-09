@@ -466,7 +466,6 @@ bool Fix8Log::init()
                         else
                             fileNameModelMap.insert(wsd.fileName,model);
                     }
-                    newMW->setLoading(false);
                     if (model) {
                         newMW->addWorkSheet(model,wsd);
                         qDebug() << "FIX THIS HARD CODE ROW SETTING of 2 ?" << __FILE__ << __LINE__;
@@ -474,6 +473,7 @@ bool Fix8Log::init()
                     }
                 }
             }
+            newMW->setLoading(false);
             newMW->show();
         }
         displayConsoleMessage("Session restored from autosave");
@@ -522,10 +522,11 @@ bool Fix8Log::init(QString fileNameToLoad)
 
     if (model) {
         fileNameModelMap.insert(wsd.fileName,model);
-        newMW->setLoading(false);
         newMW->addWorkSheet(model,wsd);
         newMW->show();
     }
+    newMW->setLoading(false);
+
     return true;
 }
 void Fix8Log::saveSession()
