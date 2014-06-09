@@ -113,7 +113,6 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     qint32 fileSize = dataFile.size();
     QByteArray ba;
 
-
     while(!dataFile.atEnd()) {
         ba = dataFile.readLine();
         linecount++;
@@ -125,6 +124,23 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();
+    QList <Message *> *messageList = new QList<Message *>();
+    while(!dataFile.atEnd()) {
+        itemList.clear();
+        try {
+            ba = dataFile.readLine();
+            ba.truncate(ba.size()-1);
+            Message *msg = Message::factory(TEX::ctx(),ba.data());
+            messageList->append(msg);
+        }
+        catch (f8Exception&  e){
+            errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
+            qWarning() << "exception, row " << i;
+            qWarning() << "Error - " << e.what();
+            msgList.append(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+        }
+        i++;
+    }
     /* messgeTypeItem = new QStandardItem(qstr);
     qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;
 
@@ -133,6 +149,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         try {
             ba = dataFile.readLine();
             ba.truncate(ba.size()-1); // strip eol charactor
+
             std::unique_ptr <Message> msg(Message::factory(TEX::ctx(),ba.data()));
             msg->Header()->get(snum);
             const Presence& pre(msg->get_fp().get_presence());
@@ -245,6 +262,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::Message(qstr));
 */
+    qDebug() << "NUM OF MESSAGES READ IN = " << messageList->count() << __FILE__ << __LINE__;
     dataFile.close();
     return model;
 }
