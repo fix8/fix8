@@ -105,6 +105,5 @@ QMAKE_CXXFLAGS += /bigobj
 OTHER_FILES += \
     qml/loadProgress.qml \    
     fix8log.pro.user \
-    fix8log.pro.user.7112d3e \
 
 

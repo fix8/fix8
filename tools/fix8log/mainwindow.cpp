@@ -709,6 +709,7 @@ void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
 }
 void MainWindow::setTableSchema(TableSchema *newTableSchema)
 {
+    qDebug() << "MAIN WINDOW::setTableSchema" << __FILE__ << __LINE__;
     WorkSheet *ws;
     tableSchema = newTableSchema;
     QAction *action;

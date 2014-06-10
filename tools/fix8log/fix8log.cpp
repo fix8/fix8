@@ -159,6 +159,7 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
             if (!qbe) {
                 qbe  = new QBaseEntry(*be);
                 qbe->ft = new FieldTrait(*itr);
+                //qDebug () << "Number2 " << qbe->ft->_fnum;
                 baseMap.insert(qbe->name,qbe);
             }
             name = qbe->name;

@@ -48,6 +48,7 @@ public:
     void setTableSchema(TableSchema &ts);
     void setMessageList( QList <Message *> *messageList);
 private:
+    void generateData();
     TableSchema *tableSchema;
     QList <Message *> *messageList;
 

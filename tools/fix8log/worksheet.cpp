@@ -174,6 +174,8 @@ void WorkSheet::setTableSchema(TableSchema *ts)
     QHeaderView *horHeader =  fixTable->horizontalHeader();
     QAbstractItemModel * headerModel = horHeader->model();
     headerModel->removeColumns(0,headerModel->columnCount());
+    _model->setTableSchema(*tableSchema);
+
     if (!tableSchema) {
         qWarning() << "ERROR - Table Schema IS NULL" << __FILE__ << __LINE__;
         return;
@@ -186,7 +188,6 @@ void WorkSheet::setTableSchema(TableSchema *ts)
         qWarning() << "ERROR - Table Schema Field List has 0 fields" << __FILE__ << __LINE__;
         return;
     }
-    _model->setTableSchema(*tableSchema);
     fixTable->setAnouncement("Schema Set To: " + tableSchema->name);
 }
 /* don't need this method anymore done by worksheetmodel */

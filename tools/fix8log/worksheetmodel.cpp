@@ -46,9 +46,17 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
     QStandardItem *hi;
     QBaseEntryList *fieldList;
     QBaseEntry *field;
+    qDebug() << "WORK SHEET SET TABLE SCHEMA " << __FILE__ << __LINE__;
     clear();
-    if (tableSchema->fieldList->count() < 1)
+    if (!tableSchema->fieldList) {
+        qWarning() << "Field List is null" << __FILE__ << __LINE__;
+        setColumnCount(0);
         return;
+    }
+    if (tableSchema->fieldList->count() < 1)
+        qWarning() << "Field List is null" << __FILE__ << __LINE__;
+
+
     setColumnCount(tableSchema->fieldList->count());
     fieldList = tableSchema->fieldList;
 
@@ -57,25 +65,73 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
     int i = 0;
     while(iter.hasNext()) {
         field = iter.next();
-       // std::cout << *field << std::endl;
+        qDebug() << ">>>>>>>>>" << field->ft->_fnum;
         hi = new QStandardItem(field->name);
         setHorizontalHeaderItem(i,hi);
         i++;
     }
+    generateData();
 }
 void WorkSheetModel::setMessageList( QList <Message *> *ml)
 {
-   messageList = ml;
-   removeRows(0,rowCount());
-   if (!messageList) {
-       qWarning() << "Warning - messagelist == 0" << __FILE__ << __LINE__;
-       return;
-   }
-   Message *message;
-   QListIterator <Message *> iter(*messageList);
-   while(iter.hasNext()) {
-       message = iter.next();
-       QString str = QString::fromStdString(message->get_msgtype());
-       //qDebug() << "HAVE MESSAGE TYPE: " << str << __FILE__ << __LINE__;
-   }
+    messageList = ml;
+    removeRows(0,rowCount());
+    if (!messageList) {
+        qWarning() << "Warning - messagelist == 0" << __FILE__ << __LINE__;
+        return;
+    }
+    /*
+    Message *message;
+    QListIterator <Message *> iter(*messageList);
+
+    while(iter.hasNext()) {
+        message = iter.next();
+        QString str = QString::fromStdString(message->get_msgtype());
+        qDebug() << "HAVE MESSAGE TYPE: " << str << __FILE__ << __LINE__;
+    }
+    */
+    generateData();
 }
+void WorkSheetModel::generateData()
+{
+    Message    *message;
+    BaseField  *baseField;
+    QBaseEntry *headerField;
+    int fieldID;
+    if (!tableSchema) {
+        qWarning() << "Unable to generate data -  table schema is null" << __FILE__ << __LINE__;
+        setColumnCount(0);
+        return;
+    }
+    if (!tableSchema->fieldList) {
+        qWarning() << "Unable to generate data -  field list is null" << __FILE__ << __LINE__;
+        setColumnCount(0);
+        return;
+    }
+    if (!messageList) {
+        qWarning() << "Unable to generate data -  message list is null" << __FILE__ << __LINE__;
+        setRowCount(0);
+        return;
+    }
+    QListIterator <Message *> mIter(*messageList);
+    while(mIter.hasNext()) {
+        message = mIter.next();
+        QListIterator <QBaseEntry *> iter(*(tableSchema->fieldList));
+        qDebug() << "\nNEW MESSAGE STARTS**********************************" << __FILE__ << __LINE__;
+        while(iter.hasNext()) {
+            headerField = iter.next();
+            fieldID = headerField->ft->_fnum;
+            qDebug() << "Checking for field: " << fieldID << __LINE__  << __FILE__;
+            //qDebug() << "\tNum of Fields in message = " << message;
+            //Fields::const_iterator fi = message->get_field(fieldID);
+            //if (fi == message->fields_end())
+             BaseField *bf = message->get_field(fieldID);
+             if (bf)
+                qDebug() << "******************DO NOT HAVE FIeld*******************";
+            else
+                qDebug() << "FIELD NOT FOUND ";
+        }
+
+    }
+}
+
