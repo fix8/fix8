@@ -41,10 +41,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "mainwindow.h"
 #include "messagefield.h"
 #include "schemaeditordialog.h"
+#include "worksheetmodel.h"
 #include "windowdata.h"
 #include <QApplication>
 #include <QDebug>
 #include <QtWidgets>
+#include "worksheetmodel.h"
 #include <fix8/f8includes.hpp>
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
@@ -242,7 +244,7 @@ bool Fix8Log::init()
     bool createdTable = false;
     QString dbFileName = "fix8log.sql";
     QString errorStr;
-    QStandardItemModel *model = 0;
+    WorkSheetModel *model = 0;
     QList <WindowData> windowDataList;
     WindowData wd;
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
@@ -451,7 +453,7 @@ bool Fix8Log::init()
                     WorkSheetData wsd = iter2.next();
                     currentItemIter =  fileNameModelMap.find(wsd.fileName);
                     if (currentItemIter != fileNameModelMap.end()) {
-                        model = currentItemIter.value();
+                        model = (WorkSheetModel *) currentItemIter.value();
                     }
                     else {
                         newMW->setLoadMessage("Loading File " + wsd.fileName);
@@ -503,7 +505,7 @@ done:
 }
 bool Fix8Log::init(QString fileNameToLoad)
 {
-    QStandardItemModel *model = 0;
+    WorkSheetModel *model = 0;
     MainWindow *newMW  =new MainWindow(true);
     WindowData wd;
     WorkSheetData wsd;

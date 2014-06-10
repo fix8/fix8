@@ -41,13 +41,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QStandardItemModel>
 #include <QUuid>
 #include "globals.h"
+class WorkSheetModel;
 class FixMimeData : public QMimeData
 {
 public:
     FixMimeData();
     bool hasFormat(const QString &mimeType);
     fix8logdata f8ld;
-    QStandardItemModel *model;
+    WorkSheetModel *model;
     QUuid windowID;    // used for drag and drop
     QUuid worksheetID;
 };

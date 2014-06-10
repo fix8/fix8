@@ -56,7 +56,7 @@ class Database;
 class SchemaEditorDialog;
 class FutureReadData;
 class FixMimeData;
-
+class WorkSheetModel;
 FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr);
 
 class Fix8Log : public QObject
@@ -90,7 +90,7 @@ public slots:
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
 protected:
-    QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);
+    WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);
     void saveSession();
     void wireSignalAndSlots(MainWindow *mw);
     QList <MainWindow *> mainWindows;

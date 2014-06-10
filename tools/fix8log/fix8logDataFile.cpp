@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "intItem.h"
 #include "messagearea.h"
+#include "worksheetmodel.h"
 #include <QDebug>
 #include <QFile>
 #include <QtWidgets>
@@ -53,9 +54,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Myfix_types.hpp>
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
+
 using namespace FIX8;
 
-QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
+WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
 {
     bool bstatus;
     msg_type mt;
@@ -87,15 +89,8 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     QString senderID;
     QFile dataFile(fileName);
     QList<QStandardItem *> itemList;
-    QStandardItemModel *model = new QStandardItemModel();
-    model->setColumnCount(WorkSheet::NumColumns);
-    QStandardItem *headerItem[WorkSheet::NumColumns];
-    for(int i=0;i<WorkSheet::NumColumns;i++) {
-        headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
-        if (i==WorkSheet::SendingTime)
-            headerItem[i]->setToolTip("Right click to select time format");
-        model->setHorizontalHeaderItem(i,headerItem[i]);
-    }
+    WorkSheetModel *model = new WorkSheetModel(this);
+
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
 
     QList <GUI::ConsoleMessage> msgList;
@@ -120,7 +115,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
 
     dataFile.seek(0);
     model->setRowCount(linecount);
-    model->setColumnCount(WorkSheet::NumColumns);
+
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();
@@ -141,6 +136,8 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         }
         i++;
     }
+    model->setMessageList(messageList);
+
     /* messgeTypeItem = new QStandardItem(qstr);
     qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;
 
@@ -318,6 +315,8 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     QList<QStandardItem *> itemList;
     FutureReadData *frd = new FutureReadData();
     QStandardItemModel *model = new QStandardItemModel();
+    qDebug() << "Reqwork this, num of columns..." << __FILE__ << __LINE__;
+    /*
     model->setColumnCount(WorkSheet::NumColumns);
     QStandardItem *headerItem[WorkSheet::NumColumns];
     for(int i=0;i<WorkSheet::NumColumns;i++) {
@@ -326,7 +325,7 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
             headerItem[i]->setToolTip("Right click to select time format");
         model->setHorizontalHeaderItem(i,headerItem[i]);
     }
-
+    */
     QList <GUI::ConsoleMessage> msgList;
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
@@ -350,7 +349,8 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
 
     dataFile.seek(0);
     model->setRowCount(linecount);
-    model->setColumnCount(WorkSheet::NumColumns);
+    qDebug() << "rework this, ..." << __FILE__ << __LINE__;
+    // model->setColumnCount(WorkSheet::NumColumns);
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();

@@ -29,20 +29,53 @@ ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, IN
 CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
 NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
+HOLDE
 */
 //-------------------------------------------------------------------------------------------------
-
-#include "fixmimedata.h"
 #include "worksheetmodel.h"
-FixMimeData::FixMimeData():QMimeData(),model(0)
+#include <QDebug>
+#include <QList>
+WorkSheetModel::WorkSheetModel(QObject *parent) :
+    QStandardItemModel(parent),tableSchema(0),messageList(0)
 {
 }
-bool FixMimeData::hasFormat(const QString &str)
+void WorkSheetModel::setTableSchema(TableSchema &ts)
 {
-    if (str == "Fix8Log")
-        return true;
-    else
-        return QMimeData::hasFormat(str);
+    //TraitHelper tr;
+    tableSchema = &ts;
+    QStandardItem *hi;
+    QBaseEntryList *fieldList;
+    QBaseEntry *field;
+    clear();
+    if (tableSchema->fieldList->count() < 1)
+        return;
+    setColumnCount(tableSchema->fieldList->count());
+    fieldList = tableSchema->fieldList;
+
+    QListIterator <QBaseEntry *> iter(*fieldList);
+
+    int i = 0;
+    while(iter.hasNext()) {
+        field = iter.next();
+       // std::cout << *field << std::endl;
+        hi = new QStandardItem(field->name);
+        setHorizontalHeaderItem(i,hi);
+        i++;
+    }
+}
+void WorkSheetModel::setMessageList( QList <Message *> *ml)
+{
+   messageList = ml;
+   removeRows(0,rowCount());
+   if (!messageList) {
+       qWarning() << "Warning - messagelist == 0" << __FILE__ << __LINE__;
+       return;
+   }
+   Message *message;
+   QListIterator <Message *> iter(*messageList);
+   while(iter.hasNext()) {
+       message = iter.next();
+       QString str = QString::fromStdString(message->get_msgtype());
+       //qDebug() << "HAVE MESSAGE TYPE: " << str << __FILE__ << __LINE__;
+   }
 }

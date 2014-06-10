@@ -43,11 +43,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "windowdata.h"
 #include "worksheet.h"
+
 #include "worksheetdata.h"
 #include <QList>
 #include <QUuid>
 class FixMimeData;
 class FixToolBar;
+class WorkSheetModel;
 class NoDataLabel;
 class SearchLineEdit;
 class TableSchema;
@@ -80,7 +82,7 @@ public:
     MainWindow(MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
     void addNewSchema(TableSchema *);
-    void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
+    void addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd);
     void deletedSchema(int schemaID);
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);

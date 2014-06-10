@@ -44,6 +44,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "worksheetdata.h"
 class TableSchema;
+class WorkSheetModel;
 class QFile;
 class QLabel;
 class QMenu;
@@ -67,16 +68,16 @@ class WorkSheet : public QWidget
     Q_OBJECT
 public:
     explicit WorkSheet(QWidget *parent = 0);
-    WorkSheet(QStandardItemModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
+    WorkSheet(WorkSheetModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
     QUuid getID();
     ~WorkSheet();
-    enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
-    static QString headerLabel[NumColumns];
+    //enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
+   // static QString headerLabel[NumColumns];
     QString getFileName();
-    QStandardItemModel *getModel();
+    WorkSheetModel *getModel();
     WorkSheetData getWorksheetData();
     bool loadFileName(QString &fileName,
                       QList <GUI::ConsoleMessage> &returnMessageList,
@@ -110,8 +111,8 @@ private:
     QMenu *timeFormatMenu;
     QQuickView *progressView;
     QString fixFileName;
-    QStandardItemModel *_model;
-    QStandardItem *headerItem[NumColumns];
+    WorkSheetModel *_model;
+    // QStandardItem *headerItem[NumColumns];
     QVector <QStandardItem *> headerItems;
     QString alias;
     QWidget *progressWidget;

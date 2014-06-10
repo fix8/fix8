@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "mainwindow.h"
 #include "nodatalabel.h"
 #include "worksheet.h"
+#include "worksheetmodel.h"
 #include "globals.h"
 #include "searchlineedit.h"
 #include "tableschema.h"
@@ -86,8 +87,13 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
             connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData*)),
                     this,SLOT(modelDroppedSlot(FixMimeData*)));
             newWorkSheet->splitter->restoreState(ba);
-            tabW->addTab(newWorkSheet,mw.tabW->tabText(i));
+            QString str = mw.tabW->tabText(i);
+            if (str.length() > 36) {
+                str = "..." + str.right(33);
+            }
+            tabW->addTab(newWorkSheet,str);
         }
+
         if (tabW->count() > 0)
             stackW->setCurrentWidget(workAreaSplitter);
         else
@@ -639,7 +645,7 @@ WorkSheetData MainWindow::getWorksheetData(QUuid &workSheetID, bool *ok)
     }
     return wsd;
 }
-void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
+void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
 {
     int currentIndex = stackW->currentIndex();
     stackW->setCurrentIndex(ShowProgress);

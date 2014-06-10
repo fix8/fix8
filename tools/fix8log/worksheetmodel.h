@@ -33,16 +33,24 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#ifndef WORKSHEETMODEL_H
+#define WORKSHEETMODEL_H
+#include <QStandardItemModel>
+#include <QList>
+#include <fix8/f8includes.hpp>
+//#include <fix8/field.hpp>
+//#include <fix8/message.hpp>
+#include "tableschema.h"
+class WorkSheetModel : public QStandardItemModel
+{
+public:
+    explicit WorkSheetModel(QObject *parent = 0);
+    void setTableSchema(TableSchema &ts);
+    void setMessageList( QList <Message *> *messageList);
+private:
+    TableSchema *tableSchema;
+    QList <Message *> *messageList;
 
-#include "fixmimedata.h"
-#include "worksheetmodel.h"
-FixMimeData::FixMimeData():QMimeData(),model(0)
-{
-}
-bool FixMimeData::hasFormat(const QString &str)
-{
-    if (str == "Fix8Log")
-        return true;
-    else
-        return QMimeData::hasFormat(str);
-}
+};
+
+#endif // WORKSHEETMODEL_H

@@ -3,7 +3,7 @@
 # Project created by QtCreator 2014-03-15T21:24:01
 #
 #-------------------------------------------------
-
+CONFIG += x86_64
 QT       += core gui sql qml quick widgets
 
 TARGET = fix8log
@@ -18,9 +18,6 @@ SOURCES += main.cpp\
     fixtable.cpp \
     mainFileSlots.cpp \
     mainWindowSlots.cpp \
-    f8/Myfix_classes.cpp \
-    f8/Myfix_traits.cpp \
-    f8/Myfix_types.cpp \
     intItem.cpp \
     worksheet.cpp \
     messagefield.cpp \
@@ -47,15 +44,16 @@ SOURCES += main.cpp\
     databaseSchemaFields.cpp \
     fix8logSlots.cpp \
     schemadelegate.cpp \
-    selectedfieldstreeview.cpp
+    selectedfieldstreeview.cpp \
+    worksheetmodel.cpp \
+    ../../test/Myfix_classes.cpp \
+    ../../test/Myfix_traits.cpp \
+    ../../test/Myfix_types.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
     fix8log.h \
     fixtable.h \
-    f8/Myfix_classes.hpp \
-    f8/Myfix_router.hpp \
-    f8/Myfix_types.hpp \
     intItem.h \
     worksheet.h \
     messagefield.h \
@@ -75,7 +73,11 @@ HEADERS  += mainwindow.h \
     schemaitem.h \
     tableschema.h \
     schemadelegate.h \
-    selectedfieldstreeview.h
+    selectedfieldstreeview.h \
+    worksheetmodel.h \
+    ../../test/Myfix_classes.hpp \
+    ../../test/Myfix_router.hpp \
+    ../../test/Myfix_types.hpp
 
 RESOURCES += \
     resources.qrc
@@ -83,7 +85,7 @@ RESOURCES += \
 unix {
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
 LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
-INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ./f8
+INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
 DEPENDPATH += /usr/local/include
 }
 win32 {
@@ -92,7 +94,7 @@ QMAKE_CXXFLAGS += /bigobj
     MOC_DIR = moc
     UI_DIR = ui
     OBJECTS_DIR = obj
-    INCLUDEPATH += . ./f8 \
+    INCLUDEPATH += . ./f8 ../../test \
                 ../../msvc/packages/fix8.dev.1.1.20140603.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \

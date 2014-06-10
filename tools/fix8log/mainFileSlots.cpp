@@ -133,10 +133,16 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
         QList <GUI::ConsoleMessage> messageList;
+        /*
         QString fileNameStr = fi.fileName();
         if (fileNameStr.length() > 36)
             fileNameStr = fileNameStr.right(33);
-        index = tabW->addTab(workSheet,fileNameStr);
+            */
+        QString str = fileName;
+        if (str.length() > 36) {
+            str = "..." + str.right(33);
+        }
+        index = tabW->addTab(workSheet,str);
         tabW->setToolTip(fileName);
         tabW->setCurrentWidget(workSheet);
         workSheet->showLoadProcess(true);
@@ -146,7 +152,6 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
         workSheet->setUpdatesEnabled(true);
         workSheetList.append(workSheet);
-        qDebug() << "NUM OF WORK SHEETS " << workSheetList.count() << __FILE__ << __LINE__;
         if (!bstatus) {
             if (returnStatus == CANCEL) {
                 GUI::ConsoleMessage msg("Canceled Loading File: " + fileName);
@@ -156,7 +161,6 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
                 delete workSheet;
             }
             else {
-
                 GUI::ConsoleMessage msg("Loading File: " + fileName + " Failed",GUI::ConsoleMessage::ErrorMsg);
                 messageList.append(msg);
             }
@@ -250,11 +254,17 @@ void MainWindow::copyTabSlot()
             this,SLOT(modelDroppedSlot(FixMimeData *)));
     newWorkSheet->setWindowID(uuid);
     QString fileName = workSheet->getFileName();
+    /*
     QFileInfo fi(fileName);
     QString fileNameStr = fi.fileName();
     if (fileNameStr.length() > 36)
         fileNameStr = fileNameStr.right(33);
-    int index = tabW->addTab(newWorkSheet,fileNameStr);
+    */
+    QString str = fileName;
+    if (str.length() > 36) {
+        str = "..." + str.right(33);
+    }
+    int index = tabW->addTab(newWorkSheet,str);
     tabW->setToolTip(fileName);
     tabW->setCurrentIndex(index);
 }

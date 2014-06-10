@@ -45,37 +45,40 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "intItem.h"
 #include "messagearea.h"
 #include "tableschema.h"
+#include "worksheetmodel.h"
 #include <QDebug>
 #include <QQuickView>
 #include <QtWidgets>
 #include <iostream>
 #include <string.h>
 #include <fix8/f8includes.hpp>
-#include <field.hpp>
-#include <message.hpp>
+#include <fix8/field.hpp>
+#include <fix8/message.hpp>
 #include <Myfix_types.hpp>
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
 using namespace FIX8;
+/*
 QString WorkSheet::headerLabel[] =
 {tr("SeqNum"),tr("SenderCompID "),tr("TargetCompID"), QString(QChar(0x2935)) + "  SendTime"  ,
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
  tr("HeartBtInt"),tr("Message Type")};
-
+*/
 
 WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linecount(0),tableSchema(0)
 {
     build();
-    _model = new QStandardItemModel();
+    _model = new WorkSheetModel(this);
     fixTable->setModel(_model);
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+    /*
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
         _model->setHorizontalHeaderItem(i,headerItem[i]);
         if (i==WorkSheet::SendingTime)
             headerItem[i]->setToolTip("Right click to select time format");
     }
+    */
     dateTimeDelegate = new DateTimeDelegate(this);
     fixTable->setItemDelegateForColumn(FixTable::SendingTime,
                                        dateTimeDelegate);
@@ -93,7 +96,7 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     QWidget(parent),cancelLoad(false),linecount(0)
 {
     build();
-    QStandardItemModel *oldModel;
+    WorkSheetModel *oldModel;
     _model = oldws.getModel();
     fixFileName = oldws.getFileName();
     tableSchema = oldws.tableSchema;
@@ -112,7 +115,7 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     setTableSchema(tableSchema);
 
 }
-WorkSheet::WorkSheet(QStandardItemModel *model,
+WorkSheet::WorkSheet(WorkSheetModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
     QWidget(parent),cancelLoad(false),linecount(0),origWSD(wsd),tableSchema(0)
 {
@@ -126,11 +129,13 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
 
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+   /*
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
         if (i==WorkSheet::SendingTime)
             headerItem[i]->setToolTip("Right click to select time format");
     }
+    */
     FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
@@ -145,6 +150,8 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
         selectedRow = 1;
     fixTable->selectRow(selectedRow);
     QModelIndex mi = _model->index(selectedRow,0);
+    qWarning() << "REWORK THIS MsgSeqNum" << __FILE__ << __LINE__;
+    /*
     QModelIndex otherIndex = _model->index(selectedRow,MsgSeqNum);
     QVariant var = mi.data(Qt::UserRole+1);
     QString str =  _model->data(otherIndex).toString();
@@ -157,9 +164,11 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
     messageArea->setMessageFieldList(mfl,seqN,str);
     // update to get time format displayed
     setTimeFormat(GUI::Globals::timeFormat);
+    */
 }
 void WorkSheet::setTableSchema(TableSchema *ts)
 {
+    qDebug() << "Set Table Schema For Worksheet";
     tableSchema = ts;
     _model->clear();
     QHeaderView *horHeader =  fixTable->horizontalHeader();
@@ -177,10 +186,10 @@ void WorkSheet::setTableSchema(TableSchema *ts)
         qWarning() << "ERROR - Table Schema Field List has 0 fields" << __FILE__ << __LINE__;
         return;
     }
-    _model->setColumnCount(tableSchema->fieldList->count());
-    buildHeader();
+    _model->setTableSchema(*tableSchema);
     fixTable->setAnouncement("Schema Set To: " + tableSchema->name);
 }
+/* don't need this method anymore done by worksheetmodel */
 void WorkSheet::buildHeader()
 {
     QStandardItem *hi;
@@ -323,7 +332,8 @@ bool WorkSheet::loadFileName(QString &fileName,
     dataFile->seek(0);
     myTimer.start();
     _model->setRowCount(linecount);
-    _model->setColumnCount(NumColumns);
+    qDebug() << "REQORK THIS, NUM OF COLUMNS..." << __FILE__ << __LINE__;
+   // _model->setColumnCount(NumColumns);
     // MessageItem **messageItems = new MessageItem[NumColumns];
     int colPosition = 0;
     int rowPosition = 0;
@@ -452,7 +462,7 @@ bool WorkSheet::loadFileName(QString &fileName,
     returnCode = OK;
     return true;
 }
-QStandardItemModel *WorkSheet::getModel()
+WorkSheetModel *WorkSheet::getModel()
 {
     return _model;
 }
@@ -484,6 +494,8 @@ void  WorkSheet::rowSelectedSlot(QModelIndex mi)
         qWarning() << "ERROR - MODEL IS NULL" << __FILE__ << __LINE__;
         return;
     }
+    qDebug() << "rework this, Seq Num" << __FILE__ << __LINE__;
+    /*
     QModelIndex otherIndex = _model->index(row,MsgSeqNum);
     QString str =  _model->data(otherIndex).toString();
     int seqN = str.toInt();
@@ -493,6 +505,7 @@ void  WorkSheet::rowSelectedSlot(QModelIndex mi)
     otherIndex = _model->index(row,MessageType);
     str =  _model->data(otherIndex).toString();
     messageArea->setMessageFieldList(mfl,seqN,str);
+    */
 }
 void WorkSheet::setAlias(QString &str)
 {

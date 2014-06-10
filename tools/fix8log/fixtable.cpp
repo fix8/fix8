@@ -221,7 +221,7 @@ void  FixTable::mouseMoveEvent(QMouseEvent *event)
     fmd->worksheetID = worksheetID;
     fmd->setUrls(QList<QUrl>() << url);
     //QMimeData *mimeData = new QMimeData;
-    fmd->model = (QStandardItemModel *) model();
+    fmd->model = (WorkSheetModel *) model();
     drag->setMimeData(fmd);
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
 }
