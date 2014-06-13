@@ -1,4 +1,3 @@
-//-------------------------------------------------------------------------------------------------
 /*
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +31,6 @@ THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), E
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
-//-------------------------------------------------------------------------------------------------
 
 #ifndef SCHEMAEDITORDIALOG_H
 #define SCHEMAEDITORDIALOG_H
@@ -44,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "tableschema.h"
 #include "mainwindow.h"
 #include "messagefield.h"
+#include "messageitemdelegate.h"
 #include "selectedfieldstreeview.h"
 class Database;
 class SchemaEditorDialog : public QMainWindow
@@ -102,7 +101,9 @@ private:
     void setStatus(StatusType);
     void setUncheckedStateParent(QStandardItem *parentItem);
     void showWindowArea(QString windowName);
+    void updateStatusOfMessageList();
     bool validate();
+    MessageItemDelegate *messageDelegate;
     QAction  *closeA;
     QAction  *saveA;
     QAction  *undoA;
@@ -126,6 +127,7 @@ private:
 
     QTreeView *availableFieldsTreeView;
     SelectedFieldsTreeView *selectedFieldsTreeView;
+
     QLabel *availableSchemasL;
     QLabel *messageListL;
     QLabel *newAvailableSchemasL;

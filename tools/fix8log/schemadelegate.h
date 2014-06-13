@@ -1,5 +1,4 @@
 
-//-------------------------------------------------------------------------------------------------
 /*
 
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
@@ -34,7 +33,7 @@ THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), E
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
-//-------------------------------------------------------------------------------------------------
+
 #ifndef SCHEMA_DELEGATE_H
 #define SCHEMA_DELEGATE_H
 #include <QStyledItemDelegate>

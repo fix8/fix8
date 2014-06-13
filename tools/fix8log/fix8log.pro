@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     worksheetmodel.cpp \
     ../../test/Myfix_classes.cpp \
     ../../test/Myfix_traits.cpp \
-    ../../test/Myfix_types.cpp
+    ../../test/Myfix_types.cpp \
+    messageitemdelegate.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -77,7 +78,8 @@ HEADERS  += mainwindow.h \
     worksheetmodel.h \
     ../../test/Myfix_classes.hpp \
     ../../test/Myfix_router.hpp \
-    ../../test/Myfix_types.hpp
+    ../../test/Myfix_types.hpp \
+    messageitemdelegate.h
 
 RESOURCES += \
     resources.qrc

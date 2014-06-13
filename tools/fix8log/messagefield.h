@@ -102,6 +102,7 @@ public:
     QString key;
     QString name;
     QBaseEntryList *qbel;
+    QVector<int> fieldsV;
 };
 class MessageFieldList : public QList<MessageField *>
 {

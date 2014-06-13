@@ -178,6 +178,8 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
 
     messageModel = new QStandardItemModel(messageListTreeView);
     messageListTreeView->setModel(messageModel);
+    messageDelegate = new MessageItemDelegate(messageListTreeView);
+    messageListTreeView->setItemDelegateForColumn(0,messageDelegate);
     QStringList messageListHeaders;
     messageListHeaders << "Name";
     messageModel->setHorizontalHeaderLabels(messageListHeaders);
@@ -532,6 +534,7 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
         var.setValue((void *) mf);
         item = new QStandardItem(mf->name);
         item->setData(var);
+        item->setData(false,MessageItemDelegate::InUseRole);
         messageModel->setItem(i,item);
         i++;
     }
@@ -657,6 +660,27 @@ void SchemaEditorDialog::showWindowArea( QString windowName)
 {
         windowV->setText(windowName);
 
+
+}
+void SchemaEditorDialog::updateStatusOfMessageList()
+{
+    QStandardItem *item;
+    QModelIndex index;
+    MessageField *mf;
+    QVariant var;
+    qDebug() << "UPDATE MESSAGE LIST STATUS: " << __FILE__ << __LINE__;
+    if (!messageModel) {
+        qWarning() << "NULL MESSAGE MODEL" << __FILE__ << __LINE__;
+    }
+    if (messageModel->rowCount() < 1)
+        return;
+    for(int i=0;i<messageModel->rowCount();i++) {
+        index = messageModel->index(i,0);
+        item = messageModel->itemFromIndex(index);
+        var = item->data();
+        mf = (MessageField *) var.value<void *>();
+        //mf->fieldsV;
+    }
 
 }
 

@@ -60,7 +60,6 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
     if (iter == selectedMap.end()) {
         if (availItem->checkState() == Qt::Checked)    {
             selectItem = new QStandardItem(be->name);
-
             if (fieldUseList) {
                 fieldUse = fieldUseList->findByName(be->name);
                 if (fieldUse) {
@@ -78,7 +77,6 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
                     tooltipStr = "Used in: " + messageNameList.join("\n\t");
                 else
                     tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
-
                 selectItem->setToolTip(tooltipStr);
             }
             selectItem->setData(var);
@@ -104,6 +102,8 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         selectedMap.remove(be->name);
         selectedBaseEntryList.removeOne(be);
     }
+    updateStatusOfMessageList();
+
     Qt::SortOrder so = selectedFieldsTreeView->header()->sortIndicatorOrder();
     selectedFieldModel->sort(0,so);
 }
@@ -216,6 +216,7 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
             this,SLOT(messageListClickedSlot(QModelIndex)));
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    updateStatusOfMessageList();
     setUpdatesEnabled(true);
     validate();
 }

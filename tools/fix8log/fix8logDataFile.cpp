@@ -61,7 +61,7 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
 {
     bool bstatus;
     msg_type mt;
-    msg_seq_num snum;
+    //  msg_seq_num snum;
     QString str;
     QString name;
     IntItem *seqItem;
@@ -123,9 +123,12 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     while(!dataFile.atEnd()) {
         itemList.clear();
         try {
+            msg_seq_num snum;
             ba = dataFile.readLine();
             ba.truncate(ba.size()-1);
             Message *msg = Message::factory(TEX::ctx(),ba.data());
+            msg->Header()->get(snum);
+            qDebug() << "SEQ NUM = " << snum() << __FILE__ << __LINE__;
             messageList->append(msg);
         }
         catch (f8Exception&  e){
@@ -137,8 +140,8 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
         i++;
     }
     model->setMessageList(messageList);
-
-    /* messgeTypeItem = new QStandardItem(qstr);
+/*
+    messgeTypeItem = new QStandardItem(qstr);
     qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;
 
     while(!dataFile.atEnd()) {
@@ -149,6 +152,8 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
 
             std::unique_ptr <Message> msg(Message::factory(TEX::ctx(),ba.data()));
             msg->Header()->get(snum);
+            qDebug() << "SEQ NUM = " << snum() << __FILE__ << __LINE__;
+
             const Presence& pre(msg->get_fp().get_presence());
 
             MessageFieldList *mlf = new MessageFieldList();
@@ -245,20 +250,21 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
             messgeTypeItem->setData(userDataVar);
             model->setItem(rowPosition,colPosition,messgeTypeItem);
             rowPosition++;
+
         }
         catch (f8Exception&  e){
             errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
             qWarning() << "exception, row " << i;
             qWarning() << "Error - " << e.what();
-            msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
+            //msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
         i++;
     }
+    */
     nMilliseconds = myTimer.elapsed();
     qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
-    msgList.append(GUI::Message(qstr));
-*/
+    //msgList.append(GUI::Message(qstr));
     qDebug() << "NUM OF MESSAGES READ IN = " << messageList->count() << __FILE__ << __LINE__;
     dataFile.close();
     return model;
