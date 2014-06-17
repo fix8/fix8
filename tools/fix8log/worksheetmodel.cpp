@@ -33,6 +33,7 @@ HOLDE
 */
 //-------------------------------------------------------------------------------------------------
 #include "worksheetmodel.h"
+#include "intItem.h"
 #include <fix8/f8includes.hpp>
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
@@ -54,7 +55,6 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
     QStandardItem *hi;
     QBaseEntryList *fieldList;
     QBaseEntry *field;
-    qDebug() << "WORK SHEET SET TABLE SCHEMA " << __FILE__ << __LINE__;
     clear();
     if (!tableSchema->fieldList) {
         qWarning() << "Field List is null" << __FILE__ << __LINE__;
@@ -78,7 +78,7 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
         setHorizontalHeaderItem(i,hi);
         i++;
     }
-    //generateData();
+    generateData();
 }
 void WorkSheetModel::setMessageList( QList <Message *> *ml)
 {
@@ -91,14 +91,14 @@ void WorkSheetModel::setMessageList( QList <Message *> *ml)
 
     Message *message;
     QListIterator <Message *> iter(*messageList);
-
+    /*
     while(iter.hasNext()) {
         message = iter.next();
         QString str = QString::fromStdString(message->get_msgtype());
-        //qDebug() << "HAVE MESSAGE TYPE: " << str << __FILE__ << __LINE__;
+        qDebug() << "HAVE MESSAGE TYPE: " << str << __FILE__ << __LINE__;
     }
-
-   // generateData();
+*/
+    generateData();
 }
 void WorkSheetModel::generateData()
 {
@@ -110,7 +110,11 @@ void WorkSheetModel::generateData()
     BaseField  *baseField;
     QBaseEntry *tableHeader;
     GroupBase  *groupBase;
+    FieldTrait::FieldType ft;
+    char c[60];
     int fieldID;
+    int rowPos = 0;
+    int colPos = 0;
     if (!tableSchema) {
         qWarning() << "Unable to generate data -  table schema is null" << __FILE__ << __LINE__;
         setColumnCount(0);
@@ -133,114 +137,123 @@ void WorkSheetModel::generateData()
     while(mIter.hasNext()) {
         message = mIter.next();
         header = message->Header();
-         tableHeaderIter.toFront();
+        trailer = message->Trailer();
+        tableHeaderIter.toFront();
+        colPos = 0;
         while(tableHeaderIter.hasNext()) {
-           tableHeader = tableHeaderIter.next();
-           fieldID = tableHeader->ft->_fnum;
-           BaseField *bf = header->get_field(fieldID);
-           if (bf) {
-               FieldTrait::FieldType ft =  bf->get_underlying_type();
-               if (FieldTrait::is_int(ft)) {
-                   int ival(static_cast<Field<int, 0>*>(bf)->get());
-                   qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
-               }
-           }
-        }
-    }
-
-    /*
-    while(mIter.hasNext()) {
-        message = mIter.next();
-        header = message->Header();
-
-        const Presence& preh(header->get_fp().get_presence());
-        // for every field in the header, lets see if there are any we want
-        int ii = 0;
-        for (Fields::const_iterator itr(header->fields_begin()); itr != header->fields_end(); ++itr)
-        {
-            // rewind list of items we want to front
-            tableHeaderIter.toFront();
-            const FieldTrait::FieldType trait(preh.find(itr->first)->_ftype);
-            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
-            // loop through all fields we want, and see if they are in the given header
-            while(tableHeaderIter.hasNext()) {
-                tableHeader = tableHeaderIter.next();
-                fieldID = tableHeader->ft->_fnum;
-                BaseField *bf = header->get_field(fieldID);
-                if (bf) {
-                    FieldTrait::FieldType ft =  bf->get_underlying_type();
-                    if (FieldTrait::is_int(ft)) {
-                        int ival(static_cast<Field<int, 0>*>(bf)->get());
-                        qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
-                    }
+            tableHeader = tableHeaderIter.next();
+            fieldID = tableHeader->ft->_fnum;
+            BaseField *bf = header->get_field(fieldID);
+            if (bf) {
+                ft =  bf->get_underlying_type();
+                memset(c,'\0',60);
+                bf->print(c);
+                if (FieldTrait::is_int(ft)) {
+                    int ival(static_cast<Field<int, 0>*>(bf)->get());
+                    //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
+                    IntItem *intItem = new IntItem(ival);
+                    setItem(rowPos,colPos++,intItem);
+                }
+                else if (FieldTrait::is_float(ft)) {
+                    double fval(static_cast<Field<double, 0>*>(bf)->get());
+                }
+                else if (FieldTrait::is_string(ft)) {
+                    memset(c,'\0',60);
+                    bf->print(c);
+                    QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                    setItem(rowPos,colPos++,strItem);
                 }
             }
-        }
-    }
+            else
+                qWarning() << "BASE FIELD = NULL FOR HEADER"  << __FILE__ << __LINE__;
+
+            // Look for field traits in message itselt
+            BaseField *bfm = message->get_field(fieldID);
+            if (bfm) {
+                ft =  bfm->get_underlying_type();
+                memset(c,'\0',60);
+                bfm->print(c);
+                if (FieldTrait::is_int(ft)) {
+                    int ival(static_cast<Field<int, 0>*>(bfm)->get());
+                    //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
+                    IntItem *intItem = new IntItem(ival);
+                    setItem(rowPos,colPos++,intItem);
+                }
+                else if (FieldTrait::is_float(ft)) {
+                    double fval(static_cast<Field<double, 0>*>(bfm)->get());
+                }
+                else if (FieldTrait::is_string(ft)) {
+                    memset(c,'\0',60);
+                    bfm->print(c);
+                    QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                    setItem(rowPos,colPos++,strItem);
+                }
+            }
+            else
+                qWarning() << "BASE FIELD = NULL" << __FILE__ << __LINE__;
 
             Groups groups = message->get_groups();
-            //qDebug() << "Num Of Groups = "  << groups.size();
+            qDebug() << "Num Of Groups = "  << groups.size();
             std::map<unsigned short,GroupBase *>::iterator iterGrps;
             for(iterGrps = groups.begin(); iterGrps != groups.end(); iterGrps++) {
                 groupBase = iterGrps->second;
                 int size = groupBase->size();
-                //qDebug() << "\tHave Group, size = " << size;
                 for(int i=0;i<size;i++) {
                     MessageBase *mb = groupBase->get_element(i);
                     mbName = QString::fromStdString(mb->get_msgtype());
-                    //qDebug() << "\t\tHave Message Named: " + mbName;
-                }
-
-            for(std::vector<MessageBase *>::iterator mbiter = groupBase->_msgs.begin();mbiter!= groupBase->_msgs.end();++mbiter)
-                MessageBase *messageBase = *mbiter;
-            }
-
-
-            for (Fields::const_iterator gfi( gfi != groupBase->fields_end(); ++gfi)
-                 name = QString::fromStdString(TEX::ctx().find_be(gfi->first)->_name;
-
-            }
-            const Presence& pre(message->get_fp().get_presence());
-            //qDebug() << "\nNEW MESSAGE STARTS**********************************" << __FILE__ << __LINE__;
-            for (Fields::const_iterator itr(message->fields_begin()); itr != message->fields_end(); ++itr)
-            {
-                const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
-                //qDebug() << "\tFIELD TRAIT = " << name;
-            }
-
-        while(iter.hasNext()) {
-            tableHeader = iter.next();
-            fieldID = tableHeader->ft->_fnum;
-            qDebug() << "Checking for field: " << fieldID << " name = " << tableHeader->name;
-            //qDebug() << "\tNum of Fields in message = " << message;
-            //Fields::const_iterator fi = message->get_field(fieldID);
-            Fields::const_iterator fi =  message->fields_begin();
-            //while(fi != message->fields_end())
-
-            //if (fi == message->fields_end())
-             BaseField *bf = message->get_field(fieldID);
-             if (bf)
-                qDebug() << "******************HAVE FIeld*******************";
-            else
-                qDebug() << "FIELD NOT FOUND - I always get this.";
-        }
-    */
-
-}
-
-
-
-/*******************************************************************
-                      if (FieldTrait::is_char(ft))
-                        ; //qDebug()  << "\t\t\tIS CHAR";
-                    else if (FieldTrait::is_string(ft))
-                        ;//qDebug()  << "\t\t\tIS STRING";
-                    else if (FieldTrait::is_int(ft)) {
-                      int ival(static_cast<Field<int, 0>*>(bf)->get());
+                    BaseField *bfg = mb->get_field(fieldID);
+                    if (bfg) {
+                        ft =  bfg->get_underlying_type();
+                        memset(c,'\0',60);
+                        bfg->print(c);
+                        if (FieldTrait::is_int(ft)) {
+                            int ival(static_cast<Field<int, 0>*>(bfg)->get());
+                            //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
+                            IntItem *intItem = new IntItem(ival);
+                            setItem(rowPos,colPos++,intItem);
+                        }
+                        else if (FieldTrait::is_float(ft)) {
+                            double fval(static_cast<Field<double, 0>*>(bfg)->get());
+                        }
+                        else if (FieldTrait::is_string(ft)) {
+                            memset(c,'\0',60);
+                            bfg->print(c);
+                            QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                            setItem(rowPos,colPos++,strItem);
+                        }
                     }
-                    if (FieldTrait::is_float(ft))
-                       ; // qDebug()  << "\t\t\tIS FLOAT";
                     else
-                        qDebug()  << "Unknown datat type " << __FILE__ << __LINE__;
-**************************************************************************/
+                        qWarning() << "BASE FIELD = NULL FOR GROUP" << __FILE__ << __LINE__;
+                    // qDebug() << "\t\tHave Message Named: " + mbName;
+                }
+            }
+            if (trailer) {
+                BaseField *bft = trailer->get_field(fieldID);
+                if (bft) {
+                    ft =  bft->get_underlying_type();
+                    memset(c,'\0',60);
+                    bft->print(c);
+                    if (FieldTrait::is_int(ft)) {
+                        int ival(static_cast<Field<int, 0>*>(bft)->get());
+                        IntItem *intItem = new IntItem(ival);
+                        setItem(rowPos,colPos++,intItem);
+                    }
+                    else if (FieldTrait::is_float(ft)) {
+                        double fval(static_cast<Field<double, 0>*>(bft)->get());
+                    }
+                    else if (FieldTrait::is_string(ft)) {
+                        memset(c,'\0',60);
+                        bft->print(c);
+                        QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                        setItem(rowPos,colPos++,strItem);
+                    }
+
+                }
+                else
+                    qWarning() << "BASE FIELD = NULL FOR TRAILER"  << __FILE__ << __LINE__;
+            }
+        }
+        rowPos++;
+
+    }
+}

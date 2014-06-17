@@ -124,11 +124,17 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
         itemList.clear();
         try {
             msg_seq_num snum;
+            sender_comp_id senderID;
             ba = dataFile.readLine();
             ba.truncate(ba.size()-1);
             Message *msg = Message::factory(TEX::ctx(),ba.data());
             msg->Header()->get(snum);
-            qDebug() << "SEQ NUM = " << snum() << __FILE__ << __LINE__;
+            msg->Header()->get(senderID);
+            qDebug() << "SEQ NUM = " << snum()  << __FILE__ << __LINE__;
+            char c[60];
+            memset(c,'\0',60);
+            senderID.print(c);
+            qDebug() << "SID NUM = " << QLatin1Literal(c);
             messageList->append(msg);
         }
         catch (f8Exception&  e){
