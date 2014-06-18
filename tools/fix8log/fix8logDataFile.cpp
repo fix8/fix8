@@ -64,24 +64,9 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     //  msg_seq_num snum;
     QString str;
     QString name;
-    IntItem *seqItem;
-    QStandardItem *senderItem;
-    QStandardItem *targetItem;
-    QStandardItem *sendTimeItem;
-    QStandardItem *beginStrItem;
-    IntItem *bodyLengthItem;
-    IntItem  *checkSumItem;
-    QStandardItem  *encryptMethodItem;
-    IntItem  *heartBeatIntItem;
-    //QStandardItem  *messgeTypeItem;
 
-    TEX::BeginString beginStr;
-    TEX::BodyLength  bodyLength;
-    TEX::CheckSum    checkSum;
-    TEX::EncryptMethod encryptMethod;
-    TEX::HeartBtInt    heartBeatInt;
     TEX::SenderCompID scID;
-    TEX::TargetCompID tcID;
+    //TEX::TargetCompID tcID;
     TEX::SendingTime  sendTime;
     std::string sstr;
     QString qstr;
@@ -119,7 +104,7 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();
-    QList <Message *> *messageList = new QList<Message *>();
+    QMessageList *messageList = new QMessageList();
     while(!dataFile.atEnd()) {
         itemList.clear();
         try {
@@ -130,12 +115,14 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
             Message *msg = Message::factory(TEX::ctx(),ba.data());
             msg->Header()->get(snum);
             msg->Header()->get(senderID);
-            qDebug() << "SEQ NUM = " << snum()  << __FILE__ << __LINE__;
+
             char c[60];
             memset(c,'\0',60);
             senderID.print(c);
-            qDebug() << "SID NUM = " << QLatin1Literal(c);
-            messageList->append(msg);
+            QLatin1String sid(c);
+            QMessage *qmessage = new QMessage(msg,sid);
+            //qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
+            messageList->append(qmessage);
         }
         catch (f8Exception&  e){
             errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
@@ -300,19 +287,8 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     msg_seq_num snum;
     QString str;
     QString name;
-    IntItem *seqItem;
-    QStandardItem *senderItem;
-    QStandardItem *targetItem;
-    QStandardItem *sendTimeItem;
-    QStandardItem *beginStrItem;
-    IntItem *bodyLengthItem;
-    IntItem  *checkSumItem;
-    QStandardItem  *encryptMethodItem;
-    IntItem  *heartBeatIntItem;
-    QStandardItem  *messgeTypeItem;
 
-    TEX::BeginString beginStr;
-    TEX::BodyLength  bodyLength;
+
     TEX::CheckSum    checkSum;
     TEX::EncryptMethod encryptMethod;
     TEX::HeartBtInt    heartBeatInt;
@@ -328,16 +304,7 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     FutureReadData *frd = new FutureReadData();
     QStandardItemModel *model = new QStandardItemModel();
     qDebug() << "Reqwork this, num of columns..." << __FILE__ << __LINE__;
-    /*
-    model->setColumnCount(WorkSheet::NumColumns);
-    QStandardItem *headerItem[WorkSheet::NumColumns];
-    for(int i=0;i<WorkSheet::NumColumns;i++) {
-        headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
-        if (i==WorkSheet::SendingTime)
-            headerItem[i]->setToolTip("Right click to select time format");
-        model->setHorizontalHeaderItem(i,headerItem[i]);
-    }
-    */
+
     QList <GUI::ConsoleMessage> msgList;
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
@@ -366,7 +333,6 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();
-    messgeTypeItem = new QStandardItem(qstr);
     qDebug() << "FIX THIS < DATA  GETTING READ IN..." << __FILE__ << __LINE__;
     /*
     while(!dataFile.atEnd()) {

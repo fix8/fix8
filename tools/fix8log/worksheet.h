@@ -73,6 +73,7 @@ public:
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
     QUuid getID();
+    QMessageList *getMessageList();
     ~WorkSheet();
     //enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
    // static QString headerLabel[NumColumns];

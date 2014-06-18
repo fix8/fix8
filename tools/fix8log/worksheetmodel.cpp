@@ -41,7 +41,8 @@ HOLDE
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
 using namespace FIX8;
-
+#include <QApplication>
+#include <QElapsedTimer>
 #include <QDebug>
 #include <QList>
 WorkSheetModel::WorkSheetModel(QObject *parent) :
@@ -63,8 +64,6 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
     }
     if (tableSchema->fieldList->count() < 1)
         qWarning() << "Field List is null" << __FILE__ << __LINE__;
-
-
     setColumnCount(tableSchema->fieldList->count());
     fieldList = tableSchema->fieldList;
 
@@ -80,7 +79,7 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
     }
     generateData();
 }
-void WorkSheetModel::setMessageList( QList <Message *> *ml)
+void WorkSheetModel::setMessageList( QMessageList *ml)
 {
     messageList = ml;
     removeRows(0,rowCount());
@@ -88,22 +87,18 @@ void WorkSheetModel::setMessageList( QList <Message *> *ml)
         qWarning() << "Warning - messagelist == 0" << __FILE__ << __LINE__;
         return;
     }
-
-    Message *message;
-    QListIterator <Message *> iter(*messageList);
-    /*
-    while(iter.hasNext()) {
-        message = iter.next();
-        QString str = QString::fromStdString(message->get_msgtype());
-        qDebug() << "HAVE MESSAGE TYPE: " << str << __FILE__ << __LINE__;
-    }
-*/
     generateData();
 }
+QMessageList *WorkSheetModel::getMessageList()
+{
+    return messageList;
+}
+
 void WorkSheetModel::generateData()
 {
     QString name;
     QString mbName;
+    QMessage   *qmessage;
     Message    *message;
     MessageBase *header;
     MessageBase *trailer;
@@ -130,12 +125,28 @@ void WorkSheetModel::generateData()
         setRowCount(0);
         return;
     }
+    setColumnCount(tableSchema->fieldList->count());
+    QColor modBGColor = QColor(255,214,79,100);
     // This is a list of messages read in from file
-    QListIterator <Message *> mIter(*messageList);
+    QListIterator <QMessage *> mIter(*messageList);
     // this is the fields user selected that they want displayed
     QListIterator <QBaseEntry *> tableHeaderIter(*(tableSchema->fieldList));
+    bool modifyBackgroundColor;
+    QElapsedTimer myTimer;
+     myTimer.start();
+    setRowCount(messageList->count());
     while(mIter.hasNext()) {
-        message = mIter.next();
+        if (rowPos%100 == 0) { // every 100 iterations allow gui to process events
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
+        }
+        qmessage = mIter.next();
+        if (qmessage->senderID == QLatin1Literal("DLD_TEX"))
+            modifyBackgroundColor = true;
+        else
+            modifyBackgroundColor = false;
+        QVariant var;
+        var.setValue((void *) qmessage);
+        message  = qmessage->mesg;
         header = message->Header();
         trailer = message->Trailer();
         tableHeaderIter.toFront();
@@ -148,26 +159,47 @@ void WorkSheetModel::generateData()
                 ft =  bf->get_underlying_type();
                 memset(c,'\0',60);
                 bf->print(c);
+
                 if (FieldTrait::is_int(ft)) {
                     int ival(static_cast<Field<int, 0>*>(bf)->get());
-                    //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
+                    // qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
                     IntItem *intItem = new IntItem(ival);
-                    setItem(rowPos,colPos++,intItem);
+                    intItem->setData(var);
+                    if (modifyBackgroundColor)
+                        intItem->setData(modBGColor, Qt::BackgroundRole);
+                    setItem(rowPos,colPos,intItem);
                 }
-                else if (FieldTrait::is_float(ft)) {
+                /*
+                if (FieldTrait::is_float(ft)) {
                     double fval(static_cast<Field<double, 0>*>(bf)->get());
                 }
+                */
                 else if (FieldTrait::is_string(ft)) {
                     memset(c,'\0',60);
                     bf->print(c);
-                    QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
-                    setItem(rowPos,colPos++,strItem);
+                    QLatin1Literal ll(c);
+                    //qDebug() << "CREATE HEADER STRING ITEM FOR " << ll << __FILE__ << __LINE__;
+                    QStandardItem *strItem = new QStandardItem(QString(ll));
+                    strItem->setData(var);
+                    if (modifyBackgroundColor)
+                        strItem->setData(modBGColor, Qt::BackgroundRole);
+                    setItem(rowPos,colPos,strItem);
                 }
-            }
-            else
-                qWarning() << "BASE FIELD = NULL FOR HEADER"  << __FILE__ << __LINE__;
+                else if (FieldTrait::is_char(ft)) {
+                    QChar ch(static_cast<Field<char, 0>*>(bf)->get());
+                    QString cstr = ch.decomposition();
+                    QStandardItem *charItem = new QStandardItem(cstr);
+                    charItem->setData(var);
+                    if (modifyBackgroundColor)
+                        charItem->setData(modBGColor, Qt::BackgroundRole);
+                    setItem(rowPos,colPos,charItem);
+                }
 
-            // Look for field traits in message itselt
+            }
+            //else
+            //  qWarning() << "BASE FIELD = NULL FOR HEADER"  << __FILE__ << __LINE__;
+
+            // Look for field traits in message itself
             BaseField *bfm = message->get_field(fieldID);
             if (bfm) {
                 ft =  bfm->get_underlying_type();
@@ -177,23 +209,38 @@ void WorkSheetModel::generateData()
                     int ival(static_cast<Field<int, 0>*>(bfm)->get());
                     //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
                     IntItem *intItem = new IntItem(ival);
-                    setItem(rowPos,colPos++,intItem);
+                    intItem->setData(var);
+                    if (modifyBackgroundColor)
+                        intItem->setData(modBGColor, Qt::BackgroundRole);
+                    setItem(rowPos,colPos,intItem);
                 }
                 else if (FieldTrait::is_float(ft)) {
                     double fval(static_cast<Field<double, 0>*>(bfm)->get());
                 }
+
                 else if (FieldTrait::is_string(ft)) {
                     memset(c,'\0',60);
                     bfm->print(c);
                     QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
-                    setItem(rowPos,colPos++,strItem);
+                    strItem->setData(var);
+                    if (modifyBackgroundColor)
+                        strItem->setData(modBGColor, Qt::BackgroundRole);
+                    setItem(rowPos,colPos,strItem);
+                }
+                else if (FieldTrait::is_char(ft)) {
+                    QChar ch(static_cast<Field<char, 0>*>(bfm)->get());
+                    QString cstr = ch.decomposition();
+                    QStandardItem *charItem = new QStandardItem(cstr);
+                    charItem->setData(var);
+                    if (modifyBackgroundColor)
+                        charItem->setData(modBGColor, Qt::BackgroundRole);
+                    setItem(rowPos,colPos,charItem);
                 }
             }
-            else
-                qWarning() << "BASE FIELD = NULL" << __FILE__ << __LINE__;
-
+            //else
+            //   qWarning() << "BASE FIELD = NULL FOR HEADER" << __FILE__ << __LINE__;
             Groups groups = message->get_groups();
-            qDebug() << "Num Of Groups = "  << groups.size();
+            //qDebug() << "Num Of Groups = "  << groups.size();
             std::map<unsigned short,GroupBase *>::iterator iterGrps;
             for(iterGrps = groups.begin(); iterGrps != groups.end(); iterGrps++) {
                 groupBase = iterGrps->second;
@@ -210,7 +257,10 @@ void WorkSheetModel::generateData()
                             int ival(static_cast<Field<int, 0>*>(bfg)->get());
                             //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
                             IntItem *intItem = new IntItem(ival);
-                            setItem(rowPos,colPos++,intItem);
+                            intItem->setData(var);
+                            if (modifyBackgroundColor)
+                                intItem->setData(modBGColor, Qt::BackgroundRole);
+                            setItem(rowPos,colPos,intItem);
                         }
                         else if (FieldTrait::is_float(ft)) {
                             double fval(static_cast<Field<double, 0>*>(bfg)->get());
@@ -219,11 +269,23 @@ void WorkSheetModel::generateData()
                             memset(c,'\0',60);
                             bfg->print(c);
                             QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
-                            setItem(rowPos,colPos++,strItem);
+                            strItem->setData(var);
+                            if (modifyBackgroundColor)
+                                strItem->setData(modBGColor, Qt::BackgroundRole);
+                            setItem(rowPos,colPos,strItem);
+                        }
+                        else if (FieldTrait::is_char(ft)) {
+                            QChar ch(static_cast<Field<char, 0>*>(bfm)->get());
+                            QString cstr = ch.decomposition();
+                            QStandardItem *charItem = new QStandardItem(cstr);
+                            charItem->setData(var);
+                            if (modifyBackgroundColor)
+                                charItem->setData(modBGColor, Qt::BackgroundRole);
+                            setItem(rowPos,colPos,charItem);
                         }
                     }
-                    else
-                        qWarning() << "BASE FIELD = NULL FOR GROUP" << __FILE__ << __LINE__;
+                    //  else
+                    //     qWarning() << "BASE FIELD = NULL FOR GROUP" << __FILE__ << __LINE__;
                     // qDebug() << "\t\tHave Message Named: " + mbName;
                 }
             }
@@ -236,7 +298,10 @@ void WorkSheetModel::generateData()
                     if (FieldTrait::is_int(ft)) {
                         int ival(static_cast<Field<int, 0>*>(bft)->get());
                         IntItem *intItem = new IntItem(ival);
-                        setItem(rowPos,colPos++,intItem);
+                        intItem->setData(var);
+                        if (modifyBackgroundColor)
+                            intItem->setData(modBGColor, Qt::BackgroundRole);
+                        setItem(rowPos,colPos,intItem);
                     }
                     else if (FieldTrait::is_float(ft)) {
                         double fval(static_cast<Field<double, 0>*>(bft)->get());
@@ -245,15 +310,31 @@ void WorkSheetModel::generateData()
                         memset(c,'\0',60);
                         bft->print(c);
                         QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
-                        setItem(rowPos,colPos++,strItem);
+                        strItem->setData(var);
+                        if (modifyBackgroundColor)
+                            strItem->setData(modBGColor, Qt::BackgroundRole);
+                        setItem(rowPos,colPos,strItem);
                     }
-
+                    else if (FieldTrait::is_char(ft)) {
+                        QChar ch(static_cast<Field<char, 0>*>(bft)->get());
+                        QString cstr = ch.decomposition();
+                        QStandardItem *charItem = new QStandardItem(cstr);
+                        charItem->setData(var);
+                        if (modifyBackgroundColor)
+                            charItem->setData(modBGColor, Qt::BackgroundRole);
+                        setItem(rowPos,colPos,charItem);
+                    }
                 }
-                else
-                    qWarning() << "BASE FIELD = NULL FOR TRAILER"  << __FILE__ << __LINE__;
-            }
-        }
-        rowPos++;
+                //else
+                // qWarning() << "BASE FIELD = NULL FOR TRAILER"  << __FILE__ << __LINE__;
 
+            }
+            colPos++;
+
+        }
+        int nMilliseconds = myTimer.elapsed();
+        qDebug() << "TIME TO LOAD = " << nMilliseconds;
+        qDebug() << "Column Count = " << tableSchema->fieldList->count();
+        rowPos++;
     }
 }

@@ -36,7 +36,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #ifndef MESSAGEFIELD_H
 #define MESSAGEFIELD_H
-
+#include <QColor>
+#include <QMap>
 #include <QPair>
 #include <QVariant>
 #include <QList>
@@ -124,5 +125,21 @@ class FieldUseList : public QList <FieldUse *>
  public:
     FieldUseList();
     FieldUse * findByName(QString &);
+};
+class QMessage
+{
+  public:
+    QMessage(Message *m,QLatin1String senderID);
+    Message *mesg;
+    QString senderID;
+    int seqID;
+};
+class QMessageList : public QList <QMessage *>
+{
+public:
+    QMessageList();
+    QMap <QString,QColor> senderColorMap;
+    QString defaultSender;
+    static QColor senderColors[6];
 };
 #endif // MESSAGEFIELD_H

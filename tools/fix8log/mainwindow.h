@@ -144,6 +144,7 @@ protected:
     QAction  *copyWindowA;
     QAction  *editSchemaA;
     QAction  *filterOnA;
+    QAction  *filterSenderMenuA;
     QAction  *hideConsoleA;
     QAction  *hideToolBarA;
     QAction  *hideSearchToolBarA;

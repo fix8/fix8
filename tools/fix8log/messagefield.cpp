@@ -249,7 +249,19 @@ MessageField::MessageField(QString &Key, QString &Name):
 {
 
 }
+
 MessageFieldList::MessageFieldList() : QList<MessageField*>()
+{
+
+}
+QMessage::QMessage(Message *m,QLatin1String sid):mesg(m),senderID(sid)
+{
+}
+QColor QMessageList::senderColors[] = {QColor(255,214,79,100),QColor(151,255,81,100),
+                                                   QColor(79,255,211,100),QColor(80,121,255,100),
+                                                   QColor(110,77,255,100),QColor(255,73,195,100)};
+
+QMessageList::QMessageList():QList <QMessage *>()
 {
 
 }

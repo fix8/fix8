@@ -45,7 +45,8 @@ IntItem::IntItem(const IntItem &it):QStandardItem()
 {
   setText(it.text());
   value = it.value;
-}
+}   
+
 bool IntItem::operator< ( const QStandardItem & other ) const
 {  
       const IntItem *ot = (IntItem *) &other;

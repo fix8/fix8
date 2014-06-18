@@ -105,6 +105,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         qWarning() << "Error - file dialog is null, cannot get values" << __FILE__ << __LINE__;
         return;
     }
+
     QByteArray prevHeaderSettings;
     bool havePreviousHeader = false;
     QSettings settings("fix8","logviewer");
@@ -115,7 +116,8 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
     if (tabW->count() > 0) {
         WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (tabW->widget(tabW->count() -1));
         if (oldWorkSheet) {
-            prevHeaderSettings = oldWorkSheet->fixTable->horizontalHeader()->saveState();
+
+            //prevHeaderSettings = oldWorkSheet->fixTable->horizontalHeader()->saveState();
             havePreviousHeader = true;
         }
     }
@@ -124,6 +126,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         fileName = iter.next();
         QFileInfo fi(fileName);
         WorkSheet *workSheet = new WorkSheet(this);
+        workSheet->setTableSchema(tableSchema);
         connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
                 this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
         connect(workSheet,SIGNAL(modelDropped(FixMimeData *)),
@@ -133,11 +136,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
         QList <GUI::ConsoleMessage> messageList;
-        /*
-        QString fileNameStr = fi.fileName();
-        if (fileNameStr.length() > 36)
-            fileNameStr = fileNameStr.right(33);
-            */
+
         QString str = fileName;
         if (str.length() > 36) {
             str = "..." + str.right(33);

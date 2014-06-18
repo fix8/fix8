@@ -41,17 +41,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //#include <fix8/field.hpp>
 //#include <fix8/message.hpp>
 #include "tableschema.h"
+#include "messagefield.h"
+
 class WorkSheetModel : public QStandardItemModel
 {
 public:
     explicit WorkSheetModel(QObject *parent = 0);
     void setTableSchema(TableSchema &ts);
-    void setMessageList( QList <Message *> *messageList);
+    void setMessageList( QMessageList *messageList);
+    QMessageList *getMessageList();
 private:
     void generateData();
     TableSchema *tableSchema;
-    QList <Message *> *messageList;
-
+    QMessageList *messageList;
 };
 
 #endif // WORKSHEETMODEL_H

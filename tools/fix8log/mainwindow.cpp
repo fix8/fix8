@@ -141,7 +141,6 @@ void MainWindow::buildMainWindow()
     schemaMenu = mainMenuBar->addMenu("&Schema");
     helpMenu = mainMenuBar->addMenu("&Help");
     mainToolBar = new QToolBar("Main Toolbar",this);
-
     mainToolBar->setObjectName("MainToolBar");
     searchToolBar = new FixToolBar("Search Toolbar",this);
     connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
@@ -209,6 +208,9 @@ void MainWindow::buildMainWindow()
     showIcon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
     showMessageA->setIcon(showIcon);
 
+
+    filterSenderMenuA = new QAction("Sender",this);
+    filterSenderMenuA->setIcon(QIcon(":/images/svg/emblem-shared.svg"));
     searchBackA  = new QAction(tr("Back"),this);
     searchBackA->setIcon((QIcon(":/images/svg/back.svg")));
     searchBeginA = new QAction(tr("Begining"),this);
@@ -328,6 +330,7 @@ void MainWindow::buildMainWindow()
     optionMenu->addAction(hideSearchToolBarA);
     optionMenu->addAction(hideConsoleA);
     optionMenu->addAction(editSchemaA);
+    optionMenu->addAction(filterSenderMenuA);
     optionMenu->addAction(showMessageA);
     optionMenu->setTearOffEnabled(true);
     optionMenu->addMenu(hideColumMenu);
@@ -353,7 +356,7 @@ void MainWindow::buildMainWindow()
     mainToolBar->addAction(autoSaveA);
     mainToolBar->addSeparator();
     mainToolBar->addAction(editSchemaA);
-
+    mainToolBar->addAction(filterSenderMenuA);
 
     // helpMenu
     aboutA = new QAction("About",this);

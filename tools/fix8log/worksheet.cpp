@@ -123,13 +123,13 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
     _model = model;
     fixTable->setModel(_model);
     dateTimeDelegate = new DateTimeDelegate(this);
-    fixTable->setItemDelegateForColumn(FixTable::SendingTime,
-                                       dateTimeDelegate);
 
+    //fixTable->setItemDelegateForColumn(FixTable::SendingTime,
+    //                                    dateTimeDelegate);
 
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
-   /*
+    /*
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
         if (i==WorkSheet::SendingTime)
@@ -265,6 +265,14 @@ QUuid WorkSheet::getID()
 {
     return uuid;
 }
+QMessageList *WorkSheet::getMessageList()
+{
+    QMessageList *ml = 0;
+    if (_model)
+        ml = _model->getMessageList();
+    return ml;
+}
+
 bool WorkSheet::loadFileName(QString &fileName,
                              QList <GUI::ConsoleMessage> &msgList,
                              quint32 &returnCode)
@@ -275,94 +283,53 @@ bool WorkSheet::loadFileName(QString &fileName,
     msg_type mt;
     msg_seq_num snum;
     QString str;
+    QString errorStr;
     QString name;
-    IntItem *seqItem;
-    QStandardItem *senderItem;
-    QStandardItem *targetItem;
-    QStandardItem *sendTimeItem;
-    QStandardItem *beginStrItem;
-    IntItem *bodyLengthItem;
-    IntItem  *checkSumItem;
-    QStandardItem  *encryptMethodItem;
-    IntItem  *heartBeatIntItem;
-    QStandardItem  *messgeTypeItem;
-
-    TEX::BeginString beginStr;
-    TEX::BodyLength  bodyLength;
-    TEX::CheckSum    checkSum;
-    TEX::EncryptMethod encryptMethod;
-    TEX::HeartBtInt    heartBeatInt;
     TEX::SenderCompID scID;
-    TEX::TargetCompID tcID;
-    TEX::SendingTime  sendTime;
-    std::string sstr;
-    QString key;
     QString qstr;
-    QString seqNumStr;
-    QString senderID;
-    QVariant returnedValue;
-    stackLayout->setCurrentIndex(1);
-    QFile *dataFile = new QFile(fileName);
-    QList<QStandardItem *> itemList;
-    bstatus =  dataFile->open(QIODevice::ReadOnly);
+    QFile dataFile(fileName);
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
+
+    bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
         GUI::ConsoleMessage message(tr("Failed to open file: ") + fileName);
         msgList.append(message);
-        delete dataFile;
-        showLoadProcess(false);
-        returnCode = FILE_NOT_FOUND;
-        return false;
+        _model->clear();
+        return 0;
     }
     int i=0;
-    //_model = (QStandardItemModel *)fixTable->model();
-    QString errorStr;
-    //QTime myTimer;
     QElapsedTimer myTimer;
-    linecount = 0;
-
-    qint32 fileSize = dataFile->size();
+    int linecount = 0;
+    int nMilliseconds;
+    qint32 fileSize = dataFile.size();
     QByteArray ba;
 
-    // get line count
-
-    while(!dataFile->atEnd()) {
-        ba = dataFile->readLine();
+    while(!dataFile.atEnd()) {
+        ba = dataFile.readLine();
         linecount++;
     }
-    showLoadProcess(true);
-    dataFile->seek(0);
+     showLoadProcess(true);
+    dataFile.seek(0);
     myTimer.start();
-    _model->setRowCount(linecount);
-    qDebug() << "REQORK THIS, NUM OF COLUMNS..." << __FILE__ << __LINE__;
-   // _model->setColumnCount(NumColumns);
-    // MessageItem **messageItems = new MessageItem[NumColumns];
-    int colPosition = 0;
-    int rowPosition = 0;
-    int nMilliseconds = 0;
-    //messgeTypeItem = new MessageItem(qstr);
-    while(!dataFile->atEnd()) {
-        itemList.clear();
+    QMessageList *messageList = new QMessageList();
+    while(!dataFile.atEnd()) {
+        if (i%100 == 0) { // every 100 iterations allow gui to process events
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
+        }
         try {
-            ba = dataFile->readLine();
-            ba.truncate(ba.size()-1); // strip eol charactor
-            std::unique_ptr <Message> msg(Message::factory(TEX::ctx(),ba.data()));
+            msg_seq_num snum;
+            sender_comp_id senderID;
+            ba = dataFile.readLine();
+            ba.truncate(ba.size()-1);
+            Message *msg = Message::factory(TEX::ctx(),ba.data());
             msg->Header()->get(snum);
-            const Presence& pre(msg->get_fp().get_presence());
-            MessageFieldList *mlf = new MessageFieldList();
-            colPosition = 0;
-            /*
-            for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
-            {
-                const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-                name =
-                        QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            msg->Header()->get(senderID);
 
-                //key = QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
-                QVariant var = trait;
-                //MessageField mf(itr->first,name,var);
-                  MessageField mf(itr->first,name,0);
-                mlf->append(mf);
-            }
+            char c[60];
+            memset(c,'\0',60);
+            senderID.print(c);
+            QLatin1String sid(c);
+            QMessage *qmessage = new QMessage(msg,sid);
             if (i%100 == 0) { // every 100 iterations allow gui to process events
                 if (cancelLoad) {
                     showLoadProcess(false);
@@ -371,81 +338,8 @@ bool WorkSheet::loadFileName(QString &fileName,
                 }
                 qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
             }
-            QVariant userDataVar;
-            userDataVar.setValue((void*)mlf);
-            int num = snum();
-            seqItem = new IntItem(num);
-            _model->setItem(rowPosition,0,seqItem);
-            colPosition++;
-            seqItem->setData(userDataVar);
-
-            bstatus = msg->Header()->get(scID);
-            qstr = QString::fromStdString(scID());
-            senderItem =  new QStandardItem(qstr);
-            senderItem->setData(userDataVar);
-
-            _model->setItem(rowPosition,colPosition,senderItem);
-            colPosition++;
-
-            msg->Header()->get(tcID);
-            qstr = QString::fromStdString(tcID());
-            targetItem =  new QStandardItem(qstr);
-            targetItem->setData(userDataVar);
-            _model->setItem(rowPosition,colPosition,targetItem);
-            colPosition++;
-
-            msg->Header()->get(sendTime);
-            Tickval tv  = sendTime();
-            QDateTime dt = QDateTime::fromTime_t(tv.secs());
-            sendTimeItem = new QStandardItem(dt.toString());
-            sendTimeItem->setData(userDataVar);
-            sendTimeItem->setData(dt,Qt::UserRole+2);
-            _model->setItem(rowPosition,colPosition,sendTimeItem);
-            colPosition++;
-
-            msg->Header()->get(beginStr);
-            qstr = QString::fromStdString(beginStr());
-            beginStrItem = new QStandardItem(qstr);
-            beginStrItem->setData(userDataVar);
-            _model->setItem(rowPosition,colPosition,beginStrItem);
-            colPosition++;
-
-            msg->Header()->get(bodyLength);
-            num = bodyLength();
-            bodyLengthItem = new IntItem(num);
-            bodyLengthItem->setData(userDataVar);
-            bodyLengthItem->setData(0,num);
-            _model->setItem(rowPosition,colPosition,bodyLengthItem);
-            colPosition++;
-
-            msg->Trailer()->get(checkSum);
-            num = QString::fromStdString(checkSum()).toInt();
-            checkSumItem = new IntItem(num);
-            checkSumItem->setData(userDataVar);
-            _model->setItem(rowPosition,colPosition,checkSumItem);
-            colPosition++;
-
-            msg->Header()->get(encryptMethod);
-            num = encryptMethod();
-            encryptMethodItem = new QStandardItem(QString::number(num));
-            encryptMethodItem->setData(userDataVar);
-            _model->setItem(rowPosition,colPosition,encryptMethodItem);
-            colPosition++;
-
-            msg->Header()->get(heartBeatInt);
-            num = heartBeatInt();
-            heartBeatIntItem = new IntItem(num);
-            heartBeatIntItem->setData(userDataVar);
-            _model->setItem(rowPosition,colPosition,heartBeatIntItem);
-            colPosition++;
-
-            mt = msg->get_msgtype();
-            qstr = QString::fromStdString(mt());
-            messgeTypeItem = new QStandardItem(qstr);
-            messgeTypeItem->setData(userDataVar);
-            _model->setItem(rowPosition,colPosition,messgeTypeItem);
-            rowPosition++;
-            */
+            //qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
+            messageList->append(qmessage);
         }
         catch (f8Exception&  e){
             errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
@@ -455,8 +349,7 @@ bool WorkSheet::loadFileName(QString &fileName,
         }
         i++;
     }
-    nMilliseconds = myTimer.elapsed();
-    qDebug() << "TIME TO LOAD (milliseconds) " << nMilliseconds;
+    _model->setMessageList(messageList);
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::ConsoleMessage(qstr));
     showLoadProcess(false);
@@ -559,9 +452,12 @@ void WorkSheet::showLoadProcess(bool isBeingLoaded)
 }
 void WorkSheet::popupHeaderMenuSlot(int col,const QPoint &pt)
 {
+    qWarning() << "FIX OR REMOVE THIS POPUP MENU" << __FILE__ << __LINE__;
+    /*
     if (col == FixTable::SendingTime) {
         timeFormatMenu->popup(pt);
     }
+    */
 }
 void WorkSheet::timeFormatSelectedSlot(QAction *action)
 {

@@ -53,5 +53,6 @@
         <file>images/svg/edit-undo.svg</file>
         <file>images/svg/greenPlus.svg</file>
         <file>images/svg/xred.svg</file>
+        <file>images/svg/emblem-shared.svg</file>
     </qresource>
 </RCC>
