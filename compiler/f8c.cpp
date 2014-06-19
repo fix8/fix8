@@ -96,10 +96,10 @@ const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
-     incpath(true), nconst_router(false), no_shared_groups(false);
+     incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:S");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SD");
 extern string spacer, shortName, precompHdr;
 
 //-----------------------------------------------------------------------------------------
@@ -173,6 +173,7 @@ int main(int argc, char **argv)
 		{ "classes",		1,	0,	'c' },
 		{ "pch",		      1,	0,	'H' },
 		{ "second",			0,	0,	's' },
+		{ "defaulted",		0,	0,	'D' },
 		{ "noshared",		0,	0,	'S' },
 		{ "prefix",			1,	0,	'p' },
 		{ "namespace",		1,	0,	'n' },
@@ -242,6 +243,7 @@ int main(int argc, char **argv)
 		case 'r': retain_precomp = true; break;
 		case 's': second_only = true; break;
 		case 'S': no_shared_groups = true; break;
+		case 'D': no_default_routers = true; break;
 		case 't': tabsize = get_value<unsigned>(optarg); break;
 		case 'p': prefix = optarg; break;
 		case 'H': precompHdr = optarg; break;
@@ -968,11 +970,13 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl;
 	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
 	osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
+	osc_hpp << endl << "extern \"C\"" << endl << '{' << endl
+      << spacer << "const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
 	osc_hpp << "using " << ctxt._clname << "_BaseMsgEntry = MsgTable;" << endl;
-	osc_hpp << "/// Compiler generated metadata object, accessed through this function" << endl;
+	osc_hpp << "/// Compiler generated metadata object, accessed through this function." << endl;
 	osc_hpp << "const F8MetaCntx& ctx();" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
@@ -1178,7 +1182,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_cpp << ',' << endl;
 		osc_cpp << spacer << "{ \"" << mitr->first << "\", { ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-         osc_cpp << "Type2Types<" << ctxt._fixns << "::" << mitr->second._name << ", bool>()";
+         osc_cpp << "Type2Type<" << ctxt._fixns << "::" << mitr->second._name << ", bool>()";
       else
          osc_cpp << "Type2Type<" << ctxt._fixns << "::" << mitr->second._name << ">()";
 		osc_cpp << ", \"" << mitr->second._name << '"';
@@ -1196,7 +1200,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
          ++fields_generated;
 
 	osc_cpp << endl << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl << endl
-      << "/// Compiler generated metadata object, accessed through this function" << endl
+      << "/// Compiler generated metadata object, accessed through this function." << endl
       << "const F8MetaCntx& ctx() // avoid SIOF" << endl << '{' << endl
       << spacer << "static const " << ctxt._clname << "_BaseMsgEntry "
          << "bme(msgpairs, " << mspec.size() << ");" << endl
@@ -1220,10 +1224,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name << " *msg) ";
-      if (!nconst_router)
-         osu_hpp << "const ";
-      osu_hpp << "{ return " << (mitr->second._is_admin ? "true" : "false") << "; }" << endl;
+		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name << " *msg)";
+      if (no_default_routers)
+         osu_hpp << ';' << endl;
+      else
+      {
+         if (!nconst_router)
+            osu_hpp << " const";
+         osu_hpp << " { return " << (mitr->second._is_admin ? "true" : "false") << "; }" << endl;
+      }
 	}
 	osu_hpp << "};" << endl;
 
@@ -1236,6 +1245,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osu_hpp << "#endif // " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl;
 	osr_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osr_cpp << _csMap.find(cs_end_namespace)->second << endl;
+	osc_cpp << endl << "// Compiler generated metadata object accessible outside its namespace through this function." << endl;
+	osc_cpp << "extern \"C\"" << endl << '{' << endl
+      << spacer << "const F8MetaCntx& " << ctxt._fixns << "_ctx() { return " << ctxt._fixns << "::ctx(); }"
+      << endl << '}' << endl << endl;
 	osc_cpp << _csMap.find(cs_end_namespace)->second << endl;
 	osc_cpp << endl;
 
@@ -1393,7 +1406,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		ost_cpp << spacer << "{ " << fitr->first << ", { ";
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{
-			ost_cpp << "Type2Types<" << ctxt._fixns << "::" << fitr->second._name << ", ";
+			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name << ", ";
          string ttype;
          if (!FieldTrait::get_type_string(fitr->second._ftype, ttype).empty())
 				ost_cpp << ttype;
