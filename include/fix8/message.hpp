@@ -128,20 +128,25 @@ public:
 class Minst
 {
 	/*! Generate a message instantiator
-	  \tparam T type to instantiate */
-   template<typename T>
+	 */
 	struct _gen
 	{
 		/*! Instantiate a message
+          \tparam T type to instantiate
 		  \return new message */
+        template<typename T>
 		static Message *_make() { return new T; }
 		/*! Instantiate a message cast to Message
+          \tparam T type to instantiate
 		  \return new message */
-		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
+        template<typename T, typename R>
+        static Message *_make() { return reinterpret_cast< Message * >( new T ); }
 #if defined HAVE_EXTENDED_METADATA
 		/*! SIOF static TraitHelper
+          \tparam T type to instantiate
 		  \return ref to static TraitHelper */
-		static const TraitHelper& _make_traits()
+        template<typename T, typename R = void>
+        static const TraitHelper& _make_traits()
 		{
 			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
 			return _helper;
@@ -157,19 +162,10 @@ public:
 
 	/*! Ctor
 	  \tparam T type to instantiate */
-   template<typename T>
-   Minst(Type2Type<T>) : _do(_gen<T>::_make)
+   template<typename T, typename... args>
+   Minst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>)
 #if defined HAVE_EXTENDED_METADATA
-		 , _get_traits(_gen<T>::_make_traits)
-#endif
-	{}
-
-	/*! Ctor with extended traits
-	  \tparam T type to instantiate */
-   template<typename T>
-   Minst(Type2Type<T, bool>) : _do(_gen<T>::_make_cast)
-#if defined HAVE_EXTENDED_METADATA
-		 , _get_traits(_gen<T>::_make_traits)
+		 , _get_traits(_gen::_make_traits<T, args...>)
 #endif
 	{}
 };
