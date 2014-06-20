@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.stable;
-		version : 1.2.20140604.2;
+		version : 1.2.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 library (stable);
 		authors: {Fix8};
 		owners: {Fix8, Sergey Sedreev};
