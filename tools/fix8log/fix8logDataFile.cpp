@@ -64,7 +64,7 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     //  msg_seq_num snum;
     QString str;
     QString name;
-
+    QMap <QString, qint32> senderMap;
     TEX::SenderCompID scID;
     //TEX::TargetCompID tcID;
     TEX::SendingTime  sendTime;
@@ -255,10 +255,8 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     }
     */
     nMilliseconds = myTimer.elapsed();
-    qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     //msgList.append(GUI::Message(qstr));
-    qDebug() << "NUM OF MESSAGES READ IN = " << messageList->count() << __FILE__ << __LINE__;
     dataFile.close();
     return model;
 }
@@ -316,11 +314,8 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     int i=0;
     QElapsedTimer myTimer;
     int linecount = 0;
-    int nMilliseconds;
     qint32 fileSize = dataFile.size();
     QByteArray ba;
-
-
     while(!dataFile.atEnd()) {
         ba = dataFile.readLine();
         linecount++;
@@ -437,8 +432,7 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
         i++;
     }
     */
-    nMilliseconds = myTimer.elapsed();
-    qDebug() << "TIME TO LOAD = " << nMilliseconds;
+
     qstr = QString::number(model->rowCount()) + " Messages were read from file: " + fileName;
     msgList.append(GUI::ConsoleMessage(qstr));
     dataFile.close();

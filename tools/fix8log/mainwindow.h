@@ -83,6 +83,7 @@ public:
     ~MainWindow();
     void addNewSchema(TableSchema *);
     void addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd);
+    void addWorkSheet(WorkSheetData &wsd);
     void deletedSchema(int schemaID);
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);

@@ -144,26 +144,54 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         index = tabW->addTab(workSheet,str);
         tabW->setToolTip(fileName);
         tabW->setCurrentWidget(workSheet);
-        workSheet->showLoadProcess(true);
         stackW->setCurrentWidget(workAreaSplitter);
         quint32 returnStatus = 0;
         workSheet->setUpdatesEnabled(false);
+        setCursor(Qt::BusyCursor);
         bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
-        workSheet->setUpdatesEnabled(true);
-        workSheetList.append(workSheet);
+        unsetCursor();
         if (!bstatus) {
-            if (returnStatus == CANCEL) {
-                GUI::ConsoleMessage msg("Canceled Loading File: " + fileName);
+            if (returnStatus == WorkSheet::TERMINATED) {
+                str = "Loading of file: " + fileName + " terminated.";
+                GUI::ConsoleMessage msg(str);
+                statusBar()->showMessage(str,3000);
                 messageList.append(msg);
+            }
+            else if (returnStatus == WorkSheet::CANCEL) {
                 tabW->removeTab(index);
                 workSheetList.removeOne(workSheet);
                 delete workSheet;
-            }
-            else {
-                GUI::ConsoleMessage msg("Loading File: " + fileName + " Failed",GUI::ConsoleMessage::ErrorMsg);
+                str = "Loading of file " + fileName + " canceled.";
+                GUI::ConsoleMessage msg(str);
+                statusBar()->showMessage(str,3000);
                 messageList.append(msg);
             }
+            else if (returnStatus == WorkSheet::FILE_NOT_FOUND) {
+                tabW->removeTab(index);
+                workSheetList.removeOne(workSheet);
+                delete workSheet;
+                str = "Loading of file " + fileName + " failed. File not found.";
+                GUI::ConsoleMessage msg(str);
+                messageList.append(msg);
+                statusBar()->showMessage(str,3000);
+            }
+            else {
+                tabW->removeTab(index);
+                workSheetList.removeOne(workSheet);
+                delete workSheet;
+                str = "Loading of file " + fileName + " failed.";
+                GUI::ConsoleMessage msg(str);
+                messageList.append(msg);
+                statusBar()->showMessage(str,3000);
+            }
         }
+        else {
+            workSheet->setUpdatesEnabled(true);
+            workSheetList.append(workSheet);
+            str = "Loaded " + fileName + " completed";
+            statusBar()->showMessage(str,2000);
+        }
+        // display error messages associated with each worksheet
         if (messageList.count() > 0) {
             QListIterator <GUI::ConsoleMessage> messageIter(messageList);
             while(messageIter.hasNext()) {
@@ -171,8 +199,8 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
                 displayConsoleMessage(message);
             }
         }
-
     }
+
     if (tabW->count() > 0) {
         stackW->setCurrentWidget(workAreaSplitter);
         copyTabA->setEnabled(true);
@@ -206,6 +234,8 @@ void MainWindow::displayConsoleMessage(GUI::ConsoleMessage message)
 void MainWindow::tabCloseRequestSlot(int tabPosition)
 {
     WorkSheet *worksheet =  qobject_cast <WorkSheet *> (tabW->widget(tabPosition));
+    if (worksheet)
+        worksheet->terminate(); // call in case worksheet is being loaded
     tabW->removeTab(tabPosition);
 
     if (tabW->count() > 0) {

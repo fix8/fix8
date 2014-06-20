@@ -3,7 +3,7 @@
 # Project created by QtCreator 2014-03-15T21:24:01
 #
 #-------------------------------------------------
-CONFIG += x86_64
+CONFIG += x86_64  debug_and_release
 QT       += core gui sql qml quick widgets
 
 TARGET = fix8log

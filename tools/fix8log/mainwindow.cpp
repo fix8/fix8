@@ -648,6 +648,104 @@ WorkSheetData MainWindow::getWorksheetData(QUuid &workSheetID, bool *ok)
     }
     return wsd;
 }
+void MainWindow::addWorkSheet(WorkSheetData &wsd)
+{
+    qDebug() << "NEW CODE, REMOVE OLD ONE" << __FILE__ << __LINE__;
+    int index;
+    bool bstatus;
+    QString str;
+    quint32   returnStatus = 0;
+    QList <GUI::ConsoleMessage> messageList;
+    QFileInfo fi(wsd.fileName);
+    if (!fi.exists()) {
+        GUI::ConsoleMessage msg("File named " + wsd.fileName + " was not found",
+                                GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
+        return;
+    }
+    WorkSheet *workSheet = new WorkSheet(this);
+    workSheet->setTableSchema(tableSchema);
+    connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+            this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
+    connect(workSheet,SIGNAL(modelDropped(FixMimeData *)),
+            this,SLOT(modelDroppedSlot(FixMimeData *)));
+    workSheet->setWindowID(uuid);
+    workSheet->splitter->restoreState(wsd.splitterState);
+    workSheet->fixTable->horizontalHeader()->restoreState(wsd.headerState);
+    str = wsd.fileName;
+    if (str.length() > 36) {
+        str = "..." + str.right(33);
+    }
+    index = tabW->addTab(workSheet,str);
+    tabW->setToolTip(wsd.fileName);
+    tabW->setCurrentWidget(workSheet);
+    stackW->setCurrentWidget(workAreaSplitter);
+    workSheet->setUpdatesEnabled(false);
+    bstatus = workSheet->loadFileName(wsd.fileName,messageList,returnStatus);
+    if (!bstatus) {
+        if (returnStatus == WorkSheet::TERMINATED) {
+            str = "Loading of file: " + wsd.fileName + " was terminated.";
+            GUI::ConsoleMessage msg(str);
+            statusBar()->showMessage(str,3000);
+            messageList.append(str);
+            tabW->removeTab(index);
+            // don't need to delete it, deletion of tab will delete it
+        }
+        else if (returnStatus == WorkSheet::CANCEL) {
+            str = "Loading of file " + wsd.fileName + " canceled.";
+            GUI::ConsoleMessage msg(str);
+            statusBar()->showMessage(str,3000);
+            messageList.append(msg);
+            tabW->removeTab(index);
+            delete workSheet;
+        }
+        else if (returnStatus == WorkSheet::FILE_NOT_FOUND) {
+            tabW->removeTab(index);
+            delete workSheet;
+            str = "Loading of file " + wsd.fileName + " failed. File not found.";
+            GUI::ConsoleMessage msg(str);
+            statusBar()->showMessage(str,3000);
+            messageList.append(msg);
+            delete workSheet;
+        }
+        else {
+            tabW->removeTab(index);
+            delete workSheet;
+            str = "Loading of file " + wsd.fileName + " failed.";
+            GUI::ConsoleMessage msg(str);
+            messageList.append(msg);
+            statusBar()->showMessage(str,3000);
+        }
+    }
+    else {
+        workSheet->setUpdatesEnabled(true);
+        workSheetList.append(workSheet);
+        str = "Loading of file " + wsd.fileName + " Completed";
+        GUI::ConsoleMessage msg(str,GUI::ConsoleMessage::InfoMsg);
+        messageList.append(msg);
+        statusBar()->showMessage(str,3000);
+    }
+
+    if (messageList.count() > 0) {
+        QListIterator <GUI::ConsoleMessage> messageIter(messageList);
+        while(messageIter.hasNext()) {
+            GUI::ConsoleMessage message = messageIter.next();
+            displayConsoleMessage(message);
+        }
+    }
+    if (tabW->count() > 0) {
+        stackW->setCurrentWidget(workAreaSplitter);
+        copyTabA->setEnabled(true);
+        showMessageA->setEnabled(true);
+        if (tabW->count() > 1)
+            tabW->setCurrentIndex(index);
+    }
+    else {
+        stackW->setCurrentWidget(noDataL);
+        copyTabA->setEnabled(false);
+        showMessageA->setEnabled(false);
+    }
+}
 void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
 {
     int currentIndex = stackW->currentIndex();
@@ -683,10 +781,10 @@ void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
     stackW->setCurrentIndex(ShowTab);
 
 
-if (tabW->count() > 0)
-    stackW->setCurrentWidget(workAreaSplitter);
-else
-    stackW->setCurrentWidget(noDataL);
+    if (tabW->count() > 0)
+        stackW->setCurrentWidget(workAreaSplitter);
+    else
+        stackW->setCurrentWidget(noDataL);
 }
 void MainWindow::setAutoSaveOn(bool on)
 {

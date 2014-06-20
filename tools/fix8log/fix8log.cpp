@@ -180,7 +180,7 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
             fieldUse->messageFieldList.append(mf);
 
         }
-       else
+        else
             qWarning() << "\t\tERROR QBASELIST = 0" ;
 
         //MessageBase *header =  new Message::Header();
@@ -234,7 +234,7 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
 
         }
 
-            ii++;
+        ii++;
     }
 }
 
@@ -444,40 +444,52 @@ bool Fix8Log::init()
             wireSignalAndSlots(newMW);
             mainWindows.append(newMW);
             newMW->setAutoSaveOn(autoSaveOn);
+            newMW->show();
+
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             if (wsdList.count() > 0) {
                 QListIterator <WorkSheetData> iter2(wsdList);
                 while(iter2.hasNext()) {
-                    model = 0;
                     WorkSheetData wsd = iter2.next();
+
+                    //model = 0;
+                    /* Used to share models to speed up time, but now every work sheet has its own model */
+
                     currentItemIter =  fileNameModelMap.find(wsd.fileName);
+                    /*
                     if (currentItemIter != fileNameModelMap.end()) {
                         model = (WorkSheetModel *) currentItemIter.value();
                     }
                     else {
-                        newMW->setLoadMessage("Loading File " + wsd.fileName);
-                        model = readLogFile(wsd.fileName,errorStr);
-                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,4);
-                        if (cancelSessionRestore) {
-                            newMW->setLoading(false);
-                            goto done;
-                        }
-                        if (!model)
-                            errorStrList.append(errorStr);
-                        else
-                            fileNameModelMap.insert(wsd.fileName,model);
+
+                   //  newMW->setLoadMessage("Loading File " + wsd.fileName);
+                    // model = readLogFile(wsd.fileName,errorStr);
+                    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,4);
+                     qDebug() << "LATTER RESTORE ABILITY TO CANCEL RESTORE" << __FILE__ << __LINE__;
+
+                    if (cancelSessionRestore) {
+                        newMW->setLoading(false);
+                        goto done;
                     }
-                    if (model) {
-                        newMW->addWorkSheet(model,wsd);
-                        qDebug() << "FIX THIS HARD CODE ROW SETTING of 2 ?" << __FILE__ << __LINE__;
-                        newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
-                    }
+
+                    if (!model)
+                        errorStrList.append(errorStr);
+                    else
+                        fileNameModelMap.insert(wsd.fileName,model);
+                    //}
+
+                    //if (model) {
+                    //newMW->addWorkSheet(model,wsd);
+                     */
+                    newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
+                    qDebug() << "FIX THIS HARD CODE ROW SETTING of 2 ?" << __FILE__ << __LINE__;
+                    newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
+                    //}
                 }
             }
             newMW->setLoading(false);
-            newMW->show();
         }
         displayConsoleMessage("Session restored from autosave");
     }

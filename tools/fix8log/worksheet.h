@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QUuid>
 #include "fixHeaderView.h"
 #include "globals.h"
+#include "messagefield.h"
 #include "worksheetdata.h"
 class TableSchema;
 class WorkSheetModel;
@@ -57,11 +58,7 @@ class DateTimeDelegate;
 class FixTable;
 class FixMimeData;
 class MessageArea;
-#define OK             0x0000
-#define CANCEL         0x0001
-#define READ_ERROR     0x0002
-#define FILE_NOT_FOUND 0x0004
-#define OPEN_FAILED    0x0080
+#
 class WorkSheet : public QWidget
 {
     friend class MainWindow;
@@ -70,11 +67,13 @@ public:
     explicit WorkSheet(QWidget *parent = 0);
     WorkSheet(WorkSheetModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
+    enum {OK =0x0000,CANCEL = 0x0001,READ_ERROR=0x0002,FILE_NOT_FOUND=0x0004,
+        OPEN_FAILED=0x0080,TERMINATED=0x0100};
+    ~WorkSheet();
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
     QUuid getID();
     QMessageList *getMessageList();
-    ~WorkSheet();
     //enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
    // static QString headerLabel[NumColumns];
     QString getFileName();
@@ -85,8 +84,9 @@ public:
                       quint32 &returnCode);
     void hideColumn(int colNum, bool hideCol);
     void setAlias(QString &);
-    void showLoadProcess(bool isBeingLoaded);
+    void showLoadProcess(bool isBeingLoaded, int numRecords=0);
     void setTimeFormat(GUI::Globals::TimeFormat);
+    void terminate();; // called to stop loading file if it is
 signals:
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
@@ -119,12 +119,13 @@ private:
     QWidget *progressWidget;
     QQuickItem  *qmlObject;
     bool cancelLoad;
-    int linecount;
     WorkSheetData origWSD;
     DateTimeDelegate *dateTimeDelegate;
     QUuid windowID;
     QUuid uuid;
     TableSchema *tableSchema;
+    QMessageList *messageList;
+    quint32 cancelReason;
 };
 
 class WorkSheetList : public QList <WorkSheet *>

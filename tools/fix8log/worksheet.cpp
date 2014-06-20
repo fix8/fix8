@@ -58,14 +58,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Myfix_router.hpp>
 #include <Myfix_classes.hpp>
 using namespace FIX8;
-/*
-QString WorkSheet::headerLabel[] =
-{tr("SeqNum"),tr("SenderCompID "),tr("TargetCompID"), QString(QChar(0x2935)) + "  SendTime"  ,
- tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
- tr("HeartBtInt"),tr("Message Type")};
-*/
 
-WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linecount(0),tableSchema(0)
+
+WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),tableSchema(0),messageList(0)
+
 {
     build();
     _model = new WorkSheetModel(this);
@@ -78,11 +74,12 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linec
         if (i==WorkSheet::SendingTime)
             headerItem[i]->setToolTip("Right click to select time format");
     }
-    */
+
     dateTimeDelegate = new DateTimeDelegate(this);
     fixTable->setItemDelegateForColumn(FixTable::SendingTime,
                                        dateTimeDelegate);
-    FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
+*/
+FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
     fixHeader->setSectionResizeMode(QHeaderView::Interactive);
@@ -93,7 +90,7 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linec
 
 }
 WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
-    QWidget(parent),cancelLoad(false),linecount(0)
+    QWidget(parent),cancelLoad(false),tableSchema(0),messageList(0)
 {
     build();
     WorkSheetModel *oldModel;
@@ -101,9 +98,11 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     fixFileName = oldws.getFileName();
     tableSchema = oldws.tableSchema;
     fixTable->setModel(_model);
+    /*
     dateTimeDelegate = new DateTimeDelegate(this);
     fixTable->setItemDelegateForColumn(FixTable::SendingTime,
                                        dateTimeDelegate);
+                                       */
     FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
@@ -117,16 +116,14 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
 }
 WorkSheet::WorkSheet(WorkSheetModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
-    QWidget(parent),cancelLoad(false),linecount(0),origWSD(wsd),tableSchema(0)
+    QWidget(parent),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0)
 {
     build();
     _model = model;
     fixTable->setModel(_model);
-    dateTimeDelegate = new DateTimeDelegate(this);
-
+    //dateTimeDelegate = new DateTimeDelegate(this);
     //fixTable->setItemDelegateForColumn(FixTable::SendingTime,
     //                                    dateTimeDelegate);
-
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
     /*
@@ -149,7 +146,7 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
     if (selectedRow < 0)
         selectedRow = 1;
     fixTable->selectRow(selectedRow);
-    QModelIndex mi = _model->index(selectedRow,0);
+    //QModelIndex mi = _model->index(selectedRow,0);
     qWarning() << "REWORK THIS MsgSeqNum" << __FILE__ << __LINE__;
     /*
     QModelIndex otherIndex = _model->index(selectedRow,MsgSeqNum);
@@ -165,6 +162,16 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
     // update to get time format displayed
     setTimeFormat(GUI::Globals::timeFormat);
     */
+}
+WorkSheet::~WorkSheet()
+{
+    qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
+    if (_model) {
+        _model->clear();
+        delete _model;
+    }
+    if (messageList)
+        qDeleteAll(*messageList);
 }
 void WorkSheet::setTableSchema(TableSchema *ts)
 {
@@ -218,6 +225,7 @@ void WorkSheet::buildHeader()
 }
 void WorkSheet::build()
 {
+    cancelReason = OK;
     setAcceptDrops(true);
     uuid = QUuid::createUuid();
     timeFormatMenu = new QMenu(this);
@@ -257,10 +265,7 @@ void WorkSheet::build()
     stackLayout->insertWidget(1,progressWidget);
     stackLayout->setCurrentIndex(0);
 }
-WorkSheet::~WorkSheet()
-{
-    //qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
-}
+
 QUuid WorkSheet::getID()
 {
     return uuid;
@@ -272,13 +277,21 @@ QMessageList *WorkSheet::getMessageList()
         ml = _model->getMessageList();
     return ml;
 }
-
+void WorkSheet::terminate()
+{
+  // in case loadFile is going on
+    qDebug() << "here in terminate " << __FILE__ << __LINE__;
+    showLoadProcess(false);
+    cancelLoad = true;
+    cancelReason = TERMINATED;
+}
+/* THis method not used anymore */
 bool WorkSheet::loadFileName(QString &fileName,
                              QList <GUI::ConsoleMessage> &msgList,
                              quint32 &returnCode)
 {
-
     fixFileName = fileName;
+
     bool bstatus;
     msg_type mt;
     msg_seq_num snum;
@@ -288,6 +301,8 @@ bool WorkSheet::loadFileName(QString &fileName,
     TEX::SenderCompID scID;
     QString qstr;
     QFile dataFile(fileName);
+    cancelReason = OK; // clear cancel reason
+
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
 
     bstatus =  dataFile.open(QIODevice::ReadOnly);
@@ -295,27 +310,33 @@ bool WorkSheet::loadFileName(QString &fileName,
         GUI::ConsoleMessage message(tr("Failed to open file: ") + fileName);
         msgList.append(message);
         _model->clear();
-        return 0;
+        returnCode = OPEN_FAILED;
+        return false;
     }
-    int i=0;
-    QElapsedTimer myTimer;
-    int linecount = 0;
-    int nMilliseconds;
-    qint32 fileSize = dataFile.size();
     QByteArray ba;
-
+    int linecount=0;
     while(!dataFile.atEnd()) {
         ba = dataFile.readLine();
         linecount++;
     }
-     showLoadProcess(true);
+    showLoadProcess(true,linecount);
     dataFile.seek(0);
+    int i=0;
+    QElapsedTimer myTimer;
+    int nMilliseconds;
+    qint32 fileSize = dataFile.size();
+
+
     myTimer.start();
-    QMessageList *messageList = new QMessageList();
+    messageList = new QMessageList();
     while(!dataFile.atEnd()) {
-        if (i%100 == 0) { // every 100 iterations allow gui to process events
-            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
+        if (cancelLoad) {
+            dataFile.close();
+            if (cancelReason == TERMINATED)  // set from terminate
+            returnCode = TERMINATED;
+            return false;
         }
+
         try {
             msg_seq_num snum;
             sender_comp_id senderID;
@@ -428,7 +449,7 @@ void WorkSheet::cancelLoadSlot()
     cancelLoad = true;
     stackLayout->setCurrentIndex(0);
 }
-void WorkSheet::showLoadProcess(bool isBeingLoaded)
+void WorkSheet::showLoadProcess(bool isBeingLoaded, int numRecords)
 {
     QVariant returnedValue;
     QString str1;
@@ -440,7 +461,7 @@ void WorkSheet::showLoadProcess(bool isBeingLoaded)
                        << __FILE__ << __LINE__;
         else {
             str1 = "Loading : " + fixFileName;
-            str2 = "(Number of records:" + QString::number(linecount) + ")";
+            str2 = "(Number of records: " + QString::number(numRecords)  +")";
             QMetaObject::invokeMethod (qmlObject, "setLoadFile",
                                        Q_RETURN_ARG(QVariant, returnedValue),
                                        Q_ARG(QVariant,str1),
