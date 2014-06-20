@@ -238,9 +238,9 @@ struct F8MetaCntx
 			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
 
 		for (const auto& pr : _be)
-			_reverse_fieldtable.insert({pr.second()._name, &pr.second()});
+			_reverse_fieldtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
 		for (const auto& pr : _bme)
-			_reverse_msgtable.insert({pr.second()._name, &pr.second()});
+			_reverse_msgtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
 	}
 
 	/// Dtor.

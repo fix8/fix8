@@ -846,7 +846,7 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
-	if (*ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
@@ -886,7 +886,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
   \return ticks decoded */
 inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
-	if (*ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
@@ -918,8 +918,10 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 
 inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
-   tm tms {};
+	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
+		return Tickval(true).get_ticks();
 
+   tm tms {};
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
 	ptr += parse_decimal(ptr, 2, tms.tm_mon);
@@ -967,7 +969,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
@@ -1058,7 +1060,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
@@ -1149,7 +1151,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
@@ -1240,7 +1242,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
@@ -1332,7 +1334,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(from ? ::strlen(from) : 0), _value(date_parse(from, _sz)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
