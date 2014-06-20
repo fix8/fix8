@@ -1848,50 +1848,37 @@ using data = f8String;
 /// Field metadata structures
 class Inst
 {
-	/*! Generate a field instantiator
-	  \tparam T type to instantiate */
-   template<typename T>
 	struct _gen
 	{
-		/*! Instantiate a field (no realm)
+        /*! Instantiate a field (no realm)
+          \tparam T type to instantiate
 		  \param from source string
 		  \param db realm base for this type
 		  \param rv realm value
 		  \return new field */
-		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+        template<typename T>
+        static BaseField *_make(const char *from, const RealmBase *db, const int rv)
 			{ return new T{from, db}; }
-	};
 
-	/*! Generate a field instantiator with realm
-	  \tparam T type to instantiate */
-   template<typename T, typename R>
-	struct _gen_realm
-	{
-		/*! Instantiate a field
-		  \param from source string
-		  \param db realm base for this type
-		  \param rv realm value
-		  \return new field */
-		static BaseField *_make_realm(const char *from, const RealmBase *db, const int rv)
-		{
-			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
-				? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
-		}
-	};
+        /*! Instantiate a field
+          \tparam T type to instantiate 
+          \param from source string
+          \param db realm base for this type
+          \param rv realm value
+          \return new field */
+        template<typename T, typename R>
+        static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+        {
+            return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
+                ? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
+        }
+    };
 
 public:
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
-	/*! Ctor
-	  \tparam T type to instantiate */
-   template<typename T>
-   Inst(Type2Type<T>) : _do(_gen<T>::_make) {}
-
-	/*! Ctor with realm
-	  \tparam T type to instantiate
-	  \tparam R realm type to instantiate */
-   template<typename T, typename R>
-   Inst(Type2Type<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
+    template<typename T, typename... args>
+    Inst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>) {}
 };
 
 struct BaseEntry

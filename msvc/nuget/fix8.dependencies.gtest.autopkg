@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dependencies.gtest;
-		version : 1.7.20140509.1;
+		version : 1.7.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 GTest dependency;
 		authors: {Google Inc};
 		owners: {Fix8, Sergey Sedreev};
