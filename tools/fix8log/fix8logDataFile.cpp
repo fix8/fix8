@@ -139,7 +139,8 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
         }
         i++;
     }
-    model->setMessageList(messageList);
+    bool cancelLoad = false;
+    model->setMessageList(messageList,cancelLoad);
 /*
     messgeTypeItem = new QStandardItem(qstr);
     qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;

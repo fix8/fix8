@@ -79,7 +79,9 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
         for (int i=0;i<mw.tabW->count();i++) {
             WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (mw.tabW->widget(i));
             QByteArray ba = oldWorkSheet->splitter->saveState();
-            WorkSheet *newWorkSheet = new WorkSheet(*oldWorkSheet,this);
+            WorkSheet *newWorkSheet = new WorkSheet(this);
+            qDebug() << "REDO NEW WINDOW " << __FILE__ << __LINE__;
+            newWorkSheet->copyFrom(*oldWorkSheet);
             newWorkSheet->setWindowID(uuid);
             workSheetList.append(newWorkSheet);
             connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
@@ -88,6 +90,8 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
                     this,SLOT(modelDroppedSlot(FixMimeData*)));
             connect(newWorkSheet,SIGNAL(sendMessage(GUI::ConsoleMessage)),
                     this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
+            connect(newWorkSheet,SIGNAL(terminateCopy(WorkSheet*)),
+                    this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
             newWorkSheet->splitter->restoreState(ba);
             QString str = mw.tabW->tabText(i);
             if (str.length() > 36) {
@@ -669,6 +673,8 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         displayConsoleMessage(msg);
         return;
     }
+     setCursor(Qt::BusyCursor);
+
     WorkSheet *workSheet = new WorkSheet(this);
     workSheet->setTableSchema(tableSchema);
     connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
@@ -677,6 +683,8 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
             this,SLOT(modelDroppedSlot(FixMimeData *)));
     connect(workSheet,SIGNAL(sendMessage(GUI::ConsoleMessage)),
             this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
+    connect(workSheet,SIGNAL(terminateCopy(WorkSheet*)),
+            this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
     workSheet->setWindowID(uuid);
     workSheet->splitter->restoreState(wsd.splitterState);
     workSheet->fixTable->horizontalHeader()->restoreState(wsd.headerState);
@@ -705,7 +713,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
             statusBar()->showMessage(str,3000);
             messageList.append(msg);
             tabW->removeTab(index);
-            delete workSheet;
+            workSheet->deleteLater();
         }
         else if (returnStatus == WorkSheet::FILE_NOT_FOUND) {
             tabW->removeTab(index);
@@ -748,7 +756,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         showMessageA->setEnabled(true);
         tabW->setCurrentIndex(index);
         QMenu *senderMenu = workSheet->getSenderMenu();
-        if (senderMenu) {
+        if (filterSenderMenuA && senderMenu) {
             filterSenderMenuA->setMenu(senderMenu);
         }
     }
@@ -757,6 +765,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         copyTabA->setEnabled(false);
         showMessageA->setEnabled(false);
     }
+    unsetCursor();
 }
 void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
 {
@@ -778,6 +787,8 @@ void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
             this,SLOT(modelDroppedSlot(FixMimeData *)));
     connect(newWorkSheet,SIGNAL(sendMessage(GUI::ConsoleMessage)),
             this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
+    connect(newWorkSheet,SIGNAL(terminateCopy(WorkSheet*)),
+            this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;
@@ -838,6 +849,8 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
         qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
         return;
     }
+    setCursor(Qt::BusyCursor);
+
     al = schemaActionGroup->actions();
     if (al.count() > 0) {
         QListIterator <QAction *> iter(al);
@@ -856,6 +869,7 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
         ws = iter2.next();
         ws->setTableSchema(tableSchema);
     }
+    unsetCursor();
 }
 void MainWindow::tableSchemaModified(TableSchema *ts)
 {

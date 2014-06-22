@@ -35,6 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "messagefield.h"
+#include <QApplication>
 #include <QDebug>
 FieldUse::FieldUse():isDefault(false)
 {
@@ -266,8 +267,8 @@ QMessage::QMessage(const QMessage &qm)
 }
 
 QColor QMessageList::senderColors[] = {QColor(255,214,79,100),QColor(151,255,81,100),
-                                                   QColor(79,255,211,100),QColor(80,121,255,100),
-                                                   QColor(110,77,255,100),QColor(255,73,195,100)};
+                                       QColor(79,255,211,100),QColor(80,121,255,100),
+                                       QColor(110,77,255,100),QColor(255,73,195,100)};
 
 QMessageList::QMessageList():QList <QMessage *>()
 {
@@ -278,15 +279,33 @@ QMessageList::QMessageList(const QMessageList &list): QList<QMessage *>(list)
 
 }
 
-QMessageList * QMessageList::clone()
+QMessageList * QMessageList::clone(const bool &cancel)
 {
     QMessage *message;
     QMessageList *qml = new QMessageList();
-
+    qDebug() << "!!! MESSAGELIST CLONE: count = " << count() << __FILE__ << __LINE__;
     qml->senderColorMap = senderColorMap;
     qml->defaultSender = defaultSender;
     QListIterator <QMessage *> iter(*this);
+    int i=0;
+    iter.toFront();
     while(iter.hasNext()) {
+
+        if (i%100 == 0) { // every 100 iterations allow gui to process events
+            if (cancel) {
+                qDebug() << "!!!!!!!!!CALL CANCEL" << __FILE__ << __LINE__;
+                if (qml) {
+                    qDeleteAll(qml->begin(),qml->end());
+                    delete qml;
+                    qml = 0;
+                    return qml;
+                }
+            }
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
+
+        }
+
+        i++;
         message =  iter.next();
         qml->append(new QMessage(*message));
     }

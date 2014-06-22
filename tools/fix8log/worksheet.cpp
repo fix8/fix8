@@ -90,42 +90,47 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),
     setTimeFormat(GUI::Globals::timeFormat);
 
 }
-WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
-    QWidget(parent),
-     senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0)
+bool WorkSheet::copyFrom(WorkSheet &oldws)
 {
     QString qstr;
-    build();
     WorkSheetModel *oldModel;
     oldModel = oldws.getModel();
     if (oldModel) {
-        _model = oldModel->clone();
-        QMessageList *oldMessageList = oldModel->getMessageList();
-        if(oldMessageList) {
-            messageList = oldMessageList->clone();
+         showLoadProcess(true,oldModel->rowCount());
+        _model = oldModel->clone(cancelLoad);
+        if(!_model || cancelLoad) {
+            //emit terminateCopy(this);
+            showLoadProcess(false);
+            return false;
         }
         fixTable->setWorkSheetModel(_model);
+        /*
+        QMessageList *oldMessageList = oldModel->getMessageList();
+        if(oldMessageList) {
+            qDebug() << "have old message list, count = " << oldMessageList->count() << __FILE__ << __LINE__;
+            messageList = oldMessageList->clone(cancelLoad);
+            if(!messageList || cancelLoad) {
+                qDebug() << "CANCEL HERE" << __FILE__ << __LINE__;
+                //emit terminateCopy(this);
+                return false;
+            }
+            else
+                qDebug() << "HAVE NEW MESSAGFE LIST CLONED, num of messages = "
+                            << messageList->count() << __FILE__ << __LINE__;
+        }
+        */
     }
     fixFileName = oldws.getFileName();
     tableSchema = oldws.tableSchema;
-
-    FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
-    connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
-            this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
-    fixHeader->setSectionResizeMode(QHeaderView::Interactive);
-    fixHeader->setStretchLastSection(true);
-    fixHeader->setSectionsMovable(true);
-    fixHeader->setSortIndicatorShown(true);
-    setTimeFormat(GUI::Globals::timeFormat);
     setTableSchema(tableSchema);
     QString str = oldws.getFileName();
     QFileInfo fi(str);
     senderMenu = new QMenu(this);
     senderMenu->setTitle(fi.fileName());
-
     if (!oldws.senderActionGroup) {
         fixTable->setWorkSheetModel(_model);
-        return;
+        showLoadProcess(false);
+        return false;
     }
     QList<QAction *> oldList = oldws.senderActionGroup->actions();
     QListIterator <QAction *> aiter(oldList);
@@ -144,11 +149,8 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     showAllSendersA = new QAction("Show All",this);
     senderActionGroup->addAction(showAllSendersA);
     senderMenu->addAction(showAllSendersA);
-    if (_model)
-        _model->setMessageList(messageList);
-    qstr = QString::number(_model->rowCount()) + tr(" Messages were copied");
-    //msgList.append(GUI::ConsoleMessage(qstr));
     showLoadProcess(false);
+    return true;
 }
 WorkSheet::WorkSheet(WorkSheetModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
@@ -209,6 +211,11 @@ WorkSheet::~WorkSheet()
     if (messageList)
         qDeleteAll(*messageList);
 }
+bool WorkSheet::loadCanceled()
+{
+    return cancelLoad;
+}
+
 void WorkSheet::setTableSchema(TableSchema *ts)
 {
     tableSchema = ts;
@@ -317,6 +324,7 @@ void WorkSheet::terminate()
     showLoadProcess(false);
     cancelLoad = true;
     cancelReason = TERMINATED;
+    senderMenu = 0;
 }
 /* THis method not used anymore */
 bool WorkSheet::loadFileName(QString &fileName,
@@ -369,7 +377,6 @@ bool WorkSheet::loadFileName(QString &fileName,
                 returnCode = TERMINATED;
             return false;
         }
-
         try {
             msg_seq_num snum;
             sender_comp_id senderID;
@@ -435,7 +442,6 @@ bool WorkSheet::loadFileName(QString &fileName,
     }
     else
         senderMenu = new QMenu(this);
-    senderMenu->setTitle(fi.fileName());
     // only support up to 6 colors for filtering by senderID
     if (valueList.count() > 1) {
         int maxItems = valueList.count();
@@ -449,13 +455,14 @@ bool WorkSheet::loadFileName(QString &fileName,
             action->setCheckable(true);
             action->setChecked(true);
             senderActionGroup->addAction(action);
+
             senderMenu->addAction(action);
         }
     }
     showAllSendersA = new QAction("Show All",this);
     senderActionGroup->addAction(showAllSendersA);
     senderMenu->addAction(showAllSendersA);
-    _model->setMessageList(messageList);
+    _model->setMessageList(messageList,cancelLoad);
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::ConsoleMessage(qstr));
     showLoadProcess(false);

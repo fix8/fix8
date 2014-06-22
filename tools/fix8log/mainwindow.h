@@ -136,6 +136,7 @@ public:
     void tabCurentChangedSlot(int);
     void tabNameModifiedSlot(QString);
     void tabNameReturnKeySlot();
+    void terminatedWorkSheetCopySlot(WorkSheet *);
     void toolbarOrientationChangedSlot(Qt::Orientation);
 protected:
     enum {ShowNoDataLabel,ShowTab,ShowProgress};

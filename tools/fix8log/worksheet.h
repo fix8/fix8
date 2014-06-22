@@ -71,6 +71,8 @@ public:
     enum {OK =0x0000,CANCEL = 0x0001,READ_ERROR=0x0002,FILE_NOT_FOUND=0x0004,
         OPEN_FAILED=0x0080,TERMINATED=0x0100};
     ~WorkSheet();
+    bool copyFrom(WorkSheet &oldws);
+    bool loadCanceled();
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
     QUuid getID();
@@ -94,6 +96,7 @@ signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
     void sendMessage(GUI::ConsoleMessage);
     void sendMessages(QList < GUI::ConsoleMessage>);
+    void terminateCopy(WorkSheet *);
 public slots:
     void cancelLoadSlot();
     void popupHeaderMenuSlot(int col,const QPoint &);

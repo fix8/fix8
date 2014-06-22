@@ -48,12 +48,12 @@ class WorkSheetModel : public QStandardItemModel
 public:
     explicit WorkSheetModel(QObject *parent = 0);
     void setTableSchema(TableSchema &ts);
-    void setMessageList( QMessageList *messageList);
+    void setMessageList( QMessageList *messageList,const bool &cancelLoad);
     QMessageList *getMessageList();
-    WorkSheetModel *clone();
+    WorkSheetModel *clone(const bool &cancelLoad);
     static int senderIDRole;
 private:
-    void generateData();
+    void generateData(const bool &cancelLoad);
     TableSchema *tableSchema;
     QMessageList *messageList;
 };

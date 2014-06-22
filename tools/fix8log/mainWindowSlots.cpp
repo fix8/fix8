@@ -323,3 +323,7 @@ void MainWindow::displayMessageSlot(GUI::ConsoleMessage msg)
 {
   displayConsoleMessage(msg);
 }
+void MainWindow::terminatedWorkSheetCopySlot(WorkSheet *ws)
+{
+    qDebug() << "REMOVE THIS SLOT ?" << __FILE__ << __LINE__;
+}

@@ -56,6 +56,11 @@ using namespace FIX8;
 void MainWindow::createTabSlot()
 {
     QString str;
+    if (cursor().shape() == Qt::BusyCursor) {
+        QMessageBox::information(this,"FIX8Log","This View is Currently Busy");
+        return;
+    }
+    setCursor(Qt::BusyCursor);
     if (!fileDialog) {
         QStringList filters;
         if (fileFilter == "*.logs")
@@ -75,6 +80,8 @@ void MainWindow::createTabSlot()
         fileDialog->setDirectory(lastSelectedDir);
     }
     fileDialog->show();
+    unsetCursor();
+
 }
 void MainWindow::fileDirChangedSlot(const QString &newDir)
 {
@@ -88,6 +95,7 @@ void MainWindow::fileFilterSelectedSlot(QString filter)
     QSettings settings("fix8","logviewer");
     settings.setValue("FileFilter",filter);
 }
+
 void MainWindow::fileSelectionFinishedSlot(int returnCode)
 {
     //typedef std::map<std::string, unsigned> MessageCount;
@@ -139,6 +147,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         quint32 returnStatus = 0;
         workSheet->setUpdatesEnabled(false);
         setCursor(Qt::BusyCursor);
+
         bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
         unsetCursor();
         if (!bstatus) {
@@ -181,6 +190,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
             workSheetList.append(workSheet);
             str = "Loaded " + fileName + " completed";
             statusBar()->showMessage(str,2000);
+            filterSenderMenuA->setMenu(workSheet->getSenderMenu());
         }
         // display error messages associated with each worksheet
         if (messageList.count() > 0) {
@@ -224,12 +234,20 @@ void MainWindow::displayConsoleMessage(GUI::ConsoleMessage message)
 void MainWindow::tabCloseRequestSlot(int tabPosition)
 {
     WorkSheet *worksheet =  qobject_cast <WorkSheet *> (tabW->widget(tabPosition));
-    if (worksheet)
-        worksheet->terminate(); // call in case worksheet is being loaded
+    setCursor(Qt::BusyCursor);
+    if (worksheet) {
+         int index = tabW->currentIndex();
+         if(index == tabPosition) {
+             filterSenderMenuA->setMenu(0);
+         }
+    worksheet->terminate(); // call in case worksheet is being loaded
+    }
     tabW->removeTab(tabPosition);
-
     if (tabW->count() > 0) {
         stackW->setCurrentWidget(workAreaSplitter);
+        WorkSheet *currentWorkSheet = qobject_cast<WorkSheet *> (tabW->currentWidget());
+        if (currentWorkSheet)
+            filterSenderMenuA->setMenu(currentWorkSheet->getSenderMenu());
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);
     }
@@ -242,14 +260,25 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
         workSheetList.removeOne(worksheet);
         delete worksheet;
     }
+    unsetCursor();
 }
 void MainWindow::closeSlot()
 {
+    if (cursor().shape() == Qt::BusyCursor) {
+        QMessageBox::information(this,"FIX8Log","This View is Currently Busy");
+        return;
+    }
+    setCursor(Qt::BusyCursor);
     writeSettings();
     emit deleteWindow(this);
+    unsetCursor();
 }
 void MainWindow::copyWindowSlot()
 {
+    if (cursor().shape() == Qt::BusyCursor) {
+        QMessageBox::information(this,"FIX8Log","This View is Currently Busy");
+        return;
+    }
     emit copyWindow(this);
 }
 void MainWindow::copyTabSlot()
@@ -260,30 +289,48 @@ void MainWindow::copyTabSlot()
         qWarning() << "No tabs to copy" << __FILE__ << __LINE__;
         return;
     }
+    // crazy but use curor style to see if app is busy
+    if (cursor().shape() == Qt::BusyCursor) {
+        QMessageBox::information(this,"FIX8Log","This View is Currently Busy");
+        return;
+    }
+    setCursor(Qt::BusyCursor);
     workSheet = qobject_cast <WorkSheet *> (tabW->currentWidget());
     if (!workSheet) {
         qWarning() << "No work sheet to copy" << __FILE__ << __LINE__;
+        unsetCursor();
         return;
     }
-    newWorkSheet = new WorkSheet(*workSheet);
-    workSheetList.append(workSheet);
+    newWorkSheet = new WorkSheet(this);
+
     connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),
             this,SLOT(modelDroppedSlot(FixMimeData *)));
     newWorkSheet->setWindowID(uuid);
     QString fileName = workSheet->getFileName();
-    /*
-    QFileInfo fi(fileName);
-    QString fileNameStr = fi.fileName();
-    if (fileNameStr.length() > 36)
-        fileNameStr = fileNameStr.right(33);
-    */
+
     QString str = fileName;
     if (str.length() > 36) {
         str = "..." + str.right(33);
     }
+    int currentIndex = tabW->currentIndex();
     int index = tabW->addTab(newWorkSheet,str);
     tabW->setToolTip(fileName);
     tabW->setCurrentIndex(index);
+    bool bstatus = newWorkSheet->copyFrom(*workSheet);
+    if (!bstatus)
+        if (newWorkSheet->loadCanceled()) {
+            tabW->removeTab(index);
+            tabW->setCurrentIndex(currentIndex);
+            newWorkSheet->deleteLater();
+            QString str = "Copy Canceled";
+            GUI::ConsoleMessage msg(str);
+            statusBar()->showMessage(str,3000);
+            displayConsoleMessage(msg);
+            unsetCursor();
+            return;
+        }
+    workSheetList.append(workSheet);
+    unsetCursor();
 }

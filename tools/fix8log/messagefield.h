@@ -140,7 +140,7 @@ class QMessageList : public QList <QMessage *>
 public:
     QMessageList();
     QMessageList(const QMessageList &list);
-    QMessageList *clone();
+    QMessageList *clone(const bool &cancel); // cancel set from outside in case want to exit loading
     QMap <QString,QColor> senderColorMap;
     QString defaultSender;
     static QColor senderColors[6];

@@ -53,13 +53,31 @@ WorkSheetModel::WorkSheetModel(QObject *parent) :
 {
 
 }
-WorkSheetModel * WorkSheetModel::clone()
+// cancel load happens from GUI, need to check here for long operations
+WorkSheetModel * WorkSheetModel::clone(const bool &cancelLoad)
 {
     WorkSheetModel *wsm = new WorkSheetModel();
     if (tableSchema)
         wsm->setTableSchema(*tableSchema);
     if (messageList) {
-        wsm->setMessageList(messageList);
+        qDebug() << "1 SET MESSAGE LIST COUNT = " << messageList->count()  << __FILE__ << __LINE__;
+        QMessageList *newMessageList = messageList->clone(cancelLoad);
+        qDebug() << "2 SET MESSAGE LIST COUNT = " << messageList->count()  << __FILE__ << __LINE__;
+        if (cancelLoad) {
+            wsm->deleteLater();
+            wsm = 0;
+            return wsm;
+        }
+        if(newMessageList)
+            qDebug() << "\tNEW MESSAGE LIST COUNT " << newMessageList->count() << __FILE__ << __LINE__;
+        else
+            qDebug() << "\tNEW MESSAGE LIST IS NULL" << __FILE__ << __LINE__;
+        wsm->setMessageList(newMessageList,cancelLoad);
+    }
+    if(cancelLoad) {  // gui set this to cancel
+        qDebug() << "HAVE CANCEL LOAD" << __FILE__ << __LINE__;
+        wsm->deleteLater();
+        wsm = 0;
     }
     return wsm;
 }
@@ -90,10 +108,11 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
         setHorizontalHeaderItem(i,hi);
         i++;
     }
+    bool fakeCancel = false;
     if (messageList && messageList->count() > 0)
-        generateData();
+        generateData(fakeCancel);
 }
-void WorkSheetModel::setMessageList( QMessageList *ml)
+void WorkSheetModel::setMessageList( QMessageList *ml,const bool &cancelLoad)
 {
     messageList = ml;
     removeRows(0,rowCount());
@@ -101,14 +120,14 @@ void WorkSheetModel::setMessageList( QMessageList *ml)
         qWarning() << "Warning - messagelist == 0" << __FILE__ << __LINE__;
         return;
     }
-    generateData();
+    generateData(cancelLoad);
 }
 QMessageList *WorkSheetModel::getMessageList()
 {
     return messageList;
 }
 
-void WorkSheetModel::generateData()
+void WorkSheetModel::generateData(const bool &cancelLoad)
 {
     QString name;
     QString mbName;
@@ -151,7 +170,11 @@ void WorkSheetModel::generateData()
     setRowCount(messageList->count());
     while(mIter.hasNext()) {
         if (rowPos%100 == 0) { // every 100 iterations allow gui to process events
-            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
+            if (cancelLoad) {
+                qDebug() << "CANCEL LOAD IN GENERATE DATA " << __FILE__ << __LINE__;
+                return;
+            }
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
         }
         qmessage = mIter.next();
         QString senderID = qmessage->senderID;
