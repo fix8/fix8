@@ -205,7 +205,7 @@ private:
 public:
 	enum Logtype { session_log, protocol_log };
 
-	/*! Ctor.
+ 	/*! Ctor.
 	  \param xmlfile xml config filename.
 	  \param do_process if true, process the file on construction */
 	Configuration(const std::string& xmlfile, bool do_process=false)

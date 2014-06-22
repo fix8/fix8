@@ -71,6 +71,9 @@ struct _pair
 	Key _key;
 	Val _value;
 
+	const Key& first() const { return _key; }
+	const Val& second() const { return _value; }
+
 	/// Sort functor
 	static bool Less(const _pair& p1, const _pair& p2) { return p1._key < p2._key; }
 };
@@ -82,6 +85,9 @@ struct _pair<const char *, Val>
 {
 	const char *_key;
 	Val _value;
+
+	const char *first() const { return _key; }
+	const Val& second() const { return _value; }
 
 	/// Sort functor
 	static bool Less(const _pair& p1, const _pair& p2) { return ::strcmp(p1._key, p2._key) < 0; }
@@ -366,20 +372,10 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Type2Type idiom. Kudos to Andrei Alexandrescu
-/*! \tparam type to convey */
-template<typename T>
-struct Type2Type
-{
-	using type = T;
-};
-
-template<typename T, typename R>
-struct Type2Types
-{
-	using type = T;
-	using rtype = R;
-};
+/// Type2Type idiom. Variadic template version. Kudos to Andrei Alexandrescu
+/*! \tparam T type to convey
+	 \tparam args further types to convey */
+template<typename T, typename... args> struct Type2Type {};
 
 } // FIX8
 

@@ -120,4 +120,5 @@ EXTRA_DIST = $(xmltoman) fix8.spec \
 if USEDOXYGEN
 EXTRA_DIST += doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen
 endif
+EXTRA_DIST += utests/precomp.hpp runtime/precomp.hpp util/precomp.hpp compiler/precomp.hpp
 

@@ -339,13 +339,16 @@ AC_ARG_WITH(gperf,
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
+AC_MSG_CHECKING(for precision)
 using_double_precision=yes
 AC_ARG_WITH([precision],
 [AS_HELP_STRING([--with-precision=VAL],[select whether to use single or double precision (single|double, default=double)])],
 [case "${withval}" in
    single) using_double_precision=no
-       AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
-   double) using_double_precision=yes ;;
+			  AC_MSG_RESULT(single)
+			  AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
+   double) AC_MSG_RESULT(double)
+			  using_double_precision=yes ;;
    *) echo
       echo "ERROR: Unknown value ${withval} for precision given."
       echo
