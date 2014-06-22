@@ -86,6 +86,8 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
                     this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
             connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData*)),
                     this,SLOT(modelDroppedSlot(FixMimeData*)));
+            connect(newWorkSheet,SIGNAL(sendMessage(GUI::ConsoleMessage)),
+                    this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
             newWorkSheet->splitter->restoreState(ba);
             QString str = mw.tabW->tabText(i);
             if (str.length() > 36) {
@@ -210,7 +212,8 @@ void MainWindow::buildMainWindow()
 
 
     filterSenderMenuA = new QAction("Sender",this);
-    filterSenderMenuA->setIcon(QIcon(":/images/svg/emblem-shared.svg"));
+    filterSenderMenuA->setIcon(QIcon(":/images/svg/filterSender.svg"));
+    filterSenderMenuA->setToolTip("Filter Out Messages By SenderID");
     searchBackA  = new QAction(tr("Back"),this);
     searchBackA->setIcon((QIcon(":/images/svg/back.svg")));
     searchBeginA = new QAction(tr("Begining"),this);
@@ -357,7 +360,10 @@ void MainWindow::buildMainWindow()
     mainToolBar->addSeparator();
     mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(filterSenderMenuA);
-
+    QToolButton *tb = qobject_cast <QToolButton *>(mainToolBar->widgetForAction(filterSenderMenuA));
+    if (tb) {
+        tb->setPopupMode(QToolButton::InstantPopup);
+    }
     // helpMenu
     aboutA = new QAction("About",this);
     aboutQTA = new QAction("Qt",this);
@@ -669,6 +675,8 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     connect(workSheet,SIGNAL(modelDropped(FixMimeData *)),
             this,SLOT(modelDroppedSlot(FixMimeData *)));
+    connect(workSheet,SIGNAL(sendMessage(GUI::ConsoleMessage)),
+            this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
     workSheet->setWindowID(uuid);
     workSheet->splitter->restoreState(wsd.splitterState);
     workSheet->fixTable->horizontalHeader()->restoreState(wsd.headerState);
@@ -719,6 +727,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
     }
     else {
         workSheet->setUpdatesEnabled(true);
+
         workSheetList.append(workSheet);
         str = "Loading of file " + wsd.fileName + " Completed";
         GUI::ConsoleMessage msg(str,GUI::ConsoleMessage::InfoMsg);
@@ -737,8 +746,11 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         stackW->setCurrentWidget(workAreaSplitter);
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);
-        if (tabW->count() > 1)
-            tabW->setCurrentIndex(index);
+        tabW->setCurrentIndex(index);
+        QMenu *senderMenu = workSheet->getSenderMenu();
+        if (senderMenu) {
+            filterSenderMenuA->setMenu(senderMenu);
+        }
     }
     else {
         stackW->setCurrentWidget(noDataL);
@@ -764,6 +776,8 @@ void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),
             this,SLOT(modelDroppedSlot(FixMimeData *)));
+    connect(newWorkSheet,SIGNAL(sendMessage(GUI::ConsoleMessage)),
+            this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;

@@ -49,7 +49,8 @@ SOURCES += main.cpp\
     ../../test/Myfix_classes.cpp \
     ../../test/Myfix_traits.cpp \
     ../../test/Myfix_types.cpp \
-    messageitemdelegate.cpp
+    messageitemdelegate.cpp \
+    proxyFilter.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -79,7 +80,8 @@ HEADERS  += mainwindow.h \
     ../../test/Myfix_classes.hpp \
     ../../test/Myfix_router.hpp \
     ../../test/Myfix_types.hpp \
-    messageitemdelegate.h
+    messageitemdelegate.h \
+    proxyFilter.h
 
 RESOURCES += \
     resources.qrc

@@ -64,7 +64,7 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     //  msg_seq_num snum;
     QString str;
     QString name;
-    QMap <QString, qint32> senderMap;
+    QMap <QLatin1String, qint32> senderMap; // <sender id, numofoccurances>
     TEX::SenderCompID scID;
     //TEX::TargetCompID tcID;
     TEX::SendingTime  sendTime;
@@ -122,6 +122,13 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
             QLatin1String sid(c);
             QMessage *qmessage = new QMessage(msg,sid);
             //qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
+            if (senderMap.contains(sid)) {
+                qint32 numOfTimes = senderMap.value(sid);
+                numOfTimes++;
+                senderMap.insert(sid,numOfTimes);
+            }
+            else
+                senderMap.insert(sid,1);
             messageList->append(qmessage);
         }
         catch (f8Exception&  e){

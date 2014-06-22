@@ -207,8 +207,17 @@ void MainWindow::tabNameReturnKeySlot()
     worksheet = qobject_cast <WorkSheet *> (tabW->widget(index));
     worksheet->setAlias(tabName);
 }
-void MainWindow::tabCurentChangedSlot(int)
+void MainWindow::tabCurentChangedSlot(int index)
 {
+     QMenu *senderMenu;
+     WorkSheet *worksheet = qobject_cast <WorkSheet *> (tabW->widget(index));
+     if (worksheet) {
+        senderMenu = worksheet->getSenderMenu();
+        if (senderMenu)
+            filterSenderMenuA->setMenu(senderMenu);
+        else
+            filterSenderMenuA->setMenu(0);
+     }
     if (!editTabNamePB->isChecked())
         return;
     cancelTabNameSlot();
@@ -310,4 +319,7 @@ void MainWindow::setWindowNameSlot()
         name = str;
     }
 }
-
+void MainWindow::displayMessageSlot(GUI::ConsoleMessage msg)
+{
+  displayConsoleMessage(msg);
+}

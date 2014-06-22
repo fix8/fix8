@@ -38,19 +38,18 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX_TABLE_VIEW_H
 class QFile;
 class QKeyEvent;
-
-#include <QDate>
-#include <QMap>
-#include <QRadialGradient>
-#include <QTableView>
-#include <QUuid>
 class QHeaderView;
 class FixHeaderView;
 class FixMimeData;
 class QStandardItem;
 class QStandardItemModel;
-
-
+class ProxyFilter;
+class WorkSheetModel;
+#include <QDate>
+#include <QMap>
+#include <QRadialGradient>
+#include <QTableView>
+#include <QUuid>
 
 class FixTable: public QTableView {
   Q_OBJECT
@@ -60,6 +59,8 @@ class FixTable: public QTableView {
   //FixTable(const FixTable &);
   void setAnouncement(const QString &message,int interval=3000); // milisec
   void setWindowID(QUuid &uuid);
+  void setWorkSheetModel(WorkSheetModel *);
+  void setSenderIDFilter(QStringList senderIDs);
   ~FixTable();
   static QString headerLabel[NumColumns];
   QSize sizeHint () const;
@@ -77,6 +78,7 @@ class FixTable: public QTableView {
   void modelDropped(FixMimeData  *);
   //  void doHeaderPopup(GradeHeaderItem *,const QPoint &);
  private:
+  void validateFilters();
   QString emptyStr1;
   QString emptyStr2;
   QFont   emptyFont;
@@ -109,5 +111,8 @@ class FixTable: public QTableView {
    int     animationPeriod;
    int     noDataTimerID;
    QColor  emptyAlphaFG;
+   ProxyFilter *proxyFilter;
+   QStringList senderIDs;
+   WorkSheetModel *_model;
 };
 #endif

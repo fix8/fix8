@@ -130,6 +130,7 @@ class QMessage
 {
   public:
     QMessage(Message *m,QLatin1String senderID);
+    QMessage(const QMessage &);
     Message *mesg;
     QString senderID;
     int seqID;
@@ -138,6 +139,8 @@ class QMessageList : public QList <QMessage *>
 {
 public:
     QMessageList();
+    QMessageList(const QMessageList &list);
+    QMessageList *clone();
     QMap <QString,QColor> senderColorMap;
     QString defaultSender;
     static QColor senderColors[6];

@@ -257,6 +257,14 @@ MessageFieldList::MessageFieldList() : QList<MessageField*>()
 QMessage::QMessage(Message *m,QLatin1String sid):mesg(m),senderID(sid)
 {
 }
+QMessage::QMessage(const QMessage &qm)
+{
+    senderID = qm.senderID;
+    seqID = qm.seqID;
+    if (qm.mesg)
+        mesg = qm.mesg->clone();
+}
+
 QColor QMessageList::senderColors[] = {QColor(255,214,79,100),QColor(151,255,81,100),
                                                    QColor(79,255,211,100),QColor(80,121,255,100),
                                                    QColor(110,77,255,100),QColor(255,73,195,100)};
@@ -264,4 +272,23 @@ QColor QMessageList::senderColors[] = {QColor(255,214,79,100),QColor(151,255,81,
 QMessageList::QMessageList():QList <QMessage *>()
 {
 
+}
+QMessageList::QMessageList(const QMessageList &list): QList<QMessage *>(list)
+{
+
+}
+
+QMessageList * QMessageList::clone()
+{
+    QMessage *message;
+    QMessageList *qml = new QMessageList();
+
+    qml->senderColorMap = senderColorMap;
+    qml->defaultSender = defaultSender;
+    QListIterator <QMessage *> iter(*this);
+    while(iter.hasNext()) {
+        message =  iter.next();
+        qml->append(new QMessage(*message));
+    }
+    return qml;
 }

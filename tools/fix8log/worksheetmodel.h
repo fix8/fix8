@@ -50,6 +50,8 @@ public:
     void setTableSchema(TableSchema &ts);
     void setMessageList( QMessageList *messageList);
     QMessageList *getMessageList();
+    WorkSheetModel *clone();
+    static int senderIDRole;
 private:
     void generateData();
     TableSchema *tableSchema;

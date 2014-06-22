@@ -36,6 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
+#include <QActionGroup>
 #include <QQuickItem>
 #include <QWidget>
 #include <QModelIndex>
@@ -78,6 +79,7 @@ public:
    // static QString headerLabel[NumColumns];
     QString getFileName();
     WorkSheetModel *getModel();
+    QMenu *getSenderMenu();
     WorkSheetData getWorksheetData();
     bool loadFileName(QString &fileName,
                       QList <GUI::ConsoleMessage> &returnMessageList,
@@ -98,9 +100,13 @@ public slots:
     void rowSelectedSlot(QModelIndex);
     void timeFormatSelectedSlot(QAction *);
     void modelDroppedSlot(FixMimeData *);
+    void senderActionGroupSlot(QAction *);
 protected:
     QSplitter *splitter;
     FixTable *fixTable;
+    QActionGroup *senderActionGroup;
+    QAction      *showAllSendersA;
+    QMenu        *senderMenu;
     MessageArea   *messageArea; // temp for now - pace holder
     void build();
     void buildHeader();

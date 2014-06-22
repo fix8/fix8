@@ -37,7 +37,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fixHeaderView.h"
 #include "fixmimedata.h"
 #include "fixtable.h"
+#include "proxyFilter.h"
 #include "globals.h"
+#include "worksheetmodel.h"
 #include <QDate>
 #include <QDebug>
 #include <QFile>
@@ -66,9 +68,11 @@ QString FixTable::headerLabel[] =
  tr("HeartBtInt"),tr("Message Type")};
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
-    QTableView(p),windowID(wid),worksheetID(wsid)
+    QTableView(p),windowID(wid),worksheetID(wsid),_model(0)
 
 {
+    proxyFilter = new ProxyFilter(this);
+    proxyFilter->setSortRole(Qt::UserRole +1 );
     showAnouncement= false;
     anounceFont = font();
     anounceFont.setBold(true);
@@ -97,6 +101,12 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setAlternatingRowColors(true);
     resize(sizeHint());
 }
+void FixTable::setWorkSheetModel(WorkSheetModel *m)
+{
+    _model = m;
+    proxyFilter->setSourceModel(_model);
+    setModel(m);
+}
 void FixTable::setWindowID(QUuid &uuid)
 {
     windowID = uuid;
@@ -121,8 +131,24 @@ void FixTable::setAnouncement(const QString &message,int interval)
     animationPeriod = interval;
     killTimer(anounceTimerID);
     anounceTimerID = startTimer(90);
-
 }
+void FixTable::setSenderIDFilter(QStringList ids)
+{
+    senderIDs = ids;
+    proxyFilter->setAcceptedSendIDs(senderIDs);
+    validateFilters();
+    update();
+}
+void FixTable::validateFilters()
+{
+    if (senderIDs.count() > 0) {
+            proxyFilter->setSourceModel(_model);
+            setModel(proxyFilter);
+    }
+     else
+            setModel(_model);
+}
+
 void FixTable::timerEvent(QTimerEvent *te)
 {
     if (te->timerId() == anounceTimerID) {

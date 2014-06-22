@@ -113,6 +113,7 @@ public:
     void copyTabSlot();
     void copyWindowSlot();
     void createTabSlot();
+    void displayMessageSlot(GUI::ConsoleMessage);
     void editSchemaSlot();
     void editTabNameSlot(bool isOn);
     void fileDirChangedSlot(const QString &);

@@ -54,5 +54,6 @@
         <file>images/svg/greenPlus.svg</file>
         <file>images/svg/xred.svg</file>
         <file>images/svg/emblem-shared.svg</file>
+        <file>images/svg/filterSender.svg</file>
     </qresource>
 </RCC>

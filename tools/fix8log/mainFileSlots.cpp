@@ -75,8 +75,6 @@ void MainWindow::createTabSlot()
         fileDialog->setDirectory(lastSelectedDir);
     }
     fileDialog->show();
-
-
 }
 void MainWindow::fileDirChangedSlot(const QString &newDir)
 {
@@ -85,13 +83,11 @@ void MainWindow::fileDirChangedSlot(const QString &newDir)
     settings.setValue("FileDirState",ba);
     settings.setValue("LastSelectedDir",newDir);
 }
-
 void MainWindow::fileFilterSelectedSlot(QString filter)
 {
     QSettings settings("fix8","logviewer");
     settings.setValue("FileFilter",filter);
 }
-
 void MainWindow::fileSelectionFinishedSlot(int returnCode)
 {
     //typedef std::map<std::string, unsigned> MessageCount;
@@ -105,23 +101,19 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         qWarning() << "Error - file dialog is null, cannot get values" << __FILE__ << __LINE__;
         return;
     }
-
     QByteArray prevHeaderSettings;
     bool havePreviousHeader = false;
     QSettings settings("fix8","logviewer");
     settings.setValue("FileDirState",fileDialog->saveState());
     fileList = fileDialog->selectedFiles();
-
     QStringListIterator iter(fileList);
     if (tabW->count() > 0) {
         WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (tabW->widget(tabW->count() -1));
         if (oldWorkSheet) {
-
             //prevHeaderSettings = oldWorkSheet->fixTable->horizontalHeader()->saveState();
             havePreviousHeader = true;
         }
     }
-
     while(iter.hasNext()) {
         fileName = iter.next();
         QFileInfo fi(fileName);
@@ -136,7 +128,6 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
         QList <GUI::ConsoleMessage> messageList;
-
         QString str = fileName;
         if (str.length() > 36) {
             str = "..." + str.right(33);
@@ -200,7 +191,6 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
             }
         }
     }
-
     if (tabW->count() > 0) {
         stackW->setCurrentWidget(workAreaSplitter);
         copyTabA->setEnabled(true);

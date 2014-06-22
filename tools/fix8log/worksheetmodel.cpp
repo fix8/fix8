@@ -45,11 +45,25 @@ using namespace FIX8;
 #include <QElapsedTimer>
 #include <QDebug>
 #include <QList>
+
+int WorkSheetModel::senderIDRole = Qt::UserRole+2;
+
 WorkSheetModel::WorkSheetModel(QObject *parent) :
     QStandardItemModel(parent),tableSchema(0),messageList(0)
 {
 
 }
+WorkSheetModel * WorkSheetModel::clone()
+{
+    WorkSheetModel *wsm = new WorkSheetModel();
+    if (tableSchema)
+        wsm->setTableSchema(*tableSchema);
+    if (messageList) {
+        wsm->setMessageList(messageList);
+    }
+    return wsm;
+}
+
 void WorkSheetModel::setTableSchema(TableSchema &ts)
 {
     //TraitHelper tr;
@@ -67,9 +81,7 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
         qWarning() << "Field List is null" << __FILE__ << __LINE__;
     setColumnCount(tableSchema->fieldList->count());
     fieldList = tableSchema->fieldList;
-
     QListIterator <QBaseEntry *> iter(*fieldList);
-
     int i = 0;
     while(iter.hasNext()) {
         field = iter.next();
@@ -126,23 +138,28 @@ void WorkSheetModel::generateData()
         setRowCount(0);
         return;
     }
+
     setColumnCount(tableSchema->fieldList->count());
-    QColor modBGColor = QColor(255,214,79,100);
+    QColor modBGColor; // = QColor(255,214,79,100);
     // This is a list of messages read in from file
     QListIterator <QMessage *> mIter(*messageList);
     // this is the fields user selected that they want displayed
     QListIterator <QBaseEntry *> tableHeaderIter(*(tableSchema->fieldList));
     bool modifyBackgroundColor;
     QElapsedTimer myTimer;
-     myTimer.start();
+    myTimer.start();
     setRowCount(messageList->count());
     while(mIter.hasNext()) {
         if (rowPos%100 == 0) { // every 100 iterations allow gui to process events
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
         }
         qmessage = mIter.next();
-        if (qmessage->senderID == QLatin1Literal("DLD_TEX"))
+        QString senderID = qmessage->senderID;
+
+        if (messageList->senderColorMap.contains(qmessage->senderID) ) {
+            modBGColor =messageList->senderColorMap.value(qmessage->senderID);
             modifyBackgroundColor = true;
+        }
         else
             modifyBackgroundColor = false;
         QVariant var;
@@ -166,6 +183,7 @@ void WorkSheetModel::generateData()
                     int ival(static_cast<Field<int, 0>*>(bf)->get());
                     // qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
                     IntItem *intItem = new IntItem(ival);
+                    intItem->setData(senderID,senderIDRole);
                     intItem->setData(var);
                     if (modifyBackgroundColor)
                         intItem->setData(modBGColor, Qt::BackgroundRole);
@@ -185,6 +203,7 @@ void WorkSheetModel::generateData()
                     bf->print(c);
                     QLatin1Literal ll(c);
                     QStandardItem *strItem = new QStandardItem(QString(ll));
+                    strItem->setData(senderID,senderIDRole);
                     strItem->setData(var);
                     if (modifyBackgroundColor)
                         strItem->setData(modBGColor, Qt::BackgroundRole);
@@ -196,6 +215,7 @@ void WorkSheetModel::generateData()
                     QChar ch(static_cast<Field<char, 0>*>(bf)->get());
                     QString cstr = ch.decomposition();
                     QStandardItem *charItem = new QStandardItem(cstr);
+                    charItem->setData(senderID,senderIDRole);
                     charItem->setData(var);
                     if (modifyBackgroundColor)
                         charItem->setData(modBGColor, Qt::BackgroundRole);
@@ -214,6 +234,7 @@ void WorkSheetModel::generateData()
                     int ival(static_cast<Field<int, 0>*>(bfm)->get());
                     //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
                     IntItem *intItem = new IntItem(ival);
+                    intItem->setData(senderID,senderIDRole);
                     intItem->setData(var);
                     if (modifyBackgroundColor)
                         intItem->setData(modBGColor, Qt::BackgroundRole);
@@ -231,6 +252,7 @@ void WorkSheetModel::generateData()
                     memset(c,'\0',60);
                     bfm->print(c);
                     QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                    strItem->setData(senderID,senderIDRole);
                     strItem->setData(var);
                     if (modifyBackgroundColor)
                         strItem->setData(modBGColor, Qt::BackgroundRole);
@@ -241,6 +263,7 @@ void WorkSheetModel::generateData()
                     QChar ch(static_cast<Field<char, 0>*>(bfm)->get());
                     QString cstr = ch.decomposition();
                     QStandardItem *charItem = new QStandardItem(cstr);
+                    charItem->setData(senderID,senderIDRole);
                     charItem->setData(var);
                     if (modifyBackgroundColor)
                         charItem->setData(modBGColor, Qt::BackgroundRole);
@@ -267,6 +290,7 @@ void WorkSheetModel::generateData()
                             int ival(static_cast<Field<int, 0>*>(bfg)->get());
                             //qDebug() << tableHeader->name << ", field id = " << fieldID << ", value = " << ival;
                             IntItem *intItem = new IntItem(ival);
+                            intItem->setData(senderID,senderIDRole);
                             intItem->setData(var);
                             if (modifyBackgroundColor)
                                 intItem->setData(modBGColor, Qt::BackgroundRole);
@@ -274,7 +298,7 @@ void WorkSheetModel::generateData()
                             found = true;
                         }
                         else if (FieldTrait::is_float(ft)) {
-                             qDebug() << "WORK WITH FLOAT" << __FILE__ << __LINE__;
+                            qDebug() << "WORK WITH FLOAT" << __FILE__ << __LINE__;
                             double fval(static_cast<Field<double, 0>*>(bfg)->get());
                             found = true;
                         }
@@ -282,6 +306,7 @@ void WorkSheetModel::generateData()
                             memset(c,'\0',60);
                             bfg->print(c);
                             QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                            strItem->setData(senderID,senderIDRole);
                             strItem->setData(var);
                             if (modifyBackgroundColor)
                                 strItem->setData(modBGColor, Qt::BackgroundRole);
@@ -292,6 +317,7 @@ void WorkSheetModel::generateData()
                             QChar ch(static_cast<Field<char, 0>*>(bfm)->get());
                             QString cstr = ch.decomposition();
                             QStandardItem *charItem = new QStandardItem(cstr);
+                            charItem->setData(senderID,senderIDRole);
                             charItem->setData(var);
                             if (modifyBackgroundColor)
                                 charItem->setData(modBGColor, Qt::BackgroundRole);
@@ -313,6 +339,7 @@ void WorkSheetModel::generateData()
                     if (FieldTrait::is_int(ft)) {
                         int ival(static_cast<Field<int, 0>*>(bft)->get());
                         IntItem *intItem = new IntItem(ival);
+                        intItem->setData(senderID,senderIDRole);
                         intItem->setData(var);
                         if (modifyBackgroundColor)
                             intItem->setData(modBGColor, Qt::BackgroundRole);
@@ -328,6 +355,7 @@ void WorkSheetModel::generateData()
                         memset(c,'\0',60);
                         bft->print(c);
                         QStandardItem *strItem = new QStandardItem(QLatin1Literal(c));
+                        strItem->setData(senderID,senderIDRole);
                         strItem->setData(var);
                         if (modifyBackgroundColor)
                             strItem->setData(modBGColor, Qt::BackgroundRole);
@@ -338,6 +366,7 @@ void WorkSheetModel::generateData()
                         QChar ch(static_cast<Field<char, 0>*>(bft)->get());
                         QString cstr = ch.decomposition();
                         QStandardItem *charItem = new QStandardItem(cstr);
+                        charItem->setData(senderID,senderIDRole);
                         charItem->setData(var);
                         if (modifyBackgroundColor)
                             charItem->setData(modBGColor, Qt::BackgroundRole);
@@ -352,13 +381,14 @@ void WorkSheetModel::generateData()
                 //qDebug() << "**************** NOT FOUND **********************" << colPos << __FILE__ << __LINE__;
                 // create a dummmy item, so color of row can be uniform across;
                 QStandardItem *dummyItem = new QStandardItem("");
+                dummyItem->setData(senderID,senderIDRole);
                 dummyItem->setData(var);
                 if (modifyBackgroundColor)
                     dummyItem->setData(modBGColor, Qt::BackgroundRole);
                 setItem(rowPos,colPos,dummyItem);
             }
             colPos++;
-        }        
+        }
         rowPos++;
     }
     int nMilliseconds = myTimer.elapsed();

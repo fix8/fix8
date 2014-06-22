@@ -47,6 +47,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "tableschema.h"
 #include "worksheetmodel.h"
 #include <QDebug>
+#include <QMap>
 #include <QQuickView>
 #include <QtWidgets>
 #include <iostream>
@@ -60,12 +61,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace FIX8;
 
 
-WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),tableSchema(0),messageList(0)
-
+WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),
+    senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0)
 {
     build();
     _model = new WorkSheetModel(this);
-    fixTable->setModel(_model);
+    fixTable->setWorkSheetModel(_model);
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     /*
     for(int i=0;i<NumColumns;i++) {
@@ -79,7 +80,7 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),table
     fixTable->setItemDelegateForColumn(FixTable::SendingTime,
                                        dateTimeDelegate);
 */
-FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
+    FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
     fixHeader->setSectionResizeMode(QHeaderView::Interactive);
@@ -90,19 +91,24 @@ FixHeaderView *fixHeader = qobject_cast <FixHeaderView *> (fixTable->horizontalH
 
 }
 WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
-    QWidget(parent),cancelLoad(false),tableSchema(0),messageList(0)
+    QWidget(parent),
+     senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0)
 {
+    QString qstr;
     build();
     WorkSheetModel *oldModel;
-    _model = oldws.getModel();
+    oldModel = oldws.getModel();
+    if (oldModel) {
+        _model = oldModel->clone();
+        QMessageList *oldMessageList = oldModel->getMessageList();
+        if(oldMessageList) {
+            messageList = oldMessageList->clone();
+        }
+        fixTable->setWorkSheetModel(_model);
+    }
     fixFileName = oldws.getFileName();
     tableSchema = oldws.tableSchema;
-    fixTable->setModel(_model);
-    /*
-    dateTimeDelegate = new DateTimeDelegate(this);
-    fixTable->setItemDelegateForColumn(FixTable::SendingTime,
-                                       dateTimeDelegate);
-                                       */
+
     FixHeaderView *fixHeader =  qobject_cast <FixHeaderView *> (fixTable->horizontalHeader());
     connect(fixHeader,SIGNAL(doPopup(int,QPoint)),
             this,SLOT(popupHeaderMenuSlot(int,const QPoint &)));
@@ -112,15 +118,46 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
     fixHeader->setSortIndicatorShown(true);
     setTimeFormat(GUI::Globals::timeFormat);
     setTableSchema(tableSchema);
+    QString str = oldws.getFileName();
+    QFileInfo fi(str);
+    senderMenu = new QMenu(this);
+    senderMenu->setTitle(fi.fileName());
 
+    if (!oldws.senderActionGroup) {
+        fixTable->setWorkSheetModel(_model);
+        return;
+    }
+    QList<QAction *> oldList = oldws.senderActionGroup->actions();
+    QListIterator <QAction *> aiter(oldList);
+    QAction *oldSelectAllA = oldws.showAllSendersA;
+    QAction *oldA;
+    while(aiter.hasNext()) {
+       oldA = aiter.next();
+       if (oldA != oldSelectAllA) {
+           QAction *action = new QAction(oldA->text(),this);
+           action->setCheckable(true);
+           action->setChecked(oldA->isChecked());
+           senderActionGroup->addAction(action);
+           senderMenu->addAction(action);
+       }
+    }
+    showAllSendersA = new QAction("Show All",this);
+    senderActionGroup->addAction(showAllSendersA);
+    senderMenu->addAction(showAllSendersA);
+    if (_model)
+        _model->setMessageList(messageList);
+    qstr = QString::number(_model->rowCount()) + tr(" Messages were copied");
+    //msgList.append(GUI::ConsoleMessage(qstr));
+    showLoadProcess(false);
 }
 WorkSheet::WorkSheet(WorkSheetModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
-    QWidget(parent),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0)
+    QWidget(parent),
+     senderMenu(0),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0)
 {
     build();
     _model = model;
-    fixTable->setModel(_model);
+    fixTable->setWorkSheetModel(_model);
     //dateTimeDelegate = new DateTimeDelegate(this);
     //fixTable->setItemDelegateForColumn(FixTable::SendingTime,
     //                                    dateTimeDelegate);
@@ -165,7 +202,6 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
 }
 WorkSheet::~WorkSheet()
 {
-    qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
     if (_model) {
         _model->clear();
         delete _model;
@@ -175,14 +211,12 @@ WorkSheet::~WorkSheet()
 }
 void WorkSheet::setTableSchema(TableSchema *ts)
 {
-    qDebug() << "Set Table Schema For Worksheet";
     tableSchema = ts;
     _model->clear();
     QHeaderView *horHeader =  fixTable->horizontalHeader();
     QAbstractItemModel * headerModel = horHeader->model();
     headerModel->removeColumns(0,headerModel->columnCount());
     _model->setTableSchema(*tableSchema);
-
     if (!tableSchema) {
         qWarning() << "ERROR - Table Schema IS NULL" << __FILE__ << __LINE__;
         return;
@@ -209,10 +243,8 @@ void WorkSheet::buildHeader()
         return;
     if (tableSchema->fieldList->count() < 1)
         return;
-
     fieldList = tableSchema->fieldList;
     headerItems.clear();
-
     QListIterator <QBaseEntry *> iter(*fieldList);
     headerItems.resize(fieldList->count());
     int i = 0;
@@ -225,6 +257,9 @@ void WorkSheet::buildHeader()
 }
 void WorkSheet::build()
 {
+    senderActionGroup = new QActionGroup(this);
+    senderActionGroup->setExclusive(false);
+    connect(senderActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(senderActionGroupSlot(QAction *)));
     cancelReason = OK;
     setAcceptDrops(true);
     uuid = QUuid::createUuid();
@@ -265,7 +300,6 @@ void WorkSheet::build()
     stackLayout->insertWidget(1,progressWidget);
     stackLayout->setCurrentIndex(0);
 }
-
 QUuid WorkSheet::getID()
 {
     return uuid;
@@ -279,8 +313,7 @@ QMessageList *WorkSheet::getMessageList()
 }
 void WorkSheet::terminate()
 {
-  // in case loadFile is going on
-    qDebug() << "here in terminate " << __FILE__ << __LINE__;
+    // in case loadFile is going on
     showLoadProcess(false);
     cancelLoad = true;
     cancelReason = TERMINATED;
@@ -291,7 +324,7 @@ bool WorkSheet::loadFileName(QString &fileName,
                              quint32 &returnCode)
 {
     fixFileName = fileName;
-
+    QFileInfo fi(fixFileName);
     bool bstatus;
     msg_type mt;
     msg_seq_num snum;
@@ -304,7 +337,6 @@ bool WorkSheet::loadFileName(QString &fileName,
     cancelReason = OK; // clear cancel reason
 
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
-
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
         GUI::ConsoleMessage message(tr("Failed to open file: ") + fileName);
@@ -328,12 +360,13 @@ bool WorkSheet::loadFileName(QString &fileName,
 
 
     myTimer.start();
+    QMap <QString, qint32> senderMap; // <sender id, numofoccurances>
     messageList = new QMessageList();
     while(!dataFile.atEnd()) {
         if (cancelLoad) {
             dataFile.close();
             if (cancelReason == TERMINATED)  // set from terminate
-            returnCode = TERMINATED;
+                returnCode = TERMINATED;
             return false;
         }
 
@@ -359,6 +392,14 @@ bool WorkSheet::loadFileName(QString &fileName,
                 }
                 qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
             }
+            if (senderMap.contains(sid)) {
+                qint32 numOfTimes = senderMap.value(sid);
+                numOfTimes++;
+                senderMap.insert(sid,numOfTimes);
+            }
+            else {
+                senderMap.insert(sid,1);
+            }
             //qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
             messageList->append(qmessage);
         }
@@ -369,13 +410,94 @@ bool WorkSheet::loadFileName(QString &fileName,
             msgList.append(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
         i++;
+
     }
+    QList<qint32> valueList = senderMap.values();
+    qSort(valueList.begin(), valueList.end(),qGreater<int>());
+
+    QListIterator <qint32> valueIter(valueList);
+    QStringList keyList;
+    while(valueIter.hasNext()) {
+        qint32 value = valueIter.next();
+        QMap<QString, qint32>::const_iterator imap = senderMap.constBegin();
+        while (imap != senderMap.constEnd()) {
+            if (imap.value() == value) {
+                keyList.append(imap.key());
+                break;
+            }
+            ++imap;
+        }
+    }
+
+    int k = 0;
+    if (senderMenu) {
+        senderMenu->clear();
+    }
+    else
+        senderMenu = new QMenu(this);
+    senderMenu->setTitle(fi.fileName());
+    // only support up to 6 colors for filtering by senderID
+    if (valueList.count() > 1) {
+        int maxItems = valueList.count();
+        if (maxItems >7)
+            maxItems = 7;
+        for( int i=0; i<maxItems; i++) {
+            QString key = keyList.at(i);
+            if (i!=0) // first one is special, it shows up the most, so it has no color assigned to it
+                messageList->senderColorMap.insert(key,QMessageList::senderColors[i-1]);
+            QAction *action = new QAction(key,this);
+            action->setCheckable(true);
+            action->setChecked(true);
+            senderActionGroup->addAction(action);
+            senderMenu->addAction(action);
+        }
+    }
+    showAllSendersA = new QAction("Show All",this);
+    senderActionGroup->addAction(showAllSendersA);
+    senderMenu->addAction(showAllSendersA);
     _model->setMessageList(messageList);
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::ConsoleMessage(qstr));
     showLoadProcess(false);
     returnCode = OK;
     return true;
+}
+void WorkSheet::senderActionGroupSlot(QAction *action)
+{
+    bool    isChecked;
+    QAction *act;
+    QString str;
+    QStringList filterList;
+    QList<QAction *> actions =  senderActionGroup->actions();
+    QListIterator <QAction *> iter(actions);
+    if (action == showAllSendersA) {
+        if (actions.count() < 1) {
+            fixTable->setSenderIDFilter(filterList);
+            return;
+        }
+        while(iter.hasNext()) {
+            act = iter.next();
+            if (act != showAllSendersA)
+                act->setChecked(true);
+        }
+    }
+    else {
+        while(iter.hasNext()) {
+            act = iter.next();
+            if (!act->isChecked() && act != showAllSendersA)
+                filterList << act->text();
+        }
+    }
+    fixTable->setSenderIDFilter(filterList);
+    GUI::ConsoleMessage msg;
+    if (filterList.count() >= (actions.count() -1))
+        msg = GUI::ConsoleMessage("All Sender Types Filtered Out !",GUI::ConsoleMessage::WarningMsg);
+    else if (filterList.count() > 0)
+        msg = GUI::ConsoleMessage("Filtering out messages with these Sender IDs:" + filterList.join(','));
+    else
+         msg = GUI::ConsoleMessage("Turned off filtering by sender id");
+    emit sendMessage(msg);
+
 }
 WorkSheetModel *WorkSheet::getModel()
 {
@@ -385,6 +507,11 @@ QString WorkSheet::getFileName()
 {
     return  fixFileName;
 }
+QMenu * WorkSheet::getSenderMenu()
+{
+    return senderMenu;
+}
+
 void  WorkSheet::hideColumn(int colNum, bool hideCol)
 {
     if (!fixTable) {
