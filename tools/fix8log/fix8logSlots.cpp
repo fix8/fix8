@@ -274,3 +274,12 @@ void Fix8Log::tableSchemaSelectedSlot(TableSchema *ts)
     }
     qDebug() << "TABLE SCHEMA SELECTED " << ts->name << __FILE__ << __LINE__;
 }
+void Fix8Log::wakeupSlot(const QString&)
+{
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        mw->showNormal();
+    }
+}

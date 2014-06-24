@@ -59,10 +59,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace GUI;
 using namespace FIX8;
 using namespace std;
-Fix8Log::Fix8Log(QObject *parent) :
-    QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
+Fix8Log::Fix8Log(QtSingleApplication *qsa) :
+    QObject(),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
-    defaultTableSchema(0),worldTableSchema(0)
+    defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";

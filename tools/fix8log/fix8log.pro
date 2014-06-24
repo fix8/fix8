@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += x86_64  debug_and_release
 QT       += core gui sql qml quick widgets
-
+include(./qtsingleapplication/src/qtsingleapplication.pri)
 TARGET = fix8log
 TEMPLATE = app
 

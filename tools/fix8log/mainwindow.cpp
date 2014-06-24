@@ -97,7 +97,7 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
             if (str.length() > 36) {
                 str = "..." + str.right(33);
             }
-            tabW->addTab(newWorkSheet,str);
+            int index = tabW->addTab(newWorkSheet,str);
         }
 
         if (tabW->count() > 0)
@@ -693,6 +693,11 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         str = "..." + str.right(33);
     }
     index = tabW->addTab(workSheet,str);
+    /*
+    QPixmap pm(24,24);
+    pm.fill(Qt::blue);
+    tabW->setTabIcon(index,QIcon(pm));
+    */
     tabW->setToolTip(wsd.fileName);
     tabW->setCurrentWidget(workSheet);
     stackW->setCurrentWidget(workAreaSplitter);
@@ -751,13 +756,17 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         }
     }
     if (tabW->count() > 0) {
+        qDebug() << "TAB COUNT = " << tabW->count() << __FILE__ << __LINE__;
         stackW->setCurrentWidget(workAreaSplitter);
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);
-        tabW->setCurrentIndex(index);
-        QMenu *senderMenu = workSheet->getSenderMenu();
-        if (filterSenderMenuA && senderMenu) {
-            filterSenderMenuA->setMenu(senderMenu);
+        tabW->setCurrentIndex(0);
+        workSheet = qobject_cast<WorkSheet *> (tabW->widget(0));
+        if (workSheet) {
+            QMenu *senderMenu = workSheet->getSenderMenu();
+            if (filterSenderMenuA && senderMenu) {
+                filterSenderMenuA->setMenu(senderMenu);
+            }
         }
     }
     else {

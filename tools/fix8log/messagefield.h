@@ -130,6 +130,7 @@ class QMessage
 {
   public:
     QMessage(Message *m,QLatin1String senderID);
+    QMessage(Message *m,QLatin1String senderID, int seqID);
     QMessage(const QMessage &);
     Message *mesg;
     QString senderID;

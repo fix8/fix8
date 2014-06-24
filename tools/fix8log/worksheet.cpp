@@ -96,7 +96,7 @@ bool WorkSheet::copyFrom(WorkSheet &oldws)
     WorkSheetModel *oldModel;
     oldModel = oldws.getModel();
     if (oldModel) {
-         showLoadProcess(true,oldModel->rowCount());
+        showLoadProcess(true,oldModel->rowCount());
         _model = oldModel->clone(cancelLoad);
         if(!_model || cancelLoad) {
             //emit terminateCopy(this);
@@ -137,14 +137,14 @@ bool WorkSheet::copyFrom(WorkSheet &oldws)
     QAction *oldSelectAllA = oldws.showAllSendersA;
     QAction *oldA;
     while(aiter.hasNext()) {
-       oldA = aiter.next();
-       if (oldA != oldSelectAllA) {
-           QAction *action = new QAction(oldA->text(),this);
-           action->setCheckable(true);
-           action->setChecked(oldA->isChecked());
-           senderActionGroup->addAction(action);
-           senderMenu->addAction(action);
-       }
+        oldA = aiter.next();
+        if (oldA != oldSelectAllA) {
+            QAction *action = new QAction(oldA->text(),this);
+            action->setCheckable(true);
+            action->setChecked(oldA->isChecked());
+            senderActionGroup->addAction(action);
+            senderMenu->addAction(action);
+        }
     }
     showAllSendersA = new QAction("Show All",this);
     senderActionGroup->addAction(showAllSendersA);
@@ -155,7 +155,7 @@ bool WorkSheet::copyFrom(WorkSheet &oldws)
 WorkSheet::WorkSheet(WorkSheetModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
     QWidget(parent),
-     senderMenu(0),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0)
+    senderMenu(0),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0)
 {
     build();
     _model = model;
@@ -204,12 +204,24 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
 }
 WorkSheet::~WorkSheet()
 {
+    qDebug() << "Delete Work SHeet" << __FILE__ << __LINE__;
     if (_model) {
         _model->clear();
         delete _model;
     }
     if (messageList)
         qDeleteAll(*messageList);
+    if (senderMenu) {
+        delete senderMenu;
+        senderMenu = 0;
+    }
+    if (senderActionGroup) {
+        qDebug() << "DELETE ACTION GROUP " << __FILE__ << __LINE__;
+        QList <QAction *> actionList = senderActionGroup->actions();
+        qDeleteAll(actionList);
+        delete senderActionGroup;
+        senderActionGroup = 0;
+    }
 }
 bool WorkSheet::loadCanceled()
 {
@@ -390,7 +402,7 @@ bool WorkSheet::loadFileName(QString &fileName,
             memset(c,'\0',60);
             senderID.print(c);
             QLatin1String sid(c);
-            QMessage *qmessage = new QMessage(msg,sid);
+            QMessage *qmessage = new QMessage(msg,sid,snum());
             if (i%100 == 0) { // every 100 iterations allow gui to process events
                 if (cancelLoad) {
                     showLoadProcess(false);
@@ -502,7 +514,7 @@ void WorkSheet::senderActionGroupSlot(QAction *action)
     else if (filterList.count() > 0)
         msg = GUI::ConsoleMessage("Filtering out messages with these Sender IDs:" + filterList.join(','));
     else
-         msg = GUI::ConsoleMessage("Turned off filtering by sender id");
+        msg = GUI::ConsoleMessage("Turned off filtering by sender id");
     emit sendMessage(msg);
 
 }
@@ -537,24 +549,24 @@ void  WorkSheet::hideColumn(int colNum, bool hideCol)
 }
 void  WorkSheet::rowSelectedSlot(QModelIndex mi)
 {
-    QVariant var = mi.data(Qt::UserRole+1);
+    QMessage *message;
     int row = mi.row();
     if (!_model) {
         qWarning() << "ERROR - MODEL IS NULL" << __FILE__ << __LINE__;
         return;
     }
-    qDebug() << "rework this, Seq Num" << __FILE__ << __LINE__;
-    /*
-    QModelIndex otherIndex = _model->index(row,MsgSeqNum);
-    QString str =  _model->data(otherIndex).toString();
-    int seqN = str.toInt();
-    MessageFieldList *mfl = (MessageFieldList *) var.value<void *>();
-    if (!mfl)
-        qWarning() << "No Message Fields Found for row" << __FILE__ << __LINE__;
-    otherIndex = _model->index(row,MessageType);
-    str =  _model->data(otherIndex).toString();
-    messageArea->setMessageFieldList(mfl,seqN,str);
-    */
+    for (int i=0;i<  _model->columnCount();i++) {
+            QModelIndex otherIndex = _model->index(row,0);
+            if (otherIndex.isValid()) {
+                QVariant var = _model->data(otherIndex,Qt::UserRole + 1);
+                if (var.isValid()) {
+                    message = (QMessage *) var.value<void *>();
+                    messageArea->setMessage(message);
+                    return;
+                }
+            }
+    }
+    messageArea->setMessage(0);
 }
 void WorkSheet::setAlias(QString &str)
 {

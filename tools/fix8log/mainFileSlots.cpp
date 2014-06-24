@@ -316,6 +316,7 @@ void MainWindow::copyTabSlot()
     }
     int currentIndex = tabW->currentIndex();
     int index = tabW->addTab(newWorkSheet,str);
+
     tabW->setToolTip(fileName);
     tabW->setCurrentIndex(index);
     bool bstatus = newWorkSheet->copyFrom(*workSheet);

@@ -35,6 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "mainwindow.h"
+#include <qtsingleapplication.h>
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
@@ -45,7 +46,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace GUI;
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QtSingleApplication instance(argc, argv);
+        if (instance.sendMessage("Wake up!"))
+            return 0;
+
+
     bool loadFile = false;
     QString loadFileName;
     QCoreApplication::setApplicationName("fix8log");
@@ -57,7 +62,7 @@ int main(int argc, char *argv[])
     parser.setApplicationDescription("FIX Log Viewer");
     QCommandLineOption  loadFileOption(QStringList() << "i" << "input", "Load log file <file>.", "file");
     parser.addOption(loadFileOption);
-    parser.process(a);
+    parser.process(instance);
     if (parser.isSet(loadFileOption)) {
         loadFileName= parser.value(loadFileOption);
         qDebug() << "Load File Name = " << loadFileName;
@@ -70,10 +75,15 @@ int main(int argc, char *argv[])
     }
     qRegisterMetaType<fix8logdata>("fix8logdata");
     qRegisterMetaTypeStreamOperators<fix8logdata>("fix8logdata");
-    Fix8Log *f8l = new Fix8Log(0);
+    Fix8Log *f8l = new Fix8Log(&instance);
+    QObject::connect(&instance,SIGNAL(messageReceived(const QString&)),
+                     f8l,SLOT(wakeupSlot(const QString&)));
+
+
     if (loadFile)
         f8l->init(loadFileName);
     else
         f8l->init();
-    return a.exec();
+    return instance.exec();
+
 }

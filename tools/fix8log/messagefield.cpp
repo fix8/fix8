@@ -257,7 +257,14 @@ MessageFieldList::MessageFieldList() : QList<MessageField*>()
 }
 QMessage::QMessage(Message *m,QLatin1String sid):mesg(m),senderID(sid)
 {
+    seqID = -1;
 }
+QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
+    seqID(seq)
+{
+
+}
+
 QMessage::QMessage(const QMessage &qm)
 {
     senderID = qm.senderID;

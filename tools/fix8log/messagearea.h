@@ -40,25 +40,28 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QWidget>
 class QLabel;
 class QStackedLayout;
+class QStandardItem;
 class QStandardItemModel;
-class QTableView;
+class QTreeView;
 class MessageFieldList;
-
+class QMessage;
 class MessageArea : public QWidget
 {
 
 public:
     explicit MessageArea(QWidget *parent = 0);
-    void setMessageFieldList(MessageFieldList *, int seqNum, QString &msgType);
+    void setMessage(QMessage *);
 signals:
 
 public slots:
     QStackedLayout *stackLayout;
-    QTableView     *tableView;
+    QTreeView     *treeView;
+    QStandardItem *treeHeaderItem;
     QStandardItemModel *model;
     QWidget *infoArea;
     QLabel  *seqNumV;
     QLabel  *messageTypeV;
+    QMessage *currentMessage;
 };
 
 #endif // MESSAGEAREA_H

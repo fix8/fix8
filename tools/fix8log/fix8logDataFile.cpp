@@ -120,8 +120,8 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
             memset(c,'\0',60);
             senderID.print(c);
             QLatin1String sid(c);
-            QMessage *qmessage = new QMessage(msg,sid);
-            //qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
+            QMessage *qmessage = new QMessage(msg,sid,snum());
+            qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
             if (senderMap.contains(sid)) {
                 qint32 numOfTimes = senderMap.value(sid);
                 numOfTimes++;

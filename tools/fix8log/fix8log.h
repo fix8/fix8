@@ -45,6 +45,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "mainwindow.h"
 #include "messagefield.h"
 #include "tableschema.h"
+#include <qtsingleapplication.h>
+
 #include <fix8/f8includes.hpp>
 #include <fix8/field.hpp>
 #include <fix8/message.hpp>
@@ -63,7 +65,7 @@ class Fix8Log : public QObject
 {
     Q_OBJECT
 public:
-    explicit Fix8Log(QObject *parent = 0);
+    explicit Fix8Log(QtSingleApplication *);
     bool init();
     bool init(QString fileNameToLoad);
     void readFileInAnotherThread(const QString &fileName,QString &errorStr);
@@ -89,6 +91,7 @@ public slots:
     void schemaModifiedSlot(TableSchema *,bool nameAndOrDescriptionOnly);
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
+    void wakeupSlot(const QString&);
 protected:
     WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);
     void saveSession();
@@ -110,6 +113,7 @@ protected:
     FieldUseList fieldUseList;
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
+    QtSingleApplication *applicationInstance;
 private:
     void cleanWindowDataList(QList <WindowData> &windowDataList);
 
