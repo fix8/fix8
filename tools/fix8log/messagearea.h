@@ -57,6 +57,11 @@ public slots:
     QStackedLayout *stackLayout;
     QTreeView     *treeView;
     QStandardItem *treeHeaderItem;
+    QStandardItem *valueHeaderItem;
+
+    QStandardItem *headerItem;
+    QStandardItem *tailItem;
+    QStandardItem *fieldItem;
     QStandardItemModel *model;
     QWidget *infoArea;
     QLabel  *seqNumV;
