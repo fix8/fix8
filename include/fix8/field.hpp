@@ -1852,41 +1852,42 @@ class Inst
 {
 	struct _gen
 	{
-        /*! Instantiate a field (no realm)
-          \tparam T type to instantiate
-		  \param from source string
-		  \param db realm base for this type
-		  \param rv realm value
-		  \return new field */
-        template<typename T>
-        static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+		/*! Instantiate a field (no realm)
+			\tparam T type to instantiate
+			\param from source string
+			\param db realm base for this type
+			\param rv realm value
+			\return new field */
+		template<typename T>
+		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
 			{ return new T{from, db}; }
 
-        /*! Instantiate a field
-          \tparam T type to instantiate 
-          \param from source string
-          \param db realm base for this type
-          \param rv realm value
-          \return new field */
-        template<typename T, typename R>
-        static BaseField *_make(const char *from, const RealmBase *db, const int rv)
-        {
-            return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
-                ? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
-        }
-    };
+		/*! Instantiate a field
+			\tparam T type to instantiate
+			\param from source string
+			\param db realm base for this type
+			\param rv realm value
+			\return new field */
+		template<typename T, typename R>
+		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+		{
+			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
+				? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
+		}
+	};
 
 public:
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
-    template<typename T, typename... args>
-    Inst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>) {}
+	template<typename T, typename... args>
+	Inst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>) {}
 };
 
 struct BaseEntry
 {
    const Inst _create;
 	const char *_name;
+	const unsigned short _fnum;
 	const RealmBase *_rlm;
 	const char *_comment;
 };

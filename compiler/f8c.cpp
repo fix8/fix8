@@ -1419,7 +1419,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
       }
       else
 			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
-      ost_cpp << ">(), \"" << fitr->second._name << '\"';
+      ost_cpp << ">(), \"" << fitr->second._name << "\", " << fitr->first;
 		if (fitr->second._dvals)
 			ost_cpp << ", &" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
 		if (!fitr->second._comment.empty())
