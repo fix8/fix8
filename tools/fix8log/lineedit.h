@@ -1,4 +1,3 @@
-//-------------------------------------------------------------------------------------------------
 /*
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,45 +31,20 @@ THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), E
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
-//-------------------------------------------------------------------------------------------------
 
-#ifndef TABLESCHEMA_H
-#define TABLESCHEMA_H
-#include <QString>
-#include <QList>
-#include <QPointer>
-#include "messagefield.h"
-class TableSchema
+#ifndef LINEEDIT_H
+#define LINEEDIT_H
+
+/* created as QLineEdit cannot handle syntax highlighter */
+#include <QTextEdit>
+
+class LineEdit : public QTextEdit
 {
 public:
-    TableSchema();
-    TableSchema(QString name, QString description,bool isLocked);
-    TableSchema(const TableSchema &);
-    ~TableSchema();
-    TableSchema & operator=( const TableSchema &rhs);
-    bool   operator==( const TableSchema &) const;
-    bool   operator!=( const TableSchema &) const;
-    TableSchema *clone();
-    QStringList getColumnNames();
-    void setFields(QBaseEntryList *);
-    void addField(QBaseEntry *);
-    void removeFieldByName(QString &name);
-    void removeAllFields();
-    QBaseEntryList * getFields();
-    qint32 id;
-    QString name;
-    QString description;
-    bool locked;
-    QBaseEntryList  *fieldList;
-    QStringList fieldNames; // stored in database
+    explicit LineEdit(QWidget *parent = 0);
+    QSize sizeHint() const;
+protected:
+    virtual void keyPressEvent(QKeyEvent *e);
+    virtual void wheelEvent(QWheelEvent *e);
 };
-
-class TableSchemaList : public QList <TableSchema *>
-{
-public:
- TableSchemaList();
- ~TableSchemaList();
- TableSchema *findByID(qint32 id);
- TableSchema *findByName(const QString &name);
-};
-#endif // TABLESCHEMA_H
+#endif // LINEEDIT_H

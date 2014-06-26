@@ -55,5 +55,10 @@
         <file>images/svg/xred.svg</file>
         <file>images/svg/emblem-shared.svg</file>
         <file>images/svg/filterSender.svg</file>
+        <file>images/svg/go-first-symbolic.svg</file>
+        <file>images/svg/go-last-symbolic.svg</file>
+        <file>images/svg/go-next-symbolic.svg</file>
+        <file>images/svg/go-previous-symbolic.svg</file>
+        <file>images/svg/text-editor-symbolic.svg</file>
     </qresource>
 </RCC>

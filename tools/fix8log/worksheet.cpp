@@ -227,6 +227,10 @@ bool WorkSheet::loadCanceled()
 {
     return cancelLoad;
 }
+TableSchema * WorkSheet::getTableSchema()
+{
+    return tableSchema;
+}
 
 void WorkSheet::setTableSchema(TableSchema *ts)
 {

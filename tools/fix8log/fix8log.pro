@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 CONFIG += x86_64  debug_and_release
-QT       += core gui sql qml quick widgets
+QT       += core gui sql qml quick widgets  script
 include(./qtsingleapplication/src/qtsingleapplication.pri)
 TARGET = fix8log
 TEMPLATE = app
@@ -50,7 +50,10 @@ SOURCES += main.cpp\
     ../../test/Myfix_traits.cpp \
     ../../test/Myfix_types.cpp \
     messageitemdelegate.cpp \
-    proxyFilter.cpp
+    proxyFilter.cpp \
+    mainWindowSearch.cpp \
+    lineedit.cpp \
+    editHighLighter.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -81,7 +84,9 @@ HEADERS  += mainwindow.h \
     ../../test/Myfix_router.hpp \
     ../../test/Myfix_types.hpp \
     messageitemdelegate.h \
-    proxyFilter.h
+    proxyFilter.h \
+    lineedit.h \
+    editHighLighter.h
 
 RESOURCES += \
     resources.qrc

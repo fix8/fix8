@@ -163,6 +163,10 @@ void TableSchema::setFields(QBaseEntryList * qel)
 {
     fieldList = qel;
 }
+QStringList TableSchema::getColumnNames()
+{
+  return fieldNames;
+}
 
 QBaseEntryList *TableSchema::getFields()
 {

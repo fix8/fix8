@@ -75,6 +75,7 @@ public:
     bool loadCanceled();
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
+    TableSchema *getTableSchema();
     QUuid getID();
     QMessageList *getMessageList();
     //enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};

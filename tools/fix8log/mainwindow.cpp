@@ -33,7 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-
+#include "editHighLighter.h"
 #include "fixmimedata.h"
 #include "fixtoolbar.h"
 #include "mainwindow.h"
@@ -41,7 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheet.h"
 #include "worksheetmodel.h"
 #include "globals.h"
-#include "searchlineedit.h"
+#include "lineedit.h"
 #include "tableschema.h"
 #include <QQuickView>
 #include <QtWidgets>
@@ -52,7 +52,7 @@ TableSchemaList *MainWindow::schemaList = 0;
 
 MainWindow::MainWindow(bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(showLoading),tableSchema(0)
+      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchString(false)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -64,7 +64,7 @@ MainWindow::MainWindow(bool showLoading)
 
 MainWindow::MainWindow(MainWindow &mw,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false)
+      windowDataID(-1),loadingActive(false), haveSearchString(false)
 {
     buildMainWindow();
     setAcceptDrops(true);
@@ -218,16 +218,24 @@ void MainWindow::buildMainWindow()
     filterSenderMenuA = new QAction("Sender",this);
     filterSenderMenuA->setIcon(QIcon(":/images/svg/filterSender.svg"));
     filterSenderMenuA->setToolTip("Filter Out Messages By SenderID");
-    searchBackA  = new QAction(tr("Back"),this);
-    searchBackA->setIcon((QIcon(":/images/svg/back.svg")));
-    searchBeginA = new QAction(tr("Begining"),this);
-    searchBeginA->setIcon((QIcon(":/images/svg/begining.svg")));
-    searchEndA   = new QAction(tr("End"),this);
-    searchEndA->setIcon((QIcon(":/images/svg/end.svg")));
-    searchNextA  = new QAction(tr("Next"),this);
-    searchNextA->setIcon((QIcon(":/images/svg/forward.svg")));
+    searchActionGroup = new QActionGroup(this);
+    connect(searchActionGroup,SIGNAL(triggered(QAction*)),
+            this,SLOT(searchActionSlot(QAction*)));
+    searchBackA  = new QAction(this);
+    searchBackA->setIcon((QIcon(":/images/svg/go-previous-symbolic.svg")));
+    searchBeginA = new QAction(this);
+    searchBeginA->setIcon((QIcon(":/images/svg/go-first-symbolic.svg")));
+    searchEndA   = new QAction(this);
+    searchEndA->setIcon((QIcon(":/images/svg/go-last-symbolic.svg")));
+    searchNextA  = new QAction(this);
+    searchNextA->setIcon((QIcon(":/images/svg/go-next-symbolic.svg")));
+    searchActionGroup->addAction(searchBackA);
+    searchActionGroup->addAction(searchBeginA);
+    searchActionGroup->addAction(searchEndA);
+    searchActionGroup->addAction(searchNextA);
+
     searchEditA  = new QAction(tr("Edit"),this);
-    searchEditA->setIcon(QIcon(":/images/svg/edittabname.svg"));
+    searchEditA->setIcon(QIcon(":/images/svg/text-editor-symbolic.svg"));
     searchLV = new QLabel(searchToolBar);// only show when toobar is vertial
     searchArea = new QWidget(this);
     QHBoxLayout *searchBox = new QHBoxLayout();
@@ -235,16 +243,18 @@ void MainWindow::buildMainWindow()
     searchArea->setLayout(searchBox);
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
-    searchLineEdit = new SearchLineEdit(searchArea);
+    searchLineEdit = new LineEdit(searchArea);
+    editHighlighter = new EditHighLighter(searchLineEdit->document());
+    connect(searchLineEdit,SIGNAL(textChanged()),this,SLOT(searchTextChangedSlot()));
     searchBox->addWidget(searchL,0);
     searchBox->addWidget(searchLineEdit,1);
     searchToolBar->addWidget(searchLV);
     searchToolBar->addWidget(searchArea);
-    searchToolBar->addAction(searchEditA);
     searchToolBar->addAction(searchBeginA);
     searchToolBar->addAction(searchBackA);
     searchToolBar->addAction(searchNextA);
     searchToolBar->addAction(searchEndA);
+     searchToolBar->addAction(searchEditA);
     QHBoxLayout *space = new QHBoxLayout();
     space->addStretch(1);
     space->setMargin(0);
@@ -854,6 +864,9 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
     if (!tableSchema)
         tableSchema = defaultTableSchema;
     schemaV->setText(tableSchema->name);
+
+    QStringList columnNames = tableSchema->getColumnNames();
+    editHighlighter->setColumHeaders(columnNames);
     if (!schemaActionGroup) {
         qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
         return;

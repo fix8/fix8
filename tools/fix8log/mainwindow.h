@@ -39,6 +39,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include <QMainWindow>
 #include <QQuickItem>
+#include <QtScript>
+
 #include "fixtable.h"
 #include "globals.h"
 #include "windowdata.h"
@@ -47,8 +49,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheetdata.h"
 #include <QList>
 #include <QUuid>
+class EditHighLighter;
 class FixMimeData;
 class FixToolBar;
+class LineEdit;
 class WorkSheetModel;
 class NoDataLabel;
 class SearchLineEdit;
@@ -87,6 +91,7 @@ public:
     void deletedSchema(int schemaID);
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
+    void setSearchColumnNames(QStringList columnNames);
     static void setTableSchemaList(TableSchemaList *);
     void showFileDialog();
     QString getName();
@@ -125,11 +130,12 @@ public:
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void quitSlot();
     void schemaSelectedSlot(QAction *);
+    void searchActionSlot(QAction *);
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void setWindowNameSlot();
-    QSize sizeHint() const;
+    void searchTextChangedSlot();
     void setColorSlot(QColor color);
     void showMessageArea(bool);
     void tabCloseRequestSlot(int);
@@ -179,7 +185,7 @@ protected:
     QActionGroup *iconsStyleGroup;
     QByteArray messageSplitterSettings;
     QColor menubarColor;
-    SearchLineEdit *searchLineEdit;
+    LineEdit *searchLineEdit;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
     QLabel   *scopeV;
@@ -226,6 +232,7 @@ protected:
     void readSettings();
     void setAutoSaveOn(bool);
     void showEvent(QShowEvent *);
+    QSize sizeHint() const;
     void timerEvent(QTimerEvent *);
     void writeSettings();
 signals:
@@ -243,6 +250,8 @@ signals:
 private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
+    QString createSearchRoutine(bool &bstatus);
+    void runSearchScript();
     QByteArray fileDirState;
     QString  lastSelectedDir;
     QString fileFilter;
@@ -252,7 +261,13 @@ private:
     QString name;
     TableSchema *tableSchema;
     WorkSheetList workSheetList;
-
+    QStringList searchColumnNames;
+    EditHighLighter *editHighlighter;
+    QString searchString;
+    bool    haveSearchString;
+    QScriptValue searchFunction;
+    QActionGroup *searchActionGroup;
+    QScriptEngine engine;
 };
 
 #endif // MAINWINDOW_H

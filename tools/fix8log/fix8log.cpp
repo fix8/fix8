@@ -495,7 +495,6 @@ bool Fix8Log::init()
     }
     else
         qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
-done:
 
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
