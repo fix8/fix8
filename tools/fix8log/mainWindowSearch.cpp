@@ -77,9 +77,9 @@ QString MainWindow::createSearchRoutine(bool &bstatus)
             func.append(",");
         }
     }
-    func.append(") { return( ");
+    func.append(") {return ");
     func.append(searchLineEdit->toPlainText());
-    func.append(");})");
+    func.append(";})");
 
     return func;
 }
@@ -103,7 +103,7 @@ void MainWindow::searchActionSlot(QAction *)
         }
         else {
             qDebug() << "OK";
-            searchFunction = engine.evaluate(searchString);
+
             haveSearchString = true;
         }
     }
@@ -113,7 +113,35 @@ void MainWindow::runSearchScript()
 {
     QScriptValueList args;
     QScriptValue answer;
-    args << 'A' << 'A' << 'A' << 'A' << 'A' << 'A';
-    answer = searchFunction.call(QScriptValue(), args);
-    qDebug() << "Status of run search = " << answer.toBool();
+    QStandardItem *item;
+
+    searchFunction = engine.evaluate(searchString);
+    if (tabW->count()  < 1) {
+        qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
+        return;
+    }
+    WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+    if (!ws) {
+        qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
+        return;
+    }
+    WorkSheetModel *wsm = ws->getModel();
+    if (!wsm || (wsm->rowCount() < 1)) {
+        qWarning() << "Search Feailed, work sheet model is null, or has no rows" << __FILE__ << __LINE__;
+        return;
+    }
+    QVector <qint32> logicalIndexes;
+    for(int i=0;i<wsm->rowCount();i++) {
+        args.clear();
+        for(int j=0;j<wsm->columnCount();j++) {
+            item = wsm->item(i,j);
+            args <<item->text();
+        }
+        answer = searchFunction.call(QScriptValue(), args);
+        if (answer.toBool()) {
+            qDebug() << "Answer = true, append " << i+1 << __FILE__ << __LINE__;
+            logicalIndexes.append(i);
+        }
+    }
+    ws->setSearchIndexes(logicalIndexes);
 }

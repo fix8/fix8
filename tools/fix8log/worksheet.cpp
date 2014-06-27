@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheet.h"
 #include "dateTimeDelegate.h"
 #include "fixHeaderView.h"
+#include "fixtableverticaheaderview.h"
 #include "fixmimedata.h"
 #include "fixtable.h"
 #include "globals.h"
@@ -656,6 +657,14 @@ void WorkSheet::modelDroppedSlot(FixMimeData *m)
 {
     emit modelDropped(m);
 }
+void WorkSheet::setSearchIndexes(const QVector<qint32> &indexes)
+{
+    qDebug() << "Work Sheet, set vertical headers to " << indexes << __FILE__ << __LINE__;
+    FixTableVerticaHeaderView *fvh = fixTable->getFixVerticalHeader();
+    fvh->setHighlightList(indexes);
+    update();
+}
+
 WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()
 {
 

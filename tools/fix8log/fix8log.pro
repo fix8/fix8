@@ -53,7 +53,9 @@ SOURCES += main.cpp\
     proxyFilter.cpp \
     mainWindowSearch.cpp \
     lineedit.cpp \
-    editHighLighter.cpp
+    editHighLighter.cpp \
+    searchDelegate.cpp \
+    fixtableverticaheaderview.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -86,7 +88,9 @@ HEADERS  += mainwindow.h \
     messageitemdelegate.h \
     proxyFilter.h \
     lineedit.h \
-    editHighLighter.h
+    editHighLighter.h \
+    searchDelegate.h \
+    fixtableverticaheaderview.h
 
 RESOURCES += \
     resources.qrc
@@ -113,6 +117,10 @@ QMAKE_CXXFLAGS += /bigobj
 }
 OTHER_FILES += \
     qml/loadProgress.qml \    
-    fix8log.pro.user \
+    Screenshot 2014-05-12 at 07.29.46.png \
+    schemaeditordialog.cpp.oow \
+    schemaeditordialog.h.oow \
+    schemaEditorDialogSlots.cpp.0529 \
+    schemaEditorDialogSlots.cpp.oow
 
 

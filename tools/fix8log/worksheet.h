@@ -75,6 +75,7 @@ public:
     bool loadCanceled();
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
+    void setSearchIndexes(const QVector <qint32> &indexes);
     TableSchema *getTableSchema();
     QUuid getID();
     QMessageList *getMessageList();

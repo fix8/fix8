@@ -35,10 +35,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "fixHeaderView.h"
+#include "fixtableverticaheaderview.h"
 #include "fixmimedata.h"
 #include "fixtable.h"
 #include "proxyFilter.h"
 #include "globals.h"
+#include "searchDelegate.h"
 #include "worksheetmodel.h"
 #include <QDate>
 #include <QDebug>
@@ -83,6 +85,8 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     viewport()->setAcceptDrops(true);
+    fixVH = new FixTableVerticaHeaderView(this);
+    setVerticalHeader(fixVH);
     bgColorStart.setRgb(2,19,39);
     bgColorEnd.setRgb(10,10,10);
     emptyStr1 = tr("No");
@@ -139,6 +143,11 @@ void FixTable::setSenderIDFilter(QStringList ids)
     validateFilters();
     update();
 }
+ FixTableVerticaHeaderView *FixTable::getFixVerticalHeader()
+ {
+     return fixVH;
+ }
+
 void FixTable::validateFilters()
 {
     if (senderIDs.count() > 0) {

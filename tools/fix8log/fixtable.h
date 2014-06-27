@@ -40,6 +40,7 @@ class QFile;
 class QKeyEvent;
 class QHeaderView;
 class FixHeaderView;
+class FixTableVerticaHeaderView;
 class FixMimeData;
 class QStandardItem;
 class QStandardItemModel;
@@ -61,6 +62,7 @@ class FixTable: public QTableView {
   void setWindowID(QUuid &uuid);
   void setWorkSheetModel(WorkSheetModel *);
   void setSenderIDFilter(QStringList senderIDs);
+  FixTableVerticaHeaderView *getFixVerticalHeader();
   ~FixTable();
   static QString headerLabel[NumColumns];
   QSize sizeHint () const;
@@ -114,5 +116,6 @@ class FixTable: public QTableView {
    ProxyFilter *proxyFilter;
    QStringList senderIDs;
    WorkSheetModel *_model;
+   FixTableVerticaHeaderView *fixVH;
 };
 #endif
