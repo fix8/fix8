@@ -68,16 +68,20 @@ public:
     explicit WorkSheet(QWidget *parent = 0);
     WorkSheet(WorkSheetModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
+    typedef enum {SearchFirst,SearchBack,SearchNext,SearchLast} SearchType;
+    enum {SearchFinished=0x0001,SearchHasPrevious=0x0002,SearchHasNext=0x0004,SearchEmpty=0x0008};
     enum {OK =0x0000,CANCEL = 0x0001,READ_ERROR=0x0002,FILE_NOT_FOUND=0x0004,
         OPEN_FAILED=0x0080,TERMINATED=0x0100};
     ~WorkSheet();
     bool copyFrom(WorkSheet &oldws);
+    QVector <qint32> getSearchIndexes();
     bool loadCanceled();
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
     void setSearchIndexes(const QVector <qint32> &indexes);
     TableSchema *getTableSchema();
     QUuid getID();
+    quint32 doSearch(SearchType);
     QMessageList *getMessageList();
     //enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
    // static QString headerLabel[NumColumns];
@@ -98,6 +102,7 @@ signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
     void sendMessage(GUI::ConsoleMessage);
     void sendMessages(QList < GUI::ConsoleMessage>);
+    void rowSelected(int row);
     void terminateCopy(WorkSheet *);
 public slots:
     void cancelLoadSlot();
@@ -137,6 +142,9 @@ private:
     TableSchema *tableSchema;
     QMessageList *messageList;
     quint32 cancelReason;
+    QVector<qint32> searchLogicalIndexes;
+    QItemSelectionModel *sm;
+    qint32 currentRow;
 };
 
 class WorkSheetList : public QList <WorkSheet *>

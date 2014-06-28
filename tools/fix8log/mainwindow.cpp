@@ -92,6 +92,8 @@ MainWindow::MainWindow(MainWindow &mw,bool copyAll)
                     this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
             connect(newWorkSheet,SIGNAL(terminateCopy(WorkSheet*)),
                     this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
+            connect(newWorkSheet,SIGNAL(rowSelected(int)),
+                    this,SLOT(rowSelectedSlot(int)));
             newWorkSheet->splitter->restoreState(ba);
             QString str = mw.tabW->tabText(i);
             if (str.length() > 36) {
@@ -221,14 +223,14 @@ void MainWindow::buildMainWindow()
     searchActionGroup = new QActionGroup(this);
     connect(searchActionGroup,SIGNAL(triggered(QAction*)),
             this,SLOT(searchActionSlot(QAction*)));
-    searchBackA  = new QAction(this);
-    searchBackA->setIcon((QIcon(":/images/svg/go-previous-symbolic.svg")));
-    searchBeginA = new QAction(this);
-    searchBeginA->setIcon((QIcon(":/images/svg/go-first-symbolic.svg")));
-    searchEndA   = new QAction(this);
-    searchEndA->setIcon((QIcon(":/images/svg/go-last-symbolic.svg")));
-    searchNextA  = new QAction(this);
-    searchNextA->setIcon((QIcon(":/images/svg/go-next-symbolic.svg")));
+    searchBackA  = new QAction("Previous",this);
+    searchBackA->setIcon(QIcon(":/images/svg/go-previous-symbolic.svg"));
+    searchBeginA = new QAction("First",this);
+    searchBeginA->setIcon(QIcon(":/images/svg/go-first-symbolic.svg"));
+    searchEndA   = new QAction("Last",this);
+    searchEndA->setIcon(QIcon(":/images/svg/go-last-symbolic.svg"));
+    searchNextA  = new QAction("Next",this);
+    searchNextA->setIcon(QIcon(":/images/svg/go-next-symbolic.svg"));
     searchActionGroup->addAction(searchBackA);
     searchActionGroup->addAction(searchBeginA);
     searchActionGroup->addAction(searchEndA);
@@ -241,13 +243,22 @@ void MainWindow::buildMainWindow()
     QHBoxLayout *searchBox = new QHBoxLayout();
     searchBox->setMargin(0);
     searchArea->setLayout(searchBox);
+    QIcon linkIcon;
+    linkIcon.addPixmap(QPixmap(":/images/128x128/broken_link-128.png"),QIcon::Normal,QIcon::Off);
+    linkIcon.addPixmap(QPixmap(":/images/128x128/chainlink_128x128-32.png"),QIcon::Normal,QIcon::On);
+    linkSearchA = new QAction("Search All",this);
+    linkSearchA->setCheckable(true);
+    linkSearchA->setToolTip("Search all tabs or just current tab");
+    linkSearchA->setIcon(linkIcon);
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
     searchLineEdit = new LineEdit(searchArea);
     editHighlighter = new EditHighLighter(searchLineEdit->document());
     connect(searchLineEdit,SIGNAL(textChanged()),this,SLOT(searchTextChangedSlot()));
+    connect(searchLineEdit,SIGNAL(returnPressed()),this,SLOT(searchReturnSlot()));
     searchBox->addWidget(searchL,0);
     searchBox->addWidget(searchLineEdit,1);
+    searchToolBar->addAction(linkSearchA);
     searchToolBar->addWidget(searchLV);
     searchToolBar->addWidget(searchArea);
     searchToolBar->addAction(searchBeginA);
@@ -572,6 +583,7 @@ void MainWindow::showEvent(QShowEvent *se)
             showMessageA->setEnabled(false);
         }
     }
+    validateSearchButtons();
     QMainWindow::showEvent(se);
 }
 void MainWindow::timerEvent(QTimerEvent *te)
@@ -695,6 +707,8 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
             this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
     connect(workSheet,SIGNAL(terminateCopy(WorkSheet*)),
             this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
+    connect(workSheet,SIGNAL(rowSelected(int)),
+            this,SLOT(rowSelectedSlot(int)));
     workSheet->setWindowID(uuid);
     workSheet->splitter->restoreState(wsd.splitterState);
     workSheet->fixTable->horizontalHeader()->restoreState(wsd.headerState);
@@ -808,6 +822,8 @@ void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
             this,SLOT(displayMessageSlot(GUI::ConsoleMessage)));
     connect(newWorkSheet,SIGNAL(terminateCopy(WorkSheet*)),
             this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
+    connect(newWorkSheet,SIGNAL(rowSelected(int)),
+            this,SLOT(rowSelectedSlot(int)));
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;

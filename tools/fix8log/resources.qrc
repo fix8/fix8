@@ -60,5 +60,7 @@
         <file>images/svg/go-next-symbolic.svg</file>
         <file>images/svg/go-previous-symbolic.svg</file>
         <file>images/svg/text-editor-symbolic.svg</file>
+        <file>images/128x128/broken_link-128.png</file>
+        <file>images/128x128/chainlink_128x128-32.png</file>
     </qresource>
 </RCC>

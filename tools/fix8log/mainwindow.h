@@ -128,9 +128,11 @@ public:
     void iconSizeSlot(QAction *);
     void modelDroppedSlot(FixMimeData *);
     void popupMenuSlot(const QModelIndex &,const QPoint &);
+    void rowSelectedSlot(int);
     void quitSlot();
     void schemaSelectedSlot(QAction *);
     void searchActionSlot(QAction *);
+    void searchReturnSlot();
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
@@ -146,6 +148,8 @@ public:
     void toolbarOrientationChangedSlot(Qt::Orientation);
 protected:
     enum {ShowNoDataLabel,ShowTab,ShowProgress};
+    void validateSearchButtons();
+    void validateSearchButtons(quint32 searchStatus, WorkSheet *ws);
     QAction  *aboutA;
     QAction  *aboutQTA;
     QAction  *autoSaveA;
@@ -167,6 +171,7 @@ protected:
     QAction  *newTabA;
     QAction  *copyTabA;
     QAction  *cutTabA;
+    QAction  *linkSearchA;
     QAction  *pasteTabA;
     QAction  *quitA;
     QAction  *saveA;

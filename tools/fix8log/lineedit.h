@@ -40,9 +40,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 class LineEdit : public QTextEdit
 {
+    Q_OBJECT
 public:
     explicit LineEdit(QWidget *parent = 0);
     QSize sizeHint() const;
+signals:
+    void returnPressed();
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
     virtual void wheelEvent(QWheelEvent *e);

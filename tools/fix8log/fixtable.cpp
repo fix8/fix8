@@ -150,12 +150,14 @@ void FixTable::setSenderIDFilter(QStringList ids)
 
 void FixTable::validateFilters()
 {
+
     if (senderIDs.count() > 0) {
             proxyFilter->setSourceModel(_model);
             setModel(proxyFilter);
     }
      else
             setModel(_model);
+
 }
 
 void FixTable::timerEvent(QTimerEvent *te)

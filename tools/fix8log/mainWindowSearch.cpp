@@ -53,6 +53,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 void MainWindow::searchTextChangedSlot()
 {
     haveSearchString = false;
+
 }
 void MainWindow::setSearchColumnNames(QStringList columnNames)
 {
@@ -65,6 +66,7 @@ QString MainWindow::createSearchRoutine(bool &bstatus)
     QString strValue;
     QString func = "(function(";
     if (!tableSchema) {
+        bstatus = false;
         qWarning() << "Error, table schame is null" << __FILE__ << __LINE__;
         return str;
     }
@@ -80,32 +82,74 @@ QString MainWindow::createSearchRoutine(bool &bstatus)
     func.append(") {return ");
     func.append(searchLineEdit->toPlainText());
     func.append(";})");
-
+    bstatus = true;
     return func;
 }
-void MainWindow::searchActionSlot(QAction *)
+void MainWindow::searchActionSlot(QAction *action)
 {
-    QString errorStr;
+    WorkSheet *ws = 0;
     QString errorMessage;
-
     QScriptSyntaxCheckResult::State syntaxState;
-
     bool bstatus;
     if (!haveSearchString) {
         searchString =  createSearchRoutine(bstatus);
-        qDebug() << "Search String = " << searchString << __FILE__ << __LINE__;
+        //qDebug() << "Search String = " << searchString << __FILE__ << __LINE__;
         QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
         syntaxState =syntaxResult.state();
         if ( syntaxState == QScriptSyntaxCheckResult::Error) {
             errorMessage = syntaxResult.errorMessage();
-            qWarning() << "Error MEssage:" << errorMessage << __FILE__ << __LINE__;
+            GUI::ConsoleMessage msg(errorMessage,GUI::ConsoleMessage::ErrorMsg);
+            displayConsoleMessage(msg);
+             validateSearchButtons();
             return;
         }
-        else {
-            qDebug() << "OK";
-
-            haveSearchString = true;
-        }
+        haveSearchString = true;
+    }
+    runSearchScript();
+    WorkSheet::SearchType searchType;
+    if (action == searchNextA)
+        searchType = WorkSheet::SearchNext;
+    else if (action == searchBackA)
+        searchType = WorkSheet::SearchBack;
+    else if (action == searchEndA)
+        searchType = WorkSheet::SearchLast;
+    else
+        searchType = WorkSheet::SearchFirst;
+    // set ws to current workSheet;
+    qDebug() << "Search Type =" << searchType << __FILE__ << __LINE__;
+    if (tabW->count()  < 1) {
+        qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
+        return;
+    }
+    ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+    if (!ws) {
+        qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
+        return;
+    }
+    quint32  searchStatus  = ws->doSearch(searchType);
+    validateSearchButtons(searchStatus,ws);
+}
+void MainWindow::searchReturnSlot()
+{
+    bool bstatus;
+    QString errorMessage;
+    QScriptSyntaxCheckResult::State syntaxState;
+    QString newSearchStr = createSearchRoutine(bstatus);
+    if (newSearchStr == searchString)
+        return;
+    searchString = newSearchStr;
+    QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
+    syntaxState =syntaxResult.state();
+    if ( syntaxState == QScriptSyntaxCheckResult::Error) {
+        errorMessage = syntaxResult.errorMessage();
+        GUI::ConsoleMessage msg(errorMessage,GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
+        haveSearchString = false;
+        validateSearchButtons();
+        return;
+    }
+    else {
+        haveSearchString = true;
     }
     runSearchScript();
 }
@@ -114,23 +158,28 @@ void MainWindow::runSearchScript()
     QScriptValueList args;
     QScriptValue answer;
     QStandardItem *item;
-
     searchFunction = engine.evaluate(searchString);
     if (tabW->count()  < 1) {
         qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
+        validateSearchButtons();
+        update();
         return;
     }
     WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
     if (!ws) {
-        qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
+        qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
+         validateSearchButtons();
+         update();
         return;
     }
     WorkSheetModel *wsm = ws->getModel();
     if (!wsm || (wsm->rowCount() < 1)) {
-        qWarning() << "Search Feailed, work sheet model is null, or has no rows" << __FILE__ << __LINE__;
+        qWarning() << "Search Failed, work sheet model is null, or has no rows" << __FILE__ << __LINE__;
+        validateSearchButtons();
+        update();
         return;
     }
-    QVector <qint32> logicalIndexes;
+    QVector <qint32> filterLogicalIndexes;
     for(int i=0;i<wsm->rowCount();i++) {
         args.clear();
         for(int j=0;j<wsm->columnCount();j++) {
@@ -139,9 +188,70 @@ void MainWindow::runSearchScript()
         }
         answer = searchFunction.call(QScriptValue(), args);
         if (answer.toBool()) {
-            qDebug() << "Answer = true, append " << i+1 << __FILE__ << __LINE__;
-            logicalIndexes.append(i);
+            filterLogicalIndexes.append(i);
         }
     }
-    ws->setSearchIndexes(logicalIndexes);
+    ws->setSearchIndexes(filterLogicalIndexes);
+    validateSearchButtons();
+    update();
+}
+void MainWindow::validateSearchButtons()
+{
+    QScriptSyntaxCheckResult::State syntaxState;
+    WorkSheet *ws;
+    WorkSheetModel *wsm;
+    bool enableSearch = true;
+    qDebug() << "VALIDATE SEARCH() " << __FILE__ << __LINE__;
+    if (tabW->count()  < 1)
+        enableSearch = false;
+    else {
+        ws = qobject_cast <WorkSheet *> (tabW->currentWidget());
+        if (!ws) {
+            qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
+            enableSearch = false;
+        }
+        else {
+            wsm = ws->getModel();
+            if (!wsm || (wsm->rowCount() < 1))
+                enableSearch = false;
+        }
+    }
+    if (enableSearch) {
+        if (searchString.length() < 3)
+            enableSearch = false;
+        else {
+            QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
+            syntaxState =syntaxResult.state();
+            if ( syntaxState == QScriptSyntaxCheckResult::Error)
+                enableSearch = false;
+        }
+    }
+    searchBackA->setEnabled(enableSearch);
+    searchBeginA->setEnabled(enableSearch);
+    searchNextA->setEnabled(enableSearch);
+    searchEndA->setEnabled(enableSearch);
+}
+void MainWindow::validateSearchButtons(quint32 searchStatus, WorkSheet *ws)
+{
+    bool enableSearch = false;
+    if (searchStatus & WorkSheet::SearchHasPrevious)
+        enableSearch = true;
+    searchBackA->setEnabled(enableSearch);
+    searchBeginA->setEnabled(enableSearch);
+    QString hex;
+    hex = QString::number(searchStatus,16);
+    qDebug() << "SEARCH STATUS = " << hex;
+    qDebug() << "SEARCH-NEXT VALUE =" << QString::number(WorkSheet::SearchNext,16);
+    enableSearch = false;
+    if (searchStatus & WorkSheet::SearchHasNext) {
+        qDebug() << "ENABLE NEXT BUTTON" <<  __FILE__ << __LINE__;
+        enableSearch = true;
+    }
+    searchNextA->setEnabled(enableSearch);
+    searchEndA->setEnabled(enableSearch);
+}
+void MainWindow::rowSelectedSlot(int row)
+{
+    qDebug() << "Main WIndow row selected " << row << __FILE__<< __LINE__;
+    validateSearchButtons();
 }

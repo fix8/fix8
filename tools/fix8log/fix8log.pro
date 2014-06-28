@@ -55,7 +55,8 @@ SOURCES += main.cpp\
     lineedit.cpp \
     editHighLighter.cpp \
     searchDelegate.cpp \
-    fixtableverticaheaderview.cpp
+    fixtableverticaheaderview.cpp \
+    worksheetSearches.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

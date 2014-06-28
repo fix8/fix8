@@ -63,11 +63,13 @@ using namespace FIX8;
 
 
 WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),
-    senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0)
+    senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0),
+  currentRow(-1)
 {
     build();
     _model = new WorkSheetModel(this);
     fixTable->setWorkSheetModel(_model);
+    sm = fixTable->selectionModel();
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     /*
     for(int i=0;i<NumColumns;i++) {
@@ -156,7 +158,9 @@ bool WorkSheet::copyFrom(WorkSheet &oldws)
 WorkSheet::WorkSheet(WorkSheetModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
     QWidget(parent),
-    senderMenu(0),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0)
+    senderMenu(0),cancelLoad(false),origWSD(wsd),tableSchema(0),messageList(0),
+    currentRow(-1)
+
 {
     build();
     _model = model;
@@ -554,24 +558,35 @@ void  WorkSheet::hideColumn(int colNum, bool hideCol)
 }
 void  WorkSheet::rowSelectedSlot(QModelIndex mi)
 {
+    qDebug() << "Row selected:: " << mi.row() << __FILE__ << __LINE__;
+
+
+    QModelIndex mi2 = sm->currentIndex();
+    currentRow = mi2.row();
+    qDebug() << "SM CURRENT INDEX = " << mi2.row();
     QMessage *message;
     int row = mi.row();
     if (!_model) {
         qWarning() << "ERROR - MODEL IS NULL" << __FILE__ << __LINE__;
+        emit rowSelected(currentRow);
         return;
     }
     for (int i=0;i<  _model->columnCount();i++) {
-            QModelIndex otherIndex = _model->index(row,0);
-            if (otherIndex.isValid()) {
-                QVariant var = _model->data(otherIndex,Qt::UserRole + 1);
-                if (var.isValid()) {
-                    message = (QMessage *) var.value<void *>();
-                    messageArea->setMessage(message);
-                    return;
-                }
+        QModelIndex otherIndex = _model->index(row,0);
+        if (otherIndex.isValid()) {
+            QVariant var = _model->data(otherIndex,Qt::UserRole + 1);
+            if (var.isValid()) {
+                message = (QMessage *) var.value<void *>();
+                messageArea->setMessage(message);
+                emit rowSelected(currentRow);
+
+                return;
             }
+        }
     }
     messageArea->setMessage(0);
+    emit rowSelected(currentRow);
+
 }
 void WorkSheet::setAlias(QString &str)
 {
@@ -656,13 +671,6 @@ void WorkSheet::setWindowID( QUuid &uuid)
 void WorkSheet::modelDroppedSlot(FixMimeData *m)
 {
     emit modelDropped(m);
-}
-void WorkSheet::setSearchIndexes(const QVector<qint32> &indexes)
-{
-    qDebug() << "Work Sheet, set vertical headers to " << indexes << __FILE__ << __LINE__;
-    FixTableVerticaHeaderView *fvh = fixTable->getFixVerticalHeader();
-    fvh->setHighlightList(indexes);
-    update();
 }
 
 WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()

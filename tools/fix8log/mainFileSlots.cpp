@@ -131,6 +131,8 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
                 this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
         connect(workSheet,SIGNAL(modelDropped(FixMimeData *)),
                 this,SLOT(modelDroppedSlot(FixMimeData *)));
+        connect(workSheet,SIGNAL(rowSelected(int)),
+                this,SLOT(rowSelectedSlot(int)));
         workSheet->setWindowID(uuid);
         workSheet->splitter->restoreState(messageSplitterSettings);
         if (havePreviousHeader)
@@ -307,6 +309,8 @@ void MainWindow::copyTabSlot()
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),
             this,SLOT(modelDroppedSlot(FixMimeData *)));
+    connect(newWorkSheet,SIGNAL(rowSelected(int)),
+            this,SLOT(rowSelectedSlot(int)));
     newWorkSheet->setWindowID(uuid);
     QString fileName = workSheet->getFileName();
 
