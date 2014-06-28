@@ -100,7 +100,7 @@ void MainWindow::searchActionSlot(QAction *action)
             errorMessage = syntaxResult.errorMessage();
             GUI::ConsoleMessage msg(errorMessage,GUI::ConsoleMessage::ErrorMsg);
             displayConsoleMessage(msg);
-             validateSearchButtons();
+            validateSearchButtons();
             return;
         }
         haveSearchString = true;
@@ -131,6 +131,7 @@ void MainWindow::searchActionSlot(QAction *action)
 }
 void MainWindow::searchReturnSlot()
 {
+    // Return Key Pressed
     bool bstatus;
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
@@ -151,9 +152,29 @@ void MainWindow::searchReturnSlot()
     else {
         haveSearchString = true;
     }
-    runSearchScript();
+    bstatus = runSearchScript();
+    if (bstatus) {
+        if (tabW->count()  < 1) {
+            qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
+            validateSearchButtons();
+            update();
+            return;
+        }
+        WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+        if (!ws) {
+            qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
+            validateSearchButtons();
+            update();
+            return;
+        }
+        // qDebug() << "Determine where to search from forward or backward based upon selected row
+        WorkSheet::SearchType searchType;
+        searchType = WorkSheet::SearchNext;
+        quint32  searchStatus  = ws->doSearch(searchType);
+        validateSearchButtons(searchStatus,ws);
+    }
 }
-void MainWindow::runSearchScript()
+bool MainWindow::runSearchScript()
 {
     QScriptValueList args;
     QScriptValue answer;
@@ -163,21 +184,21 @@ void MainWindow::runSearchScript()
         qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
         validateSearchButtons();
         update();
-        return;
+        return false;
     }
     WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
     if (!ws) {
         qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
-         validateSearchButtons();
-         update();
-        return;
+        validateSearchButtons();
+        update();
+        return false;
     }
     WorkSheetModel *wsm = ws->getModel();
     if (!wsm || (wsm->rowCount() < 1)) {
         qWarning() << "Search Failed, work sheet model is null, or has no rows" << __FILE__ << __LINE__;
         validateSearchButtons();
         update();
-        return;
+        return false;
     }
     QVector <qint32> filterLogicalIndexes;
     for(int i=0;i<wsm->rowCount();i++) {
@@ -194,6 +215,7 @@ void MainWindow::runSearchScript()
     ws->setSearchIndexes(filterLogicalIndexes);
     validateSearchButtons();
     update();
+    return true;
 }
 void MainWindow::validateSearchButtons()
 {

@@ -256,7 +256,7 @@ private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
     QString createSearchRoutine(bool &bstatus);
-    void runSearchScript();
+    bool runSearchScript();
     QByteArray fileDirState;
     QString  lastSelectedDir;
     QString fileFilter;
