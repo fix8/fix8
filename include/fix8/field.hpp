@@ -205,10 +205,30 @@ public:
 	    \return true if same */
 	virtual bool operator==(const BaseField& that) const = 0;
 
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	virtual bool operator<(const BaseField& that) const = 0;
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const = 0;
+
 	/// Inequivalence operator.
 	/*! \param that field to compare
 	    \return true if not the same */
 	bool operator!=(const BaseField& that) const { return !(*this == that); }
+
+	/// Less or equal to operator.
+	/*! \param that field to compare
+	    \return true if less than or equal to */
+	bool operator<=(const BaseField& that) const { return *this < that || *this == that; }
+
+	/// Greater or equal to operator.
+	/*! \param that field to compare
+	    \return true if greater than or equal to */
+	bool operator>=(const BaseField& that) const { return *this > that || *this == that; }
 
 	/*! Get the realm pointer for this field.
 	  \return the realm pointer */
@@ -284,14 +304,26 @@ public:
 		return *this;
 	}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Equivalence operator.
 	/*! \param that field to compare
 	    \return true if same */
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<int, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	virtual ~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<int, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<int, field>&>(that)._value; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -363,6 +395,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -389,8 +424,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && ::strcmp(static_cast<const Field<char *, field>&>(that)._value, _value) == 0; }
 
-	/// Dtor.
-	virtual ~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	virtual bool operator<(const BaseField& that) const
+		{ return same_base(that) && ::strcmp(_value, static_cast<const Field<char *, field>&>(that)._value) < 0; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const
+		{ return same_base(that) && ::strcmp(_value, static_cast<const Field<char *, field>&>(that)._value) > 0; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -467,6 +511,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -483,8 +530,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<f8String, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	virtual ~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	virtual bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<f8String, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<f8String, field>&>(that)._value; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -573,6 +629,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -589,12 +648,21 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<fp_type, field>&>(that)._value == _value; }
 
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<fp_type, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<fp_type, field>&>(that)._value; }
+
 	/*! Set the output precision
 	  \param prec precision digits */
 	void set_precision(const int prec) { _precision = prec; }
-
-	/// Dtor.
-	virtual ~Field() {}
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -675,6 +743,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(*from) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -691,8 +762,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<char, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<char, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<char, field>&>(that)._value; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -976,6 +1056,9 @@ public:
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -992,8 +1075,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<UTCTimestamp, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<UTCTimestamp, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<UTCTimestamp, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1067,6 +1159,9 @@ public:
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1083,8 +1178,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<UTCTimeOnly, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<UTCTimeOnly, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<UTCTimeOnly, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1158,6 +1262,9 @@ public:
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1174,8 +1281,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<UTCDateOnly, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<UTCDateOnly, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<UTCDateOnly, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1249,6 +1365,9 @@ public:
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1265,8 +1384,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<LocalMktDate, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<LocalMktDate, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<LocalMktDate, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1341,6 +1469,9 @@ public:
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1357,8 +1488,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<MonthYear, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<MonthYear, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<MonthYear, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1427,6 +1567,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1443,8 +1586,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<TZTimeOnly, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<TZTimeOnly, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<TZTimeOnly, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1508,6 +1660,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1524,8 +1679,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<TZTimestamp, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<TZTimestamp, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<TZTimestamp, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1773,6 +1937,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(toupper(*from) == 'Y') {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1789,8 +1956,17 @@ public:
 	bool operator==(const BaseField& that) const
 		{ return same_base(that) && static_cast<const Field<Boolean, field>&>(that)._value == _value; }
 
-	/// Dtor.
-	~Field() {}
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<Boolean, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<Boolean, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value (bool) */
