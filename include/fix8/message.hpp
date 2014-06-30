@@ -1089,6 +1089,17 @@ public:
 			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
 	}
 
+	/*! Check if a field is present in this message (either header, body or trailer).
+	    \param fnum field number
+	    \return pointer to field or 0 if not found */
+	BaseField *get_field_flattened(const unsigned short fnum) const
+	{
+		Fields::const_iterator itr;
+		return  (itr = _fields.find(fnum)) != _fields.end() ? itr->second
+				: (itr = _header->_fields.find(fnum)) != _header->_fields.end() ? itr->second
+				: (itr = _trailer->_fields.find(fnum)) != _trailer->_fields.end() ? itr->second : nullptr;
+	}
+
 #if defined RAW_MSG_SUPPORT
 	/*! Get the raw FIX message that this message was decoded from
 	    \return reference to FIX message string */
