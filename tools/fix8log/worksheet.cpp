@@ -604,6 +604,12 @@ WorkSheetData WorkSheet::getWorksheetData()
             wsd.selectedRow = index.row();
         }
     }
+    wsd.headerExpanded = messageArea->getExpansionState(MessageArea::HeaderItem);
+    wsd.fieldsExpanded = messageArea->getExpansionState(MessageArea::FieldsItem);
+    wsd.trailerExpanded = messageArea->getExpansionState(MessageArea::TrailerItem);
+    wsd.searchStr = searchString;
+
+
     return wsd;
 }
 void WorkSheet::cancelLoadSlot()
@@ -667,6 +673,15 @@ void WorkSheet::setWindowID( QUuid &uuid)
 void WorkSheet::modelDroppedSlot(FixMimeData *m)
 {
     emit modelDropped(m);
+}
+void WorkSheet::setMessageAreaExpansion(MessageArea::TreeItem ti, bool expanded)
+{
+    messageArea->setItemExpaned(ti,expanded);
+}
+
+bool WorkSheet::getMessageExpansionState(MessageArea::TreeItem ti)
+{
+    return messageArea->getExpansionState(ti);
 }
 
 WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()

@@ -243,6 +243,7 @@ void MainWindow::buildMainWindow()
     searchActionGroup->addAction(searchNextA);
 
     searchEditA  = new QAction(tr("Edit"),this);
+    connect(searchEditA,SIGNAL(triggered()),this,SIGNAL(showSearchDialog()));
     searchEditA->setIcon(QIcon(":/images/svg/text-editor-symbolic.svg"));
     searchLV = new QLabel(searchToolBar);// only show when toobar is vertial
     searchArea = new QWidget(this);
@@ -777,8 +778,13 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
             messageList.append(msg);
             statusBar()->showMessage(str,3000);
         }
+        workSheet->setUpdatesEnabled(true);
+
     }
     else {
+        workSheet->setMessageAreaExpansion(MessageArea::HeaderItem,wsd.headerExpanded);
+        workSheet->setMessageAreaExpansion(MessageArea::FieldsItem,wsd.fieldsExpanded);
+        workSheet->setMessageAreaExpansion(MessageArea::TrailerItem,wsd.trailerExpanded);
         workSheet->setUpdatesEnabled(true);
 
         workSheetList.append(workSheet);
@@ -827,6 +833,9 @@ void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
         return;
     }
     newWorkSheet = new WorkSheet(model,wsd,this);
+    newWorkSheet->setMessageAreaExpansion(MessageArea::HeaderItem,wsd.headerExpanded);
+    newWorkSheet->setMessageAreaExpansion(MessageArea::FieldsItem,wsd.fieldsExpanded);
+    newWorkSheet->setMessageAreaExpansion(MessageArea::TrailerItem,wsd.trailerExpanded);
     newWorkSheet->setTableSchema(tableSchema);
     workSheetList.append(newWorkSheet);
     newWorkSheet->setWindowID(uuid);

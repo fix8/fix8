@@ -250,6 +250,7 @@ signals:
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
     void editSchema(MainWindow *);
+    void showSearchDialog();
     void tableSchemaChanged(TableSchema *);
     void exitApp();
     void modelDropped(FixMimeData *);

@@ -36,7 +36,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include "worksheetdata.h"
 #include <QDebug>
-WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1)
+WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1),
+    headerExpanded(false),fieldsExpanded(false),trailerExpanded(false)
 {
 }
 WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
@@ -48,6 +49,10 @@ WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
     headerState   = wsd.headerState;
     fileName      = wsd.fileName;
     selectedRow   = wsd.selectedRow;
+    headerExpanded = wsd.headerExpanded;
+    fieldsExpanded = wsd.fieldsExpanded;
+    trailerExpanded = wsd.trailerExpanded;
+    searchStr    = wsd.searchStr;
 }
 WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
 {
@@ -60,5 +65,9 @@ WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
     headerState   = rhs.headerState;
     fileName      = rhs.fileName;
     selectedRow   = rhs.selectedRow;
+    headerExpanded = rhs.headerExpanded;
+    fieldsExpanded = rhs.fieldsExpanded;
+    trailerExpanded = rhs.trailerExpanded;
+    searchStr       = rhs.searchStr;
     return *this;
 }

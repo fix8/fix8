@@ -50,7 +50,10 @@ class MessageArea : public QWidget
 
 public:
     explicit MessageArea(QWidget *parent = 0);
+    typedef enum {HeaderItem=0,FieldsItem=1,TrailerItem=2} TreeItem;
     void setMessage(QMessage *);
+    void setItemExpaned(TreeItem,bool);
+    bool getExpansionState(TreeItem);
 signals:
 
 public slots:

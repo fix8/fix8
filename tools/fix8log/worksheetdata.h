@@ -51,6 +51,10 @@ public:
     int        selectedRow;
     QByteArray splitterState;
     QByteArray headerState;
+    bool       headerExpanded;
+    bool       fieldsExpanded;
+    bool       trailerExpanded;
+    QString    searchStr;
     WorkSheetData      &operator=( const WorkSheetData &s);
 
 };

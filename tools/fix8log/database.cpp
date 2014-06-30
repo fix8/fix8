@@ -48,7 +48,7 @@ QString Database::arguments[] = {
     // windows
     "id INTEGER primary key, red integer, green integer,blue  integer,geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32),tableSchemaID integer",
     //worksheets
-    "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB",
+    "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB,headerExpanded integer default 0, fieldsExpanded integer default 0,trailerExpanded integer default 0,searchStr char[60]",
     // tableschemas
     "id INTEGER primary key, name char(32), description char(120),locked integer default 0, xmlSchema char(36)",
     // schemafields

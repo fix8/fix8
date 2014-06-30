@@ -41,6 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "mainwindow.h"
 #include "messagefield.h"
 #include "schemaeditordialog.h"
+#include "searchDialog.h"
 #include "windowdata.h"
 #include <QApplication>
 #include <QDebug>
@@ -282,4 +283,11 @@ void Fix8Log::wakeupSlot(const QString&)
         mw = iter.next();
         mw->showNormal();
     }
+}
+void Fix8Log::showSearchDialogSlot()
+{
+    if (!searchDialog) {
+        searchDialog = new SearchDialog(database,0);
+    }
+    searchDialog->showNormal();
 }

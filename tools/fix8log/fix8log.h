@@ -58,6 +58,7 @@ class Database;
 class SchemaEditorDialog;
 class FutureReadData;
 class FixMimeData;
+class SearchDialog;
 class WorkSheetModel;
 FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr);
 
@@ -89,6 +90,7 @@ public slots:
     void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
     void schemaModifiedSlot(TableSchema *,bool nameAndOrDescriptionOnly);
+    void showSearchDialogSlot();
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
     void wakeupSlot(const QString&);
@@ -114,6 +116,8 @@ protected:
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
     QtSingleApplication *applicationInstance;
+signals:
+    void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
     void cleanWindowDataList(QList <WindowData> &windowDataList);
 
@@ -122,8 +126,7 @@ private:
     void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QBaseEntryList *qbaseEntryList,int *level);
 
-signals:
-    void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
+    SearchDialog *searchDialog;
 };
 
 #endif // FIX8LOG_H

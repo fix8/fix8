@@ -82,6 +82,10 @@ QList <WorkSheetData> Database::getWorkSheets(int windowID)
         wd.selectedRow = query.value(4).toInt();
         wd.splitterState    = query.value(5).toByteArray();
         wd.headerState = query.value(6).toByteArray();
+        wd.headerExpanded = query.value(7).toBool();
+        wd.fieldsExpanded = query.value(8).toBool();
+        wd.trailerExpanded = query.value(9).toBool();
+        wd.searchStr = query.value(10).toString();
         wsdList.append(wd);
     }
     return wsdList;
@@ -97,8 +101,8 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO worksheets (id,windowID,alias, file ,selectedRow,splitterState,headerState)"
-                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState)");
+    bstatus = query.prepare("INSERT INTO worksheets (id,windowID,alias, file ,selectedRow,splitterState,headerState,headerExpanded,fieldsExpanded,trailerExpanded,searchStr)"
+                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerexpanded,:searchStr)");
     if (bstatus == 0) {
         qWarning("Error database - add worksheet failed in prepare statement...");
         sqlError = query.lastError();
@@ -106,13 +110,17 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
         qWarning() << errorMessage;
         return false;
     }
-    qDebug() << "Database save work sheet with window id = " << wsd.windowID << __FILE__ << __LINE__;
     query.bindValue(":windowID",wsd.windowID);
     query.bindValue(":alias",wsd.tabAlias);
     query.bindValue(":file",wsd.fileName);
     query.bindValue(":selectedRow",wsd.selectedRow);
     query.bindValue(":splitterState",wsd.splitterState);
     query.bindValue(":headerState",wsd.headerState);
+    query.bindValue(":headerExpanded",wsd.headerExpanded);
+    query.bindValue(":fieldsExpanded",wsd.fieldsExpanded);
+    query.bindValue(":trailerExpanded",wsd.trailerExpanded);
+    query.bindValue(":searchStr",wsd.searchStr);
+
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("\tDatabase - Add worksheet failed in exec statement...");

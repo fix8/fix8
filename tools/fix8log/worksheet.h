@@ -43,6 +43,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QUuid>
 #include "fixHeaderView.h"
 #include "globals.h"
+#include "messagearea.h"
 #include "messagefield.h"
 #include "worksheetdata.h"
 class TableSchema;
@@ -58,7 +59,6 @@ class QStandardItemModel;
 class DateTimeDelegate;
 class FixTable;
 class FixMimeData;
-class MessageArea;
 #
 class WorkSheet : public QWidget
 {
@@ -79,6 +79,8 @@ public:
     void setSearchString(const QString &);
     QString &getSearchString();
     void setWindowID( QUuid &);
+    void setMessageAreaExpansion(MessageArea::TreeItem, bool expanded);
+    bool getMessageExpansionState(MessageArea::TreeItem);
     void setTableSchema(TableSchema *);
     void setSearchIndexes(const QVector <qint32> &indexes);
     TableSchema *getTableSchema();

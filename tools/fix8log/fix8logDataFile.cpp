@@ -89,7 +89,6 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     int i=0;
     QElapsedTimer myTimer;
     int linecount = 0;
-    int nMilliseconds;
     qint32 fileSize = dataFile.size();
     QByteArray ba;
 
@@ -262,7 +261,7 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
         i++;
     }
     */
-    nMilliseconds = myTimer.elapsed();
+   //nMilliseconds = myTimer.elapsed();
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     //msgList.append(GUI::Message(qstr));
     dataFile.close();

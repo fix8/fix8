@@ -62,7 +62,7 @@ using namespace std;
 Fix8Log::Fix8Log(QtSingleApplication *qsa) :
     QObject(),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
-    defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa)
+    defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa),searchDialog(0)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
@@ -136,6 +136,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(modelDropped(FixMimeData*)),this,SLOT(modelDroppedSlot(FixMimeData*)));
     connect(mw,SIGNAL(editSchema(MainWindow*)),this,SLOT(editSchemaSlot(MainWindow  *)));
     connect(mw,SIGNAL(tableSchemaChanged(TableSchema*)),this,SLOT(tableSchemaSelectedSlot(TableSchema *)));
+    connect(mw,SIGNAL(showSearchDialog()),this,SLOT(showSearchDialogSlot()));
     mw->setAutoSaveOn(autoSaveOn);
 }
 

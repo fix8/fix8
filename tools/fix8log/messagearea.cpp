@@ -174,7 +174,7 @@ void MessageArea::setMessage(QMessage *m)
 
         }
         for (Fields::const_iterator itr(trailer->fields_begin()); itr != trailer->fields_end(); ++itr)
-        {
+        {treeView->isExpanded(headerItem->index());
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
             name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
             bf = itr->second;
@@ -198,4 +198,41 @@ void MessageArea::setMessage(QMessage *m)
     else {
         seqNumV->setText("");
     }
+}
+void MessageArea::setItemExpaned(TreeItem ti,bool expanded)
+{
+    switch (ti) {
+    case HeaderItem:
+        treeView->setExpanded(headerItem->index(),expanded);
+        break;
+    case FieldsItem:
+        treeView->setExpanded(fieldItem->index(),expanded);
+        break;
+    case TrailerItem:
+        treeView->setExpanded(tailItem->index(),expanded);
+        break;
+    default:
+         qWarning() << "Unknown expansion item" << __FILE__ << __LINE__;
+        break;
+    }
+
+}
+bool MessageArea::getExpansionState(TreeItem ti)
+{
+    bool isExpanded = false;
+    switch(ti) {
+    case HeaderItem:
+        isExpanded = treeView->isExpanded(headerItem->index());
+        break;
+    case FieldsItem:
+        isExpanded = treeView->isExpanded(fieldItem->index());
+        break;
+    case TrailerItem:
+        isExpanded = treeView->isExpanded(tailItem->index());
+        break;
+    default:
+        qWarning() << "Unknown request typefor expansion state" << __FILE__ << __LINE__;
+
+    }
+    return isExpanded;
 }
