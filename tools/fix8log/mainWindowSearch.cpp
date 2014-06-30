@@ -91,8 +91,19 @@ void MainWindow::searchActionSlot(QAction *action)
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
     bool bstatus;
+
+    if (tabW->count()  < 1) {
+        qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
+        return;
+    }
+    ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+    if (!ws) {
+        qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
+        return;
+    }
     if (!haveSearchString) {
         searchString =  createSearchRoutine(bstatus);
+        ws->setSearchString(searchLineEdit->toPlainText());
         //qDebug() << "Search String = " << searchString << __FILE__ << __LINE__;
         QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
         syntaxState =syntaxResult.state();
@@ -115,17 +126,7 @@ void MainWindow::searchActionSlot(QAction *action)
         searchType = WorkSheet::SearchLast;
     else
         searchType = WorkSheet::SearchFirst;
-    // set ws to current workSheet;
-    qDebug() << "Search Type =" << searchType << __FILE__ << __LINE__;
-    if (tabW->count()  < 1) {
-        qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
-        return;
-    }
-    ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
-    if (!ws) {
-        qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
-        return;
-    }
+
     quint32  searchStatus  = ws->doSearch(searchType);
     validateSearchButtons(searchStatus,ws);
 }
@@ -136,8 +137,16 @@ void MainWindow::searchReturnSlot()
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
     QString newSearchStr = createSearchRoutine(bstatus);
+    WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+    if (!ws) {
+        qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
+        validateSearchButtons();
+        update();
+        return;
+    }
     if (newSearchStr == searchString)
         return;
+    ws->setSearchString(searchLineEdit->toPlainText());
     searchString = newSearchStr;
     QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
     syntaxState =syntaxResult.state();
@@ -156,13 +165,6 @@ void MainWindow::searchReturnSlot()
     if (bstatus) {
         if (tabW->count()  < 1) {
             qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
-            validateSearchButtons();
-            update();
-            return;
-        }
-        WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
-        if (!ws) {
-            qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
             validateSearchButtons();
             update();
             return;
@@ -244,8 +246,10 @@ void MainWindow::validateSearchButtons()
         else {
             QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
             syntaxState =syntaxResult.state();
-            if ( syntaxState == QScriptSyntaxCheckResult::Error)
+            if ( syntaxState == QScriptSyntaxCheckResult::Error) {
+             qDebug() << "HAve Serch Error" << __FILE__ << __LINE__;
                 enableSearch = false;
+            }
         }
     }
     searchBackA->setEnabled(enableSearch);
@@ -260,13 +264,9 @@ void MainWindow::validateSearchButtons(quint32 searchStatus, WorkSheet *ws)
         enableSearch = true;
     searchBackA->setEnabled(enableSearch);
     searchBeginA->setEnabled(enableSearch);
-    QString hex;
-    hex = QString::number(searchStatus,16);
-    qDebug() << "SEARCH STATUS = " << hex;
-    qDebug() << "SEARCH-NEXT VALUE =" << QString::number(WorkSheet::SearchNext,16);
+
     enableSearch = false;
     if (searchStatus & WorkSheet::SearchHasNext) {
-        qDebug() << "ENABLE NEXT BUTTON" <<  __FILE__ << __LINE__;
         enableSearch = true;
     }
     searchNextA->setEnabled(enableSearch);
@@ -275,5 +275,21 @@ void MainWindow::validateSearchButtons(quint32 searchStatus, WorkSheet *ws)
 void MainWindow::rowSelectedSlot(int row)
 {
     qDebug() << "Main WIndow row selected " << row << __FILE__<< __LINE__;
+    validateSearchButtons();
+}
+void MainWindow::searchToolbarVisibleSlot(bool visible)
+{
+    WorkSheet *workSheet;
+    for(int i=0;i < tabW->count();i++) {
+        workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
+        if (!visible)
+            workSheet->doSearch(WorkSheet::SearchOff);
+        else
+            workSheet->doSearch(WorkSheet::ResumeSearch);
+    }
+}
+void MainWindow::setSearchString(const QString &searchStr)
+{
+    searchLineEdit->setText(searchStr);
     validateSearchButtons();
 }

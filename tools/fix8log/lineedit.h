@@ -37,17 +37,26 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* created as QLineEdit cannot handle syntax highlighter */
 #include <QTextEdit>
-
+class QCompleter;
 class LineEdit : public QTextEdit
 {
     Q_OBJECT
 public:
     explicit LineEdit(QWidget *parent = 0);
+    void setCompleter(QCompleter *c);
+       QCompleter *completer() const;
     QSize sizeHint() const;
-signals:
-    void returnPressed();
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
     virtual void wheelEvent(QWheelEvent *e);
+     void focusInEvent(QFocusEvent *e);
+
+signals:
+    void returnPressed();
+private slots:
+     void insertCompletion(const QString &completion);
+private:
+     QString textUnderCursor() const;
+     QCompleter *c;
 };
 #endif // LINEEDIT_H

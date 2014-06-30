@@ -78,8 +78,18 @@ QVector <qint32> WorkSheet::getSearchIndexes()
 }
 quint32 WorkSheet::doSearch(SearchType st)
 {
-    qDebug() << "Do Search, available indixes are: " << searchLogicalIndexes;
+    QMessage *message = 0;
     quint32 returnCode =  SearchEmpty;
+
+    if (st == SearchOff) {
+        qDebug() << "\tWorkSheet, turn off search" << __FILE__ << __LINE__;
+        fixTable->setSearchFilterOn(false);
+        return SearchOk;
+    }
+    else if (st == ResumeSearch) {
+        fixTable->setSearchFilterOn(true);
+         return SearchOk;
+    }
     if (!_model || (_model->rowCount() < 1))
         return SearchEmpty;
 
@@ -92,11 +102,6 @@ quint32 WorkSheet::doSearch(SearchType st)
         return SearchEmpty;
     }
     QModelIndex index;
-
-
-    //
-    //QList <QModelIndex> sl = fixTable->selectedIndexes();
-    //index = sl.first();
     int previousRow = -1;
     int nextRow     = -1;
     for(int i=0; i<searchLogicalIndexes.count(); i++){
@@ -158,15 +163,36 @@ quint32 WorkSheet::doSearch(SearchType st)
     // fixTable->selectRow( QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
     sm->setCurrentIndex(_model->index(newCurrentRow,1),QItemSelectionModel::Select);
     fixTable->selectRow(newCurrentRow);
+    for (int i=0;i<  _model->columnCount();i++) {
+        // loop over all to find valid variant, but should get it on first try
+        QModelIndex otherIndex = _model->index(newCurrentRow,0);
+        if (otherIndex.isValid()) {
+            QVariant var = _model->data(otherIndex,Qt::UserRole + 1);
+            if (var.isValid()) {
+                message = (QMessage *) var.value<void *>();
+                messageArea->setMessage(message);
+                break;
+            }
+        }
+    }
+
     //fixTable->setCurrentIndex(_model->index(newCurrentRow,0));
 
     currentRow = newCurrentRow;
     //}
 
-    qDebug() << "SET CURRENT INDEX TO " << newCurrentRow << __FILE__ << __LINE__;
     QString hex;
     hex = QString::number(returnCode,16);
     qDebug() << ">>>>>>>>>>>return code:" << hex;
     //qDebug() << "CHECK Selected Row  = " << fixTable-> << __FILE__ << __LINE__;
     return returnCode;
+}
+void WorkSheet::setSearchString(const QString &str)
+{
+    searchString = str;
+}
+
+QString &WorkSheet::getSearchString()
+{
+    return searchString;
 }

@@ -81,7 +81,6 @@ void MainWindow::createTabSlot()
     }
     fileDialog->show();
     unsetCursor();
-
 }
 void MainWindow::fileDirChangedSlot(const QString &newDir)
 {
@@ -193,6 +192,8 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
             str = "Loaded " + fileName + " completed";
             statusBar()->showMessage(str,2000);
             filterSenderMenuA->setMenu(workSheet->getSenderMenu());
+            QString searchStr = workSheet->getSearchString();
+            setSearchString(searchStr);
         }
         // display error messages associated with each worksheet
         if (messageList.count() > 0) {
@@ -248,8 +249,11 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
     if (tabW->count() > 0) {
         stackW->setCurrentWidget(workAreaSplitter);
         WorkSheet *currentWorkSheet = qobject_cast<WorkSheet *> (tabW->currentWidget());
-        if (currentWorkSheet)
+        if (currentWorkSheet) {
             filterSenderMenuA->setMenu(currentWorkSheet->getSenderMenu());
+            QString searchStr = currentWorkSheet->getSearchString();
+            setSearchString(searchStr);
+        }
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);
     }

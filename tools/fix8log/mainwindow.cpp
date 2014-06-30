@@ -150,12 +150,18 @@ void MainWindow::buildMainWindow()
     helpMenu = mainMenuBar->addMenu("&Help");
     mainToolBar = new QToolBar("Main Toolbar",this);
     mainToolBar->setObjectName("MainToolBar");
-    searchToolBar = new FixToolBar("Search Toolbar",this);
+    searchToolBar = new FixToolBar("Search",this);
+
     connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
             this,SLOT(toolbarOrientationChangedSlot(Qt::Orientation)));
+    connect(searchToolBar,SIGNAL(visibilityChanged(bool)),
+            this,SLOT(searchToolbarVisibleSlot(bool)));
     searchToolBar->setObjectName("SearchToolBar");
+    searchToolBarA = searchToolBar->toggleViewAction();
+    searchToolBarA->setToolTip("Search For Records");
+    searchToolBarA->setIcon(QIcon(":/images/svg/magniflying_glass.svg"));
     hideToolBarA = mainToolBar->toggleViewAction();
-    hideSearchToolBarA = searchToolBar->toggleViewAction();
+
     mainToolBar->setMovable(true);
     searchToolBar->setMovable(true);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
@@ -253,6 +259,15 @@ void MainWindow::buildMainWindow()
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
     searchLineEdit = new LineEdit(searchArea);
+
+    searchCompleter = new QCompleter(this);
+
+    searchCompleter->setCompletionMode(QCompleter::InlineCompletion);
+    searchCompleter->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+    searchCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    searchCompleter->setWrapAround(false);
+    searchLineEdit->setCompleter(searchCompleter);
+
     editHighlighter = new EditHighLighter(searchLineEdit->document());
     connect(searchLineEdit,SIGNAL(textChanged()),this,SLOT(searchTextChangedSlot()));
     connect(searchLineEdit,SIGNAL(returnPressed()),this,SLOT(searchReturnSlot()));
@@ -265,7 +280,7 @@ void MainWindow::buildMainWindow()
     searchToolBar->addAction(searchBackA);
     searchToolBar->addAction(searchNextA);
     searchToolBar->addAction(searchEndA);
-     searchToolBar->addAction(searchEditA);
+    searchToolBar->addAction(searchEditA);
     QHBoxLayout *space = new QHBoxLayout();
     space->addStretch(1);
     space->setMargin(0);
@@ -355,7 +370,7 @@ void MainWindow::buildMainWindow()
     configureIconsMenu->addMenu(iconSizeMenu);
     configureIconsMenu->addMenu(iconStyleMenu);
     optionMenu->addAction(hideToolBarA);
-    optionMenu->addAction(hideSearchToolBarA);
+    optionMenu->addAction(searchToolBarA);
     optionMenu->addAction(hideConsoleA);
     optionMenu->addAction(editSchemaA);
     optionMenu->addAction(filterSenderMenuA);
@@ -385,6 +400,7 @@ void MainWindow::buildMainWindow()
     mainToolBar->addSeparator();
     mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(filterSenderMenuA);
+    mainToolBar->addAction(searchToolBarA);
     QToolButton *tb = qobject_cast <QToolButton *>(mainToolBar->widgetForAction(filterSenderMenuA));
     if (tb) {
         tb->setPopupMode(QToolButton::InstantPopup);
@@ -695,7 +711,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         displayConsoleMessage(msg);
         return;
     }
-     setCursor(Qt::BusyCursor);
+    setCursor(Qt::BusyCursor);
 
     WorkSheet *workSheet = new WorkSheet(this);
     workSheet->setTableSchema(tableSchema);
@@ -888,6 +904,20 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
         return;
     }
     setCursor(Qt::BusyCursor);
+
+    QString colName;
+     QStringList colNameList;
+    int rowCount = tableSchema->fieldNames.count();
+    for(int i=0;i<rowCount;i++) {
+        colName  = tableSchema->fieldNames[i];
+        colNameList.append(colName);
+
+    }
+    colNameList.sort();
+    qDebug() <<"COL NAME LIST SET TO " << colNameList << __FILE__ << __LINE__;
+    QStringListModel *strModel = new QStringListModel(colNameList,this);
+    searchCompleter->setModel(strModel);
+
 
     al = schemaActionGroup->actions();
     if (al.count() > 0) {

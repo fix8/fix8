@@ -62,6 +62,7 @@ class FixTable: public QTableView {
   void setWindowID(QUuid &uuid);
   void setWorkSheetModel(WorkSheetModel *);
   void setSenderIDFilter(QStringList senderIDs);
+  void setSearchFilterOn(bool on);
   FixTableVerticaHeaderView *getFixVerticalHeader();
   ~FixTable();
   static QString headerLabel[NumColumns];
@@ -117,5 +118,6 @@ class FixTable: public QTableView {
    QStringList senderIDs;
    WorkSheetModel *_model;
    FixTableVerticaHeaderView *fixVH;
+   bool     searchFilterOn;
 };
 #endif

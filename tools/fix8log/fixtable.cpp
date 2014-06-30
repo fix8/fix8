@@ -70,7 +70,7 @@ QString FixTable::headerLabel[] =
  tr("HeartBtInt"),tr("Message Type")};
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
-    QTableView(p),windowID(wid),worksheetID(wsid),_model(0)
+    QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false)
 
 {
     proxyFilter = new ProxyFilter(this);
@@ -119,6 +119,13 @@ FixTable::~FixTable()
 {
     qDebug() << "Delte Fix Table" << __FILE__ << __LINE__;
 }
+void FixTable::setSearchFilterOn(bool on)
+{
+    searchFilterOn = on;
+    fixVH->turnOnSearchHighLight(searchFilterOn);
+    viewport()->repaint();
+}
+
 void FixTable::setAnouncement(const QString &message,int interval)
 {
     showAnouncement = true;
@@ -150,7 +157,6 @@ void FixTable::setSenderIDFilter(QStringList ids)
 
 void FixTable::validateFilters()
 {
-
     if (senderIDs.count() > 0) {
             proxyFilter->setSourceModel(_model);
             setModel(proxyFilter);

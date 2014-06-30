@@ -46,12 +46,14 @@ void  FixTableVerticaHeaderView::paintSection(QPainter * painter,
                                               const QRect &rect,
                                               int logicalIndex) const
 {
-    painter->save();
     QStyleOptionHeader option;
-    initStyleOption( &option );
-
     option.position = QStyleOptionHeader::Beginning;
     QHeaderView::paintSection(painter, rect, logicalIndex);
+    if (!highLightOn)
+        return;
+    painter->save();
+
+    initStyleOption( &option );
     painter->restore();
     qint32 ivalue;
     QVectorIterator <qint32> iter(hightlightRows);
@@ -83,7 +85,7 @@ void FixTableVerticaHeaderView::setHighlightList(QVector <qint32>list,bool turnO
 void FixTableVerticaHeaderView::turnOnSearchHighLight(bool on)
 {
     highLightOn  = on;
-    repaint();
+    update();
 }
 /*
 void FixTableVerticaHeaderView::mousePressEvent(QMouseEvent *e)

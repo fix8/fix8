@@ -558,9 +558,6 @@ void  WorkSheet::hideColumn(int colNum, bool hideCol)
 }
 void  WorkSheet::rowSelectedSlot(QModelIndex mi)
 {
-    qDebug() << "Row selected:: " << mi.row() << __FILE__ << __LINE__;
-
-
     QModelIndex mi2 = sm->currentIndex();
     currentRow = mi2.row();
     qDebug() << "SM CURRENT INDEX = " << mi2.row();
@@ -579,7 +576,6 @@ void  WorkSheet::rowSelectedSlot(QModelIndex mi)
                 message = (QMessage *) var.value<void *>();
                 messageArea->setMessage(message);
                 emit rowSelected(currentRow);
-
                 return;
             }
         }

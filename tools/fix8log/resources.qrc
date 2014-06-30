@@ -62,5 +62,6 @@
         <file>images/svg/text-editor-symbolic.svg</file>
         <file>images/128x128/broken_link-128.png</file>
         <file>images/128x128/chainlink_128x128-32.png</file>
+        <file>images/svg/magniflying_glass.svg</file>
     </qresource>
 </RCC>

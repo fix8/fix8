@@ -60,6 +60,7 @@ class TableSchema;
 class TableSchemaList;
 class QAction;
 class QActionGroup;
+class QCompleter;
 class QDockWidget;
 class QFileDialog;
 class QLabel;
@@ -138,6 +139,7 @@ public:
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void setWindowNameSlot();
     void searchTextChangedSlot();
+    void searchToolbarVisibleSlot(bool);
     void setColorSlot(QColor color);
     void showMessageArea(bool);
     void tabCloseRequestSlot(int);
@@ -180,6 +182,7 @@ protected:
     QAction  *searchEndA;
     QAction  *searchNextA;
     QAction  *searchEditA;
+    QAction  *searchToolBarA;
     QAction  *showMessageA;
     QAction  *whatsThisA;
     QAction  *windowNameA;
@@ -257,6 +260,7 @@ private:
     void buildSchemaMenu();
     QString createSearchRoutine(bool &bstatus);
     bool runSearchScript();
+    void setSearchString(const QString &searchStr);
     QByteArray fileDirState;
     QString  lastSelectedDir;
     QString fileFilter;
@@ -273,6 +277,7 @@ private:
     QScriptValue searchFunction;
     QActionGroup *searchActionGroup;
     QScriptEngine engine;
+    QCompleter *searchCompleter;
 };
 
 #endif // MAINWINDOW_H

@@ -68,14 +68,16 @@ public:
     explicit WorkSheet(QWidget *parent = 0);
     WorkSheet(WorkSheetModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
-    typedef enum {SearchFirst,SearchBack,SearchNext,SearchLast} SearchType;
-    enum {SearchFinished=0x0001,SearchHasPrevious=0x0002,SearchHasNext=0x0004,SearchEmpty=0x0008};
+    typedef enum {SearchFirst,SearchBack,SearchNext,SearchLast,SearchOff,ResumeSearch} SearchType;
+    enum {SearchFinished=0x0001,SearchHasPrevious=0x0002,SearchHasNext=0x0004,SearchEmpty=0x0008,SearchOk = 0x0010};
     enum {OK =0x0000,CANCEL = 0x0001,READ_ERROR=0x0002,FILE_NOT_FOUND=0x0004,
         OPEN_FAILED=0x0080,TERMINATED=0x0100};
     ~WorkSheet();
     bool copyFrom(WorkSheet &oldws);
     QVector <qint32> getSearchIndexes();
     bool loadCanceled();
+    void setSearchString(const QString &);
+    QString &getSearchString();
     void setWindowID( QUuid &);
     void setTableSchema(TableSchema *);
     void setSearchIndexes(const QVector <qint32> &indexes);
@@ -145,6 +147,7 @@ private:
     QVector<qint32> searchLogicalIndexes;
     QItemSelectionModel *sm;
     qint32 currentRow;
+    QString searchString; // raw search string
 };
 
 class WorkSheetList : public QList <WorkSheet *>
