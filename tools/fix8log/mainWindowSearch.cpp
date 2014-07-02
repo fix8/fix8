@@ -231,7 +231,7 @@ void MainWindow::validateSearchButtons()
     else {
         ws = qobject_cast <WorkSheet *> (tabW->currentWidget());
         if (!ws) {
-            qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
+            qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
             enableSearch = false;
         }
         else {
