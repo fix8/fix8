@@ -152,6 +152,7 @@ void MainWindow::buildMainWindow()
     mainToolBar->setObjectName("MainToolBar");
     searchToolBar = new FixToolBar("Search",this);
 
+
     connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
             this,SLOT(toolbarOrientationChangedSlot(Qt::Orientation)));
     connect(searchToolBar,SIGNAL(visibilityChanged(bool)),

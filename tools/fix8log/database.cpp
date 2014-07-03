@@ -41,7 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QSqlTableModel>
 #include <QVariant>
 
-QString Database::tableNames[] = {"sqlinfo","windows","worksheets","tableschemas","schemafields"};
+QString Database::tableNames[] = {"sqlinfo","windows","worksheets","tableschemas","schemafields","searchfunctions"};
 QString Database::arguments[] = {
     // sqlinfo
     "version integer",
@@ -53,6 +53,8 @@ QString Database::arguments[] = {
     "id INTEGER primary key, name char(32), description char(120),locked integer default 0, xmlSchema char(36)",
     // schemafields
     "id INTEGER primary key,name char(60),schemaID integer"
+    // searchfunctions
+    "id INTEGER primary key,alias char(32),function char(120)"
 };
 
 Database::Database(QString fileName,QObject *parent):QObject(parent),name(fileName),handle(0)
