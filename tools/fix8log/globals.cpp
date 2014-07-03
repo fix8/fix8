@@ -50,7 +50,8 @@ QSize Globals::regIconSize;
 QSize Globals::largeIconSize;
 QColor Globals::menubarDefaultColor;
 Globals* Globals::m_pInstance = NULL;
-
+bool Globals::isFirstTime = false;
+QString Globals::appName = "Fix8 LogViewer";
 QString Globals::timeFormats[] {
     "Day-Mon-YY hh:min:sec", "Day Mon hh:min:sec", "hh:min:sec","hh:min"};
 Globals::TimeFormat Globals::timeFormat = Globals::HHMM;

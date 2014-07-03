@@ -121,11 +121,13 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
         qWarning() << "Error - wire signals and slots, window is null" << __FILE__ << __LINE__;
         return;
     }
+    mw->
     connect(mw,SIGNAL(toolButtonStyleModified(Qt::ToolButtonStyle)),
             this,SLOT(toolButtonStyleModfiedSlot(Qt::ToolButtonStyle)));
     connect(mw,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
+
     connect(mw,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
     connect(mw,SIGNAL(autoSaveOn(bool)),this,SLOT(autoSaveOnSlot(bool)));
     connect(mw,SIGNAL(cancelSessionRestore()),this,SLOT(cancelSessionRestoreSlot()));
@@ -268,6 +270,7 @@ bool Fix8Log::init()
     QFile dbFile(dbFileName);
     if (!dbFile.exists()) {
         firstTimeToUse = true;
+        GUI::Globals::isFirstTime = true;
         displayConsoleMessage(GUI::ConsoleMessage("Creating Database..."));
     }
     database = new Database(dbFileName,this);

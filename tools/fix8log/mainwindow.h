@@ -236,6 +236,7 @@ protected:
     QWidget *tabNameEditArea;
     QWhatsThis *whatsThis;
     void buildMainWindow();
+    void closeEvent(QCloseEvent *);
     void displayConsoleMessage(GUI::ConsoleMessage);
     void readSettings();
     void setAutoSaveOn(bool);

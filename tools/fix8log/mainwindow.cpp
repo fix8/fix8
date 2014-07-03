@@ -164,7 +164,10 @@ void MainWindow::buildMainWindow()
 
     mainToolBar->setMovable(true);
     searchToolBar->setMovable(true);
+    searchToolBar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
+    if (GUI::Globals::isFirstTime)
+        addToolBarBreak();
     addToolBar(Qt::TopToolBarArea,searchToolBar);
 
     autoSaveA = new  QAction(tr("&Auto Save"),this);
@@ -584,6 +587,11 @@ QString MainWindow::getName()
 const QUuid &MainWindow::getUuid()
 {
     return uuid;
+}
+void MainWindow::closeEvent(QCloseEvent *ce)
+{
+   ce->ignore();
+   closeSlot();
 }
 
 void MainWindow::showEvent(QShowEvent *se)

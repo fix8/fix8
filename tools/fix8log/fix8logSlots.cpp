@@ -69,10 +69,15 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
+    qDebug() << "DELETE MAIN WINDOW" << __FILE__ << __LINE__;
     if (mainWindows.count() == 1)  {
         if (autoSaveOn) {
             saveSession();
         }
+    }
+    if (searchDialog && (searchDialog->getMainWindow() == mw)) {
+        searchDialog->deleteLater();
+        searchDialog = 0;
     }
     mainWindows.removeOne(mw);
     mw->deleteLater();
@@ -130,6 +135,7 @@ void Fix8Log::autoSaveOnSlot(bool on)
 void Fix8Log::lastWindowClosedSlot()
 {
     qDebug() << "Last Window closed";
+    qApp->exit();
 }
 void Fix8Log::cancelSessionRestoreSlot()
 {
@@ -151,7 +157,7 @@ void Fix8Log::schemaModifiedSlot(TableSchema *tableSchema, bool NameOnly)
         ts = iter.next();
         if (ts->id == tableSchema->id) {
             *ts = *tableSchema;
-                found = true;
+            found = true;
             break;
         }
     }
@@ -259,9 +265,9 @@ void  Fix8Log::schemaEditorFinishedSlot(int returnCode)
 {
     if (returnCode == QDialogButtonBox::Close) {
         schemaEditorDialog->close();
-    schemaEditorDialog->saveSettings();
-    schemaEditorDialog->deleteLater();
-    schemaEditorDialog = 0;
+        schemaEditorDialog->saveSettings();
+        schemaEditorDialog->deleteLater();
+        schemaEditorDialog = 0;
     }
 
 
@@ -286,8 +292,44 @@ void Fix8Log::wakeupSlot(const QString&)
 }
 void Fix8Log::showSearchDialogSlot()
 {
+    QString str;
     if (!searchDialog) {
         searchDialog = new SearchDialog(database,0);
+        QSettings settings("fix8","logviewer");
+        QRect rect = settings.value("SearchDialog").toRect();
+        QSize sh = searchDialog->sizeHint();
+        if (rect.width() < sh.width())
+            rect.setWidth(sh.width());
+        if (rect.height() < sh.height())
+            rect.setHeight(sh.height());
+
+        searchDialog->setGeometry(rect);
+        connect(searchDialog,SIGNAL(accepted()),this,SLOT(searchDialogAcceptedSlot()));
     }
+
+    MainWindow *mw = qobject_cast <MainWindow *> (sender());
+    if (!mw) {
+        qWarning() << "Error show search dialog, main window is null" << __FILE__ << __LINE__;
+        return;
+    }
+    searchDialog->setMainWindow(mw);
+    TableSchema *ts = mw->getTableSchema();
+    if (!ts) {
+        str = "Error - Search Dialog Needs Window to have its table schema set";
+        QMessageBox::warning(0,QString("Fix8Log Viewer"),str);
+        qWarning() << str << __FILE__ << __LINE__;
+        return;
+    }
+    QRect rect = mw->geometry();
+    searchDialog->move(rect.x() + (rect.width()/4),rect.y() + (rect.height()/3));
+    searchDialog->setTableSchema(ts);
     searchDialog->showNormal();
+    searchDialog->raise();
+}
+void Fix8Log::searchDialogAcceptedSlot()
+{
+    qDebug() << "Search Accepted" << __FILE__ << __LINE__;
+    QSettings settings("fix8","logviewer");
+    if (searchDialog)
+        settings.setValue("SearchDialog",searchDialog->geometry());
 }

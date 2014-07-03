@@ -76,6 +76,8 @@ public:
     static QSize largeIconSize;
     static QColor menubarDefaultColor;
     static TimeFormat timeFormat;
+    static bool isFirstTime;
+    static QString appName;
     //  static QVector <MessagePair> *ConsoleMessagePairs;
 private:
     Globals(){};

@@ -90,6 +90,7 @@ public slots:
     void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
     void schemaModifiedSlot(TableSchema *,bool nameAndOrDescriptionOnly);
+    void searchDialogAcceptedSlot();
     void showSearchDialogSlot();
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
