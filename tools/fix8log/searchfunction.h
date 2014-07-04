@@ -14,7 +14,7 @@ public:
     QString function;
 };
 
-class SearchFunctionList : public QList<SearchFunction>
+class SearchFunctionList : public QList<SearchFunction *>
 {
 public:
     SearchFunctionList();

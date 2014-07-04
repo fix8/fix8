@@ -6,6 +6,7 @@
 #include "editHighLighter.h"
 #include "lineedit.h"
 #include "mainwindow.h"
+#include "searchfunction.h"
 class Database;
 class TableSchema;
 class SearchDialog : public QDialog
@@ -31,8 +32,11 @@ public:
   protected:
   void showEvent(QShowEvent *);
   void keyPressEvent(QKeyEvent *);
+signals:
+  void updatedSearchFunctions();
  private:
   QString createSearchRoutine(bool &bstatus);
+  void populateSearchFunctions();
   void validate();
   void setMessage(QString str,bool isError = true);
     QStyledItemDelegate *delegate;
@@ -71,5 +75,6 @@ public:
     QStandardItem *aliasItem;
     QStandardItem *functionItem;
     MainWindow    *mainWindow;
+    SearchFunctionList *searchFunctionList;
 };
 #endif // FILTERDIALOG_H

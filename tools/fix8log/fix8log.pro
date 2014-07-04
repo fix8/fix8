@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     fixtableverticaheaderview.cpp \
     worksheetSearches.cpp \
     searchDialog.cpp \
-    searchfunction.cpp
+    searchfunction.cpp \
+    databaseSearchFunctions.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

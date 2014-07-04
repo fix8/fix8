@@ -52,7 +52,7 @@ QString Database::arguments[] = {
     // tableschemas
     "id INTEGER primary key, name char(32), description char(120),locked integer default 0, xmlSchema char(36)",
     // schemafields
-    "id INTEGER primary key,name char(60),schemaID integer"
+    "id INTEGER primary key,name char(60),schemaID integer",
     // searchfunctions
     "id INTEGER primary key,alias char(32),function char(120)"
 };

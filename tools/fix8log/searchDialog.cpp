@@ -7,7 +7,7 @@
 
 SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     QDialog(parent),database(db),tableSchema(ts),haveError(false),strModel(0),
-    aliasItem(0),functionItem(0),mainWindow(0)
+    aliasItem(0),functionItem(0),mainWindow(0),searchFunctionList(0)
 {
 
     // setWindowIcon(QIcon(":/images/vicon22.png"));
@@ -161,6 +161,13 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     vbox->addWidget(buttonBox,0);
     resize(sizeHint());
     mode = ViewMode;
+    if (database) {
+        searchFunctionList = database->getSearchFunctions();
+        if (!searchFunctionList || (searchFunctionList->count() < 1) )
+            setMessage("No Search Functions In Database",false);
+        else
+            populateSearchFunctions();
+    }
 }
 void SearchDialog::setTableSchema(TableSchema *ts)
 {
@@ -266,6 +273,12 @@ void SearchDialog::saveSlot()
     QScriptEngine engine;
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
+    SearchFunction *sf;
+
+    if (!database) {
+        setMessage("Save failed as database is null");
+        return;
+    }
     QString newSearchStr = createSearchRoutine(bstatus);
 
     if (!bstatus) {
@@ -284,8 +297,29 @@ void SearchDialog::saveSlot()
         return;
     }
     if (mode == NewMode) {
+        sf = new SearchFunction();
+        sf->alias = aliasEdit->text();
+        sf->function = functionEdit->toPlainText();
+        bstatus = database->addSearchFunction(*sf);
+        if (!bstatus) {
+            setMessage(("Error saving search item to database"));
+            mode = ViewMode;
+            validate();
+            return;
+        }
+        else {
+            setMessage("Saved To Database",false);
+        }
+        if (!searchFunctionList)
+            searchFunctionList = new SearchFunctionList();
+
+        searchFunctionList->append(sf);
+        QVariant var;
+        var.setValue((void *) sf);
         QStandardItem *aliasItem = new QStandardItem(aliasEdit->text());
         QStandardItem *funcItem = new QStandardItem(functionEdit->toPlainText());
+        aliasItem->setData(var);
+        funcItem->setData(var);
         QList <QStandardItem *> items;
         items.append(aliasItem);
         items.append(funcItem);
@@ -293,6 +327,17 @@ void SearchDialog::saveSlot()
     }
     else {// must be EditMode
         if (aliasItem && functionItem) {
+            QVariant var = aliasItem->data();
+            sf = (SearchFunction *) var.value<void *>();
+            sf->alias = aliasEdit->text();
+            sf->function = functionEdit->toPlainText();
+            bstatus = database->updateSearchFunction(*sf);
+            if (!bstatus) {
+                setMessage("Update of search method failed");
+                mode = ViewMode;
+                validate();
+                return;
+            }
             aliasItem->setText(aliasEdit->text());
             functionItem->setText(functionEdit->toPlainText());
         }
@@ -301,6 +346,7 @@ void SearchDialog::saveSlot()
     functionEdit->setText("");
     mode = ViewMode;
     validate();
+    emit updatedSearchFunctions();
 }
 void SearchDialog::rowSelectedSlot(QModelIndex)
 {
@@ -399,39 +445,7 @@ void SearchDialog::keyPressEvent(QKeyEvent *event)
 }
 void SearchDialog::functionReturnSlot()
 {
-    bool bstatus;
-    QString errorMessage;
-    QScriptEngine engine;
-
-    QScriptSyntaxCheckResult::State syntaxState;
-    QString newSearchStr = createSearchRoutine(bstatus);
-
-    QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(newSearchStr);
-    syntaxState =syntaxResult.state();
-    if ( syntaxState == QScriptSyntaxCheckResult::Error) {
-        errorMessage = syntaxResult.errorMessage();
-        setMessage(errorMessage);
-        haveError = true;
-        mode = ViewMode;
-        validate();
-        return;
-    }
-    QString aliasStr = aliasEdit->text();
-    if (aliasStr.length() < 1) {
-        mode = ViewMode;
-        validate();
-        return;
-    }
-    QStandardItem *aliasItem = new QStandardItem(aliasStr);
-    QStandardItem *funcItem = new QStandardItem(functionEdit->toPlainText());
-    QList <QStandardItem *> items;
-    items.append(aliasItem);
-    items.append(funcItem);
-    model->appendRow(items);
-    aliasEdit->clear();
-    functionEdit->setText("");
-    mode = ViewMode;
-    validate();
+    saveSlot();
 }
 void SearchDialog::setMainWindow(MainWindow *mw)
 {
@@ -443,14 +457,62 @@ MainWindow *SearchDialog::getMainWindow()
 }
 void SearchDialog::deleteSlot()
 {
+    bool bstatus;
     QItemSelectionModel *selectionModel;
     selectionModel = tableView->selectionModel();
     if (!selectionModel->hasSelection()) {
         validate();
         return;
     }
+    if(!database) {
+        setMessage("Delete failed as database is null");
+        validate();
+        return;
+    }
     QModelIndexList selectedItems = selectionModel->selectedRows();
     QModelIndex mi = selectedItems.at(0);
+    QVariant var  = mi.data(Qt::UserRole + 1);
+    if (!var.isValid()) {
+        setMessage("Failed to delete item from database, have null value");
+        validate();
+        return;
+    }
+    qDebug() << "Get Search Item" << __FILE__ << __LINE__;
+    SearchFunction *sf = (SearchFunction *) var.value<void *>();
+    if (!sf) {
+        setMessage("Failed to delete item from database, have null value2");
+        validate();
+        return;
+    }
+    qDebug() << "Remove From Database" << __FILE__ << __LINE__;
+    bstatus = database->removeSearchFunction(sf->id);
+    if (!bstatus)
+        setMessage("Failed to delete item from database");
+    else
+        setMessage("Deleted Function From Database",false);
     model->removeRow(mi.row());
     validate();
+    emit updatedSearchFunctions();
+}
+void SearchDialog::populateSearchFunctions()
+{
+    SearchFunction *sf;
+    if (!searchFunctionList)
+        return;
+    model->removeRows(0,model->rowCount());
+    model->setRowCount(searchFunctionList->count());
+    QListIterator<SearchFunction *> iter(*searchFunctionList);
+    int row = 0;
+    while(iter.hasNext()) {
+        QVariant var;
+        sf = iter.next();
+        var.setValue((void *) sf);
+        QStandardItem *aliasItem = new QStandardItem(sf->alias);
+        aliasItem->setData(var);
+        QStandardItem *funcItem = new QStandardItem(sf->function);
+        funcItem->setData(var);
+        model->setItem(row,0,aliasItem);
+        model->setItem(row,1,funcItem);
+        row++;
+    }
 }

@@ -305,6 +305,8 @@ void Fix8Log::showSearchDialogSlot()
 
         searchDialog->setGeometry(rect);
         connect(searchDialog,SIGNAL(accepted()),this,SLOT(searchDialogAcceptedSlot()));
+        connect(searchDialog,SIGNAL(updatedSearchFunctions()),
+                this,SLOT(updatedSearchFunctionsSlot()));
     }
 
     MainWindow *mw = qobject_cast <MainWindow *> (sender());
@@ -332,4 +334,16 @@ void Fix8Log::searchDialogAcceptedSlot()
     QSettings settings("fix8","logviewer");
     if (searchDialog)
         settings.setValue("SearchDialog",searchDialog->geometry());
+}
+void Fix8Log::updatedSearchFunctionsSlot()
+{
+    if (!database) {
+        qWarning() << "Database not set, update search functions failed" << __FILE__ << __LINE__;
+    }
+    SearchFunctionList *sfl = database->getSearchFunctions();
+    if (sfl)
+        qDebug() << "Update of serarch Functions, count = " << sfl->count() << __FILE__ << __LINE__;
+    else
+        qDebug() << "Update search functions, empty" << __FILE__ << __LINE__;
+
 }

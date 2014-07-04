@@ -19,7 +19,7 @@ SearchFunction & SearchFunction::operator=( const SearchFunction &rhs)
     return *this;
 }
 
-SearchFunctionList::SearchFunctionList(): QList<SearchFunction>()
+SearchFunctionList::SearchFunctionList(): QList<SearchFunction *>()
 {
 
 }

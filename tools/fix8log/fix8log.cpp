@@ -305,6 +305,15 @@ bool Fix8Log::init()
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
     }
+   bstatus = database->tableIsValid(Database::SearchFunctions);
+   if (!bstatus) {
+       qWarning() << "Cerateing Search Table" << __FILE__ << __LINE__;
+       bstatus = database->createTable(Database::SearchFunctions);
+       if (!bstatus) {
+           errorStr = "Failed to create table  search table.";
+           displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+       }
+   }
     bstatus = database->tableIsValid(Database::TableSchemas);
     if (!bstatus) {
         bstatus = database->createTable(Database::TableSchemas);

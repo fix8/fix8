@@ -94,6 +94,7 @@ public slots:
     void showSearchDialogSlot();
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
+    void updatedSearchFunctionsSlot();
     void wakeupSlot(const QString&);
 protected:
     WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);

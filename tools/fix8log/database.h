@@ -43,6 +43,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include "searchfunction.h"
 #include "tableschema.h"
 #include "windowdata.h"
 #include "worksheetdata.h"
@@ -88,6 +89,11 @@ public:
     QStringList getSchemaFields(int schemaID);
     bool addSchemaFields(int schemaID, QStringList fieldNames);
     bool removeSchemaFields(int schemaID);
+    // SearchFunctions
+    SearchFunctionList *getSearchFunctions();
+    bool addSearchFunction(SearchFunction &);
+    bool updateSearchFunction(SearchFunction &);
+    bool removeSearchFunction(qint32 searchFunctionID);
 private:
     QString name;
     QSqlDatabase *handle;
