@@ -49,6 +49,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheetdata.h"
 #include <QList>
 #include <QUuid>
+class ComboBoxLineEdit;
 class EditHighLighter;
 class FixMimeData;
 class FixToolBar;
@@ -142,6 +143,7 @@ public:
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void setWindowNameSlot();
+    void searchFunctionSelectedSlot(int);
     void searchTextChangedSlot();
     void searchToolbarVisibleSlot(bool);
     void setColorSlot(QColor color);
@@ -269,6 +271,7 @@ private:
     QString createSearchRoutine(bool &bstatus);
     bool runSearchScript();
     void setSearchString(const QString &searchStr);
+    void validateSearchText();
     QByteArray fileDirState;
     QString  lastSelectedDir;
     QString fileFilter;
@@ -287,7 +290,10 @@ private:
     QScriptEngine engine;
     QCompleter *searchCompleter;
     QComboBox  *searchSelectCB;
+    ComboBoxLineEdit *searchSelectLineEdit;
     QLabel     *searchSelectL;
+    QMap <QString, qint32 > searchFunctionMap; //< function, indexofComboBox>
+    QAbstractItemModel *searchSelectModel;
 };
 
 #endif // MAINWINDOW_H

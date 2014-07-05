@@ -33,7 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-
+#include "comboboxlineedit.h"
 #include "fixmimedata.h"
 #include "fixtoolbar.h"
 #include "lineedit.h"
@@ -54,7 +54,24 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 void MainWindow::searchTextChangedSlot()
 {
     haveSearchString = false;
+    validateSearchText();
+}
+void MainWindow::validateSearchText()
+{
+    QString searchText = searchLineEdit->toPlainText();
+    if (searchFunctionMap.contains(searchText)) {
+        int index = searchFunctionMap.value(searchText);
+        QVariant var = searchSelectCB->itemData(index);
+        //SearchFunction *sf = (SearchFunction *) var.value<void *>();
+        searchSelectCB->setCurrentIndex(index);
+        qDebug() << "Search Text found"<< __FILE__ << __LINE__;
 
+    }
+    else {
+        qDebug() << "Search Text not found"<< __FILE__ << __LINE__;
+        searchSelectCB->setCurrentIndex(0);
+    }
+    validateSearchButtons();
 }
 void MainWindow::setSearchColumnNames(QStringList columnNames)
 {
@@ -330,19 +347,36 @@ void MainWindow::updateSearchFunctions(SearchFunctionList *sfl)
 }
 void MainWindow::populateSearchList(SearchFunctionList *sfl)
 {
-   SearchFunction *sf;
-   searchSelectCB->clear();
-   if (!sfl || sfl->count() < 1)
-       return;
-   QListIterator <SearchFunction *> iter(*sfl);
-   while(iter.hasNext()) {
-       sf = iter.next();
-       QVariant var;
-       var.setValue((void *) sf);
-       searchSelectCB->addItem(sf->alias,var);
-   }
+    int index = 1;
+    SearchFunction *sf;
+    searchFunctionMap.clear();
+    searchSelectCB->clear();
+    if (!sfl || sfl->count() < 1)
+        return;
+    QListIterator <SearchFunction *> iter(*sfl);
+    searchSelectCB->addItem("Select Function");
+    while(iter.hasNext()) {
+        sf = iter.next();
+        QVariant var;
+        var.setValue((void *) sf);
+        searchSelectCB->addItem(sf->alias,var);
+        searchFunctionMap.insert(sf->function,index);
+        index++;
+    }
 }
 void MainWindow::saveSearchStringSlot()
 {
-  emit showSearchDialogAddMode(searchLineEdit->toPlainText());
+    emit showSearchDialogAddMode(searchLineEdit->toPlainText());
+}
+void MainWindow::searchFunctionSelectedSlot(int index)
+{
+    if (index == 0)
+        searchLineEdit->setText("");
+    else {
+        QVariant var = searchSelectCB->itemData(index);
+        if (var.isValid()) {
+            SearchFunction *sf = (SearchFunction *) var.value<void *>();
+            searchLineEdit->setText(sf->function);
+        }
+    }
 }

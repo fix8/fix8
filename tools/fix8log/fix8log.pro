@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     worksheetSearches.cpp \
     searchDialog.cpp \
     searchfunction.cpp \
-    databaseSearchFunctions.cpp
+    databaseSearchFunctions.cpp \
+    comboboxlineedit.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -96,7 +97,8 @@ HEADERS  += mainwindow.h \
     searchDelegate.h \
     fixtableverticaheaderview.h \
     searchDialog.h \
-    searchfunction.h
+    searchfunction.h \
+    comboboxlineedit.h
 
 RESOURCES += \
     resources.qrc

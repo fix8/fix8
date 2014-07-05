@@ -33,6 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#include "comboboxlineedit.h"
 #include "editHighLighter.h"
 #include "fixmimedata.h"
 #include "fixtoolbar.h"
@@ -281,9 +282,12 @@ void MainWindow::buildMainWindow()
     searchSelectBox->setMargin(0);
     searchSelectL = new QLabel("Select:");
     searchSelectCB = new QComboBox(this);
+    connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),SLOT(searchFunctionSelectedSlot(int)));
+    searchSelectLineEdit = new ComboBoxLineEdit(this);
+    searchSelectCB->setLineEdit(searchSelectLineEdit);
     QFontMetrics fm(searchSelectCB->font());
     searchSelectCB->setMaximumWidth(fm.maxWidth()*20);
-
+    searchSelectModel = searchSelectCB->model();
     searchSelectCB->setEditable(false);
     searchSelectBox->addWidget(searchSelectL,0);
     searchSelectBox->addWidget(searchSelectCB,1);
