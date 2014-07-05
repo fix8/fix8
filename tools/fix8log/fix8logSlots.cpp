@@ -305,8 +305,8 @@ void Fix8Log::showSearchDialogSlot()
 
         searchDialog->setGeometry(rect);
         connect(searchDialog,SIGNAL(accepted()),this,SLOT(searchDialogAcceptedSlot()));
-        connect(searchDialog,SIGNAL(updatedSearchFunctions()),
-                this,SLOT(updatedSearchFunctionsSlot()));
+        connect(searchDialog,SIGNAL(updatedSearchFunctions(SearchFunctionList *)),
+                this,SLOT(updatedSearchFunctionsSlot(SearchFunctionList *)));
     }
 
     MainWindow *mw = qobject_cast <MainWindow *> (sender());
@@ -328,6 +328,46 @@ void Fix8Log::showSearchDialogSlot()
     searchDialog->showNormal();
     searchDialog->raise();
 }
+void Fix8Log::showSearchDialogAddModeSlot(QString searchStr)
+{
+    QString str;
+    if (!searchDialog) {
+        searchDialog = new SearchDialog(database,0);
+        QSettings settings("fix8","logviewer");
+        QRect rect = settings.value("SearchDialog").toRect();
+        QSize sh = searchDialog->sizeHint();
+        if (rect.width() < sh.width())
+            rect.setWidth(sh.width());
+        if (rect.height() < sh.height())
+            rect.setHeight(sh.height());
+
+        searchDialog->setGeometry(rect);
+        connect(searchDialog,SIGNAL(accepted()),this,SLOT(searchDialogAcceptedSlot()));
+        connect(searchDialog,SIGNAL(updatedSearchFunctions(SearchFunctionList *)),
+                this,SLOT(updatedSearchFunctionsSlot(SearchFunctionList *)));
+    }
+
+    MainWindow *mw = qobject_cast <MainWindow *> (sender());
+    if (!mw) {
+        qWarning() << "Error show search dialog, main window is null" << __FILE__ << __LINE__;
+        return;
+    }
+    searchDialog->setMainWindow(mw);
+    TableSchema *ts = mw->getTableSchema();
+    if (!ts) {
+        str = "Error - Search Dialog Needs Window to have its table schema set";
+        QMessageBox::warning(0,QString("Fix8Log Viewer"),str);
+        qWarning() << str << __FILE__ << __LINE__;
+        return;
+    }
+    QRect rect = mw->geometry();
+    searchDialog->move(rect.x() + (rect.width()/4),rect.y() + (rect.height()/3));
+    searchDialog->setTableSchema(ts);
+    searchDialog->setNewMode(searchStr);
+    searchDialog->showNormal();
+    searchDialog->raise();
+}
+
 void Fix8Log::searchDialogAcceptedSlot()
 {
     qDebug() << "Search Accepted" << __FILE__ << __LINE__;
@@ -335,15 +375,21 @@ void Fix8Log::searchDialogAcceptedSlot()
     if (searchDialog)
         settings.setValue("SearchDialog",searchDialog->geometry());
 }
-void Fix8Log::updatedSearchFunctionsSlot()
+void Fix8Log::updatedSearchFunctionsSlot(SearchFunctionList *sfl)
 {
     if (!database) {
         qWarning() << "Database not set, update search functions failed" << __FILE__ << __LINE__;
     }
-    SearchFunctionList *sfl = database->getSearchFunctions();
+
     if (sfl)
         qDebug() << "Update of serarch Functions, count = " << sfl->count() << __FILE__ << __LINE__;
     else
         qDebug() << "Update search functions, empty" << __FILE__ << __LINE__;
 
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        mw->updateSearchFunctions(sfl);
+    }
 }

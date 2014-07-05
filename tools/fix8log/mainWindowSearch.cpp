@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheet.h"
 #include "worksheetmodel.h"
 #include "globals.h"
+#include "searchfunction.h"
 #include "searchlineedit.h"
 #include "tableschema.h"
 #include <QQuickView>
@@ -247,7 +248,7 @@ void MainWindow::validateSearchButtons()
             QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
             syntaxState =syntaxResult.state();
             if ( syntaxState == QScriptSyntaxCheckResult::Error) {
-             qDebug() << "HAve Serch Error" << __FILE__ << __LINE__;
+                qDebug() << "HAve Serch Error" << __FILE__ << __LINE__;
                 enableSearch = false;
             }
         }
@@ -274,7 +275,6 @@ void MainWindow::validateSearchButtons(quint32 searchStatus, WorkSheet *ws)
 }
 void MainWindow::rowSelectedSlot(int row)
 {
-    qDebug() << "Main WIndow row selected " << row << __FILE__<< __LINE__;
     validateSearchButtons();
 }
 void MainWindow::searchToolbarVisibleSlot(bool visible)
@@ -292,4 +292,57 @@ void MainWindow::setSearchString(const QString &searchStr)
 {
     searchLineEdit->setText(searchStr);
     validateSearchButtons();
+}
+void MainWindow::updateSearchFunctions(SearchFunctionList *sfl)
+{
+    bool nothingToDo = false;
+    bool updateAlias = false;
+    bool updateFunction = false;
+    QVariant var;
+    SearchFunction *currentSearchFunction = 0;
+    SearchFunction *newSearchFunction = 0;
+    int currentIndex = searchSelectCB->currentIndex();
+    if (currentIndex >= 0) {
+        var = searchSelectCB->itemData(currentIndex);
+        if (var.isValid()) {
+            currentSearchFunction = (SearchFunction *) var.value<void *>();
+
+        }
+    }
+    searchSelectCB->clear();
+    if (sfl && (sfl->count() > 0)  && currentSearchFunction) {
+        newSearchFunction = sfl->findByID(currentSearchFunction->id);
+        if (newSearchFunction) {
+            if (newSearchFunction == currentSearchFunction)
+                nothingToDo = true;
+            else {
+                if (newSearchFunction->alias != currentSearchFunction->alias)
+                    updateAlias = true;
+                if (newSearchFunction->function != currentSearchFunction->function)
+                    updateFunction =  true;
+            }
+
+        }
+        populateSearchList(sfl);
+    }
+    else
+        populateSearchList(sfl);
+}
+void MainWindow::populateSearchList(SearchFunctionList *sfl)
+{
+   SearchFunction *sf;
+   searchSelectCB->clear();
+   if (!sfl || sfl->count() < 1)
+       return;
+   QListIterator <SearchFunction *> iter(*sfl);
+   while(iter.hasNext()) {
+       sf = iter.next();
+       QVariant var;
+       var.setValue((void *) sf);
+       searchSelectCB->addItem(sf->alias,var);
+   }
+}
+void MainWindow::saveSearchStringSlot()
+{
+  emit showSearchDialogAddMode(searchLineEdit->toPlainText());
 }

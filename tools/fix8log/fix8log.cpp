@@ -62,7 +62,7 @@ using namespace std;
 Fix8Log::Fix8Log(QtSingleApplication *qsa) :
     QObject(),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
-    defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa),searchDialog(0)
+    defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa),searchDialog(0),searchFunctionList(0)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
@@ -111,6 +111,7 @@ void Fix8Log::cleanWindowDataList(QList <WindowData> &windowDataList)
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,true);
+    newMW->updateSearchFunctions(searchFunctionList);
     wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
@@ -139,6 +140,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(editSchema(MainWindow*)),this,SLOT(editSchemaSlot(MainWindow  *)));
     connect(mw,SIGNAL(tableSchemaChanged(TableSchema*)),this,SLOT(tableSchemaSelectedSlot(TableSchema *)));
     connect(mw,SIGNAL(showSearchDialog()),this,SLOT(showSearchDialogSlot()));
+    connect(mw,SIGNAL(showSearchDialogAddMode(QString)),this,SLOT(showSearchDialogAddModeSlot(QString)));
     mw->setAutoSaveOn(autoSaveOn);
 }
 
@@ -314,6 +316,9 @@ bool Fix8Log::init()
            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
        }
    }
+   else
+       searchFunctionList = database->getSearchFunctions();
+
     bstatus = database->tableIsValid(Database::TableSchemas);
     if (!bstatus) {
         bstatus = database->createTable(Database::TableSchemas);
@@ -453,6 +458,7 @@ bool Fix8Log::init()
         while(iter.hasNext()) {
             wd = iter.next();
             newMW  = new MainWindow(true);
+            newMW->updateSearchFunctions(searchFunctionList);
             newMW->setWindowData(wd);
             wireSignalAndSlots(newMW);
             mainWindows.append(newMW);
@@ -512,6 +518,8 @@ bool Fix8Log::init()
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
+        newMW->updateSearchFunctions(searchFunctionList);
+
         if (windowDataList.count() > 0) {
             wd = windowDataList.at(0);
             if (!wd.tableSchema) {
@@ -532,6 +540,7 @@ bool Fix8Log::init(QString fileNameToLoad)
 {
     WorkSheetModel *model = 0;
     MainWindow *newMW  =new MainWindow(true);
+    newMW->updateSearchFunctions(searchFunctionList);
     WindowData wd;
     WorkSheetData wsd;
     QString errorStr;

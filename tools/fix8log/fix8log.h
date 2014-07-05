@@ -44,6 +44,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "mainwindow.h"
 #include "messagefield.h"
+#include "searchfunction.h"
 #include "tableschema.h"
 #include <qtsingleapplication.h>
 
@@ -92,9 +93,10 @@ public slots:
     void schemaModifiedSlot(TableSchema *,bool nameAndOrDescriptionOnly);
     void searchDialogAcceptedSlot();
     void showSearchDialogSlot();
+    void showSearchDialogAddModeSlot(QString);
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
-    void updatedSearchFunctionsSlot();
+    void updatedSearchFunctionsSlot(SearchFunctionList *sfl);
     void wakeupSlot(const QString&);
 protected:
     WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);
@@ -129,6 +131,7 @@ private:
                       MessageField *mf,QBaseEntryList *qbaseEntryList,int *level);
 
     SearchDialog *searchDialog;
+    SearchFunctionList *searchFunctionList;
 };
 
 #endif // FIX8LOG_H

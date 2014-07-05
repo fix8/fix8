@@ -346,7 +346,7 @@ void SearchDialog::saveSlot()
     functionEdit->setText("");
     mode = ViewMode;
     validate();
-    emit updatedSearchFunctions();
+    emit updatedSearchFunctions(searchFunctionList);
 }
 void SearchDialog::rowSelectedSlot(QModelIndex)
 {
@@ -484,6 +484,8 @@ void SearchDialog::deleteSlot()
         validate();
         return;
     }
+    if (searchFunctionList)
+        searchFunctionList->removeOne(sf);
     qDebug() << "Remove From Database" << __FILE__ << __LINE__;
     bstatus = database->removeSearchFunction(sf->id);
     if (!bstatus)
@@ -492,7 +494,7 @@ void SearchDialog::deleteSlot()
         setMessage("Deleted Function From Database",false);
     model->removeRow(mi.row());
     validate();
-    emit updatedSearchFunctions();
+    emit updatedSearchFunctions(searchFunctionList);
 }
 void SearchDialog::populateSearchFunctions()
 {
@@ -515,4 +517,10 @@ void SearchDialog::populateSearchFunctions()
         model->setItem(row,1,funcItem);
         row++;
     }
+}
+void SearchDialog::setNewMode(QString searchStr)
+{
+    newSearchSlot();
+    functionEdit->setText(searchStr);
+    validate();
 }

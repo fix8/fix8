@@ -9,6 +9,7 @@ public:
     SearchFunction();
     SearchFunction(const SearchFunction &);
     SearchFunction & operator=( const SearchFunction &rhs);
+    bool operator==(const SearchFunction &rhs);
     qint32 id;
     QString alias;
     QString function;
@@ -18,6 +19,7 @@ class SearchFunctionList : public QList<SearchFunction *>
 {
 public:
     SearchFunctionList();
+    SearchFunction *findByID(qint32 id);
 };
 
 #endif // SEARCHFUNCTION_H

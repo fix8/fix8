@@ -15,6 +15,7 @@ class SearchDialog : public QDialog
 public:
   explicit SearchDialog(Database *database,TableSchema *tableSchema, QWidget *parent = 0);
     typedef enum  {ViewMode,EditMode,NewMode} Mode;
+    void setNewMode(QString searchStr);
     void setTableSchema(TableSchema *ts);
     void setMainWindow(MainWindow *mw);
     MainWindow *getMainWindow();
@@ -33,7 +34,7 @@ public:
   void showEvent(QShowEvent *);
   void keyPressEvent(QKeyEvent *);
 signals:
-  void updatedSearchFunctions();
+  void updatedSearchFunctions(SearchFunctionList *);
  private:
   QString createSearchRoutine(bool &bstatus);
   void populateSearchFunctions();

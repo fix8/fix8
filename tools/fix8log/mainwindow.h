@@ -56,6 +56,7 @@ class LineEdit;
 class WorkSheetModel;
 class NoDataLabel;
 class SearchLineEdit;
+class SearchFunctionList;
 class TableSchema;
 class TableSchemaList;
 class QAction;
@@ -92,6 +93,7 @@ public:
     void deletedSchema(int schemaID);
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
+    void populateSearchList(SearchFunctionList *sfl);
     void setSearchColumnNames(QStringList columnNames);
     static void setTableSchemaList(TableSchemaList *);
     void showFileDialog();
@@ -107,6 +109,7 @@ public:
     void setWindowData(const WindowData &wd);
     void setTableSchema(TableSchema *);
     void tableSchemaModified(TableSchema *);
+    void updateSearchFunctions(SearchFunctionList *);
     protected slots:
     void autoSaveOnSlot(bool);
     void cancelSessionRestoreSlot();
@@ -131,6 +134,7 @@ public:
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void rowSelectedSlot(int);
     void quitSlot();
+    void saveSearchStringSlot();
     void schemaSelectedSlot(QAction *);
     void searchActionSlot(QAction *);
     void searchReturnSlot();
@@ -177,6 +181,7 @@ protected:
     QAction  *pasteTabA;
     QAction  *quitA;
     QAction  *saveA;
+    QAction *saveSearchFuncA;
     QAction  *searchBackA;
     QAction  *searchBeginA;
     QAction  *searchEndA;
@@ -252,6 +257,7 @@ signals:
     void deleteWindow(MainWindow *);
     void editSchema(MainWindow *);
     void showSearchDialog();
+    void showSearchDialogAddMode(QString searchFunction);
     void tableSchemaChanged(TableSchema *);
     void exitApp();
     void modelDropped(FixMimeData *);
@@ -280,6 +286,8 @@ private:
     QActionGroup *searchActionGroup;
     QScriptEngine engine;
     QCompleter *searchCompleter;
+    QComboBox  *searchSelectCB;
+    QLabel     *searchSelectL;
 };
 
 #endif // MAINWINDOW_H

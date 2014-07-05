@@ -233,6 +233,13 @@ void MainWindow::buildMainWindow()
     searchActionGroup = new QActionGroup(this);
     connect(searchActionGroup,SIGNAL(triggered(QAction*)),
             this,SLOT(searchActionSlot(QAction*)));
+    QIcon saveIcon;
+    saveIcon.addPixmap(QPixmap(":/images/svg/saveEnabled.svg"),QIcon::Normal,QIcon::On);
+    saveIcon.addPixmap(QPixmap(":/images/svg/saveDisabled.svg"),QIcon::Normal,QIcon::Off);
+    saveSearchFuncA  = new QAction("Save",this);
+    saveSearchFuncA->setIcon(saveIcon);
+    saveSearchFuncA->setToolTip(tr("Save this search criteria"));
+    connect(saveSearchFuncA,SIGNAL(triggered()),this,SLOT(saveSearchStringSlot()));
     searchBackA  = new QAction("Previous",this);
     searchBackA->setIcon(QIcon(":/images/svg/go-previous-symbolic.svg"));
     searchBeginA = new QAction("First",this);
@@ -248,7 +255,11 @@ void MainWindow::buildMainWindow()
 
     searchEditA  = new QAction(tr("Edit"),this);
     connect(searchEditA,SIGNAL(triggered()),this,SIGNAL(showSearchDialog()));
-    searchEditA->setIcon(QIcon(":/images/svg/text-editor-symbolic.svg"));
+    //searchEditA->setIcon(QIcon(":/images/svg/text-editor-symbolic.svg"));
+    QSize stoolbar = searchToolBar->iconSize();
+    QPixmap searchEditPM(":/images/svg/text-editor-symbolic.svg");
+    int ht = stoolbar.height()*.66;
+     searchEditA->setIcon(searchEditPM.scaledToHeight(ht));
     searchLV = new QLabel(searchToolBar);// only show when toobar is vertial
     searchArea = new QWidget(this);
     QHBoxLayout *searchBox = new QHBoxLayout();
@@ -264,6 +275,18 @@ void MainWindow::buildMainWindow()
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
     searchLineEdit = new LineEdit(searchArea);
+    QWidget *searchSelectArea = new QWidget(this);
+    QHBoxLayout *searchSelectBox = new QHBoxLayout();
+    searchSelectArea->setLayout(searchSelectBox);
+    searchSelectBox->setMargin(0);
+    searchSelectL = new QLabel("Select:");
+    searchSelectCB = new QComboBox(this);
+    QFontMetrics fm(searchSelectCB->font());
+    searchSelectCB->setMaximumWidth(fm.maxWidth()*20);
+
+    searchSelectCB->setEditable(false);
+    searchSelectBox->addWidget(searchSelectL,0);
+    searchSelectBox->addWidget(searchSelectCB,1);
 
     searchCompleter = new QCompleter(this);
 
@@ -281,10 +304,12 @@ void MainWindow::buildMainWindow()
     searchToolBar->addAction(linkSearchA);
     searchToolBar->addWidget(searchLV);
     searchToolBar->addWidget(searchArea);
+    searchToolBar->addAction(saveSearchFuncA);
     searchToolBar->addAction(searchBeginA);
     searchToolBar->addAction(searchBackA);
     searchToolBar->addAction(searchNextA);
     searchToolBar->addAction(searchEndA);
+    searchToolBar->addWidget(searchSelectArea);
     searchToolBar->addAction(searchEditA);
     QHBoxLayout *space = new QHBoxLayout();
     space->addStretch(1);
