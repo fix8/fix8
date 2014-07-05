@@ -1094,8 +1094,8 @@ public:
 	    \return pointer to field or 0 if not found */
 	BaseField *get_field_flattened(const unsigned short fnum) const
 	{
-		Fields::const_iterator itr;
-		return  (itr = _fields.find(fnum)) != _fields.end() ? itr->second
+		auto itr (_fields.find(fnum));
+		return  itr != _fields.end() ? itr->second
 				: (itr = _header->_fields.find(fnum)) != _header->_fields.end() ? itr->second
 				: (itr = _trailer->_fields.find(fnum)) != _trailer->_fields.end() ? itr->second : nullptr;
 	}

@@ -157,7 +157,8 @@ class Logger
 	std::list<std::string> _buffer;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, nolf, num_flags };
+	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction,
+					 buffer, inbound, outbound, nolf, minitimestamp, num_flags };
 	enum { rotation_default = 5, max_rotation = 64};
 	using LogFlags = ebitset<Flags>;
 
@@ -344,6 +345,10 @@ public:
 		<< buffer
 #endif
 	) {}
+
+	/*! Ctor with logflags
+	   \param flags name to use */
+	SingleLogger(LogFlags flags) : FileLogger(fn, flags) {}
 
 	/*! Set the global logfile name.
 	    \param from name to set to */
