@@ -60,7 +60,8 @@ using namespace FIX8;
 using namespace std;
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
-    MainWindow *newMW  =new MainWindow(*mw);
+    MainWindow *newMW  =new MainWindow(*mw,database);
+    newMW->setSearchFunctions(searchFunctionList);
     wireSignalAndSlots(newMW);
     newMW->show();
     newMW->showFileDialog();
@@ -382,7 +383,7 @@ void Fix8Log::updatedSearchFunctionsSlot(SearchFunctionList *sfl)
     }
 
     if (sfl)
-        qDebug() << "Update of serarch Functions, count = " << sfl->count() << __FILE__ << __LINE__;
+        qDebug() << "Update of search Functions, count = " << sfl->count() << __FILE__ << __LINE__;
     else
         qDebug() << "Update search functions, empty" << __FILE__ << __LINE__;
 
@@ -392,4 +393,12 @@ void Fix8Log::updatedSearchFunctionsSlot(SearchFunctionList *sfl)
         mw = iter.next();
         mw->updateSearchFunctions(sfl);
     }
+    /*
+    if (searchFunctionList) {
+        qDeleteAll(searchFunctionList->begin(),searchFunctionList->end());
+       // delete searchFunctionList;
+    }
+    */
+    searchFunctionList = sfl;
+
 }

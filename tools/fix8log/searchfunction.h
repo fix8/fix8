@@ -19,6 +19,7 @@ class SearchFunctionList : public QList<SearchFunction *>
 {
 public:
     SearchFunctionList();
+     SearchFunctionList & operator=( const SearchFunctionList &rhs);
     SearchFunction *findByID(qint32 id);
 };
 

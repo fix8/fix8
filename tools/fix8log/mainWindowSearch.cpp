@@ -172,6 +172,7 @@ void MainWindow::searchReturnSlot()
         errorMessage = syntaxResult.errorMessage();
         GUI::ConsoleMessage msg(errorMessage,GUI::ConsoleMessage::ErrorMsg);
         displayConsoleMessage(msg);
+        ws->doSearch(WorkSheet::SearchOff);
         haveSearchString = false;
         validateSearchButtons();
         return;
@@ -187,7 +188,7 @@ void MainWindow::searchReturnSlot()
             update();
             return;
         }
-        // qDebug() << "Determine where to search from forward or backward based upon selected row
+        //Debug() << "Determine where to search from forward or backward based upon selected row
         WorkSheet::SearchType searchType;
         searchType = WorkSheet::SearchNext;
         quint32  searchStatus  = ws->doSearch(searchType);
@@ -243,7 +244,6 @@ void MainWindow::validateSearchButtons()
     WorkSheet *ws;
     WorkSheetModel *wsm;
     bool enableSearch = true;
-    qDebug() << "VALIDATE SEARCH() " << __FILE__ << __LINE__;
     if (tabW->count()  < 1)
         enableSearch = false;
     else {
@@ -310,59 +310,92 @@ void MainWindow::setSearchString(const QString &searchStr)
     searchLineEdit->setText(searchStr);
     validateSearchButtons();
 }
+void MainWindow::setSearchFunctions(SearchFunctionList *sfl)
+{
+    populateSearchList(sfl);
+}
+
 void MainWindow::updateSearchFunctions(SearchFunctionList *sfl)
 {
-    bool nothingToDo = false;
-    bool updateAlias = false;
+
     bool updateFunction = false;
     QVariant var;
     SearchFunction *currentSearchFunction = 0;
     SearchFunction *newSearchFunction = 0;
     int currentIndex = searchSelectCB->currentIndex();
-    if (currentIndex >= 0) {
-        var = searchSelectCB->itemData(currentIndex);
-        if (var.isValid()) {
-            currentSearchFunction = (SearchFunction *) var.value<void *>();
-
-        }
+    if (currentIndex == 0) {
+        validateSearchButtons();
+        return;
     }
-    searchSelectCB->clear();
+    var = searchSelectCB->itemData(currentIndex);
+    if (var.isValid()) {
+        currentSearchFunction = (SearchFunction *) var.value<void *>();
+    }
+
+    //searchSelectCB->clear();
     if (sfl && (sfl->count() > 0)  && currentSearchFunction) {
         newSearchFunction = sfl->findByID(currentSearchFunction->id);
         if (newSearchFunction) {
-            if (newSearchFunction == currentSearchFunction)
-                nothingToDo = true;
-            else {
-                if (newSearchFunction->alias != currentSearchFunction->alias)
-                    updateAlias = true;
-                if (newSearchFunction->function != currentSearchFunction->function)
-                    updateFunction =  true;
+            if (newSearchFunction->id == currentSearchFunction->id){
+                if (newSearchFunction->function != currentSearchFunction->function) {
+                    updateFunction = true;
+                    *currentSearchFunction = *newSearchFunction;
+                }
             }
-
         }
-        populateSearchList(sfl);
+        else {
+            searchLineEdit->setText("");
+            WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+            if (ws){
+                ws->doSearch(WorkSheet::SearchOff);
+            }
+        }
     }
-    else
-        populateSearchList(sfl);
+    validateSearchButtons();
+    populateSearchList(sfl);
+    if (updateFunction) {
+        searchLineEdit->setText(newSearchFunction->function);
+        searchReturnSlot();
+    }
+    else if (currentSearchFunction) {
+        disconnect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
+        searchLineEdit->setText(currentSearchFunction->function);
+        int index = searchFunctionMap.value(currentSearchFunction->function);
+        searchSelectCB->setCurrentIndex(index);
+        connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
+    }
+
 }
 void MainWindow::populateSearchList(SearchFunctionList *sfl)
 {
     int index = 1;
+
     SearchFunction *sf;
+    disconnect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
+
     searchFunctionMap.clear();
     searchSelectCB->clear();
-    if (!sfl || sfl->count() < 1)
+    if (!sfl || sfl->count() < 1) {
+        connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),SLOT(searchFunctionSelectedSlot(int)));
         return;
-    QListIterator <SearchFunction *> iter(*sfl);
+    }
+
+    if (searchFunctionList.count() > 0) {
+        qDeleteAll(searchFunctionList.begin(),searchFunctionList.end());
+    }
+    searchFunctionList = *sfl;
+    QListIterator <SearchFunction *> iter(searchFunctionList);
     searchSelectCB->addItem("Select Function");
     while(iter.hasNext()) {
         sf = iter.next();
         QVariant var;
         var.setValue((void *) sf);
+
         searchSelectCB->addItem(sf->alias,var);
         searchFunctionMap.insert(sf->function,index);
         index++;
     }
+    connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),SLOT(searchFunctionSelectedSlot(int)));
 }
 void MainWindow::saveSearchStringSlot()
 {
@@ -377,6 +410,7 @@ void MainWindow::searchFunctionSelectedSlot(int index)
         if (var.isValid()) {
             SearchFunction *sf = (SearchFunction *) var.value<void *>();
             searchLineEdit->setText(sf->function);
+            searchReturnSlot();
         }
     }
 }

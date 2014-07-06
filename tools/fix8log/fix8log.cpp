@@ -110,8 +110,8 @@ void Fix8Log::cleanWindowDataList(QList <WindowData> &windowDataList)
 }
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
-    MainWindow *newMW  =new MainWindow(*mw,true);
-    newMW->updateSearchFunctions(searchFunctionList);
+    MainWindow *newMW  =new MainWindow(*mw,database,true);
+    newMW->setSearchFunctions(searchFunctionList);
     wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
@@ -457,8 +457,8 @@ bool Fix8Log::init()
     if (autoSaveOn){
         while(iter.hasNext()) {
             wd = iter.next();
-            newMW  = new MainWindow(true);
-            newMW->updateSearchFunctions(searchFunctionList);
+            newMW  = new MainWindow(database,true);
+            newMW->setSearchFunctions(searchFunctionList);
             newMW->setWindowData(wd);
             wireSignalAndSlots(newMW);
             mainWindows.append(newMW);
@@ -517,8 +517,8 @@ bool Fix8Log::init()
 
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
-        newMW = new MainWindow();
-        newMW->updateSearchFunctions(searchFunctionList);
+        newMW = new MainWindow(database);
+        newMW->setSearchFunctions(searchFunctionList);
 
         if (windowDataList.count() > 0) {
             wd = windowDataList.at(0);
@@ -539,8 +539,8 @@ bool Fix8Log::init()
 bool Fix8Log::init(QString fileNameToLoad)
 {
     WorkSheetModel *model = 0;
-    MainWindow *newMW  =new MainWindow(true);
-    newMW->updateSearchFunctions(searchFunctionList);
+    MainWindow *newMW  =new MainWindow(database,true);
+    newMW->setSearchFunctions(searchFunctionList);
     WindowData wd;
     WorkSheetData wsd;
     QString errorStr;

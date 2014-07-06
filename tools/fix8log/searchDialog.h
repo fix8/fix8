@@ -23,14 +23,19 @@ public:
  protected slots:
   void aliasChangedSlot(QString);
   void cancelSlot();
+  void closeSlot();
   void deleteSlot();
+  void exportSlot();
   void functionChangedSlot();
   void functionReturnSlot();
+  void importSlot();
   void newSearchSlot();
   void editSearchSlot();
+  void editSearchItemSlot(QModelIndex mi);
   void saveSlot();
   void rowSelectedSlot(QModelIndex);
   protected:
+  void closeEvent(QCloseEvent *);
   void showEvent(QShowEvent *);
   void keyPressEvent(QKeyEvent *);
 signals:
@@ -38,8 +43,10 @@ signals:
  private:
   QString createSearchRoutine(bool &bstatus);
   void populateSearchFunctions();
-  void validate();
+  void readXML(QString &fileName);
   void setMessage(QString str,bool isError = true);
+  void validate();
+  void writeXML(QString &fileName);
     QStyledItemDelegate *delegate;
     QLabel     *titleL;
     QDialogButtonBox *buttonBox;

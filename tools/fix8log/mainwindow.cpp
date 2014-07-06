@@ -51,9 +51,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 TableSchema *MainWindow::defaultTableSchema = 0;
 TableSchemaList *MainWindow::schemaList = 0;
 
-MainWindow::MainWindow(bool showLoading)
+MainWindow::MainWindow(Database *db,bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchString(false)
+      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchString(false),database(db)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -63,9 +63,9 @@ MainWindow::MainWindow(bool showLoading)
     readSettings();
 }
 
-MainWindow::MainWindow(MainWindow &mw,bool copyAll)
+MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false), haveSearchString(false)
+      windowDataID(-1),loadingActive(false), haveSearchString(false),database(db)
 {
     buildMainWindow();
     setAcceptDrops(true);
@@ -282,7 +282,7 @@ void MainWindow::buildMainWindow()
     searchSelectBox->setMargin(0);
     searchSelectL = new QLabel("Select:");
     searchSelectCB = new QComboBox(this);
-    connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),SLOT(searchFunctionSelectedSlot(int)));
+    connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
     searchSelectLineEdit = new ComboBoxLineEdit(this);
     searchSelectCB->setLineEdit(searchSelectLineEdit);
     QFontMetrics fm(searchSelectCB->font());
@@ -840,7 +840,6 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
         }
     }
     if (tabW->count() > 0) {
-        qDebug() << "TAB COUNT = " << tabW->count() << __FILE__ << __LINE__;
         stackW->setCurrentWidget(workAreaSplitter);
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);

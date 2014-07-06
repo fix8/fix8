@@ -40,16 +40,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QMainWindow>
 #include <QQuickItem>
 #include <QtScript>
-
 #include "fixtable.h"
 #include "globals.h"
+#include "searchfunction.h"
 #include "windowdata.h"
 #include "worksheet.h"
-
 #include "worksheetdata.h"
 #include <QList>
 #include <QUuid>
 class ComboBoxLineEdit;
+class Database;
 class EditHighLighter;
 class FixMimeData;
 class FixToolBar;
@@ -85,8 +85,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     friend class Fix8Log;
 public:
-    MainWindow(bool showLoading=false);
-    MainWindow(MainWindow & sibling,bool copyAll = false);
+    MainWindow(Database *database,bool showLoading=false);
+    MainWindow(MainWindow & sibling,Database *database,bool copyAll = false);
     ~MainWindow();
     void addNewSchema(TableSchema *);
     void addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd);
@@ -96,6 +96,7 @@ public:
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
     void populateSearchList(SearchFunctionList *sfl);
     void setSearchColumnNames(QStringList columnNames);
+    void setSearchFunctions(SearchFunctionList *sfl);
     static void setTableSchemaList(TableSchemaList *);
     void showFileDialog();
     QString getName();
@@ -294,6 +295,8 @@ private:
     QLabel     *searchSelectL;
     QMap <QString, qint32 > searchFunctionMap; //< function, indexofComboBox>
     QAbstractItemModel *searchSelectModel;
+    SearchFunctionList searchFunctionList;
+    Database *database;
 };
 
 #endif // MAINWINDOW_H

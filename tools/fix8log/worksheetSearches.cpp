@@ -82,7 +82,6 @@ quint32 WorkSheet::doSearch(SearchType st)
     quint32 returnCode =  SearchEmpty;
 
     if (st == SearchOff) {
-        qDebug() << "\tWorkSheet, turn off search" << __FILE__ << __LINE__;
         fixTable->setSearchFilterOn(false);
         return SearchOk;
     }
@@ -109,10 +108,10 @@ quint32 WorkSheet::doSearch(SearchType st)
             previousRow = searchLogicalIndexes[i];
     }
     for(int i=searchLogicalIndexes.count()-1;i>=0; i--){
-        qDebug() << "\tCurrent Row: " << currentRow;
+        //qDebug() << "\tCurrent Row: " << currentRow;
         if (currentRow < searchLogicalIndexes[i]) {
             nextRow = searchLogicalIndexes[i];
-            qDebug() << "\tNext Row set to " << nextRow;
+            //qDebug() << "\tNext Row set to " << nextRow;
         }
     }
     QString h2;

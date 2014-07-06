@@ -1,4 +1,5 @@
 #include "searchfunction.h"
+#include <QDebug>
 
 SearchFunction::SearchFunction():id(-9999)
 {
@@ -20,7 +21,7 @@ SearchFunction & SearchFunction::operator=( const SearchFunction &rhs)
 }
 bool SearchFunction::operator==(const SearchFunction &rhs)
 {
-    if (*this == rhs)
+    if (this == &rhs)
         return true;
     if ((id == rhs.id) &&(alias == rhs.alias) && (function== rhs.function))
         return true;
@@ -43,5 +44,21 @@ SearchFunction *SearchFunctionList::findByID(qint32 id)
             return sf;
     }
     return 0;
+}
+SearchFunctionList & SearchFunctionList::operator=( const SearchFunctionList &rhs)
+{
+    SearchFunction *sf;
+    SearchFunction *oldSF;
+    if (this == &rhs) {
+        return *this;
+    }
+  this->clear();
+  QListIterator <SearchFunction *> iter(rhs);
+  while(iter.hasNext()) {
+      oldSF = iter.next();
+      sf = new SearchFunction(*oldSF);
+      append(sf);
+  }
+  return *this;
 }
 

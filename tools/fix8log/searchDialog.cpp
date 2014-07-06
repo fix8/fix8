@@ -4,7 +4,20 @@
 #include "tableschema.h"
 #include <QAbstractItemDelegate>
 #include <QtScript>
+class FileFilterProxyModel : public QSortFilterProxyModel
+{
+protected:
+    virtual bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+};
 
+bool FileFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
+    QFileSystemModel* fileModel = qobject_cast<QFileSystemModel*>(sourceModel());
+    return fileModel->fileName(index0).indexOf(".backup.") < 0;
+    // uncomment to call the default implementation
+    //return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
+}
 SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     QDialog(parent),database(db),tableSchema(ts),haveError(false),strModel(0),
     aliasItem(0),functionItem(0),mainWindow(0),searchFunctionList(0)
@@ -33,9 +46,8 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     buttonBox->setOrientation(Qt::Horizontal);
 
     closeB = buttonBox->addButton(QDialogButtonBox::Close);
-
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(closeB,SIGNAL(clicked()),this,SIGNAL(accepted()));
+    connect(closeB,SIGNAL(clicked()),this,SLOT(closeSlot()));
 
     closeB->setToolTip(tr("Close this dialog"));
     closeB->setStatusTip(tr("Close this dialog"));
@@ -52,16 +64,20 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     titleBox->addWidget(titleL,0,Qt::AlignLeft);
     titleBox->addSpacing(1);
 
-    QFont font;
-    font.setPointSize(font.pointSize() + 1);
-    font.setBold(true);
-    titleL->setFont(font);
+    QFont fnt = titleL->font();
+    fnt.setPointSize(fnt.pointSize() + 1);
+    fnt.setBold(true);
+    titleL->setFont(fnt);
     titleL->setAlignment(Qt::AlignLeft);
 
     editArea = new QGroupBox("Edit");
     QGridLayout *egrid = new QGridLayout();
     editArea->setLayout(egrid);
     aliasEdit = new QLineEdit();
+    fnt = aliasEdit->font();
+    fnt.setPointSize(fnt.pointSize() + 2);
+    fnt.setBold(true);
+    aliasEdit->setFont(fnt);
     //QRegExp nameRegExp("^[a-z,A-Z,0-9]+\\s?[a-z,A-Z,0-9]*$");
     QRegExp nameRegExp("^\\S+(\\s\\S+)+$");
     QRegExpValidator *nameValidator = new QRegExpValidator(nameRegExp,this);
@@ -69,6 +85,8 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     connect(aliasEdit,SIGNAL(textChanged(QString)),this,SLOT(aliasChangedSlot(QString)));
     aliasEdit->setMaxLength(24);
     functionEdit = new LineEdit();
+    functionEdit->setFont(fnt);
+
     connect(functionEdit,SIGNAL(textChanged()),this,SLOT(functionChangedSlot()));
     connect(functionEdit,SIGNAL(returnPressed()),this,SLOT(functionReturnSlot()));
     aliasL = new QLabel("Alias",this);
@@ -111,6 +129,7 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     tableView->setSortingEnabled(true);
     tableView->setAlternatingRowColors(true);
     connect(tableView,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+    connect(tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(editSearchItemSlot(QModelIndex)));
     QStringList headers;
     headers << "Alias" << "Function";
     model->setHorizontalHeaderLabels(headers);
@@ -136,8 +155,11 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     deleteB = new QPushButton("Delete",this);
     connect(deleteB,SIGNAL(clicked()),this,SLOT(deleteSlot()));
     exportB = new QPushButton("Export...",this);
+    exportB->setToolTip(("Export functions to file"));
+    connect(exportB,SIGNAL(clicked()),this,SLOT(exportSlot()));
     importB = new QPushButton("Import...",this);
-
+    importB->setToolTip(("Import functions from file"));
+    connect(importB,SIGNAL(clicked()),this,SLOT(importSlot()));
     bbox->addWidget(newB,0,Qt::AlignTop);
     bbox->addWidget(editB,0,Qt::AlignTop);
     bbox->addWidget(deleteB,0,Qt::AlignTop);
@@ -161,21 +183,29 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     vbox->addWidget(buttonBox,0);
     resize(sizeHint());
     mode = ViewMode;
-    if (database) {
-        searchFunctionList = database->getSearchFunctions();
-        if (!searchFunctionList || (searchFunctionList->count() < 1) )
-            setMessage("No Search Functions In Database",false);
-        else
-            populateSearchFunctions();
-    }
+
 }
 void SearchDialog::setTableSchema(TableSchema *ts)
 {
+    qDebug() << "Search Dialog, set database " << __FILE__ << __LINE__;
     tableSchema = ts;
     QString colName;
     QStringList colNameList;
-    int rowCount = tableSchema->fieldNames.count();
-    for(int i=0;i<rowCount;i++) {
+    if (searchFunctionList) {
+        qDeleteAll(searchFunctionList->begin(),searchFunctionList->end());
+        delete searchFunctionList;
+        searchFunctionList = 0;
+    }
+    model->removeRows(0,model->rowCount());
+    if (!database) {
+        qWarning() << "Error database is null";
+        return;
+    }
+
+
+
+    int colCount = tableSchema->fieldNames.count();
+    for(int i=0;i<colCount;i++) {
         colName  = tableSchema->fieldNames[i];
         colNameList.append(colName);
 
@@ -188,6 +218,13 @@ void SearchDialog::setTableSchema(TableSchema *ts)
 
     searchCompleter->setModel(strModel);
     functionEdit->setCompleter(searchCompleter);
+
+    qDebug() << "Populate Search Dialog...." << __FILE__ << __LINE__;
+    searchFunctionList = database->getSearchFunctions();
+    if (!searchFunctionList || (searchFunctionList->count() < 1) )
+        setMessage("No Search Functions In Database",false);
+    else
+        populateSearchFunctions();
 }
 
 void SearchDialog::showEvent(QShowEvent *se)
@@ -226,6 +263,29 @@ void SearchDialog::newSearchSlot()
     QStringListModel *strModel = new QStringListModel(colNameList,this);
     searchCompleter->setModel(strModel);
     mode = NewMode;
+    validate();
+}
+void SearchDialog::editSearchItemSlot(QModelIndex mi)
+{
+
+    if (!mi.isValid()) {
+        qWarning() << "Error Edit Search Item, index is invalid " << __FILE__ << __LINE__;
+        return;
+    }
+    int row = mi.row();
+    aliasItem = model->item(row,0);
+    if (!aliasItem) {
+        qWarning() << "Error Edit Search Item, alias item  is invalid " << __FILE__ << __LINE__;
+        return;
+    }
+    functionItem = model->item(row,1);
+    if (!functionItem) {
+        qWarning() << "Error Edit Search Item, function item  is invalid " << __FILE__ << __LINE__;
+        return;
+    }
+    aliasEdit->setText(aliasItem->text());
+    functionEdit->setText(functionItem->text());
+    mode = EditMode;
     validate();
 }
 
@@ -477,7 +537,6 @@ void SearchDialog::deleteSlot()
         validate();
         return;
     }
-    qDebug() << "Get Search Item" << __FILE__ << __LINE__;
     SearchFunction *sf = (SearchFunction *) var.value<void *>();
     if (!sf) {
         setMessage("Failed to delete item from database, have null value2");
@@ -486,7 +545,6 @@ void SearchDialog::deleteSlot()
     }
     if (searchFunctionList)
         searchFunctionList->removeOne(sf);
-    qDebug() << "Remove From Database" << __FILE__ << __LINE__;
     bstatus = database->removeSearchFunction(sf->id);
     if (!bstatus)
         setMessage("Failed to delete item from database");
@@ -499,9 +557,9 @@ void SearchDialog::deleteSlot()
 void SearchDialog::populateSearchFunctions()
 {
     SearchFunction *sf;
+
     if (!searchFunctionList)
         return;
-    model->removeRows(0,model->rowCount());
     model->setRowCount(searchFunctionList->count());
     QListIterator<SearchFunction *> iter(*searchFunctionList);
     int row = 0;
@@ -523,4 +581,68 @@ void SearchDialog::setNewMode(QString searchStr)
     newSearchSlot();
     functionEdit->setText(searchStr);
     validate();
+}
+void SearchDialog::closeEvent(QCloseEvent *ce)
+{
+    aliasEdit->clear();
+    functionEdit->setText("");
+    mode = ViewMode;
+    validate();
+    QDialog::closeEvent(ce);
+}
+void SearchDialog::closeSlot()
+{
+    aliasEdit->clear();
+    functionEdit->setText("");
+    mode = ViewMode;
+    validate();
+    emit accepted();
+}
+void SearchDialog::exportSlot()
+{
+    QSettings settings("fix8","logviewer");
+    QFileDialog *fileDialog = new QFileDialog(this,"Export Search Functions");
+    QString workingDir = settings.value("ExportImportSearchDir",QDir::homePath()).toString();
+    fileDialog->setDirectory(workingDir);
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog->setProxyModel(new FileFilterProxyModel());
+    fileDialog->setNameFilter("XML (*.xml)");
+    int status = fileDialog->exec();
+    if (status == QDialog::Accepted) {
+        qDebug() << "Accepted" << __FILE__ << __LINE__;
+        QString fileName = fileDialog->selectedFiles().at(0);
+        qDebug() << "SELECTION: " << fileName;
+        QFileInfo fi(fileName);
+        QString ext = fi.suffix();
+        if ((ext != "xml") && (ext != "XML")) {
+            fileName.append(".xml");
+            qDebug() << "Ask if want to overwrite" << __FILE__ << __LINE__;
+
+        }
+        settings.setValue("ExportImportSearchDir",fi.absolutePath());
+        writeXML(fileName);
+
+    }
+    fileDialog->deleteLater();
+}
+void SearchDialog::importSlot()
+{
+    QFileDialog *fileDialog = new QFileDialog(this,"Export Search Functions");
+    fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
+    fileDialog->setProxyModel(new FileFilterProxyModel());
+    fileDialog->setNameFilter("XML (*.xml)");
+    int status = fileDialog->exec();
+    if (status == QDialog::Accepted) {
+        qDebug() << "Accepted" << __FILE__ << __LINE__;
+
+    }
+    fileDialog->deleteLater();
+}
+void SearchDialog::writeXML(QString &fileName)
+{
+
+}
+void SearchDialog::readXML(QString &fileName)
+{
+
 }

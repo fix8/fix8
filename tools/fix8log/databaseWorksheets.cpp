@@ -102,7 +102,7 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
     }
     QSqlQuery query(*handle);
     bstatus = query.prepare("INSERT INTO worksheets (id,windowID,alias, file ,selectedRow,splitterState,headerState,headerExpanded,fieldsExpanded,trailerExpanded,searchStr)"
-                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerexpanded,:searchStr)");
+                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerExpanded,:searchStr)");
     if (bstatus == 0) {
         qWarning("Error database - add worksheet failed in prepare statement...");
         sqlError = query.lastError();
