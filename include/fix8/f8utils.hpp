@@ -77,51 +77,57 @@ F8API std::string& InPlaceStrToUpper(std::string& src);
 /*! In place string to lower case.
   \param src source string
   \return reference to modified string */
-F8API std::string& InPlaceStrToLower( std::string& src );
+F8API std::string& InPlaceStrToLower(std::string& src);
 
 /*! String to lower case.
   \param src source string
   \return to new lowercase string */
-F8API std::string StrToLower( const std::string& src );
+F8API std::string StrToLower(const std::string& src);
 
 /*! Decode a weekday name into numeric dow (0=SUN), case insensitive
   only check at most the first 2 unique characters (will ignore any characters after that);
   alternatively, accept numeric dow 0-6;
   \param from source dow string
   \return idx dow or -1 if not found */
-F8API int decode_dow( const std::string& from );
+F8API int decode_dow(const std::string& from);
 
 /*! Check if string has trailing slash, if not add.
   \param source source string
   \return reference to modified string */
-F8API std::string& CheckAddTrailingSlash( std::string& source );
+F8API std::string& CheckAddTrailingSlash(std::string& source);
 
 /*! Replace any character found in the supplied set in string with supplied character
   \param iset set of characters
   \param src source string
   \param repl character to replace
   \return reference to modified string */
-F8API std::string& InPlaceReplaceInSet( const std::string& iset, std::string& src, const char repl = '_' );
+F8API std::string& InPlaceReplaceInSet(const std::string& iset, std::string& src, const char repl='_');
 
 /*! Find standard error string for given errno.
   \param err errno value
   \param str if not 0, prepend string to error string
   \return error string */
-F8API std::string Str_error( const int err, const char *str = 0 );
+F8API std::string Str_error(const int err, const char *str=0);
 
-/*! Format Tickval into string.
+/*! Format Tickval into string. 2014-07-02 23:15:51.514776595
   \param result target string
   \param tv tickval to use or 0 for current time
   \param dplaces number of decimal places to report seconds (default 6)
   \param use_gm if true, use gmtime, if false localtime
   \return reference to target string */
-F8API const std::string& GetTimeAsStringMS( std::string& result, const class Tickval *tv = 0, const unsigned dplaces = 6, bool use_gm = false );
+F8API const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
+
+/*! Format Tickval into mini string. 14-07-02 23:15:51
+  \param result target string
+  \param tv tickval to use or 0 for current time
+  \return reference to target string */
+F8API const std::string& GetTimeAsStringMini(std::string& result, const Tickval *tv);
 
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
-F8API const std::string& trim( std::string& source, const std::string& ws = " \t" );
+F8API const std::string& trim(std::string& source, const std::string& ws=" \t");
 
 //----------------------------------------------------------------------------------------
 /*! Sidestep the warn_unused_result attribute
@@ -244,7 +250,7 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 //----------------------------------------------------------------------------------------
 /*! Create a full path, including nested directories
     \param path path to create */
-F8API void create_path( const std::string& path );
+F8API void create_path(const std::string& path);
 
 //----------------------------------------------------------------------------------------
 /// A class to contain regex matches using RegExp.
@@ -749,7 +755,7 @@ inline fp_type fast_atof (const char *p)
 /*! \param value the source value
     \param str the target string
     \param prec number of precision digits*/
-extern "C" { size_t modp_dtoa( double value, char* str, int prec ); }
+extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
 
 //----------------------------------------------------------------------------------------
 /// Bitset for enums.

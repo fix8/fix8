@@ -1245,7 +1245,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osu_hpp << "#endif // " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl;
 	osr_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osr_cpp << _csMap.find(cs_end_namespace)->second << endl;
-	osc_cpp << endl << "// Compiler generated metadata object accessible outside its namespace through this function." << endl;
+	osc_cpp << endl << "// Compiler generated metadata object accessible outside namespace through this function." << endl;
 	osc_cpp << "extern \"C\"" << endl << '{' << endl
       << spacer << "const F8MetaCntx& " << ctxt._fixns << "_ctx() { return " << ctxt._fixns << "::ctx(); }"
       << endl << '}' << endl << endl;
@@ -1419,7 +1419,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
       }
       else
 			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
-      ost_cpp << ">(), \"" << fitr->second._name << '\"';
+      ost_cpp << ">(), \"" << fitr->second._name << "\", " << fitr->first;
 		if (fitr->second._dvals)
 			ost_cpp << ", &" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
 		if (!fitr->second._comment.empty())

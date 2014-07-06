@@ -61,9 +61,8 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    }
 
 #ifdef _MSC_VER
-   struct tm *ptim;
    time_t tval(startTime->secs());
-	ptim = use_gm ? gmtime(&tval) : localtime (&tval);
+   struct tm *ptim(use_gm ? gmtime(&tval) : localtime (&tval));
 #else
    struct tm tim, *ptim;
    time_t tval(startTime->secs());
@@ -71,6 +70,7 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    ptim = &tim;
 #endif
 
+	// 2014-07-02 23:15:51.514776595
    ostringstream oss;
    oss << setfill('0') << setw(4) << (ptim->tm_year + 1900) << '-';
    oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
@@ -84,6 +84,37 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
 	}
 	else
 		oss << setfill('0') << setw(2) << ptim->tm_sec;
+   return result = oss.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+const string& GetTimeAsStringMini(string& result, const Tickval *tv)
+{
+   const Tickval *startTime;
+   Tickval gotTime;
+   if (tv)
+      startTime = tv;
+   else
+   {
+		gotTime.now();
+      startTime = &gotTime;
+   }
+
+#ifdef _MSC_VER
+   time_t tval(startTime->secs());
+   struct tm *ptim(localtime (&tval));
+#else
+   struct tm tim, *ptim;
+   time_t tval(startTime->secs());
+   localtime_r(&tval, &tim);
+   ptim = &tim;
+#endif
+
+// 14-07-02 23:15:51
+   ostringstream oss;
+   oss << setfill('0') << setw(2) << ((ptim->tm_year + 1900) % 100) << '-';
+   oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
+   oss << ':' << setw(2) << ptim->tm_min << ':' << setfill('0') << setw(2) << ptim->tm_sec;
    return result = oss.str();
 }
 

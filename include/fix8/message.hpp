@@ -132,21 +132,23 @@ class Minst
 	struct _gen
 	{
 		/*! Instantiate a message
-          \tparam T type to instantiate
-		  \return new message */
-        template<typename T>
+			\tparam T type to instantiate
+			\return new message */
+		template<typename T>
 		static Message *_make() { return new T; }
+
 		/*! Instantiate a message cast to Message
-          \tparam T type to instantiate
-		  \return new message */
-        template<typename T, typename R>
-        static Message *_make() { return reinterpret_cast< Message * >( new T ); }
+			\tparam T type to instantiate
+			\return new message */
+		template<typename T, typename R>
+		static Message *_make() { return reinterpret_cast< Message * >( new T ); }
+
 #if defined HAVE_EXTENDED_METADATA
 		/*! SIOF static TraitHelper
-          \tparam T type to instantiate
-		  \return ref to static TraitHelper */
-        template<typename T, typename R = void>
-        static const TraitHelper& _make_traits()
+			\tparam T type to instantiate
+			\return ref to static TraitHelper */
+		template<typename T, typename R = void>
+		static const TraitHelper& _make_traits()
 		{
 			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
 			return _helper;
@@ -248,13 +250,22 @@ struct F8MetaCntx
 	const BaseEntry *find_be(const unsigned short fnum) const
 		{ return fnum < _flu_sz ? _flu[fnum] : nullptr; }
 
-	/*! Get the field BaseEntry object for this field number. Reverse lookup.
+	/*! Get the field BaseEntry object for this field by tag. Reverse lookup.
 	  \param fieldstr const char ptr to name of field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *reverse_find_be(const char *fieldstr) const
 	{
 		auto itr(_reverse_fieldtable.find(fieldstr));
-		return itr != _reverse_fieldtable.end() ? itr->second : nullptr;
+		return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+	}
+
+	/*! Get the field number for this field by tag. Reverse lookup.
+	  \param fieldstr const char ptr to name of field to get
+	  \return unsigned short field number */
+	unsigned short reverse_find_fnum(const char *fieldstr) const
+	{
+		auto itr(_reverse_fieldtable.find(fieldstr));
+		return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
 	}
 
 	/*! Create a new field of the tag type passed, and from the raw string given.
@@ -288,7 +299,7 @@ struct F8MetaCntx
 	const BaseMsgEntry *reverse_find_bme(const char *msgstr) const
 	{
 		auto itr(_reverse_msgtable.find(msgstr));
-		return itr != _reverse_msgtable.end() ? itr->second : nullptr;
+		return itr != _reverse_msgtable.cend() ? itr->second : nullptr;
 	}
 
 	/*! Create a new message of the tag type passed.
@@ -1076,6 +1087,17 @@ public:
 		}
 		if (_trailer)
 			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
+	}
+
+	/*! Check if a field is present in this message (either header, body or trailer).
+	    \param fnum field number
+	    \return pointer to field or 0 if not found */
+	BaseField *get_field_flattened(const unsigned short fnum) const
+	{
+		auto itr (_fields.find(fnum));
+		return  itr != _fields.end() ? itr->second
+				: (itr = _header->_fields.find(fnum)) != _header->_fields.end() ? itr->second
+				: (itr = _trailer->_fields.find(fnum)) != _trailer->_fields.end() ? itr->second : nullptr;
 	}
 
 #if defined RAW_MSG_SUPPORT

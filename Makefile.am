@@ -35,10 +35,6 @@ AUTOMAKE_OPTIONS = foreign dist-bzip2 dist-zip
 
 SUBDIRS = runtime compiler test util
 
-if PROBUILD
-SUBDIRS += pro
-endif
-
 if USEGTEST
 SUBDIRS += utests
 endif
