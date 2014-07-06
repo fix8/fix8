@@ -1,8 +1,10 @@
 #include "searchDialog.h"
 #include "lineedit.h"
 #include "database.h"
+#include "globals.h"
 #include "tableschema.h"
 #include <QAbstractItemDelegate>
+#include <QXmlStreamWriter>
 #include <QtScript>
 class FileFilterProxyModel : public QSortFilterProxyModel
 {
@@ -22,7 +24,9 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     QDialog(parent),database(db),tableSchema(ts),haveError(false),strModel(0),
     aliasItem(0),functionItem(0),mainWindow(0),searchFunctionList(0)
 {
-
+    QFont fnt = font();
+    fnt.setBold(true);
+    setFont(fnt);
     // setWindowIcon(QIcon(":/images/vicon22.png"));
     // QFile file(":/SearchDialog.qss");
     //  file.open(QFile::ReadOnly);
@@ -64,7 +68,7 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     titleBox->addWidget(titleL,0,Qt::AlignLeft);
     titleBox->addSpacing(1);
 
-    QFont fnt = titleL->font();
+    fnt  = titleL->font();
     fnt.setPointSize(fnt.pointSize() + 1);
     fnt.setBold(true);
     titleL->setFont(fnt);
@@ -169,6 +173,7 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     wbox->addWidget(tableView,1);
     wbox->addLayout(bbox,0);
     messageL = new QLabel(this);
+    messageL->setFont(fnt);
     regPal = messageL->palette();
     errorPal = regPal;
     errorPal.setColor(QPalette::WindowText,Qt::red);
@@ -447,7 +452,10 @@ void SearchDialog::validate()
         cancelB->setEnabled(false);
         newB->setEnabled(true);
         importB->setEnabled(true);
-        exportB->setEnabled(true);
+        if (model->rowCount() < 1)
+            exportB->setEnabled(false);
+        else
+            exportB->setEnabled(true);
     }
 }
 void SearchDialog::aliasChangedSlot(QString)
@@ -600,7 +608,13 @@ void SearchDialog::closeSlot()
 }
 void SearchDialog::exportSlot()
 {
+    QString str;
     QSettings settings("fix8","logviewer");
+    if (model->rowCount() < 1) {
+        str = "Error -  no functions to export";
+        QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Ok);
+        return;
+    }
     QFileDialog *fileDialog = new QFileDialog(this,"Export Search Functions");
     QString workingDir = settings.value("ExportImportSearchDir",QDir::homePath()).toString();
     fileDialog->setDirectory(workingDir);
@@ -609,13 +623,17 @@ void SearchDialog::exportSlot()
     fileDialog->setNameFilter("XML (*.xml)");
     int status = fileDialog->exec();
     if (status == QDialog::Accepted) {
-        qDebug() << "Accepted" << __FILE__ << __LINE__;
         QString fileName = fileDialog->selectedFiles().at(0);
-        qDebug() << "SELECTION: " << fileName;
         QFileInfo fi(fileName);
         QString ext = fi.suffix();
         if ((ext != "xml") && (ext != "XML")) {
             fileName.append(".xml");
+            fi = QFileInfo(fileName);
+            if (fi.exists()) {
+                str = "Error - File " + fi.fileName() + " already exists";
+                QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Ok);
+                return;
+            }
             qDebug() << "Ask if want to overwrite" << __FILE__ << __LINE__;
 
         }
@@ -634,15 +652,104 @@ void SearchDialog::importSlot()
     int status = fileDialog->exec();
     if (status == QDialog::Accepted) {
         qDebug() << "Accepted" << __FILE__ << __LINE__;
-
+        QString fileName = fileDialog->selectedFiles().at(0);
+        readXML(fileName);
     }
     fileDialog->deleteLater();
 }
 void SearchDialog::writeXML(QString &fileName)
 {
+    QString str;
+    bool bstatus;
+    QFile file(fileName);
+    QStandardItem *aliasItem;
+    QStandardItem *funcItem;
+    bstatus = file.open(QIODevice::WriteOnly);
+    if (!bstatus) {
+        str = "Error - unable to open file, " + fileName;
+        QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Open,QMessageBox::NoButton);
+        return;
+    }
 
+    QXmlStreamWriter xmlWriter(&file);
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeDTD("<!DOCTYPE fix8search>");
+    str = "Generated " + QDateTime::currentDateTime().toString() + " with " + GUI::Globals::appName + " " + GUI::Globals::versionStr;
+    xmlWriter.writeComment(str);
+    xmlWriter.writeStartElement("searchlist");
+    int rowCount = model->rowCount();
+    for (int i=0;i<rowCount;i++) {
+        xmlWriter.writeStartElement("function");
+        aliasItem = model->item(i,0);
+        funcItem = model->item(i,1);
+        xmlWriter.writeAttribute("alias",aliasItem->text());
+        xmlWriter.writeCharacters(funcItem->text());
+        xmlWriter.writeEndElement();
+    }
+    xmlWriter.writeEndElement();
+    xmlWriter.writeEndDocument();
 }
 void SearchDialog::readXML(QString &fileName)
 {
+    QString str;
+    bool bstatus;
+    QFile file(fileName);
+    QString funcStr;
+    QString aliasStr;
+    QStringRef aliasStrR;
 
+    QStandardItem *aliasItem;
+    QStandardItem *funcItem;
+    QXmlStreamAttributes attributes;
+
+    bstatus = file.open(QIODevice::ReadOnly);
+    if (!bstatus) {
+        str = "Error - unable to open file, " + fileName;
+        QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Open,QMessageBox::NoButton);
+        return;
+    }
+    int i = 0;
+    QXmlStreamReader xmlReader(&file);
+    int numOfImported = 0;
+    while (!xmlReader.atEnd()) {
+        QList <QStandardItem *> items;
+        if  (xmlReader.readNextStartElement()) {
+            if (xmlReader.name() == "function") {
+                attributes = xmlReader.attributes();
+                funcStr = xmlReader.readElementText();
+                if (attributes.hasAttribute("alias")) {
+                    aliasStr = attributes.value("alias").toString();
+                    aliasItem = new QStandardItem(aliasStr);
+                    funcItem  = new QStandardItem(funcStr);
+                    items.append(aliasItem);
+                    items.append(funcItem);
+                    model->appendRow(items);
+                    SearchFunction *sf = new SearchFunction();
+                    sf->alias = aliasStr;
+                    sf->function = funcStr;
+                    QVariant var;
+                    var.setValue((void *) sf);
+                    aliasItem->setData(var);
+                    funcItem->setData(var);
+                    database->addSearchFunction(*sf);
+                    if (!searchFunctionList) {
+                        searchFunctionList = new SearchFunctionList();
+                    }
+                    searchFunctionList->append(sf);
+                    numOfImported ++;
+                }
+
+            }
+        }
+    }
+    if (numOfImported > 0) {
+        str = "Imported " + QString::number(numOfImported) + " functions.";
+        setMessage(str,false);
+    }
+    else {
+        str = "Import failed, no functions found.";
+        setMessage(str);
+    }
+
+    validate();
 }
