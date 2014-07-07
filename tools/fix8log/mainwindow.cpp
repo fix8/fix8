@@ -556,7 +556,10 @@ void MainWindow::buildMainWindow()
     popupCopyTextA = new QAction("Copy Text",this);
     popupMenu->addAction(popupCopyTextA);
     popupMenu->addAction(popupCopyHtmlA);
-
+    popupActionGroup = new QActionGroup(this);
+    popupActionGroup->addAction(popupCopyTextA);
+    popupActionGroup->addAction(popupCopyHtmlA);
+    connect(popupActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(popupMenuActionSlot(QAction*)));
     buildSchemaMenu();
     buildHideColumnMenu();
 }

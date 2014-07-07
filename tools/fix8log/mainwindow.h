@@ -134,6 +134,7 @@ public:
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
     void modelDroppedSlot(FixMimeData *);
+    void popupMenuActionSlot(QAction *);
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void rowSelectedSlot(int);
     void quitSlot();

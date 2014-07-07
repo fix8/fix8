@@ -333,3 +333,7 @@ void MainWindow::doPopupSlot(const QModelIndex &mi,const  QPoint &pt)
 {
     popupMenu->popup(pt);
 }
+void MainWindow::popupMenuActionSlot(QAction*)
+{
+
+}
