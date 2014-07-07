@@ -142,54 +142,58 @@ public:
 template<typename T>
 int Timer<T>::operator()()
 {
-   unsigned elapsed(0);
+    unsigned elapsed(0);
 
-   while(!_cancellation_token)
-   {
-      bool shouldsleep(false);
-      {
-			f8_scoped_spin_lock guard(_spin_lock);
+    while(!_cancellation_token)
+    {
+        bool shouldsleep = false;
 
-         if (_event_queue.size())
-         {
-            TimerEvent<T> op(_event_queue.top());
-				if (!op._t) // empty timeval means exit
-				{
-					_event_queue.pop(); // remove from queue
-					break;
-				}
+        {
+            f8_scoped_spin_lock guard(_spin_lock);
 
-				const Tickval now(Tickval::get_tickval());
-				if (op._t <= now)  // has elapsed
-				{
-					TimerEvent<T> rop(_event_queue.top()); // take a copy
-					_event_queue.pop(); // remove from queue
-					guard.release();
-					++elapsed;
-					if (!(_monitor.*rop._callback)())
-						break;
-					if (op._repeat)
-					{
-						op._t = now.get_ticks() + op._intervalMS * Tickval::million;
-						guard.acquire(_spin_lock);
-						_event_queue.push(op); // push back on queue
-					}
+            if (_event_queue.size())
+            {
+                TimerEvent<T> op(_event_queue.top());
+
+                if (!op._t)
+                    _event_queue.pop(); // if empty timeval - remove from queue
+                else
+                {
+                    const Tickval now(Tickval::get_tickval());
+
+                    if (op._t <= now)  // has elapsed
+                    {
+                        TimerEvent<T> rop(_event_queue.top()); // take a copy
+                        _event_queue.pop(); // remove from queue
+                        guard.release();
+                        ++elapsed;
+
+                        const bool cb_result = (_monitor.*rop._callback)();
+
+                        if (cb_result && op._repeat)
+                        {
+                            op._t = now.get_ticks() + op._intervalMS * Tickval::million;
+                            guard.acquire(_spin_lock);
+                            _event_queue.push(op); // push back on queue
+                        }
+                    }
+                    else
+                        shouldsleep = true;
+                }
             }
             else
-               shouldsleep = true;
-         }
-         else
-            shouldsleep = true;
-      }	// we want the lock to go out of scope before we sleep
+                shouldsleep = true;
+        }
 
-      if (shouldsleep)
-			hypersleep<h_milliseconds>(_granularity);
-   }
+        // we want the lock to go out of scope before we sleep
+        if (shouldsleep)
+            hypersleep<h_milliseconds>(_granularity);
+    }
 
-	std::ostringstream ostr;
-	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
-	GlobalLogger::instance()->send(ostr.str());
-	return 0;
+    std::ostringstream ostr;
+    ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
+    GlobalLogger::instance()->send(ostr.str());
+    return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
