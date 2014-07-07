@@ -319,6 +319,7 @@ void WorkSheet::build()
     splitter->setObjectName("messageSplitter");
     fixTable = new FixTable(windowID,uuid,this);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+    connect(fixTable,SIGNAL(doPopup(const QModelIndex &,const QPoint &)),this,SLOT(doPopupSlot(const QModelIndex &,const QPoint &)));
     connect(fixTable,SIGNAL(modelDropped(FixMimeData*)),
             this,SLOT(modelDroppedSlot(FixMimeData *)));
     messageArea = new MessageArea(this);
@@ -682,6 +683,11 @@ void WorkSheet::setMessageAreaExpansion(MessageArea::TreeItem ti, bool expanded)
 bool WorkSheet::getMessageExpansionState(MessageArea::TreeItem ti)
 {
     return messageArea->getExpansionState(ti);
+}
+void WorkSheet::doPopupSlot(const QModelIndex &mi,const QPoint &pt)
+{
+    qDebug() << "Work Sheet do popup" << __FILE__ << __LINE__;
+    emit doPopup(mi,pt);
 }
 
 WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()

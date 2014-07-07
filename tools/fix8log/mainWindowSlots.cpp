@@ -329,3 +329,7 @@ void MainWindow::terminatedWorkSheetCopySlot(WorkSheet *ws)
 {
     qDebug() << "REMOVE THIS SLOT ?" << __FILE__ << __LINE__;
 }
+void MainWindow::doPopupSlot(const QModelIndex &mi,const  QPoint &pt)
+{
+    popupMenu->popup(pt);
+}

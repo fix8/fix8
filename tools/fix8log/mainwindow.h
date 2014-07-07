@@ -125,6 +125,7 @@ public:
     void copyWindowSlot();
     void createTabSlot();
     void displayMessageSlot(GUI::ConsoleMessage);
+    void doPopupSlot(const QModelIndex &,const  QPoint &);
     void editSchemaSlot();
     void editTabNameSlot(bool isOn);
     void fileDirChangedSlot(const QString &);
@@ -182,6 +183,8 @@ protected:
     QAction  *cutTabA;
     QAction  *linkSearchA;
     QAction  *pasteTabA;
+    QAction  *popupCopyTextA;
+    QAction  *popupCopyHtmlA;
     QAction  *quitA;
     QAction  *saveA;
     QAction *saveSearchFuncA;
@@ -194,6 +197,7 @@ protected:
     QAction  *showMessageA;
     QAction  *whatsThisA;
     QAction  *windowNameA;
+    QActionGroup *popupActionGroup;
     QActionGroup *schemaActionGroup;
     QActionGroup *schemaScopeGroup;
     QActionGroup *hideColActionGroup;
@@ -221,7 +225,7 @@ protected:
     QMenu    *optionMenu;
     QMenu    *schemaMenu;
     QMenu    *schemaScopeMenu;
-    QMenu    *poupMenu;
+    QMenu    *popupMenu;
     QMenuBar *mainMenuBar;
     QPushButton *cancelEditTabNamePB;
     QPushButton *configPB;

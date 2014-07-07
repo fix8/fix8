@@ -102,6 +102,7 @@ public:
     void setTimeFormat(GUI::Globals::TimeFormat);
     void terminate();; // called to stop loading file if it is
 signals:
+     void doPopup(const QModelIndex &,const QPoint &);
     void modelDropped(FixMimeData *);
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
     void sendMessage(GUI::ConsoleMessage);
@@ -110,6 +111,7 @@ signals:
     void terminateCopy(WorkSheet *);
 public slots:
     void cancelLoadSlot();
+    void doPopupSlot(const QModelIndex &,const QPoint&);
     void popupHeaderMenuSlot(int col,const QPoint &);
     void rowSelectedSlot(QModelIndex);
     void timeFormatSelectedSlot(QAction *);

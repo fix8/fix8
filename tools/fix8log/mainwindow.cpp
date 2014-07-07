@@ -95,6 +95,8 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
                     this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
             connect(newWorkSheet,SIGNAL(rowSelected(int)),
                     this,SLOT(rowSelectedSlot(int)));
+            connect(newWorkSheet,SIGNAL(doPopup(const QModelIndex &, const QPoint &)),
+                    this,SLOT(doPopupSlot(const QModelIndex &, const QPoint &)));
             newWorkSheet->splitter->restoreState(ba);
             QString str = mw.tabW->tabText(i);
             if (str.length() > 36) {
@@ -549,6 +551,12 @@ void MainWindow::buildMainWindow()
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
 
+    popupMenu = new QMenu(this);
+    popupCopyHtmlA = new QAction("Copy HTML",this);
+    popupCopyTextA = new QAction("Copy Text",this);
+    popupMenu->addAction(popupCopyTextA);
+    popupMenu->addAction(popupCopyHtmlA);
+
     buildSchemaMenu();
     buildHideColumnMenu();
 }
@@ -764,6 +772,8 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
             this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
     connect(workSheet,SIGNAL(rowSelected(int)),
             this,SLOT(rowSelectedSlot(int)));
+    connect(workSheet,SIGNAL(doPopup(const QModelIndex &, const QPoint &)),
+            this,SLOT(doPopupSlot(const QModelIndex &, const QPoint &)));
     workSheet->setWindowID(uuid);
     workSheet->splitter->restoreState(wsd.splitterState);
     workSheet->fixTable->horizontalHeader()->restoreState(wsd.headerState);
@@ -886,6 +896,8 @@ void MainWindow::addWorkSheet(WorkSheetModel *model,WorkSheetData &wsd)
             this,SLOT(terminatedWorkSheetCopySlot(WorkSheet*)));
     connect(newWorkSheet,SIGNAL(rowSelected(int)),
             this,SLOT(rowSelectedSlot(int)));
+    connect(newWorkSheet,SIGNAL(doPopup(const QModelIndex &, const QPoint &)),
+            this,SLOT(doPopupSlot(const QModelIndex &, const QPoint &)));
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;

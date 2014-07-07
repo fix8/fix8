@@ -97,9 +97,10 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     emptyStrColor.setRgb(239,237,213);
     fixHeader = new FixHeaderView();
     setHorizontalHeader(fixHeader);
-    setMouseTracking(true);
+    //setMouseTracking(true);
     QStringList strList;
-    setSelectionMode(QAbstractItemView::SingleSelection);
+    //setSelectionMode(QAbstractItemView::SingleSelection);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSortingEnabled(true);
     setAlternatingRowColors(true);
@@ -117,7 +118,7 @@ void FixTable::setWindowID(QUuid &uuid)
 }
 FixTable::~FixTable()
 {
-    qDebug() << "Delte Fix Table" << __FILE__ << __LINE__;
+    qDebug() << "Delete Fix Table" << __FILE__ << __LINE__;
 }
 void FixTable::setSearchFilterOn(bool on)
 {
@@ -232,10 +233,11 @@ void  FixTable::mousePressEvent(QMouseEvent *me)
         index = indexAt(me->pos());
         if (index.isValid()) {
             me->accept();
+            qDebug() << "Do popup" << __FILE__ << __LINE__;
             emit doPopup(index,me->globalPos());
         }
     }
-    else if (me->button() == Qt::LeftButton) {
+    else if (me->button() == Qt::MiddleButton) {
         Qt::KeyboardModifiers km = me->modifiers();
         if (km && Qt::ControlModifier)
             dragStartPosition = me->pos();
