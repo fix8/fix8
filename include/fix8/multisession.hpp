@@ -97,7 +97,7 @@ public:
 
 	/*! Get the number of server sessions being manager by this object
 	  \return count of server sessions */
-	unsigned size() const { return _servermap.size(); }
+	unsigned size() const { return static_cast<unsigned>(_servermap.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ public:
 
 	/*! Get the number of sessions being manager by this object
 	  \return count of sessions */
-	unsigned size() const { return _sessionmap.size(); }
+	unsigned size() const { return static_cast<unsigned>(_sessionmap.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------

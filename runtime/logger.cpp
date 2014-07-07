@@ -66,7 +66,10 @@ namespace FIX8
     }
 
 	const vector<string> Logger::_bit_names
-		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound", "nolf", };
+	{
+		"append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction",
+		"buffer", "inbound", "outbound", "nolf", "minitimestamp"
+	};
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -128,6 +131,12 @@ int Logger::operator()()
 
 			if (_flags & timestamp)
 				ostr << msg_ptr->_when << ' ';
+			else if (_flags & minitimestamp)
+			{
+				string result;
+				GetTimeAsStringMini(result, &msg_ptr->_when);
+				ostr << result << ' ';
+			}
 
 			if (_flags & buffer)
 			{

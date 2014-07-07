@@ -267,6 +267,8 @@ public:
 
 	/// Convenient scoped pointer for your session
 	using ClientSession_ptr = std::unique_ptr<ClientSession<T>>;
+
+	using session_type = T;
 };
 
 //-------------------------------------------------------------------------------------------------
