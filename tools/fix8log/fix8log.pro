@@ -113,7 +113,7 @@ RESOURCES += \
     UI_DIR = ui
     OBJECTS_DIR = obj
 unix {
-message("Unix Compile")
+message("Unix Compile.")
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
 LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
