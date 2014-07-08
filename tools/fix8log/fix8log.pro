@@ -3,12 +3,10 @@
 # Project created by QtCreator 2014-03-15T21:24:01
 #
 #-------------------------------------------------
-CONFIG += x86_64  debug_and_release
+CONFIG += debug_and_release
 QT       += core gui sql qml quick widgets  script
-include(./qtsingleapplication/src/qtsingleapplication.pri)
 TARGET = fix8log
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -60,7 +58,12 @@ SOURCES += main.cpp\
     searchDialog.cpp \
     searchfunction.cpp \
     databaseSearchFunctions.cpp \
-    comboboxlineedit.cpp
+    comboboxlineedit.cpp \
+    qtlocalpeer.cpp \
+    qtlockedfile.cpp \
+    qtlockedfile_win.cpp \
+    qtsingleapplication.cpp \
+    qtsinglecoreapplication.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -98,37 +101,53 @@ HEADERS  += mainwindow.h \
     fixtableverticaheaderview.h \
     searchDialog.h \
     searchfunction.h \
-    comboboxlineedit.h
+    comboboxlineedit.h \
+    qtlocalpeer.h \
+    QtLockedFile \
+    qtlockedfile.h \
+    qtsingleapplication.h \
+    qtsinglecoreapplication.h
 
 RESOURCES += \
     resources.qrc
 
-unix {
-QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
-LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
-INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
-DEPENDPATH += /usr/local/include
-}
-win32 {
-    message("Windows Compile")
-QMAKE_CXXFLAGS += /bigobj
-    MOC_DIR = moc
+
+
+    QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
     UI_DIR = ui
     OBJECTS_DIR = obj
+win32 {
+     message("Windows Compile")
     INCLUDEPATH += . ./f8 ../../test \
-                ../../msvc/packages/fix8.dev.1.1.20140603.1/build/native/include \
+                ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \
                 ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/include
-    LIBS +=
+debug {
+    CONFIG += console
+    message("Debug")
+   LIBS +=     ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Debug/Desktop/fix8d.lib \
+                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoFoundationd.lib \
+                ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Debug/Desktop/tbb_debug.lib \
+                ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Debug/Desktop/tbbmalloc_proxy_debug.lib \
+                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoNetd.lib \
+                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoNetSSLd.lib \
+                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoCryptod.lib \
+                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoUtild.lib
+ }
+ release {
+   LIBS +=      ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
+        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbb.lib \
+        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc_proxy.lib \
+        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoFoundation.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoNet.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoNetSSL.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoCrypto.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoUtil.lib
+}
 }
 OTHER_FILES += \
-    qml/loadProgress.qml \    
-    Screenshot 2014-05-12 at 07.29.46.png \
-    schemaeditordialog.cpp.oow \
-    schemaeditordialog.h.oow \
-    schemaEditorDialogSlots.cpp.0529 \
-    schemaEditorDialogSlots.cpp.oow
-
+    qml/loadProgress.qml
 
