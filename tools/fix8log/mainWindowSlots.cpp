@@ -105,6 +105,7 @@ void MainWindow::iconSizeSlot(QAction *action)
 void MainWindow::configSlot()
 {
     int status;
+
     QSettings settings("fix8","logviewer");
     QPalette pal = mainMenuBar->palette();
     menubarColor = pal.color(QPalette::Background);
@@ -120,12 +121,15 @@ void MainWindow::configSlot()
     if (status != QDialog::Accepted) {
         pal.setColor(QPalette::Background,menubarColor);
         mainMenuBar->setPalette(pal);
+
+        menuBar()->setStyleSheet("background-color: #4d4d4d; selection-background-color: #fcfcfc;");
     }
     else {
         settings.setValue("MenuBarColor",menubarColor);
     }
 
     colorDialog->deleteLater();
+
 }
 void MainWindow::setColorSlot(QColor  color)
 {
@@ -145,7 +149,11 @@ void MainWindow::currentColorChangedSlot(QColor color)
 {
     QPalette pal = mainMenuBar->palette();
     pal.setColor(QPalette::Background,color);
-    mainMenuBar->setPalette(pal);
+    qDebug() << "COLOR SET TO " << color.name() << __FILE__ << __LINE__;
+    //menuBar()->setStyleSheet("background-color: #4d4d4d; selection-background-color: #fcfcfc;");
+    QString colorStr = QString("background-color:") + QString(color.name()) + QString(";");
+    menuBar()->setStyleSheet(colorStr);
+    //mainMenuBar->setPalette(pal);
 }
 void MainWindow::editTabNameSlot(bool isOn)
 {

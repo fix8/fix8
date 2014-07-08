@@ -3,7 +3,7 @@
 # Project created by QtCreator 2014-03-15T21:24:01
 #
 #-------------------------------------------------
-CONFIG += debug_and_release
+CONFIG += release
 QT       += core gui sql qml quick widgets  script
 TARGET = fix8log
 TEMPLATE = app
@@ -130,6 +130,19 @@ win32 {
                 ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \
                 ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/include
+
+release {
+ message("Release")
+   LIBS +=      ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
+        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbb.lib \
+        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc_proxy.lib \
+        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoFoundation.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoNet.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoNetSSL.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoCrypto.lib \
+        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoUtil.lib
+}
 debug {
     CONFIG += console
     message("Debug")
@@ -142,17 +155,6 @@ debug {
                 ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoCryptod.lib \
                 ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoUtild.lib
  }
- release {
-   LIBS +=      ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
-        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbb.lib \
-        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc_proxy.lib \
-        ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc.lib \
-        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoFoundation.lib \
-        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoNet.lib \
-        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoNetSSL.lib \
-        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoCrypto.lib \
-        ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoUtil.lib
-}
 }
 OTHER_FILES += \
     qml/loadProgress.qml
