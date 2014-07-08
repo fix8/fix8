@@ -61,7 +61,6 @@ SOURCES += main.cpp\
     comboboxlineedit.cpp \
     qtlocalpeer.cpp \
     qtlockedfile.cpp \
-    qtlockedfile_win.cpp \
     qtsingleapplication.cpp \
     qtsinglecoreapplication.cpp
 
@@ -111,13 +110,20 @@ HEADERS  += mainwindow.h \
 RESOURCES += \
     resources.qrc
 
-
-
-    QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
     UI_DIR = ui
     OBJECTS_DIR = obj
+unix {
+message("Unix Compile")
+QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
+LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
+INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
+DEPENDPATH += /usr/local/include
+SOURCES += qtlockedfile_unix.cpp
+}
 win32 {
      message("Windows Compile")
+    SOURCES += qtlockedfile_win.cpp
+    QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
     INCLUDEPATH += . ./f8 ../../test \
                 ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \

@@ -147,6 +147,7 @@ void MainWindow::buildMainWindow()
     uuid = QUuid::createUuid();
     setAnimated(true);
     mainMenuBar = menuBar();
+    mainMenuBar->setAutoFillBackground(false);
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
     schemaMenu = mainMenuBar->addMenu("&Schema");

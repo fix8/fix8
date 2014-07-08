@@ -61,10 +61,6 @@ MessageArea::MessageArea(QWidget *parent) :
     QVBoxLayout *wBox = new QVBoxLayout();
     workArea->setLayout(wBox);
     treeView = new QTreeView(workArea);
-    QFont fnt = treeView->font();
-    fnt.setPointSize(fnt.pointSize()+1);
-    fnt.setBold(true);
-    treeView->setFont(fnt);
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     treeView->setModel(model);
     treeView->setUniformRowHeights(true);
@@ -82,7 +78,7 @@ MessageArea::MessageArea(QWidget *parent) :
     //treeView->setSortingEnabled(true);
 
     infoArea = new QWidget(workArea);
-    fnt = infoArea->font();
+    QFont fnt = infoArea->font();
     fnt.setBold(true);
     fnt.setPointSize(fnt.pointSize()+2);
     infoArea->setFont(fnt);
