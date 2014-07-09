@@ -186,9 +186,7 @@ int Timer<T>::operator()()
 			hypersleep<h_milliseconds>(_granularity);
    }
 
-	std::ostringstream ostr;
-	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
-	GlobalLogger::instance()->send(ostr.str());
+	glout << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
 	return 0;
 }
 

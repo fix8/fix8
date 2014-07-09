@@ -353,41 +353,83 @@ public:
 	/*! Set the global logfile name.
 	    \param from name to set to */
 	static void set_global_filename(const std::string& from)
-	{
-		CopyString(from, fn, max_global_filename_length);
-	}
-
-	/*! Send a message with prefix to the logger.
-	  \param prefix text to prefix message with
-	  \param what message to log
-	  \return true on success */
-	static bool log(const std::string& prefix, const std::string& what)
-	{
-		return Singleton<SingleLogger<fn>>::instance()->send(prefix + ' ' + what);
-	}
+		{ CopyString(from, fn, max_global_filename_length); }
 
 	/*! Send a message to the logger.
 	  \param what message to log
 	  \return true on success */
 	static bool log(const std::string& what)
-	{
-		return Singleton<SingleLogger<fn>>::instance()->send(what);
-	}
+		{ return Singleton<SingleLogger<fn>>::instance()->send(what); }
 
 	static void flush_log()
-	{
-		Singleton<SingleLogger<fn>>::instance()->flush();
-	}
+		{ Singleton<SingleLogger<fn>>::instance()->flush(); }
 
 	static void stop()
+		{ Singleton<SingleLogger<fn>>::instance()->stop(); }
+};
+
+//-----------------------------------------------------------------------------------------
+class buffered_ostream : public std::ostream
+{
+protected:
+	class tsbuf : public std::streambuf
 	{
-		Singleton<SingleLogger<fn>>::instance()->stop();
-	}
+		std::string _str;
+
+		int_type overflow(int_type c)
+		{
+			if (c != traits_type::eof())
+			{
+				char z(c);
+				_str.append(&z, 1);
+			}
+			return c;
+		}
+
+		std::streamsize xsputn(const char *s, std::streamsize num)
+			{ _str.append(s, num); return num; }
+
+	public:
+		tsbuf() = default;
+		~tsbuf() = default;
+		const std::string& get() const { return _str; }
+	};
+
+	tsbuf _buf;
+
+public:
+   buffered_ostream() : std::ostream(&_buf) {}
+   virtual ~buffered_ostream() {}
+};
+
+//-----------------------------------------------------------------------------------------
+using bool_func_string = std::function<bool(const std::string&)>;
+using bool_func_string_int = std::function<bool(const std::string&, const unsigned)>;
+
+class log_stream : public buffered_ostream
+{
+	bool_func_string _logger;
+
+public:
+	log_stream(decltype(_logger) func) : _logger(func) {}
+	~log_stream() { _logger(_buf.get()); }
+};
+
+class log2_stream : public buffered_ostream
+{
+	bool_func_string_int _logger;
+
+public:
+	log2_stream(decltype(_logger) func) : _logger(func) {}
+	~log2_stream() { _logger(_buf.get(), 0); }
 };
 
 //-----------------------------------------------------------------------------------------
 F8API extern char glob_log0[max_global_filename_length];
 using GlobalLogger = SingleLogger<glob_log0>;
+
+// our buffered RAII ostream singleton insertable log target
+#define glout log_stream(bool_func_string(GlobalLogger::log))
 
 //-------------------------------------------------------------------------------------------------
 

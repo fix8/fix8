@@ -99,27 +99,14 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 	_timer.start();
 	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 
-	ostringstream ostr;
 	if (!_logger)
-	{
-		ostr.str("");
-		ostr << "Warning: no session logger defined for " << _sid;
-		GlobalLogger::log(ostr.str());
-	}
+		glout << "Warning: no session logger defined for " << _sid;
 
 	if (!_plogger)
-	{
-		ostr.str("");
-		ostr << "Warning: no protocol logger defined for " << _sid;
-		GlobalLogger::log(ostr.str());
-	}
+		glout << "Warning: no protocol logger defined for " << _sid;
 
 	if (!_persist)
-	{
-		ostr.str("");
-		ostr << "Warning: no persister defined for " << _sid;
-		GlobalLogger::log(ostr.str());
-	}
+		glout << "Warning: no persister defined for " << _sid;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -144,7 +131,8 @@ void Session::atomic_init(States::SessionStates st)
 //-------------------------------------------------------------------------------------------------
 Session::~Session()
 {
-	log("Session terminating");
+	//log("Session terminating");
+	slout << "Session terminating";
 	if (_logger)
 		_logger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
@@ -283,7 +271,7 @@ bool Session::process(const f8String& from)
 		const Message *msg(Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag));
 		if (!msg)
 		{
-			GlobalLogger::log("Fatal: factory failed to generate a valid message");
+			glout << "Fatal: factory failed to generate a valid message";
 			return false;
 		}
 
@@ -439,9 +427,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	{
 		if (id != _sid)
 		{
-			ostr.str("");
-			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
-			GlobalLogger::log(ostr.str());
+			glout << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
 			if (_loginParameters._enforce_compids)
 			{
 				stop();
@@ -466,9 +452,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 
 		if (_sci() != tci())
 		{
-			ostr.str("");
-			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
-			GlobalLogger::log(ostr.str());
+			glout << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
 			if (_loginParameters._enforce_compids)
 			{
 				stop();
@@ -483,60 +467,43 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 			bool iserr(false);
 			if (itr == _loginParameters._clients.cend())
 			{
-				ostr.str("");
-				ostr << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
+				glout << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
 				iserr = true;
 			}
 
 			if (!iserr && get<1>(itr->second) != Poco::Net::IPAddress()
 				&& get<1>(itr->second) != _connection->get_peer_socket_address().host())
 			{
-				ostr.str("");
-				ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
+				glout << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
 					<< _connection->get_peer_socket_address().toString() << ").";
 				iserr = true;
 			}
 
 			if (iserr)
 			{
-				GlobalLogger::log(ostr.str());
 				stop();
 				do_state_change(States::st_session_terminated);
 				return false;
 			}
 
-			ostr.str("");
-			ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
+			glout << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
 				<< _connection->get_peer_socket_address().toString() << ").";
-			GlobalLogger::log(ostr.str());
 		}
 
 		// important - these objects can't be created until we have a valid SessionID
 		if (_sf)
 		{
 			if (!_logger && !(_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id)))
-			{
-				ostr.str("");
-				ostr << "Warning: no session logger defined for " << id;
-				GlobalLogger::log(ostr.str());
-			}
+				glout << "Warning: no session logger defined for " << id;
 
 			if (!_plogger && !(_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id)))
-			{
-				ostr.str("");
-				ostr << "Warning: no protocol logger defined for " << id;
-				GlobalLogger::log(ostr.str());
-			}
+				glout << "Warning: no protocol logger defined for " << id;
 
 			if (!_persist)
 			{
 				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 				if (!(_persist = _sf->create_persister(_sf->_ses, &id, reset_given)))
-				{
-					ostr.str("");
-					ostr << "Warning: no persister defined for " << id;
-					GlobalLogger::log(ostr.str());
-				}
+					glout << "Warning: no persister defined for " << id;
 			}
 
 #if 0
@@ -549,7 +516,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 #endif
 		}
 		else
-			GlobalLogger::log("Error: SessionConfig object missing in session");
+			glout << "Error: SessionConfig object missing in session";
 
 		ostr.str("");
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
@@ -1156,20 +1123,18 @@ void Session::set_affinity(int core_id)
 void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
 {
    const Poco::Net::X509Certificate& cert(errorCert.certificate());
-	ostringstream ostr;
-   ostr << "WARNING: Certificate verification failed" << endl;
-   ostr << "----------------------------------------" << endl;
-   ostr << "Issuer Name:  " << cert.issuerName() << endl;
-   ostr << "Subject Name: " << cert.subjectName() << endl;
-   ostr << "The certificate yielded the error: " << errorCert.errorMessage() << endl;
-   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth();
-	GlobalLogger::log(ostr.str());
+   glout << "WARNING: Certificate verification failed" << endl;
+			<< "----------------------------------------" << endl;
+			<< "Issuer Name:  " << cert.issuerName() << endl;
+			<< "Subject Name: " << cert.subjectName() << endl;
+			<< "The certificate yielded the error: " << errorCert.errorMessage() << endl;
+			<< "The error occurred in the certificate chain at position " << errorCert.errorDepth();
 	errorCert.setIgnoreError(true);
 }
 
 void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& privateKey)
 {
-	GlobalLogger::log("warning: privatekey passphrase requested and ignored!");
+	glout << "warning: privatekey passphrase requested and ignored!";
 }
 
 #endif // HAVE_OPENSSL

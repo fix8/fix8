@@ -622,12 +622,12 @@ void Message::report_codec_timings(const f8String& tag)
 
 	ostr << tag << ' ';
 	format_codec_timings("Encode", ostr, _encode_timings);
-	GlobalLogger::log(ostr.str());
+	glout << ostr.str();
 
 	ostr.str("");
 	ostr << tag << ' ';
 	format_codec_timings("Decode", ostr, _decode_timings);
-	GlobalLogger::log(ostr.str());
+	glout << ostr.str();
 }
 #endif
 

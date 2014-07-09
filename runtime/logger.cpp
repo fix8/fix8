@@ -52,18 +52,18 @@ namespace FIX8
 	template<>
 	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance{};
 #endif
-    template<>
-    SingleLogger<glob_log0> *Singleton<SingleLogger<glob_log0>>::create_instance()
-    {
-        static f8_spin_lock mutex;
-        f8_scoped_spin_lock guard(mutex);
-        if (_instance.load() == 0)
-        {
-            SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
-            _instance = p;
-        }
-        return _instance;
-    }
+	template<>
+	SingleLogger<glob_log0> *Singleton<SingleLogger<glob_log0>>::create_instance()
+	{
+		static f8_spin_lock mutex;
+		f8_scoped_spin_lock guard(mutex);
+		if (_instance.load() == 0)
+		{
+			SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
+			_instance = p;
+		}
+		return _instance;
+	}
 
 	const vector<string> Logger::_bit_names
 	{
@@ -295,11 +295,7 @@ PipeLogger::PipeLogger(const string& fname, const LogFlags flags) : Logger(flags
 #endif
 
 	if (pcmd == 0)
-	{
-		ostringstream ostr;
-		ostr << "PipeLogger: " << pathname << ": failed to execute";
-		GlobalLogger::log(ostr.str());
-	}
+		glout << "PipeLogger: " << pathname << ": failed to execute";
 	else
 	{
 		_ofs = new fptrostream(pcmd);

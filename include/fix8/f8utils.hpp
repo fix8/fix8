@@ -64,7 +64,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // file/line stringification
 #define STRINGOF(x) #x
 #define STRINGIFY(x) STRINGOF(x)
-#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__)
+#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__) " "
 
 namespace FIX8 {
 
