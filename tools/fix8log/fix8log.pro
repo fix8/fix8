@@ -62,7 +62,10 @@ SOURCES += main.cpp\
     qtlocalpeer.cpp \
     qtlockedfile.cpp \
     qtsingleapplication.cpp \
-    qtsinglecoreapplication.cpp
+    qtsinglecoreapplication.cpp \
+    qwwtwocolorindicator.cpp \
+    wwglobal_p.cpp \
+    pushbuttonmodifykey.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -105,7 +108,11 @@ HEADERS  += mainwindow.h \
     QtLockedFile \
     qtlockedfile.h \
     qtsingleapplication.h \
-    qtsinglecoreapplication.h
+    qtsinglecoreapplication.h \
+    QwwTwoColorIndicator \
+    qwwtwocolorindicator.h \
+    wwglobal_p.h \
+    pushbuttonmodifykey.h
 
 RESOURCES += \
     resources.qrc

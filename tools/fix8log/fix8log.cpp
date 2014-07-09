@@ -547,7 +547,7 @@ bool Fix8Log::init(QString fileNameToLoad)
     wsd.fileName = fileNameToLoad;
     wd.isVisible = true;
     wd.name = "Fix8LogViewer";
-    wd.color = Globals::menubarDefaultColor;
+
     wireSignalAndSlots(newMW);
     newMW->setWindowData(wd);
     wireSignalAndSlots(newMW);

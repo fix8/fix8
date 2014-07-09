@@ -45,7 +45,7 @@ WindowData::WindowData(const WindowData &w)
     id       = w.id;
     geometry = w.geometry;
     state    = w.state;
-    color    = w.color;
+    menubarStyleSheet    = w.menubarStyleSheet;
     isVisible = w.isVisible;
     currentTab = w.currentTab;
     name       = w.name;

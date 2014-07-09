@@ -450,10 +450,11 @@ void MainWindow::buildMainWindow()
     helpMenu->addAction(whatsThisA);
     helpMenu->addAction(aboutA);
 
-    configPB = new QPushButton(this);
+    configPB = new PushButtonModifyKey(this);
+    configPB->setToolTip("Change menubar color.\n(Hold Shift Key down to change text color)");
     configPB->setIcon(QIcon(":/images/svg/preferences-color.svg"));
-    configPB->setToolTip(tr("Set Menubar Color"));
     configPB->setFlat(true);
+
     menuBar()->setCornerWidget(configPB);
     QWidget *schemaArea = new QWidget(this);
     QHBoxLayout *schemaBox = new QHBoxLayout(schemaArea);
@@ -473,6 +474,7 @@ void MainWindow::buildMainWindow()
     schemaV->setToolTip("Current Schema");
     statusBar()->addWidget(schemaArea);
     connect(configPB,SIGNAL(clicked()),this,SLOT(configSlot()));
+    connect(configPB,SIGNAL(rightButtonPressed()),this,SLOT(configFGSlot()));
     // restore should be in settings but must come after
     stackW = new QStackedWidget(this);
     setCentralWidget(stackW);
@@ -665,7 +667,7 @@ QSize MainWindow::sizeHint() const
 WindowData MainWindow::getWindowData()
 {
     WindowData wd;
-    wd.color = menubarColor;
+    wd.menubarStyleSheet = menuBarStyleSheet;
     wd.geometry = this->saveGeometry();
     wd.state    = this->saveState();
     wd.id       = this->windowDataID;
@@ -688,7 +690,8 @@ void MainWindow::setWindowData(const WindowData &wd)
     windowDataID = wd.id;
     restoreGeometry(wd.geometry);
     restoreState(wd.state);
-    setColorSlot(wd.color);
+    if (mainMenuBar)
+        mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
     setVisible(wd.isVisible);
     setWindowTitle(wd.name);
     name = wd.name;

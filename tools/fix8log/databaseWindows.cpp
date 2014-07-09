@@ -73,19 +73,16 @@ QList<WindowData> Database::getWindows()
     }
     while (query.next()) {
         WindowData wd;
-        wd.id = query.value(0).toInt(&ok);
-        red   = query.value(1).toInt(&ok);
-        green = query.value(2).toInt(&ok);
-        blue  = query.value(3).toInt(&ok);
-        wd.color    = QColor(red,green,blue);
-        wd.geometry = query.value(4).toByteArray();
-        wd.state    = query.value(5).toByteArray();
-        wd.isVisible    = query.value(6).toBool();
-        wd.currentTab   = query.value(7).toInt(&ok);
+        wd.id = query.value(0).toInt();
+        wd.menubarStyleSheet = query.value(1).toString();
+        wd.geometry = query.value(2).toByteArray();
+        wd.state    = query.value(3).toByteArray();
+        wd.isVisible    = query.value(4).toBool();
+        wd.currentTab   = query.value(5).toInt(&ok);
         if (!ok)
             wd.currentTab = 0;
-        wd.name = query.value(8).toString();
-        wd.tableSchemaID = query.value(9).toInt(&ok);
+        wd.name = query.value(6).toString();
+        wd.tableSchemaID = query.value(7).toInt(&ok);
         if (!ok)
             wd.tableSchemaID = -1;
         windowDataList.append(wd);
@@ -102,8 +99,8 @@ bool Database::addWindow(WindowData &wd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO windows (id, red, green, blue, geometry, restoreState, isVisible, currentTab, name,tableSchemaID)"
-                            "VALUES(NULL, :red, :green, :blue, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID)");
+    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID)"
+                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID)");
     if (bstatus == 0) {
         qWarning("Error database - add window failed in prepare statement...");
         sqlError = query.lastError();
@@ -111,9 +108,7 @@ bool Database::addWindow(WindowData &wd)
         qWarning() << errorMessage;
         return false;
     }
-    query.bindValue(":red",wd.color.red());
-    query.bindValue(":green",wd.color.green());
-    query.bindValue(":blue",wd.color.blue());
+    query.bindValue(":menubarStyleSheet",wd.menubarStyleSheet);
     query.bindValue(":geometry",wd.geometry);
     query.bindValue(":restoreState",wd.state);
     query.bindValue("isVisible",wd.isVisible);
@@ -145,9 +140,7 @@ bool Database::updateWindow(WindowData &wd)
     QSqlQuery query(*handle);
     QString str= "update windows set"
             + QString("  id=:id")
-            + QString(", red=:red")
-            + QString(", green=:green")
-            + QString(", blue=:blue")
+            + QString(", menubarStyleSheet=:menubarStyleSheet")
             + QString(", geometry=:geometry")
             + QString(", restoreState=:restoreState")
             + QString(", currentTab=:currentTab")
@@ -165,12 +158,7 @@ bool Database::updateWindow(WindowData &wd)
         return false;
     }
     query.bindValue(":name",wd.name);
-    int red = wd.color.red();
-    int grn = wd.color.green();
-    int blu = wd.color.blue();
-    query.bindValue(":red",red);
-    query.bindValue(":green",grn);
-    query.bindValue(":blue",blu);
+    query.bindValue(":menubarStyleSheet",wd.menubarStyleSheet);
     query.bindValue(":geometry",wd.geometry);
     query.bindValue(":restoreState",wd.state);
     query.bindValue(":tableSchemaID",wd.tableSchemaID);

@@ -75,14 +75,10 @@ void MainWindow::readSettings()
 
     QVariant var;
     QPalette pal = mainMenuBar->palette();
-    QColor defaultColor = pal.color(QPalette::Background);
-    var = settings.value("MenuBarColor",defaultColor);
-    QColor color = var.value<QColor>();
-    pal.setColor(QPalette::Background,color);
-    mainMenuBar->setPalette(pal);
-    menubarColor = color;
+    var = settings.value("MenuBarColor");
+    menuBarStyleSheet = var.toString();
+    mainMenuBar->setStyleSheet(menuBarStyleSheet);
     messageSplitterSettings = settings.value("MessageSplitter").toByteArray();
-
 }
 void MainWindow::writeSettings()
 {

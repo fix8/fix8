@@ -1,4 +1,3 @@
-//-------------------------------------------------------------------------------------------------
 /*
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,26 +31,21 @@ THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), E
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
-//-------------------------------------------------------------------------------------------------
+#ifndef PUSHBUTTONMODIFYKEY_H
+#define PUSHBUTTONMODIFYKEY_H
 
-#ifndef WINDOWDATA_H
-#define WINDOWDATA_H
-#include <QByteArray>
-#include <QColor>
-class TableSchema;
+#include <QPushButton>
+#include <QMouseEvent>
 
-class WindowData {
+class PushButtonModifyKey : public QPushButton
+{
+    Q_OBJECT
 public:
-    WindowData();
-    WindowData(const WindowData &);
-    int id;
-    QByteArray geometry;
-    QByteArray state;
-    QString    menubarStyleSheet;
-    bool       isVisible;
-    qint32     currentTab;
-    QString    name;
-    qint32     tableSchemaID;
-    TableSchema *tableSchema;
+    explicit PushButtonModifyKey(QWidget *parent = 0);
+protected:
+    void mousePressEvent(QMouseEvent *e);
+signals:
+    void rightButtonPressed();
 };
-#endif // WINDOWDATA_H
+
+#endif // PUSHBUTTONMODIFYKEY_H

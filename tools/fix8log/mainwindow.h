@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtScript>
 #include "fixtable.h"
 #include "globals.h"
+#include "pushbuttonmodifykey.h"
 #include "searchfunction.h"
 #include "windowdata.h"
 #include "worksheet.h"
@@ -121,6 +122,7 @@ public:
     void hideColumnActionSlot(QAction *);
     void createWindowSlot();
     void configSlot();
+    void configFGSlot();
     void copyTabSlot();
     void copyWindowSlot();
     void createTabSlot();
@@ -205,7 +207,7 @@ protected:
     QActionGroup *iconSizeActionGroup;
     QActionGroup *iconsStyleGroup;
     QByteArray messageSplitterSettings;
-    QColor menubarColor;
+    QString    menuBarStyleSheet;
     LineEdit *searchLineEdit;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
@@ -228,8 +230,8 @@ protected:
     QMenu    *schemaScopeMenu;
     QMenu    *popupMenu;
     QMenuBar *mainMenuBar;
+    PushButtonModifyKey *configPB;
     QPushButton *cancelEditTabNamePB;
-    QPushButton *configPB;
     QPushButton *editTabNamePB;
     QQuickItem  *qmlObject;
     QQuickView *progressView;
@@ -302,6 +304,7 @@ private:
     QAbstractItemModel *searchSelectModel;
     SearchFunctionList searchFunctionList;
     Database *database;
+    bool colorSelectionFG;
 };
 
 #endif // MAINWINDOW_H

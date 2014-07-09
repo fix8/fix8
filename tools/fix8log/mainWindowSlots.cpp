@@ -102,58 +102,108 @@ void MainWindow::iconSizeSlot(QAction *action)
     searchToolBar->setIconSize(is);
     settings.setValue("ToolButtonSize",is);
 }
-void MainWindow::configSlot()
+void MainWindow::configFGSlot()
 {
+    colorSelectionFG = true;
     int status;
-
     QSettings settings("fix8","logviewer");
-    QPalette pal = mainMenuBar->palette();
-    menubarColor = pal.color(QPalette::Background);
+
+    menuBarStyleSheet =  mainMenuBar->styleSheet();
     QColorDialog *colorDialog = new QColorDialog();
-    colorDialog->setWindowTitle(tr("Select Menu Bar Color"));
-    colorDialog->setCurrentColor(menubarColor);
+    colorDialog->setWindowTitle(tr("Select Menu Bar Text Color"));
     colorDialog->setCustomColor(0,GUI::Globals::menubarDefaultColor);
     connect(colorDialog,SIGNAL(colorSelected(QColor)),this,SLOT(setColorSlot(QColor)));
     connect(colorDialog,SIGNAL(currentColorChanged(QColor)),this,SLOT(currentColorChangedSlot(QColor)));
-    // need this for Ubuntu
     colorDialog->raise();
     status = colorDialog->exec();
     if (status != QDialog::Accepted) {
-        pal.setColor(QPalette::Background,menubarColor);
-        mainMenuBar->setPalette(pal);
-
-        menuBar()->setStyleSheet("background-color: #4d4d4d; selection-background-color: #fcfcfc;");
+        menuBar()->setStyleSheet(menuBarStyleSheet);
     }
     else {
-        settings.setValue("MenuBarColor",menubarColor);
+        menuBarStyleSheet =  mainMenuBar->styleSheet();
+        settings.setValue("MenuBarColor",menuBarStyleSheet);
     }
-
     colorDialog->deleteLater();
+}
+void MainWindow::configSlot()
+{
+    int status;
+    QSettings settings("fix8","logviewer");
 
+    colorSelectionFG = false;
+    menuBarStyleSheet =  mainMenuBar->styleSheet();
+    QColorDialog *colorDialog = new QColorDialog();
+    colorDialog->setWindowTitle(tr("Select Menu Bar Color"));
+    colorDialog->setCustomColor(0,GUI::Globals::menubarDefaultColor);
+    connect(colorDialog,SIGNAL(colorSelected(QColor)),this,SLOT(setColorSlot(QColor)));
+    connect(colorDialog,SIGNAL(currentColorChanged(QColor)),this,SLOT(currentColorChangedSlot(QColor)));
+    colorDialog->raise();
+    status = colorDialog->exec();
+    if (status != QDialog::Accepted)
+        menuBar()->setStyleSheet(menuBarStyleSheet);
+    else  {
+        menuBarStyleSheet =  mainMenuBar->styleSheet();
+        settings.setValue("MenuBarColor",menuBarStyleSheet);
+    }
+    colorDialog->deleteLater();
 }
 void MainWindow::setColorSlot(QColor  color)
-{
-    // does not work on ubuntu
-    QPalette pal = mainMenuBar->palette();
-    pal.setColor(QPalette::Background,color);
-    pal.setColor(QPalette::Window,color);
-    //pal.setColor(QPalette::Base,color);
-    mainMenuBar->setPalette(pal);
-    //QString ss("QMenuBar::item { background-color: red; color: black }"); // Use background-color instead of background
-    // mainMenuBar->setStyleSheet(ss);
-
-
-    menubarColor = color;
+{    
+    QString colorStr;
+    bool hasBackground = false;
+    bool hasColor      = false;
+    QString colorValue;
+    QString backgroundValue;
+    QStringList attributes = menuBarStyleSheet.split(';');
+    qDebug() << "Attributes: " << attributes;
+    QStringListIterator iter(attributes);
+    QString attribute;
+    while(iter.hasNext()) {
+        attribute = iter.next();
+        if (attribute.contains("background-color")) {
+            hasBackground = true;
+            backgroundValue = attribute;
+        }
+        else if (attribute.contains("color")) {
+            hasColor = true;
+            colorValue = attribute;
+        }
+    }
+    if (colorSelectionFG)
+        colorStr = backgroundValue +  QString("; color:") + QString(color.name()) + QString(";");
+    else
+        colorStr = QString("background-color:") + QString(color.name()) + QString(";") + colorValue + ";";
+    mainMenuBar->setStyleSheet(colorStr);
+    qDebug() << "Set style sheet to: " << colorStr;
+    menuBarStyleSheet = mainMenuBar->styleSheet();
 }
 void MainWindow::currentColorChangedSlot(QColor color)
 {
-    QPalette pal = mainMenuBar->palette();
-    pal.setColor(QPalette::Background,color);
-    qDebug() << "COLOR SET TO " << color.name() << __FILE__ << __LINE__;
-    //menuBar()->setStyleSheet("background-color: #4d4d4d; selection-background-color: #fcfcfc;");
-    QString colorStr = QString("background-color:") + QString(color.name()) + QString(";");
+    QString colorStr;
+    bool hasBackground = false;
+    bool hasColor      = false;
+    QString colorValue;
+    QString backgroundValue;
+    QStringList attributes = menuBarStyleSheet.split(';');
+    qDebug() << "Attributes: " << attributes;
+    QStringListIterator iter(attributes);
+    QString attribute;
+    while(iter.hasNext()) {
+        attribute = iter.next();
+        if (attribute.contains("background-color")) {
+            hasBackground = true;
+            backgroundValue = attribute;
+        }
+        else if (attribute.contains("color")) {
+            hasColor = true;
+            colorValue = attribute;
+        }
+    }
+    if (colorSelectionFG)
+        colorStr = backgroundValue +  QString("; color:") + QString(color.name()) + QString(";");
+    else
+        colorStr = QString("background-color:") + QString(color.name()) + QString(";") + colorValue + ";";
     menuBar()->setStyleSheet(colorStr);
-    //mainMenuBar->setPalette(pal);
 }
 void MainWindow::editTabNameSlot(bool isOn)
 {
@@ -197,7 +247,7 @@ void MainWindow::tabNameModifiedSlot(QString str)
     if(isValid)
         tabNameLineEdit->setToolTip(tr("Enter return to change name and exit edit mode"));
     else
-         tabNameLineEdit->setToolTip(tr("Enter tab name"));
+        tabNameLineEdit->setToolTip(tr("Enter tab name"));
 }
 void MainWindow::tabNameReturnKeySlot()
 {
@@ -217,9 +267,9 @@ void MainWindow::tabNameReturnKeySlot()
 }
 void MainWindow::tabCurentChangedSlot(int index)
 {
-     QMenu *senderMenu;
-     WorkSheet *worksheet = qobject_cast <WorkSheet *> (tabW->widget(index));
-     if (worksheet) {
+    QMenu *senderMenu;
+    WorkSheet *worksheet = qobject_cast <WorkSheet *> (tabW->widget(index));
+    if (worksheet) {
         QString searchStr = worksheet->getSearchString();
         setSearchString(searchStr);
         senderMenu = worksheet->getSenderMenu();
@@ -227,7 +277,7 @@ void MainWindow::tabCurentChangedSlot(int index)
             filterSenderMenuA->setMenu(senderMenu);
         else
             filterSenderMenuA->setMenu(0);
-     }
+    }
     if (!editTabNamePB->isChecked())
         return;
     cancelTabNameSlot();
@@ -268,13 +318,13 @@ void MainWindow::setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat tf)
 }
 void MainWindow::setTimeFormatSlot(GUI::Globals::TimeFormat tf)
 {
-   WorkSheet *workSheet;
-   for(int i=0;i < tabW->count();i++) {
-       workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
-       if (workSheet)
-           workSheet->setTimeFormat(tf);
-   }
-   repaint();
+    WorkSheet *workSheet;
+    for(int i=0;i < tabW->count();i++) {
+        workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
+        if (workSheet)
+            workSheet->setTimeFormat(tf);
+    }
+    repaint();
 }
 void MainWindow::toolbarOrientationChangedSlot(Qt::Orientation orient)
 {
@@ -301,13 +351,13 @@ void MainWindow::schemaSelectedSlot(QAction *action)
     QVariant var =  action->data();
     if (!schemaList) {
         qWarning() << "ERROR - NO SCHEMA LIST SET" << __FILE__ << __LINE__;
-         return;
+        return;
     }
 
-     ts = (TableSchema *) var.value<void *>();
-     if (!ts) {
-         qWarning() << "Error - Table Schema Not Found" << __FILE__ << __LINE__;
-         return;
+    ts = (TableSchema *) var.value<void *>();
+    if (!ts) {
+        qWarning() << "Error - Table Schema Not Found" << __FILE__ << __LINE__;
+        return;
     }
     schemaV->setText(ts->name);
     tableSchema = ts;
@@ -331,7 +381,7 @@ void MainWindow::setWindowNameSlot()
 }
 void MainWindow::displayMessageSlot(GUI::ConsoleMessage msg)
 {
-  displayConsoleMessage(msg);
+    displayConsoleMessage(msg);
 }
 void MainWindow::terminatedWorkSheetCopySlot(WorkSheet *ws)
 {
