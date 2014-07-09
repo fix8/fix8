@@ -395,3 +395,7 @@ void MainWindow::popupMenuActionSlot(QAction*)
 {
 
 }
+void MainWindow::linkSearchSlot(bool turnedOn)
+{
+    qDebug() << "Link Search Enabled " << turnedOn << __FILE__ << __LINE__;
+}

@@ -36,7 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include "windowdata.h"
 #include "tableschema.h"
-WindowData::WindowData():currentTab(0),tableSchemaID(-1),tableSchema(0)
+WindowData::WindowData():currentTab(0),tableSchemaID(-1),tableSchema(0),searchAll(false)
 {
 
 }
@@ -51,5 +51,7 @@ WindowData::WindowData(const WindowData &w)
     name       = w.name;
     tableSchemaID = w.tableSchemaID;
     tableSchema = w.tableSchema;
+    searchAll   = w.searchAll;
+    searchStr   = w.searchStr;
 }
 

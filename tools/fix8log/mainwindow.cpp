@@ -53,7 +53,8 @@ TableSchemaList *MainWindow::schemaList = 0;
 
 MainWindow::MainWindow(Database *db,bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchString(false),database(db)
+      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchString(false),database(db),
+      linkSearchOn(false)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -65,7 +66,7 @@ MainWindow::MainWindow(Database *db,bool showLoading)
 
 MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false), haveSearchString(false),database(db)
+      windowDataID(-1),loadingActive(false), haveSearchString(false),database(db),linkSearchOn(false)
 {
     buildMainWindow();
     setAcceptDrops(true);
@@ -276,6 +277,7 @@ void MainWindow::buildMainWindow()
     linkSearchA->setCheckable(true);
     linkSearchA->setToolTip("Search all tabs or just current tab");
     linkSearchA->setIcon(linkIcon);
+    connect(linkSearchA,SIGNAL(toggled(bool)),SLOT(linkSearchSlot(bool)));
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
     searchLineEdit = new LineEdit(searchArea);

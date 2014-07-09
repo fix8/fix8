@@ -135,6 +135,7 @@ public:
     void fileSelectionFinishedSlot(int returnCode);
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
+    void linkSearchSlot(bool turnedOn);
     void modelDroppedSlot(FixMimeData *);
     void popupMenuActionSlot(QAction *);
     void popupMenuSlot(const QModelIndex &,const QPoint &);
@@ -305,6 +306,7 @@ private:
     SearchFunctionList searchFunctionList;
     Database *database;
     bool colorSelectionFG;
+    bool linkSearchOn;
 };
 
 #endif // MAINWINDOW_H

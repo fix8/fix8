@@ -53,5 +53,7 @@ public:
     QString    name;
     qint32     tableSchemaID;
     TableSchema *tableSchema;
+    bool searchAll;
+    QString searchStr;
 };
 #endif // WINDOWDATA_H
