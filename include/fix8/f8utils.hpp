@@ -1047,7 +1047,17 @@ public:
 	}
 
     /*! Creates a single instance of the underlying object */
-   F8API static T *create_instance();
+    static T *create_instance()
+    {
+        static f8_spin_lock mutex;
+        f8_scoped_spin_lock guard( mutex );
+        if ( _instance.load() == 0 )
+        {
+            T *p( new T ); // avoid race condition between mem assignment and construction
+            _instance = p;
+        }
+        return _instance;
+    }
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
