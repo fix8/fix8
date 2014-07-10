@@ -139,8 +139,10 @@ void MainWindow::configSlot()
     connect(colorDialog,SIGNAL(currentColorChanged(QColor)),this,SLOT(currentColorChangedSlot(QColor)));
     colorDialog->raise();
     status = colorDialog->exec();
-    if (status != QDialog::Accepted)
+    if (status != QDialog::Accepted) {
         menuBar()->setStyleSheet(menuBarStyleSheet);
+        fileMenu->setStyleSheet("");
+    }
     else  {
         menuBarStyleSheet =  mainMenuBar->styleSheet();
         settings.setValue("MenuBarColor",menuBarStyleSheet);
@@ -150,8 +152,7 @@ void MainWindow::configSlot()
 void MainWindow::setColorSlot(QColor  color)
 {    
     QString colorStr;
-    bool hasBackground = false;
-    bool hasColor      = false;
+
     QString colorValue;
     QString backgroundValue;
     QStringList attributes = menuBarStyleSheet.split(';');
@@ -161,11 +162,9 @@ void MainWindow::setColorSlot(QColor  color)
     while(iter.hasNext()) {
         attribute = iter.next();
         if (attribute.contains("background-color")) {
-            hasBackground = true;
             backgroundValue = attribute;
         }
         else if (attribute.contains("color")) {
-            hasColor = true;
             colorValue = attribute;
         }
     }
@@ -174,28 +173,29 @@ void MainWindow::setColorSlot(QColor  color)
     else
         colorStr = QString("background-color:") + QString(color.name()) + QString(";") + colorValue + ";";
     mainMenuBar->setStyleSheet(colorStr);
-    qDebug() << "Set style sheet to: " << colorStr;
     menuBarStyleSheet = mainMenuBar->styleSheet();
+
+    fileMenu->setStyleSheet(menuStyle);
+    optionMenu->setStyleSheet(menuStyle);
+    schemaMenu->setStyleSheet(menuStyle);
+    helpMenu->setStyleSheet(menuStyle);
+
+
 }
 void MainWindow::currentColorChangedSlot(QColor color)
 {
     QString colorStr;
-    bool hasBackground = false;
-    bool hasColor      = false;
     QString colorValue;
     QString backgroundValue;
     QStringList attributes = menuBarStyleSheet.split(';');
-    qDebug() << "Attributes: " << attributes;
     QStringListIterator iter(attributes);
     QString attribute;
     while(iter.hasNext()) {
         attribute = iter.next();
         if (attribute.contains("background-color")) {
-            hasBackground = true;
             backgroundValue = attribute;
         }
         else if (attribute.contains("color")) {
-            hasColor = true;
             colorValue = attribute;
         }
     }
@@ -204,6 +204,10 @@ void MainWindow::currentColorChangedSlot(QColor color)
     else
         colorStr = QString("background-color:") + QString(color.name()) + QString(";") + colorValue + ";";
     menuBar()->setStyleSheet(colorStr);
+    fileMenu->setStyleSheet(menuStyle);
+    optionMenu->setStyleSheet(menuStyle);
+    schemaMenu->setStyleSheet(menuStyle);
+    helpMenu->setStyleSheet(menuStyle);
 }
 void MainWindow::editTabNameSlot(bool isOn)
 {
@@ -398,4 +402,5 @@ void MainWindow::popupMenuActionSlot(QAction*)
 void MainWindow::linkSearchSlot(bool turnedOn)
 {
     qDebug() << "Link Search Enabled " << turnedOn << __FILE__ << __LINE__;
+    linkSearchOn = turnedOn;
 }

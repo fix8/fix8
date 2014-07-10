@@ -113,6 +113,16 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     }
     readSettings();
     move(x+100,y+90); // offset from window copied
+    linkSearchOn = mw.linkSearchOn;
+    linkSearchA->setChecked(linkSearchOn);
+    searchString = mw.searchString;
+    if (mainMenuBar) {
+        mainMenuBar->setStyleSheet(mw.mainMenuBar->styleSheet());
+        fileMenu->setStyleSheet(menuStyle);
+        optionMenu->setStyleSheet(menuStyle);
+        schemaMenu->setStyleSheet(menuStyle);
+        helpMenu->setStyleSheet(menuStyle);
+    }
 }
 void MainWindow::setLoading(bool bstatus)
 {
@@ -148,6 +158,12 @@ void MainWindow::buildMainWindow()
     uuid = QUuid::createUuid();
     setAnimated(true);
     mainMenuBar = menuBar();
+    QPalette pal = mainMenuBar->palette();
+    menuBG =  pal.color(QPalette::Window);
+    menuFG =  pal.color(QPalette::WindowText);
+    //Save this string as setStyle on menubar changes colors of menus, this is only way to get around it
+    menuStyle = QString("background-color:" + menuBG.name() + QString("; color:")
+                                + menuFG.name()) + QString(";");
     mainMenuBar->setAutoFillBackground(true);
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
@@ -487,7 +503,7 @@ void MainWindow::buildMainWindow()
     fnt.setPointSize(fnt.pointSize() + 4);
     noDataL->setFont(fnt);
     noDataL->setAutoFillBackground(true);
-    QPalette pal = noDataL->palette();
+    pal = noDataL->palette();
     pal.setColor(QPalette::Window,Qt::black);
     pal.setColor(QPalette::WindowText,Qt::white);
     noDataL->setPalette(pal);
@@ -681,6 +697,8 @@ WindowData MainWindow::getWindowData()
     else if(defaultTableSchema)
         wd.tableSchemaID = defaultTableSchema->id;
     wd.name     = name;
+    wd.searchAll = linkSearchOn;
+    wd.searchStr = searchLineEdit->toPlainText();
     return wd;
 }
 void MainWindow::setWindowData(const WindowData &wd)
@@ -692,8 +710,13 @@ void MainWindow::setWindowData(const WindowData &wd)
     windowDataID = wd.id;
     restoreGeometry(wd.geometry);
     restoreState(wd.state);
-    if (mainMenuBar)
+    if (mainMenuBar) {
         mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
+        fileMenu->setStyleSheet(menuStyle);
+        optionMenu->setStyleSheet(menuStyle);
+        schemaMenu->setStyleSheet(menuStyle);
+        helpMenu->setStyleSheet(menuStyle);
+    }
     setVisible(wd.isVisible);
     setWindowTitle(wd.name);
     name = wd.name;
@@ -719,6 +742,11 @@ void MainWindow::setWindowData(const WindowData &wd)
         }
     }
     setTableSchema(tableSchema);
+    linkSearchOn = wd.searchAll;
+    linkSearchA->setChecked(linkSearchOn);
+    searchString = wd.searchStr;
+
+    searchLineEdit->setText(searchString);
 }
 QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {
@@ -953,7 +981,6 @@ void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
 }
 void MainWindow::setTableSchema(TableSchema *newTableSchema)
 {
-    qDebug() << "MAIN WINDOW::setTableSchema" << __FILE__ << __LINE__;
     WorkSheet *ws;
     tableSchema = newTableSchema;
     QAction *action;

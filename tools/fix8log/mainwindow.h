@@ -307,6 +307,9 @@ private:
     Database *database;
     bool colorSelectionFG;
     bool linkSearchOn;
+    QColor menuBG;
+    QColor menuFG;
+    QString menuStyle;
 };
 
 #endif // MAINWINDOW_H

@@ -78,6 +78,10 @@ void MainWindow::readSettings()
     var = settings.value("MenuBarColor");
     menuBarStyleSheet = var.toString();
     mainMenuBar->setStyleSheet(menuBarStyleSheet);
+    fileMenu->setStyleSheet(menuStyle);
+    optionMenu->setStyleSheet(menuStyle);
+    schemaMenu->setStyleSheet(menuStyle);
+    helpMenu->setStyleSheet(menuStyle);
     messageSplitterSettings = settings.value("MessageSplitter").toByteArray();
 }
 void MainWindow::writeSettings()

@@ -68,7 +68,7 @@ void MainWindow::validateSearchText()
 
     }
     else {
-        qDebug() << "Search Text not found"<< __FILE__ << __LINE__;
+        // qDebug() << "Search Text not found"<< __FILE__ << __LINE__;
         searchSelectCB->setCurrentIndex(0);
     }
     validateSearchButtons();

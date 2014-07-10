@@ -204,6 +204,18 @@ QBaseEntryList *QBaseEntryList::clone()
     }
     return qbel;
 }
+QStringList QBaseEntryList::getFieldNames()
+{
+    QStringList fieldNames;
+    QBaseEntry *qbe;
+    QListIterator <QBaseEntry *> iter(*this);
+    while(iter.hasNext()) {
+        qbe = iter.next();
+        fieldNames << qbe->name;
+    }
+    return fieldNames;
+}
+
 QBaseEntry * QBaseEntryList::findByName(QString &name)
 {
     QBaseEntry *qbe;

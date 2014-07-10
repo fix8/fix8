@@ -93,6 +93,7 @@ public:
     QBaseEntry *findByName(QString &);
     void removeByName(QString &name);
     QBaseEntryList *clone();
+    QStringList getFieldNames();
 };
 
 class MessageField

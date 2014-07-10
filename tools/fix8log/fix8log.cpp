@@ -123,8 +123,8 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
         return;
     }
     mw->
-    connect(mw,SIGNAL(toolButtonStyleModified(Qt::ToolButtonStyle)),
-            this,SLOT(toolButtonStyleModfiedSlot(Qt::ToolButtonStyle)));
+            connect(mw,SIGNAL(toolButtonStyleModified(Qt::ToolButtonStyle)),
+                    this,SLOT(toolButtonStyleModfiedSlot(Qt::ToolButtonStyle)));
     connect(mw,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
@@ -236,14 +236,10 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
             qbe->baseEntryList = new QList<QBaseEntry *>();
             (*level)++;
             generate_traits(itr->_group,baseMap,ful,mf,qbe->baseEntryList,level); // descend into repeating groups
-
         }
-
         ii++;
     }
 }
-
-
 bool Fix8Log::init()
 {
     bool bstatus;
@@ -256,6 +252,47 @@ bool Fix8Log::init()
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
     readSettings();
+    QString key;
+    QString value;
+    quint32 ikey;
+    FieldTrait::FieldType ft;
+    const BaseMsgEntry *tbme;
+    //Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
+    //Globals::messagePairs = new QVector<Globals::MessagePair>();
+    int messageCount = TEX::ctx()._bme.size();
+    // qDebug() << "SIZE OF MESSAGE TABLE = " << messageCount ;
+    const BaseEntry *tbe;
+    messageFieldList = new MessageFieldList();
+    MessageField *messageField;
+    fieldTraitV.resize( TEX::ctx()._be.size());
+    ///dnb
+    QString fieldName;
+    FIX8::TEX::NewOrderSingle nos;
+    MessageBase *_header = nos.Header();
+    for (Fields::const_iterator hiter = _header->fields_begin();
+         hiter != _header->fields_end();
+         hiter++) {
+    }
+    for(int ii=0;ii < messageCount; ii++)
+    {
+        const char *kk = TEX::ctx()._bme.at(ii)->_key;
+        const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
+        //cout << ">>>>> " << TEX::ctx()._bme.at(ii)->_value._name << endl;
+        QBaseEntryList *qbaseEntryList = new QBaseEntryList();
+        value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
+        key =
+                QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
+        messageField = new MessageField(key,value);
+        int level = 0;
+        generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
+        // qbaseEntryList->print();
+        //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
+        messageField->qbel = qbaseEntryList;
+        messageFieldList->append(messageField);
+    }
+
+
+
     if (!dir.exists()) {
         bstatus = dir.mkdir(dbPath);
         if (!bstatus) {
@@ -307,17 +344,16 @@ bool Fix8Log::init()
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
     }
-   bstatus = database->tableIsValid(Database::SearchFunctions);
-   if (!bstatus) {
-       qWarning() << "Cerateing Search Table" << __FILE__ << __LINE__;
-       bstatus = database->createTable(Database::SearchFunctions);
-       if (!bstatus) {
-           errorStr = "Failed to create table  search table.";
-           displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-       }
-   }
-   else
-       searchFunctionList = database->getSearchFunctions();
+    bstatus = database->tableIsValid(Database::SearchFunctions);
+    if (!bstatus) {
+        bstatus = database->createTable(Database::SearchFunctions);
+        if (!bstatus) {
+            errorStr = "Failed to create table  search table.";
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+        }
+    }
+    else
+        searchFunctionList = database->getSearchFunctions();
 
     bstatus = database->tableIsValid(Database::TableSchemas);
     if (!bstatus) {
@@ -329,19 +365,23 @@ bool Fix8Log::init()
         else {
             // create default schema ...
             TableSchema *ts = new TableSchema("Default","Default Table Schema",true);
-            if (ts) {
-                bstatus = database->addTableSchema(*ts);
-                if (!bstatus) {
-                    errorStr = "Failed to create default table schema";
+            ts->setFields(defaultHeaderItems.clone());
+            ts->fieldNames = defaultHeaderItems.getFieldNames();
+            qDebug() << "************* 1 SET DEF FIELD NAMES TO: " << ts->fieldNames << __FILE__ << __LINE__;
+            bstatus = database->addTableSchema(*ts);
+            if (!bstatus) {
+                errorStr = "Failed to create default table schema";
+                displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+            }
+            else {
+                database->saveTableSchemaFields(*ts);
+                tableSchemaList = database->getTableSchemas();
+                defaultTableSchema = tableSchemaList->findByName("Default");
+                defaultTableSchema->fieldNames = database->getSchemaFields(defaultTableSchema->id);
+                qDebug() << "GOT DEFAULT FROM DATABASE: " << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
+                if (!tableSchemaList) {
+                    errorStr = "Error - no table schemas found in database";
                     displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-                }
-                else {
-                    tableSchemaList = database->getTableSchemas();
-                    defaultTableSchema = tableSchemaList->findByName("Default");
-                    if (!tableSchemaList) {
-                        errorStr = "Error - no table schemas found in database";
-                        displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-                    }
                 }
             }
         }
@@ -352,6 +392,9 @@ bool Fix8Log::init()
             errorStr = "Error - no table schemas found in database, creating default....";
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
             defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
+            defaultTableSchema->setFields(defaultHeaderItems.clone());
+            defaultTableSchema->fieldNames = defaultHeaderItems.getFieldNames();
+            qDebug() << "************* SET DEF FIELD NAMES TO: " << defaultTableSchema->fieldNames;
             bstatus = database->addTableSchema(*defaultTableSchema);
             if (!bstatus) {
                 errorStr = "Failed to add default table schema to database";
@@ -366,6 +409,7 @@ bool Fix8Log::init()
             defaultTableSchema = tableSchemaList->findByName("Default");
             if(!defaultTableSchema) {
                 errorStr = "Failed to find default table schema, creating it...";
+                qDebug() << errorStr << __FILE__ << __LINE__;
                 displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
                 defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
                 tableSchemaList->append(defaultTableSchema);
@@ -384,44 +428,6 @@ bool Fix8Log::init()
             TableSchema *ts = tsIter.next();
             ts->fieldNames = database->getSchemaFields(ts->id);
         }
-    }
-    QString key;
-    QString value;
-    quint32 ikey;
-    FieldTrait::FieldType ft;
-    const BaseMsgEntry *tbme;
-    //Globals::messagePairs = new QVector<Globals::MessagePair>(TEX::ctx()._bme.size());
-    //Globals::messagePairs = new QVector<Globals::MessagePair>();
-    int messageCount = TEX::ctx()._bme.size();
-    // qDebug() << "SIZE OF MESSAGE TABLE = " << messageCount ;
-    const BaseEntry *tbe;
-    messageFieldList = new MessageFieldList();
-    MessageField *messageField;
-    fieldTraitV.resize( TEX::ctx()._be.size());
-    ///dnb
-    QString fieldName;
-    FIX8::TEX::NewOrderSingle nos;
-    MessageBase *_header = nos.Header();
-    for (Fields::const_iterator hiter = _header->fields_begin();
-         hiter != _header->fields_end();
-         hiter++) {
-    }
-    for(int ii=0;ii < messageCount; ii++)
-    {
-        const char *kk = TEX::ctx()._bme.at(ii)->_key;
-        const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
-        //cout << ">>>>> " << TEX::ctx()._bme.at(ii)->_value._name << endl;
-        QBaseEntryList *qbaseEntryList = new QBaseEntryList();
-        value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
-        key =
-                QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
-        messageField = new MessageField(key,value);
-        int level = 0;
-        generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
-        // qbaseEntryList->print();
-        //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
-        messageField->qbel = qbaseEntryList;
-        messageFieldList->append(messageField);
     }
 
     // generate fieldList from names;
@@ -528,6 +534,7 @@ bool Fix8Log::init()
             }
             newMW->setWindowData(wd);
         }
+        qDebug() << "NEW DEFAULT MAIN WINDOW SET TABLE SCHEMNA TO DEFAULT:"  << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
         newMW->setTableSchema(defaultTableSchema);
         wireSignalAndSlots(newMW);
         newMW->show();
