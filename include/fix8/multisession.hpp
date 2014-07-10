@@ -44,8 +44,7 @@ namespace FIX8 {
 /// Multi Server Manager.
 class ServerManager
 {
-	using ServerMap = std::map<Poco::Net::ServerSocket, ServerSessionBase *>;
-	ServerMap _servermap;
+	std::map<Poco::Net::ServerSocket, ServerSessionBase *> _servermap;
 
 public:
 	/// Ctor.
@@ -95,6 +94,10 @@ public:
 				{ result.push_back(_servermap.find(pp)->second); });
 		return result.size();
 	}
+
+	/*! Get the number of server sessions being manager by this object
+	  \return count of server sessions */
+	unsigned size() const { return static_cast<unsigned>(_servermap.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -103,8 +106,7 @@ template <typename T>
 class SessionManager
 {
 	f8_mutex _mutex;
-	using SessionMap = std::map<f8String, T*>;
-	SessionMap _sessionmap;
+	std::map<f8String, T*> _sessionmap;
 
 public:
 	/// Ctor.
@@ -160,16 +162,21 @@ public:
 	/*! Find a session by session name
 	  \param name session name
 	  \return T* or nullptr if not found */
-	T *find(const f8String& name) const
+	T *find(const f8String& name)
 	{
 		f8_scoped_lock guard(_mutex);
 		const auto itr(_sessionmap.find(name));
 		return itr == _sessionmap.cend() ? nullptr : itr->second;
 	}
+
 	/*! Find a session by session name, subscript operator version
 	  \param name session name
 	  \return T* or nullptr if not found */
 	T *operator[] (const f8String& name) const { return find(name); }
+
+	/*! Get the number of sessions being manager by this object
+	  \return count of sessions */
+	unsigned size() const { return static_cast<unsigned>(_sessionmap.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------

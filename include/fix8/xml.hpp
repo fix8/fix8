@@ -128,14 +128,45 @@ public:
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
 	  \return the number of found elements */
-	F8API int find( const std::string& what, XmlSet& eset, bool ignorecase = false,
+	F8API int find(const std::string& what, XmlSet& eset, bool ignorecase = false,
 		const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const;
+
+	/*! Find a child element with a given name, attribute name and attribute value. This version assumes the base of the
+	  search term already contains the current xpath tag and delimiter.
+	  \param what the name to search for
+	  \param ignorecase if true ignore case of name
+	  \param atag the attribute name
+	  \param aval the attribute value
+	  \param delim the Xpath delimiter
+	  \return the found or 0 if not found */
+	F8API const XmlElement *find_child(const std::string& what, bool ignorecase = false,
+		const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const
+	{
+		const std::string sterm(tag_ + '/' + what);
+		return find(sterm, ignorecase, atag, aval, delim);
+	}
+
+	/*! Recursively find all child elements with a given name, attribute name and attribute value.
+		This version assumes the base of the search term already contains the current xpath tag and delimiter.
+	  \param what the name to search for
+	  \param eset target XmlSet to place results
+	  \param ignorecase if true ignore case of name
+	  \param atag the attribute name
+	  \param aval the attribute value
+	  \param delim the Xpath delimiter
+	  \return the number of found elements */
+	F8API int find_child(const std::string& what, XmlSet& eset, bool ignorecase = false,
+		const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const
+	{
+		const std::string sterm(tag_ + '/' + what);
+		return find(sterm, eset, ignorecase, atag, aval, delim);
+	}
 
 	/*! Find an attribute's with the given name.
 	  \param what attribute to find
 	  \param target where to place value
 	  \return true if found */
-	F8API bool GetAttr( const std::string& what, std::string& target ) const;
+	F8API bool GetAttr(const std::string& what, std::string& target) const;
 
 	/*! Find an attribute's value with the name "value".
 	  \param target where to place value
@@ -146,7 +177,7 @@ public:
 		return GetAttr(valstr, target);
 	}
 
-	/*! Check if an attribute's with the given name is present.
+	/*! Check if an attribute with the given name is present.
 	  \param what attribute to find
 	  \return true if found */
 	bool HasAttr(const std::string& what) const
@@ -166,7 +197,7 @@ public:
 	  \param what attribute to find
 	  \param value attribute value
 	  \return true if found */
-	F8API bool findAttrByValue( const std::string& what, const std::string& value ) const;
+	F8API bool findAttrByValue(const std::string& what, const std::string& value) const;
 
 	/*! Find an attribute with the given name and return its typed value.
 	  \tparam type of target attribute
@@ -258,6 +289,15 @@ public:
 	/*! Get the element tag name.
 	  \return the tag */
 	const std::string& GetTag() const { return tag_; }
+
+	/*! Generate a formatted string for error reporting
+	  \return formatted string */
+	const std::string GetLocString() const
+	{
+		std::ostringstream ostr;
+		ostr << '"' << tag_ << "\" (" << GetPath() << ':' << txtline_ << ')';
+		return ostr.str();
+	}
 
 	/*! Get the element value.
 	  \return the value */

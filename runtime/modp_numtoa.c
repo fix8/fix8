@@ -139,15 +139,24 @@ F8API size_t modp_dtoa(double value, char* str, int prec) // DD
             /* 1.5 -> 2, but 2.5 -> 2 */
             ++whole;
         }
-    } else {
-        int count = prec;
+    } else {    // these mods DD: remove trailing zero in prec (unless there is only one 0)
+        int count = prec, done = 0;
         // now do fractional part, as an unsigned number
-        do {
+        do
+        {
             --count;
-            *wstr++ = (char)(48 + (frac % 10));
-        } while (frac /= 10);
+            if (frac % 10)
+                done += (*wstr++ = (char)(48 + (frac % 10)));
+            else if (done)
+                *wstr++ = '0';
+        }
+        while (frac /= 10);
         // add extra 0s
-        while (count-- > 0) *wstr++ = '0';
+        if (!done)
+            *wstr++ = '0';
+        else
+            while (count-- > 0)
+                *wstr++ = '0';
         // add decimal
         *wstr++ = '.';
     }
@@ -155,12 +164,13 @@ F8API size_t modp_dtoa(double value, char* str, int prec) // DD
     // do whole part
     // Take care of sign
     // Conversion. Number is reversed.
-    do *wstr++ = (char)(48 + (whole % 10)); while (whole /= 10);
-    if (neg) {
+    do
+        *wstr++ = (char)(48 + (whole % 10));
+    while (whole /= 10);
+    if (neg)
         *wstr++ = '-';
-    }
-    *wstr='\0';
+    *wstr = 0;
     strreverse(str, wstr-1);
-	return wstr - str; // DD
+    return wstr - str; // DD
 }
 

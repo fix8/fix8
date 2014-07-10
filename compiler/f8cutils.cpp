@@ -341,6 +341,7 @@ void print_usage()
 	um.add('R', "norealm", "do not generate realm constructed field instantiators (default false)");
 	um.add('W', "nowarn", "suppress warning messages (default false)");
 	um.add('C', "nocheck", "do not embed version checking in generated code (default false)");
+	um.add('D', "defaulted", "do not generate default router bodies. Application must provide all router definitions (default false)");
 	um.add('U', "noconst", "Generate non-const Router method declarations (default false, const)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
@@ -366,7 +367,7 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 	if (FieldTrait::is_char(ftype))
 		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))
-		return new TypedRealm<float>(get_value<fp_type>(from), isRange);
+		return new TypedRealm<fp_type>(get_value<fp_type>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
 	return nullptr;

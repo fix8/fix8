@@ -346,19 +346,19 @@ int main(int argc, char **argv)
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
-		GlobalLogger::log(e.what());
+		glout << e.what();
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
-		GlobalLogger::log(e.what());
+		glout << e.what();
 	}
 	catch (...)
 	{
 		cerr << "unknown exception" << endl;
 		restore_tty = true;
-		GlobalLogger::log("unknown exception");
+		glout << "unknown exception";
 	}
 
 	if (restore_tty && !server)
@@ -393,10 +393,7 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti)
 	unique_ptr<SessionInstanceBase> inst(srv->create_server_instance());
 	if (!quiet)
 		inst->session_ptr()->control() |= Session::print;
-	ostringstream sostr;
-	sostr << "client(" << scnt << ") connection established.";
-	GlobalLogger::log(sostr.str());
-
+	glout << "client(" << scnt << ") connection established.";
 	const ProcessModel pm(srv->get_process_model(srv->_ses));
 	cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
 	inst->start(pm == pm_pipeline, next_send, next_receive);
