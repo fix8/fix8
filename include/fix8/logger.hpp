@@ -428,7 +428,7 @@ public:
 F8API extern char glob_log0[max_global_filename_length];
 using GlobalLogger = SingleLogger<glob_log0>;
 
-// our buffered RAII ostream singleton insertable log target
+// our buffered RAII ostream singleton insertable log target, global ostream log target
 #define glout log_stream(bool_func_string(GlobalLogger::log))
 
 //-------------------------------------------------------------------------------------------------
