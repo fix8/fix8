@@ -1088,12 +1088,12 @@ void Session::set_affinity(int core_id)
 void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
 {
    const Poco::Net::X509Certificate& cert(errorCert.certificate());
-   glout << "WARNING: Certificate verification failed" << endl;
-			<< "----------------------------------------" << endl;
-			<< "Issuer Name:  " << cert.issuerName() << endl;
-			<< "Subject Name: " << cert.subjectName() << endl;
-			<< "The certificate yielded the error: " << errorCert.errorMessage() << endl;
-			<< "The error occurred in the certificate chain at position " << errorCert.errorDepth();
+	glout << "WARNING: Certificate verification failed";
+	glout << "----------------------------------------";
+	glout << "Issuer Name:  " << cert.issuerName();
+	glout << "Subject Name: " << cert.subjectName();
+	glout << "The certificate yielded the error: " << errorCert.errorMessage();
+	glout << "The error occurred in the certificate chain at position " << errorCert.errorDepth();
 	errorCert.setIgnoreError(true);
 }
 
