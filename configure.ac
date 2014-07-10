@@ -143,19 +143,6 @@ m4_include(m4/ax_check_compile_flag.m4)
 has_assignmentvars=no
 AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
 
-oktopro=no
-PRODIRFILE=./pro/buildcheck
-AC_MSG_CHECKING(for pro build)
-if test -a "$PRODIRFILE"; then
-   AC_DEFINE_UNQUOTED(HAVE_PRO_BUILD, 1, [Define to 1 if this is a pro build. NOT available in the open source version.])
-   oktopro=yes
-   AC_CONFIG_FILES([pro/Makefile])
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-AM_CONDITIONAL([PROBUILD], [test $oktopro = yes])
-
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
 [AS_HELP_STRING([--enable-toggleassignmentvars],[enable toggleassignmentvars for gcc (default=yes if available)])],
@@ -339,13 +326,16 @@ AC_ARG_WITH(gperf,
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
+AC_MSG_CHECKING(for precision)
 using_double_precision=yes
 AC_ARG_WITH([precision],
 [AS_HELP_STRING([--with-precision=VAL],[select whether to use single or double precision (single|double, default=double)])],
 [case "${withval}" in
    single) using_double_precision=no
-       AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
-   double) using_double_precision=yes ;;
+			  AC_MSG_RESULT(single)
+			  AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
+   double) AC_MSG_RESULT(double)
+			  using_double_precision=yes ;;
    *) echo
       echo "ERROR: Unknown value ${withval} for precision given."
       echo

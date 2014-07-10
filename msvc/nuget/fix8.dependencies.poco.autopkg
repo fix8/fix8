@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dependencies.poco;
-		version : 1.5.20140509.1;
+		version : 1.5.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 Poco dependency;
 		authors: {Applied Informatics};
 		owners: {Fix8, Sergey Sedreev};

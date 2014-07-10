@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dependencies.tbb;
-		version : 4.2.20140416.1;
+		version : 4.2.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 TBB dependency;
 		authors: {Intel Corporation};
 		owners: {Fix8, Sergey Sedreev};

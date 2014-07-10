@@ -51,11 +51,7 @@ const size_t HEADER_CALC_OFFSET(32);
 //-------------------------------------------------------------------------------------------------
 /// Int2Type idiom. Kudos to Andrei Alexandrescu
 /*! \tparam field integer value to make type from */
-template<unsigned field>
-struct EnumType
-{
-	enum { val = field };
-};
+template<unsigned field> struct EnumType {};
 
 //-------------------------------------------------------------------------------------------------
 /// Domain range/set static metadata base class
@@ -139,7 +135,7 @@ public:
 	/*! Ctor.
 	  \param fnum field num for this field
 	  \param rlm pointer to the realmbase for this field (if available) */
-	BaseField(const unsigned short fnum, const RealmBase *rlm=nullptr) : _fnum(fnum), _rlm(rlm) {}
+	BaseField(unsigned short fnum, const RealmBase *rlm=nullptr) : _fnum(fnum), _rlm(rlm) {}
 
 	/// Dtor.
 	virtual ~BaseField() {}
@@ -199,6 +195,41 @@ public:
 		return to - cur_ptr;
 	}
 
+	/// BaseField Equivalence test.
+	/*! \param that field to compare
+	    \return true if same */
+	bool same_base(const BaseField& that) const { return that._fnum == _fnum; }
+
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	virtual bool operator==(const BaseField& that) const = 0;
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	virtual bool operator<(const BaseField& that) const = 0;
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const = 0;
+
+	/// Inequivalence operator.
+	/*! \param that field to compare
+	    \return true if not the same */
+	bool operator!=(const BaseField& that) const { return !(*this == that); }
+
+	/// Less or equal to operator.
+	/*! \param that field to compare
+	    \return true if less than or equal to */
+	bool operator<=(const BaseField& that) const { return *this < that || *this == that; }
+
+	/// Greater or equal to operator.
+	/*! \param that field to compare
+	    \return true if greater than or equal to */
+	bool operator>=(const BaseField& that) const { return *this > that || *this == that; }
+
 	/*! Get the realm pointer for this field.
 	  \return the realm pointer */
 	const RealmBase *get_realm() const { return _rlm; }
@@ -212,21 +243,22 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field template. There will ONLY be partial template specialisations of this class.
+/// Field template. There will ONLY be partial template specialisations of this template.
 /*! \tparam T field type
     \tparam field field number (fix tag) */
-template<typename T, const unsigned short field>
+template<typename T, unsigned short field>
 class Field : public BaseField
 {
-	Field () = delete;
-	Field (const Field& from) = delete;
-	Field (const f8String& from, const RealmBase *rlm=nullptr) = delete;
+	Field() = delete;
+	Field(const Field&) = delete;
+	Field& operator=(const Field&) = delete;
+	Field(const f8String&, const RealmBase *) = delete;
 };
 
 //-------------------------------------------------------------------------------------------------
 /// Partial specialisation for int field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<int, field> : public BaseField
 {
 protected:
@@ -275,6 +307,24 @@ public:
 	/// Dtor.
 	virtual ~Field() {}
 
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<int, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<int, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<int, field>&>(that)._value; }
+
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
 	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
@@ -319,7 +369,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 /// Partial specialisation for char * field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<char *, field> : public BaseField
 {
 protected:
@@ -345,6 +395,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -365,8 +418,23 @@ public:
 	    \return true if unequal */
 	bool operator!=(const char *that) const { return ::strcmp(_value, that); }
 
-	/// Dtor.
-	virtual ~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && ::strcmp(static_cast<const Field<char *, field>&>(that)._value, _value) == 0; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	virtual bool operator<(const BaseField& that) const
+		{ return same_base(that) && ::strcmp(_value, static_cast<const Field<char *, field>&>(that)._value) < 0; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const
+		{ return same_base(that) && ::strcmp(_value, static_cast<const Field<char *, field>&>(that)._value) > 0; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -412,7 +480,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 /// Partial specialisation for f8String field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<f8String, field> : public BaseField
 {
 protected:
@@ -443,6 +511,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(from) {}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -453,8 +524,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	virtual ~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<f8String, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	virtual bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<f8String, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<f8String, field>&>(that)._value; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -500,7 +586,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 /// Partial specialisation for fp_type field type. fp_type is singe or double
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<fp_type, field> : public BaseField
 {
 protected:
@@ -543,6 +629,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
 
+	/// Dtor.
+	virtual ~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -553,12 +642,27 @@ public:
 		return *this;
 	}
 
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<fp_type, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<fp_type, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<fp_type, field>&>(that)._value; }
+
 	/*! Set the output precision
 	  \param prec precision digits */
 	void set_precision(const int prec) { _precision = prec; }
-
-	/// Dtor.
-	virtual ~Field() {}
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -604,7 +708,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 /// Partial specialisation for unsigned short field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<char, field> : public BaseField
 {
 	char _value;
@@ -639,6 +743,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(*from) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -649,8 +756,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<char, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<char, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<char, field>&>(that)._value; }
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
@@ -804,7 +926,7 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
-	if (*ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
@@ -844,7 +966,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
   \return ticks decoded */
 inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
-	if (*ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
@@ -876,8 +998,10 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 
 inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
-   tm tms {};
+	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
+		return Tickval(true).get_ticks();
 
+   tm tms {};
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
 	ptr += parse_decimal(ptr, 2, tms.tm_mon);
@@ -892,7 +1016,7 @@ using UTCTimestamp = EnumType<FieldTrait::ft_UTCTimestamp>;
 
 /// Partial specialisation for UTCTimestamp field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
 	Tickval _value;
@@ -925,12 +1049,15 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -942,8 +1069,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<UTCTimestamp, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<UTCTimestamp, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<UTCTimestamp, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -982,7 +1124,7 @@ using UTCTimeOnly = EnumType<FieldTrait::ft_UTCTimeOnly>;
 
 /// Partial specialisation for UTCTimeOnly field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<UTCTimeOnly, field> : public BaseField
 {
 	Tickval _value;
@@ -1010,12 +1152,15 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1027,8 +1172,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<UTCTimeOnly, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<UTCTimeOnly, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<UTCTimeOnly, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1067,7 +1227,7 @@ using UTCDateOnly = EnumType<FieldTrait::ft_UTCDateOnly>;
 
 /// Partial specialisation for UTCDateOnly field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<UTCDateOnly, field> : public BaseField
 {
 	Tickval _value;
@@ -1095,12 +1255,15 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1112,8 +1275,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<UTCDateOnly, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<UTCDateOnly, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<UTCDateOnly, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1152,7 +1330,7 @@ using LocalMktDate = EnumType<FieldTrait::ft_LocalMktDate>;
 
 /// Partial specialisation for LocalMktDate field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<LocalMktDate, field> : public BaseField
 {
 	Tickval _value;
@@ -1180,12 +1358,15 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1197,8 +1378,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<LocalMktDate, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<LocalMktDate, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<LocalMktDate, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1237,7 +1433,7 @@ using MonthYear = EnumType<FieldTrait::ft_MonthYear>;
 
 /// Partial specialisation for MonthYear field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<MonthYear, field> : public BaseField
 {
 	size_t _sz;
@@ -1266,12 +1462,15 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(from ? ::strlen(from) : 0), _value(date_parse(from, _sz)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1283,8 +1482,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<MonthYear, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<MonthYear, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	virtual bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<MonthYear, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1323,7 +1537,7 @@ using TZTimeOnly = EnumType<FieldTrait::ft_TZTimeOnly>;
 
 /// Partial specialisation for TZTimeOnly field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<TZTimeOnly, field> : public BaseField
 {
 	Tickval _value;
@@ -1353,6 +1567,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1363,8 +1580,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<TZTimeOnly, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<TZTimeOnly, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<TZTimeOnly, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1398,7 +1630,7 @@ using TZTimestamp = EnumType<FieldTrait::ft_TZTimestamp>;
 
 /// Partial specialisation for TZTimestamp field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<TZTimestamp, field> : public BaseField
 {
 	Tickval _value;
@@ -1428,6 +1660,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1438,8 +1673,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<TZTimestamp, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<TZTimestamp, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<TZTimestamp, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value Tickval& */
@@ -1473,7 +1723,7 @@ using Length = EnumType<FieldTrait::ft_Length>;
 
 /// Partial specialisation for Length field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<Length, field> : public Field<int, field>
 {
 public:
@@ -1483,7 +1733,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
+	Field (unsigned val, const RealmBase *rlm=nullptr) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1508,7 +1758,7 @@ using TagNum = EnumType<FieldTrait::ft_TagNum>;
 
 /// Partial specialisation for TagNum field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<TagNum, field> : public Field<int, field>
 {
 public:
@@ -1543,7 +1793,7 @@ using SeqNum = EnumType<FieldTrait::ft_SeqNum>;
 
 /// Partial specialisation for SeqNum field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<SeqNum, field> : public Field<int, field>
 {
 public:
@@ -1578,7 +1828,7 @@ using NumInGroup = EnumType<FieldTrait::ft_NumInGroup>;
 
 /// Partial specialisation for NumInGroup field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<NumInGroup, field> : public Field<int, field>
 {
 public:
@@ -1613,7 +1863,7 @@ using DayOfMonth = EnumType<FieldTrait::ft_DayOfMonth>;
 
 /// Partial specialisation for DayOfMonth field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<DayOfMonth, field> : public Field<int, field>
 {
 public:
@@ -1648,7 +1898,7 @@ using Boolean = EnumType<FieldTrait::ft_Boolean>;
 
 /// Partial specialisation for Boolean field type.
 /*! \tparam field field number (fix tag) */
-template<const unsigned short field>
+template<unsigned short field>
 class Field<Boolean, field> : public BaseField
 {
 	bool _value;
@@ -1687,6 +1937,9 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(toupper(*from) == 'Y') {}
 
+	/// Dtor.
+	~Field() {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1697,8 +1950,23 @@ public:
 		return *this;
 	}
 
-	/// Dtor.
-	~Field() {}
+	/// Equivalence operator.
+	/*! \param that field to compare
+	    \return true if same */
+	bool operator==(const BaseField& that) const
+		{ return same_base(that) && static_cast<const Field<Boolean, field>&>(that)._value == _value; }
+
+	/// Less than operator.
+	/*! \param that field to compare
+	    \return true if less than */
+	bool operator<(const BaseField& that) const
+		{ return same_base(that) && _value < static_cast<const Field<Boolean, field>&>(that)._value; }
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	    \return true if greater than */
+	bool operator>(const BaseField& that) const
+		{ return same_base(that) && _value > static_cast<const Field<Boolean, field>&>(that)._value; }
 
 	/*! Get field value.
 	  \return value (bool) */
@@ -1758,31 +2026,26 @@ using data = f8String;
 /// Field metadata structures
 class Inst
 {
-	/*! Generate a field instantiator
-	  \tparam T type to instantiate */
-   template<typename T>
 	struct _gen
 	{
 		/*! Instantiate a field (no realm)
-		  \param from source string
-		  \param db realm base for this type
-		  \param rv realm value
-		  \return new field */
+			\tparam T type to instantiate
+			\param from source string
+			\param db realm base for this type
+			\param rv realm value
+			\return new field */
+		template<typename T>
 		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
 			{ return new T{from, db}; }
-	};
 
-	/*! Generate a field instantiator with realm
-	  \tparam T type to instantiate */
-   template<typename T, typename R>
-	struct _gen_realm
-	{
 		/*! Instantiate a field
-		  \param from source string
-		  \param db realm base for this type
-		  \param rv realm value
-		  \return new field */
-		static BaseField *_make_realm(const char *from, const RealmBase *db, const int rv)
+			\tparam T type to instantiate
+			\param from source string
+			\param db realm base for this type
+			\param rv realm value
+			\return new field */
+		template<typename T, typename R>
+		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
 		{
 			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
 				? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
@@ -1792,22 +2055,15 @@ class Inst
 public:
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
-	/*! Ctor
-	  \tparam T type to instantiate */
-   template<typename T>
-   Inst(Type2Type<T>) : _do(_gen<T>::_make) {}
-
-	/*! Ctor with realm
-	  \tparam T type to instantiate
-	  \tparam R realm type to instantiate */
-   template<typename T, typename R>
-   Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
+	template<typename T, typename... args>
+	Inst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>) {}
 };
 
 struct BaseEntry
 {
    const Inst _create;
 	const char *_name;
+	const unsigned short _fnum;
 	const RealmBase *_rlm;
 	const char *_comment;
 };

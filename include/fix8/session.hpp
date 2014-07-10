@@ -809,6 +809,12 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// our buffered RAII ostream log target, ostream Session log target for specified Session ptr
+#define ssout(x) log2_stream(bool_func_string_int(std::bind(&Session::log, x, std::placeholders::_1, std::placeholders::_2)))
+// our buffered RAII ostream log target, ostream Session log target for current Session
+#define slout ssout(this)
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

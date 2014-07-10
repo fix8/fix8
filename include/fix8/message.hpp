@@ -128,19 +128,26 @@ public:
 class Minst
 {
 	/*! Generate a message instantiator
-	  \tparam T type to instantiate */
-   template<typename T>
+	 */
 	struct _gen
 	{
 		/*! Instantiate a message
-		  \return new message */
+			\tparam T type to instantiate
+			\return new message */
+		template<typename T>
 		static Message *_make() { return new T; }
+
 		/*! Instantiate a message cast to Message
-		  \return new message */
-		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
+			\tparam T type to instantiate
+			\return new message */
+		template<typename T, typename R>
+		static Message *_make() { return reinterpret_cast< Message * >( new T ); }
+
 #if defined HAVE_EXTENDED_METADATA
 		/*! SIOF static TraitHelper
-		  \return ref to static TraitHelper */
+			\tparam T type to instantiate
+			\return ref to static TraitHelper */
+		template<typename T, typename R = void>
 		static const TraitHelper& _make_traits()
 		{
 			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
@@ -157,23 +164,15 @@ public:
 
 	/*! Ctor
 	  \tparam T type to instantiate */
-   template<typename T>
-   Minst(Type2Type<T>) : _do(_gen<T>::_make)
+   template<typename T, typename... args>
+   Minst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>)
 #if defined HAVE_EXTENDED_METADATA
-		 , _get_traits(_gen<T>::_make_traits)
-#endif
-	{}
-
-	/*! Ctor with extended traits
-	  \tparam T type to instantiate */
-   template<typename T>
-   Minst(Type2Types<T, bool>) : _do(_gen<T>::_make_cast)
-#if defined HAVE_EXTENDED_METADATA
-		 , _get_traits(_gen<T>::_make_traits)
+		 , _get_traits(_gen::_make_traits<T, args...>)
 #endif
 	{}
 };
 
+/// Message instantiation table entry
 struct BaseMsgEntry
 {
    const Minst _create;
@@ -181,10 +180,13 @@ struct BaseMsgEntry
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field metadata structure
+/// Field and Message metadata structures
 //-------------------------------------------------------------------------------------------------
+using c_str_compare = std::function<bool(const char *, const char *)>;
 using MsgTable = GeneratedTable<const char *, BaseMsgEntry>;
+using ReverseMsgTable = std::map<const char * const, const BaseMsgEntry *, c_str_compare>;
 using FieldTable = GeneratedTable<unsigned, BaseEntry>;
+using ReverseFieldTable = std::map<const char * const, const BaseEntry *, c_str_compare>;
 
 //-------------------------------------------------------------------------------------------------
 /// Static metadata context class - one per FIX xml schema
@@ -210,6 +212,10 @@ struct F8MetaCntx
 	/// Preamble length
 	const size_t _preamble_sz;
 
+	ReverseMsgTable _reverse_msgtable;
+	ReverseFieldTable _reverse_fieldtable;
+	static bool _comp(const char *p1, const char *p2) { return ::strcmp(p1, p2) < 0; }
+
 	/*! Ctor.
 	  \param version FIX version
 	  \param bme Generated Message Table
@@ -220,13 +226,19 @@ struct F8MetaCntx
 		: _version(version), _bme(bme), _be(be), _cn(cn),
 		_flu_sz(_be.at(_be.size() - 1)->_key + 1), _flu(new const BaseEntry *[_flu_sz]),
 		_mk_hdr(_bme.find_ref("header")._create._do), _mk_trl(_bme.find_ref("trailer")._create._do),
-		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3)
+		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3),
+		_reverse_msgtable(_comp), _reverse_fieldtable(_comp)
 	{
 		if (_flu_sz == 1)
 			throw f8Exception("F8MetaCntx initialisation incomplete");
 		std::fill(_flu, _flu + _flu_sz, nullptr);
       for (unsigned offset(0); offset < _be.size(); ++offset)
 			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
+
+		for (const auto& pr : _be)
+			_reverse_fieldtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
+		for (const auto& pr : _bme)
+			_reverse_msgtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
 	}
 
 	/// Dtor.
@@ -237,6 +249,68 @@ struct F8MetaCntx
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *find_be(const unsigned short fnum) const
 		{ return fnum < _flu_sz ? _flu[fnum] : nullptr; }
+
+	/*! Get the field BaseEntry object for this field by tag. Reverse lookup.
+	  \param fieldstr const char ptr to name of field to get
+	  \return ptr to BaseEntry or 0 if not found */
+	const BaseEntry *reverse_find_be(const char *fieldstr) const
+	{
+		auto itr(_reverse_fieldtable.find(fieldstr));
+		return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+	}
+
+	/*! Get the field number for this field by tag. Reverse lookup.
+	  \param fieldstr const char ptr to name of field to get
+	  \return unsigned short field number */
+	unsigned short reverse_find_fnum(const char *fieldstr) const
+	{
+		auto itr(_reverse_fieldtable.find(fieldstr));
+		return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
+	}
+
+	/*! Create a new field of the tag type passed, and from the raw string given.
+	  \param fnum FIX field number
+	  \param from const char ptr to string containing value to construct from
+	  \return ptr to BaseField or 0 if fnum not found */
+	BaseField *create_field(unsigned short fnum, const char *from) const
+	{
+		const BaseEntry *be(find_be(fnum));
+		return be ? be->_create._do(from, be->_rlm, -1) : nullptr;
+	}
+
+	/*! Create a new field of the tag type passed, and from the raw string given.
+	  \param tag const char ptr to name of field to create
+	  \param from const char ptr to string containing value to construct from
+	  \return ptr to BaseField or 0 if fnum not found */
+	BaseField *create_field(const char *tag, const char *from) const
+	{
+		const BaseEntry *be(reverse_find_be(tag));
+		return be ? be->_create._do(from, be->_rlm, -1) : nullptr;
+	}
+
+	/*! Get the message BaseMsgEntry object for this message.
+	  \param tag const char ptr to name of message to get
+	  \return ptr to BaseMsgEntry or 0 if not found */
+	const BaseMsgEntry *find_bme(const char *tag) const { return _bme.find_ptr(tag); }
+
+	/*! Get the message BaseMsgEntry object for this message. Reverse lookup.
+	  \param msgstr const char ptr to name of message to get
+	  \return ptr to BaseMsgEntry or 0 if not found */
+	const BaseMsgEntry *reverse_find_bme(const char *msgstr) const
+	{
+		auto itr(_reverse_msgtable.find(msgstr));
+		return itr != _reverse_msgtable.cend() ? itr->second : nullptr;
+	}
+
+	/*! Create a new message of the tag type passed.
+	  \param tag const char ptr to tag of message
+	  \param version if true, do reverse lookup (use message long name)
+	  \return ptr to Message or 0 if tag not found */
+	Message *create_msg(const char *tag, bool version=false) const
+	{
+		const BaseMsgEntry *bme(version ? reverse_find_bme(tag) : find_bme(tag));
+		return bme ? bme->_create._do() : nullptr;
+	}
 
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	  \return version */
@@ -288,7 +362,6 @@ protected:
 	    \return number of bytes consumed */
 	static unsigned extract_trailer(const f8String& from, f8String& chksum);
 
-protected:
 	// used by the printer
 	F8API static unsigned _tabsize;
 
@@ -924,20 +997,7 @@ public:
 		MessageBase::clear(reuse);
 	}
 
-	/*! Generate a checksum from an encoded buffer.
-	    \param from source buffer encoded Fix message
-	    \param offset starting offset
-	    \param len maximum length
-	    \return calculated checknum */
-	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
-	{
-		unsigned val(0);
-		const char *eptr(from.c_str() + (len != -1 ? len + offset : from.size() - offset));
-		for (const char *ptr(from.c_str() + offset); ptr < eptr; val += *ptr++);
-		return val % 256;
-	}
-
-	/*! Generate a checksum from an encoded buffer. ULL version.
+	/*! Generate a checksum from an encoded buffer, ULL version.
 	    \param from char *buffer encoded Fix message
 	    \param sz size of msg
 	    \param offset starting offset
@@ -950,6 +1010,14 @@ public:
 		for (const char *ptr(from + offset); ptr < eptr; val += *ptr++);
 		return val % 256;
 	}
+
+	/*! Generate a checksum from an encoded buffer, string version.
+	    \param from source buffer encoded Fix message
+	    \param offset starting offset
+	    \param len maximum length
+	    \return calculated checknum */
+	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
+		{ return calc_chksum(from.c_str(), from.size(), offset, len); }
 
 	/*! Format a checksum into the required 3 digit, 0 padded string.
 	    \param val checksum value
@@ -1019,6 +1087,17 @@ public:
 		}
 		if (_trailer)
 			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
+	}
+
+	/*! Check if a field is present in this message (either header, body or trailer).
+	    \param fnum field number
+	    \return pointer to field or 0 if not found */
+	BaseField *get_field_flattened(const unsigned short fnum) const
+	{
+		auto itr (_fields.find(fnum));
+		return  itr != _fields.end() ? itr->second
+				: (itr = _header->_fields.find(fnum)) != _header->_fields.end() ? itr->second
+				: (itr = _trailer->_fields.find(fnum)) != _trailer->_fields.end() ? itr->second : nullptr;
 	}
 
 #if defined RAW_MSG_SUPPORT

@@ -35,10 +35,6 @@ AUTOMAKE_OPTIONS = foreign dist-bzip2 dist-zip
 
 SUBDIRS = runtime compiler test util
 
-if PROBUILD
-SUBDIRS += pro
-endif
-
 if USEGTEST
 SUBDIRS += utests
 endif
@@ -120,4 +116,5 @@ EXTRA_DIST = $(xmltoman) fix8.spec \
 if USEDOXYGEN
 EXTRA_DIST += doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen
 endif
+EXTRA_DIST += utests/precomp.hpp runtime/precomp.hpp util/precomp.hpp compiler/precomp.hpp
 
