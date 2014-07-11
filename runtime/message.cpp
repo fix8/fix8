@@ -159,7 +159,14 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 
 		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 		{
+<<<<<<< HEAD
+			f8String tag, val;
+			_elmnt.SubExpr(match, from, tag, s_offset, 1);
+			_elmnt.SubExpr(match, from, val, s_offset, 2);
+			const unsigned tv(fast_atoi<unsigned>(tag.c_str()));
+=======
 			const unsigned tv(fast_atoi<unsigned>(tag));
+>>>>>>> upstream/master
 			Presence::const_iterator itr(grp->_fp.get_presence().end());
 			if (grp->_fp.get(tv, itr, FieldTrait::present))	// already present; next group?
 				break;

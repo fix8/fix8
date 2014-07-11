@@ -447,6 +447,15 @@ Message *MyMenu::generate_new_order_single()
 	static unsigned oid(0);
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
+<<<<<<< HEAD
+	*nos += new TEX::ClOrdID(oistr.str());
+	*nos += new TEX::Symbol("BHP");
+	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
+	*nos += new TEX::Side(TEX::Side_BUY);
+	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+	*nos += new TEX::NoUnderlyings(3);
+=======
 	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 	*nos << new TEX::TransactTime
 	     << new TEX::OrderQty(1 + RandDev::getrandom(9999))
@@ -459,6 +468,7 @@ Message *MyMenu::generate_new_order_single()
 
 	*nos << new TEX::NoPartyIDs(unsigned(0));
 	*nos << new TEX::NoUnderlyings(3);
+>>>>>>> upstream/master
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
 	// repeating groups
@@ -508,8 +518,13 @@ Message *MyMenu::generate_new_order_single()
 	*nonp << gr10;
 	GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
 	MessageBase *gr11(nonpsid->create_group());
+<<<<<<< HEAD
+	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
+	*nonpsid += gr11;
+=======
 	*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
 	*nonpsid << gr11;
+>>>>>>> upstream/master
 
 	return nos;
 }
