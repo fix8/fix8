@@ -134,6 +134,8 @@ Session::~Session()
 	slout << "Session terminating";
 	if (_logger)
 		_logger->stop();
+	if (_plogger)
+		_plogger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
 	if (_connection && _connection->get_role() == Connection::cn_acceptor)
