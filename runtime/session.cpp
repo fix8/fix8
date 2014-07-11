@@ -411,7 +411,6 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
 	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
-	ostringstream ostr;
 	sender_comp_id sci; // so this should be our tci
 	msg->Header()->get(sci);
 	target_comp_id tci; // so this should be our sci

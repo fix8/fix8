@@ -328,8 +328,6 @@ bool ClientConnection::connect()
 
 	while (attempts < (lparam._reliable ? 1 : lparam._login_retries))
 	{
-		ostringstream ostr;
-
 		try
 		{
 			if (_addr == Poco::Net::SocketAddress())
