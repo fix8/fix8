@@ -55,6 +55,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include <pthread.h>
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#include <thread>
 #elif (THREAD_SYSTEM == THREAD_POCO)
 #include <Poco/Thread.h>
 #include <Poco/ThreadTarget.h>

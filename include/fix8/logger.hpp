@@ -148,7 +148,6 @@ public:
 //-------------------------------------------------------------------------------------------------
 class Tickval;
 
-
 //-------------------------------------------------------------------------------------------------
 /// dthread delegated async logging class
 class Logger
@@ -216,6 +215,10 @@ public:
 		stop();
 		delete _ofs;
 	}
+
+	/*! Set the LogFlags
+	    \param flags flags to set */
+	void set_flags(LogFlags flags) { _flags = flags; }
 
 	/*! Get the underlying stream object.
 	    \return the stream */
@@ -361,9 +364,16 @@ public:
 	static bool log(const std::string& what)
 		{ return Singleton<SingleLogger<fn>>::instance()->send(what); }
 
+	/*! Flush the logger */
 	static void flush_log()
 		{ Singleton<SingleLogger<fn>>::instance()->flush(); }
 
+	/*! Set the logflags
+	  \param flags flags to set */
+	static void set_flags(LogFlags flags)
+		{ Singleton<SingleLogger<fn>>::instance()->set_flags(flags); }
+
+	/*! Stop the logger */
 	static void stop()
 		{ Singleton<SingleLogger<fn>>::instance()->stop(); }
 };

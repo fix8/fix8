@@ -243,6 +243,24 @@ public:
 	bool try_lock() { throw f8Exception("try_lock is not implemented in ff"); }
 	void unlock() { ff::spin_unlock(_lk); }
 };
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+using f8_mutex = std::mutex;
+class f8_spin_lock
+{
+	std::atomic_flag _sl = ATOMIC_FLAG_INIT;
+
+public:
+	f8_spin_lock() = default;
+	~f8_spin_lock() = default;
+
+	void lock()
+	{
+		while(_sl.test_and_set(std::memory_order_acquire))
+			;
+	}
+	bool try_lock() { return !_sl.test_and_set(std::memory_order_acquire); }
+	void unlock() { _sl.clear(std::memory_order_release); }
+};
 #elif (THREAD_SYSTEM == THREAD_TBB)
 	#if (MPMC_SYSTEM != MPMC_TBB)
 		#error TBB shall be used for locks/queues in case of TBB_THREAD

@@ -23,6 +23,7 @@
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX1_DLD"
 				port="11001"
+				noport="1001"
 				active="true" />
 
 	<session name="DLD2"

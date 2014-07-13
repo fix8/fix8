@@ -490,8 +490,9 @@ fi
 thread_set=no
 using_poco_thread=no
 using_tbb_thread=no
+using_std_thread=no
 AC_ARG_WITH([thread],
-[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco|tbb, default=pthread)])],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco|tbb|stdthread, default=pthread)])],
 [case "${withval}" in
 	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
 				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
@@ -500,6 +501,15 @@ AC_ARG_WITH([thread],
 				[AC_MSG_ERROR([Pthread API support is required.])])
 				thread_set=yes
 				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
+				;;
+	stdthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				using_std_thread=yes
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_STDTHREAD, [std::thread system used])
 				;;
 	tbb) using_tbb_thread=yes
 			thread_set=yes
@@ -519,9 +529,11 @@ esac])
 AC_DEFINE(THREAD_POCO, 1, [Poco thread system])
 AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
 AC_DEFINE(THREAD_TBB, 3, [tbb thread thread system])
+AC_DEFINE(THREAD_STDTHREAD, 4, [std::thread thread system])
 if test "$thread_set" = no; then
 	using_poco_thread=no
 	using_tbb_thread=no
+	using_std_thread=no
 	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread regex system used])
 fi
 

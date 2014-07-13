@@ -41,6 +41,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
+#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+#include<thread>
 #elif (THREAD_SYSTEM == THREAD_POCO)
 #include <Poco/Thread.h>
 #include <Poco/ThreadTarget.h>
@@ -62,6 +64,11 @@ public:
 private:
 	pthread_attr_t _attr;
 	pthread_t _tid;
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+public:
+	using thread_id_t = std::thread::id;
+private:
+	std::unique_ptr<std::thread> _thread;
 #elif (THREAD_SYSTEM == THREAD_POCO)
 public:
 	using thread_id_t = Poco::Thread::TID;
@@ -77,11 +84,10 @@ private:
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 	template<typename T>
 	static void *_run(void *what) { return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
-#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
+#else
 	template<typename T>
 	static void _run(void *what) { (*static_cast<T *>(what))(); }
 #endif
-	_dthreadcore& operator=(const _dthreadcore&);
 
 protected:
 	int _exitval = 0;
@@ -93,6 +99,8 @@ protected:
 		return pthread_create(&_tid, &_attr, _run<T>, sub);
 #elif (THREAD_SYSTEM == THREAD_POCO)
 		_thread.start(_run<T>, sub);
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+		_thread.reset(new std::thread(_run<T>, sub));
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
 #endif
@@ -119,6 +127,7 @@ public:
 			throw dthreadException("pthread_attr_setdetachstate failure");
 #elif (THREAD_SYSTEM == THREAD_POCO)
 #elif (THREAD_SYSTEM == THREAD_TBB)
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
 
@@ -129,6 +138,7 @@ public:
 		pthread_attr_destroy(&_attr);
 #elif (THREAD_SYSTEM == THREAD_POCO)
 #elif (THREAD_SYSTEM == THREAD_TBB)
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
 
@@ -169,7 +179,7 @@ public:
 			return -2;
 		}
 		return _exitval;
-#elif (THREAD_SYSTEM == THREAD_TBB)
+#elif (THREAD_SYSTEM == THREAD_TBB || THREAD_SYSTEM == THREAD_STDTHREAD)
 		if (_thread.get() && _thread->joinable())
 			_thread->join();
 		return _exitval;
@@ -190,6 +200,8 @@ public:
 		Poco::Thread::yield();
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		tbb::this_tbb_thread::yield();
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+		std::this_thread::yield();
 #endif
 		return 0;
 	}
@@ -206,6 +218,8 @@ public:
 		return _thread.currentTid();
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		return _thread.get() ? _thread->get_id() : tbb::tbb_thread::id();
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+		return _thread.get() ? _thread->get_id() : std::thread::id();
 #endif
 	}
 
@@ -219,6 +233,8 @@ public:
 		return Poco::Thread::currentTid();
 #elif (THREAD_SYSTEM == THREAD_TBB)
 		return tbb::this_tbb_thread::get_id();
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+		return std::this_thread::get_id();
 #endif
 	}
 
@@ -229,7 +245,7 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_equal(_tid, that._tid);
-#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
+#else
 		return getdthreadid() == that.getdthreadid();
 #endif
 	}
@@ -241,10 +257,12 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return !pthread_equal(_tid, that._tid);
-#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
+#else
 		return getdthreadid() != that.getdthreadid();
 #endif
 	}
+
+	_dthreadcore& operator=(const _dthreadcore&) = delete;
 };
 
 //----------------------------------------------------------------------------------------
