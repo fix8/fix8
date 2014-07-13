@@ -258,7 +258,12 @@ public:
 		while(_sl.test_and_set(std::memory_order_acquire))
 			;
 	}
-	bool try_lock() { return !_sl.test_and_set(std::memory_order_acquire); }
+	bool try_lock()
+	{
+		if (_sl)
+			return false;
+		return !_sl.test_and_set(std::memory_order_acquire);
+	}
 	void unlock() { _sl.clear(std::memory_order_release); }
 };
 #elif (THREAD_SYSTEM == THREAD_TBB)
