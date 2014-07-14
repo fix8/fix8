@@ -58,6 +58,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace GUI;
 using namespace FIX8;
 using namespace std;
+void Fix8Log::aboutSlot()
+{
+    QString str = GUI::Globals::appName + ", version  " + GUI::Globals::versionStr + "\n";
+    str.append("A opensource FIX log file viewer tool.\n");
+    str.append("For questions or comments visit www.fix8.org.\n");
+    str.append("This software released under the GPL license.");
+    QMessageBox::about(0,GUI::Globals::appName,str);
+
+}
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,database);

@@ -74,6 +74,7 @@ public:
     void readSettings();
     void writeSettings();
 public slots:
+    void aboutSlot();
     void autoSaveOnSlot(bool);
     void cancelSessionRestoreSlot();
     void createNewWindowSlot(MainWindow *mw=0);
