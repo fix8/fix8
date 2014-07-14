@@ -918,6 +918,10 @@ protected:
 	mutable int _begin_payload = -1;
 	mutable unsigned _payload_len = 0;
 #endif
+#if defined PREENCODE_MSG_SUPPORT
+	mutable std::array<char, MAX_MSG_LENGTH> _preencode;
+	mutable size_t _preencode_len = 0;
+#endif
 
 public:
 	/*! Ctor.
@@ -1120,6 +1124,19 @@ public:
 	/*! Get the offset of payload begin
 	    \return offset of payload begin */
 	unsigned get_payload_begin() const { return _begin_payload; }
+#endif
+#if defined PREENCODE_MSG_SUPPORT
+	/*! Get the pre-encoded (prepared)
+	    \return ptr to message or 0 if not prepared */
+	const char *get_preencode_msg() const { return _preencode_len ? _preencode.data() : nullptr; }
+
+	/*! Get the pre-encoded (prepared) mesage length
+	    \return length */
+	size_t get_preencode_len() const { return _preencode_len; }
+
+	/*! Encode the payload to the prepare array
+	    \return length encoded */
+	size_t preencode() { return _preencode_len = MessageBase::encode(_preencode.data()); }
 #endif
 
 	/*! Print the message to the specified stream.

@@ -388,6 +388,9 @@ bool MyMenu::batch_preload_new_order_single()
 				  << new FIX8::TEX::ClOrdID(oistr.str())
 				  << prc
 				  << new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
+#if defined PREENCODE_MSG_SUPPORT
+			ptr->preencode();
+#endif
 
 			_session.push(ptr);
 		}
@@ -490,7 +493,9 @@ bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::preload_new_order_single()
 {
-	cout << endl << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
+	cout << endl;
+	if (_session.size())
+		cout << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
 	unsigned num(preload_count);
 	if (!num)
 	{
@@ -509,8 +514,7 @@ bool MyMenu::preload_new_order_single()
 		oistr << "ord" << ++oid << '-' << num;
 
 		FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
-		FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
-		prc->set_precision(3);
+		FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3)); // precision=3
 
 		*ptr  << new FIX8::TEX::Symbol("BHP")
 				<< new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
@@ -521,6 +525,9 @@ bool MyMenu::preload_new_order_single()
 				<< prc
 				<< new FIX8::TEX::ClOrdID(oistr.str())
 				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
+#if defined PREENCODE_MSG_SUPPORT
+		ptr->preencode(); // pre-encode message payload (not header or trailer)
+#endif
 
 		_session.push(ptr);
 	}

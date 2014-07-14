@@ -74,6 +74,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 #endif
 
+#if defined PREPARE_MSG_SUPPORT
+#include <array>
+#endif
 #include <unordered_map>
 #include <functional>
 #include <errno.h>

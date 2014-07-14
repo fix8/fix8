@@ -720,6 +720,14 @@ AC_ARG_ENABLE([rawmsgsupport],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
 esac])
 
+AC_ARG_ENABLE([preencode],
+[AS_HELP_STRING([--enable-preencode],[enable pre-encode (prepare) message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(PREENCODE_MSG_SUPPORT, 1, [Define to 1 if you wish to pre-encode (prepare) message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-preencode) ;;
+esac])
+
 AC_ARG_ENABLE([bufgloblogging],
 [AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
 [case "${enableval}" in
