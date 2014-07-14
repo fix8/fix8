@@ -69,11 +69,13 @@ MessageArea::MessageArea(QWidget *parent) :
     valueHeaderItem  = new QStandardItem("Value");
     headerItem = new QStandardItem("Header");
     fieldItem  = new QStandardItem("Fields");
+    groupItem  = new QStandardItem("Groups");
     tailItem   = new QStandardItem("Trailer");
     model->setHorizontalHeaderItem(0,treeHeaderItem);
     model->setHorizontalHeaderItem(1,valueHeaderItem);
     model->appendRow(headerItem);
     model->appendRow(fieldItem);
+    model->appendRow(groupItem);
     model->appendRow(tailItem);
     //treeView->setSortingEnabled(true);
 
@@ -115,12 +117,14 @@ void MessageArea::setMessage(QMessage *m)
     QString messageType;
     bool headerExpanded = treeView->isExpanded(headerItem->index());
     bool fieldExpanded  = treeView->isExpanded(fieldItem->index());
+     bool groupExpanded  = treeView->isExpanded(groupItem->index());
     bool tailExpanded = treeView->isExpanded(tailItem->index());
     setUpdatesEnabled(false);
 
     headerItem->removeRows(0,headerItem->rowCount());
 
     fieldItem->removeRows(0,fieldItem->rowCount());
+    groupItem->removeRows(0,groupItem->rowCount());
     tailItem->removeRows(0,tailItem->rowCount());
     if (currentMessage) {
         seqNumV->setText(QString::number(currentMessage->seqID));
@@ -153,6 +157,7 @@ void MessageArea::setMessage(QMessage *m)
 
         for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
         {
+
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
             name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
             bf = itr->second;
@@ -169,6 +174,36 @@ void MessageArea::setMessage(QMessage *m)
             fieldItem->appendRow(items);
 
         }
+        Groups groups = msg->get_groups();
+        typedef std::map<unsigned short, class GroupBase *>::iterator it_type;
+        for(it_type iterator = groups.begin(); iterator != groups.end(); iterator++) {
+            GroupBase *gb = iterator->second;
+            int  gbSize = gb->size();
+            qDebug() << "\tGroup Base Size = " << gbSize;
+            for(int k=0;k<gbSize;k++) {
+                MessageBase *mb = gb->get_element(k);
+
+                 for (Fields::const_iterator itr(mb->fields_begin());itr != mb->fields_end(); ++itr) {
+                     const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
+                     name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                     bf = itr->second;
+                     memset(c,'\0',60);
+                     bf->print(c);
+                     str = QString::fromLatin1(c);
+                     QStandardItem *messageItem =
+                             new QStandardItem(name);
+                     QStandardItem *valueItem =
+                             new QStandardItem(str);
+                     QList <QStandardItem *>items;
+                     items.append(messageItem);
+                     items.append(valueItem);
+                     groupItem->appendRow(items);
+                     qDebug() << "\t\tField Name = " << name << __FILE__ << __LINE__;
+                 }
+            }
+        }
+        qDebug() << "GROUPS COUNT = " << groups.size() << __FILE__ << __LINE__;
+         //for (Fields::const_iterator itr(msg->get_groups()
         for (Fields::const_iterator itr(trailer->fields_begin()); itr != trailer->fields_end(); ++itr)
         {treeView->isExpanded(headerItem->index());
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
@@ -188,6 +223,7 @@ void MessageArea::setMessage(QMessage *m)
         }
         treeView->setExpanded(headerItem->index(),headerExpanded);
         treeView->setExpanded(fieldItem->index(),fieldExpanded);
+           treeView->setExpanded(groupItem->index(),groupExpanded);
         treeView->setExpanded(tailItem->index(),tailExpanded);
         setUpdatesEnabled(true);
     }

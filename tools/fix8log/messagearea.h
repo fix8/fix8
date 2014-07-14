@@ -65,6 +65,7 @@ public slots:
     QStandardItem *headerItem;
     QStandardItem *tailItem;
     QStandardItem *fieldItem;
+    QStandardItem *groupItem;
     QStandardItemModel *model;
     QWidget *infoArea;
     QLabel  *seqNumV;
