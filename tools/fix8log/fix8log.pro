@@ -3,7 +3,7 @@
 # Project created by QtCreator 2014-03-15T21:24:01
 #
 #-------------------------------------------------
-CONFIG += release
+CONFIG += debug_release
 QT       += core gui sql qml quick widgets  script
 TARGET = fix8log
 TEMPLATE = app
@@ -63,8 +63,6 @@ SOURCES += main.cpp\
     qtlockedfile.cpp \
     qtsingleapplication.cpp \
     qtsinglecoreapplication.cpp \
-    qwwtwocolorindicator.cpp \
-    wwglobal_p.cpp \
     pushbuttonmodifykey.cpp
 
 HEADERS  += mainwindow.h \
@@ -109,9 +107,6 @@ HEADERS  += mainwindow.h \
     qtlockedfile.h \
     qtsingleapplication.h \
     qtsinglecoreapplication.h \
-    QwwTwoColorIndicator \
-    qwwtwocolorindicator.h \
-    wwglobal_p.h \
     pushbuttonmodifykey.h
 
 RESOURCES += \
@@ -140,7 +135,8 @@ win32 {
 
 release {
  message("Release")
-   LIBS +=      ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
+   LIBS +=  rpcrt4.lib \
+        ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
         ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbb.lib \
         ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc_proxy.lib \
         ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc.lib \

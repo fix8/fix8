@@ -15,7 +15,6 @@
 #ifndef WW_NO_TWOCOLORINDICATOR
 
 #include <QWidget>
-#include <wwglobal.h>
 
 class QwwTwoColorIndicatorPrivate;
 class Q_WW_EXPORT QwwTwoColorIndicator : public QWidget, QwwPrivatable
