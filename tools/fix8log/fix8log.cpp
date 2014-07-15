@@ -64,8 +64,7 @@ Fix8Log::Fix8Log(QtSingleApplication *qsa) :
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
     defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa),searchDialog(0),searchFunctionList(0)
 {
-    Globals::Instance()->version = 0.1;
-    Globals::Instance()->versionStr = "0.1";
+    GUI::Globals::Instance();
     connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
     defaultHeaderStrs << "MsgSeqNum" << "MsgType" << "SendingTime" << "SenderCompID" << "TargetCompID";
 }
@@ -250,7 +249,7 @@ bool Fix8Log::init()
     WorkSheetModel *model = 0;
     QList <WindowData> windowDataList;
     WindowData wd;
-    QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
+    QString dbPath = QDir::homePath() + QDir::separator()  +  "f8logview";
     QDir dir(dbPath);
     readSettings();
     QString key;

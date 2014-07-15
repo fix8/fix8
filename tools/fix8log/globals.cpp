@@ -61,6 +61,7 @@ Globals* Globals::Instance()
     if (!m_pInstance)   {// Only allow one instance of class to be generated.
         m_pInstance = new Globals;
      databaseVersion  = 2;
+     versionStr = QString::number(version);
      QToolBar *toolbar = new QToolBar();
      QPalette pal = toolbar->palette();
      menubarDefaultColor = pal.color(QPalette::Background);
