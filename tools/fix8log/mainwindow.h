@@ -109,7 +109,7 @@ public:
     void setCurrentTabAndSelectedRow(int currentTab, int selectedRow);
     void setLoading(bool);
     void setLoadMessage(QString);
-    void setWindowData(const WindowData &wd);
+    void setWindowData(const WindowData wd);
     void setTableSchema(TableSchema *);
     void tableSchemaModified(TableSchema *);
     void updateSearchFunctions(SearchFunctionList *);
