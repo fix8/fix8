@@ -44,11 +44,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "messagefield.h"
 #include "messageitemdelegate.h"
 #include "selectedfieldstreeview.h"
+
 class Database;
+class FieldsView;
 class SchemaEditorDialog : public QMainWindow
 {
     Q_OBJECT
 public:
+    enum {MessageView,FieldView};
     explicit SchemaEditorDialog(Database *database, QWidget *parent = 0);
      void populateMessageList(MessageFieldList *);
      void restoreSettings();
@@ -94,6 +97,7 @@ private:
     typedef enum {Ok,SaveNeeded,EmptyFields} StatusType;
     typedef enum {ExpandAll,CollapseAll,Anything} ExpandMode;
     void addItemToSelected(QStandardItem *,Qt::CheckState);
+    void buildMessageView();
     void buildSchemaArea();
     void buildSelectedListFromCurrentSchema();
     void setCheckState(QStandardItem *item,Qt::CheckState cs);
@@ -112,6 +116,9 @@ private:
     QAction *copySchemaA;
     QAction *editSchemaA;
     QAction *deleteSchemaA;
+    QAction *messageViewA;
+    QAction *fieldViewA;
+    QActionGroup *viewActionGroup;
     QButtonGroup *expandBG;
     QColor editColor;
     QColor regularColor;
@@ -187,6 +194,9 @@ private:
     StatusType statusValue;
     bool undoBuild;  // set and unset in undoSlot
     MainWindow *currentMainWindow;
+    QStackedWidget *centralStack;
+    QWidget   *messageView;
+    FieldsView   *fieldsView;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

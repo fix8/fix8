@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 CONFIG += debug_release
-QT       += core gui sql qml quick widgets  script
+QT       += core gui sql qml quick widgets quickwidgets script
 TARGET = fix8log
 TEMPLATE = app
 
@@ -63,7 +63,9 @@ SOURCES += main.cpp\
     qtlockedfile.cpp \
     qtsingleapplication.cpp \
     qtsinglecoreapplication.cpp \
-    pushbuttonmodifykey.cpp
+    pushbuttonmodifykey.cpp \
+    schemaeditordialogMessageView.cpp \
+    fieldsview.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -107,7 +109,8 @@ HEADERS  += mainwindow.h \
     qtlockedfile.h \
     qtsingleapplication.h \
     qtsinglecoreapplication.h \
-    pushbuttonmodifykey.h
+    pushbuttonmodifykey.h \
+    fieldsview.h
 
 RESOURCES += \
     resources.qrc
@@ -160,5 +163,7 @@ debug {
  }
 }
 OTHER_FILES += \
-    qml/loadProgress.qml
+    qml/loadProgress.qml \
+    qml/fieldView.qml \
+    images/svg/messageView.svg
 

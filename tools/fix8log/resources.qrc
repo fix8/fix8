@@ -65,5 +65,8 @@
         <file>images/svg/magniflying_glass.svg</file>
         <file>images/svg/saveDisabled.svg</file>
         <file>images/svg/saveEnabled.svg</file>
+        <file>qml/fieldView.qml</file>
+        <file>images/svg/messageView.svg</file>
+        <file>images/svg/fieldsView.svg</file>
     </qresource>
 </RCC>
