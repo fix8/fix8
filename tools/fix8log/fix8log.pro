@@ -124,6 +124,7 @@ SOURCES += qtlockedfile_unix.cpp
 }
 win32 {
      message("Windows Compile")
+    CONFIG -= console
     SOURCES += qtlockedfile_win.cpp
     QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
     INCLUDEPATH += . ./f8 ../../test \
@@ -147,7 +148,6 @@ release {
         ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoUtil.lib
 }
 debug {
-    CONFIG += console
     message("Debug")
    LIBS +=     ../../msvc/packages/fix8.dev.1.2.20140629.1/build/native/lib/x64/v120/Debug/Desktop/fix8d.lib \
                 ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoFoundationd.lib \
