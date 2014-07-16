@@ -685,7 +685,7 @@ QSize MainWindow::sizeHint() const
 WindowData MainWindow::getWindowData()
 {
     WindowData wd;
-    wd.menubarStyleSheet = menuBarStyleSheet;
+    wd.menubarStyleSheet = mainMenuBar->styleSheet();
     wd.geometry = this->saveGeometry();
     wd.state    = this->saveState();
     wd.id       = this->windowDataID;
@@ -701,7 +701,7 @@ WindowData MainWindow::getWindowData()
     wd.searchStr = searchLineEdit->toPlainText();
     return wd;
 }
-void MainWindow::setWindowData(const WindowData &wd)
+void MainWindow::setWindowData(const WindowData wd)
 {
     QAction *action;
     QVariant var;
@@ -710,6 +710,7 @@ void MainWindow::setWindowData(const WindowData &wd)
     windowDataID = wd.id;
     restoreGeometry(wd.geometry);
     restoreState(wd.state);
+    menuBarStyleSheet = wd.menubarStyleSheet;
     if (mainMenuBar) {
         mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
         fileMenu->setStyleSheet(menuStyle);

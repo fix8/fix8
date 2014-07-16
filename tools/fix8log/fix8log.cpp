@@ -465,11 +465,14 @@ bool Fix8Log::init()
             wd = iter.next();
             newMW  = new MainWindow(database,true);
             newMW->setSearchFunctions(searchFunctionList);
-            newMW->setWindowData(wd);
+
             wireSignalAndSlots(newMW);
             mainWindows.append(newMW);
             newMW->setAutoSaveOn(autoSaveOn);
+            newMW->setWindowData(wd);
             newMW->show();
+            // have to set style sheet after show to see it take effect
+            newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
 
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
