@@ -33,6 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#include "fieldsview.h"
 #include "schemaeditordialog.h"
 #include "schemadelegate.h"
 #include "schemaitem.h"
@@ -43,12 +44,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace GUI;
 void SchemaEditorDialog::buildMessageView()
 {
-    messageView = new QWidget(centralStack);
-    QVBoxLayout *vbox = new QVBoxLayout(messageView);
-    messageView->setLayout(vbox);
+
+    QVBoxLayout *vbox = new QVBoxLayout(centerW);
+    centerW->setLayout(vbox);
+
+    //messageView = new QWidget(centerW);
+    //messageView->setLayout(vbox);
     // target window at top of main widget
-    targetArea = new QWidget(centralStack);
+    targetArea = new QWidget(centerW);
     QHBoxLayout *tarBox = new QHBoxLayout(targetArea);
+    tarBox->setMargin(0);
     targetArea->setLayout(tarBox);
     QFont fnt = targetArea->font();
     fnt.setBold(true);
@@ -68,6 +73,7 @@ void SchemaEditorDialog::buildMessageView()
 
     QHBoxLayout *topBox = new QHBoxLayout();
     topBox->addWidget(targetArea,2);
+    topBox->setMargin(0);
     statusArea = new QWidget(targetArea);
     QHBoxLayout *sbox = new QHBoxLayout(statusArea);
     statusArea->setLayout(sbox);
@@ -83,12 +89,22 @@ void SchemaEditorDialog::buildMessageView()
 
     splitter = new QSplitter(Qt::Horizontal,this);
     buildSchemaArea();
-    QWidget *workWidget = new QWidget(splitter);
-    QGridLayout *wgrid = new QGridLayout(workWidget);
-    workWidget->setLayout(wgrid);
+
+    viewStack = new QStackedWidget(splitter);
+    messageView = new QWidget(viewStack);
+
+    fieldsView = new FieldsView(viewStack);
+    QPalette pal1 = palette();
+    QColor bgColor = pal1.color(QPalette::Window);
+    fieldsView->setBackgroundColor(bgColor);
+
+    viewStack->insertWidget(MessageView,messageView);
+    viewStack->insertWidget(FieldView,fieldsView);
+    QGridLayout *wgrid = new QGridLayout(messageView);
+    messageView->setLayout(wgrid);
 
     splitter->insertWidget(0,schemaArea);
-    splitter->insertWidget(1,workWidget);
+    splitter->insertWidget(1,viewStack);
     splitter->setChildrenCollapsible(true);
 
     messageListL  = new QLabel("Messages");
@@ -237,4 +253,5 @@ void SchemaEditorDialog::buildMessageView()
     vbox->addWidget(splitter,1);
     vbox->addSpacing(12);
     vbox->addWidget(messageL,0);
+    //centerLayout->addWidget(messageView,1);
 }

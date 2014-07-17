@@ -83,6 +83,7 @@ protected slots:
     void saveSchemaSlot();
     void selectedListClickedSlot(QModelIndex);
     void undoSchemaSlot();
+    void viewActionSlot(QAction *);
 protected:
     void closeEvent(QCloseEvent *);
     void showEvent(QShowEvent *);
@@ -194,7 +195,8 @@ private:
     StatusType statusValue;
     bool undoBuild;  // set and unset in undoSlot
     MainWindow *currentMainWindow;
-    QStackedWidget *centralStack;
+    QStackedWidget *viewStack;
+    QWidget   *centerW;
     QWidget   *messageView;
     FieldsView   *fieldsView;
 };

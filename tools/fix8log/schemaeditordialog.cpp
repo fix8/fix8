@@ -113,16 +113,20 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     viewActionGroup->addAction(messageViewA);
     viewActionGroup->addAction(fieldViewA);
     viewActionGroup->setExclusive(true);
+    connect(viewActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(viewActionSlot(QAction *)));
     mainToolBar->addAction(messageViewA);
     mainToolBar->addAction(fieldViewA);
     // central widget if schema mainwindow
-    centralStack = new QStackedWidget(this);
-    setCentralWidget(centralStack);
+   // centralStack = new QStackedWidget(this);
+    //centralStack->insertWidget(MessageView,messageView);
+  //  centralStack->insertWidget(FieldView,fieldsView);
+    centerW = new QWidget(this);
+    setCentralWidget(centerW);
+
     buildMessageView();
 
-    fieldsView = new FieldsView(this);
-    centralStack->insertWidget(MessageView,messageView);
-    centralStack->insertWidget(FieldView,fieldsView);
+    //fieldsView = new FieldsView(this);
+
     viewMode = RegMode;
 }
 void SchemaEditorDialog::buildSchemaArea()

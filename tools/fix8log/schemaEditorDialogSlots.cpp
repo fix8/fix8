@@ -838,3 +838,12 @@ void SchemaEditorDialog::undoSchemaSlot()
     setUpdatesEnabled(true);
     validate();
 }
+void SchemaEditorDialog::viewActionSlot(QAction *action)
+{
+    qDebug() << "SET VIEW" << __FILE__ << __LINE__;
+    if (action == messageViewA)
+       viewStack->setCurrentIndex(MessageView);
+    else
+        viewStack->setCurrentIndex(FieldView);
+}
+
