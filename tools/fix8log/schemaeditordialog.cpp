@@ -47,7 +47,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),
     expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),inUseTableSchema(0),tempTableSchema(0),
-    tableSchemaStatus(NoMods),undoBuild(false),currentMainWindow(0)
+    tableSchemaStatus(NoMods),undoBuild(false),currentMainWindow(0),fieldUsePairList(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Table Schema Editor"));
@@ -114,12 +114,10 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     viewActionGroup->addAction(fieldViewA);
     viewActionGroup->setExclusive(true);
     connect(viewActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(viewActionSlot(QAction *)));
+     // COme back latter and see if we want to offer this functionality
     mainToolBar->addAction(messageViewA);
     mainToolBar->addAction(fieldViewA);
-    // central widget if schema mainwindow
-   // centralStack = new QStackedWidget(this);
-    //centralStack->insertWidget(MessageView,messageView);
-  //  centralStack->insertWidget(FieldView,fieldsView);
+
     centerW = new QWidget(this);
     setCentralWidget(centerW);
 
@@ -364,6 +362,29 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
     }
     messageModel->sort(0);
 }
+void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>> *prList)
+{
+    fieldUsePairList = prList;
+    int pp = 0;
+    QList <QStandardItem *> items;
+    QListIterator <QPair<QString ,FieldUse *>> pairListIter(*fieldUsePairList);
+    fieldsModel->setRowCount(fieldUsePairList->count());
+    int i=0;
+    while(pairListIter.hasNext()) {
+
+        QPair<QString,FieldUse *> pair = pairListIter.next();
+        QString nam = pair.first;
+        QStandardItem *item = new QStandardItem(nam);
+        item->setCheckable(true);
+        qDebug() << ">> PAIR " << pp++ << " " << nam;
+        fieldsModel->setItem(i,item);
+        i++;
+    }
+
+
+
+}
+
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
 {
     tableSchemaList = tsl;

@@ -289,8 +289,26 @@ bool Fix8Log::init()
         //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);
+
+
     }
 
+    qDebug() << ">>>>>>>>>>>>>> FIELD USE LIST:" << fieldUseList.count() << __FILE__ << __LINE__;
+
+    QListIterator <FieldUse *> fieldIter(fieldUseList);
+    while(fieldIter.hasNext()) {
+        FieldUse *mf = fieldIter.next();
+        fieldUsePairList.append(qMakePair(mf->name,mf));
+    }
+    int pp = 0;
+    qDebug() << ">>>>>>>>>>>>>> Pair list:" << fieldUsePairList.count() << __FILE__ << __LINE__;
+    qSort(fieldUsePairList.begin(), fieldUsePairList.end());
+    QListIterator <QPair<QString ,FieldUse *>> pairListIter(fieldUsePairList);
+    while(pairListIter.hasNext()) {
+        QPair<QString,FieldUse *> pair = pairListIter.next();
+        QString nam = pair.first;
+        qDebug() << "PAIR " << pp++ << " " << nam;
+    }
 
 
     if (!dir.exists()) {

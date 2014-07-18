@@ -63,7 +63,7 @@ void SchemaEditorDialog::buildMessageView()
     windowL->setFont(fnt);
     windowV = new QLabel("",targetArea);
     windowV->setAlignment(Qt::AlignLeft);
-    fnt.setPointSize(fnt.pointSize()+2);
+    //fnt.setPointSize(fnt.pointSize()+2);
     fnt.setItalic(true);
     windowV->setFont(fnt);
     QFontMetrics fm1(fnt);
@@ -89,24 +89,22 @@ void SchemaEditorDialog::buildMessageView()
 
     splitter = new QSplitter(Qt::Horizontal,this);
     buildSchemaArea();
-
-    viewStack = new QStackedWidget(splitter);
-    messageView = new QWidget(viewStack);
-
-    fieldsView = new FieldsView(viewStack);
-    QPalette pal1 = palette();
-    QColor bgColor = pal1.color(QPalette::Window);
-    fieldsView->setBackgroundColor(bgColor);
-
-    viewStack->insertWidget(MessageView,messageView);
-    viewStack->insertWidget(FieldView,fieldsView);
+    messageView = new QWidget(splitter);
     QGridLayout *wgrid = new QGridLayout(messageView);
     messageView->setLayout(wgrid);
-
     splitter->insertWidget(0,schemaArea);
-    splitter->insertWidget(1,viewStack);
+    splitter->insertWidget(1,messageView);
     splitter->setChildrenCollapsible(true);
 
+    workAreaStack = new QStackedWidget(this);
+
+    /***************** start message area *************/
+
+    messageWorkArea = new QWidget(this);
+
+    QGridLayout *mwaGrid = new QGridLayout(messageWorkArea);
+    messageWorkArea->setLayout(mwaGrid);
+    mwaGrid->setMargin(0);
     messageListL  = new QLabel("Messages");
     messageListL->setToolTip("All possible FIX messages");
     availableListL = new QLabel("Available Fields");
@@ -191,6 +189,8 @@ void SchemaEditorDialog::buildMessageView()
     availableFieldModel->setHorizontalHeaderItem(0,availableFieldHeaderItem);
     availableFieldsTreeView->setSortingEnabled(true);
     availableFieldsTreeView->setModel(availableFieldModel);
+    /********************** end message area ***************/
+
 
     QWidget *selectArea = new QWidget(this);
     QVBoxLayout *selectBox = new QVBoxLayout(selectArea);
@@ -225,18 +225,46 @@ void SchemaEditorDialog::buildMessageView()
     selectBox->addWidget(selectedFieldsTreeView,1);
     selectBox->addWidget(selectButonArea,0);
 
-    wgrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
-    wgrid->addWidget(availableListL,0,1,Qt::AlignHCenter|Qt::AlignBottom);
+    mwaGrid->addWidget(messageListL,0,0,Qt::AlignHCenter|Qt::AlignBottom);
+    mwaGrid->addWidget(availableListL,0,1,Qt::AlignHCenter|Qt::AlignBottom);
+    mwaGrid->addWidget(messageArea,1,0);
+    mwaGrid->addWidget(availableArea,1,1);
+    mwaGrid->setRowStretch(0,0);
+    mwaGrid->setRowStretch(1,1);
+    mwaGrid->setColumnStretch(0,1);
+    mwaGrid->setColumnStretch(1,1);
+
+    workAreaStack->insertWidget(MessageView, messageWorkArea);
+
+    fieldsWorkArea = new QWidget(this);
+    QVBoxLayout *fwaBox = new QVBoxLayout();
+     fwaBox->setMargin(0);
+    fieldsWorkArea->setLayout(fwaBox);
+
+    fieldListL  = new QLabel("Available Fields");
+    fieldListL->setToolTip("All possible FIX Fields");
+    fieldListView = new QListView(this);
+    fieldListView->setWrapping(true);
+    fieldsModel = new QStandardItemModel(fieldListView);
+    fieldListView->setModel(fieldsModel);
+    fieldListView->setFlow(QListView::LeftToRight);
+    fieldListView->setGridSize(QSize(180,36));
+    fieldListView->setResizeMode(QListView::Adjust);
+    fwaBox->addWidget(fieldListL,0);
+    fwaBox->addWidget(fieldListView,1);
+
+    workAreaStack->insertWidget(MessageView, messageWorkArea);
+    workAreaStack->insertWidget(FieldView, fieldsWorkArea);
+    wgrid->addWidget(workAreaStack,0,0,2,2);
     wgrid->addWidget(selectedListL,0,2,Qt::AlignHCenter|Qt::AlignBottom);
-    wgrid->addWidget(messageArea,1,0);
-    wgrid->addWidget(availableArea,1,1);
     wgrid->addWidget(selectArea,1,2);
+
     wgrid->setMargin(3);
     wgrid->setSpacing(4);
     wgrid->setRowStretch(0,0);
     wgrid->setRowStretch(1,1);
     wgrid->setColumnStretch(0,0);
-    wgrid->setColumnStretch(1,1);
+    wgrid->setColumnStretch(1,2);
     wgrid->setColumnStretch(2,1);
 
     messageL = new QLabel(this);
@@ -253,5 +281,4 @@ void SchemaEditorDialog::buildMessageView()
     vbox->addWidget(splitter,1);
     vbox->addSpacing(12);
     vbox->addWidget(messageL,0);
-    //centerLayout->addWidget(messageView,1);
 }

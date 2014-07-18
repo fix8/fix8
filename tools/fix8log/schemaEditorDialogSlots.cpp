@@ -842,8 +842,8 @@ void SchemaEditorDialog::viewActionSlot(QAction *action)
 {
     qDebug() << "SET VIEW" << __FILE__ << __LINE__;
     if (action == messageViewA)
-       viewStack->setCurrentIndex(MessageView);
+        workAreaStack->setCurrentIndex(MessageView);
     else
-        viewStack->setCurrentIndex(FieldView);
+        workAreaStack->setCurrentIndex(FieldView);
 }
 

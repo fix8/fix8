@@ -68,5 +68,7 @@
         <file>qml/fieldView.qml</file>
         <file>images/svg/messageView.svg</file>
         <file>images/svg/fieldsView.svg</file>
+        <file>images/32x32/tab.png</file>
+        <file>qml/LetterArea.qml</file>
     </qresource>
 </RCC>

@@ -115,6 +115,7 @@ protected:
     TableSchema *worldTableSchema;
     MessageFieldList *messageFieldList;
     FieldTraitVector fieldTraitV;
+    QList<QPair<QString ,FieldUse *>> fieldUsePairList;
     QMap<QString, QBaseEntry *> baseMap;
     QMultiMap <QString,FieldTrait *> fieldsInUseMap;
     FieldUseList fieldUseList;

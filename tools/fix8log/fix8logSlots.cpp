@@ -214,6 +214,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
     if (!schemaEditorDialog) {
         schemaEditorDialog = new SchemaEditorDialog(database);
         schemaEditorDialog->populateMessageList(messageFieldList);
+        schemaEditorDialog->populateFieldListPair(&fieldUsePairList);
 
         schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
         schemaEditorDialog->setBaseMaps(baseMap);

@@ -46,7 +46,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "selectedfieldstreeview.h"
 
 class Database;
-class FieldsView;
 class SchemaEditorDialog : public QMainWindow
 {
     Q_OBJECT
@@ -54,6 +53,7 @@ public:
     enum {MessageView,FieldView};
     explicit SchemaEditorDialog(Database *database, QWidget *parent = 0);
      void populateMessageList(MessageFieldList *);
+     void populateFieldListPair(QList<QPair<QString ,FieldUse *>> *);
      void restoreSettings();
      void saveSettings();
     void setTableSchemaInUse(TableSchema *inUse);
@@ -164,6 +164,7 @@ private:
     QStandardItemModel *availableSchemaModel;
     QStandardItemModel *availableFieldModel;
     QStandardItemModel *selectedFieldModel;
+    QStandardItemModel *fieldsModel;
     QTextEdit *descriptionE;
     QTextEdit *newDescriptionE;
     QToolBar *mainToolBar;
@@ -196,9 +197,15 @@ private:
     bool undoBuild;  // set and unset in undoSlot
     MainWindow *currentMainWindow;
     QStackedWidget *viewStack;
+    QListView *fieldListView;
     QWidget   *centerW;
     QWidget   *messageView;
-    FieldsView   *fieldsView;
+
+    QStackedWidget *workAreaStack;
+    QWidget *messageWorkArea;
+    QWidget *fieldsWorkArea;
+    QLabel *fieldListL;
+    QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
 };
 
 #endif // SCHEMAEDITORDIALOG_H
