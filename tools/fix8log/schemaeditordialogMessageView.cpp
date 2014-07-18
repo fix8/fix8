@@ -242,15 +242,22 @@ void SchemaEditorDialog::buildMessageView()
     fieldsWorkArea->setLayout(fwaBox);
 
     fieldListL  = new QLabel("Available Fields");
+    fieldListL->setAlignment(Qt::AlignHCenter);
+    fnt = fieldListL->font();
+    fnt.setBold(true);
+    fieldListL->setFont(fnt);
     fieldListL->setToolTip("All possible FIX Fields");
     fieldListView = new QListView(this);
+    fnt = fieldListView->font();
+    fnt.setBold(true);
+    fieldListView->setFont(fnt);
     fieldListView->setWrapping(true);
     fieldsModel = new QStandardItemModel(fieldListView);
     fieldListView->setModel(fieldsModel);
     fieldListView->setFlow(QListView::LeftToRight);
     fieldListView->setGridSize(QSize(180,36));
     fieldListView->setResizeMode(QListView::Adjust);
-    fwaBox->addWidget(fieldListL,0);
+    fwaBox->addWidget(fieldListL,0,Qt::AlignCenter);
     fwaBox->addWidget(fieldListView,1);
 
     workAreaStack->insertWidget(MessageView, messageWorkArea);

@@ -370,13 +370,20 @@ void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>>
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(*fieldUsePairList);
     fieldsModel->setRowCount(fieldUsePairList->count());
     int i=0;
+    bool tt; // use tootip
     while(pairListIter.hasNext()) {
-
+        tt = false;
         QPair<QString,FieldUse *> pair = pairListIter.next();
         QString nam = pair.first;
+        if (nam.length() >22)  {
+            nam.truncate(20);
+            nam.append("\u2026");
+            tt = true;
+        }
         QStandardItem *item = new QStandardItem(nam);
         item->setCheckable(true);
-        qDebug() << ">> PAIR " << pp++ << " " << nam;
+        if (tt)
+            item->setToolTip(pair.first);
         fieldsModel->setItem(i,item);
         i++;
     }
