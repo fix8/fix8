@@ -366,30 +366,36 @@ void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>>
 {
     fieldUsePairList = prList;
     int pp = 0;
-    QList <QStandardItem *> items;
+    fieldsModel->removeRows(0,fieldsModel->rowCount());
+    if (fieldItems.count() > 0) {
+        qDeleteAll(fieldItems.begin(),fieldItems.end());
+    }
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(*fieldUsePairList);
     fieldsModel->setRowCount(fieldUsePairList->count());
     int i=0;
+    QString nam;
+    QVariant var;
+
     bool tt; // use tootip
     while(pairListIter.hasNext()) {
         tt = false;
         QPair<QString,FieldUse *> pair = pairListIter.next();
-        QString nam = pair.first;
+        nam = pair.first;
         if (nam.length() >22)  {
-            nam.truncate(20);
+            nam.truncate(22);
             nam.append("\u2026");
             tt = true;
         }
         QStandardItem *item = new QStandardItem(nam);
+        var.setValue((void *) pair.second);
+        item->setData(var);
         item->setCheckable(true);
         if (tt)
             item->setToolTip(pair.first);
         fieldsModel->setItem(i,item);
+        fieldItems.append(item);
         i++;
     }
-
-
-
 }
 
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)

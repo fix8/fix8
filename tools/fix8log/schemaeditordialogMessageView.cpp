@@ -257,6 +257,9 @@ void SchemaEditorDialog::buildMessageView()
     fieldListView->setFlow(QListView::LeftToRight);
     fieldListView->setGridSize(QSize(180,36));
     fieldListView->setResizeMode(QListView::Adjust);
+    QItemSelectionModel *selectionModel =fieldListView->selectionModel();
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
     fwaBox->addWidget(fieldListL,0,Qt::AlignCenter);
     fwaBox->addWidget(fieldListView,1);
 

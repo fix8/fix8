@@ -76,6 +76,7 @@ protected slots:
     void deleteSchemaSlot();
     void editSchemaSlot();
     void expandAllSlot(bool);
+    void fieldCheckedSlot(QStandardItem *);
     void messageListClickedSlot(QModelIndex);
     void nameEditedSlot(const QString &);
     void newSchemaSlot();
@@ -206,6 +207,7 @@ private:
     QWidget *fieldsWorkArea;
     QLabel *fieldListL;
     QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
+    QList <QStandardItem *> fieldItems;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

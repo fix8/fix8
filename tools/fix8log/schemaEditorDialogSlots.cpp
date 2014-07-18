@@ -846,4 +846,11 @@ void SchemaEditorDialog::viewActionSlot(QAction *action)
     else
         workAreaStack->setCurrentIndex(FieldView);
 }
+void SchemaEditorDialog::fieldCheckedSlot(QStandardItem *item)
+{
+    qDebug() << "Field Changed" << __FILE__ << __LINE__;
 
+    if (item) {
+        qDebug() << "\tField = " << item->text() << __FILE__ << __LINE__;
+    }
+}
