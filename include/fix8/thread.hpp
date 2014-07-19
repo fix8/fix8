@@ -38,47 +38,31 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_THREAD_HPP_
 
 //----------------------------------------------------------------------------------------
+#include <atomic>
+#include <memory>
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
-#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #include<thread>
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#include <Poco/Thread.h>
-#include <Poco/ThreadTarget.h>
-#elif (THREAD_SYSTEM == THREAD_TBB)
-#include <tbb/tbb_thread.h>
+#include<mutex>
 #endif
 
 //----------------------------------------------------------------------------------------
 namespace FIX8
 {
 
+template<typename T> using f8_atomic = std::atomic < T > ;
+    
 //----------------------------------------------------------------------------------------
 /// pthread wrapper abstract base
 class _dthreadcore
 {
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
-public:
-	using thread_id_t = pthread_t;
-private:
-	pthread_attr_t _attr;
-	pthread_t _tid;
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#if (THREAD_SYSTEM == THREAD_STDTHREAD)
 public:
 	using thread_id_t = std::thread::id;
 private:
 	std::unique_ptr<std::thread> _thread;
-#elif (THREAD_SYSTEM == THREAD_POCO)
-public:
-	using thread_id_t = Poco::Thread::TID;
-private:
-	Poco::Thread _thread;
-#elif (THREAD_SYSTEM == THREAD_TBB)
-public:
-	using thread_id_t = tbb::tbb_thread::id;
-private:
-	std::unique_ptr<tbb::tbb_thread> _thread;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -97,12 +81,8 @@ protected:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_create(&_tid, &_attr, _run<T>, sub);
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		_thread.start(_run<T>, sub);
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		_thread.reset(new std::thread(_run<T>, sub));
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
 #endif
 		return 0;
 	}
@@ -114,8 +94,6 @@ public:
 	_dthreadcore(const bool detach, const size_t stacksize)
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		: _attr(), _tid()
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		: _thread()
 #endif
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -125,8 +103,6 @@ public:
 			throw dthreadException("pthread_attr_setstacksize failure");
 		if (detach && pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_DETACHED))
 			throw dthreadException("pthread_attr_setdetachstate failure");
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#elif (THREAD_SYSTEM == THREAD_TBB)
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
@@ -136,8 +112,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#elif (THREAD_SYSTEM == THREAD_TBB)
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
@@ -157,29 +131,7 @@ public:
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		void *rptr(&_exitval);
 		return pthread_join(_tid, &rptr) ? -1 : _exitval;
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		try
-		{
-			if (_thread.isRunning())
-			{
-				if (timeoutInMs == 0)
-					_thread.join();
-				else
-					_thread.join(timeoutInMs);
-			}
-		}
-		catch(const Poco::SystemException& ex)
-		{
-			// this is due to poco throws exceptions in case of thread was stopped already or not running
-			return -1;
-		}
-		catch(const Poco::TimeoutException& ex)
-		{
-			// this is due to poco throws exceptions in case of waiting for thread exit timed out
-			return -2;
-		}
-		return _exitval;
-#elif (THREAD_SYSTEM == THREAD_TBB || THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		if (_thread.get() && _thread->joinable())
 			_thread->join();
 		return _exitval;
@@ -196,10 +148,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_yield();
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		Poco::Thread::yield();
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		tbb::this_tbb_thread::yield();
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		std::this_thread::yield();
 #endif
@@ -214,10 +162,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return _tid;
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		return _thread.currentTid();
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		return _thread.get() ? _thread->get_id() : tbb::tbb_thread::id();
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		return _thread.get() ? _thread->get_id() : std::thread::id();
 #endif
@@ -229,10 +173,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_self();
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		return Poco::Thread::currentTid();
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		return tbb::this_tbb_thread::get_id();
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		return std::this_thread::get_id();
 #endif
@@ -367,19 +307,156 @@ public:
 	/*! request thread stop.
 	  \return function result */
 	void request_stop() { _sub.cancellation_token().request_stop(); }
-
-#if (THREAD_SYSTEM == THREAD_POCO)
-	/*! Join the thread.
-	  \param timeoutInMs optional timeout in ms (Poco only)
-	  \return result of join */
-	int join(int timeoutInMs=0)
-	{
-		const int ts(_sub.cancellation_token().thread_state());
-		return ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped
-			? _exitval : _dthreadcore::join(timeoutInMs);
-	}
-#endif
 };
+
+//----------------------------------------------------------------------------------------
+/// generic pthread_mutex wrapper
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+class f8_mutex
+{
+	pthread_mutex_t _pmutex;
+
+public:
+	f8_mutex()
+	{
+		if (pthread_mutex_init(&_pmutex, 0))
+			throw f8Exception("pthread_mutex_init failed");
+	}
+
+	~f8_mutex() { pthread_mutex_destroy(&_pmutex); };
+
+	void lock() { pthread_mutex_lock(&_pmutex); }
+	bool try_lock() { return pthread_mutex_trylock(&_pmutex) == 0; }
+	void unlock() { pthread_mutex_unlock(&_pmutex); }
+};
+#endif
+//----------------------------------------------------------------------------------------
+/// generic pthread_spin_lock wrapper
+
+#ifdef __APPLE__
+// A simple spinlock that spins up to 100K times and then does a sched_yield to back-off.
+// unlock() could just set _lock to false BUT that assumes that the spinlock was locked
+// to begin with, which may not be the case.  Therefore this implementation has the
+// advantage of causing your thread to spin if you try to unlock something that is
+// not locked, which I would think is a logic error that the caller should fix.
+// The choice of 100K was arbitrary.  The right way to set that parameter would be
+// to keep track of how big x gets before thread starvation occurs and use that number.
+// That number is going to be target- and use-case-dependent  though.
+class f8_spin_lock
+{
+	bool _isLocked;
+public:
+	f8_spin_lock() : _isLocked(false) {}
+	~f8_spin_lock() {}
+
+	void lock()
+	{
+		register int x = 0;
+		while(!__sync_bool_compare_and_swap(&_isLocked, false, true))
+		{
+			if(++x >= 100000)
+			{
+				x = 0;
+				sched_yield();
+			}
+		}
+	}
+	bool try_lock() { return _isLocked; }
+	void unlock()
+	{
+		register int x = 0;
+		while(!__sync_bool_compare_and_swap(&_isLocked, true, false))
+		{
+			if(++x >= 100000)
+			{
+				x = 0;
+				sched_yield();
+			}
+		}
+	}
+};
+#else
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+class f8_spin_lock
+{
+	pthread_spinlock_t _psl;
+
+public:
+	f8_spin_lock()
+	{
+		if (pthread_spin_init(&_psl, PTHREAD_PROCESS_PRIVATE))
+			throw f8Exception("pthread_spin_init failed");
+	}
+
+	~f8_spin_lock() { pthread_spin_destroy(&_psl); };
+
+	void lock() { pthread_spin_lock(&_psl); }
+	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
+	void unlock() { pthread_spin_unlock(&_psl); }
+};
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+using f8_mutex = std::mutex;
+class f8_spin_lock
+{
+	std::atomic_flag _sl; // = ATOMIC_FLAG_INIT # does not compile under vs2013
+
+public:
+    f8_spin_lock() { _sl.clear(std::memory_order_relaxed); }
+	~f8_spin_lock() = default;
+    
+	void lock() { while (!try_lock()); }
+	bool try_lock() { return !_sl.test_and_set(std::memory_order_acquire); }
+	void unlock() { _sl.clear(std::memory_order_release); }
+};
+#endif
+#endif //__APPLE__
+
+template<typename T>
+class f8_scoped_lock_impl
+{
+    T *_local_mutex = nullptr;
+    bool _disabled = false;
+
+public:
+    f8_scoped_lock_impl() = default;
+    f8_scoped_lock_impl( T& mutex ) { acquire( mutex ); }
+    f8_scoped_lock_impl( T& mutex, bool disable ) : _disabled( disable )
+    {
+        if ( !_disabled )
+            acquire( mutex );
+    }
+
+    ~f8_scoped_lock_impl() { release(); }
+
+    f8_scoped_lock_impl( const f8_scoped_lock_impl& ) = delete;
+    f8_scoped_lock_impl& operator=( const f8_scoped_lock_impl& ) = delete;
+
+    void acquire( T& mutex )
+    {
+        mutex.lock();
+        _local_mutex = &mutex;
+    }
+
+    bool try_acquire( T& mutex )
+    {
+        bool result( mutex.try_lock() );
+        if ( result )
+            _local_mutex = &mutex;
+        return result;
+    }
+
+    void release()
+    {
+        if ( !_disabled && _local_mutex )
+        {
+            _local_mutex->unlock();
+            _local_mutex = nullptr;
+        }
+    }
+};
+
+using f8_scoped_lock = f8_scoped_lock_impl < f8_mutex > ;
+using f8_scoped_spin_lock = f8_scoped_lock_impl < f8_spin_lock > ;
 
 } // FIX8
 
