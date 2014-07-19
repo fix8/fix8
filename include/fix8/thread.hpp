@@ -38,6 +38,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_THREAD_HPP_
 
 //----------------------------------------------------------------------------------------
+#include <atomic>
+#include <memory>
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
@@ -50,6 +52,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8
 {
 
+template<typename T> using f8_atomic = std::atomic < T > ;
+    
 //----------------------------------------------------------------------------------------
 /// pthread wrapper abstract base
 class _dthreadcore
@@ -394,18 +398,65 @@ public:
 using f8_mutex = std::mutex;
 class f8_spin_lock
 {
-	std::atomic_flag _sl = ATOMIC_FLAG_INIT;
+	std::atomic_flag _sl; // = ATOMIC_FLAG_INIT # does not compile under vs2013
 
 public:
-	f8_spin_lock() = default;
+    f8_spin_lock() { _sl.clear(std::memory_order_relaxed); }
 	~f8_spin_lock() = default;
-
+    
 	void lock() { while (!try_lock()); }
 	bool try_lock() { return !_sl.test_and_set(std::memory_order_acquire); }
 	void unlock() { _sl.clear(std::memory_order_release); }
 };
 #endif
 #endif //__APPLE__
+
+template<typename T>
+class f8_scoped_lock_impl
+{
+    T *_local_mutex = nullptr;
+    bool _disabled = false;
+
+public:
+    f8_scoped_lock_impl() = default;
+    f8_scoped_lock_impl( T& mutex ) { acquire( mutex ); }
+    f8_scoped_lock_impl( T& mutex, bool disable ) : _disabled( disable )
+    {
+        if ( !_disabled )
+            acquire( mutex );
+    }
+
+    ~f8_scoped_lock_impl() { release(); }
+
+    f8_scoped_lock_impl( const f8_scoped_lock_impl& ) = delete;
+    f8_scoped_lock_impl& operator=( const f8_scoped_lock_impl& ) = delete;
+
+    void acquire( T& mutex )
+    {
+        mutex.lock();
+        _local_mutex = &mutex;
+    }
+
+    bool try_acquire( T& mutex )
+    {
+        bool result( mutex.try_lock() );
+        if ( result )
+            _local_mutex = &mutex;
+        return result;
+    }
+
+    void release()
+    {
+        if ( !_disabled && _local_mutex )
+        {
+            _local_mutex->unlock();
+            _local_mutex = nullptr;
+        }
+    }
+};
+
+using f8_scoped_lock = f8_scoped_lock_impl < f8_mutex > ;
+using f8_scoped_spin_lock = f8_scoped_lock_impl < f8_spin_lock > ;
 
 } // FIX8
 

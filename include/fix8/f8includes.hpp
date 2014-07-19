@@ -76,10 +76,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>
 #include <fix8/mpmc.hpp>
+#include <fix8/thread.hpp>
 #include <fix8/f8types.hpp>
 #include <fix8/f8utils.hpp>
 #include <fix8/xml.hpp>
-#include <fix8/thread.hpp>
 #include <fix8/gzstream.hpp>
 #include <fix8/tickval.hpp>
 #include <fix8/logger.hpp>
