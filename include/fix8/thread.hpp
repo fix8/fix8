@@ -41,13 +41,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
-#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #include<thread>
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#include <Poco/Thread.h>
-#include <Poco/ThreadTarget.h>
-#elif (THREAD_SYSTEM == THREAD_TBB)
-#include <tbb/tbb_thread.h>
 #endif
 
 //----------------------------------------------------------------------------------------
@@ -58,27 +53,11 @@ namespace FIX8
 /// pthread wrapper abstract base
 class _dthreadcore
 {
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
-public:
-	using thread_id_t = pthread_t;
-private:
-	pthread_attr_t _attr;
-	pthread_t _tid;
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#if (THREAD_SYSTEM == THREAD_STDTHREAD)
 public:
 	using thread_id_t = std::thread::id;
 private:
 	std::unique_ptr<std::thread> _thread;
-#elif (THREAD_SYSTEM == THREAD_POCO)
-public:
-	using thread_id_t = Poco::Thread::TID;
-private:
-	Poco::Thread _thread;
-#elif (THREAD_SYSTEM == THREAD_TBB)
-public:
-	using thread_id_t = tbb::tbb_thread::id;
-private:
-	std::unique_ptr<tbb::tbb_thread> _thread;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -97,12 +76,8 @@ protected:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_create(&_tid, &_attr, _run<T>, sub);
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		_thread.start(_run<T>, sub);
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		_thread.reset(new std::thread(_run<T>, sub));
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
 #endif
 		return 0;
 	}
@@ -114,8 +89,6 @@ public:
 	_dthreadcore(const bool detach, const size_t stacksize)
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		: _attr(), _tid()
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		: _thread()
 #endif
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -125,8 +98,6 @@ public:
 			throw dthreadException("pthread_attr_setstacksize failure");
 		if (detach && pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_DETACHED))
 			throw dthreadException("pthread_attr_setdetachstate failure");
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#elif (THREAD_SYSTEM == THREAD_TBB)
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
@@ -136,8 +107,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#elif (THREAD_SYSTEM == THREAD_TBB)
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
@@ -157,29 +126,7 @@ public:
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		void *rptr(&_exitval);
 		return pthread_join(_tid, &rptr) ? -1 : _exitval;
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		try
-		{
-			if (_thread.isRunning())
-			{
-				if (timeoutInMs == 0)
-					_thread.join();
-				else
-					_thread.join(timeoutInMs);
-			}
-		}
-		catch(const Poco::SystemException& ex)
-		{
-			// this is due to poco throws exceptions in case of thread was stopped already or not running
-			return -1;
-		}
-		catch(const Poco::TimeoutException& ex)
-		{
-			// this is due to poco throws exceptions in case of waiting for thread exit timed out
-			return -2;
-		}
-		return _exitval;
-#elif (THREAD_SYSTEM == THREAD_TBB || THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		if (_thread.get() && _thread->joinable())
 			_thread->join();
 		return _exitval;
@@ -196,10 +143,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_yield();
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		Poco::Thread::yield();
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		tbb::this_tbb_thread::yield();
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		std::this_thread::yield();
 #endif
@@ -214,10 +157,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return _tid;
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		return _thread.currentTid();
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		return _thread.get() ? _thread->get_id() : tbb::tbb_thread::id();
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		return _thread.get() ? _thread->get_id() : std::thread::id();
 #endif
@@ -229,10 +168,6 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_self();
-#elif (THREAD_SYSTEM == THREAD_POCO)
-		return Poco::Thread::currentTid();
-#elif (THREAD_SYSTEM == THREAD_TBB)
-		return tbb::this_tbb_thread::get_id();
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 		return std::this_thread::get_id();
 #endif
@@ -367,18 +302,6 @@ public:
 	/*! request thread stop.
 	  \return function result */
 	void request_stop() { _sub.cancellation_token().request_stop(); }
-
-#if (THREAD_SYSTEM == THREAD_POCO)
-	/*! Join the thread.
-	  \param timeoutInMs optional timeout in ms (Poco only)
-	  \return result of join */
-	int join(int timeoutInMs=0)
-	{
-		const int ts(_sub.cancellation_token().thread_state());
-		return ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped
-			? _exitval : _dthreadcore::join(timeoutInMs);
-	}
-#endif
 };
 
 } // FIX8

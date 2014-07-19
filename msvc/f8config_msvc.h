@@ -472,17 +472,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Location of the system config directory */
 #define SYSCONFDIR "/etc"
 
-/* Poco thread system */
-#define THREAD_POCO 1
-
 /* pthread thread system */
 #define THREAD_PTHREAD 2
 
-/* pthread regex system used */
-#define THREAD_SYSTEM THREAD_TBB
+/* std::thread thread system */
+#define THREAD_STDTHREAD 4
 
-/* tbb thread thread system */
-#define THREAD_TBB 3
+/* pthread regex system used */
+#define THREAD_SYSTEM THREAD_STDTHREAD
 
 /* tbb malloc */
 #define MALLOC_TBB 1
