@@ -45,14 +45,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # include <atomic>
 template<typename T> using f8_atomic = std::atomic<T>;
 
+#include <thread.hpp>
 //-------------------------------------------------------------------------------------------------
 #if (MPMC_SYSTEM == MPMC_TBB)
 
 # include <tbb/concurrent_queue.h>
-# include <tbb/mutex.h>
-
-using f8_mutex = tbb::mutex;
-using f8_spin_lock = tbb::spin_mutex;
 template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
