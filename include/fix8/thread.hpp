@@ -52,8 +52,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8
 {
 
-template<typename T> using f8_atomic = std::atomic < T > ;
-    
+template<typename T> using f8_atomic = std::atomic <T>;
+
 //----------------------------------------------------------------------------------------
 /// pthread wrapper abstract base
 class _dthreadcore
@@ -63,6 +63,12 @@ public:
 	using thread_id_t = std::thread::id;
 private:
 	std::unique_ptr<std::thread> _thread;
+#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+public:
+	using thread_id_t = pthread_t;
+private:
+	pthread_attr_t _attr;
+	pthread_t _tid;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
@@ -403,7 +409,7 @@ class f8_spin_lock
 public:
     f8_spin_lock() { _sl.clear(std::memory_order_relaxed); }
 	~f8_spin_lock() = default;
-    
+
 	void lock() { while (!try_lock()); }
 	bool try_lock() { return !_sl.test_and_set(std::memory_order_acquire); }
 	void unlock() { _sl.clear(std::memory_order_release); }
@@ -455,8 +461,8 @@ public:
     }
 };
 
-using f8_scoped_lock = f8_scoped_lock_impl < f8_mutex > ;
-using f8_scoped_spin_lock = f8_scoped_lock_impl < f8_spin_lock > ;
+using f8_scoped_lock = f8_scoped_lock_impl<f8_mutex>;
+using f8_scoped_spin_lock = f8_scoped_lock_impl<f8_spin_lock>;
 
 } // FIX8
 

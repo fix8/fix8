@@ -146,6 +146,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'L', "Set Lines per page" }, &MyMenu::set_lpp },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 
@@ -323,6 +324,15 @@ bool MyMenu::help()
 	for (const auto& pp : _handlers)
 		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::set_lpp()
+{
+	f8String str;
+	if (!_cm->GetString(_tty, str).empty())
+		_cm->set_lpp(stoi(str));
 	return true;
 }
 

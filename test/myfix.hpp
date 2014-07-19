@@ -191,6 +191,7 @@ public:
 	bool send_msgs();
 	bool write_msgs();
 	bool read_msgs();
+	bool set_lpp();
 	bool static_probe();
 	bool new_order_single_recycled();
 

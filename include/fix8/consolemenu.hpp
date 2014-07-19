@@ -50,7 +50,7 @@ class ConsoleMenu
 	const F8MetaCntx& _ctx;
 	std::istream& _is;
 	std::ostream& _os;
-	const int _lpp;
+	int _lpp;
 	static const f8String _opt_keys, _fld_prompt;
 
 public:
@@ -59,7 +59,7 @@ public:
 	 \param is - reference to input stream
 	 \param os - reference to output stream
 	 \param lpp - lines to print per page */
-	ConsoleMenu (const F8MetaCntx& ctx, std::istream& is=std::cin, std::ostream& os=std::cout, const int lpp=20)
+	ConsoleMenu (const F8MetaCntx& ctx, std::istream& is=std::cin, std::ostream& os=std::cout, int lpp=20)
 		: _ctx(ctx), _is(is), _os(os), _lpp(lpp) {}
 
 	/// Dtor.
@@ -73,6 +73,8 @@ public:
 	F8API void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
 	F8API virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
 	F8API virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
+
+	void set_lpp(int lpp) { _lpp = lpp; }
 
 	bool get_yn(const f8String& prompt, bool echo=false) const { return toupper(get_key(prompt, echo)) == 'Y'; }
 	char get_key(const f8String& prompt=std::string(), bool echo=false) const

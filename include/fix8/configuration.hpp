@@ -91,15 +91,6 @@ struct SslContext
 /// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
-protected:
-	enum group_types
-	{
-		g_sessions, g_persisters, g_loggers, g_server_group,
-		g_ssl_context, g_schedules, g_logins, g_client_group,
-		g_count
-	};
-
-private:
 	static RegExp _ipexp;
 
 	const XmlElement *_root, *_default;
@@ -114,7 +105,14 @@ private:
 	const XmlElement *find_element(const std::string& tag, const ConfigMap& from) const
 		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : nullptr; }
 
-protected:
+public:
+	enum group_types
+	{
+		g_sessions, g_persisters, g_loggers, g_server_group,
+		g_ssl_context, g_schedules, g_logins, g_client_group,
+		g_count
+	};
+
 	/*! Find an element in a specified group.
 	  \param type group type enum
 	  \param tag the tag to find

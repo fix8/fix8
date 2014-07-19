@@ -164,12 +164,9 @@ struct SessionConfig : public Configuration
 class ClientSessionBase : public SessionConfig
 {
 public:
-#ifdef _MSC_VER
 	ClientSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
 		: SessionConfig(ctx, conf_file, session_name) {}
-#else
-    using SessionConfig::SessionConfig;
-#endif
+    // using SessionConfig::SessionConfig;
 
 	/*! If reliable, determine if the maximum no. of reties has been reached
 	  \return false for default clientsession */
@@ -496,13 +493,10 @@ protected:
 	Poco::Net::ServerSocket *_server_sock = nullptr;
 
 public:
-#ifdef _MSC_VER
+    /// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	ServerSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
 		: SessionConfig(ctx, conf_file, session_name) {}
-#else
-    /// Ctor. Prepares session for receiving inbbound connections (acceptor).
-	using SessionConfig::SessionConfig;
-#endif
+	//using SessionConfig::SessionConfig;	// not supported in all C++11 compilers
 
 	/// Dtor.
 	virtual ~ServerSessionBase ()

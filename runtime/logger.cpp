@@ -47,7 +47,7 @@ namespace FIX8
 
 #ifdef _MSC_VER
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0>>::_instance;
+	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance;
 #else
 	template<>
 	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance{};
