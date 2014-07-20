@@ -238,7 +238,7 @@ void SchemaEditorDialog::buildMessageView()
 
     fieldsWorkArea = new QWidget(this);
     QVBoxLayout *fwaBox = new QVBoxLayout();
-     fwaBox->setMargin(0);
+    fwaBox->setMargin(0);
     fieldsWorkArea->setLayout(fwaBox);
 
     fieldListL  = new QLabel("Available Fields");
@@ -291,4 +291,199 @@ void SchemaEditorDialog::buildMessageView()
     vbox->addWidget(splitter,1);
     vbox->addSpacing(12);
     vbox->addWidget(messageL,0);
+}
+void SchemaEditorDialog::syncMessageViewWithFieldView()
+{
+    QStandardItem *item;
+    QBaseEntry * qbe;
+    qDebug() << "HERE WE ARE IN SYNC " << __FILE__ << __LINE__;
+    if (fieldItems.count() < 1) {
+        qWarning() << "Nothing to do for FieldView Sync " << __FILE__ << __LINE__;
+        return;
+    }
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    QListIterator <QStandardItem *> iter(fieldItems);
+    setUpdatesEnabled(false);
+    qDebug() << "num of field items =" << fieldItems.count();
+    while(iter.hasNext()) {
+        item = iter.next();
+        item->setCheckState(Qt::Unchecked);
+    }
+    qDebug() << "NUM OF SELECTED BASE ENTRY ITEMS = " << selectedBaseEntryList.count();
+    QListIterator <QBaseEntry *> iter2(selectedBaseEntryList);
+    while(iter2.hasNext()) {
+        qbe = iter2.next();
+        if (qbe) {
+            item = fieldItemsMap.find(qbe->name).value();
+            if (item) {
+                item->setCheckState(Qt::Checked);
+                qDebug() << "SET CHECK STATE TO TRUE " << __FILE__ << __LINE__;
+            }
+        }
+    }
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    setUpdatesEnabled(true);
+}
+void SchemaEditorDialog::checkEntryInFieldsView(QBaseEntry *qbe)
+{
+    if (!qbe) {
+        qWarning() << "check entry in FieldsView failed, entry = 0" << __FILE__ << __LINE__;
+        return;
+    }
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    QStandardItem *item = fieldItemsMap.find(qbe->name).value();
+    if (item)
+        item->setCheckState(Qt::Checked);
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
+}
+void SchemaEditorDialog::uncheckEntryInFieldsView(QBaseEntry *qbe)
+{
+    if (!qbe) {
+        qWarning() << "uncheck entry in FieldsView failed, entry = 0" << __FILE__ << __LINE__;
+        return;
+    }
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    QStandardItem *item = fieldItemsMap.find(qbe->name).value();
+    if (item)
+        item->setCheckState(Qt::Unchecked);
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
+}
+void SchemaEditorDialog::clearFieldsView()
+{
+    QStandardItem *item;
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    QListIterator <QStandardItem *> iter(fieldItems);
+    setUpdatesEnabled(false);
+    qDebug() << "num of field items =" << fieldItems.count();
+    while(iter.hasNext()) {
+        item = iter.next();
+        item->setCheckState(Qt::Unchecked);
+    }
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
+}
+void SchemaEditorDialog::resetFieldsView()
+{
+    QStandardItem *item;
+    QString nam;
+    QVariant var;
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    QListIterator <QStandardItem *> iter(fieldItems);
+    qDebug() << "num of field items =" << fieldItems.count();
+    fieldsModel->removeRows(0,fieldsModel->rowCount());
+    fieldItemsMap.clear();
+    if (fieldItems.count() > 0) {
+        fieldItems.clear();
+        //qDeleteAll(fieldItems.begin(),fieldItems.end());
+    }
+    if (!fieldUsePairList || fieldUsePairList->count() < 1) {
+        qWarning() << "Reset failed iwth no items found" << __FILE__ << __LINE__;
+        connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+                this,SLOT(fieldCheckedSlot(QStandardItem *)));
+        return;
+    }
+
+
+    QListIterator <QPair<QString ,FieldUse *>> pairListIter(*fieldUsePairList);
+    bool tt; // use tootip
+    int i=0;
+    while(pairListIter.hasNext()) {
+        tt = false;
+        QPair<QString,FieldUse *> pair = pairListIter.next();
+        nam = pair.first;
+        if (nam.length() >22)  {
+            nam.truncate(22);
+            nam.append("\u2026"); // elipse (...) charactor
+            tt = true;
+        }
+        item = new QStandardItem(nam);
+        var.setValue((void *) pair.second);
+        item->setData(var);
+        item->setCheckable(true);
+        if (tt)
+            item->setToolTip(pair.first);
+        fieldsModel->setItem(i++,item);
+        fieldItems.append(item);
+        //FieldTrait *ft = pair.second->field;
+        fieldItemsMap.insert(pair.first,item);
+    }
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    updateFieldsView();
+}
+void SchemaEditorDialog::updateFieldsView()
+{
+    QStandardItem *item;
+    QBaseEntry  *qbe;
+    QListIterator <QStandardItem *> iter(fieldItems);
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
+    while(iter.hasNext()) {
+        item = iter.next();
+        item->setCheckState(Qt::Unchecked);
+    }
+    if (!tempTableSchema || !(tempTableSchema->fieldList)) {
+        qWarning() << "Error in updateFields, temp schema is null" << __FILE__ << __LINE__;
+        connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+                this,SLOT(fieldCheckedSlot(QStandardItem *)));
+        return;
+
+    }
+    qDebug() << "updateFieldsVIew, count of fields item map = " << fieldItemsMap.count() << __FILE__ << __LINE__;
+    QListIterator <QBaseEntry *> iter2(*(tempTableSchema->fieldList));
+    while(iter2.hasNext()) {
+        qbe = iter2.next();
+        if (qbe->ft) {
+            qDebug() << "FOUND Field Type " << __FILE__ << __LINE__;
+            QMap<QString, QStandardItem *>::const_iterator i = fieldItemsMap.find(qbe->name);
+            if (i != fieldItemsMap.end()) {
+                QStandardItem *item = i.value();
+                if (item)  {
+                    qDebug() << "\tcheck item: " << item->text() << __FILE__ << __LINE__;
+                    item->setCheckState(Qt::Checked);
+                }
+            }
+            else {
+                qDebug() << "fieldItemsMap.end reached" << __FILE__ << __LINE__;
+            }
+        }
+    }
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+            this,SLOT(fieldCheckedSlot(QStandardItem *)));
+}
+void SchemaEditorDialog::fieldCheckedSlot(QStandardItem *item)
+{
+    QBaseEntry *qbe = 0;
+    bool isChecked = false;
+    if (!item) {
+        qWarning() << "Item not found in Schema Editor" << __FILE__ << __LINE__;
+        return;
+    }
+
+    if (item->checkState() == Qt::Checked)
+        isChecked = true;
+
+    qDebug() << "\tIs checked = " << isChecked << __FILE__ << __LINE__;
+
+    if (!baseMap || (baseMap->count() < 1)) {
+        qWarning() << "\tError base mape not set in Schema Editor Dialog" << __FILE__ << __LINE__;
+        return;
+    }
+    QVariant var = item->data();
+    FieldUse *fieldUse = (FieldUse *) var.value<void *>();
+    qDebug() << "Field Use" << fieldUse->name;
+    QMap<QString, QBaseEntry *>::const_iterator i =  baseMap->find(fieldUse->name);
+    if (i != baseMap->end()) {
+        qbe = i.value();
+        qDebug() << "FOUND QBE:" << qbe->name << __FILE__ << __LINE__;
+        addItemToSelected(qbe,isChecked);
+    }
 }

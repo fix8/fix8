@@ -39,6 +39,64 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "database.h"
 #include "globals.h"
 using namespace GUI;
+void SchemaEditorDialog::addItemToSelected(QBaseEntry *qbe,bool isChecked)
+{
+    QStringList messageNameList;
+    QString tooltipStr;
+    FieldUse *fieldUse;
+    MessageField *messageField;
+    QStandardItem *selectItem ;
+    setUpdatesEnabled(false);
+
+    QMap<QString,QStandardItem *>::iterator  iter  = selectedMap.find(qbe->name);
+    selectItem = new QStandardItem(qbe->name);
+    if (fieldUseList) {
+        if (isChecked)    {
+            fieldUse = fieldUseList->findByName(qbe->name);
+            if (fieldUse) {
+                QListIterator <MessageField *> iter(fieldUse->messageFieldList);
+                while(iter.hasNext()) {
+                    messageField = iter.next();
+                    messageNameList << messageField->name;
+                }
+            }
+            if (messageNameList.count() == 0)
+                tooltipStr = "Not used in any messages";
+            else if (messageNameList.count() == 1)
+                tooltipStr = "Used in " + messageNameList.at(0) + " message" ;
+            else if(messageNameList.count() < 5)
+                tooltipStr = "Used in: " + messageNameList.join("\n\t");
+            else
+                tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
+            selectItem->setToolTip(tooltipStr);
+        }
+        QVariant var;
+        var.setValue((void *) qbe);
+        selectItem->setData(var);
+        if (tempTableSchema)
+            tempTableSchema->addField(qbe);
+        selectedFieldModel->appendRow(selectItem);
+        selectedMap.insert(qbe->name,selectItem);
+    }
+    else {
+        selectItem = (QStandardItem *) iter.value();
+        if (selectItem) {
+            qDebug() << "Remove selected item:" << __FILE__ << __LINE__;
+            qDebug() << "\tSlect item row " << selectItem->row();
+            selectedFieldModel->removeRow(selectItem->row());
+            if(tempTableSchema) {
+                tempTableSchema->removeFieldByName(qbe->name);
+            }
+            else
+                qWarning() << "Error - tempTableSchema is null" << __FILE__ << __LINE__;
+        }
+        selectedMap.remove(qbe->name);
+        selectedBaseEntryList.removeOne(qbe);
+    }
+    Qt::SortOrder so = selectedFieldsTreeView->header()->sortIndicatorOrder();
+    selectedFieldModel->sort(0,so);
+    setUpdatesEnabled(true);
+}
 void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckState cs)
 {
     QStringList messageNameList;
@@ -56,6 +114,7 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         qWarning() << "Base Entry not found for item" << __FILE__ << __LINE__;
         return;
     }
+    setUpdatesEnabled(false);
     QMap<QString,QStandardItem *>::iterator  iter  = selectedMap.find(be->name);
     if (iter == selectedMap.end()) {
         if (availItem->checkState() == Qt::Checked)    {
@@ -102,10 +161,12 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         selectedMap.remove(be->name);
         selectedBaseEntryList.removeOne(be);
     }
+    updateFieldsView();
     updateStatusOfMessageList();
 
     Qt::SortOrder so = selectedFieldsTreeView->header()->sortIndicatorOrder();
     selectedFieldModel->sort(0,so);
+    setUpdatesEnabled(true);
 }
 
 void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
@@ -205,6 +266,7 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
             selectedMap.insert(qbe->name,selectItem);
             selectedBaseEntryList.append(qbe);
         }
+        syncMessageViewWithFieldView();
     }
     QItemSelectionModel *selectionModel;
     selectionModel = messageListTreeView->selectionModel();
@@ -217,6 +279,7 @@ void SchemaEditorDialog::availableSchemasClickedSlot(QModelIndex index)
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     updateStatusOfMessageList();
+    resetFieldsView();
     setUpdatesEnabled(true);
     validate();
 }
@@ -260,6 +323,7 @@ void SchemaEditorDialog::clearSelectedSlot()
     QListIterator <QModelIndex> iter(selectedList);
     disconnect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    setUpdatesEnabled(false);
     while(iter.hasNext()) {
         mi = iter.next();
         item = selectedFieldModel->itemFromIndex(mi);
@@ -268,6 +332,7 @@ void SchemaEditorDialog::clearSelectedSlot()
             selectedFieldModel->removeRow(item->row());
             QBaseEntry *be = (QBaseEntry *) var.value<void *>();
             selectedMap.remove(be->name);
+            uncheckEntryInFieldsView(be);
             // selectedBaseEntryList.removeOne(be);
             tempTableSchema->removeFieldByName(be->name);
             QMultiMap<QString,QStandardItem *>::iterator aiter  = availableMap.find(be->name);
@@ -281,6 +346,8 @@ void SchemaEditorDialog::clearSelectedSlot()
     }
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    updateFieldsView();
+    setUpdatesEnabled(true);
     validate();
 }
 void SchemaEditorDialog::clearAllSlot()
@@ -304,6 +371,7 @@ void SchemaEditorDialog::clearAllSlot()
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     selectedBaseEntryList.clear();
+    clearFieldsView();
     validate();
 }
 void SchemaEditorDialog::closeSlot()
@@ -391,6 +459,7 @@ void SchemaEditorDialog::defaultSlot()
     }
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    updateFieldsView();
     setUpdatesEnabled(true);
     validate();
 }
@@ -411,6 +480,8 @@ void SchemaEditorDialog::deleteSchemaSlot()
         delete tempTableSchema;
         tempTableSchema = 0;
     }
+    setUpdatesEnabled(false);
+
     bstatus = database->deleteTableSchema(currentTableSchema->id);
     if (bstatus) {
         setMessage("Schema " + currentTableSchema->name + " deleted.",false);
@@ -423,6 +494,8 @@ void SchemaEditorDialog::deleteSchemaSlot()
     else {
         setMessage("Unable in removing schema: " + currentTableSchema->name + " from database.",false);
     }
+    updateFieldsView();
+    setUpdatesEnabled(true);
     validate();
 }
 void SchemaEditorDialog::expandAllSlot(bool on)
@@ -517,7 +590,7 @@ void SchemaEditorDialog::messageListClickedSlot(QModelIndex mi)
                                 item3->setCheckState(Qt::Checked);
                             }
                             item2->appendRow(item3);
-                        }                        
+                        }
                     }
                 }
             }
@@ -671,7 +744,7 @@ void SchemaEditorDialog::applySlot()
     validate();
 
 }
- // saves field changes
+// saves field changes
 void SchemaEditorDialog::saveSchemaSlot()
 {
 
@@ -696,7 +769,7 @@ void SchemaEditorDialog::saveSchemaSlot()
 
     if (currentSchemaItem)
         currentSchemaItem->tableSchema = currentTableSchema;
-        //currentSchemaItem->tableSchema = tempTableSchema->clone();
+    //currentSchemaItem->tableSchema = tempTableSchema->clone();
     qDebug() << "SAVE SCHEMA TO DATABASE"  << __FILE__ << __LINE__;
     bstatus = database->saveTableSchemaFields(*tempTableSchema);
 
@@ -835,6 +908,7 @@ void SchemaEditorDialog::undoSchemaSlot()
             this,SLOT(messageListClickedSlot(QModelIndex)));
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    resetFieldsView();
     setUpdatesEnabled(true);
     validate();
 }
@@ -845,12 +919,4 @@ void SchemaEditorDialog::viewActionSlot(QAction *action)
         workAreaStack->setCurrentIndex(MessageView);
     else
         workAreaStack->setCurrentIndex(FieldView);
-}
-void SchemaEditorDialog::fieldCheckedSlot(QStandardItem *item)
-{
-    qDebug() << "Field Changed" << __FILE__ << __LINE__;
-
-    if (item) {
-        qDebug() << "\tField = " << item->text() << __FILE__ << __LINE__;
-    }
 }

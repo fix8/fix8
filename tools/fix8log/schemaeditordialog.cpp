@@ -297,12 +297,14 @@ void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
             selectedFieldModel->appendRow(selectItem);
             selectedMap.insert(qbe->name,selectItem);
             selectedBaseEntryList.append(qbe);
+
         }
     }
     selectionModel = messageListTreeView->selectionModel();
     selectionModel->select(messageModel->index(0,0),QItemSelectionModel::Select);
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
+    syncMessageViewWithFieldView();
     setUpdatesEnabled(true);
     //qDebug() << "11 Call Validate " << __FILE__ << __LINE__;
 
@@ -366,16 +368,18 @@ void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>>
 {
     fieldUsePairList = prList;
     int pp = 0;
+    disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
     fieldsModel->removeRows(0,fieldsModel->rowCount());
     if (fieldItems.count() > 0) {
         qDeleteAll(fieldItems.begin(),fieldItems.end());
     }
+    fieldItemsMap.clear();
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(*fieldUsePairList);
     fieldsModel->setRowCount(fieldUsePairList->count());
-    int i=0;
     QString nam;
     QVariant var;
-
+    int i=0;
     bool tt; // use tootip
     while(pairListIter.hasNext()) {
         tt = false;
@@ -392,10 +396,13 @@ void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>>
         item->setCheckable(true);
         if (tt)
             item->setToolTip(pair.first);
-        fieldsModel->setItem(i,item);
+        fieldsModel->setItem(i++,item);
         fieldItems.append(item);
-        i++;
+        FieldTrait *ft = pair.second->field;
+        fieldItemsMap.insert(pair.first,item);
     }
+    connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
+               this,SLOT(fieldCheckedSlot(QStandardItem *)));
 }
 
 void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)

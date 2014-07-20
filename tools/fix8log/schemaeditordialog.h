@@ -99,14 +99,21 @@ private:
     typedef enum {Ok,SaveNeeded,EmptyFields} StatusType;
     typedef enum {ExpandAll,CollapseAll,Anything} ExpandMode;
     void addItemToSelected(QStandardItem *,Qt::CheckState);
+    void addItemToSelected(QBaseEntry *be,bool isChecked); // called from field view
     void buildMessageView();
     void buildSchemaArea();
     void buildSelectedListFromCurrentSchema();
+    void checkEntryInFieldsView(QBaseEntry *);
+    void clearFieldsView();
+    void resetFieldsView();
     void setCheckState(QStandardItem *item,Qt::CheckState cs);
     void setMessage(QString str, bool isError);
     void setStatus(StatusType);
     void setUncheckedStateParent(QStandardItem *parentItem);
     void showWindowArea(QString windowName);
+    void syncMessageViewWithFieldView();
+    void uncheckEntryInFieldsView(QBaseEntry *);
+    void updateFieldsView();
     void updateStatusOfMessageList();
     bool validate();
     MessageItemDelegate *messageDelegate;
@@ -208,6 +215,7 @@ private:
     QLabel *fieldListL;
     QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
     QList <QStandardItem *> fieldItems;
+    QMap  <QString,QStandardItem *> fieldItemsMap;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

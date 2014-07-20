@@ -301,15 +301,16 @@ bool Fix8Log::init()
         fieldUsePairList.append(qMakePair(mf->name,mf));
     }
     int pp = 0;
-    qDebug() << ">>>>>>>>>>>>>> Pair list:" << fieldUsePairList.count() << __FILE__ << __LINE__;
+    //qDebug() << ">>>>>>>>>>>>>> Pair list:" << fieldUsePairList.count() << __FILE__ << __LINE__;
     qSort(fieldUsePairList.begin(), fieldUsePairList.end());
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(fieldUsePairList);
+   /*
     while(pairListIter.hasNext()) {
         QPair<QString,FieldUse *> pair = pairListIter.next();
         QString nam = pair.first;
         qDebug() << "PAIR " << pp++ << " " << nam;
     }
-
+*/
 
     if (!dir.exists()) {
         bstatus = dir.mkdir(dbPath);

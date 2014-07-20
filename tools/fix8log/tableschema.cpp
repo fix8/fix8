@@ -108,6 +108,8 @@ bool   TableSchema::operator!=( const TableSchema &ts) const
     }
     return false;
 }
+
+
 bool   TableSchema::operator==( const TableSchema &ts) const
 {
     bool ok = true;
