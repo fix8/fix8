@@ -528,7 +528,7 @@ protected:
 	  e.g. SCHED_OTHER, SCHED_RR, SCHED_FIFO
 	    \param id thread id
 	    \return string */
-	static f8String get_thread_policy_string(_dthreadcore::thread_id_t id);
+	static f8String get_thread_policy_string(thread_id_t id);
 #endif
 
 	/*! Set the scheduling policy for the current thread

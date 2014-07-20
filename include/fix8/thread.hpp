@@ -54,19 +54,19 @@ namespace FIX8
 
 template<typename T> using f8_atomic = std::atomic <T>;
 
+#if (THREAD_SYSTEM == THREAD_STDTHREAD)
+	using thread_id_t = std::thread::id;
+#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+	using thread_id_t = pthread_t;
+#endif
+
 //----------------------------------------------------------------------------------------
 /// pthread wrapper abstract base
-class _dthreadcore
+class _f8_threadcore
 {
 #if (THREAD_SYSTEM == THREAD_STDTHREAD)
-public:
-	using thread_id_t = std::thread::id;
-private:
 	std::unique_ptr<std::thread> _thread;
 #elif (THREAD_SYSTEM == THREAD_PTHREAD)
-public:
-	using thread_id_t = pthread_t;
-private:
 	pthread_attr_t _attr;
 	pthread_t _tid;
 #endif
@@ -94,31 +94,23 @@ protected:
 	}
 
 public:
-	/*! Ctor.
-	  \param detach detach thread if true
-	  \param stacksize default thread stacksize */
-	_dthreadcore(const bool detach, const size_t stacksize)
+	/*! Ctor. */
+	_f8_threadcore()
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		: _attr(), _tid()
-#endif
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
 		if (pthread_attr_init(&_attr))
-			throw dthreadException("pthread_attr_init failure");
-		if (stacksize && pthread_attr_setstacksize(&_attr, stacksize))
-			throw dthreadException("pthread_attr_setstacksize failure");
-		if (detach && pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_DETACHED))
-			throw dthreadException("pthread_attr_setdetachstate failure");
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+			throw f8_threadException("pthread_attr_init failure");
+#else
+	{
 #endif
 	}
 
 	/// Dtor.
-	virtual ~_dthreadcore()
+	virtual ~_f8_threadcore()
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
 #endif
 	}
 
@@ -164,7 +156,7 @@ public:
 
 	/*! Get the thread's thread ID.
 	  \return the thread id */
-	thread_id_t getdthreadid() const
+	thread_id_t get_threadid() const
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return _tid;
@@ -184,39 +176,42 @@ public:
 #endif
 	}
 
-	/*! dthread equivalence operator.
+	/*! f8_thread equivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are equal */
-	bool operator==(const _dthreadcore& that) const
+	bool operator==(const _f8_threadcore& that) const
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_equal(_tid, that._tid);
 #else
-		return getdthreadid() == that.getdthreadid();
+		return get_threadid() == that.get_threadid();
 #endif
 	}
 
-	/*! dthread inequivalence operator.
+	/*! f8_thread inequivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are unequal */
-	bool operator!=(const _dthreadcore& that) const
+	bool operator!=(const _f8_threadcore& that) const
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return !pthread_equal(_tid, that._tid);
 #else
-		return getdthreadid() != that.getdthreadid();
+		return get_threadid() != that.get_threadid();
 #endif
 	}
 
-	_dthreadcore& operator=(const _dthreadcore&) = delete;
+	_f8_threadcore& operator=(const _f8_threadcore&) = delete;
 };
 
 //----------------------------------------------------------------------------------------
 /// Thread cancellation token
-struct dthread_cancellation_token
+class f8_thread_cancellation_token
 {
+	f8_atomic<int> _stop_requested, _thread_state;
+
+public:
 	/// ctor
-	dthread_cancellation_token() { _stop_requested = 0; _thread_state = Unknown; }
+	f8_thread_cancellation_token() { _stop_requested = 0; _thread_state = Unknown; }
 
 	/*! check if a stop has been requested
 	  \return true if stop requested */
@@ -243,68 +238,53 @@ struct dthread_cancellation_token
 	/*! Set the thread state
 	  \param state state to set to */
 	void thread_state(ThreadState state) { _thread_state = state; }
-
-private:
-	f8_atomic<int> _stop_requested, _thread_state;
 };
 
 //----------------------------------------------------------------------------------------
-/// POSIX pthread wrapper. dthread by pointer to member function.  Ctor provides T instance and specifies ptr to member to call or defaults to operator()
+/// Thread wrapper. Ctor provides T instance and specifies ptr to member to call or defaults to operator()
 /*! \tparam T class call thread entry functor */
 template<typename T>
-class dthread : public _dthreadcore
+class f8_thread : public _f8_threadcore
 {
 	class _helper
 	{
 		T& _what;
 		int (T::*_method)();
-		dthread_cancellation_token& (T::*_cancellation_token_method)();
+		f8_thread_cancellation_token& (T::*_cancellation_token_method)();
 
 	public:
-		_helper(T& what, int (T::*method)(), dthread_cancellation_token& (T::*cancellation_token_method)())
+		_helper(T& what, int (T::*method)(), f8_thread_cancellation_token& (T::*cancellation_token_method)())
 			: _what(what), _method(method), _cancellation_token_method(cancellation_token_method) {}
 		int operator()()
 		{
 			try
 			{
-				cancellation_token().thread_state(dthread_cancellation_token::Running);
+				cancellation_token().thread_state(f8_thread_cancellation_token::Running);
 				const int ret((_what.*_method)());
-				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				cancellation_token().thread_state(f8_thread_cancellation_token::Stopped);
 				return ret;
 			}
 			catch(const std::exception&)
 			{
-				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				cancellation_token().thread_state(f8_thread_cancellation_token::Stopped);
 				throw;
 			}
 		}
-		dthread_cancellation_token& cancellation_token() { return (_what.*_cancellation_token_method)(); }
+		f8_thread_cancellation_token& cancellation_token() { return (_what.*_cancellation_token_method)(); }
 	}
 	_sub;
 
 public:
-	/*! Ctor. Pointer to object, functor version.
-	  \param what instance of class with entry point
-	  \param method pointer to entry point method
-	  \param cancellation_token_method pointer to cancellation_token
-	  \param detach detach thread if true
-	  \param stacksize default thread stacksize */
-	dthread(T what, int (T::*method)()=&T::operator(),
-		dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
-
 	/*! Ctor. Reference to object, functor version.
 	  \param what reference wrapper of class with entry point
 	  \param method reference to entry point method
-	  \param cancellation_token_method pointer to cancellation_token
-	  \param detach detach thread if true
-	  \param stacksize default thread stacksize */
-	dthread(std::reference_wrapper<T> what, int (T::*method)()=&T::operator(),
-		dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
+	  \param cancellation_token_method pointer to cancellation_token */
+	f8_thread(std::reference_wrapper<T> what, int (T::*method)()=&T::operator(),
+		f8_thread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token)
+			: _sub(what, method, cancellation_token_method) {}
 
 	/// Dtor.
-	virtual ~dthread() {}
+	virtual ~f8_thread() {}
 
 	/*! start thread.
 	  \return function result */
@@ -337,7 +317,7 @@ public:
 };
 #endif
 //----------------------------------------------------------------------------------------
-/// generic pthread_spin_lock wrapper
+/// generic spin_lock wrapper
 
 #ifdef __APPLE__
 // A simple spinlock that spins up to 100K times and then does a sched_yield to back-off.
@@ -404,10 +384,19 @@ public:
 using f8_mutex = std::mutex;
 class f8_spin_lock
 {
-	std::atomic_flag _sl; // = ATOMIC_FLAG_INIT # does not compile under vs2013
+	std::atomic_flag _sl
+#ifndef _MSC_VER
+		= ATOMIC_FLAG_INIT
+#endif
+		;
 
 public:
-    f8_spin_lock() { _sl.clear(std::memory_order_relaxed); }
+    f8_spin_lock()
+	 {
+#ifdef _MSC_VER
+		 _sl.clear(std::memory_order_relaxed); // = ATOMIC_FLAG_INIT # does not compile under vs2013
+#endif
+	 }
 	~f8_spin_lock() = default;
 
 	void lock() { while (!try_lock()); }
@@ -425,35 +414,35 @@ class f8_scoped_lock_impl
 
 public:
     f8_scoped_lock_impl() = default;
-    f8_scoped_lock_impl( T& mutex ) { acquire( mutex ); }
-    f8_scoped_lock_impl( T& mutex, bool disable ) : _disabled( disable )
+    f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
+    f8_scoped_lock_impl(T& mutex, bool disable) : _disabled(disable)
     {
-        if ( !_disabled )
-            acquire( mutex );
+        if (!_disabled)
+            acquire(mutex);
     }
 
     ~f8_scoped_lock_impl() { release(); }
 
-    f8_scoped_lock_impl( const f8_scoped_lock_impl& ) = delete;
-    f8_scoped_lock_impl& operator=( const f8_scoped_lock_impl& ) = delete;
+    f8_scoped_lock_impl(const f8_scoped_lock_impl&) = delete;
+    f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&) = delete;
 
-    void acquire( T& mutex )
+    void acquire(T& mutex)
     {
         mutex.lock();
         _local_mutex = &mutex;
     }
 
-    bool try_acquire( T& mutex )
+    bool try_acquire(T& mutex)
     {
-        bool result( mutex.try_lock() );
-        if ( result )
+        bool result(mutex.try_lock());
+        if (result)
             _local_mutex = &mutex;
         return result;
     }
 
     void release()
     {
-        if ( !_disabled && _local_mutex )
+        if (!_disabled && _local_mutex)
         {
             _local_mutex->unlock();
             _local_mutex = nullptr;
@@ -463,6 +452,9 @@ public:
 
 using f8_scoped_lock = f8_scoped_lock_impl<f8_mutex>;
 using f8_scoped_spin_lock = f8_scoped_lock_impl<f8_spin_lock>;
+template<typename T> using dthread = f8_thread<T>;
+using _dthreadcore = _f8_threadcore;
+using dthread_cancellation_token = f8_thread_cancellation_token;
 
 } // FIX8
 

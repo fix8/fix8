@@ -187,7 +187,7 @@ void Logger::purge_thread_codes()
 }
 
 //-------------------------------------------------------------------------------------------------
-char Logger::get_thread_code(_dthreadcore::thread_id_t tid)
+char Logger::get_thread_code(thread_id_t tid)
 {
 	f8_scoped_lock guard(_mutex);
 

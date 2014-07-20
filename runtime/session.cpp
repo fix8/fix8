@@ -1019,7 +1019,7 @@ void Session::recover_seqnums()
 
 //-------------------------------------------------------------------------------------------------
 #if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
+f8String Session::get_thread_policy_string(thread_id_t id)
 {
    int policy;
 	ostringstream ostr;

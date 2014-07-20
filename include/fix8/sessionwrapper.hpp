@@ -274,12 +274,12 @@ public:
 template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
-	dthread<ReliableClientSession<T>> _thread;
+	f8_thread<ReliableClientSession<T>> _thread;
 	unsigned _send_seqnum = 0, _recv_seqnum = 0, _current = 0, _attempts = 0;
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
-	dthread_cancellation_token _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -476,7 +476,7 @@ public:
 		return 0;
 	}
 
-	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 
 	/// Convenient scoped pointer for your session
 	using ReliableClientSession_ptr = std::unique_ptr<ReliableClientSession<T>>;

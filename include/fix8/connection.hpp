@@ -58,10 +58,10 @@ protected:
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
-	dthread_cancellation_token  _cancellation_token;
+	f8_thread_cancellation_token  _cancellation_token;
 
 private:
-	dthread<AsyncSocket> _thread;
+	f8_thread<AsyncSocket> _thread;
 
 public:
 	/*! Ctor.
@@ -88,7 +88,7 @@ public:
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute(dthread_cancellation_token& cancellation_token) { return 0; }
+	virtual int execute(f8_thread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
@@ -107,7 +107,7 @@ public:
 		 \return 0 on success */
 	int join() { return _thread.join(); }
 
-	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -117,8 +117,8 @@ class FIXReader : public AsyncSocket<f8String>
 	enum { _max_msg_len = MAX_MSG_LENGTH, _chksum_sz = 7 };
 	f8_atomic<bool> _socket_error;
 
-	dthread<FIXReader> _callback_thread;
-	dthread_cancellation_token _callback_cancellation_token;
+	f8_thread<FIXReader> _callback_thread;
+	f8_thread_cancellation_token _callback_cancellation_token;
 
 #if EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
@@ -280,7 +280,7 @@ public:
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-	F8API virtual int execute(dthread_cancellation_token& cancellation_token);
+	F8API virtual int execute(f8_thread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
 		 \return 0 on success */
@@ -301,7 +301,7 @@ public:
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
 
-	dthread_cancellation_token& callback_cancellation_token() { return _callback_cancellation_token; }
+	f8_thread_cancellation_token& callback_cancellation_token() { return _callback_cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -450,7 +450,7 @@ public:
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-	F8API virtual int execute(dthread_cancellation_token& cancellation_token);
+	F8API virtual int execute(f8_thread_cancellation_token& cancellation_token);
 
 	/// Stop the processing threads and quit.
 	virtual void quit()

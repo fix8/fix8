@@ -74,6 +74,7 @@ public:
 	F8API virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
 	F8API virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
 
+	int get_lpp() const { return _lpp; }
 	void set_lpp(int lpp) { _lpp = lpp; }
 
 	bool get_yn(const f8String& prompt, bool echo=false) const { return toupper(get_key(prompt, echo)) == 'Y'; }

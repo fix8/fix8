@@ -330,6 +330,7 @@ bool MyMenu::help()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::set_lpp()
 {
+	cout << "Enter number of lines per page (currently=" << _cm->get_lpp() << "): " << flush;
 	f8String str;
 	if (!_cm->GetString(_tty, str).empty())
 		_cm->set_lpp(stoi(str));

@@ -148,7 +148,7 @@ public:
 /// BerkeleyDB backed message persister.
 class BDBPersister : public Persister
 {
-	dthread<BDBPersister> _thread;
+	f8_thread<BDBPersister> _thread;
 
 	DbEnv _dbEnv;
 	Db *_db;
@@ -216,7 +216,7 @@ class BDBPersister : public Persister
 		return _persist_queue.try_push(what);
 	}
 
-	dthread_cancellation_token _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor.
@@ -282,7 +282,7 @@ public:
 	  \return 0 on success */
 	F8API int operator()();	// write thread
 
-	dthread_cancellation_token& cancellation_token() { return _cancellation_token;	}
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
 
 #endif // HAVE_BDB

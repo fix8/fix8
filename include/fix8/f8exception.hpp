@@ -251,9 +251,9 @@ struct BadCheckSum : f8Exception
 
 //-------------------------------------------------------------------------------------------------
 /// A pthread attribute error occured.
-struct dthreadException : f8Exception
+struct f8_threadException : f8Exception
 {
-	dthreadException(const std::string& reason) { format("Thread error", reason); }
+	f8_threadException(const std::string& reason) { format("Thread error", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------

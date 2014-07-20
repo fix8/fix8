@@ -149,10 +149,10 @@ public:
 class Tickval;
 
 //-------------------------------------------------------------------------------------------------
-/// dthread delegated async logging class
+/// f8_thread delegated async logging class
 class Logger
 {
-	dthread<Logger> _thread;
+	f8_thread<Logger> _thread;
 	std::list<std::string> _buffer;
 
 public:
@@ -166,16 +166,16 @@ protected:
 	LogFlags _flags;
 	std::ostream *_ofs;
 	size_t _lines;
-	dthread_cancellation_token _stopping;
+	f8_thread_cancellation_token _stopping;
 
 	struct LogElement
 	{
-		_dthreadcore::thread_id_t _tid;
+		thread_id_t _tid;
 		std::string _str;
 		unsigned _val;
 		Tickval _when;
 
-		LogElement(const _dthreadcore::thread_id_t tid, const std::string& str, const unsigned val=0)
+		LogElement(const thread_id_t tid, const std::string& str, const unsigned val=0)
 			: _tid(tid), _str(str), _val(val), _when(true) {}
 		LogElement() : _tid(), _val(), _when(true) {}
 		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _val(from._val), _when(from._when) {}
@@ -195,10 +195,10 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-	using ThreadCodes = std::map<_dthreadcore::thread_id_t, char>;
+	using ThreadCodes = std::map<thread_id_t, char>;
 	ThreadCodes _thread_codes;
 
-	using RevThreadCodes = std::map<char, _dthreadcore::thread_id_t>;
+	using RevThreadCodes = std::map<char, thread_id_t>;
 	RevThreadCodes _rev_thread_codes;
 
 public:
@@ -230,7 +230,7 @@ public:
 	    \return true on success */
 	bool send(const std::string& what, const unsigned val=0)
 	{
-		const LogElement le(_dthreadcore::getid(), what, val);
+		const LogElement le(f8_thread<Logger>::getid(), what, val);
 		return _msg_queue.try_push (le) == 0;
 	}
 
@@ -256,7 +256,7 @@ public:
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */
-	F8API char get_thread_code( _dthreadcore::thread_id_t tid );
+	F8API char get_thread_code(thread_id_t tid);
 
 	/// Remove dead threads from the thread code cache.
 	F8API void purge_thread_codes();
@@ -266,7 +266,7 @@ public:
 
 	/*! Get the thread cancellation token
 		\return reference to the cancellation token */
-	dthread_cancellation_token& cancellation_token() { return _stopping; }
+	f8_thread_cancellation_token& cancellation_token() { return _stopping; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -289,7 +289,7 @@ public:
 	/*! Perform logfile rotation
 	    \param force force the rotation (even if the file is set ti append)
 	    \return true on success */
-	F8API virtual bool rotate( bool force = false );
+	F8API virtual bool rotate(bool force=false);
 };
 
 //-------------------------------------------------------------------------------------------------

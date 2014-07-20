@@ -399,7 +399,7 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti)
 	inst->start(pm == pm_pipeline, next_send, next_receive);
 	if (inst->session_ptr()->get_connection()->is_secure())
 		cout << "Session is secure (SSL)" << endl;
-	if (!ismulti)	// demonstrate use of timer events
+	if (!ismulti && !quiet)	// demonstrate use of timer events
 	{
 		TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
 		inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
