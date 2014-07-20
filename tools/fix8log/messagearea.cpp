@@ -136,6 +136,7 @@ void MessageArea::setMessage(QMessage *m)
         const char *dum = msg->get_msgtype().c_str();
         BaseMsgEntry bme = TEX::ctx()._bme.find_ref(dum);
         messageTypeV->setText(bme._name);
+
         for (Fields::const_iterator itr(header->fields_begin()); itr != header->fields_end(); ++itr)
         {
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
@@ -154,10 +155,9 @@ void MessageArea::setMessage(QMessage *m)
             headerItem->appendRow(items);
 
         }
-
+        //for (Positions::const_iterator itr(msg->); itr != _pos.end(); ++i
         for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
         {
-
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
             name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
             bf = itr->second;

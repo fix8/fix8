@@ -119,7 +119,12 @@ void SchemaEditorDialog::buildMessageView()
     QVBoxLayout *mbox = new QVBoxLayout(messageArea);
     messageArea->setLayout(mbox);
     mbox->setMargin(0);
+    QString ss1;
+    ss1.append("QTreeView::item:hover { color: #ffffff; background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #1a3994, stop: 1 #061a33);}");
+
     messageListTreeView = new QTreeView(this);
+    messageListTreeView->setStyleSheet(ss1);
+    messageListTreeView->setMouseTracking(true);
     messageSpacerItem = new QSpacerItem(22,32);
     mbox->addWidget(messageListTreeView,1);
     mbox->addSpacerItem(messageSpacerItem);
@@ -141,6 +146,7 @@ void SchemaEditorDialog::buildMessageView()
     availableArea->setLayout(avbox);
 
     availableFieldsTreeView = new QTreeView(this);
+    availableFieldsTreeView->setStyleSheet(ss1);
     availableFieldsTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QWidget *availableButtonArea = new QWidget(availableArea);
     QHBoxLayout *abox = new QHBoxLayout(availableButtonArea);
@@ -205,6 +211,7 @@ void SchemaEditorDialog::buildMessageView()
     selectedHeaderItem = new QStandardItem("");
     selectedFieldModel->setHorizontalHeaderItem(0,selectedHeaderItem);
     selectedFieldsTreeView->setSortingEnabled(true);
+    selectedFieldsTreeView->setStyleSheet(ss1);
     selectedFieldsTreeView->setModel(selectedFieldModel);
 
     clearPB = new QPushButton("Clear",this);
@@ -248,8 +255,12 @@ void SchemaEditorDialog::buildMessageView()
     fieldListL->setFont(fnt);
     fieldListL->setToolTip("All possible FIX Fields");
     fieldListView = new QListView(this);
+    QString ss;
+    ss.append("QListView::item:hover { color: #ffffff; background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #1a3994, stop: 1 #061a33);}");
+    fieldListView->setStyleSheet(ss);
     fnt = fieldListView->font();
     fnt.setBold(true);
+    fnt.setPointSize(fnt.pointSize()+1);
     fieldListView->setFont(fnt);
     fieldListView->setWrapping(true);
     fieldsModel = new QStandardItemModel(fieldListView);

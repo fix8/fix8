@@ -54,6 +54,7 @@ void SchemaEditorDialog::addItemToSelected(QBaseEntry *qbe,bool isChecked)
         if (isChecked)    {
             fieldUse = fieldUseList->findByName(qbe->name);
             if (fieldUse) {
+
                 QListIterator <MessageField *> iter(fieldUse->messageFieldList);
                 while(iter.hasNext()) {
                     messageField = iter.next();
@@ -69,29 +70,31 @@ void SchemaEditorDialog::addItemToSelected(QBaseEntry *qbe,bool isChecked)
             else
                 tooltipStr = "Used in " + QString::number(messageNameList.count()) + " messages";
             selectItem->setToolTip(tooltipStr);
+
+            QVariant var;
+            var.setValue((void *) qbe);
+            selectItem->setData(var);
+            if (tempTableSchema)
+                tempTableSchema->addField(qbe);
+            selectedFieldModel->appendRow(selectItem);
+            selectedMap.insert(qbe->name,selectItem);
         }
-        QVariant var;
-        var.setValue((void *) qbe);
-        selectItem->setData(var);
-        if (tempTableSchema)
-            tempTableSchema->addField(qbe);
-        selectedFieldModel->appendRow(selectItem);
-        selectedMap.insert(qbe->name,selectItem);
-    }
-    else {
-        selectItem = (QStandardItem *) iter.value();
-        if (selectItem) {
-            qDebug() << "Remove selected item:" << __FILE__ << __LINE__;
-            qDebug() << "\tSlect item row " << selectItem->row();
-            selectedFieldModel->removeRow(selectItem->row());
-            if(tempTableSchema) {
-                tempTableSchema->removeFieldByName(qbe->name);
+        else {
+            qDebug() << "HEY LETS REMOVE ITEM..........." << __FILE__ << __LINE__;
+            selectItem = (QStandardItem *) iter.value();
+            if (selectItem) {
+                qDebug() << "Remove selected item:" << __FILE__ << __LINE__;
+                qDebug() << "\tSlect item row " << selectItem->row();
+                selectedFieldModel->removeRow(selectItem->row());
+                if(tempTableSchema) {
+                    tempTableSchema->removeFieldByName(qbe->name);
+                }
+                else
+                    qWarning() << "Error - tempTableSchema is null" << __FILE__ << __LINE__;
             }
-            else
-                qWarning() << "Error - tempTableSchema is null" << __FILE__ << __LINE__;
+            selectedMap.remove(qbe->name);
+            selectedBaseEntryList.removeOne(qbe);
         }
-        selectedMap.remove(qbe->name);
-        selectedBaseEntryList.removeOne(qbe);
     }
     Qt::SortOrder so = selectedFieldsTreeView->header()->sortIndicatorOrder();
     selectedFieldModel->sort(0,so);

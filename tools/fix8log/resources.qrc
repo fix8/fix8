@@ -70,5 +70,6 @@
         <file>images/svg/fieldsView.svg</file>
         <file>images/32x32/tab.png</file>
         <file>qml/LetterArea.qml</file>
+        <file>qml/aboutDialog.qml</file>
     </qresource>
 </RCC>
