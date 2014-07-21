@@ -374,7 +374,9 @@ void SchemaEditorDialog::clearAllSlot()
     connect(availableFieldModel,SIGNAL(itemChanged(QStandardItem*)),
             this,SLOT(availableTreeItemChangedSlot(QStandardItem*)));
     selectedBaseEntryList.clear();
-    clearFieldsView();
+    //clearFieldsView();
+    updateFieldsView();
+
     validate();
 }
 void SchemaEditorDialog::closeSlot()

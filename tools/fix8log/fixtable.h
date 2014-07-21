@@ -58,7 +58,7 @@ class FixTable: public QTableView {
   enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
   FixTable(QUuid &windowID, QUuid &workSheetID,QWidget * parent = 0);
   //FixTable(const FixTable &);
-  void setAnouncement(const QString &message,int interval=3000); // milisec
+  void setAnouncement(const QString &message,int interval=5000); // milisec
   void setWindowID(QUuid &uuid);
   void setWorkSheetModel(WorkSheetModel *);
   void setSenderIDFilter(QStringList senderIDs);
@@ -84,6 +84,8 @@ class FixTable: public QTableView {
   void validateFilters();
   QString emptyStr1;
   QString emptyStr2;
+  QString emptySchemaStr1;
+  QString emptySchemaStr2;
   QFont   emptyFont;
   QColor  bgColorStart;
   QColor  bgColorEnd;
@@ -91,6 +93,8 @@ class FixTable: public QTableView {
   QColor  emptyStrColor;
   int     emptyX1,emptyY1;
   int     emptyX2,emptyY2;
+  int     emptySchemaX1,emptySchemaY1;
+  int     emptySchemaX2,emptySchemaY2;
   QPointF center;
   //QStandardItemModel *_model;
   //QStandardItem *headerItem[NumColumns];
@@ -119,5 +123,6 @@ class FixTable: public QTableView {
    WorkSheetModel *_model;
    FixTableVerticaHeaderView *fixVH;
    bool     searchFilterOn;
+   int updateFreq;
 };
 #endif

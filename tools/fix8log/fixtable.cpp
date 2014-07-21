@@ -70,7 +70,7 @@ QString FixTable::headerLabel[] =
  tr("HeartBtInt"),tr("Message Type")};
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
-    QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false)
+    QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false),anounceTimerID(-1)
 
 {
     proxyFilter = new ProxyFilter(this);
@@ -80,6 +80,7 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     anounceFont.setBold(true);
     anounceFont.setPointSize(anounceFont.pointSize() + 4);
     anounceFG = Qt::white;
+
     emptyAlphaFG = anounceFG;
     anounceBG = Qt::black;
     setAcceptDrops(true);
@@ -89,6 +90,9 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setVerticalHeader(fixVH);
     bgColorStart.setRgb(2,19,39);
     bgColorEnd.setRgb(10,10,10);
+
+    emptySchemaStr1 = tr("No Columns Selected");
+    emptySchemaStr2 = tr("(Edit Table Schema)");
     emptyStr1 = tr("No");
     emptyStr2 = tr("Data");
     emptyFont   = font();
@@ -131,18 +135,21 @@ void FixTable::setAnouncement(const QString &message,int interval)
 {
     showAnouncement = true;
     anouncement = message;
-    alpha = 255;
     if (model()->rowCount() > 0) {
         anounceAlphaBG = anounceBG;
         anounceAlphaFG = anounceFG;
     }
     else {
-        anounceAlphaBG = anounceFG;
-        anounceAlphaFG = anounceBG;
+        anounceAlphaBG = anounceBG;
+        anounceAlphaFG = anounceFG;
     }
     animationPeriod = interval;
-    killTimer(anounceTimerID);
-    anounceTimerID = startTimer(90);
+    if (anounceTimerID > 0)
+        killTimer(anounceTimerID);
+    alpha = 255;
+    updateFreq =  (int) (interval/50);
+
+    anounceTimerID = startTimer(updateFreq);
 }
 void FixTable::setSenderIDFilter(QStringList ids)
 {
@@ -170,8 +177,8 @@ void FixTable::validateFilters()
 void FixTable::timerEvent(QTimerEvent *te)
 {
     if (te->timerId() == anounceTimerID) {
-        alpha = alpha-10;
-        if (alpha < 10) {
+        alpha = alpha-15;
+        if (alpha < 15) {
             killTimer(anounceTimerID);
             anounceTimerID  = -1;
             showAnouncement = false;
@@ -180,7 +187,7 @@ void FixTable::timerEvent(QTimerEvent *te)
                 alpha = 0;
                 emptyAlphaFG = emptyStrColor;
                 emptyAlphaFG.setAlpha(alpha);
-                noDataTimerID = startTimer(90);
+                noDataTimerID = startTimer(updateFreq);
             }
         }
         else {
@@ -208,10 +215,13 @@ void FixTable::resizeEvent(QResizeEvent *re)
     QSize s = re->size();
     int centerX = s.width();
     int centerY = s.height()/2;
-
+    emptySchemaX1 = (centerX - fm.width(emptySchemaStr1))/2;
+    emptySchemaX2 = (centerX - fm.width(emptySchemaStr2))/2;
     emptyX1 = (centerX - fm.width(emptyStr1))/2;
     emptyX2 = (centerX - fm.width(emptyStr2))/2;
     offset = fm.height()/2;
+    emptySchemaY1 = centerY - offset;
+    emptySchemaY2 = centerY + offset;
     emptyY1 = centerY - offset;
     emptyY2 = centerY + offset;
 
@@ -280,14 +290,16 @@ void FixTable::paintEvent(QPaintEvent *pe)
     QPainter painter(viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     int numRows = model()->rowCount();
-
+     int numCols = model()->columnCount();
     if (showAnouncement) {
+        /*
         if (numRows < 1) {
             QBrush brush(bgColorEnd);
             painter.setBrush(brush);
             QRect r(0,0,width(),height());
             painter.fillRect(r,brush);
         }
+        */
         painter.setBrush(anounceAlphaBG);
         painter.setPen(anounceAlphaBG);
         painter.drawRoundedRect(anounceRect,14,14);
@@ -296,7 +308,19 @@ void FixTable::paintEvent(QPaintEvent *pe)
         painter.drawText(anounceRect,anouncement,QTextOption(Qt::AlignCenter));
         return;
     }
-    if (numRows < 1) {
+    if (numCols < 1) {
+        //QBrush brush(grad);
+        QBrush brush(bgColorEnd);
+        painter.setBrush(brush);
+        QRect r(0,0,width(),height());
+        painter.fillRect(r,brush);
+        // painter.setFont(emptyFont);
+        painter.setFont(emptyFont);
+        painter.setPen(emptyAlphaFG);
+        painter.drawText(emptySchemaX1,emptySchemaY1,emptySchemaStr1);
+        painter.drawText(emptySchemaX2,emptySchemaY2,emptySchemaStr2);
+    }
+    else if (numRows < 1) {
         //QBrush brush(grad);
         QBrush brush(bgColorEnd);
         painter.setBrush(brush);
