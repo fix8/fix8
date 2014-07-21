@@ -64,7 +64,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // file/line stringification
 #define STRINGOF(x) #x
 #define STRINGIFY(x) STRINGOF(x)
-#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__)
+#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__) " "
 
 namespace FIX8 {
 
@@ -1046,8 +1046,19 @@ public:
 		return create_instance();
 	}
 
-    /*! Creates a single instance of the underlying object */
-   F8API static T *create_instance();
+	/*! Get the instance of the underlying object. If not created, create.
+	    \return the instance */
+	static T *create_instance()
+	{
+		static f8_spin_lock mutex;
+		f8_scoped_spin_lock guard(mutex);
+		if (_instance.load() == 0)
+		{
+			T *p(new T); // avoid race condition between mem assignment and construction
+			_instance = p;
+		}
+		return _instance;
+	}
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */

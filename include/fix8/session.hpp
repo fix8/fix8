@@ -528,7 +528,7 @@ protected:
 	  e.g. SCHED_OTHER, SCHED_RR, SCHED_FIFO
 	    \param id thread id
 	    \return string */
-	static f8String get_thread_policy_string(_dthreadcore::thread_id_t id);
+	static f8String get_thread_policy_string(thread_id_t id);
 #endif
 
 	/*! Set the scheduling policy for the current thread
@@ -807,6 +807,12 @@ public:
 		return state < _state_names.size() ? _state_names[state] : unknown;
 	}
 };
+
+//-------------------------------------------------------------------------------------------------
+// our buffered RAII ostream log target, ostream Session log target for specified Session ptr
+#define ssout(x) log2_stream(bool_func_string_int(std::bind(&Session::log, x, std::placeholders::_1, std::placeholders::_2)))
+// our buffered RAII ostream log target, ostream Session log target for current Session
+#define slout ssout(this)
 
 //-------------------------------------------------------------------------------------------------
 

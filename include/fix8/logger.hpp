@@ -148,12 +148,11 @@ public:
 //-------------------------------------------------------------------------------------------------
 class Tickval;
 
-
 //-------------------------------------------------------------------------------------------------
-/// dthread delegated async logging class
+/// f8_thread delegated async logging class
 class Logger
 {
-	dthread<Logger> _thread;
+	f8_thread<Logger> _thread;
 	std::list<std::string> _buffer;
 
 public:
@@ -167,16 +166,16 @@ protected:
 	LogFlags _flags;
 	std::ostream *_ofs;
 	size_t _lines;
-	dthread_cancellation_token _stopping;
+	f8_thread_cancellation_token _stopping;
 
 	struct LogElement
 	{
-		_dthreadcore::thread_id_t _tid;
+		thread_id_t _tid;
 		std::string _str;
 		unsigned _val;
 		Tickval _when;
 
-		LogElement(const _dthreadcore::thread_id_t tid, const std::string& str, const unsigned val=0)
+		LogElement(const thread_id_t tid, const std::string& str, const unsigned val=0)
 			: _tid(tid), _str(str), _val(val), _when(true) {}
 		LogElement() : _tid(), _val(), _when(true) {}
 		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _val(from._val), _when(from._when) {}
@@ -196,10 +195,10 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-	using ThreadCodes = std::map<_dthreadcore::thread_id_t, char>;
+	using ThreadCodes = std::map<thread_id_t, char>;
 	ThreadCodes _thread_codes;
 
-	using RevThreadCodes = std::map<char, _dthreadcore::thread_id_t>;
+	using RevThreadCodes = std::map<char, thread_id_t>;
 	RevThreadCodes _rev_thread_codes;
 
 public:
@@ -217,6 +216,10 @@ public:
 		delete _ofs;
 	}
 
+	/*! Set the LogFlags
+	    \param flags flags to set */
+	void set_flags(LogFlags flags) { _flags = flags; }
+
 	/*! Get the underlying stream object.
 	    \return the stream */
 	virtual std::ostream& get_stream() const { return _ofs ? *_ofs : std::cout; }
@@ -227,7 +230,7 @@ public:
 	    \return true on success */
 	bool send(const std::string& what, const unsigned val=0)
 	{
-		const LogElement le(_dthreadcore::getid(), what, val);
+		const LogElement le(f8_thread<Logger>::getid(), what, val);
 		return _msg_queue.try_push (le) == 0;
 	}
 
@@ -253,7 +256,7 @@ public:
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */
-	F8API char get_thread_code( _dthreadcore::thread_id_t tid );
+	F8API char get_thread_code(thread_id_t tid);
 
 	/// Remove dead threads from the thread code cache.
 	F8API void purge_thread_codes();
@@ -263,7 +266,7 @@ public:
 
 	/*! Get the thread cancellation token
 		\return reference to the cancellation token */
-	dthread_cancellation_token& cancellation_token() { return _stopping; }
+	f8_thread_cancellation_token& cancellation_token() { return _stopping; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -286,7 +289,7 @@ public:
 	/*! Perform logfile rotation
 	    \param force force the rotation (even if the file is set ti append)
 	    \return true on success */
-	F8API virtual bool rotate( bool force = false );
+	F8API virtual bool rotate(bool force=false);
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -353,41 +356,90 @@ public:
 	/*! Set the global logfile name.
 	    \param from name to set to */
 	static void set_global_filename(const std::string& from)
-	{
-		CopyString(from, fn, max_global_filename_length);
-	}
-
-	/*! Send a message with prefix to the logger.
-	  \param prefix text to prefix message with
-	  \param what message to log
-	  \return true on success */
-	static bool log(const std::string& prefix, const std::string& what)
-	{
-		return Singleton<SingleLogger<fn>>::instance()->send(prefix + ' ' + what);
-	}
+		{ CopyString(from, fn, max_global_filename_length); }
 
 	/*! Send a message to the logger.
 	  \param what message to log
 	  \return true on success */
 	static bool log(const std::string& what)
-	{
-		return Singleton<SingleLogger<fn>>::instance()->send(what);
-	}
+		{ return Singleton<SingleLogger<fn>>::instance()->send(what); }
 
+	/*! Flush the logger */
 	static void flush_log()
-	{
-		Singleton<SingleLogger<fn>>::instance()->flush();
-	}
+		{ Singleton<SingleLogger<fn>>::instance()->flush(); }
 
+	/*! Set the logflags
+	  \param flags flags to set */
+	static void set_flags(LogFlags flags)
+		{ Singleton<SingleLogger<fn>>::instance()->set_flags(flags); }
+
+	/*! Stop the logger */
 	static void stop()
+		{ Singleton<SingleLogger<fn>>::instance()->stop(); }
+};
+
+//-----------------------------------------------------------------------------------------
+class buffered_ostream : public std::ostream
+{
+protected:
+	class tsbuf : public std::streambuf
 	{
-		Singleton<SingleLogger<fn>>::instance()->stop();
-	}
+		std::string _str;
+
+		int_type overflow(int_type c)
+		{
+			if (c != traits_type::eof())
+			{
+				char z(c);
+				_str.append(&z, 1);
+			}
+			return c;
+		}
+
+		std::streamsize xsputn(const char *s, std::streamsize num)
+			{ _str.append(s, num); return num; }
+
+	public:
+		tsbuf() = default;
+		~tsbuf() = default;
+		const std::string& get() const { return _str; }
+	};
+
+	tsbuf _buf;
+
+public:
+   buffered_ostream() : std::ostream(&_buf) {}
+   virtual ~buffered_ostream() {}
+};
+
+//-----------------------------------------------------------------------------------------
+using bool_func_string = std::function<bool(const std::string&)>;
+using bool_func_string_int = std::function<bool(const std::string&, const unsigned)>;
+
+class log_stream : public buffered_ostream
+{
+	bool_func_string _logger;
+
+public:
+	log_stream(decltype(_logger) func) : _logger(func) {}
+	~log_stream() { _logger(_buf.get()); }
+};
+
+class log2_stream : public buffered_ostream
+{
+	bool_func_string_int _logger;
+
+public:
+	log2_stream(decltype(_logger) func) : _logger(func) {}
+	~log2_stream() { _logger(_buf.get(), 0); }
 };
 
 //-----------------------------------------------------------------------------------------
 F8API extern char glob_log0[max_global_filename_length];
 using GlobalLogger = SingleLogger<glob_log0>;
+
+// our buffered RAII ostream singleton insertable log target, global ostream log target
+#define glout log_stream(bool_func_string(GlobalLogger::log))
 
 //-------------------------------------------------------------------------------------------------
 

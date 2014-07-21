@@ -488,10 +488,9 @@ else
 fi
 
 thread_set=no
-using_poco_thread=no
-using_tbb_thread=no
+using_std_thread=no
 AC_ARG_WITH([thread],
-[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco|tbb, default=pthread)])],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|stdthread, default=pthread)])],
 [case "${withval}" in
 	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
 				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
@@ -501,28 +500,26 @@ AC_ARG_WITH([thread],
 				thread_set=yes
 				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
 				;;
-	tbb) using_tbb_thread=yes
-			thread_set=yes
-			AC_DEFINE(THREAD_SYSTEM, THREAD_TBB, [tbb thread system used])
-			AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
-			;;
-	poco) using_poco_thread=yes
-			thread_set=yes
-			AC_DEFINE(THREAD_SYSTEM, THREAD_POCO, [poco thread system used])
-			;;
+	stdthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				using_std_thread=yes
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_STDTHREAD, [std::thread system used])
+				;;
 	*) echo
 		echo "ERROR: Unknown value ${withval} for REGEX given."
 		echo
 		exit 1
 esac])
 
-AC_DEFINE(THREAD_POCO, 1, [Poco thread system])
 AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
-AC_DEFINE(THREAD_TBB, 3, [tbb thread thread system])
+AC_DEFINE(THREAD_STDTHREAD, 4, [std::thread thread system])
 if test "$thread_set" = no; then
-	using_poco_thread=no
-	using_tbb_thread=no
-	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread regex system used])
+	using_std_thread=no
+	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread used for threading])
 fi
 
 oktogtest=yes
@@ -706,6 +703,14 @@ AC_ARG_ENABLE([rawmsgsupport],
 	yes) AC_DEFINE(RAW_MSG_SUPPORT, 1, [Define to 1 if you wish to enable raw FIX message support]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
+esac])
+
+AC_ARG_ENABLE([preencode],
+[AS_HELP_STRING([--enable-preencode],[enable pre-encode (prepare) message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(PREENCODE_MSG_SUPPORT, 1, [Define to 1 if you wish to pre-encode (prepare) message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-preencode) ;;
 esac])
 
 AC_ARG_ENABLE([bufgloblogging],

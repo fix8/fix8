@@ -55,13 +55,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include <pthread.h>
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#include <Poco/Thread.h>
-#include <Poco/ThreadTarget.h>
-#include <Poco/Mutex.h>
-#include <fix8/ff/spin-lock.hpp>
-#elif (THREAD_SYSTEM == THREAD_TBB)
-#include <tbb/tbb_thread.h>
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#include <thread>
 #else
 # error Define what thread system to use
 #endif
@@ -72,16 +67,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 #endif
 
+#if defined PREPARE_MSG_SUPPORT
+#include <array>
+#endif
 #include <unordered_map>
 #include <functional>
 #include <errno.h>
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>
 #include <fix8/mpmc.hpp>
+#include <fix8/thread.hpp>
 #include <fix8/f8types.hpp>
 #include <fix8/f8utils.hpp>
 #include <fix8/xml.hpp>
-#include <fix8/thread.hpp>
 #include <fix8/gzstream.hpp>
 #include <fix8/tickval.hpp>
 #include <fix8/logger.hpp>

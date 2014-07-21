@@ -396,7 +396,7 @@ int main(int argc, char **argv)
                   trim(msg_name);
                   rMS.Erase(match, what);
                   const string name_tag("name");
-                  XmlElement *tmsg(const_cast<XmlElement*>(msgs->find("messages/message", false, &name_tag, &msg_name)));
+                  XmlElement *tmsg(const_cast<XmlElement*>(msgs->find("messages/message", &name_tag, &msg_name)));
                   if (!tmsg)
                   {
                      if (!nowarn)
@@ -971,7 +971,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
 	osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
 	osc_hpp << endl << "extern \"C\"" << endl << '{' << endl
-      << spacer << "const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
+      << spacer << "F8API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;

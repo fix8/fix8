@@ -146,6 +146,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'L', "Set Lines per page" }, &MyMenu::set_lpp },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 
@@ -241,9 +242,7 @@ int main(int argc, char **argv)
 				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
-				ostringstream sostr;
-				sostr << "client(" << ++scnt << ") connection established.";
-				GlobalLogger::log(sostr.str());
+				glout << "client(" << ++scnt << ") connection established.";
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
@@ -325,6 +324,16 @@ bool MyMenu::help()
 	for (const auto& pp : _handlers)
 		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::set_lpp()
+{
+	cout << "Enter number of lines per page (currently=" << _cm->get_lpp() << "): " << flush;
+	f8String str;
+	if (!_cm->GetString(_tty, str).empty())
+		_cm->set_lpp(stoi(str));
 	return true;
 }
 

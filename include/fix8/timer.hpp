@@ -94,12 +94,12 @@ template<typename T>
 class Timer
 {
    T& _monitor;
-   dthread<Timer> _thread;
+   f8_thread<Timer> _thread;
 	f8_spin_lock _spin_lock;
    unsigned _granularity;
 
    std::priority_queue<TimerEvent<T>> _event_queue;
-	dthread_cancellation_token _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
 
 public:
 	/*! Ctor.
@@ -134,7 +134,7 @@ public:
 	  \return result at timer thread exit */
    int operator()();
 
-	dthread_cancellation_token& cancellation_token() { return _cancellation_token;}
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token;}
 
 };
 
@@ -186,9 +186,7 @@ int Timer<T>::operator()()
 			hypersleep<h_milliseconds>(_granularity);
    }
 
-	std::ostringstream ostr;
-	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
-	GlobalLogger::instance()->send(ostr.str());
+	glout << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
 	return 0;
 }
 
