@@ -310,6 +310,8 @@ private:
     QColor menuBG;
     QColor menuFG;
     QString menuStyle;
+    QLabel  *fix8versionL;
+    QLabel  *fix8versionV;
 };
 
 #endif // MAINWINDOW_H

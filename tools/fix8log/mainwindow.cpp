@@ -456,6 +456,23 @@ void MainWindow::buildMainWindow()
     mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(filterSenderMenuA);
     mainToolBar->addAction(searchToolBarA);
+    QWidget      *fixVersionArea = new QWidget(mainToolBar);
+    QHBoxLayout  *fixVerLayout = new QHBoxLayout(fixVersionArea);
+    fixVerLayout->setMargin(0);
+
+    fix8versionL = new QLabel("Schema:",fixVersionArea);
+    fix8versionL->setToolTip("What should this tool tip say ?");
+
+    fix8versionV = new QLabel("???",fixVersionArea);
+    fix8versionV->setToolTip("And What should this tool tip say ?");
+    fnt = fix8versionL->font();
+    fnt.setBold(true);
+    fix8versionL->setFont(fnt);
+    fix8versionV->setFont(fnt);
+    fixVerLayout->addStretch(1);
+    fixVerLayout->addWidget(fix8versionL,0,Qt::AlignRight);
+    fixVerLayout->addWidget(fix8versionV,0);
+    mainToolBar->addWidget(fixVersionArea);
     QToolButton *tb = qobject_cast <QToolButton *>(mainToolBar->widgetForAction(filterSenderMenuA));
     if (tb) {
         tb->setPopupMode(QToolButton::InstantPopup);

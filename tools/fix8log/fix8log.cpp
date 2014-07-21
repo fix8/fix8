@@ -268,6 +268,7 @@ bool Fix8Log::init()
     ///dnb
     QString fieldName;
     FIX8::TEX::NewOrderSingle nos;
+    qDebug() << "VERSION OF CODE = " << TEX::ctx().version() << __FILE__ << __LINE__;
     MessageBase *_header = nos.Header();
     for (Fields::const_iterator hiter = _header->fields_begin();
          hiter != _header->fields_end();
