@@ -62,7 +62,7 @@
     <Import Project="root.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>dc79ba31</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>2135afac</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)d</TargetName>
