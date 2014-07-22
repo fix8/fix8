@@ -36,9 +36,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #ifndef MESSAGEAREA_H
 #define MESSAGEAREA_H
+#include <fix8/f8includes.hpp>
+#include "fix8/field.hpp"
+#include "fix8/message.hpp"
+#include <Myfix_types.hpp>
+#include <Myfix_router.hpp>
+#include <Myfix_classes.hpp>
 
 #include <QWidget>
+class QAbstractButton;
+class QButtonGroup;
+class QGroupBox;
 class QLabel;
+class QRadioButton;
 class QStackedLayout;
 class QStandardItem;
 class QStandardItemModel;
@@ -54,9 +64,10 @@ public:
     void setMessage(QMessage *);
     void setItemExpaned(TreeItem,bool);
     bool getExpansionState(TreeItem);
-signals:
-
-public slots:
+protected slots:
+  void expandMessageSlot(QAbstractButton *);
+private:
+    void generateItems(FIX8::GroupBase *gb,QStandardItem *parent,FIX8::Message *, int *i);
     QStackedLayout *stackLayout;
     QTreeView     *treeView;
     QStandardItem *treeHeaderItem;
@@ -65,12 +76,16 @@ public slots:
     QStandardItem *headerItem;
     QStandardItem *tailItem;
     QStandardItem *fieldItem;
-    QStandardItem *groupItem;
+
     QStandardItemModel *model;
     QWidget *infoArea;
     QLabel  *seqNumV;
     QLabel  *messageTypeV;
     QMessage *currentMessage;
+    QButtonGroup *expandButtonGroup;
+    QRadioButton *expandNone,*level1,*level2,*expandAll;
+    QGroupBox    *messageExpansionArea;
+
 };
 
 #endif // MESSAGEAREA_H
