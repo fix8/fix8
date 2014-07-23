@@ -830,8 +830,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
     connect(workSheet,SIGNAL(doPopup(const QModelIndex &, const QPoint &)),
             this,SLOT(doPopupSlot(const QModelIndex &, const QPoint &)));
     workSheet->setWindowID(uuid);
-    workSheet->splitter->restoreState(wsd.splitterState);
-    workSheet->fixTable->horizontalHeader()->restoreState(wsd.headerState);
+    workSheet->setWorkSheetData(wsd);
     str = wsd.fileName;
     if (str.length() > 36) {
         str = "..." + str.right(33);

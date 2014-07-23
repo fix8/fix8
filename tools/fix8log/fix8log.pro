@@ -166,5 +166,7 @@ OTHER_FILES += \
     qml/loadProgress.qml \
     qml/fieldView.qml \
     images/svg/messageView.svg \
-    qml/LetterArea.qml
+    qml/LetterArea.qml \
+    qml/aboutTab.qml \
+    qml/AboutAuthor.qml
 

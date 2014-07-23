@@ -83,6 +83,7 @@ public:
     bool getMessageExpansionState(MessageArea::TreeItem);
     void setTableSchema(TableSchema *);
     void setSearchIndexes(const QVector <qint32> &indexes);
+    void setWorkSheetData(const WorkSheetData &wsd);
     TableSchema *getTableSchema();
     QUuid getID();
     quint32 doSearch(SearchType);

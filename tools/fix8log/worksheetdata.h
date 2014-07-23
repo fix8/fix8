@@ -55,6 +55,8 @@ public:
     bool       fieldsExpanded;
     bool       trailerExpanded;
     QString    searchStr;
+    QByteArray messageHeaderState;
+    quint32    fieldsExpansionType;
     WorkSheetData      &operator=( const WorkSheetData &s);
 
 };

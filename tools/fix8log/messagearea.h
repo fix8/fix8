@@ -57,15 +57,20 @@ class MessageFieldList;
 class QMessage;
 class MessageArea : public QWidget
 {
-
+Q_OBJECT
 public:
     explicit MessageArea(QWidget *parent = 0);
     typedef enum {HeaderItem=0,FieldsItem=1,TrailerItem=2} TreeItem;
+    typedef enum {ExpandNone,ExpandOne,ExpandAll,ExpandUnknown} ExpandMode;
     void setMessage(QMessage *);
     void setItemExpaned(TreeItem,bool);
-    bool getExpansionState(TreeItem);
+    bool getExpansionState(TreeItem);   
+    void setHeaderState(QByteArray &headerState);
+    quint32 getExpansion();
+    void setExpansion(quint32 value);
+    QByteArray getHeaderState();
 protected slots:
-  void expandMessageSlot(QAbstractButton *);
+  void expandMessageSlot(int);
 private:
     void generateItems(FIX8::GroupBase *gb,QStandardItem *parent,FIX8::Message *, int *i);
     QStackedLayout *stackLayout;
@@ -83,8 +88,9 @@ private:
     QLabel  *messageTypeV;
     QMessage *currentMessage;
     QButtonGroup *expandButtonGroup;
-    QRadioButton *expandNone,*level1,*level2,*expandAll;
+    QRadioButton *expandNone,*level1,*expandAll;
     QGroupBox    *messageExpansionArea;
+    ExpandMode expandMode;
 
 };
 

@@ -107,21 +107,6 @@ bool WorkSheet::copyFrom(WorkSheet &oldws)
             return false;
         }
         fixTable->setWorkSheetModel(_model);
-        /*
-        QMessageList *oldMessageList = oldModel->getMessageList();
-        if(oldMessageList) {
-            qDebug() << "have old message list, count = " << oldMessageList->count() << __FILE__ << __LINE__;
-            messageList = oldMessageList->clone(cancelLoad);
-            if(!messageList || cancelLoad) {
-                qDebug() << "CANCEL HERE" << __FILE__ << __LINE__;
-                //emit terminateCopy(this);
-                return false;
-            }
-            else
-                qDebug() << "HAVE NEW MESSAGFE LIST CLONED, num of messages = "
-                            << messageList->count() << __FILE__ << __LINE__;
-        }
-        */
     }
     fixFileName = oldws.getFileName();
     tableSchema = oldws.tableSchema;
@@ -152,6 +137,8 @@ bool WorkSheet::copyFrom(WorkSheet &oldws)
     showAllSendersA = new QAction("Show All",this);
     senderActionGroup->addAction(showAllSendersA);
     senderMenu->addAction(showAllSendersA);
+    WorkSheetData wsd = oldws.getWorksheetData();
+    setWorkSheetData(wsd);
     showLoadProcess(false);
     return true;
 }
@@ -190,6 +177,9 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
     if (selectedRow < 0)
         selectedRow = 1;
     fixTable->selectRow(selectedRow);
+    QByteArray ba = wsd.messageHeaderState;
+    messageArea->setHeaderState(ba);
+    messageArea->setExpansion(wsd.fieldsExpansionType);
     //QModelIndex mi = _model->index(selectedRow,0);
     qWarning() << "REWORK THIS MsgSeqNum" << __FILE__ << __LINE__;
     /*
@@ -608,6 +598,8 @@ WorkSheetData WorkSheet::getWorksheetData()
     wsd.headerExpanded = messageArea->getExpansionState(MessageArea::HeaderItem);
     wsd.fieldsExpanded = messageArea->getExpansionState(MessageArea::FieldsItem);
     wsd.trailerExpanded = messageArea->getExpansionState(MessageArea::TrailerItem);
+    wsd.messageHeaderState = messageArea->getHeaderState();
+    wsd.fieldsExpansionType = messageArea->getExpansion();
     wsd.searchStr = searchString;
 
 
@@ -688,6 +680,14 @@ void WorkSheet::doPopupSlot(const QModelIndex &mi,const QPoint &pt)
 {
     qDebug() << "Work Sheet do popup" << __FILE__ << __LINE__;
     emit doPopup(mi,pt);
+}
+void WorkSheet::setWorkSheetData(const WorkSheetData &wsd)
+{
+   splitter->restoreState(wsd.splitterState);
+   fixTable->horizontalHeader()->restoreState(wsd.headerState);
+   QByteArray ba = wsd.messageHeaderState;
+   messageArea->setHeaderState(ba);
+   messageArea->setExpansion(wsd.fieldsExpansionType);
 }
 
 WorkSheetList::WorkSheetList(QWidget *parent):QList <WorkSheet *>()

@@ -63,6 +63,9 @@ MessageArea::MessageArea(QWidget *parent) :
     wBox->setMargin(0);
     workArea->setLayout(wBox);
     treeView = new QTreeView(workArea);
+    QFont fnt  = treeView->font();
+    fnt.setBold(true);
+    treeView->setFont(fnt);
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     treeView->setModel(model);
     treeView->setUniformRowHeights(true);
@@ -71,18 +74,16 @@ MessageArea::MessageArea(QWidget *parent) :
     valueHeaderItem  = new QStandardItem("Value");
     headerItem = new QStandardItem("Header");
     fieldItem  = new QStandardItem("Fields");
-    // groupItem  = new QStandardItem("Groups");
     tailItem   = new QStandardItem("Trailer");
     model->setHorizontalHeaderItem(0,treeHeaderItem);
     model->setHorizontalHeaderItem(1,valueHeaderItem);
     model->appendRow(headerItem);
     model->appendRow(fieldItem);
-    //model->appendRow(groupItem);
     model->appendRow(tailItem);
     //treeView->setSortingEnabled(true);
 
     infoArea = new QWidget(workArea);
-    QFont fnt = infoArea->font();
+    fnt = infoArea->font();
     fnt.setBold(true);
     fnt.setPointSize(fnt.pointSize()+2);
     infoArea->setFont(fnt);
@@ -107,19 +108,16 @@ MessageArea::MessageArea(QWidget *parent) :
     messageExpansionArea->setLayout(meaBox);
     expandNone = new QRadioButton("None",this);
     level1 =  new QRadioButton("1",this);
-    level2 =  new QRadioButton("2",this);
     expandAll =  new QRadioButton("All",this);
     meaBox->addWidget(expandNone);
     meaBox->addWidget(level1);
-    meaBox->addWidget(level2);
     meaBox->addWidget(expandAll);
     expandButtonGroup = new QButtonGroup(this);
-    connect(expandButtonGroup,SIGNAL(buttonClicked(QAbstractButton*)),
-            this,SLOT(expandMessageSlot(QAbstractButton *)));
-    expandButtonGroup->addButton(expandNone);
-    expandButtonGroup->addButton(level1);
-    expandButtonGroup->addButton(level2);
-    expandButtonGroup->addButton(expandAll);
+    connect(expandButtonGroup,SIGNAL(buttonClicked(int)),
+            this,SLOT(expandMessageSlot(int)));
+    expandButtonGroup->addButton(expandNone,ExpandNone);
+    expandButtonGroup->addButton(level1,ExpandOne);
+    expandButtonGroup->addButton(expandAll,ExpandAll);
     expandButtonGroup->setExclusive(true);
     wBox->addWidget(treeView,1);
     wBox->addWidget(messageExpansionArea,0,Qt::AlignBottom);
@@ -132,7 +130,6 @@ void MessageArea::generateItems(FIX8::GroupBase *gb, QStandardItem *parent,FIX8:
     QString str;
     QString name;
     BaseField *bf;
-    qDebug() << "Genereate Items, level = " << *i;
     i++;
     int  gbSize = gb->size();
     for(int k=0;k<gbSize;k++) {
@@ -145,11 +142,13 @@ void MessageArea::generateItems(FIX8::GroupBase *gb, QStandardItem *parent,FIX8:
                 GroupBase *gb (mb->find_group(itr->first));
                 if (gb)
                 {
-                    QStandardItem *groupItem =
-                            new QStandardItem(name);
+                    QStandardItem *groupItem = new QStandardItem(name);
+                    QStandardItem *groupCountItem = new QStandardItem(QString::number(gb->size()));
+                    groupCountItem->setToolTip("Num of fields in group");
+                    items.append(groupItem);
+                    items.append(groupCountItem);
                     generateItems(gb,groupItem,msg,i);
-                    parent->appendRow(groupItem);
-
+                    parent->appendRow(items);
                 }
             }
             else {
@@ -169,6 +168,9 @@ void MessageArea::generateItems(FIX8::GroupBase *gb, QStandardItem *parent,FIX8:
             }
         }
     }
+    // if ((expandMode == ExpandAll) && (*i >0))
+    //     treeView->setExpanded(parent->index(),true);
+
 }
 
 void MessageArea::setMessage(QMessage *m)
@@ -226,22 +228,22 @@ void MessageArea::setMessage(QMessage *m)
         //for (Positions::const_iterator itr(msg->); itr != _pos.end(); ++i
         for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
         {
-
+            QList <QStandardItem *>items;
             if (msg->get_fp().is_group(itr->first)) {
                 name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
-                qDebug() << "\tHAVE GROUP, name = " << name << __FILE__ << __LINE__;
                 GroupBase *gb (msg->find_group(itr->first));
+
                 if (gb)
                 {
                     //display group
                     int  gbSize = gb->size();
-                    QStandardItem *groupItem =
-                            new QStandardItem(name);
-                    //qDebug() << "\tGroup Base Size = " << gbSize;
+                    QStandardItem *groupItem = new QStandardItem(name);
+                    QStandardItem *groupCountItem = new QStandardItem(QString::number(gb->size()));
+                    items.append(groupItem);
+                    items.append(groupCountItem);
+                    fieldItem->appendRow(items);
                     int i=0;
                     generateItems(gb,groupItem,msg,&i);
-
-                    fieldItem->appendRow(groupItem);
                 }
             }
             else {
@@ -254,60 +256,13 @@ void MessageArea::setMessage(QMessage *m)
                         new QStandardItem(name);
                 QStandardItem *valueItem =
                         new QStandardItem(str);
-                QList <QStandardItem *>items;
+
                 items.append(messageItem);
                 items.append(valueItem);
                 fieldItem->appendRow(items);
             }
         }
-        /*
-            const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
-            bf = itr->second;
-            memset(c,'\0',60);
-            bf->print(c);
-            str = QString::fromLatin1(c);
-            QStandardItem *messageItem =
-                    new QStandardItem(name);
-            QStandardItem *valueItem =
-                    new QStandardItem(str);
-            QList <QStandardItem *>items;
-            items.append(messageItem);
-            items.append(valueItem);
-            fieldItem->appendRow(items);
 
-        }
-        */
-        /*
-        Groups groups = msg->get_groups();
-        typedef std::map<unsigned short, class GroupBase *>::iterator it_type;
-        for(it_type iterator = groups.begin(); iterator != groups.end(); iterator++) {
-            GroupBase *gb = iterator->second;
-            int  gbSize = gb->size();
-            qDebug() << "\tGroup Base Size = " << gbSize;
-            for(int k=0;k<gbSize;k++) {
-                MessageBase *mb = gb->get_element(k);
-
-                for (Fields::const_iterator itr(mb->fields_begin());itr != mb->fields_end(); ++itr) {
-                    const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-                    name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
-                    bf = itr->second;
-                    memset(c,'\0',60);
-                    bf->print(c);
-                    str = QString::fromLatin1(c);
-                    QStandardItem *messageItem =
-                            new QStandardItem(name);
-                    QStandardItem *valueItem =
-                            new QStandardItem(str);
-                    QList <QStandardItem *>items;
-                    items.append(messageItem);
-                    items.append(valueItem);
-                    groupItem->appendRow(items);
-                    qDebug() << "\t\tField Name = " << name << __FILE__ << __LINE__;
-                }
-            }
-        }
-        */
         // qDebug() << "GROUPS COUNT = " << groups.size() << __FILE__ << __LINE__;
         //for (Fields::const_iterator itr(msg->get_groups()
         for (Fields::const_iterator itr(trailer->fields_begin()); itr != trailer->fields_end(); ++itr)
@@ -328,9 +283,13 @@ void MessageArea::setMessage(QMessage *m)
             items.append(valueItem);
             tailItem->appendRow(items);
         }
+        if (expandMode == ExpandOne)
+            treeView->expandToDepth(1);
+        else if (expandMode == ExpandAll)
+            treeView->expandAll();
+
         treeView->setExpanded(headerItem->index(),headerExpanded);
         treeView->setExpanded(fieldItem->index(),fieldExpanded);
-        //treeView->setExpanded(groupItem->index(),groupExpanded);
         treeView->setExpanded(tailItem->index(),tailExpanded);
         setUpdatesEnabled(true);
     }
@@ -375,7 +334,72 @@ bool MessageArea::getExpansionState(TreeItem ti)
     }
     return isExpanded;
 }
-void MessageArea::expandMessageSlot(QAbstractButton *)
+void MessageArea::expandMessageSlot(int expandButton)
 {
+    setUpdatesEnabled(false);
+    int numOfRows;
+    numOfRows = fieldItem->rowCount();
+    bool headerExpanded = treeView->isExpanded(headerItem->index());
+    bool fieldExpanded = treeView->isExpanded(fieldItem->index());
+    bool trailerExpanded = treeView->isExpanded(tailItem->index());
+    expandMode = (ExpandMode) expandButton;
+    if (expandMode == ExpandNone) {
+        for (int i=0;i<numOfRows;i++) {
+            QStandardItem *child = fieldItem->child(i);
+            if (child->hasChildren())
+                treeView->collapse(child->index());
+        }
+    }
+    else if (expandMode == ExpandAll) {
+        treeView->expandAll();
+        treeView->setExpanded(headerItem->index(),headerExpanded);
+        treeView->setExpanded(tailItem->index(),trailerExpanded);
+    }
+    else if (expandMode == ExpandOne) {
+        treeView->collapseAll();
+        treeView->setExpanded(fieldItem->index(),true);
+        numOfRows = fieldItem->rowCount();
+        for (int i=0;i<numOfRows;i++) {
+            QStandardItem *child = fieldItem->child(i);
+            if (child->hasChildren())
+                treeView->setExpanded(child->index(),true);
+        }
+        treeView->setExpanded(headerItem->index(),headerExpanded);
+        treeView->setExpanded(fieldItem->index(),true);
+        treeView->setExpanded(tailItem->index(),trailerExpanded);
+    }
+    setUpdatesEnabled(true);
 
+}
+void MessageArea::setHeaderState(QByteArray &headerState)
+{
+    treeView->header()->restoreState(headerState);
+}
+QByteArray MessageArea::getHeaderState()
+{
+    return treeView->header()->saveState();
+}
+void MessageArea::setExpansion(quint32 value)
+{
+    QRadioButton  *radioButton = 0;
+    expandMode = (ExpandMode) value;
+    switch(expandMode) {
+    case ExpandNone:
+        radioButton = expandNone;
+        break;
+    case ExpandOne:
+        radioButton = level1;
+        break;
+    case ExpandAll:
+        radioButton = expandAll;
+        break;
+    default:
+        qWarning() << "Invalid expansion value:" << expandMode << __FILE__ << __LINE__;
+    }
+    if (radioButton)
+        radioButton->setChecked(true);
+}
+quint32 MessageArea::getExpansion()
+{
+    return expandMode;
 }

@@ -86,6 +86,9 @@ QList <WorkSheetData> Database::getWorkSheets(int windowID)
         wd.fieldsExpanded = query.value(8).toBool();
         wd.trailerExpanded = query.value(9).toBool();
         wd.searchStr = query.value(10).toString();
+        wd.messageHeaderState = query.value(11).toByteArray();
+        wd.fieldsExpansionType = query.value(12).toUInt();
+        qDebug() << ">>>>>>>>>>>>> DATABASE GET FIELDS EXPANSION TYPE:" << wd.fieldsExpansionType << __FILE__ << __LINE__;
         wsdList.append(wd);
     }
     return wsdList;
@@ -101,8 +104,8 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO worksheets (id,windowID,alias, file ,selectedRow,splitterState,headerState,headerExpanded,fieldsExpanded,trailerExpanded,searchStr)"
-                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerExpanded,:searchStr)");
+    bstatus = query.prepare("INSERT INTO worksheets (id,windowID,alias, file ,selectedRow,splitterState,headerState,headerExpanded,fieldsExpanded,trailerExpanded,searchStr,messageAreaHeaderState,fieldsExpansionType)"
+                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerExpanded,:searchStr,:messageAreaHeaderState, :fieldsExpansionType)");
     if (bstatus == 0) {
         qWarning("Error database - add worksheet failed in prepare statement...");
         sqlError = query.lastError();
@@ -110,6 +113,7 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
         qWarning() << errorMessage;
         return false;
     }
+    qDebug() << "SAVE MESSAGE HEADER STATE LENGTH = " << wsd.messageHeaderState.length() << __FILE__ << __LINE__;
     query.bindValue(":windowID",wsd.windowID);
     query.bindValue(":alias",wsd.tabAlias);
     query.bindValue(":file",wsd.fileName);
@@ -120,6 +124,8 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
     query.bindValue(":fieldsExpanded",wsd.fieldsExpanded);
     query.bindValue(":trailerExpanded",wsd.trailerExpanded);
     query.bindValue(":searchStr",wsd.searchStr);
+    query.bindValue(":messageAreaHeaderState",wsd.messageHeaderState);
+    query.bindValue(":fieldsExpansionType",wsd.fieldsExpansionType);
 
     bstatus = query.exec();
     if (bstatus == 0) {

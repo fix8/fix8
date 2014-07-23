@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheetdata.h"
 #include <QDebug>
 WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1),
-    headerExpanded(false),fieldsExpanded(false),trailerExpanded(false)
+    headerExpanded(false),fieldsExpanded(false),trailerExpanded(false),fieldsExpansionType(0)
 {
 }
 WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
@@ -53,6 +53,8 @@ WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
     fieldsExpanded = wsd.fieldsExpanded;
     trailerExpanded = wsd.trailerExpanded;
     searchStr    = wsd.searchStr;
+    messageHeaderState = wsd.messageHeaderState;
+    fieldsExpansionType = wsd.fieldsExpansionType;
 }
 WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
 {
@@ -69,5 +71,7 @@ WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
     fieldsExpanded = rhs.fieldsExpanded;
     trailerExpanded = rhs.trailerExpanded;
     searchStr       = rhs.searchStr;
+    messageHeaderState = rhs.messageHeaderState;
+    fieldsExpansionType = rhs.fieldsExpansionType;
     return *this;
 }
