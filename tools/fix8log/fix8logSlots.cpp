@@ -45,7 +45,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "windowdata.h"
 #include <QApplication>
 #include <QDebug>
+#include <QDialog>
 #include <QtWidgets>
+#include <QQuickView>
+#include <QQuickWidget>
 #include <fix8/f8includes.hpp>
 #include <fix8/field.hpp>
 #include <fix8/message.hpp>
@@ -60,12 +63,37 @@ using namespace FIX8;
 using namespace std;
 void Fix8Log::aboutSlot()
 {
+    QQuickView *aboutView = new QQuickView(QUrl("qrc:qml/helpAbout.qml"));
+    //qmlObject = aboutView->rootObject();
+
+    aboutView->setResizeMode(QQuickView::SizeRootObjectToView);
+    QWidget *aboutWidget = QWidget::createWindowContainer(aboutView,0);
+    QDialog *aboutDialog = new QDialog();
+    QVBoxLayout *aboutLayout = new QVBoxLayout(0);
+    aboutDialog->setLayout(aboutLayout);
+    aboutLayout->addWidget(aboutWidget,1);
+    QDialogButtonBox *dialogButtonBox = new QDialogButtonBox();
+
+    dialogButtonBox->addButton(QDialogButtonBox::Ok);
+    connect(dialogButtonBox,SIGNAL(clicked(QAbstractButton*)),
+            aboutDialog,SLOT(close()));
+    aboutLayout->addWidget(aboutWidget,1);
+    aboutLayout->addWidget(dialogButtonBox,0);
+    aboutDialog->resize(320,480);
+    aboutDialog->setWindowTitle(GUI::Globals::appName);
+    aboutDialog->exec();
+    aboutDialog->deleteLater();
+    //dialogButtonBox->deleteLater();
+    //aboutLayout->deleteLater();
+    //aboutWidget->deleteLater();
+
+    /*
     QString str = GUI::Globals::appName + ", version  " + GUI::Globals::versionStr + "\n";
     str.append("A opensource FIX log file viewer tool.\n");
     str.append("For questions or comments visit www.fix8.org.\n");
     str.append("This software released under the GPL license.");
     QMessageBox::about(0,GUI::Globals::appName,str);
-
+    */
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
@@ -74,12 +102,12 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
     wireSignalAndSlots(newMW);
     newMW->show();
     newMW->showFileDialog();
+
     mainWindows.append(newMW);
     //const GeneratedTable<const char *, BaseMsgEntry>::Pair *p = TEX::ctx()._bme.at(1);
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
-    qDebug() << "DELETE MAIN WINDOW" << __FILE__ << __LINE__;
     if (mainWindows.count() == 1)  {
         if (autoSaveOn) {
             saveSession();
