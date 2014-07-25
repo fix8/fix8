@@ -64,8 +64,10 @@ using namespace std;
 void Fix8Log::aboutSlot()
 {
     QQuickView *aboutView = new QQuickView(QUrl("qrc:qml/helpAbout.qml"));
-    //qmlObject = aboutView->rootObject();
-
+    QQuickItem *qmlObject = aboutView->rootObject();
+    if (qmlObject) {
+        qDebug() << "Set Version HERE" << __FILE__ << __LINE__;
+    }
     aboutView->setResizeMode(QQuickView::SizeRootObjectToView);
     QWidget *aboutWidget = QWidget::createWindowContainer(aboutView,0);
     QDialog *aboutDialog = new QDialog();
@@ -79,21 +81,11 @@ void Fix8Log::aboutSlot()
             aboutDialog,SLOT(close()));
     aboutLayout->addWidget(aboutWidget,1);
     aboutLayout->addWidget(dialogButtonBox,0);
-    aboutDialog->resize(320,480);
+    aboutDialog->resize(380,340);
     aboutDialog->setWindowTitle(GUI::Globals::appName);
     aboutDialog->exec();
     aboutDialog->deleteLater();
-    //dialogButtonBox->deleteLater();
-    //aboutLayout->deleteLater();
-    //aboutWidget->deleteLater();
 
-    /*
-    QString str = GUI::Globals::appName + ", version  " + GUI::Globals::versionStr + "\n";
-    str.append("A opensource FIX log file viewer tool.\n");
-    str.append("For questions or comments visit www.fix8.org.\n");
-    str.append("This software released under the GPL license.");
-    QMessageBox::about(0,GUI::Globals::appName,str);
-    */
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {

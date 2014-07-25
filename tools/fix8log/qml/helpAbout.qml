@@ -4,6 +4,10 @@ import QtQuick.Dialogs 1.0
 
 TabView {
     id:tv
+    function serVersion(version)
+    {
+        versionText.text = "Version: " + version;
+    }
 
     anchors.fill: parent
     Component.onCompleted: {
@@ -18,6 +22,12 @@ TabView {
             id:versionRec
             radius: 12
             anchors.fill: parent
+            Text {
+                id:versionText
+                anchors.centerIn: parent
+                font.pointSize: 16
+
+            }
         }
     }
     Component {

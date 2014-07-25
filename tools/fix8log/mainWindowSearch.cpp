@@ -82,7 +82,8 @@ QString MainWindow::createSearchRoutine(bool &bstatus)
 {
     QString str;
     QString strValue;
-    QString func = "(function(";
+    QScriptValueList args;
+   // QString func = "(function(";
     if (!tableSchema) {
         bstatus = false;
         qWarning() << "Error, table schame is null" << __FILE__ << __LINE__;
@@ -90,6 +91,7 @@ QString MainWindow::createSearchRoutine(bool &bstatus)
     }
     int rowCount = tableSchema->fieldNames.count();
 
+/*
     for(int i=0;i<rowCount;i++) {
         str  = tableSchema->fieldNames[i];
         func.append(str);
@@ -97,11 +99,52 @@ QString MainWindow::createSearchRoutine(bool &bstatus)
             func.append(",");
         }
     }
-    func.append(") {return ");
-    func.append(searchLineEdit->toPlainText());
-    func.append(";})");
+*/
+
+
+
+
+    //func.append(")");
+    //function.append(""{return ");
+   QString function; // = " function() {";
+   function.append("print('howdy');");
+   //function.append("}");
+
+    //func.append(searchLineEdit->toPlainText());
+    //func.append(";})");
+
+    function.append("var cars = ['Saab', 'Volvo', 'BMW'];");
+    function.append("print('howdy');");
+    function.append("print(cars[1]);");
+    function.append("print(dogs[0].name);");
+    function.append("print(dogs[0].type);");
+
+    qDebug() << "Javascript function = " << function << __FILE__ << __LINE__;
+    QScriptSyntaxCheckResult::State syntaxState;
+    QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(function);
+    QScriptValue dogs = engine.newArray(3);
+    QScriptValue sv[3];
+    sv[0].setProperty("name","poodle");
+    sv[0].setProperty("type","shorthair");
+    sv[1].setProperty("name","Boxer");
+    sv[1].setProperty("type","Short");
+    sv[1].setProperty("name","Great Dane");
+    sv[1].setProperty("type","Big");
+    dogs.setProperty(0,sv[0]);
+    dogs.setProperty(1,sv[1]);
+   // dogs.setProperty(2,sv[2]);
+    engine.globalObject().setProperty("dogs", dogs);
+    syntaxState =syntaxResult.state();
+
+       if ( syntaxState == QScriptSyntaxCheckResult::Error)
+         qDebug() << "Syntax error";
+     else {
+         qDebug() << "A-OK";
+          searchFunction = engine.evaluate(function);
+                searchFunction.call(dogs, args);
+       }
     bstatus = true;
-    return func;
+    return function;
 }
 void MainWindow::searchActionSlot(QAction *action)
 {

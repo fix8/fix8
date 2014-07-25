@@ -63,6 +63,7 @@ MessageArea::MessageArea(QWidget *parent) :
     wBox->setMargin(0);
     workArea->setLayout(wBox);
     treeView = new QTreeView(workArea);
+    treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     QFont fnt  = treeView->font();
     fnt.setBold(true);
     treeView->setFont(fnt);
