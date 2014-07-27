@@ -263,15 +263,48 @@ bool MainWindow::runSearchScript()
         item = wsm->item(i,0);
         var  = item->data();
         QStringListIterator iter(searchArgList);
-        qmsg = (QMessage *) var.value<void *>();
-        while(iter.hasNext()) {
-            arg = iter.next();
-            if (qmsg->map.contains(arg)) {
-                QMultiMap<QString,QVariant>::iterator miter = qmsg->map.find(arg);
-                if (miter != qmsg->map.end())
-                    qDebug() << i << ":" << item->text() << ", arg = " << arg << " value = " << miter.value();
+        QVariantList **variantLists;
+        variantLists = new QVariantList *[searchArgList.count()];
+        // gets list of all values of messages that apply to search arguments
+        for(int i=0;i<searchArgList.count();i++) {
+            variantLists[i] = new QVariantList();
+            arg = searchArgList.at(i);
+            qmsg = (QMessage *) var.value<void *>();
+            while(iter.hasNext()) {
+                arg = iter.next();
+                if (qmsg->map.contains(arg)) {
+                    QMultiMap<QString,QVariant>::iterator miter = qmsg->map.find(arg);
+                    while (miter != qmsg->map.end()) {
+                        qDebug() << i << ":" << item->text() << ", arg = " << arg << " value = " << miter.value();
+                        var = miter.value();
+                        variantLists[i]->append(var);
+                        miter++;
+                    }
+                }
             }
         }
+        // if any lists are empty do not search message as it does not meet search criteria
+        for (int j=0;j < (*variantLists)->count();j++)
+        {
+            QVariantList *vl = variantLists[j];
+            if (vl->count() < 1)
+                goto done;
+        }
+        // want to loop over all possible values that satisfy javascript
+        // function - myfunction(va,vb,...v?);
+        // each variantList in variantLists is a list tht contains all matches for a v
+        // v0 == list of va's, v1's == vb's,....
+
+        for (int k=0;k < (*variantLists)->count();k++)
+        {
+            QVariantList *vl = variantLists[k];
+            // ...
+            // load each comination into args list then call search function
+            //  answer = searchFunction.call(QScriptValue(), args);
+
+        }
+        done:
+        // to do clean up and rethink what needs to be done here
         qmsg = (QMessage *) var.value<void *>();
         /*
         answer = searchFunction.call(QScriptValue(), args);
@@ -283,7 +316,7 @@ bool MainWindow::runSearchScript()
 
     ws->setSearchIndexes(filterLogicalIndexes);
 
-validateSearchButtons();
+    validateSearchButtons();
     update();
     return true;
 }
