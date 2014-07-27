@@ -52,6 +52,6 @@ WindowData::WindowData(const WindowData &w)
     tableSchemaID = w.tableSchemaID;
     tableSchema = w.tableSchema;
     searchAll   = w.searchAll;
-    searchStr   = w.searchStr;
+    searchFunction   = w.searchFunction;
 }
 

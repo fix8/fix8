@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define WINDOWDATA_H
 #include <QByteArray>
 #include <QColor>
+#include "searchfunction.h"
 class TableSchema;
 
 class WindowData {
@@ -54,6 +55,6 @@ public:
     qint32     tableSchemaID;
     TableSchema *tableSchema;
     bool searchAll;
-    QString searchStr;
+    SearchFunction searchFunction;
 };
 #endif // WINDOWDATA_H

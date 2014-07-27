@@ -76,6 +76,7 @@ SearchFunctionList *Database::getSearchFunctions()
         sf->id = query.value(0).toInt();
         sf->alias = query.value(1).toString();
         sf->function = query.value(2).toString();
+        sf->javascript = query.value(3).toString();
         sfl->append(sf);
     }
     return sfl;
@@ -90,8 +91,8 @@ bool Database::addSearchFunction(SearchFunction &sf)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO searchfunctions (id, alias,function)"
-                            "VALUES(NULL, :alias, :function)");
+    bstatus = query.prepare("INSERT INTO searchfunctions (id, alias,function, javascript)"
+                            "VALUES(NULL, :alias, :function, :javascript)");
     if (bstatus == 0) {
         qWarning("Error database - add search function  failed in prepare statement...");
         sqlError = query.lastError();
@@ -101,6 +102,7 @@ bool Database::addSearchFunction(SearchFunction &sf)
     }
     query.bindValue(":alias",sf.alias);
     query.bindValue(":function",sf.function);
+     query.bindValue(":javascript",sf.javascript);
 
     bstatus = query.exec();
     if (bstatus == 0) {
@@ -127,6 +129,7 @@ bool Database::updateSearchFunction(SearchFunction &sf)
     QString str= "update searchfunctions set"
             + QString("  alias=:alias")
             + QString(", function=:function")
+            + QString(",javascript=:javascript")
             + QString("  WHERE id='")  + QString::number(sf.id)
             + QString("'");
 
@@ -140,6 +143,7 @@ bool Database::updateSearchFunction(SearchFunction &sf)
     }
     query.bindValue(":alias",sf.alias);
     query.bindValue(":function",sf.function);
+     query.bindValue(":javascript",sf.javascript);
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("Error - update table search function failed in exec statement...");

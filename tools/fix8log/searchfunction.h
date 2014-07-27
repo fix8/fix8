@@ -13,6 +13,7 @@ public:
     qint32 id;
     QString alias;
     QString function;
+    QString javascript;
 };
 
 class SearchFunctionList : public QList<SearchFunction *>

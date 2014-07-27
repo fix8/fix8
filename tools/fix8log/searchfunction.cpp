@@ -9,14 +9,16 @@ SearchFunction::SearchFunction(const SearchFunction &sf)
     id = sf.id;
     alias = sf.alias;
     function = sf.function;
+    javascript = sf.javascript;
 }
 SearchFunction & SearchFunction::operator=( const SearchFunction &rhs)
 {
     if (this == &rhs)
         return *this;
-    id       = rhs.id;
-    alias    = rhs.alias;
+    id = rhs.id;
+    alias = rhs.alias;
     function = rhs.function;
+    javascript = rhs.javascript;
     return *this;
 }
 bool SearchFunction::operator==(const SearchFunction &rhs)

@@ -192,8 +192,8 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
             str = "Loaded " + fileName + " completed";
             statusBar()->showMessage(str,2000);
             filterSenderMenuA->setMenu(workSheet->getSenderMenu());
-            QString searchStr = workSheet->getSearchString();
-            setSearchString(searchStr);
+            SearchFunction sf = workSheet->getSearchFunction();
+            setSearchFunction(sf);
         }
         // display error messages associated with each worksheet
         if (messageList.count() > 0) {
@@ -251,8 +251,8 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
         WorkSheet *currentWorkSheet = qobject_cast<WorkSheet *> (tabW->currentWidget());
         if (currentWorkSheet) {
             filterSenderMenuA->setMenu(currentWorkSheet->getSenderMenu());
-            QString searchStr = currentWorkSheet->getSearchString();
-            setSearchString(searchStr);
+            SearchFunction sf = currentWorkSheet->getSearchFunction();
+            setSearchFunction(sf);
         }
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);

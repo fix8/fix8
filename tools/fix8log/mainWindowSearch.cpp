@@ -53,7 +53,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 void MainWindow::searchTextChangedSlot()
 {
-    haveSearchString = false;
+    haveSearchFunction = false;
     validateSearchText();
 }
 void MainWindow::validateSearchText()
@@ -62,7 +62,7 @@ void MainWindow::validateSearchText()
     if (searchFunctionMap.contains(searchText)) {
         int index = searchFunctionMap.value(searchText);
         QVariant var = searchSelectCB->itemData(index);
-        //SearchFunction *sf = (SearchFunction *) var.value<void *>();
+        SearchFunction *sf = (SearchFunction *) var.value<void *>();
         searchSelectCB->setCurrentIndex(index);
         qDebug() << "Search Text found"<< __FILE__ << __LINE__;
 
@@ -73,78 +73,67 @@ void MainWindow::validateSearchText()
     }
     validateSearchButtons();
 }
+/*
 void MainWindow::setSearchColumnNames(QStringList columnNames)
 {
     searchColumnNames = columnNames;
 
 }
-QString MainWindow::createSearchRoutine(bool &bstatus)
+*/
+SearchFunction  MainWindow::createSearchRoutine(bool &bstatus)
 {
     QString str;
     QString strValue;
     QScriptValueList args;
-   // QString func = "(function(";
+    SearchFunction sf;
+    searchArgList.clear();
+    QString func = "function(";
     if (!tableSchema) {
         bstatus = false;
         qWarning() << "Error, table schame is null" << __FILE__ << __LINE__;
-        return str;
+        return sf;
     }
-    int rowCount = tableSchema->fieldNames.count();
-
-/*
+    QString f = searchLineEdit->toPlainText();
+    QString ff = f.simplified();
+    if (!fieldUsePairList) {
+        qWarning() << "FIELDS NOT SET FOR SEARCH" << __FILE__ << __LINE__;
+        bstatus = false;
+        return sf;
+    }
+    int mapCount = fieldUsePairList->count();
+    for(int k=0;k<mapCount;k++) {
+        QString fieldName = fieldUsePairList->at(k).first;
+        if (ff.contains(fieldName)) {
+            if (!searchArgList.contains(fieldName))
+                searchArgList.append(fieldName);
+        }
+    }
+    int rowCount = searchArgList.count();
     for(int i=0;i<rowCount;i++) {
-        str  = tableSchema->fieldNames[i];
+        str  = searchArgList.at(i);
         func.append(str);
         if (i < rowCount -1) {
             func.append(",");
         }
     }
-*/
-
-
-
-
-    //func.append(")");
-    //function.append(""{return ");
-   QString function; // = " function() {";
-   function.append("print('howdy');");
-   //function.append("}");
-
-    //func.append(searchLineEdit->toPlainText());
-    //func.append(";})");
-
-    function.append("var cars = ['Saab', 'Volvo', 'BMW'];");
-    function.append("print('howdy');");
-    function.append("print(cars[1]);");
-    function.append("print(dogs[0].name);");
-    function.append("print(dogs[0].type);");
-
-    qDebug() << "Javascript function = " << function << __FILE__ << __LINE__;
+    func.append(")");
+    func.append(" { return ");
+    func.append(searchLineEdit->toPlainText());
+    func.append(";}");
+    sf.javascript = func;
+    sf.function = searchLineEdit->toPlainText();
     QScriptSyntaxCheckResult::State syntaxState;
-    QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(function);
-    QScriptValue dogs = engine.newArray(3);
-    QScriptValue sv[3];
-    sv[0].setProperty("name","poodle");
-    sv[0].setProperty("type","shorthair");
-    sv[1].setProperty("name","Boxer");
-    sv[1].setProperty("type","Short");
-    sv[1].setProperty("name","Great Dane");
-    sv[1].setProperty("type","Big");
-    dogs.setProperty(0,sv[0]);
-    dogs.setProperty(1,sv[1]);
-   // dogs.setProperty(2,sv[2]);
-    engine.globalObject().setProperty("dogs", dogs);
+    QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(func);
     syntaxState =syntaxResult.state();
-
-       if ( syntaxState == QScriptSyntaxCheckResult::Error)
-         qDebug() << "Syntax error";
-     else {
-         qDebug() << "A-OK";
-          searchFunction = engine.evaluate(function);
-                searchFunction.call(dogs, args);
-       }
-    bstatus = true;
-    return function;
+    if ( syntaxState == QScriptSyntaxCheckResult::Error) {
+        qDebug() << "Syntax error";
+        bstatus = false;
+    }
+    else {
+        qDebug() << "OK";
+        bstatus = true;
+    }
+    return sf;
 }
 void MainWindow::searchActionSlot(QAction *action)
 {
@@ -152,7 +141,6 @@ void MainWindow::searchActionSlot(QAction *action)
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
     bool bstatus;
-
     if (tabW->count()  < 1) {
         qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
         return;
@@ -162,11 +150,11 @@ void MainWindow::searchActionSlot(QAction *action)
         qWarning() << "Search Feailed, work sheet is null" << __FILE__ << __LINE__;
         return;
     }
-    if (!haveSearchString) {
-        searchString =  createSearchRoutine(bstatus);
-        ws->setSearchString(searchLineEdit->toPlainText());
-        //qDebug() << "Search String = " << searchString << __FILE__ << __LINE__;
-        QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
+    if (!haveSearchFunction) {
+        searchFunction =  createSearchRoutine(bstatus);
+        //ws->setSearchString(searchLineEdit->toPlainText());
+        QScriptSyntaxCheckResult syntaxResult =
+                engine.checkSyntax(searchFunction.javascript);
         syntaxState =syntaxResult.state();
         if ( syntaxState == QScriptSyntaxCheckResult::Error) {
             errorMessage = syntaxResult.errorMessage();
@@ -175,7 +163,7 @@ void MainWindow::searchActionSlot(QAction *action)
             validateSearchButtons();
             return;
         }
-        haveSearchString = true;
+        haveSearchFunction = true;
     }
     runSearchScript();
     WorkSheet::SearchType searchType;
@@ -197,7 +185,8 @@ void MainWindow::searchReturnSlot()
     bool bstatus;
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
-    QString newSearchStr = createSearchRoutine(bstatus);
+    SearchFunction newSearchFun = createSearchRoutine(bstatus);
+
     WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
     if (!ws) {
         qWarning() << "Search Failed, work sheet is null" << __FILE__ << __LINE__;
@@ -205,23 +194,20 @@ void MainWindow::searchReturnSlot()
         update();
         return;
     }
-    if (newSearchStr == searchString)
+    if (newSearchFun.function == searchFunction.function)
         return;
-    ws->setSearchString(searchLineEdit->toPlainText());
-    searchString = newSearchStr;
-    QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
-    syntaxState =syntaxResult.state();
-    if ( syntaxState == QScriptSyntaxCheckResult::Error) {
-        errorMessage = syntaxResult.errorMessage();
-        GUI::ConsoleMessage msg(errorMessage,GUI::ConsoleMessage::ErrorMsg);
-        displayConsoleMessage(msg);
+    ws->setSearchFunction(newSearchFun);
+    searchFunction = newSearchFun;
+
+
+    if (searchFunction.function.length() <  3) {
         ws->doSearch(WorkSheet::SearchOff);
-        haveSearchString = false;
+        haveSearchFunction = false;
         validateSearchButtons();
         return;
     }
     else {
-        haveSearchString = true;
+        haveSearchFunction = true;
     }
     bstatus = runSearchScript();
     if (bstatus) {
@@ -235,15 +221,20 @@ void MainWindow::searchReturnSlot()
         WorkSheet::SearchType searchType;
         searchType = WorkSheet::SearchNext;
         quint32  searchStatus  = ws->doSearch(searchType);
+
         validateSearchButtons(searchStatus,ws);
     }
+
 }
 bool MainWindow::runSearchScript()
 {
     QScriptValueList args;
     QScriptValue answer;
     QStandardItem *item;
-    searchFunction = engine.evaluate(searchString);
+    QMessage *qmsg;
+    QVariant var;
+    QString arg;
+    searchFunctionVal = engine.evaluate(searchFunction.javascript);
     if (tabW->count()  < 1) {
         qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
         validateSearchButtons();
@@ -264,20 +255,35 @@ bool MainWindow::runSearchScript()
         update();
         return false;
     }
+    qDebug() << "********************   FIX NEW SEARCH *******************" << __FILE__ << __LINE__;
+
     QVector <qint32> filterLogicalIndexes;
     for(int i=0;i<wsm->rowCount();i++) {
         args.clear();
-        for(int j=0;j<wsm->columnCount();j++) {
-            item = wsm->item(i,j);
-            args <<item->text();
+        item = wsm->item(i,0);
+        var  = item->data();
+        QStringListIterator iter(searchArgList);
+        qmsg = (QMessage *) var.value<void *>();
+        while(iter.hasNext()) {
+            arg = iter.next();
+            if (qmsg->map.contains(arg)) {
+                QMultiMap<QString,QVariant>::iterator miter = qmsg->map.find(arg);
+                if (miter != qmsg->map.end())
+                    qDebug() << i << ":" << item->text() << ", arg = " << arg << " value = " << miter.value();
+            }
         }
+        qmsg = (QMessage *) var.value<void *>();
+        /*
         answer = searchFunction.call(QScriptValue(), args);
         if (answer.toBool()) {
             filterLogicalIndexes.append(i);
         }
+        */
     }
+
     ws->setSearchIndexes(filterLogicalIndexes);
-    validateSearchButtons();
+
+validateSearchButtons();
     update();
     return true;
 }
@@ -302,13 +308,13 @@ void MainWindow::validateSearchButtons()
         }
     }
     if (enableSearch) {
-        if (searchString.length() < 3)
+        if (searchFunction.javascript.length() < 3)
             enableSearch = false;
         else {
-            QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchString);
+            QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(searchFunction.javascript);
             syntaxState =syntaxResult.state();
             if ( syntaxState == QScriptSyntaxCheckResult::Error) {
-                qDebug() << "HAve Serch Error" << __FILE__ << __LINE__;
+                qDebug() << "Have Search Error" << __FILE__ << __LINE__;
                 enableSearch = false;
             }
         }
@@ -348,9 +354,10 @@ void MainWindow::searchToolbarVisibleSlot(bool visible)
             workSheet->doSearch(WorkSheet::ResumeSearch);
     }
 }
-void MainWindow::setSearchString(const QString &searchStr)
+void MainWindow::setSearchFunction(const SearchFunction &searchFunc)
 {
-    searchLineEdit->setText(searchStr);
+    searchFunction  = searchFunc;
+    searchLineEdit->setText(searchFunction.function);
     validateSearchButtons();
 }
 void MainWindow::setSearchFunctions(SearchFunctionList *sfl)

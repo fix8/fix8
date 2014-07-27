@@ -186,12 +186,12 @@ quint32 WorkSheet::doSearch(SearchType st)
     //qDebug() << "CHECK Selected Row  = " << fixTable-> << __FILE__ << __LINE__;
     return returnCode;
 }
-void WorkSheet::setSearchString(const QString &str)
+void WorkSheet::setSearchFunction(const SearchFunction &sf)
 {
-    searchString = str;
+    searchFunction = sf;
 }
 
-QString &WorkSheet::getSearchString()
+SearchFunction &WorkSheet::getSearchFunction()
 {
-    return searchString;
+    return searchFunction;
 }

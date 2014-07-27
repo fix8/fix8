@@ -86,7 +86,8 @@ QList<WindowData> Database::getWindows()
         if (!ok)
             wd.tableSchemaID = -1;
         wd.searchAll = query.value(8).toBool();
-        wd.searchStr = query.value(9).toString();
+        wd.searchFunction.function = query.value(9).toString();
+        wd.searchFunction.javascript =  query.value(10).toString();
         windowDataList.append(wd);
     }
     return windowDataList;
@@ -101,8 +102,8 @@ bool Database::addWindow(WindowData &wd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID, searchAll, searchStr)"
-                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID, :searchAll, :searchStr)");
+    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID, searchAll, searchFunction, searchJavascript)"
+                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID, :searchAll, :searchFunction, :searchJavascript)");
     if (bstatus == 0) {
         qWarning("Error database - add window failed in prepare statement...");
         sqlError = query.lastError();
@@ -118,7 +119,9 @@ bool Database::addWindow(WindowData &wd)
     query.bindValue(":name",wd.name);
     query.bindValue(":tableSchemaID",wd.tableSchemaID);
     query.bindValue(":searchAll",wd.searchAll);
-    query.bindValue(":searchStr",wd.searchStr);
+    query.bindValue(":searchFunction",wd.searchFunction.function);
+    query.bindValue(":searchJavascript",wd.searchFunction.javascript);
+
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("\tDatabase - Add window failed in exec statement...");
@@ -151,7 +154,7 @@ bool Database::updateWindow(WindowData &wd)
             + QString(", name=:name")
             + QString(", tableSchemaID=:tableSchemaID")
             + QString(", searchAll=:searchAll")
-            + QString(", searchStr=:searchStr")
+            + QString(", searchFunction=:searchFunction")
             + QString("  WHERE id='")  + QString::number(wd.id)
             + QString("'");
 
@@ -170,7 +173,8 @@ bool Database::updateWindow(WindowData &wd)
     query.bindValue(":tableSchemaID",wd.tableSchemaID);
     query.bindValue(":currentTab",wd.currentTab);
     query.bindValue(":searchAll",wd.searchAll);
-    query.bindValue(":searchStr",wd.searchStr);
+    query.bindValue(":searchFunction",wd.searchFunction.function);
+     query.bindValue(":searchJavascript",wd.searchFunction.javascript);
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("Error - update window failed in exec statement...");

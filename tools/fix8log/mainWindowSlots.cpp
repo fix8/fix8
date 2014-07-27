@@ -274,8 +274,8 @@ void MainWindow::tabCurentChangedSlot(int index)
     QMenu *senderMenu;
     WorkSheet *worksheet = qobject_cast <WorkSheet *> (tabW->widget(index));
     if (worksheet) {
-        QString searchStr = worksheet->getSearchString();
-        setSearchString(searchStr);
+        SearchFunction sf = worksheet->getSearchFunction();
+        setSearchFunction(sf);
         senderMenu = worksheet->getSenderMenu();
         if (senderMenu)
             filterSenderMenuA->setMenu(senderMenu);

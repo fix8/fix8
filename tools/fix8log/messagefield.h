@@ -44,7 +44,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QVector>
 #include <fix8/f8includes.hpp>
 #include <fix8/f8types.hpp>
+#include "fix8/field.hpp"
+#include "fix8/message.hpp"
 #include <Myfix_types.hpp>
+
 using namespace FIX8;
 
 class QFieldTrait {
@@ -135,7 +138,11 @@ class QMessage
     QMessage(const QMessage &);
     Message *mesg;
     QString senderID;
+    QMultiMap <QString, QVariant > map;
     int seqID;
+private:
+    void generateItems(GroupBase *gb);
+
 };
 class QMessageList : public QList <QMessage *>
 {

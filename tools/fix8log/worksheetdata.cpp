@@ -52,7 +52,7 @@ WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
     headerExpanded = wsd.headerExpanded;
     fieldsExpanded = wsd.fieldsExpanded;
     trailerExpanded = wsd.trailerExpanded;
-    searchStr    = wsd.searchStr;
+    searchFunction    = wsd.searchFunction;
     messageHeaderState = wsd.messageHeaderState;
     fieldsExpansionType = wsd.fieldsExpansionType;
 }
@@ -70,7 +70,7 @@ WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
     headerExpanded = rhs.headerExpanded;
     fieldsExpanded = rhs.fieldsExpanded;
     trailerExpanded = rhs.trailerExpanded;
-    searchStr       = rhs.searchStr;
+    searchFunction       = rhs.searchFunction;
     messageHeaderState = rhs.messageHeaderState;
     fieldsExpansionType = rhs.fieldsExpansionType;
     return *this;

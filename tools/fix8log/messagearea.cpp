@@ -134,7 +134,6 @@ void MessageArea::generateItems(FIX8::GroupBase *gb, QStandardItem *parent,FIX8:
     i++;
     int  gbSize = gb->size();
     for(int k=0;k<gbSize;k++) {
-
         MessageBase *mb = gb->get_element(k);
         for (Fields::const_iterator itr(mb->fields_begin());itr != mb->fields_end(); ++itr) {
             if (mb->get_fp().is_group(itr->first)) {

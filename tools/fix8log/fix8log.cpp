@@ -164,7 +164,6 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
             if (!qbe) {
                 qbe  = new QBaseEntry(*be);
                 qbe->ft = new FieldTrait(*itr);
-                //qDebug () << "Number2 " << qbe->ft->_fnum;
                 baseMap.insert(qbe->name,qbe);
             }
             name = qbe->name;
@@ -268,7 +267,7 @@ bool Fix8Log::init()
     ///dnb
     QString fieldName;
     FIX8::TEX::NewOrderSingle nos;
-    qDebug() << "VERSION OF CODE = " << TEX::ctx().version() << __FILE__ << __LINE__;
+    //qDebug() << "VERSION OF CODE = " << TEX::ctx().version() << __FILE__ << __LINE__;
     MessageBase *_header = nos.Header();
     for (Fields::const_iterator hiter = _header->fields_begin();
          hiter != _header->fields_end();
@@ -278,7 +277,6 @@ bool Fix8Log::init()
     {
         const char *kk = TEX::ctx()._bme.at(ii)->_key;
         const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
-        //cout << ">>>>> " << TEX::ctx()._bme.at(ii)->_value._name << endl;
         QBaseEntryList *qbaseEntryList = new QBaseEntryList();
         value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
         key =
@@ -286,15 +284,11 @@ bool Fix8Log::init()
         messageField = new MessageField(key,value);
         int level = 0;
         generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
-        // qbaseEntryList->print();
-        //Globals::messagePairs->insert(ii,Globals::MessagePair(key,value));
+        //qDebug() << "NUM OF FIELDS IN MESSAGE:" << qbaseEntryList->count() << __FILE__ << __LINE__;
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);
-
-
     }
-
-    qDebug() << ">>>>>>>>>>>>>> FIELD USE LIST:" << fieldUseList.count() << __FILE__ << __LINE__;
+    //qDebug() << ">>>>>>>>>>>>>> FIELD USE LIST:" << fieldUseList.count() << __FILE__ << __LINE__;
 
     QListIterator <FieldUse *> fieldIter(fieldUseList);
     while(fieldIter.hasNext()) {
@@ -305,14 +299,6 @@ bool Fix8Log::init()
     //qDebug() << ">>>>>>>>>>>>>> Pair list:" << fieldUsePairList.count() << __FILE__ << __LINE__;
     qSort(fieldUsePairList.begin(), fieldUsePairList.end());
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(fieldUsePairList);
-   /*
-    while(pairListIter.hasNext()) {
-        QPair<QString,FieldUse *> pair = pairListIter.next();
-        QString nam = pair.first;
-        qDebug() << "PAIR " << pp++ << " " << nam;
-    }
-*/
-
     if (!dir.exists()) {
         bstatus = dir.mkdir(dbPath);
         if (!bstatus) {
@@ -484,6 +470,7 @@ bool Fix8Log::init()
         while(iter.hasNext()) {
             wd = iter.next();
             newMW  = new MainWindow(database,true);
+            newMW->setFieldUsePair(&fieldUsePairList);
             newMW->setSearchFunctions(searchFunctionList);
 
             wireSignalAndSlots(newMW);
@@ -501,40 +488,10 @@ bool Fix8Log::init()
                 QListIterator <WorkSheetData> iter2(wsdList);
                 while(iter2.hasNext()) {
                     WorkSheetData wsd = iter2.next();
-
-                    //model = 0;
-                    /* Used to share models to speed up time, but now every work sheet has its own model */
-
                     currentItemIter =  fileNameModelMap.find(wsd.fileName);
-                    /*
-                    if (currentItemIter != fileNameModelMap.end()) {
-                        model = (WorkSheetModel *) currentItemIter.value();
-                    }
-                    else {
-
-                   //  newMW->setLoadMessage("Loading File " + wsd.fileName);
-                    // model = readLogFile(wsd.fileName,errorStr);
-                    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,4);
-                     qDebug() << "LATTER RESTORE ABILITY TO CANCEL RESTORE" << __FILE__ << __LINE__;
-
-                    if (cancelSessionRestore) {
-                        newMW->setLoading(false);
-                        goto done;
-                    }
-
-                    if (!model)
-                        errorStrList.append(errorStr);
-                    else
-                        fileNameModelMap.insert(wsd.fileName,model);
-                    //}
-
-                    //if (model) {
-                    //newMW->addWorkSheet(model,wsd);
-                     */
                     newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
                     qDebug() << "FIX THIS HARD CODE ROW SETTING of 2 ?" << __FILE__ << __LINE__;
                     newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
-                    //}
                 }
             }
             newMW->setLoading(false);
@@ -543,10 +500,10 @@ bool Fix8Log::init()
     }
     else
         qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
-
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow(database);
+        newMW->setFieldUsePair(&fieldUsePairList);
         newMW->setSearchFunctions(searchFunctionList);
 
         if (windowDataList.count() > 0) {
@@ -557,7 +514,6 @@ bool Fix8Log::init()
             }
             newMW->setWindowData(wd);
         }
-        qDebug() << "NEW DEFAULT MAIN WINDOW SET TABLE SCHEMNA TO DEFAULT:"  << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
         newMW->setTableSchema(defaultTableSchema);
         wireSignalAndSlots(newMW);
         newMW->show();
@@ -570,6 +526,7 @@ bool Fix8Log::init(QString fileNameToLoad)
 {
     WorkSheetModel *model = 0;
     MainWindow *newMW  =new MainWindow(database,true);
+    newMW->setFieldUsePair(&fieldUsePairList);
     newMW->setSearchFunctions(searchFunctionList);
     WindowData wd;
     WorkSheetData wsd;

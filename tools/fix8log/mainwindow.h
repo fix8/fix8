@@ -96,7 +96,9 @@ public:
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
     void populateSearchList(SearchFunctionList *sfl);
-    void setSearchColumnNames(QStringList columnNames);
+    void setFieldUsePair(QList<QPair<QString ,FieldUse *>> *);
+    QList<QPair<QString ,FieldUse *>> * getFieldUsePair();
+    //void setSearchColumnNames(QStringList columnNames);
     void setSearchFunctions(SearchFunctionList *sfl);
     static void setTableSchemaList(TableSchemaList *);
     void showFileDialog();
@@ -277,9 +279,9 @@ signals:
 private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
-    QString createSearchRoutine(bool &bstatus);
+    SearchFunction createSearchRoutine(bool &bstatus);
     bool runSearchScript();
-    void setSearchString(const QString &searchStr);
+    void setSearchFunction(const SearchFunction &);
     void validateSearchText();
     QByteArray fileDirState;
     QString  lastSelectedDir;
@@ -292,9 +294,9 @@ private:
     WorkSheetList workSheetList;
     QStringList searchColumnNames;
     EditHighLighter *editHighlighter;
-    QString searchString;
-    bool    haveSearchString;
-    QScriptValue searchFunction;
+    SearchFunction searchFunction;
+    bool    haveSearchFunction;
+    QScriptValue searchFunctionVal;
     QActionGroup *searchActionGroup;
     QScriptEngine engine;
     QCompleter *searchCompleter;
@@ -312,6 +314,8 @@ private:
     QString menuStyle;
     QLabel  *fix8versionL;
     QLabel  *fix8versionV;
+    QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
+    QStringList searchArgList;
 };
 
 #endif // MAINWINDOW_H

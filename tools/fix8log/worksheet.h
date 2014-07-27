@@ -45,6 +45,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "messagearea.h"
 #include "messagefield.h"
+#include "searchfunction.h"
 #include "worksheetdata.h"
 class TableSchema;
 class WorkSheetModel;
@@ -76,8 +77,8 @@ public:
     bool copyFrom(WorkSheet &oldws);
     QVector <qint32> getSearchIndexes();
     bool loadCanceled();
-    void setSearchString(const QString &);
-    QString &getSearchString();
+    void setSearchFunction(const SearchFunction &);
+    SearchFunction &getSearchFunction();
     void setWindowID( QUuid &);
     void setMessageAreaExpansion(MessageArea::TreeItem, bool expanded);
     bool getMessageExpansionState(MessageArea::TreeItem);
@@ -152,7 +153,7 @@ private:
     QVector<qint32> searchLogicalIndexes;
     QItemSelectionModel *sm;
     qint32 currentRow;
-    QString searchString; // raw search string
+    SearchFunction searchFunction; // raw search string
 };
 
 class WorkSheetList : public QList <WorkSheet *>

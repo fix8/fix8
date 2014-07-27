@@ -35,6 +35,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "messagefield.h"
+#include <Myfix_types.hpp>
+#include <Myfix_router.hpp>
+#include <Myfix_classes.hpp>
+
 #include <QApplication>
 #include <QDebug>
 FieldUse::FieldUse():isDefault(false)
@@ -274,15 +278,146 @@ QMessage::QMessage(Message *m,QLatin1String sid):mesg(m),senderID(sid)
 QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
     seqID(seq)
 {
+    MessageBase *header;
+    MessageBase *trailer;
+    GroupBase  *groupBase;
+    char c[60];
+    BaseField *bf;
+    FieldTrait::FieldType ft;
+    QVariant var;
+    QString str;
+    QString name;
+    if (!mesg)
+        return;
+    header = mesg->Header();
+    trailer = mesg->Trailer();
+    for (Fields::const_iterator itr(header->fields_begin()); itr != header->fields_end(); ++itr)
+    {
+        //const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
+        name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+        bf = itr->second;
+        ft =  bf->get_underlying_type();
+        if (FieldTrait::is_int(ft)) {
+            int ival(static_cast<Field<int, 0>*>(bf)->get());
+            var = ival;
+            map.insert(name,var);
+        }
+        if (FieldTrait::is_float(ft)) {
+            double fval(static_cast<Field<double, 0>*>(bf)->get());
+            var = fval;
+            map.insert(name,var);
+        }
+        else {
+            memset(c,'\0',60);
+            bf->print(c);
+            str =  QString::fromLatin1(c);
+            map.insert(name,str);
+        }
+    }
+    for (Fields::const_iterator itr(mesg->fields_begin()); itr != mesg->fields_end(); ++itr)
+    {
+        if (mesg->get_fp().is_group(itr->first)) {
+            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            GroupBase *gb (mesg->find_group(itr->first));
+            if (gb)
+                generateItems(gb);
+        }
+        else {
+            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            bf = itr->second;
+            ft =  bf->get_underlying_type();
+            if (FieldTrait::is_int(ft)) {
+                int ival(static_cast<Field<int, 0>*>(bf)->get());
+                var = ival;
+                map.insert(name,var);
+            }
+            if (FieldTrait::is_float(ft)) {
+                double fval(static_cast<Field<double, 0>*>(bf)->get());
+                var = fval;
+                map.insert(name,var);
+            }
+            else {
+                memset(c,'\0',60);
+                bf->print(c);
+                str =  QString::fromLatin1(c);
+                map.insert(name,str);
+            }
+        }
+    }
+    for (Fields::const_iterator itr(trailer->fields_begin()); itr != trailer->fields_end(); ++itr)
+    {
 
+        name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+        bf = itr->second;
+        ft =  bf->get_underlying_type();
+        if (FieldTrait::is_int(ft)) {
+            int ival(static_cast<Field<int, 0>*>(bf)->get());
+            var = ival;
+            map.insert(name,var);
+        }
+        if (FieldTrait::is_float(ft)) {
+            double fval(static_cast<Field<double, 0>*>(bf)->get());
+            var = fval;
+            map.insert(name,var);
+        }
+        else {
+            memset(c,'\0',60);
+            bf->print(c);
+            str =  QString::fromLatin1(c);
+            map.insert(name,str);
+        }
+    }
 }
-
 QMessage::QMessage(const QMessage &qm)
 {
     senderID = qm.senderID;
     seqID = qm.seqID;
     if (qm.mesg)
         mesg = qm.mesg->clone();
+    map = qm.map;
+}
+void QMessage::generateItems(GroupBase *gb)
+{
+    char c[60];
+    QString str;
+    QString name;
+    BaseField *bf;
+    QVariant var;
+    FieldTrait::FieldType ft;
+    int  gbSize = gb->size();
+    for(int k=0;k<gbSize;k++) {
+        MessageBase *mb = gb->get_element(k);
+        for (Fields::const_iterator itr(mb->fields_begin());itr != mb->fields_end(); ++itr) {
+            if (mb->get_fp().is_group(itr->first)) {
+                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                GroupBase *gb (mb->find_group(itr->first));
+                if (gb)
+                {
+                    generateItems(gb);
+                }
+            }
+            else {
+                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                bf = itr->second;
+                ft =  bf->get_underlying_type();
+                if (FieldTrait::is_int(ft)) {
+                    int ival(static_cast<Field<int, 0>*>(bf)->get());
+                    var = ival;
+                    map.insert(name,var);
+                }
+                if (FieldTrait::is_float(ft)) {
+                    double fval(static_cast<Field<double, 0>*>(bf)->get());
+                    var = fval;
+                    map.insert(name,var);
+                }
+                else {
+                    memset(c,'\0',60);
+                    bf->print(c);
+                    str = QString::fromLatin1(c);
+                }
+            }
+        }
+    }
 }
 
 QColor QMessageList::senderColors[] = {QColor(255,214,79,100),QColor(151,255,81,100),
@@ -302,7 +437,7 @@ QMessageList * QMessageList::clone(const bool &cancel)
 {
     QMessage *message;
     QMessageList *qml = new QMessageList();
-    qDebug() << "!!! MESSAGELIST CLONE: count = " << count() << __FILE__ << __LINE__;
+    //qDebug() << "!!! MESSAGELIST CLONE: count = " << count() << __FILE__ << __LINE__;
     qml->senderColorMap = senderColorMap;
     qml->defaultSender = defaultSender;
     QListIterator <QMessage *> iter(*this);

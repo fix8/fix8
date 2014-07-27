@@ -53,8 +53,8 @@ TableSchemaList *MainWindow::schemaList = 0;
 
 MainWindow::MainWindow(Database *db,bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchString(false),database(db),
-      linkSearchOn(false)
+      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchFunction(false),database(db),
+      linkSearchOn(false),fieldUsePairList(0)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -66,7 +66,7 @@ MainWindow::MainWindow(Database *db,bool showLoading)
 
 MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false), haveSearchString(false),database(db),linkSearchOn(false)
+      windowDataID(-1),loadingActive(false), haveSearchFunction(false),database(db),linkSearchOn(false)
 {
     buildMainWindow();
     setAcceptDrops(true);
@@ -76,6 +76,7 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     setGeometry(rect);
     int x = mw.x();
     int y = mw.y();
+    fieldUsePairList = mw.getFieldUsePair();
     restoreState(mw.saveState());
     if (copyAll) {
         for (int i=0;i<mw.tabW->count();i++) {
@@ -115,7 +116,7 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     move(x+100,y+90); // offset from window copied
     linkSearchOn = mw.linkSearchOn;
     linkSearchA->setChecked(linkSearchOn);
-    searchString = mw.searchString;
+    searchFunction = mw.searchFunction;
     if (mainMenuBar) {
         mainMenuBar->setStyleSheet(mw.mainMenuBar->styleSheet());
         fileMenu->setStyleSheet(menuStyle);
@@ -163,7 +164,7 @@ void MainWindow::buildMainWindow()
     menuFG =  pal.color(QPalette::WindowText);
     //Save this string as setStyle on menubar changes colors of menus, this is only way to get around it
     menuStyle = QString("background-color:" + menuBG.name() + QString("; color:")
-                                + menuFG.name()) + QString(";");
+                        + menuFG.name()) + QString(";");
     mainMenuBar->setAutoFillBackground(true);
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
@@ -280,7 +281,7 @@ void MainWindow::buildMainWindow()
     QSize stoolbar = searchToolBar->iconSize();
     QPixmap searchEditPM(":/images/svg/text-editor-symbolic.svg");
     int ht = stoolbar.height()*.66;
-     searchEditA->setIcon(searchEditPM.scaledToHeight(ht));
+    searchEditA->setIcon(searchEditPM.scaledToHeight(ht));
     searchLV = new QLabel(searchToolBar);// only show when toobar is vertial
     searchArea = new QWidget(this);
     QHBoxLayout *searchBox = new QHBoxLayout();
@@ -669,8 +670,8 @@ const QUuid &MainWindow::getUuid()
 }
 void MainWindow::closeEvent(QCloseEvent *ce)
 {
-   ce->ignore();
-   closeSlot();
+    ce->ignore();
+    closeSlot();
 }
 
 void MainWindow::showEvent(QShowEvent *se)
@@ -715,7 +716,7 @@ WindowData MainWindow::getWindowData()
         wd.tableSchemaID = defaultTableSchema->id;
     wd.name     = name;
     wd.searchAll = linkSearchOn;
-    wd.searchStr = searchLineEdit->toPlainText();
+    wd.searchFunction = searchFunction;
     return wd;
 }
 void MainWindow::setWindowData(const WindowData wd)
@@ -762,9 +763,9 @@ void MainWindow::setWindowData(const WindowData wd)
     setTableSchema(tableSchema);
     linkSearchOn = wd.searchAll;
     linkSearchA->setChecked(linkSearchOn);
-    searchString = wd.searchStr;
+    searchFunction = wd.searchFunction;
 
-    searchLineEdit->setText(searchString);
+    searchLineEdit->setText(searchFunction.function);
 }
 QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {
@@ -1017,7 +1018,7 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
     setCursor(Qt::BusyCursor);
 
     QString colName;
-     QStringList colNameList;
+    QStringList colNameList;
     int rowCount = tableSchema->fieldNames.count();
     for(int i=0;i<rowCount;i++) {
         colName  = tableSchema->fieldNames[i];
@@ -1026,9 +1027,17 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
     }
     colNameList.sort();
     qDebug() <<"COL NAME LIST SET TO " << colNameList << __FILE__ << __LINE__;
-    QStringListModel *strModel = new QStringListModel(colNameList,this);
-    searchCompleter->setModel(strModel);
-
+    QStringListModel *strModel = 0;
+    QStringList fieldNameList;
+    if (fieldUsePairList) {
+        QListIterator  <QPair<QString ,FieldUse *>> fieldPairIter(*fieldUsePairList);
+        while(fieldPairIter.hasNext()) {
+            QPair<QString,FieldUse *>  pair = fieldPairIter.next();
+            fieldNameList << pair.first;
+        }
+        strModel = new QStringListModel(fieldNameList,this);
+        searchCompleter->setModel(strModel);
+    }
 
     al = schemaActionGroup->actions();
     if (al.count() > 0) {
@@ -1098,4 +1107,13 @@ void MainWindow::deletedSchema(int schemaID)
 TableSchema * MainWindow::getTableSchema()
 {
     return tableSchema;
+}
+void MainWindow::setFieldUsePair(QList<QPair<QString ,FieldUse *>> *fup)
+{
+    fieldUsePairList = fup;
+}
+
+QList<QPair<QString ,FieldUse *>> * MainWindow::getFieldUsePair()
+{
+    return fieldUsePairList;
 }

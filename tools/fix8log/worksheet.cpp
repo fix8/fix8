@@ -338,7 +338,6 @@ void WorkSheet::terminate()
     cancelReason = TERMINATED;
     senderMenu = 0;
 }
-/* THis method not used anymore */
 bool WorkSheet::loadFileName(QString &fileName,
                              QList <GUI::ConsoleMessage> &msgList,
                              quint32 &returnCode)
@@ -355,7 +354,6 @@ bool WorkSheet::loadFileName(QString &fileName,
     QString qstr;
     QFile dataFile(fileName);
     cancelReason = OK; // clear cancel reason
-
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
@@ -600,7 +598,7 @@ WorkSheetData WorkSheet::getWorksheetData()
     wsd.trailerExpanded = messageArea->getExpansionState(MessageArea::TrailerItem);
     wsd.messageHeaderState = messageArea->getHeaderState();
     wsd.fieldsExpansionType = messageArea->getExpansion();
-    wsd.searchStr = searchString;
+    wsd.searchFunction = searchFunction;
 
 
     return wsd;

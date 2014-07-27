@@ -46,7 +46,7 @@ QString Database::arguments[] = {
     // sqlinfo
     "version integer",
     // windows
-    "id INTEGER primary key,menubarStyleSheet char[256],geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32),tableSchemaID integer, searchAll integer default 0,searchStr char[60]",
+    "id INTEGER primary key,menubarStyleSheet char[256],geometry BLOB,restoreState BLOB, isVisible integer default 1,currentTab integer default 0, name char(32),tableSchemaID integer, searchAll integer default 0,searchFunction char[60], searchJavascript char[60]",
     //worksheets
     "id INTEGER primary key, windowID integer,alias char(32), file char(120),selectedRow integer,splitterState BLOB,headerState BLOB,headerExpanded integer default 0, fieldsExpanded integer default 0,trailerExpanded integer default 0,searchStr char[60], messageAreaHeaderState BLOB, fieldsExpansionType integer default 0",
     // tableschemas
@@ -54,7 +54,7 @@ QString Database::arguments[] = {
     // schemafields
     "id INTEGER primary key,name char(60),schemaID integer",
     // searchfunctions
-    "id INTEGER primary key,alias char(32),function char(120)"
+    "id INTEGER primary key,alias char(32),function char(60), javascript char(60)"
 };
 
 Database::Database(QString fileName,QObject *parent):QObject(parent),name(fileName),handle(0)

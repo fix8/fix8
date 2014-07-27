@@ -38,7 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define WORKSHEETDATA_H
 #include <QByteArray>
 #include <QString>
-
+#include "searchfunction.h"
 class WorkSheetData
 {
 public:
@@ -54,7 +54,7 @@ public:
     bool       headerExpanded;
     bool       fieldsExpanded;
     bool       trailerExpanded;
-    QString    searchStr;
+    SearchFunction   searchFunction;
     QByteArray messageHeaderState;
     quint32    fieldsExpansionType;
     WorkSheetData      &operator=( const WorkSheetData &s);

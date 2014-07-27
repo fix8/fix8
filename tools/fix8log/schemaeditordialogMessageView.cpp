@@ -307,7 +307,6 @@ void SchemaEditorDialog::syncMessageViewWithFieldView()
 {
     QStandardItem *item;
     QBaseEntry * qbe;
-    qDebug() << "HERE WE ARE IN SYNC " << __FILE__ << __LINE__;
     if (fieldItems.count() < 1) {
         qWarning() << "Nothing to do for FieldView Sync " << __FILE__ << __LINE__;
         return;
@@ -321,7 +320,6 @@ void SchemaEditorDialog::syncMessageViewWithFieldView()
         item = iter.next();
         item->setCheckState(Qt::Unchecked);
     }
-    qDebug() << "NUM OF SELECTED BASE ENTRY ITEMS = " << selectedBaseEntryList.count();
     QListIterator <QBaseEntry *> iter2(selectedBaseEntryList);
     while(iter2.hasNext()) {
         qbe = iter2.next();
@@ -329,7 +327,6 @@ void SchemaEditorDialog::syncMessageViewWithFieldView()
             item = fieldItemsMap.find(qbe->name).value();
             if (item) {
                 item->setCheckState(Qt::Checked);
-                qDebug() << "SET CHECK STATE TO TRUE " << __FILE__ << __LINE__;
             }
         }
     }
