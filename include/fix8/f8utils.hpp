@@ -129,6 +129,10 @@ F8API const std::string& GetTimeAsStringMini(std::string& result, const Tickval 
   \return trimmed string */
 F8API const std::string& trim(std::string& source, const std::string& ws=" \t");
 
+/*! Return a set of strings with current package info
+  \return vector os strings */
+F8API std::vector<f8String> package_info();
+
 //----------------------------------------------------------------------------------------
 /*! Sidestep the warn_unused_result attribute
   \tparam T type
@@ -166,9 +170,9 @@ inline unsigned ROT13Hash (const std::string& str)
 {
 	unsigned int hash(0);
 
-	for (std::string::const_iterator itr(str.begin()); itr != str.end(); ++itr)
+	for (const auto& pp : str)
 	{
-		hash += *itr;
+		hash += pp;
 		hash -= rotl(hash, 13);
 	}
 
@@ -1110,7 +1114,7 @@ public:
 //---------------------------------------------------------------------------------------------------
 class tty_save_state
 {
-	bool _raw_mode;
+	bool _raw_mode = false;
 	int _fd;
 #ifndef _MSC_VER
 #ifdef __APPLE__
@@ -1121,7 +1125,7 @@ class tty_save_state
 #endif
 
 public:
-	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
+	explicit tty_save_state(int fd) : _fd(fd) {}
 
 	tty_save_state& operator=(const tty_save_state& from)
 	{

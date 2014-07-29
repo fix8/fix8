@@ -154,8 +154,8 @@ int Logger::operator()()
 void Logger::flush()
 {
 	f8_scoped_lock guard(_mutex);
-	for (std::list<std::string>::const_iterator itr(_buffer.begin()); itr != _buffer.end(); ++itr)
-		get_stream() << *itr << endl;
+	for (const auto& pp : _buffer)
+		get_stream() << pp << endl;
 	_buffer.clear();
 	_lines = 0;
 }

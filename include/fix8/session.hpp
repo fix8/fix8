@@ -520,7 +520,7 @@ protected:
 		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type.c_str()));
 		if (!bme)
 			throw InvalidMetadata<f8String>(msg_type);
-		return bme->_create._do();
+		return bme->_create._do(true);
 	}
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__

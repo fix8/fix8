@@ -216,7 +216,6 @@ void Session::stop()
 			_timer.clear();
 		else
 		{
-			_timer.schedule(_hb_processor, 0);
 			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			if (_persist)
 				_persist->stop();
@@ -251,7 +250,7 @@ bool Session::process(const f8String& from)
 		if (fpos == f8String::npos)
 		{
 			//cerr << "Session::process throwing for " << from << endl;
-			throw InvalidMessage(from);
+			throw InvalidMessage(from, FILE_LINE);
 		}
 
 		seqnum = fast_atoi<unsigned>(from.data() + fpos + 3, default_field_separator);
@@ -747,7 +746,6 @@ bool Session::heartbeat_service()
 		}
 	}
 
-	//_timer.schedule(_hb_processor, 1000);
 	return true;
 }
 

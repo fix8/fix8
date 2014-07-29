@@ -211,7 +211,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if (sockRead(&bt, 1) != 1)
 				return false;
 			if (!isdigit(bt) && bt != default_field_separator)
-				throw IllegalMessage(msg_buf);
+				throw IllegalMessage(msg_buf, FILE_LINE);
 			msg_buf[offs++] = bt;
 		}
 		while (bt != default_field_separator && offs < _max_msg_len);
@@ -222,7 +222,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		if ((result = MessageBase::extract_element(to.data(), static_cast<unsigned>(to.size()), tag, val)))
 		{
 			if (*tag != '8')
-				throw IllegalMessage(to);
+				throw IllegalMessage(to, FILE_LINE);
 
 			if (_session.get_ctx()._beginStr.compare(val))	// invalid FIX version
 				throw InvalidVersion(string(val));
@@ -230,7 +230,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if ((result = MessageBase::extract_element(to.data() + result, static_cast<unsigned>(to.size()) - result, tag, val)))
 			{
 				if (*tag != '9')
-					throw IllegalMessage(to);
+					throw IllegalMessage(to, FILE_LINE);
 
 				const unsigned mlen(fast_atoi<unsigned>(val));
 				if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
@@ -252,7 +252,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			}
 		}
 
-		throw IllegalMessage(to);
+		throw IllegalMessage(to, FILE_LINE);
 	}
 
 	return false;

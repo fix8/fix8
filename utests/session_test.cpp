@@ -100,7 +100,7 @@ public:
         FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger)
     {
         _timer.clear();
-        _timer.schedule(_hb_processor, 0);
+        _timer.stop();
         _timer.join();
     }
 

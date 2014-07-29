@@ -146,6 +146,7 @@ FIX8::tty_save_state save_tty(0);
 const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
+	{ { 'a', "New Order Single (alternate group method)" }, &MyMenu::new_order_single_alternate },
 	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
 		&MyMenu::new_order_single_recycled },
 	{ { 'N', "50 New Order Singles" }, &MyMenu::new_order_single_50 },
@@ -442,6 +443,79 @@ bool myfix_session_server::sample_scheduler_callback()
 }
 
 //-----------------------------------------------------------------------------------------
+Message *MyMenu::generate_new_order_single_alternate()
+{
+	static unsigned oid(0);
+	ostringstream oistr;
+	oistr << "ord" << ++oid;
+	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle(false)); // shallow construction
+	*nos << new TEX::TransactTime
+	     << new TEX::OrderQty(1 + RandDev::getrandom(9999))
+	     << new TEX::Price(RandDev::getrandom(500.), 5)	// 5 decimal places if necessary
+	     << new TEX::ClOrdID(oistr.str())
+	     << new TEX::Symbol("BHP")
+	     << new TEX::OrdType(TEX::OrdType_LIMIT)
+	     << new TEX::Side(TEX::Side_BUY)
+	     << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+	*nos << new TEX::NoPartyIDs(unsigned(0));
+	*nos << new TEX::NoUnderlyings(3);
+	GroupBase *noul(nos->find_add_group<TEX::NewOrderSingle::NoUnderlyings>(nullptr)); // no parent group
+
+	// repeating groups
+	MessageBase *gr1(noul->create_group(false)); // shallow construction
+	*gr1 << new TEX::UnderlyingSymbol("BLAH")
+	     << new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
+	*noul << gr1;
+
+	MessageBase *gr2(noul->create_group(false)); // shallow construction
+	// nested repeating groups
+	*gr2 << new TEX::UnderlyingSymbol("FOO")
+	     << new TEX::NoUnderlyingSecurityAltID(2);
+	*noul << gr2;
+	GroupBase *nosai(gr2->find_add_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>(noul)); // parent is noul
+	MessageBase *gr3(nosai->create_group(false)); // shallow construction
+	*gr3 << new TEX::UnderlyingSecurityAltID("UnderBlah");
+	*nosai << gr3;
+	MessageBase *gr4(nosai->create_group(false)); // shallow construction
+	*gr4 << new TEX::UnderlyingSecurityAltID("OverFoo");
+	*nosai << gr4;
+
+	MessageBase *gr5(noul->create_group(false)); // shallow construction
+	*gr5 << new TEX::UnderlyingSymbol("BOOM");
+	// nested repeating groups
+	GroupBase *nus(gr5->find_add_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>(noul)); // parent is noul
+	static const char *secIDs[] { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
+	{
+		MessageBase *gr(nus->create_group(false)); // shallow construction
+		*gr << new TEX::UnderlyingStipType(secIDs[ii]);
+		*nus << gr;
+	}
+	*noul << gr5;
+
+	// multiply nested repeating groups
+	*nos << new TEX::NoAllocs(1);
+	GroupBase *noall(nos->find_add_group<TEX::NewOrderSingle::NoAllocs>(nullptr)); // no parent group
+	MessageBase *gr9(noall->create_group(false)); // shallow construction
+	*gr9 << new TEX::AllocAccount("Account1")
+	     << new TEX::NoNestedPartyIDs(1);
+	*noall << gr9;
+	GroupBase *nonp(gr9->find_add_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>(noall)); // parent is noall
+	MessageBase *gr10(nonp->create_group(false)); // shallow construction
+	*gr10 << new TEX::NestedPartyID("nestedpartyID1")
+	      << new TEX::NoNestedPartySubIDs(1);
+	*nonp << gr10;
+	GroupBase *nonpsid(gr10->find_add_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>(nonp)); // parent is nonp
+	MessageBase *gr11(nonpsid->create_group(false)); // shallow construction
+	*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
+	*nonpsid << gr11;
+
+	return nos;
+}
+
+//-----------------------------------------------------------------------------------------
 Message *MyMenu::generate_new_order_single()
 {
 	static unsigned oid(0);
@@ -512,6 +586,13 @@ Message *MyMenu::generate_new_order_single()
 	*nonpsid << gr11;
 
 	return nos;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single_alternate()
+{
+	_session.send(generate_new_order_single_alternate());
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -802,6 +883,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	    << new TEX::LastCapacity('5')
 	    << new TEX::ReportToExch('Y')
 	    << new TEX::ExecID(oistr.str());
+	msg->push_unknown(er);
 	_session.send(er);
 
 	unsigned remaining_qty(qty()), cum_qty(0);

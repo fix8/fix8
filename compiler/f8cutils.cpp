@@ -224,28 +224,28 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 	XmlElement::XmlSet flist;
 	if (xt->find(where, flist))
 	{
-		for(XmlElement::XmlSet::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
+		for(const auto *pp : flist)
 		{
 			string fname, required;
-			if ((*fitr)->GetAttr("name", fname) && (*fitr)->GetAttr("required", required))
+			if (pp->GetAttr("name", fname) && pp->GetAttr("required", required))
 			{
 				FieldToNumMap::const_iterator ftonItr(ftonSpec.find(fname));
 				FieldSpecMap::iterator fs_itr;
 				if (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr->second)) == fspec.end())
 				{
-					cerr << shortName << ':' << recover_line(**fitr) << ": error: Field element missing required attributes" << endl;
+					cerr << shortName << ':' << recover_line(*pp) << ": error: Field element missing required attributes" << endl;
 					++glob_errors;
 					continue;
 				}
 
 				string compname;
-				unsigned compidx((*fitr)->GetAttr("component", compname) ? lookup_component(compon, compname) : 0);
+				unsigned compidx(pp->GetAttr("component", compname) ? lookup_component(compon, compname) : 0);
 
 				// add FieldTrait
-				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, compidx)))
+				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, pp->GetSubIdx(), required == "Y", false, compidx)))
 				{
 					if (!nowarn)
-						cerr << shortName << ':' << recover_line(**fitr) << ": warning: Could not add trait object '" << fname << "' (duplicate ?)" << endl;
+						cerr << shortName << ':' << recover_line(*pp) << ": warning: Could not add trait object '" << fname << "' (duplicate ?)" << endl;
 					++glob_warnings;
 				}
 				else
@@ -257,7 +257,7 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 			}
 			else
 			{
-				cerr << shortName << ':' << recover_line(**fitr) << ": error: Field element missing required attributes" << endl;
+				cerr << shortName << ':' << recover_line(*pp) << ": error: Field element missing required attributes" << endl;
 				++glob_errors;
 			}
 		}
@@ -278,44 +278,42 @@ string bintoaschex(const string& from)
 //-----------------------------------------------------------------------------------------
 void process_ordering(MessageSpecMap& mspec)
 {
-	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+	for (const auto& pp : mspec)
 	{
 		FieldTraitOrder mo;
-		for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
-			flitr != mitr->second._fields.get_presence().end(); ++flitr)
-				mo.insert({&*flitr});
+		for (const auto& ii : pp.second._fields.get_presence())
+			mo.insert({&ii});
 
 		unsigned cnt(0);
-		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
-			(*fto)->_pos = ++cnt;
+		for (auto *ii : mo)
+			ii->_pos = ++cnt;
 	}
 }
 
 //-----------------------------------------------------------------------------------------
 void process_message_group_ordering(const GroupMap& gm)
 {
-	for (GroupMap::const_iterator gitr(gm.begin()); gitr != gm.end(); ++gitr)
+	for (const auto& pp : gm)
 	{
 		FieldTraitOrder go;
-		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
-			flitr != gitr->second._fields.get_presence().end(); ++flitr)
-				go.insert({&*flitr});
+		for (const auto& ii : pp.second._fields.get_presence())
+			go.insert({&ii});
 
 		unsigned gcnt(0);
-		for (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
-			(*fto)->_pos = ++gcnt;
+		for (auto *ii : go)
+			ii->_pos = ++gcnt;
 
-		if (!gitr->second._groups.empty())
-			process_message_group_ordering(gitr->second._groups);
+		if (!pp.second._groups.empty())
+			process_message_group_ordering(pp.second._groups);
 	}
 }
 
 //-----------------------------------------------------------------------------------------
 void process_group_ordering(const CommonGroupMap& globmap)
 {
-	for (CommonGroupMap::const_iterator gcitr(globmap.begin()); gcitr != globmap.end(); ++gcitr)
-      for (CommonGroups::const_iterator gitr(gcitr->second.begin()); gitr != gcitr->second.end(); ++gitr)
-			process_message_group_ordering(gitr->second._groups);
+	for (const auto& pp : globmap)
+      for (const auto& ii : pp.second)
+			process_message_group_ordering(ii.second._groups);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -414,8 +412,8 @@ ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 		os << " Comment:" << what._comment;
 	os << " isadmin:" << boolalpha << what._is_admin << endl;
 	os << "Fields:" << endl << what._fields;
-	for (GroupMap::const_iterator itr(what._groups.begin()); itr != what._groups.end(); ++itr)
-		os << "Group (" << itr->first << "): " << endl << itr->second << endl;
+	for (const auto& pp : what._groups)
+		os << "Group (" << pp.first << "): " << endl << pp.second << endl;
 
 	return os;
 }

@@ -511,7 +511,6 @@ bool MyMenu::preload_new_order_single()
 		oistr << "ord" << ++oid << '-' << num;
 
 		FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
-		FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3)); // precision=3
 
 		*ptr  << new FIX8::TEX::Symbol("BHP")
 				<< new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
@@ -519,13 +518,12 @@ bool MyMenu::preload_new_order_single()
 				<< new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
 				<< new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
 				<< new FIX8::TEX::TransactTime
-				<< prc
+				<< new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3) // precision=3
 				<< new FIX8::TEX::ClOrdID(oistr.str())
 				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
 #if defined PREENCODE_MSG_SUPPORT
 		ptr->preencode(); // pre-encode message payload (not header or trailer)
 #endif
-
 		_session.push(ptr);
 	}
 

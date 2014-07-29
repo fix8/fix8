@@ -11,6 +11,7 @@
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
+				permissive_mode="false"
 				process_model="threaded"
 				enforce_compids="false"
 				silent_disconnect="false"

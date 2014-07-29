@@ -164,8 +164,8 @@ public:
 protected:
 	f8_mutex _mutex;
 	LogFlags _flags;
-	std::ostream *_ofs;
-	size_t _lines;
+	std::ostream *_ofs = nullptr;
+	size_t _lines = 0;
 	f8_thread_cancellation_token _stopping;
 
 	struct LogElement
@@ -193,7 +193,7 @@ protected:
 	};
 
 	f8_concurrent_queue<LogElement> _msg_queue;
-	unsigned _sequence, _osequence;
+	unsigned _sequence = 0, _osequence = 0;
 
 	using ThreadCodes = std::map<thread_id_t, char>;
 	ThreadCodes _thread_codes;
@@ -204,7 +204,7 @@ protected:
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(std::ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
+	Logger(const LogFlags flags) : _thread(std::ref(*this)), _flags(flags)
 	{
 		_thread.start();
 	}
