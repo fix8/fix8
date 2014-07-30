@@ -300,17 +300,20 @@ QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
         if (FieldTrait::is_int(ft)) {
             int ival(static_cast<Field<int, 0>*>(bf)->get());
             var = ival;
+            //qDebug() << "1 MAP INSERT name= " << name << "value = " << var << __FILE__ << __LINE__;
             map.insert(name,var);
         }
-        if (FieldTrait::is_float(ft)) {
+        else if (FieldTrait::is_float(ft)) {
             double fval(static_cast<Field<double, 0>*>(bf)->get());
             var = fval;
+            //qDebug() << "2 MAP INSERT name= " << name << "value = " << var << __FILE__ << __LINE__;
             map.insert(name,var);
         }
         else {
             memset(c,'\0',60);
             bf->print(c);
             str =  QString::fromLatin1(c);
+            //qDebug() << "3 MAP INSERT name= " << name << "value = " << str << __FILE__ << __LINE__;
             map.insert(name,str);
         }
     }

@@ -50,6 +50,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QStandardItemModel>
 #include <QtScript>
 #include <QScriptSyntaxCheckResult>
+#include <stdio.h>
 
 void MainWindow::searchTextChangedSlot()
 {
@@ -87,7 +88,7 @@ SearchFunction  MainWindow::createSearchRoutine(bool &bstatus)
     QScriptValueList args;
     SearchFunction sf;
     searchArgList.clear();
-    QString func = "function(";
+    QString func = "(function(";
     if (!tableSchema) {
         bstatus = false;
         qWarning() << "Error, table schame is null" << __FILE__ << __LINE__;
@@ -119,7 +120,7 @@ SearchFunction  MainWindow::createSearchRoutine(bool &bstatus)
     func.append(")");
     func.append(" { return ");
     func.append(searchLineEdit->toPlainText());
-    func.append(";}");
+    func.append(";})");
     sf.javascript = func;
     sf.function = searchLineEdit->toPlainText();
     QScriptSyntaxCheckResult::State syntaxState;
@@ -228,12 +229,14 @@ void MainWindow::searchReturnSlot()
 }
 bool MainWindow::runSearchScript()
 {
+    bool  skip = false;
     QScriptValueList args;
     QScriptValue answer;
     QStandardItem *item;
     QMessage *qmsg;
     QVariant var;
     QString arg;
+    qDebug() << "Javascript:" << searchFunction.javascript;
     searchFunctionVal = engine.evaluate(searchFunction.javascript);
     if (tabW->count()  < 1) {
         qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
@@ -255,10 +258,11 @@ bool MainWindow::runSearchScript()
         update();
         return false;
     }
-    qDebug() << "********************   FIX NEW SEARCH *******************" << __FILE__ << __LINE__;
 
+    int row=0;
     QVector <qint32> filterLogicalIndexes;
     for(int i=0;i<wsm->rowCount();i++) {
+        skip = false;
         args.clear();
         item = wsm->item(i,0);
         var  = item->data();
@@ -274,8 +278,8 @@ bool MainWindow::runSearchScript()
                 arg = iter.next();
                 if (qmsg->map.contains(arg)) {
                     QMultiMap<QString,QVariant>::iterator miter = qmsg->map.find(arg);
-                    while (miter != qmsg->map.end()) {
-                        qDebug() << i << ":" << item->text() << ", arg = " << arg << " value = " << miter.value();
+                    while (miter != qmsg->map.end() &&  miter.key() == arg) {
+                        //qDebug() << i << ":" << item->text() << ", arg = " << arg << " value = " << miter.value();
                         var = miter.value();
                         variantLists[i]->append(var);
                         miter++;
@@ -283,35 +287,99 @@ bool MainWindow::runSearchScript()
                 }
             }
         }
+        // temp
+
+        //qDebug() << "INTO FOR LOOP...." << (*variantLists)->count() << __LINE__;
         // if any lists are empty do not search message as it does not meet search criteria
         for (int j=0;j < (*variantLists)->count();j++)
         {
+           // qDebug() << "\tj = " << j  << __FILE__ << __LINE__;
             QVariantList *vl = variantLists[j];
-            if (vl->count() < 1)
-                goto done;
+            if (vl->count() < 1) {
+                //qDebug() << "SKIP = true" << __FILE__ << __LINE__;
+                skip = true;
+            }
         }
         // want to loop over all possible values that satisfy javascript
         // function - myfunction(va,vb,...v?);
         // each variantList in variantLists is a list tht contains all matches for a v
         // v0 == list of va's, v1's == vb's,....
+        int totalSize = 1;
+        int repeatLength=1;
+        QVariant **vector;
+        if (!skip) {
+            //qDebug() << "DO NOT SKIP" << __FILE__ << __LINE__;
+            int vectorsize = (*variantLists)->count();
+           // qDebug() << "vector size = " << vectorsize << __FILE__ << __LINE__;
+            for(int i=0;i<vectorsize;i++)
+                totalSize = totalSize* variantLists[i]->count();
+            //qDebug() << "\t total size = " << totalSize << __FILE__ << __LINE__;
+            vector = new QVariant*[totalSize];
+            int arrayCounter= 1;
+            for (int i=0;i<totalSize;i++) {
+                //qDebug() << "\t\t loop i = " << i << __FILE__ << __LINE__;
+                arrayCounter = arrayCounter *(variantLists[i]->count());
+                repeatLength = totalSize/arrayCounter;
+                vector[i] = new QVariant[totalSize];
+                int k = 0;
+                int r = 0;
+                for (int j =0;j< totalSize ;j++) {
+                    vector[i][j]  = variantLists[i]->at(k);
+                    r++;
+                    if (r >=repeatLength) {
+                        r = 0;
+                        k++;
+                        if (k >= variantLists[i]->count())
+                            k = 0;
+                    }
+                }
 
-        for (int k=0;k < (*variantLists)->count();k++)
-        {
-            QVariantList *vl = variantLists[k];
-            // ...
-            // load each comination into args list then call search function
-            //  answer = searchFunction.call(QScriptValue(), args);
+            }
 
+            for (int i=0;i<totalSize;i++) {
+                args.clear();
+                for (int j=0;j< vectorsize;j++) {
+                     QString valueStr = vector[i][j].toString();
+                     args << valueStr;
+                    /*
+                    switch (vector[i][j].type()) {
+                    case QVariant::Int:
+                        args << vector[i][j].toInt();
+                        break;
+                    case QVariant::Double:
+                        args << vector[i][j].toDouble();
+                        break;
+                    case QVariant::String:
+                        args << vector[i][j].toString();
+                        break;
+                    default:
+                        qWarning() << "UNkndown variarnt type in message" << __FILE__ << __LINE__;
+                    }
+                    */
+                }
+                //qDebug() << "Args = " << *(vector[i]);
+                answer = searchFunctionVal.call(QScriptValue(), args);
+
+                if (answer.toBool()) {
+                   filterLogicalIndexes.append(row);
+                   ; qDebug()  << "FOUND ONE " << row;
+                 }
+                //else
+                //    qDebug() << "Not found" << row;
+            }
         }
-        done:
+        //else
+        //   qDebug() << "Skipping message" << __FILE__ << __LINE__;
         // to do clean up and rethink what needs to be done here
         qmsg = (QMessage *) var.value<void *>();
-        /*
-        answer = searchFunction.call(QScriptValue(), args);
-        if (answer.toBool()) {
-            filterLogicalIndexes.append(i);
-        }
-        */
+
+        //answer = searchFunction.call(QScriptValue(), args);
+        //if (answer.toBool()) {
+        //    filterLogicalIndexes.append(row);
+        //}
+
+
+    row++;
     }
 
     ws->setSearchIndexes(filterLogicalIndexes);
