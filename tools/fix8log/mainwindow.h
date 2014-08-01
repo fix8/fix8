@@ -147,6 +147,7 @@ public:
     void schemaSelectedSlot(QAction *);
     void searchActionSlot(QAction *);
     void searchReturnSlot();
+    void setFontSlot(QAction *fontAction);
     // time format travels up from work sheet
     void setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat);
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
@@ -172,6 +173,9 @@ protected:
     QAction  *closeA;
     QAction  *copyWindowA;
     QAction  *editSchemaA;
+    QAction  *fontIncreaseA;
+    QAction  *fontDecreaseA;
+    QAction  *fontRegularA;
     QAction  *filterOnA;
     QAction  *filterSenderMenuA;
     QAction  *hideConsoleA;
@@ -203,6 +207,7 @@ protected:
     QAction  *showMessageA;
     QAction  *whatsThisA;
     QAction  *windowNameA;
+    QActionGroup *fontActionGroup;
     QActionGroup *popupActionGroup;
     QActionGroup *schemaActionGroup;
     QActionGroup *schemaScopeGroup;

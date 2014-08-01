@@ -404,3 +404,15 @@ void MainWindow::linkSearchSlot(bool turnedOn)
     qDebug() << "Link Search Enabled " << turnedOn << __FILE__ << __LINE__;
     linkSearchOn = turnedOn;
 }
+void MainWindow::setFontSlot(QAction *fontAction)
+{
+  qDebug() << "SET FONT" << __FILE__ << __LINE__;
+  QFont fnt = font();
+  int ptSize = fnt.pointSize();
+  if (fontAction == fontIncreaseA)
+      ptSize +=2;
+  else if (fontAction == fontDecreaseA)
+      ptSize -=2;
+  fnt.setPointSize(ptSize);
+  setFont(fnt);
+}

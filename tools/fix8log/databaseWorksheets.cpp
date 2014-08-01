@@ -87,7 +87,6 @@ QList <WorkSheetData> Database::getWorkSheets(int windowID)
         wd.trailerExpanded = query.value(9).toBool();
         wd.searchFunction.function = query.value(10).toString();
         wd.searchFunction.javascript = query.value(11).toString();
-
         wd.messageHeaderState = query.value(12).toByteArray();
         wd.fieldsExpansionType = query.value(13).toUInt();
         qDebug() << ">>>>>>>>>>>>> DATABASE GET FIELDS EXPANSION TYPE:" << wd.fieldsExpansionType << __FILE__ << __LINE__;
@@ -107,7 +106,7 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
     }
     QSqlQuery query(*handle);
     bstatus = query.prepare("INSERT INTO worksheets (id,windowID,alias, file ,selectedRow,splitterState,headerState,headerExpanded,fieldsExpanded,trailerExpanded,searchFunction,searchJavascript, messageAreaHeaderState,fieldsExpansionType)"
-                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerExpanded,:searchFunction, searchJavascript,:messageAreaHeaderState, :fieldsExpansionType)");
+                            "VALUES(NULL,:windowID,:alias, :file ,:selectedRow,:splitterState,:headerState,:headerExpanded,:fieldsExpanded,:tailerExpanded,:searchFunction, :searchJavascript,:messageAreaHeaderState, :fieldsExpansionType)");
     if (bstatus == 0) {
         qWarning("Error database - add worksheet failed in prepare statement...");
         sqlError = query.lastError();

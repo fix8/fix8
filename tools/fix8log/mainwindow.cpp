@@ -66,7 +66,7 @@ MainWindow::MainWindow(Database *db,bool showLoading)
 
 MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false), haveSearchFunction(false),database(db),linkSearchOn(false)
+      windowDataID(-1),loadingActive(false), haveSearchFunction(false),database(db),linkSearchOn(false),fieldUsePairList(0)
 {
     buildMainWindow();
     setAcceptDrops(true);
@@ -185,6 +185,16 @@ void MainWindow::buildMainWindow()
     searchToolBarA->setIcon(QIcon(":/images/svg/magniflying_glass.svg"));
     hideToolBarA = mainToolBar->toggleViewAction();
 
+    fontActionGroup = new QActionGroup(this);
+    fontIncreaseA = new QAction(QIcon(":/images/svg/increasefont.svg"),"Larger Font",this);
+    fontDecreaseA = new QAction(QIcon(":/images/svg/decreasefont.svg"),"Smaller Font",this);
+    fontRegularA  = new QAction(QIcon(":/images/svg/font.svg"),"Regular Font",this);
+    fontActionGroup->addAction(fontIncreaseA);
+    fontActionGroup->addAction(fontDecreaseA);
+    fontActionGroup->addAction(fontRegularA);
+    connect(fontActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(setFontSlot(QAction*)));
+
+
     mainToolBar->setMovable(true);
     searchToolBar->setMovable(true);
     searchToolBar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
@@ -199,21 +209,25 @@ void MainWindow::buildMainWindow()
     autoIcon.addPixmap(QPixmap(":/images/svg/saveOff.svg"),QIcon::Normal,QIcon::Off);
     autoSaveA->setIcon(autoIcon);
     autoSaveA->setToolTip(tr("Automatically Save Session For Next Use"));
+    autoSaveA->setWhatsThis(tr("When  turned all windows and tabs will be saved and restored upon next start of application"));
     autoSaveA->setCheckable(true);
     connect(autoSaveA,SIGNAL(triggered(bool)),this,SLOT(autoSaveOnSlot(bool)));
     closeA = new QAction(tr("&Close Window"),this);
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
+    closeA->setWhatsThis(tr("Closes only this window, if last window open then it will exit application"));
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
 
     quitA = new QAction(tr("&Quit"),this);
     quitA->setIcon(QIcon(":/images/32x32/exit.svg"));
     quitA->setToolTip(tr("Exit Application"));
+     quitA->setWhatsThis(tr("Exit application, clsoing all windows"));
     connect(quitA,SIGNAL(triggered()),this,SLOT(quitSlot()));
 
     newTabA = new QAction(tr("New Tab"),this);
     newTabA->setIcon((QIcon(":/images/svg/newspreadsheet.svg")));
     newTabA->setToolTip(tr("Create A New Empty Tab"));
+    newTabA->setWhatsThis(tr("Create a new tab in this window"));
 
     copyTabA = new QAction(tr("Copy Tab"),this);
     copyTabA->setIcon((QIcon(":/images/svg/spreadsheetCopy.svg")));
@@ -226,7 +240,7 @@ void MainWindow::buildMainWindow()
     newWindowA = new QAction("New &Window",this);
     newWindowA->setIcon((QIcon(":/images/32x32/newwindow.svg")));
     newWindowA->setToolTip(tr("Open New Window"));
-
+    newWindowA->setWhatsThis(tr("Open a new empty window"));
     windowNameA = new QAction("Window Name",this);
     windowNameA->setToolTip("Set Window Name");
     connect(windowNameA,SIGNAL(triggered()),this,SLOT(setWindowNameSlot()));
@@ -234,13 +248,17 @@ void MainWindow::buildMainWindow()
     copyWindowA = new QAction("&Copy Window",this);
     copyWindowA->setIcon((QIcon(":/images/32x32/copywindow.svg")));
     copyWindowA->setToolTip(tr("Copy Window"));
+    copyWindowA->setWhatsThis(tr("Create a new window exactly like this one"));
     connect(copyWindowA,SIGNAL(triggered()),this,SLOT(copyWindowSlot()));
     editSchemaA= new QAction("&Schema Editor",this);
     editSchemaA->setIconText("Edit");
+    editSchemaA->setToolTip(tr("Edit table columns"));
+    editSchemaA->setWhatsThis(tr("Allows you to select what fields should be displayed as columns in table"));
     editSchemaA->setIcon((QIcon(":/images/svg/editSchema.svg")));
     connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
     showMessageA = new QAction(tr("Show/Hide Msgs"),this);
     showMessageA->setToolTip(tr("Show/Hide Message Area"));
+    showMessageA->setWhatsThis(tr("Message area displays errors, warnings and status"));
     showMessageA->setCheckable(true);
     connect(showMessageA,SIGNAL(triggered(bool)),this,SLOT(showMessageArea(bool)));
     QIcon showIcon;
@@ -252,6 +270,7 @@ void MainWindow::buildMainWindow()
     filterSenderMenuA = new QAction("Sender",this);
     filterSenderMenuA->setIcon(QIcon(":/images/svg/filterSender.svg"));
     filterSenderMenuA->setToolTip("Filter Out Messages By SenderID");
+    filterSenderMenuA->setWhatsThis("Allows you to filter out messages by SenderID");
     searchActionGroup = new QActionGroup(this);
     connect(searchActionGroup,SIGNAL(triggered(QAction*)),
             this,SLOT(searchActionSlot(QAction*)));
@@ -259,16 +278,26 @@ void MainWindow::buildMainWindow()
     saveIcon.addPixmap(QPixmap(":/images/svg/saveEnabled.svg"),QIcon::Normal,QIcon::On);
     saveIcon.addPixmap(QPixmap(":/images/svg/saveDisabled.svg"),QIcon::Normal,QIcon::Off);
     saveSearchFuncA  = new QAction("Save",this);
+
     saveSearchFuncA->setIcon(saveIcon);
     saveSearchFuncA->setToolTip(tr("Save this search criteria"));
+    saveSearchFuncA->setWhatsThis(tr("Save search string to database so it can be reused latter"));
     connect(saveSearchFuncA,SIGNAL(triggered()),this,SLOT(saveSearchStringSlot()));
     searchBackA  = new QAction("Previous",this);
+    searchBackA->setToolTip("Search Back");
+    searchBackA->setWhatsThis("Go to preceeding message that matches search critera");
     searchBackA->setIcon(QIcon(":/images/svg/go-previous-symbolic.svg"));
     searchBeginA = new QAction("First",this);
+    searchBeginA->setToolTip("Go to first search entry");
+    searchBeginA->setWhatsThis("Go to firs message that matches search requirement");
     searchBeginA->setIcon(QIcon(":/images/svg/go-first-symbolic.svg"));
     searchEndA   = new QAction("Last",this);
+    searchEndA->setToolTip("Go to last search entry");
+    searchEndA->setWhatsThis("Go to last message that matches search requirement");
     searchEndA->setIcon(QIcon(":/images/svg/go-last-symbolic.svg"));
     searchNextA  = new QAction("Next",this);
+     searchNextA->setToolTip("Search Forward");
+     searchNextA->setWhatsThis("Go to next message that matches search critera");
     searchNextA->setIcon(QIcon(":/images/svg/go-next-symbolic.svg"));
     searchActionGroup->addAction(searchBackA);
     searchActionGroup->addAction(searchBeginA);
@@ -276,6 +305,8 @@ void MainWindow::buildMainWindow()
     searchActionGroup->addAction(searchNextA);
 
     searchEditA  = new QAction(tr("Edit"),this);
+    searchEditA->setToolTip("Edit search functions");
+    searchEditA->setWhatsThis("Allows you to add remove,edit and provide aliases for search functions");
     connect(searchEditA,SIGNAL(triggered()),this,SIGNAL(showSearchDialog()));
     //searchEditA->setIcon(QIcon(":/images/svg/text-editor-symbolic.svg"));
     QSize stoolbar = searchToolBar->iconSize();
@@ -293,11 +324,14 @@ void MainWindow::buildMainWindow()
     linkSearchA = new QAction("Search All",this);
     linkSearchA->setCheckable(true);
     linkSearchA->setToolTip("Search all tabs or just current tab");
+    linkSearchA->setWhatsThis("When on, search applies to all tabs of this window");
     linkSearchA->setIcon(linkIcon);
     connect(linkSearchA,SIGNAL(toggled(bool)),SLOT(linkSearchSlot(bool)));
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
     searchLineEdit = new LineEdit(searchArea);
+    searchLineEdit->setWhatsThis("Search critera. Can be any Javascript\nEg: MsgType=='8' && AvgPx > 10.0");
+
     QWidget *searchSelectArea = new QWidget(this);
     QHBoxLayout *searchSelectBox = new QHBoxLayout();
     searchSelectArea->setLayout(searchSelectBox);
@@ -311,6 +345,9 @@ void MainWindow::buildMainWindow()
     searchSelectCB->setMaximumWidth(fm.maxWidth()*20);
     searchSelectModel = searchSelectCB->model();
     searchSelectCB->setEditable(false);
+    searchSelectCB->setToolTip("Alias list of search functions");
+    searchSelectCB->setWhatsThis("Select search function by its alias.  Use \"Search Edit\" to edit this list");
+
     searchSelectBox->addWidget(searchSelectL,0);
     searchSelectBox->addWidget(searchSelectCB,1);
 
@@ -337,6 +374,11 @@ void MainWindow::buildMainWindow()
     searchToolBar->addAction(searchEndA);
     searchToolBar->addWidget(searchSelectArea);
     searchToolBar->addAction(searchEditA);
+
+    whatsThisA = QWhatsThis::createAction(this);
+    whatsThisA->setIcon(QIcon(":/images/svg/help-contents.svg"));
+    whatsThisA->setToolTip("Provides brief description of  icons and buttons");
+
     QHBoxLayout *space = new QHBoxLayout();
     space->addStretch(1);
     space->setMargin(0);
@@ -457,6 +499,11 @@ void MainWindow::buildMainWindow()
     mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(filterSenderMenuA);
     mainToolBar->addAction(searchToolBarA);
+    mainToolBar->addSeparator();
+    mainToolBar->addAction(fontIncreaseA);
+    mainToolBar->addAction(fontDecreaseA);
+    mainToolBar->addAction(fontRegularA);
+    mainToolBar->addAction(whatsThisA);
     QWidget      *fixVersionArea = new QWidget(mainToolBar);
     QHBoxLayout  *fixVerLayout = new QHBoxLayout(fixVersionArea);
     fixVerLayout->setMargin(0);
@@ -482,7 +529,7 @@ void MainWindow::buildMainWindow()
     aboutA = new QAction("About",this);
     aboutQTA = new QAction("Qt",this);
     //whatsThis = new QWhatsThis();
-    whatsThisA = QWhatsThis::createAction(this);
+
     helpMenu->addAction(whatsThisA);
     helpMenu->addAction(aboutA);
 

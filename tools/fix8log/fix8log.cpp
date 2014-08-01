@@ -104,12 +104,12 @@ void Fix8Log::cleanWindowDataList(QList <WindowData> &windowDataList)
                     wd->tableSchemaID = defaultTableSchema->id;
             }
         }
-
     }
 }
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,database,true);
+    newMW->setFieldUsePair(&fieldUsePairList);
     newMW->setSearchFunctions(searchFunctionList);
     wireSignalAndSlots(newMW);
     newMW->show();
@@ -121,13 +121,11 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
         qWarning() << "Error - wire signals and slots, window is null" << __FILE__ << __LINE__;
         return;
     }
-    mw->
-            connect(mw,SIGNAL(toolButtonStyleModified(Qt::ToolButtonStyle)),
-                    this,SLOT(toolButtonStyleModfiedSlot(Qt::ToolButtonStyle)));
+    connect(mw,SIGNAL(toolButtonStyleModified(Qt::ToolButtonStyle)),
+            this,SLOT(toolButtonStyleModfiedSlot(Qt::ToolButtonStyle)));
     connect(mw,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
-
     connect(mw,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
     connect(mw,SIGNAL(autoSaveOn(bool)),this,SLOT(autoSaveOnSlot(bool)));
     connect(mw,SIGNAL(cancelSessionRestore()),this,SLOT(cancelSessionRestoreSlot()));
@@ -143,7 +141,6 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw->aboutA,SIGNAL(triggered()),this,SLOT(aboutSlot()));
     mw->setAutoSaveOn(autoSaveOn);
 }
-
 void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMessageType mt)
 {
     GUI::ConsoleMessage m(str,mt);
@@ -168,12 +165,10 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
             }
             name = qbe->name;
             qbaseEntryList->append(qbe);
-
             if (defaultHeaderStrs.contains(name)) {
                 if (!defaultHeaderItems.findByName(name))
                     defaultHeaderItems.append(qbe);
             }
-
             fieldUse = ful.findByName(name);
             if (!fieldUse) {
                 fieldUse = new FieldUse();
@@ -182,11 +177,9 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
                 ful.append(fieldUse);
             }
             fieldUse->messageFieldList.append(mf);
-
         }
         else
             qWarning() << "\t\tERROR QBASELIST = 0" ;
-
         //MessageBase *header =  new Message::Header();
         //cout << "Field Type: " << ft._ftype << endl;
         //cout << spacer << "\t" << *itr << endl; // use FieldTrait insert operator. g out traits.
@@ -196,7 +189,6 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
         }
         ii++;
     }
-
 }
 void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                               MessageField *mf,QBaseEntryList *qbaseEntryList,int *level)
@@ -225,7 +217,6 @@ void Fix8Log::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *>
                 ful.append(fieldUse);
             }
             fieldUse->messageFieldList.append(mf);
-
             if (defaultHeaderStrs.contains(name)) {
                 if (!defaultHeaderItems.findByName(name))
                     defaultHeaderItems.append(qbe);
@@ -284,12 +275,9 @@ bool Fix8Log::init()
         messageField = new MessageField(key,value);
         int level = 0;
         generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
-        //qDebug() << "NUM OF FIELDS IN MESSAGE:" << qbaseEntryList->count() << __FILE__ << __LINE__;
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);
     }
-    //qDebug() << ">>>>>>>>>>>>>> FIELD USE LIST:" << fieldUseList.count() << __FILE__ << __LINE__;
-
     QListIterator <FieldUse *> fieldIter(fieldUseList);
     while(fieldIter.hasNext()) {
         FieldUse *mf = fieldIter.next();
@@ -400,7 +388,6 @@ bool Fix8Log::init()
             defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
             defaultTableSchema->setFields(defaultHeaderItems.clone());
             defaultTableSchema->fieldNames = defaultHeaderItems.getFieldNames();
-            qDebug() << "************* SET DEF FIELD NAMES TO: " << defaultTableSchema->fieldNames;
             bstatus = database->addTableSchema(*defaultTableSchema);
             if (!bstatus) {
                 errorStr = "Failed to add default table schema to database";
@@ -472,7 +459,6 @@ bool Fix8Log::init()
             newMW  = new MainWindow(database,true);
             newMW->setFieldUsePair(&fieldUsePairList);
             newMW->setSearchFunctions(searchFunctionList);
-
             wireSignalAndSlots(newMW);
             mainWindows.append(newMW);
             newMW->setAutoSaveOn(autoSaveOn);
@@ -480,7 +466,6 @@ bool Fix8Log::init()
             newMW->show();
             // have to set style sheet after show to see it take effect
             newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
-
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
@@ -505,7 +490,6 @@ bool Fix8Log::init()
         newMW = new MainWindow(database);
         newMW->setFieldUsePair(&fieldUsePairList);
         newMW->setSearchFunctions(searchFunctionList);
-
         if (windowDataList.count() > 0) {
             wd = windowDataList.at(0);
             if (!wd.tableSchema) {
@@ -534,7 +518,6 @@ bool Fix8Log::init(QString fileNameToLoad)
     wsd.fileName = fileNameToLoad;
     wd.isVisible = true;
     wd.name = "Fix8LogViewer";
-
     wireSignalAndSlots(newMW);
     newMW->setWindowData(wd);
     wireSignalAndSlots(newMW);
@@ -542,14 +525,12 @@ bool Fix8Log::init(QString fileNameToLoad)
     newMW->setLoadMessage("Loading File " + wsd.fileName);
     model = readLogFile(wsd.fileName,errorStr);
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,4);
-
     if (model) {
         fileNameModelMap.insert(wsd.fileName,model);
         newMW->addWorkSheet(model,wsd);
         newMW->show();
     }
     newMW->setLoading(false);
-
     return true;
 }
 void Fix8Log::saveSession()
@@ -565,6 +546,7 @@ void Fix8Log::saveSession()
         qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
     QListIterator <MainWindow *> iter(mainWindows);
     while(iter.hasNext()) {
+        qDebug() << "Save Main Window..." << __FILE__ << __LINE__;
         mw = iter.next();
         WindowData wd = mw->getWindowData();
         bstatus = database->addWindow(wd);
@@ -587,10 +569,8 @@ void Fix8Log::readSettings()
 {
     QSettings settings("fix8","logviewer");
     autoSaveOn = (bool) settings.value("AutoSave",false).toBool();
-
     GUI::Globals::timeFormat  = (GUI::Globals::TimeFormat) settings.value("StartTimeFormat",GUI::Globals::HHMMSS).toInt();
     emit notifyTimeFormatChanged(GUI::Globals::timeFormat);
-
 }
 void Fix8Log::writeSettings()
 {

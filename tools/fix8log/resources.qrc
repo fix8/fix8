@@ -71,5 +71,9 @@
         <file>images/32x32/tab.png</file>
         <file>qml/LetterArea.qml</file>
         <file>qml/helpAbout.qml</file>
+        <file>images/svg/help-contents.svg</file>
+        <file>images/svg/font.svg</file>
+        <file>images/svg/increasefont.svg</file>
+        <file>images/svg/decreasefont.svg</file>
     </qresource>
 </RCC>
