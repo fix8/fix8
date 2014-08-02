@@ -377,6 +377,10 @@ public:
 	 \tparam args further types to convey */
 template<typename T, typename... args> struct Type2Type {};
 
+//-------------------------------------------------------------------------------------------------
+/// Template provides insert operator that inserts nothing
+struct null_insert { template <typename T> null_insert& operator<<(const T&) { return *this; } };
+
 } // FIX8
 
 #endif // _F8_TYPES_HPP_

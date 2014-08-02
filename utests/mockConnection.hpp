@@ -323,7 +323,7 @@ public:
     {
         const unsigned current_sz(sock->getReceiveBufferSize());
         sock->setReceiveBufferSize(sz);
-        glout << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
+        glout_info << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
     }
 
     /*! Set the socket send buffer sz
@@ -334,7 +334,7 @@ public:
     {
         const unsigned current_sz(sock->getSendBufferSize());
         sock->setSendBufferSize(sz);
-        glout << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
+        glout_info << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
     }
 
     /// empty function

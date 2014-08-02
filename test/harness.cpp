@@ -243,7 +243,7 @@ int main(int argc, char **argv)
 				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
-				glout << "client(" << ++scnt << ") connection established.";
+				glout_info << "client(" << ++scnt << ") connection established.";
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();

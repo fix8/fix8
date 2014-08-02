@@ -64,7 +64,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // file/line stringification
 #define STRINGOF(x) #x
 #define STRINGIFY(x) STRINGOF(x)
-#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__) " "
+#define FILE_LINE "[" __FILE__ ":" STRINGIFY(__LINE__) "] "
 
 namespace FIX8 {
 
@@ -123,11 +123,27 @@ F8API const std::string& GetTimeAsStringMS(std::string& result, const class Tick
   \return reference to target string */
 F8API const std::string& GetTimeAsStringMini(std::string& result, const Tickval *tv);
 
+/*! Trim leading and trailing whitespace from a string
+  \param source source string
+  \param ws string containing whitespace characters to trim out
+  \return copy of trimmed string */
+inline std::string trim(const std::string& source, const std::string& ws=" \t")
+{
+    const size_t bgstr(source.find_first_not_of(ws));
+    return bgstr == std::string::npos
+		 ? source : source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+}
+
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
-F8API const std::string& trim(std::string& source, const std::string& ws=" \t");
+inline const std::string& trim(std::string& source, const std::string& ws=" \t")
+{
+    const size_t bgstr(source.find_first_not_of(ws));
+    return bgstr == std::string::npos
+		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+}
 
 /*! Return a set of strings with current package info
   \return vector os strings */
@@ -762,6 +778,18 @@ inline fp_type fast_atof (const char *p)
 extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
 
 //----------------------------------------------------------------------------------------
+/// empty argument version
+constexpr unsigned bitsum() { return 0; }
+
+/*! Calculate the value of a set of bit positions, e.g. bitsum(1,3,5,6)
+    \tparam T first value, used to unpack
+    \tparam Args remaining values
+    \return result */
+template <typename T, typename... Args>
+constexpr unsigned bitsum(T value, Args... args)
+	{ return 1 << value | bitsum(args...); }
+
+//----------------------------------------------------------------------------------------
 /// Bitset for enums.
 /*! \tparam T the enum type
     \tparam B the integral type of the enumeration */
@@ -820,14 +848,18 @@ public:
 	    \param sset the set of strings
 	    \param what the string to find and set
 	    \param on set or clear the found bit
-	    \return true if found and set */
-	bool set(const std::vector<std::string>& sset, const std::string& what, bool on=true)
+	    \return enumeration (as int) if found and -1 if not */
+	int set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase, bool on=true)
 	{
-		auto itr(std::find(sset.cbegin(), sset.cend(), what));
+		auto itr(sset.cbegin());
+		for (; itr != sset.cend(); ++itr)
+			if (ignorecase ? trim(*itr) % what : trim(*itr) == what)
+				break;
 		if (itr == sset.cend())
-			return false;
-		set(static_cast<T>(std::distance(sset.cbegin(), itr)), on);
-		return true;
+			return -1;
+		const int dist(std::distance(sset.cbegin(), itr));
+		set(static_cast<T>(dist), on);
+		return dist;
 	}
 
 	/*! Clear a bit on or off.
@@ -912,12 +944,15 @@ public:
 	    \param what the string to find and set
 	    \param on set or clear the found bit
 	    \return true if found and set */
-	bool set(const unsigned els, const std::string *sset, const std::string& what, bool on=true)
+	bool set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase=false, bool on=true)
 	{
-		const std::string *last(sset + els), *result(std::find(sset, last, what));
-		if (result == last)
+		auto itr(sset.cbegin());
+		for (; itr != sset.cend(); ++itr)
+			if (ignorecase ? trim(*itr) % what : trim(*itr) == what)
+				break;
+		if (itr == sset.cend())
 			return false;
-		set(static_cast<T>(std::distance(sset, result)), on);
+		set(static_cast<T>(std::distance(sset.cbegin(), itr)), on);
 		return true;
 	}
 
@@ -961,13 +996,17 @@ public:
 	 \param sset the set of strings; if null return default value
 	 \param what the string to find
 	 \param def the default value to return if not found
+	 \param ignorecase if true, ignore case
 	 \return enum value or default */
 template<typename T>
-T enum_str_get(const std::vector<std::string>& sset, const std::string& what, const T def)
+T enum_str_get(const std::vector<std::string>& sset, const std::string& what, const T def, bool ignorecase=false)
 {
 	if (sset.empty())
 		return def;
-	auto itr(std::find(sset.cbegin(), sset.cend(), what));
+	auto itr(sset.cbegin());
+	for (; itr != sset.cend(); ++itr)
+		if (ignorecase ? *itr % what : *itr == what)
+			break;
 	return itr == sset.cend() ? def : static_cast<T>(std::distance(sset.begin(), itr));
 }
 

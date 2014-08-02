@@ -186,7 +186,7 @@ int Timer<T>::operator()()
 			hypersleep<h_milliseconds>(_granularity);
    }
 
-	glout << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
+	glout_info << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
 	return 0;
 }
 

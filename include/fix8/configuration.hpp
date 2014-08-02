@@ -264,9 +264,15 @@ public:
 	F8API Poco::Net::IPAddress get_ip(const XmlElement *from) const;
 
 	/*! Extract the logflags from the flags attribute in a log entity.
+	  \tparam T ebitset type
+	  \param tag attribute tag to search for
+	  \param names vector of names for each enumeration
 	  \param from xml entity to search
+	  \param positions vector to place enumeration position in
 	  \return LogFLags object */
-	F8API Logger::LogFlags get_logflags(const XmlElement *from) const;
+	template<typename T>
+	T get_logflags(const std::string& tag, const std::vector<std::string>& names,
+		const XmlElement *from, Logger::LogPositions *positions=nullptr) const;
 
 	/*! Extract the session log filename address from a session entity.
 	  \param from xml entity to search

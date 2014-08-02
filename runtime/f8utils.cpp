@@ -212,14 +212,6 @@ void create_path(const string& path)
 }
 
 //----------------------------------------------------------------------------------------
-const string& trim(string& source, const string& ws)
-{
-    const size_t bgstr(source.find_first_not_of(ws));
-    return bgstr == string::npos
-		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
-}
-
-//----------------------------------------------------------------------------------------
 namespace
 {
 	using Day = pair<char, int>;

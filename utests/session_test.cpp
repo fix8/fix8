@@ -161,8 +161,8 @@ public:
         flag.set(Logger::pipe, true);
 
         per = new MemoryPersister;
-        sLogger = new PipeLogger(cmd, flag);
-        pLogger = new PipeLogger(cmd, flag);
+        sLogger = new PipeLogger(cmd, flag, Logger::Levels(Logger::All));
+        pLogger = new PipeLogger(cmd, flag, Logger::Levels(Logger::All));
 #endif // _MSC_VER
 
         ss = new test_session(ctx(), id, per, sLogger, pLogger);

@@ -51,7 +51,7 @@ bool MemcachedPersister::initialise(const f8String& config_str, const f8String& 
 	_cache = memcached(config_str.c_str(), config_str.size());
 	if (!(_server_count = memcached_server_count(_cache)))
 	{
-		glout << FILE_LINE << "Error: no memcached servers were configured for " << _key_base;
+		glout_error << FILE_LINE << "Error: no memcached servers were configured for " << _key_base;
 		return false;
 	}
 	return purge ? memcached_success(memcached_flush(_cache, 0)) : true;
@@ -83,7 +83,7 @@ unsigned MemcachedPersister::get(const unsigned from, const unsigned to, Session
 
 	if (!startSeqNum || from > finish)
 	{
-		glout << FILE_LINE << "No records found";
+		glout_warn << FILE_LINE << "No records found";
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -115,7 +115,7 @@ bool MemcachedPersister::put(const unsigned sender_seqnum, const unsigned target
 	const string key(generate_seq_key(0)), payload(generate_ctrl_record(sender_seqnum, target_seqnum));
 	if (!put_to_cache(key, payload))
 	{
-		glout << FILE_LINE << "Error: could not write control record to memcached for " << _key_base;
+		glout_error << FILE_LINE << "Error: could not write control record to memcached for " << _key_base;
 		return false;
 	}
 	return true;
@@ -130,7 +130,7 @@ bool MemcachedPersister::put(const unsigned seqnum, const f8String& what)
 	const string key(generate_seq_key(seqnum));
 	if (!put_to_cache(key, what))
 	{
-		glout << FILE_LINE << "Error: could not write record for seqnum " << seqnum << " for " << _key_base;
+		glout_error << FILE_LINE << "Error: could not write record for seqnum " << seqnum << " for " << _key_base;
 		return false;
 	}
 
@@ -146,7 +146,7 @@ bool MemcachedPersister::put(const f8String& inkey, const f8String& what)
 	const string key(_key_base + inkey);
 	if (!put_to_cache(key, what))
 	{
-		glout << FILE_LINE << "Error: could not write record for key " << inkey << " for " << _key_base;
+		glout_error << FILE_LINE << "Error: could not write record for key " << inkey << " for " << _key_base;
 		return false;
 	}
 
@@ -163,7 +163,7 @@ bool MemcachedPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) c
 	string target;
 	if (!get_from_cache(key, target))
 	{
-		glout << FILE_LINE << "Warning: memcached does not have control record for " << _key_base;
+		glout_warn << FILE_LINE << "Warning: memcached does not have control record for " << _key_base;
 		return false;
 	}
 
@@ -179,7 +179,7 @@ bool MemcachedPersister::get(const unsigned seqnum, f8String& to) const
 	const string key(generate_seq_key(seqnum));
 	if (!get_from_cache(key, to))
 	{
-		glout << FILE_LINE << "Warning: could not get message record with seqnum " << seqnum << " for " << _key_base;
+		glout_warn << FILE_LINE << "Warning: could not get message record with seqnum " << seqnum << " for " << _key_base;
 		return false;
 	}
 
@@ -194,7 +194,7 @@ bool MemcachedPersister::get(const f8String& inkey, f8String& to) const
 	const string key(_key_base + inkey);
 	if (!get_from_cache(key, to))
 	{
-		glout << FILE_LINE << "Warning: could not get message record with key " << inkey << " for " << _key_base;
+		glout_warn << FILE_LINE << "Warning: could not get message record with key " << inkey << " for " << _key_base;
 		return false;
 	}
 

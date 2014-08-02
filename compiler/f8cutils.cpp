@@ -392,14 +392,23 @@ string insert_year()
 //-------------------------------------------------------------------------------------------------
 void generate_includes(ostream& to)
 {
-	static const string incfiles[]
+	static const vector<string> incfiles
 	{
-        "f8includes.hpp"
+		//"f8includes.hpp"
+		"f8exception.hpp",
+		"mpmc.hpp",
+		"thread.hpp",
+		"f8types.hpp",
+		"f8utils.hpp",
+		"tickval.hpp",
+		"traits.hpp",
+		"field.hpp",
+		"message.hpp"
 	};
 
 	to << "// f8 includes" << endl;
-	for (const string *ptr(incfiles); ptr < incfiles + sizeof(incfiles)/sizeof(string); ++ptr)
-		to << "#include " << (incpath ? "<fix8/" : "<") << *ptr << '>' << endl;
+	for (const auto& pp : incfiles)
+		to << "#include " << (incpath ? "<fix8/" : "<") << pp << '>' << endl;
 }
 
 //-------------------------------------------------------------------------------------------------

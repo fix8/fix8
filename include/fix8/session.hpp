@@ -646,19 +646,34 @@ public:
 	    \return the context object */
 	const F8MetaCntx& get_ctx() const { return _ctx; }
 
-	/*! Log a message to the session logger.
+	/*! Check if the given log level is set for the session logger
+	    \param level level to test
+	    \return true if available */
+	bool is_loggable(Logger::Level level) const { return _logger ? _logger->is_loggable(level) : false; }
+
+	/*! Log a message to the session logger. Do not check for level permission
 	    \param what string to log
+	    \param lev log level
 	    \param value optional value for the logger to use
 	    \return true on success */
-	bool log(const std::string& what, const unsigned value=0) const
-		{ return _logger ? _logger->send(what, value) : false; }
+	bool enqueue(const std::string& what, Logger::Level lev, unsigned value=0) const
+		{ return _logger ? _logger->enqueue(what, lev, value) : false; }
+
+	/*! Log a message to the session logger.
+	    \param what string to log
+	    \param lev log level
+	    \param value optional value for the logger to use
+	    \return true on success */
+	bool log(const std::string& what, Logger::Level lev, unsigned value=0) const
+		{ return _logger ? _logger->send(what, lev, value) : false; }
 
 	/*! Log a message to the protocol logger.
 	    \param what Fix message (string) to log
+	    \param lev log level
 	    \param direction 0=out, 1=in
 	    \return true on success */
-	bool plog(const std::string& what, const unsigned direction=0) const
-		{ return _plogger ? _plogger->send(what, direction) : false; }
+	bool plog(const std::string& what, Logger::Level lev, const unsigned direction=0) const
+		{ return _plogger ? _plogger->send(what, lev, direction) : false; }
 
 	/*! Return the last received timstamp
 	    \return Tickval on success */
@@ -810,9 +825,29 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 // our buffered RAII ostream log target, ostream Session log target for specified Session ptr
-#define ssout(x) log2_stream(bool_func_string_int(std::bind(&Session::log, x, std::placeholders::_1, std::placeholders::_2)))
-// our buffered RAII ostream log target, ostream Session log target for current Session
+#define ssout_info(x) if (!x->is_loggable(Logger::Info)); \
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Info, std::placeholders::_2)))
+#define ssout(x) ssout_info(x)
+
+#define ssout_warn(x) if (!x->is_loggable(Logger::Warn)); \
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Warn, std::placeholders::_2)))
+#define ssout_error(x) if (!x->is_loggable(Logger::Error)); \
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Error, std::placeholders::_2)))
+#define ssout_fatal(x) if (!x->is_loggable(Logger::Fatal)); \
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Fatal, std::placeholders::_2)))
+#if defined NDEBUG
+#define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, std::placeholders::_2))) << FILE_LINE
+#else
+#define ssout_debug(x) true ? null_insert() : null_insert()
+#endif
+
 #define slout ssout(this)
+#define slout_info ssout_info(this)
+#define slout_warn ssout_warn(this)
+#define slout_error ssout_error(this)
+#define slout_fatal ssout_fatal(this)
+#define slout_debug ssout_debug(this)
 
 //-------------------------------------------------------------------------------------------------
 

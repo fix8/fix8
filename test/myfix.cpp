@@ -216,7 +216,7 @@ int main(int argc, char **argv)
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
-		case 'l': GlobalLogger::set_global_filename(optarg); break;
+		case 'l': GlobalLogger::set_global_filename(optarg); GlobalLogger::instance(); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
 		case 'N': session = optarg; break;
@@ -347,19 +347,19 @@ int main(int argc, char **argv)
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
-		glout << e.what();
+		glout_error << e.what();
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
-		glout << e.what();
+		glout_error << e.what();
 	}
 	catch (...)
 	{
 		cerr << "unknown exception" << endl;
 		restore_tty = true;
-		glout << "unknown exception";
+		glout_error << "unknown exception";
 	}
 
 	if (restore_tty && !server)
@@ -394,7 +394,7 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti)
 	unique_ptr<SessionInstanceBase> inst(srv->create_server_instance());
 	if (!quiet)
 		inst->session_ptr()->control() |= Session::print;
-	glout << "client(" << scnt << ") connection established.";
+	glout_info << "client(" << scnt << ") connection established.";
 	const ProcessModel pm(srv->get_process_model(srv->_ses));
 	cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
 	inst->start(pm == pm_pipeline, next_send, next_receive);

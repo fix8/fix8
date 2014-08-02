@@ -209,7 +209,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 
 	if (!hlen)
 	{
-		//cerr << "Message::factory throwing" << endl;
+		glout_debug << "Message::factory throwing";
 		throw InvalidMessage(from, FILE_LINE);
 	}
 
@@ -688,12 +688,12 @@ void Message::report_codec_timings(const f8String& tag)
 
 	ostr << tag << ' ';
 	format_codec_timings("Encode", ostr, _encode_timings);
-	glout << ostr.str();
+	glout_info << ostr.str();
 
 	ostr.str("");
 	ostr << tag << ' ';
 	format_codec_timings("Decode", ostr, _decode_timings);
-	glout << ostr.str();
+	glout_info << ostr.str();
 }
 #endif
 
