@@ -780,15 +780,15 @@ extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
 
 //----------------------------------------------------------------------------------------
 /// empty argument version
-constexpr unsigned bitsum() { return 0; }
+//constexpr unsigned bitsum() { return 0; }
 
 /*! Calculate the value of a set of bit positions, e.g. bitsum(1,3,5,6)
     \tparam T first value, used to unpack
     \tparam Args remaining values
     \return result */
-template <typename T, typename... Args>
-constexpr unsigned bitsum(T value, Args... args)
-	{ return 1 << value | bitsum(args...); }
+//template <typename T, typename... Args>
+//constexpr unsigned bitsum(T value, Args... args)
+//	{ return 1 << value | bitsum(args...); }
 
 //----------------------------------------------------------------------------------------
 /// Bitset for enums.

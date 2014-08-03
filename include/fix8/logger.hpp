@@ -157,10 +157,10 @@ class Logger
 
 public:
 	enum Level { Debug, Info, Warn, Error, Fatal };
-	static const int Errors = bitsum(Warn,Error,Fatal), All = bitsum(Debug,Info,Warn,Error,Fatal), None = 0;
+	static const int Errors = (1<<Warn|1<<Error|1<<Fatal), All = (1<<Debug|1<<Info|1<<Warn|1<<Error|1<<Fatal), None = 0;
 	enum Flags { mstart, sstart, sequence, thread, timestamp, minitimestamp, direction, level,
 					 append, start_controls=append, buffer, compress, pipe, broadcast, nolf, inbound, outbound, num_flags };
-	static const int StdFlags = bitsum(sequence,thread,timestamp,level);
+	static const int StdFlags = (1<<sequence|1<<thread|1<<timestamp|1<<level);
 	enum { rotation_default = 5, max_rotation = 1024};
 	using LogFlags = ebitset<Flags>;
 	using Levels = ebitset<Level>;
