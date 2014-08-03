@@ -835,7 +835,7 @@ public:
 	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Error, std::placeholders::_2)))
 #define ssout_fatal(x) if (!x->is_loggable(Logger::Fatal)); \
 	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Fatal, std::placeholders::_2)))
-#if defined NDEBUG
+#if defined F8_DEBUG
 #define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
 	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, std::placeholders::_2))) << FILE_LINE
 #else

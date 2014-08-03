@@ -397,21 +397,20 @@ const size_t max_global_filename_length(1024);
 /*! \tparam fn actual pathname of logfile
     \details Create a static instance of this template and set the template parameter to the desired logfile pathname */
 template<char *fn>
-class SingleLogger : public Singleton<SingleLogger<fn>>, public FileLogger
+class SingleLogger
 {
-public:
-	/// Ctor.
-	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread << level
+	static FileLogger& instance()
+	{
+		static FileLogger _fl(fn, Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::thread << Logger::level
 #if defined BUFFERED_GLOBAL_LOGGING
-		<< buffer
+			<< Logger::buffer
 #endif
-		,Levels(All)
-	) {}
+			,Logger::Levels(Logger::All));
 
-	/*! Ctor with logflags
-	   \param flags name to use */
-	SingleLogger(LogFlags flags) : FileLogger(fn, flags) {}
+		return _fl;
+	}
 
+public:
 	/*! Set the global logfile name.
 	    \param from name to set to */
 	static void set_global_filename(const std::string& from)
@@ -423,30 +422,38 @@ public:
 	  \param val extra value to log
 	  \return true on success */
 	static bool log(const std::string& what, Logger::Level lev=Logger::Info, unsigned int val=0)
-		{ return Singleton<SingleLogger<fn>>::instance()->send(what, lev, val); }
+		{ return instance().send(what, lev, val); }
+
+	/*! Enqueue a message to the logger. Will not check log level.
+	  \param what message to log
+	  \param lev level to log
+	  \param val extra value to log
+	  \return true on success */
+	static bool enqueue(const std::string& what, Logger::Level lev=Logger::Info, unsigned int val=0)
+		{ return instance().enqueue(what, lev, val); }
 
 	/*! Flush the logger */
-	static void flush_log()
-		{ Singleton<SingleLogger<fn>>::instance()->flush(); }
+	static void flush_log() { instance().flush(); }
 
 	/*! Set the logflags
 	  \param flags flags to set */
-	static void set_flags(LogFlags flags)
-		{ Singleton<SingleLogger<fn>>::instance()->set_flags(flags); }
+	static void set_flags(Logger::LogFlags flags) { instance().set_flags(flags); }
 
 	/*! Set the log levels
 	  \param levels levels to set */
-	static void set_levels(Levels levels)
-		{ Singleton<SingleLogger<fn>>::instance()->set_levels(levels); }
+	static void set_levels(Logger::Levels levels) { instance().set_levels(levels); }
 
 	/*! Set the log positions
 	  \param positions positions to set */
-	static void set_positions(LogPositions positions)
-		{ Singleton<SingleLogger<fn>>::instance()->set_positions(positions); }
+	static void set_positions(Logger::LogPositions positions) { instance().set_positions(positions); }
 
 	/*! Stop the logger */
-	static void stop()
-		{ Singleton<SingleLogger<fn>>::instance()->stop(); }
+	static void stop() { instance().stop(); }
+
+	/*! Check if the given log level is set for this logger
+	    \param level level to test
+	    \return true if available */
+	static bool is_loggable(Logger::Level lev) { return instance().is_loggable(lev); }
 };
 
 //-----------------------------------------------------------------------------------------
@@ -503,19 +510,25 @@ F8API extern char glob_log0[max_global_filename_length];
 using GlobalLogger = SingleLogger<glob_log0>;
 
 // our buffered RAII ostream singleton insertable log target, global ostream log target
-#define glout log_stream(logger_function(GlobalLogger::log), Logger::Info)
-#define glout_info log_stream(logger_function(GlobalLogger::log), Logger::Info)
-#define glout_warn log_stream(logger_function(GlobalLogger::log), Logger::Warn)
-#define glout_error log_stream(logger_function(GlobalLogger::log), Logger::Error)
-#define glout_fatal log_stream(logger_function(GlobalLogger::log), Logger::Fatal)
-#if defined NDEBUG
-#define glout_debug log_stream(logger_function(GlobalLogger::log), Logger::Debug) << FILE_LINE
-#else
-#define glout_debug true ? null_insert() : null_insert()
-#endif
 
 //-------------------------------------------------------------------------------------------------
 
 } // FIX8
+
+#define glout_info if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Info)); \
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Info)
+#define glout glout_info
+#define glout_warn if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Warn)); \
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Warn)
+#define glout_error if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Error)); \
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Error)
+#define glout_fatal if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Fatal)); \
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Fatal)
+#if defined F8_DEBUG
+#define glout_debug if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Debug)); \
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Debug) << FILE_LINE
+#else
+#define glout_debug true ? FIX8::null_insert() : FIX8::null_insert()
+#endif
 
 #endif // _FIX8_LOGGER_HPP_

@@ -548,7 +548,7 @@ public:
 	{
 		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			glout_debug << _msgType << " replacing field:" << fnum;
 			delete replace(fnum, itr, what);
 			return;
 		}
@@ -569,7 +569,7 @@ public:
 		Presence::const_iterator itr(_fp.get_presence().end());
 		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			glout_debug << _msgType << " replacing field:" << fnum;
 			delete replace(fnum, itr, what);
 			return;
 		}
@@ -589,7 +589,7 @@ public:
 		Presence::const_iterator itr(_fp.get_presence().end());
 		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			glout_debug << _msgType << " replacing field:" << fnum;
 			delete replace(fnum, itr, what);
 			return;
 		}

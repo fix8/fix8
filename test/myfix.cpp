@@ -216,7 +216,7 @@ int main(int argc, char **argv)
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
-		case 'l': GlobalLogger::set_global_filename(optarg); GlobalLogger::instance(); break;
+		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
 		case 'N': session = optarg; break;

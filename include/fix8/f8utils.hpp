@@ -41,6 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iostream>
 #include <string>
 #include <memory>
+#include <mutex>
 
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
@@ -1062,59 +1063,27 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 }
 
 //----------------------------------------------------------------------------------------
-/// A lockfree Singleton.
-/*! \tparam T the instance object type */
+/*! A lockfree Singleton. C++11 makes this a lot simpler
+http://en.wikipedia.org/wiki/Double-checked_locking
+ \tparam T the instance object type */
 template <typename T>
 class Singleton
 {
-	F8API static f8_atomic<T*> _instance;
-    //static f8_spin_lock _mutex;
-
-	Singleton(const Singleton&);
-	Singleton& operator=(const Singleton&);
-
 public:
 	/// Ctor.
 	Singleton() {}
 
 	/// Dtor.
-	virtual ~Singleton() { delete _instance.exchange(nullptr); }
+	virtual ~Singleton() {}
 
-	/*! Get the instance of the underlying object. If not created, create.
-	    \return the instance */
+	Singleton(const Singleton&) = delete;
+	Singleton& operator=(const Singleton&) = delete;
+
 	static T *instance()
 	{
-		if (_instance.load()) // cast operator performs atomic load with acquire, [ss]:cast is not working under msvc
-			return _instance;
-		return create_instance();
+		static T instance;
+		return &instance;
 	}
-
-	/*! Get the instance of the underlying object. If not created, create.
-	    \return the instance */
-	static T *create_instance()
-	{
-		static f8_spin_lock mutex;
-		f8_scoped_spin_lock guard(mutex);
-		if (_instance.load() == 0)
-		{
-			T *p(new T); // avoid race condition between mem assignment and construction
-			_instance = p;
-		}
-		return _instance;
-	}
-
-	/*! Get the instance of the underlying object. If not created, create.
-	    \return the instance */
-	T *operator->() const { return instance(); }
-
-	/*! Replace the instance object with a new instance.
-	    \param what the new instance
-	    \return the original instance */
-	static T *reset(T *what) { return _instance.exchange(what); }
-
-	/*! Get the instance of the underlying object removing it from the singleton.
-	    \return the instance */
-	static T *release() { return _instance.exchange(nullptr); }
 };
 
 //---------------------------------------------------------------------------------------------------

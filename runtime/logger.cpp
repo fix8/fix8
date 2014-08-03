@@ -45,14 +45,6 @@ namespace FIX8
 {
 	char glob_log0[max_global_filename_length] { "global_filename_not_set.log" };
 
-#ifdef _MSC_VER
-	template<>
-	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance;
-#else
-	template<>
-	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance{};
-#endif
-
 	const vector<string> Logger::_bit_names
 	{
 		"mstart", "sstart", "sequence", "thread", "timestamp", "minitimestamp", "direction", "level",
@@ -312,7 +304,7 @@ PipeLogger::PipeLogger(const string& fname, const LogFlags flags, const Levels l
 #endif
 
 	if (pcmd == 0)
-		glout << "PipeLogger: " << pathname << ": failed to execute";
+		glout_info << "PipeLogger: " << pathname << ": failed to execute";
 	else
 	{
 		_ofs = new fptrostream(pcmd);

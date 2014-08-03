@@ -1549,7 +1549,7 @@ Optional Features:
   --enable-valgrind       enable internal support for valgrind (default=no)
   --enable-gprof          enable internal support for gprof (default=no)
   --enable-codectiming    enable CODEC timing testing code (default=no)
-  --enable-debug          enable DEBUG support (NDEBUG) (default=no)
+  --enable-debug          enable DEBUG support (F8_DEBUG) (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
   --enable-experimental-buffered-socket-read
                           enable experimental buffered socket read
@@ -24570,7 +24570,7 @@ fi
 if test "${enable_debug+set}" = set; then :
   enableval=$enable_debug; case "${enableval}" in
 	yes)
-$as_echo "#define NDEBUG 1" >>confdefs.h
+$as_echo "#define F8_DEBUG 1" >>confdefs.h
  ;;
 	no)  ;;
 	*) as_fn_error $? "bad value ${enableval} for --enable-debug" "$LINENO" 5 ;;

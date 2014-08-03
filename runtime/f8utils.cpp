@@ -282,6 +282,12 @@ vector<f8String> package_info()
    strs.push_back(ostr.str()); ostr.str("");
 	ostr << "MPMC_SYSTEM: " << MPMC_SYSTEM;
    strs.push_back(ostr.str()); ostr.str("");
+	ostr << "THREAD_PTHREAD: " << THREAD_PTHREAD;
+   strs.push_back(ostr.str()); ostr.str("");
+	ostr << "THREAD_STDTHREAD: " << THREAD_STDTHREAD;
+   strs.push_back(ostr.str()); ostr.str("");
+	ostr << "THREAD_SYSTEM: " << THREAD_SYSTEM;
+   strs.push_back(ostr.str()); ostr.str("");
 #if defined SLEEP_NO_YIELD
 	ostr << "SLEEP_NO_YIELD: " << SLEEP_NO_YIELD;
    strs.push_back(ostr.str()); ostr.str("");
@@ -296,6 +302,10 @@ vector<f8String> package_info()
 #endif
 #if defined HAVE_EXTENDED_METADATA
 	ostr << "HAVE_EXTENDED_METADATA: " << HAVE_EXTENDED_METADATA;
+   strs.push_back(ostr.str()); ostr.str("");
+#endif
+#if defined F8_DEBUG
+	ostr << "F8_DEBUG: " << F8_DEBUG;
    strs.push_back(ostr.str()); ostr.str("");
 #endif
 	return strs;
