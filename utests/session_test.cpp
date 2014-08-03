@@ -148,8 +148,8 @@ public:
         flag.set(Logger::direction, true);
 
         per = new MemoryPersister;
-        sLogger = new FileLogger("utest_slog.log", flag);
-        pLogger = new FileLogger("utest_plog.log", flag);
+        sLogger = new FileLogger( "utest_slog.log", flag, Logger::Levels( Logger::All ) );
+        pLogger = new FileLogger( "utest_plog.log", flag, Logger::Levels( Logger::All ) );
 #else
         f8String cmd("|/bin/cat");
         ebitset<Logger::Flags> flag;
