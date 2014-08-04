@@ -45,19 +45,15 @@ namespace FIX8
 {
 	char glob_log0[max_global_filename_length] { "global_filename_not_set.log" };
 
-#ifdef _MSC_VER
-	template<>
-	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance;
-#else
-	template<>
-	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance{};
-#endif
-
 	const vector<string> Logger::_bit_names
 	{
-		"append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction",
-		"buffer", "inbound", "outbound", "nolf", "minitimestamp"
+		"mstart", "sstart", "sequence", "thread", "timestamp", "minitimestamp", "direction", "level",
+		"append", "buffer", "compress", "pipe", "broadcast", "nolf", "inbound", "outbound"
 	};
+
+	const vector<string> Logger::_level_names { "Debug", "Info ", "Warn ", "Error", "Fatal" };
+
+	const Tickval Logger::_started { true };
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -102,29 +98,53 @@ int Logger::operator()()
 
 			ostringstream ostr;
 
-			if (_flags & sequence)
+			f8_scoped_spin_lock posguard(_log_spl); // protect positions, allow app to change
+			for (auto pp : _positions)
 			{
-				ostr << setw(7) << right << setfill('0');
-				if (_flags & direction)
-					ostr << (msg_ptr->_val ? ++_sequence  : ++_osequence) << ' ';
-				else
-					ostr << ++_sequence << ' ';
+				if (pp < start_controls) switch (pp)
+				{
+				case mstart:
+					{
+						const Tickval tvs(msg_ptr->_when - _started);
+						ostr << setw(11) << right << setfill('0') << (tvs.secs() * 1000 + tvs.msecs()) << ' ';
+					}
+					break;
+				case sstart:
+					ostr << setw(8) << right << setfill('0') << (msg_ptr->_when - _started).secs() << ' ';
+					break;
+				case sequence:
+					{
+						ostr << setw(7) << right << setfill('0');
+						if (_flags & direction)
+							ostr << (msg_ptr->_val ? ++_sequence  : ++_osequence) << ' ';
+						else
+							ostr << ++_sequence << ' ';
+					}
+					break;
+				case thread:
+					ostr << get_thread_code(msg_ptr->_tid) << ' ';
+					break;
+				case direction:
+					ostr << (msg_ptr->_val ? " in" : "out") << ' ' ;
+					break;
+				case timestamp:
+					ostr << msg_ptr->_when << ' ';
+					break;
+				case minitimestamp:
+					{
+						string result;
+						GetTimeAsStringMini(result, &msg_ptr->_when);
+						ostr << result << ' ';
+					}
+					break;
+				case level:
+					ostr << _level_names[msg_ptr->_level] << ' ';
+					break;
+				default:
+					break;
+				}
 			}
-
-			if (_flags & thread)
-				ostr << get_thread_code(msg_ptr->_tid) << ' ';
-
-			if (_flags & direction)
-				ostr << (msg_ptr->_val ? " in" : "out") << ' ' ;
-
-			if (_flags & timestamp)
-				ostr << msg_ptr->_when << ' ';
-			else if (_flags & minitimestamp)
-			{
-				string result;
-				GetTimeAsStringMini(result, &msg_ptr->_when);
-				ostr << result << ' ';
-			}
+			posguard.release();
 
 			if (_flags & buffer)
 			{
@@ -154,8 +174,8 @@ int Logger::operator()()
 void Logger::flush()
 {
 	f8_scoped_lock guard(_mutex);
-	for (std::list<std::string>::const_iterator itr(_buffer.begin()); itr != _buffer.end(); ++itr)
-		get_stream() << *itr << endl;
+	for (const auto& pp : _buffer)
+		get_stream() << pp << endl;
 	_buffer.clear();
 	_lines = 0;
 }
@@ -210,8 +230,8 @@ char Logger::get_thread_code(thread_id_t tid)
 }
 
 //-------------------------------------------------------------------------------------------------
-FileLogger::FileLogger(const string& fname, const LogFlags flags, const unsigned rotnum)
-	: Logger(flags), _rotnum(rotnum)
+FileLogger::FileLogger(const string& fname, const LogFlags flags, const Levels levels, const LogPositions positions, const unsigned rotnum)
+	: Logger(flags, levels, positions), _rotnum(rotnum)
 {
    if (!fname.empty())
    {
@@ -269,7 +289,8 @@ bool FileLogger::rotate(bool force)
 }
 
 //-------------------------------------------------------------------------------------------------
-PipeLogger::PipeLogger(const string& fname, const LogFlags flags) : Logger(flags)
+PipeLogger::PipeLogger(const string& fname, const LogFlags flags, const Levels levels, const LogPositions positions)
+	: Logger(flags, levels, positions)
 {
 	const string pathname(fname.substr(1));
 
@@ -283,7 +304,7 @@ PipeLogger::PipeLogger(const string& fname, const LogFlags flags) : Logger(flags
 #endif
 
 	if (pcmd == 0)
-		glout << "PipeLogger: " << pathname << ": failed to execute";
+		glout_info << "PipeLogger: " << pathname << ": failed to execute";
 	else
 	{
 		_ofs = new fptrostream(pcmd);
@@ -293,13 +314,15 @@ PipeLogger::PipeLogger(const string& fname, const LogFlags flags) : Logger(flags
 
 //-------------------------------------------------------------------------------------------------
 // nc -lu 127.0.0.1 -p 51000
-BCLogger::BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags) : Logger(flags), _init_ok(true)
+BCLogger::BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags, const Levels levels, const LogPositions positions)
+	: Logger(flags, levels, positions), _init_ok(true)
 {
 	_ofs = new bcostream(sock);
 	_flags |= broadcast;
 }
 
-BCLogger::BCLogger(const string& ip, const unsigned port, const LogFlags flags) : Logger(flags), _init_ok()
+BCLogger::BCLogger(const string& ip, const unsigned port, const LogFlags flags, const Levels levels, const LogPositions positions)
+	: Logger(flags, levels, positions), _init_ok()
 {
 	Poco::Net::IPAddress ipaddr;
 	if (Poco::Net::IPAddress::tryParse(ip, ipaddr)

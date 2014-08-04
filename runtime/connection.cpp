@@ -62,7 +62,7 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 						{
 							if (!_session.process(msg))
 							{
-								scout << "Unhandled message: " << msg;
+								scout_warn << "Unhandled message: " << msg;
 								++invalid;
 							}
 							else
@@ -77,18 +77,18 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 		}
 		catch (Poco::Net::NetException& e)
 		{
-			scout << e.what();
+			scout_error << e.what();
 			retval = -1;
 		}
 		catch (PeerResetConnection& e)
 		{
-			scout << e.what();
+			scout_error << e.what();
 			_session.do_state_change(States::st_session_terminated);
 			retval = -1;
 		}
 		catch (exception& e)
 		{
-			scout << e.what();
+			scout_error << e.what();
 			++invalid;
 		}
 	}
@@ -104,7 +104,7 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 					{
 						if (!_msg_queue.try_push (msg))
 						{
-							scout << "FIXReader: message queue is full";
+							scout_warn << "FIXReader: message queue is full";
 							++dropped;
 						}
 						else
@@ -114,7 +114,7 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 					{
 						if (!_session.process(msg))
 						{
-							scout << "Unhandled message: " << msg;
+							scout_warn << "Unhandled message: " << msg;
 							++invalid;
 						}
 						else
@@ -126,28 +126,30 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 			}
 			catch (Poco::Net::NetException& e)
 			{
-				scout << e.what();
+				scout_error << e.what();
 				retval = -1;
 				break;
 			}
 			catch (PeerResetConnection& e)
 			{
-				scout << e.what();
+				scout_error << e.what();
 				_session.do_state_change(States::st_session_terminated);
 				retval = -1;
 				break;
 			}
 			catch (exception& e)
 			{
-				scout << e.what();
+				scout_error << e.what();
 				++invalid;
 			}
 		}
 
-		scout << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
+		scout_info << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
 			<< invalid << " invalid";
 		if (retval && errno)
-			scout << "socket error=" << errno;
+		{
+			scout_error << "socket error=" << errno;
+		}
 	}
 
 	return retval;
@@ -175,7 +177,7 @@ int FIXReader::callback_processor()
 
       if (!_session.process(*msg_ptr))
 		{
-			scout << "Unhandled message: " << *msg_ptr;
+			scout_warn << "Unhandled message: " << *msg_ptr;
 			++ignored;
 		}
 		else
@@ -185,7 +187,7 @@ int FIXReader::callback_processor()
 #endif
    }
 
-	scout << "FIXReaderCallback: " << processed << " messages processed, " << ignored << " ignored";
+	scout_info << "FIXReaderCallback: " << processed << " messages processed, " << ignored << " ignored";
 
 	return 0;
 }
@@ -211,7 +213,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if (sockRead(&bt, 1) != 1)
 				return false;
 			if (!isdigit(bt) && bt != default_field_separator)
-				throw IllegalMessage(msg_buf);
+				throw IllegalMessage(msg_buf, FILE_LINE);
 			msg_buf[offs++] = bt;
 		}
 		while (bt != default_field_separator && offs < _max_msg_len);
@@ -222,7 +224,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		if ((result = MessageBase::extract_element(to.data(), static_cast<unsigned>(to.size()), tag, val)))
 		{
 			if (*tag != '8')
-				throw IllegalMessage(to);
+				throw IllegalMessage(to, FILE_LINE);
 
 			if (_session.get_ctx()._beginStr.compare(val))	// invalid FIX version
 				throw InvalidVersion(string(val));
@@ -230,7 +232,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if ((result = MessageBase::extract_element(to.data() + result, static_cast<unsigned>(to.size()) - result, tag, val)))
 			{
 				if (*tag != '9')
-					throw IllegalMessage(to);
+					throw IllegalMessage(to, FILE_LINE);
 
 				const unsigned mlen(fast_atoi<unsigned>(val));
 				if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
@@ -252,7 +254,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			}
 		}
 
-		throw IllegalMessage(to);
+		throw IllegalMessage(to, FILE_LINE);
 	}
 
 	return false;
@@ -277,25 +279,25 @@ int FIXWriter::execute(f8_thread_cancellation_token& cancellation_token)
 		}
 		catch (PeerResetConnection& e)
 		{
-			scout << e.what();
+			scout_error << e.what();
 			result = -1;
 			break;
 		}
 		catch (Poco::Net::NetException& e)
 		{
-			scout << e.what();
+			scout_error << e.what();
 			++invalid;
 			break;
 		}
 		catch (exception& e)
 		{
-			scout << e.what();
+			scout_error << e.what();
 			++invalid;
 			break; //?
 		}
 	}
 
-	scout << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid";
+	scout_info << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid";
 
 	return result;
 }
@@ -310,7 +312,7 @@ void Connection::start()
 //-------------------------------------------------------------------------------------------------
 void Connection::stop()
 {
-	//cerr << "Connection::stop()" << endl;
+	scout_debug << "Connection::stop()";
 	_writer.stop();
 	_writer.join();
 	_reader.stop();
@@ -333,7 +335,7 @@ bool ClientConnection::connect()
 			if (_addr == Poco::Net::SocketAddress())
 				throw Poco::Net::InvalidAddressException("empty address");
 
-			scout << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
+			scout_info << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
 			_sock->connect(_addr, timeout);
 			if (lparam._recv_buf_sz)
 				set_recv_buf_sz(lparam._recv_buf_sz);
@@ -341,25 +343,25 @@ bool ClientConnection::connect()
 				set_send_buf_sz(lparam._send_buf_sz);
 			_sock->setLinger(false, 0);
 			_sock->setNoDelay(_no_delay);
-			scout << "Connection successful";
+			scout_info << "Connection successful";
 			return _connected = true;
 		}
 		catch (Poco::Exception& e)
 		{
 			if (lparam._reliable)
 				throw;
-			scout << "exception: " << e.displayText();
+			scout_error << "exception: " << e.displayText();
 			hypersleep<h_milliseconds>(lparam._login_retry_interval);
 		}
 		catch (exception& e)
 		{
 			if (lparam._reliable)
 				throw;
-			scout << "exception: " << e.what();
+			scout_error << "exception: " << e.what();
 			hypersleep<h_milliseconds>(lparam._login_retry_interval);
 		}
 	}
 
-	scout << "Connection failed";
+	scout_error << "Connection failed";
 	return false;
 }

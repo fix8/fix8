@@ -95,8 +95,8 @@ int precomp(XmlElement& xf, ostream& outf)
 		process_messages(*trailer, components, "trailer", 0, outf);
 
 	outf << string(depth * 2, ' ') << "<messages>" << endl;
-	for(XmlElement::XmlSet::const_iterator itr(msglist.begin()); itr != msglist.end(); ++itr)
-		process_messages(**itr, components, "message", depth, outf);
+	for(auto const *pp : msglist)
+		process_messages(*pp, components, "message", depth, outf);
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
 	process_fields(fldlist, depth, outf);
@@ -141,13 +141,13 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 
 	XmlElement::XmlSet msglist;
 	xft.find("fix/messages/message", msglist);
-	for(XmlElement::XmlSet::const_iterator itr(msglist.begin()); itr != msglist.end(); ++itr)
-		process_messages(**itr, componentsfixt, "message", depth, outf);
+	for(auto const *pp : msglist)
+		process_messages(*pp, componentsfixt, "message", depth, outf);
 
 	msglist.clear();
 	xf.find("fix/messages/message", msglist);
-	for(XmlElement::XmlSet::const_iterator itr(msglist.begin()); itr != msglist.end(); ++itr)
-		process_messages(**itr, components, "message", depth, outf);
+	for(auto const *pp : msglist)
+		process_messages(*pp, components, "message", depth, outf);
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
 	process_fields(fldlist, depth, outf);
@@ -165,27 +165,27 @@ void filter_unique(XmlElement::XmlSet& fldlist)
 	using UniqueFieldMap = map<string, const XmlElement *>;
 	UniqueFieldMap ufm;
 	unsigned dupls(0);
-	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)
+	for(const auto *pp : fldlist)
 	{
 		string name;
-		(*itr)->GetAttr("name", name);
-		if (!ufm.insert({name, *itr}).second)
+		pp->GetAttr("name", name);
+		if (!ufm.insert({name, pp}).second)
 			++dupls; // cerr << "Duplicate field: " << name << endl;
 	}
 
 	fldlist.clear();
-	for(UniqueFieldMap::const_iterator itr(ufm.begin()); itr != ufm.end(); ++itr)
-		fldlist.insert(itr->second);
+	for(const auto& pp : ufm)
+		fldlist.insert(pp.second);
 }
 
 //-----------------------------------------------------------------------------------------
 void load_components(const XmlElement::XmlSet& comlist, Components& components)
 {
-	for(XmlElement::XmlSet::const_iterator itr(comlist.begin()); itr != comlist.end(); ++itr)
+	for(const auto *pp : comlist)
 	{
 		string name;
-		if ((*itr)->GetAttr("name", name))
-			components.insert({name, *itr});
+		if (pp->GetAttr("name", name))
+			components.insert({name, pp});
 	}
 }
 

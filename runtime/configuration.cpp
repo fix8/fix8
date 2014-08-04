@@ -261,19 +261,31 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 		const XmlElement *which(find_group(g_loggers, name));
 		if (which)
 		{
+			Logger::LogPositions positions;
 			string type;
+
 			if (which->GetAttr("type", type)
 				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
 			{
-				string logname("logname_not_set.log");
+				string logname("logname_not_set.log"), levstr;
 				which->FindAttrRef("filename", logname);
 				trim(logname);
 
+				which->GetAttr("levels", levstr);
+				const Logger::Levels levels(levstr.empty() || levstr % "All"
+						? Logger::Levels(Logger::All) : levstr % "None"
+						? Logger::Levels(Logger::None) : get_logflags<Logger::Levels>("levels", Logger::_level_names, which));
+
+				const Logger::LogFlags flags(which->HasAttr("flags")
+					? get_logflags<Logger::LogFlags>("flags", Logger::_bit_names, which, &positions) : Logger::LogFlags(Logger::StdFlags));
+
 				if (logname[0] == '|')
+				{
 #ifndef HAVE_POPEN
 					throw ConfigurationError("popen not supported on your platform");
 #endif
-					return new PipeLogger(logname, get_logflags(which));
+					return new PipeLogger(logname, flags, levels, positions);
+				}
 
 				RegMatch match;
 				if (_ipexp.SearchString(match, logname, 3) == 3)
@@ -281,13 +293,13 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					f8String ip, port;
 					_ipexp.SubExpr(match, logname, ip, 0, 1);
 					_ipexp.SubExpr(match, logname, port, 0, 2);
-					BCLogger *bcl(new BCLogger(ip, get_value<unsigned>(port), get_logflags(which)));
+					auto *bcl(new BCLogger(ip, get_value<unsigned>(port), flags, levels, positions));
 					if (*bcl)
 						return bcl;
 				}
 
 				get_logname(which, logname, sid); // only applies to file loggers
-				return new FileLogger(logname, get_logflags(which), get_logfile_rotation(which));
+				return new FileLogger(logname, flags, levels, positions, get_logfile_rotation(which));
 			}
 		}
 	}
@@ -333,17 +345,21 @@ string& Configuration::get_logname(const XmlElement *from, string& to, const Ses
 }
 
 //-------------------------------------------------------------------------------------------------
-Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
+template<typename T>
+T Configuration::get_logflags(const string& tag, const vector<string>& names,
+	const XmlElement *from, Logger::LogPositions *positions) const
 {
-	Logger::LogFlags flags;
+	T flags;
 	string flags_str;
-	if (from && from->GetAttr("flags", flags_str))
+	if (from && from->GetAttr(tag, flags_str))
 	{
 		istringstream istr(flags_str);
 		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').fail(); istr.ignore(1))
 		{
 			string result(extr);
-			flags.set(Logger::_bit_names, trim(result));
+			const int evalue(flags.set(names, trim(result), true, true));
+			if (positions && evalue >= 0)
+				positions->push_back(evalue);
 		}
 	}
 

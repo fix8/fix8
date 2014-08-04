@@ -273,7 +273,7 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 		const BaseMsgEntry *mc(SelectMsg());
 		if (!mc)
 			break;
-		Message *msg(mc->_create._do());
+		Message *msg(mc->_create._do(true));
 		const FieldTable::Pair *fld;
 		while((fld = SelectField(msg)))
 			EditMsg(tty, fld, msg);
@@ -314,7 +314,7 @@ void ConsoleMenu::EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Mess
 			{
 				for (int ii(0); ii < cnt; ++ii)
 				{
-					Message *gmsg(static_cast<Message *>(gb->create_group()));
+					Message *gmsg(static_cast<Message *>(gb->create_group(true)));
 					const FieldTable::Pair *fld;
 					while((fld = SelectField(gmsg, ii + 1)))
 						EditMsg(tty, fld, gmsg);

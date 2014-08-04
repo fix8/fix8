@@ -352,7 +352,7 @@ public:
 					std::ostringstream ostr;
 					ostr << "Trying " << _servers[_current]._hostname << '(' << (1 + _servers[_current]._retries) << "), "
 						<< _attempts << " attempts so far";
-					this->_session->log(ostr.str());
+					this->_session->log(ostr.str(), Logger::Warn);
 					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
 				}
 
@@ -375,57 +375,57 @@ public:
 			}
 			catch (Poco::TimeoutException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (f8Exception& e)
 			{
 				//	std::cerr << e.what() << std::endl;
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::InvalidAddressException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 #if POCO_VERSION >= 0x01040000
 			catch (Poco::Net::InvalidSocketException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 #endif
 			catch (Poco::Net::ServiceNotFoundException& e)
 			{
 				//std::cerr << e.what() << std::endl;
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::ConnectionRefusedException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::DNSException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::InterfaceNotFoundException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::NetException& e)	// catch all other NetExceptions
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (std::exception& e)
 			{
 				//std::cout << "process:: std::exception" << endl;
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 
@@ -436,15 +436,15 @@ public:
 			}
 			catch (f8Exception& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 			}
 			catch (Poco::Net::NetException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 			}
 			catch (std::exception& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 			}
 
 			delete this->_cc;

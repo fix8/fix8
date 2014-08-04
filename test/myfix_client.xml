@@ -55,7 +55,8 @@
 				type="session"
 				filename="./run/myfix_client_session.log"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				levels="debug|info|warn|error|fatal"
+				iflags="timestamp|sequence|thread|level"/>
 
 	<log 		name="session_log_udp"
 				type="session"
@@ -82,6 +83,7 @@
 
 	<log 		name="protocol_log_file"
 				type="protocol"
+				levels="debug|info|warn|error|fatal"
 				filename="./run/myfix_client_protocol.log"
 				rotation="5"
 				flags_old="append|inbound|outbound|direction|sequence"

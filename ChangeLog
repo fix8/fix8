@@ -1,3 +1,40 @@
+* Fri Aug 01 2014 David L. Dight <fix@fix8.org> 1.3.0
+- Fixed Jira tickets FX-309, FX-308, FX-307, FX-306, FX-305, FX-304, FX-303, FX-302, FX-301,
+							FX-300, FX-299, FX-298, FX-296, FX-295, FX-294, FX-293, FX-292, FX-291,
+							FX-290, FX-289, FX-288, FX-287, FX-286, FX-236, FX-310, FX-312, FX-311
+							FX-297, FX-281, FX-233. FX-231
+- gcc 4.7.2 linux build broken
+- Allow shallow message construction
+- Provide Message::move_legal
+- Facilitate "pass-through" fields which are not mentioned in the Dictionary
+- Provide flag settings to control XML parser
+- Remove main Nuget package link dependency to gtest
+- Replace FIX8::dthread with std::thread
+- ReliableClientSession crash when socket connection refused
+- Compilation error on clean checkout 14/07/10
+- Protocol Logger Thread is not destroyed after deleting session
+- Wrong Timer implementation
+- RAII std::ostream Singleton log target
+- GlobalLogger::create_instance needs refactoring
+- Precision was altered unintentionally
+- Support flattened field query in messages
+- Allow SingleLogger to accept user defined LogFlags
+- Add mini-timestamp flag to logger
+- hftest server exits when sending preloaded messages under windows
+- Update on 14-06-24 introduced build warnings on win
+- Fix variadic templates compile error under VS2013
+- Windows build fails when configured w/o TBB
+- Create VS2012 build of FIX8
+- Provide programmatic/generic method of loading and using Fix8 metadata
+- Permit lookup of fields and messages by their long name
+- Xml improvements: find_child, GetLocString
+- Field equivalence operators missing
+- Option to compiler to generate router stubs without defaults
+- Session state does not changed when connection goes down.
+- Allow the option to the getters from a fix message those values that are fixed point values to be stored in float instead of double
+- Make dist, rpmbuild and pro build broken
+- Make nuget package generation files (*.autopkg) to be version independent
+
 * Wed Jun 04 2014 David L. Dight <fix@fix8.org> 1.2.0
 - Fixed Jira tickets FX-278, FX-276, FX-275, FX-274, FX-273, FX-272, FX-271, FX-270, FX-269,
 							FX-268, FX-267, FX-266, FX-265, FX-264, FX-263, FX-228, FX-261, FX-260,

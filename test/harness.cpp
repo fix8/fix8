@@ -147,6 +147,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 'L', "Set Lines per page" }, &MyMenu::set_lpp },
+	{ { 'v', "Show version info" }, &MyMenu::version_info },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 
@@ -242,7 +243,7 @@ int main(int argc, char **argv)
 				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
-				glout << "client(" << ++scnt << ") connection established.";
+				glout_info << "client(" << ++scnt << ") connection established.";
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
@@ -388,6 +389,15 @@ bool MyMenu::create_msgs()
 }
 
 //-----------------------------------------------------------------------------------------
+bool MyMenu::version_info()
+{
+	cout << endl;
+	vector<f8String> vv(package_info());
+	copy(vv.begin(), vv.end(), ostream_iterator<f8String>(cout, "\n"));
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::edit_msgs()
 {
 	_cm->EditMsgs(_tty, _lst);
@@ -469,7 +479,7 @@ bool MyMenu::read_msgs()
 	cout << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())
-		return load_msgs(fname);
+		load_msgs(fname);
 	return true;
 }
 

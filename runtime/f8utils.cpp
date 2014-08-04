@@ -212,14 +212,6 @@ void create_path(const string& path)
 }
 
 //----------------------------------------------------------------------------------------
-const string& trim(string& source, const string& ws)
-{
-    const size_t bgstr(source.find_first_not_of(ws));
-    return bgstr == string::npos
-		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
-}
-
-//----------------------------------------------------------------------------------------
 namespace
 {
 	using Day = pair<char, int>;
@@ -250,6 +242,76 @@ int decode_dow (const string& from)
 	return day_names[result.first->second][1] == source[1]
 		 || day_names[(++result.first)->second][1] == source[1] ? result.first->second : -1;
 }
+
+//----------------------------------------------------------------------------------------
+vector<f8String> package_info()
+{
+	vector<f8String> strs;
+	ostringstream ostr;
+   ostr << "Package info for " PACKAGE " version " VERSION;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "PACKAGE_BUGREPORT:" << PACKAGE_BUGREPORT;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "PACKAGE_URL:" << PACKAGE_URL;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "MAGIC_NUM: " << MAGIC_NUM;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "CONFIGURE_OPTIONS:" << CONFIGURE_OPTIONS;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "CPPFLAGS:" << CPPFLAGS;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "LIBS:" << LIBS;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "LDFLAGS:" << LDFLAGS;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "CONFIGURE_SDATE: " << CONFIGURE_SDATE;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "CONFIGURE_TIME: " << CONFIGURE_TIME;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "CONFIGURE_TIME_NUM: " << CONFIGURE_TIME_NUM;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "HOST_SYSTEM: " << HOST_SYSTEM;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "MAX_FLD_LENGTH: " << MAX_FLD_LENGTH;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "MAX_MSG_LENGTH: " << MAX_MSG_LENGTH;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "MPMC_FF: " << MPMC_FF;
+   strs.push_back(ostr.str()); ostr.str("");
+   ostr << "MPMC_TBB: " << MPMC_TBB;
+   strs.push_back(ostr.str()); ostr.str("");
+	ostr << "MPMC_SYSTEM: " << MPMC_SYSTEM;
+   strs.push_back(ostr.str()); ostr.str("");
+	ostr << "THREAD_PTHREAD: " << THREAD_PTHREAD;
+   strs.push_back(ostr.str()); ostr.str("");
+	ostr << "THREAD_STDTHREAD: " << THREAD_STDTHREAD;
+   strs.push_back(ostr.str()); ostr.str("");
+	ostr << "THREAD_SYSTEM: " << THREAD_SYSTEM;
+   strs.push_back(ostr.str()); ostr.str("");
+#if defined SLEEP_NO_YIELD
+	ostr << "SLEEP_NO_YIELD: " << SLEEP_NO_YIELD;
+   strs.push_back(ostr.str()); ostr.str("");
+#endif
+#if defined CODECTIMING
+	ostr << "CODECTIMING: " << CODECTIMING;
+   strs.push_back(ostr.str()); ostr.str("");
+#endif
+#if defined HAVE_OPENSSL
+	ostr << "HAVE_OPENSSL: " << HAVE_OPENSSL;
+   strs.push_back(ostr.str()); ostr.str("");
+#endif
+#if defined HAVE_EXTENDED_METADATA
+	ostr << "HAVE_EXTENDED_METADATA: " << HAVE_EXTENDED_METADATA;
+   strs.push_back(ostr.str()); ostr.str("");
+#endif
+#if defined F8_DEBUG
+	ostr << "F8_DEBUG: " << F8_DEBUG;
+   strs.push_back(ostr.str()); ostr.str("");
+#endif
+	return strs;
+}
+
+//----------------------------------------------------------------------------------------
 
 } // namespace FIX8
 

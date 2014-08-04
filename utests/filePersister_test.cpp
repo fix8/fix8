@@ -251,8 +251,8 @@ public:
     ~check_session()
     {
         _timer.clear();
-        _timer.schedule(_hb_processor, 0);
-		  _timer.join();
+        _timer.stop();
+        _timer.join();
 	 }
 
     /*! retrans_callback overload

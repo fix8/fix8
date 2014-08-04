@@ -111,7 +111,7 @@ endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec \
 	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh ${ffincludes} \
-	bootstrap README.md LICENSE
+	bootstrap README.md LICENSE runtime/dllmain.cpp
 
 if USEDOXYGEN
 EXTRA_DIST += doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen
