@@ -51,11 +51,14 @@ EmbeddedFileSelector::EmbeddedFileSelector(QWidget *parent) :
     listView->setViewMode(QListView::IconMode);
     listView->setResizeMode(QListView::Adjust);
     detailView = new QTableView(stackW);
-
     QHeaderView *verticalH = detailView->verticalHeader();
     verticalH->setVisible(false);
     detailView->setShowGrid(false);
     detailView->setSortingEnabled(true);
+
+
+    QHeaderView *horizontalH = detailView->horizontalHeader();
+    horizontalH->setStretchLastSection(true);
     listView->setSelectionMode(QAbstractItemView::SingleSelection);
     detailView->setSelectionMode(QAbstractItemView::SingleSelection);
     detailView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -90,11 +93,11 @@ void EmbeddedFileSelector::saveSettings()
     settings.setValue("splitter",splitter->saveState());
     settings.setValue("currentDir",currentDir.path());
     settings.setValue("viewmode",viewMode);
+    settings.setValue("detailView",detailView->horizontalHeader()->saveState());
 }
 void EmbeddedFileSelector::readSettings()
 {
     QSettings settings("fix8","logviewerNewWindowWizard");
-    qDebug() << "EMBED FILE SEL READ SETTINGS" << __FILE__ << __LINE__;
     QByteArray ba =  settings.value("splitter").toByteArray();
     splitter->restoreState(ba);
     currentDir.setPath(settings.value("currentDir",QDir::homePath()).toString());
@@ -103,20 +106,21 @@ void EmbeddedFileSelector::readSettings()
     QModelIndex rootIndex = dirModel->setRootPath(currentDir.path());
     listView->setRootIndex(rootIndex);
     detailView->setRootIndex(rootIndex);
-     addParentDir(currentDir);
+    addParentDir(currentDir);
+    detailView->horizontalHeader()->restoreState(settings.value("detailView").toByteArray());
+
+    validate();
 }
 void EmbeddedFileSelector::addParentDir(QDir dir)
 {
     if (dir == QDir::root())
         return;
     dir.cdUp();
-    qDebug() << "Adding parent: " << dir.path() << __FILE__ << __LINE__;
     directoryCB->addItem(dir.path());
     addParentDir(dir);
 }
 void EmbeddedFileSelector::directoryCBSlot(QString path)
 {
-    qDebug() << "Set Directory";
     if (path == currentDir.path()) {
         return;
     }
@@ -142,25 +146,22 @@ void EmbeddedFileSelector::viewModeSlot(int vm)
         return;
     else
         viewMode = (ViewMode ) vm;
-    qDebug() << "Set View Mode.." << __FILE__ << __LINE__;
     stackW->setCurrentIndex(viewMode);
-
 }
 void EmbeddedFileSelector::viewClickedSlot(QModelIndex mi)
 {
     QFileInfo fi = dirModel->fileInfo(mi);
-    qDebug() << "Clicked: PATH = " << fi.absoluteFilePath() << __FILE__ << __LINE__;
     if (fi.isDir()) {
         lastDirPath = currentDir.path();
         if (backDirList.count() > 9) {
             backDirList.pop_front();
         }
+        forwardDirList.clear();
         backDirList.append(lastDirPath);
         //dirModel->setRootPath(fi.absoluteFilePath());
         listView->setRootIndex(mi);
         detailView->setRootIndex(mi);
         currentDir = QDir(fi.absoluteFilePath());
-        qDebug() << "\tCurrent Dir Path = " << currentDir.path();
         directoryCB->clear();
         directoryCB->addItem(currentDir.path());
         addParentDir(currentDir);
@@ -168,36 +169,59 @@ void EmbeddedFileSelector::viewClickedSlot(QModelIndex mi)
         if (directoryCB->findText(lastDirPath) < 0)
             directoryCB->addItem(lastDirPath);
         directoryCB->setCurrentIndex(index);
-
     }
-
+    validate();
 }
 void EmbeddedFileSelector::goBackForwardSlot(int buttonID)
 {
-    qDebug() << "GO BACK/FORWARD" << __FILE__ << __LINE__;
+    int numItems;
+    QString path;
+    int index;
     if (buttonID == DirectoryBack) {
         if (backDirList.count() < 1) {
-            qDebug() << "BACK COUNT < 1" << __FILE__ << __LINE__;
-            // validate()
+            validate();
             return;
         }
-
-        int numItems = backDirList.count();
-        QString path = backDirList.last();
-        qDebug() << "NUM OF ITEMS NOW: "  << numItems;
+        if (forwardDirList.count() > 9)
+            forwardDirList.removeFirst();
+        forwardDirList.append(currentDir.path());
+        numItems = backDirList.count();
+        path = backDirList.last();
         backDirList.removeAt(numItems-1);
-        qDebug() << "GO BACK TO:" << path;
-        currentDir.setPath(path);
-        directoryCB->clear();
-        directoryCB->addItem(currentDir.path());
-        addParentDir(currentDir);
-        int index = directoryCB->findText(path);
-        if (directoryCB->findText(lastDirPath) < 0)
-            directoryCB->addItem(lastDirPath);
-        directoryCB->setCurrentIndex(index);
-        QModelIndex rootIndex = dirModel->setRootPath(path);
-        listView->setRootIndex(rootIndex);
-        detailView->setRootIndex(rootIndex);
     }
-    //validate();
+    else { // must be forward dir
+        if (forwardDirList.count() < 1) {
+            validate();
+            return;
+        }
+        if (backDirList.count() > 9)
+            backDirList.removeFirst();
+        backDirList.append(currentDir.path());
+        numItems = forwardDirList.count();
+        path = forwardDirList.last();
+        forwardDirList.removeAt(numItems-1);
+    }
+    currentDir.setPath(path);
+    directoryCB->clear();
+    directoryCB->addItem(currentDir.path());
+    addParentDir(currentDir);
+    index = directoryCB->findText(path);
+    if (directoryCB->findText(lastDirPath) < 0)
+        directoryCB->addItem(lastDirPath);
+    directoryCB->setCurrentIndex(index);
+    QModelIndex rootIndex = dirModel->setRootPath(path);
+    listView->setRootIndex(rootIndex);
+    detailView->setRootIndex(rootIndex);
+    validate();
+}
+void EmbeddedFileSelector::validate()
+{
+    if (backDirList.count() < 1)
+        backB->setEnabled(false);
+    else
+        backB->setEnabled(true);
+    if (forwardDirList.count() < 1)
+        forwardB->setEnabled(false);
+    else
+        forwardB->setEnabled(true);
 }

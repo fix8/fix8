@@ -41,8 +41,10 @@ protected:
     ViewMode    viewMode;
     QFileSystemModel    *dirModel;
     QStringList backDirList;
+    QStringList forwardDirList;
 private:
     void addParentDir(QDir dir);
+    void validate();
 };
 
 #endif // EMBEDDEDFILESELECTOR_H

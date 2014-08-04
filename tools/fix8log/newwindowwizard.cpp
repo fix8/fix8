@@ -17,6 +17,8 @@ void NewWindowWizard::createSchemaPage()
    schemaPage->setLayout(schemaGrid);
 
    schemaListView = new QListView(schemaPage);
+   QFontMetrics fm(schemaListView->font());
+   schemaListView->setMaximumWidth(fm.averageCharWidth()*24);
    schemaLabel = new QLabel(schemaPage);
    schemaLabel->setWordWrap(true);
    schemaLabel->setTextFormat(Qt::RichText);
@@ -47,10 +49,13 @@ void NewWindowWizard::createFilePage()
 }
 void NewWindowWizard::readSettings()
 {
-
+    QSettings settings("fix8","logviewerNewWindowWizard");
+    setGeometry(settings.value("geometry").toRect());
     fileSelector->readSettings();
 }
 void NewWindowWizard::saveSettings()
 {
+    QSettings settings("fix8","logviewerNewWindowWizard");
+    settings.setValue("geometry",geometry());
     fileSelector->saveSettings();
 }
