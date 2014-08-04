@@ -95,6 +95,7 @@ public:
     void deletedSchema(int schemaID);
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
+    void loadFile(QString &fileName);
     void populateSearchList(SearchFunctionList *sfl);
     void setFieldUsePair(QList<QPair<QString ,FieldUse *>> *);
     QList<QPair<QString ,FieldUse *>> * getFieldUsePair();

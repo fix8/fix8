@@ -74,7 +74,18 @@ void Fix8Log::copyWindowSlot(MainWindow *mw)
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
    newWindowWizard = new NewWindowWizard();
-   newWindowWizard->exec();
+   int status = newWindowWizard->exec();
+   qDebug() << "Status == " << status;
+   if (status == QDialog::Accepted	) {
+       QString fileName = newWindowWizard->getSelectedFile();
+        qDebug() << "Selected File = " << fileName << __FILE__ << __LINE__;
+        MainWindow *newMW  =new MainWindow(*mw,database);
+        newMW->setSearchFunctions(searchFunctionList);
+        wireSignalAndSlots(newMW);
+        newMW->show();
+        newMW->loadFile(fileName);
+
+   }
    newWindowWizard->saveSettings();
    newWindowWizard->deleteLater();
 

@@ -78,5 +78,8 @@
         <file>qml/newMainWindow.qml</file>
         <file>images/svg/detailView.svg</file>
         <file>images/svg/listView.svg</file>
+        <file>images/svg/user-home.svg</file>
+        <file>images/svg/harddrive.svg</file>
+        <file>images/svg/newwindow.svg</file>
     </qresource>
 </RCC>

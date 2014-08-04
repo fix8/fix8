@@ -6,10 +6,8 @@ EmbeddedFileSelector::EmbeddedFileSelector(QWidget *parent) :
 {
     QVBoxLayout *vbox = new QVBoxLayout(this);
     setLayout(vbox);
-
     QHBoxLayout *toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
-
     directoryL = new QLabel("Look in:", this);
     directoryL->setAlignment(Qt::AlignLeft);
     directoryCB = new QComboBox(this);
@@ -38,10 +36,21 @@ EmbeddedFileSelector::EmbeddedFileSelector(QWidget *parent) :
     toolLayout->addWidget(forwardB,0);
     toolLayout->addWidget(listViewB,0);
     toolLayout->addWidget(detailViewB,0);
-
     splitter = new QSplitter(Qt::Horizontal,this);
-
     quickSelectView = new QListView(splitter);
+    quickSelectView->setFlow(QListView::TopToBottom);
+    quickSelectView->setGridSize(QSize(100,90));
+    quickSelectView->setUniformItemSizes(true);
+    quickSelectView->setMovement(QListView::Static);
+    quickSelectView->setResizeMode(QListView::Adjust);
+    quickSelectModel = new QStandardItemModel(quickSelectView);
+    connect(quickSelectView,SIGNAL(clicked(QModelIndex)),this,SLOT(quickSelectViewSlot(QModelIndex)));
+    quickSelectView->setModel(quickSelectModel);
+    quickSelectView->setViewMode(QListView::IconMode);
+    quickRootItem = new QStandardItem(QIcon(":/images/svg/harddrive.svg"),"Computer");
+    quickHomeItem = new QStandardItem(QIcon(":/images/svg/user-home.svg"),"Home");
+    quickSelectModel->insertRow(0,quickHomeItem);
+    quickSelectModel->insertRow(1,quickRootItem);
     stackW = new QStackedWidget(splitter);
     listView = new QListView(stackW);
     listView->setFlow(QListView::LeftToRight);
@@ -55,23 +64,28 @@ EmbeddedFileSelector::EmbeddedFileSelector(QWidget *parent) :
     verticalH->setVisible(false);
     detailView->setShowGrid(false);
     detailView->setSortingEnabled(true);
-
-
     QHeaderView *horizontalH = detailView->horizontalHeader();
     horizontalH->setStretchLastSection(true);
     listView->setSelectionMode(QAbstractItemView::SingleSelection);
     detailView->setSelectionMode(QAbstractItemView::SingleSelection);
     detailView->setSelectionBehavior(QAbstractItemView::SelectRows);
     dirModel = new QFileSystemModel (this);
-    dirModel->setFilter(QDir::Files| QDir::Dirs);
+    dirModel->setFilter(QDir::Files| QDir::Dirs|QDir::NoDotAndDotDot);
     listView->setModel(dirModel);
     detailView->setModel(dirModel);
+    detailViewSelectionModel =  detailView->selectionModel();
+    listViewSelectionModel   =  listView->selectionModel();
     connect(listView,SIGNAL(clicked(QModelIndex)),this,SLOT(viewClickedSlot(QModelIndex)));
     connect(detailView,SIGNAL(clicked(QModelIndex)),this,SLOT(viewClickedSlot(QModelIndex)));
     stackW->insertWidget(ListView,listView);
     stackW->insertWidget(DetailView,detailView);
     splitter->addWidget(quickSelectView);
     splitter->addWidget(stackW);
+    splitter->setCollapsible(0,false);
+    splitter->setCollapsible(1,false);
+    splitter->setStretchFactor(0,0);
+    splitter->setStretchFactor(1,1);
+
     QHBoxLayout *filterLayout = new QHBoxLayout();
     filterLayout->setMargin(0);
     filterTypeL = new QLabel("Files Filter:");
@@ -169,7 +183,11 @@ void EmbeddedFileSelector::viewClickedSlot(QModelIndex mi)
         if (directoryCB->findText(lastDirPath) < 0)
             directoryCB->addItem(lastDirPath);
         directoryCB->setCurrentIndex(index);
+        detailViewSelectionModel->clearSelection();
+        listViewSelectionModel->clearSelection();
     }
+    else
+        currentFile = fi.absoluteFilePath();
     validate();
 }
 void EmbeddedFileSelector::goBackForwardSlot(int buttonID)
@@ -201,6 +219,8 @@ void EmbeddedFileSelector::goBackForwardSlot(int buttonID)
         path = forwardDirList.last();
         forwardDirList.removeAt(numItems-1);
     }
+    detailViewSelectionModel->clearSelection();
+    listViewSelectionModel->clearSelection();
     currentDir.setPath(path);
     directoryCB->clear();
     directoryCB->addItem(currentDir.path());
@@ -212,10 +232,16 @@ void EmbeddedFileSelector::goBackForwardSlot(int buttonID)
     QModelIndex rootIndex = dirModel->setRootPath(path);
     listView->setRootIndex(rootIndex);
     detailView->setRootIndex(rootIndex);
+    detailViewSelectionModel->clear();
+    listViewSelectionModel->clear();
     validate();
 }
 void EmbeddedFileSelector::validate()
 {
+    QList <QModelIndex> selectedIndexes;
+    QModelIndex selectedIndex;
+    bool isDir = false;
+    bool fileSelected = false;
     if (backDirList.count() < 1)
         backB->setEnabled(false);
     else
@@ -224,4 +250,108 @@ void EmbeddedFileSelector::validate()
         forwardB->setEnabled(false);
     else
         forwardB->setEnabled(true);
+    bool listViewHasSelected = false;
+    bool detailViewHasSelected = false;
+
+    if (listViewSelectionModel->hasSelection()) {
+        selectedIndexes = listViewSelectionModel->selectedIndexes();
+        selectedIndex = selectedIndexes.at(0);
+        if (selectedIndex.isValid()) {
+            isDir = dirModel->isDir(selectedIndex);
+            qDebug() << "IS DIR = " << isDir;
+            if (!isDir)
+                listViewHasSelected = true;
+        }
+    }
+    if (!listViewHasSelected) {
+        if (detailViewSelectionModel->hasSelection()) {
+            selectedIndexes = detailViewSelectionModel->selectedIndexes();
+            selectedIndex = selectedIndexes.at(0);
+            if (selectedIndex.isValid()) {
+                isDir = dirModel->isDir(selectedIndex);
+                if (!isDir)
+                    detailViewHasSelected = true;
+            }
+        }
+    }
+    if (detailViewHasSelected || listViewHasSelected)
+        fileSelected = true;
+    else
+        currentFile = QString::null;
+    emit haveFileSelected(fileSelected);
+}
+void EmbeddedFileSelector::quickSelectViewSlot(QModelIndex mi)
+{
+    int index;
+    QStandardItem *item = quickSelectModel->itemFromIndex(mi);
+    if (!item) {
+        qWarning() << "Error - quick select item is null" << __FILE__ << __LINE__;
+        return;
+    }
+    lastDirPath = currentDir.path();
+    if (item == quickHomeItem)  {
+        if (currentDir == QDir::home())
+            return;
+        currentDir = QDir::home();
+
+    }
+    else if (item == quickRootItem) {
+        if (currentDir == QDir::root())
+            return;
+        currentDir = QDir::root();
+    }
+    detailViewSelectionModel->clearSelection();
+    listViewSelectionModel->clearSelection();
+    directoryCB->clear();
+    directoryCB->addItem(currentDir.path());
+    addParentDir(currentDir);
+    index = directoryCB->findText(currentDir.path());
+    if (directoryCB->findText(lastDirPath) < 0)
+        directoryCB->addItem(lastDirPath);
+    directoryCB->setCurrentIndex(index);
+    QModelIndex rootIndex = dirModel->setRootPath(currentDir.path());
+    listView->setRootIndex(rootIndex);
+    detailView->setRootIndex(rootIndex);
+    forwardDirList.clear();
+    if (backDirList.count() > 9)
+        backDirList.removeFirst();
+    backDirList.append(currentDir.path());
+
+    validate();
+}
+bool EmbeddedFileSelector::isFileSelected()
+{
+    QList <QModelIndex> selectedIndexes;
+    QModelIndex selectedIndex;
+    bool isDir = false;
+    bool listViewHasSelected = false;
+    bool detailViewHasSelected = false;
+    bool haveFile = false;
+    if (listViewSelectionModel->hasSelection()) {
+        selectedIndexes = listViewSelectionModel->selectedIndexes();
+        selectedIndex = selectedIndexes.at(0);
+        if (selectedIndex.isValid()) {
+            isDir = dirModel->isDir(selectedIndex);
+            if (!isDir)
+                listViewHasSelected = true;
+        }
+    }
+    if (!listViewHasSelected) {
+        if (detailViewSelectionModel->hasSelection()) {
+            selectedIndexes = detailViewSelectionModel->selectedIndexes();
+            selectedIndex = selectedIndexes.at(0);
+            if (selectedIndex.isValid()) {
+                isDir = dirModel->isDir(selectedIndex);
+                if (!isDir)
+                    detailViewHasSelected = true;
+            }
+        }
+    }
+    if (detailViewHasSelected || listViewHasSelected)
+        haveFile = true;
+    return haveFile;
+}
+QString EmbeddedFileSelector::getSelectedFile()
+{
+    return currentFile;
 }

@@ -217,6 +217,115 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         showMessageA->setEnabled(false);
     }
 }
+void MainWindow::loadFile(QString &fileName)
+{
+    bool bstatus;
+    int index;
+
+    QByteArray prevHeaderSettings;
+    bool havePreviousHeader = false;
+
+    if (tabW->count() > 0) {
+        WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (tabW->widget(tabW->count() -1));
+        if (oldWorkSheet) {
+            //prevHeaderSettings = oldWorkSheet->fixTable->horizontalHeader()->saveState();
+            havePreviousHeader = true;
+        }
+    }
+    WorkSheet *workSheet = new WorkSheet(this);
+    workSheet->setTableSchema(tableSchema);
+    connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
+            this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
+    connect(workSheet,SIGNAL(modelDropped(FixMimeData *)),
+            this,SLOT(modelDroppedSlot(FixMimeData *)));
+    connect(workSheet,SIGNAL(rowSelected(int)),
+            this,SLOT(rowSelectedSlot(int)));
+    workSheet->setWindowID(uuid);
+    workSheet->splitter->restoreState(messageSplitterSettings);
+    if (havePreviousHeader)
+        workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
+    QList <GUI::ConsoleMessage> messageList;
+    QString str = fileName;
+    if (str.length() > 36) {
+        str = "..." + str.right(33);
+    }
+    index = tabW->addTab(workSheet,str);
+    tabW->setToolTip(fileName);
+    tabW->setCurrentWidget(workSheet);
+    stackW->setCurrentWidget(workAreaSplitter);
+    quint32 returnStatus = 0;
+    workSheet->setUpdatesEnabled(false);
+    setCursor(Qt::BusyCursor);
+
+    bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
+    unsetCursor();
+    if (!bstatus) {
+        if (returnStatus == WorkSheet::TERMINATED) {
+            str = "Loading of file: " + fileName + " terminated.";
+            GUI::ConsoleMessage msg(str);
+            statusBar()->showMessage(str,3000);
+            messageList.append(msg);
+        }
+        else if (returnStatus == WorkSheet::CANCEL) {
+            tabW->removeTab(index);
+            workSheetList.removeOne(workSheet);
+            delete workSheet;
+            str = "Loading of file " + fileName + " canceled.";
+            GUI::ConsoleMessage msg(str);
+            statusBar()->showMessage(str,3000);
+            messageList.append(msg);
+        }
+        else if (returnStatus == WorkSheet::FILE_NOT_FOUND) {
+            tabW->removeTab(index);
+            workSheetList.removeOne(workSheet);
+            delete workSheet;
+            str = "Loading of file " + fileName + " failed. File not found.";
+            GUI::ConsoleMessage msg(str);
+            messageList.append(msg);
+            statusBar()->showMessage(str,3000);
+        }
+        else {
+            tabW->removeTab(index);
+            workSheetList.removeOne(workSheet);
+            delete workSheet;
+            str = "Loading of file " + fileName + " failed.";
+            GUI::ConsoleMessage msg(str);
+            messageList.append(msg);
+            statusBar()->showMessage(str,3000);
+        }
+    }
+    else {
+        workSheet->setUpdatesEnabled(true);
+        workSheetList.append(workSheet);
+        str = "Loaded " + fileName + " completed";
+        statusBar()->showMessage(str,2000);
+        filterSenderMenuA->setMenu(workSheet->getSenderMenu());
+        SearchFunction sf = workSheet->getSearchFunction();
+        setSearchFunction(sf);
+    }
+    // display error messages associated with each worksheet
+    if (messageList.count() > 0) {
+        QListIterator <GUI::ConsoleMessage> messageIter(messageList);
+        while(messageIter.hasNext()) {
+            GUI::ConsoleMessage message = messageIter.next();
+            displayConsoleMessage(message);
+        }
+    }
+
+    if (tabW->count() > 0) {
+        stackW->setCurrentWidget(workAreaSplitter);
+        copyTabA->setEnabled(true);
+        showMessageA->setEnabled(true);
+        if (tabW->count() > 1)
+            tabW->setCurrentIndex(index);
+    }
+    else {
+        stackW->setCurrentWidget(noDataL);
+        copyTabA->setEnabled(false);
+        showMessageA->setEnabled(false);
+    }
+}
+
 void MainWindow::displayConsoleMessage(GUI::ConsoleMessage message)
 {
     QString str;
@@ -239,11 +348,11 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
     WorkSheet *worksheet =  qobject_cast <WorkSheet *> (tabW->widget(tabPosition));
     setCursor(Qt::BusyCursor);
     if (worksheet) {
-         int index = tabW->currentIndex();
-         if(index == tabPosition) {
-             filterSenderMenuA->setMenu(0);
-         }
-    worksheet->terminate(); // call in case worksheet is being loaded
+        int index = tabW->currentIndex();
+        if(index == tabPosition) {
+            filterSenderMenuA->setMenu(0);
+        }
+        worksheet->terminate(); // call in case worksheet is being loaded
     }
     tabW->removeTab(tabPosition);
     if (tabW->count() > 0) {
