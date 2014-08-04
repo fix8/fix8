@@ -1,0 +1,31 @@
+#ifndef NEWWINDOWWIZARD_H
+#define NEWWINDOWWIZARD_H
+
+#include <QWizard>
+class QListView;
+class QLabel;
+class EmbeddedFileSelector;
+class NewWindowWizard : public QWizard
+{
+    Q_OBJECT
+public:
+    explicit NewWindowWizard(QWidget *parent = 0);
+    void readSettings();
+    void saveSettings();
+signals:
+
+public slots:
+
+protected:
+    void createSchemaPage();
+    void createFilePage();
+private:
+ QWizardPage *schemaPage;
+ QWizardPage *filePage;
+
+ EmbeddedFileSelector *fileSelector;
+ QListView   *schemaListView;
+ QLabel      *schemaLabel;
+};
+
+#endif // NEWWINDOWWIZARD_H

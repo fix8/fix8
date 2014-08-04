@@ -75,5 +75,8 @@
         <file>images/svg/font.svg</file>
         <file>images/svg/increasefont.svg</file>
         <file>images/svg/decreasefont.svg</file>
+        <file>qml/newMainWindow.qml</file>
+        <file>images/svg/detailView.svg</file>
+        <file>images/svg/listView.svg</file>
     </qresource>
 </RCC>

@@ -65,7 +65,12 @@ SOURCES += main.cpp\
     qtsinglecoreapplication.cpp \
     pushbuttonmodifykey.cpp \
     schemaeditordialogMessageView.cpp \
-    fieldsview.cpp
+    fieldsview.cpp \
+    fix8logGenererateTraits.cpp \
+    fix8logInit.cpp \
+    fix8WindowSlots.cpp \
+    newwindowwizard.cpp \
+    embeddedfileselector.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -110,7 +115,9 @@ HEADERS  += mainwindow.h \
     qtsingleapplication.h \
     qtsinglecoreapplication.h \
     pushbuttonmodifykey.h \
-    fieldsview.h
+    fieldsview.h \
+    newwindowwizard.h \
+    embeddedfileselector.h
 
 RESOURCES += \
     resources.qrc
@@ -166,5 +173,8 @@ OTHER_FILES += \
     qml/loadProgress.qml \
     images/svg/messageView.svg \
     qml/LetterArea.qml \
-    qml/helpAbout.qml
+    qml/helpAbout.qml \
+    qml/newMainWindow.qml \
+    images/Broken_Link-128.png \
+    images/svg/listView.svg
 

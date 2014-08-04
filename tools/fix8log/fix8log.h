@@ -55,10 +55,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fix8/traits.hpp"
 
 class QStandardItemModel;
+class QQuickView;
 class Database;
 class SchemaEditorDialog;
 class FutureReadData;
 class FixMimeData;
+class NewWindowWizard;
 class SearchDialog;
 class WorkSheetModel;
 FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr);
@@ -88,6 +90,7 @@ public slots:
     void lastWindowClosedSlot();
     void modelDroppedSlot(FixMimeData *);
     void newSchemaCreatedSlot(TableSchema *);
+    void newMainWindowWizardSlot();
     void setTimeFormatSlot(GUI::Globals::TimeFormat);
     void schemaDeletedSlot(int schemaID);
     void schemaEditorFinishedSlot(int);
@@ -122,6 +125,13 @@ protected:
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
     QtSingleApplication *applicationInstance;
+
+    /*
+    QQuickView *newWindowWizard;
+    QQuickItem  *newWinWizObject;
+    QWidget *newWindowWidget;
+    QDialog *newWindowDialog;
+    */
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
@@ -134,6 +144,8 @@ private:
 
     SearchDialog *searchDialog;
     SearchFunctionList *searchFunctionList;
+    NewWindowWizard *newWindowWizard;
+
 };
 
 #endif // FIX8LOG_H

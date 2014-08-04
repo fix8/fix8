@@ -87,37 +87,7 @@ void Fix8Log::aboutSlot()
     aboutDialog->deleteLater();
 
 }
-void Fix8Log::createNewWindowSlot(MainWindow *mw)
-{
-    MainWindow *newMW  =new MainWindow(*mw,database);
-    newMW->setSearchFunctions(searchFunctionList);
-    wireSignalAndSlots(newMW);
-    newMW->show();
-    newMW->showFileDialog();
 
-    mainWindows.append(newMW);
-    //const GeneratedTable<const char *, BaseMsgEntry>::Pair *p = TEX::ctx()._bme.at(1);
-}
-void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
-{
-    if (mainWindows.count() == 1)  {
-        if (autoSaveOn) {
-            saveSession();
-        }
-    }
-    if (searchDialog && (searchDialog->getMainWindow() == mw)) {
-        searchDialog->deleteLater();
-        searchDialog = 0;
-    }
-    mainWindows.removeOne(mw);
-    mw->deleteLater();
-    if (mainWindows.count() < 1) {
-        writeSettings();
-        qApp->exit();
-    }
-    if (schemaEditorDialog)
-        schemaEditorDialog->windowDeleted(mw);
-}
 void Fix8Log::displayConsoleMessage(GUI::ConsoleMessage msg)
 {
     MainWindow *mw;
@@ -162,11 +132,7 @@ void Fix8Log::autoSaveOnSlot(bool on)
     QSettings settings("fix8","logviewer");
     settings.setValue("AutoSave",autoSaveOn);
 }
-void Fix8Log::lastWindowClosedSlot()
-{
-    qDebug() << "Last Window closed";
-    qApp->exit();
-}
+
 void Fix8Log::cancelSessionRestoreSlot()
 {
     cancelSessionRestore = true;

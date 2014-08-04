@@ -1056,8 +1056,6 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
         tableSchema = defaultTableSchema;
     schemaV->setText(tableSchema->name);
 
-    QStringList columnNames = tableSchema->getColumnNames();
-    editHighlighter->setColumHeaders(columnNames);
     if (!schemaActionGroup) {
         qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
         return;
@@ -1158,6 +1156,18 @@ TableSchema * MainWindow::getTableSchema()
 void MainWindow::setFieldUsePair(QList<QPair<QString ,FieldUse *>> *fup)
 {
     fieldUsePairList = fup;
+    QStringList fieldNames;
+    if (!fieldUsePairList) {
+        qWarning() << "Warning Field Use Pair is null " << __FILE__ << __LINE__;
+        return;
+    }
+    QListIterator <QPair<QString ,FieldUse *>> iter(*fieldUsePairList);
+    while(iter.hasNext()) {
+        QPair<QString,FieldUse *> pair = iter.next();
+        fieldNames << pair.first;
+
+    }
+    editHighlighter->setColumHeaders(fieldNames);
 }
 
 QList<QPair<QString ,FieldUse *>> * MainWindow::getFieldUsePair()
