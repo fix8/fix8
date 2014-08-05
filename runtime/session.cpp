@@ -333,7 +333,10 @@ application_call:
 	{
 		slout_debug << "process:: f8exception" << ' ' << seqnum << ' ' << e.what();
 
-		log(e.what(), Logger::Error);
+		// log to both incase the exception was to do with the logger
+		slout_fatal << e.what();
+		glout_fatal << e.what();
+
 		if (!e.force_logoff())
 		{
 			send(generate_reject(seqnum, e.what()));
@@ -351,12 +354,12 @@ application_call:
 	catch (Poco::Net::NetException& e)
 	{
 		slout_debug << "process:: Poco::Net::NetException";
-		log(e.what(), Logger::Error);
+		slout_error << e.what();
 	}
 	catch (exception& e)
 	{
 		slout_debug << "process:: std::exception";
-		log(e.what(), Logger::Error);
+		slout_error << e.what();
 	}
 
 	return false;
@@ -741,11 +744,11 @@ bool Session::heartbeat_service()
 				}
 				catch (Poco::Net::NetException& e)
 				{
-					log(e.what(), Logger::Error);
+					slout_error << e.what();
 				}
 				catch (exception& e)
 				{
-					log(e.what(), Logger::Error);
+					slout_error << e.what();
 				}
 				return true;
 			}
@@ -1009,12 +1012,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	}
 	catch (f8Exception& e)
 	{
-		log(e.what(), Logger::Error);
+		slout_error << e.what();
 		return false;
 	}
 	catch (Poco::Exception& e)
 	{
-		log(e.displayText(), Logger::Error);
+		slout_error << e.displayText();
 		return false;
 	}
 

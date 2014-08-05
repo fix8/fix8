@@ -3488,13 +3488,6 @@ _ACEOF
 libfix8_la_version_info=$MAJOR_VERSION_NUM:$MINOR_VERSION_NUM:0
 
 
-UNAME_S=`uname -s 2>/dev/null || echo unknown`
-UNAME_M=`uname -m 2>/dev/null || echo unknown`
-UNAME_O=`uname -o 2>/dev/null || echo unknown`
-UNAME_R=`uname -r 2>/dev/null || echo unknown`
-UNAME_P=`uname -p 2>/dev/null || echo unknown`
-UNAME_V=`uname -v 2>/dev/null || echo unknown`
-
 BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
 BRAND_COMPANY_SHORTNAME='fix8'

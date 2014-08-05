@@ -129,13 +129,13 @@ TEST(filelogger, create_logfile)
     levels.set(Logger::Fatal, true);
 
 	 const Logger::LogPositions logpositions { Logger::sequence, Logger::thread, Logger::direction, Logger::timestamp };
-    FileLogger logger("log/utest_log.log", flags, levels, logpositions);
+    FileLogger logger("log/utest_log.log", flags, levels, " ", logpositions);
 
     EXPECT_TRUE(exist("log/utest_log.log"));
-    logger.send("first_message_out", Logger::Info, 0);
-    logger.send("first_message_in", Logger::Info, 1);
-    logger.send("second_message_out", Logger::Info, 0);
-    logger.send("third_message_out", Logger::Info, 0);
+    logger.send("first_message_out", Logger::Info, FILE_LINE, 0);
+    logger.send("first_message_in", Logger::Info, FILE_LINE, 1);
+    logger.send("second_message_out", Logger::Info, FILE_LINE, 0);
+    logger.send("third_message_out", Logger::Info, FILE_LINE, 0);
 
     //wait until log file have been written
     hypersleep<h_milliseconds>(50);
@@ -181,7 +181,7 @@ TEST(filelogger, rotate)
     levels.set(Logger::Fatal, true);
 
 	 const Logger::LogPositions logpositions { Logger::sequence, Logger::thread, Logger::direction, Logger::timestamp };
-    FileLogger logger("log/utest_log.log", flag, levels, logpositions, 3);
+    FileLogger logger("log/utest_log.log", flag, levels, " ", logpositions, 3);
     EXPECT_TRUE(exist("log/utest_log.log"));
 
     logger.rotate(true);

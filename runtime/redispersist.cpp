@@ -54,7 +54,7 @@ bool HiredisPersister::initialise(const f8String& host, unsigned port, unsigned 
 	{
 		if (_cache->err)
 		{
-			glout_error << FILE_LINE << "redis error connect: " << _cache->errstr << " for " << _key_base;
+			glout_error << "redis error connect: " << _cache->errstr << " for " << _key_base;
 		}
 		return false;
 	}
@@ -64,7 +64,7 @@ bool HiredisPersister::initialise(const f8String& host, unsigned port, unsigned 
 		redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZREMRANGEBYRANK %s 0 -1", _key_base.c_str())));
 		if (reply->type == REDIS_REPLY_ERROR)
 		{
-			glout_error << FILE_LINE << "redis error purge (ZREMRANGEBYRANK): " << reply->str << " for " << _key_base;
+			glout_error << "redis error purge (ZREMRANGEBYRANK): " << reply->str << " for " << _key_base;
 		}
 		freeReplyObject(reply);
 	}
@@ -89,13 +89,13 @@ unsigned HiredisPersister::get_last_seqnum(unsigned& sequence) const
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGE %s -1 -1 WITHSCORES", _key_base.c_str())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error ZRANGE: " << reply->str << " for " << _key_base;
+		glout_error << "redis error ZRANGE: " << reply->str << " for " << _key_base;
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 2)	// we expect two records
 		result = fast_atoi<unsigned>((*(reply->element + 1))->str);	// 3nd element is score (seqnum)
 	else
 	{
-		glout_error << FILE_LINE << "redis error ZRANGE: unexpected type: " << reply->type << " for " << _key_base;
+		glout_error << "redis error ZRANGE: unexpected type: " << reply->type << " for " << _key_base;
 	}
 
 	freeReplyObject(reply);
@@ -114,7 +114,7 @@ unsigned HiredisPersister::get(const unsigned from, const unsigned to, Session& 
 
 	if (!startSeqNum || from > finish)
 	{
-		glout_warn << FILE_LINE << "No records found";
+		glout_warn << "No records found";
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -123,7 +123,7 @@ unsigned HiredisPersister::get(const unsigned from, const unsigned to, Session& 
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGEBYSCORE %s %u %u WITHSCORES", _key_base.c_str(), startSeqNum, finish)));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error ZRANGEBYSCORE: " << reply->str << " for " << _key_base;
+		glout_error << "redis error ZRANGEBYSCORE: " << reply->str << " for " << _key_base;
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY)
 	{
@@ -140,7 +140,7 @@ unsigned HiredisPersister::get(const unsigned from, const unsigned to, Session& 
 	}
 	else
 	{
-		glout_error << FILE_LINE << "redis error ZRANGEBYSCORE: unexpected type: " << reply->type << " for " << _key_base;
+		glout_error << "redis error ZRANGEBYSCORE: unexpected type: " << reply->type << " for " << _key_base;
 	}
 
 	freeReplyObject(reply);
@@ -163,7 +163,7 @@ bool HiredisPersister::put(const unsigned sender_seqnum, const unsigned target_s
 	reply = static_cast<redisReply*>(redisCommand(_cache, "ZADD %s 0 %u:%u", _key_base.c_str(), sender_seqnum, target_seqnum));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error ZADD: " << reply->str << " for " << _key_base;
+		glout_error << "redis error ZADD: " << reply->str << " for " << _key_base;
 		result = false;
 	}
 
@@ -182,7 +182,7 @@ bool HiredisPersister::put(const unsigned seqnum, const f8String& what)
 		seqnum, what.data(), what.size())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error ZADD: " << reply->str << " for " << _key_base;
+		glout_error << "redis error ZADD: " << reply->str << " for " << _key_base;
 		result = false;
 	}
 
@@ -201,7 +201,7 @@ bool HiredisPersister::put(const f8String& key, const f8String& what)
 		key.c_str(), what.data(), what.size())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error SET: " << reply->str << " for " << _key_base << ':' << key;
+		glout_error << "redis error SET: " << reply->str << " for " << _key_base << ':' << key;
 		result = false;
 	}
 
@@ -219,7 +219,7 @@ bool HiredisPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) con
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGEBYSCORE %s 0 0", _key_base.c_str())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error ZRANGEBYSCORE: " << reply->str << " for " << _key_base;
+		glout_error << "redis error ZRANGEBYSCORE: " << reply->str << " for " << _key_base;
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY)
 	{
@@ -234,7 +234,7 @@ bool HiredisPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) con
 	}
 	else
 	{
-		glout_error << FILE_LINE << "redis error ZRANGEBYSCORE: unexpected type: " << reply->type << " for " << _key_base;
+		glout_error << "redis error ZRANGEBYSCORE: unexpected type: " << reply->type << " for " << _key_base;
 	}
 
 	freeReplyObject(reply);
@@ -251,7 +251,7 @@ bool HiredisPersister::get(const unsigned seqnum, f8String& to) const
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGEBYSCORE %s %u %u", _key_base.c_str(), seqnum, seqnum)));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error ZRANGEBYSCORE: " << reply->str << " for " << _key_base;
+		glout_error << "redis error ZRANGEBYSCORE: " << reply->str << " for " << _key_base;
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 1)	// we expect one record
 	{
@@ -260,7 +260,7 @@ bool HiredisPersister::get(const unsigned seqnum, f8String& to) const
 	}
 	else
 	{
-		glout_error << FILE_LINE << "redis error ZRANGEBYSCORE: unexpected type: " << reply->type << " for " << _key_base;
+		glout_error << "redis error ZRANGEBYSCORE: unexpected type: " << reply->type << " for " << _key_base;
 	}
 
 	freeReplyObject(reply);
@@ -277,7 +277,7 @@ bool HiredisPersister::get(const f8String& key, f8String& to) const
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "GET %s%s", _key_base.c_str(), key.c_str())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error GET: " << reply->str << " for " << _key_base << ':' << key;
+		glout_error << "redis error GET: " << reply->str << " for " << _key_base << ':' << key;
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 1)	// we expect one record
 	{
@@ -286,7 +286,7 @@ bool HiredisPersister::get(const f8String& key, f8String& to) const
 	}
 	else
 	{
-		glout_error << FILE_LINE << "redis error GET: unexpected type: " << reply->type << " for " << _key_base << ':' << key;
+		glout_error << "redis error GET: unexpected type: " << reply->type << " for " << _key_base << ':' << key;
 	}
 
 	freeReplyObject(reply);
@@ -303,7 +303,7 @@ bool HiredisPersister::del(const f8String& key)
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "DEL %s%s", _key_base.c_str(), key.c_str())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		glout_error << FILE_LINE << "redis error DEL: " << reply->str << " for " << _key_base << ':' << key;
+		glout_error << "redis error DEL: " << reply->str << " for " << _key_base << ':' << key;
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 1)	// we expect one record
 	{
@@ -311,7 +311,7 @@ bool HiredisPersister::del(const f8String& key)
 	}
 	else
 	{
-		glout_error << FILE_LINE << "redis error DEL: unexpected type: " << reply->type << " for " << _key_base << ':' << key;
+		glout_error << "redis error DEL: unexpected type: " << reply->type << " for " << _key_base << ':' << key;
 	}
 
 	freeReplyObject(reply);

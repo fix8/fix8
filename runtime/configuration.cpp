@@ -267,9 +267,11 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 			if (which->GetAttr("type", type)
 				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
 			{
-				string logname("logname_not_set.log"), levstr;
+				string logname("logname_not_set.log"), levstr, delim(" ");
 				which->FindAttrRef("filename", logname);
 				trim(logname);
+				if (which->GetAttr("delimiter", delim) && delim.size() > 2) // "|" or "<>" or "{}" etc
+					throw ConfigurationError("invalid logging field delimiter");
 
 				which->GetAttr("levels", levstr);
 				const Logger::Levels levels(levstr.empty() || levstr % "All"
@@ -284,7 +286,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 #ifndef HAVE_POPEN
 					throw ConfigurationError("popen not supported on your platform");
 #endif
-					return new PipeLogger(logname, flags, levels, positions);
+					return new PipeLogger(logname, flags, levels, delim, positions);
 				}
 
 				RegMatch match;
@@ -293,13 +295,11 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					f8String ip, port;
 					_ipexp.SubExpr(match, logname, ip, 0, 1);
 					_ipexp.SubExpr(match, logname, port, 0, 2);
-					auto *bcl(new BCLogger(ip, get_value<unsigned>(port), flags, levels, positions));
-					if (*bcl)
-						return bcl;
+					return new BCLogger(ip, get_value<unsigned>(port), flags, levels, delim, positions);
 				}
 
 				get_logname(which, logname, sid); // only applies to file loggers
-				return new FileLogger(logname, flags, levels, positions, get_logfile_rotation(which));
+				return new FileLogger(logname, flags, levels, delim, positions, get_logfile_rotation(which));
 			}
 		}
 	}

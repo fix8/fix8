@@ -656,16 +656,16 @@ public:
 	    \param lev log level
 	    \param value optional value for the logger to use
 	    \return true on success */
-	bool enqueue(const std::string& what, Logger::Level lev, unsigned value=0) const
-		{ return _logger ? _logger->enqueue(what, lev, value) : false; }
+	bool enqueue(const std::string& what, Logger::Level lev, const char *fl=nullptr, unsigned value=0) const
+		{ return _logger ? _logger->enqueue(what, lev, fl, value) : false; }
 
 	/*! Log a message to the session logger.
 	    \param what string to log
 	    \param lev log level
 	    \param value optional value for the logger to use
 	    \return true on success */
-	bool log(const std::string& what, Logger::Level lev, unsigned value=0) const
-		{ return _logger ? _logger->send(what, lev, value) : false; }
+	bool log(const std::string& what, Logger::Level lev, const char *fl=nullptr, unsigned value=0) const
+		{ return _logger ? _logger->send(what, lev, fl, value) : false; }
 
 	/*! Log a message to the protocol logger.
 	    \param what Fix message (string) to log
@@ -673,7 +673,7 @@ public:
 	    \param direction 0=out, 1=in
 	    \return true on success */
 	bool plog(const std::string& what, Logger::Level lev, const unsigned direction=0) const
-		{ return _plogger ? _plogger->send(what, lev, direction) : false; }
+		{ return _plogger ? _plogger->send(what, lev, nullptr, direction) : false; }
 
 	/*! Return the last received timstamp
 	    \return Tickval on success */
@@ -826,18 +826,18 @@ public:
 //-------------------------------------------------------------------------------------------------
 // our buffered RAII ostream log target, ostream Session log target for specified Session ptr
 #define ssout_info(x) if (!x->is_loggable(Logger::Info)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Info, std::placeholders::_2)))
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Info, FILE_LINE, std::placeholders::_2)))
 #define ssout(x) ssout_info(x)
 
 #define ssout_warn(x) if (!x->is_loggable(Logger::Warn)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Warn, std::placeholders::_2)))
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Warn, FILE_LINE, std::placeholders::_2)))
 #define ssout_error(x) if (!x->is_loggable(Logger::Error)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Error, std::placeholders::_2)))
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Error, FILE_LINE, std::placeholders::_2)))
 #define ssout_fatal(x) if (!x->is_loggable(Logger::Fatal)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Fatal, std::placeholders::_2)))
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Fatal, FILE_LINE, std::placeholders::_2)))
 #if defined F8_DEBUG
 #define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, std::placeholders::_2))) << FILE_LINE
+	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, FILE_LINE, std::placeholders::_2)))
 #else
 #define ssout_debug(x) true ? null_insert() : null_insert()
 #endif

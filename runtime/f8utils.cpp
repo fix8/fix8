@@ -118,7 +118,7 @@ const string& GetTimeAsStringMini(string& result, const Tickval *tv)
    return result = oss.str();
 }
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 string& CheckAddTrailingSlash(string& src)
 {
 	if (!src.empty() && *src.rbegin() != '/')

@@ -65,7 +65,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // file/line stringification
 #define STRINGOF(x) #x
 #define STRINGIFY(x) STRINGOF(x)
-#define FILE_LINE "[" __FILE__ ":" STRINGIFY(__LINE__) "] "
+#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__)
 
 namespace FIX8 {
 
@@ -118,11 +118,33 @@ F8API std::string Str_error(const int err, const char *str=0);
   \return reference to target string */
 F8API const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
 
+/*! Format Tickval into string. 2014-07-02 23:15:51.514776595
+  \param tv tickval to use or 0 for current time
+  \param dplaces number of decimal places to report seconds (default 6)
+  \param use_gm if true, use gmtime, if false localtime
+  \return string */
+inline std::string GetTimeAsStringMS(const class Tickval *tv, const unsigned dplaces=6, bool use_gm=false)
+{
+	std::string result;
+	GetTimeAsStringMS(result, tv, dplaces, use_gm);
+	return result;
+}
+
 /*! Format Tickval into mini string. 14-07-02 23:15:51
   \param result target string
   \param tv tickval to use or 0 for current time
   \return reference to target string */
 F8API const std::string& GetTimeAsStringMini(std::string& result, const Tickval *tv);
+
+/*! Format Tickval into mini string. 14-07-02 23:15:51
+  \param tv tickval to use or 0 for current time
+  \return string */
+inline std::string GetTimeAsStringMini(const Tickval *tv)
+{
+	std::string result;
+	GetTimeAsStringMini(result, tv);
+	return result;
+}
 
 /*! Trim leading and trailing whitespace from a string
   \param source source string

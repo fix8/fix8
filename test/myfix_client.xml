@@ -56,7 +56,7 @@
 				filename="./run/myfix_client_session.log"
 				rotation="5"
 				levels="debug|info|warn|error|fatal"
-				iflags="timestamp|sequence|thread|level"/>
+				flags="sequence|timestamp|sstart|thread|location|level"/>
 
 	<log 		name="session_log_udp"
 				type="session"

@@ -81,6 +81,7 @@
 				type="session"
 				filename="./run/myfix_server_session.log"
 				rotation="5"
+				delimiter="&lt;&gt;"
 				levels="debug|info|warn|error|fatal"
 				flags="mstart|sequence|thread|timestamp|level"/>
 
