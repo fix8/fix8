@@ -350,6 +350,7 @@ void MainWindow::buildMainWindow()
 
     searchSelectBox->addWidget(searchSelectL,0);
     searchSelectBox->addWidget(searchSelectCB,1);
+    searchSelectBox->addStretch(1);
 
     searchCompleter = new QCompleter(this);
 
@@ -358,7 +359,8 @@ void MainWindow::buildMainWindow()
     searchCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     searchCompleter->setWrapAround(false);
     searchLineEdit->setCompleter(searchCompleter);
-
+    QFontMetrics fm1(searchLineEdit->font());
+    searchLineEdit->setMinimumWidth(fm1.averageCharWidth()*32);
     editHighlighter = new EditHighLighter(searchLineEdit->document());
     connect(searchLineEdit,SIGNAL(textChanged()),this,SLOT(searchTextChangedSlot()));
     connect(searchLineEdit,SIGNAL(returnPressed()),this,SLOT(searchReturnSlot()));
@@ -372,8 +374,9 @@ void MainWindow::buildMainWindow()
     searchToolBar->addAction(searchBackA);
     searchToolBar->addAction(searchNextA);
     searchToolBar->addAction(searchEndA);
-    searchToolBar->addWidget(searchSelectArea);
     searchToolBar->addAction(searchEditA);
+    searchToolBar->addWidget(searchSelectArea);
+
 
     whatsThisA = QWhatsThis::createAction(this);
     whatsThisA->setIcon(QIcon(":/images/svg/help-contents.svg"));

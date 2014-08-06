@@ -297,15 +297,15 @@ bool MainWindow::runSearchScript()
                 }
             }
             else {
-                //qDebug() << "\tNo mesage found with arg:" << arg << __FILE__ << __LINE__;
                 skipPoint = j;
                 skip = true;
                 break; // nbsps
             }
         }
         if (skip) {
-            for (int j=0;j< skipPoint;j++)
-                delete  [] variantLists[j];
+            for (int j=0;j< skipPoint;j++) {
+                delete  variantLists[j];
+            }
             delete [] variantLists;
         }
         else  {

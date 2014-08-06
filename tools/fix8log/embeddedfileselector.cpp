@@ -38,8 +38,12 @@ EmbeddedFileSelector::EmbeddedFileSelector(QWidget *parent) :
     toolLayout->addWidget(detailViewB,0);
     splitter = new QSplitter(Qt::Horizontal,this);
     quickSelectView = new QListView(splitter);
+    quickSelectView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     quickSelectView->setFlow(QListView::TopToBottom);
-    quickSelectView->setGridSize(QSize(100,90));
+    QFontMetrics fm(quickSelectView->font());
+    int quickSelectViewWidth = fm.width("computer")+4;
+    quickSelectView->setMaximumWidth(quickSelectViewWidth + 12);
+    quickSelectView->setGridSize(QSize(90,quickSelectViewWidth));
     quickSelectView->setUniformItemSizes(true);
     quickSelectView->setMovement(QListView::Static);
     quickSelectView->setResizeMode(QListView::Adjust);
@@ -54,7 +58,7 @@ EmbeddedFileSelector::EmbeddedFileSelector(QWidget *parent) :
     stackW = new QStackedWidget(splitter);
     listView = new QListView(stackW);
     listView->setFlow(QListView::LeftToRight);
-    listView->setGridSize(QSize(94,44));
+    listView->setGridSize(QSize(94,fm.averageCharWidth()*12));
     listView->setUniformItemSizes(true);
     listView->setWrapping(true);
     listView->setViewMode(QListView::IconMode);
@@ -112,7 +116,13 @@ void EmbeddedFileSelector::saveSettings()
 void EmbeddedFileSelector::readSettings()
 {
     QSettings settings("fix8","logviewerNewWindowWizard");
-    QByteArray ba =  settings.value("splitter").toByteArray();
+    QList<int> defaultSizeList;
+    defaultSizeList << 100 << 500;
+    splitter->setSizes(defaultSizeList);
+    QByteArray defba = splitter->saveState();
+    QByteArray ba =  settings.value("splitter",defba).toByteArray();
+
+
     splitter->restoreState(ba);
     currentDir.setPath(settings.value("currentDir",QDir::homePath()).toString());
     directoryCB->addItem(currentDir.path());

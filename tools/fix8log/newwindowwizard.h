@@ -5,6 +5,7 @@
 class QDesktopWidget;
 class QListView;
 class QLabel;
+class QStackedLayout;
 class EmbeddedFileSelector;
 class NewWindowWizard : public QWizard
 {
@@ -23,12 +24,15 @@ protected:
 private:
  QWizardPage *schemaPage;
  QWizardPage *filePage;
-
+ QStackedLayout *schemaStack;
+ QLabel       *noSchemasFoundL;
  EmbeddedFileSelector *fileSelector;
  QListView   *schemaListView;
  QLabel      *schemaLabel;
  QDesktopWidget *desktopW;
  int filePageID;
+ int noSchemasID;
+ int schemasListID;
 
 };
 
