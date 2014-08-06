@@ -304,7 +304,6 @@ bool Fix8Log::init()
                     WorkSheetData wsd = iter2.next();
                     currentItemIter =  fileNameModelMap.find(wsd.fileName);
                     newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
-                    qDebug() << "FIX THIS HARD CODE ROW SETTING of 2 ?" << __FILE__ << __LINE__;
                     newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
                 }
             }

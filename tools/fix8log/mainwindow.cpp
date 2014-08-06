@@ -1078,11 +1078,13 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
     QStringListModel *strModel = 0;
     QStringList fieldNameList;
     if (fieldUsePairList) {
+        qDebug() << "FIELD USE PAIR LIST COUNT = " << fieldUsePairList->count() << __FILE__ << __LINE__;
         QListIterator  <QPair<QString ,FieldUse *>> fieldPairIter(*fieldUsePairList);
         while(fieldPairIter.hasNext()) {
             QPair<QString,FieldUse *>  pair = fieldPairIter.next();
             fieldNameList << pair.first;
         }
+        qDebug() << "FILE NAME LIST COUNT:" << fieldNameList.count();
         strModel = new QStringListModel(fieldNameList,this);
         searchCompleter->setModel(strModel);
     }

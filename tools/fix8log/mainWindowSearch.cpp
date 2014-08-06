@@ -190,6 +190,7 @@ void MainWindow::searchReturnSlot()
     // Return Key Pressed
     bool bstatus;
     QString errorMessage;
+    QVector <qint32> filterLogicalIndexes;
     QScriptSyntaxCheckResult::State syntaxState;
     SearchFunction newSearchFun = createSearchRoutine(bstatus);
 
@@ -205,10 +206,11 @@ void MainWindow::searchReturnSlot()
     ws->setSearchFunction(newSearchFun);
     searchFunction = newSearchFun;
 
-
+    ws->setSearchIndexes(filterLogicalIndexes);
     if (searchFunction.function.length() <  3) {
         ws->doSearch(WorkSheet::SearchOff);
         haveSearchFunction = false;
+        ws->setSearchIndexes(filterLogicalIndexes);
         validateSearchButtons();
         return;
     }
@@ -241,16 +243,13 @@ bool MainWindow::runSearchScript()
     QMessage *qmsg;
     QVariant var,var1;
     QString arg;
+    QVector <qint32> filterLogicalIndexes;
+
     searchFunctionVal = engine.evaluate(searchFunction.javascript);
     if (tabW->count()  < 1) {
         qWarning() << "Search Failed, no work sheets" << __FILE__ << __LINE__;
         validateSearchButtons();
         update();
-        return false;
-    }
-    if (searchArgList.count() < 1) {
-        qWarning() << "No search arguments provided " << __FILE__ << __LINE__;
-        validateSearchButtons();
         return false;
     }
     WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
@@ -260,6 +259,13 @@ bool MainWindow::runSearchScript()
         update();
         return false;
     }
+    if (searchArgList.count() < 1) {
+        qWarning() << "No search arguments provided " << __FILE__ << __LINE__;
+        ws->setSearchIndexes(filterLogicalIndexes);
+        validateSearchButtons();
+        return false;
+    }
+
     WorkSheetModel *wsm = ws->getModel();
     if (!wsm || (wsm->rowCount() < 1)) {
         qWarning() << "Search Failed, work sheet model is null, or has no rows" << __FILE__ << __LINE__;
@@ -269,7 +275,6 @@ bool MainWindow::runSearchScript()
     }
     int row=0;
     int numOfSearchArguments = searchArgList.count();
-    QVector <qint32> filterLogicalIndexes;
     QStringListIterator iter(searchArgList);
     for(int i=0;i<wsm->rowCount();i++) {
         skip = false;
@@ -320,17 +325,22 @@ bool MainWindow::runSearchScript()
                 vector[ii] = new QVariant[numOfSearchArguments];
             repeatLength= 1;
             for(int ii=0;ii<numOfSearchArguments;ii++) {
-                repeatLength = totalSize/(repeatLength * (variantLists[ii]->count()));
-                int k = 0;
-                int m = 0;
-                for(int j=0;j<totalSize;j++) {
-                    vector[j][ii]  = variantLists[ii]->at(k);
-                    m++;
-                    if (m >= repeatLength) {
-                        m = 0;
-                        k++;
-                        if (k > variantLists[ii]->count())
-                            k = 0;
+                if (variantLists[ii]->count() ==0 ) {
+                    qWarning() << "ERROR NO VALUES IN VECTOR" << __FILE__ << __LINE__;
+                }
+                else {
+                    repeatLength = totalSize/(repeatLength * (variantLists[ii]->count()));
+                    int k = 0;
+                    int m = 0;
+                    for(int j=0;j<totalSize;j++) {
+                        vector[j][ii]  = variantLists[ii]->at(k);
+                        m++; // should tis be incremented at end of loop
+                        if (m >= repeatLength) {
+                            m = 0;
+                            k++;
+                            if (k > variantLists[ii]->count())
+                                k = 0;
+                        }
                     }
                 }
             }
@@ -365,7 +375,7 @@ bool MainWindow::runSearchScript()
                 }
             }
             for (int ii=0;ii<numOfSearchArguments;ii++) {
-                delete [] vector[ii];
+                delete []vector[ii];
             }
             delete []vector;
             vector = 0;

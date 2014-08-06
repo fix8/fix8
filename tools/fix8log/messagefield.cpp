@@ -407,6 +407,7 @@ void QMessage::generateItems(GroupBase *gb)
                     int ival(static_cast<Field<int, 0>*>(bf)->get());
                     var = ival;
                     map.insert(name,var);
+                    //qDebug() << "HERE IN GENERATE: add item to map" << name << __FILE__ << __LINE__;
                 }
                 if (FieldTrait::is_float(ft)) {
                     double fval(static_cast<Field<double, 0>*>(bf)->get());
@@ -417,6 +418,8 @@ void QMessage::generateItems(GroupBase *gb)
                     memset(c,'\0',60);
                     bf->print(c);
                     str = QString::fromLatin1(c);
+                    var = str;
+                    map.insert(name,var);
                 }
             }
         }
