@@ -164,13 +164,13 @@ public:
 #endif
 	static const int None = 0;
 	enum Flags { mstart, sstart, sequence, thread, timestamp, minitimestamp, direction, level, location,
-					 append, start_controls=append, buffer, compress, pipe, broadcast, nolf, inbound, outbound, num_flags };
+					 start_controls, append=start_controls, buffer, compress, pipe, broadcast, nolf, inbound, outbound, xml, num_flags };
 #ifndef _MSC_VER
 	static const int StdFlags = bitsum(sequence,thread,timestamp,level);
 #else
 	static const int StdFlags = (1<<sequence|1<<thread|1<<timestamp|1<<level|1<<location);
 #endif
-	enum { rotation_default = 5, max_rotation = 1024};
+	static const int rotation_default = 5, max_rotation = 1024;
 	using LogFlags = ebitset<Flags>;
 	using Levels = ebitset<Level>;
 	using LogPositions = std::vector<int>;
@@ -232,7 +232,10 @@ protected:
 
 public:
 	/*! Ctor.
-	    \param flags ebitset flags */
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
 	Logger(const LogFlags flags, const Levels levels=Levels(All), const std::string delim=" ", const LogPositions positions=LogPositions())
 		: _thread(std::ref(*this)), _flags(flags), _levels(levels), _delim(delim), _positions(positions)
 	{
@@ -285,6 +288,7 @@ public:
 	/*! Log a string with log level. Ignore level and always enqueue.
 	    \param what the string to log
 	    \param lev log level (enum)
+	    \param fl pointer to fileline
 	    \param val optional value for the logger to use
 	    \return true on success */
 	bool enqueue(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0)
@@ -296,6 +300,7 @@ public:
 	/*! Log a string with log level.
 	    \param what the string to log
 	    \param lev log level (enum)
+	    \param fl pointer to fileline
 	    \param val optional value for the logger to use
 	    \return true on success */
 	bool send(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0)
@@ -312,6 +317,10 @@ public:
 	/*! The logging thread entry point.
 	    \return 0 on success */
 	F8API int operator()();
+
+	/*! Process this logelement
+		\param le LogElement */
+	F8API virtual void process_logline(LogElement *le);
 
 	/// string representation of logflags
 	static const std::vector<std::string> _bit_names;
@@ -347,6 +356,7 @@ public:
 /// A file logger.
 class FileLogger : public Logger
 {
+protected:
 	std::string _pathname;
 	unsigned _rotnum;
 
@@ -354,6 +364,9 @@ public:
 	/*! Ctor.
 	    \param pathname pathname to log to
 	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions
 	    \param rotnum number of logfile rotations to retain (default=5) */
 	F8API FileLogger(const std::string& pathname, const LogFlags flags, const Levels levels, const std::string delim=" ",
 		const LogPositions positions=LogPositions(), const unsigned rotnum=rotation_default);
@@ -368,13 +381,49 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// A file logger.
+class XmlFileLogger : public FileLogger
+{
+
+public:
+	/*! Ctor.
+	    \param pathname pathname to log to
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions
+	    \param rotnum number of logfile rotations to retain (default=5) */
+	F8API XmlFileLogger(const std::string& pathname, const LogFlags flags, const Levels levels, const std::string delim=" ",
+		const LogPositions positions=LogPositions(), const unsigned rotnum=rotation_default)
+		: FileLogger(pathname, flags, levels, delim, positions, rotnum)
+	{
+		preamble();
+	}
+
+	/// Write the xml preamble. If you use rotate, you need to call this AFTER rotating
+	void preamble() { get_stream() << "<?xml version='1.0' encoding='ISO-8859-1'?>" << std::endl << "<fix8>" << std::endl; }
+	/// Write the xml postamble. If you use rotate, you need to call this BEFORE rotating
+	void postamble() { get_stream() << "</fix8>" << std::endl; }
+
+	/// Dtor.
+	virtual ~XmlFileLogger() { postamble(); }
+
+	/*! Process this logelement
+		\param le LogElement */
+	F8API virtual void process_logline(LogElement *le);
+};
+
+//-------------------------------------------------------------------------------------------------
 /// A pipe logger.
 class PipeLogger : public Logger
 {
 public:
 	/*! Ctor.
 	    \param command pipe command
-	    \param flags ebitset flags */
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
 	PipeLogger(const std::string& command, const LogFlags flags, const Levels levels, const std::string delim=" ",
 		LogPositions positions=LogPositions());
 
@@ -391,14 +440,20 @@ class BCLogger : public Logger
 public:
 	/*! Ctor.
 	    \param sock udp socket
-	    \param flags ebitset flags */
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
 	BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags, const Levels levels, const std::string delim=" ",
 		LogPositions positions=LogPositions());
 
 	/*! Ctor.
 	    \param ip ip string
 	    \param port port to use
-	    \param flags ebitset flags */
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
 	BCLogger(const std::string& ip, const unsigned port, const LogFlags flags, const Levels levels,
 		const std::string delim=" ", LogPositions positions=LogPositions());
 
@@ -440,6 +495,7 @@ public:
 	/*! Send a message to the logger.
 	  \param what message to log
 	  \param lev level to log
+	  \param fl pointer to fileline
 	  \param val extra value to log
 	  \return true on success */
 	static bool log(const std::string& what, Logger::Level lev=Logger::Info, const char *fl=nullptr, unsigned int val=0)
@@ -448,6 +504,7 @@ public:
 	/*! Enqueue a message to the logger. Will not check log level.
 	  \param what message to log
 	  \param lev level to log
+	  \param fl pointer to fileline
 	  \param val extra value to log
 	  \return true on success */
 	static bool enqueue(const std::string& what, Logger::Level lev=Logger::Info, const char *fl=nullptr, unsigned int val=0)
@@ -476,7 +533,7 @@ public:
 	static void stop() { instance().stop(); }
 
 	/*! Check if the given log level is set for this logger
-	    \param level level to test
+	    \param lev level to test
 	    \return true if available */
 	static bool is_loggable(Logger::Level lev) { return instance().is_loggable(lev); }
 };

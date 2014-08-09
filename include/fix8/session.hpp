@@ -654,6 +654,7 @@ public:
 	/*! Log a message to the session logger. Do not check for level permission
 	    \param what string to log
 	    \param lev log level
+		 \param fl pointer to fileline
 	    \param value optional value for the logger to use
 	    \return true on success */
 	bool enqueue(const std::string& what, Logger::Level lev, const char *fl=nullptr, unsigned value=0) const
@@ -662,6 +663,7 @@ public:
 	/*! Log a message to the session logger.
 	    \param what string to log
 	    \param lev log level
+		 \param fl pointer to fileline
 	    \param value optional value for the logger to use
 	    \return true on success */
 	bool log(const std::string& what, Logger::Level lev, const char *fl=nullptr, unsigned value=0) const

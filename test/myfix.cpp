@@ -182,7 +182,6 @@ int main(int argc, char **argv)
 {
 	int val;
 	bool server(false), reliable(false), once(false), dump(false), multi(false);
-	char delim(' ');
 	string clcf, session;
 
 #ifdef HAVE_GETOPT_LONG

@@ -48,7 +48,7 @@ namespace FIX8
 	const vector<string> Logger::_bit_names
 	{
 		"mstart", "sstart", "sequence", "thread", "timestamp", "minitimestamp", "direction", "level", "location",
-		"append", "buffer", "compress", "pipe", "broadcast", "nolf", "inbound", "outbound"
+		"append", "buffer", "compress", "pipe", "broadcast", "nolf", "inbound", "outbound", "xml"
 	};
 
 	const vector<string> Logger::_level_names { "Debug", "Info ", "Warn ", "Error", "Fatal" };
@@ -96,88 +96,7 @@ int Logger::operator()()
 #endif
 			}
 
-			ostringstream ostr;
-
-			f8_scoped_spin_lock posguard(_log_spl); // protect positions, allow app to change
-			for (auto pp : _positions)
-			{
-				ostringstream fostr;
-				if (pp < start_controls) switch (pp)
-				{
-				case mstart:
-					{
-						const Tickval tvs(msg_ptr->_when - _started);
-						fostr << setw(11) << right << setfill('0') << (tvs.secs() * 1000 + tvs.msecs());
-					}
-					break;
-				case sstart:
-					fostr << setw(8) << right << setfill('0') << (msg_ptr->_when - _started).secs();
-					break;
-				case sequence:
-					fostr << setw(7) << right << setfill('0');
-					if (_flags & direction)
-						fostr << (msg_ptr->_val ? ++_sequence  : ++_osequence);
-					else
-						fostr << ++_sequence;
-					break;
-				case thread:
-					fostr << get_thread_code(msg_ptr->_tid);
-					break;
-				case location:
-					if (msg_ptr->_fileline)
-						fostr << msg_ptr->_fileline;
-					break;
-				case direction:
-					fostr << (msg_ptr->_val ? " in" : "out");
-					break;
-				case timestamp:
-					fostr << msg_ptr->_when;
-					break;
-				case minitimestamp:
-					fostr << GetTimeAsStringMini(&msg_ptr->_when);
-					break;
-				case level:
-					fostr << _level_names[msg_ptr->_level];
-					break;
-				default:
-					break;
-				}
-
-				if (!fostr.str().empty())
-				{
-					if (_delim.size() > 1)
-						ostr << _delim[0] << fostr.str() << _delim[1];
-					else
-						ostr << fostr.str() << _delim;
-				}
-			}
-			posguard.release();
-
-			if (_flags & buffer)
-			{
-				string result(ostr.str());
-				if (_delim.size() > 1)
-				{
-					result += _delim[0];
-					result += msg_ptr->_str;
-					result += _delim[1];
-				}
-				else
-					result += msg_ptr->_str;
-				_buffer.push_back(result);
-			}
-			else
-			{
-				f8_scoped_lock guard(_mutex);
-				if (_delim.size() > 1)
-					get_stream() << ostr.str() << _delim[0] << msg_ptr->_str << _delim[1];
-				else
-					get_stream() << ostr.str() << msg_ptr->_str;
-				if (_flags & nolf)
-					get_stream().flush();
-				else
-					get_stream() << endl;
-			}
+			process_logline(msg_ptr);
 		}
 #if (MPMC_SYSTEM == MPMC_FF)
 		_msg_queue.release(msg_ptr);
@@ -185,6 +104,92 @@ int Logger::operator()()
 	}
 
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+void Logger::process_logline(LogElement *msg_ptr)
+{
+	ostringstream ostr;
+	f8_scoped_spin_lock posguard(_log_spl); // protect positions, allow app to change
+	for (auto pp : _positions)
+	{
+		ostringstream fostr;
+		if (pp < start_controls) switch (pp)
+		{
+		case mstart:
+			{
+				const Tickval tvs(msg_ptr->_when - _started);
+				fostr << setw(11) << right << setfill('0') << (tvs.secs() * 1000 + tvs.msecs());
+			}
+			break;
+		case sstart:
+			fostr << setw(8) << right << setfill('0') << (msg_ptr->_when - _started).secs();
+			break;
+		case sequence:
+			fostr << setw(7) << right << setfill('0');
+			if (_flags & direction)
+				fostr << (msg_ptr->_val ? ++_sequence  : ++_osequence);
+			else
+				fostr << ++_sequence;
+			break;
+		case thread:
+			fostr << get_thread_code(msg_ptr->_tid);
+			break;
+		case location:
+			if (msg_ptr->_fileline)
+				fostr << msg_ptr->_fileline;
+			break;
+		case direction:
+			fostr << (msg_ptr->_val ? " in" : "out");
+			break;
+		case timestamp:
+			fostr << msg_ptr->_when;
+			break;
+		case minitimestamp:
+			fostr << GetTimeAsStringMini(&msg_ptr->_when);
+			break;
+		case level:
+			fostr << _level_names[msg_ptr->_level];
+			break;
+		default:
+			break;
+		}
+
+		if (!fostr.str().empty())
+		{
+			if (_delim.size() > 1)
+				ostr << _delim[0] << fostr.str() << _delim[1];
+			else
+				ostr << fostr.str() << _delim;
+		}
+	}
+	posguard.release();
+
+	if (_flags & buffer)
+	{
+		string result(ostr.str());
+		if (_delim.size() > 1)
+		{
+			result += _delim[0];
+			result += msg_ptr->_str;
+			result += _delim[1];
+		}
+		else
+			result += msg_ptr->_str;
+		_buffer.push_back(result);
+	}
+	else
+	{
+		f8_scoped_lock guard(_mutex);
+		if (_delim.size() > 1)
+			get_stream() << ostr.str() << _delim[0] << msg_ptr->_str << _delim[1];
+		else
+			get_stream() << ostr.str() << msg_ptr->_str;
+		if (_flags & nolf)
+			get_stream().flush();
+		else
+			get_stream() << endl;
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -360,5 +365,39 @@ BCLogger::BCLogger(const string& ip, const unsigned port, const LogFlags flags, 
 		_flags |= broadcast;
 		_init_ok = true;
 	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void XmlFileLogger::process_logline(LogElement *msg_ptr)
+{
+	f8String spacer(3, ' ');
+	ostringstream ostr;
+
+	ostr << spacer << "<logline ";
+	if (_flags & mstart)
+	{
+		const Tickval tvs(msg_ptr->_when - _started);
+		ostr << "mstart=\'" << (tvs.secs() * 1000 + tvs.msecs()) << "\' ";
+	}
+	if (_flags & sstart)
+		ostr << "sstart=\'" << (msg_ptr->_when - _started).secs() << "\' ";
+	if (_flags & sequence)
+		ostr << "sequence=\'" << (_flags & direction ? (msg_ptr->_val ? ++_sequence  : ++_osequence) : ++_sequence) << "\' ";
+	if (_flags & thread)
+		ostr << "thread=\'" << get_thread_code(msg_ptr->_tid) << "\' ";
+	if (_flags & location && msg_ptr->_fileline)
+		ostr << "location=\'" << msg_ptr->_fileline << "\' ";
+	if (_flags & direction)
+		ostr << "direction=\'" << (msg_ptr->_val ? " in" : "out") << "\' ";
+	if (_flags & timestamp)
+		ostr << "timestamp=\'" << msg_ptr->_when << "\' ";
+	if (_flags & minitimestamp)
+		ostr << "minitimestamp=\'" << GetTimeAsStringMini(&msg_ptr->_when) << "\' ";
+	if (_flags & level)
+		ostr << "level=\'" << _level_names[msg_ptr->_level] << "\' ";
+
+	ostr << "text=\'" << msg_ptr->_str << "\'/>";
+	f8_scoped_lock guard(_mutex);
+	get_stream() << ostr.str() << endl;
 }
 

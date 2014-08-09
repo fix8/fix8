@@ -872,6 +872,7 @@ public:
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
 	    \param sset the set of strings
 	    \param what the string to find and set
+		 \param ignorecase if true, ignore case
 	    \param on set or clear the found bit
 	    \return enumeration (as int) if found and -1 if not */
 	int set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase, bool on=true)
@@ -964,9 +965,9 @@ public:
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
-	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
+		 \param ignorecase if true, ignore case
 	    \param on set or clear the found bit
 	    \return true if found and set */
 	bool set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase=false, bool on=true)

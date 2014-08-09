@@ -332,14 +332,24 @@ struct F8MetaCntx
 		return itr != _reverse_msgtable.cend() ? itr->second : nullptr;
 	}
 
+	/*! Create a new message from longname
+	  \param tag const char ptr to tag of message
+	  \param deepctor if true, do deep message construction
+	  \return ptr to Message or 0 if tag not found */
+	Message *create_msg_from_longname(const char *tag, bool deepctor=true) const
+	{
+		const BaseMsgEntry *bme(reverse_find_bme(tag));
+		return bme ? bme->_create._do(deepctor) : nullptr;
+	}
+
 	/*! Create a new message of the tag type passed.
 	  \param tag const char ptr to tag of message
-	  \param version if true, do reverse lookup (use message long name)
+	  \param deepctor if true, do deep message construction
 	  \return ptr to Message or 0 if tag not found */
-	Message *create_msg(const char *tag, bool version=false) const
+	Message *create_msg(const char *tag, bool deepctor=true) const
 	{
-		const BaseMsgEntry *bme(version ? reverse_find_bme(tag) : find_bme(tag));
-		return bme ? bme->_create._do(true) : nullptr;
+		const BaseMsgEntry *bme(find_bme(tag));
+		return bme ? bme->_create._do(deepctor) : nullptr;
 	}
 
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
@@ -453,7 +463,7 @@ public:
 	    \param grpbase pointer to groupbase of holding object
 	    \param fnum repeating group fix field num (no...)
 	    \param from source string
-	    \param offset in bytes to decode from
+	    \param s_offset in bytes to decode from
 	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
 	unsigned decode_group(GroupBase *grpbase, const unsigned short fnum, const f8String& from,

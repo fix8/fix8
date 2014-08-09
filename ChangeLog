@@ -1,8 +1,13 @@
-* Fri Aug 01 2014 David L. Dight <fix@fix8.org> 1.3.0
+* Mon Aug 11 2014 David L. Dight <fix@fix8.org> 1.3.0
 - Fixed Jira tickets FX-309, FX-308, FX-307, FX-306, FX-305, FX-304, FX-303, FX-302, FX-301,
 							FX-300, FX-299, FX-298, FX-296, FX-295, FX-294, FX-293, FX-292, FX-291,
 							FX-290, FX-289, FX-288, FX-287, FX-286, FX-236, FX-310, FX-312, FX-311
-							FX-297, FX-281, FX-233. FX-231
+							FX-297, FX-281, FX-233, FX-231, FX-313, FX-315, FX-316
+- Provide XML logger
+- Overhaul logging system
+- Loggers should support log level
+- Allow shallow message construction
+- Provide Message::move_legal
 - gcc 4.7.2 linux build broken
 - Allow shallow message construction
 - Provide Message::move_legal
