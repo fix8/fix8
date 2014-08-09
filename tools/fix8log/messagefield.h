@@ -46,7 +46,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8types.hpp>
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
-#include <Myfix_types.hpp>
 
 using namespace FIX8;
 

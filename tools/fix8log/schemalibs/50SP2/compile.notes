@@ -1,0 +1,3 @@
+ols/fix8log/schemalibs/50SP2'
+david@blue:~/projects/fix8/tools/fix8log/schemalibs/50SP2$ f8c  --verbose --retain  --noshared --namespace TEX FIX50SP2.xml --noshared --namespace TEX --noshared --namespace TE --noshared --namespace TEX --fixt FIXT11.xml
+

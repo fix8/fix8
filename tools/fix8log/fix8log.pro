@@ -44,9 +44,6 @@ SOURCES += main.cpp\
     schemadelegate.cpp \
     selectedfieldstreeview.cpp \
     worksheetmodel.cpp \
-    ../../test/Myfix_classes.cpp \
-    ../../test/Myfix_traits.cpp \
-    ../../test/Myfix_types.cpp \
     messageitemdelegate.cpp \
     proxyFilter.cpp \
     mainWindowSearch.cpp \
@@ -70,7 +67,9 @@ SOURCES += main.cpp\
     fix8logInit.cpp \
     fix8WindowSlots.cpp \
     newwindowwizard.cpp \
-    embeddedfileselector.cpp
+    embeddedfileselector.cpp \
+    fix8Database.cpp \
+    fix8logLibraries.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -127,7 +126,7 @@ RESOURCES += \
 unix {
 message("Unix Compile.")
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
-LIBS += -lz -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
+LIBS += -lz -L../fix8log/schemalibs/libs -l50SP2 -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
 DEPENDPATH += /usr/local/include
 SOURCES += qtlockedfile_unix.cpp

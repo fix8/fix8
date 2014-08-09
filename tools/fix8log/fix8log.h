@@ -125,13 +125,6 @@ protected:
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
     QtSingleApplication *applicationInstance;
-
-    /*
-    QQuickView *newWindowWizard;
-    QQuickItem  *newWinWizObject;
-    QWidget *newWindowWidget;
-    QDialog *newWindowDialog;
-    */
 signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
@@ -141,7 +134,8 @@ private:
                       MessageField *mf,QList <QBaseEntry *> *qbaseEntryList, int *level);
     void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
                       MessageField *mf,QBaseEntryList *qbaseEntryList,int *level);
-
+    void initDatabase();
+    std::function<const F8MetaCntx&()> loadFix8so(QString libName, bool &bstatus);
     SearchDialog *searchDialog;
     SearchFunctionList *searchFunctionList;
     NewWindowWizard *newWindowWizard;

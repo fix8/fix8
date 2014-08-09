@@ -1,4 +1,3 @@
-//-------------------------------------------------------------------------------------------------
 /*
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -34,56 +33,55 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-------------------------------------------------------------------------------------------------
 
-#include "mainwindow.h"
-#include <qtsingleapplication.h>
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
-
-#include <QDataStream>
+#include "database.h"
 #include "fix8log.h"
+#include "fixmimedata.h"
 #include "globals.h"
+#include "mainwindow.h"
+#include "messagefield.h"
+#include "schemaeditordialog.h"
+#include "worksheetmodel.h"
+#include "windowdata.h"
+#include <QApplication>
+#include <QLibrary>
+#include <QDebug>
+#include <QtWidgets>
+#include "worksheetmodel.h"
+#include <fix8/f8includes.hpp>
+#include "fix8/field.hpp"
+#include "fix8/message.hpp"
+#include <fix8/f8types.hpp>
+/*
+#include <Myfix_types.hpp>
+#include <Myfix_router.hpp>
+#include <Myfix_classes.hpp>
+*/
+#include <iostream>
+#include <string.h>
 using namespace GUI;
-int main(int argc, char *argv[])
+using namespace FIX8;
+using namespace std;
+
+std::function<const F8MetaCntx&()> Fix8Log::loadFix8so(QString libName, bool &bstatus)
 {
-    QtSingleApplication instance(argc, argv);
-        if (instance.sendMessage("Wake up!"))
-            return 0;
+    function<const F8MetaCntx&()> ctxfunc;
+    QLibrary *myfixLib = new QLibrary(libName,this);
 
-
-    bool loadFile = false;
-    QString loadFileName;
-    QCoreApplication::setApplicationName("fix8log");
-    QCoreApplication::setApplicationVersion(QString::number(Globals::version));
-    QCommandLineParser parser;
-    parser.parse(QCoreApplication::arguments());
-    parser.addHelpOption();
-    parser.addVersionOption();
-    parser.setApplicationDescription("FIX Log Viewer");
-    QCommandLineOption  loadFileOption(QStringList() << "i" << "input", "Load log file <file>.", "file");
-    parser.addOption(loadFileOption);
-    parser.process(instance);
-    if (parser.isSet(loadFileOption)) {
-        loadFileName= parser.value(loadFileOption);
-        qDebug() << "Load File Name = " << loadFileName;
-        QFileInfo fi(loadFileName);
-        if (!fi.exists()) {
-            qWarning() << "Error - " << loadFileName << " does not exist.";
-            exit(-1);
-        }
-        loadFile = true;
+    bstatus = myfixLib->load();
+    if (!bstatus) {
+        qWarning() << "Error - failed loading library " << libName << __FILE__ << __LINE__;
+        delete myfixLib;
+        return ctxfunc;
     }
-    qRegisterMetaType<fix8logdata>("fix8logdata");
-    qRegisterMetaTypeStreamOperators<fix8logdata>("fix8logdata");
-    Fix8Log *f8l = new Fix8Log(&instance);
-    QObject::connect(&instance,SIGNAL(messageReceived(const QString&)),
-                     f8l,SLOT(wakeupSlot(const QString&)));
-
-    //QString fixLib = "/home/f8log/"
-    if (loadFile)
-        f8l->init(loadFileName);
+    QFunctionPointer _handle;
+    char *ctxfuncstr = "TEX::_ctx";
+    _handle = myfixLib->resolve(ctxfuncstr);
+    if (!_handle) {
+        qWarning() << "Failed to get handle " << ctxfuncstr << " in library: " << libName << __FILE__ << __LINE__;
+        bstatus = false;
+    }
     else
-        f8l->init();
-    return instance.exec();
-
+      ctxfunc   = reinterpret_cast<const F8MetaCntx& (*)()> (_handle);
+    return ctxfunc;
+     // { reinterpret_cast<const F8MetaCntx& (*)()>(dlsym(_handle, ctxfuncstr.c_str())) }
 }
