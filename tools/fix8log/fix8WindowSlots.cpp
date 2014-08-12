@@ -34,6 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #include "database.h"
 #include "fix8log.h"
+#include "fix8sharedlib.h"
 #include "fixmimedata.h"
 #include "globals.h"
 #include "mainwindow.h"
@@ -73,7 +74,7 @@ void Fix8Log::copyWindowSlot(MainWindow *mw)
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
-   newWindowWizard = new NewWindowWizard();
+   newWindowWizard = new NewWindowWizard(fix8ShareLibList);
    int status = newWindowWizard->exec();
    qDebug() << "Status == " << status;
    if (status == QDialog::Accepted	) {

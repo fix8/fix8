@@ -75,7 +75,7 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     QFile dataFile(fileName);
     QList<QStandardItem *> itemList;
     WorkSheetModel *model = new WorkSheetModel(this);
-
+    qDebug() << "HERE WE ARE IN READ LOG FILE " << __FILE__ << __LINE__;
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
 
     QList <GUI::ConsoleMessage> msgList;

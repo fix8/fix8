@@ -41,6 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtConcurrent/QtConcurrent>
 #include <QMap>
 #include <QString>
+#include "fix8sharedlib.h"
 #include "globals.h"
 #include "mainwindow.h"
 #include "messagefield.h"
@@ -139,7 +140,7 @@ private:
     SearchDialog *searchDialog;
     SearchFunctionList *searchFunctionList;
     NewWindowWizard *newWindowWizard;
-
+    Fix8SharedLibList fix8ShareLibList;
 };
 
 #endif // FIX8LOG_H

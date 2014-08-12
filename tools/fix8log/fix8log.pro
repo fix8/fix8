@@ -69,7 +69,8 @@ SOURCES += main.cpp\
     newwindowwizard.cpp \
     embeddedfileselector.cpp \
     fix8Database.cpp \
-    fix8logLibraries.cpp
+    fix8logLibraries.cpp \
+    fix8sharedlib.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -116,7 +117,8 @@ HEADERS  += mainwindow.h \
     pushbuttonmodifykey.h \
     fieldsview.h \
     newwindowwizard.h \
-    embeddedfileselector.h
+    embeddedfileselector.h \
+    fix8sharedlib.h
 
 RESOURCES += \
     resources.qrc

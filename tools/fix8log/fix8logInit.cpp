@@ -85,23 +85,28 @@ bool Fix8Log::init()
     QMap <QString, QStandardItemModel *>::iterator currentItemIter;
     bool haveError = false;
     bool isInitial = true;
-
     readSettings();
     initDatabase();
-    loadFix8so("/home/david/libs/lib50SP2.so",haveError);
-    if (haveError) {
+    std::function<const F8MetaCntx&()> ctxFunc = loadFix8so("/home/david/libs/lib50SP2.so",bstatus);
+    if (!bstatus) {
         qWarning() << "Error occured loading share library: ..." << __FILE__ << __LINE__;
     }
     else
         qDebug() << "Loaded Shared Library !!!!" << __FILE__ << __LINE__;
 
-    int messageCount = TEX::ctx()._bme.size();
+   // int messageCount = TEX::ctx()._bme.size();
+    int messageCount = ctxFunc()._bme.size();
     for(int ii=0;ii < messageCount; ii++) {
-        const char *kk = TEX::ctx()._bme.at(ii)->_key;
-        const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
+        const char *kk = ctxFunc()._bme.at(ii)->_key;
+        const TraitHelper tr = ctxFunc()._bme.at(ii)->_value._create._get_traits();
         QBaseEntryList *qbaseEntryList = new QBaseEntryList();
-        value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
-        key   = QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
+        value = QString::fromStdString(ctxFunc()._bme.at(ii)->_value._name);
+        key   = QString::fromStdString(ctxFunc()._bme.at(ii)->_key);
+        //const char *kk = TEX::ctx()._bme.at(ii)->_key;
+        //const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
+        //QBaseEntryList *qbaseEntryList = new QBaseEntryList();
+        //value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
+        // key   = QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
         messageField = new MessageField(key,value);
         int level = 0;
         generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
@@ -133,8 +138,8 @@ bool Fix8Log::init()
     qSort(fieldUsePairList.begin(), fieldUsePairList.end());
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(fieldUsePairList);
     MainWindow::setTableSchemaList(tableSchemaList);
-    int sizeofFieldTable = TEX::ctx()._be.size();
-
+    //int sizeofFieldTable = TEX::ctx()._be.size();
+    int sizeofFieldTable = ctxFunc()._be.size();
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     // QList <WindowData> windowDataList = database->getWindows();

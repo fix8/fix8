@@ -2,8 +2,8 @@
 #include <QtWidgets>
 #include "embeddedfileselector.h"
 #include "globals.h"
-NewWindowWizard::NewWindowWizard(QWidget *parent) :
-    QWizard(parent)
+NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, QWidget *parent) :
+    QWizard(parent),fix8SharedLibList(shareLibs)
 {
     setWindowTitle(GUI::Globals::appName + "New Window Wizard");
     setWindowIconText("New Window");
@@ -21,45 +21,46 @@ NewWindowWizard::NewWindowWizard(QWidget *parent) :
 }
 void NewWindowWizard::createSchemaPage()
 {
-   schemaPage = new QWizardPage(this);
-   schemaPage->setTitle("<h1>New Window Wizard</h1>");
-   schemaPage->setSubTitle("<h2>Select FIX Schema</h2>");
-   QGridLayout *schemaGrid= new QGridLayout(schemaPage);
-   schemaPage->setLayout(schemaGrid);
-   schemaStack = new QStackedLayout();
-   schemaListView = new QListView(schemaPage);
-   noSchemasFoundL = new QLabel(schemaPage);
-   QString ss = "QLabel { color: rgb(255,255,255); border-color: rgba(255, 0, 0, 75%);  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #1a3994, stop: 1 #061a33); }";
-   noSchemasFoundL->setStyleSheet(ss);
-   noSchemasFoundL->setText("No Schemas\nFound");
-   QFont fnt = noSchemasFoundL->font();
-   fnt.setBold(true);
-   fnt.setPointSize(fnt.pointSize()+2);
-   noSchemasFoundL->setFont(fnt);
-   noSchemasFoundL->setAlignment(Qt::AlignCenter);
-   schemasListID = schemaStack->addWidget(schemaListView);
-   noSchemasID = schemaStack->addWidget(noSchemasFoundL);
+    schemaPage = new QWizardPage(this);
+    schemaPage->setTitle("<h1>New Window Wizard</h1>");
+    schemaPage->setSubTitle("<h2>Select FIX Schema</h2>");
+    QGridLayout *schemaGrid= new QGridLayout(schemaPage);
+    schemaPage->setLayout(schemaGrid);
+    schemaStack = new QStackedLayout();
+    schemaListView = new QListView(schemaPage);
+    noSchemasFoundL = new QLabel(schemaPage);
+    QString ss = "QLabel { color: rgb(255,255,255); border-color: rgba(255, 0, 0, 75%);  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #1a3994, stop: 1 #061a33); }";
+    noSchemasFoundL->setStyleSheet(ss);
+    noSchemasFoundL->setText("No Schemas\nFound");
+    QFont fnt = noSchemasFoundL->font();
+    fnt.setBold(true);
+    fnt.setPointSize(fnt.pointSize()+2);
+    noSchemasFoundL->setFont(fnt);
+    noSchemasFoundL->setAlignment(Qt::AlignCenter);
+    schemasListID = schemaStack->addWidget(schemaListView);
+    noSchemasID = schemaStack->addWidget(noSchemasFoundL);
     schemaStack->setCurrentIndex(noSchemasID);
-   QFontMetrics fm(schemaListView->font());
-   schemaListView->setMaximumWidth(fm.averageCharWidth()*24);
-   noSchemasFoundL->setMaximumWidth(fm.averageCharWidth()*24);
+    QFontMetrics fm(schemaListView->font());
+    schemaListView->setMaximumWidth(fm.averageCharWidth()*24);
+    noSchemasFoundL->setMaximumWidth(fm.averageCharWidth()*24);
 
-   schemaLabel = new QLabel(schemaPage);
-
-
-   schemaLabel->setWordWrap(true);
-   schemaLabel->setTextFormat(Qt::RichText);
-   QString str = "<h1>Select Schema</h1>";
-   str.append("Each window is associated with one FIX schema. These schema's (listed here) are loaded from two locations:");
-   str.append("<p><ul><li>System Level- loaded from the  fix8logview install directory - <i>" + qApp->applicationDirPath() + "/fixschemas</i></li>");
-   str.append("<li>User Level -loaded from user's subdirectory <i>" + QDir::homePath() + "/f8logview/schemas</i></li>");
-   schemaLabel->setText(str);
-   schemaGrid->addLayout(schemaStack,0,0);
-   schemaGrid->addWidget(schemaLabel,0,1,Qt::AlignLeft);
-   schemaGrid->setColumnStretch(0,0);
-   schemaGrid->setColumnStretch(1,1);
-
-   addPage(schemaPage);
+    schemaLabel = new QLabel(schemaPage);
+    schemaLabel->setWordWrap(true);
+    schemaLabel->setTextFormat(Qt::RichText);
+    systemDirName  = qApp->applicationDirPath() + "/fixschemas";
+    userDirName =   QDir::homePath() + "/f8logview/fixschemas";
+    QString str = "<h1>Select Schema</h1>";
+    str.append("Each window is associated with one FIX schema. These schema's (listed here) are loaded from two locations:");
+    str.append("<p><ul><li>System Level- loaded from the  fix8logview install directory - <i>" + systemDirName+ "</i></li>");
+    str.append("<li>User Level -loaded from user's subdirectory <i>" + userDirName + "</i></li>");
+    schemaLabel->setText(str);
+    schemaGrid->addLayout(schemaStack,0,0);
+    schemaGrid->addWidget(schemaLabel,0,1,Qt::AlignLeft);
+    schemaGrid->setColumnStretch(0,0);
+    schemaGrid->setColumnStretch(1,1);
+    loadSchemas(Fix8SharedLib::SystemLib);
+    loadSchemas(Fix8SharedLib::UserLib);
+    addPage(schemaPage);
 }
 void NewWindowWizard::createFilePage()
 {
@@ -102,11 +103,27 @@ void NewWindowWizard::currentPageChangedSlot(int id)
 {
     QAbstractButton *finishedB;
     if (id == filePageID) {
-         finishedB = button(QWizard::FinishButton);
+        finishedB = button(QWizard::FinishButton);
         finishedB->setEnabled(fileSelector->isFileSelected());
     }
 }
 QString  NewWindowWizard::getSelectedFile()
 {
-   return fileSelector->getSelectedFile();
+    return fileSelector->getSelectedFile();
+}
+bool NewWindowWizard::loadSchemas(Fix8SharedLib::LibType libType)
+{
+    QDir schemaDir;
+    QString errorStr;
+    if (libType == Fix8SharedLib::SystemLib)
+        schemaDir = QDir(systemDirName);
+    else
+        schemaDir = QDir(userDirName);
+    if (!schemaDir.exists()) {
+        errorStr = "Schema Dir" + schemaDir.path() + " does not exists";
+        schemaErrorStrList.append(errorStr);
+        return false;
+    }
+    QFileInfoList fileInfoList = schemaDir.entryInfoList(QDir::Files |QDir::NoDotAndDotDot| QDir::NoSymLinks);
+    return true;
 }

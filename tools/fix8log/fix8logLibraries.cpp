@@ -69,19 +69,22 @@ std::function<const F8MetaCntx&()> Fix8Log::loadFix8so(QString libName, bool &bs
 
     bstatus = myfixLib->load();
     if (!bstatus) {
-        qWarning() << "Error - failed loading library " << libName << __FILE__ << __LINE__;
+        qWarning() << ">>>>> Error - failed loading library " << libName << __FILE__ << __LINE__;
         delete myfixLib;
         return ctxfunc;
     }
     QFunctionPointer _handle;
-    char *ctxfuncstr = "TEX::_ctx";
+    char *ctxfuncstr = "TEX_ctx";
     _handle = myfixLib->resolve(ctxfuncstr);
     if (!_handle) {
         qWarning() << "Failed to get handle " << ctxfuncstr << " in library: " << libName << __FILE__ << __LINE__;
         bstatus = false;
     }
-    else
-      ctxfunc   = reinterpret_cast<const F8MetaCntx& (*)()> (_handle);
+    else {
+        qDebug() << "EVERYTHING OK " << __FILE__ << __LINE__;
+        bstatus = true;
+        ctxfunc   = reinterpret_cast<const F8MetaCntx& (*)()> (_handle);
+    }
     return ctxfunc;
-     // { reinterpret_cast<const F8MetaCntx& (*)()>(dlsym(_handle, ctxfuncstr.c_str())) }
+    // { reinterpret_cast<const F8MetaCntx& (*)()>(dlsym(_handle, ctxfuncstr.c_str())) }
 }
