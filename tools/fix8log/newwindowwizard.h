@@ -5,6 +5,7 @@
 class QDesktopWidget;
 class QListView;
 class QLabel;
+class QStandardItemModel;
 class QStackedLayout;
 class EmbeddedFileSelector;
 
@@ -28,8 +29,10 @@ private:
  QWizardPage *filePage;
  QStackedLayout *schemaStack;
  QLabel       *noSchemasFoundL;
+ QLabel       *legend;
  EmbeddedFileSelector *fileSelector;
  QListView   *schemaListView;
+ QStandardItemModel *schemaModel;
  QLabel      *schemaLabel;
  QDesktopWidget *desktopW;
  int filePageID;
