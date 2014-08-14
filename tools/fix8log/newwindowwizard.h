@@ -8,6 +8,7 @@ class QLabel;
 class QStandardItemModel;
 class QStackedLayout;
 class EmbeddedFileSelector;
+class NewWindowSchemaPage;
 
 class NewWindowWizard : public QWizard
 {
@@ -24,8 +25,7 @@ protected:
     void createSchemaPage();
     void createFilePage();
 private:
- bool loadSchemas(Fix8SharedLib::LibType);
- QWizardPage *schemaPage;
+ NewWindowSchemaPage *schemaPage;
  QWizardPage *filePage;
  QStackedLayout *schemaStack;
  QLabel       *noSchemasFoundL;
@@ -42,7 +42,5 @@ private:
  QString systemDirName;
  QString userDirName;
  QStringList schemaErrorStrList;
-
 };
-
 #endif // NEWWINDOWWIZARD_H
