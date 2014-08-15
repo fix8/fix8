@@ -1,6 +1,7 @@
 #include "newwindowwizard.h"
 #include <QtWidgets>
 #include "embeddedfileselector.h"
+#include "newwindowfilepage.h"
 #include "newwindowschemapage.h"
 #include "globals.h"
 NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, QWidget *parent) :
@@ -38,16 +39,8 @@ void NewWindowWizard::createSchemaPage()
 }
 void NewWindowWizard::createFilePage()
 {
-    filePage = new QWizardPage(this);
-    filePage->setTitle("<h1>New Window Wizard</h1>");
-    filePage->setSubTitle("<h2>Select Initial FIX Log File</h2>");
-    QVBoxLayout *fileBox= new QVBoxLayout(filePage);
-    filePage->setLayout(fileBox);
-    fileSelector = new EmbeddedFileSelector(filePage);
-    connect(fileSelector,SIGNAL(haveFileSelected(bool)),
-            this,SLOT(fileSelectedSlot(bool)));
-    //QLabel *fileLabel = new QLabel("FILE");
-    fileBox->addWidget(fileSelector);
+
+    filePage = new NewWindowFilePage(this);
     QAbstractButton *finishedB = button(QWizard::FinishButton);
     finishedB->setToolTip("Select a valid file to enable this button");
     filePageID = addPage(filePage);
@@ -58,30 +51,21 @@ void NewWindowWizard::readSettings()
     QRect defaultRect(00,100,600,500);
     QVariant defaultVar(defaultRect);
     setGeometry(settings.value("geometry",defaultRect).toRect());
-    fileSelector->readSettings();
-    QAbstractButton *finishedB = button(QWizard::FinishButton);
-    finishedB->setEnabled(fileSelector->isFileSelected());
+    filePage->readSettings();
+
 }
 void NewWindowWizard::saveSettings()
 {
     QSettings settings("fix8","logviewerNewWindowWizard");
     settings.setValue("geometry",geometry());
-    fileSelector->saveSettings();
+    filePage->saveSettings();
 }
-void NewWindowWizard::fileSelectedSlot(bool haveFile)
-{
-    QAbstractButton *finishedB = button(QWizard::FinishButton);
-    finishedB->setEnabled(haveFile);
-}
+
 void NewWindowWizard::currentPageChangedSlot(int id)
 {
-    QAbstractButton *finishedB;
-    if (id == filePageID) {
-        finishedB = button(QWizard::FinishButton);
-        finishedB->setEnabled(fileSelector->isFileSelected());
-    }
+
 }
 QString  NewWindowWizard::getSelectedFile()
 {
-    return fileSelector->getSelectedFile();
+    return filePage->getSelectedFile();
 }

@@ -71,7 +71,8 @@ SOURCES += main.cpp\
     fix8Database.cpp \
     fix8logLibraries.cpp \
     fix8sharedlib.cpp \
-    newwindowschemapage.cpp
+    newwindowschemapage.cpp \
+    newwindowfilepage.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -120,7 +121,8 @@ HEADERS  += mainwindow.h \
     newwindowwizard.h \
     embeddedfileselector.h \
     fix8sharedlib.h \
-    newwindowschemapage.h
+    newwindowschemapage.h \
+    newwindowfilepage.h
 
 RESOURCES += \
     resources.qrc
