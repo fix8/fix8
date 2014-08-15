@@ -392,8 +392,8 @@ bool MyMenu::create_msgs()
 bool MyMenu::version_info()
 {
 	cout << endl;
-	vector<f8String> vv(package_info());
-	copy(vv.begin(), vv.end(), ostream_iterator<f8String>(cout, "\n"));
+	for (const auto& pp : package_info())
+		cout << pp.first << ": " << pp.second << endl;
 	return true;
 }
 

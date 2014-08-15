@@ -168,9 +168,17 @@ inline const std::string& trim(std::string& source, const std::string& ws=" \t")
 		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
 }
 
-/*! Return a set of strings with current package info
-  \return vector os strings */
-F8API std::vector<f8String> package_info();
+//----------------------------------------------------------------------------------------
+using Package_info = std::map<f8String, f8String>;
+
+/*! Return a Package_info map of strings with current package info
+  \return Package_info object reference */
+F8API const Package_info& package_info();
+
+/*! Find a Package_info string value for the given tag
+  \param what source string to look up
+  \return Package_info string value or an empty string */
+F8API f8String find_package_info_string(const f8String& what);
 
 //----------------------------------------------------------------------------------------
 /*! Sidestep the warn_unused_result attribute

@@ -3474,10 +3474,20 @@ cat >>confdefs.h <<_ACEOF
 #define PATCH_VERSION_NUM $PATCH_VERSION_NUM
 _ACEOF
 
+MAGIC_NUM=`echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}'`
+# this would also probably have worked
+# MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
+
 
 cat >>confdefs.h <<_ACEOF
-#define MAGIC_NUM (MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)
+#define MAGIC_NUM $MAGIC_NUM
 _ACEOF
+
+
+cat >>confdefs.h <<_ACEOF
+#define MAGIC_NUM_EXPR (MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)
+_ACEOF
+
 
 
 cat >>confdefs.h <<_ACEOF

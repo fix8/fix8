@@ -293,7 +293,7 @@ public:
 
 	/*! Generate a formatted string for error reporting
 	  \return formatted string */
-	const std::string GetLocString() const
+	std::string GetLocString() const
 	{
 		std::ostringstream ostr;
 		ostr << '"' << tag_ << "\" (" << GetPath() << ':' << txtline_ << ')';

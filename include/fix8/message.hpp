@@ -112,29 +112,6 @@ public:
 	friend class MessageBase;
 };
 
-/// Structures for framework generated repeating group creation
-class Ginst
-{
-	/*! Generate a groupbase instantiator
-	 */
-	struct _gen
-	{
-		/*! Instantiate a groupbase
-			\tparam T type to instantiate
-			\return new message */
-		template<typename T>
-		static GroupBase *_make() { return new T; }
-	};
-
-public:
-	GroupBase *(&_do)();
-
-	/*! Ctor
-	  \tparam T type to instantiate */
-   template<typename T>
-   Ginst(Type2Type<T>) : _do(_gen::_make<T>) {}
-};
-
 //-------------------------------------------------------------------------------------------------
 /// Base class for inbound message routing
 class Router
@@ -187,7 +164,7 @@ class Minst
 	};
 
 public:
-	Message *(&_do)(bool);
+	std::function<Message *(bool)> _do;
 #if defined HAVE_EXTENDED_METADATA
 	const TraitHelper& (&_get_traits)();
 #endif
@@ -213,6 +190,7 @@ struct BaseMsgEntry
 /// Field and Message metadata structures
 //-------------------------------------------------------------------------------------------------
 using c_str_compare = std::function<bool(const char *, const char *)>;
+using msg_create = std::function<Message *(bool)>;
 using MsgTable = GeneratedTable<const char *, BaseMsgEntry>;
 using ReverseMsgTable = std::map<const char * const, const BaseMsgEntry *, c_str_compare>;
 using FieldTable = GeneratedTable<unsigned, BaseEntry>;
@@ -236,7 +214,7 @@ struct F8MetaCntx
 	/// Hash array for field lookup (built by ctor)
 	const BaseEntry **_flu;
 	/// References to the header and trailer create functions
-	Message *(&_mk_hdr)(bool), *(&_mk_trl)(bool);
+	msg_create _mk_hdr, _mk_trl;
 	/// Fix header beginstring
 	const f8String _beginStr;
 	/// Preamble length
@@ -265,10 +243,10 @@ struct F8MetaCntx
       for (unsigned offset(0); offset < _be.size(); ++offset)
 			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
 
-		for (const auto& pr : _be)
-			_reverse_fieldtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
-		for (const auto& pr : _bme)
-			_reverse_msgtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
+		std::for_each(_be.begin(), _be.end(), [this](const FieldTable::Pair& pp)
+			{ _reverse_fieldtable.emplace(std::make_pair(pp.second()._name, &pp.second())); });
+		std::for_each(_bme.begin(), _bme.end(), [this](const MsgTable::Pair& pp)
+			{ _reverse_msgtable.emplace(std::make_pair(pp.second()._name, &pp.second())); });
 	}
 
 	/// Dtor.
@@ -794,16 +772,16 @@ public:
 
 	/*! Find a group of a specified type. If not found attempt to add.
 	    \tparam T type of group to get
-	    \param grpbase parent group (if group nested)
+	    \param grpbase parent group (if group nested) or nullptr if no parent
 	    \return pointer to found group or 0 if not found */
 	template<typename T>
-	GroupBase *find_add_group(GroupBase *grpbase) { return find_add_group(T::_fnum, grpbase); }
+	GroupBase *find_add_group(GroupBase *grpbase=nullptr) { return find_add_group(T::_fnum, grpbase); }
 
 	/*! Find a group of a specified type. If not found attempt to add.
 	    \param fnum field number
-	    \param grpbase parent group (if group nested)
+	    \param grpbase parent group (if group nested) or nullptr if no parent
 	    \return pointer to found group or 0 if not found */
-	GroupBase *find_add_group(const unsigned short fnum, GroupBase *grpbase)
+	GroupBase *find_add_group(const unsigned short fnum, GroupBase *grpbase=nullptr)
 	{
 		auto gitr(_groups.find(fnum));
 		if (gitr != _groups.end())

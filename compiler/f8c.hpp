@@ -247,4 +247,3 @@ public:
 } // FIX8
 
 #endif // _F8_F8C_HPP_
-/* vim: set ts=3 sw=3 tw=0 noet :*/
