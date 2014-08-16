@@ -11,6 +11,7 @@ public:
 explicit NewWindowSchemaPage(Fix8SharedLibList &shareLibs,QWidget *parent = 0);
 virtual bool isComplete() const;
 bool loadSchemas(Fix8SharedLib::LibType);
+QString getSelectedLib();
 protected slots:
 void schemaListViewSlot(QModelIndex);
 protected:

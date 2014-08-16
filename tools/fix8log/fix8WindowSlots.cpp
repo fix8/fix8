@@ -79,7 +79,11 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
    qDebug() << "Status == " << status;
    if (status == QDialog::Accepted	) {
        QString fileName = newWindowWizard->getSelectedFile();
+        QString libName = newWindowWizard->getSelectedLib();
         qDebug() << "Selected File = " << fileName << __FILE__ << __LINE__;
+        qDebug() << "Selected Lib = " << libName << __FILE__ << __LINE__;
+   }
+        /*
         MainWindow *newMW  =new MainWindow(*mw,database);
         newMW->setSearchFunctions(searchFunctionList);
         wireSignalAndSlots(newMW);
@@ -90,7 +94,7 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
    newWindowWizard->saveSettings();
    newWindowWizard->deleteLater();
 
-    /*
+
     newWindowWizard = new QQuickView(QUrl("qrc:qml/newMainWindow.qml"));
     QQmlContext *context = newWindowWizard->rootContext();
 

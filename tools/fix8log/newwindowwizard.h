@@ -3,6 +3,7 @@
 #include "fix8sharedlib.h"
 #include <QWizard>
 class QDesktopWidget;
+class QFile;
 class QListView;
 class QLabel;
 class QStandardItemModel;
@@ -17,6 +18,7 @@ class NewWindowWizard : public QWizard
 public:
     explicit NewWindowWizard(Fix8SharedLibList &shareLibs, QWidget *parent = 0);
     QString getSelectedFile();
+    QString  getSelectedLib();
     void readSettings();
     void saveSettings();
 public slots:

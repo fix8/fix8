@@ -7,11 +7,13 @@
 #include <fix8/f8types.hpp>
 #include "fix8/traits.hpp"
 #include "messagefield.h"
+class QLibrary;
 
 class Fix8SharedLib
 {
 public:
     Fix8SharedLib();
+    static Fix8SharedLib *create(QString fileName);
     typedef enum {SystemLib,UserLib} LibType;
     qint16 count;
     QString name;
@@ -19,7 +21,9 @@ public:
     LibType libType;
     bool    isOK;
     QString errorMessage;
+    QLibrary *fixLib;
     std::function<const F8MetaCntx&()> ctxFunc;
+    QFunctionPointer _handle;
     MessageFieldList *messageFieldList;
     FieldTraitVector fieldTraitV;
     QList<QPair<QString ,FieldUse *>> fieldUsePairList;
@@ -28,6 +32,12 @@ public:
     FieldUseList fieldUseList;
     QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
+    bool loadFix8so();
+private:
+    void generate_traits(const TraitHelper &tr, QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
+                      MessageField *mf,QList <QBaseEntry *> *qbaseEntryList, int *level);
+    void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
+                      MessageField *mf,QBaseEntryList *qbaseEntryList,int *level);
 };
 
 class Fix8SharedLibList : public QList <Fix8SharedLib *>
@@ -35,6 +45,7 @@ class Fix8SharedLibList : public QList <Fix8SharedLib *>
 public:
     Fix8SharedLibList();
     Fix8SharedLib *findByName(QString &name);
+    Fix8SharedLib *findByFileName(QString  &filename);
     bool removeByName(QString &name);
 };
 #endif // FIX8SHAREDLIB_H

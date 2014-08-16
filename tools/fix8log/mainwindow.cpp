@@ -35,6 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #include "comboboxlineedit.h"
 #include "editHighLighter.h"
+#include "fix8sharedlib.h"
 #include "fixmimedata.h"
 #include "fixtoolbar.h"
 #include "mainwindow.h"
@@ -54,7 +55,7 @@ TableSchemaList *MainWindow::schemaList = 0;
 MainWindow::MainWindow(Database *db,bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
       windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchFunction(false),database(db),
-      linkSearchOn(false),fieldUsePairList(0)
+      linkSearchOn(false),fieldUsePairList(0),sharedLib(0)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -76,6 +77,7 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     setGeometry(rect);
     int x = mw.x();
     int y = mw.y();
+    sharedLib = mw.getSharedLibrary();
     fieldUsePairList = mw.getFieldUsePair();
     restoreState(mw.saveState());
     if (copyAll) {
@@ -515,6 +517,8 @@ void MainWindow::buildMainWindow()
     fix8versionL->setToolTip("What should this tool tip say ?");
 
     fix8versionV = new QLabel("???",fixVersionArea);
+    QPalette fpal = fix8versionV->palette();
+    fix8RegColor = fpal.color(QPalette::WindowText); // save for latter
     fix8versionV->setToolTip("And What should this tool tip say ?");
     fnt = fix8versionL->font();
     fnt.setBold(true);
@@ -1178,4 +1182,38 @@ void MainWindow::setFieldUsePair(QList<QPair<QString ,FieldUse *>> *fup)
 QList<QPair<QString ,FieldUse *>> * MainWindow::getFieldUsePair()
 {
     return fieldUsePairList;
+}
+void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
+{
+    sharedLib = f8sl;
+    QString message;
+    QPalette pal = fix8versionV->palette();
+    if (!sharedLib) {
+        message = "Error = FIX8 schema library is null";
+        GUI::ConsoleMessage msg(message,GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
+         pal.setColor(QPalette::WindowText,Qt::red);
+        fix8versionV->setText("?");
+        fix8versionV->setToolTip("Error no FIX Schema library provided");
+    }
+    if (!(sharedLib->isOK)) {
+        GUI::ConsoleMessage msg(sharedLib->errorMessage,GUI::ConsoleMessage::ErrorMsg);
+        pal.setColor(QPalette::WindowText,Qt::red);
+        fix8versionV->setText(sharedLib->name);
+        fix8versionV->setToolTip("Error loading FIX schema lib: " + sharedLib->fileName);
+       displayConsoleMessage(msg);
+    }
+    else {
+        message = "FIX8 Schema lib set to " + sharedLib->name;
+         GUI::ConsoleMessage msg(sharedLib->errorMessage,GUI::ConsoleMessage::InfoMsg);
+         displayConsoleMessage(msg);
+         fix8versionV->setText(sharedLib->name);
+         fix8versionV->setToolTip(sharedLib->fileName);
+          pal.setColor(QPalette::WindowText,fix8RegColor);
+    }
+    fix8versionV->setPalette(pal);
+}
+Fix8SharedLib * MainWindow::getSharedLibrary()
+{
+    return sharedLib;
 }

@@ -52,6 +52,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 class ComboBoxLineEdit;
 class Database;
 class EditHighLighter;
+class Fix8SharedLib;
 class FixMimeData;
 class FixToolBar;
 class LineEdit;
@@ -98,6 +99,8 @@ public:
     void loadFile(QString &fileName);
     void populateSearchList(SearchFunctionList *sfl);
     void setFieldUsePair(QList<QPair<QString ,FieldUse *>> *);
+    void setSharedLibrary(Fix8SharedLib *);
+    Fix8SharedLib *getSharedLibrary();
     QList<QPair<QString ,FieldUse *>> * getFieldUsePair();
     //void setSearchColumnNames(QStringList columnNames);
     void setSearchFunctions(SearchFunctionList *sfl);
@@ -322,6 +325,8 @@ private:
     QLabel  *fix8versionV;
     QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
     QStringList searchArgList;
+    Fix8SharedLib *sharedLib;
+    QColor fix8RegColor;
 };
 
 #endif // MAINWINDOW_H

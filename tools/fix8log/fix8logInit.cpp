@@ -87,6 +87,13 @@ bool Fix8Log::init()
     bool isInitial = true;
     readSettings();
     initDatabase();
+    Fix8SharedLib *fix8shareLib = Fix8SharedLib::create(QString("/home/david/f8logview/fixschemas/libTEX.so"));
+
+    qDebug() << "Status of create fix8 share lib = " << fix8shareLib->isOK << __FILE__ << __LINE__;
+    if (!fix8shareLib->isOK) {
+        qDebug() << "\tError Str = " << fix8shareLib->errorMessage;
+    }
+   /*
     std::function<const F8MetaCntx&()> ctxFunc = loadFix8so("/home/david/libs/lib50SP2.so",bstatus);
     if (!bstatus) {
         qWarning() << "Error occured loading share library: ..." << __FILE__ << __LINE__;
@@ -94,14 +101,15 @@ bool Fix8Log::init()
     else
         qDebug() << "Loaded Shared Library !!!!" << __FILE__ << __LINE__;
 
-   // int messageCount = TEX::ctx()._bme.size();
-    int messageCount = ctxFunc()._bme.size();
+
+    int messageCount = TEX::ctx()._bme.size();
+    int messageCount = fix8shareLib->ctxFunc()._bme.size();
     for(int ii=0;ii < messageCount; ii++) {
-        const char *kk = ctxFunc()._bme.at(ii)->_key;
-        const TraitHelper tr = ctxFunc()._bme.at(ii)->_value._create._get_traits();
+        const char *kk = fix8shareLib->ctxFunc()._bme.at(ii)->_key;
+        const TraitHelper tr = fix8shareLib->ctxFunc()._bme.at(ii)->_value._create._get_traits();
         QBaseEntryList *qbaseEntryList = new QBaseEntryList();
-        value = QString::fromStdString(ctxFunc()._bme.at(ii)->_value._name);
-        key   = QString::fromStdString(ctxFunc()._bme.at(ii)->_key);
+        value = QString::fromStdString(fix8shareLib->ctxFunc()._bme.at(ii)->_value._name);
+        key   = QString::fromStdString(fix8shareLib->ctxFunc()._bme.at(ii)->_key);
         //const char *kk = TEX::ctx()._bme.at(ii)->_key;
         //const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
         //QBaseEntryList *qbaseEntryList = new QBaseEntryList();
@@ -113,12 +121,13 @@ bool Fix8Log::init()
         messageField->qbel = qbaseEntryList;
         messageFieldList->append(messageField);
     }
+
     QListIterator <FieldUse *> fieldIter(fieldUseList);
     while(fieldIter.hasNext()) {
         FieldUse *mf = fieldIter.next();
         fieldUsePairList.append(qMakePair(mf->name,mf));
     }
-
+    */
     // generate fieldList from names;
     if (tableSchemaList) {
         QListIterator <TableSchema *> tsIter(*tableSchemaList);
@@ -128,18 +137,18 @@ bool Fix8Log::init()
             QStringListIterator fieldNameIter(ts->fieldNames);
             while(fieldNameIter.hasNext()) {
                 fieldName = fieldNameIter.next();
-                QBaseEntry *qbe = baseMap.value(fieldName);
+                QBaseEntry *qbe = fix8shareLib->baseMap.value(fieldName);
                 if (qbe) {
                     ts->fieldList->append(qbe);
                 }
             }
         }
     }
-    qSort(fieldUsePairList.begin(), fieldUsePairList.end());
-    QListIterator <QPair<QString ,FieldUse *>> pairListIter(fieldUsePairList);
+    //qSort(fieldUsePairList.begin(), fieldUsePairList.end());
+    QListIterator <QPair<QString ,FieldUse *>> pairListIter(fix8shareLib->fieldUsePairList);
     MainWindow::setTableSchemaList(tableSchemaList);
     //int sizeofFieldTable = TEX::ctx()._be.size();
-    int sizeofFieldTable = ctxFunc()._be.size();
+    int sizeofFieldTable = fix8shareLib->ctxFunc()._be.size();
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     // QList <WindowData> windowDataList = database->getWindows();
@@ -152,7 +161,8 @@ bool Fix8Log::init()
         while(iter.hasNext()) {
             wd = iter.next();
             newMW  = new MainWindow(database,true);
-            newMW->setFieldUsePair(&fieldUsePairList);
+            newMW->setSharedLibrary(fix8shareLib);
+            newMW->setFieldUsePair(&(fix8shareLib->fieldUsePairList));
             newMW->setSearchFunctions(searchFunctionList);
             wireSignalAndSlots(newMW);
             mainWindows.append(newMW);

@@ -69,3 +69,7 @@ QString  NewWindowWizard::getSelectedFile()
 {
     return filePage->getSelectedFile();
 }
+QString NewWindowWizard::getSelectedLib()
+{
+    return schemaPage->getSelectedLib();
+}
