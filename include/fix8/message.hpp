@@ -259,7 +259,7 @@ struct F8MetaCntx
 		{ return fnum < _flu_sz ? _flu[fnum] : nullptr; }
 
 	/*! Get the field BaseEntry object for this field by tag. Reverse lookup.
-	  \param fieldstr const char ptr to name of field to get
+	  \param fieldstr const char ptr to longname of field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *reverse_find_be(const char *fieldstr) const
 	{
@@ -268,7 +268,7 @@ struct F8MetaCntx
 	}
 
 	/*! Get the field number for this field by tag. Reverse lookup.
-	  \param fieldstr const char ptr to name of field to get
+	  \param fieldstr const char ptr to longname of field to get
 	  \return unsigned short field number */
 	unsigned short reverse_find_fnum(const char *fieldstr) const
 	{
@@ -287,7 +287,7 @@ struct F8MetaCntx
 	}
 
 	/*! Create a new field of the tag type passed, and from the raw string given.
-	  \param tag const char ptr to name of field to create
+	  \param tag const char ptr to longname of field to create
 	  \param from const char ptr to string containing value to construct from
 	  \return ptr to BaseField or 0 if fnum not found */
 	BaseField *create_field(const char *tag, const char *from) const
@@ -302,7 +302,7 @@ struct F8MetaCntx
 	const BaseMsgEntry *find_bme(const char *tag) const { return _bme.find_ptr(tag); }
 
 	/*! Get the message BaseMsgEntry object for this message. Reverse lookup.
-	  \param msgstr const char ptr to name of message to get
+	  \param msgstr const char ptr to longname of message to get
 	  \return ptr to BaseMsgEntry or 0 if not found */
 	const BaseMsgEntry *reverse_find_bme(const char *msgstr) const
 	{
@@ -333,6 +333,10 @@ struct F8MetaCntx
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	  \return version */
 	unsigned version() const { return _version; }
+
+	/*! Get fix header beginstring
+	  \return beginstring */
+	const f8String& get_beginStr() const { return _beginStr; }
 
 #if defined HAVE_EXTENDED_METADATA
 	//----------------------------------------------------------------------------------------------
