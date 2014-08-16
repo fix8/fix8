@@ -47,6 +47,7 @@ const XmlElement::XmlAttrs XmlElement::emptyattrs_;
 RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,}[1-4]{0,});"),
 	XmlElement::rIn_("href=\"([^\"]+)\""),
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
+XmlElement::XmlFlags XmlElement::flags_;
 
 //----------------------------------------------------------------------------------------
 const Str2Chr XmlElement::stringtochar_
@@ -151,7 +152,10 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 	enum
   	{
 		olb, otag, ocom0, ocom1, comment, ccom0, ccom1, ccomment,
-		oattr, odec, cdec, value, cls, ctag, finished
+		oattr, odec, cdec, value, cls, ctag,
+		cdata0, cdata1, cdata2, cdata3, cdata4, cdata5, cdata6, cdata7,	// ![CDATA[
+		vcdata, ecdata0, ecdata1, // ]]
+		finished
 	}
   	state(olb);
 
@@ -267,9 +271,112 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 			if (c == '>')
 				state = depth_ ? finished : olb;
 			break;
+		case cdata0:
+			state = cdata1;
+			break;
+		case cdata1:
+			if (c == '[')
+				state = cdata2;
+			else
+			{
+				state = value;
+				tmpval += "![";
+				tmpval += c;
+			}
+			break;
+		case cdata2:
+			if (c == 'C')
+				state = cdata3;
+			else
+			{
+				state = value;
+				tmpval += "![";
+				tmpval += c;
+			}
+			break;
+		case cdata3:
+			if (c == 'D')
+				state = cdata4;
+			else
+			{
+				state = value;
+				tmpval += "![C";
+				tmpval += c;
+			}
+			break;
+		case cdata4:
+			if (c == 'A')
+				state = cdata5;
+			else
+			{
+				state = value;
+				tmpval += "![CD";
+				tmpval += c;
+			}
+			break;
+		case cdata5:
+			if (c == 'T')
+				state = cdata6;
+			else
+			{
+				state = value;
+				tmpval += "![CDA";
+				tmpval += c;
+			}
+			break;
+		case cdata6:
+			if (c == 'A')
+				state = cdata7;
+			else
+			{
+				state = value;
+				tmpval += "![CDAT";
+				tmpval += c;
+			}
+			break;
+		case cdata7:
+			if (c == '[')
+				state = vcdata;
+			else
+			{
+				state = value;
+				tmpval += "![CDATA";
+				tmpval += c;
+			}
+			break;
+		case vcdata:
+			if (c == ']')
+				state = ecdata0;
+			else
+				tmpval += c;
+			break;
+		case ecdata0:
+			if (c == ']')
+				state = ecdata1;
+			else
+			{
+				tmpval += ']';
+				tmpval += c;
+				state = vcdata;
+			}
+			break;
+		case ecdata1:
+			if (c == '>')
+				state = value;
+			else
+			{
+				tmpval += "]]";
+				state = vcdata;
+			}
+			break;
 		case value:
 			if (c == '<')
 			{
+				if (ifsptr->peek() == '!')
+				{
+					state = cdata0;
+					break;
+				}
 				if (ifsptr->peek() != '/')
 				{
 					ifsptr->putback(c);
@@ -459,7 +566,7 @@ int XmlElement::ParseAttrs(const string& attlst)
 			}
 			break;
 		case oc0:
-			if (c == '*')
+			if (c == '*' && !(flags_ & noextensions))
 			{
 				state = comment;
 				break;
@@ -551,13 +658,13 @@ XmlElement::~XmlElement()
 }
 
 //-----------------------------------------------------------------------------------------
-const XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
+const XmlElement *XmlElement::find(const string& what, const string *atag,
 	const string *aval, const char delim)	const // find 1st matching entity
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-		return root_->find(what.substr(2), ignorecase, atag, aval, delim);
+		return root_->find(what.substr(2), atag, aval, delim);
 
-	if (ignorecase ? what % tag_ : what == tag_)
+	if (flags_ & nocase ? what % tag_ : what == tag_)
 		return atag && aval && !findAttrByValue(*atag, *aval) ? nullptr : this;
 
 	if (children_)
@@ -573,7 +680,7 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
 			{
-				const XmlElement *ptr((*result.first++).second->find(lwhat, ignorecase, atag, aval, delim));
+				const XmlElement *ptr((*result.first++).second->find(lwhat, atag, aval, delim));
 				if (ptr)
 					return ptr;
 			}
@@ -584,13 +691,13 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 }
 
 //-----------------------------------------------------------------------------------------
-int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
-	const string *atag, const string *aval, const char delim) const	// find all matching entities
+int XmlElement::find(const string& what, XmlSet& eset, const string *atag, const string *aval,
+		const char delim) const	// find all matching entities
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-		return root_->find(what.substr(2), eset, ignorecase, atag, aval, delim);
+		return root_->find(what.substr(2), eset, atag, aval, delim);
 
-	if (ignorecase ? what % tag_ : what == tag_)
+	if (flags_ & nocase ? what % tag_ : what == tag_)
 	{
 		if (atag && aval && !findAttrByValue(*atag, *aval))
 			return 0;
@@ -610,7 +717,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 			const string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
-				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval, delim);
+				(*result.first++).second->find(lwhat, eset, atag, aval, delim);
 			return static_cast<int>(eset.size());
 		}
 	}
@@ -678,22 +785,29 @@ const string& XmlElement::InplaceXlate (string& what)
 		rCE_.Replace(match, what, oval);
 	}
 
-   if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
-   {
-      string whatv;
-      rEn_.SubExpr(match, what, whatv, 0, 1);
-      const string result(getenv(whatv.c_str()));
-      if (!result.empty())
-         rEn_.Replace(match, what, result);
-   }
+	if (!(flags_ & noextensions))
+	{
+		if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
+		{
+			string whatv;
+			rEn_.SubExpr(match, what, whatv, 0, 1);
+			const char *gresult(getenv(whatv.c_str()));
+			if (gresult)
+			{
+				const string result(gresult);
+				if (!result.empty())
+					rEn_.Replace(match, what, result);
+			}
+		}
 
-   if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
-   {
-      string whatv;
-      rEv_.SubExpr(match, what, whatv, 0, 1);
-      string result;
-      if (exec_cmd(whatv, result))
-         rEv_.Replace(match, what, result);
+		if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
+		{
+			string whatv;
+			rEv_.SubExpr(match, what, whatv, 0, 1);
+			string result;
+			if (exec_cmd(whatv, result))
+				rEv_.Replace(match, what, result);
+		}
    }
 
 	return what;

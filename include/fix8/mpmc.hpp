@@ -42,17 +42,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // different libraries
 
 //-------------------------------------------------------------------------------------------------
-# include <atomic>
-template<typename T> using f8_atomic = std::atomic<T>;
-
-//-------------------------------------------------------------------------------------------------
 #if (MPMC_SYSTEM == MPMC_TBB)
 
 # include <tbb/concurrent_queue.h>
-# include <tbb/mutex.h>
-
-using f8_mutex = tbb::mutex;
-using f8_spin_lock = tbb::spin_mutex;
 template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
@@ -70,59 +62,6 @@ template<typename T> using f8_concurrent_queue = FIX8::ff_unbounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
 #endif // MPMC_SYSTEM
-
-//----------------------------------------------------------------------------------------
-/// Your bog standard RAII scoped lock
-namespace FIX8 {
-
-template<typename T>
-class f8_scoped_lock_impl
-{
-	T *_local_mutex = nullptr;
-	bool _disabled = false;
-
-public:
-	f8_scoped_lock_impl() = default;
-	f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
-	f8_scoped_lock_impl(T& mutex, bool disable) : _disabled(disable)
-	{
-		if (!_disabled)
-			acquire(mutex);
-	}
-
-	~f8_scoped_lock_impl() { release(); }
-
-	f8_scoped_lock_impl(const f8_scoped_lock_impl&) = delete;
-	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&) = delete;
-
-	void acquire(T& mutex)
-	{
-		mutex.lock();
-		_local_mutex = &mutex;
-	}
-
-	bool try_acquire(T& mutex)
-	{
-		bool result(mutex.try_lock());
-		if(result)
-			_local_mutex = &mutex;
-		return result;
-	}
-
-	void release()
-	{
-		if (!_disabled && _local_mutex)
-		{
-			_local_mutex->unlock();
-			_local_mutex = nullptr;
-		}
-	}
-};
-
-using f8_scoped_lock = f8_scoped_lock_impl<f8_mutex>;
-using f8_scoped_spin_lock = f8_scoped_lock_impl<f8_spin_lock>;
-
-} // namespace
 
 //-------------------------------------------------------------------------------------------------
 

@@ -137,7 +137,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rdomN:");
+const string GETARGLIST("hl:svqc:R:S:rdomN:D:");
 f8_atomic<bool> term_received(false);
 void server_process(ServerSessionBase *srv, int scnt, bool ismulti=false), client_process(ClientSessionBase *mc);
 FIX8::tty_save_state save_tty(0);
@@ -146,6 +146,7 @@ FIX8::tty_save_state save_tty(0);
 const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
+	{ { 'a', "New Order Single (alternate group method)" }, &MyMenu::new_order_single_alternate },
 	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
 		&MyMenu::new_order_single_recycled },
 	{ { 'N', "50 New Order Singles" }, &MyMenu::new_order_single_50 },
@@ -189,6 +190,7 @@ int main(int argc, char **argv)
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
 		{ "log",			1,	0,	'l' },
+		{ "delimiter",	1,	0,	'D' },
 		{ "config",		1,	0,	'c' },
 		{ "session",	1,	0,	'N' },
 		{ "once",	   0,	0,	'o' },
@@ -216,6 +218,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
+		case 'D': GlobalLogger::set_delimiter(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
 		case 'N': session = optarg; break;
@@ -346,19 +349,19 @@ int main(int argc, char **argv)
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
-		GlobalLogger::log(e.what());
+		glout_error << e.what();
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
-		GlobalLogger::log(e.what());
+		glout_error << e.what();
 	}
 	catch (...)
 	{
 		cerr << "unknown exception" << endl;
 		restore_tty = true;
-		GlobalLogger::log("unknown exception");
+		glout_error << "unknown exception";
 	}
 
 	if (restore_tty && !server)
@@ -393,16 +396,13 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti)
 	unique_ptr<SessionInstanceBase> inst(srv->create_server_instance());
 	if (!quiet)
 		inst->session_ptr()->control() |= Session::print;
-	ostringstream sostr;
-	sostr << "client(" << scnt << ") connection established.";
-	GlobalLogger::log(sostr.str());
-
+	glout_info << "client(" << scnt << ") connection established.";
 	const ProcessModel pm(srv->get_process_model(srv->_ses));
 	cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
 	inst->start(pm == pm_pipeline, next_send, next_receive);
 	if (inst->session_ptr()->get_connection()->is_secure())
 		cout << "Session is secure (SSL)" << endl;
-	if (!ismulti)	// demonstrate use of timer events
+	if (!ismulti && !quiet)	// demonstrate use of timer events
 	{
 		TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
 		inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
@@ -442,6 +442,79 @@ bool myfix_session_server::sample_scheduler_callback()
 {
 	cout << "myfix_session_server::sample_scheduler_callback Hello!" << endl;
 	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+Message *MyMenu::generate_new_order_single_alternate()
+{
+	static unsigned oid(0);
+	ostringstream oistr;
+	oistr << "ord" << ++oid;
+	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle(false)); // shallow construction
+	*nos << new TEX::TransactTime
+	     << new TEX::OrderQty(1 + RandDev::getrandom(9999))
+	     << new TEX::Price(RandDev::getrandom(500.), 5)	// 5 decimal places if necessary
+	     << new TEX::ClOrdID(oistr.str())
+	     << new TEX::Symbol("BHP")
+	     << new TEX::OrdType(TEX::OrdType_LIMIT)
+	     << new TEX::Side(TEX::Side_BUY)
+	     << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+	*nos << new TEX::NoPartyIDs(unsigned(0));
+	*nos << new TEX::NoUnderlyings(3);
+	GroupBase *noul(nos->find_add_group<TEX::NewOrderSingle::NoUnderlyings>(nullptr)); // no parent group
+
+	// repeating groups
+	MessageBase *gr1(noul->create_group(false)); // shallow construction
+	*gr1 << new TEX::UnderlyingSymbol("BLAH")
+	     << new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
+	*noul << gr1;
+
+	MessageBase *gr2(noul->create_group(false)); // shallow construction
+	// nested repeating groups
+	*gr2 << new TEX::UnderlyingSymbol("FOO")
+	     << new TEX::NoUnderlyingSecurityAltID(2);
+	*noul << gr2;
+	GroupBase *nosai(gr2->find_add_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>(noul)); // parent is noul
+	MessageBase *gr3(nosai->create_group(false)); // shallow construction
+	*gr3 << new TEX::UnderlyingSecurityAltID("UnderBlah");
+	*nosai << gr3;
+	MessageBase *gr4(nosai->create_group(false)); // shallow construction
+	*gr4 << new TEX::UnderlyingSecurityAltID("OverFoo");
+	*nosai << gr4;
+
+	MessageBase *gr5(noul->create_group(false)); // shallow construction
+	*gr5 << new TEX::UnderlyingSymbol("BOOM");
+	// nested repeating groups
+	GroupBase *nus(gr5->find_add_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>(noul)); // parent is noul
+	static const char *secIDs[] { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
+	{
+		MessageBase *gr(nus->create_group(false)); // shallow construction
+		*gr << new TEX::UnderlyingStipType(secIDs[ii]);
+		*nus << gr;
+	}
+	*noul << gr5;
+
+	// multiply nested repeating groups
+	*nos << new TEX::NoAllocs(1);
+	GroupBase *noall(nos->find_add_group<TEX::NewOrderSingle::NoAllocs>(nullptr)); // no parent group
+	MessageBase *gr9(noall->create_group(false)); // shallow construction
+	*gr9 << new TEX::AllocAccount("Account1")
+	     << new TEX::NoNestedPartyIDs(1);
+	*noall << gr9;
+	GroupBase *nonp(gr9->find_add_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>(noall)); // parent is noall
+	MessageBase *gr10(nonp->create_group(false)); // shallow construction
+	*gr10 << new TEX::NestedPartyID("nestedpartyID1")
+	      << new TEX::NoNestedPartySubIDs(1);
+	*nonp << gr10;
+	GroupBase *nonpsid(gr10->find_add_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>(nonp)); // parent is nonp
+	MessageBase *gr11(nonpsid->create_group(false)); // shallow construction
+	*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
+	*nonpsid << gr11;
+
+	return nos;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -515,6 +588,13 @@ Message *MyMenu::generate_new_order_single()
 	*nonpsid << gr11;
 
 	return nos;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single_alternate()
+{
+	_session.send(generate_new_order_single_alternate());
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -669,6 +749,7 @@ void print_usage()
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
+	um.add('D', "delimiter", "set GlobalLogger field delimiter (default ' ')");
 	um.add('N', "session", "for client, select session to use from configuration (default DLD1)");
 	um.add('r', "reliable", "start in reliable mode");
 	um.add('d', "dump", "dump parsed XML config file, exit");
@@ -805,6 +886,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	    << new TEX::LastCapacity('5')
 	    << new TEX::ReportToExch('Y')
 	    << new TEX::ExecID(oistr.str());
+	msg->push_unknown(er);
 	_session.send(er);
 
 	unsigned remaining_qty(qty()), cum_qty(0);

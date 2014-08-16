@@ -60,8 +60,8 @@ template<typename T>
 class TimerEvent
 {
    bool (T::*_callback)();
-	Tickval _t;
-	unsigned _intervalMS;
+	Tickval _t {};
+	unsigned _intervalMS = 0;
 	bool _repeat;
 
 public:
@@ -69,8 +69,7 @@ public:
 		The callback method returns a bool. If false, exit timer
 	  \param callback pointer to callback method
 	  \param repeat if true, repeat indefinately */
-	explicit TimerEvent(bool (T::*callback)(), bool repeat=false)
-		: _callback(callback), _t(), _intervalMS(), _repeat(repeat) {}
+	explicit TimerEvent(bool (T::*callback)(), bool repeat=false) : _callback(callback), _repeat(repeat) {}
 
 	/// Dtor.
 	~TimerEvent() {}
@@ -94,12 +93,12 @@ template<typename T>
 class Timer
 {
    T& _monitor;
-   dthread<Timer> _thread;
+   f8_thread<Timer> _thread;
 	f8_spin_lock _spin_lock;
    unsigned _granularity;
 
    std::priority_queue<TimerEvent<T>> _event_queue;
-	dthread_cancellation_token _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
 
 public:
 	/*! Ctor.
@@ -110,8 +109,8 @@ public:
 	/// Dtor.
    virtual ~Timer()
 	{
-		_thread.request_stop();
-		_thread.join();
+		stop();
+		join();
 	}
 
 	/*! Schedule a timer event. Callback method in event called on timer expiry.
@@ -130,12 +129,14 @@ public:
 	/// Start the timer thread.
 	void start() { _thread.start(); }
 
+	/// Stop the timer thread.
+	void stop() { _thread.request_stop(); }
+
 	/*! Timer thread entry point.
 	  \return result at timer thread exit */
    int operator()();
 
-	dthread_cancellation_token& cancellation_token() { return _cancellation_token;}
-
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token;}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -153,10 +154,10 @@ int Timer<T>::operator()()
          if (_event_queue.size())
          {
             TimerEvent<T> op(_event_queue.top());
-				if (!op._t) // empty timeval means exit
+				if (!op._t) // ignore empty timeval
 				{
 					_event_queue.pop(); // remove from queue
-					break;
+					continue;
 				}
 
 				const Tickval now(Tickval::get_tickval());
@@ -166,13 +167,12 @@ int Timer<T>::operator()()
 					_event_queue.pop(); // remove from queue
 					guard.release();
 					++elapsed;
-					if (!(_monitor.*rop._callback)())
-						break;
-					if (op._repeat)
+					const bool result((_monitor.*rop._callback)());
+					if (result && op._repeat) // don't repeat if callback returned false
 					{
 						op._t = now.get_ticks() + op._intervalMS * Tickval::million;
 						guard.acquire(_spin_lock);
-						_event_queue.push(op); // push back on queue
+						_event_queue.push(std::move(op)); // push back on queue
 					}
             }
             else
@@ -186,9 +186,7 @@ int Timer<T>::operator()()
 			hypersleep<h_milliseconds>(_granularity);
    }
 
-	std::ostringstream ostr;
-	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
-	GlobalLogger::instance()->send(ostr.str());
+	glout_info << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
 	return 0;
 }
 
@@ -224,7 +222,7 @@ bool Timer<T>::schedule(TimerEvent<T> what, unsigned timeToWait)
 
 	what.set(tofire);
 	f8_scoped_spin_lock guard(_spin_lock);
-	_event_queue.push(what);
+	_event_queue.push(std::move(what));
 
    return true;
 }

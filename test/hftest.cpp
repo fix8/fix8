@@ -376,9 +376,6 @@ bool MyMenu::batch_preload_new_order_single()
 			oistr << "ord" << ++oid << '-' << num;
 
 			FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
-			FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
-			prc->set_precision(3);
-
 			*ptr << new FIX8::TEX::Symbol("BHP")
 				  << new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
 				  << new FIX8::TEX::OrdType(FIX8::TEX::OrdType_LIMIT)
@@ -386,9 +383,12 @@ bool MyMenu::batch_preload_new_order_single()
 				  << new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
 				  << new FIX8::TEX::TransactTime
 				  << new FIX8::TEX::ClOrdID(oistr.str())
-				  << prc
+				  << new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3)
 				  << new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
 
+#if defined PREENCODE_MSG_SUPPORT
+			ptr->preencode();
+#endif
 			_session.push(ptr);
 		}
 		cout << _session.cached() << " NewOrderSingle msgs preloaded." << endl;
@@ -490,7 +490,9 @@ bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::preload_new_order_single()
 {
-	cout << endl << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
+	cout << endl;
+	if (_session.size())
+		cout << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
 	unsigned num(preload_count);
 	if (!num)
 	{
@@ -509,8 +511,6 @@ bool MyMenu::preload_new_order_single()
 		oistr << "ord" << ++oid << '-' << num;
 
 		FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
-		FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
-		prc->set_precision(3);
 
 		*ptr  << new FIX8::TEX::Symbol("BHP")
 				<< new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
@@ -518,10 +518,12 @@ bool MyMenu::preload_new_order_single()
 				<< new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
 				<< new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
 				<< new FIX8::TEX::TransactTime
-				<< prc
+				<< new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3) // precision=3
 				<< new FIX8::TEX::ClOrdID(oistr.str())
 				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
-
+#if defined PREENCODE_MSG_SUPPORT
+		ptr->preencode(); // pre-encode message payload (not header or trailer)
+#endif
 		_session.push(ptr);
 	}
 

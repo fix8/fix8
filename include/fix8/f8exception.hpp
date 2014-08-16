@@ -183,6 +183,7 @@ struct InvalidBodyLength : f8Exception
 struct InvalidMessage : f8Exception
 {
 	InvalidMessage(const std::string& str) { format("Invalid FIX Message", str); }
+	InvalidMessage(const std::string& str, const char *str1) { format("Invalid FIX Message", str, " at", str1); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -190,6 +191,7 @@ struct InvalidMessage : f8Exception
 struct IllegalMessage : f8Exception
 {
 	IllegalMessage(const std::string& str) { format("Illegal FIX Message", str); }
+	IllegalMessage(const std::string& str, const char *str1) { format("Illegal FIX Message", str, " at", str1); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -218,6 +220,8 @@ struct BadCompidId : f8Exception
 struct InvalidRepeatingGroup : f8Exception
 {
 	InvalidRepeatingGroup(const unsigned field) { format("Invalid Repeating Group", field); }
+	InvalidRepeatingGroup(const unsigned field, const char *str)
+		{ format("Invalid Repeating Group", field, " in", str); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -251,9 +255,9 @@ struct BadCheckSum : f8Exception
 
 //-------------------------------------------------------------------------------------------------
 /// A pthread attribute error occured.
-struct dthreadException : f8Exception
+struct f8_threadException : f8Exception
 {
-	dthreadException(const std::string& reason) { format("Thread error", reason); }
+	f8_threadException(const std::string& reason) { format("Thread error", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------

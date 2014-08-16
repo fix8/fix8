@@ -185,17 +185,21 @@ public:
 	bool do_exit() { return false; }
 	bool do_logout();
 	bool create_msgs();
+	bool version_info();
 	bool edit_msgs();
 	bool delete_msgs();
 	bool print_msgs();
 	bool send_msgs();
 	bool write_msgs();
 	bool read_msgs();
+	bool set_lpp();
 	bool static_probe();
+	bool new_order_single_alternate();
 	bool new_order_single_recycled();
 
 	bool load_msgs(const std::string& fname);
 	FIX8::Message *generate_new_order_single();
+	FIX8::Message *generate_new_order_single_alternate();
 	void send_lst();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }

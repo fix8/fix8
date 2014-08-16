@@ -61,9 +61,8 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    }
 
 #ifdef _MSC_VER
-   struct tm *ptim;
    time_t tval(startTime->secs());
-	ptim = use_gm ? gmtime(&tval) : localtime (&tval);
+   struct tm *ptim(use_gm ? gmtime(&tval) : localtime (&tval));
 #else
    struct tm tim, *ptim;
    time_t tval(startTime->secs());
@@ -71,6 +70,7 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    ptim = &tim;
 #endif
 
+	// 2014-07-02 23:15:51.514776595
    ostringstream oss;
    oss << setfill('0') << setw(4) << (ptim->tm_year + 1900) << '-';
    oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
@@ -87,7 +87,38 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    return result = oss.str();
 }
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+const string& GetTimeAsStringMini(string& result, const Tickval *tv)
+{
+   const Tickval *startTime;
+   Tickval gotTime;
+   if (tv)
+      startTime = tv;
+   else
+   {
+		gotTime.now();
+      startTime = &gotTime;
+   }
+
+#ifdef _MSC_VER
+   time_t tval(startTime->secs());
+   struct tm *ptim(localtime (&tval));
+#else
+   struct tm tim, *ptim;
+   time_t tval(startTime->secs());
+   localtime_r(&tval, &tim);
+   ptim = &tim;
+#endif
+
+// 14-07-02 23:15:51
+   ostringstream oss;
+   oss << setfill('0') << setw(2) << ((ptim->tm_year + 1900) % 100) << '-';
+   oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
+   oss << ':' << setw(2) << ptim->tm_min << ':' << setfill('0') << setw(2) << ptim->tm_sec;
+   return result = oss.str();
+}
+
+//-------------------------------------------------------------------------------------------------
 string& CheckAddTrailingSlash(string& src)
 {
 	if (!src.empty() && *src.rbegin() != '/')
@@ -181,14 +212,6 @@ void create_path(const string& path)
 }
 
 //----------------------------------------------------------------------------------------
-const string& trim(string& source, const string& ws)
-{
-    const size_t bgstr(source.find_first_not_of(ws));
-    return bgstr == string::npos
-		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
-}
-
-//----------------------------------------------------------------------------------------
 namespace
 {
 	using Day = pair<char, int>;
@@ -219,6 +242,65 @@ int decode_dow (const string& from)
 	return day_names[result.first->second][1] == source[1]
 		 || day_names[(++result.first)->second][1] == source[1] ? result.first->second : -1;
 }
+
+//----------------------------------------------------------------------------------------
+const Package_info& package_info()
+{
+   //ostr << "Package info for " PACKAGE " version " VERSION;
+	static const Package_info pinfo
+	{
+		{ "VERSION", VERSION },
+		{ "PACKAGE", PACKAGE },
+		{ "PACKAGE_BUGREPORT", PACKAGE_BUGREPORT },
+		{ "PACKAGE_URL", PACKAGE_URL },
+		{ "MAGIC_NUM", STRINGIFY(MAGIC_NUM) },
+		{ "CONFIGURE_OPTIONS", CONFIGURE_OPTIONS },
+		{ "CPPFLAGS", CPPFLAGS },
+		{ "LIBS", LIBS },
+		{ "LDFLAGS", LDFLAGS },
+		{ "CONFIGURE_SDATE", CONFIGURE_SDATE },
+		{ "CONFIGURE_TIME", CONFIGURE_TIME },
+		{ "MAJOR_VERSION_NUM", STRINGIFY(MAJOR_VERSION_NUM) },
+		{ "MINOR_VERSION_NUM", STRINGIFY(MINOR_VERSION_NUM) },
+		{ "PATCH_VERSION_NUM", STRINGIFY(PATCH_VERSION_NUM) },
+		{ "CONFIGURE_TIME_NUM", STRINGIFY(CONFIGURE_TIME_NUM) },
+		{ "HOST_SYSTEM", HOST_SYSTEM },
+		{ "MAX_FLD_LENGTH", STRINGIFY(MAX_FLD_LENGTH) },
+		{ "MAX_MSG_LENGTH", STRINGIFY(MAX_MSG_LENGTH) },
+		{ "MPMC_FF", STRINGIFY(MPMC_FF) },
+		{ "MPMC_TBB", STRINGIFY(MPMC_TBB) },
+		{ "MPMC_SYSTEM", STRINGIFY(MPMC_SYSTEM) },
+		{ "DEFAULT_PRECISION", STRINGIFY(DEFAULT_PRECISION) },
+		{ "THREAD_PTHREAD", STRINGIFY(THREAD_PTHREAD) },
+		{ "THREAD_STDTHREAD", STRINGIFY(THREAD_STDTHREAD) },
+		{ "THREAD_SYSTEM", STRINGIFY(THREAD_SYSTEM) },
+#if defined SLEEP_NO_YIELD
+		{ "SLEEP_NO_YIELD", STRINGIFY(SLEEP_NO_YIELD) },
+#endif
+#if defined CODECTIMING
+		{ "CODECTIMING", STRINGIFY(CODECTIMING) },
+#endif
+#if defined HAVE_OPENSSL
+		{ "HAVE_OPENSSL", STRINGIFY(HAVE_OPENSSL) },
+#endif
+#if defined HAVE_EXTENDED_METADATA
+		{ "HAVE_EXTENDED_METADATA", STRINGIFY(HAVE_EXTENDED_METADATA) },
+#endif
+#if defined F8_DEBUG
+		{ "F8_DEBUG", STRINGIFY(F8_DEBUG) },
+#endif
+	};
+
+	return pinfo;
+}
+
+f8String find_package_info_string(const f8String& what)
+{
+	auto itr(package_info().find(what));
+	return itr != package_info().cend() ? itr->second : f8String{};
+}
+
+//----------------------------------------------------------------------------------------
 
 } // namespace FIX8
 

@@ -110,7 +110,8 @@ struct FieldTrait
 	  \param pos field position (in FIX message)
 	  \param compon component idx
 	  \param field_traits bitmap of TraitTypes
-	  \param tgroup ptr ot traits if group */
+	  \param group ptr ot traits if group
+	  \param fieldcnt number of fields in group if group */
 	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits
 #if defined HAVE_EXTENDED_METADATA
 		, const FieldTrait *group=nullptr, unsigned fieldcnt=0

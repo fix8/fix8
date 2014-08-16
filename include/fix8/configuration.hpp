@@ -91,15 +91,6 @@ struct SslContext
 /// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
-protected:
-	enum group_types
-	{
-		g_sessions, g_persisters, g_loggers, g_server_group,
-		g_ssl_context, g_schedules, g_logins, g_client_group,
-		g_count
-	};
-
-private:
 	static RegExp _ipexp;
 
 	const XmlElement *_root, *_default;
@@ -114,7 +105,14 @@ private:
 	const XmlElement *find_element(const std::string& tag, const ConfigMap& from) const
 		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : nullptr; }
 
-protected:
+public:
+	enum group_types
+	{
+		g_sessions, g_persisters, g_loggers, g_server_group,
+		g_ssl_context, g_schedules, g_logins, g_client_group,
+		g_count
+	};
+
 	/*! Find an element in a specified group.
 	  \param type group type enum
 	  \param tag the tag to find
@@ -205,7 +203,7 @@ private:
 public:
 	enum Logtype { session_log, protocol_log };
 
-	/*! Ctor.
+ 	/*! Ctor.
 	  \param xmlfile xml config filename.
 	  \param do_process if true, process the file on construction */
 	Configuration(const std::string& xmlfile, bool do_process=false)
@@ -266,9 +264,15 @@ public:
 	F8API Poco::Net::IPAddress get_ip(const XmlElement *from) const;
 
 	/*! Extract the logflags from the flags attribute in a log entity.
+	  \tparam T ebitset type
+	  \param tag attribute tag to search for
+	  \param names vector of names for each enumeration
 	  \param from xml entity to search
+	  \param positions vector to place enumeration position in
 	  \return LogFLags object */
-	F8API Logger::LogFlags get_logflags(const XmlElement *from) const;
+	template<typename T>
+	T get_logflags(const std::string& tag, const std::vector<std::string>& names,
+		const XmlElement *from, Logger::LogPositions *positions=nullptr) const;
 
 	/*! Extract the session log filename address from a session entity.
 	  \param from xml entity to search

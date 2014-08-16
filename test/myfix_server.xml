@@ -11,6 +11,7 @@
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
+				permissive_mode="false"
 				process_model="threaded"
 				enforce_compids="false"
 				silent_disconnect="false"
@@ -74,13 +75,15 @@
 				type="session"
 				filename="|/bin/cat"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				flags="timestamp|sequence|thread|level"/>
 
 	<log 		name="session_log_file"
 				type="session"
 				filename="./run/myfix_server_session.log"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				delimiter="[]"
+				levels="debug|info|warn|error|fatal"
+				flags="mstart|sequence|thread|timestamp|level"/>
 
 	<log 		name="protocol_log"
 				type="protocol"
