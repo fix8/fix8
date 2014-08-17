@@ -39,6 +39,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "worksheet.h"
 #include "dateTimeDelegate.h"
 #include "fixHeaderView.h"
+#include "fix8sharedlib.h"
+
 #include "fixtableverticaheaderview.h"
 #include "fixmimedata.h"
 #include "fixtable.h"
@@ -56,15 +58,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8includes.hpp>
 #include <fix8/field.hpp>
 #include <fix8/message.hpp>
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
 using namespace FIX8;
 
 
 WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),
     senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0),
-  currentRow(-1)
+  currentRow(-1),sharedLib(0)
 {
     build();
     _model = new WorkSheetModel(this);
@@ -350,7 +349,7 @@ bool WorkSheet::loadFileName(QString &fileName,
     QString str;
     QString errorStr;
     QString name;
-    TEX::SenderCompID scID;
+    //TEX::SenderCompID scID;
     QString qstr;
     QFile dataFile(fileName);
     cancelReason = OK; // clear cancel reason
@@ -392,7 +391,7 @@ bool WorkSheet::loadFileName(QString &fileName,
             sender_comp_id senderID;
             ba = dataFile.readLine();
             ba.truncate(ba.size()-1);
-            Message *msg = Message::factory(TEX::ctx(),ba.data());
+            Message *msg = Message::factory(sharedLib->ctxFunc(),ba.data());
             msg->Header()->get(snum);
             msg->Header()->get(senderID);
 
@@ -400,7 +399,7 @@ bool WorkSheet::loadFileName(QString &fileName,
             memset(c,'\0',60);
             senderID.print(c);
             QLatin1String sid(c);
-            QMessage *qmessage = new QMessage(msg,sid,snum());
+            QMessage *qmessage = new QMessage(msg,sid,snum(),sharedLib->ctxFunc);
             if (i%100 == 0) { // every 100 iterations allow gui to process events
                 if (cancelLoad) {
                     showLoadProcess(false);
@@ -704,4 +703,9 @@ bool WorkSheetList::removeByID(const QUuid &id)
         }
     }
     return false;
+}
+void WorkSheet::setSharedLib(Fix8SharedLib *f8sl)
+{
+    sharedLib = f8sl;
+    messageArea->setSharedLib(sharedLib);
 }

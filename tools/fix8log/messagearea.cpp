@@ -38,17 +38,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8includes.hpp>
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
-
 #include "intItem.h"
 #include "messagearea.h"
 #include "messagefield.h"
+#include "fix8sharedlib.h"
 #include <QtWidgets>
 
 MessageArea::MessageArea(QWidget *parent) :
-    QWidget(parent),currentMessage(0)
+    QWidget(parent),currentMessage(0),sharedLib(0)
 {
     stackLayout = new QStackedLayout();
     stackLayout->setMargin(0);
@@ -138,7 +135,7 @@ void MessageArea::generateItems(FIX8::GroupBase *gb, QStandardItem *parent,FIX8:
         for (Fields::const_iterator itr(mb->fields_begin());itr != mb->fields_end(); ++itr) {
             if (mb->get_fp().is_group(itr->first)) {
                 QList <QStandardItem *>items;
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                name = QString::fromStdString(sharedLib->ctxFunc().find_be(itr->first)->_name);
                 GroupBase *gb (mb->find_group(itr->first));
                 if (gb)
                 {
@@ -153,7 +150,7 @@ void MessageArea::generateItems(FIX8::GroupBase *gb, QStandardItem *parent,FIX8:
             }
             else {
                 QList <QStandardItem *>items;
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                name = QString::fromStdString(sharedLib->ctxFunc().find_be(itr->first)->_name);
                 bf = itr->second;
                 memset(c,'\0',60);
                 bf->print(c);
@@ -204,13 +201,13 @@ void MessageArea::setMessage(QMessage *m)
         const Presence& pre(msg->get_fp().get_presence());
         messageType =  QString::fromStdString(msg->get_msgtype());
         const char *dum = msg->get_msgtype().c_str();
-        BaseMsgEntry bme = TEX::ctx()._bme.find_ref(dum);
+        BaseMsgEntry bme = sharedLib->ctxFunc()._bme.find_ref(dum);
         messageTypeV->setText(bme._name);
 
         for (Fields::const_iterator itr(header->fields_begin()); itr != header->fields_end(); ++itr)
         {
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            name = QString::fromStdString(sharedLib->ctxFunc().find_be(itr->first)->_name);
             bf = itr->second;
             memset(c,'\0',60);
             bf->print(c);
@@ -230,7 +227,7 @@ void MessageArea::setMessage(QMessage *m)
         {
             QList <QStandardItem *>items;
             if (msg->get_fp().is_group(itr->first)) {
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                name = QString::fromStdString(sharedLib->ctxFunc().find_be(itr->first)->_name);
                 GroupBase *gb (msg->find_group(itr->first));
 
                 if (gb)
@@ -247,7 +244,7 @@ void MessageArea::setMessage(QMessage *m)
                 }
             }
             else {
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                name = QString::fromStdString(sharedLib->ctxFunc().find_be(itr->first)->_name);
                 bf = itr->second;
                 memset(c,'\0',60);
                 bf->print(c);
@@ -269,7 +266,7 @@ void MessageArea::setMessage(QMessage *m)
         {
             treeView->isExpanded(headerItem->index());
             const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            name = QString::fromStdString(sharedLib->ctxFunc().find_be(itr->first)->_name);
             bf = itr->second;
             memset(c,'\0',60);
             bf->print(c);
@@ -402,4 +399,8 @@ void MessageArea::setExpansion(quint32 value)
 quint32 MessageArea::getExpansion()
 {
     return expandMode;
+}
+void MessageArea::setSharedLib(Fix8SharedLib *sl)
+{
+    sharedLib = sl;
 }

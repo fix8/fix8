@@ -80,9 +80,9 @@ int main(int argc, char *argv[])
                      f8l,SLOT(wakeupSlot(const QString&)));
 
     //QString fixLib = "/home/f8log/"
-    if (loadFile)
-        f8l->init(loadFileName);
-    else
+    //if (loadFile)
+    //    f8l->init(loadFileName);
+   // else
         f8l->init();
     return instance.exec();
 

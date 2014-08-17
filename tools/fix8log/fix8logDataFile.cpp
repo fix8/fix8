@@ -51,14 +51,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8includes.hpp>
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
 
 using namespace FIX8;
-
+/*
 WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
 {
+
     bool bstatus;
     msg_type mt;
     //  msg_seq_num snum;
@@ -140,133 +138,14 @@ WorkSheetModel *Fix8Log::readLogFile(const QString &fileName,QString &errorStr)
     }
     bool cancelLoad = false;
     model->setMessageList(messageList,cancelLoad);
-/*
-    messgeTypeItem = new QStandardItem(qstr);
-    qDebug() << "Fix how data gets read in..." << __FILE__ << __LINE__;
 
-    while(!dataFile.atEnd()) {
-        itemList.clear();
-        try {
-            ba = dataFile.readLine();
-            ba.truncate(ba.size()-1); // strip eol charactor
-
-            std::unique_ptr <Message> msg(Message::factory(TEX::ctx(),ba.data()));
-            msg->Header()->get(snum);
-            qDebug() << "SEQ NUM = " << snum() << __FILE__ << __LINE__;
-
-            const Presence& pre(msg->get_fp().get_presence());
-
-            MessageFieldList *mlf = new MessageFieldList();
-            colPosition = 0;
-            for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
-            {
-                const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-                name =
-                        QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
-                QVariant var = trait;
-                MessageField mf(itr->first,name,var);
-                mlf->append(mf);
-            }
-            if (i%100 == 0) { // every 100 iterations allow gui to process events
-                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
-                if (cancelSessionRestore) {
-                    qDebug() << "Does clear delete objects - if not have memory leak" << __FILE__ << __LINE__;
-                    model->clear();
-                    delete model;
-                    dataFile.close();
-                    return 0;
-                }
-            }
-            QVariant userDataVar;
-            userDataVar.setValue((void*)mlf);
-            int num = snum();
-            seqItem = new IntItem(num);
-            model->setItem(rowPosition,0,seqItem);
-            colPosition++;
-            seqItem->setData(userDataVar);
-
-            bstatus = msg->Header()->get(scID);
-            qstr = QString::fromStdString(scID());
-            senderItem =  new QStandardItem(qstr);
-            senderItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,senderItem);
-            colPosition++;
-
-            msg->Header()->get(tcID);
-            qstr = QString::fromStdString(tcID());
-            targetItem =  new QStandardItem(qstr);
-            targetItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,targetItem);
-            colPosition++;
-
-            msg->Header()->get(sendTime);
-            Tickval tv  = sendTime();
-            QDateTime dt = QDateTime::fromTime_t(tv.secs());
-            sendTimeItem = new QStandardItem(dt.toString());
-            sendTimeItem->setData(userDataVar);
-            sendTimeItem->setData(dt,Qt::UserRole+2);
-            model->setItem(rowPosition,colPosition,sendTimeItem);
-            colPosition++;
-
-            msg->Header()->get(beginStr);
-            qstr = QString::fromStdString(beginStr());
-            beginStrItem = new QStandardItem(qstr);
-            beginStrItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,beginStrItem);
-            colPosition++;
-
-            msg->Header()->get(bodyLength);
-            num = bodyLength();
-            bodyLengthItem = new IntItem(num);
-            bodyLengthItem->setData(userDataVar);
-            bodyLengthItem->setData(0,num);
-            model->setItem(rowPosition,colPosition,bodyLengthItem);
-            colPosition++;
-
-            msg->Trailer()->get(checkSum);
-            num = QString::fromStdString(checkSum()).toInt();
-            checkSumItem = new IntItem(num);
-            checkSumItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,checkSumItem);
-            colPosition++;
-
-            msg->Header()->get(encryptMethod);
-            num = encryptMethod();
-            encryptMethodItem = new QStandardItem(QString::number(num));
-            encryptMethodItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,encryptMethodItem);
-            colPosition++;
-
-            msg->Header()->get(heartBeatInt);
-            num = heartBeatInt();
-            heartBeatIntItem = new IntItem(num);
-            heartBeatIntItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,heartBeatIntItem);
-            colPosition++;
-
-            mt = msg->get_msgtype();
-            qstr = QString::fromStdString(mt());
-            messgeTypeItem = new QStandardItem(qstr);
-            messgeTypeItem->setData(userDataVar);
-            model->setItem(rowPosition,colPosition,messgeTypeItem);
-            rowPosition++;
-
-        }
-        catch (f8Exception&  e){
-            errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
-            qWarning() << "exception, row " << i;
-            qWarning() << "Error - " << e.what();
-            //msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
-        }
-        i++;
-    }
-    */
    //nMilliseconds = myTimer.elapsed();
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     //msgList.append(GUI::Message(qstr));
     dataFile.close();
     return model;
 }
+*/
 void Fix8Log::readFileInAnotherThread(const QString &fileName,QString &errorStr)
 {
     QFutureWatcher <FutureReadData *> *watcher = new
@@ -293,13 +172,14 @@ FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr)
     QString str;
     QString name;
 
-
+/*
     TEX::CheckSum    checkSum;
     TEX::EncryptMethod encryptMethod;
     TEX::HeartBtInt    heartBeatInt;
     TEX::SenderCompID scID;
     TEX::TargetCompID tcID;
     TEX::SendingTime  sendTime;
+    */
     std::string sstr;
     QString qstr;
     QString seqNumStr;

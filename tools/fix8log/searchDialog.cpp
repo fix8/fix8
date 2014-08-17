@@ -565,7 +565,6 @@ void SearchDialog::deleteSlot()
 void SearchDialog::populateSearchFunctions()
 {
     SearchFunction *sf;
-
     if (!searchFunctionList)
         return;
     model->setRowCount(searchFunctionList->count());
@@ -639,7 +638,6 @@ void SearchDialog::exportSlot()
         }
         settings.setValue("ExportImportSearchDir",fi.absolutePath());
         writeXML(fileName);
-
     }
     fileDialog->deleteLater();
 }
@@ -670,7 +668,6 @@ void SearchDialog::writeXML(QString &fileName)
         QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Open,QMessageBox::NoButton);
         return;
     }
-
     QXmlStreamWriter xmlWriter(&file);
     xmlWriter.setAutoFormatting(true);
     xmlWriter.writeDTD("<!DOCTYPE fix8search>");
@@ -701,7 +698,6 @@ void SearchDialog::readXML(QString &fileName)
     QStandardItem *aliasItem;
     QStandardItem *funcItem;
     QXmlStreamAttributes attributes;
-
     bstatus = file.open(QIODevice::ReadOnly);
     if (!bstatus) {
         str = "Error - unable to open file, " + fileName;
@@ -738,7 +734,6 @@ void SearchDialog::readXML(QString &fileName)
                     searchFunctionList->append(sf);
                     numOfImported ++;
                 }
-
             }
         }
     }
@@ -750,6 +745,5 @@ void SearchDialog::readXML(QString &fileName)
         str = "Import failed, no functions found.";
         setMessage(str);
     }
-
     validate();
 }

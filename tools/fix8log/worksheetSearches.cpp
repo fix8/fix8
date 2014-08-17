@@ -56,9 +56,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8includes.hpp>
 #include <fix8/field.hpp>
 #include <fix8/message.hpp>
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
 using namespace FIX8;
 
 void WorkSheet::setSearchIndexes(const QVector<qint32> &indexes)

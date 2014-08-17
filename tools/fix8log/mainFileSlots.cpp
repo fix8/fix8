@@ -47,9 +47,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <string.h>
 #include <fix8/f8includes.hpp>
 #include <fix8/message.hpp>
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
 
 
 using namespace FIX8;
@@ -125,6 +122,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         fileName = iter.next();
         QFileInfo fi(fileName);
         WorkSheet *workSheet = new WorkSheet(this);
+        workSheet->setSharedLib(sharedLib);
         workSheet->setTableSchema(tableSchema);
         connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
                 this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
@@ -233,6 +231,7 @@ void MainWindow::loadFile(QString &fileName)
         }
     }
     WorkSheet *workSheet = new WorkSheet(this);
+     workSheet->setSharedLib(sharedLib);
     workSheet->setTableSchema(tableSchema);
     connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
@@ -417,7 +416,7 @@ void MainWindow::copyTabSlot()
         return;
     }
     newWorkSheet = new WorkSheet(this);
-
+    newWorkSheet->setSharedLib(sharedLib);
     connect(newWorkSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
     connect(newWorkSheet,SIGNAL(modelDropped(FixMimeData *)),

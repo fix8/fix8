@@ -85,6 +85,7 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
             WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (mw.tabW->widget(i));
             QByteArray ba = oldWorkSheet->splitter->saveState();
             WorkSheet *newWorkSheet = new WorkSheet(this);
+            newWorkSheet->setSharedLib(sharedLib);
             qDebug() << "REDO NEW WINDOW " << __FILE__ << __LINE__;
             newWorkSheet->copyFrom(*oldWorkSheet);
             newWorkSheet->setWindowID(uuid);
@@ -873,6 +874,7 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
     setCursor(Qt::BusyCursor);
 
     WorkSheet *workSheet = new WorkSheet(this);
+     workSheet->setSharedLib(sharedLib);
     workSheet->setTableSchema(tableSchema);
     connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));

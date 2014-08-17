@@ -107,6 +107,8 @@ public:
     QString name;
     QBaseEntryList *qbel;
     QVector<int> fieldsV;
+
+
 };
 class MessageFieldList : public QList<MessageField *>
 {
@@ -132,8 +134,8 @@ class FieldUseList : public QList <FieldUse *>
 class QMessage
 {
   public:
-    QMessage(Message *m,QLatin1String senderID);
-    QMessage(Message *m,QLatin1String senderID, int seqID);
+    QMessage(Message *m,QLatin1String senderID,std::function<const F8MetaCntx&()> ctxFunc);
+    QMessage(Message *m,QLatin1String senderID, int seqID,std::function<const F8MetaCntx&()> ctxFunc);
     QMessage(const QMessage &);
     Message *mesg;
     QString senderID;
@@ -141,6 +143,7 @@ class QMessage
     int seqID;
 private:
     void generateItems(GroupBase *gb);
+    std::function<const F8MetaCntx&()> ctxFunc;
 
 };
 class QMessageList : public QList <QMessage *>

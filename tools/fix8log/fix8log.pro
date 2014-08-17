@@ -63,7 +63,6 @@ SOURCES += main.cpp\
     pushbuttonmodifykey.cpp \
     schemaeditordialogMessageView.cpp \
     fieldsview.cpp \
-    fix8logGenererateTraits.cpp \
     fix8logInit.cpp \
     fix8WindowSlots.cpp \
     newwindowwizard.cpp \
@@ -99,9 +98,6 @@ HEADERS  += mainwindow.h \
     schemadelegate.h \
     selectedfieldstreeview.h \
     worksheetmodel.h \
-    ../../test/Myfix_classes.hpp \
-    ../../test/Myfix_router.hpp \
-    ../../test/Myfix_types.hpp \
     messageitemdelegate.h \
     proxyFilter.h \
     lineedit.h \
@@ -142,7 +138,7 @@ win32 {
     CONFIG -= console
     SOURCES += qtlockedfile_win.cpp
     QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
-    INCLUDEPATH += . ./f8 ../../test \
+    INCLUDEPATH += . ./f8 \
                 ../../msvc/packages/fix8.dev.1.2.20140801.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \

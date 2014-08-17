@@ -39,9 +39,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8includes.hpp>
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
 
 #include <QWidget>
 class QAbstractButton;
@@ -55,6 +52,7 @@ class QStandardItemModel;
 class QTreeView;
 class MessageFieldList;
 class QMessage;
+class Fix8SharedLib;
 class MessageArea : public QWidget
 {
 Q_OBJECT
@@ -66,6 +64,7 @@ public:
     void setItemExpaned(TreeItem,bool);
     bool getExpansionState(TreeItem);   
     void setHeaderState(QByteArray &headerState);
+    void setSharedLib(Fix8SharedLib *);
     quint32 getExpansion();
     void setExpansion(quint32 value);
     QByteArray getHeaderState();
@@ -91,6 +90,7 @@ private:
     QRadioButton *expandNone,*level1,*expandAll;
     QGroupBox    *messageExpansionArea;
     ExpandMode expandMode;
+    Fix8SharedLib *sharedLib;
 
 };
 

@@ -186,8 +186,10 @@ bool Fix8Log::init()
     }
     return bstatus;
 }
+
 bool Fix8Log::init(QString fileNameToLoad)
 {
+    /*
     WorkSheetModel *model = 0;
     MainWindow *newMW  =new MainWindow(database,true);
     newMW->setFieldUsePair(&fieldUsePairList);
@@ -211,5 +213,6 @@ bool Fix8Log::init(QString fileNameToLoad)
         newMW->show();
     }
     newMW->setLoading(false);
+    */
     return true;
 }

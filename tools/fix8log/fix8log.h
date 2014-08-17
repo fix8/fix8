@@ -104,7 +104,7 @@ public slots:
     void updatedSearchFunctionsSlot(SearchFunctionList *sfl);
     void wakeupSlot(const QString&);
 protected:
-    WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);
+   // WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);
     void saveSession();
     void wireSignalAndSlots(MainWindow *mw);
     QList <MainWindow *> mainWindows;
@@ -130,11 +130,6 @@ signals:
     void notifyTimeFormatChanged(GUI::Globals::TimeFormat);
 private:
     void cleanWindowDataList(QList <WindowData> &windowDataList);
-
-    void generate_traits(const TraitHelper &tr, QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
-                      MessageField *mf,QList <QBaseEntry *> *qbaseEntryList, int *level);
-    void generate_traits(const TraitHelper &tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,
-                      MessageField *mf,QBaseEntryList *qbaseEntryList,int *level);
     void initDatabase();
     std::function<const F8MetaCntx&()> loadFix8so(QString libName, bool &bstatus);
     SearchDialog *searchDialog;

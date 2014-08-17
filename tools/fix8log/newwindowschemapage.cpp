@@ -43,7 +43,11 @@ NewWindowSchemaPage::NewWindowSchemaPage(Fix8SharedLibList &shareLibs,QWidget *p
     fnt = legend->font();
     fnt.setItalic(true);
     legend->setFont(fnt);
+#ifdef Q_OS_WIN
+    legend->setText("*System Library");
+#else
     legend->setText("\u002aSystem Library");
+#endif
     schemaLabel = new QLabel(this);
     schemaLabel->setWordWrap(true);
     schemaLabel->setTextFormat(Qt::RichText);
@@ -103,7 +107,11 @@ bool NewWindowSchemaPage::loadSchemas(Fix8SharedLib::LibType libType)
         if (libStr == "lib") {
             QString name = baseName.right(baseName.length()-3);
             if (libType == Fix8SharedLib::SystemLib)
-                name.append("\u002a");
+#ifdef Q_OS_WIN
+                name.append("*");
+#else
+             name.append("\u002a");
+#endif
             if (!nameList.contains(name)) {
                 si = new QStandardItem(name);
                 QVariant var;

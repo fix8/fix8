@@ -47,6 +47,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "messagefield.h"
 #include "searchfunction.h"
 #include "worksheetdata.h"
+class Fix8SharedLib;
 class TableSchema;
 class WorkSheetModel;
 class QFile;
@@ -101,8 +102,9 @@ public:
     void hideColumn(int colNum, bool hideCol);
     void setAlias(QString &);
     void showLoadProcess(bool isBeingLoaded, int numRecords=0);
+    void setSharedLib(Fix8SharedLib *);
     void setTimeFormat(GUI::Globals::TimeFormat);
-    void terminate();; // called to stop loading file if it is
+    void terminate(); // called to stop loading file if it is
 signals:
      void doPopup(const QModelIndex &,const QPoint &);
     void modelDropped(FixMimeData *);
@@ -154,6 +156,7 @@ private:
     QItemSelectionModel *sm;
     qint32 currentRow;
     SearchFunction searchFunction; // raw search string
+    Fix8SharedLib *sharedLib;
 };
 
 class WorkSheetList : public QList <WorkSheet *>

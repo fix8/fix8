@@ -35,9 +35,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 
 #include "messagefield.h"
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
 
 #include <QApplication>
 #include <QDebug>
@@ -271,12 +268,12 @@ MessageFieldList::MessageFieldList() : QList<MessageField*>()
 {
 
 }
-QMessage::QMessage(Message *m,QLatin1String sid):mesg(m),senderID(sid)
+QMessage::QMessage(Message *m,QLatin1String sid,std::function<const F8MetaCntx&()> ctxF):mesg(m),senderID(sid),ctxFunc(ctxF)
 {
     seqID = -1;
 }
-QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
-    seqID(seq)
+QMessage::QMessage(Message *m,QLatin1String sid, int seq,std::function<const F8MetaCntx&()> ctxF):mesg(m),senderID(sid),
+    seqID(seq),ctxFunc(ctxF)
 {
     MessageBase *header;
     MessageBase *trailer;
@@ -294,7 +291,7 @@ QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
     for (Fields::const_iterator itr(header->fields_begin()); itr != header->fields_end(); ++itr)
     {
         //const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-        name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+        name = QString::fromStdString(ctxFunc().find_be(itr->first)->_name);
         bf = itr->second;
         ft =  bf->get_underlying_type();
         if (FieldTrait::is_int(ft)) {
@@ -320,13 +317,13 @@ QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
     for (Fields::const_iterator itr(mesg->fields_begin()); itr != mesg->fields_end(); ++itr)
     {
         if (mesg->get_fp().is_group(itr->first)) {
-            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            name = QString::fromStdString(ctxFunc().find_be(itr->first)->_name);
             GroupBase *gb (mesg->find_group(itr->first));
             if (gb)
                 generateItems(gb);
         }
         else {
-            name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+            name = QString::fromStdString(ctxFunc().find_be(itr->first)->_name);
             bf = itr->second;
             ft =  bf->get_underlying_type();
             if (FieldTrait::is_int(ft)) {
@@ -350,7 +347,7 @@ QMessage::QMessage(Message *m,QLatin1String sid, int seq):mesg(m),senderID(sid),
     for (Fields::const_iterator itr(trailer->fields_begin()); itr != trailer->fields_end(); ++itr)
     {
 
-        name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+        name = QString::fromStdString(ctxFunc().find_be(itr->first)->_name);
         bf = itr->second;
         ft =  bf->get_underlying_type();
         if (FieldTrait::is_int(ft)) {
@@ -378,6 +375,7 @@ QMessage::QMessage(const QMessage &qm)
     if (qm.mesg)
         mesg = qm.mesg->clone();
     map = qm.map;
+    ctxFunc = qm.ctxFunc;
 }
 void QMessage::generateItems(GroupBase *gb)
 {
@@ -392,7 +390,7 @@ void QMessage::generateItems(GroupBase *gb)
         MessageBase *mb = gb->get_element(k);
         for (Fields::const_iterator itr(mb->fields_begin());itr != mb->fields_end(); ++itr) {
             if (mb->get_fp().is_group(itr->first)) {
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                name = QString::fromStdString(ctxFunc().find_be(itr->first)->_name);
                 GroupBase *gb (mb->find_group(itr->first));
                 if (gb)
                 {
@@ -400,7 +398,7 @@ void QMessage::generateItems(GroupBase *gb)
                 }
             }
             else {
-                name = QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                name = QString::fromStdString(ctxFunc().find_be(itr->first)->_name);
                 bf = itr->second;
                 ft =  bf->get_underlying_type();
                 if (FieldTrait::is_int(ft)) {
