@@ -68,11 +68,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
 			_db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_THREAD, 0); // try and open existing if possible
 			unsigned last;
 			if (get_last_seqnum(last))
-			{
-				ostringstream ostr;
-				ostr << _dbFname << ": Last sequence is " << last;
-				GlobalLogger::log(FILE_LINE, ostr.str());
-			}
+				glout_info << _dbFname << ": Last sequence is " << last;
 		}
 		catch(DbException& dbe)
 		{
@@ -83,11 +79,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
 				notFound = true;
 				break;
 			default:
-				{
-					ostringstream ostr;
-					ostr << "Error: opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
-					GlobalLogger::log(FILE_LINE, ostr.str());
-				}
+				glout_error << "Error: opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
 				return false;
 			}
 		}
@@ -101,14 +93,12 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
 			if (purge)
 			{
 				_db->truncate(0, 0, 0);
-				GlobalLogger::log(FILE_LINE, "Purged perist db");
+				glout_info << "Purged perist db";
 			}
       }
       catch(DbException& dbe)
       {
-			ostringstream ostr;
-         ostr << "Error: creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
-			GlobalLogger::log(FILE_LINE, ostr.str());
+			glout_error << "Error: creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
          return false;
       }
 
@@ -144,9 +134,7 @@ unsigned BDBPersister::get_last_seqnum(unsigned& sequence) const
    cursorp->close();
    if (retval)
    {
-		ostringstream ostr;
-      ostr << "last record not found (" << db_strerror(retval) << ')';
-		GlobalLogger::log(FILE_LINE, ostr.str());
+		glout_warn << "last record not found (" << db_strerror(retval) << ')';
       return 0;
    }
    return sequence = buffer.keyBuf_.int_;
@@ -164,7 +152,7 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 
 	if (!startSeqNum || from > finish)
 	{
-		GlobalLogger::log(FILE_LINE, "No records found");
+		glout_warn << "No records found";
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -194,11 +182,7 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 	}
 	else
-	{
-		ostringstream ostr;
-		ostr << "record not found (" << db_strerror(retval) << ')';
-		GlobalLogger::log(FILE_LINE, ostr.str());
-	}
+		glout_warn << "record not found (" << db_strerror(retval) << ')';
 	cursorp->close();
 
 	return recs_sent;
@@ -232,9 +216,7 @@ bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
    int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
    if (retval)
    {
-		ostringstream ostr;
-		ostr << "Could not get control 0 " << '(' << db_strerror(retval) << ')';
-		GlobalLogger::log(FILE_LINE, ostr.str());
+		glout_error << "Could not get control 0 " << '(' << db_strerror(retval) << ')';
       return false;
    }
 	unsigned *loc(reinterpret_cast<unsigned *>(buffer.dataBuf_));
@@ -253,9 +235,7 @@ bool BDBPersister::get(const unsigned seqnum, f8String& to) const
    int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
    if (retval)
    {
-		ostringstream ostr;
-		ostr << "Could not get " << seqnum << '(' << db_strerror(retval) << ')';
-		GlobalLogger::log(FILE_LINE, ostr.str());
+		glout_error << "Could not get " << seqnum << '(' << db_strerror(retval) << ')';
       return false;
    }
    to.assign(buffer.dataBuf_);
@@ -319,11 +299,7 @@ int BDBPersister::operator()()
 			KeyDataPair keyPair(*msg_ptr);
 			int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
 			if (retval)
-			{
-				ostringstream ostr;
-				ostr << "Could not add" << '(' << db_strerror(retval) << ')';
-				GlobalLogger::log(FILE_LINE, ostr.str());
-			}
+				glout_error << "Could not add" << '(' << db_strerror(retval) << ')';
 			else
 				++persisted;
 		}
@@ -334,9 +310,7 @@ int BDBPersister::operator()()
 
 	//cout << "persister()() exited..." << endl;
 
-	ostringstream ostr;
-	ostr << received << " messages received, " << persisted << " messages persisted";
-	GlobalLogger::log(FILE_LINE, ostr.str());
+	glout_info << received << " messages received, " << persisted << " messages persisted";
 
    return 0;
 }
@@ -356,7 +330,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 
 	if (!startSeqNum || from > finish)
 	{
-		GlobalLogger::log(FILE_LINE, "No records found");
+		glout_warn << "No records found";
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -381,11 +355,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 		(session.*callback)(result, rctx);
 	}
 	else
-	{
-		ostringstream ostr;
-		ostr << "record not found (" << startSeqNum << ')';
-		GlobalLogger::log(FILE_LINE, ostr.str());
-	}
+		glout_error << "record not found (" << startSeqNum << ')';
 
 	return recs_sent;
 }

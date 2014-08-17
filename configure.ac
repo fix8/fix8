@@ -58,17 +58,16 @@ MINOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}']
 AC_DEFINE_UNQUOTED([MINOR_VERSION_NUM], [$MINOR_VERSION_NUM], [Minor version number])
 PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$3}']`
 AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
-AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
+MAGIC_NUM=`[echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}']`
+# this would also probably have worked
+# MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
+
+AC_DEFINE_UNQUOTED([MAGIC_NUM], [$MAGIC_NUM], [Encode version])
+AC_DEFINE_UNQUOTED([MAGIC_NUM_EXPR], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version as expresion])
+
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
 AC_SUBST(libfix8_la_version_info, $MAJOR_VERSION_NUM:$MINOR_VERSION_NUM:0)
-
-UNAME_S=`uname -s 2>/dev/null || echo unknown`
-UNAME_M=`uname -m 2>/dev/null || echo unknown`
-UNAME_O=`uname -o 2>/dev/null || echo unknown`
-UNAME_R=`uname -r 2>/dev/null || echo unknown`
-UNAME_P=`uname -p 2>/dev/null || echo unknown`
-UNAME_V=`uname -v 2>/dev/null || echo unknown`
 
 BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
@@ -142,19 +141,6 @@ esac
 m4_include(m4/ax_check_compile_flag.m4)
 has_assignmentvars=no
 AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
-
-oktopro=no
-PRODIRFILE=./pro/buildcheck
-AC_MSG_CHECKING(for pro build)
-if test -a "$PRODIRFILE"; then
-   AC_DEFINE_UNQUOTED(HAVE_PRO_BUILD, 1, [Define to 1 if this is a pro build. NOT available in the open source version.])
-   oktopro=yes
-   AC_CONFIG_FILES([pro/Makefile])
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-AM_CONDITIONAL([PROBUILD], [test $oktopro = yes])
 
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
@@ -290,11 +276,11 @@ AC_ARG_WITH(maxfldlen,
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
-AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default precision for floating point fields])
-AC_ARG_WITH(precision,
-  AS_HELP_STRING([--with-precision=VALUE],[Default precision for floating point fields (default=2)]),
+AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default number of precision digits for floating point fields])
+AC_ARG_WITH(precision-digits,
+  AS_HELP_STRING([--with-precision-digits=VALUE],[Default number of precision digits for floating point fields (default=2)]),
 [
-	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default precision for floating point fields (default=2)])
+	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default number of precision digits for floating point fields (default=2)])
 ],[])
 
 AC_ARG_WITH(tbb,
@@ -338,6 +324,22 @@ AC_ARG_WITH(gperf,
 
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+AC_MSG_CHECKING(for precision)
+using_double_precision=yes
+AC_ARG_WITH([precision],
+[AS_HELP_STRING([--with-precision=VAL],[select whether to use single or double precision (single|double, default=double)])],
+[case "${withval}" in
+   single) using_double_precision=no
+			  AC_MSG_RESULT(single)
+			  AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
+   double) AC_MSG_RESULT(double)
+			  using_double_precision=yes ;;
+   *) echo
+      echo "ERROR: Unknown value ${withval} for precision given."
+      echo
+      exit 1
+esac])
 
 mpmc_set=no
 using_ff=no
@@ -485,10 +487,9 @@ else
 fi
 
 thread_set=no
-using_poco_thread=no
-using_tbb_thread=no
+using_std_thread=no
 AC_ARG_WITH([thread],
-[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco|tbb, default=pthread)])],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|stdthread, default=pthread)])],
 [case "${withval}" in
 	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
 				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
@@ -498,28 +499,26 @@ AC_ARG_WITH([thread],
 				thread_set=yes
 				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
 				;;
-	tbb) using_tbb_thread=yes
-			thread_set=yes
-			AC_DEFINE(THREAD_SYSTEM, THREAD_TBB, [tbb thread system used])
-			AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
-			;;
-	poco) using_poco_thread=yes
-			thread_set=yes
-			AC_DEFINE(THREAD_SYSTEM, THREAD_POCO, [poco thread system used])
-			;;
+	stdthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				using_std_thread=yes
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_STDTHREAD, [std::thread system used])
+				;;
 	*) echo
 		echo "ERROR: Unknown value ${withval} for REGEX given."
 		echo
 		exit 1
 esac])
 
-AC_DEFINE(THREAD_POCO, 1, [Poco thread system])
 AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
-AC_DEFINE(THREAD_TBB, 3, [tbb thread thread system])
+AC_DEFINE(THREAD_STDTHREAD, 4, [std::thread thread system])
 if test "$thread_set" = no; then
-	using_poco_thread=no
-	using_tbb_thread=no
-	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread regex system used])
+	using_std_thread=no
+	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread used for threading])
 fi
 
 oktogtest=yes
@@ -705,6 +704,14 @@ AC_ARG_ENABLE([rawmsgsupport],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
 esac])
 
+AC_ARG_ENABLE([preencode],
+[AS_HELP_STRING([--enable-preencode],[enable pre-encode (prepare) message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(PREENCODE_MSG_SUPPORT, 1, [Define to 1 if you wish to pre-encode (prepare) message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-preencode) ;;
+esac])
+
 AC_ARG_ENABLE([bufgloblogging],
 [AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
 [case "${enableval}" in
@@ -745,9 +752,9 @@ AC_ARG_ENABLE([codectiming],
 esac])
 
 AC_ARG_ENABLE([debug],
-[AS_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
+[AS_HELP_STRING([--enable-debug],[enable DEBUG support (F8_DEBUG) (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging extensions]) ;;
+	yes) AC_DEFINE(F8_DEBUG, 1, [Define to 1 for debugging support]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
 esac])

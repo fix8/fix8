@@ -146,6 +146,8 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'L', "Set Lines per page" }, &MyMenu::set_lpp },
+	{ { 'v', "Show version info" }, &MyMenu::version_info },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 
@@ -241,9 +243,7 @@ int main(int argc, char **argv)
 				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
-				ostringstream sostr;
-				sostr << "client(" << ++scnt << ") connection established.";
-				GlobalLogger::log(sostr.str());
+				glout_info << "client(" << ++scnt << ") connection established.";
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
@@ -329,6 +329,16 @@ bool MyMenu::help()
 }
 
 //-----------------------------------------------------------------------------------------
+bool MyMenu::set_lpp()
+{
+	cout << "Enter number of lines per page (currently=" << _cm->get_lpp() << "): " << flush;
+	f8String str;
+	if (!_cm->GetString(_tty, str).empty())
+		_cm->set_lpp(stoi(str));
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::do_logout()
 {
 	if (!_session.is_shutdown())
@@ -375,6 +385,15 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 bool MyMenu::create_msgs()
 {
 	_cm->CreateMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::version_info()
+{
+	cout << endl;
+	for (const auto& pp : package_info())
+		cout << pp.first << ": " << pp.second << endl;
 	return true;
 }
 
@@ -460,7 +479,7 @@ bool MyMenu::read_msgs()
 	cout << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())
-		return load_msgs(fname);
+		load_msgs(fname);
 	return true;
 }
 

@@ -100,7 +100,7 @@ public:
         FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger)
     {
         _timer.clear();
-        _timer.schedule(_hb_processor, 0);
+        _timer.stop();
         _timer.join();
     }
 
@@ -148,8 +148,8 @@ public:
         flag.set(Logger::direction, true);
 
         per = new MemoryPersister;
-        sLogger = new FileLogger("utest_slog.log", flag);
-        pLogger = new FileLogger("utest_plog.log", flag);
+        sLogger = new FileLogger( "utest_slog.log", flag, Logger::Levels( Logger::All ) );
+        pLogger = new FileLogger( "utest_plog.log", flag, Logger::Levels( Logger::All ) );
 #else
         f8String cmd("|/bin/cat");
         ebitset<Logger::Flags> flag;
@@ -161,8 +161,8 @@ public:
         flag.set(Logger::pipe, true);
 
         per = new MemoryPersister;
-        sLogger = new PipeLogger(cmd, flag);
-        pLogger = new PipeLogger(cmd, flag);
+        sLogger = new PipeLogger(cmd, flag, Logger::Levels(Logger::All));
+        pLogger = new PipeLogger(cmd, flag, Logger::Levels(Logger::All));
 #endif // _MSC_VER
 
         ss = new test_session(ctx(), id, per, sLogger, pLogger);

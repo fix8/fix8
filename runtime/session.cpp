@@ -99,26 +99,19 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 	_timer.start();
 	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 
-	ostringstream ostr;
 	if (!_logger)
 	{
-		ostr.str("");
-		ostr << "Warning: no session logger defined for " << _sid;
-		GlobalLogger::log(ostr.str());
+		glout_warn << "Warning: no session logger defined for " << _sid;
 	}
 
 	if (!_plogger)
 	{
-		ostr.str("");
-		ostr << "Warning: no protocol logger defined for " << _sid;
-		GlobalLogger::log(ostr.str());
+		glout_warn << "Warning: no protocol logger defined for " << _sid;
 	}
 
 	if (!_persist)
 	{
-		ostr.str("");
-		ostr << "Warning: no persister defined for " << _sid;
-		GlobalLogger::log(ostr.str());
+		glout_warn << "Warning: no persister defined for " << _sid;
 	}
 }
 
@@ -144,9 +137,11 @@ void Session::atomic_init(States::SessionStates st)
 //-------------------------------------------------------------------------------------------------
 Session::~Session()
 {
-	log("Session terminating");
+	slout_info << "Session terminating";
 	if (_logger)
 		_logger->stop();
+	if (_plogger)
+		_plogger->stop();
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
 	if (_connection && _connection->get_role() == Connection::cn_acceptor)
@@ -165,14 +160,14 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 		_plogger->purge_thread_codes();
 
 	_control.clear(shutdown);
-	log("Starting session");
+	slout_info << "Starting session";
 	_connection = connection; // takes owership
 	if (!_connection->connect()) // if already connected returns true
 		return -1;
 	if (_connection->get_role() == Connection::cn_acceptor)
 		atomic_init(States::st_wait_for_logon); // important for server that this is done before connect
 	_connection->start();
-	log("Session connected");
+	slout_info << "Session connected";
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
@@ -203,9 +198,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	{
 		if (_connection->get_role() == Connection::cn_initiator)
 		{
-			ostringstream ostr;
-			ostr << *_schedule;
-			log(ostr.str());
+			slout_info << *_schedule;
 		}
 		_timer.schedule(_session_scheduler, 1000);	// check every second
 	}
@@ -231,7 +224,6 @@ void Session::stop()
 			_timer.clear();
 		else
 		{
-			_timer.schedule(_hb_processor, 0);
 			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			if (_persist)
 				_persist->stop();
@@ -265,8 +257,8 @@ bool Session::process(const f8String& from)
 		const f8String::size_type fpos(from.find("34="));
 		if (fpos == f8String::npos)
 		{
-			//cerr << "Session::process throwing for " << from << endl;
-			throw InvalidMessage(from);
+			slout_debug << "Session::process throwing for " << from;
+			throw InvalidMessage(from, FILE_LINE);
 		}
 
 		seqnum = fast_atoi<unsigned>(from.data() + fpos + 3, default_field_separator);
@@ -275,7 +267,7 @@ bool Session::process(const f8String& from)
 		if (_plogger && _plogger->has_flag(Logger::inbound))
 		{
 			if (_state != States::st_wait_for_logon)
-				plog(from, 1);
+				plog(from, Logger::Info, 1);
 			else
 				retry_plog = true;
 		}
@@ -283,7 +275,7 @@ bool Session::process(const f8String& from)
 		const Message *msg(Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag));
 		if (!msg)
 		{
-			GlobalLogger::log("Fatal: factory failed to generate a valid message");
+			glout_fatal << "Fatal: factory failed to generate a valid message";
 			return false;
 		}
 
@@ -327,7 +319,7 @@ application_call:
 
 		++_next_receive_seq;
 		if (retry_plog)
-			plog(from, 1);
+			plog(from, Logger::Info, 1);
 		if (_persist)
 		{
 			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
@@ -339,9 +331,12 @@ application_call:
 	}
 	catch (f8Exception& e)
 	{
-		//cerr << "process:: f8exception" << ' ' << seqnum << ' ' << e.what() << endl;
+		slout_debug << "process:: f8exception" << ' ' << seqnum << ' ' << e.what();
 
-		log(e.what());
+		// log to both incase the exception was to do with the logger
+		slout_fatal << e.what();
+		glout_fatal << e.what();
+
 		if (!e.force_logoff())
 		{
 			send(generate_reject(seqnum, e.what()));
@@ -358,13 +353,13 @@ application_call:
 	}
 	catch (Poco::Net::NetException& e)
 	{
-		//cerr << "process:: Poco::Net::NetException" << endl;
-		log(e.what());
+		slout_debug << "process:: Poco::Net::NetException";
+		slout_error << e.what();
 	}
 	catch (exception& e)
 	{
-		//cerr << "process:: std::exception" << endl;
-		log(e.what());
+		slout_debug << "process:: std::exception";
+		slout_error << e.what();
 	}
 
 	return false;
@@ -391,7 +386,9 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 	if (seqnum > _next_receive_seq)
 	{
 		if (_state == States::st_resend_request_sent)
-			log("Resend request already sent");
+		{
+			slout_warn << "Resend request already sent";
+		}
 		if (_state == States::st_continuous)
 		{
 			send(generate_resend_request(_next_receive_seq));
@@ -428,7 +425,6 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
 	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
-	ostringstream ostr;
 	sender_comp_id sci; // so this should be our tci
 	msg->Header()->get(sci);
 	target_comp_id tci; // so this should be our sci
@@ -439,9 +435,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	{
 		if (id != _sid)
 		{
-			ostr.str("");
-			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
-			GlobalLogger::log(ostr.str());
+			glout_warn << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
 			if (_loginParameters._enforce_compids)
 			{
 				stop();
@@ -455,9 +449,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		msg->get(hbi);
 		_connection->set_hb_interval(hbi());
 		do_state_change(States::st_continuous);
-		ostr.str("");
-		ostr << "Client setting heartbeat interval to " << hbi();
-		log(ostr.str());
+		slout_info << "Client setting heartbeat interval to " << hbi();
 	}
 	else // acceptor
 	{
@@ -466,9 +458,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 
 		if (_sci() != tci())
 		{
-			ostr.str("");
-			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
-			GlobalLogger::log(ostr.str());
+			glout_warn << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
 			if (_loginParameters._enforce_compids)
 			{
 				stop();
@@ -483,32 +473,27 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 			bool iserr(false);
 			if (itr == _loginParameters._clients.cend())
 			{
-				ostr.str("");
-				ostr << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
+				glout_error << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
 				iserr = true;
 			}
 
 			if (!iserr && get<1>(itr->second) != Poco::Net::IPAddress()
 				&& get<1>(itr->second) != _connection->get_peer_socket_address().host())
 			{
-				ostr.str("");
-				ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
+				glout_error << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
 					<< _connection->get_peer_socket_address().toString() << ").";
 				iserr = true;
 			}
 
 			if (iserr)
 			{
-				GlobalLogger::log(ostr.str());
 				stop();
 				do_state_change(States::st_session_terminated);
 				return false;
 			}
 
-			ostr.str("");
-			ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
+			glout_info << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
 				<< _connection->get_peer_socket_address().toString() << ").";
-			GlobalLogger::log(ostr.str());
 		}
 
 		// important - these objects can't be created until we have a valid SessionID
@@ -516,16 +501,12 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		{
 			if (!_logger && !(_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id)))
 			{
-				ostr.str("");
-				ostr << "Warning: no session logger defined for " << id;
-				GlobalLogger::log(ostr.str());
+				glout_warn << "Warning: no session logger defined for " << id;
 			}
 
 			if (!_plogger && !(_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id)))
 			{
-				ostr.str("");
-				ostr << "Warning: no protocol logger defined for " << id;
-				GlobalLogger::log(ostr.str());
+				glout_warn << "Warning: no protocol logger defined for " << id;
 			}
 
 			if (!_persist)
@@ -533,31 +514,25 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 				if (!(_persist = _sf->create_persister(_sf->_ses, &id, reset_given)))
 				{
-					ostr.str("");
-					ostr << "Warning: no persister defined for " << id;
-					GlobalLogger::log(ostr.str());
+					glout_warn << "Warning: no persister defined for " << id;
 				}
 			}
 
 #if 0
 			if (_schedule)
-			{
-				ostr.str("");
-				ostr << *_schedule;
-				log(ostr.str());
-			}
+				slout_info << *_schedule;
 #endif
 		}
 		else
-			GlobalLogger::log("Error: SessionConfig object missing in session");
+		{
+			glout_error << "Error: SessionConfig object missing in session";
+		}
 
-		ostr.str("");
-		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
-		log(ostr.str());
+		slout_info << "Connection from " << _connection->get_peer_socket_address().toString();
 
 		if (reset_given) // ignore version restrictions on this behaviour
 		{
-			log("Resetting sequence numbers");
+			slout_info << "Resetting sequence numbers";
 			_next_send_seq = _next_receive_seq = 1;
 		}
 		else
@@ -578,9 +553,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		}
 		else
 		{
-			ostr.str("");
-			ostr << id << " failed authentication";
-			log(ostr.str());
+			slout_error << id << " failed authentication";
 			stop();
 			do_state_change(States::st_session_terminated);
 			return false;
@@ -588,18 +561,14 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 
 		if (_loginParameters._login_schedule.is_valid() && !_loginParameters._login_schedule.test())
 		{
-			ostr.str("");
-			ostr << id << " Session unavailable. Login not accepted.";
-			log(ostr.str());
+			slout_error << id << " Session unavailable. Login not accepted.";
 			stop();
 			do_state_change(States::st_session_terminated);
 			return false;
 		}
 	}
 
-	ostr.str("");
-	ostr << "Heartbeat interval is " << _connection->get_hb_interval();
-	log(ostr.str());
+	slout_info << "Heartbeat interval is " << _connection->get_hb_interval();
 
 	_timer.schedule(_hb_processor, 1000);	// check every second
 
@@ -613,7 +582,7 @@ bool Session::handle_logout(const unsigned seqnum, const Message *msg)
 
 	//if (_state != States::st_logoff_sent)
 	//	send(generate_logout());
-	log("peer has logged out");
+	slout_info << "peer has logged out";
 	stop();
 	return true;
 }
@@ -626,7 +595,7 @@ bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 	new_seq_num nsn;
 	if (msg->get(nsn))
 	{
-		//cerr << "newseqnum = " << nsn() << ", _next_receive_seq = " << _next_receive_seq << " seqnum:" << seqnum << endl;
+		slout_debug << "newseqnum = " << nsn() << ", _next_receive_seq = " << _next_receive_seq << " seqnum:" << seqnum;
 		if (nsn() >= static_cast<int>(_next_receive_seq))
 			_next_receive_seq = nsn() - 1;
 		else if (nsn() < static_cast<int>(_next_receive_seq))
@@ -736,9 +705,7 @@ bool Session::activation_service()	// called on the timer threead
 		_active = _schedule->_sch.test(curr);
 		if (curr != _active)
 		{
-			ostringstream ostr;
-			ostr << "Session activation transitioned to " << (_active ? "active" : "inactive");
-			log(ostr.str());
+			slout_info << "Session activation transitioned to " << (_active ? "active" : "inactive");
 		}
 	}
 
@@ -770,18 +737,18 @@ bool Session::heartbeat_service()
 				ostr << "Remote has ignored my test request. Aborting session...";
 				send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
 				do_state_change(States::st_logoff_sent);
-				log(ostr.str());
+				log(ostr.str(), Logger::Error);
 				try
 				{
 					stop();
 				}
 				catch (Poco::Net::NetException& e)
 				{
-					log(e.what());
+					slout_error << e.what();
 				}
 				catch (exception& e)
 				{
-					log(e.what());
+					slout_error << e.what();
 				}
 				return true;
 			}
@@ -794,7 +761,7 @@ bool Session::heartbeat_service()
 				else
 					ostr << "more than " << _connection->get_hb_interval20pc();
 				ostr << " secs. Sending test request";
-				log(ostr.str());
+				log(ostr.str(), Logger::Warn);
 				const f8String testReqID("TEST");
 				send(generate_test_request(testReqID));
 				do_state_change(States::st_test_request_sent);
@@ -802,7 +769,6 @@ bool Session::heartbeat_service()
 		}
 	}
 
-	//_timer.schedule(_hb_processor, 1000);
 	return true;
 }
 
@@ -970,19 +936,21 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		*msg->Header() << new orig_sending_time(sendtime());
 
 		if (_loginParameters._always_seqnum_assign)
-			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
+		{
+			slout_debug << "send_process: _next_send_seq = " << _next_send_seq;
 			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
+		}
 	}
 	else
 	{
-		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
+		slout_debug << "send_process: _next_send_seq = " << _next_send_seq;
 		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
 	}
 	*msg->Header() << new sending_time;
 
 	try
 	{
-		//cout << "Sending:" << *msg;
+		slout_debug << "Sending:" << *msg;
 		modify_outbound(msg);
 		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		size_t enclen(msg->encode(&ptr));
@@ -997,16 +965,14 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 			}
 			if (!_connection->send(ptr, enclen))
 			{
-				ostringstream ostr;
-				ostr << "Message write failed: " << enclen << " bytes";
-				log(ostr.str());
+				slout_error << "Message write failed: " << enclen << " bytes";
 				_batchmsgs_buffer.clear();
 				return false;
 			}
 			_last_sent.now();
 
 			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(optr);
+				plog(optr, Logger::Info);
 
 			//cout << "send_process" << endl;
 
@@ -1032,7 +998,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		{
 			_batchmsgs_buffer.append(ptr);
 			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(ptr);
+				plog(ptr, Logger::Info);
 
 			if (!is_dup)
 			{
@@ -1046,12 +1012,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	}
 	catch (f8Exception& e)
 	{
-		log(e.what());
+		slout_error << e.what();
 		return false;
 	}
 	catch (Poco::Exception& e)
 	{
-		log(e.displayText());
+		slout_error << e.displayText();
 		return false;
 	}
 
@@ -1067,9 +1033,7 @@ void Session::recover_seqnums()
 		unsigned send_seqnum, receive_seqnum;
 		if (_persist->get(send_seqnum, receive_seqnum))
 		{
-			ostringstream ostr;
-			ostr << "Last sent: " << send_seqnum << ", last received: " << receive_seqnum;
-			log(ostr.str());
+			slout_info << "Last sent: " << send_seqnum << ", last received: " << receive_seqnum;
 			_next_send_seq = send_seqnum; // + 1;
 			_next_receive_seq = receive_seqnum; // + 1;
 		}
@@ -1078,7 +1042,7 @@ void Session::recover_seqnums()
 
 //-------------------------------------------------------------------------------------------------
 #if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
+f8String Session::get_thread_policy_string(thread_id_t id)
 {
    int policy;
 	ostringstream ostr;
@@ -1097,32 +1061,25 @@ void Session::set_scheduler(int priority)
    pthread_t thread(pthread_self());
    sched_param param { priority };
 
-	ostringstream ostr;
-	ostr << "Current scheduler policy: " << get_thread_policy_string(thread);
-	log(ostr.str());
-	ostr.str("");
+	slout_info << "Current scheduler policy: " << get_thread_policy_string(thread);
 
    if (pthread_setschedparam(thread, SCHED_RR, &param))
 	{
-		ostr << "Could not set new scheduler priority: " << get_thread_policy_string(thread)
+		slout_error << "Could not set new scheduler priority: " << get_thread_policy_string(thread)
 			<< " (" << Str_error(errno) << ") " << priority;
-		log(ostr.str());
 		return;
    }
 
-	ostr << "New scheduler policy: " << get_thread_policy_string(thread);
-	log(ostr.str());
+	slout_info << "New scheduler policy: " << get_thread_policy_string(thread);
 }
 
 //-------------------------------------------------------------------------------------------------
 void Session::set_affinity(int core_id)
 {
    const int num_cores(sysconf(_SC_NPROCESSORS_ONLN));
-	ostringstream ostr;
    if (core_id >= num_cores)
 	{
-		ostr << "Invalid core id: " << core_id;
-		log(ostr.str());
+		slout_error << "Invalid core id: " << core_id;
       return;
 	}
 
@@ -1132,22 +1089,21 @@ void Session::set_affinity(int core_id)
    const int error(pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset));
 
 	if (error)
-		ostr << "Could not set thread affinity for core " << core_id << " (" << Str_error(errno) << ')';
+		slout_error << "Could not set thread affinity for core " << core_id << " (" << Str_error(errno) << ')';
 	else
-		ostr << "Set thread affinity to " << core_id << " core for thread " << pthread_self();
-	log(ostr.str());
+		slout_info << "Set thread affinity to " << core_id << " core for thread " << pthread_self();
 }
 #else
 //-------------------------------------------------------------------------------------------------
 void Session::set_scheduler(int priority)
 {
-	log("set_scheduler: not implemented");
+	slout_error << "set_scheduler: not implemented";
 }
 
 //-------------------------------------------------------------------------------------------------
 void Session::set_affinity(int core_id)
 {
-	log("set_affinity: not implemented");
+	slout_error << "set_affinity: not implemented";
 }
 #endif
 
@@ -1156,20 +1112,18 @@ void Session::set_affinity(int core_id)
 void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
 {
    const Poco::Net::X509Certificate& cert(errorCert.certificate());
-	ostringstream ostr;
-   ostr << "WARNING: Certificate verification failed" << endl;
-   ostr << "----------------------------------------" << endl;
-   ostr << "Issuer Name:  " << cert.issuerName() << endl;
-   ostr << "Subject Name: " << cert.subjectName() << endl;
-   ostr << "The certificate yielded the error: " << errorCert.errorMessage() << endl;
-   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth();
-	GlobalLogger::log(ostr.str());
+	glout_warn << "WARNING: Certificate verification failed";
+	glout_warn << "----------------------------------------";
+	glout_warn << "Issuer Name:  " << cert.issuerName();
+	glout_warn << "Subject Name: " << cert.subjectName();
+	glout_warn << "The certificate yielded the error: " << errorCert.errorMessage();
+	glout_warn << "The error occurred in the certificate chain at position " << errorCert.errorDepth();
 	errorCert.setIgnoreError(true);
 }
 
 void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& privateKey)
 {
-	GlobalLogger::log("warning: privatekey passphrase requested and ignored!");
+	glout_warn << "warning: privatekey passphrase requested and ignored!";
 }
 
 #endif // HAVE_OPENSSL

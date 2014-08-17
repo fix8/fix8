@@ -323,9 +323,7 @@ public:
     {
         const unsigned current_sz(sock->getReceiveBufferSize());
         sock->setReceiveBufferSize(sz);
-        std::ostringstream ostr;
-        ostr << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
-        GlobalLogger::log(ostr.str());
+        glout_info << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
     }
 
     /*! Set the socket send buffer sz
@@ -336,9 +334,7 @@ public:
     {
         const unsigned current_sz(sock->getSendBufferSize());
         sock->setSendBufferSize(sz);
-        std::ostringstream ostr;
-        ostr << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
-        GlobalLogger::log(ostr.str());
+        glout_info << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
     }
 
     /// empty function

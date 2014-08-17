@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dev.tests;
-		version : 1.1.20140603.1;
+		version : ${RELEASE_MAJOR}.${RELEASE_MINOR}.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 library tests (development);
 		authors: {Fix8};
 		owners: {Fix8, Sergey Sedreev};
@@ -23,7 +23,8 @@ nuget {
         packages : {
             // This is a list of other NuGet packages required to use this package.
             // Each item follows the format "<pkg_name>/<version>"
-            fix8.dev/1.0.20140512.2,
+            fix8.dependencies.gtest/1.7.20140509.1,
+            fix8.dev/${RELEASE_MAJOR}.${RELEASE_MINOR}.${RELEASE_DATE}.${RELEASE_REVISION},
         };
     }
 

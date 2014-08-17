@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dev;
-		version : 1.1.20140603.1;
+		version : ${RELEASE_MAJOR}.${RELEASE_MINOR}.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 library (development);
 		authors: {Fix8};
 		owners: {Fix8, Sergey Sedreev};
@@ -24,14 +24,13 @@ nuget {
             // This is a list of other NuGet packages required to use this package.
             // Each item follows the format "<pkg_name>/<version>"
             fix8.dependencies.getopt/1.0.20140509.1,
-			fix8.dependencies.getopt.redist/1.0.20140509.1,
-            fix8.dependencies.gtest/1.7.20140509.1,
-			fix8.dependencies.openssl/1.0.20140509.1,
-			fix8.dependencies.openssl.redist/1.0.20140509.1,
-			fix8.dependencies.poco/1.5.20140509.1,
-			fix8.dependencies.poco.redist/1.5.20140509.1,
-			fix8.dependencies.tbb/4.2.20140416.1,
-			fix8.dependencies.tbb.redist/4.2.20140416.1
+	    fix8.dependencies.getopt.redist/1.0.20140509.1,
+	    fix8.dependencies.openssl/1.0.20140509.1,
+	    fix8.dependencies.openssl.redist/1.0.20140509.1,
+	    fix8.dependencies.poco/1.5.20140509.1,
+	    fix8.dependencies.poco.redist/1.5.20140509.1,
+	    fix8.dependencies.tbb/4.2.20140416.1,
+	    fix8.dependencies.tbb.redist/4.2.20140416.1
         };
     }
 

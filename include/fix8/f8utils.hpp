@@ -41,6 +41,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iostream>
 #include <string>
 #include <memory>
+#include <mutex>
 
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
@@ -77,51 +78,107 @@ F8API std::string& InPlaceStrToUpper(std::string& src);
 /*! In place string to lower case.
   \param src source string
   \return reference to modified string */
-F8API std::string& InPlaceStrToLower( std::string& src );
+F8API std::string& InPlaceStrToLower(std::string& src);
 
 /*! String to lower case.
   \param src source string
   \return to new lowercase string */
-F8API std::string StrToLower( const std::string& src );
+F8API std::string StrToLower(const std::string& src);
 
 /*! Decode a weekday name into numeric dow (0=SUN), case insensitive
   only check at most the first 2 unique characters (will ignore any characters after that);
   alternatively, accept numeric dow 0-6;
   \param from source dow string
   \return idx dow or -1 if not found */
-F8API int decode_dow( const std::string& from );
+F8API int decode_dow(const std::string& from);
 
 /*! Check if string has trailing slash, if not add.
   \param source source string
   \return reference to modified string */
-F8API std::string& CheckAddTrailingSlash( std::string& source );
+F8API std::string& CheckAddTrailingSlash(std::string& source);
 
 /*! Replace any character found in the supplied set in string with supplied character
   \param iset set of characters
   \param src source string
   \param repl character to replace
   \return reference to modified string */
-F8API std::string& InPlaceReplaceInSet( const std::string& iset, std::string& src, const char repl = '_' );
+F8API std::string& InPlaceReplaceInSet(const std::string& iset, std::string& src, const char repl='_');
 
 /*! Find standard error string for given errno.
   \param err errno value
   \param str if not 0, prepend string to error string
   \return error string */
-F8API std::string Str_error( const int err, const char *str = 0 );
+F8API std::string Str_error(const int err, const char *str=0);
 
-/*! Format Tickval into string.
+/*! Format Tickval into string. 2014-07-02 23:15:51.514776595
   \param result target string
   \param tv tickval to use or 0 for current time
   \param dplaces number of decimal places to report seconds (default 6)
   \param use_gm if true, use gmtime, if false localtime
   \return reference to target string */
-F8API const std::string& GetTimeAsStringMS( std::string& result, const class Tickval *tv = 0, const unsigned dplaces = 6, bool use_gm = false );
+F8API const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
+
+/*! Format Tickval into string. 2014-07-02 23:15:51.514776595
+  \param tv tickval to use or 0 for current time
+  \param dplaces number of decimal places to report seconds (default 6)
+  \param use_gm if true, use gmtime, if false localtime
+  \return string */
+inline std::string GetTimeAsStringMS(const class Tickval *tv, const unsigned dplaces=6, bool use_gm=false)
+{
+	std::string result;
+	GetTimeAsStringMS(result, tv, dplaces, use_gm);
+	return result;
+}
+
+/*! Format Tickval into mini string. 14-07-02 23:15:51
+  \param result target string
+  \param tv tickval to use or 0 for current time
+  \return reference to target string */
+F8API const std::string& GetTimeAsStringMini(std::string& result, const Tickval *tv);
+
+/*! Format Tickval into mini string. 14-07-02 23:15:51
+  \param tv tickval to use or 0 for current time
+  \return string */
+inline std::string GetTimeAsStringMini(const Tickval *tv)
+{
+	std::string result;
+	GetTimeAsStringMini(result, tv);
+	return result;
+}
+
+/*! Trim leading and trailing whitespace from a string
+  \param source source string
+  \param ws string containing whitespace characters to trim out
+  \return copy of trimmed string */
+inline std::string trim(const std::string& source, const std::string& ws=" \t")
+{
+    const size_t bgstr(source.find_first_not_of(ws));
+    return bgstr == std::string::npos
+		 ? source : source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+}
 
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
-F8API const std::string& trim( std::string& source, const std::string& ws = " \t" );
+inline const std::string& trim(std::string& source, const std::string& ws=" \t")
+{
+    const size_t bgstr(source.find_first_not_of(ws));
+    return bgstr == std::string::npos
+		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+}
+
+//----------------------------------------------------------------------------------------
+using Package_info = std::map<f8String, f8String>;
+
+/*! Return a Package_info map of strings with current package info
+  \return Package_info object reference */
+F8API const Package_info& package_info();
+
+/*! Find a Package_info string value for the given tag
+  \param what source string to look up
+  \return Package_info string value or an empty string */
+F8API f8String find_package_info_string(const f8String& what);
 
 //----------------------------------------------------------------------------------------
 /*! Sidestep the warn_unused_result attribute
@@ -160,9 +217,9 @@ inline unsigned ROT13Hash (const std::string& str)
 {
 	unsigned int hash(0);
 
-	for (std::string::const_iterator itr(str.begin()); itr != str.end(); ++itr)
+	for (const auto& pp : str)
 	{
-		hash += *itr;
+		hash += pp;
 		hash -= rotl(hash, 13);
 	}
 
@@ -244,7 +301,7 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 //----------------------------------------------------------------------------------------
 /*! Create a full path, including nested directories
     \param path path to create */
-F8API void create_path( const std::string& path );
+F8API void create_path(const std::string& path);
 
 //----------------------------------------------------------------------------------------
 /// A class to contain regex matches using RegExp.
@@ -655,10 +712,10 @@ Follows atof() precedent of essentially no error checking.
 09-May-2009 Tom Van Baak (tvb) www.LeapSecond.com
 	\param p source string
 	\return double converted value */
-inline double fast_atof (const char *p)
+inline fp_type fast_atof (const char *p)
 {
 	bool frac(false);
-	double sign(1.), value(0.), scale(1.);
+	fp_type sign(1.), value(0.), scale(1.);
 
 	while (isspace(*p))
 		++p;
@@ -683,11 +740,11 @@ inline double fast_atof (const char *p)
 	if (*p == '.')
 	{
 		++p;
-		double pow10(10.);
+		fp_type mpow10(10.);
 		while (isdigit(*p))
 		{
-			value += (*p - '0') / pow10;
-			pow10 *= 10.;
+			value += (*p - '0') / mpow10;
+			mpow10 *= 10.;
 			++p;
 		}
 	}
@@ -713,6 +770,10 @@ inline double fast_atof (const char *p)
 			expon = expon * 10 + (*p - '0');
 			++p;
 		}
+#if defined USE_SINGLE_PRECISION
+		if (expon > 38)
+			expon = 38;
+#else
 		if (expon > 308)
 			expon = 308;
 
@@ -722,6 +783,8 @@ inline double fast_atof (const char *p)
 			scale *= 1E50;
 			expon -= 50;
 		}
+#endif
+
 		while (expon >= 8)
 		{
 			scale *= 1E8;
@@ -738,13 +801,26 @@ inline double fast_atof (const char *p)
 	return sign * (frac ? (value / scale) : (value * scale));
 }
 
-
 //----------------------------------------------------------------------------------------
 /// Convert double to ascii
 /*! \param value the source value
     \param str the target string
     \param prec number of precision digits*/
-extern "C" { size_t modp_dtoa( double value, char* str, int prec ); }
+extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
+
+//----------------------------------------------------------------------------------------
+#ifndef _MSC_VER
+/// empty argument version
+constexpr unsigned bitsum() { return 0; }
+
+/*! Calculate the value of a set of bit positions, e.g. bitsum(1,3,5,6)
+    \tparam T first value, used to unpack
+    \tparam Args remaining values
+    \return result */
+template <typename T, typename... Args>
+constexpr unsigned bitsum(T value, Args... args)
+	{ return 1 << value | bitsum(args...); }
+#endif
 
 //----------------------------------------------------------------------------------------
 /// Bitset for enums.
@@ -804,15 +880,20 @@ public:
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
 	    \param sset the set of strings
 	    \param what the string to find and set
+		 \param ignorecase if true, ignore case
 	    \param on set or clear the found bit
-	    \return true if found and set */
-	bool set(const std::vector<std::string>& sset, const std::string& what, bool on=true)
+	    \return enumeration (as int) if found and -1 if not */
+	int set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase, bool on=true)
 	{
-		auto itr(std::find(sset.cbegin(), sset.cend(), what));
+		auto itr(sset.cbegin());
+		for (; itr != sset.cend(); ++itr)
+			if (ignorecase ? trim(*itr) % what : trim(*itr) == what)
+				break;
 		if (itr == sset.cend())
-			return false;
-		set(static_cast<T>(std::distance(sset.cbegin(), itr)), on);
-		return true;
+			return -1;
+		const int dist(std::distance(sset.cbegin(), itr));
+		set(static_cast<T>(dist), on);
+		return dist;
 	}
 
 	/*! Clear a bit on or off.
@@ -892,17 +973,20 @@ public:
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
-	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
+		 \param ignorecase if true, ignore case
 	    \param on set or clear the found bit
 	    \return true if found and set */
-	bool set(const unsigned els, const std::string *sset, const std::string& what, bool on=true)
+	bool set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase=false, bool on=true)
 	{
-		const std::string *last(sset + els), *result(std::find(sset, last, what));
-		if (result == last)
+		auto itr(sset.cbegin());
+		for (; itr != sset.cend(); ++itr)
+			if (ignorecase ? trim(*itr) % what : trim(*itr) == what)
+				break;
+		if (itr == sset.cend())
 			return false;
-		set(static_cast<T>(std::distance(sset, result)), on);
+		set(static_cast<T>(std::distance(sset.cbegin(), itr)), on);
 		return true;
 	}
 
@@ -946,13 +1030,17 @@ public:
 	 \param sset the set of strings; if null return default value
 	 \param what the string to find
 	 \param def the default value to return if not found
+	 \param ignorecase if true, ignore case
 	 \return enum value or default */
 template<typename T>
-T enum_str_get(const std::vector<std::string>& sset, const std::string& what, const T def)
+T enum_str_get(const std::vector<std::string>& sset, const std::string& what, const T def, bool ignorecase=false)
 {
 	if (sset.empty())
 		return def;
-	auto itr(std::find(sset.cbegin(), sset.cend(), what));
+	auto itr(sset.cbegin());
+	for (; itr != sset.cend(); ++itr)
+		if (ignorecase ? *itr % what : *itr == what)
+			break;
 	return itr == sset.cend() ? def : static_cast<T>(std::distance(sset.begin(), itr));
 }
 
@@ -1008,48 +1096,27 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 }
 
 //----------------------------------------------------------------------------------------
-/// A lockfree Singleton.
-/*! \tparam T the instance object type */
+/*! A lockfree Singleton. C++11 makes this a lot simpler
+http://en.wikipedia.org/wiki/Double-checked_locking
+ \tparam T the instance object type */
 template <typename T>
 class Singleton
 {
-	F8API static f8_atomic<T*> _instance;
-    //static f8_spin_lock _mutex;
-
-	Singleton(const Singleton&);
-	Singleton& operator=(const Singleton&);
-
 public:
 	/// Ctor.
 	Singleton() {}
 
 	/// Dtor.
-	virtual ~Singleton() { delete _instance.exchange(nullptr); }
+	virtual ~Singleton() {}
 
-	/*! Get the instance of the underlying object. If not created, create.
-	    \return the instance */
+	Singleton(const Singleton&) = delete;
+	Singleton& operator=(const Singleton&) = delete;
+
 	static T *instance()
 	{
-		if (_instance.load()) // cast operator performs atomic load with acquire, [ss]:cast is not working under msvc
-			return _instance;
-		return create_instance();
+		static T instance;
+		return &instance;
 	}
-
-    /*! Creates a single instance of the underlying object */
-   F8API static T *create_instance();
-
-	/*! Get the instance of the underlying object. If not created, create.
-	    \return the instance */
-	T *operator->() const { return instance(); }
-
-	/*! Replace the instance object with a new instance.
-	    \param what the new instance
-	    \return the original instance */
-	static T *reset(T *what) { return _instance.exchange(what); }
-
-	/*! Get the instance of the underlying object removing it from the singleton.
-	    \return the instance */
-	static T *release() { return _instance.exchange(nullptr); }
 };
 
 //---------------------------------------------------------------------------------------------------
@@ -1088,7 +1155,7 @@ public:
 //---------------------------------------------------------------------------------------------------
 class tty_save_state
 {
-	bool _raw_mode;
+	bool _raw_mode = false;
 	int _fd;
 #ifndef _MSC_VER
 #ifdef __APPLE__
@@ -1099,7 +1166,7 @@ class tty_save_state
 #endif
 
 public:
-	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
+	explicit tty_save_state(int fd) : _fd(fd) {}
 
 	tty_save_state& operator=(const tty_save_state& from)
 	{

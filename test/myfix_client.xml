@@ -23,6 +23,7 @@
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX1_DLD"
 				port="11001"
+				noport="1001"
 				active="true" />
 
 	<session name="DLD2"
@@ -54,7 +55,8 @@
 				type="session"
 				filename="./run/myfix_client_session.log"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				levels="debug|info|warn|error|fatal"
+				flags="sequence|timestamp|sstart|thread|location|level"/>
 
 	<log 		name="session_log_udp"
 				type="session"
@@ -81,6 +83,7 @@
 
 	<log 		name="protocol_log_file"
 				type="protocol"
+				levels="debug|info|warn|error|fatal"
 				filename="./run/myfix_client_protocol.log"
 				rotation="5"
 				flags_old="append|inbound|outbound|direction|sequence"

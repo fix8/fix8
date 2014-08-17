@@ -164,12 +164,9 @@ struct SessionConfig : public Configuration
 class ClientSessionBase : public SessionConfig
 {
 public:
-#ifdef _MSC_VER
 	ClientSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
 		: SessionConfig(ctx, conf_file, session_name) {}
-#else
-    using SessionConfig::SessionConfig;
-#endif
+    // using SessionConfig::SessionConfig;
 
 	/*! If reliable, determine if the maximum no. of reties has been reached
 	  \return false for default clientsession */
@@ -267,6 +264,8 @@ public:
 
 	/// Convenient scoped pointer for your session
 	using ClientSession_ptr = std::unique_ptr<ClientSession<T>>;
+
+	using session_type = T;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -275,12 +274,12 @@ public:
 template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
-	dthread<ReliableClientSession<T>> _thread;
+	f8_thread<ReliableClientSession<T>> _thread;
 	unsigned _send_seqnum = 0, _recv_seqnum = 0, _current = 0, _attempts = 0;
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
-	dthread_cancellation_token _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -353,7 +352,7 @@ public:
 					std::ostringstream ostr;
 					ostr << "Trying " << _servers[_current]._hostname << '(' << (1 + _servers[_current]._retries) << "), "
 						<< _attempts << " attempts so far";
-					this->_session->log(ostr.str());
+					this->_session->log(ostr.str(), Logger::Warn);
 					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
 				}
 
@@ -376,57 +375,57 @@ public:
 			}
 			catch (Poco::TimeoutException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (f8Exception& e)
 			{
 				//	std::cerr << e.what() << std::endl;
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::InvalidAddressException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 #if POCO_VERSION >= 0x01040000
 			catch (Poco::Net::InvalidSocketException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 #endif
 			catch (Poco::Net::ServiceNotFoundException& e)
 			{
 				//std::cerr << e.what() << std::endl;
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::ConnectionRefusedException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::DNSException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::InterfaceNotFoundException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (Poco::Net::NetException& e)	// catch all other NetExceptions
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 			catch (std::exception& e)
 			{
 				//std::cout << "process:: std::exception" << endl;
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 				excepted = true;
 			}
 
@@ -437,15 +436,15 @@ public:
 			}
 			catch (f8Exception& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 			}
 			catch (Poco::Net::NetException& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 			}
 			catch (std::exception& e)
 			{
-				this->_session->log(e.what());
+				this->_session->log(e.what(), Logger::Error);
 			}
 
 			delete this->_cc;
@@ -477,7 +476,7 @@ public:
 		return 0;
 	}
 
-	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 
 	/// Convenient scoped pointer for your session
 	using ReliableClientSession_ptr = std::unique_ptr<ReliableClientSession<T>>;
@@ -494,13 +493,10 @@ protected:
 	Poco::Net::ServerSocket *_server_sock = nullptr;
 
 public:
-#ifdef _MSC_VER
+    /// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	ServerSessionBase(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
 		: SessionConfig(ctx, conf_file, session_name) {}
-#else
-    /// Ctor. Prepares session for receiving inbbound connections (acceptor).
-	using SessionConfig::SessionConfig;
-#endif
+	//using SessionConfig::SessionConfig;	// not supported in all C++11 compilers
 
 	/// Dtor.
 	virtual ~ServerSessionBase ()

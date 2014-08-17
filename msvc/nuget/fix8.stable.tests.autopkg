@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
-		id = fix8.dev.tests;
-		version : 1.1.20140603.1;
+		id = fix8.stable.tests;
+		version : ${RELEASE_MAJOR}.${RELEASE_MINOR}.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 library tests (stable);
 		authors: {Fix8};
 		owners: {Fix8, Sergey Sedreev};
@@ -9,10 +9,10 @@ nuget {
 		projectUrl: "http://fix8.org/";
 		iconUrl: "https://www.gnu.org/licenses/lgpl.html";
 		requireLicenseAcceptance:false;
-		summary: Prebuilt FIX8 library tests (develoment branch);
+		summary: Prebuilt FIX8 library tests (master branch);
 		
 		// if you need to span several lines you can prefix a string with an @ symbol (exactly like c# does).
-		description: @"Develop branch of FIX8 library tests";
+		description: @"Master branch of FIX8 library tests";
 		releaseNotes: "";
 		copyright: Copyright 2013-2014;
 		tags: { FIX8, native, CoApp };
@@ -23,7 +23,8 @@ nuget {
         packages : {
             // This is a list of other NuGet packages required to use this package.
             // Each item follows the format "<pkg_name>/<version>"
-            fix8.dev/1.0.20140512.2,
+            fix8.dependencies.gtest/1.7.20140509.1,
+            fix8.stable/${RELEASE_MAJOR}.${RELEASE_MINOR}.${RELEASE_DATE}.${RELEASE_REVISION},
         };
     }
 
