@@ -65,7 +65,6 @@ class FixTable: public QTableView {
   void setSearchFilterOn(bool on);
   FixTableVerticaHeaderView *getFixVerticalHeader();
   ~FixTable();
-  static QString headerLabel[NumColumns];
   QSize sizeHint () const;
  protected:
   void dragEnterEvent(QDragEnterEvent *event);

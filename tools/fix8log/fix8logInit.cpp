@@ -110,10 +110,10 @@ bool Fix8Log::init()
             }
         }
     }
-    QListIterator <QPair<QString ,FieldUse *>> pairListIter(fix8shareLib->fieldUsePairList);
+   // QListIterator <QPair<QString ,FieldUse *>> pairListIter(fix8shareLib->fieldUsePairList);
     MainWindow::setTableSchemaList(tableSchemaList);
     //int sizeofFieldTable = TEX::ctx()._be.size();
-    int sizeofFieldTable = fix8shareLib->ctxFunc()._be.size();
+   // int sizeofFieldTable = fix8shareLib->ctxFunc()._be.size();
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     windowDataList = database->getWindows();

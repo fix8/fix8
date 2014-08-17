@@ -64,10 +64,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Myfix_classes.hpp>
 using namespace FIX8;
 */
-QString FixTable::headerLabel[] =
-{tr("SeqNum"),tr("SenderCompID"),tr("TargetCompID"),tr("SendTime"),
- tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
- tr("HeartBtInt"),tr("Message Type")};
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false),anounceTimerID(-1)

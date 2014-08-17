@@ -135,7 +135,7 @@ SOURCES += qtlockedfile_unix.cpp
 }
 win32 {
      message("Windows Compile")
-    CONFIG -= console
+    CONFIG += console
     SOURCES += qtlockedfile_win.cpp
     QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
     INCLUDEPATH += . ./f8 \

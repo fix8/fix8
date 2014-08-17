@@ -699,6 +699,7 @@ void MainWindow::showFileDialog()
 }
 void MainWindow::buildHideColumnMenu()
 {
+    /*
     for (int i=0;i<FixTable::NumColumns;i++) {
         QAction *hideA = new QAction(tr("Hide ") + FixTable::headerLabel[i],this);
         hideA->setCheckable(true);
@@ -706,6 +707,7 @@ void MainWindow::buildHideColumnMenu()
         hideColumMenu->addAction(hideA);
         hideColActionGroup->addAction(hideA);
     }
+    */
 }
 void MainWindow::displayMessageDialog(QString &message)
 {
