@@ -128,7 +128,7 @@ RESOURCES += \
 unix {
 message("Unix Compile.")
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
-LIBS += -lz -L../fix8log/schemalibs/libs -l50SP2 -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
+LIBS += -lz  -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
 DEPENDPATH += /usr/local/include
 SOURCES += qtlockedfile_unix.cpp
