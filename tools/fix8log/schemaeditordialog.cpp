@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "schemadelegate.h"
 #include "schemaitem.h"
 #include "database.h"
+#include "fix8sharedlib.h"
 #include "fieldsview.h"
 #include "globals.h"
 #include <QCloseEvent>
@@ -47,7 +48,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     QMainWindow(parent),tableSchemaList(0),defaultTableSchema(0),
     currentSchemaItem(0),defaultSchemaItem(0),database(db),
     expandMode(Anything),defaultHeaderItems(0),currentTableSchema(0),inUseTableSchema(0),tempTableSchema(0),
-    tableSchemaStatus(NoMods),undoBuild(false),currentMainWindow(0),fieldUsePairList(0)
+    tableSchemaStatus(NoMods),undoBuild(false),currentMainWindow(0),fieldUsePairList(0),sharedLib(0)
 {
     setWindowIcon(QIcon(":/images/svg/editSchema.svg"));
     setWindowTitle(tr("Table Schema Editor"));
@@ -118,6 +119,25 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     mainToolBar->addAction(messageViewA);
     mainToolBar->addAction(fieldViewA);
 
+    QWidget      *fixVersionArea = new QWidget(mainToolBar);
+    QHBoxLayout  *fixVerLayout = new QHBoxLayout(fixVersionArea);
+    fixVerLayout->setMargin(0);
+
+    fix8versionL = new QLabel("Schema:",fixVersionArea);
+    fix8versionL->setToolTip("What should this tool tip say ?");
+
+    fix8versionV = new QLabel("???",fixVersionArea);
+    QPalette fpal = fix8versionV->palette();
+    fix8RegColor = fpal.color(QPalette::WindowText); // save for latter
+    fix8versionV->setToolTip("And What should this tool tip say ?");
+    QFont fnt = fix8versionL->font();
+    fnt.setBold(true);
+    fix8versionL->setFont(fnt);
+    fix8versionV->setFont(fnt);
+    fixVerLayout->addStretch(1);
+    fixVerLayout->addWidget(fix8versionL,0,Qt::AlignRight);
+    fixVerLayout->addWidget(fix8versionV,0);
+    mainToolBar->addWidget(fixVersionArea);
     centerW = new QWidget(this);
     setCentralWidget(centerW);
 
@@ -689,4 +709,26 @@ void SchemaEditorDialog::windowDeleted(MainWindow *mw)
 {
     if (mw == currentMainWindow)
         closeSlot();
+}
+void SchemaEditorDialog::setSharedLibrary(Fix8SharedLib *f8sl)
+{
+    sharedLib = f8sl;
+    QString message;
+    QPalette pal = fix8versionV->palette();
+    if (!sharedLib) {
+         pal.setColor(QPalette::WindowText,Qt::red);
+        fix8versionV->setText("?");
+        fix8versionV->setToolTip("Error no FIX Schema library provided");
+    }
+    if (!(sharedLib->isOK)) {
+        pal.setColor(QPalette::WindowText,Qt::red);
+        fix8versionV->setText(sharedLib->name);
+        fix8versionV->setToolTip("Error loading FIX schema lib: " + sharedLib->fileName);
+    }
+    else {
+         fix8versionV->setText(sharedLib->name);
+         fix8versionV->setToolTip(sharedLib->fileName);
+          pal.setColor(QPalette::WindowText,fix8RegColor);
+    }
+    fix8versionV->setPalette(pal);
 }

@@ -771,6 +771,8 @@ WindowData MainWindow::getWindowData()
     wd.name     = name;
     wd.searchAll = linkSearchOn;
     wd.searchFunction = searchFunction;
+    if (sharedLib)
+        wd.fix8sharedlib = sharedLib->fileName;
     return wd;
 }
 void MainWindow::setWindowData(const WindowData wd)

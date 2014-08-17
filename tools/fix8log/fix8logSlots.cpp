@@ -37,6 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "database.h"
 #include "fix8log.h"
 #include "fixmimedata.h"
+#include "fix8sharedlib.h"
 #include "globals.h"
 #include "mainwindow.h"
 #include "messagefield.h"
@@ -197,14 +198,30 @@ void  Fix8Log::modelDroppedSlot(FixMimeData* fmd)
 void  Fix8Log::editSchemaSlot(MainWindow *mw)
 {
     bool ok;
+    QString str;
+    Fix8SharedLib *sharedLib = 0;
+    if (!mw) {
+        str = "Error - No window selected";
+        QMessageBox::warning(0,Globals::appName,str);
+        return;
+    }
+    sharedLib = mw->getSharedLibrary();
+    if (!sharedLib) {
+        str = "Error - This window has not schema assigned to it.";
+        QMessageBox::warning(0,Globals::appName,str);
+        return;
+    }
+
     if (!schemaEditorDialog) {
+
         schemaEditorDialog = new SchemaEditorDialog(database);
-        schemaEditorDialog->populateMessageList(messageFieldList);
-        schemaEditorDialog->populateFieldListPair(&fieldUsePairList);
+        schemaEditorDialog->populateMessageList(sharedLib->messageFieldList);
+        schemaEditorDialog->populateFieldListPair(&(sharedLib->fieldUsePairList));
+        schemaEditorDialog->setSharedLibrary(sharedLib);
 
         schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
         schemaEditorDialog->setBaseMaps(baseMap);
-        schemaEditorDialog->setFieldUseList(fieldUseList);
+        schemaEditorDialog->setFieldUseList(sharedLib->fieldUseList);
         schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
         schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
         connect(schemaEditorDialog,SIGNAL(finished(int)),

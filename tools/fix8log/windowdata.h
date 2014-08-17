@@ -56,5 +56,6 @@ public:
     TableSchema *tableSchema;
     bool searchAll;
     SearchFunction searchFunction;
+    QString fix8sharedlib;
 };
 #endif // WINDOWDATA_H

@@ -46,17 +46,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "selectedfieldstreeview.h"
 
 class Database;
+class Fix8SharedLib;
 class SchemaEditorDialog : public QMainWindow
 {
     Q_OBJECT
 public:
     enum {MessageView,FieldView};
     explicit SchemaEditorDialog(Database *database, QWidget *parent = 0);
-     void populateMessageList(MessageFieldList *);
-     void populateFieldListPair(QList<QPair<QString ,FieldUse *>> *);
-     void restoreSettings();
-     void saveSettings();
+    void populateMessageList(MessageFieldList *);
+    void populateFieldListPair(QList<QPair<QString ,FieldUse *>> *);
+    void restoreSettings();
+    void saveSettings();
     void setTableSchemaInUse(TableSchema *inUse);
+    void setSharedLibrary(Fix8SharedLib *f8sl);
     bool setCurrentTarget(MainWindow *mainWindow,bool isEditRequest=false);
     void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
     void setFieldUseList(FieldUseList &);
@@ -151,6 +153,8 @@ private:
     QLabel *availableListL;
     QLabel *selectedListL;
     QLineEdit *newSchemaLine;
+    QLabel  *fix8versionL;
+    QLabel  *fix8versionV;
     QMenu    *fileMenu;
     QMenuBar *mainMenuBar;
     QMultiMap <QString ,QStandardItem *> selectedMap; //<fieldName,selected>
@@ -216,6 +220,8 @@ private:
     QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
     QList <QStandardItem *> fieldItems;
     QMap  <QString,QStandardItem *> fieldItemsMap;
+    QColor fix8RegColor;
+    Fix8SharedLib *sharedLib;
 };
 
 #endif // SCHEMAEDITORDIALOG_H

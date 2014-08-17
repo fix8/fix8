@@ -53,5 +53,5 @@ WindowData::WindowData(const WindowData &w)
     tableSchema = w.tableSchema;
     searchAll   = w.searchAll;
     searchFunction   = w.searchFunction;
+    fix8sharedlib    = w.fix8sharedlib;
 }
-

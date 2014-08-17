@@ -102,8 +102,8 @@ bool Database::addWindow(WindowData &wd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID, searchAll, searchFunction, searchJavascript)"
-                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID, :searchAll, :searchFunction, :searchJavascript)");
+    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID, searchAll, searchFunction, searchJavascript,fix8sharedlib)"
+                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID, :searchAll, :searchFunction, :searchJavascript, :fix8sharedlib)");
     if (bstatus == 0) {
         qWarning("Error database - add window failed in prepare statement...");
         sqlError = query.lastError();
@@ -121,6 +121,8 @@ bool Database::addWindow(WindowData &wd)
     query.bindValue(":searchAll",wd.searchAll);
     query.bindValue(":searchFunction",wd.searchFunction.function);
     query.bindValue(":searchJavascript",wd.searchFunction.javascript);
+    query.bindValue(":fix8sharedlib",wd.fix8sharedlib);
+
 
     bstatus = query.exec();
     if (bstatus == 0) {
@@ -155,6 +157,7 @@ bool Database::updateWindow(WindowData &wd)
             + QString(", tableSchemaID=:tableSchemaID")
             + QString(", searchAll=:searchAll")
             + QString(", searchFunction=:searchFunction")
+             + QString(", fix8sharedlib=:fix8sharedlib")
             + QString("  WHERE id='")  + QString::number(wd.id)
             + QString("'");
 
@@ -175,6 +178,7 @@ bool Database::updateWindow(WindowData &wd)
     query.bindValue(":searchAll",wd.searchAll);
     query.bindValue(":searchFunction",wd.searchFunction.function);
      query.bindValue(":searchJavascript",wd.searchFunction.javascript);
+     query.bindValue(":fix8sharedlib",wd.fix8sharedlib);
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("Error - update window failed in exec statement...");

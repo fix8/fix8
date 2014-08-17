@@ -93,41 +93,7 @@ bool Fix8Log::init()
     if (!fix8shareLib->isOK) {
         qDebug() << "\tError Str = " << fix8shareLib->errorMessage;
     }
-   /*
-    std::function<const F8MetaCntx&()> ctxFunc = loadFix8so("/home/david/libs/lib50SP2.so",bstatus);
-    if (!bstatus) {
-        qWarning() << "Error occured loading share library: ..." << __FILE__ << __LINE__;
-    }
-    else
-        qDebug() << "Loaded Shared Library !!!!" << __FILE__ << __LINE__;
 
-
-    int messageCount = TEX::ctx()._bme.size();
-    int messageCount = fix8shareLib->ctxFunc()._bme.size();
-    for(int ii=0;ii < messageCount; ii++) {
-        const char *kk = fix8shareLib->ctxFunc()._bme.at(ii)->_key;
-        const TraitHelper tr = fix8shareLib->ctxFunc()._bme.at(ii)->_value._create._get_traits();
-        QBaseEntryList *qbaseEntryList = new QBaseEntryList();
-        value = QString::fromStdString(fix8shareLib->ctxFunc()._bme.at(ii)->_value._name);
-        key   = QString::fromStdString(fix8shareLib->ctxFunc()._bme.at(ii)->_key);
-        //const char *kk = TEX::ctx()._bme.at(ii)->_key;
-        //const TraitHelper tr = TEX::ctx()._bme.at(ii)->_value._create._get_traits();
-        //QBaseEntryList *qbaseEntryList = new QBaseEntryList();
-        //value = QString::fromStdString(TEX::ctx()._bme.at(ii)->_value._name);
-        // key   = QString::fromStdString(TEX::ctx()._bme.at(ii)->_key);
-        messageField = new MessageField(key,value);
-        int level = 0;
-        generate_traits(tr,baseMap,fieldUseList,messageField,qbaseEntryList,&level);
-        messageField->qbel = qbaseEntryList;
-        messageFieldList->append(messageField);
-    }
-
-    QListIterator <FieldUse *> fieldIter(fieldUseList);
-    while(fieldIter.hasNext()) {
-        FieldUse *mf = fieldIter.next();
-        fieldUsePairList.append(qMakePair(mf->name,mf));
-    }
-    */
     // generate fieldList from names;
     if (tableSchemaList) {
         QListIterator <TableSchema *> tsIter(*tableSchemaList);
@@ -144,46 +110,56 @@ bool Fix8Log::init()
             }
         }
     }
-    //qSort(fieldUsePairList.begin(), fieldUsePairList.end());
     QListIterator <QPair<QString ,FieldUse *>> pairListIter(fix8shareLib->fieldUsePairList);
     MainWindow::setTableSchemaList(tableSchemaList);
     //int sizeofFieldTable = TEX::ctx()._be.size();
     int sizeofFieldTable = fix8shareLib->ctxFunc()._be.size();
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
-    // QList <WindowData> windowDataList = database->getWindows();
     windowDataList = database->getWindows();
     cleanWindowDataList(windowDataList);
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QListIterator <WindowData> iter(windowDataList);
-
+    Fix8SharedLib  *fixlib;
     if (autoSaveOn){
         while(iter.hasNext()) {
             wd = iter.next();
-            newMW  = new MainWindow(database,true);
-            newMW->setSharedLibrary(fix8shareLib);
-            newMW->setFieldUsePair(&(fix8shareLib->fieldUsePairList));
-            newMW->setSearchFunctions(searchFunctionList);
-            wireSignalAndSlots(newMW);
-            mainWindows.append(newMW);
-            newMW->setAutoSaveOn(autoSaveOn);
-            newMW->setWindowData(wd);
-            newMW->show();
-            // have to set style sheet after show to see it take effect
-            newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
-            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-            QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
-            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-            if (wsdList.count() > 0) {
-                QListIterator <WorkSheetData> iter2(wsdList);
-                while(iter2.hasNext()) {
-                    WorkSheetData wsd = iter2.next();
-                    currentItemIter =  fileNameModelMap.find(wsd.fileName);
-                    newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
-                    newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
-                }
+            if (wd.fix8sharedlib.length() < 1) {
+                qWarning() << " FIX Lib is not defined" << __FILE__ << __LINE__;
             }
-            newMW->setLoading(false);
+            else {
+                fixlib = fix8ShareLibList.findByFileName(wd.fix8sharedlib);
+                if (!fixlib) {
+                    qDebug() << "Fix lib: " << wd.fix8sharedlib << " not found creating it...." << __FILE__ << __LINE__;
+                    fixlib = Fix8SharedLib::create(wd.fix8sharedlib);
+                    if (fixlib->isOK)
+                        fix8ShareLibList.append(fixlib);
+                }
+                newMW  = new MainWindow(database,true);
+                newMW->setSharedLibrary(fixlib);
+                newMW->setFieldUsePair(&(fixlib->fieldUsePairList));
+                newMW->setSearchFunctions(searchFunctionList);
+                wireSignalAndSlots(newMW);
+                mainWindows.append(newMW);
+                newMW->setAutoSaveOn(autoSaveOn);
+                newMW->setWindowData(wd);
+                newMW->show();
+                // have to set style sheet after show to see it take effect
+                newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
+                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+                QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
+                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+                if (wsdList.count() > 0) {
+                    QListIterator <WorkSheetData> iter2(wsdList);
+                    while(iter2.hasNext()) {
+                        WorkSheetData wsd = iter2.next();
+                        currentItemIter =  fileNameModelMap.find(wsd.fileName);
+                        newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
+                        newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
+                    }
+                }
+                newMW->setLoading(false);
+            }
         }
         displayConsoleMessage("Session restored from autosave");
     }
