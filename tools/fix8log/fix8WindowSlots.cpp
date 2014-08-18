@@ -71,26 +71,50 @@ void Fix8Log::copyWindowSlot(MainWindow *mw)
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
-   newWindowWizard = new NewWindowWizard(fix8ShareLibList);
-   int status = newWindowWizard->exec();
-   qDebug() << "Status == " << status;
-   if (status == QDialog::Accepted	) {
-       QString fileName = newWindowWizard->getSelectedFile();
+
+    Fix8SharedLib *f8lib;
+    QString str;
+    newWindowWizard = new NewWindowWizard(fix8ShareLibList);
+    int status = newWindowWizard->exec();
+    newWindowWizard->saveSettings();
+    qDebug() << "Status == " << status;
+    if (status == QDialog::Accepted	) {
+        QString fileName = newWindowWizard->getSelectedFile();
         QString libName = newWindowWizard->getSelectedLib();
         qDebug() << "Selected File = " << fileName << __FILE__ << __LINE__;
         qDebug() << "Selected Lib = " << libName << __FILE__ << __LINE__;
-   }
-        /*
+        f8lib =  fix8ShareLibList.findByFileName(libName);
+        if (!f8lib) {
+            f8lib = Fix8SharedLib::create(libName);
+            if (!f8lib) {
+                str = "Error - failed to load FIX8 sharelib: " + libName;
+                QMessageBox::warning(0,Globals::appName,str);
+                newWindowWizard->deleteLater();
+                return;
+            }
+            if (!f8lib->isOK) {
+                str = "Error - " + f8lib->errorMessage;
+                QMessageBox::warning(0,Globals::appName,str);
+                delete f8lib;
+                newWindowWizard->deleteLater();
+                return;
+            }
+        }
         MainWindow *newMW  =new MainWindow(*mw,database);
         newMW->setSearchFunctions(searchFunctionList);
         wireSignalAndSlots(newMW);
+        newMW->setSharedLibrary(f8lib);
+        newMW->setFieldUsePair(&(f8lib->fieldUsePairList));
+        newMW->setAutoSaveOn(autoSaveOn);
+        newMW->setWindowData(mw->getWindowData());
+
         newMW->show();
         newMW->loadFile(fileName);
-
-   }
-   newWindowWizard->saveSettings();
-   newWindowWizard->deleteLater();
-
+        mainWindows.append(newMW);
+    }
+    newWindowWizard->saveSettings();
+    newWindowWizard->deleteLater();
+    /*
 
     newWindowWizard = new QQuickView(QUrl("qrc:qml/newMainWindow.qml"));
     QQmlContext *context = newWindowWizard->rootContext();
@@ -185,7 +209,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
 void Fix8Log::newMainWindowWizardSlot()
 {
     qDebug() << "REMOVE THIS SLOT" << __FILE__ << __LINE__;
-   /* newWindowWizard = new QQuickView(QUrl("qrc:qml/newMainWindow.qml"));
+    /* newWindowWizard = new QQuickView(QUrl("qrc:qml/newMainWindow.qml"));
     newWinWizObject = newWindowWizard->rootObject();
     if (!newWinWizObject) {
         qWarning() << "qml root object not found for New Window  Wizard" << __FILE__ << __LINE__ ;

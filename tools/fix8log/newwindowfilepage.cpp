@@ -27,7 +27,7 @@ bool NewWindowFilePage::isComplete() const
 }
 void NewWindowFilePage::readSettings()
 {
-    QSettings settings("fix8","logviewerNewWindowWizard");
+    QSettings settings("fix8","logviewerNewWindowFilePage");
     QRect defaultRect(00,100,600,500);
     QVariant defaultVar(defaultRect);
     setGeometry(settings.value("geometry",defaultRect).toRect());
@@ -35,7 +35,7 @@ void NewWindowFilePage::readSettings()
 }
 void NewWindowFilePage::saveSettings()
 {
-    QSettings settings("fix8","logviewerNewWindowWizard");
+    QSettings settings("fix8","logviewerNewWindowFilePage");
     settings.setValue("geometry",geometry());
     fileSelector->saveSettings();
 }

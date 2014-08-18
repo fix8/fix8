@@ -81,5 +81,6 @@
         <file>images/svg/user-home.svg</file>
         <file>images/svg/harddrive.svg</file>
         <file>images/svg/newwindow.svg</file>
+        <file>qml/welcome.qml</file>
     </qresource>
 </RCC>

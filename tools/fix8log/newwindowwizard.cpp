@@ -1,13 +1,17 @@
 #include "newwindowwizard.h"
+#include <QApplication>
 #include <QtWidgets>
 #include "embeddedfileselector.h"
 #include "newwindowfilepage.h"
 #include "newwindowschemapage.h"
 #include "globals.h"
-NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, QWidget *parent) :
-    QWizard(parent),fix8SharedLibList(shareLibs)
+#include "welcomepage.h"
+
+NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, bool FirstTime,QWidget *parent) :
+    QWizard(parent),fix8SharedLibList(shareLibs),firstTime(FirstTime)
 {
-    setWindowTitle(GUI::Globals::appName + "New Window Wizard");
+    int x,y;
+    setWindowTitle(GUI::Globals::appName);
     setWindowIconText("New Window");
     setTitleFormat(Qt::RichText);
     setPixmap(QWizard::LogoPixmap,QPixmap(":/images/svg/newwindow.svg").scaledToHeight(48));
@@ -16,11 +20,36 @@ NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, QWidget *parent) 
     QRect rect = desktopW->screenGeometry(primaryScreenID);
     setMaximumHeight(rect.height()*0.75);
     setMaximumWidth(rect.width()*.66);
+    if (firstTime) {
+        QDesktopWidget *desktop = QApplication::desktop();
+        QRect rect = desktop->screenGeometry(desktop->primaryScreen());
+        x = (rect.width() -800)/2;
+        y = (rect.height() - 600)/2;
+        createWelcomePage();
+    }
     createSchemaPage();
     createFilePage();
     readSettings();
+    if (firstTime) {
+        move(x,y);
+        resize(QSize(800,600));
+    }
     connect(this,SIGNAL(currentIdChanged(int)),this,SLOT(currentPageChangedSlot(int)));
 }
+void NewWindowWizard::createWelcomePage()
+{
+    QWizardPage *welcomeWizardPage= new QWizardPage(this);
+    welcomeWizardPage->setTitle("<h3>Welcome</h3>");
+    QGridLayout *welcomeGrid= new QGridLayout(welcomeWizardPage);
+    welcomeWizardPage->setLayout(welcomeGrid);
+    welcomeGrid->setRowStretch(0,1);
+    welcomeGrid->setColumnStretch(0,1);
+
+    welcomePage = new WelcomePage(welcomeWizardPage);
+    welcomeGrid->addWidget(welcomePage);
+    addPage(welcomeWizardPage);
+}
+
 void NewWindowWizard::createSchemaPage()
 {
     schemaPage = new NewWindowSchemaPage(fix8SharedLibList,this);
@@ -48,17 +77,24 @@ void NewWindowWizard::createFilePage()
 void NewWindowWizard::readSettings()
 {
     QSettings settings("fix8","logviewerNewWindowWizard");
-    QRect defaultRect(00,100,600,500);
+    QRect defaultRect(0,100,600,500);
     QVariant defaultVar(defaultRect);
-    setGeometry(settings.value("geometry",defaultRect).toRect());
     filePage->readSettings();
+
+    QRect rect = settings.value("geometry",defaultRect).toRect();
+    qDebug() << ">>>>>>>>>>> READ SETTINGS, GEOMETRY = " << rect << __FILE__ << __LINE__;
+    setGeometry(rect);
+    setMinimumHeight(480);
+    setMinimumWidth(480);
 
 }
 void NewWindowWizard::saveSettings()
 {
-    QSettings settings("fix8","logviewerNewWindowWizard");
-    settings.setValue("geometry",geometry());
     filePage->saveSettings();
+
+    QSettings settings("fix8","logviewerNewWindowWizard");
+    qDebug() << ">>>>>SAVE NEW WINDOW WIZARD" << geometry() << __FILE__ << __LINE__;
+    settings.setValue("geometry",geometry());
 }
 
 void NewWindowWizard::currentPageChangedSlot(int id)

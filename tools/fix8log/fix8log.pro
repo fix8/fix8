@@ -71,7 +71,8 @@ SOURCES += main.cpp\
     fix8logLibraries.cpp \
     fix8sharedlib.cpp \
     newwindowschemapage.cpp \
-    newwindowfilepage.cpp
+    newwindowfilepage.cpp \
+    welcomepage.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -118,7 +119,8 @@ HEADERS  += mainwindow.h \
     embeddedfileselector.h \
     fix8sharedlib.h \
     newwindowschemapage.h \
-    newwindowfilepage.h
+    newwindowfilepage.h \
+    welcomepage.h
 
 RESOURCES += \
     resources.qrc
@@ -177,5 +179,6 @@ OTHER_FILES += \
     qml/helpAbout.qml \
     qml/newMainWindow.qml \
     images/Broken_Link-128.png \
-    images/svg/listView.svg
+    images/svg/listView.svg \
+    qml/welcome.qml
 

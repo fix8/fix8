@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "globals.h"
 #include "mainwindow.h"
 #include "messagefield.h"
+#include "newwindowwizard.h"
 #include "schemaeditordialog.h"
 #include "worksheetmodel.h"
 #include "windowdata.h"
@@ -50,11 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fix8/field.hpp"
 #include "fix8/message.hpp"
 #include <fix8/f8types.hpp>
-/*
-#include <Myfix_types.hpp>
-#include <Myfix_router.hpp>
-#include <Myfix_classes.hpp>
-*/
+
 #include <iostream>
 #include <string.h>
 using namespace GUI;
@@ -71,6 +68,10 @@ bool Fix8Log::init()
     QString key;
     QString value;
     quint32 ikey;
+    Fix8SharedLib *f8lib;
+    QString fileName;
+    QString libName;
+    int status;
     FieldTrait::FieldType ft;
     const BaseMsgEntry *tbme;
 
@@ -84,17 +85,13 @@ bool Fix8Log::init()
     MainWindow *newMW;
     QMap <QString, QStandardItemModel *>::iterator currentItemIter;
     bool haveError = false;
-    bool isInitial = true;
     readSettings();
     initDatabase();
-    Fix8SharedLib *fix8shareLib = Fix8SharedLib::create(QString("/home/david/f8logview/fixschemas/libTEX.so"));
+    // Fix8SharedLib *fix8shareLib = Fix8SharedLib::create(QString("/home/david/f8logview/fixschemas/libTEX.so"));
 
-    qDebug() << "Status of create fix8 share lib = " << fix8shareLib->isOK << __FILE__ << __LINE__;
-    if (!fix8shareLib->isOK) {
-        qDebug() << "\tError Str = " << fix8shareLib->errorMessage;
-    }
 
     // generate fieldList from names;
+    /*
     if (tableSchemaList) {
         QListIterator <TableSchema *> tsIter(*tableSchemaList);
         while(tsIter.hasNext()) {
@@ -110,10 +107,10 @@ bool Fix8Log::init()
             }
         }
     }
-   // QListIterator <QPair<QString ,FieldUse *>> pairListIter(fix8shareLib->fieldUsePairList);
-    MainWindow::setTableSchemaList(tableSchemaList);
-    //int sizeofFieldTable = TEX::ctx()._be.size();
-   // int sizeofFieldTable = fix8shareLib->ctxFunc()._be.size();
+    */
+    // QListIterator <QPair<QString ,FieldUse *>> pairListIter(fix8shareLib->fieldUsePairList);
+    //MainWindow::setTableSchemaList(tableSchemaList);
+
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     windowDataList = database->getWindows();
@@ -132,61 +129,97 @@ bool Fix8Log::init()
                 if (!fixlib) {
                     qDebug() << "Fix lib: " << wd.fix8sharedlib << " not found creating it...." << __FILE__ << __LINE__;
                     fixlib = Fix8SharedLib::create(wd.fix8sharedlib);
-                    if (fixlib->isOK)
+                    if (fixlib->isOK) {
                         fix8ShareLibList.append(fixlib);
-                }
-                newMW  = new MainWindow(database,true);
-                newMW->setSharedLibrary(fixlib);
-                newMW->setFieldUsePair(&(fixlib->fieldUsePairList));
-                newMW->setSearchFunctions(searchFunctionList);
-                wireSignalAndSlots(newMW);
-                mainWindows.append(newMW);
-                newMW->setAutoSaveOn(autoSaveOn);
-                newMW->setWindowData(wd);
-                newMW->show();
-                // have to set style sheet after show to see it take effect
-                newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
-                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-                QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
-                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-                if (wsdList.count() > 0) {
-                    QListIterator <WorkSheetData> iter2(wsdList);
-                    while(iter2.hasNext()) {
-                        WorkSheetData wsd = iter2.next();
-                        currentItemIter =  fileNameModelMap.find(wsd.fileName);
-                        newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
-                        newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
+                        newMW  = new MainWindow(database,true);
+                        newMW->setSharedLibrary(fixlib);
+                        newMW->setFieldUsePair(&(fixlib->fieldUsePairList));
+                        newMW->setSearchFunctions(searchFunctionList);
+                        wireSignalAndSlots(newMW);
+                        mainWindows.append(newMW);
+                        newMW->setAutoSaveOn(autoSaveOn);
+                        newMW->setWindowData(wd);
+                        // have to set style sheet after show to see it take effect
+                        newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
+                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+                        QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
+                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+                        if (wsdList.count() > 0) {
+                            QListIterator <WorkSheetData> iter2(wsdList);
+                            while(iter2.hasNext()) {
+                                WorkSheetData wsd = iter2.next();
+                                currentItemIter =  fileNameModelMap.find(wsd.fileName);
+                                newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
+                                newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
+                            }
+                        }
+                        newMW->show();
+                        newMW->setLoading(false);
                     }
                 }
-                newMW->setLoading(false);
             }
+            displayConsoleMessage("Session restored from autosave");
         }
-        displayConsoleMessage("Session restored from autosave");
     }
     else
         qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
-        newMW = new MainWindow(database);
-        newMW->setFieldUsePair(&fieldUsePairList);
-        newMW->setSearchFunctions(searchFunctionList);
-        if (windowDataList.count() > 0) {
-            wd = windowDataList.at(0);
-            if (!wd.tableSchema) {
-                qWarning() << "No Table schema found for window, setting it to default" << __FILE__ << __LINE__;
-                wd.tableSchema = defaultTableSchema;
+        newWindowWizard = new NewWindowWizard(fix8ShareLibList,firstTimeToUse);
+        newWindowWizard->readSettings();
+        QDesktopWidget *desktop = QApplication::desktop();
+        QRect rect = desktop->screenGeometry(desktop->primaryScreen());
+        int x = (rect.width() -800)/2;
+        int y = (rect.height() - 600)/2;
+        newWindowWizard->move(x,y);
+        status = newWindowWizard->exec();
+        newWindowWizard->saveSettings();
+        qDebug() << "Status == " << status << __FILE__ << __LINE__;
+        if (status == QDialog::Accepted	) {
+            fileName = newWindowWizard->getSelectedFile();
+            libName = newWindowWizard->getSelectedLib();
+            f8lib = Fix8SharedLib::create(libName);
+            if (!f8lib) {
+                errorStr = "Error - failed to load FIX8 sharelib: " + libName;
+                QMessageBox::warning(0,Globals::appName,errorStr);
+                newWindowWizard->deleteLater();
+                exit(-1);
             }
-            newMW->setWindowData(wd);
+            if (!f8lib->isOK) {
+                errorStr = "Error - " + f8lib->errorMessage;
+                QMessageBox::warning(0,Globals::appName,errorStr);
+                delete f8lib;
+                newWindowWizard->deleteLater();
+                exit(-1);
+            }
+            newMW = new MainWindow(database);
+            newMW->setSearchFunctions(searchFunctionList);
+            wireSignalAndSlots(newMW);
+            newMW->setSharedLibrary(f8lib);
+            newMW->setFieldUsePair(&(f8lib->fieldUsePairList));
+            newMW->setAutoSaveOn(autoSaveOn);
+            if (windowDataList.count() > 0) {
+                wd = windowDataList.at(0);
+                if (!wd.tableSchema) {
+                    qWarning() << "No Table schema found for window, setting it to default" << __FILE__ << __LINE__;
+                    wd.tableSchema = defaultTableSchema;
+                }
+                newMW->setWindowData(wd);
+            }
+            else
+                newMW->setTableSchema(defaultTableSchema);
+            newMW->show();
+            newMW->loadFile(fileName);
+            newMW->setAutoSaveOn(autoSaveOn);
+            mainWindows.append(newMW);
         }
-        newMW->setTableSchema(defaultTableSchema);
-        wireSignalAndSlots(newMW);
-        newMW->show();
-        newMW->setAutoSaveOn(autoSaveOn);
-        mainWindows.append(newMW);
+        else {
+            qDebug() << "CALL EXIT APP" << __FILE__ << __LINE__;
+            exit(-1);
+        }
     }
-    return bstatus;
+    return true;
 }
-
 bool Fix8Log::init(QString fileNameToLoad)
 {
     /*

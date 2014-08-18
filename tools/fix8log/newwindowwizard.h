@@ -11,12 +11,12 @@ class QStackedLayout;
 class EmbeddedFileSelector;
 class NewWindowFilePage;
 class NewWindowSchemaPage;
-
+class WelcomePage;
 class NewWindowWizard : public QWizard
 {
     Q_OBJECT
 public:
-    explicit NewWindowWizard(Fix8SharedLibList &shareLibs, QWidget *parent = 0);
+    explicit NewWindowWizard(Fix8SharedLibList &shareLibs, bool isFirstTime = false,QWidget *parent = 0);
     QString getSelectedFile();
     QString  getSelectedLib();
     void readSettings();
@@ -24,12 +24,13 @@ public:
 public slots:
 void currentPageChangedSlot(int pageID);
 protected:
+    void createWelcomePage();
     void createSchemaPage();
     void createFilePage();
 private:
+ WelcomePage *welcomePage;
  NewWindowSchemaPage *schemaPage;
  NewWindowFilePage *filePage;
-
  QDesktopWidget *desktopW;
  int filePageID;
  int noSchemasID;
@@ -38,5 +39,6 @@ private:
  QString systemDirName;
  QString userDirName;
  QStringList schemaErrorStrList;
+ bool firstTime;
 };
 #endif // NEWWINDOWWIZARD_H
