@@ -74,7 +74,7 @@ and *OSX*. Other *NIX variants may work too.
 %{_libdir}/libfix8.la
 %{_libdir}/libfix8.so
 %{_libdir}/libfix8.so.1
-%{_libdir}/libfix8.so.1.0.2
+%{_libdir}/libfix8.so.1.0.3
 %{_libdir}/libhftest.la
 %{_libdir}/libhftest.so
 %{_libdir}/libhftest.so.0
