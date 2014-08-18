@@ -2,10 +2,11 @@ var classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyI
 [
     [ "NoRelationshipRiskInstruments", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39" ],
     [ "NoRelationshipRiskWarningLevels", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationship786c5956e4bef528b843e18e0e3af2a6.html", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationship786c5956e4bef528b843e18e0e3af2a6" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#adb39901ad2d0d2d4999d9c83e20497d8ae8971d95cf3c3c90b7a9efb9cbc8bd8b", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#a17317e291494345bbedda43c6053a855ae8971d95cf3c3c90b7a9efb9cbc8bd8b", null ],
     [ "NoRelationshipRiskLimits", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#a04eb181b21af8de0a56d27795af8b22d", null ],
     [ "~NoRelationshipRiskLimits", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#a2913248382f7aa049cbeb9d7c5940e61", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#a8d036a52f40f099cffd0c3d7e3837770", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#afb0dd51e0224878d8ae30d34e6a1f6ac", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#a5a2f7a816d80610feb978a39f62ef32b", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#ad8ef06c538419e6aeb17b305994ca1a8", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#a3abbd9981fafe5dd8a4b5e9fd617e14f", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipRiskLimits.html#acfb733e0b83827c55c61721508fed091", null ],

@@ -6,6 +6,7 @@ var searchData=
   ['liststatus',['ListStatus',['../classFIX8_1_1TEX_1_1ListStatus.html',1,'FIX8::TEX']]],
   ['liststatusrequest',['ListStatusRequest',['../classFIX8_1_1TEX_1_1ListStatusRequest.html',1,'FIX8::TEX']]],
   ['liststrikeprice',['ListStrikePrice',['../classFIX8_1_1TEX_1_1ListStrikePrice.html',1,'FIX8::TEX']]],
+  ['log_5fstream',['log_stream',['../classFIX8_1_1log__stream.html',1,'FIX8']]],
   ['logelement',['LogElement',['../structFIX8_1_1Logger_1_1LogElement.html',1,'FIX8::Logger']]],
   ['logfileexception',['LogfileException',['../structFIX8_1_1LogfileException.html',1,'FIX8']]],
   ['logger',['Logger',['../classFIX8_1_1Logger.html',1,'FIX8']]],

@@ -2,8 +2,9 @@ var classFIX8_1_1TEX_1_1ApplicationMessageRequest =
 [
     [ "NoApplIDs", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs.html", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs" ],
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoPartyIDs.html", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoPartyIDs" ],
-    [ "ApplicationMessageRequest", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#a90703d79ee9a136d4954db3902015bf7", null ],
+    [ "ApplicationMessageRequest", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#aee47130fef3a350193d28243c762beff", null ],
     [ "~ApplicationMessageRequest", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#a1e6ebada4a6013001ce056aceabdf7de", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#af4b2d097188b0f35d78da1e41e51134a", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#a27abe9d187a0b93fe2c21448bba66e39", null ],
     [ "process", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#a265b8dca6ea95095e9aa415a1c2fce0c", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#abf5df8c8ecdd8695fa5a08ee311320c9", null ],

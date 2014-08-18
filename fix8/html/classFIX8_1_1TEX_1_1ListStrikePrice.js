@@ -1,8 +1,9 @@
 var classFIX8_1_1TEX_1_1ListStrikePrice =
 [
     [ "NoStrikes", "classFIX8_1_1TEX_1_1ListStrikePrice_1_1NoStrikes.html", "classFIX8_1_1TEX_1_1ListStrikePrice_1_1NoStrikes" ],
-    [ "ListStrikePrice", "classFIX8_1_1TEX_1_1ListStrikePrice.html#aca998413aa9b776d6aed202a53f66fa7", null ],
+    [ "ListStrikePrice", "classFIX8_1_1TEX_1_1ListStrikePrice.html#a74770560352acc68022d3f9837a5c9d6", null ],
     [ "~ListStrikePrice", "classFIX8_1_1TEX_1_1ListStrikePrice.html#a6a49f33624d609e92d4a6c4c1575f3b3", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1ListStrikePrice.html#a263e98f0de1c87d110d159fa0027dbd8", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ListStrikePrice.html#ab45f2a39ba1d0c6606a5ab238076adcd", null ],
     [ "process", "classFIX8_1_1TEX_1_1ListStrikePrice.html#aa795488b2eb59696d3f11bea1b53dee9", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1ListStrikePrice.html#a6a5f031c75c4b6d00633995f6adbd5e9", null ],

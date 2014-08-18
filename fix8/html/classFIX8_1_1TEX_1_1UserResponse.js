@@ -1,6 +1,6 @@
 var classFIX8_1_1TEX_1_1UserResponse =
 [
-    [ "UserResponse", "classFIX8_1_1TEX_1_1UserResponse.html#a70fdf76e26bf3a87a6f6c10d473be0be", null ],
+    [ "UserResponse", "classFIX8_1_1TEX_1_1UserResponse.html#a657e5916006deb741984c31c8723e572", null ],
     [ "~UserResponse", "classFIX8_1_1TEX_1_1UserResponse.html#a88eda7db685e14fa1c4e126217b99f79", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1UserResponse.html#a8667824330acc45df83db1a2217b6189", null ],
     [ "process", "classFIX8_1_1TEX_1_1UserResponse.html#a633d38afa60a9979e1e13f615894c919", null ],

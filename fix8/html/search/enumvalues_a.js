@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['mandatory',['mandatory',['../structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a643aabd72398b27421b25905d8cc1ac1',1,'FIX8::FieldTrait']]],
-  ['max_5frotation',['max_rotation',['../classFIX8_1_1Logger.html#a869e3057ba0856fb3780b4621486c6cbaca181bd419c261d0dde6df584a079025',1,'FIX8::Logger']]],
-  ['maxdepth',['MaxDepth',['../classXmlElement.html#ab5ea1bfa45ec1296705a5a01343c06cdacc6863a02162cb1a1bc3dc07c4331650',1,'XmlElement']]],
-  ['maxerrlen_5f',['MaxErrLen_',['../classFIX8_1_1RegExp.html#a056a6f1f750c6979ef0752dbd83860b0ae9cd13e845fdab8d0cd36cd9e6bd0712',1,'FIX8::RegExp']]],
-  ['maxmsglen',['MaxMsgLen',['../classFIX8_1_1Persister.html#a58105afb4e1edbd201cca672f57b8ecba6671b0b2d47dc4e4d716424be8e95f89',1,'FIX8::Persister']]]
+  ['level',['level',['../classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736caa881878e105659002c85d77a4d98cc2b',1,'FIX8::Logger']]],
+  ['location',['location',['../classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cafba166fa86eaae54b65e888d093dc46d',1,'FIX8::Logger']]],
+  ['log_5frotation',['log_rotation',['../namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852afe4cec891e5ae67b5b1e37dbe7cb9a32',1,'FIX8::defaults']]],
+  ['login_5fretries',['login_retries',['../namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0',1,'FIX8::defaults']]]
 ];

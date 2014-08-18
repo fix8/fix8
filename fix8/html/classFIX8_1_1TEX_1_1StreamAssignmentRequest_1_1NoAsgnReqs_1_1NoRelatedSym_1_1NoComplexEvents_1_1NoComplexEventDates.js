@@ -1,10 +1,11 @@
 var classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates =
 [
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#addd714217a67adbf23e1d3b4232d3299ad3361e26436a5693d27cf0c8b7fd9e57", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a71801e0faaed3ed21c00a8cb008f2b15ad3361e26436a5693d27cf0c8b7fd9e57", null ],
     [ "NoComplexEventDates", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#abb273a2f2a01458e1f8e353506ce4a82", null ],
     [ "~NoComplexEventDates", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a527ed9b94a5ab9312144a11b8cc09daf", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a909d4637ac6e7a3193e6960bf7616d93", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a8ade1cc23beaacfefb0b93cbf4d17489", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#abc17dedfa2b66c0de7691505caab12c0", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a00b3156dd1ecf6a4d3d80b68959ac696", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#aa397605df4b7360f1709c6fae8fdaf41", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a221fba905a4d4728cafab4a1e3072cd3", null ],

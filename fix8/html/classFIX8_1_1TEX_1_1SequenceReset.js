@@ -1,8 +1,8 @@
 var classFIX8_1_1TEX_1_1SequenceReset =
 [
-    [ "SequenceReset", "classFIX8_1_1TEX_1_1SequenceReset.html#a645bdad195cebbf87e37d2189d4992b3", null ],
+    [ "SequenceReset", "classFIX8_1_1TEX_1_1SequenceReset.html#ae356ed57093625195750f701dc9f95c9", null ],
     [ "~SequenceReset", "classFIX8_1_1TEX_1_1SequenceReset.html#a92610f60f28f40f0db797105a3ef3eba", null ],
-    [ "SequenceReset", "classFIX8_1_1TEX_1_1SequenceReset.html#a645bdad195cebbf87e37d2189d4992b3", null ],
+    [ "SequenceReset", "classFIX8_1_1TEX_1_1SequenceReset.html#ae356ed57093625195750f701dc9f95c9", null ],
     [ "~SequenceReset", "classFIX8_1_1TEX_1_1SequenceReset.html#a92610f60f28f40f0db797105a3ef3eba", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SequenceReset.html#aacb280c352ea967b36cb54f43c901674", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SequenceReset.html#aacb280c352ea967b36cb54f43c901674", null ],

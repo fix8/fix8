@@ -1,8 +1,8 @@
 var classFIX8_1_1TEX_1_1trailer =
 [
-    [ "trailer", "classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df", null ],
+    [ "trailer", "classFIX8_1_1TEX_1_1trailer.html#ab75384481921389253557a5ef5c4d981", null ],
     [ "~trailer", "classFIX8_1_1TEX_1_1trailer.html#a336869762f4aa56f3da31b5d67baebf6", null ],
-    [ "trailer", "classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df", null ],
+    [ "trailer", "classFIX8_1_1TEX_1_1trailer.html#ab75384481921389253557a5ef5c4d981", null ],
     [ "~trailer", "classFIX8_1_1TEX_1_1trailer.html#a336869762f4aa56f3da31b5d67baebf6", null ],
     [ "add_preamble", "classFIX8_1_1TEX_1_1trailer.html#a00adcd74cfc2ab7e77cae78a8740fd31", null ],
     [ "add_preamble", "classFIX8_1_1TEX_1_1trailer.html#a00adcd74cfc2ab7e77cae78a8740fd31", null ],

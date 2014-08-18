@@ -2,8 +2,9 @@ var classFIX8_1_1TEX_1_1AllocationReportAck =
 [
     [ "NoAllocs", "classFIX8_1_1TEX_1_1AllocationReportAck_1_1NoAllocs.html", "classFIX8_1_1TEX_1_1AllocationReportAck_1_1NoAllocs" ],
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1AllocationReportAck_1_1NoPartyIDs.html", "classFIX8_1_1TEX_1_1AllocationReportAck_1_1NoPartyIDs" ],
-    [ "AllocationReportAck", "classFIX8_1_1TEX_1_1AllocationReportAck.html#ac38f8cc2beea63d4197bfab784e05e9e", null ],
+    [ "AllocationReportAck", "classFIX8_1_1TEX_1_1AllocationReportAck.html#aa95672699fe016f49633935a3043bc6f", null ],
     [ "~AllocationReportAck", "classFIX8_1_1TEX_1_1AllocationReportAck.html#a79f651a94bee9a3b93b2125806a0d375", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1AllocationReportAck.html#a2f15e077ee9adfd560289972d4022c19", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationReportAck.html#a554ff9e7606b457a005d7e7345ea7955", null ],
     [ "process", "classFIX8_1_1TEX_1_1AllocationReportAck.html#a80f466767f7824cd54ea6d358986b030", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1AllocationReportAck.html#a3955e67893cb4c75db7cdbc8aa1f3963", null ],

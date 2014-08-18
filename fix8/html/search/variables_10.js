@@ -6,5 +6,6 @@ var searchData=
   ['ren_5f',['rEn_',['../classXmlElement.html#a1d3e675692a01cff94d0f871611fbf4c',1,'XmlElement']]],
   ['rev_5f',['rEv_',['../classXmlElement.html#adc19c07619a18551e547f7e4115d6a00',1,'XmlElement']]],
   ['rin_5f',['rIn_',['../classXmlElement.html#a71fb8f90def54bf13b967e0f0cf2e063',1,'XmlElement']]],
-  ['root_5f',['root_',['../classXmlElement.html#a9b03aa156b9de6ca25b737e298a0d0bb',1,'XmlElement']]]
+  ['root_5f',['root_',['../classXmlElement.html#a9b03aa156b9de6ca25b737e298a0d0bb',1,'XmlElement']]],
+  ['rotation_5fdefault',['rotation_default',['../classFIX8_1_1Logger.html#a7aec7e670a34c28a879da7f36de39d75',1,'FIX8::Logger']]]
 ];

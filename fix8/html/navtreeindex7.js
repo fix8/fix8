@@ -1,5 +1,7 @@
 var NAVTREEINDEX7 =
 {
+"Myfix__types_8hpp.html#a5c9b55d3c96c24a18bc394da31a1674e":[4,0,48,1627],
+"Myfix__types_8hpp.html#a5cbd73f165c7b0e2aea7c12a44a3bc11":[4,0,48,3103],
 "Myfix__types_8hpp.html#a5cc0442e3b7dc9aa4316506695b07452":[4,0,48,3421],
 "Myfix__types_8hpp.html#a5cc34afabae722cee696e9edadcf37a4":[4,0,48,2835],
 "Myfix__types_8hpp.html#a5cf25d8287e952517b538abcaf8c6604":[4,0,48,2039],
@@ -71,7 +73,6 @@ var NAVTREEINDEX7 =
 "Myfix__types_8hpp.html#a601f148aa92b12c40505e2215be73695":[4,0,48,131],
 "Myfix__types_8hpp.html#a60252fd4af5c5c135b0e2806c051b0a4":[4,0,48,3000],
 "Myfix__types_8hpp.html#a6027f8a30c4c2a52eec1fcdf4f553dad":[4,0,48,3303],
-"Myfix__types_8hpp.html#a6029a9a2788ea4a08364a8c88da900e7":[4,0,48,277],
 "Myfix__types_8hpp.html#a6029b1bc983ed362f468b48dfd57f965":[4,0,48,1350],
 "Myfix__types_8hpp.html#a602b27617bee0ad6639131c4387387ac":[4,0,48,3462],
 "Myfix__types_8hpp.html#a6032daa8d5d6924fa2cc7987635f172e":[4,0,48,3975],
@@ -190,9 +191,9 @@ var NAVTREEINDEX7 =
 "Myfix__types_8hpp.html#a667cdcafa36e257c554f5176a6b5ce5a":[4,0,48,3740],
 "Myfix__types_8hpp.html#a668d23cbe4bd4d7eab673281dcd6b60f":[4,0,48,1556],
 "Myfix__types_8hpp.html#a66905b45040c8d310b673b42f0071145":[4,0,48,4593],
-"Myfix__types_8hpp.html#a66948b617a858046ceb0fa8c0b90a659":[4,0,48,194],
 "Myfix__types_8hpp.html#a669cf3eb7f1713c8815900c22b2f4ab2":[4,0,48,1802],
 "Myfix__types_8hpp.html#a669dea486b0824e453d4153e04e6c463":[4,0,48,1678],
+"Myfix__types_8hpp.html#a66baeb8f1f7b54ecf079fea9f2648032":[4,0,48,1553],
 "Myfix__types_8hpp.html#a66d61dee4ac85ab3ec10e069e646899c":[4,0,48,717],
 "Myfix__types_8hpp.html#a66dc13bc0b62e26665ddac8a7911dfe1":[4,0,48,1198],
 "Myfix__types_8hpp.html#a66fa4ce1c3ca00f8f62366b2835810c4":[4,0,48,1519],
@@ -248,6 +249,5 @@ var NAVTREEINDEX7 =
 "Myfix__types_8hpp.html#a69d4fe89b65d6d7f971eee97fc354399":[4,0,48,3796],
 "Myfix__types_8hpp.html#a69e7bc7e76e79e7e4a326827733b4a7b":[4,0,48,2462],
 "Myfix__types_8hpp.html#a69f3aaa7b1c4d672a0b53276e95b02b0":[4,0,48,2585],
-"Myfix__types_8hpp.html#a6a178400ebd391ab9bab24b60767d9b0":[4,0,48,127],
-"Myfix__types_8hpp.html#a6a338f05ce870ec70872968b98d62003":[4,0,48,4735]
+"Myfix__types_8hpp.html#a6a178400ebd391ab9bab24b60767d9b0":[4,0,48,127]
 };

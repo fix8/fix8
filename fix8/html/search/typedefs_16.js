@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['yield',['Yield',['../namespaceFIX8_1_1TEX.html#aeecc6f0d40f2926988b8f27e23313bcb',1,'FIX8::TEX']]],
-  ['yieldcalcdate',['YieldCalcDate',['../namespaceFIX8_1_1TEX.html#ad2abe940ba4c587c0da321da42c4543a',1,'FIX8::TEX']]],
-  ['yieldredemptiondate',['YieldRedemptionDate',['../namespaceFIX8_1_1TEX.html#a1c03899e06cdbd40eddaf1133ff1999d',1,'FIX8::TEX']]],
-  ['yieldredemptionprice',['YieldRedemptionPrice',['../namespaceFIX8_1_1TEX.html#ad1c8bd51d263388985351cd56265868a',1,'FIX8::TEX']]],
-  ['yieldredemptionpricetype',['YieldRedemptionPriceType',['../namespaceFIX8_1_1TEX.html#a5f74da7488feace50849f46c8f2f0010',1,'FIX8::TEX']]],
-  ['yieldtype',['YieldType',['../namespaceFIX8_1_1TEX.html#a2a2e6c5f2439b2942c630bf714d5bfb4',1,'FIX8::TEX']]]
+  ['xmlattrs',['XmlAttrs',['../classXmlElement.html#ae1f3ab640b81c44f5f0e052a2fd6cc79',1,'XmlElement']]],
+  ['xmldata',['XMLData',['../namespaceFIX8.html#a4157e083beafbe0b3f08e3ef7feecc71',1,'FIX8::XMLData()'],['../namespaceFIX8_1_1TEX.html#a668d23cbe4bd4d7eab673281dcd6b60f',1,'FIX8::TEX::XmlData()']]],
+  ['xmldatalen',['XmlDataLen',['../namespaceFIX8_1_1TEX.html#a512825c60e749bef61206ff5191a7c4c',1,'FIX8::TEX']]],
+  ['xmlflags',['XmlFlags',['../classXmlElement.html#a022673e3f2f7db0736d5e9c472854c8a',1,'XmlElement']]],
+  ['xmlset',['XmlSet',['../classXmlElement.html#a698efd439f8e23c43a1c955c94d72907',1,'XmlElement']]],
+  ['xmlsubels',['XmlSubEls',['../classXmlElement.html#a6e97777a89a4ed70e8cf830a81763694',1,'XmlElement']]]
 ];

@@ -1,6 +1,6 @@
 var classFIX8_1_1TEX_1_1MarketDefinitionRequest =
 [
-    [ "MarketDefinitionRequest", "classFIX8_1_1TEX_1_1MarketDefinitionRequest.html#ac1b50dbcdeec9fd2f208a166a439c05f", null ],
+    [ "MarketDefinitionRequest", "classFIX8_1_1TEX_1_1MarketDefinitionRequest.html#a3f867b4f905703c737b0acc50f87b1c9", null ],
     [ "~MarketDefinitionRequest", "classFIX8_1_1TEX_1_1MarketDefinitionRequest.html#aebec6465977eaebd574281eaeec6c090", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinitionRequest.html#a66d45744ac759c40a959b4dd2ebe0b1b", null ],
     [ "process", "classFIX8_1_1TEX_1_1MarketDefinitionRequest.html#aee54600bb67a663dd14f8320b7a93ce2", null ],

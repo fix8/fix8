@@ -1,6 +1,6 @@
 var classFIX8_1_1TEX_1_1UserRequest =
 [
-    [ "UserRequest", "classFIX8_1_1TEX_1_1UserRequest.html#a09a0e0d1d338af094a755ccb61f4d7fe", null ],
+    [ "UserRequest", "classFIX8_1_1TEX_1_1UserRequest.html#af3eafa96f71d1d1830ae2a520f8a91ea", null ],
     [ "~UserRequest", "classFIX8_1_1TEX_1_1UserRequest.html#a37bca9d0dcb8cd306852f07b9fae7bf9", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1UserRequest.html#a37dfe8186875f2497efbc36c2826c9f1", null ],
     [ "process", "classFIX8_1_1TEX_1_1UserRequest.html#a2746d5ab1c26736a75b412ffcac75747", null ],

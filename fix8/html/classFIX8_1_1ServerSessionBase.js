@@ -1,5 +1,6 @@
 var classFIX8_1_1ServerSessionBase =
 [
+    [ "ServerSessionBase", "classFIX8_1_1ServerSessionBase.html#a9bdecf6cf10156feeb91cc6a199854f9", null ],
     [ "~ServerSessionBase", "classFIX8_1_1ServerSessionBase.html#ae7c89f671e7f3be6110dbc5696da2928", null ],
     [ "accept", "classFIX8_1_1ServerSessionBase.html#a8332495a7ce9d3233658c2da03d7485a", null ],
     [ "create_server_instance", "classFIX8_1_1ServerSessionBase.html#af85fbb6b0258b5de8546fefe317e9688", null ],

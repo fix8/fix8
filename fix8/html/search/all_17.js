@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['warn',['Warn',['../classFIX8_1_1Logger.html#a59932392d2aa3809b5344d29d94001b6a4234103165da2b577217d0372690c8df',1,'FIX8::Logger']]],
   ['week',['week',['../classFIX8_1_1Tickval.html#a44142164547e0e5e860cbdc66fc658bb',1,'FIX8::Tickval']]],
   ['what',['what',['../classFIX8_1_1f8Exception.html#a479fb74f51273a9a731ef368f4b0c8c7',1,'FIX8::f8Exception']]],
   ['workingindicator',['WorkingIndicator',['../namespaceFIX8_1_1TEX.html#a6f68be739fe3e264c713b6688d5afa7b',1,'FIX8::TEX']]],

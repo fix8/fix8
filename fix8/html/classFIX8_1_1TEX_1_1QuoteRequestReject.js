@@ -2,8 +2,9 @@ var classFIX8_1_1TEX_1_1QuoteRequestReject =
 [
     [ "NoRelatedSym", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym.html", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym" ],
     [ "NoRootPartyIDs", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRootPartyIDs.html", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRootPartyIDs" ],
-    [ "QuoteRequestReject", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#ac472d29991c10ff08cbbbbfc0d2a9d47", null ],
+    [ "QuoteRequestReject", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#a6ba21c6e59f980574fa9ec147d25f574", null ],
     [ "~QuoteRequestReject", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#ab91fda9d197ea7bb2a682f6d5de58c7c", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#ad73e56f5cdd3797d63a9fea4d07daf57", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#a74fbf687a3a5e5aedc9365bfd4ba4730", null ],
     [ "process", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#a11ad43b1c436ded53a052ca6c503ffd5", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteRequestReject.html#a43cec350990b48a3f39704ba6191f505", null ],

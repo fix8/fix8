@@ -1,10 +1,11 @@
 var classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs =
 [
     [ "NoNested2PartyIDs", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs_1_1NoNested2PartyIDs.html", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs_1_1NoNested2PartyIDs" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#ab7f6eac4f2fbd3f17097139216c1c630a654b73b4c3bf3ed18c5aed1115655600", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#a7ffe74d4c8f16f58e712306a6d4ccf1ea654b73b4c3bf3ed18c5aed1115655600", null ],
     [ "NoAllocs", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#a05c15284cf5350f74bb14732aad9f15a", null ],
     [ "~NoAllocs", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#ac605e4dbeec18057e0554f13e6681cb8", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#aa7311923a7667acb86aa016fb3c45aca", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#ab35be261cdc53ba07cdb3f4b36a9f362", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#acb678f5fe6e16f35acab6738cb6b76d9", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#ad521d31502b6e8be27c8cc30045820a5", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#a63ce183f9f6ae3d0b72e9b58a2b9b737", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoAllocs.html#aca60f396c47aa41a1d4b855d03005aeb", null ],

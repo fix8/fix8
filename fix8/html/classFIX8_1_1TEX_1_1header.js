@@ -1,12 +1,13 @@
 var classFIX8_1_1TEX_1_1header =
 [
     [ "NoHops", "classFIX8_1_1TEX_1_1header_1_1NoHops.html", "classFIX8_1_1TEX_1_1header_1_1NoHops" ],
-    [ "header", "classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01", null ],
+    [ "header", "classFIX8_1_1TEX_1_1header.html#ae8f7ddb106e796e6e741e5d10efd0e31", null ],
     [ "~header", "classFIX8_1_1TEX_1_1header.html#a4784a7a3474b8840d192b05fcf2606dd", null ],
-    [ "header", "classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01", null ],
+    [ "header", "classFIX8_1_1TEX_1_1header.html#ae8f7ddb106e796e6e741e5d10efd0e31", null ],
     [ "~header", "classFIX8_1_1TEX_1_1header.html#a4784a7a3474b8840d192b05fcf2606dd", null ],
     [ "add_preamble", "classFIX8_1_1TEX_1_1header.html#aca7d8c5d728db017cea28db245159296", null ],
     [ "add_preamble", "classFIX8_1_1TEX_1_1header.html#aca7d8c5d728db017cea28db245159296", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1header.html#aa85fe5d5d18325fefda572fb2ca373e5", null ],
     [ "get_begin_string", "classFIX8_1_1TEX_1_1header.html#a8df13bb84a8b19844d10c37b78226d7b", null ],
     [ "get_begin_string", "classFIX8_1_1TEX_1_1header.html#a8df13bb84a8b19844d10c37b78226d7b", null ],
     [ "get_body_length", "classFIX8_1_1TEX_1_1header.html#a6820ee113b8443d03ed49492cc0f1881", null ],

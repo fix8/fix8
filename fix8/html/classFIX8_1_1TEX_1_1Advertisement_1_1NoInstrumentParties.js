@@ -1,10 +1,11 @@
 var classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties =
 [
     [ "NoInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a92f5fdf4936d7687b0df1efa2c781393a6b1721866c047b39cedd8dc0b2137507", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a1d7d651ca0c4f311ed024638a97990bca6b1721866c047b39cedd8dc0b2137507", null ],
     [ "NoInstrumentParties", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a725742cf13d61cccfb2a59c9ed7179c8", null ],
     [ "~NoInstrumentParties", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#aed215e83f9e1d6ad71b999c4ea3e5054", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#ac258ea35e456799678224140203b153e", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#acea139225d900f09865a5db26664adbf", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a0c96ae41c3eb0fe6dc00451543682569", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a4343431465569aabef1df8dc80fbb414", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a7e211aff4e487c526ca55cadf33abe0a", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a60b4f335042b5fb9369333633e01c9ad", null ],

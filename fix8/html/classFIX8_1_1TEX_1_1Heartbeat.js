@@ -1,8 +1,8 @@
 var classFIX8_1_1TEX_1_1Heartbeat =
 [
-    [ "Heartbeat", "classFIX8_1_1TEX_1_1Heartbeat.html#a14f9ca47606bb74e9057866f69ed153f", null ],
+    [ "Heartbeat", "classFIX8_1_1TEX_1_1Heartbeat.html#a951be90845f475065fb1afdd389c72e2", null ],
     [ "~Heartbeat", "classFIX8_1_1TEX_1_1Heartbeat.html#a4b39c11d7545b691ea01153eca533f13", null ],
-    [ "Heartbeat", "classFIX8_1_1TEX_1_1Heartbeat.html#a14f9ca47606bb74e9057866f69ed153f", null ],
+    [ "Heartbeat", "classFIX8_1_1TEX_1_1Heartbeat.html#a951be90845f475065fb1afdd389c72e2", null ],
     [ "~Heartbeat", "classFIX8_1_1TEX_1_1Heartbeat.html#a4b39c11d7545b691ea01153eca533f13", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Heartbeat.html#a05819d62f6bc6efff32abacfa98635f2", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Heartbeat.html#a05819d62f6bc6efff32abacfa98635f2", null ],

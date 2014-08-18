@@ -9,16 +9,17 @@ var hierarchy =
     [ "coroutine", "classcoroutine.html", null ],
     [ "coroutine_ref", "classcoroutine__ref.html", null ],
     [ "FIX8::ebitset< Flags >", "classFIX8_1_1ebitset.html", null ],
+    [ "FIX8::ebitset< Level >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset< TraitTypes, unsigned short >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset_r< SessionControl >", "classFIX8_1_1ebitset__r.html", null ],
-    [ "FIX8::_dthreadcore", "classFIX8_1_1__dthreadcore.html", [
-      [ "FIX8::dthread< FIX8::AsyncSocket >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< FIX8::BDBPersister >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< FIX8::FIXReader >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< FIX8::Logger >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< FIX8::ReliableClientSession< T > >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< FIX8::Timer >", "classFIX8_1_1dthread.html", null ],
-      [ "FIX8::dthread< T >", "classFIX8_1_1dthread.html", null ]
+    [ "FIX8::_f8_threadcore", "classFIX8_1_1__f8__threadcore.html", [
+      [ "FIX8::f8_thread< FIX8::AsyncSocket >", "classFIX8_1_1f8__thread.html", null ],
+      [ "FIX8::f8_thread< FIX8::BDBPersister >", "classFIX8_1_1f8__thread.html", null ],
+      [ "FIX8::f8_thread< FIX8::FIXReader >", "classFIX8_1_1f8__thread.html", null ],
+      [ "FIX8::f8_thread< FIX8::Logger >", "classFIX8_1_1f8__thread.html", null ],
+      [ "FIX8::f8_thread< FIX8::ReliableClientSession< T > >", "classFIX8_1_1f8__thread.html", null ],
+      [ "FIX8::f8_thread< FIX8::Timer >", "classFIX8_1_1f8__thread.html", null ],
+      [ "FIX8::f8_thread< T >", "classFIX8_1_1f8__thread.html", null ]
     ] ],
     [ "FIX8::_pair< Key, Val >", "structFIX8_1_1__pair.html", null ],
     [ "FIX8::_pair< const char *, Val >", "structFIX8_1_1__pair_3_01const_01char_01_5_00_01Val_01_4.html", null ],
@@ -33,8 +34,8 @@ var hierarchy =
       [ "FIX8::Field< Boolean, field >", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html", null ],
       [ "FIX8::Field< char *, field >", "classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html", null ],
       [ "FIX8::Field< char, field >", "classFIX8_1_1Field_3_01char_00_01field_01_4.html", null ],
-      [ "FIX8::Field< double, field >", "classFIX8_1_1Field_3_01double_00_01field_01_4.html", null ],
       [ "FIX8::Field< f8String, field >", "classFIX8_1_1Field_3_01f8String_00_01field_01_4.html", null ],
+      [ "FIX8::Field< fp_type, field >", "classFIX8_1_1Field_3_01fp__type_00_01field_01_4.html", null ],
       [ "FIX8::Field< int, field >", "classFIX8_1_1Field_3_01int_00_01field_01_4.html", [
         [ "FIX8::Field< DayOfMonth, field >", "classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html", null ],
         [ "FIX8::Field< Length, field >", "classFIX8_1_1Field_3_01Length_00_01field_01_4.html", null ],
@@ -72,14 +73,14 @@ var hierarchy =
     ] ],
     [ "FIX8::ConsoleMenu", "classFIX8_1_1ConsoleMenu.html", null ],
     [ "FIX8::Ctxt", "structFIX8_1_1Ctxt.html", null ],
-    [ "FIX8::dthread< T >::_helper", "classFIX8_1_1dthread_1_1__helper.html", null ],
-    [ "FIX8::dthread_cancellation_token", "structFIX8_1_1dthread__cancellation__token.html", null ],
     [ "FIX8::ebitset< T, B >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset_r< T, B >", "classFIX8_1_1ebitset__r.html", null ],
     [ "FIX8::EnumType< field >", "structFIX8_1_1EnumType.html", null ],
     [ "FIX8::f8_mutex", "classFIX8_1_1f8__mutex.html", null ],
     [ "FIX8::f8_scoped_lock_impl< T >", "classFIX8_1_1f8__scoped__lock__impl.html", null ],
     [ "FIX8::f8_spin_lock", "classFIX8_1_1f8__spin__lock.html", null ],
+    [ "FIX8::f8_thread< T >::_helper", "classFIX8_1_1f8__thread_1_1__helper.html", null ],
+    [ "FIX8::f8_thread_cancellation_token", "classFIX8_1_1f8__thread__cancellation__token.html", null ],
     [ "FIX8::F8MetaCntx", "structFIX8_1_1F8MetaCntx.html", null ],
     [ "FIX8::ff_unbounded_queue< T >", "classFIX8_1_1ff__unbounded__queue.html", null ],
     [ "FIX8::ff_unbounded_queue< T * >", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html", null ],
@@ -1688,14 +1689,13 @@ var hierarchy =
       [ "FIX8::TEX::TradingSessionStatus::NoSecurityAltID", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html", null ]
     ] ],
     [ "FIX8::Inst", "classFIX8_1_1Inst.html", null ],
-    [ "FIX8::Inst::_gen< T >", "structFIX8_1_1Inst_1_1__gen.html", null ],
-    [ "FIX8::Inst::_gen_realm< T, R >", "structFIX8_1_1Inst_1_1__gen__realm.html", null ],
+    [ "FIX8::Inst::_gen", "structFIX8_1_1Inst_1_1__gen.html", null ],
     [ "FIX8::IntervalTimer", "classFIX8_1_1IntervalTimer.html", null ],
     [ "FIX8::IPrec", "structFIX8_1_1IPrec.html", null ],
     [ "FIX8::Logger", "classFIX8_1_1Logger.html", [
       [ "FIX8::BCLogger", "classFIX8_1_1BCLogger.html", null ],
       [ "FIX8::FileLogger", "classFIX8_1_1FileLogger.html", [
-        [ "FIX8::SingleLogger< fn >", "classFIX8_1_1SingleLogger.html", null ]
+        [ "FIX8::XmlFileLogger", "classFIX8_1_1XmlFileLogger.html", null ]
       ] ],
       [ "FIX8::PipeLogger", "classFIX8_1_1PipeLogger.html", null ]
     ] ],
@@ -1840,7 +1840,8 @@ var hierarchy =
     ] ],
     [ "FIX8::MessageSpec", "structFIX8_1_1MessageSpec.html", null ],
     [ "FIX8::Minst", "classFIX8_1_1Minst.html", null ],
-    [ "FIX8::Minst::_gen< T >", "structFIX8_1_1Minst_1_1__gen.html", null ],
+    [ "FIX8::Minst::_gen", "structFIX8_1_1Minst_1_1__gen.html", null ],
+    [ "FIX8::null_insert", "structFIX8_1_1null__insert.html", null ],
     [ "FIX8::Persister", "classFIX8_1_1Persister.html", [
       [ "FIX8::BDBPersister", "classFIX8_1_1BDBPersister.html", null ],
       [ "FIX8::FilePersister", "classFIX8_1_1FilePersister.html", null ],
@@ -1889,6 +1890,7 @@ var hierarchy =
       [ "FIX8::SessionInstance< T >", "classFIX8_1_1SessionInstance.html", null ]
     ] ],
     [ "FIX8::SessionManager< T >", "classFIX8_1_1SessionManager.html", null ],
+    [ "FIX8::SingleLogger< fn >", "classFIX8_1_1SingleLogger.html", null ],
     [ "FIX8::Singleton< T >", "classFIX8_1_1Singleton.html", null ],
     [ "FIX8::SslContext", "structFIX8_1_1SslContext.html", null ],
     [ "FIX8::StringLessThanNoCase", "structFIX8_1_1StringLessThanNoCase.html", null ],
@@ -1898,22 +1900,18 @@ var hierarchy =
     [ "FIX8::Timer< T >", "classFIX8_1_1Timer.html", null ],
     [ "FIX8::TimerEvent< T >", "classFIX8_1_1TimerEvent.html", null ],
     [ "FIX8::tty_save_state", "classFIX8_1_1tty__save__state.html", null ],
-    [ "FIX8::Type2Type< T >", "structFIX8_1_1Type2Type.html", null ],
-    [ "FIX8::Type2Types< T, R >", "structFIX8_1_1Type2Types.html", null ],
+    [ "FIX8::Type2Type< T, args >", "structFIX8_1_1Type2Type.html", null ],
     [ "MyMenu", "classMyMenu.html", null ],
     [ "MyMenu::MenuItem", "structMyMenu_1_1MenuItem.html", null ],
     [ "RandDev", "structRandDev.html", null ],
-    [ "FIX8::Singleton< SingleLogger< fn > >", "classFIX8_1_1Singleton.html", [
-      [ "FIX8::SingleLogger< fn >", "classFIX8_1_1SingleLogger.html", null ]
-    ] ],
     [ "exception", null, [
       [ "FIX8::f8Exception", "classFIX8_1_1f8Exception.html", [
         [ "FIX8::BadCheckSum", "structFIX8_1_1BadCheckSum.html", null ],
         [ "FIX8::BadCompidId", "structFIX8_1_1BadCompidId.html", null ],
         [ "FIX8::BadSendingTime", "structFIX8_1_1BadSendingTime.html", null ],
         [ "FIX8::ConfigurationError", "structFIX8_1_1ConfigurationError.html", null ],
-        [ "FIX8::dthreadException", "structFIX8_1_1dthreadException.html", null ],
         [ "FIX8::DuplicateField", "structFIX8_1_1DuplicateField.html", null ],
+        [ "FIX8::f8_threadException", "structFIX8_1_1f8__threadException.html", null ],
         [ "FIX8::IllegalMessage", "structFIX8_1_1IllegalMessage.html", null ],
         [ "FIX8::InvalidBodyLength", "structFIX8_1_1InvalidBodyLength.html", null ],
         [ "FIX8::InvalidConfiguration", "structFIX8_1_1InvalidConfiguration.html", null ],
@@ -1936,10 +1934,14 @@ var hierarchy =
     ] ],
     [ "ostream", null, [
       [ "FIX8::bcostream", "classFIX8_1_1bcostream.html", null ],
+      [ "FIX8::buffered_ostream", "classFIX8_1_1buffered__ostream.html", [
+        [ "FIX8::log_stream", "classFIX8_1_1log__stream.html", null ]
+      ] ],
       [ "FIX8::fptrostream", "classFIX8_1_1fptrostream.html", null ]
     ] ],
     [ "streambuf", null, [
       [ "FIX8::bcoutbuf", "classFIX8_1_1bcoutbuf.html", null ],
+      [ "FIX8::buffered_ostream::tsbuf", "classFIX8_1_1buffered__ostream_1_1tsbuf.html", null ],
       [ "FIX8::fdinbuf", "classFIX8_1_1fdinbuf.html", null ],
       [ "FIX8::fdoutbuf", "classFIX8_1_1fdoutbuf.html", null ]
     ] ],

@@ -1,9 +1,9 @@
 var classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs =
 [
-    [ "_fnum", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac48f5451142d15b1f3594c2110e4ce2fa2fef4116e41572803f23e6161951e46e", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a1a5860e0dbd06ea2eec794608de6e0c9a2fef4116e41572803f23e6161951e46e", null ],
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a1a792348334255b9e1a1b540b3b303a6", null ],
     [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac17b8032e0202fd97016a726d7f41468", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#aa20dd701e618bde1c2c98745909c38e2", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a2d5f7fad840c44c70f1a674c9bd81eb3", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a0162e41c1d004268ce5024254c0686ef", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ab35489af33a8211551a9e8c8be4db683", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a448d85c3bae2fa25430b82a55ff0ee68", null ],

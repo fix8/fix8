@@ -12,5 +12,6 @@ var searchData=
   ['bdbpersister',['BDBPersister',['../classFIX8_1_1BDBPersister.html',1,'FIX8']]],
   ['bidrequest',['BidRequest',['../classFIX8_1_1TEX_1_1BidRequest.html',1,'FIX8::TEX']]],
   ['bidresponse',['BidResponse',['../classFIX8_1_1TEX_1_1BidResponse.html',1,'FIX8::TEX']]],
+  ['buffered_5fostream',['buffered_ostream',['../classFIX8_1_1buffered__ostream.html',1,'FIX8']]],
   ['businessmessagereject',['BusinessMessageReject',['../classFIX8_1_1TEX_1_1BusinessMessageReject.html',1,'FIX8::TEX']]]
 ];

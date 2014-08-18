@@ -1,6 +1,6 @@
 var classFIX8_1_1TEX_1_1TradingSessionStatusRequest =
 [
-    [ "TradingSessionStatusRequest", "classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html#af3836054a651c2539847f70252ae221c", null ],
+    [ "TradingSessionStatusRequest", "classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html#a0dfad8f81ba8a0a79c0d0353cb5e2db4", null ],
     [ "~TradingSessionStatusRequest", "classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html#a94c037c5eff471f835c37018806180ac", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html#ae50f68e4c5be961080cf4a876792c776", null ],
     [ "process", "classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html#a896adbc1eb250f41b7e06ce85cb260d6", null ],

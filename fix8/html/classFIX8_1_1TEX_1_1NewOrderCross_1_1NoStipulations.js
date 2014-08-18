@@ -1,9 +1,9 @@
 var classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations =
 [
-    [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#ab2a961b483eae433e4cc56829e982b39a4e3f71f0e572df145869fbab6cd87abd", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#abd461e0b08ebd16237001cbcb56e0f1aa4e3f71f0e572df145869fbab6cd87abd", null ],
     [ "NoStipulations", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#a6e322603a05a992a877e7d6860c22743", null ],
     [ "~NoStipulations", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#a0e7ae9b2c3aa4722f6730b264faf5cbc", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#ae35c482e953a378749a52d552d8108a4", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#aa2cccf652959515fb67d610a345cbdd0", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#a114cd356dc1414367933944890d2e14d", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#abbe1242bc8356607d31f71e11fbc86d9", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStipulations.html#aad04aa8270d25a96d9774f028af2d04d", null ],

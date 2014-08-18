@@ -1,6 +1,6 @@
 var classFIX8_1_1TEX_1_1UserNotification =
 [
-    [ "UserNotification", "classFIX8_1_1TEX_1_1UserNotification.html#a1588d5c5b4d04a4ae629a25aaa2b7fd0", null ],
+    [ "UserNotification", "classFIX8_1_1TEX_1_1UserNotification.html#a6cdb9c03f044458cb164875dc306b07a", null ],
     [ "~UserNotification", "classFIX8_1_1TEX_1_1UserNotification.html#ae2de52f3df50b08eccd1707ac7e19222", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1UserNotification.html#a031b08aaf34aff7bde1a061006a91724", null ],
     [ "process", "classFIX8_1_1TEX_1_1UserNotification.html#aabf2b8568bb0a985a036bf60eb1313f4", null ],

@@ -1,9 +1,9 @@
 var classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID =
 [
-    [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#a87613a6a8a6fafc0991bbd4b47a6ec5ba464ec64fb51584a8ea80b30ec6b8c6f5", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#adc7407bdb36391fbed8fb7591461c617a464ec64fb51584a8ea80b30ec6b8c6f5", null ],
     [ "NoLegSecurityAltID", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#aab684b33cb3488367068a10b75aad293", null ],
     [ "~NoLegSecurityAltID", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#afa9a0a999ff10d668b74588dce6cd1dc", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#a0a5c4219e6fcd8cec6375a61658898ab", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#ab9f8907f0475bee4e4c14b2d70d622ea", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#ae5661158cdb3d42a7cc5783e232d590c", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#a7f4948fba3f7fac59fd015abd76f8a3d", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1News_1_1NoLegs_1_1NoLegSecurityAltID.html#abba1649ff872f54ddc55b3a08148ca89", null ],

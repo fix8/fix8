@@ -1,8 +1,9 @@
 var classFIX8_1_1TEX_1_1SettlementInstructionRequest =
 [
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1SettlementInstructionRequest_1_1NoPartyIDs.html", "classFIX8_1_1TEX_1_1SettlementInstructionRequest_1_1NoPartyIDs" ],
-    [ "SettlementInstructionRequest", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#a9251a2969faa3da8fc4aa512c7100907", null ],
+    [ "SettlementInstructionRequest", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#afea88acdaea7ba55a1d165a6e605ea9c", null ],
     [ "~SettlementInstructionRequest", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#a28903329e849a4c9ade3e642bc406433", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#a6c89d2147177d78c1305c1ff96d308b1", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#a9fc885237056eb456cbda66979341a6e", null ],
     [ "process", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#a58fab52b2c5871739b70eafb6cd65971", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#a3fe35cff3ea2d179bb2f1215f55926d1", null ],

@@ -1,11 +1,16 @@
 var searchData=
 [
-  ['package',['PACKAGE',['../f8config_8h.html#aca8570fb706c81df371b7f9bc454ae03',1,'f8config.h']]],
-  ['package_5fbugreport',['PACKAGE_BUGREPORT',['../f8config_8h.html#a1d1d2d7f8d2f95b376954d649ab03233',1,'f8config.h']]],
-  ['package_5fname',['PACKAGE_NAME',['../f8config_8h.html#a1c0439e4355794c09b64274849eb0279',1,'f8config.h']]],
-  ['package_5fstring',['PACKAGE_STRING',['../f8config_8h.html#ac73e6f903c16eca7710f92e36e1c6fbf',1,'f8config.h']]],
-  ['package_5ftarname',['PACKAGE_TARNAME',['../f8config_8h.html#af415af6bfede0e8d5453708afe68651c',1,'f8config.h']]],
-  ['package_5furl',['PACKAGE_URL',['../f8config_8h.html#a5c93853116d5a50307b6744f147840aa',1,'f8config.h']]],
-  ['package_5fversion',['PACKAGE_VERSION',['../f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0',1,'f8config.h']]],
-  ['patch_5fversion_5fnum',['PATCH_VERSION_NUM',['../f8config_8h.html#a8d9556de1e767d55bb4d961702101c56',1,'f8config.h']]]
+  ['magic_5fnum',['MAGIC_NUM',['../f8config_8h.html#a23f15b5855019d8ac0c75f82484f8047',1,'f8config.h']]],
+  ['magic_5fnum_5fexpr',['MAGIC_NUM_EXPR',['../f8config_8h.html#acaa2c5c35b25393bbf00f3fd342737df',1,'f8config.h']]],
+  ['major_5fversion_5fnum',['MAJOR_VERSION_NUM',['../f8config_8h.html#ab0321c14ceb0d62f8093d79f29da520a',1,'f8config.h']]],
+  ['malloc_5fstd',['MALLOC_STD',['../f8config_8h.html#a5aaae97ed2b2ff648dfd45a08122fc02',1,'f8config.h']]],
+  ['malloc_5fsystem',['MALLOC_SYSTEM',['../f8config_8h.html#abe7febcc522253e69c4ff6535a9dbf2d',1,'f8config.h']]],
+  ['malloc_5ftbb',['MALLOC_TBB',['../f8config_8h.html#a1c05018a2a0c34edc11cd0a224d23eb2',1,'f8config.h']]],
+  ['malloc_5ftcmalloc',['MALLOC_TCMALLOC',['../f8config_8h.html#a4e8626f7262d21384be32fd26276a56a',1,'f8config.h']]],
+  ['max_5ffld_5flength',['MAX_FLD_LENGTH',['../f8config_8h.html#aaaea75bb49416feeca9692988a596cd9',1,'f8config.h']]],
+  ['max_5fmsg_5flength',['MAX_MSG_LENGTH',['../f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4',1,'f8config.h']]],
+  ['minor_5fversion_5fnum',['MINOR_VERSION_NUM',['../f8config_8h.html#a37f45b01bad6430f4367b95004c5176f',1,'f8config.h']]],
+  ['mpmc_5fff',['MPMC_FF',['../f8config_8h.html#a94102a049c050bfde55ae2d68a41b7df',1,'f8config.h']]],
+  ['mpmc_5fsystem',['MPMC_SYSTEM',['../f8config_8h.html#aa8ca454008db79971bcf97328e0fa449',1,'f8config.h']]],
+  ['mpmc_5ftbb',['MPMC_TBB',['../f8config_8h.html#a0e907525944a6dd0912e5040d1a90019',1,'f8config.h']]]
 ];

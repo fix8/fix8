@@ -1,8 +1,9 @@
 var classFIX8_1_1TEX_1_1ListCancelRequest =
 [
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs.html", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs" ],
-    [ "ListCancelRequest", "classFIX8_1_1TEX_1_1ListCancelRequest.html#af0f47b5f707091aab64a6790703be7b5", null ],
+    [ "ListCancelRequest", "classFIX8_1_1TEX_1_1ListCancelRequest.html#a0e55348f6c16bc20eaa6543db9777477", null ],
     [ "~ListCancelRequest", "classFIX8_1_1TEX_1_1ListCancelRequest.html#ab2dec6de5b152ce0807d77673edf60ad", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1ListCancelRequest.html#a8b249809d08936a028332ef483d883c9", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ListCancelRequest.html#af37d38533748e0fbe2aafc6bb4e5e2ee", null ],
     [ "process", "classFIX8_1_1TEX_1_1ListCancelRequest.html#a11870baf0774dfccf50faccfd869133f", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1ListCancelRequest.html#a265ff0bffb97d058e2632f146498c6f9", null ],

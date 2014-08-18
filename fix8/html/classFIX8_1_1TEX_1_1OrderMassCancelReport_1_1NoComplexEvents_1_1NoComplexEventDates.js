@@ -1,10 +1,11 @@
 var classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates =
 [
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a3b4c636a6f55f8d8e325aed36d70c7c5a051f274b63ac0b98bbc3f0782d0b90df", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#aaa86caa83b92be157fde248de02bca5ba051f274b63ac0b98bbc3f0782d0b90df", null ],
     [ "NoComplexEventDates", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a8039a0c0c77cc101803088ea552795a6", null ],
     [ "~NoComplexEventDates", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a47ed8635c95393f2ea1083c6253938d0", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a8d91ff0d3c92f209efe312602b099a5b", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#af18040712638c5dccbab13b47322ab79", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#ae26e8b42814b0bc5f3660e4d31db3ca0", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a4f97b1e29ce7f28bae9f6aef8b0d7b7a", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a74d6a9b0ea5b5f20c6a92d7ff33176c8", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#add531326d9c1f2a00f217f2a2143e7b9", null ],

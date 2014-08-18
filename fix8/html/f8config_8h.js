@@ -36,6 +36,7 @@ var f8config_8h =
     [ "HAVE_MEMORY_H", "f8config_8h.html#ae93a78f9d076138897af441c9f86f285", null ],
     [ "HAVE_MMAP", "f8config_8h.html#ac24e9c0562704d17896d14869e748fcc", null ],
     [ "HAVE_POPEN", "f8config_8h.html#a42f2de81cc9398f23045b483488d082d", null ],
+    [ "HAVE_PTHREAD_PRIO_INHERIT", "f8config_8h.html#a428591e6b13dacf3451dc891e385f51b", null ],
     [ "HAVE_PTRDIFF_T", "f8config_8h.html#a4e62300203d0b0f776e7f2d56f63000e", null ],
     [ "HAVE_RANDOM", "f8config_8h.html#a635a22df95c3b9f98ab0c4961292d027", null ],
     [ "HAVE_REALLOC", "f8config_8h.html#a0302094a0ee567c610a36c63104ebda5", null ],
@@ -72,6 +73,7 @@ var f8config_8h =
     [ "LSTAT_FOLLOWS_SLASHED_SYMLINK", "f8config_8h.html#a34ef112da2cd333b13939ec3dc368af3", null ],
     [ "LT_OBJDIR", "f8config_8h.html#ac2d5925d76379847dd9fc4747b061659", null ],
     [ "MAGIC_NUM", "f8config_8h.html#a23f15b5855019d8ac0c75f82484f8047", null ],
+    [ "MAGIC_NUM_EXPR", "f8config_8h.html#acaa2c5c35b25393bbf00f3fd342737df", null ],
     [ "MAJOR_VERSION_NUM", "f8config_8h.html#ab0321c14ceb0d62f8093d79f29da520a", null ],
     [ "MALLOC_STD", "f8config_8h.html#a5aaae97ed2b2ff648dfd45a08122fc02", null ],
     [ "MALLOC_SYSTEM", "f8config_8h.html#abe7febcc522253e69c4ff6535a9dbf2d", null ],
@@ -98,10 +100,9 @@ var f8config_8h =
     [ "RETSIGTYPE", "f8config_8h.html#adbe5dcee9c146b338794974137c55e70", null ],
     [ "STDC_HEADERS", "f8config_8h.html#a550e5c272cc3cf3814651721167dcd23", null ],
     [ "SYSCONFDIR", "f8config_8h.html#a2f62cb1c6f014272be957f002103552e", null ],
-    [ "THREAD_POCO", "f8config_8h.html#a5b87c6e2dcbbbb817964cfa4899640c1", null ],
     [ "THREAD_PTHREAD", "f8config_8h.html#a43cc9005979c58b8cfbca2f57365ce94", null ],
+    [ "THREAD_STDTHREAD", "f8config_8h.html#a10716bac51ed564e41266fe95f95d5c5", null ],
     [ "THREAD_SYSTEM", "f8config_8h.html#aaf43a337f805a114090b4acd6ab58030", null ],
-    [ "THREAD_TBB", "f8config_8h.html#aeba2fc85c83235ee32530ab59d97e21e", null ],
     [ "TIME_WITH_SYS_TIME", "f8config_8h.html#a2b44ef64cf38e064ef11e11f35271380", null ],
     [ "VERSION", "f8config_8h.html#a1c6d5de492ac61ad29aec7aa9a436bbf", null ]
 ];

@@ -1,6 +1,6 @@
 var classFIX8_1_1BaseField =
 [
-    [ "BaseField", "classFIX8_1_1BaseField.html#a0c30a2ade639a49b882e45c9f9eebc0e", null ],
+    [ "BaseField", "classFIX8_1_1BaseField.html#ae49337b990afa5c6545577e5120aadf0", null ],
     [ "~BaseField", "classFIX8_1_1BaseField.html#a10ed2f79aa2bb273414e63e2b2ce0358", null ],
     [ "copy", "classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840", null ],
     [ "encode", "classFIX8_1_1BaseField.html#afd80e9008687fd420a6e85a416dde11e", null ],
@@ -10,8 +10,15 @@ var classFIX8_1_1BaseField =
     [ "get_rlm_idx", "classFIX8_1_1BaseField.html#a374451d87d0136e4ef8dc733122cadf8", null ],
     [ "get_tag", "classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5", null ],
     [ "get_underlying_type", "classFIX8_1_1BaseField.html#ad9a9f7a4624aff90343fd5240c88a9e0", null ],
+    [ "operator!=", "classFIX8_1_1BaseField.html#abed3f745ce515a01ff44b4f77d04d547", null ],
+    [ "operator<", "classFIX8_1_1BaseField.html#a62ea126dd3d4d60923f1a57a6cdce024", null ],
+    [ "operator<=", "classFIX8_1_1BaseField.html#a4b8c43b295a579dead5fc34fb4bc6f4e", null ],
+    [ "operator==", "classFIX8_1_1BaseField.html#a8b1d5a98d9a5009b3f1b6036d25ce3a1", null ],
+    [ "operator>", "classFIX8_1_1BaseField.html#a23c9b4f25f10df3ef985bc279582636f", null ],
+    [ "operator>=", "classFIX8_1_1BaseField.html#ada2e25f566fcdc810d2698918a4747d4", null ],
     [ "print", "classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c", null ],
     [ "print", "classFIX8_1_1BaseField.html#a2c7b143aae868a9be93b3d735f14ec0a", null ],
+    [ "same_base", "classFIX8_1_1BaseField.html#a8575c467e421e2ef9dda5ef24ec77b13", null ],
     [ "MessageBase", "classFIX8_1_1BaseField.html#a139cd168bbc5193327f4459beb465d83", null ],
     [ "operator<<", "classFIX8_1_1BaseField.html#a5d91db73d9b8644f626f24a9c754c5b2", null ],
     [ "_fnum", "classFIX8_1_1BaseField.html#a1542ff8a3e530ed0d9c5595cb66bad24", null ],

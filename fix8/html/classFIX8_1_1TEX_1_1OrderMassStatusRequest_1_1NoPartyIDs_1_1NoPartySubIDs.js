@@ -1,9 +1,9 @@
 var classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs =
 [
-    [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a06d453a1588d82a9cb5f2da7cd704e7ea92d895f1519cc43c7f8b4febdc0dd4d6", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a97b3cc367985fd2d20e354681dfccf20a92d895f1519cc43c7f8b4febdc0dd4d6", null ],
     [ "NoPartySubIDs", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#ae9b408de5768bf655a9d8bd30aa4402d", null ],
     [ "~NoPartySubIDs", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#aee7cbc14d41f3119c3b993bc5d945e2e", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a7eb5d775fdb44db1094555720325ecb9", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a144165c78a624365294de8ac416c7689", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a9b1de4f273214db05b835067fea24560", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a7fd18b134025f1a8e81a16512cc4bdc4", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#ac954e84af1a1d74b44f76c62a094cc4b", null ],

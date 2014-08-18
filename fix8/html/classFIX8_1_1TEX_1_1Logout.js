@@ -1,8 +1,8 @@
 var classFIX8_1_1TEX_1_1Logout =
 [
-    [ "Logout", "classFIX8_1_1TEX_1_1Logout.html#a1114a95cc647d1e04070bf9ab7e0ac94", null ],
+    [ "Logout", "classFIX8_1_1TEX_1_1Logout.html#ab194d6663ca4fc2bc399a4d53afe85e2", null ],
     [ "~Logout", "classFIX8_1_1TEX_1_1Logout.html#a792101606cf5c9c8132e718c471e6909", null ],
-    [ "Logout", "classFIX8_1_1TEX_1_1Logout.html#a1114a95cc647d1e04070bf9ab7e0ac94", null ],
+    [ "Logout", "classFIX8_1_1TEX_1_1Logout.html#ab194d6663ca4fc2bc399a4d53afe85e2", null ],
     [ "~Logout", "classFIX8_1_1TEX_1_1Logout.html#a792101606cf5c9c8132e718c471e6909", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Logout.html#a09ba50ebb72b434f853c1effde9dd0d4", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Logout.html#a09ba50ebb72b434f853c1effde9dd0d4", null ],

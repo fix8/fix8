@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['log_5frotation',['log_rotation',['../namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4afe4cec891e5ae67b5b1e37dbe7cb9a32',1,'FIX8::defaults']]],
-  ['login_5fretries',['login_retries',['../namespaceFIX8_1_1defaults.html#a482d7b9d7d9b6344906d08bed3dd43d4af78f674b2d9c9588437cb5e5fc0080c0',1,'FIX8::defaults']]]
+  ['inbound',['inbound',['../classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade63fafe68f6e03d7c9ad188a375517b',1,'FIX8::Logger']]],
+  ['info',['Info',['../classFIX8_1_1Logger.html#a59932392d2aa3809b5344d29d94001b6a2a1e954decf0b80d9eaf21981ad27738',1,'FIX8::Logger']]]
 ];

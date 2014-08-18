@@ -18,9 +18,9 @@ var searchData=
   ['tradingsessionstatus',['TradingSessionStatus',['../classFIX8_1_1TEX_1_1TradingSessionStatus.html',1,'FIX8::TEX']]],
   ['tradingsessionstatusrequest',['TradingSessionStatusRequest',['../classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html',1,'FIX8::TEX']]],
   ['trailer',['trailer',['../classFIX8_1_1TEX_1_1trailer.html',1,'FIX8::TEX']]],
+  ['tsbuf',['tsbuf',['../classFIX8_1_1buffered__ostream_1_1tsbuf.html',1,'FIX8::buffered_ostream']]],
   ['tty_5fsave_5fstate',['tty_save_state',['../classFIX8_1_1tty__save__state.html',1,'FIX8']]],
   ['type2type',['Type2Type',['../structFIX8_1_1Type2Type.html',1,'FIX8']]],
-  ['type2types',['Type2Types',['../structFIX8_1_1Type2Types.html',1,'FIX8']]],
   ['typedrealm',['TypedRealm',['../classFIX8_1_1TypedRealm.html',1,'FIX8']]],
   ['typedrealm_3c_20char_20_3e',['TypedRealm&lt; char &gt;',['../classFIX8_1_1TypedRealm.html',1,'FIX8']]],
   ['typedrealm_3c_20std_3a_3astring_20_3e',['TypedRealm&lt; std::string &gt;',['../classFIX8_1_1TypedRealm.html',1,'FIX8']]]

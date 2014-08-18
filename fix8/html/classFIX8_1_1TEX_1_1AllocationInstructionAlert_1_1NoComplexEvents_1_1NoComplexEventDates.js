@@ -1,10 +1,11 @@
 var classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates =
 [
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#a6f47c9012fb89148873b62942f82cacbac7914ed03d35a173780337c181c1d420", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#ac37f50a167d51f7d9e747db81e950313ac7914ed03d35a173780337c181c1d420", null ],
     [ "NoComplexEventDates", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#a39a9d5d0a7d35432be1cfa5362ed1f54", null ],
     [ "~NoComplexEventDates", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#a872a330c42340c066fd6f100615365da", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#ab91b3885f17e88f7c4cd48a1b83bc2a4", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#ab37fe976de7da67fea1f0e2b0fcf7925", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#acc726d9659fb281ade7fe1f3b40e2b7a", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#ac30f083e3b38e804b9e5c5c5161ee2cd", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#a498f42d1b3c3b57f89e352036e534d18", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoComplexEvents_1_1NoComplexEventDates.html#a51398a0405515ca88ef00790079962ec", null ],

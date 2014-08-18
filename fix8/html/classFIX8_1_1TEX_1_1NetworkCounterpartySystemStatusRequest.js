@@ -1,8 +1,9 @@
 var classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest =
 [
     [ "NoCompIDs", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest_1_1NoCompIDs.html", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest_1_1NoCompIDs" ],
-    [ "NetworkCounterpartySystemStatusRequest", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#a7d207a39e8704f225e0794e676dc0bad", null ],
+    [ "NetworkCounterpartySystemStatusRequest", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#a157d3dc8706ee7ab037f132a1e8a1e62", null ],
     [ "~NetworkCounterpartySystemStatusRequest", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#acedf65b08e30aa3ea08f46499cc93e46", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#a963c6b5f59576e9415a83b07b66c4091", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#a541aeb96e2c9922fc6ec21121b0989e3", null ],
     [ "process", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#aed0d24c8adc3b7dc72dd50cb0b8de60f", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#a982be2e4603f400d994650451952a182", null ],

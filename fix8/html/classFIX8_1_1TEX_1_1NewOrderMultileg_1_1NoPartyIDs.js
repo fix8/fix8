@@ -1,10 +1,11 @@
 var classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs =
 [
     [ "NoPartySubIDs", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs.html", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs" ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a364ef5d6a830a99deaa75f2ad5d88868af90c1990132f0e82cf69acdc1418f904", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a385168749d7b20125315319668c64ad6af90c1990132f0e82cf69acdc1418f904", null ],
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a9342c527ad657f47c9b63734dd6d373e", null ],
     [ "~NoPartyIDs", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#ae6d7cb960b2bd361d544f6d211b189a5", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#adff21fc7cecdfee7eab7876989a1d190", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#ab73f40f0e2977c39b67076f1dfa962d6", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a036d0330e8c8e0a8d1e61f19cadebfef", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#acb4ce1882e66d5caebe1975de03a7f2d", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a34c8010069f43b6ec58fcb76f7e7de0c", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#abf9120f142c79fe2834da29c40bcba10", null ],

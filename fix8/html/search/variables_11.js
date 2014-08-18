@@ -9,6 +9,7 @@ var searchData=
   ['spacer',['spacer',['../f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce',1,'spacer():&#160;f8c.cpp'],['../f8cutils_8cpp.html#ace2465f840cdd8763c991859ffe224ce',1,'spacer():&#160;f8c.cpp']]],
   ['splen_5f',['splen_',['../classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d',1,'UsageMan']]],
   ['starttime_5f',['startTime_',['../classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61',1,'FIX8::IntervalTimer']]],
+  ['stdflags',['StdFlags',['../classFIX8_1_1Logger.html#a8ab46551e7fa7b5384a2854c83679da1',1,'FIX8::Logger']]],
   ['stringtochar_5f',['stringtochar_',['../classXmlElement.html#a2f9d92b7c9a7197648babbc5d4a51984',1,'XmlElement']]],
   ['subcnt_5f',['subCnt_',['../classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20',1,'FIX8::RegMatch']]],
   ['subexprs_5f',['subexprs_',['../classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc',1,'FIX8::RegMatch']]],

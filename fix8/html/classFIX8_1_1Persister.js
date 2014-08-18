@@ -1,6 +1,6 @@
 var classFIX8_1_1Persister =
 [
-    [ "MaxMsgLen", "classFIX8_1_1Persister.html#a58105afb4e1edbd201cca672f57b8ecba6671b0b2d47dc4e4d716424be8e95f89", null ],
+    [ "MaxMsgLen", "classFIX8_1_1Persister.html#a8e21078e64216ca7eb6071e8be249299a6671b0b2d47dc4e4d716424be8e95f89", null ],
     [ "Persister", "classFIX8_1_1Persister.html#a830e15d1094d76a8197896e0d1a8f148", null ],
     [ "~Persister", "classFIX8_1_1Persister.html#a2db5fb9e4dc7cac7f26c5c6dda828e74", null ],
     [ "Persister", "classFIX8_1_1Persister.html#a0975f75968ee957bb63f70a8f66724c0", null ],

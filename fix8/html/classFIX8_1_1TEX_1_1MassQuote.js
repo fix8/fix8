@@ -2,8 +2,9 @@ var classFIX8_1_1TEX_1_1MassQuote =
 [
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1MassQuote_1_1NoPartyIDs.html", "classFIX8_1_1TEX_1_1MassQuote_1_1NoPartyIDs" ],
     [ "NoQuoteSets", "classFIX8_1_1TEX_1_1MassQuote_1_1NoQuoteSets.html", "classFIX8_1_1TEX_1_1MassQuote_1_1NoQuoteSets" ],
-    [ "MassQuote", "classFIX8_1_1TEX_1_1MassQuote.html#a1aaef5997bffdc493a213678cd9f56f9", null ],
+    [ "MassQuote", "classFIX8_1_1TEX_1_1MassQuote.html#a7ab96281e7d02ceeec390d90dba0be25", null ],
     [ "~MassQuote", "classFIX8_1_1TEX_1_1MassQuote.html#a7c16018e3ac9ce90e12676a816fd452e", null ],
+    [ "create_nested_group", "classFIX8_1_1TEX_1_1MassQuote.html#abc163f175b0606354f53f9b795808ff1", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MassQuote.html#a7588974f5ca6c679f209ff606e3c90fb", null ],
     [ "process", "classFIX8_1_1TEX_1_1MassQuote.html#aec29dfbc1050fac21ae82e19e8897fec", null ],
     [ "_fieldcnt", "classFIX8_1_1TEX_1_1MassQuote.html#a690d827863afa33c21183153a6757c74", null ],

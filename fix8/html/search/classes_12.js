@@ -29,7 +29,6 @@ var searchData=
   ['settlementobligationreport',['SettlementObligationReport',['../classFIX8_1_1TEX_1_1SettlementObligationReport.html',1,'FIX8::TEX']]],
   ['singlelogger',['SingleLogger',['../classFIX8_1_1SingleLogger.html',1,'FIX8']]],
   ['singleton',['Singleton',['../classFIX8_1_1Singleton.html',1,'FIX8']]],
-  ['singleton_3c_20singlelogger_3c_20fn_20_3e_20_3e',['Singleton&lt; SingleLogger&lt; fn &gt; &gt;',['../classFIX8_1_1Singleton.html',1,'FIX8']]],
   ['sslcontext',['SslContext',['../structFIX8_1_1SslContext.html',1,'FIX8']]],
   ['streamassignmentreport',['StreamAssignmentReport',['../classFIX8_1_1TEX_1_1StreamAssignmentReport.html',1,'FIX8::TEX']]],
   ['streamassignmentreportack',['StreamAssignmentReportACK',['../classFIX8_1_1TEX_1_1StreamAssignmentReportACK.html',1,'FIX8::TEX']]],

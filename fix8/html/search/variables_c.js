@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['max_5frotation',['max_rotation',['../classFIX8_1_1Logger.html#a34d024348ab39227f7f85e9278256d69',1,'FIX8::Logger']]],
   ['maxdepth_5f',['maxdepth_',['../classXmlElement.html#aa5d9b1996c7f59f47e6007f748a6850e',1,'XmlElement']]],
   ['million',['million',['../classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc',1,'FIX8::Tickval']]],
   ['minute',['minute',['../classFIX8_1_1Tickval.html#adc2e06021fad4ebe7a719a5cd58cf982',1,'FIX8::Tickval']]],

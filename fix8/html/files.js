@@ -3,14 +3,7 @@ var files =
     [ "configuration.cpp", "configuration_8cpp.html", null ],
     [ "configuration.hpp", "configuration_8hpp.html", "configuration_8hpp" ],
     [ "connection.cpp", "connection_8cpp.html", null ],
-    [ "connection.hpp", "connection_8hpp.html", [
-      [ "AsyncSocket", "classFIX8_1_1AsyncSocket.html", "classFIX8_1_1AsyncSocket" ],
-      [ "FIXReader", "classFIX8_1_1FIXReader.html", "classFIX8_1_1FIXReader" ],
-      [ "FIXWriter", "classFIX8_1_1FIXWriter.html", "classFIX8_1_1FIXWriter" ],
-      [ "Connection", "classFIX8_1_1Connection.html", "classFIX8_1_1Connection" ],
-      [ "ClientConnection", "classFIX8_1_1ClientConnection.html", "classFIX8_1_1ClientConnection" ],
-      [ "ServerConnection", "classFIX8_1_1ServerConnection.html", "classFIX8_1_1ServerConnection" ]
-    ] ],
+    [ "connection.hpp", "connection_8hpp.html", "connection_8hpp" ],
     [ "consolemenu.cpp", "consolemenu_8cpp.html", null ],
     [ "consolemenu.hpp", "consolemenu_8hpp.html", "consolemenu_8hpp" ],
     [ "coroutine.hpp", "coroutine_8hpp.html", "coroutine_8hpp" ],
@@ -41,7 +34,7 @@ var files =
       [ "MissingMessageComponent", "structFIX8_1_1MissingMessageComponent.html", "structFIX8_1_1MissingMessageComponent" ],
       [ "MissingMandatoryField", "structFIX8_1_1MissingMandatoryField.html", "structFIX8_1_1MissingMandatoryField" ],
       [ "BadCheckSum", "structFIX8_1_1BadCheckSum.html", "structFIX8_1_1BadCheckSum" ],
-      [ "dthreadException", "structFIX8_1_1dthreadException.html", "structFIX8_1_1dthreadException" ],
+      [ "f8_threadException", "structFIX8_1_1f8__threadException.html", "structFIX8_1_1f8__threadException" ],
       [ "PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", "structFIX8_1_1PeerResetConnection" ],
       [ "InvalidConfiguration", "structFIX8_1_1InvalidConfiguration.html", "structFIX8_1_1InvalidConfiguration" ],
       [ "ConfigurationError", "structFIX8_1_1ConfigurationError.html", "structFIX8_1_1ConfigurationError" ],
@@ -55,9 +48,7 @@ var files =
     [ "f8utils.hpp", "f8utils_8hpp.html", "f8utils_8hpp" ],
     [ "ff_wrapper.hpp", "ff__wrapper_8hpp.html", [
       [ "ff_unbounded_queue", "classFIX8_1_1ff__unbounded__queue.html", "classFIX8_1_1ff__unbounded__queue" ],
-      [ "ff_unbounded_queue< T * >", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4" ],
-      [ "f8_mutex", "classFIX8_1_1f8__mutex.html", "classFIX8_1_1f8__mutex" ],
-      [ "f8_spin_lock", "classFIX8_1_1f8__spin__lock.html", "classFIX8_1_1f8__spin__lock" ]
+      [ "ff_unbounded_queue< T * >", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html", "classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4" ]
     ] ],
     [ "field.hpp", "field_8hpp.html", "field_8hpp" ],
     [ "filepersist.cpp", "filepersist_8cpp.html", null ],
@@ -147,12 +138,7 @@ var files =
       [ "SessionInstanceBase", "classFIX8_1_1SessionInstanceBase.html", "classFIX8_1_1SessionInstanceBase" ],
       [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ]
     ] ],
-    [ "thread.hpp", "thread_8hpp.html", [
-      [ "_dthreadcore", "classFIX8_1_1__dthreadcore.html", "classFIX8_1_1__dthreadcore" ],
-      [ "dthread_cancellation_token", "structFIX8_1_1dthread__cancellation__token.html", "structFIX8_1_1dthread__cancellation__token" ],
-      [ "dthread", "classFIX8_1_1dthread.html", "classFIX8_1_1dthread" ],
-      [ "_helper", "classFIX8_1_1dthread_1_1__helper.html", "classFIX8_1_1dthread_1_1__helper" ]
-    ] ],
+    [ "thread.hpp", "thread_8hpp.html", "thread_8hpp" ],
     [ "tickval.hpp", "tickval_8hpp.html", "tickval_8hpp" ],
     [ "timer.hpp", "timer_8hpp.html", [
       [ "Timer", "classFIX8_1_1Timer.html", "classFIX8_1_1Timer" ],
