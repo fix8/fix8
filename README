@@ -92,6 +92,9 @@ Directory    Description
      util/
              additional utilities source
 
+     stocklib/
+             stock FIX library builds
+
      pro/
              Fix8Pro extensions (commercial version only)
 

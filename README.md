@@ -103,6 +103,10 @@ and framework; and a set of complete client/server test applications.
              <td>runtime library source</td>
           </tr>
           <tr>
+             <td>stocklib/</td>
+             <td>stock FIX library builds</td>
+          </tr>
+          <tr>
              <td>util/</td>
              <td>additional utilities source</td>
           </tr>

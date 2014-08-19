@@ -3474,9 +3474,8 @@ cat >>confdefs.h <<_ACEOF
 #define PATCH_VERSION_NUM $PATCH_VERSION_NUM
 _ACEOF
 
-MAGIC_NUM=`echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}'`
-# this would also probably have worked
-# MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
+# MAGIC_NUM=`[echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}']`
+MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
 
 
 cat >>confdefs.h <<_ACEOF
@@ -24808,7 +24807,7 @@ fi
 
 CHANGELOG=$srcdir/ChangeLog
 
-ac_config_files="$ac_config_files Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml"
+ac_config_files="$ac_config_files Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml"
 
 ac_config_headers="$ac_config_headers include/fix8/f8config.h"
 
@@ -26000,6 +25999,7 @@ do
     "utests/Makefile") CONFIG_FILES="$CONFIG_FILES utests/Makefile" ;;
     "util/Makefile") CONFIG_FILES="$CONFIG_FILES util/Makefile" ;;
     "doc/fix8.doxygen") CONFIG_FILES="$CONFIG_FILES doc/fix8.doxygen" ;;
+    "stocklib/Makefile") CONFIG_FILES="$CONFIG_FILES stocklib/Makefile" ;;
     "fix8.spec") CONFIG_FILES="$CONFIG_FILES fix8.spec" ;;
     "doc/man/f8c.1.xml") CONFIG_FILES="$CONFIG_FILES doc/man/f8c.1.xml" ;;
     "doc/man/seqedit.1.xml") CONFIG_FILES="$CONFIG_FILES doc/man/seqedit.1.xml" ;;
