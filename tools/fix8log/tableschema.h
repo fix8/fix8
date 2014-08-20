@@ -45,6 +45,7 @@ class TableSchema
 public:
     TableSchema();
     TableSchema(QString name, QString description,bool isLocked);
+    TableSchema(QString name, QString description,bool isLocked,QString sharedLib);
     TableSchema(const TableSchema &);
     ~TableSchema();
     TableSchema & operator=( const TableSchema &rhs);
@@ -63,6 +64,7 @@ public:
     bool locked;
     QBaseEntryList  *fieldList;
     QStringList fieldNames; // stored in database
+    QString  sharedLib;
 };
 
 class TableSchemaList : public QList <TableSchema *>
@@ -72,5 +74,6 @@ public:
  ~TableSchemaList();
  TableSchema *findByID(qint32 id);
  TableSchema *findByName(const QString &name);
+ TableSchema *findDefault();
 };
 #endif // TABLESCHEMA_H

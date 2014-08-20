@@ -81,6 +81,7 @@ public:
     bool deleteWorkSheet(int workSheetID);
     // Schema Methods
     TableSchemaList *getTableSchemas();
+    TableSchemaList *getTableSchemasByLibName(QString libName);
     bool addTableSchema(TableSchema &);
     bool updateTableSchema(TableSchema &);
     bool deleteTableSchema(qint32 tableSchemaID);

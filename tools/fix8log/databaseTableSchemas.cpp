@@ -42,7 +42,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QSqlTableModel>
 #include <QVariant>
 
-
 TableSchemaList *Database::getTableSchemas()
 {
     TableSchemaList *tsl=0;
@@ -56,9 +55,10 @@ TableSchemaList *Database::getTableSchemas()
     }
     QSqlQuery query(*handle);
     str = "select * from tableschemas";
+    qDebug() << "PREPARE STR = " << str << __FILE__ << __LINE__;
     bstatus = query.prepare(str);
     if (bstatus == 0) {
-        qWarning("Error in get table schemas in prepare statement...");
+        qWarning() << "Error in get table schemas in prepare statement..." << __FILE__ << __LINE__;
         sqlError = query.lastError();
         errorMessage = sqlError.databaseText();
         qWarning() << errorMessage;
@@ -79,6 +79,55 @@ TableSchemaList *Database::getTableSchemas()
         ts->name        = query.value(1).toString();
         ts->description = query.value(2).toString();
         ts->locked      = query.value(3).toBool();
+        ts->sharedLib   = query.value(5).toString();
+        tsl->append(ts);
+    }
+    if(tsl->count() < 1) {
+        delete tsl;
+        tsl = 0;
+    }
+    return tsl;
+}
+TableSchemaList *Database::getTableSchemasByLibName(QString libFileName)
+{
+    TableSchemaList *tsl=0;
+    bool bstatus;
+    bool ok;
+    QString filter;
+    QString str;
+    if (!handle) {
+        errorMessage = tr("Error in get table schemas  - handle is not initialized");
+        qWarning() << errorMessage;
+        return tsl;
+    }
+    QSqlQuery query(*handle);
+    filter = "fixSharedLibFile = '" + libFileName + "'";
+    str =  "select * from tableschemas where " + filter;
+    qDebug() << "PREPARE STATEMENT = " << str << __FILE__ << __LINE__;
+    bstatus = query.prepare(str);
+    if (bstatus == 0) {
+        qWarning() << "Error in get table schemas in prepare statement..." << __FILE__ << __LINE__;
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return tsl;
+    }
+
+    bstatus = query.exec();
+    if (bstatus == false) {
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return tsl;
+    }
+    tsl = new TableSchemaList();
+    while (query.next()) {
+        TableSchema *ts = new TableSchema();
+        ts->id          = query.value(0).toInt(&ok);
+        ts->name        = query.value(1).toString();
+        ts->description = query.value(2).toString();
+        ts->locked      = query.value(3).toBool();
+        ts->sharedLib   = query.value(5).toString();
         tsl->append(ts);
     }
     if(tsl->count() < 1) {
@@ -97,8 +146,8 @@ bool Database::addTableSchema(TableSchema &ts)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO tableschemas (id, name,description, locked)"
-                            "VALUES(NULL, :name, :description, :locked)");
+    bstatus = query.prepare("INSERT INTO tableschemas (id, name,description, locked, fixSharedLibFile)"
+                            "VALUES(NULL, :name, :description, :locked, :fixSharedLibFile)");
     if (bstatus == 0) {
         qWarning("Error database - add table schema  failed in prepare statement...");
         sqlError = query.lastError();
@@ -109,6 +158,7 @@ bool Database::addTableSchema(TableSchema &ts)
     query.bindValue(":name",ts.name);
     query.bindValue(":description",ts.description);
     query.bindValue(":locked",ts.locked);
+    query.bindValue(":fixSharedLibFile",ts.sharedLib);
 
     bstatus = query.exec();
     if (bstatus == 0) {
@@ -136,6 +186,7 @@ bool Database::updateTableSchema(TableSchema &ts)
             + QString("  name=:name")
             + QString(", description=:description")
             + QString(", locked=:locked")
+            + QString(", fixSharedLibFile=:fixSharedLibFile")
             + QString("  WHERE id='")  + QString::number(ts.id)
             + QString("'");
 
@@ -150,6 +201,7 @@ bool Database::updateTableSchema(TableSchema &ts)
     query.bindValue(":name",ts.name);
     query.bindValue(":description",ts.description);
     query.bindValue(":locked",ts.locked);
+    query.bindValue(":fixSharedLibFile",ts.sharedLib);
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("Error - update table schema  failed in exec statement...");

@@ -212,15 +212,12 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
     if (!schemaEditorDialog) {
 
         schemaEditorDialog = new SchemaEditorDialog(database);
-        schemaEditorDialog->populateMessageList(sharedLib->messageFieldList);
-        schemaEditorDialog->populateFieldListPair(&(sharedLib->fieldUsePairList));
         schemaEditorDialog->setSharedLibrary(sharedLib);
 
         schemaEditorDialog->setToolButtonStyle(mw->toolButtonStyle());
-        schemaEditorDialog->setBaseMaps(baseMap);
-        schemaEditorDialog->setFieldUseList(sharedLib->fieldUseList);
-        schemaEditorDialog->setDefaultHeaderItems(defaultHeaderItems);
-        schemaEditorDialog->setTableSchemas(tableSchemaList,defaultTableSchema);
+        //lets use database to do this, dnb
+       // schemaEditorDialog->setTableSchemas(tableSchemaList,&(sharedLib->defaultTableSchema));
+        // use database and fix8lib to
         connect(schemaEditorDialog,SIGNAL(finished(int)),
                 this,SLOT(schemaEditorFinishedSlot(int)));
         connect(schemaEditorDialog,SIGNAL(newSchemaCreated(TableSchema*)),

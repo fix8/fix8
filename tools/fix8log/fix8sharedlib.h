@@ -6,6 +6,7 @@
 #include <fix8/message.hpp>
 #include <fix8/f8types.hpp>
 #include "fix8/traits.hpp"
+#include "tableschema.h"
 #include "messagefield.h"
 class QLibrary;
 
@@ -13,8 +14,14 @@ class Fix8SharedLib
 {
 public:
     Fix8SharedLib();
+
     static Fix8SharedLib *create(QString fileName);
     typedef enum {SystemLib,UserLib} LibType;
+    void setDefaultTableSchema(TableSchema *defaultTS);
+    TableSchema *createDefaultTableSchema();
+    TableSchema *getDefaultTableSchema();
+    TableSchemaList *getTableSchemas();
+    void setTableSchemas(TableSchemaList *tsl);
     qint16 count;
     QString name;
     QString fileName;
@@ -30,8 +37,12 @@ public:
     QMap<QString, QBaseEntry *> baseMap;
     QMultiMap <QString,FieldTrait *> fieldsInUseMap;
     FieldUseList fieldUseList;
-    QStringList defaultHeaderStrs;
     QBaseEntryList defaultHeaderItems;
+    TableSchema *defaultTableSchema;
+    TableSchemaList *tableSchemas;
+    static QStringList defaultHeaderStrs;
+    static void init();
+
     bool loadFix8so();
 private:
     void generate_traits(const TraitHelper &tr, QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,

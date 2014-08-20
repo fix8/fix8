@@ -35,6 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #include <QApplication>
 #include "schemaeditordialog.h"
+#include "fix8sharedlib.h"
 #include "schemaitem.h"
 #include "database.h"
 #include "globals.h"
@@ -711,10 +712,17 @@ void SchemaEditorDialog::saveNewEditSlot()
         }
         messageL->setText("");
         newSchemaLine->setText("");
-        tableSchema = new TableSchema(name,description,false);
-        bstatus = database->addTableSchema(*tableSchema);
-        if (!bstatus) {
-            setMessage("Error - save to database failed",true);
+        if (sharedLib && (sharedLib->fileName.length() > 0)) {
+            tableSchema = new TableSchema(name,description,false,sharedLib->fileName);
+            bstatus = database->addTableSchema(*tableSchema);
+            if (!bstatus) {
+                setMessage("Error - save to database failed",true);
+                return;
+            }
+        }
+        else {
+            str = "Error - failed to create new schema as shard lib is currently not set";
+            QMessageBox::warning(this,Globals::appName,str);
             return;
         }
         si = new SchemaItem(*tableSchema);

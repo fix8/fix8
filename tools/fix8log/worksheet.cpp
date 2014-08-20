@@ -233,11 +233,13 @@ void WorkSheet::setTableSchema(TableSchema *ts)
     QHeaderView *horHeader =  fixTable->horizontalHeader();
     QAbstractItemModel * headerModel = horHeader->model();
     headerModel->removeColumns(0,headerModel->columnCount());
-    _model->setTableSchema(*tableSchema);
+
+
     if (!tableSchema) {
         qWarning() << "ERROR - Table Schema IS NULL" << __FILE__ << __LINE__;
         return;
     }
+     _model->setTableSchema(*tableSchema);
     if (!tableSchema->fieldList) {
         qWarning() << "ERROR - Table Schema Field List IS NULL" << __FILE__ << __LINE__;
         return;

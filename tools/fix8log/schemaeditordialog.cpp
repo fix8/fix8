@@ -42,6 +42,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fieldsview.h"
 #include "globals.h"
 #include <QCloseEvent>
+#include <QDebug>
 
 using namespace GUI;
 SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
@@ -239,9 +240,7 @@ void SchemaEditorDialog::buildSchemaArea()
 void SchemaEditorDialog::buildSelectedListFromCurrentSchema()
 {
     SchemaItem *schemaItem;
-
     QItemSelectionModel *selectionModel = availableSchemasListView->selectionModel();
-
     selectionModel->clear();
     if (!currentTableSchema) {
         qWarning() << "No current table schema selected" << __FILE__ << __LINE__;
@@ -340,28 +339,39 @@ void SchemaEditorDialog::closeEvent(QCloseEvent *ce)
         QMainWindow::closeEvent(ce);
 
 }
-
 void SchemaEditorDialog::showEvent(QShowEvent *se)
 {
     validate();
     QMainWindow::showEvent(se);
 }
-void SchemaEditorDialog::setDefaultHeaderItems( QBaseEntryList &DefaultHeaderItems)
+void SchemaEditorDialog::setSharedLibrary(Fix8SharedLib *f8sl)
 {
-    defaultHeaderItems = &DefaultHeaderItems;
-}
-
-void SchemaEditorDialog::setBaseMaps(QMap<QString, QBaseEntry *>  &BaseMap)
-{
-    baseMap = &BaseMap;
-}
-void SchemaEditorDialog::setFieldUseList(FieldUseList &ful)
-{
-    fieldUseList = &ful;
-}
-void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
-{
-    messageFieldList = mfl;
+    sharedLib = f8sl;
+    QString message;
+    QPalette pal = fix8versionV->palette();
+    if (!sharedLib) {
+         pal.setColor(QPalette::WindowText,Qt::red);
+        fix8versionV->setText("?");
+        fix8versionV->setToolTip("Error no FIX Schema library provided");
+    }
+    if (!(sharedLib->isOK)) {
+        pal.setColor(QPalette::WindowText,Qt::red);
+        fix8versionV->setText(sharedLib->name);
+        fix8versionV->setToolTip("Error loading FIX schema lib: " + sharedLib->fileName);
+    }
+    else {
+         fix8versionV->setText(sharedLib->name);
+         fix8versionV->setToolTip(sharedLib->fileName);
+          pal.setColor(QPalette::WindowText,fix8RegColor);
+    }
+    fix8versionV->setPalette(pal);
+    if (!sharedLib || !sharedLib->isOK) {
+        qWarning() << "ERROR - shared lib not set or has an error" << __FILE__ << __LINE__;
+    }
+    defaultHeaderItems = &(sharedLib->defaultHeaderItems);
+    baseMap  = &(sharedLib->baseMap);
+    fieldUseList = &(sharedLib->fieldUseList);
+    messageFieldList   = sharedLib->messageFieldList;
     MessageField *mf;
     QStandardItem *item;
     if (!messageFieldList) {
@@ -383,10 +393,7 @@ void SchemaEditorDialog::populateMessageList(MessageFieldList *mfl)
         i++;
     }
     messageModel->sort(0);
-}
-void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>> *prList)
-{
-    fieldUsePairList = prList;
+    fieldUsePairList = &(sharedLib->fieldUsePairList);
     int pp = 0;
     disconnect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(fieldCheckedSlot(QStandardItem *)));
@@ -399,7 +406,7 @@ void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>>
     fieldsModel->setRowCount(fieldUsePairList->count());
     QString nam;
     QVariant var;
-    int i=0;
+    i=0;
     bool tt; // use tootip
     while(pairListIter.hasNext()) {
         tt = false;
@@ -423,16 +430,24 @@ void SchemaEditorDialog::populateFieldListPair(QList<QPair<QString ,FieldUse *>>
     }
     connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(fieldCheckedSlot(QStandardItem *)));
-}
 
-void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
+}
+/* lets get rid of all these methods and do it in setSharedLib above */
+
+bool SchemaEditorDialog::setTableSchemas()
 {
-    tableSchemaList = tsl;
+    if (!database) {
+        qWarning() << "Setting table schemas failed as database not set" << __FILE__ << __LINE__;
+        return false;
+    }
+    tableSchemaList = database->getTableSchemasByLibName(sharedLib->fileName);
     if (availableSchemaModel->rowCount() > 0) {
         availableSchemaModel->removeRows(0,availableSchemaModel->rowCount() -1);
     }
-    defaultTableSchema = dts;
+    if (tableSchemaList)
+    defaultTableSchema = tableSchemaList->findDefault();
     if (defaultTableSchema) {
+        qDebug() << "Found Default Table Schema" << __FILE__ << __LINE__;
         currentTableSchema = defaultTableSchema;
         defaultSchemaItem = new SchemaItem(*defaultTableSchema);
         currentSchemaItem = defaultSchemaItem;
@@ -446,10 +461,11 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
     }
     if (!tableSchemaList) {
         qWarning() << "NO Default Table Schema List  For Scema Edtior" << __FILE__ << __LINE__;
-        return;
+        return false;
     }
     TableSchema *tableSchema;
     SchemaItem *schemaItem;
+    qDebug() << "SCHEMA EDITOR: NUM OF TABLE SCHEMAS = " << tableSchemaList->count() << __FILE__;
     QListIterator <TableSchema *> iter(*tableSchemaList);
     while(iter.hasNext()) {
         tableSchema = iter.next();
@@ -464,6 +480,7 @@ void SchemaEditorDialog::setTableSchemas(TableSchemaList *tsl, TableSchema *dts)
     }
     buildSelectedListFromCurrentSchema();
 */
+    return true;
 }
 void SchemaEditorDialog::setTableSchemaInUse(TableSchema *ts)
 {
@@ -710,25 +727,4 @@ void SchemaEditorDialog::windowDeleted(MainWindow *mw)
     if (mw == currentMainWindow)
         closeSlot();
 }
-void SchemaEditorDialog::setSharedLibrary(Fix8SharedLib *f8sl)
-{
-    sharedLib = f8sl;
-    QString message;
-    QPalette pal = fix8versionV->palette();
-    if (!sharedLib) {
-         pal.setColor(QPalette::WindowText,Qt::red);
-        fix8versionV->setText("?");
-        fix8versionV->setToolTip("Error no FIX Schema library provided");
-    }
-    if (!(sharedLib->isOK)) {
-        pal.setColor(QPalette::WindowText,Qt::red);
-        fix8versionV->setText(sharedLib->name);
-        fix8versionV->setToolTip("Error loading FIX schema lib: " + sharedLib->fileName);
-    }
-    else {
-         fix8versionV->setText(sharedLib->name);
-         fix8versionV->setToolTip(sharedLib->fileName);
-          pal.setColor(QPalette::WindowText,fix8RegColor);
-    }
-    fix8versionV->setPalette(pal);
-}
+

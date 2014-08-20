@@ -53,17 +53,11 @@ class SchemaEditorDialog : public QMainWindow
 public:
     enum {MessageView,FieldView};
     explicit SchemaEditorDialog(Database *database, QWidget *parent = 0);
-    void populateMessageList(MessageFieldList *);
-    void populateFieldListPair(QList<QPair<QString ,FieldUse *>> *);
     void restoreSettings();
     void saveSettings();
     void setTableSchemaInUse(TableSchema *inUse);
     void setSharedLibrary(Fix8SharedLib *f8sl);
     bool setCurrentTarget(MainWindow *mainWindow,bool isEditRequest=false);
-    void setBaseMaps(QMap<QString, QBaseEntry *>  &baseMap);
-    void setFieldUseList(FieldUseList &);
-    void setTableSchemas(TableSchemaList *, TableSchema *defaultTableSchema);
-    void setDefaultHeaderItems( QBaseEntryList &defaultHeaderItems);
     void windowDeleted(MainWindow *mw);
 protected slots:
     void applySlot();
@@ -111,6 +105,7 @@ private:
     void setCheckState(QStandardItem *item,Qt::CheckState cs);
     void setMessage(QString str, bool isError);
     void setStatus(StatusType);
+    bool setTableSchemas();
     void setUncheckedStateParent(QStandardItem *parentItem);
     void showWindowArea(QString windowName);
     void syncMessageViewWithFieldView();

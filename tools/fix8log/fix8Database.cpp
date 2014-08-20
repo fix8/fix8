@@ -128,61 +128,16 @@ void Fix8Log::initDatabase()
             errorStr = "Failed to create table  table.";
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
         }
-        else {
-            // create default schema ...
-            TableSchema *ts = new TableSchema("Default","Default Table Schema",true);
-            ts->setFields(defaultHeaderItems.clone());
-            ts->fieldNames = defaultHeaderItems.getFieldNames();
-            bstatus = database->addTableSchema(*ts);
-            if (!bstatus) {
-                errorStr = "Failed to create default table schema";
-                displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-            }
-            else {
-                database->saveTableSchemaFields(*ts);
-                tableSchemaList = database->getTableSchemas();
-                defaultTableSchema = tableSchemaList->findByName("Default");
-                defaultTableSchema->fieldNames = database->getSchemaFields(defaultTableSchema->id);
-                if (!tableSchemaList) {
-                    errorStr = "Error - no table schemas found in database";
-                    displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-                }
-            }
-        }
+
+
+
     }
     else {
         tableSchemaList = database->getTableSchemas();
         if (!tableSchemaList) {
             errorStr = "Error - no table schemas found in database, creating default....";
             displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
-            defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
-            defaultTableSchema->setFields(defaultHeaderItems.clone());
-            defaultTableSchema->fieldNames = defaultHeaderItems.getFieldNames();
-            bstatus = database->addTableSchema(*defaultTableSchema);
-            if (!bstatus) {
-                errorStr = "Failed to add default table schema to database";
-                displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-            }
-            else {
-                tableSchemaList = new TableSchemaList();
-                tableSchemaList->append(defaultTableSchema);
-            }
-        }
-        else { // lets make sure we have default table schema, else create it
-            defaultTableSchema = tableSchemaList->findByName("Default");
-            if(!defaultTableSchema) {
-                errorStr = "Failed to find default table schema, creating it...";
-                qDebug() << errorStr << __FILE__ << __LINE__;
-                displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::WarningMsg));
-                defaultTableSchema = new TableSchema("Default","Default Table Schema",true);
-                tableSchemaList->append(defaultTableSchema);
-                bstatus = database->addTableSchema(*defaultTableSchema);
-                if (!bstatus) {
-                    errorStr = "Failed to add default table schema to database 2";
-                    displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
-                }
-            }
-            MainWindow::defaultTableSchema = defaultTableSchema;
+
         }
     }
     if (tableSchemaList) {

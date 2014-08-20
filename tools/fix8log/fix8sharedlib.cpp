@@ -5,13 +5,24 @@
 #include <QLibrary>
 #include <QString>
 
-Fix8SharedLib::Fix8SharedLib():count(0)
+QStringList Fix8SharedLib::defaultHeaderStrs;
+
+
+
+Fix8SharedLib::Fix8SharedLib():count(0),defaultTableSchema(0),tableSchemas(0)
 {
+    if (defaultHeaderStrs.count() < 1)
+        init();
+}
+void Fix8SharedLib::init()
+{
+  defaultHeaderStrs <<  "MsgSeqNum" << "MsgType" << "SendingTime" << "SenderCompID" << "TargetCompID";
 }
 Fix8SharedLib * Fix8SharedLib::create(QString fileName)
 {
     bool bstatus;
     QString str;
+    qDebug() << "HERE IN CREATE SHARE LIB " << __FILE__ << __LINE__;
     Fix8SharedLib *f8sl = new Fix8SharedLib();
     f8sl->fileName = fileName;
     QFile file(fileName);
@@ -39,11 +50,47 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
     qDebug() << "\tAFTER LOAD bstatus =" << bstatus << __FILE__ << __LINE__;
     return f8sl;
 }
+void Fix8SharedLib::setDefaultTableSchema(TableSchema *defaultTS)
+{
+    defaultTableSchema = defaultTS;
+}
+TableSchema *Fix8SharedLib::createDefaultTableSchema()
+{
+    QString fieldName;
+    defaultTableSchema = new TableSchema("Default","",true,fileName);
+    defaultTableSchema->setFields(defaultHeaderItems.clone());
+    defaultTableSchema->fieldNames = defaultHeaderItems.getFieldNames();
+    defaultTableSchema->fieldList  = new QBaseEntryList();
+    QStringListIterator fieldNameIter(defaultTableSchema->fieldNames);
+    while(fieldNameIter.hasNext()) {
+        fieldName = fieldNameIter.next();
+        QBaseEntry *qbe = baseMap.value(fieldName);
+        if (qbe) {
+            defaultTableSchema->fieldList->append(qbe);
+        }
+    }
+    return defaultTableSchema;
+}
+
+TableSchema *Fix8SharedLib::getDefaultTableSchema()
+{
+    return defaultTableSchema;
+}
+TableSchemaList *Fix8SharedLib::getTableSchemas()
+{
+    return tableSchemas;
+}
+void Fix8SharedLib::setTableSchemas(TableSchemaList *tsl)
+{
+    tableSchemas = tsl;
+}
+
 bool Fix8SharedLib::loadFix8so()
 {
     bool bstatus;
     QString key;
     QString value;
+    QString fieldName;
     MessageField *messageField;
     fixLib = new QLibrary(fileName);
 
@@ -91,6 +138,21 @@ bool Fix8SharedLib::loadFix8so()
         fieldUsePairList.append(qMakePair(mf->name,mf));
     }
     qSort(fieldUsePairList.begin(), fieldUsePairList.end());
+    /*
+    // create default table schema
+    defaultTableSchema.setFields(defaultHeaderItems.clone());
+    defaultTableSchema.fieldNames = defaultHeaderItems.getFieldNames();
+    defaultTableSchema.fieldList  = new QBaseEntryList();
+    QStringListIterator fieldNameIter(defaultTableSchema.fieldNames);
+    while(fieldNameIter.hasNext()) {
+        fieldName = fieldNameIter.next();
+        QBaseEntry *qbe = baseMap.value(fieldName);
+        if (qbe) {
+            defaultTableSchema.fieldList->append(qbe);
+        }
+    }
+    */
+
     return bstatus;
 }
 void Fix8SharedLib::generate_traits(const TraitHelper& tr,QMap <QString, QBaseEntry *> &baseMap,FieldUseList &ful,

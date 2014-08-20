@@ -49,13 +49,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtWidgets>
 #include <QStandardItemModel>
 
-TableSchema *MainWindow::defaultTableSchema = 0;
-TableSchemaList *MainWindow::schemaList = 0;
 
 MainWindow::MainWindow(Database *db,bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
       windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchFunction(false),database(db),
-      linkSearchOn(false),fieldUsePairList(0),sharedLib(0)
+      linkSearchOn(false),fieldUsePairList(0),sharedLib(0),defaultTableSchema(0),schemaList(0)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -654,7 +652,6 @@ void MainWindow::buildMainWindow()
     popupActionGroup->addAction(popupCopyTextA);
     popupActionGroup->addAction(popupCopyHtmlA);
     connect(popupActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(popupMenuActionSlot(QAction*)));
-    buildSchemaMenu();
     buildHideColumnMenu();
 }
 void MainWindow::buildSchemaMenu()
@@ -689,10 +686,7 @@ void MainWindow::createWindowSlot()
 {
     emit createWindow(this);
 }
-void MainWindow::setTableSchemaList(TableSchemaList *tsl)
-{
-    schemaList = tsl;
-}
+
 void MainWindow::showFileDialog()
 {
     createTabSlot();
@@ -801,6 +795,11 @@ void MainWindow::setWindowData(const WindowData wd)
     tableSchema  = wd.tableSchema;
     if (!tableSchema)
         tableSchema = defaultTableSchema;
+    if (!tableSchema) {
+        qWarning() << "MAIN WINDOW HAS NULL TABLE SCHEMA " << __FILE__ << __LINE__;
+        schemaV->setText("???");
+        return;
+    }
     schemaV->setText(tableSchema->name);
     if (!schemaActionGroup) {
         qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
@@ -1203,11 +1202,17 @@ void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
         fix8versionV->setToolTip("Error no FIX Schema library provided");
     }
     if (!(sharedLib->isOK)) {
+        qDebug() << "SOMETHING WRONG WITH SHARED LIB" << __FILE__ << __LINE__;
+        qDebug() << "ERROR MESSAGE = " << sharedLib->errorMessage ;
         GUI::ConsoleMessage msg(sharedLib->errorMessage,GUI::ConsoleMessage::ErrorMsg);
         pal.setColor(QPalette::WindowText,Qt::red);
         fix8versionV->setText(sharedLib->name);
         fix8versionV->setToolTip("Error loading FIX schema lib: " + sharedLib->fileName);
        displayConsoleMessage(msg);
+       defaultTableSchema = sharedLib->getDefaultTableSchema();
+       schemaList = sharedLib->getTableSchemas();
+       buildSchemaMenu();
+
     }
     else {
         message = "FIX8 Schema lib set to " + sharedLib->name;

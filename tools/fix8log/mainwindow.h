@@ -104,7 +104,6 @@ public:
     QList<QPair<QString ,FieldUse *>> * getFieldUsePair();
     //void setSearchColumnNames(QStringList columnNames);
     void setSearchFunctions(SearchFunctionList *sfl);
-    static void setTableSchemaList(TableSchemaList *);
     void showFileDialog();
     QString getName();
     TableSchema* getTableSchema();
@@ -255,8 +254,7 @@ protected:
     //QToggleButton editTabNamePB;
     QToolBar *mainToolBar;
     FixToolBar *searchToolBar;
-    static TableSchema *defaultTableSchema;
-    static TableSchemaList *schemaList;
+
     QList <FixTable *> fixTableLists;
     QWidget *progressWidget;
     QWidget *searchArea;
@@ -327,6 +325,8 @@ private:
     QStringList searchArgList;
     Fix8SharedLib *sharedLib;
     QColor fix8RegColor;
+    TableSchema *defaultTableSchema;
+    TableSchemaList *schemaList;
 };
 
 #endif // MAINWINDOW_H

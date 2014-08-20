@@ -42,6 +42,11 @@ TableSchema::TableSchema():id(-1),locked(false),fieldList(0)
 TableSchema::TableSchema(QString Name, QString Description,bool Locked):id(-1),
     name(Name),description(Description),locked(Locked),fieldList(0)
 {
+
+}
+TableSchema::TableSchema(QString Name, QString Description,bool Locked, QString SharedLib):id(-1),
+    name(Name),description(Description),locked(Locked),sharedLib(SharedLib),fieldList(0)
+{
 }
 TableSchema::TableSchema(const TableSchema &ts)
 {
@@ -51,6 +56,7 @@ TableSchema::TableSchema(const TableSchema &ts)
     fieldNames = ts.fieldNames;
     fieldList = 0;
     id = ts.id;
+    sharedLib = ts.sharedLib;
 }
 TableSchema::~TableSchema()
 {
@@ -66,6 +72,7 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
     description = rhs.description;
     locked      = rhs.locked;
     fieldNames  = rhs.fieldNames;
+    sharedLib   = rhs.sharedLib;
     fieldList = 0;
     return *this;
 }
@@ -83,19 +90,15 @@ bool   TableSchema::operator!=( const TableSchema &ts) const
     if (ts.fieldList && !fieldList) {
         if (ts.fieldList->count() != 0)
             return true;
-        else
-            return false;
+
     }
-    if (!ts.fieldList && !fieldList)
-        return false;
+
 
     if (!ts.fieldList && fieldList) {
         if (fieldList->count() != 0) {
             return true;
         }
-        else {
-            return false;
-        }
+
     }
     if (ts.fieldList->count() != fieldList->count())
         return true;
@@ -106,6 +109,8 @@ bool   TableSchema::operator!=( const TableSchema &ts) const
         if (!fieldList->findByName(be->name))
             return true;
     }
+    if (sharedLib != ts.sharedLib)
+        return true;
     return false;
 }
 
@@ -148,6 +153,8 @@ bool   TableSchema::operator==( const TableSchema &ts) const
             return false;
         }
     }
+    if (sharedLib != ts.sharedLib)
+        return false;
     return true;
 }
 TableSchema *TableSchema::clone()
@@ -158,6 +165,7 @@ TableSchema *TableSchema::clone()
     }
     else
         ts->fieldList = 0;
+    ts->sharedLib = sharedLib;
     return ts;
 }
 
@@ -228,6 +236,17 @@ TableSchema *TableSchemaList::findByName(const QString &name)
     while(iter.hasNext()) {
         ts = iter.next();
         if (ts->name == name)
+            return ts;
+    }
+    return 0;
+}
+TableSchema *TableSchemaList::findDefault()
+{
+    TableSchema *ts = 0;
+    QListIterator <TableSchema *> iter(*this);
+    while(iter.hasNext()) {
+        ts = iter.next();
+        if (ts->locked)
             return ts;
     }
     return 0;

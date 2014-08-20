@@ -87,7 +87,8 @@ void WorkSheetModel::setTableSchema(TableSchema &ts)
     QBaseEntryList *fieldList;
     QBaseEntry *field;
     clear();
-    if (!tableSchema->fieldList) {
+
+    if (!tableSchema || !tableSchema->fieldList) {
         qWarning() << "Field List is null" << __FILE__ << __LINE__;
         setColumnCount(0);
         return;
