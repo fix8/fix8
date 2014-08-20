@@ -154,7 +154,6 @@ bool Fix8Log::init()
         fileName = newWindowWizard->getSelectedFile();
         libName = newWindowWizard->getSelectedLib();
         bstatus = createSharedLib(libName,&f8lib,defaultTableSchema);
-        //f8lib = Fix8SharedLib::create(libName);
         if (!bstatus) {
             errorStr = "Error - failed to load FIX8 sharelib: " + libName;
             QMessageBox::warning(0,Globals::appName,errorStr);
@@ -188,8 +187,12 @@ bool Fix8Log::init()
        newMW->setSharedLibrary(f8lib);
        newMW->setFieldUsePair(&(f8lib->fieldUsePairList));
        newMW->setAutoSaveOn(autoSaveOn);
-      WindowData windowData;
-      windowData.tableSchema = f8lib->getDefaultTableSchema();
+
+      //windowData.tableSchema = f8lib->getDefaultTableSchema();
+      wd =  newMW->getWindowData();
+      wd.tableSchema = f8lib->defaultTableSchema;
+      wd.tableSchemaID = f8lib->defaultTableSchema->id;
+      wd.fix8sharedlib = f8lib->fileName;
       newMW->setWindowData(wd);
       newMW->show();
       newMW->loadFile(fileName);
@@ -232,15 +235,12 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
 {
     bool bstatus;
     TableSchemaList *tsl;
-    qDebug() << "\n\n!!!CREATE SHARED LIB" << __FILE__ << __LINE__;
     *fixlib = Fix8SharedLib::create(fix8sharedlib);
     if (!(*fixlib)->isOK) {
         qWarning() << "FAILED TO CREATED SHARED LIB FOR " << fix8sharedlib;
         return false;
     }
-    else {
-        qDebug() << "CRATE LIB OK !!!!!!!!!!!!!!!!!!!!!!!";
-    }
+
     tsl  = database->getTableSchemasByLibName((*fixlib)->fileName);
     if (!tsl) {
         qWarning() << "NO table schemas found for shared lib:"
@@ -251,8 +251,6 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
     (*fixlib)->setTableSchemas(tsl);
     defaultTableSchema  = tsl->findDefault();
     if (!defaultTableSchema) {
-        qWarning() << "NO DEFAULT TABLE SCHEMA FOR Shared lib:" << (*fixlib)->fileName << __FILE__ << __LINE__;
-        qWarning() << "Createing it ....";
         defaultTableSchema = (*fixlib)->createDefaultTableSchema();
         if (defaultTableSchema) {
             tsl->append(defaultTableSchema);
@@ -266,6 +264,7 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
             qWarning() << "Failed to create default table schema for share lib: " << (*fixlib)->fileName << __FILE__ << __LINE__;
         }
         (*fixlib)->setDefaultTableSchema(defaultTableSchema);
+        (*fixlib)->setTableSchemas(tsl);
     }
     else {
         qDebug() << "GET FIELD LIST OF for default table schema " << __FILE__ << __LINE__;
