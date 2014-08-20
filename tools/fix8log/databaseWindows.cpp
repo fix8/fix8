@@ -88,6 +88,7 @@ QList<WindowData> Database::getWindows()
         wd.searchAll = query.value(8).toBool();
         wd.searchFunction.function = query.value(9).toString();
         wd.searchFunction.javascript =  query.value(10).toString();
+        wd.fix8sharedlib =  query.value(11).toString();
         windowDataList.append(wd);
     }
     return windowDataList;

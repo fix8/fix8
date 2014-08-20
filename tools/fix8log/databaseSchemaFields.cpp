@@ -55,7 +55,7 @@ QStringList Database::getSchemaFields(int schemaID)
         return fieldList;
     }
     QSqlQuery query(*handle);
-    filter = "id = " + QString::number(schemaID);
+    filter = "schemaID = " + QString::number(schemaID);
     str =  "select * from schemafields where " + filter;
     bstatus = query.prepare(str);
     if (bstatus == 0) {

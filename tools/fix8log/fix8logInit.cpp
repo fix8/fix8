@@ -96,10 +96,15 @@ bool Fix8Log::init()
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QListIterator <WindowData> iter(windowDataList);
     Fix8SharedLib  *fixlib;
+    qDebug() << "AUTO SAVE ON" << autoSaveOn;
     if (autoSaveOn){
+        qDebug() << "AUTO SAVE ON" << __FILE__ << __LINE__;
+        qDebug() << "COUNT OF WINDOW DATA LIST = " << windowDataList.count();
         while(iter.hasNext()) {
             wd = iter.next();
+            qDebug() << "!WINDOW DATA , lib = " << wd.fix8sharedlib << __FILE__ << __LINE__;
             if (wd.fix8sharedlib.length() > 0) {
+                qDebug() << "Look for shared lib...." << __FILE__ << __LINE__;
                 fixlib = fix8ShareLibList.findByFileName(wd.fix8sharedlib);
                 if (!fixlib) {
                     qDebug() << "Fix lib: " << wd.fix8sharedlib << " not found creating it...." << __FILE__ << __LINE__;
@@ -133,7 +138,10 @@ bool Fix8Log::init()
                     }
                     newMW->setLoading(false);
                 }
+                else
+                    qDebug() << "HOW DID THIS HAPPEND WE FOUND IT" << __FILE__ << __LINE__;
             }
+            qDebug() << "INVALID SHARED LIB" << __FILE__ << __LINE__;
             displayConsoleMessage("Session restored from autosave");
         }
     }
@@ -176,7 +184,6 @@ bool Fix8Log::init()
             exit(-1);
         }
         newMW = new MainWindow(database);
-        mainWindows.append(newMW);
         newMW->setAutoSaveOn(autoSaveOn);
         // have to set style sheet after show to see it take effect
         newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
@@ -263,13 +270,16 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
         else {
             qWarning() << "Failed to create default table schema for share lib: " << (*fixlib)->fileName << __FILE__ << __LINE__;
         }
-        (*fixlib)->setDefaultTableSchema(defaultTableSchema);
-        (*fixlib)->setTableSchemas(tsl);
+
     }
     else {
         qDebug() << "GET FIELD LIST OF for default table schema " << __FILE__ << __LINE__;
         defaultTableSchema->fieldNames = database->getSchemaFields(defaultTableSchema->id);
+        qDebug() << "FIELD NAMES: " << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
+        (*fixlib)->generateSchema(defaultTableSchema);
     }
+    (*fixlib)->setDefaultTableSchema(defaultTableSchema);
+    (*fixlib)->setTableSchemas(tsl);
     qDebug() << "STATUS OF SHARED LIB AT END = " <<  (*fixlib)->isOK << __FILE__ << __LINE__;
    return true;
 }

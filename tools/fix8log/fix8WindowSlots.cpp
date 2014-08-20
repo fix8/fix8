@@ -156,8 +156,11 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
+    qDebug() << "DELETE MAIN WINDOW SLOT, window count = "<< mainWindows.count() << __FILE__ << __LINE__;
     if (mainWindows.count() == 1)  {
+
         if (autoSaveOn) {
+            qDebug() << "\tSavie Session....";
             saveSession();
         }
     }

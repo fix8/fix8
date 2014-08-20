@@ -43,13 +43,29 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
         return f8sl;
     }
     f8sl->name = baseName.right(baseName.length()-3);
-
-
     bstatus = f8sl->loadFix8so();
     f8sl->isOK = bstatus;
     qDebug() << "\tAFTER LOAD bstatus =" << bstatus << __FILE__ << __LINE__;
     return f8sl;
 }
+bool Fix8SharedLib::generateSchema(TableSchema *ts)
+{
+    QString fieldName;
+
+    if (!ts)
+        return false;
+    ts->fieldList  = new QBaseEntryList();
+    QStringListIterator fieldNameIter(ts->fieldNames);
+    while(fieldNameIter.hasNext()) {
+        fieldName = fieldNameIter.next();
+        QBaseEntry *qbe = baseMap.value(fieldName);
+        if (qbe) {
+            ts->fieldList->append(qbe);
+        }
+    }
+    return true;
+}
+
 void Fix8SharedLib::setDefaultTableSchema(TableSchema *defaultTS)
 {
     defaultTableSchema = defaultTS;
@@ -138,20 +154,7 @@ bool Fix8SharedLib::loadFix8so()
         fieldUsePairList.append(qMakePair(mf->name,mf));
     }
     qSort(fieldUsePairList.begin(), fieldUsePairList.end());
-    /*
-    // create default table schema
-    defaultTableSchema.setFields(defaultHeaderItems.clone());
-    defaultTableSchema.fieldNames = defaultHeaderItems.getFieldNames();
-    defaultTableSchema.fieldList  = new QBaseEntryList();
-    QStringListIterator fieldNameIter(defaultTableSchema.fieldNames);
-    while(fieldNameIter.hasNext()) {
-        fieldName = fieldNameIter.next();
-        QBaseEntry *qbe = baseMap.value(fieldName);
-        if (qbe) {
-            defaultTableSchema.fieldList->append(qbe);
-        }
-    }
-    */
+
 
     return bstatus;
 }

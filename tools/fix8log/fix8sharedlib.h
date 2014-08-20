@@ -20,6 +20,7 @@ public:
     void setDefaultTableSchema(TableSchema *defaultTS);
     TableSchema *createDefaultTableSchema();
     TableSchema *getDefaultTableSchema();
+    bool generateSchema(TableSchema *ts);
     TableSchemaList *getTableSchemas();
     void setTableSchemas(TableSchemaList *tsl);
     qint16 count;
