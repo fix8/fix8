@@ -73,6 +73,7 @@ QList<WindowData> Database::getWindows()
     }
     while (query.next()) {
         WindowData wd;
+        wd.tableSchema = 0;
         wd.id = query.value(0).toInt();
         wd.menubarStyleSheet = query.value(1).toString();
         wd.geometry = query.value(2).toByteArray();

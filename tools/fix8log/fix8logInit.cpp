@@ -92,59 +92,79 @@ bool Fix8Log::init()
     // initial screeen
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     windowDataList = database->getWindows();
-    cleanWindowDataList(windowDataList);
+    // cleanWindowDataList(windowDataList);
     qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
     QListIterator <WindowData> iter(windowDataList);
     Fix8SharedLib  *fixlib;
-    qDebug() << "AUTO SAVE ON" << autoSaveOn;
     if (autoSaveOn){
         qDebug() << "AUTO SAVE ON" << __FILE__ << __LINE__;
         qDebug() << "COUNT OF WINDOW DATA LIST = " << windowDataList.count();
         while(iter.hasNext()) {
             wd = iter.next();
-            qDebug() << "!WINDOW DATA , lib = " << wd.fix8sharedlib << __FILE__ << __LINE__;
+            qDebug() << "!!! WINDOW DATA , lib = " << wd.fix8sharedlib << __FILE__ << __LINE__;
             if (wd.fix8sharedlib.length() > 0) {
-                qDebug() << "Look for shared lib...." << __FILE__ << __LINE__;
                 fixlib = fix8ShareLibList.findByFileName(wd.fix8sharedlib);
                 if (!fixlib) {
-                    qDebug() << "Fix lib: " << wd.fix8sharedlib << " not found creating it...." << __FILE__ << __LINE__;
                     bstatus = createSharedLib(wd.fix8sharedlib,&fixlib,defaultTableSchema);
+                    if (!bstatus)
+                        goto done;
+
                     fix8ShareLibList.append(fixlib);
-                    newMW  = new MainWindow(database,true);
-                    newMW->setSharedLibrary(fixlib);
-                    newMW->setFieldUsePair(&(fixlib->fieldUsePairList));
-                    newMW->setSearchFunctions(searchFunctionList);
-                    wireSignalAndSlots(newMW);
-                    mainWindows.append(newMW);
-                    newMW->setAutoSaveOn(autoSaveOn);
-                    // have to set style sheet after show to see it take effect
-                    newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
-                    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-                    QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
-                    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-                    if (!wd.tableSchema) {
-                        wd.tableSchema = fixlib->getDefaultTableSchema();
-                    }
-                    newMW->setWindowData(wd);
-                    newMW->show();
-                    if (wsdList.count() > 0) {
-                        QListIterator <WorkSheetData> iter2(wsdList);
-                        while(iter2.hasNext()) {
-                            WorkSheetData wsd = iter2.next();
-                            currentItemIter =  fileNameModelMap.find(wsd.fileName);
-                            newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
-                            newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
-                        }
-                    }
-                    newMW->setLoading(false);
+
+                }
+                wd.tableSchema  = fixlib->getTableSchema(wd.tableSchemaID);
+                if (!wd.tableSchema) {
+                    qWarning() << "TABLE SCHEMA NOT FOUND, setting to default..."
+                               << __FILE__ << __LINE__;
+                    wd.tableSchema = fixlib->getDefaultTableSchema();
+                    if (wd.tableSchema)
+                        wd.tableSchemaID = wd.tableSchema->id;
                 }
                 else
-                    qDebug() << "HOW DID THIS HAPPEND WE FOUND IT" << __FILE__ << __LINE__;
+                    fixlib->generateSchema(wd.tableSchema);
+                newMW  = new MainWindow(database,true);
+                newMW->setSharedLibrary(fixlib);
+                //newMW->setTableSchema(wd.tableSchema);
+                newMW->setFieldUsePair(&(fixlib->fieldUsePairList));
+                newMW->setSearchFunctions(searchFunctionList);
+                wireSignalAndSlots(newMW);
+                mainWindows.append(newMW);
+                newMW->setAutoSaveOn(autoSaveOn);
+                // have to set style sheet after show to see it take effect
+                newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
+                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+                QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
+                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+                if (!wd.tableSchema) {
+                    qDebug() << ">>>>>>>>>>>>>>>>>> TABLE SCHEMA IS NULL, SWT TO DEFAULT" << __FILE__ << __LINE__;
+                    wd.tableSchema = fixlib->getDefaultTableSchema();
+                }
+                qDebug() << "\t !!!!!!!!!!!!!!!!\nNEW MW , set window data....." << __FILE__ << __LINE__;
+                qDebug() << "!!!!!!!!!!!!!!!!!!!!Table schema name " << wd.tableSchema->name;
+                newMW->setWindowData(wd);
+                newMW->show();
+                if (wsdList.count() > 0) {
+                    QListIterator <WorkSheetData> iter2(wsdList);
+                    while(iter2.hasNext()) {
+                        WorkSheetData wsd = iter2.next();
+                        currentItemIter =  fileNameModelMap.find(wsd.fileName);
+                        newMW->addWorkSheet(wsd); // do not create model, have code reuse and redo  busy screen for each tab
+                        newMW->setCurrentTabAndSelectedRow(wd.currentTab,2);
+                    }
+                }
+                newMW->setLoading(false);
+
             }
-            qDebug() << "INVALID SHARED LIB" << __FILE__ << __LINE__;
-            displayConsoleMessage("Session restored from autosave");
+            else
+                qDebug() << "HOW DID THIS HAPPEND WE FOUND IT" << __FILE__ << __LINE__;
+        done:
+            ;
         }
     }
+    qDebug() << "INVALID SHARED LIB" << __FILE__ << __LINE__;
+    displayConsoleMessage("Session restored from autosave");
+
+
     if (mainWindows.count() < 1) {
         newWindowWizard = new NewWindowWizard(fix8ShareLibList,firstTimeToUse);
         newWindowWizard->readSettings();
@@ -187,24 +207,24 @@ bool Fix8Log::init()
         newMW->setAutoSaveOn(autoSaveOn);
         // have to set style sheet after show to see it take effect
         newMW->mainMenuBar->setStyleSheet(wd.menubarStyleSheet);
-       fix8ShareLibList.append(f8lib);
+        fix8ShareLibList.append(f8lib);
 
-       newMW->setSearchFunctions(searchFunctionList);
-       wireSignalAndSlots(newMW);
-       newMW->setSharedLibrary(f8lib);
-       newMW->setFieldUsePair(&(f8lib->fieldUsePairList));
-       newMW->setAutoSaveOn(autoSaveOn);
+        newMW->setSearchFunctions(searchFunctionList);
+        wireSignalAndSlots(newMW);
+        newMW->setSharedLibrary(f8lib);
+        newMW->setFieldUsePair(&(f8lib->fieldUsePairList));
+        newMW->setAutoSaveOn(autoSaveOn);
 
-      //windowData.tableSchema = f8lib->getDefaultTableSchema();
-      wd =  newMW->getWindowData();
-      wd.tableSchema = f8lib->defaultTableSchema;
-      wd.tableSchemaID = f8lib->defaultTableSchema->id;
-      wd.fix8sharedlib = f8lib->fileName;
-      newMW->setWindowData(wd);
-      newMW->show();
-      newMW->loadFile(fileName);
-      newMW->setAutoSaveOn(autoSaveOn);
-      mainWindows.append(newMW);
+        //windowData.tableSchema = f8lib->getDefaultTableSchema();
+        wd =  newMW->getWindowData();
+        wd.tableSchema = f8lib->defaultTableSchema;
+        wd.tableSchemaID = f8lib->defaultTableSchema->id;
+        wd.fix8sharedlib = f8lib->fileName;
+        newMW->setWindowData(wd);
+        newMW->show();
+        newMW->loadFile(fileName);
+        newMW->setAutoSaveOn(autoSaveOn);
+        mainWindows.append(newMW);
     }
     return true;
 }
@@ -238,7 +258,7 @@ bool Fix8Log::init(QString fileNameToLoad)
     return true;
 }
 bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
-                               TableSchema *defaultTableSchema)
+                              TableSchema *defaultTableSchema)
 {
     bool bstatus;
     TableSchemaList *tsl;
@@ -275,11 +295,12 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
     else {
         qDebug() << "GET FIELD LIST OF for default table schema " << __FILE__ << __LINE__;
         defaultTableSchema->fieldNames = database->getSchemaFields(defaultTableSchema->id);
+
         qDebug() << "FIELD NAMES: " << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
         (*fixlib)->generateSchema(defaultTableSchema);
     }
     (*fixlib)->setDefaultTableSchema(defaultTableSchema);
     (*fixlib)->setTableSchemas(tsl);
     qDebug() << "STATUS OF SHARED LIB AT END = " <<  (*fixlib)->isOK << __FILE__ << __LINE__;
-   return true;
+    return true;
 }

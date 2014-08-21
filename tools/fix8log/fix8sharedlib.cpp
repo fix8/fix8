@@ -48,6 +48,14 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
     qDebug() << "\tAFTER LOAD bstatus =" << bstatus << __FILE__ << __LINE__;
     return f8sl;
 }
+TableSchema * Fix8SharedLib::getTableSchema(qint32 tableSchemaID)
+{
+    TableSchema *ts = 0;
+    if (!tableSchemas || tableSchemas->count() < 1)
+        return ts;
+    ts = tableSchemas->findByID(tableSchemaID);
+    return ts;
+}
 bool Fix8SharedLib::generateSchema(TableSchema *ts)
 {
     QString fieldName;

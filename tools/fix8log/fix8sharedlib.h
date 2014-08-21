@@ -22,6 +22,7 @@ public:
     TableSchema *getDefaultTableSchema();
     bool generateSchema(TableSchema *ts);
     TableSchemaList *getTableSchemas();
+    TableSchema *getTableSchema(qint32 tableSchemaID);
     void setTableSchemas(TableSchemaList *tsl);
     qint16 count;
     QString name;

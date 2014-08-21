@@ -222,7 +222,7 @@ void MainWindow::buildMainWindow()
     quitA = new QAction(tr("&Quit"),this);
     quitA->setIcon(QIcon(":/images/32x32/exit.svg"));
     quitA->setToolTip(tr("Exit Application"));
-     quitA->setWhatsThis(tr("Exit application, clsoing all windows"));
+    quitA->setWhatsThis(tr("Exit application, clsoing all windows"));
     connect(quitA,SIGNAL(triggered()),this,SLOT(quitSlot()));
 
     newTabA = new QAction(tr("New Tab"),this);
@@ -297,8 +297,8 @@ void MainWindow::buildMainWindow()
     searchEndA->setWhatsThis("Go to last message that matches search requirement");
     searchEndA->setIcon(QIcon(":/images/svg/go-last-symbolic.svg"));
     searchNextA  = new QAction("Next",this);
-     searchNextA->setToolTip("Search Forward");
-     searchNextA->setWhatsThis("Go to next message that matches search critera");
+    searchNextA->setToolTip("Search Forward");
+    searchNextA->setWhatsThis("Go to next message that matches search critera");
     searchNextA->setIcon(QIcon(":/images/svg/go-next-symbolic.svg"));
     searchActionGroup->addAction(searchBackA);
     searchActionGroup->addAction(searchBeginA);
@@ -793,28 +793,32 @@ void MainWindow::setWindowData(const WindowData wd)
     setWindowTitle(wd.name);
     name = wd.name;
     tableSchema  = wd.tableSchema;
-    if (!tableSchema)
+    if (!tableSchema) {
+        qDebug() << "!!! set table schema to default !!!\n" << __FILE__ << __LINE__;
         tableSchema = defaultTableSchema;
+    }
     if (!tableSchema) {
         qWarning() << "MAIN WINDOW HAS NULL TABLE SCHEMA " << __FILE__ << __LINE__;
         schemaV->setText("???");
         return;
     }
+    qDebug() << "!!! Table Schema Field Names = " << tableSchema->fieldNames << __FILE__ << __LINE__;
     schemaV->setText(tableSchema->name);
     if (!schemaActionGroup) {
         qWarning() << "Error - No  schemas action items found" << __FILE__ << __LINE__;
-        return;
     }
-    al = schemaActionGroup->actions();
-    if (al.count() > 0) {
-        QListIterator <QAction *> iter(al);
-        while(iter.hasNext()) {
-            action = iter.next();
-            var = action->data();
-            ts = (TableSchema *) var.value<void *>();
-            if (ts == tableSchema) {
-                action->setChecked(true);
-                break;
+    else {
+        al = schemaActionGroup->actions();
+        if (al.count() > 0) {
+            QListIterator <QAction *> iter(al);
+            while(iter.hasNext()) {
+                action = iter.next();
+                var = action->data();
+                ts = (TableSchema *) var.value<void *>();
+                if (ts == tableSchema) {
+                    action->setChecked(true);
+                    break;
+                }
             }
         }
     }
@@ -875,7 +879,8 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
     setCursor(Qt::BusyCursor);
 
     WorkSheet *workSheet = new WorkSheet(this);
-     workSheet->setSharedLib(sharedLib);
+    workSheet->setSharedLib(sharedLib);
+    qDebug() << "!!! WORK SHEET SET TABLE SCHEMA....." << __FILE__ << __LINE__;
     workSheet->setTableSchema(tableSchema);
     connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
@@ -1197,7 +1202,7 @@ void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
         message = "Error = FIX8 schema library is null";
         GUI::ConsoleMessage msg(message,GUI::ConsoleMessage::ErrorMsg);
         displayConsoleMessage(msg);
-         pal.setColor(QPalette::WindowText,Qt::red);
+        pal.setColor(QPalette::WindowText,Qt::red);
         fix8versionV->setText("?");
         fix8versionV->setToolTip("Error no FIX Schema library provided");
     }
@@ -1208,19 +1213,19 @@ void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
         pal.setColor(QPalette::WindowText,Qt::red);
         fix8versionV->setText(sharedLib->name);
         fix8versionV->setToolTip("Error loading FIX schema lib: " + sharedLib->fileName);
-       displayConsoleMessage(msg);
-       defaultTableSchema = sharedLib->getDefaultTableSchema();
-       schemaList = sharedLib->getTableSchemas();
-       buildSchemaMenu();
+        displayConsoleMessage(msg);
+        defaultTableSchema = sharedLib->getDefaultTableSchema();
+        schemaList = sharedLib->getTableSchemas();
+        buildSchemaMenu();
 
     }
     else {
         message = "FIX8 Schema lib set to " + sharedLib->name;
-         GUI::ConsoleMessage msg(sharedLib->errorMessage,GUI::ConsoleMessage::InfoMsg);
-         displayConsoleMessage(msg);
-         fix8versionV->setText(sharedLib->name);
-         fix8versionV->setToolTip(sharedLib->fileName);
-          pal.setColor(QPalette::WindowText,fix8RegColor);
+        GUI::ConsoleMessage msg(sharedLib->errorMessage,GUI::ConsoleMessage::InfoMsg);
+        displayConsoleMessage(msg);
+        fix8versionV->setText(sharedLib->name);
+        fix8versionV->setToolTip(sharedLib->fileName);
+        pal.setColor(QPalette::WindowText,fix8RegColor);
     }
     fix8versionV->setPalette(pal);
 }

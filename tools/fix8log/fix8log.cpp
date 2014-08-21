@@ -36,12 +36,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include "database.h"
 #include "fix8log.h"
+#include "fix8sharedlib.h"
 #include "fixmimedata.h"
 #include "globals.h"
 #include "mainwindow.h"
 #include "messagefield.h"
 #include "newwindowwizard.h"
 #include "schemaeditordialog.h"
+#include "tableschema.h"
 #include "worksheetmodel.h"
 #include "windowdata.h"
 #include <QApplication>
@@ -66,44 +68,6 @@ Fix8Log::Fix8Log(QtSingleApplication *qsa) :
     GUI::Globals::Instance();
     connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
     defaultHeaderStrs << "MsgSeqNum" << "MsgType" << "SendingTime" << "SenderCompID" << "TargetCompID";
-}
-/*  Clean windows data ->verify schema is good */
-void Fix8Log::cleanWindowDataList(QList <WindowData> &windowDataList)
-{
-    WindowData *wd;
-    TableSchema *ts;
-    int tsid;
-    if (windowDataList.count()<1) {
-        qWarning() << "Error - clean window data list failed, list is empty" << __FILE__ << __LINE__;
-        return;
-    }
-    QListIterator <WindowData> iter(windowDataList);
-    while(iter.hasNext()) {
-        wd = (WindowData *)&iter.next();
-        tsid = wd->tableSchemaID;
-        if (!tableSchemaList) {
-            qWarning() << "Table Schema List is NULL " << " so setting  to default" << __FILE__ << __LINE__;
-            wd->tableSchema = defaultTableSchema;
-            if (!defaultTableSchema) {
-                qWarning() << "ERROR - DEFAULT TABLE SCHEMA NOT SET" << __FILE__ << __LINE__;
-            }
-            else
-                wd->tableSchemaID = defaultTableSchema->id;
-        }
-        else  {
-            wd->tableSchema = tableSchemaList->findByID(tsid);
-            if (!wd->tableSchema) {
-                qWarning() << "Could not find table schema for window " << wd->name;
-                qWarning() << "Resetting to default table schema" << __FILE__ << __LINE__;
-                wd->tableSchema = defaultTableSchema;
-                if (!defaultTableSchema) {
-                    qWarning() << "ERROR - DEFAULT TABLE SCHEMA NOT SET" << __FILE__ << __LINE__;
-                }
-                else
-                    wd->tableSchemaID = defaultTableSchema->id;
-            }
-        }
-    }
 }
 
 void Fix8Log::displayConsoleMessage(QString str, GUI::ConsoleMessage::ConsoleMessageType mt)

@@ -131,7 +131,6 @@ signals:
 private:
     bool createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
                           TableSchema *defaultTableSchema);
-    void cleanWindowDataList(QList <WindowData> &windowDataList);
     void initDatabase();
     std::function<const F8MetaCntx&()> loadFix8so(QString libName, bool &bstatus);
     SearchDialog *searchDialog;
