@@ -208,7 +208,7 @@ inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.Ge
 //-----------------------------------------------------------------------------------------
 class push_dir
 {
-	char _cwd[MAX_FLD_LENGTH]{};
+	char _cwd[MAX_FLD_LENGTH];
 
 	void getdir()
 	{
@@ -241,9 +241,9 @@ class push_dir
 	}
 
 public:
-	explicit push_dir(const std::string& to) { getdir(); chgdir(to.c_str()); }
-	explicit push_dir(const char *to) { getdir(); chgdir(to); }
-	push_dir() { getdir(); }
+	explicit push_dir(const std::string& to) : _cwd() { getdir(); chgdir(to.c_str()); }
+	explicit push_dir(const char *to) : _cwd() { getdir(); chgdir(to); }
+	push_dir() : _cwd() { getdir(); }
 	~push_dir() { chgdir(_cwd); }
 };
 
