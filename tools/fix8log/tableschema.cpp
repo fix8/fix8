@@ -73,7 +73,7 @@ TableSchema & TableSchema::operator=( const TableSchema &rhs)
     locked      = rhs.locked;
     fieldNames  = rhs.fieldNames;
     sharedLib   = rhs.sharedLib;
-    fieldList = 0;
+    fieldList   = rhs.fieldList;
     return *this;
 }
 bool   TableSchema::operator!=( const TableSchema &ts) const

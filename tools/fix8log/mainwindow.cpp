@@ -657,15 +657,29 @@ void MainWindow::buildMainWindow()
 void MainWindow::buildSchemaMenu()
 {
     TableSchema *tableSchema;
-    if (!schemaList) {
-        qDebug() << "Schema List is null " << __FILE__ << __LINE__;
-        return;
-    }
+    // add default schema
     schemaActionGroup = new QActionGroup(this);
     connect(schemaActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(schemaSelectedSlot(QAction *)));
     schemaActionGroup->setExclusive(true);
     schemaMenu->addSection("Available Schemas");
+    if (sharedLib && sharedLib->defaultTableSchema) {
+        QAction *action = new QAction( sharedLib->defaultTableSchema->name,this);
+        action->setCheckable(true);
+        QVariant var;
+        var.setValue((void *)  sharedLib->defaultTableSchema);
+        action->setData(var);
+        schemaActionMap.insert( sharedLib->defaultTableSchema->id,action);
+        schemaMenu->addAction(action);
+        schemaActionGroup->addAction(action);
+    }
+
+    if (!schemaList) {
+        qDebug() << "Schema List is null " << __FILE__ << __LINE__;
+        return;
+    }
+
     QListIterator <TableSchema *> iter(*schemaList);
+
     while(iter.hasNext()) {
         tableSchema = iter.next();
         QAction *action = new QAction(tableSchema->name,this);
@@ -798,7 +812,7 @@ void MainWindow::setWindowData(const WindowData wd)
         tableSchema = defaultTableSchema;
     }
     if (!tableSchema) {
-        qWarning() << "MAIN WINDOW HAS NULL TABLE SCHEMA " << __FILE__ << __LINE__;
+        qWarning() << "!!! MAIN WINDOW HAS NULL TABLE SCHEMA " << __FILE__ << __LINE__;
         schemaV->setText("???");
         return;
     }
@@ -863,7 +877,7 @@ WorkSheetData MainWindow::getWorksheetData(QUuid &workSheetID, bool *ok)
 }
 void MainWindow::addWorkSheet(WorkSheetData &wsd)
 {
-    qDebug() << "NEW CODE, REMOVE OLD ONE" << __FILE__ << __LINE__;
+    qDebug() << " ???NEW CODE, REMOVE OLD ONE" << __FILE__ << __LINE__;
     int index;
     bool bstatus;
     QString str;
@@ -880,7 +894,6 @@ void MainWindow::addWorkSheet(WorkSheetData &wsd)
 
     WorkSheet *workSheet = new WorkSheet(this);
     workSheet->setSharedLib(sharedLib);
-    qDebug() << "!!! WORK SHEET SET TABLE SCHEMA....." << __FILE__ << __LINE__;
     workSheet->setTableSchema(tableSchema);
     connect(workSheet,SIGNAL(notifyTimeFormatChanged(GUI::Globals::TimeFormat)),
             this,SLOT(setTimeSlotFromWorkSheet(GUI::Globals::TimeFormat)));
@@ -1055,7 +1068,6 @@ void MainWindow::popupMenuSlot(const QModelIndex &,const QPoint &)
 }
 void MainWindow::finishDrop(WorkSheetData &wsd, FixMimeData *fmd)
 {
-    qDebug() << "MainWindow::finishDrop" << __FILE__ << __LINE__;
     if (!fmd) {
         qWarning() << "Failed to finish drop, fmd = 0" << __FILE__ << __LINE__;
     }
@@ -1088,17 +1100,16 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
 
     }
     colNameList.sort();
-    qDebug() <<"COL NAME LIST SET TO " << colNameList << __FILE__ << __LINE__;
     QStringListModel *strModel = 0;
     QStringList fieldNameList;
     if (fieldUsePairList) {
-        qDebug() << "FIELD USE PAIR LIST COUNT = " << fieldUsePairList->count() << __FILE__ << __LINE__;
+        //qDebug() << "FIELD USE PAIR LIST COUNT = " << fieldUsePairList->count() << __FILE__ << __LINE__;
         QListIterator  <QPair<QString ,FieldUse *>> fieldPairIter(*fieldUsePairList);
         while(fieldPairIter.hasNext()) {
             QPair<QString,FieldUse *>  pair = fieldPairIter.next();
             fieldNameList << pair.first;
         }
-        qDebug() << "FILE NAME LIST COUNT:" << fieldNameList.count();
+        //qDebug() << "FILE NAME LIST COUNT:" << fieldNameList.count();
         strModel = new QStringListModel(fieldNameList,this);
         searchCompleter->setModel(strModel);
     }
@@ -1125,19 +1136,32 @@ void MainWindow::setTableSchema(TableSchema *newTableSchema)
 }
 void MainWindow::tableSchemaModified(TableSchema *ts)
 {
+    qDebug() << ":::TABLE SCHEMA MODIFIED...." << __FILE__ << __LINE__;
     WorkSheet *ws;
     QAction *action;
     if (!ts) {
         qWarning() << "Error MainWindow::tableSchemaModfied" << __FILE__ << __LINE__;
         return;
     }
+    if (!ts->fieldList) {
+     qWarning() << "FIELD LIST IS NULL for table modified" << __FILE__ << __LINE__;
+     return;
+    }
+    qDebug() << ":::TS FIELD COUNT = " << ts->fieldList->count() << __FILE__ << __LINE__;
     QMap<int,QAction *>::const_iterator iter  = schemaActionMap.find(ts->id);
     if (iter != schemaActionMap.end()) {
         action = (QAction *) iter.value();
         action->setText(ts->name);
     }
+    qDebug() << ":::TABLE SCHEMA FIELD LIST COUNT" << tableSchema->fieldList->count() << __FILE__ << __LINE__;
+    qDebug() << ":::TABLE SCHEMA ID = " << tableSchema->id << __FILE__ << __LINE__;
+    qDebug() << ":::TS ID = " << ts->id;
     if (tableSchema->id == ts->id) {
+        qDebug() << ":::MAKE ASSIGNMENT";
+        qDebug() << ":::TS FFIELD LIST COUNT " << ts->fieldList->count() << __FILE__ << __LINE__;
         *tableSchema = *ts;
+        qDebug() << "::: AFTER ASSIGNMENT. TABLE SCHEMA FIELD LIST COUNT" << tableSchema->fieldList->count();
+
     }
     QListIterator <WorkSheet *> iter2(workSheetList);
     while(iter2.hasNext()) {
@@ -1216,7 +1240,6 @@ void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
         displayConsoleMessage(msg);
         defaultTableSchema = sharedLib->getDefaultTableSchema();
         schemaList = sharedLib->getTableSchemas();
-        buildSchemaMenu();
 
     }
     else {
@@ -1227,6 +1250,9 @@ void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
         fix8versionV->setToolTip(sharedLib->fileName);
         pal.setColor(QPalette::WindowText,fix8RegColor);
     }
+    qDebug() << "CALL BUILD SCHEMNA MENU" << __FILE__ << __LINE__;
+    buildSchemaMenu();
+    qDebug() << "AFTER CALL BUILD SCHEMNA MENU" << __FILE__ << __LINE__;
     fix8versionV->setPalette(pal);
 }
 Fix8SharedLib * MainWindow::getSharedLibrary()

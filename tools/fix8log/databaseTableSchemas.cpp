@@ -55,7 +55,6 @@ TableSchemaList *Database::getTableSchemas()
     }
     QSqlQuery query(*handle);
     str = "select * from tableschemas";
-    qDebug() << "PREPARE STR = " << str << __FILE__ << __LINE__;
     bstatus = query.prepare(str);
     if (bstatus == 0) {
         qWarning() << "Error in get table schemas in prepare statement..." << __FILE__ << __LINE__;
@@ -103,7 +102,6 @@ TableSchemaList *Database::getTableSchemasByLibName(QString libFileName)
     QSqlQuery query(*handle);
     filter = "fixSharedLibFile = '" + libFileName + "'";
     str =  "select * from tableschemas where " + filter;
-    qDebug() << "PREPARE STATEMENT = " << str << __FILE__ << __LINE__;
     bstatus = query.prepare(str);
     if (bstatus == 0) {
         qWarning() << "Error in get table schemas in prepare statement..." << __FILE__ << __LINE__;

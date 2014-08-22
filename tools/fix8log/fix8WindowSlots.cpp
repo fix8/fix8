@@ -77,12 +77,11 @@ void Fix8Log::createNewWindowSlot(MainWindow *mw)
     newWindowWizard = new NewWindowWizard(fix8ShareLibList);
     int status = newWindowWizard->exec();
     newWindowWizard->saveSettings();
-    qDebug() << "Status == " << status;
     if (status == QDialog::Accepted	) {
         QString fileName = newWindowWizard->getSelectedFile();
         QString libName = newWindowWizard->getSelectedLib();
-        qDebug() << "Selected File = " << fileName << __FILE__ << __LINE__;
-        qDebug() << "Selected Lib = " << libName << __FILE__ << __LINE__;
+        //qDebug() << "Selected File = " << fileName << __FILE__ << __LINE__;
+        // qDebug() << "Selected Lib = " << libName << __FILE__ << __LINE__;
         f8lib =  fix8ShareLibList.findByFileName(libName);
         if (!f8lib) {
             f8lib = Fix8SharedLib::create(libName);

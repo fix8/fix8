@@ -428,9 +428,10 @@ void SchemaEditorDialog::setSharedLibrary(Fix8SharedLib *f8sl)
         FieldTrait *ft = pair.second->field;
         fieldItemsMap.insert(pair.first,item);
     }
+
+    setTableSchemas();
     connect(fieldsModel,SIGNAL(itemChanged(QStandardItem*)),
                this,SLOT(fieldCheckedSlot(QStandardItem *)));
-
 }
 /* lets get rid of all these methods and do it in setSharedLib above */
 

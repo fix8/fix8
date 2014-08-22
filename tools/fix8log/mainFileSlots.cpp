@@ -33,10 +33,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-
+#include "globals.h"
 #include "mainwindow.h"
 #include "messagearea.h"
 #include "fixmimedata.h"
+#include "fix8sharedlib.h"
 #include "globals.h"
 #include "intItem.h"
 #include "nodatalabel.h"
@@ -53,8 +54,14 @@ using namespace FIX8;
 void MainWindow::createTabSlot()
 {
     QString str;
+    if (!sharedLib || (!sharedLib->isOK)) {
+       str = "Unable to open new tab as the FIX Schema lib\nis not set for this window.";
+       QMessageBox::warning(this,GUI::Globals::appName,str);
+       return;
+    }
+
     if (cursor().shape() == Qt::BusyCursor) {
-        QMessageBox::information(this,"FIX8Log","This View is Currently Busy");
+        QMessageBox::information(this,GUI::Globals::appName,"This View is Currently Busy");
         return;
     }
     setCursor(Qt::BusyCursor);
@@ -63,11 +70,13 @@ void MainWindow::createTabSlot()
         if (fileFilter == "*.logs")
             filters << "*.log" << "*";
         else
-            filters <<  "*" << "*.log";
+            filters <<  "*" << "*.log" << "*.xml" << "*.data" << "*.fix";
         fileDialog = new QFileDialog(this);
-        fileDialog->setWindowTitle("Fix8 File Selector");
+        fileDialog->setWindowTitle("Open Log File For Schema \"" + sharedLib->name +"\"");
         fileDialog->setNameFilters(filters);
-        fileDialog->setLabelText(QFileDialog::FileName,"Fix Log:");
+        fileDialog->setLabelText(QFileDialog::FileName,"Fix Log File");
+
+
         fileDialog->setFileMode(QFileDialog::ExistingFiles);
         fileDialog->setOption(QFileDialog::ReadOnly,true);
         connect(fileDialog,SIGNAL(directoryEntered(const QString &)),this,SLOT(fileDirChangedSlot(const QString &)));

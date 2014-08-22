@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
         if (instance.sendMessage("Wake up!"))
             return 0;
 
-    qDebug() << "START ME UP:" << __FILE__ << __LINE__;
     bool loadFile = false;
     QString loadFileName;
     QCoreApplication::setApplicationName("fix8log");

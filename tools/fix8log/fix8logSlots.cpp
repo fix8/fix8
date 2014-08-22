@@ -143,7 +143,7 @@ void Fix8Log::schemaModifiedSlot(TableSchema *tableSchema, bool NameOnly)
     TableSchema * ts;
     bool found = false;
     if (!tableSchemaList) {
-        qWarning() << "Schema Modfied Error, tble Schema lis t is null" << __FILE__ << __LINE__;
+        qWarning() << "Schema Modified Error, table schema list is null" << __FILE__ << __LINE__;
         return;
     }
     QListIterator <TableSchema *> iter(*tableSchemaList);
@@ -208,9 +208,7 @@ void  Fix8Log::editSchemaSlot(MainWindow *mw)
         QMessageBox::warning(0,Globals::appName,str);
         return;
     }
-
     if (!schemaEditorDialog) {
-
         schemaEditorDialog = new SchemaEditorDialog(database);
         schemaEditorDialog->setSharedLibrary(sharedLib);
 
@@ -388,7 +386,6 @@ void Fix8Log::updatedSearchFunctionsSlot(SearchFunctionList *sfl)
     if (!database) {
         qWarning() << "Database not set, update search functions failed" << __FILE__ << __LINE__;
     }
-
     if (sfl)
         qDebug() << "Update of search Functions, count = " << sfl->count() << __FILE__ << __LINE__;
     else

@@ -97,11 +97,10 @@ bool Fix8Log::init()
     QListIterator <WindowData> iter(windowDataList);
     Fix8SharedLib  *fixlib;
     if (autoSaveOn){
-        qDebug() << "AUTO SAVE ON" << __FILE__ << __LINE__;
-        qDebug() << "COUNT OF WINDOW DATA LIST = " << windowDataList.count();
+        //qDebug() << "COUNT OF WINDOW DATA LIST = " << windowDataList.count();
         while(iter.hasNext()) {
             wd = iter.next();
-            qDebug() << "!!! WINDOW DATA , lib = " << wd.fix8sharedlib << __FILE__ << __LINE__;
+            //qDebug() << "!!! WINDOW DATA , lib = " << wd.fix8sharedlib << __FILE__ << __LINE__;
             if (wd.fix8sharedlib.length() > 0) {
                 fixlib = fix8ShareLibList.findByFileName(wd.fix8sharedlib);
                 if (!fixlib) {
@@ -136,11 +135,10 @@ bool Fix8Log::init()
                 QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
                 qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
                 if (!wd.tableSchema) {
-                    qDebug() << ">>>>>>>>>>>>>>>>>> TABLE SCHEMA IS NULL, SWT TO DEFAULT" << __FILE__ << __LINE__;
+                    qDebug() << "@@@ SETTING WD TABLE SCHEMA TO DEFAULT" << __FILE__ << __LINE__;
                     wd.tableSchema = fixlib->getDefaultTableSchema();
                 }
-                qDebug() << "\t !!!!!!!!!!!!!!!!\nNEW MW , set window data....." << __FILE__ << __LINE__;
-                qDebug() << "!!!!!!!!!!!!!!!!!!!!Table schema name " << wd.tableSchema->name;
+
                 newMW->setWindowData(wd);
                 newMW->show();
                 if (wsdList.count() > 0) {
@@ -155,13 +153,11 @@ bool Fix8Log::init()
                 newMW->setLoading(false);
 
             }
-            else
-                qDebug() << "HOW DID THIS HAPPEND WE FOUND IT" << __FILE__ << __LINE__;
+
         done:
             ;
         }
     }
-    qDebug() << "INVALID SHARED LIB" << __FILE__ << __LINE__;
     displayConsoleMessage("Session restored from autosave");
 
 
@@ -175,7 +171,6 @@ bool Fix8Log::init()
         newWindowWizard->move(x,y);
         status = newWindowWizard->exec();
         newWindowWizard->saveSettings();
-        qDebug() << "Status == " << status << __FILE__ << __LINE__;
         if (status != QDialog::Accepted) {
             exit(0);
         }
@@ -293,14 +288,13 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
 
     }
     else {
-        qDebug() << "GET FIELD LIST OF for default table schema " << __FILE__ << __LINE__;
         defaultTableSchema->fieldNames = database->getSchemaFields(defaultTableSchema->id);
 
-        qDebug() << "FIELD NAMES: " << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
+        //qDebug() << "FIELD NAMES: " << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
         (*fixlib)->generateSchema(defaultTableSchema);
     }
     (*fixlib)->setDefaultTableSchema(defaultTableSchema);
     (*fixlib)->setTableSchemas(tsl);
-    qDebug() << "STATUS OF SHARED LIB AT END = " <<  (*fixlib)->isOK << __FILE__ << __LINE__;
+    //qDebug() << "STATUS OF SHARED LIB AT END = " <<  (*fixlib)->isOK << __FILE__ << __LINE__;
     return true;
 }

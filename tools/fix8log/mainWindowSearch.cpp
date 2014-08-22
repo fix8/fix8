@@ -467,22 +467,21 @@ void MainWindow::setSearchFunctions(SearchFunctionList *sfl)
 
 void MainWindow::updateSearchFunctions(SearchFunctionList *sfl)
 {
-
     bool updateFunction = false;
+    bool resetToZero = false;
     QVariant var;
+
     SearchFunction *currentSearchFunction = 0;
     SearchFunction *newSearchFunction = 0;
     int currentIndex = searchSelectCB->currentIndex();
     if (currentIndex == 0) {
         validateSearchButtons();
-        return;
+        resetToZero = true;
     }
     var = searchSelectCB->itemData(currentIndex);
     if (var.isValid()) {
         currentSearchFunction = (SearchFunction *) var.value<void *>();
     }
-
-    //searchSelectCB->clear();
     if (sfl && (sfl->count() > 0)  && currentSearchFunction) {
         newSearchFunction = sfl->findByID(currentSearchFunction->id);
         if (newSearchFunction) {
@@ -514,7 +513,10 @@ void MainWindow::updateSearchFunctions(SearchFunctionList *sfl)
         searchSelectCB->setCurrentIndex(index);
         connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
     }
-
+    else if (resetToZero) {
+        qDebug() << "RESET TO ZERO " << __FILE__ << __LINE__;
+        searchSelectCB->setCurrentIndex(0);
+    }
 }
 void MainWindow::populateSearchList(SearchFunctionList *sfl)
 {

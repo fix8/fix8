@@ -89,7 +89,6 @@ QList <WorkSheetData> Database::getWorkSheets(int windowID)
         wd.searchFunction.javascript = query.value(11).toString();
         wd.messageHeaderState = query.value(12).toByteArray();
         wd.fieldsExpansionType = query.value(13).toUInt();
-        qDebug() << ">>>>>>>>>>>>> DATABASE GET FIELDS EXPANSION TYPE:" << wd.fieldsExpansionType << __FILE__ << __LINE__;
         wsdList.append(wd);
     }
     return wsdList;
@@ -114,7 +113,6 @@ bool Database::addWorkSheet(WorkSheetData &wsd)
         qWarning() << errorMessage;
         return false;
     }
-    qDebug() << "SAVE MESSAGE HEADER STATE LENGTH = " << wsd.messageHeaderState.length() << __FILE__ << __LINE__;
     query.bindValue(":windowID",wsd.windowID);
     query.bindValue(":alias",wsd.tabAlias);
     query.bindValue(":file",wsd.fileName);

@@ -165,6 +165,7 @@ void SchemaEditorDialog::addItemToSelected(QStandardItem *availItem,Qt::CheckSta
         selectedMap.remove(be->name);
         selectedBaseEntryList.removeOne(be);
     }
+
     updateFieldsView();
     updateStatusOfMessageList();
 
@@ -778,6 +779,8 @@ void SchemaEditorDialog::saveSchemaSlot()
 
     if (tempTableSchema->fieldList) {
         currentTableSchema->fieldList = tempTableSchema->fieldList->clone();
+        qDebug() << "\tSetting currentTableSchea Field List, count =  " << currentTableSchema->fieldList->count() << __FILE__ << __LINE__;
+
     }
 
     if (currentSchemaItem)
@@ -798,6 +801,7 @@ void SchemaEditorDialog::saveSchemaSlot()
     }
     validate();
     unsetCursor();
+    qDebug() << "EMIT TABLE SCHEMA UPDATED, FIELD LIST = " << currentTableSchema->fieldList->count() << __FILE__ << __LINE__;
     emit tableSchemaUpdated(currentTableSchema,false);
 }
 void SchemaEditorDialog::selectedListClickedSlot(QModelIndex)

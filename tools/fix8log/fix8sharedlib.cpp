@@ -22,7 +22,6 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
 {
     bool bstatus;
     QString str;
-    qDebug() << "HERE IN CREATE SHARE LIB " << __FILE__ << __LINE__;
     Fix8SharedLib *f8sl = new Fix8SharedLib();
     f8sl->fileName = fileName;
     QFile file(fileName);

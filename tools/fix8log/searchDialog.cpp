@@ -192,7 +192,6 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
 }
 void SearchDialog::setTableSchema(TableSchema *ts)
 {
-    qDebug() << "Search Dialog, set database " << __FILE__ << __LINE__;
     tableSchema = ts;
     QString colName;
     QStringList colNameList;
@@ -206,9 +205,6 @@ void SearchDialog::setTableSchema(TableSchema *ts)
         qWarning() << "Error database is null";
         return;
     }
-
-
-
     int colCount = tableSchema->fieldNames.count();
     for(int i=0;i<colCount;i++) {
         colName  = tableSchema->fieldNames[i];
@@ -231,13 +227,11 @@ void SearchDialog::setTableSchema(TableSchema *ts)
     else
         populateSearchFunctions();
 }
-
 void SearchDialog::showEvent(QShowEvent *se)
 {
     //validate();
     QDialog::showEvent(se);
 }
-
 QSize SearchDialog::sizeHint() const
 {
 
@@ -411,6 +405,7 @@ void SearchDialog::saveSlot()
     functionEdit->setText("");
     mode = ViewMode;
     validate();
+    qDebug() << "Emit Update Search Functions" << __FILE__ << __LINE__;
     emit updatedSearchFunctions(searchFunctionList);
 }
 void SearchDialog::rowSelectedSlot(QModelIndex)
