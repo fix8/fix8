@@ -4,7 +4,9 @@
 #include <QFileInfo>
 #include <QLibrary>
 #include <QString>
-
+#include <iostream>
+#include <exception>
+using namespace std;
 QStringList Fix8SharedLib::defaultHeaderStrs;
 
 
@@ -24,8 +26,8 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
     QString str;
     Fix8SharedLib *f8sl = new Fix8SharedLib();
     f8sl->fileName = fileName;
-    QFile file(fileName);
-    if (!file.exists()) {
+    QFile *file = new QFile(fileName);
+    if (!file->exists()) {
         f8sl->errorMessage  = "Error - No such library found for: " + fileName;
         qWarning() << f8sl->errorMessage << __FILE__ << __LINE__;
         f8sl->isOK = false;
@@ -44,7 +46,7 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
     f8sl->name = baseName.right(baseName.length()-3);
     bstatus = f8sl->loadFix8so();
     f8sl->isOK = bstatus;
-    qDebug() << "\tAFTER LOAD bstatus =" << bstatus << __FILE__ << __LINE__;
+    // qDebug() << "\tAFTER LOAD bstatus =" << bstatus << __FILE__ << __LINE__;
     return f8sl;
 }
 TableSchema * Fix8SharedLib::getTableSchema(qint32 tableSchemaID)
@@ -128,12 +130,24 @@ bool Fix8SharedLib::loadFix8so()
     QFunctionPointer _handle;
     QString ctxStr(name + "_ctx");
     const char *ctxfuncstr = ctxStr.toLatin1().data();
+    if (!ctxfuncstr) {
+        qWarning() << ">>>>> Error - failed loading library " << fileName << "ctx handle not found" << __FILE__ << __LINE__;
+        errorMessage  =  "Error - failed loading library " + fileName + ".  CTX handle not found";
+        isOK = false;
+        //delete fixLib;
+        return false;
+    }
+     try {
     _handle = fixLib->resolve(ctxfuncstr);
-    if (!_handle) {
-        qWarning()  << "Failed to get handle " << ctxfuncstr << " in library: " << fileName << __FILE__ << __LINE__;
+    }
+    catch (exception& e) {
+        std::cout << "ERROR IN RESOLVING LIB:";
+    }
+    if (!_handle ||  _handle == 0) {
+        //qWarning()  << "Failed to get handle " << ctxStr << " in library: " << fileName << __FILE__ << __LINE__;
         errorMessage = "Failed to get handle " +  ctxStr +  " in library: " + fileName;
         isOK = false;
-        delete fixLib;
+        //delete fixLib;
         return false;
     }
     int level;

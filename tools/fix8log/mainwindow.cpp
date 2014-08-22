@@ -65,7 +65,8 @@ MainWindow::MainWindow(Database *db,bool showLoading)
 
 MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false), haveSearchFunction(false),database(db),linkSearchOn(false),fieldUsePairList(0)
+      windowDataID(-1),loadingActive(false), haveSearchFunction(false),database(db),linkSearchOn(false),fieldUsePairList(0),
+    sharedLib(0),defaultTableSchema(0),schemaList(0)
 {
     buildMainWindow();
     setAcceptDrops(true);
