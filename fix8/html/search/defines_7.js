@@ -7,5 +7,6 @@ var searchData=
   ['package_5ftarname',['PACKAGE_TARNAME',['../f8config_8h.html#af415af6bfede0e8d5453708afe68651c',1,'f8config.h']]],
   ['package_5furl',['PACKAGE_URL',['../f8config_8h.html#a5c93853116d5a50307b6744f147840aa',1,'f8config.h']]],
   ['package_5fversion',['PACKAGE_VERSION',['../f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0',1,'f8config.h']]],
-  ['patch_5fversion_5fnum',['PATCH_VERSION_NUM',['../f8config_8h.html#a8d9556de1e767d55bb4d961702101c56',1,'f8config.h']]]
+  ['patch_5fversion_5fnum',['PATCH_VERSION_NUM',['../f8config_8h.html#a8d9556de1e767d55bb4d961702101c56',1,'f8config.h']]],
+  ['preencode_5fmsg_5fsupport',['PREENCODE_MSG_SUPPORT',['../f8config_8h.html#ad21e110bc5d7e79c2286762294c3db49',1,'f8config.h']]]
 ];
