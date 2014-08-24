@@ -58,9 +58,8 @@ MINOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}']
 AC_DEFINE_UNQUOTED([MINOR_VERSION_NUM], [$MINOR_VERSION_NUM], [Minor version number])
 PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$3}']`
 AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
-MAGIC_NUM=`[echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}']`
-# this would also probably have worked
-# MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
+# MAGIC_NUM=`[echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}']`
+MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
 
 AC_DEFINE_UNQUOTED([MAGIC_NUM], [$MAGIC_NUM], [Encode version])
 AC_DEFINE_UNQUOTED([MAGIC_NUM_EXPR], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version as expresion])
@@ -872,7 +871,7 @@ AC_SUBST_FILE([CHANGELOG])
 CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
-						fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
+						stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
 AC_CONFIG_HEADERS(include/fix8/f8config.h)
 AC_OUTPUT
 

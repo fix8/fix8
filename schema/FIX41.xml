@@ -790,7 +790,7 @@
   <field number='32' name='LastShares' type='INT' />
   <field number='33' name='LinesOfText' type='INT' />
   <field number='34' name='MsgSeqNum' type='INT' />
-  <field number='35' name='MsgType' type='CHAR'>
+  <field number='35' name='MsgType' type='STRING'>
    <value enum='0' description='HEARTBEAT' />
    <value enum='1' description='TEST_REQUEST' />
    <value enum='2' description='RESEND_REQUEST' />
@@ -859,7 +859,7 @@
    <value enum='P' description='PEGGED' />
   </field>
   <field number='41' name='OrigClOrdID' type='CHAR' />
-  <field number='42' name='OrigTime' type='TIME' />
+  <field number='42' name='OrigTime' type='UTCTIMESTAMP' />
   <field number='43' name='PossDupFlag' type='CHAR'>
    <value enum='N' description='NO' />
    <value enum='Y' description='YES' />
@@ -895,8 +895,8 @@
   <field number='48' name='SecurityID' type='CHAR' />
   <field number='49' name='SenderCompID' type='CHAR' />
   <field number='50' name='SenderSubID' type='CHAR' />
-  <field number='51' name='SendingDate' type='DATE' />
-  <field number='52' name='SendingTime' type='TIME' />
+  <field number='51' name='SendingDate' type='LOCALMKTDATE' />
+  <field number='52' name='SendingTime' type='UTCTIMESTAMP' />
   <field number='53' name='Shares' type='INT' />
   <field number='54' name='Side' type='CHAR'>
    <value enum='1' description='BUY' />
@@ -921,13 +921,13 @@
    <value enum='5' description='GOOD_TILL_CROSSING' />
    <value enum='6' description='GOOD_TILL_DATE' />
   </field>
-  <field number='60' name='TransactTime' type='TIME' />
+  <field number='60' name='TransactTime' type='UTCTIMESTAMP' />
   <field number='61' name='Urgency' type='CHAR'>
    <value enum='0' description='NORMAL' />
    <value enum='1' description='FLASH' />
    <value enum='2' description='BACKGROUND' />
   </field>
-  <field number='62' name='ValidUntilTime' type='TIME' />
+  <field number='62' name='ValidUntilTime' type='UTCTIMESTAMP' />
   <field number='63' name='SettlmntTyp' type='CHAR'>
    <value enum='0' description='REGULAR' />
    <value enum='1' description='CASH' />
@@ -940,7 +940,7 @@
    <value enum='8' description='SELLERS_OPTION' />
    <value enum='9' description='T_PLUS_5' />
   </field>
-  <field number='64' name='FutSettDate' type='DATE' />
+  <field number='64' name='FutSettDate' type='LOCALMKTDATE' />
   <field number='65' name='SymbolSfx' type='CHAR' />
   <field number='66' name='ListID' type='CHAR' />
   <field number='67' name='ListSeqNo' type='INT' />
@@ -957,7 +957,7 @@
   <field number='72' name='RefAllocID' type='CHAR' />
   <field number='73' name='NoOrders' type='INT' />
   <field number='74' name='AvgPrxPrecision' type='INT' />
-  <field number='75' name='TradeDate' type='DATE' />
+  <field number='75' name='TradeDate' type='LOCALMKTDATE' />
   <field number='76' name='ExecBroker' type='CHAR' />
   <field number='77' name='OpenClose' type='CHAR'>
    <value enum='C' description='CLOSE' />
@@ -1079,14 +1079,14 @@
    <value enum='N' description='NO' />
    <value enum='Y' description='YES' />
   </field>
-  <field number='122' name='OrigSendingTime' type='TIME' />
+  <field number='122' name='OrigSendingTime' type='UTCTIMESTAMP' />
   <field number='123' name='GapFillFlag' type='CHAR'>
    <value enum='N' description='NO' />
    <value enum='Y' description='YES' />
   </field>
   <field number='124' name='NoExecs' type='INT' />
   <field number='125' name='CxlType' type=' CHAR' />
-  <field number='126' name='ExpireTime' type='TIME' />
+  <field number='126' name='ExpireTime' type='UTCTIMESTAMP' />
   <field number='127' name='DKReason' type='CHAR'>
    <value enum='A' description='UNKNOWN_SYMBOL' />
    <value enum='B' description='WRONG_SIDE' />
@@ -1218,7 +1218,7 @@
    <value enum='WAR' description='WARRANT' />
    <value enum='ZOO' description='CATS_TIGERS_LIONS' />
   </field>
-  <field number='168' name='EffectiveTime' type='TIME' />
+  <field number='168' name='EffectiveTime' type='UTCTIMESTAMP' />
   <field number='169' name='StandInstDbType' type='INT'>
    <value enum='0' description='OTHER' />
    <value enum='1' description='DTC_SID' />
@@ -1248,7 +1248,7 @@
   <field number='190' name='OfferSpotRate' type='FLOAT' />
   <field number='191' name='OfferForwardPoints' type='FLOAT' />
   <field number='192' name='OrderQty2' type='FLOAT' />
-  <field number='193' name='FutSettDate2' type='DATE' />
+  <field number='193' name='FutSettDate2' type='LOCALMKTDATE' />
   <field number='194' name='LastSpotRate' type='FLOAT' />
   <field number='195' name='LastForwardPoints' type='FLOAT' />
   <field number='196' name='AllocLinkID' type='CHAR' />
