@@ -187,18 +187,18 @@ protected:
 
 	struct LogElement
 	{
-		thread_id_t _tid{};
+		thread_id_t _tid;
 		std::string _str;
 		Level _level;
-		const char *_fileline{};
+		const char *_fileline;
 		unsigned _val{};
 		Tickval _when{true};
 
 		LogElement(const thread_id_t tid, const std::string& str, Level level, const char *fl=nullptr, const unsigned val=0)
 			: _tid(tid), _str(str), _level(level), _fileline(fl), _val(val) {}
 		LogElement(const thread_id_t tid, const std::string& str, const unsigned val=0)
-			: _tid(tid), _str(str), _level(Info),_val(val) {}
-		LogElement() : _level(Info) {}
+			: _tid(tid), _str(str), _level(Info), _fileline(), _val(val) {}
+		LogElement() : _tid(), _level(Info),_fileline() {}
 		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _level(from._level), _fileline(from._fileline),
 			_val(from._val), _when(from._when) {}
 		LogElement& operator=(const LogElement& that)
