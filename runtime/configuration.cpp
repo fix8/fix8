@@ -150,7 +150,7 @@ Schedule Configuration::create_schedule(const XmlElement *which) const
 		string daytmp;
 		const int start_day(which->GetAttr("start_day", daytmp) ? decode_dow(daytmp) : -1);
 		const int end_day(which->GetAttr("end_day", daytmp) ? decode_dow(daytmp) : start_day < 0 ? -1 : start_day);
-		return {start, end, duration, utc_offset, start_day, end_day};
+		return {start, end, Tickval(static_cast<Tickval::ticks>(duration)), utc_offset, start_day, end_day};
 	}
 
 	return {};
