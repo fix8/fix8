@@ -172,7 +172,7 @@ bool Fix8Log::init()
         status = newWindowWizard->exec();
         newWindowWizard->saveSettings();
         if (status != QDialog::Accepted) {
-            exit(0);
+            qApp->exit(0);
         }
         fileName = newWindowWizard->getSelectedFile();
         libName = newWindowWizard->getSelectedLib();
@@ -181,7 +181,7 @@ bool Fix8Log::init()
             errorStr = "Error - failed to load FIX8 sharelib: " + libName;
             QMessageBox::warning(0,Globals::appName,errorStr);
             newWindowWizard->deleteLater();
-            exit(-1);
+            qApp->exit(0);
         }
 
         if (!f8lib) {
@@ -189,14 +189,14 @@ bool Fix8Log::init()
             errorStr = "Error - failed to create FIX8 sharelib: " + libName;
             QMessageBox::warning(0,Globals::appName,errorStr);
             newWindowWizard->deleteLater();
-            exit(-1);
+            qApp->exit(0);
         }
         if (!(f8lib->isOK)) {
             qWarning() << ">>>>>>>>>>>>>SHARE LIB SET TO" << f8lib->fileName << __FILE__ << __LINE__;
             errorStr = "Error - FIX8 sharelib: " + libName + " has error.";
             QMessageBox::warning(0,Globals::appName,errorStr);
             newWindowWizard->deleteLater();
-            exit(-1);
+            qApp->exit(0);
         }
         newMW = new MainWindow(database);
         newMW->setAutoSaveOn(autoSaveOn);

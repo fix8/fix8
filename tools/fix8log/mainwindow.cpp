@@ -663,6 +663,7 @@ void MainWindow::buildSchemaMenu()
     connect(schemaActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(schemaSelectedSlot(QAction *)));
     schemaActionGroup->setExclusive(true);
     schemaMenu->addSection("Available Schemas");
+    /*
     if (sharedLib && sharedLib->defaultTableSchema) {
         QAction *action = new QAction( sharedLib->defaultTableSchema->name,this);
         action->setCheckable(true);
@@ -673,7 +674,7 @@ void MainWindow::buildSchemaMenu()
         schemaMenu->addAction(action);
         schemaActionGroup->addAction(action);
     }
-
+*/
     if (!schemaList) {
         qDebug() << "Schema List is null " << __FILE__ << __LINE__;
         return;
@@ -1252,6 +1253,7 @@ void MainWindow::setSharedLibrary(Fix8SharedLib *f8sl)
         pal.setColor(QPalette::WindowText,fix8RegColor);
     }
     qDebug() << "CALL BUILD SCHEMNA MENU" << __FILE__ << __LINE__;
+    schemaList = sharedLib->tableSchemas;
     buildSchemaMenu();
     qDebug() << "AFTER CALL BUILD SCHEMNA MENU" << __FILE__ << __LINE__;
     fix8versionV->setPalette(pal);

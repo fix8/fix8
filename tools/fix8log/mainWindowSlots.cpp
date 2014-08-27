@@ -40,6 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "fixtoolbar.h"
 #include "globals.h"
 #include "nodatalabel.h"
+#include "fix8sharedlib.h"
 #include "tableschema.h"
 #include "worksheet.h"
 #include <QDebug>
@@ -109,7 +110,7 @@ void MainWindow::configFGSlot()
     QSettings settings("fix8","logviewer");
 
     menuBarStyleSheet =  mainMenuBar->styleSheet();
-    QColorDialog *colorDialog = new QColorDialog();
+    QColorDialog *colorDialog = new QColorDialog(this);
     colorDialog->setWindowTitle(tr("Select Menu Bar Text Color"));
     colorDialog->setCustomColor(0,GUI::Globals::menubarDefaultColor);
     connect(colorDialog,SIGNAL(colorSelected(QColor)),this,SLOT(setColorSlot(QColor)));
@@ -152,34 +153,43 @@ void MainWindow::configSlot()
 void MainWindow::setColorSlot(QColor  color)
 {    
     QString colorStr;
-
     QString colorValue;
     QString backgroundValue;
     QStringList attributes = menuBarStyleSheet.split(';');
-    qDebug() << "Attributes: " << attributes;
     QStringListIterator iter(attributes);
     QString attribute;
     while(iter.hasNext()) {
         attribute = iter.next();
         if (attribute.contains("background-color")) {
             backgroundValue = attribute;
+            if (backgroundValue.length() > 2)
+                backgroundValue = backgroundValue.split(':').last();
+            else {
+                backgroundValue = menuBar()->palette().color(QPalette::Window).name();
+                qDebug() << "Use palette" << backgroundValue << __FILE__ << __LINE__;
+            }
         }
-        else if (attribute.contains("color")) {
+        if (attribute.contains("color")) {
             colorValue = attribute;
+            if (colorValue.length() > 2)
+                colorValue  = colorValue.split(':').last();
+            else
+                colorValue = menuBar()->palette().color(QPalette::WindowText).name();
         }
     }
+    if (backgroundValue.length() < 2)
+        backgroundValue = menuBar()->palette().color(QPalette::Window).name();
+
+    if (colorValue.length() <2)
+        colorValue = menuBar()->palette().color(QPalette::WindowText).name();
     if (colorSelectionFG)
-        colorStr = backgroundValue +  QString("; color:") + QString(color.name()) + QString(";");
+        colorValue = color.name();
     else
-        colorStr = QString("background-color:") + QString(color.name()) + QString(";") + colorValue + ";";
-    mainMenuBar->setStyleSheet(colorStr);
-    menuBarStyleSheet = mainMenuBar->styleSheet();
+        backgroundValue = color.name();
+        qDebug() << "Attributes: " << attributes;
 
-    fileMenu->setStyleSheet(menuStyle);
-    optionMenu->setStyleSheet(menuStyle);
-    schemaMenu->setStyleSheet(menuStyle);
-    helpMenu->setStyleSheet(menuStyle);
-
+   colorStr = "QMenuBar::item{ background:" +  backgroundValue +  "; color:" + colorValue + "} QMenuBar{background:" + backgroundValue + ";}";
+   menuBar()->setStyleSheet(colorStr);
 
 }
 void MainWindow::currentColorChangedSlot(QColor color)
@@ -194,20 +204,38 @@ void MainWindow::currentColorChangedSlot(QColor color)
         attribute = iter.next();
         if (attribute.contains("background-color")) {
             backgroundValue = attribute;
+            if (backgroundValue.length() > 2)
+                backgroundValue = backgroundValue.split(':').last();
+            else {
+                backgroundValue = menuBar()->palette().color(QPalette::Window).name();
+                qDebug() << "Use palette" << backgroundValue << __FILE__ << __LINE__;
+            }
         }
-        else if (attribute.contains("color")) {
+        if (attribute.contains("color")) {
             colorValue = attribute;
+            if (colorValue.length() > 2)
+                colorValue  = colorValue.split(':').last();
+            else
+                colorValue = menuBar()->palette().color(QPalette::WindowText).name();
         }
     }
+    if (backgroundValue.length() < 2)
+        backgroundValue = menuBar()->palette().color(QPalette::Window).name();
+
+    if (colorValue.length() <2)
+        colorValue = menuBar()->palette().color(QPalette::WindowText).name();
     if (colorSelectionFG)
-        colorStr = backgroundValue +  QString("; color:") + QString(color.name()) + QString(";");
+        colorValue = color.name();
     else
-        colorStr = QString("background-color:") + QString(color.name()) + QString(";") + colorValue + ";";
-    menuBar()->setStyleSheet(colorStr);
-    fileMenu->setStyleSheet(menuStyle);
-    optionMenu->setStyleSheet(menuStyle);
-    schemaMenu->setStyleSheet(menuStyle);
-    helpMenu->setStyleSheet(menuStyle);
+        backgroundValue = color.name();
+        qDebug() << "Attributes: " << attributes;
+
+   colorStr = "QMenuBar::item{ background:" +  backgroundValue +  "; color:" + colorValue + "} QMenuBar{background:" + backgroundValue + ";}";
+   menuBar()->setStyleSheet(colorStr);
+    //fileMenu->setStyleSheet(menuStyle);
+   // optionMenu->setStyleSheet(menuStyle);
+   // schemaMenu->setStyleSheet(menuStyle);
+   // helpMenu->setStyleSheet(menuStyle);
 }
 void MainWindow::editTabNameSlot(bool isOn)
 {
@@ -353,10 +381,6 @@ void MainWindow::schemaSelectedSlot(QAction *action)
     WorkSheet *ws;
 
     QVariant var =  action->data();
-    if (!schemaList) {
-        qWarning() << "ERROR - NO SCHEMA LIST SET" << __FILE__ << __LINE__;
-        return;
-    }
 
     ts = (TableSchema *) var.value<void *>();
     if (!ts) {
