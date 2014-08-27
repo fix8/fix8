@@ -82,32 +82,33 @@ bool   TableSchema::operator!=( const TableSchema &ts) const
     if ((ts.name != name) && (ts.description != description)) {
         return true;
     }
+
+
     if (ts.fieldNames != fieldNames) {
-        qDebug() << "0 CHECK TS != " << __FILE__ << __LINE__;
         return true;
     }
-    //
-    if (ts.fieldList && !fieldList) {
-        if (ts.fieldList->count() != 0)
-            return true;
+    if (ts.fieldList && fieldList) {
+        if (ts.fieldList && !fieldList) {
+            if (ts.fieldList->count() != 0)
+                return true;
 
-    }
-
-
-    if (!ts.fieldList && fieldList) {
-        if (fieldList->count() != 0) {
-            return true;
+        }
+        if (!ts.fieldList && fieldList) {
+            if (fieldList->count() != 0) {
+                return true;
+            }
         }
 
-    }
-    if (ts.fieldList->count() != fieldList->count())
-        return true;
-    QListIterator <QBaseEntry *> iter(*ts.fieldList);
-    QBaseEntry *be;
-    while (iter.hasNext()) {
-        be = iter.next();
-        if (!fieldList->findByName(be->name))
+        if (ts.fieldList->count() != fieldList->count())
             return true;
+
+            QListIterator <QBaseEntry *> iter(*ts.fieldList);
+            QBaseEntry *be;
+        while (iter.hasNext()) {
+            be = iter.next();
+            if (!fieldList->findByName(be->name))
+            return true;
+        }
     }
     if (sharedLib != ts.sharedLib)
         return true;

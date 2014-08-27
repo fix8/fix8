@@ -97,19 +97,15 @@ bool Fix8Log::init()
     QListIterator <WindowData> iter(windowDataList);
     Fix8SharedLib  *fixlib;
     if (autoSaveOn){
-        //qDebug() << "COUNT OF WINDOW DATA LIST = " << windowDataList.count();
         while(iter.hasNext()) {
             wd = iter.next();
-            //qDebug() << "!!! WINDOW DATA , lib = " << wd.fix8sharedlib << __FILE__ << __LINE__;
             if (wd.fix8sharedlib.length() > 0) {
                 fixlib = fix8ShareLibList.findByFileName(wd.fix8sharedlib);
                 if (!fixlib) {
                     bstatus = createSharedLib(wd.fix8sharedlib,&fixlib,defaultTableSchema);
                     if (!bstatus)
                         goto done;
-
                     fix8ShareLibList.append(fixlib);
-
                 }
                 wd.tableSchema  = fixlib->getTableSchema(wd.tableSchemaID);
                 if (!wd.tableSchema) {
@@ -135,10 +131,8 @@ bool Fix8Log::init()
                 QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
                 qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
                 if (!wd.tableSchema) {
-                    qDebug() << "@@@ SETTING WD TABLE SCHEMA TO DEFAULT" << __FILE__ << __LINE__;
                     wd.tableSchema = fixlib->getDefaultTableSchema();
                 }
-
                 newMW->setWindowData(wd);
                 newMW->show();
                 if (wsdList.count() > 0) {
@@ -269,10 +263,16 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
                    << (*fixlib)->fileName << __FILE__ << __LINE__;
         tsl = new TableSchemaList();
     }
-
+    QListIterator <TableSchema *> tsiter(*tsl);
+    while(tsiter.hasNext()) {
+        TableSchema *ts = tsiter.next();
+        ts->fieldNames = database->getSchemaFields(ts->id);
+         (*fixlib)->generateSchema(ts);
+    }
     (*fixlib)->setTableSchemas(tsl);
     defaultTableSchema  = tsl->findDefault();
     if (!defaultTableSchema) {
+        qWarning() << "HEY NO DEFAULT TABLE SCHEMA FOUND............" << __FILE__ << __LINE__;
         defaultTableSchema = (*fixlib)->createDefaultTableSchema();
         if (defaultTableSchema) {
             tsl->append(defaultTableSchema);
@@ -286,13 +286,11 @@ bool Fix8Log::createSharedLib(QString &fix8sharedlib,Fix8SharedLib **fixlib,
             qWarning() << "Failed to create default table schema for share lib: " << (*fixlib)->fileName << __FILE__ << __LINE__;
         }
 
-    }
-    else {
-        defaultTableSchema->fieldNames = database->getSchemaFields(defaultTableSchema->id);
 
         //qDebug() << "FIELD NAMES: " << defaultTableSchema->fieldNames << __FILE__ << __LINE__;
         (*fixlib)->generateSchema(defaultTableSchema);
     }
+
     (*fixlib)->setDefaultTableSchema(defaultTableSchema);
     (*fixlib)->setTableSchemas(tsl);
     //qDebug() << "STATUS OF SHARED LIB AT END = " <<  (*fixlib)->isOK << __FILE__ << __LINE__;

@@ -627,7 +627,7 @@ void SchemaEditorDialog::newSchemaSlot()
     newSchemaLine->setText("");
     newDescriptionE->setText("");
     newSchemaLine->setFocus();
-    newAvailableSchemasL->setText("Create New Schema");
+    newAvailableSchemasL->setText("Create New Table Schema");
     validate();
 }
 void SchemaEditorDialog::editSchemaSlot()
@@ -636,13 +636,13 @@ void SchemaEditorDialog::editSchemaSlot()
     viewMode = EditMode;
     schemaArea->setCurrentIndex(NewMode);
     if(!currentTableSchema) {
-        qWarning() << "Edit failed, current schema is null" << __FILE__ << __LINE__;
+        qWarning() << "Edit failed, current table schema is null" << __FILE__ << __LINE__;
         return;
     }
     newSchemaLine->setText(currentTableSchema->name);
     newDescriptionE->setText(currentTableSchema->description);
     newSchemaLine->setFocus();
-    newAvailableSchemasL->setText("Edit Schema");
+    newAvailableSchemasL->setText("Edit Table Schema");
     validate();
 }
 void SchemaEditorDialog::saveNewEditSlot()

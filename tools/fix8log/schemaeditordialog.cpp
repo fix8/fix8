@@ -81,7 +81,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     connect(undoA,SIGNAL(triggered()),this,SLOT(undoSchemaSlot()));
 
     newSchemaA = new QAction(QIcon(":/images/svg/newspreadsheet.svg"),"New",this);
-    newSchemaA->setToolTip("Create a new schema");
+    newSchemaA->setToolTip("Create a new table schema");
     connect(newSchemaA,SIGNAL(triggered()),this,SLOT(newSchemaSlot()));
 
     copySchemaA = new QAction(QIcon(":/images/svg/spreadsheetCopy.svg"),"Copy",this);
@@ -92,7 +92,7 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     connect(editSchemaA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
 
     deleteSchemaA = new QAction(QIcon(":/images/svg/editdelete.svg"),"Delete",this);
-    deleteSchemaA->setToolTip("Delete selected schema");
+    deleteSchemaA->setToolTip("Delete selected table schema");
     connect(deleteSchemaA,SIGNAL(triggered()),this,SLOT(deleteSchemaSlot()));
 
     fileMenu->addAction(applyA);
@@ -124,13 +124,13 @@ SchemaEditorDialog::SchemaEditorDialog(Database *db,QWidget *parent) :
     QHBoxLayout  *fixVerLayout = new QHBoxLayout(fixVersionArea);
     fixVerLayout->setMargin(0);
 
-    fix8versionL = new QLabel("Schema:",fixVersionArea);
-    fix8versionL->setToolTip("What should this tool tip say ?");
+    fix8versionL = new QLabel("FIX Schema:",fixVersionArea);
+    fix8versionL->setToolTip("Current FIX schema for given window");
 
     fix8versionV = new QLabel("???",fixVersionArea);
     QPalette fpal = fix8versionV->palette();
     fix8RegColor = fpal.color(QPalette::WindowText); // save for latter
-    fix8versionV->setToolTip("And What should this tool tip say ?");
+    fix8versionV->setToolTip("From shared fix8 shared library");
     QFont fnt = fix8versionL->font();
     fnt.setBold(true);
     fix8versionL->setFont(fnt);
@@ -155,7 +155,7 @@ void SchemaEditorDialog::buildSchemaArea()
     QVBoxLayout *abox = new QVBoxLayout(availableArea);
     abox->setMargin(0);
     availableArea->setLayout(abox);
-    availableSchemasL = new QLabel("Schemas",availableArea);
+    availableSchemasL = new QLabel("Table Schemas",availableArea);
     availableSchemasListView = new QListView(availableArea);
     SchemaDelegate *schemaDelegate = new SchemaDelegate(availableSchemasListView);
     availableSchemasListView->setItemDelegate(schemaDelegate);
@@ -184,12 +184,12 @@ void SchemaEditorDialog::buildSchemaArea()
     newSchemaArea->setLayout(newBox);
     newBox->setMargin(0);
     newBox->setSpacing(5);
-    newAvailableSchemasL = new QLabel("Create New Schema",newSchemaArea);
+    newAvailableSchemasL = new QLabel("New TableSchema",newSchemaArea);
     newSchemaL = new QLabel("Name",newSchemaArea);
     newSchemaLine = new QLineEdit(newSchemaArea);
     newSchemaLine->setMaxLength(24);
-    newSchemaLine->setToolTip("Name of Schema");
-    newSchemaLine->setToolTip("Type name of new schema\n(Can also use \'Enter\' key to save)");
+    newSchemaLine->setToolTip("Name of Table Schema");
+    newSchemaLine->setToolTip("Type name of new table schema\n(Can also use \'Enter\' key to save)");
     QRegExp regExp("^[a-z,A-Z,0-9]+\\s?[a-z,A-Z,0-9]+$");
     QValidator *val = new QRegExpValidator(regExp,this);
     newSchemaLine->setValidator(val);
@@ -441,12 +441,13 @@ bool SchemaEditorDialog::setTableSchemas()
         qWarning() << "Setting table schemas failed as database not set" << __FILE__ << __LINE__;
         return false;
     }
-    tableSchemaList = database->getTableSchemasByLibName(sharedLib->fileName);
+   // tableSchemaList = database->getTableSchemasByLibName(sharedLib->fileName);
+    tableSchemaList = sharedLib->getTableSchemas();
     if (availableSchemaModel->rowCount() > 0) {
         availableSchemaModel->removeRows(0,availableSchemaModel->rowCount() -1);
     }
     if (tableSchemaList)
-    defaultTableSchema = tableSchemaList->findDefault();
+        defaultTableSchema = tableSchemaList->findDefault();
     if (defaultTableSchema) {
         qDebug() << "Found Default Table Schema" << __FILE__ << __LINE__;
         currentTableSchema = defaultTableSchema;
@@ -475,12 +476,6 @@ bool SchemaEditorDialog::setTableSchemas()
             availableSchemaModel->appendRow(schemaItem);
         }
     }
-/*
-    if (currentTableSchema) {
-        tempTableSchema = currentTableSchema->clone();
-    }
-    buildSelectedListFromCurrentSchema();
-*/
     return true;
 }
 void SchemaEditorDialog::setTableSchemaInUse(TableSchema *ts)
@@ -615,6 +610,15 @@ bool SchemaEditorDialog::validate()
         availableSchemasListView->viewport()->update();
     }
     if (viewMode == NewMode || viewMode == EditMode) {
+        availableSchemasListView->setEnabled(false);
+        messageListTreeView->setEnabled(false);
+        availableFieldsTreeView->setEnabled(false);
+        selectedFieldsTreeView->setEnabled(false);
+        messageViewA->setEnabled(false);
+        fieldViewA->setEnabled(false);
+        defaultPB->setEnabled(false);
+        clearAllPB->setEnabled(false);
+        clearPB->setEnabled(false);
         if (newSchemaLine->text().length() > 1)
             isValid = true;
         newSchemaA->setEnabled(false);
@@ -627,6 +631,15 @@ bool SchemaEditorDialog::validate()
         collapsePB->setEnabled(false);
     }
     else {
+        availableSchemasListView->setEnabled(true);
+        messageListTreeView->setEnabled(true);
+        availableFieldsTreeView->setEnabled(true);
+        selectedFieldsTreeView->setEnabled(true);
+        messageViewA->setEnabled(true);
+        fieldViewA->setEnabled(true);
+        defaultPB->setEnabled(true);
+        clearAllPB->setEnabled(true);
+        clearPB->setEnabled(true);
         if (currentTableSchema && inUseTableSchema && (*currentTableSchema == *inUseTableSchema)) {
             applyA->setEnabled(false);
         }
@@ -666,12 +679,13 @@ bool SchemaEditorDialog::validate()
         if (selectedSelModel->hasSelection())
             enableClear = true;
     }
-    clearPB->setEnabled(enableClear);
-    enableClear = false;
-    if (selectedFieldModel->rowCount() > 0)
-        enableClear = true;
-    clearAllPB->setEnabled(enableClear);
-
+    if (viewMode != NewMode && viewMode != EditMode)  {
+        clearPB->setEnabled(enableClear);
+        enableClear = false;
+        if (selectedFieldModel->rowCount() > 0)
+            enableClear = true;
+        clearAllPB->setEnabled(enableClear);
+    }
     update();
     repaint();
     return isValid;
