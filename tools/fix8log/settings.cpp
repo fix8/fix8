@@ -45,7 +45,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 void MainWindow::readSettings()
 {
   QSettings settings("fix8","logviewer");
-   restoreGeometry(settings.value("Geometry").toByteArray());
+  QRect defaultSize(100,100,900,600);
+
+  bool bstatus =  restoreGeometry(settings.value("Geometry").toByteArray());
+  if (!bstatus) {
+   qDebug() << "NO DEFAULT SIZE" << __FILE__ << __LINE__;
+    setGeometry(defaultSize);
+  }
    restoreState(settings.value("MainWindowState").toByteArray());
    restoreDockWidget(consoleDock);
     lastSelectedDir = settings.value("LastSelectedDir").toString();

@@ -77,7 +77,7 @@ void NewWindowWizard::createFilePage()
 void NewWindowWizard::readSettings()
 {
     QSettings settings("fix8","logviewerNewWindowWizard");
-    QRect defaultRect(0,100,600,500);
+    QRect defaultRect(0,100,700,540);
     QVariant defaultVar(defaultRect);
     filePage->readSettings();
 

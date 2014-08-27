@@ -28,7 +28,7 @@ bool NewWindowFilePage::isComplete() const
 void NewWindowFilePage::readSettings()
 {
     QSettings settings("fix8","logviewerNewWindowFilePage");
-    QRect defaultRect(00,100,600,500);
+    QRect defaultRect(0,100,900,700);
     QVariant defaultVar(defaultRect);
     setGeometry(settings.value("geometry",defaultRect).toRect());
     fileSelector->readSettings();
