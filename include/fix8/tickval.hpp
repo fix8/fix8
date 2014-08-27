@@ -55,6 +55,8 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 #ifdef _MSC_VER
 
+#define CLOCK_REALTIME 0
+
 inline LARGE_INTEGER getFILETIMEoffset()
 {
 	SYSTEMTIME s { 1970, 1, 1, 0, 0, 0, 0 };
@@ -68,52 +70,67 @@ inline LARGE_INTEGER getFILETIMEoffset()
 	return t;
 }
 
-// Windows does not have clock_gettime, so we must supply it
-inline int clock_gettime(int X, struct timespec *tv)
+// it's just workaround!!!
+inline int clock_gettime(int X, struct timespec *tv, int reInitialize = 0)
 {
-    LARGE_INTEGER t;
-    FILETIME f;
-    double nanoseconds;
-    //static LARGE_INTEGER    offset;
-    static double frequencyToNanoseconds;
-    static int initialized = 0;
-    static BOOL usePerformanceCounter = 0;
+	// TICKS_1601_TO_1970 -> 1601 to 1970 is 369 years plus 89 leap days. taken from realization for wine
+	const long long TICKS_1601_TO_1970 = (369LL * 365 + 89) * 24 * 3600 * 10000000LL;
+	LARGE_INTEGER t;
+	FILETIME f;
+	static double frequencyToNanoseconds = 1.; 
+	static int initialized = 0;
+	static BOOL usePerformanceCounter = 0;
+	static long long offset = TICKS_1601_TO_1970;
 
-    if (!initialized)
-	 {
-        LARGE_INTEGER performanceFrequency;
-        initialized = 1;
-        usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
-        if (usePerformanceCounter)
-		  {
-            //QueryPerformanceCounter(&offset);
-            frequencyToNanoseconds = (double)performanceFrequency.QuadPart / 1000000000.;
-        }
-		  else
-		  {
-            //offset = getFILETIMEoffset();
-            frequencyToNanoseconds = 10.;
-        }
-    }
-    if (usePerformanceCounter)
-		 QueryPerformanceCounter(&t);
-    else
-	 {
-        GetSystemTimeAsFileTime(&f);
-        t.QuadPart = f.dwHighDateTime;
-        t.QuadPart <<= 32;
-        t.QuadPart |= f.dwLowDateTime;
-    }
-
-    //t.QuadPart -= offset.QuadPart;
-    nanoseconds = (double)t.QuadPart / frequencyToNanoseconds;
-    t.QuadPart = nanoseconds;
-    tv->tv_sec = t.QuadPart / 1000000000;
-    tv->tv_nsec = t.QuadPart % 1000000000;
-    return 0;
+	if (X != CLOCK_REALTIME)
+	{
+		if (reInitialize) initialized = 0;
+		if (!initialized)
+		{
+			LARGE_INTEGER performanceFrequency;
+			initialized = 1;
+			usePerformanceCounter = ::QueryPerformanceFrequency(&performanceFrequency);
+			if (usePerformanceCounter)
+			{
+				frequencyToNanoseconds = (double)performanceFrequency.QuadPart / 1000000000.;
+				//find offset between standard "unix" epoch and epoch of last computer launch :)
+				//this clock (X != CLOCK_REALTIME) will drift from realtime but difference between two time points is valid
+				{
+					LARGE_INTEGER tt;
+					::GetSystemTimeAsFileTime(&f);
+					::QueryPerformanceCounter(&tt);//hope no interrupts between that two lines
+					t.HighPart = f.dwHighDateTime;
+					t.LowPart = f.dwLowDateTime;
+					t.QuadPart -= TICKS_1601_TO_1970;
+					t.QuadPart *= 100;
+					tt.QuadPart = (double)tt.QuadPart / frequencyToNanoseconds;
+					offset = t.QuadPart - tt.QuadPart;
+				}
+			}
+		}
+		if (usePerformanceCounter)
+		{
+			::QueryPerformanceCounter(&t);
+			t.QuadPart = (double)t.QuadPart / frequencyToNanoseconds;
+			t.QuadPart += offset;
+		}
+	}
+	else if (X == CLOCK_REALTIME || !usePerformanceCounter)
+	{
+		::GetSystemTimeAsFileTime(&f);
+		t.HighPart = f.dwHighDateTime;
+		t.LowPart = f.dwLowDateTime;
+		t.QuadPart -= TICKS_1601_TO_1970;
+		t.QuadPart *= 100;
+	}
+	tv->tv_sec = t.QuadPart / 1000000000;
+	tv->tv_nsec = t.QuadPart % 1000000000;
+	//or
+	//lldiv_t result = ::div(t.QuadPart, 1000000000LL);
+	//tv->tv_sec = result.quot;
+	//tv->tv_nsec = result.rem;
+	return 0;
 }
-
-#define CLOCK_REALTIME 0
 
 #endif // _MSC_VER
 
