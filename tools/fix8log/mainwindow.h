@@ -227,6 +227,7 @@ protected:
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
     QLabel   *filterL;
+    QLabel   *filterSelectL;
     QLabel   *scopeV;
     QLabel   *schemaL;
     QLabel   *schemaV;
@@ -316,8 +317,11 @@ private:
     QScriptValue searchFunctionVal;
     QActionGroup *searchActionGroup;
     QScriptEngine engine;
+    QCompleter *filterCompleter;
     QCompleter *searchCompleter;
+    QComboBox  *filterSelectCB;
     QComboBox  *searchSelectCB;
+    ComboBoxLineEdit *filterSelectLineEdit;
     ComboBoxLineEdit *searchSelectLineEdit;
     QLabel     *searchSelectL;
     QMap <QString, qint32 > searchFunctionMap; //< function, indexofComboBox>

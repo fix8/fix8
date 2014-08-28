@@ -83,5 +83,6 @@
         <file>images/svg/newwindow.svg</file>
         <file>qml/welcome.qml</file>
         <file>images/svg/Chemistry-Conical-Funnel.svg</file>
+        <file>images/svg/filterEdit.svg</file>
     </qresource>
 </RCC>

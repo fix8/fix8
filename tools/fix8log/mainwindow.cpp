@@ -203,16 +203,38 @@ void MainWindow::buildMainWindow()
     filterBox->addWidget(excludeFilterB,0);
     filterBox->addWidget(includeFilterB,0);
 
+    QWidget *filterSelectArea = new QWidget(this);
+    QHBoxLayout *filterSelectBox = new QHBoxLayout();
+    filterSelectArea->setLayout(filterSelectBox);
+    filterSelectBox->setMargin(0);
+    filterSelectL = new QLabel("Select:");
+    filterSelectCB = new QComboBox(this);
+    //connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
+    filterSelectLineEdit = new ComboBoxLineEdit(this);
+    filterSelectCB->setLineEdit(filterSelectLineEdit);
+    QFontMetrics fm2(filterSelectCB->font());
+    filterSelectCB->setMaximumWidth(fm2.maxWidth()*20);
+    //filterSelectModel = filterSelectCB->model();
+    filterSelectCB->setEditable(false);
+    filterSelectCB->setToolTip("Alias list of filter functions");
+    filterSelectCB->setWhatsThis("Select filter function by its alias.  Use \"Search Edit\" to edit this list");
+
+    filterSelectBox->addWidget(filterSelectL,0);
+    filterSelectBox->addWidget(filterSelectCB,1);
+    filterSelectBox->addStretch(1);
+
     editFilterA= new QAction("&Filter Editor",this);
     editFilterA->setIconText("Edit");
     editFilterA->setToolTip(tr("Edit Filter"));
     editFilterA->setWhatsThis(tr("Allows you to filter out messages"));
-    editFilterA->setIcon((QIcon(":/images/svg/editSchema.svg")));
+    editFilterA->setIcon((QIcon(":/images/svg/filterEdit.svg")));
     connect(editFilterA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
    // searchToolBar->addAction(linkSearchA);
     //searchToolBar->addWidget(searchLV);
     filterToolBar->addWidget(filterArea);
     filterToolBar->addAction(editFilterA);
+
+    filterToolBar->addWidget(filterSelectArea);
     searchToolBar = new FixToolBar("Search",this);
     connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
             this,SLOT(toolbarOrientationChangedSlot(Qt::Orientation)));
