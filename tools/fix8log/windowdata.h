@@ -57,5 +57,6 @@ public:
     bool searchAll;
     SearchFunction searchFunction;
     QString fix8sharedlib;
+    qint32 fontPtSize;
 };
 #endif // WINDOWDATA_H

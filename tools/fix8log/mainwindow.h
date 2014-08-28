@@ -175,6 +175,7 @@ protected:
     QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
+    QAction  *editFilterA;
     QAction  *editSchemaA;
     QAction  *fontIncreaseA;
     QAction  *fontDecreaseA;
@@ -184,6 +185,7 @@ protected:
     QAction  *hideConsoleA;
     QAction  *hideToolBarA;
     QAction  *hideSearchToolBarA;
+     QAction  *filterToolBarA;
     QAction  *iconSizeSmallA;
     QAction  *iconSizeRegA;
     QAction  *iconSizeLargeA;
@@ -217,11 +219,14 @@ protected:
     QActionGroup *hideColActionGroup;
     QActionGroup *iconSizeActionGroup;
     QActionGroup *iconsStyleGroup;
+    QButtonGroup *filterButtonGroup;
     QByteArray messageSplitterSettings;
     QString    menuBarStyleSheet;
+    LineEdit *filterLineEdit;
     LineEdit *searchLineEdit;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
+    QLabel   *filterL;
     QLabel   *scopeV;
     QLabel   *schemaL;
     QLabel   *schemaV;
@@ -244,8 +249,11 @@ protected:
     PushButtonModifyKey *configPB;
     QPushButton *cancelEditTabNamePB;
     QPushButton *editTabNamePB;
+
     QQuickItem  *qmlObject;
     QQuickView *progressView;
+    QRadioButton *includeFilterB;
+    QRadioButton *excludeFilterB;
     QSplitter *workAreaSplitter;
     QStackedWidget *stackW;
     QStandardItemModel *_model;
@@ -254,9 +262,11 @@ protected:
     //QToggleButton editTabNamePB;
     QToolBar *mainToolBar;
     FixToolBar *searchToolBar;
+    QToolBar   *filterToolBar;
 
     QList <FixTable *> fixTableLists;
     QWidget *progressWidget;
+    QWidget *filterArea;
     QWidget *searchArea;
     QWidget *tabNameEditArea;
     QWhatsThis *whatsThis;

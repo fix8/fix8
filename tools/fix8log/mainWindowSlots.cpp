@@ -430,13 +430,15 @@ void MainWindow::linkSearchSlot(bool turnedOn)
 }
 void MainWindow::setFontSlot(QAction *fontAction)
 {
-  qDebug() << "SET FONT" << __FILE__ << __LINE__;
   QFont fnt = font();
   int ptSize = fnt.pointSize();
   if (fontAction == fontIncreaseA)
-      ptSize +=2;
+      ptSize +=1;
   else if (fontAction == fontDecreaseA)
-      ptSize -=2;
+      ptSize -=1;
+  else { // set to default
+      ptSize = GUI::Globals::fontPtSize;
+  }
   fnt.setPointSize(ptSize);
   setFont(fnt);
 }

@@ -115,6 +115,8 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
             stackW->setCurrentWidget(noDataL);
     }
     readSettings();
+    setFont(mw.font());
+
     move(x+100,y+90); // offset from window copied
     linkSearchOn = mw.linkSearchOn;
     linkSearchA->setChecked(linkSearchOn);
@@ -174,9 +176,44 @@ void MainWindow::buildMainWindow()
     helpMenu = mainMenuBar->addMenu("&Help");
     mainToolBar = new QToolBar("Main Toolbar",this);
     mainToolBar->setObjectName("MainToolBar");
+
+    filterToolBar = new QToolBar("Filter",this);
+    filterToolBar->setObjectName("FilterToolBar");
+    filterToolBar->setAutoFillBackground(true);
+    filterToolBarA =   filterToolBar->toggleViewAction();
+    filterToolBarA->setIcon(QIcon(":/images/svg/Chemistry-Conical-Funnel.svg"));
+    filterToolBarA->setToolTip("Filter Messages");
+    filterToolBarA->setWhatsThis("Filter out messages");
+    filterArea = new QWidget(this);
+    QHBoxLayout *filterBox = new QHBoxLayout();
+    filterBox->setMargin(0);
+    filterArea->setLayout(filterBox);
+    filterL = new QLabel(filterArea);
+    filterL->setText(tr("Filter:"));
+    filterLineEdit = new LineEdit(filterArea);
+    filterLineEdit->setWhatsThis("Filter critera. Can be any Javascript\nEg: MsgType=='8' && AvgPx > 10.0");
+    filterBox->addWidget(filterL,0);
+    filterBox->addWidget(filterLineEdit,1);
+    filterButtonGroup = new QButtonGroup(this);
+    excludeFilterB = new QRadioButton("Exclude",this);
+    includeFilterB = new QRadioButton("Include",this);
+    filterButtonGroup->setExclusive(true);
+    filterButtonGroup->addButton(excludeFilterB);
+    filterButtonGroup->addButton(includeFilterB);
+    filterBox->addWidget(excludeFilterB,0);
+    filterBox->addWidget(includeFilterB,0);
+
+    editFilterA= new QAction("&Filter Editor",this);
+    editFilterA->setIconText("Edit");
+    editFilterA->setToolTip(tr("Edit Filter"));
+    editFilterA->setWhatsThis(tr("Allows you to filter out messages"));
+    editFilterA->setIcon((QIcon(":/images/svg/editSchema.svg")));
+    connect(editFilterA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
+   // searchToolBar->addAction(linkSearchA);
+    //searchToolBar->addWidget(searchLV);
+    filterToolBar->addWidget(filterArea);
+    filterToolBar->addAction(editFilterA);
     searchToolBar = new FixToolBar("Search",this);
-
-
     connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
             this,SLOT(toolbarOrientationChangedSlot(Qt::Orientation)));
     connect(searchToolBar,SIGNAL(visibilityChanged(bool)),
@@ -198,9 +235,12 @@ void MainWindow::buildMainWindow()
 
 
     mainToolBar->setMovable(true);
+    filterToolBar->setMovable(true);
     searchToolBar->setMovable(true);
     searchToolBar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
+    addToolBar(Qt::TopToolBarArea,filterToolBar);
+
     if (GUI::Globals::isFirstTime)
         addToolBarBreak();
     addToolBar(Qt::TopToolBarArea,searchToolBar);
@@ -267,6 +307,7 @@ void MainWindow::buildMainWindow()
     showIcon.addPixmap(QPixmap(":/images/svg/showMessageArea.svg"),QIcon::Normal,QIcon::Off);
     showIcon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
     showMessageA->setIcon(showIcon);
+
 
 
     filterSenderMenuA = new QAction("Sender",this);
@@ -476,6 +517,9 @@ void MainWindow::buildMainWindow()
     optionMenu->addAction(searchToolBarA);
     optionMenu->addAction(hideConsoleA);
     optionMenu->addAction(editSchemaA);
+
+    optionMenu->addAction(filterToolBarA);
+
     optionMenu->addAction(filterSenderMenuA);
     optionMenu->addAction(showMessageA);
     optionMenu->setTearOffEnabled(true);
@@ -503,6 +547,8 @@ void MainWindow::buildMainWindow()
     mainToolBar->addSeparator();
     mainToolBar->addAction(editSchemaA);
     mainToolBar->addAction(filterSenderMenuA);
+    mainToolBar->addAction(filterToolBarA);
+
     mainToolBar->addAction(searchToolBarA);
     mainToolBar->addSeparator();
     mainToolBar->addAction(fontIncreaseA);
@@ -786,6 +832,9 @@ WindowData MainWindow::getWindowData()
     wd.searchFunction = searchFunction;
     if (sharedLib)
         wd.fix8sharedlib = sharedLib->fileName;
+    QFont fnt = font();
+    wd.fontPtSize = fnt.pointSize();
+
     return wd;
 }
 void MainWindow::setWindowData(const WindowData wd)
@@ -844,6 +893,12 @@ void MainWindow::setWindowData(const WindowData wd)
     searchFunction = wd.searchFunction;
 
     searchLineEdit->setText(searchFunction.function);
+    if (wd.fontPtSize > -1) {
+        QFont fnt = font();
+        fnt.setPointSize(wd.fontPtSize);
+        setFont(fnt);
+    }
+
 }
 QList <WorkSheetData> MainWindow::getWorksheetData(int windowID)
 {

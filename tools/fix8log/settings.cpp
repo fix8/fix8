@@ -38,14 +38,23 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "mainwindow.h"
 #include "globals.h"
 #include "worksheet.h"
+#include <QApplication>
 #include <QDebug>
+#include <QDesktopWidget>
 #include <QDir>
 #include <QtWidgets>
 
 void MainWindow::readSettings()
 {
   QSettings settings("fix8","logviewer");
-  QRect defaultSize(100,100,900,600);
+  QDesktopWidget *desktop = QApplication::desktop();
+  QRect rect = desktop->screenGeometry(desktop->primaryScreen());
+  int h = rect.height()*.75;
+  int w = rect.width()*.70;
+  int x = (rect.width() -w)/2;
+  int y = (rect.height() - h)/2;
+  QRect defaultSize(x,y,w,h);
+
 
   bool bstatus =  restoreGeometry(settings.value("Geometry").toByteArray());
   if (!bstatus) {

@@ -23,8 +23,8 @@ NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, bool FirstTime,QW
     if (firstTime) {
         QDesktopWidget *desktop = QApplication::desktop();
         QRect rect = desktop->screenGeometry(desktop->primaryScreen());
-        x = (rect.width() -800)/2;
-        y = (rect.height() - 600)/2;
+        x = (rect.width() -860)/2;
+        y = (rect.height() - 640)/2;
         createWelcomePage();
     }
     createSchemaPage();
@@ -32,7 +32,7 @@ NewWindowWizard::NewWindowWizard(Fix8SharedLibList &shareLibs, bool FirstTime,QW
     readSettings();
     if (firstTime) {
         move(x,y);
-        resize(QSize(800,600));
+        resize(QSize(860,640));
     }
     connect(this,SIGNAL(currentIdChanged(int)),this,SLOT(currentPageChangedSlot(int)));
 }

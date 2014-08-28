@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
+#include <QMainWindow>
 #include <QPalette>
 #include <QToolBar>
 #include <QVector>
@@ -56,6 +57,7 @@ QString Globals::timeFormats[] {
     "Day-Mon-YY hh:min:sec", "Day Mon hh:min:sec", "hh:min:sec","hh:min"};
 Globals::TimeFormat Globals::timeFormat = Globals::HHMM;
 //QVector <Globals::MessagePair> * Globals::messagePairs=0;
+qint32 Globals::fontPtSize = 16;
 Globals* Globals::Instance()
 {
     if (!m_pInstance)   {// Only allow one instance of class to be generated.
@@ -69,6 +71,9 @@ Globals* Globals::Instance()
      smallIconSize = regIconSize.scaled(regIconSize.width()*.66,regIconSize.height()*.66,Qt::KeepAspectRatio);
      largeIconSize = regIconSize.scaled(regIconSize.width()*1.333,regIconSize.height()*1.333,Qt::KeepAspectRatio);
      delete toolbar;
+     QMainWindow *mw = new QMainWindow();
+     fontPtSize = mw->font().pointSize();
+     delete mw;
     }
     return m_pInstance;
 }

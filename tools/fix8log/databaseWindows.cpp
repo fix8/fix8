@@ -90,6 +90,8 @@ QList<WindowData> Database::getWindows()
         wd.searchFunction.function = query.value(9).toString();
         wd.searchFunction.javascript =  query.value(10).toString();
         wd.fix8sharedlib =  query.value(11).toString();
+        wd.fontPtSize =  query.value(12).toInt();
+
         windowDataList.append(wd);
     }
     return windowDataList;
@@ -104,8 +106,8 @@ bool Database::addWindow(WindowData &wd)
         return false;
     }
     QSqlQuery query(*handle);
-    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID, searchAll, searchFunction, searchJavascript,fix8sharedlib)"
-                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID, :searchAll, :searchFunction, :searchJavascript, :fix8sharedlib)");
+    bstatus = query.prepare("INSERT INTO windows (id, menubarStyleSheet, geometry, restoreState, isVisible, currentTab, name,tableSchemaID, searchAll, searchFunction, searchJavascript,fix8sharedlib,fontPtSize)"
+                            "VALUES(NULL, :menubarStyleSheet, :geometry, :restoreState, :isVisible, :currentTab, :name, :tableSchemaID, :searchAll, :searchFunction, :searchJavascript, :fix8sharedlib, :fontPtSize)");
     if (bstatus == 0) {
         qWarning("Error database - add window failed in prepare statement...");
         sqlError = query.lastError();
@@ -124,6 +126,7 @@ bool Database::addWindow(WindowData &wd)
     query.bindValue(":searchFunction",wd.searchFunction.function);
     query.bindValue(":searchJavascript",wd.searchFunction.javascript);
     query.bindValue(":fix8sharedlib",wd.fix8sharedlib);
+    query.bindValue(":fontPtSize",wd.fontPtSize);
 
 
     bstatus = query.exec();
@@ -159,7 +162,8 @@ bool Database::updateWindow(WindowData &wd)
             + QString(", tableSchemaID=:tableSchemaID")
             + QString(", searchAll=:searchAll")
             + QString(", searchFunction=:searchFunction")
-             + QString(", fix8sharedlib=:fix8sharedlib")
+            + QString(", fix8sharedlib=:fix8sharedlib")
+            + QString(", fontPtSize=:fontPtSize")
             + QString("  WHERE id='")  + QString::number(wd.id)
             + QString("'");
 
@@ -181,6 +185,7 @@ bool Database::updateWindow(WindowData &wd)
     query.bindValue(":searchFunction",wd.searchFunction.function);
      query.bindValue(":searchJavascript",wd.searchFunction.javascript);
      query.bindValue(":fix8sharedlib",wd.fix8sharedlib);
+     query.bindValue(":fontPtSize",wd.fontPtSize);
     bstatus = query.exec();
     if (bstatus == 0) {
         qWarning("Error - update window failed in exec statement...");

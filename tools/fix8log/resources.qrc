@@ -82,5 +82,6 @@
         <file>images/svg/harddrive.svg</file>
         <file>images/svg/newwindow.svg</file>
         <file>qml/welcome.qml</file>
+        <file>images/svg/Chemistry-Conical-Funnel.svg</file>
     </qresource>
 </RCC>

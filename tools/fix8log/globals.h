@@ -78,6 +78,7 @@ public:
     static TimeFormat timeFormat;
     static bool isFirstTime;
     static QString appName;
+    static qint32  fontPtSize;
     //  static QVector <MessagePair> *ConsoleMessagePairs;
 private:
     Globals(){};
