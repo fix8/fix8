@@ -64,11 +64,11 @@ template<typename T> using f8_atomic = std::atomic <T>;
 /// pthread wrapper abstract base
 class _f8_threadcore
 {
-#if (THREAD_SYSTEM == THREAD_STDTHREAD)
-	std::unique_ptr<std::thread> _thread;
-#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 	pthread_attr_t _attr;
 	pthread_t _tid;
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+	std::unique_ptr<std::thread> _thread;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)

@@ -3,7 +3,7 @@ param (
 )
 
 $RELEASE_MAJOR = 1
-$RELEASE_MINOR = 2
+$RELEASE_MINOR = 3
 $RELEASE_DATE = get-date -uformat "%Y%m%d"
 $RELEASE_REVISION = 1
 $API_KEY = $ApiKey

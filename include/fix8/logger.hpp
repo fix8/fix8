@@ -163,14 +163,14 @@ public:
 	static const int Errors = (1<<Warn|1<<Error|1<<Fatal), All = (1<<Debug|1<<Info|1<<Warn|1<<Error|1<<Fatal);
 #endif
 	static const int None = 0;
-	enum Flags { mstart, sstart, sequence, thread, timestamp, minitimestamp, direction, level,
-					 append, start_controls=append, buffer, compress, pipe, broadcast, nolf, inbound, outbound, num_flags };
+	enum Flags { mstart, sstart, sequence, thread, timestamp, minitimestamp, direction, level, location,
+					 start_controls, append=start_controls, buffer, compress, pipe, broadcast, nolf, inbound, outbound, xml, num_flags };
 #ifndef _MSC_VER
 	static const int StdFlags = bitsum(sequence,thread,timestamp,level);
 #else
-	static const int StdFlags = (1<<sequence|1<<thread|1<<timestamp|1<<level);
+	static const int StdFlags = (1<<sequence|1<<thread|1<<timestamp|1<<level|1<<location);
 #endif
-	enum { rotation_default = 5, max_rotation = 1024};
+	static const int rotation_default = 5, max_rotation = 1024;
 	using LogFlags = ebitset<Flags>;
 	using Levels = ebitset<Level>;
 	using LogPositions = std::vector<int>;
@@ -180,6 +180,7 @@ protected:
 	f8_spin_lock _log_spl;
 	LogFlags _flags;
 	Levels _levels;
+	std::string _delim;
 	std::ostream *_ofs = nullptr;
 	size_t _lines = 0;
 	f8_thread_cancellation_token _stopping;
@@ -189,15 +190,17 @@ protected:
 		thread_id_t _tid;
 		std::string _str;
 		Level _level;
-		unsigned _val;
+		const char *_fileline;
+		unsigned _val{};
 		Tickval _when{true};
 
-		LogElement(const thread_id_t tid, const std::string& str, Level level, const unsigned val=0)
-			: _tid(tid), _str(str), _level(level),_val(val) {}
+		LogElement(const thread_id_t tid, const std::string& str, Level level, const char *fl=nullptr, const unsigned val=0)
+			: _tid(tid), _str(str), _level(level), _fileline(fl), _val(val) {}
 		LogElement(const thread_id_t tid, const std::string& str, const unsigned val=0)
-			: _tid(tid), _str(str), _level(Info),_val(val) {}
-		LogElement() : _tid(), _level(Info), _val() {}
-		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _level(from._level), _val(from._val), _when(from._when) {}
+			: _tid(tid), _str(str), _level(Info), _fileline(), _val(val) {}
+		LogElement() : _tid(), _level(Info),_fileline() {}
+		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _level(from._level), _fileline(from._fileline),
+			_val(from._val), _when(from._when) {}
 		LogElement& operator=(const LogElement& that)
 		{
 			if (this != &that)
@@ -205,6 +208,7 @@ protected:
 				_tid = that._tid;
 				_str = that._str;
 				_level = that._level;
+				_fileline = that._fileline;
 				_val = that._val;
 				_when = that._when;
 			}
@@ -228,9 +232,12 @@ protected:
 
 public:
 	/*! Ctor.
-	    \param flags ebitset flags */
-	Logger(const LogFlags flags, const Levels levels=Levels(All), const LogPositions positions=LogPositions())
-		: _thread(std::ref(*this)), _flags(flags), _levels(levels), _positions(positions)
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
+	Logger(const LogFlags flags, const Levels levels=Levels(All), const std::string delim=" ", const LogPositions positions=LogPositions())
+		: _thread(std::ref(*this)), _flags(flags), _levels(levels), _delim(delim), _positions(positions)
 	{
 		if (_positions.empty()) // setup default order
 		{
@@ -262,6 +269,10 @@ public:
 	    \param flags flags to set */
 	void set_flags(LogFlags flags) { _flags = flags; }
 
+	/*! Set the field delimiter
+	    \param delim delimiter value to set */
+	void set_delimiter(const std::string& delim) { _delim = delim; }
+
 	/*! Set the log attribute positions
 	    \param positions positions to set */
 	void set_positions(const std::vector<int>& positions)
@@ -277,21 +288,23 @@ public:
 	/*! Log a string with log level. Ignore level and always enqueue.
 	    \param what the string to log
 	    \param lev log level (enum)
+	    \param fl pointer to fileline
 	    \param val optional value for the logger to use
 	    \return true on success */
-	bool enqueue(const std::string& what, Level lev=Logger::Info, const unsigned val=0)
+	bool enqueue(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0)
 	{
-		const LogElement le(f8_thread<Logger>::getid(), what, lev, val);
+		const LogElement le(f8_thread<Logger>::getid(), what, lev, fl, val);
 		return _msg_queue.try_push (le) == 0;
 	}
 
 	/*! Log a string with log level.
 	    \param what the string to log
 	    \param lev log level (enum)
+	    \param fl pointer to fileline
 	    \param val optional value for the logger to use
 	    \return true on success */
-	bool send(const std::string& what, Level lev=Logger::Info, const unsigned val=0)
-		{ return is_loggable(lev) ? enqueue(what, lev, val) : true; }
+	bool send(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0)
+		{ return is_loggable(lev) ? enqueue(what, lev, fl, val) : true; }
 
 	/// Stop the logging thread.
 	void stop() { _stopping.request_stop(); enqueue(std::string()); _thread.join(); }
@@ -304,6 +317,10 @@ public:
 	/*! The logging thread entry point.
 	    \return 0 on success */
 	F8API int operator()();
+
+	/*! Process this logelement
+		\param le LogElement */
+	F8API virtual void process_logline(LogElement *le);
 
 	/// string representation of logflags
 	static const std::vector<std::string> _bit_names;
@@ -339,6 +356,7 @@ public:
 /// A file logger.
 class FileLogger : public Logger
 {
+protected:
 	std::string _pathname;
 	unsigned _rotnum;
 
@@ -346,8 +364,11 @@ public:
 	/*! Ctor.
 	    \param pathname pathname to log to
 	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions
 	    \param rotnum number of logfile rotations to retain (default=5) */
-	F8API FileLogger(const std::string& pathname, const LogFlags flags, const Levels levels,
+	F8API FileLogger(const std::string& pathname, const LogFlags flags, const Levels levels, const std::string delim=" ",
 		const LogPositions positions=LogPositions(), const unsigned rotnum=rotation_default);
 
 	/// Dtor.
@@ -360,14 +381,51 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// A file logger.
+class XmlFileLogger : public FileLogger
+{
+
+public:
+	/*! Ctor.
+	    \param pathname pathname to log to
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions
+	    \param rotnum number of logfile rotations to retain (default=5) */
+	F8API XmlFileLogger(const std::string& pathname, const LogFlags flags, const Levels levels, const std::string delim=" ",
+		const LogPositions positions=LogPositions(), const unsigned rotnum=rotation_default)
+		: FileLogger(pathname, flags, levels, delim, positions, rotnum)
+	{
+		preamble();
+	}
+
+	/// Write the xml preamble. If you use rotate, you need to call this AFTER rotating
+	void preamble() { get_stream() << "<?xml version='1.0' encoding='ISO-8859-1'?>" << std::endl << "<fix8>" << std::endl; }
+	/// Write the xml postamble. If you use rotate, you need to call this BEFORE rotating
+	void postamble() { get_stream() << "</fix8>" << std::endl; }
+
+	/// Dtor.
+	virtual ~XmlFileLogger() { postamble(); }
+
+	/*! Process this logelement
+		\param le LogElement */
+	F8API virtual void process_logline(LogElement *le);
+};
+
+//-------------------------------------------------------------------------------------------------
 /// A pipe logger.
 class PipeLogger : public Logger
 {
 public:
 	/*! Ctor.
 	    \param command pipe command
-	    \param flags ebitset flags */
-	PipeLogger(const std::string& command, const LogFlags flags, const Levels levels, LogPositions positions=LogPositions());
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
+	PipeLogger(const std::string& command, const LogFlags flags, const Levels levels, const std::string delim=" ",
+		LogPositions positions=LogPositions());
 
 	/// Dtor.
 	virtual ~PipeLogger() {}
@@ -382,14 +440,22 @@ class BCLogger : public Logger
 public:
 	/*! Ctor.
 	    \param sock udp socket
-	    \param flags ebitset flags */
-	BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags, const Levels levels, LogPositions positions=LogPositions());
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
+	BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags, const Levels levels, const std::string delim=" ",
+		LogPositions positions=LogPositions());
 
 	/*! Ctor.
 	    \param ip ip string
 	    \param port port to use
-	    \param flags ebitset flags */
-	BCLogger(const std::string& ip, const unsigned port, const LogFlags flags, const Levels levels, LogPositions positions=LogPositions());
+	    \param flags ebitset flags
+	    \param levels ebitset levels
+	    \param delim field delimiter
+	    \param positions field positions */
+	BCLogger(const std::string& ip, const unsigned port, const LogFlags flags, const Levels levels,
+		const std::string delim=" ", LogPositions positions=LogPositions());
 
 	/*! Check to see if a socket was successfully created.
 	  \return non-zero if ok, 0 if not ok */
@@ -410,7 +476,8 @@ class SingleLogger
 {
 	static FileLogger& instance()
 	{
-		static FileLogger _fl(fn, Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::thread << Logger::level
+		static FileLogger _fl(fn, Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::thread
+				<< Logger::level << Logger::location
 #if defined BUFFERED_GLOBAL_LOGGING
 			<< Logger::buffer
 #endif
@@ -428,18 +495,20 @@ public:
 	/*! Send a message to the logger.
 	  \param what message to log
 	  \param lev level to log
+	  \param fl pointer to fileline
 	  \param val extra value to log
 	  \return true on success */
-	static bool log(const std::string& what, Logger::Level lev=Logger::Info, unsigned int val=0)
-		{ return instance().send(what, lev, val); }
+	static bool log(const std::string& what, Logger::Level lev=Logger::Info, const char *fl=nullptr, unsigned int val=0)
+		{ return instance().send(what, lev, fl, val); }
 
 	/*! Enqueue a message to the logger. Will not check log level.
 	  \param what message to log
 	  \param lev level to log
+	  \param fl pointer to fileline
 	  \param val extra value to log
 	  \return true on success */
-	static bool enqueue(const std::string& what, Logger::Level lev=Logger::Info, unsigned int val=0)
-		{ return instance().enqueue(what, lev, val); }
+	static bool enqueue(const std::string& what, Logger::Level lev=Logger::Info, const char *fl=nullptr, unsigned int val=0)
+		{ return instance().enqueue(what, lev, fl, val); }
 
 	/*! Flush the logger */
 	static void flush_log() { instance().flush(); }
@@ -452,6 +521,10 @@ public:
 	  \param levels levels to set */
 	static void set_levels(Logger::Levels levels) { instance().set_levels(levels); }
 
+	/*! Set the field delimiter
+	    \param delim delimiter value to set */
+	static void set_delimiter(const std::string& delim) { instance().set_delimiter(delim); }
+
 	/*! Set the log positions
 	  \param positions positions to set */
 	static void set_positions(Logger::LogPositions positions) { instance().set_positions(positions); }
@@ -460,7 +533,7 @@ public:
 	static void stop() { instance().stop(); }
 
 	/*! Check if the given log level is set for this logger
-	    \param level level to test
+	    \param lev level to test
 	    \return true if available */
 	static bool is_loggable(Logger::Level lev) { return instance().is_loggable(lev); }
 };
@@ -500,18 +573,19 @@ public:
 };
 
 //-----------------------------------------------------------------------------------------
-using logger_function = std::function<bool(const std::string&, Logger::Level, const unsigned)>;
+using logger_function = std::function<bool(const std::string&, Logger::Level, const char *, const unsigned)>;
 
 class log_stream : public buffered_ostream
 {
 	logger_function _logger;
 	const Logger::Level _lev;
-	unsigned _value;
+	const char *_loc;
+	const unsigned _value;
 
 public:
-	log_stream(decltype(_logger) func, Logger::Level lev=Logger::Info, unsigned value=0)
-		: _logger(func), _lev(lev), _value(value) {}
-	~log_stream() { _logger(_buf.get(), _lev, _value); }
+	log_stream(decltype(_logger) func, Logger::Level lev=Logger::Info, const char *loc=nullptr, unsigned value=0)
+		: _logger(func), _lev(lev), _loc(loc), _value(value) {}
+	~log_stream() { _logger(_buf.get(), _lev, _loc, _value); }
 };
 
 //-----------------------------------------------------------------------------------------
@@ -525,17 +599,17 @@ using GlobalLogger = SingleLogger<glob_log0>;
 } // FIX8
 
 #define glout_info if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Info)); \
-	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Info)
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Info, FILE_LINE)
 #define glout glout_info
 #define glout_warn if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Warn)); \
-	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Warn)
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Warn, FILE_LINE)
 #define glout_error if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Error)); \
-	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Error)
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Error, FILE_LINE)
 #define glout_fatal if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Fatal)); \
-	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Fatal)
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Fatal, FILE_LINE)
 #if defined F8_DEBUG
 #define glout_debug if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Debug)); \
-	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Debug) << FILE_LINE
+	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Debug, FILE_LINE)
 #else
 #define glout_debug true ? FIX8::null_insert() : FIX8::null_insert()
 #endif

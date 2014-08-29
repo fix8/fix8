@@ -65,7 +65,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // file/line stringification
 #define STRINGOF(x) #x
 #define STRINGIFY(x) STRINGOF(x)
-#define FILE_LINE "[" __FILE__ ":" STRINGIFY(__LINE__) "] "
+#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__)
 
 namespace FIX8 {
 
@@ -118,11 +118,33 @@ F8API std::string Str_error(const int err, const char *str=0);
   \return reference to target string */
 F8API const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
 
+/*! Format Tickval into string. 2014-07-02 23:15:51.514776595
+  \param tv tickval to use or 0 for current time
+  \param dplaces number of decimal places to report seconds (default 6)
+  \param use_gm if true, use gmtime, if false localtime
+  \return string */
+inline std::string GetTimeAsStringMS(const class Tickval *tv, const unsigned dplaces=6, bool use_gm=false)
+{
+	std::string result;
+	GetTimeAsStringMS(result, tv, dplaces, use_gm);
+	return result;
+}
+
 /*! Format Tickval into mini string. 14-07-02 23:15:51
   \param result target string
   \param tv tickval to use or 0 for current time
   \return reference to target string */
 F8API const std::string& GetTimeAsStringMini(std::string& result, const Tickval *tv);
+
+/*! Format Tickval into mini string. 14-07-02 23:15:51
+  \param tv tickval to use or 0 for current time
+  \return string */
+inline std::string GetTimeAsStringMini(const Tickval *tv)
+{
+	std::string result;
+	GetTimeAsStringMini(result, tv);
+	return result;
+}
 
 /*! Trim leading and trailing whitespace from a string
   \param source source string
@@ -146,9 +168,17 @@ inline const std::string& trim(std::string& source, const std::string& ws=" \t")
 		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
 }
 
-/*! Return a set of strings with current package info
-  \return vector os strings */
-F8API std::vector<f8String> package_info();
+//----------------------------------------------------------------------------------------
+using Package_info = std::map<f8String, f8String>;
+
+/*! Return a Package_info map of strings with current package info
+  \return Package_info object reference */
+F8API const Package_info& package_info();
+
+/*! Find a Package_info string value for the given tag
+  \param what source string to look up
+  \return Package_info string value or an empty string */
+F8API f8String find_package_info_string(const f8String& what);
 
 //----------------------------------------------------------------------------------------
 /*! Sidestep the warn_unused_result attribute
@@ -850,6 +880,7 @@ public:
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
 	    \param sset the set of strings
 	    \param what the string to find and set
+		 \param ignorecase if true, ignore case
 	    \param on set or clear the found bit
 	    \return enumeration (as int) if found and -1 if not */
 	int set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase, bool on=true)
@@ -942,9 +973,9 @@ public:
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
-	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
+		 \param ignorecase if true, ignore case
 	    \param on set or clear the found bit
 	    \return true if found and set */
 	bool set(const std::vector<std::string>& sset, const std::string& what, bool ignorecase=false, bool on=true)

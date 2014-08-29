@@ -112,29 +112,6 @@ public:
 	friend class MessageBase;
 };
 
-/// Structures for framework generated repeating group creation
-class Ginst
-{
-	/*! Generate a groupbase instantiator
-	 */
-	struct _gen
-	{
-		/*! Instantiate a groupbase
-			\tparam T type to instantiate
-			\return new message */
-		template<typename T>
-		static GroupBase *_make() { return new T; }
-	};
-
-public:
-	GroupBase *(&_do)();
-
-	/*! Ctor
-	  \tparam T type to instantiate */
-   template<typename T>
-   Ginst(Type2Type<T>) : _do(_gen::_make<T>) {}
-};
-
 //-------------------------------------------------------------------------------------------------
 /// Base class for inbound message routing
 class Router
@@ -187,7 +164,7 @@ class Minst
 	};
 
 public:
-	Message *(&_do)(bool);
+	std::function<Message *(bool)> _do;
 #if defined HAVE_EXTENDED_METADATA
 	const TraitHelper& (&_get_traits)();
 #endif
@@ -213,6 +190,7 @@ struct BaseMsgEntry
 /// Field and Message metadata structures
 //-------------------------------------------------------------------------------------------------
 using c_str_compare = std::function<bool(const char *, const char *)>;
+using msg_create = std::function<Message *(bool)>;
 using MsgTable = GeneratedTable<const char *, BaseMsgEntry>;
 using ReverseMsgTable = std::map<const char * const, const BaseMsgEntry *, c_str_compare>;
 using FieldTable = GeneratedTable<unsigned, BaseEntry>;
@@ -236,7 +214,7 @@ struct F8MetaCntx
 	/// Hash array for field lookup (built by ctor)
 	const BaseEntry **_flu;
 	/// References to the header and trailer create functions
-	Message *(&_mk_hdr)(bool), *(&_mk_trl)(bool);
+	msg_create _mk_hdr, _mk_trl;
 	/// Fix header beginstring
 	const f8String _beginStr;
 	/// Preamble length
@@ -265,10 +243,10 @@ struct F8MetaCntx
       for (unsigned offset(0); offset < _be.size(); ++offset)
 			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
 
-		for (const auto& pr : _be)
-			_reverse_fieldtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
-		for (const auto& pr : _bme)
-			_reverse_msgtable.emplace(std::make_pair(pr.second()._name, &pr.second()));
+		std::for_each(_be.begin(), _be.end(), [this](const FieldTable::Pair& pp)
+			{ _reverse_fieldtable.emplace(std::make_pair(pp.second()._name, &pp.second())); });
+		std::for_each(_bme.begin(), _bme.end(), [this](const MsgTable::Pair& pp)
+			{ _reverse_msgtable.emplace(std::make_pair(pp.second()._name, &pp.second())); });
 	}
 
 	/// Dtor.
@@ -281,7 +259,7 @@ struct F8MetaCntx
 		{ return fnum < _flu_sz ? _flu[fnum] : nullptr; }
 
 	/*! Get the field BaseEntry object for this field by tag. Reverse lookup.
-	  \param fieldstr const char ptr to name of field to get
+	  \param fieldstr const char ptr to longname of field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *reverse_find_be(const char *fieldstr) const
 	{
@@ -290,7 +268,7 @@ struct F8MetaCntx
 	}
 
 	/*! Get the field number for this field by tag. Reverse lookup.
-	  \param fieldstr const char ptr to name of field to get
+	  \param fieldstr const char ptr to longname of field to get
 	  \return unsigned short field number */
 	unsigned short reverse_find_fnum(const char *fieldstr) const
 	{
@@ -309,7 +287,7 @@ struct F8MetaCntx
 	}
 
 	/*! Create a new field of the tag type passed, and from the raw string given.
-	  \param tag const char ptr to name of field to create
+	  \param tag const char ptr to longname of field to create
 	  \param from const char ptr to string containing value to construct from
 	  \return ptr to BaseField or 0 if fnum not found */
 	BaseField *create_field(const char *tag, const char *from) const
@@ -324,7 +302,7 @@ struct F8MetaCntx
 	const BaseMsgEntry *find_bme(const char *tag) const { return _bme.find_ptr(tag); }
 
 	/*! Get the message BaseMsgEntry object for this message. Reverse lookup.
-	  \param msgstr const char ptr to name of message to get
+	  \param msgstr const char ptr to longname of message to get
 	  \return ptr to BaseMsgEntry or 0 if not found */
 	const BaseMsgEntry *reverse_find_bme(const char *msgstr) const
 	{
@@ -332,19 +310,33 @@ struct F8MetaCntx
 		return itr != _reverse_msgtable.cend() ? itr->second : nullptr;
 	}
 
+	/*! Create a new message from longname
+	  \param tag const char ptr to tag of message
+	  \param deepctor if true, do deep message construction
+	  \return ptr to Message or 0 if tag not found */
+	Message *create_msg_from_longname(const char *tag, bool deepctor=true) const
+	{
+		const BaseMsgEntry *bme(reverse_find_bme(tag));
+		return bme ? bme->_create._do(deepctor) : nullptr;
+	}
+
 	/*! Create a new message of the tag type passed.
 	  \param tag const char ptr to tag of message
-	  \param version if true, do reverse lookup (use message long name)
+	  \param deepctor if true, do deep message construction
 	  \return ptr to Message or 0 if tag not found */
-	Message *create_msg(const char *tag, bool version=false) const
+	Message *create_msg(const char *tag, bool deepctor=true) const
 	{
-		const BaseMsgEntry *bme(version ? reverse_find_bme(tag) : find_bme(tag));
-		return bme ? bme->_create._do(true) : nullptr;
+		const BaseMsgEntry *bme(find_bme(tag));
+		return bme ? bme->_create._do(deepctor) : nullptr;
 	}
 
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	  \return version */
 	unsigned version() const { return _version; }
+
+	/*! Get fix header beginstring
+	  \return beginstring */
+	const f8String& get_beginStr() const { return _beginStr; }
 
 #if defined HAVE_EXTENDED_METADATA
 	//----------------------------------------------------------------------------------------------
@@ -453,7 +445,7 @@ public:
 	    \param grpbase pointer to groupbase of holding object
 	    \param fnum repeating group fix field num (no...)
 	    \param from source string
-	    \param offset in bytes to decode from
+	    \param s_offset in bytes to decode from
 	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
 	unsigned decode_group(GroupBase *grpbase, const unsigned short fnum, const f8String& from,
@@ -784,16 +776,16 @@ public:
 
 	/*! Find a group of a specified type. If not found attempt to add.
 	    \tparam T type of group to get
-	    \param grpbase parent group (if group nested)
+	    \param grpbase parent group (if group nested) or nullptr if no parent
 	    \return pointer to found group or 0 if not found */
 	template<typename T>
-	GroupBase *find_add_group(GroupBase *grpbase) { return find_add_group(T::_fnum, grpbase); }
+	GroupBase *find_add_group(GroupBase *grpbase=nullptr) { return find_add_group(T::_fnum, grpbase); }
 
 	/*! Find a group of a specified type. If not found attempt to add.
 	    \param fnum field number
-	    \param grpbase parent group (if group nested)
+	    \param grpbase parent group (if group nested) or nullptr if no parent
 	    \return pointer to found group or 0 if not found */
-	GroupBase *find_add_group(const unsigned short fnum, GroupBase *grpbase)
+	GroupBase *find_add_group(const unsigned short fnum, GroupBase *grpbase=nullptr)
 	{
 		auto gitr(_groups.find(fnum));
 		if (gitr != _groups.end())

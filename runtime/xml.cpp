@@ -152,7 +152,10 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 	enum
   	{
 		olb, otag, ocom0, ocom1, comment, ccom0, ccom1, ccomment,
-		oattr, odec, cdec, value, cls, ctag, finished
+		oattr, odec, cdec, value, cls, ctag,
+		cdata0, cdata1, cdata2, cdata3, cdata4, cdata5, cdata6, cdata7,	// ![CDATA[
+		vcdata, ecdata0, ecdata1, // ]]
+		finished
 	}
   	state(olb);
 
@@ -268,9 +271,112 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 			if (c == '>')
 				state = depth_ ? finished : olb;
 			break;
+		case cdata0:
+			state = cdata1;
+			break;
+		case cdata1:
+			if (c == '[')
+				state = cdata2;
+			else
+			{
+				state = value;
+				tmpval += "![";
+				tmpval += c;
+			}
+			break;
+		case cdata2:
+			if (c == 'C')
+				state = cdata3;
+			else
+			{
+				state = value;
+				tmpval += "![";
+				tmpval += c;
+			}
+			break;
+		case cdata3:
+			if (c == 'D')
+				state = cdata4;
+			else
+			{
+				state = value;
+				tmpval += "![C";
+				tmpval += c;
+			}
+			break;
+		case cdata4:
+			if (c == 'A')
+				state = cdata5;
+			else
+			{
+				state = value;
+				tmpval += "![CD";
+				tmpval += c;
+			}
+			break;
+		case cdata5:
+			if (c == 'T')
+				state = cdata6;
+			else
+			{
+				state = value;
+				tmpval += "![CDA";
+				tmpval += c;
+			}
+			break;
+		case cdata6:
+			if (c == 'A')
+				state = cdata7;
+			else
+			{
+				state = value;
+				tmpval += "![CDAT";
+				tmpval += c;
+			}
+			break;
+		case cdata7:
+			if (c == '[')
+				state = vcdata;
+			else
+			{
+				state = value;
+				tmpval += "![CDATA";
+				tmpval += c;
+			}
+			break;
+		case vcdata:
+			if (c == ']')
+				state = ecdata0;
+			else
+				tmpval += c;
+			break;
+		case ecdata0:
+			if (c == ']')
+				state = ecdata1;
+			else
+			{
+				tmpval += ']';
+				tmpval += c;
+				state = vcdata;
+			}
+			break;
+		case ecdata1:
+			if (c == '>')
+				state = value;
+			else
+			{
+				tmpval += "]]";
+				state = vcdata;
+			}
+			break;
 		case value:
 			if (c == '<')
 			{
+				if (ifsptr->peek() == '!')
+				{
+					state = cdata0;
+					break;
+				}
 				if (ifsptr->peek() != '/')
 				{
 					ifsptr->putback(c);

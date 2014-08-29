@@ -210,8 +210,7 @@ class push_dir
 {
 	char _cwd[MAX_FLD_LENGTH];
 
-public:
-	push_dir(const std::string& to) : _cwd()
+	void getdir()
 	{
 #ifdef _MSC_VER
 		if (_getcwd(_cwd, MAX_FLD_LENGTH) == 0)
@@ -223,28 +222,31 @@ public:
 			ostr << "Error getting current directory (" << ::strerror(errno) << ')';
 			throw f8Exception(ostr.str());
 		}
-		if (::chdir(to.c_str()))
-		{
-			std::ostringstream ostr;
-			ostr << "Error setting new directory '" << to << "' (" << ::strerror(errno) << ')';
-			throw f8Exception(ostr.str());
-		}
 	}
 
-	push_dir() = delete;
-
-	~push_dir()
+	void chgdir(const char *to) const
 	{
-		if (_cwd[0] && ::chdir(_cwd))
+#ifdef _MSC_VER
+		if (!to || _chdir(to))
+#else
+		if (!to || ::chdir(to))
+#endif
 		{
 			std::ostringstream ostr;
-			ostr << "Error restoring previous directory '" << _cwd << "' (" << ::strerror(errno) << ')';
+			ostr << "Error changing to directory '" << (to ? to : "(null)") << '\'';
+			if (errno)
+				ostr << " (" << ::strerror(errno) << ')';
 			throw f8Exception(ostr.str());
 		}
 	}
+
+public:
+	explicit push_dir(const std::string& to) : _cwd() { getdir(); chgdir(to.c_str()); }
+	explicit push_dir(const char *to) : _cwd() { getdir(); chgdir(to); }
+	push_dir() : _cwd() { getdir(); }
+	~push_dir() { chgdir(_cwd); }
 };
 
 } // FIX8
 
 #endif // _F8_F8C_HPP_
-/* vim: set ts=3 sw=3 tw=0 noet :*/

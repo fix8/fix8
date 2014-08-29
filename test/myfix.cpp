@@ -137,7 +137,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rdomN:");
+const string GETARGLIST("hl:svqc:R:S:rdomN:D:");
 f8_atomic<bool> term_received(false);
 void server_process(ServerSessionBase *srv, int scnt, bool ismulti=false), client_process(ClientSessionBase *mc);
 FIX8::tty_save_state save_tty(0);
@@ -190,6 +190,7 @@ int main(int argc, char **argv)
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
 		{ "log",			1,	0,	'l' },
+		{ "delimiter",	1,	0,	'D' },
 		{ "config",		1,	0,	'c' },
 		{ "session",	1,	0,	'N' },
 		{ "once",	   0,	0,	'o' },
@@ -217,6 +218,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
+		case 'D': GlobalLogger::set_delimiter(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
 		case 'N': session = optarg; break;
@@ -747,6 +749,7 @@ void print_usage()
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
+	um.add('D', "delimiter", "set GlobalLogger field delimiter (default ' ')");
 	um.add('N', "session", "for client, select session to use from configuration (default DLD1)");
 	um.add('r', "reliable", "start in reliable mode");
 	um.add('d', "dump", "dump parsed XML config file, exit");

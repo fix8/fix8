@@ -85,12 +85,12 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 
 		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
 		{
-			glout_error << FILE_LINE << "Error: creating database: " << _dbFname << " (" << strerror(errno) << ')';
+			glout_error << "Error: creating database: " << _dbFname << " (" << strerror(errno) << ')';
 			return false;
 		}
 		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
 		{
-			glout_error << FILE_LINE << "Error: creating database index: " << _dbIname << " (" << strerror(errno) << ')';
+			glout_error << "Error: creating database index: " << _dbIname << " (" << strerror(errno) << ')';
 			return false;
 		}
 
@@ -98,19 +98,19 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 
 		if (purge && !nof)
 		{
-			glout_info << FILE_LINE << (_rotnum ? "Rotated and purged perist db" : "Purged perist db");
+			glout_info << (_rotnum ? "Rotated and purged perist db" : "Purged perist db");
 		}
 	}
 	else
 	{
 		if ((_fod = open(_dbFname.c_str(), O_RDWR)) < 0)
 		{
-			glout_error << FILE_LINE << "Error: opening existing database: " << _dbFname << " (" << strerror(errno) << ')';
+			glout_error << "Error: opening existing database: " << _dbFname << " (" << strerror(errno) << ')';
 			return false;
 		}
 		if ((_iod = open(_dbIname.c_str(), O_RDWR)) < 0)
 		{
-			glout_error << FILE_LINE << "Error: opening existing database index: " << _dbIname << " (" << strerror(errno) << ')';
+			glout_error << "Error: opening existing database index: " << _dbIname << " (" << strerror(errno) << ')';
 			return false;
 		}
 
@@ -120,7 +120,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 			const ssize_t blrd(read(_iod, static_cast<void *>(&iprec), sizeof(IPrec)));
 			if (blrd < 0)
 			{
-				glout_error << FILE_LINE << "Error: reading existing database index: " << _dbIname << " (" << strerror(errno) << ')';
+				glout_error << "Error: reading existing database index: " << _dbIname << " (" << strerror(errno) << ')';
 				return false;
 			}
 			else if (blrd == 0)
@@ -128,24 +128,24 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 
 			if (iprec._seq == 0)
 			{
-				glout_info << FILE_LINE << iprec;
+				glout_info << iprec;
 			}
 
 			if (!_index.insert({iprec._seq, iprec._prec}).second)
 			{
-				glout_warn << FILE_LINE << "Warning: inserting index record into database index: " << _dbIname << " (" << iprec << "). Ignoring.";
+				glout_warn << "Warning: inserting index record into database index: " << _dbIname << " (" << iprec << "). Ignoring.";
 			}
 		}
 
 		if (_index.size())
 		{
-			glout_info << FILE_LINE << "Database " << _dbFname << " indexed " << _index.size() << " records.";
+			glout_info << "Database " << _dbFname << " indexed " << _index.size() << " records.";
 		}
 
 		unsigned last;
 		if (get_last_seqnum(last))
 		{
-			glout_info << FILE_LINE << _dbFname << ": Last sequence is " << last;
+			glout_info << _dbFname << ": Last sequence is " << last;
 		}
 	}
 
@@ -177,7 +177,7 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 
 	if (!startSeqNum || from > finish)
 	{
-		glout_info << FILE_LINE << "No records found";
+		glout_info << "No records found";
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -194,20 +194,23 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 				break;
 			if (lseek(_fod, itr->second._offset, SEEK_SET) < 0)
 			{
-				glout_error << FILE_LINE << "Error: could not seek to correct index location for get: " << _dbFname;
+				glout_error << "Error: could not seek to correct index location for get: " << _dbFname;
 				break;
 			}
 
 			if (read (_fod, buff, itr->second._size) != itr->second._size)
 			{
-				glout_error << FILE_LINE << "Error: could not read message record for seqnum " << itr->first << " from: " << _dbFname;
+				glout_error << "Error: could not read message record for seqnum " << itr->first << " from: " << _dbFname;
 				break;
 			}
 
 			Session::SequencePair txresult(itr->first, f8String(buff, itr->second._size));
 			++recs_sent;
 			if (!(session.*callback)(txresult, rctx))
+			{
+				glout_debug << "Retransmission callback signalled an error, not sending any more records from: " << _dbFname;
 				break;
+			}
 		}
 		while(++itr != _index.end());
 
@@ -216,7 +219,7 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 	}
 	else
 	{
-		glout_error << FILE_LINE << "record not found (" << startSeqNum << ')';
+		glout_error << "record not found (" << startSeqNum << ')';
 	}
 
 	return recs_sent;
@@ -236,7 +239,7 @@ bool FilePersister::put(const unsigned sender_seqnum, const unsigned target_seqn
 
 	if (lseek(_iod, 0, SEEK_SET) < 0)
 	{
-		glout_error << FILE_LINE << "Error: could not seek to 0 for seqnum persitence: " << _dbIname;
+		glout_error << "Error: could not seek to 0 for seqnum persitence: " << _dbIname;
 		return false;
 	}
 	return write (_iod, static_cast<void *>(&iprec), sizeof(IPrec)) == sizeof(IPrec);
@@ -250,29 +253,29 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 
 	if (_index.find(seqnum) != _index.end())
 	{
-		glout_error << FILE_LINE << "Error: seqnum " << seqnum << " already persisted in: " << _dbIname;
+		glout_error << "Error: seqnum " << seqnum << " already persisted in: " << _dbIname;
 		return false;
 	}
 	if (lseek(_iod, 0, SEEK_END) < 0)
 	{
-		glout_error << FILE_LINE << "Error: could not seek to index end for seqnum persitence: " << _dbIname;
+		glout_error << "Error: could not seek to index end for seqnum persitence: " << _dbIname;
 		return false;
 	}
 	off_t offset;
 	if ((offset = lseek(_fod, 0, SEEK_END)) < 0)
 	{
-		glout_error << FILE_LINE << "Error: could not seek to end for seqnum persitence: " << _dbFname;
+		glout_error << "Error: could not seek to end for seqnum persitence: " << _dbFname;
 		return false;
 	}
 	IPrec iprec(seqnum, offset, static_cast<unsigned>(what.size()));
 	if (write (_iod, static_cast<void *>(&iprec), sizeof(IPrec)) != sizeof(IPrec))
 	{
-		glout_error << FILE_LINE << "Error: could not write index record for seqnum " << seqnum << " to: " << _dbIname;
+		glout_error << "Error: could not write index record for seqnum " << seqnum << " to: " << _dbIname;
 		return false;
 	}
 	if (write (_fod, what.data(), static_cast<unsigned>(what.size())) != static_cast<ssize_t>(what.size()))
 	{
-		glout_error << FILE_LINE << "Error: could not write record for seqnum " << seqnum << " to: " << _dbFname;
+		glout_error << "Error: could not write record for seqnum " << seqnum << " to: " << _dbFname;
 		return false;
 	}
 
@@ -287,14 +290,14 @@ bool FilePersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 
 	if (_index.empty())
 	{
-		glout_warn << FILE_LINE << "Warning: index is empty: " << _dbIname;
+		glout_warn << "Warning: index is empty: " << _dbIname;
 		return false;
 	}
 
 	Index::const_iterator itr(_index.find(0));
 	if (itr == _index.end())
 	{
-		glout_error << FILE_LINE << "Error: index does not contain control record: " << _dbIname;
+		glout_error << "Error: index does not contain control record: " << _dbIname;
 		return false;
 	}
 
@@ -311,20 +314,20 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 	Index::const_iterator itr(_index.find(seqnum));
 	if (itr == _index.end())
 	{
-		glout_warn << FILE_LINE << "Warning: index does not contain seqnum: " << seqnum << " in: " << _dbIname;
+		glout_warn << "Warning: index does not contain seqnum: " << seqnum << " in: " << _dbIname;
 		return false;
 	}
 
 	if (lseek(_fod, itr->second._offset, SEEK_SET) < 0)
 	{
-		glout_error << FILE_LINE << "Error: could not seek to correct index location for get: " << _dbFname;
+		glout_error << "Error: could not seek to correct index location for get: " << _dbFname;
 		return false;
 	}
 
 	char buff[MAX_MSG_LENGTH];
 	if (read (_fod, buff, itr->second._size) != itr->second._size)
 	{
-		glout_error << FILE_LINE << "Error: could not read message record for seqnum " << seqnum << " from: " << _dbFname;
+		glout_error << "Error: could not read message record for seqnum " << seqnum << " from: " << _dbFname;
 		return false;
 	}
 

@@ -118,7 +118,7 @@ const string& GetTimeAsStringMini(string& result, const Tickval *tv)
    return result = oss.str();
 }
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 string& CheckAddTrailingSlash(string& src)
 {
 	if (!src.empty() && *src.rbegin() != '/')
@@ -244,71 +244,60 @@ int decode_dow (const string& from)
 }
 
 //----------------------------------------------------------------------------------------
-vector<f8String> package_info()
+const Package_info& package_info()
 {
-	vector<f8String> strs;
-	ostringstream ostr;
-   ostr << "Package info for " PACKAGE " version " VERSION;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "PACKAGE_BUGREPORT:" << PACKAGE_BUGREPORT;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "PACKAGE_URL:" << PACKAGE_URL;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "MAGIC_NUM: " << MAGIC_NUM;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "CONFIGURE_OPTIONS:" << CONFIGURE_OPTIONS;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "CPPFLAGS:" << CPPFLAGS;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "LIBS:" << LIBS;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "LDFLAGS:" << LDFLAGS;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "CONFIGURE_SDATE: " << CONFIGURE_SDATE;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "CONFIGURE_TIME: " << CONFIGURE_TIME;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "CONFIGURE_TIME_NUM: " << CONFIGURE_TIME_NUM;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "HOST_SYSTEM: " << HOST_SYSTEM;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "MAX_FLD_LENGTH: " << MAX_FLD_LENGTH;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "MAX_MSG_LENGTH: " << MAX_MSG_LENGTH;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "MPMC_FF: " << MPMC_FF;
-   strs.push_back(ostr.str()); ostr.str("");
-   ostr << "MPMC_TBB: " << MPMC_TBB;
-   strs.push_back(ostr.str()); ostr.str("");
-	ostr << "MPMC_SYSTEM: " << MPMC_SYSTEM;
-   strs.push_back(ostr.str()); ostr.str("");
-	ostr << "THREAD_PTHREAD: " << THREAD_PTHREAD;
-   strs.push_back(ostr.str()); ostr.str("");
-	ostr << "THREAD_STDTHREAD: " << THREAD_STDTHREAD;
-   strs.push_back(ostr.str()); ostr.str("");
-	ostr << "THREAD_SYSTEM: " << THREAD_SYSTEM;
-   strs.push_back(ostr.str()); ostr.str("");
+   //ostr << "Package info for " PACKAGE " version " VERSION;
+	static const Package_info pinfo
+	{
+		{ "VERSION", VERSION },
+		{ "PACKAGE", PACKAGE },
+		{ "PACKAGE_BUGREPORT", PACKAGE_BUGREPORT },
+		{ "PACKAGE_URL", PACKAGE_URL },
+		{ "MAGIC_NUM", STRINGIFY(MAGIC_NUM) },
+		{ "CONFIGURE_OPTIONS", CONFIGURE_OPTIONS },
+		{ "CPPFLAGS", CPPFLAGS },
+		{ "LIBS", LIBS },
+		{ "LDFLAGS", LDFLAGS },
+		{ "CONFIGURE_SDATE", CONFIGURE_SDATE },
+		{ "CONFIGURE_TIME", CONFIGURE_TIME },
+		{ "MAJOR_VERSION_NUM", STRINGIFY(MAJOR_VERSION_NUM) },
+		{ "MINOR_VERSION_NUM", STRINGIFY(MINOR_VERSION_NUM) },
+		{ "PATCH_VERSION_NUM", STRINGIFY(PATCH_VERSION_NUM) },
+		{ "CONFIGURE_TIME_NUM", STRINGIFY(CONFIGURE_TIME_NUM) },
+		{ "HOST_SYSTEM", HOST_SYSTEM },
+		{ "MAX_FLD_LENGTH", STRINGIFY(MAX_FLD_LENGTH) },
+		{ "MAX_MSG_LENGTH", STRINGIFY(MAX_MSG_LENGTH) },
+		{ "MPMC_FF", STRINGIFY(MPMC_FF) },
+		{ "MPMC_TBB", STRINGIFY(MPMC_TBB) },
+		{ "MPMC_SYSTEM", STRINGIFY(MPMC_SYSTEM) },
+		{ "DEFAULT_PRECISION", STRINGIFY(DEFAULT_PRECISION) },
+		{ "THREAD_PTHREAD", STRINGIFY(THREAD_PTHREAD) },
+		{ "THREAD_STDTHREAD", STRINGIFY(THREAD_STDTHREAD) },
+		{ "THREAD_SYSTEM", STRINGIFY(THREAD_SYSTEM) },
 #if defined SLEEP_NO_YIELD
-	ostr << "SLEEP_NO_YIELD: " << SLEEP_NO_YIELD;
-   strs.push_back(ostr.str()); ostr.str("");
+		{ "SLEEP_NO_YIELD", STRINGIFY(SLEEP_NO_YIELD) },
 #endif
 #if defined CODECTIMING
-	ostr << "CODECTIMING: " << CODECTIMING;
-   strs.push_back(ostr.str()); ostr.str("");
+		{ "CODECTIMING", STRINGIFY(CODECTIMING) },
 #endif
 #if defined HAVE_OPENSSL
-	ostr << "HAVE_OPENSSL: " << HAVE_OPENSSL;
-   strs.push_back(ostr.str()); ostr.str("");
+		{ "HAVE_OPENSSL", STRINGIFY(HAVE_OPENSSL) },
 #endif
 #if defined HAVE_EXTENDED_METADATA
-	ostr << "HAVE_EXTENDED_METADATA: " << HAVE_EXTENDED_METADATA;
-   strs.push_back(ostr.str()); ostr.str("");
+		{ "HAVE_EXTENDED_METADATA", STRINGIFY(HAVE_EXTENDED_METADATA) },
 #endif
 #if defined F8_DEBUG
-	ostr << "F8_DEBUG: " << F8_DEBUG;
-   strs.push_back(ostr.str()); ostr.str("");
+		{ "F8_DEBUG", STRINGIFY(F8_DEBUG) },
 #endif
-	return strs;
+	};
+
+	return pinfo;
+}
+
+f8String find_package_info_string(const f8String& what)
+{
+	auto itr(package_info().find(what));
+	return itr != package_info().cend() ? itr->second : f8String{};
 }
 
 //----------------------------------------------------------------------------------------
