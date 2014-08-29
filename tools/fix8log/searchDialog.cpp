@@ -380,6 +380,7 @@ void SearchDialog::cancelSlot()
 void SearchDialog::saveSlot()
 {
     bool bstatus;
+    QString str;
     QScriptEngine engine;
     QString errorMessage;
     QScriptSyntaxCheckResult::State syntaxState;
@@ -410,9 +411,18 @@ void SearchDialog::saveSlot()
         sf = new SearchFunction();
         sf->alias = aliasEdit->text();
         sf->function = functionEdit->toPlainText();
-        bstatus = database->addSearchFunction(*sf);
+        if (dialogType == SearchDialogType)
+            bstatus = database->addSearchFunction(*sf);
+        else
+            bstatus = database->addFilterFunction(*sf);
+
         if (!bstatus) {
-            setMessage(("Error saving search item to database"));
+            if (dialogType == SearchDialogType)
+                str = "Error saving search item to database";
+            else
+                str = "Error saving filter item to database";
+
+            setMessage(str);
             mode = ViewMode;
             validate();
             return;
@@ -441,9 +451,19 @@ void SearchDialog::saveSlot()
             sf = (SearchFunction *) var.value<void *>();
             sf->alias = aliasEdit->text();
             sf->function = functionEdit->toPlainText();
-            bstatus = database->updateSearchFunction(*sf);
+            if (dialogType == SearchDialogType)
+                bstatus = database->updateSearchFunction(*sf);
+            else
+                bstatus = database->updateFilterFunction(*sf);
+
             if (!bstatus) {
-                setMessage("Update of search method failed");
+                if (dialogType == SearchDialogType)
+                    str = "Update of search method failed";
+                else
+                    str = "Update of filter method failed";
+
+
+                setMessage(str);
                 mode = ViewMode;
                 validate();
                 return;
@@ -572,6 +592,7 @@ MainWindow *SearchDialog::getMainWindow()
 void SearchDialog::deleteSlot()
 {
     bool bstatus;
+    QString str;
     QItemSelectionModel *selectionModel;
     selectionModel = tableView->selectionModel();
     if (!selectionModel->hasSelection()) {
@@ -599,7 +620,10 @@ void SearchDialog::deleteSlot()
     }
     if (searchFunctionList)
         searchFunctionList->removeOne(sf);
-    bstatus = database->removeSearchFunction(sf->id);
+    if (dialogType == SearchDialogType)
+        bstatus = database->removeSearchFunction(sf->id);
+    else
+         bstatus = database->removeFilterFunction(sf->id);
     if (!bstatus)
         setMessage("Failed to delete item from database");
     else
@@ -789,7 +813,11 @@ void SearchDialog::readXML(QString &fileName)
                     var.setValue((void *) sf);
                     aliasItem->setData(var);
                     funcItem->setData(var);
-                    database->addSearchFunction(*sf);
+                    if (dialogType == SearchDialogType)
+                        database->addSearchFunction(*sf);
+                    else
+                        database->addFilterFunction(*sf);
+
                     if (!searchFunctionList) {
                         searchFunctionList = new SearchFunctionList();
                     }

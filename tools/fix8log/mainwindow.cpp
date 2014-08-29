@@ -448,9 +448,13 @@ void MainWindow::buildMainWindow()
     searchCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     searchCompleter->setWrapAround(false);
     searchLineEdit->setCompleter(searchCompleter);
+
+    filterLineEdit->setCompleter(searchCompleter);
+
     QFontMetrics fm1(searchLineEdit->font());
     searchLineEdit->setMinimumWidth(fm1.averageCharWidth()*32);
     editHighlighter = new EditHighLighter(searchLineEdit->document());
+    filterEditHighlighter  = new EditHighLighter(filterLineEdit->document());
     connect(searchLineEdit,SIGNAL(textChanged()),this,SLOT(searchTextChangedSlot()));
     connect(searchLineEdit,SIGNAL(returnPressed()),this,SLOT(searchReturnSlot()));
     searchBox->addWidget(searchL,0);
@@ -1314,6 +1318,7 @@ void MainWindow::setFieldUsePair(QList<QPair<QString ,FieldUse *>> *fup)
 
     }
     editHighlighter->setColumHeaders(fieldNames);
+    filterEditHighlighter->setColumHeaders(fieldNames);
 }
 
 QList<QPair<QString ,FieldUse *>> * MainWindow::getFieldUsePair()

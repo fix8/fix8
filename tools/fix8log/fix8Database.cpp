@@ -120,6 +120,17 @@ void Fix8Log::initDatabase()
     }
     else
         searchFunctionList = database->getSearchFunctions();
+    bstatus = database->tableIsValid(Database::FilterFunctions);
+    if (!bstatus) {
+        bstatus = database->createTable(Database::FilterFunctions);
+        if (!bstatus) {
+            errorStr = "Failed to create table  filter table.";
+            displayConsoleMessage(GUI::ConsoleMessage(errorStr,GUI::ConsoleMessage::ErrorMsg));
+        }
+    }
+    else
+        filterFunctionList = database->getFilterFunctions();
+
 
     bstatus = database->tableIsValid(Database::TableSchemas);
     if (!bstatus) {

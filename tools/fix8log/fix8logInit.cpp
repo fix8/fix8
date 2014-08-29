@@ -122,6 +122,8 @@ bool Fix8Log::init()
                 //newMW->setTableSchema(wd.tableSchema);
                 newMW->setFieldUsePair(&(fixlib->fieldUsePairList));
                 newMW->setSearchFunctions(searchFunctionList);
+                newMW->setFilterFunctions(filterFunctionList);
+
                 wireSignalAndSlots(newMW);
                 mainWindows.append(newMW);
                 newMW->setAutoSaveOn(autoSaveOn);
@@ -199,6 +201,8 @@ bool Fix8Log::init()
         fix8ShareLibList.append(f8lib);
 
         newMW->setSearchFunctions(searchFunctionList);
+        newMW->setFilterFunctions(filterFunctionList);
+
         wireSignalAndSlots(newMW);
         newMW->setSharedLibrary(f8lib);
         newMW->setFieldUsePair(&(f8lib->fieldUsePairList));

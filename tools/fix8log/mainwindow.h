@@ -329,6 +329,8 @@ private:
     WorkSheetList workSheetList;
     QStringList searchColumnNames;
     EditHighLighter *editHighlighter;
+    EditHighLighter *filterEditHighlighter;
+
     SearchFunction filterFunction;
     SearchFunction searchFunction;
     bool    haveFilterFunction;

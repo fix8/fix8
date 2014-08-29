@@ -56,7 +56,7 @@ class Database :public QObject
 public:
     Database(QString fileName,QObject *parent);
     ~Database();
-    typedef  enum {SqlInfo,Windows,WorkSheet,TableSchemas,SchemaFields,SearchFunctions, NumOfTables} TableType;
+    typedef  enum {SqlInfo,Windows,WorkSheet,TableSchemas,SchemaFields,SearchFunctions, FilterFunctions,NumOfTables} TableType;
     static QString tableNames[NumOfTables];
     static QString arguments[NumOfTables];
     bool createTable(TableType);
@@ -95,6 +95,12 @@ public:
     bool addSearchFunction(SearchFunction &);
     bool updateSearchFunction(SearchFunction &);
     bool removeSearchFunction(qint32 searchFunctionID);
+
+    // FilterFunctions
+    SearchFunctionList *getFilterFunctions();
+    bool addFilterFunction(SearchFunction &);
+    bool updateFilterFunction(SearchFunction &);
+    bool removeFilterFunction(qint32 filterFunctionID);
 private:
     QString name;
     QSqlDatabase *handle;

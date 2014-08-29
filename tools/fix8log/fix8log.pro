@@ -73,7 +73,8 @@ SOURCES += main.cpp\
     newwindowschemapage.cpp \
     newwindowfilepage.cpp \
     welcomepage.cpp \
-    mainWindowFilter.cpp
+    mainWindowFilter.cpp \
+    databaseFilterFunctions.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

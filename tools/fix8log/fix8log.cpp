@@ -63,7 +63,7 @@ Fix8Log::Fix8Log(QtSingleApplication *qsa) :
     QObject(),firstTimeToUse(false),database(0),autoSaveOn(false),
     cancelSessionRestore(false),schemaEditorDialog(0),tableSchemaList(0),
     defaultTableSchema(0),worldTableSchema(0),applicationInstance(qsa),searchDialog(0),
-    filterDialog(0),searchFunctionList(0),newWindowWizard(0)
+    filterDialog(0),searchFunctionList(0),filterFunctionList(0), newWindowWizard(0)
 {
     GUI::Globals::Instance();
     connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
