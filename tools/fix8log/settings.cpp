@@ -81,6 +81,8 @@ void MainWindow::readSettings()
    QSize toolbarIconSize = settings.value("ToolButtonSize",GUI::Globals::regIconSize).toSize();
    mainToolBar->setIconSize(toolbarIconSize);
    searchToolBar->setIconSize(toolbarIconSize);
+   filterToolBar->setIconSize(toolbarIconSize);
+
    if (toolbarIconSize == GUI::Globals::smallIconSize)
        iconSizeSmallA->setChecked(true);
    else if (toolbarIconSize == GUI::Globals::largeIconSize)

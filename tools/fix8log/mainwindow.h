@@ -97,7 +97,10 @@ public:
     void displayMessageDialog(QString &message);
     void finishDrop(WorkSheetData &wsd, FixMimeData *);
     void loadFile(QString &fileName);
+    void populateFilterList(SearchFunctionList *sfl);
     void populateSearchList(SearchFunctionList *sfl);
+    void setFilterFunctions(SearchFunctionList *sfl);
+
     void setFieldUsePair(QList<QPair<QString ,FieldUse *>> *);
     void setSharedLibrary(Fix8SharedLib *);
     Fix8SharedLib *getSharedLibrary();
@@ -117,6 +120,8 @@ public:
     void setWindowData(const WindowData wd);
     void setTableSchema(TableSchema *);
     void tableSchemaModified(TableSchema *);
+    void updateFilterFunctions(SearchFunctionList *sfl);
+
     void updateSearchFunctions(SearchFunctionList *);
     protected slots:
     void autoSaveOnSlot(bool);
@@ -138,6 +143,9 @@ public:
     void fileDirChangedSlot(const QString &);
     void fileFilterSelectedSlot(QString);
     void fileSelectionFinishedSlot(int returnCode);
+    void filterFunctionSelectedSlot(int);
+    void filterReturnSlot();
+    void filterTextChangedSlot();
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
     void linkSearchSlot(bool turnedOn);
@@ -146,6 +154,7 @@ public:
     void popupMenuSlot(const QModelIndex &,const QPoint &);
     void rowSelectedSlot(int);
     void quitSlot();
+    void saveFilterStringSlot();
     void saveSearchStringSlot();
     void schemaSelectedSlot(QAction *);
     void searchActionSlot(QAction *);
@@ -202,7 +211,9 @@ protected:
     QAction  *popupCopyHtmlA;
     QAction  *quitA;
     QAction  *saveA;
+    QAction *saveFilterFuncA;
     QAction *saveSearchFuncA;
+
     QAction  *searchBackA;
     QAction  *searchBeginA;
     QAction  *searchEndA;
@@ -255,6 +266,7 @@ protected:
     QQuickView *progressView;
     QRadioButton *includeFilterB;
     QRadioButton *excludeFilterB;
+    QRadioButton *offFilterB;
     QSplitter *workAreaSplitter;
     QStackedWidget *stackW;
     QStandardItemModel *_model;
@@ -287,6 +299,8 @@ signals:
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
     void editSchema(MainWindow *);
+    void showFilterDialog();
+    void showFilterDialogAddMode(QString searchFunction);
     void showSearchDialog();
     void showSearchDialogAddMode(QString searchFunction);
     void tableSchemaChanged(TableSchema *);
@@ -298,8 +312,11 @@ private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
     SearchFunction createSearchRoutine(bool &bstatus);
+    SearchFunction createFilterRoutine(bool &bstatus);
+    bool runFilterFilterScript();
     bool runSearchScript();
     void setSearchFunction(const SearchFunction &);
+    void validateFilterText();
     void validateSearchText();
     QByteArray fileDirState;
     QString  lastSelectedDir;
@@ -312,8 +329,11 @@ private:
     WorkSheetList workSheetList;
     QStringList searchColumnNames;
     EditHighLighter *editHighlighter;
+    SearchFunction filterFunction;
     SearchFunction searchFunction;
+    bool    haveFilterFunction;
     bool    haveSearchFunction;
+
     QScriptValue searchFunctionVal;
     QActionGroup *searchActionGroup;
     QScriptEngine engine;
@@ -324,8 +344,10 @@ private:
     ComboBoxLineEdit *filterSelectLineEdit;
     ComboBoxLineEdit *searchSelectLineEdit;
     QLabel     *searchSelectL;
+    QMap <QString, qint32 > filterFunctionMap; //< function, indexofComboBox>
     QMap <QString, qint32 > searchFunctionMap; //< function, indexofComboBox>
     QAbstractItemModel *searchSelectModel;
+    SearchFunctionList filterFunctionList;
     SearchFunctionList searchFunctionList;
     Database *database;
     bool colorSelectionFG;
@@ -336,6 +358,7 @@ private:
     QLabel  *fix8versionL;
     QLabel  *fix8versionV;
     QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
+    QStringList filterArgList;
     QStringList searchArgList;
     Fix8SharedLib *sharedLib;
     QColor fix8RegColor;

@@ -1,3 +1,39 @@
+//-------------------------------------------------------------------------------------------------
+/*
+Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+
+Fix8logviewer Open Source FIX Log Viewer.
+Copyright (C) 2010-14 David N Boosalis dboosalis@fix8.org, David L. Dight <fix@fix8.org>
+
+Fix8logviewer is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
+
+Fix8logviewer is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
+
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
+//-------------------------------------------------------------------------------------------------
+
 #include "searchDialog.h"
 #include "lineedit.h"
 #include "database.h"
@@ -20,10 +56,11 @@ bool FileFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &so
     // uncomment to call the default implementation
     //return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
-SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
+SearchDialog::SearchDialog(Database *db,TableSchema *ts,DialogType dt,QWidget *parent) :
     QDialog(parent),database(db),tableSchema(ts),haveError(false),strModel(0),
-    aliasItem(0),functionItem(0),mainWindow(0),searchFunctionList(0)
+    aliasItem(0),functionItem(0),mainWindow(0),searchFunctionList(0),dialogType(dt)
 {
+    QString str;
     QFont fnt = font();
     fnt.setBold(true);
     setFont(fnt);
@@ -34,7 +71,7 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     // setStyleSheet(styleSheet);
 
 
-    setWindowTitle("Fix8 Logviewer");
+    setWindowTitle(GUI::Globals::appName);
     QDesktopWidget *desktop = qApp->desktop();
     QRect geom = desktop->availableGeometry(this);
     qint32 screenHeightMax = (geom.height() *.50);
@@ -62,8 +99,16 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
     QHBoxLayout *titleBox = new QHBoxLayout(titleArea);
     titleArea->setLayout(titleBox);
     iconL = new QLabel(titleArea);
-    iconL->setPixmap(QPixmap(":/images/svg/magniflying_glass.svg").scaledToHeight(32,Qt::SmoothTransformation));
-    titleL = new QLabel("Search Filters",this);
+
+    if (dialogType == SearchDialogType) {
+        str = "Search Methods";
+        iconL->setPixmap(QPixmap(":/images/svg/magniflying_glass.svg").scaledToHeight(32,Qt::SmoothTransformation));
+    }
+    else {
+        str = "Filter Methods";
+        iconL->setPixmap(QPixmap(":/images/svg/filterEdit.svg").scaledToHeight(32,Qt::SmoothTransformation));
+    }
+    titleL = new QLabel(str,this);
     titleBox->addWidget(iconL,0,Qt::AlignLeft);
     titleBox->addWidget(titleL,0,Qt::AlignLeft);
     titleBox->addSpacing(1);
@@ -192,6 +237,7 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,QWidget *parent) :
 }
 void SearchDialog::setTableSchema(TableSchema *ts)
 {
+    QString str;
     tableSchema = ts;
     QString colName;
     QStringList colNameList;
@@ -222,8 +268,13 @@ void SearchDialog::setTableSchema(TableSchema *ts)
 
     qDebug() << "Populate Search Dialog...." << __FILE__ << __LINE__;
     searchFunctionList = database->getSearchFunctions();
-    if (!searchFunctionList || (searchFunctionList->count() < 1) )
-        setMessage("No Search Functions In Database",false);
+    if (!searchFunctionList || (searchFunctionList->count() < 1) ) {
+        if (dialogType == SearchDialogType)
+            str = "No Search Functions In Database";
+        else
+              str = "No Filter Functions In Database";
+        setMessage(str,false);
+    }
     else
         populateSearchFunctions();
 }
@@ -603,14 +654,25 @@ void SearchDialog::closeSlot()
 void SearchDialog::exportSlot()
 {
     QString str;
+    QString str1;
     QSettings settings("fix8","logviewer");
     if (model->rowCount() < 1) {
         str = "Error -  no functions to export";
         QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Ok);
         return;
     }
+    if (dialogType == SearchDialogType)
+        str = "Export Search Functions";
+    else
+        str = "Export Filter Functions";
+
     QFileDialog *fileDialog = new QFileDialog(this,"Export Search Functions");
-    QString workingDir = settings.value("ExportImportSearchDir",QDir::homePath()).toString();
+    if  (dialogType == SearchDialogType)
+        str ="ExportImportSearchDir";
+    else
+        str ="ExportImportFilterDir";
+
+    QString workingDir = settings.value(str,QDir::homePath()).toString();
     fileDialog->setDirectory(workingDir);
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
     fileDialog->setProxyModel(new FileFilterProxyModel());
@@ -624,21 +686,26 @@ void SearchDialog::exportSlot()
             fileName.append(".xml");
             fi = QFileInfo(fileName);
             if (fi.exists()) {
-                str = "Error - File " + fi.fileName() + " already exists";
-                QMessageBox::warning(this,GUI::Globals::appName,str,QMessageBox::Ok);
+                str1 = "Error - File " + fi.fileName() + " already exists";
+                QMessageBox::warning(this,GUI::Globals::appName,str1,QMessageBox::Ok);
                 return;
             }
             qDebug() << "Ask if want to overwrite" << __FILE__ << __LINE__;
 
         }
-        settings.setValue("ExportImportSearchDir",fi.absolutePath());
+        settings.setValue(str,fi.absolutePath());
         writeXML(fileName);
     }
     fileDialog->deleteLater();
 }
 void SearchDialog::importSlot()
 {
-    QFileDialog *fileDialog = new QFileDialog(this,"Export Search Functions");
+    QString str;
+    if  (dialogType == SearchDialogType)
+        str = "Export Search Functions";
+    else
+        str = "Export Filter Functions";
+    QFileDialog *fileDialog = new QFileDialog(this,str);
     fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
     fileDialog->setProxyModel(new FileFilterProxyModel());
     fileDialog->setNameFilter("XML (*.xml)");

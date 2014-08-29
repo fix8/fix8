@@ -72,7 +72,8 @@ SOURCES += main.cpp\
     fix8sharedlib.cpp \
     newwindowschemapage.cpp \
     newwindowfilepage.cpp \
-    welcomepage.cpp
+    welcomepage.cpp \
+    mainWindowFilter.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

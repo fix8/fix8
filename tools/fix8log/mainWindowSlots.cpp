@@ -101,6 +101,7 @@ void MainWindow::iconSizeSlot(QAction *action)
         is  = GUI::Globals::largeIconSize;
     mainToolBar->setIconSize(is);
     searchToolBar->setIconSize(is);
+    filterToolBar->setIconSize(is);
     settings.setValue("ToolButtonSize",is);
 }
 void MainWindow::configFGSlot()

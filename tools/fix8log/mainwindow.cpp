@@ -52,8 +52,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 MainWindow::MainWindow(Database *db,bool showLoading)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveSearchFunction(false),database(db),
-      linkSearchOn(false),fieldUsePairList(0),sharedLib(0),defaultTableSchema(0),schemaList(0)
+      windowDataID(-1),loadingActive(showLoading),tableSchema(0),haveFilterFunction(false),
+        haveSearchFunction(false),database(db),linkSearchOn(false),fieldUsePairList(0),sharedLib(0),defaultTableSchema(0),schemaList(0)
 {
     buildMainWindow();
     if (loadingActive) {
@@ -65,7 +65,7 @@ MainWindow::MainWindow(Database *db,bool showLoading)
 
 MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     : QMainWindow(0),schemaActionGroup(0),fileDialog(0),qmlObject(0),
-      windowDataID(-1),loadingActive(false), haveSearchFunction(false),database(db),linkSearchOn(false),fieldUsePairList(0),
+      windowDataID(-1),loadingActive(false), haveFilterFunction(false),haveSearchFunction(false),database(db),linkSearchOn(false),fieldUsePairList(0),
     sharedLib(0),defaultTableSchema(0),schemaList(0)
 {
     buildMainWindow();
@@ -191,17 +191,28 @@ void MainWindow::buildMainWindow()
     filterL = new QLabel(filterArea);
     filterL->setText(tr("Filter:"));
     filterLineEdit = new LineEdit(filterArea);
+    connect(filterLineEdit,SIGNAL(textChanged()),this,SLOT(filterTextChangedSlot()));
+    connect(filterLineEdit,SIGNAL(returnPressed()),this,SLOT(filterReturnSlot()));
     filterLineEdit->setWhatsThis("Filter critera. Can be any Javascript\nEg: MsgType=='8' && AvgPx > 10.0");
     filterBox->addWidget(filterL,0);
     filterBox->addWidget(filterLineEdit,1);
     filterButtonGroup = new QButtonGroup(this);
     excludeFilterB = new QRadioButton("Exclude",this);
+    excludeFilterB->setToolTip("Apply Filter to \'exlude\' by rule");
     includeFilterB = new QRadioButton("Include",this);
+    includeFilterB->setToolTip("Apply Filter to \'include' by rule");
+
+    offFilterB  = new QRadioButton("Off",this);
+    offFilterB->setToolTip("Turn off filter");
+
     filterButtonGroup->setExclusive(true);
     filterButtonGroup->addButton(excludeFilterB);
     filterButtonGroup->addButton(includeFilterB);
+    filterButtonGroup->addButton(offFilterB);
+
     filterBox->addWidget(excludeFilterB,0);
     filterBox->addWidget(includeFilterB,0);
+    filterBox->addWidget(offFilterB,0);
 
     QWidget *filterSelectArea = new QWidget(this);
     QHBoxLayout *filterSelectBox = new QHBoxLayout();
@@ -209,7 +220,7 @@ void MainWindow::buildMainWindow()
     filterSelectBox->setMargin(0);
     filterSelectL = new QLabel("Select:");
     filterSelectCB = new QComboBox(this);
-    //connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
+    connect(filterSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(filterFunctionSelectedSlot(int)));
     filterSelectLineEdit = new ComboBoxLineEdit(this);
     filterSelectCB->setLineEdit(filterSelectLineEdit);
     QFontMetrics fm2(filterSelectCB->font());
@@ -221,20 +232,31 @@ void MainWindow::buildMainWindow()
 
     filterSelectBox->addWidget(filterSelectL,0);
     filterSelectBox->addWidget(filterSelectCB,1);
-    filterSelectBox->addStretch(1);
+    filterSelectBox->addStretch(2);
 
     editFilterA= new QAction("&Filter Editor",this);
     editFilterA->setIconText("Edit");
     editFilterA->setToolTip(tr("Edit Filter"));
     editFilterA->setWhatsThis(tr("Allows you to filter out messages"));
     editFilterA->setIcon((QIcon(":/images/svg/filterEdit.svg")));
-    connect(editFilterA,SIGNAL(triggered()),this,SLOT(editSchemaSlot()));
+    connect(editFilterA,SIGNAL(triggered()),this,SIGNAL(showFilterDialog()));
+
+    QIcon saveIcon;
+    saveIcon.addPixmap(QPixmap(":/images/svg/saveEnabled.svg"),QIcon::Normal,QIcon::On);
+    saveIcon.addPixmap(QPixmap(":/images/svg/saveDisabled.svg"),QIcon::Normal,QIcon::Off);
+    saveFilterFuncA  = new QAction("Save",this);
+
+    saveFilterFuncA->setIcon(saveIcon);
+    saveFilterFuncA->setToolTip(tr("Save this filter criteria"));
+    saveFilterFuncA->setWhatsThis(tr("Save filter string to database so it can be reused latter"));
+    connect(saveFilterFuncA,SIGNAL(triggered()),this,SLOT(saveFilterStringSlot()));
    // searchToolBar->addAction(linkSearchA);
     //searchToolBar->addWidget(searchLV);
     filterToolBar->addWidget(filterArea);
+    filterToolBar->addAction(saveFilterFuncA);
     filterToolBar->addAction(editFilterA);
-
     filterToolBar->addWidget(filterSelectArea);
+
     searchToolBar = new FixToolBar("Search",this);
     connect(searchToolBar,SIGNAL(orientationChanged(Qt::Orientation)),
             this,SLOT(toolbarOrientationChangedSlot(Qt::Orientation)));
@@ -339,10 +361,12 @@ void MainWindow::buildMainWindow()
     searchActionGroup = new QActionGroup(this);
     connect(searchActionGroup,SIGNAL(triggered(QAction*)),
             this,SLOT(searchActionSlot(QAction*)));
+    /* set above for saveFilterFuncA
     QIcon saveIcon;
     saveIcon.addPixmap(QPixmap(":/images/svg/saveEnabled.svg"),QIcon::Normal,QIcon::On);
     saveIcon.addPixmap(QPixmap(":/images/svg/saveDisabled.svg"),QIcon::Normal,QIcon::Off);
-    saveSearchFuncA  = new QAction("Save",this);
+    */
+ saveSearchFuncA  = new QAction("Save",this);
 
     saveSearchFuncA->setIcon(saveIcon);
     saveSearchFuncA->setToolTip(tr("Save this search criteria"));
@@ -415,7 +439,7 @@ void MainWindow::buildMainWindow()
 
     searchSelectBox->addWidget(searchSelectL,0);
     searchSelectBox->addWidget(searchSelectCB,1);
-    searchSelectBox->addStretch(1);
+    searchSelectBox->addStretch(2);
 
     searchCompleter = new QCompleter(this);
 

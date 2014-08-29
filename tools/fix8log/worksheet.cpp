@@ -379,6 +379,7 @@ bool WorkSheet::loadFileName(QString &fileName,
 
 
     myTimer.start();
+    setUpdatesEnabled(false);
     QMap <QString, qint32> senderMap; // <sender id, numofoccurances>
     messageList = new QMessageList();
     while(!dataFile.atEnd()) {
@@ -386,6 +387,7 @@ bool WorkSheet::loadFileName(QString &fileName,
             dataFile.close();
             if (cancelReason == TERMINATED)  // set from terminate
                 returnCode = TERMINATED;
+            setUpdatesEnabled(true);
             return false;
         }
         try {
@@ -406,6 +408,8 @@ bool WorkSheet::loadFileName(QString &fileName,
                 if (cancelLoad) {
                     showLoadProcess(false);
                     returnCode = CANCEL;
+                    setUpdatesEnabled(true);
+
                     return false;
                 }
                 qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
@@ -418,7 +422,6 @@ bool WorkSheet::loadFileName(QString &fileName,
             else {
                 senderMap.insert(sid,1);
             }
-            //qDebug() << "SEQ NUM = " << snum()  << "sid = " << sid << __FILE__ << __LINE__;
             messageList->append(qmessage);
         }
         catch (f8Exception&  e){
@@ -476,8 +479,12 @@ bool WorkSheet::loadFileName(QString &fileName,
     _model->setMessageList(messageList,cancelLoad);
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::ConsoleMessage(qstr));
+    setUpdatesEnabled(true);
+
     showLoadProcess(false);
     returnCode = OK;
+    qDebug() << "Elapsed time of load = " << myTimer.elapsed() << __FILE__ << __LINE__;
+
     return true;
 }
 void WorkSheet::senderActionGroupSlot(QAction *action)

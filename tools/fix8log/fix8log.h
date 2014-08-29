@@ -99,9 +99,14 @@ public slots:
     void searchDialogAcceptedSlot();
     void showSearchDialogSlot();
     void showSearchDialogAddModeSlot(QString);
+
+    void showFilterDialogAddModeSlot(QString);
+    void filterDialogAcceptedSlot();
+    void showFilterDialogSlot();
     void tableSchemaSelectedSlot(TableSchema *);
     void toolButtonStyleModfiedSlot(Qt::ToolButtonStyle);
     void updatedSearchFunctionsSlot(SearchFunctionList *sfl);
+    void updatedFilterFunctionsSlot(SearchFunctionList *sfl);
     void wakeupSlot(const QString&);
 protected:
    // WorkSheetModel *readLogFile(const QString &fileName,QString &errorStr);
@@ -134,7 +139,10 @@ private:
     void initDatabase();
     std::function<const F8MetaCntx&()> loadFix8so(QString libName, bool &bstatus);
     SearchDialog *searchDialog;
+    SearchDialog *filterDialog;
+
     SearchFunctionList *searchFunctionList;
+    SearchFunctionList *filterFunctionList;
     NewWindowWizard *newWindowWizard;
     Fix8SharedLibList fix8ShareLibList;
 };

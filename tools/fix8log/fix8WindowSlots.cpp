@@ -205,6 +205,8 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(tableSchemaChanged(TableSchema*)),this,SLOT(tableSchemaSelectedSlot(TableSchema *)));
     connect(mw,SIGNAL(showSearchDialog()),this,SLOT(showSearchDialogSlot()));
     connect(mw,SIGNAL(showSearchDialogAddMode(QString)),this,SLOT(showSearchDialogAddModeSlot(QString)));
+    connect(mw,SIGNAL(showFilterDialog()),this,SLOT(showFilterDialogSlot()));
+    connect(mw,SIGNAL(showFilterDialogAddMode(QString)),this,SLOT(showFilterDialogAddModeSlot(QString)));
     connect(mw->aboutA,SIGNAL(triggered()),this,SLOT(aboutSlot()));
     mw->setAutoSaveOn(autoSaveOn);
 }
