@@ -1,10 +1,10 @@
 #include <proxyFilter.h>
 #include <QDebug>
-//#include <QtScript>
+#include <QtScript>
 
 int ProxyFilter::senderIDRole = Qt::UserRole+2;
 
-ProxyFilter::ProxyFilter(QObject *parent): QSortFilterProxyModel(parent)
+ProxyFilter::ProxyFilter(QObject *parent): QSortFilterProxyModel(parent),logicFilter(0)
 {
   rowAccepted =  false;
 
@@ -33,4 +33,8 @@ bool ProxyFilter::isRowAccepted()
 {
     qDebug() << "IS ROW ACCEPETED = " << rowAccepted << __FILE__ << __LINE__;
   return rowAccepted;
+}
+void ProxyFilter::setLogicFilter(LogicFilter *lf)
+{
+    logicFilter = lf;
 }

@@ -405,7 +405,7 @@ void MainWindow::populateFilterList(SearchFunctionList *sfl)
     }
     filterFunctionList = *sfl;
     QListIterator <SearchFunction *> iter(filterFunctionList);
-    searchSelectCB->addItem("Select Function");
+    filterSelectCB->addItem("Select Function");
     while(iter.hasNext()) {
         sf = iter.next();
         QVariant var;
@@ -423,6 +423,7 @@ void MainWindow::saveFilterStringSlot()
 }
 void MainWindow::filterFunctionSelectedSlot(int index)
 {
+    qDebug() << "FILTER FUNCTION SELECTED SLOT" << __FILE__ << __LINE__;
     if (index == 0)
         filterLineEdit->setText("");
     else {

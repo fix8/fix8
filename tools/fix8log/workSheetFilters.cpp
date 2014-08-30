@@ -1,3 +1,4 @@
+
 //-------------------------------------------------------------------------------------------------
 /*
 Fix8logviewer is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
@@ -33,49 +34,30 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#include "comboboxlineedit.h"
+#include "fixmimedata.h"
+#include "fixtoolbar.h"
+#include "lineedit.h"
+#include "mainwindow.h"
+#include "nodatalabel.h"
+#include "worksheet.h"
+#include "worksheetmodel.h"
+#include "globals.h"
+#include "searchfunction.h"
+#include "searchlineedit.h"
+#include "tableschema.h"
+#include <QQuickView>
+#include <QtWidgets>
+#include <QStandardItemModel>
+#include <QtScript>
+#include <QScriptSyntaxCheckResult>
+#include <stdio.h>
+void WorkSheet::setFilterFunction(const SearchFunction &sf)
+{
+    filterFunction = sf;
+}
 
-#include "worksheetdata.h"
-#include <QDebug>
-WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1),
-    headerExpanded(false),fieldsExpanded(false),trailerExpanded(false),filterMode(WorkSheetData::Off),fieldsExpansionType(0)
+SearchFunction &WorkSheet::getFilterFunction()
 {
-}
-WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
-{
-    id            = wsd.id;
-    windowID      = wsd.windowID;
-    tabAlias      = wsd.tabAlias;
-    splitterState = wsd.splitterState;
-    headerState   = wsd.headerState;
-    fileName      = wsd.fileName;
-    selectedRow   = wsd.selectedRow;
-    headerExpanded = wsd.headerExpanded;
-    fieldsExpanded = wsd.fieldsExpanded;
-    trailerExpanded = wsd.trailerExpanded;
-    filterMode      = wsd.filterMode;
-    filterFunction  = wsd.filterFunction;
-    searchFunction    = wsd.searchFunction;
-    messageHeaderState = wsd.messageHeaderState;
-    fieldsExpansionType = wsd.fieldsExpansionType;
-}
-WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
-{
-    if (this == &rhs)
-       return(*this);
-    id            = rhs.id;
-    windowID      = rhs.windowID;
-    tabAlias      = rhs.tabAlias;
-    splitterState = rhs.splitterState;
-    headerState   = rhs.headerState;
-    fileName      = rhs.fileName;
-    selectedRow   = rhs.selectedRow;
-    headerExpanded = rhs.headerExpanded;
-    fieldsExpanded = rhs.fieldsExpanded;
-    trailerExpanded = rhs.trailerExpanded;
-    filterMode      = rhs.filterMode;
-    filterFunction       = rhs.filterFunction;
-    searchFunction       = rhs.searchFunction;
-    messageHeaderState = rhs.messageHeaderState;
-    fieldsExpansionType = rhs.fieldsExpansionType;
-    return *this;
+    return filterFunction;
 }

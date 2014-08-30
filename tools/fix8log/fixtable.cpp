@@ -66,7 +66,8 @@ using namespace FIX8;
 */
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
-    QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false),anounceTimerID(-1)
+    QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false),anounceTimerID(-1),
+    filterMode(WorkSheetData::Off),logicFilter(0)
 
 {
     proxyFilter = new ProxyFilter(this);
@@ -106,6 +107,24 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setAlternatingRowColors(true);
     resize(sizeHint());
 }
+FixTable::~FixTable()
+{
+    qDebug() << "Delete Fix Table" << __FILE__ << __LINE__;
+}
+void FixTable::setLogicFilter(LogicFilter *lf)
+{
+    logicFilter = lf;
+    proxyFilter->setLogicFilter(logicFilter);
+    validateFilters();
+    update();
+}
+
+void FixTable::setLogicFilterMode(WorkSheetData::FilterMode fm)
+{
+    filterMode = fm;
+
+}
+
 void FixTable::setWorkSheetModel(WorkSheetModel *m)
 {
     _model = m;
@@ -116,10 +135,7 @@ void FixTable::setWindowID(QUuid &uuid)
 {
     windowID = uuid;
 }
-FixTable::~FixTable()
-{
-    qDebug() << "Delete Fix Table" << __FILE__ << __LINE__;
-}
+
 void FixTable::setSearchFilterOn(bool on)
 {
     searchFilterOn = on;

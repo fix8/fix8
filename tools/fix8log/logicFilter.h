@@ -30,52 +30,45 @@ CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (IN
 NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
 */
 //-------------------------------------------------------------------------------------------------
 
+#ifndef LOGIC_FILTER_H
+#define LOGIC_FILTER_H
+#include <QByteArray>
+#include <QObject>
+#include <QDir>
+#include <QDataStream>
+#include <QFile>
+#include <QHostAddress>
+#include <QList>
+#include <QMap>
+#include <QMutex>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QUuid>
+#include <QVariant>
 #include "worksheetdata.h"
-#include <QDebug>
-WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1),
-    headerExpanded(false),fieldsExpanded(false),trailerExpanded(false),filterMode(WorkSheetData::Off),fieldsExpansionType(0)
-{
-}
-WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
-{
-    id            = wsd.id;
-    windowID      = wsd.windowID;
-    tabAlias      = wsd.tabAlias;
-    splitterState = wsd.splitterState;
-    headerState   = wsd.headerState;
-    fileName      = wsd.fileName;
-    selectedRow   = wsd.selectedRow;
-    headerExpanded = wsd.headerExpanded;
-    fieldsExpanded = wsd.fieldsExpanded;
-    trailerExpanded = wsd.trailerExpanded;
-    filterMode      = wsd.filterMode;
-    filterFunction  = wsd.filterFunction;
-    searchFunction    = wsd.searchFunction;
-    messageHeaderState = wsd.messageHeaderState;
-    fieldsExpansionType = wsd.fieldsExpansionType;
-}
-WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
-{
-    if (this == &rhs)
-       return(*this);
-    id            = rhs.id;
-    windowID      = rhs.windowID;
-    tabAlias      = rhs.tabAlias;
-    splitterState = rhs.splitterState;
-    headerState   = rhs.headerState;
-    fileName      = rhs.fileName;
-    selectedRow   = rhs.selectedRow;
-    headerExpanded = rhs.headerExpanded;
-    fieldsExpanded = rhs.fieldsExpanded;
-    trailerExpanded = rhs.trailerExpanded;
-    filterMode      = rhs.filterMode;
-    filterFunction       = rhs.filterFunction;
-    searchFunction       = rhs.searchFunction;
-    messageHeaderState = rhs.messageHeaderState;
-    fieldsExpansionType = rhs.fieldsExpansionType;
-    return *this;
-}
+
+/*! \brief simple math logic that are used to filter data used to filter model feed
+     \author David Boosalis
+*/
+
+
+class LogicFilter {
+ public:
+  LogicFilter();
+  LogicFilter(const LogicFilter &);
+  ~LogicFilter();
+  void clear();
+  LogicFilter   &operator= ( const LogicFilter &rhs );
+  LogicFilter   *operator= ( const LogicFilter *rhs );
+  bool           operator== ( const LogicFilter &rhs );  
+  QString mathLogic;
+  QMap<QString,QVariant> colToValues;
+  WorkSheetData::FilterMode filterMode;
+};
+
+
+#endif

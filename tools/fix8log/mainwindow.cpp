@@ -397,9 +397,9 @@ void MainWindow::buildMainWindow()
     searchEditA->setToolTip("Edit search functions");
     searchEditA->setWhatsThis("Allows you to add remove,edit and provide aliases for search functions");
     connect(searchEditA,SIGNAL(triggered()),this,SIGNAL(showSearchDialog()));
-    //searchEditA->setIcon(QIcon(":/images/svg/text-editor-symbolic.svg"));
+    //searchEditA->setIcon(QIcon(":/images/svg/searchEdit.svg"));
     QSize stoolbar = searchToolBar->iconSize();
-    QPixmap searchEditPM(":/images/svg/text-editor-symbolic.svg");
+    QPixmap searchEditPM(":/images/svg/searchEdit.svg");
     int ht = stoolbar.height()*.66;
     searchEditA->setIcon(searchEditPM.scaledToHeight(ht));
     searchLV = new QLabel(searchToolBar);// only show when toobar is vertial
@@ -431,7 +431,7 @@ void MainWindow::buildMainWindow()
     searchSelectLineEdit = new ComboBoxLineEdit(this);
     searchSelectCB->setLineEdit(searchSelectLineEdit);
     QFontMetrics fm(searchSelectCB->font());
-    searchSelectCB->setMaximumWidth(fm.maxWidth()*20);
+    searchSelectCB->setMaximumWidth(fm.maxWidth()*21);
     searchSelectModel = searchSelectCB->model();
     searchSelectCB->setEditable(false);
     searchSelectCB->setToolTip("Alias list of search functions");
@@ -439,7 +439,7 @@ void MainWindow::buildMainWindow()
 
     searchSelectBox->addWidget(searchSelectL,0);
     searchSelectBox->addWidget(searchSelectCB,1);
-    searchSelectBox->addStretch(2);
+    searchSelectBox->addStretch(1);
 
     searchCompleter = new QCompleter(this);
 

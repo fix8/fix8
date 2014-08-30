@@ -30,52 +30,65 @@ CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (IN
 NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
 */
 //-------------------------------------------------------------------------------------------------
+#include <logicFilter.h>
 
-#include "worksheetdata.h"
-#include <QDebug>
-WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1),
-    headerExpanded(false),fieldsExpanded(false),trailerExpanded(false),filterMode(WorkSheetData::Off),fieldsExpansionType(0)
+LogicFilter::LogicFilter()
 {
+  filterMode = WorkSheetData::Off;
 }
-WorkSheetData::WorkSheetData(const WorkSheetData &wsd)
+/*****************************************************************/
+LogicFilter::LogicFilter(const LogicFilter &sf)
 {
-    id            = wsd.id;
-    windowID      = wsd.windowID;
-    tabAlias      = wsd.tabAlias;
-    splitterState = wsd.splitterState;
-    headerState   = wsd.headerState;
-    fileName      = wsd.fileName;
-    selectedRow   = wsd.selectedRow;
-    headerExpanded = wsd.headerExpanded;
-    fieldsExpanded = wsd.fieldsExpanded;
-    trailerExpanded = wsd.trailerExpanded;
-    filterMode      = wsd.filterMode;
-    filterFunction  = wsd.filterFunction;
-    searchFunction    = wsd.searchFunction;
-    messageHeaderState = wsd.messageHeaderState;
-    fieldsExpansionType = wsd.fieldsExpansionType;
+  mathLogic     = sf.mathLogic;
+  colToValues   = sf.colToValues;
+  filterMode    = sf.filterMode;
 }
-WorkSheetData &WorkSheetData::operator=( const WorkSheetData &rhs)
+/*****************************************************************/
+LogicFilter::~LogicFilter()
 {
-    if (this == &rhs)
-       return(*this);
-    id            = rhs.id;
-    windowID      = rhs.windowID;
-    tabAlias      = rhs.tabAlias;
-    splitterState = rhs.splitterState;
-    headerState   = rhs.headerState;
-    fileName      = rhs.fileName;
-    selectedRow   = rhs.selectedRow;
-    headerExpanded = rhs.headerExpanded;
-    fieldsExpanded = rhs.fieldsExpanded;
-    trailerExpanded = rhs.trailerExpanded;
-    filterMode      = rhs.filterMode;
-    filterFunction       = rhs.filterFunction;
-    searchFunction       = rhs.searchFunction;
-    messageHeaderState = rhs.messageHeaderState;
-    fieldsExpansionType = rhs.fieldsExpansionType;
+
+}
+/*****************************************************************/
+void LogicFilter::clear()
+{
+  colToValues.clear();
+  mathLogic.clear();
+}
+/*****************************************************************/
+LogicFilter   &LogicFilter::operator= ( const LogicFilter &rhs )
+{
+  if (this == &rhs)
     return *this;
+  else {
+  mathLogic     = rhs.mathLogic;
+  colToValues   = rhs.colToValues;
+  filterMode    = rhs.filterMode;
+  }
+  return *this;
 }
+/*****************************************************************/
+LogicFilter   *LogicFilter::operator= ( const LogicFilter *rhs )
+{
+  LogicFilter *lf = 0;
+  if (this == rhs)
+    return this;
+  if (rhs) {
+    lf = new LogicFilter();
+    *lf = *rhs;
+  }
+  return lf;
+}
+/*****************************************************************/
+bool LogicFilter::operator== ( const LogicFilter &rhs )
+{
+  bool bstatus = false;
+  if (this == &rhs)
+    return true;
+  if ((mathLogic == rhs.mathLogic)
+     && (colToValues == rhs.colToValues))
+    bstatus = true;
+  return bstatus;
+}
+

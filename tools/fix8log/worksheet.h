@@ -78,7 +78,9 @@ public:
     bool copyFrom(WorkSheet &oldws);
     QVector <qint32> getSearchIndexes();
     bool loadCanceled();
+    void setFilterFunction(const SearchFunction &);
     void setSearchFunction(const SearchFunction &);
+    SearchFunction &getFilterFunction();
     SearchFunction &getSearchFunction();
     void setWindowID( QUuid &);
     void setMessageAreaExpansion(MessageArea::TreeItem, bool expanded);
@@ -155,6 +157,7 @@ private:
     QVector<qint32> searchLogicalIndexes;
     QItemSelectionModel *sm;
     qint32 currentRow;
+    SearchFunction  filterFunction;
     SearchFunction searchFunction; // raw search string
     Fix8SharedLib *sharedLib;
 };

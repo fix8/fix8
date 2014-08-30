@@ -102,7 +102,7 @@ SearchDialog::SearchDialog(Database *db,TableSchema *ts,DialogType dt,QWidget *p
 
     if (dialogType == SearchDialogType) {
         str = "Search Methods";
-        iconL->setPixmap(QPixmap(":/images/svg/magniflying_glass.svg").scaledToHeight(32,Qt::SmoothTransformation));
+        iconL->setPixmap(QPixmap(":/images/svg/searchEdit.svg").scaledToHeight(32,Qt::SmoothTransformation));
     }
     else {
         str = "Filter Methods";
@@ -265,14 +265,15 @@ void SearchDialog::setTableSchema(TableSchema *ts)
 
     searchCompleter->setModel(strModel);
     functionEdit->setCompleter(searchCompleter);
-
-    qDebug() << "Populate Search Dialog...." << __FILE__ << __LINE__;
-    searchFunctionList = database->getSearchFunctions();
+    if (dialogType == SearchDialogType)
+        searchFunctionList = database->getSearchFunctions();
+    else
+        searchFunctionList = database->getFilterFunctions();
     if (!searchFunctionList || (searchFunctionList->count() < 1) ) {
         if (dialogType == SearchDialogType)
             str = "No Search Functions In Database";
         else
-              str = "No Filter Functions In Database";
+            str = "No Filter Functions In Database";
         setMessage(str,false);
     }
     else
@@ -623,7 +624,7 @@ void SearchDialog::deleteSlot()
     if (dialogType == SearchDialogType)
         bstatus = database->removeSearchFunction(sf->id);
     else
-         bstatus = database->removeFilterFunction(sf->id);
+        bstatus = database->removeFilterFunction(sf->id);
     if (!bstatus)
         setMessage("Failed to delete item from database");
     else

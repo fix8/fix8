@@ -74,7 +74,9 @@ SOURCES += main.cpp\
     newwindowfilepage.cpp \
     welcomepage.cpp \
     mainWindowFilter.cpp \
-    databaseFilterFunctions.cpp
+    databaseFilterFunctions.cpp \
+    workSheetFilters.cpp \
+    logicFilter.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -122,7 +124,8 @@ HEADERS  += mainwindow.h \
     fix8sharedlib.h \
     newwindowschemapage.h \
     newwindowfilepage.h \
-    welcomepage.h
+    welcomepage.h \
+    logicFilter.h
 
 RESOURCES += \
     resources.qrc
