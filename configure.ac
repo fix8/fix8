@@ -4,7 +4,7 @@ Fix8 Open Source FIX Engine.
 Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
-AC_PREREQ(2.61)
+AC_PREREQ(2.64)
 AC_INIT([fix8], m4_esyscmd([./version.sh|tr -d '\n']),fix@fix8.org,fix8,http://www.fix8.org)
 AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------

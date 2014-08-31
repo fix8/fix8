@@ -843,8 +843,12 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 	return begin - bsv;
 }
 
-/// Based on Ghulam M. Babar's "mktime slow? use custom function"
-/// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
+/*! Convert tm to time_t
+	Based on Ghulam M. Babar's "mktime slow? use custom function"
+	see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
+  \param ltm decode from
+  \param utcdiff utc offset in mins
+  \return time_t */
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
    static const int mon_days[] {0,
