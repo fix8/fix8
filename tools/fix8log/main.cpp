@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
         if (instance.sendMessage("Wake up!"))
             return 0;
 
-    bool loadFile = false;
+    //bool loadFile = false;
     QString loadFileName;
     QCoreApplication::setApplicationName("fix8log");
     QCoreApplication::setApplicationVersion(QString::number(Globals::version));
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
             qWarning() << "Error - " << loadFileName << " does not exist.";
             exit(-1);
         }
-        loadFile = true;
+        //loadFile = true;
     }
     qRegisterMetaType<fix8logdata>("fix8logdata");
     qRegisterMetaTypeStreamOperators<fix8logdata>("fix8logdata");

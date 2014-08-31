@@ -81,7 +81,7 @@ void MainWindow::setSearchColumnNames(QStringList columnNames)
 
 }
 */
-SearchFunction  MainWindow::createSearchRoutine(bool &bstatus)
+SearchFunction  MainWindow::createRoutine(bool &bstatus, bool isSearch)
 {
     QString str;
     QString strValue;
@@ -94,40 +94,73 @@ SearchFunction  MainWindow::createSearchRoutine(bool &bstatus)
         qWarning() << "Error, table schame is null" << __FILE__ << __LINE__;
         return sf;
     }
-    QString f = searchLineEdit->toPlainText();
-    QString ff = f.simplified();
+    QString f;
+    QString ff;
+    if (isSearch)
+        f = searchLineEdit->toPlainText();
+    else
+        f = filterLineEdit->toPlainText();
+    ff = f.simplified();
     if (!fieldUsePairList) {
-        qWarning() << "FIELDS NOT SET FOR SEARCH" << __FILE__ << __LINE__;
+        qWarning() << "FIELDS NOT SET FOR ROUTINE " << __FILE__ << __LINE__;
         bstatus = false;
         return sf;
     }
     int mapCount = fieldUsePairList->count();
     for(int k=0;k<mapCount;k++) {
         QString fieldName = fieldUsePairList->at(k).first;
-
         if (ff.contains(fieldName)) {
-            qDebug() << "Search Field contains:" << fieldName << __FILE__ << __LINE__;
-            if (!searchArgList.contains(fieldName)) {
-                qDebug() << "\tAppend it to list" << __FILE__ << __LINE__;
-                searchArgList.append(fieldName);
+            if (isSearch) {
+                qDebug() << "Search Field contains:" << fieldName << __FILE__ << __LINE__;
+                if (!searchArgList.contains(fieldName)) {
+                    qDebug() << "\tAppend it to list" << __FILE__ << __LINE__;
+                    searchArgList.append(fieldName);
+                }
+            }
+            else {
+                qDebug() << "Filter Field contains:" << fieldName << __FILE__ << __LINE__;
+                if (!filterArgList.contains(fieldName)) {
+                    qDebug() << "\tAppend it to list" << __FILE__ << __LINE__;
+                    filterArgList.append(fieldName);
+                }
             }
         }
     }
-    qDebug() << "Search arg list:" << searchArgList  << __FILE__ << __LINE__;
-    int rowCount = searchArgList.count();
-    for(int i=0;i<rowCount;i++) {
-        str  = searchArgList.at(i);
-        func.append(str);
-        if (i < rowCount -1) {
-            func.append(",");
+    int rowCount;
+    if (isSearch) {
+        qDebug() << "Search arg list:" << searchArgList  << __FILE__ << __LINE__;
+        rowCount = searchArgList.count();
+        for(int i=0;i<rowCount;i++) {
+            str  = searchArgList.at(i);
+            func.append(str);
+            if (i < rowCount -1) {
+                func.append(",");
+            }
         }
+        func.append(")");
+        func.append(" { return ");
+        func.append(searchLineEdit->toPlainText());
+        func.append(";})");
+        sf.javascript = func;
+        sf.function = searchLineEdit->toPlainText();
     }
-    func.append(")");
-    func.append(" { return ");
-    func.append(searchLineEdit->toPlainText());
-    func.append(";})");
-    sf.javascript = func;
-    sf.function = searchLineEdit->toPlainText();
+    else {
+        qDebug() << "Search arg list:" << searchArgList  << __FILE__ << __LINE__;
+        rowCount = filterArgList.count();
+        for(int i=0;i<rowCount;i++) {
+            str  = filterArgList.at(i);
+            func.append(str);
+            if (i < rowCount -1) {
+                func.append(",");
+            }
+        }
+        func.append(")");
+        func.append(" { return ");
+        func.append(filterLineEdit->toPlainText());
+        func.append(";})");
+        sf.javascript = func;
+        sf.function = filterLineEdit->toPlainText();
+    }
     QScriptSyntaxCheckResult::State syntaxState;
     QScriptSyntaxCheckResult syntaxResult = engine.checkSyntax(func);
     syntaxState =syntaxResult.state();
@@ -136,7 +169,6 @@ SearchFunction  MainWindow::createSearchRoutine(bool &bstatus)
         bstatus = false;
     }
     else {
-        qDebug() << "OK";
         bstatus = true;
     }
     return sf;
@@ -157,7 +189,7 @@ void MainWindow::searchActionSlot(QAction *action)
         return;
     }
     if (!haveSearchFunction) {
-        searchFunction =  createSearchRoutine(bstatus);
+        searchFunction =  createRoutine(bstatus);
         //ws->setSearchString(searchLineEdit->toPlainText());
         QScriptSyntaxCheckResult syntaxResult =
                 engine.checkSyntax(searchFunction.javascript);
@@ -192,7 +224,7 @@ void MainWindow::searchReturnSlot()
     QString errorMessage;
     QVector <qint32> filterLogicalIndexes;
     QScriptSyntaxCheckResult::State syntaxState;
-    SearchFunction newSearchFun = createSearchRoutine(bstatus);
+    SearchFunction newSearchFun = createRoutine(bstatus);
 
     WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
     if (!ws) {
@@ -206,7 +238,7 @@ void MainWindow::searchReturnSlot()
     ws->setSearchFunction(newSearchFun);
     searchFunction = newSearchFun;
 
-    ws->setSearchIndexes(filterLogicalIndexes);
+    //ws->setSearchIndexes(filterLogicalIndexes);
     if (searchFunction.function.length() <  3) {
         ws->doSearch(WorkSheet::SearchOff);
         haveSearchFunction = false;
@@ -261,7 +293,7 @@ bool MainWindow::runSearchScript()
     }
     if (searchArgList.count() < 1) {
         qWarning() << "No search arguments provided " << __FILE__ << __LINE__;
-        ws->setSearchIndexes(filterLogicalIndexes);
+        ws->setSearchIndexes(filterLogicalIndexes); // no indexes
         validateSearchButtons();
         return false;
     }

@@ -78,8 +78,10 @@ public:
     bool copyFrom(WorkSheet &oldws);
     QVector <qint32> getSearchIndexes();
     bool loadCanceled();
-    void setFilterFunction(const SearchFunction &);
+    void setFilterFunction(const SearchFunction &, WorkSheetData::FilterMode );
+    void setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup);
     void setSearchFunction(const SearchFunction &);
+
     SearchFunction &getFilterFunction();
     SearchFunction &getSearchFunction();
     void setWindowID( QUuid &);
@@ -159,7 +161,9 @@ private:
     qint32 currentRow;
     SearchFunction  filterFunction;
     SearchFunction searchFunction; // raw search string
+    WorkSheetData::FilterMode filterMode;
     Fix8SharedLib *sharedLib;
+    const QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
 };
 
 class WorkSheetList : public QList <WorkSheet *>

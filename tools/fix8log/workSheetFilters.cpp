@@ -52,12 +52,21 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QtScript>
 #include <QScriptSyntaxCheckResult>
 #include <stdio.h>
-void WorkSheet::setFilterFunction(const SearchFunction &sf)
+void WorkSheet::setFilterFunction(const SearchFunction &sf,WorkSheetData::FilterMode fm)
 {
     filterFunction = sf;
+    filterMode = fm;
+    qDebug() << "FILTER FUNCTION SET TO:" << filterFunction.function;
+    qDebug() << "FILTER Javascript  SET TO:" << filterFunction.javascript << __FILE__ << __LINE__;
+    fixTable->setFilterFunction(&filterFunction,filterMode);
 }
 
 SearchFunction &WorkSheet::getFilterFunction()
 {
     return filterFunction;
+}
+void WorkSheet::setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup)
+{
+    fieldUsePairList = fup;
+    fixTable->setFieldUsePair(fieldUsePairList);
 }

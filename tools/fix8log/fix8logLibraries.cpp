@@ -74,6 +74,7 @@ std::function<const F8MetaCntx&()> Fix8Log::loadFix8so(QString libName, bool &bs
         return ctxfunc;
     }
     QFunctionPointer _handle;
+#pragma message "Why is this string hardcoded ?" __FILE__ "..."
     char *ctxfuncstr = "TEX_ctx";
     _handle = myfixLib->resolve(ctxfuncstr);
     if (!_handle) {

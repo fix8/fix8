@@ -201,14 +201,15 @@ void MainWindow::buildMainWindow()
     excludeFilterB->setToolTip("Apply Filter to \'exlude\' by rule");
     includeFilterB = new QRadioButton("Include",this);
     includeFilterB->setToolTip("Apply Filter to \'include' by rule");
-
     offFilterB  = new QRadioButton("Off",this);
     offFilterB->setToolTip("Turn off filter");
 
     filterButtonGroup->setExclusive(true);
-    filterButtonGroup->addButton(excludeFilterB);
-    filterButtonGroup->addButton(includeFilterB);
-    filterButtonGroup->addButton(offFilterB);
+    filterButtonGroup->addButton(excludeFilterB,WorkSheetData::Exclusive);
+    filterButtonGroup->addButton(includeFilterB,WorkSheetData::Inclusive);
+    filterButtonGroup->addButton(offFilterB,WorkSheetData::Off);
+    offFilterB->setChecked(true);
+    connect(filterButtonGroup,SIGNAL(buttonClicked(int)),this,SLOT(filterModeChangedSlot(int)));
 
     filterBox->addWidget(excludeFilterB,0);
     filterBox->addWidget(includeFilterB,0);
@@ -1307,8 +1308,14 @@ void MainWindow::setFieldUsePair(QList<QPair<QString ,FieldUse *>> *fup)
 {
     fieldUsePairList = fup;
     QStringList fieldNames;
+    WorkSheet *ws;
     if (!fieldUsePairList) {
         qWarning() << "Warning Field Use Pair is null " << __FILE__ << __LINE__;
+        QListIterator <WorkSheet *> iter2(workSheetList);
+        while(iter2.hasNext()) {
+            ws = iter2.next();
+            ws->setFieldUsePair(fup);
+        }
         return;
     }
     QListIterator <QPair<QString ,FieldUse *>> iter(*fieldUsePairList);
@@ -1320,7 +1327,6 @@ void MainWindow::setFieldUsePair(QList<QPair<QString ,FieldUse *>> *fup)
     editHighlighter->setColumHeaders(fieldNames);
     filterEditHighlighter->setColumHeaders(fieldNames);
 }
-
 QList<QPair<QString ,FieldUse *>> * MainWindow::getFieldUsePair()
 {
     return fieldUsePairList;

@@ -49,9 +49,10 @@ public:
     bool isRowAccepted();
     void setAcceptedSendIDs(QStringList sendIDs);
     void setLogicFilter(LogicFilter *);
+    void setFilterFunction(const SearchFunction *sf);
     bool filterAcceptsRow ( int source_row, const QModelIndex & source_parent ) const ;
     bool processLogicFilter (QList <QVariant> &values) const;
-    //void setLogicColumnMap(QMap <QString, qint16> &);
+    void setLogicColumnMap(QMap <QString, qint16> &);
     static int senderIDRole;
 protected:
     QString createProgram() const;
@@ -65,5 +66,6 @@ private:
     mutable QScriptValue   fun;
     QVector <QVariant> fieldTypesV;
     LogicFilter *logicFilter;
+    const SearchFunction *filterFunction;
 };
 #endif

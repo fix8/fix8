@@ -63,7 +63,7 @@ using namespace FIX8;
 
 WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),
     senderMenu(0),cancelLoad(false),tableSchema(0),messageList(0),
-  currentRow(-1),sharedLib(0)
+  currentRow(-1),filterMode(WorkSheetData::Off),sharedLib(0),fieldUsePairList(0)
 {
     build();
     _model = new WorkSheetModel(this);
@@ -228,16 +228,26 @@ TableSchema * WorkSheet::getTableSchema()
 
 void WorkSheet::setTableSchema(TableSchema *ts)
 {
+    QString colName;
     tableSchema = ts;
     _model->clear();
+    QMap <QString, qint16> columnMap;
+
     QHeaderView *horHeader =  fixTable->horizontalHeader();
     QAbstractItemModel * headerModel = horHeader->model();
     headerModel->removeColumns(0,headerModel->columnCount());
 
-
     if (!tableSchema) {
         qWarning() << "ERROR - Table Schema IS NULL" << __FILE__ << __LINE__;
         return;
+    }
+
+    QStringListIterator colNameIter(tableSchema->fieldNames);
+    int i=0;
+    while(colNameIter.hasNext()) {
+        colName = colNameIter.next();
+        columnMap[colName] = i;
+        i++;
     }
      _model->setTableSchema(*tableSchema);
     if (!tableSchema->fieldList) {
@@ -248,6 +258,7 @@ void WorkSheet::setTableSchema(TableSchema *ts)
         qWarning() << "ERROR - Table Schema Field List has 0 fields" << __FILE__ << __LINE__;
         return;
     }
+    fixTable->setLogicColumnMap(columnMap);
     fixTable->setAnouncement("Schema Set To: " + tableSchema->name);
 }
 /* don't need this method anymore done by worksheetmodel */

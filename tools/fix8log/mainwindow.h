@@ -144,6 +144,7 @@ public:
     void fileFilterSelectedSlot(QString);
     void fileSelectionFinishedSlot(int returnCode);
     void filterFunctionSelectedSlot(int);
+    void filterModeChangedSlot(int);
     void filterReturnSlot();
     void filterTextChangedSlot();
     void iconStyleSlot(QAction *);
@@ -311,9 +312,8 @@ signals:
 private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
-    SearchFunction createSearchRoutine(bool &bstatus);
-    SearchFunction createFilterRoutine(bool &bstatus);
-    bool runFilterFilterScript();
+    SearchFunction createRoutine(bool &bstatus, bool isSearch=true);
+    bool runFilterScript();
     bool runSearchScript();
     void setSearchFunction(const SearchFunction &);
     void validateFilterText();
@@ -335,7 +335,7 @@ private:
     SearchFunction searchFunction;
     bool    haveFilterFunction;
     bool    haveSearchFunction;
-
+    QScriptValue filterFunctionVal;
     QScriptValue searchFunctionVal;
     QActionGroup *searchActionGroup;
     QScriptEngine engine;

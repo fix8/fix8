@@ -66,8 +66,8 @@ using namespace FIX8;
 */
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
-    QTableView(p),windowID(wid),worksheetID(wsid),_model(0),searchFilterOn(false),anounceTimerID(-1),
-    filterMode(WorkSheetData::Off),logicFilter(0)
+    QTableView(p),windowID(wid),worksheetID(wsid),anounceTimerID(-1),_model(0),searchFilterOn(false),
+    filterMode(WorkSheetData::Off),logicFilter(0),filterFunction(0),fieldUsePairList(0)
 
 {
     proxyFilter = new ProxyFilter(this);
@@ -114,16 +114,19 @@ FixTable::~FixTable()
 void FixTable::setLogicFilter(LogicFilter *lf)
 {
     logicFilter = lf;
-    proxyFilter->setLogicFilter(logicFilter);
+    if (logicFilter) {
+        proxyFilter->setLogicFilter(logicFilter);
+        proxyFilter->setDynamicSortFilter(true);
+        proxyFilter->setSourceModel(_model);
+    }
     validateFilters();
     update();
 }
-
-void FixTable::setLogicFilterMode(WorkSheetData::FilterMode fm)
+void FixTable::setLogicColumnMap(QMap <QString, qint16> &columnMap)
 {
-    filterMode = fm;
-
+  proxyFilter->setLogicColumnMap(columnMap);
 }
+
 
 void FixTable::setWorkSheetModel(WorkSheetModel *m)
 {
@@ -177,13 +180,18 @@ void FixTable::setSenderIDFilter(QStringList ids)
 
 void FixTable::validateFilters()
 {
-    if (senderIDs.count() > 0) {
+    bool haveFilter = false;
+
+    if (senderIDs.count() > 0)
+        haveFilter = true;
+    else if (filterFunction && filterMode != WorkSheetData::Off)
+        haveFilter = true;
+    if (haveFilter) {
             proxyFilter->setSourceModel(_model);
             setModel(proxyFilter);
     }
      else
-            setModel(_model);
-
+       setModel(_model);
 }
 
 void FixTable::timerEvent(QTimerEvent *te)
@@ -292,6 +300,16 @@ void  FixTable::mouseMoveEvent(QMouseEvent *event)
     drag->setMimeData(fmd);
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
 }
+void FixTable::setFilterFunction(const SearchFunction *ff, const WorkSheetData::FilterMode fm)
+{
+    filterFunction = ff;
+    filterMode = fm;
+    qDebug() << "FIXTABLE Set Filter Function TO " << filterFunction->javascript << __FILE__ << __LINE__;
+    validateFilters();
+    qDebug() << "FIXTABLE, after validate" << __FILE__ << __LINE__;
+    proxyFilter->setFilterFunction(filterFunction);
+}
+
 void FixTable::paintEvent(QPaintEvent *pe)
 {
     QTableView::paintEvent(pe);
@@ -375,4 +393,8 @@ void FixTable::dropEvent(QDropEvent *event)
         emit modelDropped(mimeData);
     }
 }
-
+void FixTable::setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup)
+{
+    fieldUsePairList = fup;
+    //fixTable->setFieldUsePair(fieldUsePairList);
+}

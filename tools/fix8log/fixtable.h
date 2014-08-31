@@ -51,7 +51,9 @@ class WorkSheetModel;
 #include <QRadialGradient>
 #include <QTableView>
 #include <QUuid>
+#include "searchfunction.h"
 #include "logicFilter.h"
+#include "messagefield.h"
 #include "worksheetdata.h"
 class FixTable: public QTableView {
   Q_OBJECT
@@ -63,8 +65,10 @@ class FixTable: public QTableView {
   void setWindowID(QUuid &uuid);
   void setWorkSheetModel(WorkSheetModel *);
   void setSenderIDFilter(QStringList senderIDs);
+  void setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup);
+  void setFilterFunction(const SearchFunction *sf,const WorkSheetData::FilterMode fm);
   void setLogicFilter(LogicFilter *);
-  void setLogicFilterMode(WorkSheetData::FilterMode);
+  void setLogicColumnMap(QMap <QString, qint16> &);
   void setSearchFilterOn(bool on);
   FixTableVerticaHeaderView *getFixVerticalHeader();
   ~FixTable();
@@ -127,6 +131,8 @@ class FixTable: public QTableView {
    bool     searchFilterOn;
    WorkSheetData::FilterMode filterMode;
    LogicFilter  *logicFilter;
+   const SearchFunction *filterFunction;
    int updateFreq;
+    const QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
 };
 #endif
