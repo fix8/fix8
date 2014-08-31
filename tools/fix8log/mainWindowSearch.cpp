@@ -213,6 +213,7 @@ void MainWindow::searchActionSlot(QAction *action)
         searchType = WorkSheet::SearchLast;
     else
         searchType = WorkSheet::SearchFirst;
+    update();
 
     quint32  searchStatus  = ws->doSearch(searchType);
     validateSearchButtons(searchStatus,ws);

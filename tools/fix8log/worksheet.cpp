@@ -258,7 +258,6 @@ void WorkSheet::setTableSchema(TableSchema *ts)
         qWarning() << "ERROR - Table Schema Field List has 0 fields" << __FILE__ << __LINE__;
         return;
     }
-    fixTable->setLogicColumnMap(columnMap);
     fixTable->setAnouncement("Schema Set To: " + tableSchema->name);
 }
 /* don't need this method anymore done by worksheetmodel */

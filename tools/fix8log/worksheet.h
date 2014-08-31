@@ -78,17 +78,18 @@ public:
     bool copyFrom(WorkSheet &oldws);
     QVector <qint32> getSearchIndexes();
     bool loadCanceled();
-    void setFilterFunction(const SearchFunction &, WorkSheetData::FilterMode );
+    void setFilterMode(WorkSheetData::FilterMode);
     void setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup);
     void setSearchFunction(const SearchFunction &);
 
-    SearchFunction &getFilterFunction();
     SearchFunction &getSearchFunction();
     void setWindowID( QUuid &);
     void setMessageAreaExpansion(MessageArea::TreeItem, bool expanded);
     bool getMessageExpansionState(MessageArea::TreeItem);
     void setTableSchema(TableSchema *);
+    void setFilterIndexes(const QVector<qint32> &indexes,WorkSheetData::FilterMode);
     void setSearchIndexes(const QVector <qint32> &indexes);
+
     void setWorkSheetData(const WorkSheetData &wsd);
     TableSchema *getTableSchema();
     QUuid getID();
@@ -156,6 +157,7 @@ private:
     TableSchema *tableSchema;
     QMessageList *messageList;
     quint32 cancelReason;
+    QVector<qint32> filterIndexes;
     QVector<qint32> searchLogicalIndexes;
     QItemSelectionModel *sm;
     qint32 currentRow;

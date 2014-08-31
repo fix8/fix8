@@ -67,7 +67,7 @@ using namespace FIX8;
 
 FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     QTableView(p),windowID(wid),worksheetID(wsid),anounceTimerID(-1),_model(0),searchFilterOn(false),
-    filterMode(WorkSheetData::Off),logicFilter(0),filterFunction(0),fieldUsePairList(0)
+    filterMode(WorkSheetData::Off),filterFunction(0),fieldUsePairList(0)
 
 {
     proxyFilter = new ProxyFilter(this);
@@ -111,21 +111,7 @@ FixTable::~FixTable()
 {
     qDebug() << "Delete Fix Table" << __FILE__ << __LINE__;
 }
-void FixTable::setLogicFilter(LogicFilter *lf)
-{
-    logicFilter = lf;
-    if (logicFilter) {
-        proxyFilter->setLogicFilter(logicFilter);
-        proxyFilter->setDynamicSortFilter(true);
-        proxyFilter->setSourceModel(_model);
-    }
-    validateFilters();
-    update();
-}
-void FixTable::setLogicColumnMap(QMap <QString, qint16> &columnMap)
-{
-  proxyFilter->setLogicColumnMap(columnMap);
-}
+
 
 
 void FixTable::setWorkSheetModel(WorkSheetModel *m)
@@ -184,9 +170,10 @@ void FixTable::validateFilters()
 
     if (senderIDs.count() > 0)
         haveFilter = true;
-    else if (filterFunction && filterMode != WorkSheetData::Off)
+    else if ((logicFilterIndexes.count() > 0) && filterMode != WorkSheetData::Off)
         haveFilter = true;
     if (haveFilter) {
+          qDebug() << "HAVE FILTER " << __FILE__ << __LINE__;
             proxyFilter->setSourceModel(_model);
             setModel(proxyFilter);
     }
@@ -300,16 +287,19 @@ void  FixTable::mouseMoveEvent(QMouseEvent *event)
     drag->setMimeData(fmd);
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
 }
-void FixTable::setFilterFunction(const SearchFunction *ff, const WorkSheetData::FilterMode fm)
+void FixTable::setLogicFilterIndexes(QVector<qint32> indexes,WorkSheetData::FilterMode fm)
 {
-    filterFunction = ff;
+    logicFilterIndexes = indexes;
     filterMode = fm;
-    qDebug() << "FIXTABLE Set Filter Function TO " << filterFunction->javascript << __FILE__ << __LINE__;
+    proxyFilter->setLogicFilterIndexes(indexes,fm);
     validateFilters();
-    qDebug() << "FIXTABLE, after validate" << __FILE__ << __LINE__;
-    proxyFilter->setFilterFunction(filterFunction);
 }
-
+void FixTable::setFilterMode(WorkSheetData::FilterMode fm)
+{
+ filterMode = fm;
+ proxyFilter->setLogicFilterMode(filterMode);
+ validateFilters();
+}
 void FixTable::paintEvent(QPaintEvent *pe)
 {
     QTableView::paintEvent(pe);

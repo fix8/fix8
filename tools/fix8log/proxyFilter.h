@@ -48,11 +48,9 @@ public:
     ProxyFilter(QObject *parent);
     bool isRowAccepted();
     void setAcceptedSendIDs(QStringList sendIDs);
-    void setLogicFilter(LogicFilter *);
-    void setFilterFunction(const SearchFunction *sf);
+    void setLogicFilterMode(WorkSheetData::FilterMode fm);
+    void setLogicFilterIndexes(QVector<qint32> indexes,WorkSheetData::FilterMode fm);
     bool filterAcceptsRow ( int source_row, const QModelIndex & source_parent ) const ;
-    bool processLogicFilter (QList <QVariant> &values) const;
-    void setLogicColumnMap(QMap <QString, qint16> &);
     static int senderIDRole;
 protected:
     QString createProgram() const;
@@ -66,6 +64,8 @@ private:
     mutable QScriptValue   fun;
     QVector <QVariant> fieldTypesV;
     LogicFilter *logicFilter;
-    const SearchFunction *filterFunction;
+    QVector<qint32> logicFilterIndexes;
+    WorkSheetData::FilterMode filterMode;
+
 };
 #endif
