@@ -60,6 +60,10 @@ class FixTable: public QTableView {
   enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
   FixTable(QUuid &windowID, QUuid &workSheetID,QWidget * parent = 0);
   //FixTable(const FixTable &);
+  bool proxyFilterInUse();
+  const ProxyFilter * getProxyFilter();
+  const WorkSheetModel *getWorkSheetModel();
+
   void setAnouncement(const QString &message,int interval=5000); // milisec
   void setWindowID(QUuid &uuid);
   void setWorkSheetModel(WorkSheetModel *);

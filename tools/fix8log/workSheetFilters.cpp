@@ -74,3 +74,8 @@ void WorkSheet::setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup)
     fieldUsePairList = fup;
     fixTable->setFieldUsePair(fieldUsePairList);
 }
+void WorkSheet::wipeFilter()
+{
+    filterIndexes.clear();
+    fixTable->setLogicFilterIndexes(filterIndexes,filterMode);
+}

@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     mainWindowFilter.cpp \
     databaseFilterFunctions.cpp \
     workSheetFilters.cpp \
-    logicFilter.cpp
+    logicFilter.cpp \
+    mainWindowExport.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -135,8 +136,8 @@ RESOURCES += \
 unix {
 message("Unix Compile.")
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
-LIBS += -lz  -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
-INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ../../test
+LIBS += -lz  -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil -L../fix8log/thirdparty/lib -lQt0Xlsx
+INCLUDEPATH += /usr/local/include /usr/local/include/fix8 -I ../fix8log/thirdparty/include
 DEPENDPATH += /usr/local/include
 SOURCES += qtlockedfile_unix.cpp
 }

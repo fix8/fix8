@@ -109,8 +109,6 @@ bool Fix8Log::init()
                 }
                 wd.tableSchema  = fixlib->getTableSchema(wd.tableSchemaID);
                 if (!wd.tableSchema) {
-                    qWarning() << "TABLE SCHEMA NOT FOUND, setting to default..."
-                               << __FILE__ << __LINE__;
                     wd.tableSchema = fixlib->getDefaultTableSchema();
                     if (wd.tableSchema)
                         wd.tableSchemaID = wd.tableSchema->id;

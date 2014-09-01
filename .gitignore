@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.o
 *.lo
 *.la
@@ -100,3 +101,84 @@ utests/.libs
 /utests/utest_classes.cpp
 /include/fix8/f8config.h
 /include/fix8/stamp-h1
+=======
+# common
+*~
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*_pch.h.cpp
+*_resource.rc
+*.qm
+.#*
+*.*#
+tags
+.DS_Store
+*.debug
+Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Thumbs.db
+# KDE
+.directory
+
+# python temporary files
+*.pyc
+
+# nsis files...
+nsis/dlls/*
+nsis/*.exe
+
+# qtcreator generated files
+*.pro.user*
+*.qmlproject.user*
+*.pluginspec
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*.vcxproj*
+*vcproj.*.*.user
+*vcxproj.*.*.user
+*.ncb
+*.opensdf
+*.sdf
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Directories to ignore
+# ---------------------
+
+temp
+debug
+lib/*
+lib64/*
+release
+doc/html/*
+ipch/*
+
+.rcc
+.pch
+
+>>>>>>> 1696c38831bbbfa711b913c2c3d13eadf75a321c

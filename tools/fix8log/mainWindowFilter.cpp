@@ -65,16 +65,11 @@ void MainWindow::validateFilterText()
         QVariant var = filterSelectCB->itemData(index);
          SearchFunction *sf = (SearchFunction *) var.value<void *>();
         filterSelectCB->setCurrentIndex(index);
-        qDebug() << "Filter Text found"<< __FILE__ << __LINE__;
-
     }
     else {
-        // qDebug() << "Filter Text not found"<< __FILE__ << __LINE__;
         filterSelectCB->setCurrentIndex(0);
     }
-
 }
-
 void MainWindow::filterReturnSlot()
 {
     // Return Key Pressed
@@ -84,14 +79,11 @@ void MainWindow::filterReturnSlot()
     QScriptSyntaxCheckResult::State syntaxState;
     SearchFunction newfilterFunction = createRoutine(bstatus,false);
     if (newfilterFunction == filterFunction) {
-        qDebug() << "FILTER FUNCTION SAME AS IT EVER WAS" << __FILE__ << __LINE__;
         return;
     }
     else {
-        qDebug() << "HAVE NEW FILTER FUNCTION" << __FILE__ << __LINE__;
         filterFunction = newfilterFunction;
         if (bstatus == false) {
-            qDebug() << "Error in create filter function occured" << __FILE__ << __LINE__;
             return;
         }
     }
@@ -102,7 +94,6 @@ void MainWindow::filterReturnSlot()
         return;
     }
     WorkSheetData::FilterMode filterMode = (WorkSheetData::FilterMode) filterButtonGroup->checkedId();
-
     if (filterFunction.function.length() <  3) {
         haveFilterFunction = false;
         return;
@@ -116,13 +107,11 @@ void MainWindow::setFilterFunctions(SearchFunctionList *sfl)
 {
     populateFilterList(sfl);
 }
-
 void MainWindow::updateFilterFunctions(SearchFunctionList *sfl)
 {
     bool updateFunction = false;
     bool resetToZero = false;
     QVariant var;
-
     SearchFunction *currentFilterFunction = 0;
     SearchFunction *newSearchFunction = 0;
     int currentIndex = filterSelectCB->currentIndex();
@@ -148,7 +137,6 @@ void MainWindow::updateFilterFunctions(SearchFunctionList *sfl)
             WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
             if (ws){
                 qDebug() << "TODO FILTER TO WORKS SHEET" << __FILE__ << __LINE__;
-                //ws->doFilter(WorkSheet::SearchOff);
             }
         }
     }
@@ -165,14 +153,12 @@ void MainWindow::updateFilterFunctions(SearchFunctionList *sfl)
         connect(filterSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(filterFunctionSelectedSlot(int)));
     }
     else if (resetToZero) {
-        qDebug() << "RESET TO ZERO " << __FILE__ << __LINE__;
         filterSelectCB->setCurrentIndex(0);
     }
 }
 void MainWindow::populateFilterList(SearchFunctionList *sfl)
 {
     int index = 1;
-
     SearchFunction *sf;
     disconnect(filterSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(filterFunctionSelectedSlot(int)));
     filterFunctionMap.clear();
@@ -181,7 +167,6 @@ void MainWindow::populateFilterList(SearchFunctionList *sfl)
         connect(filterSelectCB,SIGNAL(currentIndexChanged(int)),SLOT(filterFunctionSelectedSlot(int)));
         return;
     }
-
     if (filterFunctionList.count() > 0) {
         qDeleteAll(filterFunctionList.begin(),filterFunctionList.end());
     }
@@ -192,7 +177,6 @@ void MainWindow::populateFilterList(SearchFunctionList *sfl)
         sf = iter.next();
         QVariant var;
         var.setValue((void *) sf);
-
         filterSelectCB->addItem(sf->alias,var);
         filterFunctionMap.insert(sf->function,index);
         index++;
@@ -213,9 +197,10 @@ void MainWindow::filterFunctionSelectedSlot(int index)
         update();
         return;
     }
-    qDebug() << "FILTER FUNCTION SELECTED SLOT" << __FILE__ << __LINE__;
-    if (index == 0)
+    if (index == 0) {
         filterLineEdit->setText("");
+         ws->wipeFilter();
+    }
     else {
         QVariant var = filterSelectCB->itemData(index);
         if (var.isValid()) {
@@ -226,18 +211,14 @@ void MainWindow::filterFunctionSelectedSlot(int index)
             }
             filterLineEdit->setText(sf->function);
             if (*sf == filterFunction) {
-                qDebug() << "THEY ARE THE SAME FUNCTIONS, DO NOTHING" << __FILE__ << __LINE__;
                 return;
 
             }
             filterFunction = *sf;
             filterMode  = (WorkSheetData::FilterMode) filterButtonGroup->checkedId();
             filterFunction = createRoutine(bstatus,false);
-            //ws->setFilterFunction(filterFunction, filterMode);
             if (filterFunction.function.length() <  3) {
                 haveFilterFunction = false;
-               // ws->setSearchIndexes(filterLogicalIndexes);
-                qDebug() << "ERROR DO NOT RUN FILTER SCRIPT " << __FILE__ << __LINE__;
                 return;
             }
             else {
@@ -245,8 +226,7 @@ void MainWindow::filterFunctionSelectedSlot(int index)
             }
         }
     }
-    qDebug() << "RUN FILTER SCRIPT" << __FILE__ << __LINE__;
-    if (filterMode != WorkSheetData::Off)
+    if ((filterMode != WorkSheetData::Off) && (index != 0))
             runFilterScript();
 }
 void MainWindow::filterModeChangedSlot(int fm)
@@ -260,21 +240,9 @@ void MainWindow::filterModeChangedSlot(int fm)
         qWarning() << "Filter Failed, work sheet is null" << __FILE__ << __LINE__;
         update();
         return;
-    }
-    /*
-    filterFunction = createRoutine(bstatus,false);
-    QScriptSyntaxCheckResult syntaxResult =
-     engine.checkSyntax(filterFunction.javascript);
-    syntaxState =syntaxResult.state();
-    if ( syntaxState == QScriptSyntaxCheckResult::Error) {
-        errorMessage = syntaxResult.errorMessage();
-        GUI::ConsoleMessage msg(errorMessage,GUI::ConsoleMessage::ErrorMsg);
-        displayConsoleMessage(msg);
-        //validateFil();
-        return;
-    }
-    */
+    } 
     ws->setFilterMode(filterMode);
+    update();
 }
 bool MainWindow::runFilterScript()
 {
@@ -286,7 +254,6 @@ bool MainWindow::runFilterScript()
     QVariant var,var1;
     QString arg;
     QVector <qint32> filterLogicalIndexes;
-
     filterFunctionVal = engine.evaluate(filterFunction.javascript);
     if (tabW->count()  < 1) {
         qWarning() << "Filter Failed, no work sheets" << __FILE__ << __LINE__;
@@ -319,7 +286,6 @@ bool MainWindow::runFilterScript()
         item = wsm->item(i,0);
         var  = item->data();
         qmsg = (QMessage *) var.value<void *>();
-
         QVariantList **variantLists;
         iter.toFront();
         variantLists = new QVariantList *[numOfFilterArguments];

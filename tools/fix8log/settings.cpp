@@ -96,6 +96,7 @@ void MainWindow::readSettings()
     menuBarStyleSheet = var.toString();
     mainMenuBar->setStyleSheet(menuBarStyleSheet);
     fileMenu->setStyleSheet(menuStyle);
+    windowMenu->setStyleSheet(menuStyle);
     optionMenu->setStyleSheet(menuStyle);
     schemaMenu->setStyleSheet(menuStyle);
     helpMenu->setStyleSheet(menuStyle);

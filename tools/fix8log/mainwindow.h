@@ -138,6 +138,7 @@ public:
     void createTabSlot();
     void displayMessageSlot(GUI::ConsoleMessage);
     void doPopupSlot(const QModelIndex &,const  QPoint &);
+    void exportSlot(QAction *);
     void editSchemaSlot();
     void editTabNameSlot(bool isOn);
     void fileDirChangedSlot(const QString &);
@@ -185,6 +186,8 @@ protected:
     QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
+    QAction  *exportCSVA;
+    QAction  *exportXLSXA;
     QAction  *editFilterA;
     QAction  *editSchemaA;
     QAction  *fontIncreaseA;
@@ -224,6 +227,7 @@ protected:
     QAction  *showMessageA;
     QAction  *whatsThisA;
     QAction  *windowNameA;
+    QActionGroup *exportActionGroup;
     QActionGroup *fontActionGroup;
     QActionGroup *popupActionGroup;
     QActionGroup *schemaActionGroup;
@@ -248,7 +252,9 @@ protected:
     NoDataLabel   *noDataL;
     QLineEdit *tabNameLineEdit;
     QMap     <int,QAction *> schemaActionMap;
+    QMenu    *exportMenu;
     QMenu    *fileMenu;
+    QMenu    *windowMenu;
     QMenu    *hideColumMenu;
     QMenu    *configureIconsMenu;
     QMenu    *iconSizeMenu;
@@ -312,6 +318,9 @@ signals:
 private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
+    void exportAsCSV(QString fileName,const WorkSheet *ws);
+    void exportAsXLSXA(QString fileName,const WorkSheet *ws);
+
     SearchFunction createRoutine(bool &bstatus, bool isSearch=true);
     bool runFilterScript();
     bool runSearchScript();

@@ -562,11 +562,12 @@ void SchemaEditorDialog::showWindowArea( QString windowName)
 }
 void SchemaEditorDialog::updateStatusOfMessageList()
 {
+    qWarning() << "DELETE THIS FUNCTION ? Not Needed ?" << __FILE__ << __LINE__;
     QStandardItem *item;
     QModelIndex index;
-    MessageField *mf;
+    //MessageField *mf;
     QVariant var;
-    qDebug() << "UPDATE MESSAGE LIST STATUS: " << __FILE__ << __LINE__;
+    //qDebug() << "UPDATE MESSAGE LIST STATUS: " << __FILE__ << __LINE__;
     if (!messageModel) {
         qWarning() << "NULL MESSAGE MODEL" << __FILE__ << __LINE__;
     }
@@ -576,8 +577,7 @@ void SchemaEditorDialog::updateStatusOfMessageList()
         index = messageModel->index(i,0);
         item = messageModel->itemFromIndex(index);
         var = item->data();
-        mf = (MessageField *) var.value<void *>();
-        //mf->fieldsV;
+       // mf = (MessageField *) var.value<void *>();
     }
 
 }

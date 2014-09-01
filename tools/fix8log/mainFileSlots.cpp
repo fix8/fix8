@@ -460,3 +460,51 @@ void MainWindow::copyTabSlot()
     workSheetList.append(workSheet);
     unsetCursor();
 }
+void MainWindow::exportSlot(QAction *action)
+{
+
+    WorkSheet *ws  = qobject_cast <WorkSheet *> (tabW->currentWidget());
+    if (!ws) {
+        QMessageBox::warning(this,"Export File", "Export Failed - no file found");
+        qWarning() << "Filter Failed, work sheet is null" << __FILE__ << __LINE__;
+        return;
+    }
+    QFileInfo fi(ws->fixFileName);
+    QString title;
+    QStringList filters;
+    QString fileName;
+    if (action == exportCSVA) {
+        title = "Export " + fi.fileName() + "As CSV File";
+         filters << "*.csv";
+    }
+    else {
+        title = "Export " + fi.fileName() + "As XLSX File";
+        filters << "*.xlsx";
+    }
+    QFileDialog *fileDialog = new QFileDialog(this,title);
+    QSettings settings("fix8","logviewer");
+
+    QString exportDir = settings.value("ExportDir",QDir::homePath()).toString();
+    QFileDialog::ViewMode viewMode =
+                (QFileDialog::ViewMode)settings.value("ExportViewMode",QFileDialog::List).toInt();
+
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog->setDirectory(exportDir);
+    fileDialog->setViewMode(viewMode);
+    ;
+    fileDialog->setNameFilters(filters);
+    int status = fileDialog->exec();
+    exportDir = fileDialog->directory().path();
+    viewMode = fileDialog->viewMode();
+    qDebug() << "Save path as:" << exportDir << __FILE__ << __LINE__;
+    settings.setValue("ExportDir",exportDir);
+    settings.setValue("ExportViewMode",viewMode);
+    QStringList fileNames = fileDialog->selectedFiles();
+    fileDialog->deleteLater();
+    if (status == QDialog::Accepted) {
+            fileName  = fileNames.first();
+            if (action == exportCSVA)
+                exportAsCSV(fileName,ws);
+
+    }
+}

@@ -124,6 +124,7 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
     if (mainMenuBar) {
         mainMenuBar->setStyleSheet(mw.mainMenuBar->styleSheet());
         fileMenu->setStyleSheet(menuStyle);
+        windowMenu->setStyleSheet(menuStyle);
         optionMenu->setStyleSheet(menuStyle);
         schemaMenu->setStyleSheet(menuStyle);
         helpMenu->setStyleSheet(menuStyle);
@@ -171,6 +172,7 @@ void MainWindow::buildMainWindow()
                         + menuFG.name()) + QString(";");
     mainMenuBar->setAutoFillBackground(true);
     fileMenu = mainMenuBar->addMenu(tr("&File"));
+    windowMenu = mainMenuBar->addMenu(tr("&Window"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
     schemaMenu = mainMenuBar->addMenu("&Schema");
     helpMenu = mainMenuBar->addMenu("&Help");
@@ -328,8 +330,8 @@ void MainWindow::buildMainWindow()
     newWindowA->setIcon((QIcon(":/images/32x32/newwindow.svg")));
     newWindowA->setToolTip(tr("Open New Window"));
     newWindowA->setWhatsThis(tr("Open a new empty window"));
-    windowNameA = new QAction("Window Name",this);
-    windowNameA->setToolTip("Set Window Name");
+    windowNameA = new QAction("Change Window Name",this);
+    windowNameA->setToolTip("Rename this window");
     connect(windowNameA,SIGNAL(triggered()),this,SLOT(setWindowNameSlot()));
 
     copyWindowA = new QAction("&Copy Window",this);
@@ -577,16 +579,27 @@ void MainWindow::buildMainWindow()
     optionMenu->addMenu(hideColumMenu);
     optionMenu->addMenu(configureIconsMenu);
 
+    windowMenu->addAction(windowNameA);
+    windowMenu->addAction(copyTabA);
+    windowMenu->addAction(newTabA);
+    windowMenu->addAction(copyWindowA);
+    windowMenu->addAction(newWindowA);
+    windowMenu->addAction(closeA);
 
-    fileMenu->addAction(windowNameA);
     fileMenu->addAction(autoSaveA);
-    fileMenu->addAction(copyTabA);
-    fileMenu->addAction(newTabA);
-    fileMenu->addAction(copyWindowA);
-    fileMenu->addAction(newWindowA);
-    fileMenu->addAction(closeA);
+    exportMenu = fileMenu->addMenu("Export Table");
+    exportMenu->setToolTip(("Export selected table applying any filters"));
+    exportCSVA = exportMenu->addAction("CSV Format");
+    exportXLSXA = exportMenu->addAction("XLSX Format");
+    exportActionGroup = new QActionGroup(this);
+    exportActionGroup->addAction(exportCSVA);
+    exportActionGroup->addAction(exportXLSXA);
+
+    connect(exportActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(exportSlot(QAction *)));
     fileMenu->addSeparator();
     fileMenu->addAction(quitA);
+
+
     schemaMenu->addAction(editSchemaA);
     mainToolBar->addAction(closeA);
     mainToolBar->addAction(newWindowA);

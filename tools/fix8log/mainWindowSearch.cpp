@@ -65,11 +65,8 @@ void MainWindow::validateSearchText()
         QVariant var = searchSelectCB->itemData(index);
         SearchFunction *sf = (SearchFunction *) var.value<void *>();
         searchSelectCB->setCurrentIndex(index);
-        qDebug() << "Search Text found"<< __FILE__ << __LINE__;
-
     }
     else {
-        // qDebug() << "Search Text not found"<< __FILE__ << __LINE__;
         searchSelectCB->setCurrentIndex(0);
     }
     validateSearchButtons();
@@ -111,16 +108,12 @@ SearchFunction  MainWindow::createRoutine(bool &bstatus, bool isSearch)
         QString fieldName = fieldUsePairList->at(k).first;
         if (ff.contains(fieldName)) {
             if (isSearch) {
-                qDebug() << "Search Field contains:" << fieldName << __FILE__ << __LINE__;
                 if (!searchArgList.contains(fieldName)) {
-                    qDebug() << "\tAppend it to list" << __FILE__ << __LINE__;
                     searchArgList.append(fieldName);
                 }
             }
             else {
-                qDebug() << "Filter Field contains:" << fieldName << __FILE__ << __LINE__;
                 if (!filterArgList.contains(fieldName)) {
-                    qDebug() << "\tAppend it to list" << __FILE__ << __LINE__;
                     filterArgList.append(fieldName);
                 }
             }
@@ -128,7 +121,6 @@ SearchFunction  MainWindow::createRoutine(bool &bstatus, bool isSearch)
     }
     int rowCount;
     if (isSearch) {
-        qDebug() << "Search arg list:" << searchArgList  << __FILE__ << __LINE__;
         rowCount = searchArgList.count();
         for(int i=0;i<rowCount;i++) {
             str  = searchArgList.at(i);
@@ -145,7 +137,6 @@ SearchFunction  MainWindow::createRoutine(bool &bstatus, bool isSearch)
         sf.function = searchLineEdit->toPlainText();
     }
     else {
-        qDebug() << "Search arg list:" << searchArgList  << __FILE__ << __LINE__;
         rowCount = filterArgList.count();
         for(int i=0;i<rowCount;i++) {
             str  = filterArgList.at(i);
@@ -190,7 +181,6 @@ void MainWindow::searchActionSlot(QAction *action)
     }
     if (!haveSearchFunction) {
         searchFunction =  createRoutine(bstatus);
-        //ws->setSearchString(searchLineEdit->toPlainText());
         QScriptSyntaxCheckResult syntaxResult =
                 engine.checkSyntax(searchFunction.javascript);
         syntaxState =syntaxResult.state();
@@ -547,7 +537,6 @@ void MainWindow::updateSearchFunctions(SearchFunctionList *sfl)
         connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
     }
     else if (resetToZero) {
-        qDebug() << "RESET TO ZERO " << __FILE__ << __LINE__;
         searchSelectCB->setCurrentIndex(0);
     }
 }
@@ -557,14 +546,12 @@ void MainWindow::populateSearchList(SearchFunctionList *sfl)
 
     SearchFunction *sf;
     disconnect(searchSelectCB,SIGNAL(currentIndexChanged(int)),this,SLOT(searchFunctionSelectedSlot(int)));
-
     searchFunctionMap.clear();
     searchSelectCB->clear();
     if (!sfl || sfl->count() < 1) {
         connect(searchSelectCB,SIGNAL(currentIndexChanged(int)),SLOT(searchFunctionSelectedSlot(int)));
         return;
     }
-
     if (searchFunctionList.count() > 0) {
         qDeleteAll(searchFunctionList.begin(),searchFunctionList.end());
     }
@@ -575,7 +562,6 @@ void MainWindow::populateSearchList(SearchFunctionList *sfl)
         sf = iter.next();
         QVariant var;
         var.setValue((void *) sf);
-
         searchSelectCB->addItem(sf->alias,var);
         searchFunctionMap.insert(sf->function,index);
         index++;

@@ -173,7 +173,6 @@ void FixTable::validateFilters()
     else if ((logicFilterIndexes.count() > 0) && filterMode != WorkSheetData::Off)
         haveFilter = true;
     if (haveFilter) {
-          qDebug() << "HAVE FILTER " << __FILE__ << __LINE__;
             proxyFilter->setSourceModel(_model);
             setModel(proxyFilter);
     }
@@ -250,7 +249,6 @@ void  FixTable::mousePressEvent(QMouseEvent *me)
         index = indexAt(me->pos());
         if (index.isValid()) {
             me->accept();
-            qDebug() << "Do popup" << __FILE__ << __LINE__;
             emit doPopup(index,me->globalPos());
         }
     }
@@ -387,4 +385,20 @@ void FixTable::setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup)
 {
     fieldUsePairList = fup;
     //fixTable->setFieldUsePair(fieldUsePairList);
+}
+bool FixTable::proxyFilterInUse()
+{
+    bool result = false;
+    if (model() == proxyFilter)
+        result = true;
+    return result;
+}
+const ProxyFilter * FixTable::getProxyFilter()
+{
+    return proxyFilter;
+}
+
+const WorkSheetModel *FixTable::getWorkSheetModel()
+{
+    return _model;
 }

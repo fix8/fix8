@@ -110,6 +110,7 @@ public:
     void setSharedLib(Fix8SharedLib *);
     void setTimeFormat(GUI::Globals::TimeFormat);
     void terminate(); // called to stop loading file if it is
+    void wipeFilter();
 signals:
      void doPopup(const QModelIndex &,const QPoint &);
     void modelDropped(FixMimeData *);

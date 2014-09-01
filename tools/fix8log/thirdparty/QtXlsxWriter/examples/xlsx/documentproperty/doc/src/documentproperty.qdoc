@@ -1,0 +1,11 @@
+/*!
+    \example documentproperty
+    \title Document Properties Example
+    \brief This is a simplest xlsx examples.
+
+    \image doc_property.png
+    
+    \ingroup qtxlsx-examples
+
+    This example demonstrates how to set the document properties.
+*/
