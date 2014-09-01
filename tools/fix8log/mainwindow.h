@@ -319,7 +319,7 @@ private:
     void buildHideColumnMenu();
     void buildSchemaMenu();
     void exportAsCSV(QString fileName,const WorkSheet *ws);
-    void exportAsXLSXA(QString fileName,const WorkSheet *ws);
+    void exportAsXLSXA(QString fileName,WorkSheet *ws);
 
     SearchFunction createRoutine(bool &bstatus, bool isSearch=true);
     bool runFilterScript();

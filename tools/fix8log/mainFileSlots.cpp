@@ -505,6 +505,8 @@ void MainWindow::exportSlot(QAction *action)
             fileName  = fileNames.first();
             if (action == exportCSVA)
                 exportAsCSV(fileName,ws);
+            else
+                exportAsXLSXA(fileName,ws);
 
     }
 }

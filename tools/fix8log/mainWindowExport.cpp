@@ -33,6 +33,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#include "xlsxdocument.h"
+#include "xlsxformat.h"
+#include "xlsxcellrange.h"
+#include "xlsxworksheet.h"
+
 #include "comboboxlineedit.h"
 #include "editHighLighter.h"
 #include "fix8sharedlib.h"
@@ -53,30 +58,201 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 void MainWindow::exportAsCSV(QString fileName,const WorkSheet *ws)
 {
     QString str;
+    bool bstatus;
+    int i,j;
+    int linecount = 0;
+    QStandardItem *item;
+    QModelIndex index;
     const ProxyFilter *proxyFilter = 0;
     const WorkSheetModel *model = 0;
     if (!ws || !ws->fixTable) {
         qWarning() << "ws is null or HAS NO FIX TABLE" << __FILE__ << __LINE__;
+        GUI::ConsoleMessage msg("Export failed, work sheet is null or has no table",
+                                GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
         return;
     }
+    QFileInfo fi(fileName);
+    if (fi.suffix().toLower() != "csv")
+        fileName.append(".csv");
+
     QFile file(fileName);
+    QTextStream ts(&file);
     if (file.exists()) {
         str = fileName + " already exists.";
         QMessageBox::warning(this,"Export Failed",str);
+        GUI::ConsoleMessage msg ("Export failed" + str,
+                                 GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
         return;
 
     }
-
+    bstatus = file.open(QIODevice::WriteOnly);
+    if (!bstatus) {
+        str = "Unable to open file: " + fileName;
+        QMessageBox::warning(this,"Export Failed",str);
+        GUI::ConsoleMessage msg("Export failed" + str,
+                                GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
+        return;
+    }
+    model = ws->fixTable->getWorkSheetModel();
     bool proxyInUse = ws->fixTable->proxyFilterInUse();
     if (proxyInUse) {
         proxyFilter = ws->fixTable->getProxyFilter();
-        qDebug() << "P ROW COUNT " << proxyFilter->rowCount();
+        for (i=0;i<proxyFilter->rowCount(); i++ ) {
+            QStringList itemList;
+            for(j=0;j< proxyFilter->columnCount();j++) {
+                index = proxyFilter->index(i,j);
+                index = proxyFilter->mapToSource(index);
+                item = model->itemFromIndex(index);
+                if (item) {
+                    itemList << item->text();
+                }
+                else {
+                    itemList << " ";
+                }
+
+            }
+            ts << itemList.join(',') << "\n";
+        }
     }
-    else{
-        model = ws->fixTable->getWorkSheetModel();
-        qDebug() << "WS ROW COUNT " << model->rowCount();
+    else {
+        for (i=0;i<model->rowCount(); i++ ) {
+            QStringList itemList;
+            for(j=0;j< model->columnCount();j++) {
+                index = model->index(i,j);
+                item = model->itemFromIndex(index);
+                if (item) {
+                    itemList << item->text();
+                }
+                else {
+                    itemList << " ";
+                }
+
+            }
+            ts << itemList.join(',') << "\n";
+        }
     }
+    GUI::ConsoleMessage msg(QString("Exported to " +  fileName + ", " + QString::number(i) + " lines."));
+    displayConsoleMessage(msg);
+    file.close();
 }
-void MainWindow::exportAsXLSXA(QString fileName,const WorkSheet *ws)
+QTXLSX_USE_NAMESPACE
+
+void MainWindow::exportAsXLSXA(QString fileName,WorkSheet *ws)
 {
+    QString str;
+    QStringList headerArray;
+    headerArray << "A"<<"B"<<"C"<<"D"<<"E"<<"F"<<"G"<<"H"<<"I"<<"J"<<"K"<<"L"<<"M"<<"N"<<"O"<<"P"<<"Q"<<"R"<<"S"<<"T"<<"U"<<"V"<<"W"<<"X"<<"Y"<<"Z"<<"AA"<<"AB"<<"AC"<<"AD"<<"AE"<<"AF"<<"AG"<<"AH"<<"AI"<<"AJ"<<"AK"<<"AL"<<"AM"<<"AN"<<"AO"<<"AP"<<"AQ"<<"AR"<<"AS"<<"AT"<<"AU"<<"AV"<<"AW"<<"AX"<<"AY"<<"AZ";
+    bool bstatus;
+    int i,j;
+    int linecount = 0;
+    QStandardItem *item;
+    QModelIndex index;
+    const ProxyFilter *proxyFilter = 0;
+    const WorkSheetModel *model = 0;
+    if (!ws || !ws->fixTable) {
+        qWarning() << "ws is null or HAS NO FIX TABLE" << __FILE__ << __LINE__;
+        GUI::ConsoleMessage msg("Export failed, work sheet is null or has no table",
+                                GUI::ConsoleMessage::ErrorMsg);
+        displayConsoleMessage(msg);
+        return;
+    }
+    model = ws->fixTable->getWorkSheetModel();
+
+
+    QFileInfo fi(fileName);
+    if (fi.suffix().toLower() != "xlsx")
+        fileName.append(".xlsx");
+    Document xlsx;
+    QString xmlFileName = ws->getFileName();
+    xlsx.addSheet("From:" + xmlFileName);
+    Format headerStyle;
+    headerStyle.setFontBold(true);
+    headerStyle.setHorizontalAlignment(Format::AlignHCenter);
+    headerStyle.setVerticalAlignment(Format::AlignVCenter);
+
+
+    for (i=0;i<model->columnCount();i++) {
+        item = model->horizontalHeaderItem(i);
+        qDebug() << "SET TEXT FOR HEADER" << i << item->text();
+        xlsx.setColumnFormat(1,i,headerStyle);
+        xlsx.write(1, i+1, item->text());
+    }
+    for(i=0;i<model->rowCount();i++) {
+        for(j=0;j< model->columnCount();j++) {
+            index = model->index(i,j);
+            item = model->itemFromIndex(index);
+            if (item) {
+                xlsx.write(i+2,j+1,item->text());
+            }
+
+        }
+    }
+    xlsx.saveAs(fileName);
+
+    /*
+    QFile file(fileName);
+    QTextStream ts(&file);
+    if (file.exists()) {
+        str = fileName + " already exists.";
+        QMessageBox::warning(this,"Export Failed",str);
+        GUI::ConsoleMessage msg ("Export failed" + str,
+                            GUI::ConsoleMessage::ErrorMsg);
+         displayConsoleMessage(msg);
+        return;
+
+    }
+    bstatus = file.open(QIODevice::WriteOnly);
+    if (!bstatus) {
+        str = "Unable to open file: " + fileName;
+        QMessageBox::warning(this,"Export Failed",str);
+        GUI::ConsoleMessage msg("Export failed" + str,
+                            GUI::ConsoleMessage::ErrorMsg);
+         displayConsoleMessage(msg);
+        return;
+    }
+    model = ws->fixTable->getWorkSheetModel();
+    bool proxyInUse = ws->fixTable->proxyFilterInUse();
+    if (proxyInUse) {
+        proxyFilter = ws->fixTable->getProxyFilter();
+        for (i=0;i<proxyFilter->rowCount(); i++ ) {
+            QStringList itemList;
+            for(j=0;j< proxyFilter->columnCount();j++) {
+                index = proxyFilter->index(i,j);
+                index = proxyFilter->mapToSource(index);
+                item = model->itemFromIndex(index);
+                if (item) {
+                    itemList << item->text();
+                }
+                else {
+                    itemList << " ";
+                }
+
+            }
+            ts << itemList.join(',') << "\n";
+        }
+    }
+    else {
+        for (i=0;i<model->rowCount(); i++ ) {
+            QStringList itemList;
+            for(j=0;j< model->columnCount();j++) {
+                index = model->index(i,j);
+                item = model->itemFromIndex(index);
+                if (item) {
+                    itemList << item->text();
+                }
+                else {
+                    itemList << " ";
+                }
+
+            }
+            ts << itemList.join(',') << "\n";
+        }
+    }
+    */
+    GUI::ConsoleMessage msg(QString("Exported to " +  fileName + ", " + QString::number(i) + " lines."));
+    displayConsoleMessage(msg);
+
 }

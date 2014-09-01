@@ -3,8 +3,9 @@
 # Project created by QtCreator 2014-03-15T21:24:01
 #
 #-------------------------------------------------
+
 CONFIG += debug_release
-QT       += core gui sql qml quick widgets quickwidgets script
+QT       += xlsx core gui sql qml quick widgets quickwidgets script
 TARGET = fix8log
 TEMPLATE = app
 
@@ -79,6 +80,7 @@ SOURCES += main.cpp\
     logicFilter.cpp \
     mainWindowExport.cpp
 
+
 HEADERS  += mainwindow.h \
     globals.h \
     fix8log.h \
@@ -136,8 +138,8 @@ RESOURCES += \
 unix {
 message("Unix Compile.")
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-ignored-qualifiers -Wno-missing-field-initializers -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter -std=c++11
-LIBS += -lz  -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil -L../fix8log/thirdparty/lib -lQt0Xlsx
-INCLUDEPATH += /usr/local/include /usr/local/include/fix8 -I ../fix8log/thirdparty/include
+LIBS += -lz  -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
+INCLUDEPATH += /usr/local/include /usr/local/include/fix8
 DEPENDPATH += /usr/local/include
 SOURCES += qtlockedfile_unix.cpp
 }
