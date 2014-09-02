@@ -226,8 +226,8 @@ void MainWindow::filterFunctionSelectedSlot(int index)
             }
         }
     }
-    if ((filterMode != WorkSheetData::Off) && (index != 0))
-            runFilterScript();
+    if (index != 0)
+         runFilterScript();
 }
 void MainWindow::filterModeChangedSlot(int fm)
 {

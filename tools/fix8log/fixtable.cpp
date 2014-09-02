@@ -109,7 +109,7 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
 }
 FixTable::~FixTable()
 {
-    qDebug() << "Delete Fix Table" << __FILE__ << __LINE__;
+    //qDebug() << "Delete Fix Table" << __FILE__ << __LINE__;
 }
 
 

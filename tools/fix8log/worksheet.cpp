@@ -198,7 +198,7 @@ WorkSheet::WorkSheet(WorkSheetModel *model,
 }
 WorkSheet::~WorkSheet()
 {
-    qDebug() << "Delete Work SHeet" << __FILE__ << __LINE__;
+    //qDebug() << "Delete Work SHeet" << __FILE__ << __LINE__;
     if (_model) {
         _model->clear();
         delete _model;
@@ -210,7 +210,6 @@ WorkSheet::~WorkSheet()
         senderMenu = 0;
     }
     if (senderActionGroup) {
-        qDebug() << "DELETE ACTION GROUP " << __FILE__ << __LINE__;
         QList <QAction *> actionList = senderActionGroup->actions();
         qDeleteAll(actionList);
         delete senderActionGroup;

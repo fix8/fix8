@@ -89,7 +89,6 @@ void Fix8Log::saveSession()
         qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
     QListIterator <MainWindow *> iter(mainWindows);
     while(iter.hasNext()) {
-        qDebug() << "Save Main Window..." << __FILE__ << __LINE__;
         mw = iter.next();
         WindowData wd = mw->getWindowData();
         bstatus = database->addWindow(wd);

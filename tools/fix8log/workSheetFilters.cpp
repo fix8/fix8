@@ -61,6 +61,10 @@ void WorkSheet::setFilterMode(WorkSheetData::FilterMode fm)
     fixTable->setFilterMode(filterMode);
 
 }
+void WorkSheet::setFilterIndexes(const QVector<qint32> &indexes)
+{
+  filterIndexes = indexes;
+}
 
 void WorkSheet::setFilterIndexes(const QVector<qint32> &indexes,WorkSheetData::FilterMode fm)
 {
@@ -79,3 +83,4 @@ void WorkSheet::wipeFilter()
     filterIndexes.clear();
     fixTable->setLogicFilterIndexes(filterIndexes,filterMode);
 }
+

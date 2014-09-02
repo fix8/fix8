@@ -144,7 +144,7 @@ void MainWindow::exportAsXLSXA(QString fileName,WorkSheet *ws)
 {
     QString str;
     QStringList headerArray;
-    headerArray << "A"<<"B"<<"C"<<"D"<<"E"<<"F"<<"G"<<"H"<<"I"<<"J"<<"K"<<"L"<<"M"<<"N"<<"O"<<"P"<<"Q"<<"R"<<"S"<<"T"<<"U"<<"V"<<"W"<<"X"<<"Y"<<"Z"<<"AA"<<"AB"<<"AC"<<"AD"<<"AE"<<"AF"<<"AG"<<"AH"<<"AI"<<"AJ"<<"AK"<<"AL"<<"AM"<<"AN"<<"AO"<<"AP"<<"AQ"<<"AR"<<"AS"<<"AT"<<"AU"<<"AV"<<"AW"<<"AX"<<"AY"<<"AZ";
+    //headerArray << "A"<<"B"<<"C"<<"D"<<"E"<<"F"<<"G"<<"H"<<"I"<<"J"<<"K"<<"L"<<"M"<<"N"<<"O"<<"P"<<"Q"<<"R"<<"S"<<"T"<<"U"<<"V"<<"W"<<"X"<<"Y"<<"Z"<<"AA"<<"AB"<<"AC"<<"AD"<<"AE"<<"AF"<<"AG"<<"AH"<<"AI"<<"AJ"<<"AK"<<"AL"<<"AM"<<"AN"<<"AO"<<"AP"<<"AQ"<<"AR"<<"AS"<<"AT"<<"AU"<<"AV"<<"AW"<<"AX"<<"AY"<<"AZ";
     bool bstatus;
     int i,j;
     int linecount = 0;
@@ -172,49 +172,15 @@ void MainWindow::exportAsXLSXA(QString fileName,WorkSheet *ws)
     headerStyle.setFontBold(true);
     headerStyle.setHorizontalAlignment(Format::AlignHCenter);
     headerStyle.setVerticalAlignment(Format::AlignVCenter);
-
-
+    int w;
+    QFontMetrics fm(ws->fixTable->font());
+    xlsx.setColumnWidth(1,model->columnCount() + 1,20);
+    bool proxyInUse = ws->fixTable->proxyFilterInUse();
     for (i=0;i<model->columnCount();i++) {
         item = model->horizontalHeaderItem(i);
-        qDebug() << "SET TEXT FOR HEADER" << i << item->text();
         xlsx.setColumnFormat(1,i,headerStyle);
         xlsx.write(1, i+1, item->text());
     }
-    for(i=0;i<model->rowCount();i++) {
-        for(j=0;j< model->columnCount();j++) {
-            index = model->index(i,j);
-            item = model->itemFromIndex(index);
-            if (item) {
-                xlsx.write(i+2,j+1,item->text());
-            }
-
-        }
-    }
-    xlsx.saveAs(fileName);
-
-    /*
-    QFile file(fileName);
-    QTextStream ts(&file);
-    if (file.exists()) {
-        str = fileName + " already exists.";
-        QMessageBox::warning(this,"Export Failed",str);
-        GUI::ConsoleMessage msg ("Export failed" + str,
-                            GUI::ConsoleMessage::ErrorMsg);
-         displayConsoleMessage(msg);
-        return;
-
-    }
-    bstatus = file.open(QIODevice::WriteOnly);
-    if (!bstatus) {
-        str = "Unable to open file: " + fileName;
-        QMessageBox::warning(this,"Export Failed",str);
-        GUI::ConsoleMessage msg("Export failed" + str,
-                            GUI::ConsoleMessage::ErrorMsg);
-         displayConsoleMessage(msg);
-        return;
-    }
-    model = ws->fixTable->getWorkSheetModel();
-    bool proxyInUse = ws->fixTable->proxyFilterInUse();
     if (proxyInUse) {
         proxyFilter = ws->fixTable->getProxyFilter();
         for (i=0;i<proxyFilter->rowCount(); i++ ) {
@@ -224,35 +190,24 @@ void MainWindow::exportAsXLSXA(QString fileName,WorkSheet *ws)
                 index = proxyFilter->mapToSource(index);
                 item = model->itemFromIndex(index);
                 if (item) {
-                    itemList << item->text();
+                  xlsx.write(i+2,j+1,item->text());
                 }
-                else {
-                    itemList << " ";
-                }
-
             }
-            ts << itemList.join(',') << "\n";
         }
     }
     else {
-        for (i=0;i<model->rowCount(); i++ ) {
-            QStringList itemList;
+        for(i=0;i<model->rowCount();i++) {
             for(j=0;j< model->columnCount();j++) {
                 index = model->index(i,j);
                 item = model->itemFromIndex(index);
                 if (item) {
-                    itemList << item->text();
-                }
-                else {
-                    itemList << " ";
+                    xlsx.write(i+2,j+1,item->text());
                 }
 
             }
-            ts << itemList.join(',') << "\n";
         }
     }
-    */
+    xlsx.saveAs(fileName);
     GUI::ConsoleMessage msg(QString("Exported to " +  fileName + ", " + QString::number(i) + " lines."));
     displayConsoleMessage(msg);
-
 }
