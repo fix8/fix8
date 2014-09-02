@@ -103,24 +103,27 @@ bool NewWindowSchemaPage::loadSchemas(Fix8SharedLib::LibType libType)
         fi = iter.next();
         qDebug() << "FILE PATH + " << fi.absoluteFilePath() << __FILE__ << __LINE__;
         baseName = fi.baseName();
-        QString libStr = baseName.left(3);
-        if (libStr == "lib") {
-            QString name = baseName.right(baseName.length()-3);
-            if (libType == Fix8SharedLib::SystemLib)
+        QString name;
+
 #ifdef Q_OS_WIN
-                name.append("*");
+        name = baseName;
+        if (libType == Fix8SharedLib::SystemLib)
+            name.append("*");
 #else
-             name.append("\u002a");
+        QString libStr = baseName.left(3);
+        if (libStr == "lib")
+            name = QString name.right(baseName.length()-3);
+        if (libType == Fix8SharedLib::SystemLib)
+            name.append("\u002a");
 #endif
-            if (!nameList.contains(name)) {
-                si = new QStandardItem(name);
-                QVariant var;
-                QString fileName = fi.absoluteFilePath();
-                var.setValue(fileName);
-                si->setData(var);
-                schemaModel->insertRow(i++,si);
-                nameList.append(name);
-            }
+        if (!nameList.contains(name)) {
+            si = new QStandardItem(name);
+            QVariant var;
+            QString fileName = fi.absoluteFilePath();
+            var.setValue(fileName);
+            si->setData(var);
+            schemaModel->insertRow(i++,si);
+            nameList.append(name);
         }
     }
     return true;
@@ -128,8 +131,8 @@ bool NewWindowSchemaPage::loadSchemas(Fix8SharedLib::LibType libType)
 QString  NewWindowSchemaPage::getSelectedLib()
 {
     QString fileName;
-     if (!selectionModel->hasSelection())
-         return fileName;
+    if (!selectionModel->hasSelection())
+        return fileName;
     QList <QModelIndex> indexList = selectionModel->selectedIndexes();
     QModelIndex index = indexList.at(0);
     if (!index.isValid()) {

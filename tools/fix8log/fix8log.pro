@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-CONFIG += debug_release
+CONFIG += release
 QT       += xlsx core gui sql qml quick widgets quickwidgets script
 TARGET = fix8log
 TEMPLATE = app
@@ -149,7 +149,7 @@ win32 {
     SOURCES += qtlockedfile_win.cpp
     QMAKE_CXXFLAGS += /bigobj -D WIN32_LEAN_AND_MEAN
     INCLUDEPATH += . ./f8 \
-                ../../msvc/packages/fix8.dev.1.2.20140801.1/build/native/include \
+                ../../msvc/packages/fix8.dev.1.3.20140831.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.getopt.1.0.20140509.1/build/native/include \
                 ../../msvc/packages/fix8.dependencies.openssl.1.0.20140509.1/build/native/include/x64/v120/Release/Desktop \
                 ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/include \
@@ -158,7 +158,7 @@ win32 {
 release {
  message("Release")
    LIBS +=  rpcrt4.lib \
-        ../../msvc/packages/fix8.dev.1.2.20140801.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
+        ../../msvc/packages/fix8.dev.1.3.20140831.1/build/native/lib/x64/v120/Release/Desktop/fix8.lib \
         ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbb.lib \
         ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc_proxy.lib \
         ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Release/Desktop/tbbmalloc.lib \
@@ -168,17 +168,7 @@ release {
         ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoCrypto.lib \
         ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Release/Desktop/PocoUtil.lib
 }
-debug {
-    message("Debug")
-   LIBS +=     ../../msvc/packages/fix8.dev.1.2.20140801.1/build/native/lib/x64/v120/Debug/Desktop/fix8d.lib \
-                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoFoundationd.lib \
-                ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Debug/Desktop/tbb_debug.lib \
-                ../../msvc/packages/fix8.dependencies.tbb.4.2.20140416.1/build/native/lib/x64/v120/Debug/Desktop/tbbmalloc_proxy_debug.lib \
-                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoNetd.lib \
-                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoNetSSLd.lib \
-                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoCryptod.lib \
-                ../../msvc/packages/fix8.dependencies.poco.1.5.20140509.1/build/native/lib/x64/v120/Debug/Desktop/PocoUtild.lib
- }
+
 }
 OTHER_FILES += \
     qml/loadProgress.qml \
