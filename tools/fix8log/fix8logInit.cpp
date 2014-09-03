@@ -62,7 +62,6 @@ bool Fix8Log::init()
 {
     bool bstatus;
     bool createdTable = false;
-    QString dbFileName = "fix8log.sql";
     QString errorStr;
     QString fieldName;
     QString key;
@@ -153,19 +152,21 @@ bool Fix8Log::init()
         }
     }
     displayConsoleMessage("Session restored from autosave");
-
-
     if (mainWindows.count() < 1) {
         newWindowWizard = new NewWindowWizard(fix8ShareLibList,firstTimeToUse);
-        newWindowWizard->readSettings();
+        if (!firstTimeToUse)
+            newWindowWizard->readSettings();
+        else
+            newWindowWizard->resize(newWindowWizard->sizeHint());
+
         QDesktopWidget *desktop = QApplication::desktop();
-        QRect rect = desktop->screenGeometry(desktop->primaryScreen());
-        int x = (rect.width() -800)/2;
-        int y = (rect.height() - 600)/2;
-        newWindowWizard->move(x,y);
         status = newWindowWizard->exec();
         newWindowWizard->saveSettings();
         if (status != QDialog::Accepted) {
+            if (dbFile) {
+                dbFile->remove();
+                delete dbFile;
+            }
             qApp->exit(0);
         }
         fileName = newWindowWizard->getSelectedFile();

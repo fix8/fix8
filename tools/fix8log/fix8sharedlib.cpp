@@ -36,6 +36,9 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
     QFileInfo fi(fileName);
     qDebug() << "FILE PATH + " << fi.absoluteFilePath() << __FILE__ << __LINE__;
     QString baseName = fi.baseName();
+#ifdef Q_OS_WIN
+        f8sl->name = baseName;
+#else
     QString libStr = baseName.left(3);
     if (libStr != "lib") {
         f8sl->errorMessage  = "Error - " + fileName + "does not appear to be a library";
@@ -44,6 +47,7 @@ Fix8SharedLib * Fix8SharedLib::create(QString fileName)
         return f8sl;
     }
     f8sl->name = baseName.right(baseName.length()-3);
+#endif
     bstatus = f8sl->loadFix8so();
     f8sl->isOK = bstatus;
     // qDebug() << "\tAFTER LOAD bstatus =" << bstatus << __FILE__ << __LINE__;

@@ -72,8 +72,8 @@ void Fix8Log::initDatabase()
         }
     }
     dbFileName = dbPath + QDir::separator() + dbFileName;
-    QFile dbFile(dbFileName);
-    if (!dbFile.exists()) {
+    dbFile  = new QFile(dbFileName);
+    if (!dbFile->exists()) {
         firstTimeToUse = true;
         GUI::Globals::isFirstTime = true;
         displayConsoleMessage(GUI::ConsoleMessage("Creating Database..."));

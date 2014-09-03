@@ -101,6 +101,7 @@ void Fix8Log::exitAppSlot()
         saveSession();
     //writeSettings();
     qApp->closeAllWindows();
+    qDebug() << "CALL QUIT" << __FILE__ << __LINE__;
     qApp->quit();
 }
 void Fix8Log::toolButtonStyleModfiedSlot(Qt::ToolButtonStyle tbs)
@@ -379,7 +380,7 @@ void Fix8Log::showFilterDialogAddModeSlot(QString searchStr)
         filterDialog = new SearchDialog(database,0,SearchDialog::FilterDialogType);
         QSettings settings("fix8","logviewer");
         QRect rect = settings.value("FilterDialog").toRect();
-        QSize sh = searchDialog->sizeHint();
+        QSize sh = filterDialog->sizeHint();
         if (rect.width() < sh.width())
             rect.setWidth(sh.width());
         if (rect.height() < sh.height())
@@ -396,7 +397,7 @@ void Fix8Log::showFilterDialogAddModeSlot(QString searchStr)
         qWarning() << "Error show search dialog, main window is null" << __FILE__ << __LINE__;
         return;
     }
-    searchDialog->setMainWindow(mw);
+    filterDialog->setMainWindow(mw);
     TableSchema *ts = mw->getTableSchema();
     if (!ts) {
         str = "Error - Search Dialog Needs Window to have its table schema set";

@@ -112,7 +112,7 @@ bool NewWindowSchemaPage::loadSchemas(Fix8SharedLib::LibType libType)
 #else
         QString libStr = baseName.left(3);
         if (libStr == "lib")
-            name = QString name.right(baseName.length()-3);
+            name = baseName.right(baseName.length()-3);
         if (libType == Fix8SharedLib::SystemLib)
             name.append("\u002a");
 #endif

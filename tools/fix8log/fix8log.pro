@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-CONFIG += release
+CONFIG += debug_release
 QT       += xlsx core gui sql qml quick widgets quickwidgets script
 TARGET = fix8log
 TEMPLATE = app

@@ -21,6 +21,8 @@ public:
     QString  getSelectedLib();
     void readSettings();
     void saveSettings();
+    virtual QSize	sizeHint() const;
+
 public slots:
 void currentPageChangedSlot(int pageID);
 protected:

@@ -77,23 +77,20 @@ void NewWindowWizard::createFilePage()
 void NewWindowWizard::readSettings()
 {
     QSettings settings("fix8","logviewerNewWindowWizard");
-    QRect defaultRect(0,100,700,540);
+    QSize sh = sizeHint();
+    QRect defaultRect(0,100,sh.width(),sh.height());
     QVariant defaultVar(defaultRect);
     filePage->readSettings();
 
     QRect rect = settings.value("geometry",defaultRect).toRect();
-    qDebug() << ">>>>>>>>>>> READ SETTINGS, GEOMETRY = " << rect << __FILE__ << __LINE__;
     setGeometry(rect);
-    setMinimumHeight(480);
-    setMinimumWidth(480);
-
+    resize(rect.width(),rect.height());
 }
 void NewWindowWizard::saveSettings()
 {
     filePage->saveSettings();
 
     QSettings settings("fix8","logviewerNewWindowWizard");
-    qDebug() << ">>>>>SAVE NEW WINDOW WIZARD" << geometry() << __FILE__ << __LINE__;
     settings.setValue("geometry",geometry());
 }
 
@@ -108,4 +105,13 @@ QString  NewWindowWizard::getSelectedFile()
 QString NewWindowWizard::getSelectedLib()
 {
     return schemaPage->getSelectedLib();
+}
+QSize	NewWindowWizard::sizeHint() const
+{
+    QSize size;
+    QDesktopWidget *desktop = QApplication::desktop();
+    QRect rect = desktop->screenGeometry(desktop->primaryScreen());
+    size.setWidth(860);
+    size.setHeight(640);
+    return size;
 }

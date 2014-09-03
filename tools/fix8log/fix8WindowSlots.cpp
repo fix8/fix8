@@ -170,11 +170,12 @@ void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
     mainWindows.removeOne(mw);
     mw->deleteLater();
     if (mainWindows.count() < 1) {
+       if (schemaEditorDialog)
+            schemaEditorDialog->windowDeleted(mw);
         writeSettings();
         qApp->exit();
     }
-    if (schemaEditorDialog)
-        schemaEditorDialog->windowDeleted(mw);
+
 }
 void Fix8Log::lastWindowClosedSlot()
 {

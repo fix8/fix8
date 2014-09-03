@@ -286,12 +286,15 @@ void MainWindow::buildMainWindow()
     searchToolBar->setMovable(true);
     searchToolBar->setAllowedAreas(Qt::TopToolBarArea|Qt::BottomToolBarArea);
     addToolBar(Qt::TopToolBarArea,mainToolBar);
-    addToolBar(Qt::TopToolBarArea,filterToolBar);
+    qDebug() << "*************  IS FIRST TIME:" << GUI::Globals::isFirstTime << __FILE__ << __LINE__;
 
-    if (GUI::Globals::isFirstTime)
-        addToolBarBreak();
+
     addToolBar(Qt::TopToolBarArea,searchToolBar);
 
+    addToolBar(Qt::TopToolBarArea,filterToolBar);
+    if (GUI::Globals::isFirstTime)
+        insertToolBarBreak(searchToolBar);
+        insertToolBarBreak(filterToolBar);
     autoSaveA = new  QAction(tr("&Auto Save"),this);
     QIcon autoIcon;
     autoIcon.addPixmap(QPixmap(":/images/svg/saveOn.svg"),QIcon::Normal,QIcon::On);

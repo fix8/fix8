@@ -145,6 +145,7 @@ private:
     SearchFunctionList *filterFunctionList;
     NewWindowWizard *newWindowWizard;
     Fix8SharedLibList fix8ShareLibList;
+    QFile *dbFile;
 };
 
 #endif // FIX8LOG_H
