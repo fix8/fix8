@@ -35,18 +35,29 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIXTABLEVERTICAHEADERVIEW_H
 
 #include <QHeaderView>
+class WorkSheetModel;
+class ProxyFilter;
 
 class FixTableVerticaHeaderView : public QHeaderView
 {
 public:
-    explicit FixTableVerticaHeaderView(QWidget *parent = 0);
+    explicit FixTableVerticaHeaderView(WorkSheetModel *model,QWidget *parent = 0);
     void setHighlightList(QVector <qint32>,bool turnOn=true);
     void turnOnSearchHighLight(bool on);
+    void redoSearch();
+    void setProxyFilter(ProxyFilter *);
+    void setProxyFilterOn(bool);
 protected:
     //void mousePressEvent(QMouseEvent *e);
+   void  computerActualHighLightedRows();
    virtual void  paintSection(QPainter *painter,const QRect &,int logicalIndex) const;
+   QVector <qint32> actualHightlightRows;
    QVector <qint32> hightlightRows;
+
    bool highLightOn;
+   ProxyFilter *proxyFilter;
+   WorkSheetModel *model;
+   bool proxyFilterOn;
 };
 
 #endif // FIXTABLEVERTICAHEADERVIEW_H

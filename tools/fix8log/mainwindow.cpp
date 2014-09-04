@@ -119,7 +119,7 @@ MainWindow::MainWindow(MainWindow &mw,Database *db,bool copyAll)
 
     move(x+100,y+90); // offset from window copied
     linkSearchOn = mw.linkSearchOn;
-    linkSearchA->setChecked(linkSearchOn);
+    //linkSearchA->setChecked(linkSearchOn);
     searchFunction = mw.searchFunction;
     if (mainMenuBar) {
         mainMenuBar->setStyleSheet(mw.mainMenuBar->styleSheet());
@@ -416,12 +416,14 @@ void MainWindow::buildMainWindow()
     QIcon linkIcon;
     linkIcon.addPixmap(QPixmap(":/images/128x128/broken_link-128.png"),QIcon::Normal,QIcon::Off);
     linkIcon.addPixmap(QPixmap(":/images/128x128/chainlink_128x128-32.png"),QIcon::Normal,QIcon::On);
+    /*
     linkSearchA = new QAction("Search All",this);
     linkSearchA->setCheckable(true);
     linkSearchA->setToolTip("Search all tabs or just current tab");
     linkSearchA->setWhatsThis("When on, search applies to all tabs of this window");
     linkSearchA->setIcon(linkIcon);
     connect(linkSearchA,SIGNAL(toggled(bool)),SLOT(linkSearchSlot(bool)));
+    */
     searchL = new QLabel(searchArea);
     searchL->setText(tr("Search:"));
     searchLineEdit = new LineEdit(searchArea);
@@ -465,7 +467,7 @@ void MainWindow::buildMainWindow()
     connect(searchLineEdit,SIGNAL(returnPressed()),this,SLOT(searchReturnSlot()));
     searchBox->addWidget(searchL,0);
     searchBox->addWidget(searchLineEdit,1);
-    searchToolBar->addAction(linkSearchA);
+    //searchToolBar->addAction(linkSearchA);
     searchToolBar->addWidget(searchLV);
     searchToolBar->addWidget(searchArea);
     searchToolBar->addAction(saveSearchFuncA);
@@ -956,7 +958,7 @@ void MainWindow::setWindowData(const WindowData wd)
     }
     setTableSchema(tableSchema);
     linkSearchOn = wd.searchAll;
-    linkSearchA->setChecked(linkSearchOn);
+    //linkSearchA->setChecked(linkSearchOn);
     searchFunction = wd.searchFunction;
 
     searchLineEdit->setText(searchFunction.function);

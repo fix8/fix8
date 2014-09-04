@@ -209,7 +209,7 @@ protected:
     QAction  *newTabA;
     QAction  *copyTabA;
     QAction  *cutTabA;
-    QAction  *linkSearchA;
+   // QAction  *linkSearchA; ad latter
     QAction  *pasteTabA;
     QAction  *popupCopyTextA;
     QAction  *popupCopyHtmlA;

@@ -63,7 +63,7 @@ class FixTable: public QTableView {
   bool proxyFilterInUse();
   const ProxyFilter * getProxyFilter();
   const WorkSheetModel *getWorkSheetModel();
-
+    void redoSearch();
   void setAnouncement(const QString &message,int interval=5000); // milisec
   void setWindowID(QUuid &uuid);
   void setWorkSheetModel(WorkSheetModel *);
@@ -137,5 +137,7 @@ class FixTable: public QTableView {
    int updateFreq;
    const QList<QPair<QString ,FieldUse *>> *fieldUsePairList;
    QVector<qint32> logicFilterIndexes;
+   QVector<qint32> actualFilterIndexes;
+
 };
 #endif

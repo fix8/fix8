@@ -59,6 +59,7 @@ void WorkSheet::setFilterMode(WorkSheetData::FilterMode fm)
         return;
     filterMode = fm;
     fixTable->setFilterMode(filterMode);
+    fixTable->redoSearch();
 
 }
 void WorkSheet::setFilterIndexes(const QVector<qint32> &indexes)
@@ -71,6 +72,8 @@ void WorkSheet::setFilterIndexes(const QVector<qint32> &indexes,WorkSheetData::F
   filterIndexes = indexes;
   filterMode = fm;
   fixTable->setLogicFilterIndexes(indexes,fm);
+  fixTable->redoSearch();
+
 
 }
 void WorkSheet::setFieldUsePair(const QList<QPair<QString ,FieldUse *>> *fup)
@@ -82,5 +85,7 @@ void WorkSheet::wipeFilter()
 {
     filterIndexes.clear();
     fixTable->setLogicFilterIndexes(filterIndexes,filterMode);
+    fixTable->redoSearch();
+
 }
 

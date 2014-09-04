@@ -32,12 +32,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 #include "fixtableverticaheaderview.h"
+#include "worksheetmodel.h"
+#include "proxyFilter.h"
 #include <QDebug>
 #include <QLinearGradient>
 #include <QPainter>
 #include <QPen>
-FixTableVerticaHeaderView::FixTableVerticaHeaderView(QWidget *parent) :
-    QHeaderView(Qt::Vertical,parent),highLightOn(false)
+FixTableVerticaHeaderView::FixTableVerticaHeaderView(WorkSheetModel *m,QWidget *parent) :
+    QHeaderView(Qt::Vertical,parent),highLightOn(false),proxyFilter(0),model(m),proxyFilterOn(false)
 {
     //setClickable(true);
     setSectionsClickable(true);
@@ -50,37 +52,89 @@ void  FixTableVerticaHeaderView::paintSection(QPainter * painter,
     QStyleOptionHeader option;
     option.position = QStyleOptionHeader::Beginning;
     bool wasHighlighted = false;
+    int proxyIndex;
     if (!highLightOn) {
         QHeaderView::paintSection(painter, rect, logicalIndex);
         return;
     }
     initStyleOption( &option );
     qint32 ivalue;
-    QVectorIterator <qint32> iter(hightlightRows);
-    while(iter.hasNext()) {
-        ivalue = iter.next();
-        if (logicalIndex == ivalue) {
-            painter->save();
-            QHeaderView::paintSection(painter, rect, logicalIndex);
-            painter->restore();
-            QLinearGradient gradient(rect.topLeft(),rect.topRight());
-            gradient.setColorAt(0,QColor(40,98,231,100));
-            gradient.setColorAt(1,QColor(87,166,231,100));
-            painter->fillRect(rect,QBrush(gradient));
-            QRect newRect(rect);
-            newRect.setLeft(rect.left()+ 3);
-            painter->drawText(newRect,Qt::AlignVCenter|Qt::AlignLeft,QString::number(logicalIndex+1));
-            wasHighlighted = true;
-            break;
+    bool match;
+    if (proxyFilterOn) {
+        QVectorIterator <qint32> iter(actualHightlightRows);
+        while(iter.hasNext()) {
+            match = false;
+            ivalue = iter.next();
+            //qDebug() << "lindex = " << logicalIndex << __FILE__ << __LINE__;
+            //qDebug() <<  "vindex = " << visualIndex(logicalIndex);
+            //qDebug() <<  "ivalue = " << ivalue;
+            //sourceIndex = inde
+            //proxyFilter->mapFromSource()
+            //qDebug() << "";
+            if (logicalIndex == ivalue) {
+                painter->save();
+                //QHeaderView::paintSection(painter, rect, logicalIndex);
+                painter->restore();
+                QLinearGradient gradient(rect.topLeft(),rect.topRight());
+                gradient.setColorAt(0,QColor(40,98,231,100));
+                gradient.setColorAt(1,QColor(87,166,231,100));
+                painter->fillRect(rect,QBrush(gradient));
+                QRect lineRect = rect;
+                lineRect.setRight(rect.right()-1);
+                //lineRect.setBottom(rect.bottom()-1);
+                QRect newRect(rect);
+                newRect.setLeft(rect.left()+ 3);
+                painter->drawText(newRect,Qt::AlignVCenter|Qt::AlignLeft,QString::number(logicalIndex+1));
+                painter->drawRect(lineRect);
+                wasHighlighted = true;
+                break;
+            }
+        }
+    }
+    else {
+        QVectorIterator <qint32> iter(hightlightRows);
+        while(iter.hasNext()) {
+            match = false;
+            ivalue = iter.next();
+            //qDebug() << "lindex = " << logicalIndex << __FILE__ << __LINE__;
+            //qDebug() <<  "vindex = " << visualIndex(logicalIndex);
+            //qDebug() <<  "ivalue = " << ivalue;
+            //sourceIndex = inde
+            //proxyFilter->mapFromSource()
+            //qDebug() << "";
+            if (logicalIndex == ivalue) {
+                painter->save();
+                //QHeaderView::paintSection(painter, rect, logicalIndex);
+                painter->restore();
+                QLinearGradient gradient(rect.topLeft(),rect.topRight());
+                gradient.setColorAt(0,QColor(40,98,231,100));
+                gradient.setColorAt(1,QColor(87,166,231,100));
+                painter->fillRect(rect,QBrush(gradient));
+                QRect lineRect = rect;
+                lineRect.setRight(rect.right()-1);
+                //lineRect.setBottom(rect.bottom()-1);
+                QRect newRect(rect);
+                newRect.setLeft(rect.left()+ 3);
+                painter->drawText(newRect,Qt::AlignVCenter|Qt::AlignLeft,QString::number(logicalIndex+1));
+                painter->drawRect(lineRect);
+                wasHighlighted = true;
+                break;
+            }
         }
     }
     if (!wasHighlighted)
-       QHeaderView::paintSection(painter, rect, logicalIndex);
+        QHeaderView::paintSection(painter, rect, logicalIndex);
 }
 void FixTableVerticaHeaderView::setHighlightList(QVector <qint32>list,bool turnOn)
 {
+    qint32 row;
+    QModelIndex mi;
+    QModelIndex newMi;
     highLightOn = turnOn;
     hightlightRows = list;
+    if (proxyFilterOn) {
+        computerActualHighLightedRows();
+    }
     reset();
     update();
     repaint();
@@ -88,8 +142,50 @@ void FixTableVerticaHeaderView::setHighlightList(QVector <qint32>list,bool turnO
 void FixTableVerticaHeaderView::turnOnSearchHighLight(bool on)
 {
     highLightOn  = on;
+    if (proxyFilterOn) {
+        computerActualHighLightedRows();
+    }
     update();
 }
+void FixTableVerticaHeaderView::redoSearch()
+{
+    if (proxyFilterOn) {
+        computerActualHighLightedRows();
+    }
+}
+void FixTableVerticaHeaderView::setProxyFilter(ProxyFilter *pf)
+{
+    proxyFilter = pf;
+    if (proxyFilterOn) {
+        computerActualHighLightedRows();
+    }
+    update();
+
+}
+void FixTableVerticaHeaderView::setProxyFilterOn(bool b)
+{
+    proxyFilterOn = b;
+    if (proxyFilterOn) {
+        computerActualHighLightedRows();
+    }
+    update();
+
+}
+void FixTableVerticaHeaderView::computerActualHighLightedRows()
+{
+    qint32 row;
+    QModelIndex mi;
+    QModelIndex newMi;
+    actualHightlightRows.clear();
+    QVectorIterator<qint32> iter(hightlightRows);
+    while(iter.hasNext()) {
+        row = iter.next();
+        mi = model->index(row,0);
+        newMi = proxyFilter->mapFromSource(mi);
+        actualHightlightRows.append(newMi.row());
+    }
+}
+
 /*
 void FixTableVerticaHeaderView::mousePressEvent(QMouseEvent *e)
 {

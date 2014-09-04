@@ -83,7 +83,7 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     viewport()->setAcceptDrops(true);
-    fixVH = new FixTableVerticaHeaderView(this);
+    fixVH = new FixTableVerticaHeaderView(_model,this);
     setVerticalHeader(fixVH);
     bgColorStart.setRgb(2,19,39);
     bgColorEnd.setRgb(10,10,10);
@@ -130,6 +130,10 @@ void FixTable::setSearchFilterOn(bool on)
     searchFilterOn = on;
     fixVH->turnOnSearchHighLight(searchFilterOn);
     viewport()->repaint();
+}
+void FixTable::redoSearch()
+{
+   fixVH->redoSearch();
 }
 
 void FixTable::setAnouncement(const QString &message,int interval)
