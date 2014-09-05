@@ -180,11 +180,17 @@ void MainWindow::buildMainWindow()
     mainToolBar->setObjectName("MainToolBar");
 
     filterToolBar = new QToolBar("Filter",this);
+    connect(filterToolBar,SIGNAL(visibilityChanged(bool)),
+            this,SLOT(filterToolbarVisibleSlot(bool)));
     filterToolBar->setObjectName("FilterToolBar");
     filterToolBar->setAutoFillBackground(true);
     filterToolBarA =   filterToolBar->toggleViewAction();
-    filterToolBarA->setIcon(QIcon(":/images/svg/Chemistry-Conical-Funnel.svg"));
+    QIcon filterIcon;
+    filterIcon.addPixmap(QPixmap(":/images/svg/filterOn.svg"),QIcon::Normal,QIcon::On);
+    filterIcon.addPixmap(QPixmap(":/images/svg/filterOff.svg"),QIcon::Normal,QIcon::Off);
+    filterToolBarA->setIcon(filterIcon);
     filterToolBarA->setToolTip("Filter Messages");
+
     filterToolBarA->setWhatsThis("Filter out messages");
     filterArea = new QWidget(this);
     QHBoxLayout *filterBox = new QHBoxLayout();
@@ -268,7 +274,10 @@ void MainWindow::buildMainWindow()
     searchToolBar->setObjectName("SearchToolBar");
     searchToolBarA = searchToolBar->toggleViewAction();
     searchToolBarA->setToolTip("Search For Records");
-    searchToolBarA->setIcon(QIcon(":/images/svg/magniflying_glass.svg"));
+    QIcon searchIcon;
+    searchIcon.addPixmap(QPixmap(":/images/svg/searchOn.svg"),QIcon::Normal,QIcon::On);
+    searchIcon.addPixmap(QPixmap(":/images/svg/searchOff.svg"),QIcon::Normal,QIcon::Off);
+    searchToolBarA->setIcon(searchIcon);
     hideToolBarA = mainToolBar->toggleViewAction();
 
     fontActionGroup = new QActionGroup(this);
@@ -292,9 +301,10 @@ void MainWindow::buildMainWindow()
     addToolBar(Qt::TopToolBarArea,searchToolBar);
 
     addToolBar(Qt::TopToolBarArea,filterToolBar);
-    if (GUI::Globals::isFirstTime)
+    if (GUI::Globals::isFirstTime) {
         insertToolBarBreak(searchToolBar);
         insertToolBarBreak(filterToolBar);
+    }
     autoSaveA = new  QAction(tr("&Auto Save"),this);
     QIcon autoIcon;
     autoIcon.addPixmap(QPixmap(":/images/svg/saveOn.svg"),QIcon::Normal,QIcon::On);

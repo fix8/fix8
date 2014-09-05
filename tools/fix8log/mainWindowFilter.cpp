@@ -229,6 +229,19 @@ void MainWindow::filterFunctionSelectedSlot(int index)
     if (index != 0)
          runFilterScript();
 }
+void MainWindow::filterToolbarVisibleSlot(bool visible)
+{
+    WorkSheet *workSheet;
+    for(int i=0;i < tabW->count();i++) {
+        workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
+        if (!visible)
+            workSheet->setFilterMode(WorkSheetData::Off);
+        else {
+            WorkSheetData::FilterMode filterMode = (WorkSheetData::FilterMode) filterButtonGroup->checkedId();
+            workSheet->setFilterMode(filterMode);
+        }
+    }
+}
 void MainWindow::filterModeChangedSlot(int fm)
 {
     WorkSheetData::FilterMode filterMode = (WorkSheetData::FilterMode) fm;
@@ -241,7 +254,15 @@ void MainWindow::filterModeChangedSlot(int fm)
         update();
         return;
     } 
-    ws->setFilterMode(filterMode);
+    SearchFunction newfilterFunction = createRoutine(bstatus,false);
+    if ( filterFunction == newfilterFunction) {
+        qDebug() << "FILTERS ARE THE SAME" << __FILE__ <<__LINE__;
+        ws->setFilterMode(filterMode);
+    }
+    else {
+        qDebug() << "DIFFFRENT FILTERS RUN AGAIN...";
+        runFilterScript();
+    }
     update();
 }
 bool MainWindow::runFilterScript()

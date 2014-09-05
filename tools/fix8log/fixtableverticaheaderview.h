@@ -41,12 +41,13 @@ class ProxyFilter;
 class FixTableVerticaHeaderView : public QHeaderView
 {
 public:
-    explicit FixTableVerticaHeaderView(WorkSheetModel *model,QWidget *parent = 0);
+    explicit FixTableVerticaHeaderView(QWidget *parent = 0);
     void setHighlightList(QVector <qint32>,bool turnOn=true);
     void turnOnSearchHighLight(bool on);
     void redoSearch();
     void setProxyFilter(ProxyFilter *);
     void setProxyFilterOn(bool);
+    void setWorkModel(WorkSheetModel *m);
 protected:
     //void mousePressEvent(QMouseEvent *e);
    void  computerActualHighLightedRows();
@@ -56,7 +57,7 @@ protected:
 
    bool highLightOn;
    ProxyFilter *proxyFilter;
-   WorkSheetModel *model;
+   WorkSheetModel *_model;
    bool proxyFilterOn;
 };
 

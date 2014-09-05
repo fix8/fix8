@@ -83,7 +83,7 @@ FixTable::FixTable(QUuid &wid, QUuid &wsid,QWidget *p):
     setAcceptDrops(true);
     setDropIndicatorShown(true);
     viewport()->setAcceptDrops(true);
-    fixVH = new FixTableVerticaHeaderView(_model,this);
+    fixVH = new FixTableVerticaHeaderView(this);
     setVerticalHeader(fixVH);
     bgColorStart.setRgb(2,19,39);
     bgColorEnd.setRgb(10,10,10);
@@ -118,6 +118,7 @@ void FixTable::setWorkSheetModel(WorkSheetModel *m)
 {
     _model = m;
     proxyFilter->setSourceModel(_model);
+    fixVH->setWorkModel(_model);
     setModel(m);
 }
 void FixTable::setWindowID(QUuid &uuid)
@@ -179,9 +180,14 @@ void FixTable::validateFilters()
     if (haveFilter) {
             proxyFilter->setSourceModel(_model);
             setModel(proxyFilter);
+            fixVH->setProxyFilter(proxyFilter);
+            fixVH->setProxyFilterOn(true);
     }
-     else
+     else {
        setModel(_model);
+       fixVH->setProxyFilter(0);
+       fixVH->setProxyFilterOn(false);
+    }
 }
 
 void FixTable::timerEvent(QTimerEvent *te)

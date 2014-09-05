@@ -38,10 +38,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QLinearGradient>
 #include <QPainter>
 #include <QPen>
-FixTableVerticaHeaderView::FixTableVerticaHeaderView(WorkSheetModel *m,QWidget *parent) :
-    QHeaderView(Qt::Vertical,parent),highLightOn(false),proxyFilter(0),model(m),proxyFilterOn(false)
+FixTableVerticaHeaderView::FixTableVerticaHeaderView(QWidget *parent) :
+    QHeaderView(Qt::Vertical,parent),highLightOn(false),proxyFilter(0),proxyFilterOn(false)
 {
     //setClickable(true);
+    _model = false;
     setSectionsClickable(true);
 }
 void  FixTableVerticaHeaderView::paintSection(QPainter * painter,
@@ -149,13 +150,26 @@ void FixTableVerticaHeaderView::turnOnSearchHighLight(bool on)
 }
 void FixTableVerticaHeaderView::redoSearch()
 {
+    qDebug() << "REDOS SEARCH, proxy on =" << proxyFilterOn <<  __FILE__ << __LINE__;
     if (proxyFilterOn) {
         computerActualHighLightedRows();
     }
 }
+void FixTableVerticaHeaderView::setWorkModel(WorkSheetModel *m)
+{
+    _model = m;
+}
+
 void FixTableVerticaHeaderView::setProxyFilter(ProxyFilter *pf)
 {
     proxyFilter = pf;
+    if (proxyFilter)
+        qDebug() << "HAVE A PROXY FILTER" << __FILE__ << __LINE__;
+    else
+        qDebug() << "DO NOT HAVE  A PROXY FILTER" << __FILE__ << __LINE__;
+
+    if (proxyFilter)
+        proxyFilterOn = true;
     if (proxyFilterOn) {
         computerActualHighLightedRows();
     }
@@ -165,6 +179,7 @@ void FixTableVerticaHeaderView::setProxyFilter(ProxyFilter *pf)
 void FixTableVerticaHeaderView::setProxyFilterOn(bool b)
 {
     proxyFilterOn = b;
+    qDebug() << ">>>>>>>>>>SET PROXY ON " << proxyFilterOn << __FILE__ << __LINE__;
     if (proxyFilterOn) {
         computerActualHighLightedRows();
     }
@@ -176,20 +191,23 @@ void FixTableVerticaHeaderView::computerActualHighLightedRows()
     qint32 row;
     QModelIndex mi;
     QModelIndex newMi;
+
     actualHightlightRows.clear();
     QVectorIterator<qint32> iter(hightlightRows);
+    if (!proxyFilterOn)
+        return;
+    qDebug() << ">>>>>>>>>>>>>> HERE IN COMPUTER << __FILE__ << __LINE__";
     while(iter.hasNext()) {
         row = iter.next();
-        mi = model->index(row,0);
-        newMi = proxyFilter->mapFromSource(mi);
-        actualHightlightRows.append(newMi.row());
+        qDebug() << "ROW = " << row << __FILE__ << __LINE__;
+        qDebug() << visualIndex(row);
+        mi = _model->index(row,0);
+        if (proxyFilter) {
+            mi = proxyFilter->mapFromSource(mi);
+            qDebug() << "MI ROW " << mi.row();
+            actualHightlightRows.append(mi.row());
+         }
+
     }
 }
 
-/*
-void FixTableVerticaHeaderView::mousePressEvent(QMouseEvent *e)
-{
-    qDebug() << "MOUSE PRESS EVENT" << __FILE__ << __LINE__;
-    QHeaderView::mousePressEvent(e);
-}
-*/

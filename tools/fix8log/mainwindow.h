@@ -141,6 +141,7 @@ public:
     void exportSlot(QAction *);
     void editSchemaSlot();
     void editTabNameSlot(bool isOn);
+    void filterToolbarVisibleSlot(bool);
     void fileDirChangedSlot(const QString &);
     void fileFilterSelectedSlot(QString);
     void fileSelectionFinishedSlot(int returnCode);

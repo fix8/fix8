@@ -85,5 +85,9 @@
         <file>images/svg/Chemistry-Conical-Funnel.svg</file>
         <file>images/svg/filterEdit.svg</file>
         <file>images/svg/searchEdit.svg</file>
+        <file>images/svg/filterOff.svg</file>
+        <file>images/svg/filterOn.svg</file>
+        <file>images/svg/searchOff.svg</file>
+        <file>images/svg/searchOn.svg</file>
     </qresource>
 </RCC>
