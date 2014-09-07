@@ -2,6 +2,7 @@
 #define NEWWINDOWSCHEMAPAGE_H
 #include <QWizardPage>
 #include <QtWidgets>
+class QQuickView;
 #include "fix8sharedlib.h"
 class NewWindowSchemaPage : public QWizardPage
 {
@@ -21,7 +22,6 @@ QLabel *legend;
 QListView *schemaListView;
 QStandardItemModel *schemaModel;
 QItemSelectionModel *selectionModel;
-QLabel *schemaLabel;
 int filePageID;
 int noSchemasID;
 int schemasListID;
@@ -29,5 +29,7 @@ Fix8SharedLibList &fix8SharedLibList;
 QString systemDirName;
 QString userDirName;
 QStringList schemaErrorStrList;
+QQuickView *infoView;
+QWidget *infoWidget;
 };
 #endif // NEWWINDOWSCHEMAPAGE_H

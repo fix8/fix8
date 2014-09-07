@@ -89,5 +89,6 @@
         <file>images/svg/filterOn.svg</file>
         <file>images/svg/searchOff.svg</file>
         <file>images/svg/searchOn.svg</file>
+        <file>qml/schemaLocation.qml</file>
     </qresource>
 </RCC>

@@ -1,4 +1,8 @@
 #include "newwindowschemapage.h"
+#include <QQuickView>
+#include <QQuickItem>
+#include <QQmlContext>
+
 NewWindowSchemaPage::NewWindowSchemaPage(Fix8SharedLibList &shareLibs,QWidget *parent) :
     QWizardPage(parent),fix8SharedLibList(shareLibs)
 {
@@ -48,19 +52,21 @@ NewWindowSchemaPage::NewWindowSchemaPage(Fix8SharedLibList &shareLibs,QWidget *p
 #else
     legend->setText("\u002aSystem Library");
 #endif
-    schemaLabel = new QLabel(this);
-    schemaLabel->setWordWrap(true);
-    schemaLabel->setTextFormat(Qt::RichText);
+    infoView = new QQuickView(QUrl("qrc:qml/schemaLocation.qml"));
+     QQmlContext *dc = infoView->rootContext();
+     dc->setContextProperty("backgroundcolor",
+                                      palette().color(QPalette::Window));
+
+    QQuickItem  *qmlObject = infoView->rootObject();
+    qmlObject->setProperty("backgroundcolor",QColor("red"));
+    infoView->setResizeMode(QQuickView::SizeRootObjectToView);
+    infoWidget = QWidget::createWindowContainer(infoView,this);
+
     systemDirName = qApp->applicationDirPath() + "/fixschemas";
     userDirName = QDir::homePath() + "/f8logview/fixschemas";
-    QString str = "<h1>Select Schema</h1>";
-    str.append("Each window is associated with one FIX schema. These schema's (listed here) are loaded from two locations:");
-    str.append("<p><ul><li>System Level- loaded from the fix8logview install directory - <i>" + systemDirName+ "</i></li>");
-    str.append("<li>User Level -loaded from user's subdirectory <i>" + userDirName + "</i></li>");
-    schemaLabel->setText(str);
     schemaGrid->addLayout(schemaStack,0,0);
     schemaGrid->addWidget(legend,1,0,Qt::AlignLeft);
-    schemaGrid->addWidget(schemaLabel,0,1,2,1,Qt::AlignLeft);
+    schemaGrid->addWidget(infoWidget,0,1,2,1);
     schemaGrid->setColumnStretch(0,0);
     schemaGrid->setColumnStretch(1,1);
     schemaGrid->setRowStretch(0,1);

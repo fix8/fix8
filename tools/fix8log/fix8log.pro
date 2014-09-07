@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-CONFIG += debug_release
+CONFIG += debug_and_release
 QT       += xlsx core gui sql qml quick widgets quickwidgets script
-TARGET = fix8log
+TARGET = fix8logviewer
 TEMPLATE = app
 
 SOURCES += main.cpp\
@@ -142,6 +142,8 @@ LIBS += -lz  -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lP
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8
 DEPENDPATH += /usr/local/include
 SOURCES += qtlockedfile_unix.cpp
+OJBS=.obj
+MOCS-.moc
 }
 win32 {
      message("Windows Compile")
@@ -178,5 +180,6 @@ OTHER_FILES += \
     qml/newMainWindow.qml \
     images/Broken_Link-128.png \
     images/svg/listView.svg \
-    qml/welcome.qml
+    qml/welcome.qml \
+    qml/schemaLocation.qml
 
