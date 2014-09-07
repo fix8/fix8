@@ -197,16 +197,16 @@ struct Schedule
 {
 	Tickval _start, _end, _duration;
 	int _utc_offset, _start_day, _end_day;
-	Tickval::sticks _toffset;
+	Tickval::ticks _toffset;
 
 	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
-    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration=0/*Tickval::noticks*/, int utc_offset=0,
+    Schedule(Tickval start, Tickval end, Tickval duration=Tickval(), int utc_offset=0,
 			 int start_day=-1, int end_day=-1) :
 		_start(start), _end(end), _duration(duration),
 		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
-		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
+		_toffset(static_cast<Tickval::ticks>(_utc_offset) * Tickval::minute)
 	{
 	}
 

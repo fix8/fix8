@@ -38,8 +38,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_TICKVAL_HPP_
 
 //-------------------------------------------------------------------------------------------------
-#ifndef _MSC_VER
-#include <sys/time.h>
+#include <chrono>
+#ifdef _MSC_VER
 #include <limits.h>
 #endif
 
@@ -47,104 +47,22 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-#ifdef __APPLE__
-#include <mach/clock.h>
-#include <mach/mach.h>
-#endif
-
-//-------------------------------------------------------------------------------------------------
-#ifdef _MSC_VER
-
-inline LARGE_INTEGER getFILETIMEoffset()
-{
-	SYSTEMTIME s { 1970, 1, 1, 0, 0, 0, 0 };
-	FILETIME f;
-	LARGE_INTEGER t;
-
-	SystemTimeToFileTime(&s, &f);
-	t.QuadPart = f.dwHighDateTime;
-	t.QuadPart <<= 32;
-	t.QuadPart |= f.dwLowDateTime;
-	return t;
-}
-
-// Windows does not have clock_gettime, so we must supply it
-inline int clock_gettime(int X, struct timespec *tv)
-{
-    LARGE_INTEGER t;
-    FILETIME f;
-    double nanoseconds;
-    //static LARGE_INTEGER    offset;
-    static double frequencyToNanoseconds;
-    static int initialized = 0;
-    static BOOL usePerformanceCounter = 0;
-
-    if (!initialized)
-	 {
-        LARGE_INTEGER performanceFrequency;
-        initialized = 1;
-        usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
-        if (usePerformanceCounter)
-		  {
-            //QueryPerformanceCounter(&offset);
-            frequencyToNanoseconds = (double)performanceFrequency.QuadPart / 1000000000.;
-        }
-		  else
-		  {
-            //offset = getFILETIMEoffset();
-            frequencyToNanoseconds = 10.;
-        }
-    }
-    if (usePerformanceCounter)
-		 QueryPerformanceCounter(&t);
-    else
-	 {
-        GetSystemTimeAsFileTime(&f);
-        t.QuadPart = f.dwHighDateTime;
-        t.QuadPart <<= 32;
-        t.QuadPart |= f.dwLowDateTime;
-    }
-
-    //t.QuadPart -= offset.QuadPart;
-    nanoseconds = (double)t.QuadPart / frequencyToNanoseconds;
-    t.QuadPart = nanoseconds;
-    tv->tv_sec = t.QuadPart / 1000000000;
-    tv->tv_nsec = t.QuadPart % 1000000000;
-    return 0;
-}
-
-#define CLOCK_REALTIME 0
-
-#endif // _MSC_VER
-
-//-------------------------------------------------------------------------------------------------
-// OS X does not have clock_gettime, use clock_get_time
-inline void current_utc_time(struct timespec *ts)
-{
-#ifdef __APPLE__
-	clock_serv_t cclock;
-	mach_timespec_t mts;
-	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-	clock_get_time(cclock, &mts);
-	mach_port_deallocate(mach_task_self(), cclock);
-	ts->tv_sec = mts.tv_sec;
-	ts->tv_nsec = mts.tv_nsec;
-#else
-	clock_gettime(CLOCK_REALTIME, ts);
-#endif
-}
-
-//---------------------------------------------------------------------------------------------------
-/// High resolution time in nanosecond ticks. Thread safe.
+/// High resolution time in nanosecond ticks. Thread safe. Portable, based on std::chrono
+/// Assumes we support nanosecond resolution. For implementations that don't, there will be inaccuracies:
+/// Windows 7 supports up to 15ms resolution only; for Windows 8 it is 100ns. Linux x86_64 is 1ns.
 class Tickval
 {
 public:
-	using ticks = unsigned long long;
-	using sticks = long long;
-	static const ticks noticks = 0ULL;
-	static const sticks nosticks = 0LL;
-	static const ticks errorticks = ULLONG_MAX;
-	static const ticks thousand = 1000ULL;
+	using f8_time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
+	using ticks = decltype(f8_time_point::min().time_since_epoch().count());
+	using duration = f8_time_point::duration;
+	static const ticks noticks = 0; // this should be a signed value
+#ifdef _MSC_VER
+	static const ticks errorticks = LLONG_MAX;	// VS2013 still doesn't seem to support constexpr
+#else
+	static const ticks errorticks = f8_time_point::max().time_since_epoch().count(); // 2262-04-12 09:47:16.854775807
+#endif
+	static const ticks thousand = 1000;
 	static const ticks million = thousand * thousand;
 	static const ticks billion = thousand * million;
 	static const ticks second = billion;
@@ -154,33 +72,30 @@ public:
 	static const ticks week = 7 * day;
 
 private:
-	ticks _value; // We're ok till 03:14:08 UTC on 19 January 2038
+	f8_time_point _value;
 
 public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
-	explicit Tickval(bool settonow=false) : _value(settonow ? _cvt(get_timespec()) : noticks) {}
+	explicit Tickval(bool settonow=false)
+		: _value(settonow ? std::chrono::high_resolution_clock::now() : f8_time_point(f8_time_point::duration::zero())) {}
 
 	/*! Copy Ctor. */
 	Tickval(const Tickval& from) : _value(from._value) {}
 
 	/*! Ctor.
 	  \param from construct from raw ticks value (nanoseconds) */
-	Tickval(const ticks from) : _value(from) {}
+	explicit Tickval(ticks from) : _value(std::chrono::duration_cast<duration>(std::chrono::nanoseconds(from))) {}
+
+	/*! Ctor.
+	  \param from construct from time_point value */
+	explicit Tickval(f8_time_point from) : _value(from) {}
 
 	/*! Ctor.
 	  \param secs seconds
 	  \param nsecs nanoseconds */
-	Tickval(const time_t secs, const long nsecs)
-      : _value(billion * static_cast<ticks>(secs) + static_cast<ticks>(nsecs)) {}
-
-	/*! Ctor.
-	  \param from construct from timespec object */
-	explicit Tickval(const timespec& from) : _value(_cvt(from)) {}
-
-	/*! Ctor.
-	  \param from construct from time_t value */
-	explicit Tickval(const time_t from) : _value(static_cast<ticks>(from) * billion) {}
+	Tickval(time_t secs, long nsecs)
+		: _value(std::chrono::high_resolution_clock::from_time_t(secs) + std::chrono::duration_cast<duration>(std::chrono::nanoseconds(nsecs))) {}
 
 	/*! Assignment operator. */
 	Tickval& operator=(const Tickval& that)
@@ -193,52 +108,59 @@ public:
 	/*! Assignment operator from ticks
 	  \param that ticks to assign from
 	  \return *this */
-	Tickval& operator=(const ticks that)
+	Tickval& operator=(ticks that)
 	{
-		_value = that;
-		return *this;
-	}
-
-	/*! Assignment operator from timespec.
-	  \param that timespec object to assign from
-	  \return *this */
-	Tickval& operator=(const timespec& that)
-	{
-		_value = _cvt(that);
+		_value = f8_time_point(std::chrono::duration_cast<duration>(std::chrono::nanoseconds(that)));
 		return *this;
 	}
 
 	/*! Get the raw tick value (nanosecs).
 	  \return raw ticks */
-	ticks get_ticks() const { return _value; }
+	ticks get_ticks() const { return std::chrono::duration_cast<std::chrono::nanoseconds>(_value.time_since_epoch()).count(); }
 
 	/*! Assign the current time to this object.
 	  \return current object */
-	Tickval& now() { return get_tickval(*this); }
+	Tickval& now()
+	{
+		_value = std::chrono::high_resolution_clock::now();
+		return *this;
+	}
 
 	/*! Get the current number of elapsed seconds
 	  \return value in seconds */
-	time_t secs() const { return static_cast<time_t>(_value / billion); }
+	time_t secs() const { return std::chrono::duration_cast<std::chrono::seconds>(_value.time_since_epoch()).count(); }
 
 	/*! Get the current number of elapsed milliseconds (excluding secs)
 	  \return value in milliseconds */
-	unsigned msecs() const { return static_cast<unsigned>((_value % billion) / million); }
+	unsigned msecs() const
+	{
+		return std::chrono::duration_cast<std::chrono::milliseconds>(_value.time_since_epoch()).count() % std::milli::den;
+	}
 
 	/*! Get the current number of elapsed microseconds (excluding secs)
 	  \return value in microseconds */
-	unsigned usecs() const { return static_cast<unsigned>((_value % billion) / thousand); }
+	unsigned usecs() const
+	{
+		return std::chrono::duration_cast<std::chrono::microseconds>(_value.time_since_epoch()).count() % std::micro::den;
+	}
 
 	/*! Get the current number of elapsed nanoseconds (excluding secs)
 	  \return value in nanoseconds */
-	unsigned nsecs() const { return static_cast<unsigned>(_value % billion); }
+	unsigned nsecs() const
+	{
+		return std::chrono::duration_cast<std::chrono::nanoseconds>(_value.time_since_epoch()).count() % std::nano::den;
+	}
 
 	/*! Get the current tickval as a double.
 	  \return value as a double */
-	double todouble() const { return static_cast<double>(_value) / billion; }
+	double todouble() const
+	{
+		return static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(_value.time_since_epoch()).count() / std::nano::den);
+	}
 
 	/*! See if this Tickval holds an error value
 	  \return true if an error value */
-	bool is_errorval() const { return _value == errorticks; }
+	bool is_errorval() const { return _value.time_since_epoch().count() == errorticks; }
 
 	/*! See if this Tickval is within the range given
 	  \param a lower boundary
@@ -249,59 +171,25 @@ public:
 		return !b.is_errorval() ? a <= *this && *this <= b : a <= *this;
 	}
 
-	/*! Adjust Tickval by given signed value (sticks)
+	/*! Adjust Tickval by given value
 	  \param by amount to adjust; if +ve add, if -ve sub
 	  \return adjusted Tickval */
-	Tickval& adjust(sticks by)
-	{
-		if (by > 0LL)
-			*this += by;
-		else if (by < 0LL)
-			*this -= -by;
-		return *this;
-	}
-
-	/*! Generate a timespec object
-	  \return timespec */
-	static timespec get_timespec()
-	{
-		timespec ts;
-		current_utc_time(&ts);
-		return ts;
-	}
+	Tickval& adjust(ticks by) { return *this += by; }
 
 	/*! Generate a Tickval object, constructed with the current time.
 	  \return Tickval */
-	static Tickval get_tickval()
-	{
-		timespec ts;
-		current_utc_time(&ts);
-		return Tickval(ts);
-	}
+	static Tickval get_tickval() { return Tickval(true); }
 
 	/*! Assign current time to a given Tickval object.
 	  \return target Tickval object */
-	static Tickval& get_tickval(Tickval& to)
-	{
-		timespec ts;
-		current_utc_time(&ts);
-		return to = ts;
-	}
-
-	/*! Get tickval as struct timespec
-	  \return result */
-	struct timespec as_ts() const
-	{
-		const timespec ts { secs(), static_cast<long>(nsecs()) };
-		return ts;
-	}
+	static Tickval& get_tickval(Tickval& to) { return to = Tickval(true); }
 
 	/*! Get tickval as struct tm
 	  \param result ref to struct tm to fill
 	  \return ptr to result */
 	struct tm *as_tm(struct tm& result) const
 	{
-		const time_t insecs(secs());
+		const time_t insecs(std::chrono::system_clock::to_time_t(_value));
 #ifdef _MSC_VER
 		gmtime_s(&result, &insecs);
 		return &result;
@@ -313,20 +201,19 @@ public:
 	/*! Set from secs/nsecs
 	  \param secs seconds
 	  \param nsecs nanoseconds */
-	void set(const time_t secs, const long nsecs)
-      { _value = billion * static_cast<ticks>(secs) + static_cast<ticks>(nsecs); }
+	void set(time_t secs, long nsecs) { _value = Tickval(secs, nsecs)._value; }
 
 	/*! Not operator
 	  \return true if no ticks (0) */
-	bool operator!() const { return _value == noticks; }
+	bool operator!() const { return _value.time_since_epoch() == std::chrono::nanoseconds::zero(); }
 
 	/*! Not 0 operator
 	  \return true if ticks */
-	operator void*() { return _value == noticks ? 0 : this; }
+	operator void*() { return _value.time_since_epoch() == std::chrono::nanoseconds::zero() ? nullptr : this; }
 
 	/*! Cast to unsigned long long.
 	  \return ticks as unsigned long long */
-	operator Tickval::ticks () { return _value; }
+	operator Tickval::ticks () { return _value.time_since_epoch().count(); }
 
 	/*! Cast to double.
 	  \return ticks as double */
@@ -337,7 +224,7 @@ public:
 	  \param oldtime Tickval to subtract
 	  \return Result as Tickval */
 	friend Tickval operator-(const Tickval& newtime, const Tickval& oldtime)
-		{ return Tickval(newtime._value - oldtime._value); }
+		{ return Tickval(newtime._value - oldtime._value.time_since_epoch()); }
 
 	/*! Binary negate operator.
 	  \param newtime Tickval to subtract from
@@ -345,7 +232,7 @@ public:
 	  \return resulting oldtime */
 	friend Tickval& operator-=(Tickval& oldtime, const Tickval& newtime)
 	{
-		oldtime._value -= newtime._value;
+		oldtime._value -= newtime._value.time_since_epoch();
 		return oldtime;
 	}
 
@@ -354,7 +241,7 @@ public:
 	  \param oldtime Tickval to add
 	  \return Result as Tickval */
 	friend Tickval operator+(const Tickval& newtime, const Tickval& oldtime)
-		{ return Tickval(newtime._value + oldtime._value); }
+		{ return Tickval(newtime._value + oldtime._value.time_since_epoch()); }
 
 	/*! Binary addition operator.
 	  \param newtime Tickval to add to
@@ -362,7 +249,7 @@ public:
 	  \return resulting oldtime */
 	friend Tickval& operator+=(Tickval& oldtime, const Tickval& newtime)
 	{
-		oldtime._value += newtime._value;
+		oldtime._value += newtime._value.time_since_epoch();
 		return oldtime;
 	}
 
@@ -370,51 +257,45 @@ public:
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if equal */
-	friend bool operator==(const Tickval& a, const Tickval& b)
-		{ return a._value == b._value; }
+	friend bool operator==(const Tickval& a, const Tickval& b) { return a._value == b._value; }
 
 	/*! Inequivalence operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if not equal */
-	friend bool operator!=(const Tickval& a, const Tickval& b)
-		{ return a._value != b._value; }
+	friend bool operator!=(const Tickval& a, const Tickval& b) { return a._value != b._value; }
 
 	/*! Greater than operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is greater than b */
-	friend bool operator>(const Tickval& a, const Tickval& b)
-		{ return a._value > b._value; }
+	friend bool operator>(const Tickval& a, const Tickval& b) { return a._value > b._value; }
 
 	/*! Less than operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is less than b */
-	friend bool operator<(const Tickval& a, const Tickval& b)
-		{ return a._value < b._value; }
+	friend bool operator<(const Tickval& a, const Tickval& b) { return a._value < b._value; }
 
 	/*! Greater than or equal to operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is greater than or equal to b */
-	friend bool operator>=(const Tickval& a, const Tickval& b)
-		{ return a._value >= b._value; }
+	friend bool operator>=(const Tickval& a, const Tickval& b) { return a._value >= b._value; }
 
 	/*! Less than or equal to operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is less than or equal to b */
-	friend bool operator<=(const Tickval& a, const Tickval& b)
-		{ return a._value <= b._value; }
+	friend bool operator<=(const Tickval& a, const Tickval& b) { return a._value <= b._value; }
 
 	/*! Binary addition operator.
 	  \param oldtime Tickval to add to
 	  \param ns ticks to add
 	  \return oldtime as Tickval */
-	friend Tickval& operator+=(Tickval& oldtime, const ticks& ns)
+	friend Tickval& operator+=(Tickval& oldtime, ticks ns)
 	{
-		oldtime._value += ns;
+		oldtime._value += std::chrono::duration_cast<duration>(std::chrono::nanoseconds(ns));
 		return oldtime;
 	}
 
@@ -422,9 +303,9 @@ public:
 	  \param oldtime Tickval to subtract from
 	  \param ns Tickval to subtract
 	  \return oldtime as Tickval */
-	friend Tickval& operator-=(Tickval& oldtime, const ticks& ns)
+	friend Tickval& operator-=(Tickval& oldtime, ticks ns)
 	{
-		oldtime._value -= ns;
+		oldtime._value -= std::chrono::duration_cast<duration>(std::chrono::nanoseconds(ns));
 		return oldtime;
 	}
 
@@ -435,7 +316,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Tickval& what)
 	{
 		std::string result;
-		return os << GetTimeAsStringMS(result, &what, 9);
+		return os << GetTimeAsStringMS(result, &what, 9, false);
 	}
 
 	/*! ostream inserter friend; Tickval printer, gmtime
@@ -446,15 +327,6 @@ public:
 	{
 		std::string result;
 		return os << GetTimeAsStringMS(result, &what, 9, true);
-	}
-
-private:
-	/*! Convert timespec to ticks.
-	  \param from timespec to convert
-	  \return resulting ticks */
-	static ticks _cvt(const timespec& from)
-	{
-		return billion * static_cast<ticks>(from.tv_sec) + static_cast<ticks>(from.tv_nsec);
 	}
 };
 

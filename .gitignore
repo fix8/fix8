@@ -101,6 +101,7 @@ utests/.libs
 /utests/utest_classes.cpp
 /include/fix8/f8config.h
 /include/fix8/stamp-h1
+<<<<<<< HEAD
 =======
 # common
 *~
@@ -182,3 +183,53 @@ ipch/*
 .pch
 
 >>>>>>> 1696c38831bbbfa711b913c2c3d13eadf75a321c
+=======
+/stocklib/FIX40_classes.cpp
+/stocklib/FIX40_classes.hpp
+/stocklib/FIX40_router.hpp
+/stocklib/FIX40_traits.cpp
+/stocklib/FIX40_types.cpp
+/stocklib/FIX40_types.hpp
+/stocklib/FIX41_classes.cpp
+/stocklib/FIX41_classes.hpp
+/stocklib/FIX41_router.hpp
+/stocklib/FIX41_traits.cpp
+/stocklib/FIX41_types.cpp
+/stocklib/FIX41_types.hpp
+/stocklib/FIX42_classes.cpp
+/stocklib/FIX42_classes.hpp
+/stocklib/FIX42_router.hpp
+/stocklib/FIX42_traits.cpp
+/stocklib/FIX42_types.cpp
+/stocklib/FIX42_types.hpp
+/stocklib/FIX43_classes.cpp
+/stocklib/FIX43_classes.hpp
+/stocklib/FIX43_router.hpp
+/stocklib/FIX43_traits.cpp
+/stocklib/FIX43_types.cpp
+/stocklib/FIX43_types.hpp
+/stocklib/FIX44_classes.cpp
+/stocklib/FIX44_classes.hpp
+/stocklib/FIX44_router.hpp
+/stocklib/FIX44_traits.cpp
+/stocklib/FIX44_types.cpp
+/stocklib/FIX44_types.hpp
+/stocklib/FIX50SP1_classes.cpp
+/stocklib/FIX50SP1_classes.hpp
+/stocklib/FIX50SP1_router.hpp
+/stocklib/FIX50SP1_traits.cpp
+/stocklib/FIX50SP1_types.cpp
+/stocklib/FIX50SP1_types.hpp
+/stocklib/FIX50SP2_classes.cpp
+/stocklib/FIX50SP2_classes.hpp
+/stocklib/FIX50SP2_router.hpp
+/stocklib/FIX50SP2_traits.cpp
+/stocklib/FIX50SP2_types.cpp
+/stocklib/FIX50SP2_types.hpp
+/stocklib/FIX50_classes.cpp
+/stocklib/FIX50_classes.hpp
+/stocklib/FIX50_router.hpp
+/stocklib/FIX50_traits.cpp
+/stocklib/FIX50_types.cpp
+/stocklib/FIX50_types.hpp
+>>>>>>> e7195b1af2c69ff7a2ec728e81a283a4d75c0ac3

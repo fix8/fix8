@@ -24,6 +24,7 @@ and framework; and a set of complete client/server test applications.
 1. [Support](#support)
 1. [Downloads](#downloads)
 1. [Getting help or reporting problems](#getting-help-or-reporting-problems)
+1. [Making a Pull Request](#making-a-pull-request)
 1. [License](#license)
 1. [Fix8Pro and Fix8 Market Technologies](#fix8pro-and-fix8-market-technologies)
 1. [More Information](#more-information)
@@ -298,6 +299,18 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 
 - If you are on [LinkedIn](http://linkedin.com) join the LinkedIn group **Fix8 Users and Developers**
 for more help and information about the Fix8 project.
+
+## Making a Pull Request
+If you want to submit a change to the repository, it needs to be made on the dev branch. The following instructions may help:
+
+1. Login to github
+1. Create a fork of fix8
+1. If you are using the command line git, clone your fork and choose the dev branch (git clone https://github.com/my_name/fix8.git -b dev)
+1. Make you changes to this branch
+1. Submit changes to your branch and push the branch to your fork
+1. Create a pull request at fix8:dev
+1. Wait for pull request is accepted to fix8:dev
+1. Update your fork with recent fix8:dev
 
 ## License
 
