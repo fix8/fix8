@@ -1,4 +1,5 @@
 #include "fix8sharedlib.h"
+#include <QApplication>
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
@@ -158,6 +159,10 @@ bool Fix8SharedLib::loadFix8so()
     qDebug() << "EVERYTHING OK " << __FILE__ << __LINE__;
     bstatus = true;
     ctxFunc   = reinterpret_cast<const F8MetaCntx& (*)()> (_handle);
+    if (!ctxFunc) {
+        qFatal("NO HANDLE TO ctxFunc");
+        qApp->exit(-1);
+    }
     int messageCount = ctxFunc()._bme.size();
     messageFieldList = new MessageFieldList();
     for(int ii=0;ii < messageCount; ii++) {
