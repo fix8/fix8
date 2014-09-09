@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_MYFIX_HPP_
-#define _FIX8_MYFIX_HPP_
+#ifndef FIX8_MYFIX_HPP_
+#define FIX8_MYFIX_HPP_
 
 //-----------------------------------------------------------------------------------------
 class myfix_session_client;
@@ -72,8 +72,8 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
-		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
+	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=nullptr,
+		FIX8::Logger *logger=nullptr, FIX8::Logger *plogger=nullptr) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
 
 	/*! Application message callback.
 	    This method is called by the framework when an application message has been received and decoded. You
@@ -82,6 +82,8 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
+
+	void state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after);
 };
 
 //-----------------------------------------------------------------------------------------
@@ -115,11 +117,12 @@ class myfix_session_server : public FIX8::Session
 public:
 	/*! Ctor. Acceptor.
 	    \param ctx reference to generated metadata
+	    \param sci sender comp id of hosting session
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0,
-		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, persist, logger, plogger),
+	myfix_session_server(const FIX8::F8MetaCntx& ctx, const FIX8::sender_comp_id& sci, FIX8::Persister *persist=nullptr,
+		FIX8::Logger *logger=nullptr, FIX8::Logger *plogger=nullptr) : Session(ctx, sci, persist, logger, plogger),
 		_router(*this) {}
 
 	/*! Application message callback. This method is called by the framework when an application message has been received and decoded.
@@ -128,6 +131,10 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
+
+	/*! example scheduler callback function
+	  	\return true if ok */
+	bool sample_scheduler_callback();
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -141,11 +148,11 @@ class MyMenu
 	/// Individual menu item.
 	struct MenuItem
 	{
-		const char _key;
+		const char _key = 0;
 		const std::string _help;
 
-		MenuItem(const char key, const std::string& help) : _key(key), _help(help) {}
-		MenuItem() : _key(), _help() {}
+		MenuItem(char key, const std::string help=std::string()) : _key(key), _help(help) {}
+		MenuItem() = default;
 		bool operator() (const MenuItem& a, const MenuItem& b) const { return a._key < b._key; }
 	};
 
@@ -153,42 +160,58 @@ class MyMenu
 	std::istream _istr;
 	std::ostream& _ostr;
 
-	typedef FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem> Handlers;
+	using Handlers = std::map<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 	static const Handlers _handlers;
-	static const Handlers::TypePair _valueTable[];
 
 public:
-	MyMenu(myfix_session_client& session, int infd, std::ostream& ostr, FIX8::ConsoleMenu *cm=0)
-		: _tty(infd), _cm(cm), _session(session), _istr(new FIX8::fdinbuf(infd)), _ostr(ostr) {}
+	MyMenu(FIX8::Session& session, int infd, std::ostream& ostr, FIX8::ConsoleMenu *cm=nullptr)
+		: _tty(infd), _cm(cm), _session(static_cast<myfix_session_client&>(session)),
+		_istr(new FIX8::fdinbuf(infd)), _ostr(ostr) {}
 	virtual ~MyMenu() {}
 
 	std::istream& get_istr() { return _istr; }
 	std::ostream& get_ostr() { return _ostr; }
-	bool process(const char ch) { return ch ? (this->*_handlers.find_ref(MenuItem(ch, std::string())))() : true; }
+	bool process(char ch)
+	{
+		auto itr(_handlers.find({ch}));
+		return itr == _handlers.end() ? true : (this->*itr->second)();
+	}
 
 	bool new_order_single();
 	bool new_order_single_50();
 	bool new_order_single_1000();
 	bool resend_request();
 	bool help();
-	bool nothing() { return true; }
 	bool do_exit() { return false; }
 	bool do_logout();
 	bool create_msgs();
+	bool version_info();
 	bool edit_msgs();
 	bool delete_msgs();
 	bool print_msgs();
 	bool send_msgs();
 	bool write_msgs();
 	bool read_msgs();
+	bool set_lpp();
+	bool static_probe();
+	bool new_order_single_alternate();
+	bool new_order_single_recycled();
 
 	bool load_msgs(const std::string& fname);
 	FIX8::Message *generate_new_order_single();
+	FIX8::Message *generate_new_order_single_alternate();
 	void send_lst();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
 
-	friend struct FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
+	FIX8::f8String& get_string(FIX8::f8String& to)
+	{
+		char buff[128] {};
+		_tty.unset_raw_mode();
+		_istr.getline(buff, sizeof(buff));
+		_tty.set_raw_mode();
+		return to = buff;
+	}
 };
 
 //-----------------------------------------------------------------------------------------
@@ -208,8 +231,12 @@ struct RandDev
 	template<typename T>
    static T getrandom(const T range=0)
    {
-		T target(random());
-		return range ? target / (RAND_MAX / range + 1) : target;
+#ifdef _MSC_VER
+       T target(rand());
+#else
+       T target(random());
+#endif
+       return range ? target / (RAND_MAX / range + 1) : target;
 	}
 };
 

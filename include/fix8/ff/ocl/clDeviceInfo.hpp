@@ -35,6 +35,10 @@
   Mehdi Goli: m.goli@rgu.ac.uk
   aldinuc: minor changes */
 
+#ifndef FF_CLDEVICEINFO_HPP
+#define FF_CLDEVICEINFO_HPP
+
+
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
 #else
@@ -68,3 +72,5 @@ struct CLDevice{
  * @}
  * \endlink
  */
+
+#endif /* FF_CLDEVICEINFO_HPP */

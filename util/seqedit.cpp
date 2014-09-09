@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -57,26 +57,10 @@ e.g.\n
 \n
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <algorithm>
-
-#include <regex.h>
-#include <errno.h>
-#include <string.h>
-#include <cctype>
-#include <fcntl.h>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
@@ -104,7 +88,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	const option long_options[] =
+	const option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "dump",		0,	0,	'd' },
@@ -226,7 +210,7 @@ int main(int argc, char **argv)
 		if (iprec._seq == 0)
 			continue;
 
-		char buff[MAX_MSG_LENGTH] = {};
+		char buff[MAX_MSG_LENGTH] {};
 
 		if (lseek(fds.fod, iprec._prec._offset, SEEK_SET) < 0)
 		{

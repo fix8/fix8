@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\test\Myfix_classes.cpp" />
+    <ClCompile Include="..\test\Myfix_traits.cpp" />
+    <ClCompile Include="..\test\Myfix_types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\test\Myfix_classes.hpp" />
+    <ClInclude Include="..\test\Myfix_router.hpp" />
+    <ClInclude Include="..\test\Myfix_types.hpp" />
+  </ItemGroup>
+</Project>

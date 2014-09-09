@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -35,38 +35,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-----------------------------------------------------------------------------------------
 // f8 headers
-#include <f8headers.hpp>
-#include <f8config.h>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
+#include "precomp.hpp"
+#include <fix8/f8config.h>
 
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>
 #endif
 
 #include <errno.h>
-#include <f8exception.hpp>
-#include <hypersleep.hpp>
-#include <mpmc.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <xml.hpp>
-#include <thread.hpp>
-#include <gzstream.hpp>
-#include <tickval.hpp>
-#include <logger.hpp>
-#include <traits.hpp>
-#include <timer.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <mockConnection.hpp>
-#include <session.hpp>
-#include <configuration.hpp>
-#include <persist.hpp>
-#include <sessionwrapper.hpp>
-
+#define F8MOCK_CONNECTION 1
+#include <fix8/f8includes.hpp>
 #include "utest_types.hpp"
 #include "utest_router.hpp"
 #include "utest_classes.hpp"
@@ -113,7 +91,7 @@ TEST(sessionId, sessionId)
 /// a test session
 class test_session : public FIX8::Session
 {
-    utest_Router  _router;
+    utest_Router _router;
 
 public:
 
@@ -122,7 +100,7 @@ public:
         FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger)
     {
         _timer.clear();
-        _timer.schedule(_hb_processor, 0);
+        _timer.stop();
         _timer.join();
     }
 
@@ -170,8 +148,8 @@ public:
         flag.set(Logger::direction, true);
 
         per = new MemoryPersister;
-        sLogger = new FileLogger("utest_slog.log", flag);
-        pLogger = new FileLogger("utest_plog.log", flag);
+        sLogger = new FileLogger( "utest_slog.log", flag, Logger::Levels( Logger::All ) );
+        pLogger = new FileLogger( "utest_plog.log", flag, Logger::Levels( Logger::All ) );
 #else
         f8String cmd("|/bin/cat");
         ebitset<Logger::Flags> flag;
@@ -183,8 +161,8 @@ public:
         flag.set(Logger::pipe, true);
 
         per = new MemoryPersister;
-        sLogger = new PipeLogger(cmd, flag);
-        pLogger = new PipeLogger(cmd, flag);
+        sLogger = new PipeLogger(cmd, flag, Logger::Levels(Logger::All));
+        pLogger = new PipeLogger(cmd, flag, Logger::Levels(Logger::All));
 #endif // _MSC_VER
 
         ss = new test_session(ctx(), id, per, sLogger, pLogger);

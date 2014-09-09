@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -33,8 +33,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _F8_EXCEPTION_HPP_
-# define _F8_EXCEPTION_HPP_
+#ifndef FIX8_EXCEPTION_HPP_
+#define FIX8_EXCEPTION_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <string>
@@ -142,10 +142,17 @@ struct InvalidDomainValue : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
-/// An invalid field was requested or decoded.
+/// An invalid field was requested or added
 struct InvalidField : f8Exception
 {
-	InvalidField(const unsigned field) { format("Invalid Field", field); }
+	InvalidField(const unsigned field) { format("Invalid Field Added", field); }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// An invalid field was decoded.
+struct UnknownField : f8Exception
+{
+	UnknownField(const unsigned field) { format("Unknown Field Decoded", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -176,6 +183,7 @@ struct InvalidBodyLength : f8Exception
 struct InvalidMessage : f8Exception
 {
 	InvalidMessage(const std::string& str) { format("Invalid FIX Message", str); }
+	InvalidMessage(const std::string& str, const char *str1) { format("Invalid FIX Message", str, " at", str1); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -183,6 +191,7 @@ struct InvalidMessage : f8Exception
 struct IllegalMessage : f8Exception
 {
 	IllegalMessage(const std::string& str) { format("Illegal FIX Message", str); }
+	IllegalMessage(const std::string& str, const char *str1) { format("Illegal FIX Message", str, " at", str1); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -211,6 +220,8 @@ struct BadCompidId : f8Exception
 struct InvalidRepeatingGroup : f8Exception
 {
 	InvalidRepeatingGroup(const unsigned field) { format("Invalid Repeating Group", field); }
+	InvalidRepeatingGroup(const unsigned field, const char *str)
+		{ format("Invalid Repeating Group", field, " in", str); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -244,9 +255,9 @@ struct BadCheckSum : f8Exception
 
 //-------------------------------------------------------------------------------------------------
 /// A pthread attribute error occured.
-struct dthreadException : f8Exception
+struct f8_threadException : f8Exception
 {
-	dthreadException(const std::string& reason) { format("Thread error", reason); }
+	f8_threadException(const std::string& reason) { format("Thread error", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -260,7 +271,15 @@ struct PeerResetConnection : f8Exception
 /// An invalid configuration parameter was passed.
 struct InvalidConfiguration : f8Exception
 {
-	InvalidConfiguration(const std::string& str) { format("Invalid configuration setting in", str); }
+	InvalidConfiguration(const std::string& str) { format("Invalid configuration setting in", str.empty() ? "unknown" : str); }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// An bad or missing configuration parameter.
+struct ConfigurationError : f8Exception
+{
+	ConfigurationError(const std::string& str) { format("Configuration error", str); }
+	ConfigurationError(const std::string& str, const std::string& str1) { format(str, str1); }
 };
 
 //-------------------------------------------------------------------------------------------------

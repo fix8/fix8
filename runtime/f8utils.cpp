@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,43 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <sys/types.h>
-#ifndef _MSC_VER
-#include <sys/time.h>
-#endif
-#include <sys/stat.h>
-#include <time.h>
-#include <errno.h>
-#ifndef _MSC_VER
-#include <netdb.h>
-#endif
-#include <cstdlib>
-#include <signal.h>
-#ifndef _MSC_VER
-#include <syslog.h>
-#include <strings.h>
-#endif
-#include <string.h>
-#include <fcntl.h>
-#include <time.h>
-#ifndef _MSC_VER
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#endif
-#ifndef _MSC_VER
-#include <alloca.h>
-#endif
-#include <map>
-#include <set>
-#include <list>
-#include <vector>
-#include <algorithm>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
@@ -84,7 +48,7 @@ using namespace std;
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigned dplaces)
+const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigned dplaces, bool use_gm)
 {
    const Tickval *startTime;
    Tickval gotTime;
@@ -97,16 +61,16 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    }
 
 #ifdef _MSC_VER
-   struct tm *ptim;
    time_t tval(startTime->secs());
-   ptim = localtime (&tval);
+   struct tm *ptim(use_gm ? gmtime(&tval) : localtime (&tval));
 #else
    struct tm tim, *ptim;
    time_t tval(startTime->secs());
-   localtime_r(&tval, &tim);
+   use_gm ? gmtime_r(&tval, &tim) : localtime_r(&tval, &tim);
    ptim = &tim;
 #endif
 
+	// 2014-07-02 23:15:51.514776595
    ostringstream oss;
    oss << setfill('0') << setw(4) << (ptim->tm_year + 1900) << '-';
    oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
@@ -123,7 +87,38 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
    return result = oss.str();
 }
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+const string& GetTimeAsStringMini(string& result, const Tickval *tv)
+{
+   const Tickval *startTime;
+   Tickval gotTime;
+   if (tv)
+      startTime = tv;
+   else
+   {
+		gotTime.now();
+      startTime = &gotTime;
+   }
+
+#ifdef _MSC_VER
+   time_t tval(startTime->secs());
+   struct tm *ptim(localtime (&tval));
+#else
+   struct tm tim, *ptim;
+   time_t tval(startTime->secs());
+   localtime_r(&tval, &tim);
+   ptim = &tim;
+#endif
+
+// 14-07-02 23:15:51
+   ostringstream oss;
+   oss << setfill('0') << setw(2) << ((ptim->tm_year + 1900) % 100) << '-';
+   oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
+   oss << ':' << setw(2) << ptim->tm_min << ':' << setfill('0') << setw(2) << ptim->tm_sec;
+   return result = oss.str();
+}
+
+//-------------------------------------------------------------------------------------------------
 string& CheckAddTrailingSlash(string& src)
 {
 	if (!src.empty() && *src.rbegin() != '/')
@@ -134,9 +129,10 @@ string& CheckAddTrailingSlash(string& src)
 //-----------------------------------------------------------------------------------------
 string& InPlaceStrToUpper(string& src)
 {
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (islower(*itr))
-			*itr = toupper(*itr);
+	//for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
+	for (auto& itr : src)
+		if (islower(itr))
+			itr = toupper(itr);
 	return src;
 }
 
@@ -152,19 +148,26 @@ string& InPlaceReplaceInSet(const string& iset, string& src, const char repl)
 //-----------------------------------------------------------------------------------------
 string& InPlaceStrToLower(string& src)
 {
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (isupper(*itr))
-			*itr = tolower(*itr);
+	for (auto& itr : src)
+		if (isupper(itr))
+			itr = tolower(itr);
 	return src;
+}
+
+//-----------------------------------------------------------------------------------------
+string StrToLower(const string& src)
+{
+	string result(src);
+	return InPlaceStrToLower(result);
 }
 
 //----------------------------------------------------------------------------------------
 string Str_error(const int err, const char *str)
 {
 	const size_t max_str(256);
-	char buf[max_str] = {};
+	char buf[max_str] {};
 #ifdef _MSC_VER
-    ignore_value(strerror_s(buf, max_str - 1, err));
+	ignore_value(strerror_s(buf, max_str - 1, err));
 #else
 	ignore_value(strerror_r(err, buf, max_str - 1));
 #endif
@@ -178,12 +181,126 @@ string Str_error(const int err, const char *str)
 }
 
 //----------------------------------------------------------------------------------------
-const string& trim(string& source, const string& ws)
+int get_umask()
 {
-    const size_t bgstr(source.find_first_not_of(ws));
-    return bgstr == string::npos
-		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+#ifdef _MSC_VER
+	const int mask(_umask(0));
+	_umask(mask);
+#else
+	const int mask(umask(0));
+	umask(mask);
+#endif
+	return mask;
 }
+
+//----------------------------------------------------------------------------------------
+void create_path(const string& path)
+{
+	string new_path;
+	for(string::const_iterator pos(path.begin()); pos != path.end(); ++pos)
+	{
+		new_path += *pos;
+		if(*pos == '/' || *pos == '\\' || pos + 1 == path.end())
+		{
+#ifdef _MSC_VER
+			_mkdir(new_path.c_str());
+#else
+			mkdir(new_path.c_str(), 0777); // umask applied after
+#endif
+		}
+	}
+}
+
+//----------------------------------------------------------------------------------------
+namespace
+{
+	using Day = pair<char, int>;
+	using Daymap = multimap<char, int>;
+	static const string day_names[] { "su", "mo", "tu", "we", "th", "fr", "sa" };
+	static const Day days[] { {'s',0}, {'m',1}, {'t',2}, {'w',3}, {'t',4}, {'f',5}, {'s', 6} };
+	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
+};
+
+int decode_dow (const string& from)
+{
+	if (from.empty())
+		return -1;
+	const string source(StrToLower(from));
+	if (isdigit(source[0]) && source.size() == 1 && source[0] >= '0' && source[0] <= '6')	// accept numeric dow
+		return source[0] - '0';
+	pair<Daymap::const_iterator, Daymap::const_iterator> result(daymap.equal_range(source[0]));
+	switch(distance(result.first, result.second))
+	{
+	case 1:
+		return result.first->second;
+	default:
+		if (source.size() == 1) // drop through
+	case 0:
+			return -1;
+		break;
+	}
+	return day_names[result.first->second][1] == source[1]
+		 || day_names[(++result.first)->second][1] == source[1] ? result.first->second : -1;
+}
+
+//----------------------------------------------------------------------------------------
+const Package_info& package_info()
+{
+   //ostr << "Package info for " PACKAGE " version " VERSION;
+	static const Package_info pinfo
+	{
+		{ "VERSION", VERSION },
+		{ "PACKAGE", PACKAGE },
+		{ "PACKAGE_BUGREPORT", PACKAGE_BUGREPORT },
+		{ "PACKAGE_URL", PACKAGE_URL },
+		{ "MAGIC_NUM", STRINGIFY(MAGIC_NUM) },
+		{ "CONFIGURE_OPTIONS", CONFIGURE_OPTIONS },
+		{ "CPPFLAGS", CPPFLAGS },
+		{ "LIBS", LIBS },
+		{ "LDFLAGS", LDFLAGS },
+		{ "CONFIGURE_SDATE", CONFIGURE_SDATE },
+		{ "CONFIGURE_TIME", CONFIGURE_TIME },
+		{ "MAJOR_VERSION_NUM", STRINGIFY(MAJOR_VERSION_NUM) },
+		{ "MINOR_VERSION_NUM", STRINGIFY(MINOR_VERSION_NUM) },
+		{ "PATCH_VERSION_NUM", STRINGIFY(PATCH_VERSION_NUM) },
+		{ "CONFIGURE_TIME_NUM", STRINGIFY(CONFIGURE_TIME_NUM) },
+		{ "HOST_SYSTEM", HOST_SYSTEM },
+		{ "MAX_FLD_LENGTH", STRINGIFY(MAX_FLD_LENGTH) },
+		{ "MAX_MSG_LENGTH", STRINGIFY(MAX_MSG_LENGTH) },
+		{ "MPMC_FF", STRINGIFY(MPMC_FF) },
+		{ "MPMC_TBB", STRINGIFY(MPMC_TBB) },
+		{ "MPMC_SYSTEM", STRINGIFY(MPMC_SYSTEM) },
+		{ "DEFAULT_PRECISION", STRINGIFY(DEFAULT_PRECISION) },
+		{ "THREAD_PTHREAD", STRINGIFY(THREAD_PTHREAD) },
+		{ "THREAD_STDTHREAD", STRINGIFY(THREAD_STDTHREAD) },
+		{ "THREAD_SYSTEM", STRINGIFY(THREAD_SYSTEM) },
+#if defined SLEEP_NO_YIELD
+		{ "SLEEP_NO_YIELD", STRINGIFY(SLEEP_NO_YIELD) },
+#endif
+#if defined CODECTIMING
+		{ "CODECTIMING", STRINGIFY(CODECTIMING) },
+#endif
+#if defined HAVE_OPENSSL
+		{ "HAVE_OPENSSL", STRINGIFY(HAVE_OPENSSL) },
+#endif
+#if defined HAVE_EXTENDED_METADATA
+		{ "HAVE_EXTENDED_METADATA", STRINGIFY(HAVE_EXTENDED_METADATA) },
+#endif
+#if defined F8_DEBUG
+		{ "F8_DEBUG", STRINGIFY(F8_DEBUG) },
+#endif
+	};
+
+	return pinfo;
+}
+
+f8String find_package_info_string(const f8String& what)
+{
+	auto itr(package_info().find(what));
+	return itr != package_info().cend() ? itr->second : f8String{};
+}
+
+//----------------------------------------------------------------------------------------
 
 } // namespace FIX8
 

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -108,7 +108,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <termios.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -119,7 +118,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 #include "Perf_types.hpp"
 #include "Perf_router.hpp"
 #include "Perf_classes.hpp"
@@ -136,19 +135,17 @@ bool term_received(false);
 unsigned batch_size(1000), preload_count(0), update_count(5000);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers MyMenu::_handlers
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('b', "Batch preload and send n NewOrderSingle msgs"), &MyMenu::batch_preload_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "Send n NewOrderSingle msgs"), &MyMenu::multi_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'n', "Send a NewOrderSingle msg" }, &MyMenu::new_order_single },
+	{ { 'p', "Preload n NewOrderSingle msgs" }, &MyMenu::preload_new_order_single },
+	{ { 'b', "Batch preload and send n NewOrderSingle msgs" }, &MyMenu::batch_preload_new_order_single },
+	{ { 'N', "Send n NewOrderSingle msgs" }, &MyMenu::multi_new_order_single },
+	{ { 'a', "Send all Preloaded NewOrderSingle msgs" }, &MyMenu::send_all_preloaded },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(true);
 
@@ -180,7 +177,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
@@ -240,8 +237,7 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			FIX8::ServerSession<hf_session_server>::Server_ptr
-				ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
+			unique_ptr<FIX8::ServerSessionBase> ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
 
 			XmlElement::XmlSet eset;
 
@@ -249,8 +245,7 @@ int main(int argc, char **argv)
 			{
 				if (!ms->poll())
 					continue;
-				FIX8::SessionInstance<hf_session_server>::Instance_ptr
-					inst(new FIX8::SessionInstance<hf_session_server>(*ms));
+				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= FIX8::Session::print;
 				ostringstream sostr;
@@ -275,7 +270,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			FIX8::scoped_ptr<FIX8::ClientSession<hf_session_client> >
+			unique_ptr<FIX8::ClientSessionBase>
 				mc(reliable ? new FIX8::ReliableClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1")
 							   : new FIX8::ClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
@@ -288,6 +283,7 @@ int main(int argc, char **argv)
 				mc->start(false, next_send, next_receive);
 
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			cout << endl << "Menu started. Press '?' for help..." << endl << endl;
 			if (mc->session_ptr()->get_connection()->is_secure())
 				cout << "Session is secure (SSL)" << endl;
 			if (preload_count)
@@ -298,7 +294,7 @@ int main(int argc, char **argv)
 			{
 				cout << "Coroutine mode." << endl;
 				fd_set rfds;
-				timeval tv = { 0, 0 };
+				timeval tv {};
 
 				while (!term_received)
 				{
@@ -380,9 +376,6 @@ bool MyMenu::batch_preload_new_order_single()
 			oistr << "ord" << ++oid << '-' << num;
 
 			FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
-			FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
-			prc->set_precision(3);
-
 			*ptr << new FIX8::TEX::Symbol("BHP")
 				  << new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
 				  << new FIX8::TEX::OrdType(FIX8::TEX::OrdType_LIMIT)
@@ -390,9 +383,12 @@ bool MyMenu::batch_preload_new_order_single()
 				  << new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
 				  << new FIX8::TEX::TransactTime
 				  << new FIX8::TEX::ClOrdID(oistr.str())
-				  << prc
+				  << new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3)
 				  << new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
 
+#if defined PREENCODE_MSG_SUPPORT
+			ptr->preencode();
+#endif
 			_session.push(ptr);
 		}
 		cout << _session.cached() << " NewOrderSingle msgs preloaded." << endl;
@@ -494,7 +490,9 @@ bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::preload_new_order_single()
 {
-	cout << endl << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
+	cout << endl;
+	if (_session.size())
+		cout << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
 	unsigned num(preload_count);
 	if (!num)
 	{
@@ -513,8 +511,6 @@ bool MyMenu::preload_new_order_single()
 		oistr << "ord" << ++oid << '-' << num;
 
 		FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
-		FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
-		prc->set_precision(3);
 
 		*ptr  << new FIX8::TEX::Symbol("BHP")
 				<< new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
@@ -522,10 +518,12 @@ bool MyMenu::preload_new_order_single()
 				<< new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
 				<< new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
 				<< new FIX8::TEX::TransactTime
-				<< prc
+				<< new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3) // precision=3
 				<< new FIX8::TEX::ClOrdID(oistr.str())
 				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
-
+#if defined PREENCODE_MSG_SUPPORT
+		ptr->preencode(); // pre-encode message payload (not header or trailer)
+#endif
 		_session.push(ptr);
 	}
 
@@ -540,8 +538,8 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
 	return true;
 }
@@ -584,7 +582,7 @@ bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Me
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
+bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 {
 	static unsigned oid(0), eoid(0);
 	FIX8::TEX::OrderQty qty;
@@ -654,7 +652,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg) const
+bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg)
 {
 	static int exrecv(0);
 	if (++exrecv % update_count == 0)

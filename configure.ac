@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 AC_PREREQ(2.61)
@@ -13,7 +13,7 @@ AH_TOP([//----------------------------------------------------------------------
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
 Lesser General Public License as  published by the Free Software Foundation, either version
@@ -58,13 +58,23 @@ MINOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}']
 AC_DEFINE_UNQUOTED([MINOR_VERSION_NUM], [$MINOR_VERSION_NUM], [Minor version number])
 PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$3}']`
 AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
-AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
+# MAGIC_NUM=`[echo $MAJOR_VERSION_NUM $MINOR_VERSION_NUM $PATCH_VERSION_NUM | awk '{printf "%d",or(or(lshift($1,24),lshift($2,12)),$3)}']`
+MAGIC_NUM=$((1 << 24 | 3 << 12 | 0))
+
+AC_DEFINE_UNQUOTED([MAGIC_NUM], [$MAGIC_NUM], [Encode version])
+AC_DEFINE_UNQUOTED([MAGIC_NUM_EXPR], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version as expresion])
+
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
+
+AC_SUBST(libfix8_la_version_info, $MAJOR_VERSION_NUM:$MINOR_VERSION_NUM:0)
 
 BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
 BRAND_COMPANY_SHORTNAME='fix8'
 BRAND_COMPANY_LONGNAME='fix8 by David L. Dight'
+
+# Check for C++11
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
 # Checks for programs.
 LT_INIT
@@ -116,19 +126,20 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # check what version of gcc we're using
 
-# test for gcc >= 4.7
-is_late_gcc=no
+# compiler specific settings
 case "$CXX" in
+  *clang*)
+		LIBS="$LIBS -lstdc++ -lm " ;;
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
-		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-		if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
-			is_late_gcc=yes
-		fi ;;
-	*clang*)
-		LIBS="$LIBS -lstdc++ -lm " ;;
+		gcc_minor=`echo $GCC_VERSION | cut -d. -f2` ;;
+	*) ;;
 esac
+
+m4_include(m4/ax_check_compile_flag.m4)
+has_assignmentvars=no
+AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
 
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
@@ -139,8 +150,8 @@ AC_ARG_ENABLE([toggleassignmentvars],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-toggleassignmentvars) ;;
 esac])
 
-# use -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
+# use -fvar-tracking-assignments
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$has_assignmentvars = xyes && test x$oktotogglevar = xyes])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
@@ -153,9 +164,8 @@ AC_ARG_ENABLE([doxygen],
 	no)  oktodox=no;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
 esac])
-
-AM_CONDITIONAL([USEDOXYGEN],
-	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+AM_CONDITIONAL([USEDOXYGEN], [test -n "$DOXYGEN" && test $oktodox = yes])
+AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
 DOXYGEN_WARNINGS=YES
 AC_ARG_ENABLE([doxygen-warnings],
@@ -265,11 +275,11 @@ AC_ARG_WITH(maxfldlen,
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
-AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default precision for floating point fields])
-AC_ARG_WITH(precision,
-  AS_HELP_STRING([--with-precision=VALUE],[Default precision for floating point fields (default=2)]),
+AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default number of precision digits for floating point fields])
+AC_ARG_WITH(precision-digits,
+  AS_HELP_STRING([--with-precision-digits=VALUE],[Default number of precision digits for floating point fields (default=2)]),
 [
-	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default precision for floating point fields (default=2)])
+	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default number of precision digits for floating point fields (default=2)])
 ],[])
 
 AC_ARG_WITH(tbb,
@@ -314,6 +324,22 @@ AC_ARG_WITH(gperf,
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
+AC_MSG_CHECKING(for precision)
+using_double_precision=yes
+AC_ARG_WITH([precision],
+[AS_HELP_STRING([--with-precision=VAL],[select whether to use single or double precision (single|double, default=double)])],
+[case "${withval}" in
+   single) using_double_precision=no
+			  AC_MSG_RESULT(single)
+			  AC_DEFINE(USE_SINGLE_PRECISION, 1, [Define to 1 if using float precision]) ;;
+   double) AC_MSG_RESULT(double)
+			  using_double_precision=yes ;;
+   *) echo
+      echo "ERROR: Unknown value ${withval} for precision given."
+      echo
+      exit 1
+esac])
+
 mpmc_set=no
 using_ff=no
 AC_ARG_WITH([mpmc],
@@ -354,12 +380,20 @@ AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
 AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
 AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
 
+AC_DEFINE(MALLOC_TBB, 1, [TBB malloc])
+AC_DEFINE(MALLOC_TCMALLOC, 2, [tcmalloc])
+AC_DEFINE(MALLOC_STD, 3, [std malloc])
+AC_DEFINE(MALLOC_SYSTEM, MALLOC_STD, [malloc system to use])
+
 if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
 	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TBB, [malloc system to use])
 else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc_minimal"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
 else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
 fi
 fi
 fi
@@ -402,10 +436,23 @@ AC_MSG_CHECKING(for Poco)
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
+
+#Check for OSX
+AC_MSG_CHECKING([for OSX/Darwin])
+have_osx=no
+case `uname -s` in
+	Darwin) LIBTOOLIZE=glibtoolize
+				have_osx=yes;;
+	*) LIBTOOLIZE=libtoolize;;
+esac
+AC_MSG_RESULT([$have_osx])
+
+AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
+
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],
-[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=regex)])],
 [case "${withval}" in
 	regex) AC_MSG_CHECKING(for regex)
 				AC_TRY_COMPILE([
@@ -432,9 +479,45 @@ esac])
 
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
-if test "$regex_set" = no; then
-	using_poco_regex=yes
-	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+if test "$using_poco_regex" = yes; then
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
+else
+	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+fi
+
+thread_set=no
+using_std_thread=no
+AC_ARG_WITH([thread],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|stdthread, default=pthread)])],
+[case "${withval}" in
+	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
+				;;
+	stdthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				using_std_thread=yes
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_STDTHREAD, [std::thread system used])
+				;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for REGEX given."
+		echo
+		exit 1
+esac])
+
+AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
+AC_DEFINE(THREAD_STDTHREAD, 4, [std::thread thread system])
+if test "$thread_set" = no; then
+	using_std_thread=no
+	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread used for threading])
 fi
 
 oktogtest=yes
@@ -459,20 +542,6 @@ AC_MSG_CHECKING(for gtest)
     fi
 AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes && test "$oktogtest" = yes])
 
-
-AC_MSG_CHECKING(for tr1/unordered_map)
-	AC_TRY_COMPILE([
-	#include <tr1/unordered_map>
-	#include <string>
-		],[std::tr1::unordered_map<std::string, std::string> uom; uom["blah"]="blather";],
-		have_tr1_unordered_map=yes, have_tr1_unordered_map=no)
-	if test "$have_tr1_unordered_map" = yes; then
-	    AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAS_TR1_UNORDERED_MAP, 1, [Define to 1 if TR1 hashmaps are available])
-	else
-	    AC_MSG_RESULT(no)
-	fi
-
 AC_CHECK_LIB(crypt, crypt, [
 	AC_CHECK_HEADERS([crypt.h],
 	[
@@ -496,6 +565,60 @@ esac])
 
 AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
 
+oktoextendmetadata=no
+AC_ARG_ENABLE([extended-metadata],
+[AS_HELP_STRING([--enable-extended-metadata],[enable extended metadata generation and support (default=no)])],
+[case "${enableval}" in
+	yes)	oktoextendmetadata=yes
+			AC_DEFINE(HAVE_EXTENDED_METADATA, 1, [Define to 1 if you have extended Fix8 metadata enabled]);;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-extended-metadata) ;;
+esac])
+
+AM_CONDITIONAL(F8TESTSTATIC, [test x$oktof8test = xyes && test x$oktoextendmetadata = xyes])
+
+oktomemcached=no
+AC_ARG_ENABLE([libmemcached],
+[AS_HELP_STRING([--enable-libmemcached],[enable memcached C API support via libmemcached (default=no)])],
+[case "${enableval}" in
+	yes) oktomemcached=yes
+			AC_MSG_CHECKING(for libmemcached)
+			AC_TRY_COMPILE([
+					#include <libmemcached/memcached.h>
+				],,
+				have_libmemcached=yes,have_libmemcached=no)
+		 if test "$have_libmemcached" = yes && test "$oktomemcached" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBMEMCACHED, 1, [Define to 1 if you have libmemcached])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libmemcached) ;;
+esac])
+AM_CONDITIONAL(LIBMEMCACHEDSUPPORT, [test x$oktomemcached = xyes])
+
+oktohiredis=no
+AC_ARG_ENABLE([libhiredis],
+[AS_HELP_STRING([--enable-libhiredis],[enable redis C API support via libhiredis (default=no)])],
+[case "${enableval}" in
+	yes) oktohiredis=yes
+			AC_MSG_CHECKING(for libhiredis)
+			AC_TRY_COMPILE([
+					#include <hiredis/hiredis.h>
+				],,
+				have_libhiredis=yes,have_libhiredis=no)
+		 if test "$have_libhiredis" = yes && test "$oktohiredis" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBHIREDIS, 1, [Define to 1 if you have libhiredis])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libhiredis) ;;
+esac])
+AM_CONDITIONAL(LIBHIREDISSUPPORT, [test x$oktohiredis = xyes])
+
 oktobdb=no
 AC_ARG_ENABLE([bdb],
 [AS_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
@@ -506,8 +629,28 @@ AC_ARG_ENABLE([bdb],
 	no) ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
 esac])
-
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
+
+oktozeromq=no
+AC_ARG_ENABLE([zeromq],
+[AS_HELP_STRING([--enable-zeromq],[enable zeromq messagebus support (default=no)])],
+[case "${enableval}" in
+	yes) oktozeromq=yes
+			AC_MSG_CHECKING(for zeromq)
+			AC_TRY_COMPILE([
+					#include <zmq.hpp>
+				],,
+				have_zeromq=yes,have_zeromq=no)
+		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAS_ZEROMQ_MBUS, 1, [Define to 1 if you have zeromq])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-zeromq) ;;
+esac])
+AM_CONDITIONAL(ZEROMQSUPPORT, [test x$oktozeromq = xyes])
 
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
@@ -552,6 +695,22 @@ AC_ARG_ENABLE([xmlstrictbool],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
 esac])
 
+AC_ARG_ENABLE([rawmsgsupport],
+[AS_HELP_STRING([--enable-rawmsgsupport],[enable raw FIX message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(RAW_MSG_SUPPORT, 1, [Define to 1 if you wish to enable raw FIX message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rawmsgsupport) ;;
+esac])
+
+AC_ARG_ENABLE([preencode],
+[AS_HELP_STRING([--enable-preencode],[enable pre-encode (prepare) message support (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(PREENCODE_MSG_SUPPORT, 1, [Define to 1 if you wish to pre-encode (prepare) message support]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-preencode) ;;
+esac])
+
 AC_ARG_ENABLE([bufgloblogging],
 [AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
 [case "${enableval}" in
@@ -592,9 +751,9 @@ AC_ARG_ENABLE([codectiming],
 esac])
 
 AC_ARG_ENABLE([debug],
-[AS_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
+[AS_HELP_STRING([--enable-debug],[enable DEBUG support (F8_DEBUG) (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging extensions]) ;;
+	yes) AC_DEFINE(F8_DEBUG, 1, [Define to 1 for debugging support]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
 esac])
@@ -649,6 +808,14 @@ if test "$openssl" = yes; then
 fi
 AM_CONDITIONAL(USESSL, [test x$have_openssl = xyes])
 
+AC_ARG_ENABLE([experimental-buffered-socket-read],
+[AS_HELP_STRING([--enable-experimental-buffered-socket-read],[enable experimental buffered socket read (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(EXPERIMENTAL_BUFFERED_SOCKET_READ, 1, [Define to 1 to enable experimental socket read]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --experimental-buffered-socket-read) ;;
+esac])
+
 AC_MSG_CHECKING(checking for /var/run/)
 if test -d /var/run; then
 	AC_DEFINE(HAVE_VAR_RUN, 1, [Define to 1 if you have /var/run])
@@ -660,7 +827,7 @@ else
 fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
-CONFIGURE_SDATE=`date +%d/%m/%Y`
+CONFIGURE_SDATE=`date +%Y/%m/%d`
 BUILD_NUMBER_DATE=`date +%d%m%y`
 
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])
@@ -704,7 +871,7 @@ AC_SUBST_FILE([CHANGELOG])
 CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
-						fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
+						stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
 AC_CONFIG_HEADERS(include/fix8/f8config.h)
 AC_OUTPUT
 

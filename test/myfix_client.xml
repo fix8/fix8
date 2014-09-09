@@ -1,12 +1,8 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <fix8>
-	<session name="DLD1"
-				role="initiator"
+	<default role="initiator"
 				fix_version="1100"
-				active="true"
-				ip="127.0.0.1" port="11001"
-				sender_comp_id="DLD_TEX"
-				target_comp_id="TEX_DLD"
+				ip="127.0.0.1"
 				session_log="session_log_file"
 				protocol_log="protocol_log_file"
 				login_retry_interval="3000"
@@ -18,8 +14,23 @@
 				always_seqnum_assign="false"
 				/* server_group="FO_Group0" if present means use failover */
 				process_model="threaded"
+				enforce_compids="false"
 				login_retries="5"
+				tabsize="3"
 				persist="file0" />
+
+	<session name="DLD1"
+				sender_comp_id="DLD_TEX"
+				target_comp_id="TEX1_DLD"
+				port="11001"
+				noport="1001"
+				active="true" />
+
+	<session name="DLD2"
+				sender_comp_id="DLD2_TEX"
+				target_comp_id="TEX2_DLD2"
+				port="11002"
+				active="true" />
 
 	<persist name="file0"
             type="file" dir="./run"
@@ -44,7 +55,8 @@
 				type="session"
 				filename="./run/myfix_client_session.log"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				levels="debug|info|warn|error|fatal"
+				flags="sequence|timestamp|sstart|thread|location|level"/>
 
 	<log 		name="session_log_udp"
 				type="session"
@@ -71,10 +83,11 @@
 
 	<log 		name="protocol_log_file"
 				type="protocol"
+				levels="debug|info|warn|error|fatal"
 				filename="./run/myfix_client_protocol.log"
 				rotation="5"
-				flags_old="append|inbound"
-				flags="append|inbound|outbound|direction|sequence"/>
+				flags_old="append|inbound|outbound|direction|sequence"
+				flags="append|inbound|outbound"/>
 
 	<server_group name="FO_Group0">
 		<server name="Host_01" ip="192.168.1.121" port="12345" max_retries="3"/>

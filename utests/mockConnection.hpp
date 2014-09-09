@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -39,8 +39,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 mockConnection.hpp and mockConnection.cpp are used to supply a mock connection object for unit tests
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONNECTION_HPP_
-#define _FIX8_CONNECTION_HPP_
+#ifndef FIX8_CONNECTION_HPP_
+#define FIX8_CONNECTION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Timespan.h>
@@ -163,7 +163,7 @@ public:
           \return return the message length*/
     int send(const f8String& msg)
     {
-        return msg.length();
+        return static_cast<int>(msg.length());
     }
 
     ///empty function
@@ -273,7 +273,7 @@ public:
     int send(const f8String& from)
     {
         _output.push_back(from);
-        return from.length();
+        return static_cast<int>(from.length());
     }
 
     /*!helper to unit test, cache the message in string format
@@ -283,7 +283,7 @@ public:
     int send(const char *from, size_t sz)
     {
         _output.push_back(f8String(from, sz));
-        return sz;
+        return static_cast<int>(sz);
     }
 
     /*! Set the heartbeat interval for this connection.
@@ -323,9 +323,7 @@ public:
     {
         const unsigned current_sz(sock->getReceiveBufferSize());
         sock->setReceiveBufferSize(sz);
-        std::ostringstream ostr;
-        ostr << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
-        GlobalLogger::log(ostr.str());
+        glout_info << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
     }
 
     /*! Set the socket send buffer sz
@@ -336,9 +334,7 @@ public:
     {
         const unsigned current_sz(sock->getSendBufferSize());
         sock->setSendBufferSize(sz);
-        std::ostringstream ostr;
-        ostr << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
-        GlobalLogger::log(ostr.str());
+        glout_info << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
     }
 
     /// empty function

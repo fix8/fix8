@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,21 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <algorithm>
-
-#include <errno.h>
-#include <string.h>
-#include <cctype>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
 #include <f8c.hpp>
@@ -65,16 +51,16 @@ extern unsigned glob_errors;
 extern string shortName;
 
 //-----------------------------------------------------------------------------------------
-void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon=string(), bool required=false);
-void output_attributes(const XmlElement& xf, ostream& outf, bool required=false);
-void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf, bool required=false);
+void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon=string(), bool required=true);
+void output_attributes(const XmlElement& xf, ostream& outf, bool required=true);
+void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf, bool required=true);
 void process_group(const XmlElement& xf, const Components& components, const int depth,
-	ostream& outf, const string& compon=string(), bool required=false);
+	ostream& outf, const string& compon=string(), bool required=true);
 void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth,
-	ostream& outf, bool required=false);
+	ostream& outf, bool required=true);
 void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth,
-	ostream& outf, const string& compon=string(), bool required=false);
-void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf, bool required=false);
+	ostream& outf, const string& compon=string(), bool required=true);
+void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf, bool required=true);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 void dump_components(const Components& components, ostream& outf);
 int precomp(XmlElement& xf, ostream& outf);
@@ -109,8 +95,8 @@ int precomp(XmlElement& xf, ostream& outf)
 		process_messages(*trailer, components, "trailer", 0, outf);
 
 	outf << string(depth * 2, ' ') << "<messages>" << endl;
-	for(XmlElement::XmlSet::const_iterator itr(msglist.begin()); itr != msglist.end(); ++itr)
-		process_messages(**itr, components, "message", depth, outf);
+	for(auto const *pp : msglist)
+		process_messages(*pp, components, "message", depth, outf);
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
 	process_fields(fldlist, depth, outf);
@@ -155,16 +141,16 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 
 	XmlElement::XmlSet msglist;
 	xft.find("fix/messages/message", msglist);
-	for(XmlElement::XmlSet::const_iterator itr(msglist.begin()); itr != msglist.end(); ++itr)
-		process_messages(**itr, componentsfixt, "message", depth, outf);
+	for(auto const *pp : msglist)
+		process_messages(*pp, componentsfixt, "message", depth, outf);
 
 	msglist.clear();
 	xf.find("fix/messages/message", msglist);
-	for(XmlElement::XmlSet::const_iterator itr(msglist.begin()); itr != msglist.end(); ++itr)
-		process_messages(**itr, components, "message", depth, outf);
+	for(auto const *pp : msglist)
+		process_messages(*pp, components, "message", depth, outf);
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
-	process_fields(fldlist, depth, outf, false);
+	process_fields(fldlist, depth, outf);
 
 	dump_components(components, outf);
 
@@ -176,30 +162,30 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 //-----------------------------------------------------------------------------------------
 void filter_unique(XmlElement::XmlSet& fldlist)
 {
-	typedef map<string, const XmlElement *> UniqueFieldMap;
+	using UniqueFieldMap = map<string, const XmlElement *>;
 	UniqueFieldMap ufm;
 	unsigned dupls(0);
-	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)
+	for(const auto *pp : fldlist)
 	{
 		string name;
-		(*itr)->GetAttr("name", name);
-		if (!ufm.insert(UniqueFieldMap::value_type(name, *itr)).second)
+		pp->GetAttr("name", name);
+		if (!ufm.insert({name, pp}).second)
 			++dupls; // cerr << "Duplicate field: " << name << endl;
 	}
 
 	fldlist.clear();
-	for(UniqueFieldMap::const_iterator itr(ufm.begin()); itr != ufm.end(); ++itr)
-		fldlist.insert(itr->second);
+	for(const auto& pp : ufm)
+		fldlist.insert(pp.second);
 }
 
 //-----------------------------------------------------------------------------------------
 void load_components(const XmlElement::XmlSet& comlist, Components& components)
 {
-	for(XmlElement::XmlSet::const_iterator itr(comlist.begin()); itr != comlist.end(); ++itr)
+	for(const auto *pp : comlist)
 	{
 		string name;
-		if ((*itr)->GetAttr("name", name))
-			components.insert(Components::value_type(name, *itr));
+		if (pp->GetAttr("name", name))
+			components.insert({name, pp});
 	}
 }
 
@@ -265,7 +251,7 @@ void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& 
 void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth, ostream& outf, bool required)
 {
 	outf << string((depth + 1) * 2, ' ') << '<' << tag;
-	output_attributes(xf, outf);
+	output_attributes(xf, outf, required);
 	outf << '>' << endl;
 
 	for(XmlElement::XmlSet::const_iterator mitr(xf.begin()); mitr != xf.end(); ++mitr)
@@ -299,7 +285,7 @@ void process_group(const XmlElement& xf, const Components& components, const int
 	ostream& outf, const string& compon, bool required)
 {
 	outf << string(depth * 2, ' ') << "<group";
-	output_attributes(xf, outf);
+	output_attributes(xf, outf, required);
 	if (!compon.empty())
 		outf << " component=\'" << compon << '\'';
 	outf << '>' << endl;
@@ -327,3 +313,4 @@ void dump_components(const Components& components, ostream& outf)
 
 	outf << string(depth * 2, ' ') << "</components>" << endl;
 }
+

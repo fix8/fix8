@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-----------------------------------------------------------------------------------------
 // f8 headers
-#include "f8headers.hpp"
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -115,19 +115,27 @@ TEST(filelogger, create_logfile)
     f8String curPath = Poco::Path::current();
     log_fixture fixture(curPath);
 
-    ebitset<Logger::Flags> flag;
-    flag.set(Logger::timestamp, true);
-    flag.set(Logger::sequence, true);
-    flag.set(Logger::thread, true);
-    flag.set(Logger::direction, true);
+    ebitset<Logger::Flags> flags;
+    flags.set(Logger::timestamp, true);
+    flags.set(Logger::sequence, true);
+    flags.set(Logger::thread, true);
+    flags.set(Logger::direction, true);
 
-    FileLogger logger("log/utest_log.log", flag);
+    ebitset<Logger::Level> levels;
+    levels.set(Logger::Info, true);
+    levels.set(Logger::Debug, true);
+    levels.set(Logger::Warn, true);
+    levels.set(Logger::Error, true);
+    levels.set(Logger::Fatal, true);
+
+	 const Logger::LogPositions logpositions { Logger::sequence, Logger::thread, Logger::direction, Logger::timestamp };
+    FileLogger logger("log/utest_log.log", flags, levels, " ", logpositions);
 
     EXPECT_TRUE(exist("log/utest_log.log"));
-    logger.send("first_message_out", 0);
-    logger.send("first_message_in", 1);
-    logger.send("second_message_out", 0);
-    logger.send("third_message_out", 0);
+    logger.send("first_message_out", Logger::Info, FILE_LINE, 0);
+    logger.send("first_message_in", Logger::Info, FILE_LINE, 1);
+    logger.send("second_message_out", Logger::Info, FILE_LINE, 0);
+    logger.send("third_message_out", Logger::Info, FILE_LINE, 0);
 
     //wait until log file have been written
     hypersleep<h_milliseconds>(50);
@@ -165,7 +173,15 @@ TEST(filelogger, rotate)
     flag.set(Logger::thread, true);
     flag.set(Logger::direction, true);
 
-    FileLogger logger("log/utest_log.log", flag, 3);
+    ebitset<Logger::Level> levels;
+    levels.set(Logger::Info, true);
+    levels.set(Logger::Debug, true);
+    levels.set(Logger::Warn, true);
+    levels.set(Logger::Error, true);
+    levels.set(Logger::Fatal, true);
+
+	 const Logger::LogPositions logpositions { Logger::sequence, Logger::thread, Logger::direction, Logger::timestamp };
+    FileLogger logger("log/utest_log.log", flag, levels, " ", logpositions, 3);
     EXPECT_TRUE(exist("log/utest_log.log"));
 
     logger.rotate(true);

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_TIMER_HPP_
-# define _FIX8_TIMER_HPP_
+#ifndef FIX8_TIMER_HPP_
+#define FIX8_TIMER_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <iomanip>
@@ -60,20 +60,23 @@ template<typename T>
 class TimerEvent
 {
    bool (T::*_callback)();
-	mutable Tickval _t;
+	Tickval _t {};
+	unsigned _intervalMS = 0;
+	bool _repeat;
 
 public:
 	/*! Ctor.
 		The callback method returns a bool. If false, exit timer
-	  \param callback pointer to callback method */
-	explicit TimerEvent(bool (T::*callback)()) : _callback(callback), _t() {}
+	  \param callback pointer to callback method
+	  \param repeat if true, repeat indefinately */
+	explicit TimerEvent(bool (T::*callback)(), bool repeat=false) : _callback(callback), _repeat(repeat) {}
 
 	/// Dtor.
 	~TimerEvent() {}
 
 	/*! Set the event trigger time.
 	 \param t Tickval to assign */
-	void set(const Tickval& t) const { _t = t; }
+	void set(const Tickval& t) { _t = t; }
 
 	/*! Less than operator.
 	  \param right check if this TimeEvent is less than rhs
@@ -90,34 +93,35 @@ template<typename T>
 class Timer
 {
    T& _monitor;
-   dthread<Timer> _thread;
+   f8_thread<Timer> _thread;
 	f8_spin_lock _spin_lock;
    unsigned _granularity;
 
-   std::priority_queue<TimerEvent<T> > _event_queue;
+   std::priority_queue<TimerEvent<T>> _event_queue;
+	f8_thread_cancellation_token _cancellation_token;
 
 public:
 	/*! Ctor.
 	  \param monitor reference to callback class
 	  \param granularity timer recheck interval in ms */
-   explicit Timer(T& monitor, int granularity=10) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
+   explicit Timer(T& monitor, int granularity=10) : _monitor(monitor), _thread(std::ref(*this)), _granularity(granularity) {}
 
 	/// Dtor.
-   virtual ~Timer() {}
+   virtual ~Timer()
+	{
+		stop();
+		join();
+	}
 
 	/*! Schedule a timer event. Callback method in event called on timer expiry.
 	  \param what TimeEvent to schedule
 	  \param timeToWaitMS interval to wait in ms
 	  \return true on success */
-   bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS);
+   bool schedule(TimerEvent<T> what, unsigned timeToWaitMS);
 
 	/*! Empty the scheduler of any pending timer events.
 	  \return number of timer events that were waiting on the queue */
    size_t clear();
-
-	/*! Kill timer thread.
-	  \param sig signal to kill with */
-   void kill(const int sig=SIGKILL) { _thread.kill(sig); }
 
 	/// Join timer thread. Wait till exits.
    void join() { _thread.join(); }
@@ -125,9 +129,14 @@ public:
 	/// Start the timer thread.
 	void start() { _thread.start(); }
 
+	/// Stop the timer thread.
+	void stop() { _thread.request_stop(); }
+
 	/*! Timer thread entry point.
 	  \return result at timer thread exit */
    int operator()();
+
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token;}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -136,7 +145,7 @@ int Timer<T>::operator()()
 {
    unsigned elapsed(0);
 
-   while(true)
+   while(!_cancellation_token)
    {
       bool shouldsleep(false);
       {
@@ -144,21 +153,27 @@ int Timer<T>::operator()()
 
          if (_event_queue.size())
          {
-            const TimerEvent<T>& op(_event_queue.top());
-            if (!op._t) // empty timeval means exit
-            {
-               _event_queue.pop(); // remove from queue
-               break;
-            }
+            TimerEvent<T> op(_event_queue.top());
+				if (!op._t) // ignore empty timeval
+				{
+					_event_queue.pop(); // remove from queue
+					continue;
+				}
 
-            if (op._t <= Tickval::get_tickval())  // has elapsed
-            {
-					const TimerEvent<T> rop(_event_queue.top()); // take a copy
-               _event_queue.pop(); // remove from queue
+				const Tickval now(Tickval::get_tickval());
+				if (op._t <= now)  // has elapsed
+				{
+					TimerEvent<T> rop(_event_queue.top()); // take a copy
+					_event_queue.pop(); // remove from queue
 					guard.release();
 					++elapsed;
-               if (!(_monitor.*rop._callback)())
-						break;
+					const bool result((_monitor.*rop._callback)());
+					if (result && op._repeat) // don't repeat if callback returned false
+					{
+						op._t = now.get_ticks() + op._intervalMS * Tickval::million;
+						guard.acquire(_spin_lock);
+						_event_queue.push(std::move(op)); // push back on queue
+					}
             }
             else
                shouldsleep = true;
@@ -171,9 +186,7 @@ int Timer<T>::operator()()
 			hypersleep<h_milliseconds>(_granularity);
    }
 
-	std::ostringstream ostr;
-	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
-	GlobalLogger::instance()->send(ostr.str());
+	glout_info << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
 	return 0;
 }
 
@@ -195,7 +208,7 @@ size_t Timer<T>::clear()
 
 //-------------------------------------------------------------------------------------------------
 template<typename T>
-bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
+bool Timer<T>::schedule(TimerEvent<T> what, unsigned timeToWait)
 {
 	Tickval tofire;
 
@@ -204,11 +217,12 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
       // Calculate time to fire
 		Tickval::get_tickval(tofire);
 		tofire += timeToWait * Tickval::million;
+		what._intervalMS = timeToWait;
    }
 
 	what.set(tofire);
 	f8_scoped_spin_lock guard(_spin_lock);
-	_event_queue.push(what);
+	_event_queue.push(std::move(what));
 
    return true;
 }
@@ -301,4 +315,3 @@ public:
 } // FIX8
 
 #endif // _FIX8_TIMER_HPP_
-

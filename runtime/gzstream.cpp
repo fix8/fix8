@@ -29,11 +29,11 @@
 // DD: 05/03/2012 - changes to improve portability; ios:out append enabled;
 //
 
-#include <gzstream.hpp>
-#include <iostream>
-#include <string.h>  // for memcpy
+#include "precomp.hpp"
+#include <fix8/f8config.h>
+#ifdef HAVE_ZLIB_H
 
-#include <f8config.h>
+#include <fix8/gzstream.hpp>
 
 #ifdef GZSTREAM_NAMESPACE
 namespace GZSTREAM_NAMESPACE {
@@ -50,11 +50,11 @@ namespace GZSTREAM_NAMESPACE {
 gzstreambuf* gzstreambuf::open(const char* name, int open_mode)
 {
     if (is_open())
-        return 0;
+        return nullptr;
     mode = open_mode;
     // no input append nor read/write mode
     if ((mode & std::ios::ate) || ((mode & std::ios::in) && (mode & std::ios::out)))
-        return 0;
+        return nullptr;
     char fmode[10], *fmodeptr = fmode;
     if (mode & std::ios::in)
         *fmodeptr++ = 'r';
@@ -65,7 +65,7 @@ gzstreambuf* gzstreambuf::open(const char* name, int open_mode)
     *fmodeptr++ = 'b';
     *fmodeptr = 0;
     if ((file = gzopen( name, fmode)) == 0)
-        return 0;
+        return nullptr;
     opened = 1;
     return this;
 }
@@ -79,7 +79,7 @@ gzstreambuf *gzstreambuf::close()
         if (gzclose( file) == Z_OK)
             return this;
     }
-    return 0;
+    return nullptr;
 }
 
 int gzstreambuf::underflow()
@@ -179,6 +179,7 @@ void gzstreambase::close()
 #ifdef GZSTREAM_NAMESPACE
 } // namespace GZSTREAM_NAMESPACE
 #endif
+#endif // HAVE_ZLIB_H
 
 // ============================================================================
 // EOF //

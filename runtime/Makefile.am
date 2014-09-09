@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -38,9 +38,14 @@ AM_CPPFLAGS = -I$(inc)
 libfix8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
                      session.cpp logger.cpp persist.cpp \
                      connection.cpp configuration.cpp \
-							consolemenu.cpp filepersist.cpp modp_numtoa.c
+                     consolemenu.cpp filepersist.cpp modp_numtoa.c precomp.cpp
 
-AM_LDFLAGS = -ggdb -rdynamic -shared -lpthread
+libfix8_la_LDFLAGS = -version-info $(libfix8_la_version_info)
+
+AM_LDFLAGS = -ggdb -shared -lpthread
+if !USEOSX
+AM_LDFLAGS += -rdynamic
+endif
 
 if USECOMPRESSION
 libfix8_la_SOURCES += gzstream.cpp
@@ -52,7 +57,15 @@ if USECCRYPT
 AM_LDFLAGS += -lcrypt
 endif
 if USESSL
-AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto -lPocoXML
 endif
 
+if LIBMEMCACHEDSUPPORT
+libfix8_la_SOURCES += memcachedpersist.cpp
+AM_LDFLAGS += -lmemcached
+endif
+if LIBHIREDISSUPPORT
+libfix8_la_SOURCES += redispersist.cpp
+AM_LDFLAGS += -lhiredis
+endif
 

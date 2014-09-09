@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -35,10 +35,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-----------------------------------------------------------------------------------------
 // f8 headers
-#include <f8headers.hpp>
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
-#include <persist.hpp>
-#include <f8utils.hpp>
+#include <fix8/persist.hpp>
+#include <fix8/f8utils.hpp>
 #include <limits>
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -243,16 +243,17 @@ public:
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-		 _connection = new Connection(0, _addr, *this, pm_thread, 10, false);
-    };
+		 Session& session = *this;
+		 _connection = new Connection(0, _addr, session, pm_thread, 10, false);
+	 }
 
     /// Dtor
     ~check_session()
     {
         _timer.clear();
-        _timer.schedule(_hb_processor, 0);
+        _timer.stop();
         _timer.join();
-    };
+	 }
 
     /*! retrans_callback overload
             add resent messages to a local map for future check*/

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -40,7 +40,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   This is a complete working example of a FIX client/server using FIX8.\n
 \n
 <tt>
-	Usage: harness [-RSchlqrsv]\n
+Usage: harness [-LRSchlpqrsv] \n
+      -L,--lines              set number of screen lines in the console menu (default 50)\n
 		-R,--receive            set next expected receive sequence number\n
 		-S,--send               set next send sequence number\n
 		-c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
@@ -107,7 +108,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <termios.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -118,8 +118,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
-#include <consolemenu.hpp>
+#include <fix8/usage.hpp>
+#include <fix8/consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -132,24 +132,24 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rp:");
+const string GETARGLIST("hl:svqc:R:S:rp:L:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers MyMenu::_handlers
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('c', "Create messages"), &MyMenu::create_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('e', "Edit messages"), &MyMenu::edit_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('d', "Delete messages"), &MyMenu::delete_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Print messages"), &MyMenu::print_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('s', "Send messages"), &MyMenu::send_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "Read messages from disk"), &MyMenu::read_msgs),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'c', "Create messages" }, &MyMenu::create_msgs },
+	{ { 'e', "Edit messages" }, &MyMenu::edit_msgs },
+	{ { 'd', "Delete messages" }, &MyMenu::delete_msgs },
+	{ { 'p', "Print messages" }, &MyMenu::print_msgs },
+	{ { 's', "Send messages" }, &MyMenu::send_msgs },
+	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'L', "Set Lines per page" }, &MyMenu::set_lpp },
+	{ { 'v', "Show version info" }, &MyMenu::version_info },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
-const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
-	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
 
@@ -172,13 +172,13 @@ void sig_handler(int sig)
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	int val;
+	int val, lines(50);
 	bool server(false), reliable(false);
 	string clcf, replay_file;
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
@@ -188,6 +188,7 @@ int main(int argc, char **argv)
 		{ "server",		0,	0,	's' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
+		{ "lines",		1,	0,	'L' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
 		{ 0 },
@@ -212,6 +213,7 @@ int main(int argc, char **argv)
 		case 's': server = true; break;
 		case 'S': next_send = get_value<unsigned>(optarg); break;
 		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'L': lines = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -232,20 +234,16 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
+			unique_ptr<ServerSessionBase> ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
 				if (!ms->poll())
 					continue;
-				SessionInstance<myfix_session_server>::Instance_ptr
-					inst(new SessionInstance<myfix_session_server>(*ms));
+				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
-				ostringstream sostr;
-				sostr << "client(" << ++scnt << ") connection established.";
-				GlobalLogger::log(sostr.str());
+				glout_info << "client(" << ++scnt << ") connection established.";
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
@@ -253,7 +251,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			scoped_ptr<ClientSession<myfix_session_client> >
+			unique_ptr<ClientSessionBase>
 				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
 							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
@@ -267,7 +265,7 @@ int main(int argc, char **argv)
 			else
 				mc->start(false);
 
-			ConsoleMenu cm(TEX::ctx(), mc->session_ptr(), cin, cout, 50);
+			ConsoleMenu cm(TEX::ctx(), cin, cout, lines);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
@@ -307,6 +305,12 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
+void myfix_session_client::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
+}
+
+//-----------------------------------------------------------------------------------------
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
@@ -318,9 +322,19 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
-		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	for (const auto& pp : _handlers)
+		get_ostr() << pp.first._key << '\t' << pp.first._help << endl;
 	get_ostr() << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::set_lpp()
+{
+	cout << "Enter number of lines per page (currently=" << _cm->get_lpp() << "): " << flush;
+	f8String str;
+	if (!_cm->GetString(_tty, str).empty())
+		_cm->set_lpp(stoi(str));
 	return true;
 }
 
@@ -328,7 +342,10 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	if (!_session.is_shutdown())
+	{
 		_session.send(new TEX::Logout);
+		get_ostr() << "logout..." << endl;
+	}
 	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
@@ -346,6 +363,7 @@ void print_usage()
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
+	um.add('L', "lines", "set number of screen lines in the console menu (default 50)");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
 	um.print(cerr);
@@ -367,6 +385,15 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 bool MyMenu::create_msgs()
 {
 	_cm->CreateMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::version_info()
+{
+	cout << endl;
+	for (const auto& pp : package_info())
+		cout << pp.first << ": " << pp.second << endl;
 	return true;
 }
 
@@ -452,7 +479,7 @@ bool MyMenu::read_msgs()
 	cout << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())
-		return load_msgs(fname);
+		load_msgs(fname);
 	return true;
 }
 

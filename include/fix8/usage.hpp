@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -43,7 +43,7 @@ class UsageMan
 {
 	const std::string prognm_, params_;
 	std::string argstr_, description_;
-	typedef std::map<const char, const std::pair<const std::string, const std::string> > OPTEL;
+	using OPTEL = std::map<const char, const std::pair<const std::string, const std::string>>;
 	OPTEL optels_;
 	std::list<std::string> xtrlines_;
 	const int splen_, argoptlen_;
@@ -72,8 +72,7 @@ public:
 	  \return true on success */
 	bool add(const char sw, const std::string& lsw, const std::string& help)
 	{
-		return optels_.insert(OPTEL::value_type(sw,
-			std::pair<const std::string, const std::string>(lsw, help))).second;
+		return optels_.insert({sw, std::pair<const std::string, const std::string>(lsw, help)}).second;
 	}
 
 	/*! Add an extra help line. Lines prefixed with '@' are indented one tabstop.

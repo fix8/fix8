@@ -1,5 +1,157 @@
-* Wed Dec 04 2013 David L. Dight <fix@fix8.org> 1.0.0-RC3
-- Fixed Jira tickets FX-107, FX-129, FX-130, FX-131, FX-141, FX-142, FX-143, FX-144, FX-147, FX-149, FX-150
+* Sun Aug 24 2014 David L. Dight <fix@fix8.org> 1.3.1
+- Fixed Jira tickets FX-325
+- 1.3 build bug under Win
+
+* Sun Aug 17 2014 David L. Dight <fix@fix8.org> 1.3.0
+- Fixed Jira tickets FX-309, FX-308, FX-307, FX-306, FX-305, FX-304, FX-303, FX-302, FX-301,
+							FX-300, FX-299, FX-298, FX-296, FX-295, FX-294, FX-293, FX-292, FX-291,
+							FX-290, FX-289, FX-288, FX-287, FX-286, FX-236, FX-310, FX-312, FX-311
+							FX-297, FX-281, FX-233, FX-231, FX-313, FX-315, FX-316, FX-317, FX-318
+							FX-319
+- Provide XML logger
+- Overhaul logging system
+- Loggers should support log level
+- Allow shallow message construction
+- Provide Message::move_legal
+- XML parser does not support CDATA values
+- gcc 4.7.2 linux build broken
+- Allow shallow message construction
+- Provide Message::move_legal
+- Facilitate "pass-through" fields which are not mentioned in the Dictionary
+- MAGIC_NUM expression can cause problems
+- Support package and configuration string queries
+- Provide flag settings to control XML parser
+- Remove main Nuget package link dependency to gtest
+- Replace FIX8::dthread with std::thread
+- ReliableClientSession crash when socket connection refused
+- Compilation error on clean checkout 14/07/10
+- Protocol Logger Thread is not destroyed after deleting session
+- Wrong Timer implementation
+- RAII std::ostream Singleton log target
+- GlobalLogger::create_instance needs refactoring
+- Precision was altered unintentionally
+- Support flattened field query in messages
+- Allow SingleLogger to accept user defined LogFlags
+- Add mini-timestamp flag to logger
+- hftest server exits when sending preloaded messages under windows
+- Update on 14-06-24 introduced build warnings on win
+- Fix variadic templates compile error under VS2013
+- Windows build fails when configured w/o TBB
+- Create VS2012 build of FIX8
+- Provide programmatic/generic method of loading and using Fix8 metadata
+- Permit lookup of fields and messages by their long name
+- Xml improvements: find_child, GetLocString
+- Field equivalence operators missing
+- Option to compiler to generate router stubs without defaults
+- Session state does not changed when connection goes down.
+- Allow the option to the getters from a fix message those values that are fixed point values to be stored in float instead of double
+- Make dist, rpmbuild and pro build broken
+- Make nuget package generation files (*.autopkg) to be version independent
+
+* Wed Jun 04 2014 David L. Dight <fix@fix8.org> 1.2.0
+- Fixed Jira tickets FX-278, FX-276, FX-275, FX-274, FX-273, FX-272, FX-271, FX-270, FX-269,
+							FX-268, FX-267, FX-266, FX-265, FX-264, FX-263, FX-228, FX-261, FX-260,
+							FX-259, FX-258, FX-257, FX-256, FX-253, FX-252, FX-251, FX-250, FX-249,
+							FX-248, FX-247, FX-246, FX-245, FX-244, FX-243, FX-242, FX-241, FX-240,
+							FX-239, FX-238, FX-237, FX-236, FX-235, FX-233, FX-232, FX-231, FX-230,
+							FX-229, FX-282, FX-280, FX-279, FX-283, FX-285, FX-176, FX-220, FX-195,
+							FX-217
+- Provide access to raw inbound and outbound FIX message text
+- Make --enable-extended-metadata work in windows
+- Provide a session configuration option to enable or disable retransmission
+- Provide tabsize setting to customise fix printer
+- Update wiki with instruction of building NuGet packages
+- On Mac OS X Maverick, clang generates lots of warnings
+- building with --enable-tbb-malloc=yes on OS X gives error
+- poco error under OS X Maverics
+- Realm range not working as expected
+- Poco On Windows
+- Add a few helper methods to BaseEntry and BaseMsgEntry
+- Mandatory fields not propagating through compiler with FIXT
+- MarketDataRequest with certain fields throws exception invalid field
+- default_appl_ver_id (1137) applied if configured, regardless of FIX version
+- Example of how to subscribe to MarketData
+- Distinguish between invalid and unknown field exceptions in message
+- Replace StaticTable with std::map
+- Facilitate Fix8Pro and open source common build
+- Segfault in ~Session::Session/Session:stop
+- Create FIX8 NuGet package
+- Create a .net port of fix8
+- Upgrade bundled FastFlow from 2.0.2 to 2.0.4
+- Replace FIX8::f8_atomic with std::atomic
+- FX-242 Write Fix8 1.1 to 1.2 migration guide
+- Replace all the sizes from unsigned to size_t
+- OSX g++-4.2.1 on mac does not support -fno-var-tracking-assignments.
+- Invalid inbound acceptor SenderCompID ignored
+- Create OSX HOWTO in Confluence
+- Acceptor SenderCompID not configurable
+- Provide test example for multi-session support
+- Provide support for underlying FieldType introspection
+- Support optional CompID enforcement
+- Replace FIX8::scoped_ptr with std::unique_ptr
+- Client logs should be created with SessionID suffix
+- Restructure Session wrapper classes to support non-templated base classes
+- Allow user to set SO_KEEPALIVE option from config
+- Complete confluence documentation for 1.1.0 and 1.2.0 features
+- Provide support and management for multiple ServerInstances
+- Server support for predefined set of remote SenderCompIDs
+- Allow user to set SO_REUSEADDR option from config
+- Allow user to set SO_LINGER option from config
+- Support defaults section in Session xml configuration
+- FX-41 Replace FIX8::dthread with std::thread
+- Add option to FIX8::logger to suppress LF on logline
+- Windows build fails when configured w/o TBB
+- Linux End-of-Line Charactor not handled by Message::factory
+- hftest server exits when sending preloaded messages under windows
+- f8print will not decode f8test runs properly
+- Cmd line scripts do not like spaces in path when building fix8 under Windows
+- Move compilation to use precompiled header
+
+* Sun Apr 06 2014 David L. Dight <fix@fix8.org> 1.1.0
+- Fixed Jira tickets FX-223, FX-222, FX-221, FX-219, FX-216, FX-214, FX-213, FX-212, FX-211, FX-209,
+							FX-206, FX-205, FX-204, FX-200, FX-198, FX-193, FX-192, FX-191, FX-189, FX-187,
+							FX-185, FX-183, FX-180, FX-178, FX-177, FX-175, FX-184, FX-224, FX-225, FX-226,
+							FX-227, FX-203, FX-230
+- Fixed Win64 build failed with seqnum mismatch
+- Fixed f8c compiler crashes if schema file not found
+- Fixed Logfile creation should handle new paths
+- Added session state change event callback
+- Fixed Won't reconnect if exchange log session out.
+- Fixed Deadlock in retransmission behaviour
+- Added global logger needs optional file and line attributes when logging
+- Added provide redis persister
+- Fixed Session silently ignores no logger, no plogger and no persister errors
+- Fixed Speedup Win build
+- Update Windows Wiki (confluence) page
+- Fixed Make auto linking fix8 lib optional
+- Fixed Remove public static vars from generated code
+- Fixed hftest works incompletely under win32/64
+- Added malloc configuration defines to f8config.h
+- Fixed Test fix8 with onload/SFC 10G cards
+- Fixed Reliable session fails to re-connect on connection errors
+- Fixed UTs build fails when running via make
+- Add support for Session based BusinessMessageReject ('j')
+- Added support for Session login and logout time
+- Added make socket read buffering optional
+- Added expose FIX8::Session scheduler to user session class
+- Added support for Session Start time and End Time
+- Fixed Hang in FIXReader::sockRead
+- Fixed gcc 4.2 and greater supports -fno-var-tracking -fno-var-tracking-assignments
+- Fixed Complete build options for Pthread API
+- Added message handling: allow non-const operations
+- Fixed Non-standard XML attribute comment problem
+- Added mechanism to support ad-hoc message recycling
+- Added permit alternate source/header extensions when generating code
+- Added generic access to key/value pair put() and get() in Persister
+- Added precompiled header to f8c generated files
+- Fixed f8print will not decode f8test runs properly
+
+* Thu Jan 16 2014 David L. Dight <fix@fix8.org> 1.0.0
+- Our first official GA release
+- Fixed Jira tickets FX-107, FX-129, FX-130, FX-131, FX-134, FX-139, FX-140, FX-141, FX-142, FX-143,
+							FX-144, FX-146, FX-147, FX-149, FX-150, FX-151, FX-157, FX-158, FX-159, FX-161,
+							FX-162, FX-163, FX-164, FX-165, FX-166, FX-167, FX-168, FX-169, FX-170, FX-173,
+							FX-174
 - Provide support for basic client failover capability
 - Make connection timeout configurable
 - Add support for non-standard XML attribute comments
@@ -10,6 +162,27 @@
 - Fixed Session::send_process() dumps core in reliable mode if client drops connection before login
 - Added When working in coro mode there has to be a flag that session is ready to operate
 - Added When working in coro mode reader.execute() calls to base class operator()
+- Merged fix8:dev with fix8:master
+- Added MonthYear and LocalMktDate Date Formats
+- Fixed f8test doesn't work as expected
+- Fixed clang 3.2-3.4 compilation warnings
+- Fixed Sending of FIX message takes too long
+- Added Batch message sending
+- Fixed MessageBase::extract_element(..., f8String& tag, f8String& val) is ineffective
+- Fixed FIXReader calls sockRead too many times
+- Added Make includes relative to project root
+- Added SSL support
+- Fixed XmlElement::find with attribute and value not finding correctly
+- Fixed Segfault with non-set SessionConfig on heartbeat
+- Added Support custom field addition on f8c command line
+- Fixed Fields of type 'data' are not parsed according to FIX specification
+- Fixed time_to_epoch tm_mon ternary operator does not allow January dates to be converted to an epoch timestamp
+- Fixed Makefile.am does not reference f8dll.h
+- Fixed Build error on OS X -rdynamic
+- Fixed error: 'uint32_t' does not name a type
+- Fixed CLOCK_REALTIME error on compilation on Windows
+- Fixed Make include guards standard-compliant
+- Code freeze for GA 1.0.0 final
 
 * Sun Nov 10 2013 David L. Dight <fix@fix8.org> 0.10.0
 - Fixed Jira tickets FX-102, FX-103, FX-104, FX-105, FX-107, FX-110, FX-113, FX-114, FX-115, FX-116, FX-119, FX-120,

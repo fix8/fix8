@@ -1,0 +1,9 @@
+x64
+Win32
+*.user
+*.opensdf
+*.sdf
+*.suo
+ipch
+packages/*
+!packages/repositories.config

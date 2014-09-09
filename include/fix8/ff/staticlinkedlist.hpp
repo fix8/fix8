@@ -7,8 +7,6 @@
  *
  *  \brief TODO
  */
-#ifndef __FF_STATICLINKEDLIST_HPP_ 
-#define __FF_STATICLINKEDLIST_HPP_ 
 
 /* ***************************************************************************
  *
@@ -35,6 +33,9 @@
  *  
  * -- Massimiliano Meneghin: themaxmail@gmail.com 
  */
+
+#ifndef FF_STATICLINKEDLIST_HPP
+#define FF_STATICLINKEDLIST_HPP
 
 #include <stdlib.h>
 #include <ff/buffer.hpp>
@@ -453,4 +454,4 @@ public:
 
 } // namespace ff
 
-#endif /* __FF_DYNQUEUE_HPP_ */
+#endif /* FF_STATICLINKEDLIST_HPP */

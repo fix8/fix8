@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONFIGURATION_HPP_
-# define _FIX8_CONFIGURATION_HPP_
+#ifndef FIX8_CONFIGURATION_HPP_
+#define FIX8_CONFIGURATION_HPP_
 
 #ifdef HAVE_OPENSSL
 #include <openssl/ssl.h>
@@ -93,10 +93,9 @@ class Configuration
 {
 	static RegExp _ipexp;
 
-	const std::string _xmlfile;
-	const XmlElement *_root;
-	typedef std::map<const std::string, const XmlElement *> ConfigMap;
-	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context;
+	const XmlElement *_root, *_default;
+	using ConfigMap = std::map<const std::string, const XmlElement *>;
+	std::vector<ConfigMap> _groups;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -104,41 +103,57 @@ class Configuration
 	  \param from the map to search
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_element(const std::string& tag, const ConfigMap& from) const
-		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : 0; }
+		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : nullptr; }
 
-	/*! Find a logger by tag.
+public:
+	enum group_types
+	{
+		g_sessions, g_persisters, g_loggers, g_server_group,
+		g_ssl_context, g_schedules, g_logins, g_client_group,
+		g_count
+	};
+
+	/*! Find an element in a specified group.
+	  \param type group type enum
 	  \param tag the tag to find
 	  \return the found entity or 0 if not found */
-	const XmlElement *find_logger(const std::string& tag) const { return find_element(tag, _loggers); }
+	const XmlElement *find_group(group_types type, const std::string& tag) const
+		{ return find_element(tag, _groups[type]); }
 
-	/*! Find a persister by tag.
+private:
+	/*! Search the given element for a tag or look in the default element
+	  \param from the xml entity to search
 	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_persister(const std::string& tag) const { return find_element(tag, _persisters); }
-
-	/*! Find a _server_group by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_server_group(const std::string& tag) const { return find_element(tag, _server_group); }
-
-	/*! Find a _ssl_context by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_ssl_context(const std::string& tag) const { return find_element(tag, _ssl_context); }
+	  \param target place to put the resul
+	  \return true if found and stored */
+	bool from_or_default(const XmlElement *from, const f8String& tag, f8String& target) const
+		{ return (from && from->GetAttr(tag, target)) || (_default && _default->GetAttr(tag, target)); }
 
 	/*! Find a fix8 field typed value by tag from an xml entity.
 	  \tparam location type
-	  \param tag the tag to find
 	  \param from the xml entity to search
+	  \param tag the tag to find
 	  \param to location to store target
 	  \return the target */
 	template<typename T>
 	T& get_string_field(const XmlElement *from, const std::string& tag, T& to) const
 	{
 		std::string val;
-		if (from && from->GetAttr(tag, val))
+		if (from_or_default(from, tag, val))
 			to.set(val);
 		return to;
+	}
+
+	/*! Find a session time field by tag from an xml entity.
+	  \param from the xml entity to search
+	  \param tag the tag to find
+	  \param timeonly if true, only use the time part
+	  \return Tickval::ticks time or errorticks if not found */
+	Tickval::ticks get_time_field(const XmlElement *from, const std::string& tag, bool timeonly=false) const
+	{
+		std::string time_str;
+		return from && from->GetAttr(tag, time_str) && time_str.size() == 8 ? time_parse(time_str.c_str(), 8, timeonly)
+																								  : Tickval::errorticks;
 	}
 
 	/*! Find an attribute in the given XmlElement
@@ -146,10 +161,19 @@ class Configuration
 	  \param from the xml entity to search
 	  \param tag the tag to find
 	  \param def the default value if not found
-	  \return the found attribute vakue or the default value if not found */
+	  \return the found attribute value or the default value if not found */
 	template<typename T>
 	T find_or_default(const XmlElement *from, const std::string& tag, const T def) const
-		{	return from ? from->FindAttr(tag, def) : def; }
+	{
+		if (from)
+		{
+			if (from->HasAttr(tag))
+				return from->FindAttr(tag, def);
+			if (_default)
+				return _default->FindAttr(tag, def);
+		}
+		return def;
+	}
 
 	/*! Load a repeating group into a supplied map.
 	  \param tag the tag to find
@@ -161,75 +185,101 @@ class Configuration
 		XmlElement::XmlSet slist;
 		if (_root->find(tag, slist))
 		{
-			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+			for(const auto *pp : slist)
 			{
 				std::string name;
-				if ((*itr)->GetAttr("name", name) && is_session ? (*itr)->FindAttr("active", false) : true)
+				if (pp->GetAttr("name", name) && is_session ? pp->FindAttr("active", false) : true)
 				{
-					map_name.insert(ConfigMap::value_type(name, *itr));
+					map_name.insert({name, pp});
 					if (is_session)
-						_allsessions.push_back(*itr);
+						_allsessions.push_back(pp);
 				}
 			}
 		}
 
-		return map_name.size();
+		return static_cast<unsigned>(map_name.size());
 	}
 
 public:
 	enum Logtype { session_log, protocol_log };
 
-	/*! Ctor.
+ 	/*! Ctor.
 	  \param xmlfile xml config filename.
 	  \param do_process if true, process the file on construction */
 	Configuration(const std::string& xmlfile, bool do_process=false)
-		: _xmlfile(xmlfile), _root(XmlElement::Factory(_xmlfile)) { if (do_process) process(); }
+		: _root(XmlElement::Factory(xmlfile)),
+		_default(_root ? _root->find("fix8/default") : nullptr),
+		_groups(g_count)
+	{
+		if (!exist(xmlfile))
+			throw ConfigurationError("server config file not found", xmlfile);
+		if (do_process)
+			process();
+	}
+
+	/*! Ctor.
+	  \param istr xml stream
+	  \param do_process if true, process the stream on construction */
+	Configuration(std::istream& istr, bool do_process=false)
+		: _root(XmlElement::Factory(istr, "stream")),
+		_default(_root ? _root->find("fix8/default") : nullptr),
+		_groups(g_count)
+	{
+		if (do_process)
+			process();
+	}
 
 	/// Dtor.
 	virtual ~Configuration() {}
 
 	/*! Process the config file.
 	  \return the number of sessions processed (found) */
-	int process();
+	F8API int process();
 
 	/*! Find a session entity by index.
 	  \param num index of session
 	  \return the session entity or 0 if not found */
 	const XmlElement *get_session(const unsigned num) const
-		{ return num < _allsessions.size() ? _allsessions[num] : 0; }
-
-	/*! Find a session entity by name.
-	  \param tag name of session
-	  \return the session entity or 0 if not found */
-	const XmlElement *find_session(const std::string& tag) const { return find_element(tag, _sessions); }
+		{ return num < _allsessions.size() ? _allsessions[num] : nullptr; }
 
 	/*! Extract the role from a session entity.
 	  \param from xml entity to search
 	  \return the connection role or Connection::cn_unknown if not found */
-	Connection::Role get_role(const XmlElement *from) const;
+	F8API Connection::Role get_role(const XmlElement *from) const;
 
 	/*! Extract the ip addresses from a server_group entity.
 	  \param from xml entity to search
 	  \param target target vector of Server to store addresses
 	  \return number of addresses stored */
-	size_t get_addresses(const XmlElement *from, std::vector<Server>& target) const;
+	F8API size_t get_addresses(const XmlElement *from, std::vector<Server>& target) const;
+
+	/*! Extract the ip address and port from a session entity.
+	  \param from xml entity to search
+	  \return Poco::Net::SocketAddress */
+	F8API Poco::Net::SocketAddress get_address(const XmlElement *from) const;
 
 	/*! Extract the ip address from a session entity.
 	  \param from xml entity to search
-	  \return Poco::Net::SocketAddress */
-	Poco::Net::SocketAddress get_address(const XmlElement *from) const;
+	  \return Poco::Net::IPAddress */
+	F8API Poco::Net::IPAddress get_ip(const XmlElement *from) const;
 
 	/*! Extract the logflags from the flags attribute in a log entity.
+	  \tparam T ebitset type
+	  \param tag attribute tag to search for
+	  \param names vector of names for each enumeration
 	  \param from xml entity to search
+	  \param positions vector to place enumeration position in
 	  \return LogFLags object */
-	Logger::LogFlags get_logflags(const XmlElement *from) const;
+	template<typename T>
+	T get_logflags(const std::string& tag, const std::vector<std::string>& names,
+		const XmlElement *from, Logger::LogPositions *positions=nullptr) const;
 
 	/*! Extract the session log filename address from a session entity.
 	  \param from xml entity to search
 	  \param to target logfile string
 	  \param sid optional session id to build name from
 	  \return target string */
-	std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=0) const;
+	F8API std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=nullptr) const;
 
 	/*! Extract the connect_timeout interval (sec) from a session entity.
 	  \param from xml entity to search
@@ -254,21 +304,31 @@ public:
 
 	/*! Extract the tcp recv buffer size
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the recv buffer size count or 0 if the default should be used */
 	unsigned get_tcp_recvbuf_sz(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "tcp_recv_buffer", def); }
 
 	/*! Extract the tcp send buffer size
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the send buffer size count or 0 if the default should be used */
 	unsigned get_tcp_sendbuf_sz(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "tcp_send_buffer", def); }
 
 	/*! Extract the FIX version from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the FIX version or 0 if not found */
 	unsigned get_version(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "fix_version", def); }
+
+	/*! Extract the Message printer tabsize from a session entity.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return the tabsize version or defaults::tabsize if not found */
+	unsigned get_tabsize(const XmlElement *from, const unsigned def=defaults::tabsize) const
+		{ return find_or_default(from, "tabsize", def); }
 
 	/*! Extract the logfile rotation count.
 	  \param from xml entity to search
@@ -279,48 +339,84 @@ public:
 
 	/*! Extract the heartbeat interval from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the heartbeat interval version or 0 if not found */
 	unsigned get_heartbeat_interval(const XmlElement *from, const unsigned def=defaults::hb_interval) const
 		{ return find_or_default(from, "heartbeat_interval", def); }
 
 	/*! Extract the tcp nodelay flag.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return false if nodelay flag was passed and was false */
 	bool get_tcp_nodelay(const XmlElement *from, const bool def=true) const
 		{ return find_or_default(from, "tcp_nodelay", def); }
 
+	/*! Extract the tcp keepalive flag.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return false if keepalive flag was passed and was false */
+	bool get_tcp_keepalive(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "tcp_keepalive", def); }
+
+	/*! Extract the tcp reuseaddr flag.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return false if reuseaddr flag was passed and was false */
+	bool get_tcp_reuseaddr(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "tcp_reuseaddr", def); }
+
+	/*! Extract the socket linger setting from a session entity.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return the socket linger value (secs) */
+	int get_tcp_linger(const XmlElement *from, const int def=-1) const
+		{ return find_or_default(from, "tcp_linger", def); }
+
 	/*! Extract the silent disconnect flag.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if silent_disconnect flag was passed and was true */
 	bool get_silent_disconnect(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "silent_disconnect", def); }
 
+	/*! Extract the enforce_compids flag. When false, compids are not checked.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return true if enforce_compids flag was passed and was true */
+	bool get_enforce_compids_flag(const XmlElement *from, const bool def=true) const
+		{ return find_or_default(from, "enforce_compids", def); }
+
 	/*! Extract the ignore_logon_sequence_check flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if ignore_logon_sequence_check flag was passed and was true */
 	bool get_ignore_logon_sequence_check_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "ignore_logon_sequence_check", def); }
 
 	/*! Extract the get_no_chksum_flag flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if get_no_chksum_flag flag was passed and was true */
 	bool get_no_chksum_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "no_chksum", def); }
 
 	/*! Extract the get_permissive_mode_flag flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if get_permissive_mode_flag flag was passed and was true */
 	bool get_permissive_mode_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "permissive_mode", def); }
 
 	/*! Extract the reset_sequence_number flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if reset_sequence_number flag was passed and was true */
 	bool get_reset_sequence_number_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "reset_sequence_numbers", def); }
 
 	/*! Extract the always_seqnum_assign flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if always_seqnum_assign flag was passed and was true */
 	bool get_always_seqnum_assign(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "always_seqnum_assign", def); }
@@ -328,7 +424,7 @@ public:
 	/*! Extract process model.
 	  \param from xml entity to search
 	  \return pm_thread, pm_pipeline or pm_coro */
-	ProcessModel get_process_model(const XmlElement *from) const;
+	F8API ProcessModel get_process_model(const XmlElement *from) const;
 
 	/*! Extract default_appl_ver_id from a session entity.
 	  \param from xml entity to search
@@ -352,7 +448,7 @@ public:
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
 	  \return ssl context */
-	SslContext get_ssl_context(const XmlElement *from) const;
+	F8API SslContext get_ssl_context(const XmlElement *from) const;
 #endif
 
 	/*! Create a new persister object from a session entity.
@@ -360,32 +456,48 @@ public:
 	  \param sid optional session id to build name from
 	  \param flag additional flag for persister use
 	  \return new persister or 0 if unable to create */
-	Persister *create_persister(const XmlElement *from, const SessionID *sid=0, bool flag=false) const;
+	F8API Persister *create_persister(const XmlElement *from, const SessionID *sid=nullptr, bool flag=false) const;
 
 	/*! Create a new logger object from a session entity.
 	  \param from xml entity to search
 	  \param ltype log type
 	  \param sid optional session id to build name from
 	  \return new logger or 0 if unable to create */
-	Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
+	F8API Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=nullptr) const;
+
+	/*! Create schedule object from a session entity.
+	  \param from xml entity to search
+	  \return Schedule */
+	F8API Schedule create_schedule(const XmlElement *from) const;
+
+	/*! Create clients object from a session entity.
+	  \param from xml entity to search
+	  \return Clients */
+	F8API Clients create_clients(const XmlElement *from) const;
+
+	/*! Create login schedule object from a session entity.
+	  \param from xml entity to search
+	  \return login Schedule */
+	F8API Schedule create_login_schedule(const XmlElement *from) const;
+
+	/*! Create a new session schedule object from a session entity.
+	  \param from xml entity to search
+	  \return new Session_Schedule or 0 if unable to create */
+	F8API Session_Schedule *create_session_schedule(const XmlElement *from) const;
 
 	/*! Get all active sessions that have been read; filter by role if desired.
 	  \param target vector to place results
 	  \param role role to filter (cn_unknown means all)
 	  \return number of sessions found */
-	unsigned get_all_sessions(std::vector<const XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
+	F8API unsigned get_all_sessions(std::vector<const XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
 
 	/*! Return ptr to the root XmlElement
 	  \return root element */
 	const XmlElement *get_root() const { return _root; }
-
-	/*! Get the xml filename
-	  \return xml filename */
-	const std::string& get_xmlfile() const { return _xmlfile; }
 };
 
 //-------------------------------------------------------------------------------------------------
 
 } // FIX8
 
-#endif // _FIX8_CONFIGURATION_HPP_
+#endif // FIX8_CONFIGURATION_HPP_

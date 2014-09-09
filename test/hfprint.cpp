@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -73,7 +73,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <termios.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -84,8 +83,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
-#include <consolemenu.hpp>
+#include <fix8/usage.hpp>
+#include <fix8/consolemenu.hpp>
 #include "Perf_types.hpp"
 #include "Perf_router.hpp"
 #include "Perf_classes.hpp"
@@ -100,7 +99,7 @@ void print_usage();
 const string GETARGLIST("hsvo:c");
 bool term_received(false), summary(false);
 
-typedef map<string, unsigned> MessageCount;
+using MessageCount = map<string, unsigned>;
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -115,27 +114,13 @@ void sig_handler(int sig)
    }
 }
 
-//----------------------------------------------------------------------------------------
-/// Abstract file or stdin input.
-class filestdin
-{
-   std::istream *ifs_;
-   bool nodel_;
-
-public:
-   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
-   ~filestdin() { if (!nodel_) delete ifs_; }
-
-   std::istream& operator()() { return *ifs_; }
-};
-
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val, offset(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
 		{ "offset",			1,	0,	'o' },
@@ -201,12 +186,12 @@ int main(int argc, char **argv)
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
+				unique_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));
 					if (mitr == mc->end())
-						mc->insert(MessageCount::value_type(msg->get_msgtype(), 1));
+						mc->insert({msg->get_msgtype(), 1});
 					else
 						mitr->second++;
 				}

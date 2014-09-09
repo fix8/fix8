@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -35,11 +35,17 @@
 bin_PROGRAMS = f8c
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
-f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp
+f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp precomp.cpp
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+if USESSL
+POCO_LIBS += -lPocoNetSSL -lPocoCrypto -lPocoXML
+endif
 
-f8c_LDFLAGS = -rdynamic -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
+f8c_LDFLAGS = -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
+if !USEOSX
+f8c_LDFLAGS += -rdynamic
+endif
 if LINK_RT
 f8c_LDFLAGS += -lrt
 endif

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef __FF_DYNQUEUE_HPP_ 
-#define __FF_DYNQUEUE_HPP_ 
+#ifndef FF_DYNQUEUE_HPP
+#define FF_DYNQUEUE_HPP
 
 /* ***************************************************************************
  *
@@ -81,10 +81,15 @@ private:
     /*  Michael and Scott 2-locks MPMC queue.                             */    
     /*                                                                    */
     /*                                                                    */    
-    lock_t P_lock;
-    long padding3[longxCacheLine-sizeof(lock_t)];
-    lock_t C_lock;
-    long padding4[longxCacheLine-sizeof(lock_t)];
+    union {
+        lock_t P_lock;
+        char padding3[CACHE_LINE_SIZE];
+    };
+    union {
+        lock_t C_lock;
+        char padding4[CACHE_LINE_SIZE];
+    };
+    
     /* -------------------------------------------------------------- */
 
     // internal cache
@@ -147,6 +152,8 @@ public:
         }
         init_unlocked(P_lock); 
         init_unlocked(C_lock);
+        // Avoid unused private field warning on padding vars
+        (void) padding1; (void) padding2 ; (void) padding3; (void) padding4;
     }
 
     /**
@@ -326,7 +333,10 @@ public:
         head=tail=n;
 
         cache=(void**)getAlignedMemory(longxCacheLine*sizeof(long),cachesize*sizeof(void*));
-        if (!cache) abort();
+        if (!cache) {
+            error("FATAL ERROR: dynqueue no memory available!\n");
+            abort();
+        }
 
         if (fillcache) {
             for(int i=0;i<cachesize;++i) {
@@ -395,4 +405,4 @@ public:
 
 } // namespace
 
-#endif /* __FF_DYNQUEUE_HPP_ */
+#endif /* FF_DYNQUEUE_HPP */

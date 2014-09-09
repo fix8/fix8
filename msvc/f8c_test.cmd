@@ -2,6 +2,19 @@
 
 cd ..\test
 
+set XML_SCHEMA=..\schema\FIX50SP2.xml
+set XML_HF_SCHEMA=..\schema\FIX42PERF.xml
+set XML_FIXT_SCHEMA=..\schema\FIXT11.xml
+set Configuration=%2
+set Platform=%3
+set OutDir=%4
+set F8C=not_set
+if %Configuration% EQU Debug (
+	set F8C=%OutDir%\f8cd
+) else (
+	set F8C=%OutDir%\f8c
+)
+
 set lost=0
 for %%i in (Myfix_classes.cpp 
 			Myfix_classes.hpp 
@@ -74,13 +87,8 @@ if %needBuild% == 1 (
 
 echo ************going to generate************
 
-		if %2 EQU Debug (
-			..\Debug\f8cd -rVn TEX ..\schema\FIX50SP2.xml -x ..\schema\FIXT11.xml
-			..\Debug\f8cd -sVp Perf -n TEX ..\schema\FIX42PERF.xml
-		) else (
-			..\release\f8c -rVn TEX ..\schema\FIX50SP2.xml -x ..\schema\FIXT11.xml
-			..\release\f8c -sVp Perf -n TEX ..\schema\FIX42PERF.xml
-		)
+		%F8C% -rVn TEX %XML_SCHEMA% -x %XML_FIXT_SCHEMA%
+		%F8C% -sVUp Perf -n TEX %XML_HF_SCHEMA%
 
 echo ************  generate done  ************
 

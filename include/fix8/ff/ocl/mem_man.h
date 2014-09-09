@@ -3,6 +3,9 @@
  * total RAM space, free RAM space, process count, page size
  */
 
+#ifndef FF_MEM_MAN_H
+#define FF_MEM_MAN_H
+
 #include <sys/sysinfo.h>    // sysinfo
 #include <cstdio>
 #include <iostream>
@@ -100,6 +103,8 @@ void popsignal(){
     pthread_mutex_unlock( &count_mutex );
  
 }
+
+#endif /* FF_MEM_MAN_H */
 	
 
 /*

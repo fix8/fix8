@@ -18,24 +18,12 @@
     <ClCompile Include="..\utests\message_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\utests\utest_types.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\utests\utest_traits.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\utests\utest_classes.cpp">
+    <ClCompile Include="..\utests\precomp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\utests\utest_types.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\utests\utest_router.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\utests\utest_classes.hpp">
+    <ClInclude Include="..\utests\precomp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

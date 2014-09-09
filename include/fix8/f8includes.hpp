@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -33,15 +33,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_INCLUDES_HPP_
-# define _FIX8_INCLUDES_HPP_
-
-#include <f8dll.h>
-#include <f8config.h>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
+#if (defined(_MSC_VER) && _MSC_VER < 1700) || (!defined(_MSC_VER) && __cplusplus < 201103L)
+#error Fix8 requires C++11 compiler support.
 #endif
+//-------------------------------------------------------------------------------------------------
+#ifndef FIX8_INCLUDES_HPP_
+#define FIX8_INCLUDES_HPP_
+//-------------------------------------------------------------------------------------------------
+#include <fix8/f8dll.h>
+#include <fix8/f8config.h>
 
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>
@@ -53,14 +53,33 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/RegularExpression.h>
 #endif
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#include <pthread.h>
+#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#include <thread>
+#else
+# error Define what thread system to use
+#endif
+
+#if (MALLOC_SYSTEM == MALLOC_TBB)
+#ifdef _MSC_VER
+#include "tbb/tbbmalloc_proxy.h"
+#endif
+#endif
+
+#if defined PREPARE_MSG_SUPPORT
+#include <array>
+#endif
+#include <unordered_map>
+#include <functional>
 #include <errno.h>
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>
 #include <fix8/mpmc.hpp>
+#include <fix8/thread.hpp>
 #include <fix8/f8types.hpp>
 #include <fix8/f8utils.hpp>
 #include <fix8/xml.hpp>
-#include <fix8/thread.hpp>
 #include <fix8/gzstream.hpp>
 #include <fix8/tickval.hpp>
 #include <fix8/logger.hpp>
@@ -71,9 +90,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/session.hpp>
 #include <fix8/coroutine.hpp>
 #include <fix8/yield.hpp>
+#if F8MOCK_CONNECTION
+#include "mockConnection.hpp"
+#else
 #include <fix8/connection.hpp>
+#endif
+#include <fix8/messagebus.hpp>
 #include <fix8/configuration.hpp>
 #include <fix8/persist.hpp>
 #include <fix8/sessionwrapper.hpp>
+#include <fix8/multisession.hpp>
 
 #endif // _FIX8_INCLUDES_HPP_

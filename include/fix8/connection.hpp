@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONNECTION_HPP_
-# define _FIX8_CONNECTION_HPP_
+#ifndef FIX8_CONNECTION_HPP_
+#define FIX8_CONNECTION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Timespan.h>
@@ -52,14 +52,16 @@ class Session;
 template <typename T>
 class AsyncSocket
 {
-	dthread<AsyncSocket> _thread;
-
 protected:
 	coroutine _coro;
 	Poco::Net::StreamSocket *_sock;
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
+	f8_thread_cancellation_token  _cancellation_token;
+
+private:
+	f8_thread<AsyncSocket> _thread;
 
 public:
 	/*! Ctor.
@@ -67,10 +69,14 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _thread(FIX8::ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
+		: _sock(sock), _session(session), _pmodel(pmodel), _thread(std::ref(*this))
+	{
+	}
 
 	/// Dtor.
-	virtual ~AsyncSocket() {}
+	virtual ~AsyncSocket()
+	{
+	}
 
 	/*! Get the number of messages queued on this socket.
 	    \return number of queued messages */
@@ -78,25 +84,30 @@ public:
 
 	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
-	int operator()() { return execute(); }
+	int operator()() { return execute(_cancellation_token); }
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute() { return 0; }
+	virtual int execute(f8_thread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
 
+	/// Start the processing thread.
+	virtual void request_stop() { _thread.request_stop(); }
+
 	/// Stop the processing thread and quit.
-	virtual void quit() { _thread.kill(1); }
+	virtual void quit() { _thread.request_stop(); _thread.join(); }
 
 	/*! Get the underlying socket object.
 	    \return the socket */
 	Poco::Net::StreamSocket *socket() { return _sock; }
 
 	/*! Wait till processing thead has finished.
-	    \return 0 on success */
+		 \return 0 on success */
 	int join() { return _thread.join(); }
+
+	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -106,14 +117,17 @@ class FIXReader : public AsyncSocket<f8String>
 	enum { _max_msg_len = MAX_MSG_LENGTH, _chksum_sz = 7 };
 	f8_atomic<bool> _socket_error;
 
-	dthread<FIXReader> _callback_thread;
+	f8_thread<FIXReader> _callback_thread;
+	f8_thread_cancellation_token _callback_cancellation_token;
 
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
+#endif
 
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
-	int callback_processor();
+	F8API int callback_processor();
 
 	size_t _bg_sz; // 8=FIXx.x^A9=x
 
@@ -122,26 +136,28 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
-    /*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+	/*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
         \param where buffer to place bytes in
         \param sz number of bytes to read
         \return number of bytes read */
-    int sockRead(char *where, size_t sz)
-    {
-        if (static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr) < sz)
-            realSockRead(sz, _max_msg_len);
-        sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
-        memcpy(where, _read_buffer_rptr, sz);
-        _read_buffer_rptr += sz;
-        const size_t shift(_max_msg_len);
-        if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
-        {
-				memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
-				_read_buffer_rptr -= shift;
-				_read_buffer_wptr -= shift;
-        }
-        return sz;
-    }
+	int sockRead(char *where, size_t sz)
+	{
+		const size_t available_in_buffer(static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr));
+		if (available_in_buffer < sz)
+			realSockRead(sz - available_in_buffer, _max_msg_len);
+		sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
+		memcpy(where, _read_buffer_rptr, sz);
+		_read_buffer_rptr += sz;
+		const size_t shift(_max_msg_len);
+		if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
+		{
+			memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
+			_read_buffer_rptr -= shift;
+			_read_buffer_wptr -= shift;
+		}
+		return sz;
+	}
 
 	/*! Read bytes from the socket layer, throws PeerResetConnection.
 	    \param where buffer to place bytes in
@@ -174,6 +190,33 @@ class FIXReader : public AsyncSocket<f8String>
 		}
 		return _read_buffer_wptr - ptr;
 	}
+#else
+	/*! Read bytes from the socket layer, throws PeerResetConnection.
+		 \param where buffer to place bytes in
+		 \param sz number of bytes to read
+		 \return number of bytes read */
+	int sockRead(char *where, const size_t sz)
+	{
+		unsigned remaining(static_cast<unsigned>(sz)), rddone(0);
+		while (remaining > 0)
+		{
+			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
+			if (rdSz <= 0)
+			{
+				if (errno == EAGAIN
+#if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
+					|| errno == EWOULDBLOCK
+#endif
+				)
+					continue;
+				throw PeerResetConnection("sockRead: connection gone");
+			}
+			rddone += rdSz;
+			remaining -= rdSz;
+		}
+		return rddone;
+	}
+#endif
 
 public:
 	/*! Ctor.
@@ -181,15 +224,20 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
-        , _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
-        , _bg_sz()
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(std::ref(*this), &FIXReader::callback_processor)
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
+#endif
+		, _bg_sz()
 	{
 		set_preamble_sz();
 	}
 
 	/// Dtor.
-	virtual ~FIXReader() {}
+	virtual ~FIXReader()
+	{
+		quit();
+	}
 
 	/// Start the processing threads.
 	virtual void start()
@@ -208,8 +256,12 @@ public:
 	virtual void quit()
 	{
 		if (_pmodel == pm_pipeline)
-			_callback_thread.kill(1);
-		AsyncSocket<f8String>::quit();
+		{
+			_callback_thread.request_stop();
+			_callback_thread.join();
+		}
+		if (_pmodel != pm_coro)
+			AsyncSocket<f8String>::quit();
 	}
 
 	/// Send a message to the processing method instructing it to quit.
@@ -219,20 +271,23 @@ public:
 		{
 			const f8String from;
 			_msg_queue.try_push(from);
+			_callback_thread.request_stop();
 		}
+		if (_pmodel != pm_coro)
+			AsyncSocket<f8String>::request_stop();
 	}
 
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-   virtual int execute();
+	F8API virtual int execute(f8_thread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
-	    \return 0 on success */
-   int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
+		 \return 0 on success */
+	int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
-	void set_preamble_sz();
+	F8API void set_preamble_sz();
 
 	/*! Check to see if the socket is in error
 	    \return true if there was a socket error */
@@ -245,6 +300,8 @@ public:
 		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
+
+	f8_thread_cancellation_token& callback_cancellation_token() { return _callback_cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -262,7 +319,10 @@ public:
 		: AsyncSocket<Message *>(sock, session, pmodel) {}
 
 	/// Dtor.
-	virtual ~FIXWriter() {}
+	virtual ~FIXWriter()
+	{
+		quit();
+	}
 
 	/*! Place Fix message on outbound message queue.
 	    \param from message to send
@@ -275,7 +335,7 @@ public:
 		f8_scoped_spin_lock guard(_con_spl);
 		if (destroy)
 		{
-			scoped_ptr<Message> msg(from);
+			std::unique_ptr<Message> msg(from);
 			return _session.send_process(msg.get());
 		}
 		return _session.send_process(from);
@@ -310,15 +370,15 @@ public:
 		{
 			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
 			{
-				scoped_ptr<Message> smsg(*itr);
+				std::unique_ptr<Message> smsg(*itr);
 			}
 		}
 		///@todo: need assert on result==msgs.size()
 		return result;
 	}
 	/*! Wait till writer thead has finished.
-	    \return 0 on success */
-   int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
+		 \return 0 on success */
+	int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
 
 	/*! Send Fix message directly
 	    \param from message to send
@@ -342,14 +402,15 @@ public:
 	/*! Send message over socket.
 	    \param data char * buffer to send
 	    \param remaining number of bytes
+	    \param nb - if true, don't block
 	    \return number of bytes sent */
-	int send(const char *data, size_t remaining)
+	int send(const char *data, size_t remaining, bool nb=false)
 	{
 		unsigned wrdone(0);
 
 		while (remaining > 0)
 		{
-			const int wrtSz(_sock->sendBytes(data + wrdone, remaining));
+			const int wrtSz(_sock->sendBytes(data + wrdone, static_cast<int>(remaining)));
 			if (wrtSz < 0)
 			{
 				if (errno == EAGAIN
@@ -357,7 +418,11 @@ public:
 					|| errno == EWOULDBLOCK
 #endif
 				)
+				{
+					if (nb)
+						return wrdone;
 					continue;
+				}
 				throw PeerResetConnection("send: connection gone");
 			}
 
@@ -376,11 +441,24 @@ public:
 	}
 
 	/// Send a message to the processing method instructing it to quit.
-	virtual void stop() { _msg_queue.try_push(0); }
+	virtual void stop()
+	{
+		_msg_queue.try_push(0);
+		if (_pmodel == pm_pipeline)
+			AsyncSocket::request_stop();
+	}
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-    virtual int execute();
+	F8API virtual int execute(f8_thread_cancellation_token& cancellation_token);
+
+	/// Stop the processing threads and quit.
+	virtual void quit()
+	{
+		if (_pmodel == pm_pipeline)
+			AsyncSocket<Message *>::quit();
+	}
+
 };
 
 //----------------------------------------------------------------------------------------
@@ -456,10 +534,10 @@ public:
 	bool is_secure() const { return _secured; }
 
 	/// Start the reader and writer threads.
-	void start();
+	F8API void start();
 
 	/// Stop the reader and writer threads.
-	void stop();
+	F8API void stop();
 
 	/*! Get the connection state.
 	    \return true if connected */
@@ -471,6 +549,7 @@ public:
 
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	virtual bool write(Message *from, bool destroy=true) { return _writer.write(from, destroy); }
 
@@ -480,7 +559,8 @@ public:
 	virtual bool write(Message& from) { return _writer.write(from); }
 
 	/*! Write messages to the underlying socket as a single batch.
-	    \param from Message to write
+	    \param msgs vector of Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
@@ -531,9 +611,7 @@ public:
 	{
 		const unsigned current_sz(sock->getReceiveBufferSize());
 		sock->setReceiveBufferSize(sz);
-		std::ostringstream ostr;
-		ostr << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
-		GlobalLogger::log(ostr.str());
+		glout_info << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
 	}
 
 	/*! Set the socket send buffer sz
@@ -543,9 +621,7 @@ public:
 	{
 		const unsigned current_sz(sock->getSendBufferSize());
 		sock->setSendBufferSize(sz);
-		std::ostringstream ostr;
-		ostr << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
-		GlobalLogger::log(ostr.str());
+		glout_info << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
 	}
 	/*! Set the socket recv buffer sz
 	    \param sz new size */
@@ -570,7 +646,7 @@ public:
 
 	/*! Call the FIXreader method
 	    \return result of call */
-	int reader_execute() { return _reader.execute(); }
+	int reader_execute() { return _reader.execute(_reader.cancellation_token()); }
 
 	/*! Check if the reader will block
 	    \return true if won't block */
@@ -578,7 +654,7 @@ public:
 
 	/*! Call the FIXreader method
 	    \return result of call */
-	int writer_execute() { return _writer.execute(); }
+	int writer_execute() { return _writer.execute(_writer.cancellation_token()); }
 
 	/*! Check if the writer will block
 	    \return true if won't block */
@@ -602,7 +678,7 @@ public:
 		 \param secured true for ssl connection
 	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 							bool secured=false)
 		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
@@ -611,7 +687,7 @@ public:
 
 	/*! Establish connection.
 	    \return true on success */
-	bool connect();
+	F8API bool connect();
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -626,20 +702,34 @@ public:
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket
+	    \param reuse_addr set or clear the resueaddr flag on the socket
+	    \param linger set the tcp linger value (secs) on the socket, -1=disable
+	    \param keepalive set or clear the tcp keepalive flag on the socket
 		 \param secured true for ssl connection
 	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
-						  bool secured=false	) :
+						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+						  bool reuse_addr=false, int linger=-1, bool keepalive=false, bool secured=false) :
 		Connection(sock, addr, session, hb_interval, pmodel, secured)
 	{
-		_sock->setLinger(false, 0);
+		_sock->setLinger(linger >= 0, linger);
 		_sock->setNoDelay(no_delay);
+		_sock->setReuseAddress(reuse_addr);
+		_sock->setKeepAlive(keepalive);
 	}
 
 	/// Dtor.
 	virtual ~ServerConnection() {}
 };
+
+//-------------------------------------------------------------------------------------------------
+// our buffered RAII ostream log target for Connection session member
+#define scout ssout_info((&_session))
+#define scout_info ssout_info((&_session))
+#define scout_warn ssout_warn((&_session))
+#define scout_error ssout_error((&_session))
+#define scout_fatal ssout_fatal((&_session))
+#define scout_debug ssout_debug((&_session))
 
 //-------------------------------------------------------------------------------------------------
 

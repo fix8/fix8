@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,34 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <algorithm>
-
-#ifndef _MSC_VER
-# include <strings.h>
-# include <sys/time.h>
-# include <unistd.h>
-# include <netdb.h>
-# include <syslog.h>
-#endif
-
-#include <string.h>
-#include <time.h>
-#include <errno.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <time.h>
-
-#include <map>
-#include <set>
-#include <list>
-#include <vector>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
@@ -74,25 +47,25 @@ const XmlElement::XmlAttrs XmlElement::emptyattrs_;
 RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,}[1-4]{0,});"),
 	XmlElement::rIn_("href=\"([^\"]+)\""),
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
+XmlElement::XmlFlags XmlElement::flags_;
 
 //----------------------------------------------------------------------------------------
-const Str2Chr::TypePair valueTable[] =
+const Str2Chr XmlElement::stringtochar_
 {
-	Str2Chr::TypePair("amp", '&'),	Str2Chr::TypePair("lt", '<'),		Str2Chr::TypePair("gt", '>'),
-	Str2Chr::TypePair("apos", '\''),	Str2Chr::TypePair("quot", '"'),	Str2Chr::TypePair("nbsp", 160),
-	Str2Chr::TypePair("iexcl", 161),	Str2Chr::TypePair("cent", 162),	Str2Chr::TypePair("pound", 163),
-	Str2Chr::TypePair("curren", 164),Str2Chr::TypePair("yen", 165),	Str2Chr::TypePair("brvbar", 166),
-	Str2Chr::TypePair("sect", 167),	Str2Chr::TypePair("uml", 168),	Str2Chr::TypePair("copy", 169),
-	Str2Chr::TypePair("ordf", 170),	Str2Chr::TypePair("laquo", 171),	Str2Chr::TypePair("not", 172),
-	Str2Chr::TypePair("shy", 173),	Str2Chr::TypePair("reg", 174),	Str2Chr::TypePair("macr", 175),
-	Str2Chr::TypePair("deg", 176),	Str2Chr::TypePair("plusmn", 177),Str2Chr::TypePair("sup2", 178),
-	Str2Chr::TypePair("sup3", 179),	Str2Chr::TypePair("acute", 180),	Str2Chr::TypePair("micro", 181),
-	Str2Chr::TypePair("para", 182),	Str2Chr::TypePair("middot", 183),Str2Chr::TypePair("cedil", 184),
-	Str2Chr::TypePair("sup1", 185),	Str2Chr::TypePair("ordm", 186),	Str2Chr::TypePair("raquo", 187),
-	Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
-	Str2Chr::TypePair("iquest", 191)
+	{"amp", '&'},		{"lt", '<'},		{"gt", '>'},
+	{"apos", '\''},	{"quot", '"'},		{"nbsp", 160},
+	{"iexcl", 161},	{"cent", 162},		{"pound", 163},
+	{"curren", 164},	{"yen", 165},		{"brvbar", 166},
+	{"sect", 167},		{"uml", 168},		{"copy", 169},
+	{"ordf", 170},		{"laquo", 171},	{"not", 172},
+	{"shy", 173},		{"reg", 174},		{"macr", 175},
+	{"deg", 176},		{"plusmn", 177},	{"sup2", 178},
+	{"sup3", 179},		{"acute", 180},	{"micro", 181},
+	{"para", 182},		{"middot", 183},	{"cedil", 184},
+	{"sup1", 185},		{"ordm", 186},		{"raquo", 187},
+	{"frac14", 188},	{"frac12", 189},	{"frac34", 190},
+	{"iquest", 191}
 };
-const Str2Chr XmlElement::stringtochar_(valueTable, sizeof(valueTable)/sizeof(Str2Chr::TypePair), '?');
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -149,7 +122,7 @@ bool exec_cmd(const string& cmd, string& result)
    if (apipe)
    {
       const size_t maxcmdresultlen(1024);
-      char buffer[maxcmdresultlen] = {};
+      char buffer[maxcmdresultlen] {};
       if (!feof(apipe) && fgets(buffer, maxcmdresultlen, apipe) && buffer[0])
       {
          result = buffer;
@@ -179,7 +152,10 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 	enum
   	{
 		olb, otag, ocom0, ocom1, comment, ccom0, ccom1, ccomment,
-		oattr, odec, cdec, value, cls, ctag, finished
+		oattr, odec, cdec, value, cls, ctag,
+		cdata0, cdata1, cdata2, cdata3, cdata4, cdata5, cdata6, cdata7,	// ![CDATA[
+		vcdata, ecdata0, ecdata1, // ]]
+		finished
 	}
   	state(olb);
 
@@ -188,7 +164,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 	if (rootAttr)
 	{
 		attrs_ = new XmlAttrs;
-		attrs_->insert(XmlAttrs::value_type("docpath", rootAttr));
+		attrs_->insert({"docpath", rootAttr});
 	}
 
 	if (root_->maxdepth_ < depth)
@@ -295,9 +271,112 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 			if (c == '>')
 				state = depth_ ? finished : olb;
 			break;
+		case cdata0:
+			state = cdata1;
+			break;
+		case cdata1:
+			if (c == '[')
+				state = cdata2;
+			else
+			{
+				state = value;
+				tmpval += "![";
+				tmpval += c;
+			}
+			break;
+		case cdata2:
+			if (c == 'C')
+				state = cdata3;
+			else
+			{
+				state = value;
+				tmpval += "![";
+				tmpval += c;
+			}
+			break;
+		case cdata3:
+			if (c == 'D')
+				state = cdata4;
+			else
+			{
+				state = value;
+				tmpval += "![C";
+				tmpval += c;
+			}
+			break;
+		case cdata4:
+			if (c == 'A')
+				state = cdata5;
+			else
+			{
+				state = value;
+				tmpval += "![CD";
+				tmpval += c;
+			}
+			break;
+		case cdata5:
+			if (c == 'T')
+				state = cdata6;
+			else
+			{
+				state = value;
+				tmpval += "![CDA";
+				tmpval += c;
+			}
+			break;
+		case cdata6:
+			if (c == 'A')
+				state = cdata7;
+			else
+			{
+				state = value;
+				tmpval += "![CDAT";
+				tmpval += c;
+			}
+			break;
+		case cdata7:
+			if (c == '[')
+				state = vcdata;
+			else
+			{
+				state = value;
+				tmpval += "![CDATA";
+				tmpval += c;
+			}
+			break;
+		case vcdata:
+			if (c == ']')
+				state = ecdata0;
+			else
+				tmpval += c;
+			break;
+		case ecdata0:
+			if (c == ']')
+				state = ecdata1;
+			else
+			{
+				tmpval += ']';
+				tmpval += c;
+				state = vcdata;
+			}
+			break;
+		case ecdata1:
+			if (c == '>')
+				state = value;
+			else
+			{
+				tmpval += "]]";
+				state = vcdata;
+			}
+			break;
 		case value:
 			if (c == '<')
 			{
+				if (ifsptr->peek() == '!')
+				{
+					state = cdata0;
+					break;
+				}
 				if (ifsptr->peek() != '/')
 				{
 					ifsptr->putback(c);
@@ -332,7 +411,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 									itr != child->children_->begin()->second->children_->end(); ++itr)
 								{
 									--itr->second->depth_;
-									children_->insert(XmlSubEls::value_type(itr->first, itr->second));
+									children_->insert({itr->first, itr->second});
 									ordchildren_->insert(itr->second);
 								}
 
@@ -342,7 +421,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 							else
 							{
 								++chldcnt_;
-								children_->insert(XmlSubEls::value_type(child->GetTag(), child));
+								children_->insert({child->GetTag(), child});
 								ordchildren_->insert(child);
 							}
 						}
@@ -434,6 +513,25 @@ illegal_tag:
 }
 
 //-----------------------------------------------------------------------------------------
+bool XmlElement::Insert(XmlElement *what)
+{
+	if (!what)
+		return false;
+
+	if (!children_)
+	{
+		children_ = new XmlSubEls;
+		ordchildren_ = new XmlSet;
+	}
+
+	++chldcnt_;
+	children_->insert({what->GetTag(), what});
+	ordchildren_->insert(what);
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 int XmlElement::ParseAttrs(const string& attlst)
 {
 	istringstream istr(attlst);
@@ -468,8 +566,11 @@ int XmlElement::ParseAttrs(const string& attlst)
 			}
 			break;
 		case oc0:
-			if (c == '*')
+			if (c == '*' && !(flags_ & noextensions))
+			{
 				state = comment;
+				break;
+			}
 			else
 			{
 				tmptag += '/';
@@ -519,7 +620,7 @@ illegal_char:
 				{
 					if (!attrs_)
 						attrs_ = new XmlAttrs;
-					if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
+					if (!attrs_->insert({tmptag, InplaceXlate(tmpval)}).second)
 					{
 						++root_->errors_;
 						ostringstream ostr;
@@ -540,7 +641,7 @@ illegal_char:
 		}
 	}
 
-	return attrs_ ? attrs_->size() : 0;
+	return attrs_ ? static_cast<int>(attrs_->size()) : 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -551,20 +652,20 @@ XmlElement::~XmlElement()
 	delete decl_;
 
 	if (children_ && !_was_include)
-		for_each (children_->begin(), children_->end(), free_ptr<Delete2ndPairObject<> >());
+		for_each (children_->begin(), children_->end(), [](XmlSubEls::value_type& pp) { delete pp.second; });
 	delete children_;
 	delete ordchildren_;
 }
 
 //-----------------------------------------------------------------------------------------
-const XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
-	const string *aval, const char delim)	const// find 1st matching entity
+const XmlElement *XmlElement::find(const string& what, const string *atag,
+	const string *aval, const char delim)	const // find 1st matching entity
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-		return root_->find(what.substr(2), ignorecase, atag, aval, delim);
+		return root_->find(what.substr(2), atag, aval, delim);
 
-	if (ignorecase ? what % tag_ : what == tag_)
-		return atag && aval && !findAttrByValue(*atag, *aval) ? 0 : this;
+	if (flags_ & nocase ? what % tag_ : what == tag_)
+		return atag && aval && !findAttrByValue(*atag, *aval) ? nullptr : this;
 
 	if (children_)
 	{
@@ -575,29 +676,33 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 		{
 			lwhat.erase(0, fpos + 1);
 			fpos = lwhat.find_first_of(delim);
-			string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
-			XmlSubEls::iterator itr(children_->find(nwhat));
-			if (itr != children_->end())
-				return itr->second->find(lwhat, ignorecase, atag, aval);
+			const string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
+			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
+			while (result.first != result.second)
+			{
+				const XmlElement *ptr((*result.first++).second->find(lwhat, atag, aval, delim));
+				if (ptr)
+					return ptr;
+			}
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------------------
-int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
-	const string *atag, const string *aval, const char delim) const	// find all matching entities
+int XmlElement::find(const string& what, XmlSet& eset, const string *atag, const string *aval,
+		const char delim) const	// find all matching entities
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-		return root_->find(what.substr(2), eset, ignorecase, atag, aval, delim);
+		return root_->find(what.substr(2), eset, atag, aval, delim);
 
-	if (ignorecase ? what % tag_ : what == tag_)
+	if (flags_ & nocase ? what % tag_ : what == tag_)
 	{
 		if (atag && aval && !findAttrByValue(*atag, *aval))
 			return 0;
 		eset.insert(this);
-		return eset.size();
+		return static_cast<int>(eset.size());
 	}
 
 	if (children_)
@@ -609,11 +714,11 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 		{
 			lwhat.erase(0, fpos + 1);
 			fpos = lwhat.find_first_of(delim);
-			string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
+			const string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
-				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval);
-			return eset.size();
+				(*result.first++).second->find(lwhat, eset, atag, aval, delim);
+			return static_cast<int>(eset.size());
 		}
 	}
 
@@ -656,7 +761,8 @@ const string& XmlElement::InplaceXlate (string& what)
 	{
 		string whatv;
 		rCX_.SubExpr(match, what, whatv, 0, 1);
-		rCX_.Replace(match, what, stringtochar_.find_value(whatv)); // not found character entity replaces string with '?'
+		const auto sitr(stringtochar_.find(whatv));
+		rCX_.Replace(match, what, sitr == stringtochar_.cend() ? '?' : sitr->second); // not found character entity replaces string with '?'
 	}
 
 	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
@@ -679,39 +785,51 @@ const string& XmlElement::InplaceXlate (string& what)
 		rCE_.Replace(match, what, oval);
 	}
 
-   if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
-   {
-      string whatv;
-      rEn_.SubExpr(match, what, whatv, 0, 1);
-      const string result(getenv(whatv.c_str()));
-      if (!result.empty())
-         rEn_.Replace(match, what, result);
-   }
+	if (!(flags_ & noextensions))
+	{
+		if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
+		{
+			string whatv;
+			rEn_.SubExpr(match, what, whatv, 0, 1);
+			const char *gresult(getenv(whatv.c_str()));
+			if (gresult)
+			{
+				const string result(gresult);
+				if (!result.empty())
+					rEn_.Replace(match, what, result);
+			}
+		}
 
-   if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
-   {
-      string whatv;
-      rEv_.SubExpr(match, what, whatv, 0, 1);
-      string result;
-      if (exec_cmd(whatv, result))
-         rEv_.Replace(match, what, result);
+		if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
+		{
+			string whatv;
+			rEv_.SubExpr(match, what, whatv, 0, 1);
+			string result;
+			if (exec_cmd(whatv, result))
+				rEv_.Replace(match, what, result);
+		}
    }
 
 	return what;
 }
 
 //-----------------------------------------------------------------------------------------
-XmlElement *XmlElement::Factory(const string& fname)
+XmlElement *XmlElement::Factory(istream& ifs, const char *docpath)
 {
-	ifstream ifs(fname.c_str());
-
 #ifdef _MSC_VER
 	stringstream buffer;
 	buffer << ifs.rdbuf();
-   return ifs ? new XmlElement(buffer, 0, 0, 0, 0, fname.c_str()) : 0;
+   return ifs ? new XmlElement(buffer, 0, nullptr, 0, 0, docpath) : nullptr;
 #else
-	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : 0;
+	return ifs ? new XmlElement(ifs, 0, nullptr, 0, 0, docpath) : nullptr;
 #endif
+}
+
+//-----------------------------------------------------------------------------------------
+XmlElement *XmlElement::Factory(const string& fname)
+{
+	ifstream ifs(fname.c_str());
+	return Factory(ifs, fname.c_str());
 }
 
 //-----------------------------------------------------------------------------------------

@@ -7,9 +7,7 @@
  *
  *  \brief This file describes the map skeleton.
  */
- 
-#ifndef _FF_MAP_HPP_
-#define _FF_MAP_HPP_
+
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -28,6 +26,9 @@
  ****************************************************************************
  */
 
+ 
+#ifndef FF_MAP_HPP
+#define FF_MAP_HPP
 
 #include <vector>
 #include <ff/svector.hpp>
@@ -37,9 +38,13 @@
 #include <ff/farm.hpp>
 #include <ff/partitioners.hpp>
 
-// see http://www.stroustrup.com/C++11FAQ.html#11
-#if __cplusplus > 199711L
+// NOTE: A better check would be needed !
+// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used 
+// (icpc -E -dM -std=c++11 -x c++ /dev/null | grep GXX_EX)
+#if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_AUTO) && defined(HAS_CXX11_LAMBDA))
 #include <ff/parallel_for.hpp>
+#else
+#pragma message("C++ >= 201103L required, build will fail")
 #endif
 
 #if defined(FF_OCL)
@@ -81,12 +86,14 @@ namespace ff {
 #define MAPWTIME(mapname)                                           \
     _map_##mapname.ffwTime()
 
-    
-#if __cplusplus > 199711L
-#define FF_MAP(mapname, V,size,func,nworkers)                           \
-    FF_PARFOR_BEGIN(mapname, i, 0, size, 1, (size/nworkers), nworkers) { \
-        V[i]=func(i);                                                   \
-    } FF_PARFOR_END(mapname)
+
+
+#if (__cplusplus >= 201103L) || (defined(HAS_CXX11_AUTO) && defined(HAS_CXX11_LAMBDA))
+#define FF_MAP(mapname,V,size,func,nworkers)                        \
+    parallel_for(0,size,[&V](const long i) { V[i]=func(i);},nworkers);
+
+#else
+#pragma message("C++ >= 201103L required, build will fail")
 #endif
 
 
@@ -307,12 +314,12 @@ public:
      * \return TODO
      */
     ~ff_map() {
+        if (end_callback) end_callback(end_callback_param);
         delete (mapE*)(getEmitter());
         mapC* C = (mapC*)(getCollector());
         if (C) delete C;
-        ff_node** w= getWorkers();
-        int nw= getNWorkers();
-        for(int i=0;i<nw;++i) delete (mapW*)(w[i]);	
+        const svector<ff_node*>& w= getWorkers();
+        for(size_t i=0;i<w.size();++i) delete (mapW*)(w[i]);	
     }
 
     int   get_my_id() const { return -1; };
@@ -818,7 +825,7 @@ struct name {                                                    \
 
 
 #define NEWMAP(name, task_t, f, input, sz)               \
-    ff_mapCUDA<task_t,mapf> *name =                      \
+    ff_mapCUDA<task_t,f> *name =                         \
         new ff_mapCUDA<task_t, f>(new f, input, sz)
 #define NEWMAPONSTREAM(task_t, f)                        \
     new ff_mapCUDA<task_t, f>(new f)
@@ -1077,10 +1084,6 @@ private:
 };
 
 #endif /* FF_CUDA */
-
-
-
-
     
 /*!
 *  @}
@@ -1089,4 +1092,4 @@ private:
     
 } // namespace ff
 
-#endif /* _FF_MAP_HPP_ */
+#endif /* FF_MAP_HPP */

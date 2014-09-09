@@ -1,6 +1,7 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
+#include "precomp.hpp"
 #ifdef _MSC_VER
-#include <f8config.h>
+#include <fix8/f8config.h>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,

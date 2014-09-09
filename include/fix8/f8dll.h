@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -33,14 +33,28 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _F8DLL_H_INCLUDED_
-#define _F8DLL_H_INCLUDED_
+// F8API required only non-inlined publics, public/private statics that exposed via inline
+// functions - or the entire class could be marked with F8API.
+//-------------------------------------------------------------------------------------------------
+#ifndef FIX8_DLL_H_INCLUDED_
+#define FIX8_DLL_H_INCLUDED_
 
 #if defined(_MSC_VER)
     #if defined(BUILD_F8API)
-	#define F8API __declspec(dllexport)
+	    #define F8API __declspec(dllexport)
     #else
-	#define F8API __declspec(dllimport)
+	    #define F8API __declspec(dllimport)
+        #ifndef FIX8_NO_AUTOLINK
+            #ifdef _DEBUG
+                #define FIX8_LIB_SUFFIX "d.lib"
+            #else
+                #define FIX8_LIB_SUFFIX ".lib"
+            #endif
+            #pragma comment(lib, "fix8" FIX8_LIB_SUFFIX)
+            //#pragma message("Auto linking to fix8" FIX8_LIB_SUFFIX)
+        #else
+            //#pragma message("Skipping auto linking to fix8" FIX8_LIB_SUFFIX)
+        #endif
     #endif
 #else
     #define F8API

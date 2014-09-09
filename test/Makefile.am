@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -43,9 +43,11 @@ harness_SOURCES = harness.cpp myfix.hpp
 hftest_SOURCES = hftest.cpp hftest.hpp
 hfprint_SOURCES = hfprint.cpp hftest.hpp
 libmyfix_la_SOURCES = Myfix_classes.cpp Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
-					 		 Myfix_router.hpp Myfix_classes.hpp
+                      Myfix_router.hpp Myfix_classes.hpp
 libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
-					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
+                       Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
+
+BUILT_SOURCES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
 
 CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
 libmyfix_la_CXXFLAGS = -I$(top_srcdir)/include
@@ -59,12 +61,16 @@ XML_FIXT_SCHEMA = $(top_srcdir)/schema/FIXT11.xml
 .NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 
 $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVp Perf -R -n TEX $(XML_HF_SCHEMA)
+	$(top_srcdir)/compiler/f8c --second --verbose --noconst --prefix Perf --norealm --namespace TEX $(XML_HF_SCHEMA)
 
+LIBMYFIXFLAGS = --verbose --retain
+if F8TESTSTATIC
+LIBMYFIXFLAGS += --noshared
+endif
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)
+	$(top_srcdir)/compiler/f8c $(LIBMYFIXFLAGS) --namespace TEX $(XML_SCHEMA) --fixt $(XML_FIXT_SCHEMA)
 
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML
 GEN_LIBS = -lfix8 -lpthread
 if LINK_RT
 GEN_LIBS += -lrt
@@ -75,16 +81,26 @@ endif
 if TBBSUPPORT
 GEN_LIBS += -ltbb
 endif
+if LIBMEMCACHEDSUPPORT
+GEN_LIBS += -lmemcached
+endif
+if LIBHIREDISSUPPORT
+GEN_LIBS += -lhiredis
+endif
+
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
+if !USEOSX
+ALL_LIBS += -rdynamic
+endif
 
 if TOGGLETRACKINGASSIGNMENTS
 libmyfix_la_CXXFLAGS += -fno-var-tracking -fno-var-tracking-assignments
 endif
-f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
-f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
-hftest_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
-hfprint_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
-harness_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
+f8test_LDFLAGS = $(ALL_LIBS) -lmyfix
+f8print_LDFLAGS = $(ALL_LIBS) -lmyfix
+hftest_LDFLAGS = $(ALL_LIBS) -lhftest
+hfprint_LDFLAGS = $(ALL_LIBS) -lhftest
+harness_LDFLAGS = $(ALL_LIBS) -lmyfix
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz

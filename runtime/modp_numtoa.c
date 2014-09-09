@@ -40,7 +40,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
-#include <f8dll.h>
+#include <fix8/f8dll.h>
 
 // other interesting references on num to string convesion
 // http://www.jb.man.ac.uk/~slowe/cpp/itoa.html
@@ -54,7 +54,7 @@
  * Powers of 10
  * 10^0 to 10^9
  */
-static const double pow10[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
+static const double pow10_[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
                                10000000, 100000000, 1000000000};
 
 static void strreverse(char* begin, char* end)
@@ -65,7 +65,7 @@ static void strreverse(char* begin, char* end)
 }
 
 // slighly modified by DD to return target length
-size_t modp_dtoa(double value, char* str, int prec) // DD
+F8API size_t modp_dtoa(double value, char* str, int prec) // DD
 {
 	/* if input is larger than thres_max, revert to exponential */
     const double thres_max = (double)(0x7FFFFFFF);
@@ -103,14 +103,14 @@ size_t modp_dtoa(double value, char* str, int prec) // DD
     }
 
     whole = (int) value;
-    tmp = (value - whole) * pow10[prec];
+    tmp = (value - whole) * pow10_[prec];
     frac = (uint32_t)(tmp);
     diff = tmp - frac;
 
     if (diff > 0.5) {
         ++frac;
         /* handle rollover, e.g.  case 0.99 with prec 1 is 1.0  */
-        if (frac >= pow10[prec]) {
+        if (frac >= pow10_[prec]) {
             frac = 0;
             ++whole;
         }
@@ -139,15 +139,24 @@ size_t modp_dtoa(double value, char* str, int prec) // DD
             /* 1.5 -> 2, but 2.5 -> 2 */
             ++whole;
         }
-    } else {
-        int count = prec;
+    } else {    // these mods DD: remove trailing zero in prec (unless there is only one 0)
+        int count = prec, done = 0;
         // now do fractional part, as an unsigned number
-        do {
+        do
+        {
             --count;
-            *wstr++ = (char)(48 + (frac % 10));
-        } while (frac /= 10);
+            if (frac % 10)
+                done += (*wstr++ = (char)(48 + (frac % 10)));
+            else if (done)
+                *wstr++ = '0';
+        }
+        while (frac /= 10);
         // add extra 0s
-        while (count-- > 0) *wstr++ = '0';
+        if (!done)
+            *wstr++ = '0';
+        else
+            while (count-- > 0)
+                *wstr++ = '0';
         // add decimal
         *wstr++ = '.';
     }
@@ -155,12 +164,13 @@ size_t modp_dtoa(double value, char* str, int prec) // DD
     // do whole part
     // Take care of sign
     // Conversion. Number is reversed.
-    do *wstr++ = (char)(48 + (whole % 10)); while (whole /= 10);
-    if (neg) {
+    do
+        *wstr++ = (char)(48 + (whole % 10));
+    while (whole /= 10);
+    if (neg)
         *wstr++ = '-';
-    }
-    *wstr='\0';
+    *wstr = 0;
     strreverse(str, wstr-1);
-	return wstr - str; // DD
+    return wstr - str; // DD
 }
 

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,47 +34,48 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONSOLEMENU_HPP_
-# define _FIX8_CONSOLEMENU_HPP_
+#ifndef FIX8_CONSOLEMENU_HPP_
+#define FIX8_CONSOLEMENU_HPP_
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-typedef std::deque<FIX8::Message *> MsgList;
+using MsgList = std::deque<FIX8::Message *>;
 
 //-------------------------------------------------------------------------------------------------
 /// Console test harness menu
 class ConsoleMenu
 {
 	const F8MetaCntx& _ctx;
-	Session *_ses;
 	std::istream& _is;
 	std::ostream& _os;
-	const int _lpp;
+	int _lpp;
 	static const f8String _opt_keys, _fld_prompt;
 
 public:
 	/*! Ctor
 	 \param ctx - reference to generated metadata
-	 \param ses - pointer to session
 	 \param is - reference to input stream
 	 \param os - reference to output stream
 	 \param lpp - lines to print per page */
-	ConsoleMenu (const F8MetaCntx& ctx, Session *ses, std::istream& is=std::cin, std::ostream& os=std::cout, const int lpp=20)
-		: _ctx(ctx), _ses(ses), _is(is), _os(os), _lpp(lpp) {}
+	ConsoleMenu (const F8MetaCntx& ctx, std::istream& is=std::cin, std::ostream& os=std::cout, int lpp=20)
+		: _ctx(ctx), _is(is), _os(os), _lpp(lpp) {}
 
 	/// Dtor.
 	virtual ~ConsoleMenu () {}
 
-	virtual const BaseMsgEntry *SelectMsg() const;
-	virtual const FieldTable::Pair *SelectField(const Message *msg, int groupid=0) const;
-	virtual int SelectRealm(const unsigned short fnum, const RealmBase *rb) const;
-	Message *SelectFromMsg(MsgList& lst) const;
-	virtual int CreateMsgs(tty_save_state& tty, MsgList& lst) const;
-	void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
-	virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
-	virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API virtual const BaseMsgEntry *SelectMsg() const;
+	F8API virtual const FieldTable::Pair *SelectField(const Message *msg, int groupid = 0) const;
+	F8API virtual int SelectRealm(const unsigned short fnum, const RealmBase *rb) const;
+	F8API Message *SelectFromMsg(MsgList& lst) const;
+	F8API virtual int CreateMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
+	F8API virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
+
+	int get_lpp() const { return _lpp; }
+	void set_lpp(int lpp) { _lpp = lpp; }
 
 	bool get_yn(const f8String& prompt, bool echo=false) const { return toupper(get_key(prompt, echo)) == 'Y'; }
 	char get_key(const f8String& prompt=std::string(), bool echo=false) const
@@ -92,7 +93,7 @@ public:
 		}
 		return 0;
 	}
-	f8String& GetString(tty_save_state& tty, f8String& to) const;
+	F8API f8String& GetString(tty_save_state& tty, f8String& to) const;
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,22 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -60,12 +45,13 @@ using namespace std;
 #if defined CODECTIMING
 codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
+unsigned MessageBase::_tabsize = defaults::tabsize;
 
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data());
-	const size_t flen(from.size());
+	const unsigned flen(static_cast<unsigned>(from.size()));
 	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
 
@@ -100,8 +86,8 @@ unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore, bool permissive_mode)
 {
-	const unsigned fsize(from.size() - ignore), npos(0xffffffff);
-	unsigned pos(_pos.size()), last_valid_pos(npos);
+	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore), npos(0xffffffff);
+	unsigned pos(static_cast<unsigned>(_pos.size())), last_valid_pos(npos);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 	size_t last_valid_offset(0);
@@ -119,6 +105,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 					last_valid_pos = pos;
 					last_valid_offset = s_offset;
 				}
+				_unknown.append(dptr + s_offset, result);
 				s_offset += result;
 				continue;
 			}
@@ -134,13 +121,13 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		{
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
-				throw InvalidField(tv);
+				throw UnknownField(tv);
 			BaseField *bf(be->_create._do(val, be->_rlm, -1));
 			add_field_decoder(tv, ++pos, bf);
 			itr->_field_traits.set(FieldTrait::present);
 			// check if repeating group and num elements > 0
-			if (itr->_field_traits.has(FieldTrait::group) && static_cast<Field<int, 0> *>(bf)->get() > 0)
-				s_offset = decode_group(tv, from, s_offset, ignore);
+			if (itr->_field_traits.has(FieldTrait::group) && has_group_count(bf))
+				s_offset = decode_group(nullptr, tv, from, s_offset, ignore);
 		}
 	}
 
@@ -153,23 +140,23 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		throw MissingMandatoryField(ostr.str());
 	}
 
-	return permissive_mode && last_valid_pos == pos ? last_valid_offset : s_offset;
+	return permissive_mode && last_valid_pos == pos ? static_cast<unsigned>(last_valid_offset) : s_offset;
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& from, unsigned s_offset, unsigned ignore)
+unsigned MessageBase::decode_group(GroupBase *grpbase, const unsigned short fnum, const f8String& from,
+	unsigned s_offset, unsigned ignore)
 {
 	unsigned result;
-	GroupBase *grpbase(find_group(fnum));
-	if (!grpbase)
-		throw InvalidRepeatingGroup(fnum);
-	const unsigned fsize(from.size() - ignore);
+	if (!(grpbase = find_add_group(fnum, grpbase)))
+		throw InvalidRepeatingGroup(fnum, FILE_LINE);
+	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
-		scoped_ptr<MessageBase> grp(grpbase->create_group());
+		unique_ptr<MessageBase> grp(grpbase->create_group(false)); // shallow create
 
 		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 		{
@@ -186,10 +173,12 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 				break;
 			}
 			s_offset += result;
-			grp->add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
+			BaseField *bf(be->_create._do(val, be->_rlm, -1));
+			grp->add_field(tv, itr, ++pos, bf, false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
-			if (grp->_fp.is_group(tv, itr)) // nested group
-				s_offset = grp->decode_group(tv, from, s_offset, ignore);
+			// nested group (check if not zero elements)
+			if (grp->_fp.is_group(tv, itr) && has_group_count(bf))
+				s_offset = grp->decode_group(grpbase, tv, from, s_offset, ignore);
 		}
 
 		const unsigned short missing(grp->_fp.find_missing());
@@ -215,20 +204,20 @@ unsigned MessageBase::check_positions()
 //-------------------------------------------------------------------------------------------------
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum, bool permissive_mode)
 {
-	char mtype[MAX_MSGTYPE_FIELD_LEN] = {}, len[MAX_MSGTYPE_FIELD_LEN] = {};
-	const size_t hlen(extract_header(from, len, mtype));
+	char mtype[MAX_MSGTYPE_FIELD_LEN] {}, len[MAX_MSGTYPE_FIELD_LEN] {};
+	const unsigned hlen(extract_header(from, len, mtype));
 
 	if (!hlen)
 	{
-		//cerr << "Message::factory throwing" << endl;
-		throw InvalidMessage(from);
+		glout_debug << "Message::factory throwing";
+		throw InvalidMessage(from, FILE_LINE);
 	}
 
 	const unsigned mlen(fast_atoi<unsigned>(len));
 	const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 	if (!bme)
-		throw InvalidMessage(mtype);
-	Message *msg(bme->_create._do());
+		throw InvalidMessage(mtype, FILE_LINE);
+	Message *msg(bme->_create._do(false)); // shallow create
 #if defined CODECTIMING
 	IntervalTimer itm;
 #endif
@@ -244,14 +233,14 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 	msg->check_set_rlm(fitr->second);
 #endif
 
-	const char *pp(from.data() + from.size() - 7);
+	const char *pp(from.data() + from.size() - 7);	 // FIXME: assumes supplied string is one complete message only
 	if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
-		throw InvalidMessage(from);
+		throw InvalidMessage(from, FILE_LINE);
 	if (!no_chksum) // permit chksum calculation to be skipped
 	{
 		const f8String chksum(pp + 3, 3);
 		msg->_trailer->get_check_sum()->set(chksum);
-		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
+		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, static_cast<unsigned>(from.size()) - 7));
 		if (chkval != mchkval)
 			throw BadCheckSum(mchkval);
 	}
@@ -262,33 +251,34 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 //-------------------------------------------------------------------------------------------------
 // copy all fields from this message to 'to' where the field is legal for 'to' and it is not
 // already present in 'to'; includes repeating groups;
+// a deep constructed target message is required
 // if force, copy all fields regardless, replacing any existing, adding any new
 unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 {
-	unsigned copied(0);
-	for (Presence::const_iterator itr(_fp.get_presence().begin()); itr != _fp.get_presence().end(); ++itr)
+	unsigned copied{};
+	for (const auto& pp : _fp.get_presence())
 	{
-		if (itr->_field_traits & FieldTrait::present && (force || (to->_fp.has(itr->_fnum) && !to->_fp.get(itr->_fnum))))
+		if (pp._field_traits & FieldTrait::present && (force || (to->_fp.has(pp._fnum) && !to->_fp.get(pp._fnum))))
 		{
-			if (itr->_field_traits & FieldTrait::group)
+			GroupBase *gb;
+			if (pp._field_traits & FieldTrait::group && (gb = find_group(pp._fnum)))
 			{
-				GroupBase *gb(find_group(itr->_fnum)), *gb1(to->find_group(itr->_fnum));
-
-				for (GroupElement::const_iterator gitr(gb->_msgs.begin()); gitr != gb->_msgs.end(); ++gitr)
+				GroupBase *gb1(to->find_group(pp._fnum));
+				for (const auto *qq : gb->_msgs)
 				{
-					MessageBase *grc(gb1->create_group());
-					(*gitr)->copy_legal(grc, force);
+					MessageBase *grc(gb1->create_group(true));
+					copied += qq->copy_legal(grc, force);
 					*gb1 += grc;
 				}
 			}
 
-			BaseField *nf(get_field(itr->_fnum)->copy());
+			BaseField *nf(get_field(pp._fnum)->copy());
 #if defined POPULATE_METADATA
 			to->check_set_rlm(nf);
 #endif
 			Presence::const_iterator fpitr(_fp.get_presence().end());
-			if (force && to->_fp.get(itr->_fnum, fpitr, FieldTrait::present))
-				delete to->replace(itr->_fnum, fpitr, nf);
+			if (force && to->_fp.get(pp._fnum, fpitr, FieldTrait::present))
+				delete to->replace(pp._fnum, fpitr, nf);
 			else
 				to->add_field(nf);
 			++copied;
@@ -299,22 +289,63 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// move all fields from this message to 'to' where the field is legal for 'to' and it is not
+// already present in 'to'; includes repeating groups;
+// if force, move all fields regardless, replacing any existing
+// not thread safe
+unsigned MessageBase::move_legal(MessageBase *to, bool force)
+{
+	unsigned moved{};
+	for (const auto& pp : _fp.get_presence())
+	{
+		if (pp._field_traits & FieldTrait::present && (force || (to->_fp.has(pp._fnum) && !to->_fp.get(pp._fnum))))
+		{
+			if (pp._field_traits & FieldTrait::group)
+			{
+				auto gitr(_groups.find(pp._fnum));
+				GroupBase *gb1(to->find_group(pp._fnum));
+				if (gb1)
+					delete to->replace(pp._fnum, gitr->second);
+				else
+					*to += gitr->second;
+				gitr->second = nullptr;
+			}
+
+			auto itr(_fields.find(pp._fnum));
+			Presence::const_iterator fpitr(_fp.get_presence().end());
+			if (force && to->_fp.get(pp._fnum, fpitr, FieldTrait::present))
+				delete to->replace(pp._fnum, fpitr, itr->second);
+			else
+				to->add_field(itr->second);
+			itr->second = nullptr;
+			++moved;
+		}
+	}
+	clear_positions();
+
+	return moved;
+}
+
+//-------------------------------------------------------------------------------------------------
 size_t MessageBase::encode(char *to) const
 {
 	const char *where(to);
-	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
+	for (const auto& pp : _pos)
 	{
 #if defined POPULATE_METADATA
-		check_set_rlm(itr->second);
+		check_set_rlm(pp.second);
 #endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
-		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
+		if (!_fp.get(pp.second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
-			to += itr->second->encode(to);
-			if (fpitr->_field_traits.has(FieldTrait::group))
-				to += encode_group(itr->second->_fnum, to);
+			to += pp.second->encode(to);
+			if (fpitr->_field_traits.has(FieldTrait::group) && has_group_count(pp.second))
+				to += encode_group(pp.second->_fnum, to);
 		}
 	}
+
+	if (_unknown.size())
+		to += _unknown.copy(to, _unknown.size());
 
 	return to - where;
 }
@@ -323,19 +354,22 @@ size_t MessageBase::encode(char *to) const
 size_t MessageBase::encode(ostream& to) const
 {
 	const std::ios::pos_type where(to.tellp());
-	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
+	for (const auto& pp : _pos)
 	{
 #if defined POPULATE_METADATA
-		check_set_rlm(itr->second);
+		check_set_rlm(pp.second);
 #endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
-		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
+		if (!_fp.get(pp.second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
-			itr->second->encode(to);
-			if (fpitr->_field_traits.has(FieldTrait::group))
-				encode_group(itr->second->_fnum, to);
+			pp.second->encode(to);
+			if (fpitr->_field_traits.has(FieldTrait::group) && has_group_count(pp.second))
+				encode_group(pp.second->_fnum, to);
 		}
 	}
+
+	if (_unknown.size())
+		to << _unknown;
 
 	return to.tellp() - where;
 }
@@ -346,9 +380,9 @@ size_t MessageBase::encode_group(const unsigned short fnum, char *to) const
 	const char *where(to);
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
-		throw InvalidRepeatingGroup(fnum);
-	for (GroupElement::iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
-		to += (*itr)->encode(to);
+		throw InvalidRepeatingGroup(fnum, FILE_LINE);
+	for (const auto *pp : grpbase->_msgs)
+		to += pp->encode(to);
 	return to - where;
 }
 
@@ -358,9 +392,9 @@ size_t MessageBase::encode_group(const unsigned short fnum, std::ostream& to) co
 	const std::ios::pos_type where(to.tellp());
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
-		throw InvalidRepeatingGroup(fnum);
-	for (GroupElement::iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
-		(*itr)->encode(to);
+		throw InvalidRepeatingGroup(fnum, FILE_LINE);
+	for (const auto *pp : grpbase->_msgs)
+		pp->encode(to);
 	return to.tellp() - where;
 }
 
@@ -377,8 +411,31 @@ size_t Message::encode(char **hmsg_store) const
 	if (!_header)
 		throw MissingMessageComponent("header");
 	_header->get_msg_type()->set(_msgType);
+
+#if defined RAW_MSG_SUPPORT
+	msg += (_begin_payload = _header->encode(msg)); // start
+#if defined PREENCODE_MSG_SUPPORT
+	if (_preencode_len)
+	{
+		::memcpy(msg, _preencode.data(), _payload_len =_preencode_len);
+		msg += _preencode_len;
+	}
+	else
+#endif
+		msg += (_payload_len = MessageBase::encode(msg));
+#else
 	msg += _header->encode(msg); // start
-	msg += MessageBase::encode(msg);
+#if defined PREENCODE_MSG_SUPPORT
+	if (_preencode_len)
+	{
+		::memcpy(msg, _preencode.data(), _preencode_len);
+		msg += _preencode_len;
+	}
+	else
+#endif
+		msg += MessageBase::encode(msg);
+#endif
+
 	if (!_trailer)
 		throw MissingMessageComponent("trailer");
 	msg += _trailer->encode(msg);
@@ -398,7 +455,7 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
 
-	_header->get_body_length()->set(msgLen);
+	_header->get_body_length()->set(static_cast<int>(msgLen));
 	hmsg += _header->get_body_length()->encode(hmsg);
 
 	if (!_trailer->get_check_sum())
@@ -413,7 +470,11 @@ size_t Message::encode(char **hmsg_store) const
 #endif
 
 	*msg = 0;
-	return msg - *hmsg_store;
+	const size_t rlen(msg - *hmsg_store);
+#if defined RAW_MSG_SUPPORT
+	_rawmsg.assign(*hmsg_store, rlen);
+#endif
+	return rlen;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -428,27 +489,27 @@ size_t Message::encode(f8String& to) const
 //-------------------------------------------------------------------------------------------------
 void MessageBase::print(ostream& os, int depth) const
 {
-	const string dspacer((depth + 1) * 3, ' ');
+	const string dspacer((depth + 1) * _tabsize, ' ');
    const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType.c_str()));
    if (tbme)
-      os << string(depth * 3, ' ') << tbme->_name << " (\"" << _msgType << "\")" << endl;
-	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
+      os << string(depth * _tabsize, ' ') << tbme->_name << " (\"" << _msgType << "\")" << endl;
+	for (const auto& pp : _pos)
 	{
-		const BaseEntry *tbe(_ctx.find_be(itr->second->_fnum));
+		const BaseEntry *tbe(_ctx.find_be(pp.second->_fnum));
 		if (!tbe)
-			throw InvalidField(itr->second->_fnum);
+			throw InvalidField(pp.second->_fnum);
 		os << dspacer << tbe->_name;
-		const unsigned short comp(_fp.getComp(itr->second->_fnum));
+		const unsigned short comp(_fp.getComp(pp.second->_fnum));
 		if (comp)
 			os << " [" << _ctx._cn[comp] << ']';
-		os << " (" << itr->second->_fnum << "): ";
+		os << " (" << pp.second->_fnum << "): ";
 		int idx;
-		if (itr->second->_rlm && (idx = (itr->second->get_rlm_idx())) >= 0)
-			os << itr->second->_rlm->_descriptions[idx] << " (" << *itr->second << ')' << endl;
+		if (pp.second->_rlm && (idx = (pp.second->get_rlm_idx())) >= 0)
+			os << pp.second->_rlm->_descriptions[idx] << " (" << *pp.second << ')' << endl;
 		else
-			os << *itr->second << endl;
-		if (_fp.is_group(itr->second->_fnum))
-			print_group(itr->second->_fnum, os, depth);
+			os << *pp.second << endl;
+		if (_fp.is_group(pp.second->_fnum) && has_group_count(pp.second))
+			print_group(pp.second->_fnum, os, depth);
 	}
 }
 
@@ -457,14 +518,16 @@ void MessageBase::print_group(const unsigned short fnum, ostream& os, int depth)
 {
 	const GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
-		throw InvalidRepeatingGroup(fnum);
+		throw InvalidRepeatingGroup(fnum, FILE_LINE);
 
-	const string dspacer((depth + 1) * 3, ' ');
+	++depth;
+	const string dspacer(depth * _tabsize, ' ');
 	size_t cnt(1);
-	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr, ++cnt)
+	for (const auto *pp : grpbase->_msgs)
 	{
-		os << dspacer << (*itr)->_msgType << " (Repeating group " << cnt << '/' << grpbase->_msgs.size() << ')' << endl;
-		(*itr)->print(os, depth + 1);
+		os << dspacer << pp->_msgType << " (Repeating group " << cnt << '/' << grpbase->_msgs.size() << ')' << endl;
+		pp->print(os, depth);
+		++cnt;
 	}
 }
 
@@ -483,7 +546,7 @@ void MessageBase::print_field(const unsigned short fnum, ostream& os) const
 			os << fitr->second->_rlm->_descriptions[idx] << " (" << *fitr->second << ')';
 		else
 			os << *fitr->second;
-		if (_fp.is_group(fnum))
+		if (_fp.is_group(fnum) && has_group_count(fitr->second))
 			print_group(fnum, os, 0);
 	}
 }
@@ -491,7 +554,7 @@ void MessageBase::print_field(const unsigned short fnum, ostream& os) const
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -506,7 +569,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 				break;
 			}
 		}
-		_pos.insert(Positions::value_type(pos, with));
+		_pos.insert({pos, with});
 		itr->second = with;
 		_fp.set(fnum, FieldTrait::present);
 	}
@@ -516,7 +579,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_iterator fitr, BaseField *with)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -531,7 +594,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_itera
 				break;
 			}
 		}
-		_pos.insert(Positions::value_type(pos, with));
+		_pos.insert({pos, with});
 		itr->second = with;
 		_fp.set(fnum, fitr, FieldTrait::present);
 	}
@@ -541,7 +604,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_itera
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::remove(const unsigned short fnum)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -563,7 +626,7 @@ BaseField *MessageBase::remove(const unsigned short fnum)
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::remove(const unsigned short fnum, Presence::const_iterator fitr)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -586,7 +649,7 @@ BaseField *MessageBase::remove(const unsigned short fnum, Presence::const_iterat
 Message *Message::clone() const
 {
 	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType.c_str()));
-	Message *msg(bme._create._do());
+	Message *msg(bme._create._do(true));
 	copy_legal(msg, true);
 	_header->copy_legal(msg->_header, true);
 	_trailer->copy_legal(msg->_trailer, true);
@@ -625,12 +688,25 @@ void Message::report_codec_timings(const f8String& tag)
 
 	ostr << tag << ' ';
 	format_codec_timings("Encode", ostr, _encode_timings);
-	GlobalLogger::log(ostr.str());
+	glout_info << ostr.str();
 
 	ostr.str("");
 	ostr << tag << ' ';
 	format_codec_timings("Decode", ostr, _decode_timings);
-	GlobalLogger::log(ostr.str());
+	glout_info << ostr.str();
 }
 #endif
+
+//-------------------------------------------------------------------------------------------------
+GroupBase *MessageBase::replace(const unsigned short fnum, GroupBase *with)
+{
+	GroupBase *old(nullptr);
+	auto itr(_groups.find(fnum));
+	if (itr != _groups.end())
+	{
+		old = itr->second;
+		itr->second = with;
+	}
+	return old;
+}
 

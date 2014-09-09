@@ -1,20 +1,52 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <fix8>
-	<session name="TEX1"
-				role="acceptor"
+	<default role="acceptor"
 				fix_version="1100"
-				active="true"
 				heartbeat_interval="10"
+				ip="0.0.0.0"
 				session_log="session_log_file"
 				protocol_log="protocol_log"
-				ip="127.0.0.1" port="11001"
-				sender_comp_id="TEX_DLD"
+				tcp_recv_buffer="100663296"
+				tcp_send_buffer="100663296"
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
+				permissive_mode="false"
 				process_model="threaded"
+				enforce_compids="false"
 				silent_disconnect="false"
 				persist="file0"/>
+
+	<session name="TEX"
+				port="11001"
+				active="true"
+				sender_comp_id="TEX_DLD" />
+
+	<session name="TEX1"
+				port="11001"
+				active="true"
+				sender_comp_id="TEX1_DLD" />
+
+	<session name="TEX2"
+				port="11002"
+				active="true"
+				sender_comp_id="TEX2_DLD2" />
+
+	<schedule name="test_schedule0"
+				start_time="22:00:00"
+				end_time="22:01:00"
+				start_day="0"
+				end_day="1"
+				reject_code="7"
+				reject_text="Test system is not accepting any business messages at the moment"
+				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
+
+	<login   name="test_login0"
+				start_time="16:56:00"
+				end_time="16:57:00"
+				start_day="0"
+				end_day="6"
+				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
 
 	<persist name="bdb0"
 				type="bdb"
@@ -26,6 +58,16 @@
             use_session_id="true"
             db="server" />
 
+	<persist name="memcached0"
+            type="memcached"
+				config_string="--SERVER=127.0.0.1"
+            db="server" />
+
+	<persist name="redis0"
+            type="redis"
+				host="127.0.0.1" port="6379" connect_timeout="1"
+            db="server" />
+
 	<persist name="mem0"
 				type="mem"/>
 
@@ -33,13 +75,15 @@
 				type="session"
 				filename="|/bin/cat"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				flags="timestamp|sequence|thread|level"/>
 
 	<log 		name="session_log_file"
 				type="session"
 				filename="./run/myfix_server_session.log"
 				rotation="5"
-				flags="timestamp|sequence|thread"/>
+				delimiter="[]"
+				levels="debug|info|warn|error|fatal"
+				flags="mstart|sequence|thread|timestamp|level"/>
 
 	<log 		name="protocol_log"
 				type="protocol"
@@ -51,5 +95,10 @@
 				type="protocol"
 				flags="sequence|append|direction|inbound|outbound"
 				filename="|/bin/cat"/>
+
+	<client_group name="client_Group0">
+		<client name="Goldsteins" target_comp_id="DLD_TEX" ip="192.168.0.37" active="false"/>
+		<client name="Goldsteins" target_comp_id="DLD_TEX" ip="127.0.0.1" />
+	</client_group>
 
 </fix8>

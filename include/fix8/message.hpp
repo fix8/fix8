@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,12 +34,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_MESSAGE_HPP_
-# define _FIX8_MESSAGE_HPP_
+#ifndef FIX8_MESSAGE_HPP_
+#define FIX8_MESSAGE_HPP_
 
-#if defined HAS_TR1_UNORDERED_MAP
-# include <tr1/unordered_map>
-#endif
 #include <vector>
 
 //-------------------------------------------------------------------------------------------------
@@ -49,30 +46,37 @@ namespace FIX8 {
 class MessageBase;
 class Message;
 class Session;
-typedef std::vector<MessageBase *> GroupElement;
+class GroupBase;
+using GroupElement = std::vector<MessageBase *>;
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned short, class GroupBase *> Groups;
+using Groups = std::map<unsigned short, GroupBase *>;
 
 /// Abstract base class for all repeating groups
 class GroupBase
 {
-	/// number of fields in this group
+	/// field number
 	unsigned short _fnum;
 	/// vector of repeating messagebase groups
 	GroupElement _msgs;
 
 public:
 	/*! ctor
-	    \param fnum number of fields in this group */
+	    \param fnum field number of this group */
 	GroupBase(const unsigned short fnum) : _fnum(fnum) {}
 
 	/// dtor
 	virtual ~GroupBase() { clear(false); }
 
 	/*! Create a new group element.
+	    \param deepctor if true, construct nested groups
 	  \return new message */
-	virtual MessageBase *create_group() const = 0;
+	virtual MessageBase *create_group(bool deepctor=true) const = 0;
+
+	/*! Instantiate a new nested group element.
+	    \param fnum field number of group to create
+	  \return new message or nullptr if not a valid group for this group */
+	virtual GroupBase *create_nested_group(unsigned short fnum) const { return nullptr; }
 
 	/*! Add a message to a repeating group
 	  \param what message to add */
@@ -99,16 +103,11 @@ public:
 	/*! Get an element from a group
 	  \param idx index of element to get
 	  \return pointer to element or 0 if index out of range */
-	MessageBase *get_element(const unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : 0; }
+	MessageBase *get_element(const unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : nullptr; }
 
 	/*! Empty messages from container
 	    \param reuse if true clear vector */
-	void clear(bool reuse=true)
-	{
-		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
-		if (reuse)
-			_msgs.clear();
-	}
+	void clear(bool reuse=true);
 
 	friend class MessageBase;
 };
@@ -121,48 +120,66 @@ public:
 	/// Dtor.
    virtual ~Router() {}
 
-	/*! Function operator; overloaded with each generated Fix message type.
+	/*! Function operator (const version); overloaded with each generated Fix message type.
 	  \param msg const ptr to message to route
 	  \return true on success */
 	virtual bool operator()(const Message *msg) const { return false; }
 
 	/*! Function operator; overloaded with each generated Fix message type.
-	  \param msg non-const ptr to message to route
+	  \param msg const ptr to message to route
 	  \return true on success */
-	virtual bool operator()(Message *msg) const { return false; }
+	virtual bool operator()(const Message *msg) { return false; }
 };
 
-//-------------------------------------------------------------------------------------------------
-/// Structures for framework generated message creation table
+/// Structures for framework generated message creation and static trait interrogation
 class Minst
 {
-   template<typename T>
+	/*! Generate a message instantiator
+	 */
 	struct _gen
 	{
-		static Message *_make() { return new T; }
-		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
+		/*! Instantiate a message
+			\tparam T type to instantiate
+			\return new message */
+		template<typename T>
+		static Message *_make(bool deepctor) { return new T(deepctor); }
+
+		/*! Instantiate a message cast to Message
+			\tparam T type to instantiate
+			\return new message */
+		template<typename T, typename R>
+		static Message *_make(bool deepctor) { return reinterpret_cast<Message *>(new T(deepctor)); }
+
+#if defined HAVE_EXTENDED_METADATA
+		/*! SIOF static TraitHelper
+			\tparam T type to instantiate
+			\return ref to static TraitHelper */
+		template<typename T, typename R = void>
+		static const TraitHelper& _make_traits()
+		{
+			static const TraitHelper _helper { T::get_traits(), T::get_fieldcnt() };
+			return _helper;
+		}
+#endif
 	};
 
-	static Message *dummy() { return 0; }
-
 public:
-	Minst() : _do(dummy) {}
+	std::function<Message *(bool)> _do;
+#if defined HAVE_EXTENDED_METADATA
+	const TraitHelper& (&_get_traits)();
+#endif
 
-	Message *(&_do)();
-
-   template<typename T>
-   Minst(Type2Type<T>) : _do(_gen<T>::_make) {}
-
-   template<typename T, typename R>
-   Minst(Type2Types<T, R>) : _do(_gen<T>::_make_cast) {}
+	/*! Ctor
+	  \tparam T type to instantiate */
+   template<typename T, typename... args>
+   Minst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>)
+#if defined HAVE_EXTENDED_METADATA
+		 , _get_traits(_gen::_make_traits<T, args...>)
+#endif
+	{}
 };
 
-template<>
-struct Minst::_gen<void *>
-{
-	static Message *_make() { return 0; }
-};
-
+/// Message instantiation table entry
 struct BaseMsgEntry
 {
    const Minst _create;
@@ -170,15 +187,20 @@ struct BaseMsgEntry
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field metadata structure
+/// Field and Message metadata structures
 //-------------------------------------------------------------------------------------------------
-typedef GeneratedTable<const char *, BaseMsgEntry> MsgTable;
-typedef GeneratedTable<unsigned, BaseEntry> FieldTable;
+using c_str_compare = std::function<bool(const char *, const char *)>;
+using msg_create = std::function<Message *(bool)>;
+using MsgTable = GeneratedTable<const char *, BaseMsgEntry>;
+using ReverseMsgTable = std::map<const char * const, const BaseMsgEntry *, c_str_compare>;
+using FieldTable = GeneratedTable<unsigned, BaseEntry>;
+using ReverseFieldTable = std::map<const char * const, const BaseEntry *, c_str_compare>;
 
 //-------------------------------------------------------------------------------------------------
 /// Static metadata context class - one per FIX xml schema
 struct F8MetaCntx
 {
+	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	const unsigned _version;
 
 	/// Framework generated lookup table to generate Fix messages
@@ -192,11 +214,15 @@ struct F8MetaCntx
 	/// Hash array for field lookup (built by ctor)
 	const BaseEntry **_flu;
 	/// References to the header and trailer create functions
-	Message *(&_mk_hdr)(), *(&_mk_trl)();
+	msg_create _mk_hdr, _mk_trl;
 	/// Fix header beginstring
 	const f8String _beginStr;
 	/// Preamble length
 	const size_t _preamble_sz;
+
+	ReverseMsgTable _reverse_msgtable;
+	ReverseFieldTable _reverse_fieldtable;
+	static bool _comp(const char *p1, const char *p2) { return ::strcmp(p1, p2) < 0; }
 
 	/*! Ctor.
 	  \param version FIX version
@@ -208,36 +234,138 @@ struct F8MetaCntx
 		: _version(version), _bme(bme), _be(be), _cn(cn),
 		_flu_sz(_be.at(_be.size() - 1)->_key + 1), _flu(new const BaseEntry *[_flu_sz]),
 		_mk_hdr(_bme.find_ref("header")._create._do), _mk_trl(_bme.find_ref("trailer")._create._do),
-		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3)
+		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3),
+		_reverse_msgtable(_comp), _reverse_fieldtable(_comp)
 	{
 		if (_flu_sz == 1)
 			throw f8Exception("F8MetaCntx initialisation incomplete");
-		std::fill(_flu, _flu + _flu_sz, static_cast<BaseEntry *>(0));
+		std::fill(_flu, _flu + _flu_sz, nullptr);
       for (unsigned offset(0); offset < _be.size(); ++offset)
 			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
+
+		std::for_each(_be.begin(), _be.end(), [this](const FieldTable::Pair& pp)
+			{ _reverse_fieldtable.emplace(std::make_pair(pp.second()._name, &pp.second())); });
+		std::for_each(_bme.begin(), _bme.end(), [this](const MsgTable::Pair& pp)
+			{ _reverse_msgtable.emplace(std::make_pair(pp.second()._name, &pp.second())); });
 	}
 
 	/// Dtor.
-	~F8MetaCntx() { delete[] _flu; _flu = 0; }
+	~F8MetaCntx() { delete[] _flu; _flu = nullptr; }
 
-	/*! Get the field BaseEntry object for this filed number. Will use fast field index lookup.
+	/*! Get the field BaseEntry object for this field number. Will use fast field index lookup.
 	  \param fnum field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *find_be(const unsigned short fnum) const
-		{ return fnum < _flu_sz ? _flu[fnum] : 0; }
+		{ return fnum < _flu_sz ? _flu[fnum] : nullptr; }
+
+	/*! Get the field BaseEntry object for this field by tag. Reverse lookup.
+	  \param fieldstr const char ptr to longname of field to get
+	  \return ptr to BaseEntry or 0 if not found */
+	const BaseEntry *reverse_find_be(const char *fieldstr) const
+	{
+		auto itr(_reverse_fieldtable.find(fieldstr));
+		return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+	}
+
+	/*! Get the field number for this field by tag. Reverse lookup.
+	  \param fieldstr const char ptr to longname of field to get
+	  \return unsigned short field number */
+	unsigned short reverse_find_fnum(const char *fieldstr) const
+	{
+		auto itr(_reverse_fieldtable.find(fieldstr));
+		return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
+	}
+
+	/*! Create a new field of the tag type passed, and from the raw string given.
+	  \param fnum FIX field number
+	  \param from const char ptr to string containing value to construct from
+	  \return ptr to BaseField or 0 if fnum not found */
+	BaseField *create_field(unsigned short fnum, const char *from) const
+	{
+		const BaseEntry *be(find_be(fnum));
+		return be ? be->_create._do(from, be->_rlm, -1) : nullptr;
+	}
+
+	/*! Create a new field of the tag type passed, and from the raw string given.
+	  \param tag const char ptr to longname of field to create
+	  \param from const char ptr to string containing value to construct from
+	  \return ptr to BaseField or 0 if fnum not found */
+	BaseField *create_field(const char *tag, const char *from) const
+	{
+		const BaseEntry *be(reverse_find_be(tag));
+		return be ? be->_create._do(from, be->_rlm, -1) : nullptr;
+	}
+
+	/*! Get the message BaseMsgEntry object for this message.
+	  \param tag const char ptr to name of message to get
+	  \return ptr to BaseMsgEntry or 0 if not found */
+	const BaseMsgEntry *find_bme(const char *tag) const { return _bme.find_ptr(tag); }
+
+	/*! Get the message BaseMsgEntry object for this message. Reverse lookup.
+	  \param msgstr const char ptr to longname of message to get
+	  \return ptr to BaseMsgEntry or 0 if not found */
+	const BaseMsgEntry *reverse_find_bme(const char *msgstr) const
+	{
+		auto itr(_reverse_msgtable.find(msgstr));
+		return itr != _reverse_msgtable.cend() ? itr->second : nullptr;
+	}
+
+	/*! Create a new message from longname
+	  \param tag const char ptr to tag of message
+	  \param deepctor if true, do deep message construction
+	  \return ptr to Message or 0 if tag not found */
+	Message *create_msg_from_longname(const char *tag, bool deepctor=true) const
+	{
+		const BaseMsgEntry *bme(reverse_find_bme(tag));
+		return bme ? bme->_create._do(deepctor) : nullptr;
+	}
+
+	/*! Create a new message of the tag type passed.
+	  \param tag const char ptr to tag of message
+	  \param deepctor if true, do deep message construction
+	  \return ptr to Message or 0 if tag not found */
+	Message *create_msg(const char *tag, bool deepctor=true) const
+	{
+		const BaseMsgEntry *bme(find_bme(tag));
+		return bme ? bme->_create._do(deepctor) : nullptr;
+	}
 
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	  \return version */
 	unsigned version() const { return _version; }
+
+	/*! Get fix header beginstring
+	  \return beginstring */
+	const f8String& get_beginStr() const { return _beginStr; }
+
+#if defined HAVE_EXTENDED_METADATA
+	//----------------------------------------------------------------------------------------------
+	// The following methods can be used to iterate and interrogate static traits
+	//----------------------------------------------------------------------------------------------
+	using const_iterator = const FieldTrait*;
+	using const_internal_result = std::pair<const_iterator, const_iterator>;
+	static const_iterator find(unsigned short fnum, const TraitHelper& from)
+	{
+		const const_internal_result res(std::equal_range (from._traits, from._traits + from._fieldcnt,
+			FieldTrait(fnum), FieldTrait::Compare()));
+		return res.first != res.second ? res.first : nullptr;
+	}
+
+	static const_iterator begin(const TraitHelper& from) { return from._traits; }
+	static const_iterator end(const TraitHelper& from) { return from._traits + from._fieldcnt; }
+#endif
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map <unsigned short, BaseField *> Fields;
-typedef std::multimap<unsigned short, BaseField *> Positions;
+using Fields = std::map <unsigned short, BaseField *>;
+using Positions = std::multimap<unsigned short, BaseField *>;
 
 /// Base class for all fix messages
 class MessageBase
 {
+	/// pass through for permissive mode
+	f8String _unknown;
+
 protected:
 	Fields _fields;
 	FieldTraits _fp;
@@ -259,6 +387,9 @@ protected:
 	    \return number of bytes consumed */
 	static unsigned extract_trailer(const f8String& from, f8String& chksum);
 
+	// used by the printer
+	F8API static unsigned _tabsize;
+
 public:
 	/*! Ctor.
 	    \tparam InputIterator input iterator type
@@ -273,9 +404,9 @@ public:
 		_msgType(msgType), _ctx(ctx) {}
 
 	/// Copy ctor.
-	MessageBase(const MessageBase& from);
+	F8API MessageBase(const MessageBase& from);
 	/// Assignment operator
-	MessageBase& operator=(const MessageBase& that);
+	F8API MessageBase& operator=(const MessageBase& that);
 
 	/// Dtor.
 	virtual ~MessageBase() { clear(false); }
@@ -284,8 +415,8 @@ public:
 	    \param reuse if true clear vector */
 	virtual void clear(bool reuse=true)
 	{
-		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
-		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
+		std::for_each (_fields.begin(), _fields.end(), [](Fields::value_type& pp) { delete pp.second; });
+		std::for_each (_groups.begin(), _groups.end(), [](Groups::value_type& pp) { delete pp.second; });
 		if (reuse)
 		{
 			_fields.clear();
@@ -294,6 +425,9 @@ public:
 			_pos.clear();
 		}
 	}
+
+	/// empty the positions map
+	void clear_positions() { _pos.clear(); }
 
 	/*! Get the number of possible fields in this message
 	  \return number of fields */
@@ -305,47 +439,70 @@ public:
 	    \param ignore bytes to ignore counting back from end of message
 	    \param permissive_mode if true, ignore unknown fields
 	    \return number of bytes consumed */
-	unsigned decode(const f8String& from, unsigned offset, unsigned ignore=0, bool permissive_mode=false);
+	F8API unsigned decode(const f8String& from, unsigned offset, unsigned ignore=0, bool permissive_mode=false);
 
-	/*! Decode repeating group from string.
+	/*! Decode repeating group from string using nested group method
+	    \param grpbase pointer to groupbase of holding object
 	    \param fnum repeating group fix field num (no...)
 	    \param from source string
-	    \param offset in bytes to decode from
+	    \param s_offset in bytes to decode from
 	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
-	unsigned decode_group(const unsigned short fnum, const f8String& from, unsigned offset, unsigned ignore=0);
+	unsigned decode_group(GroupBase *grpbase, const unsigned short fnum, const f8String& from,
+		unsigned s_offset, unsigned ignore);
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	size_t encode(std::ostream& to) const;
+	F8API size_t encode(std::ostream& to) const;
 
 	/*! Encode message to buffer.
 	    \param to buffer to encode to
 	    \return number of bytes encoded */
-	size_t encode(char *to) const;
+	F8API size_t encode(char *to) const;
 
 	/*! Encode group message to stream.
 	    \param fnum repeating group fix field num (no...)
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	size_t encode_group(const unsigned short fnum, std::ostream& to) const;
+	F8API size_t encode_group(const unsigned short fnum, std::ostream& to) const;
 
 	/*! Encode group message to buffer.
 	    \param fnum repeating group fix field num (no...)
 	    \param to buffer to encode to
 	    \return number of bytes encoded */
-	size_t encode_group(const unsigned short fnum, char *to) const;
+	F8API size_t encode_group(const unsigned short fnum, char *to) const;
+
+	/*! Instantiate a new nested group element.
+	    \param fnum field number of group to create
+	  \return new message */
+	virtual GroupBase *create_nested_group(unsigned short fnum) const { return nullptr; }
 
 	/*! Check to see if positions of fields are as required.
 	  \return field number of field not in order, 0 if all ok */
-	unsigned check_positions();
+	F8API unsigned check_positions();
 
-	/*! Copy all fields from this message to 'to' where the field is legal for 'to' and it is not already present in 'to'; includes nested repeating groups.
+	/*! Copy all fields from this message to 'to' where the field is legal for 'to' and
+		  it is not already present in 'to'; includes nested repeating groups.
 	    \param to target message
 	    \param force if true copy all fields regardless, replacing any existing, adding any new
 	    \return number of fields copied */
-	unsigned copy_legal(MessageBase *to, bool force=false) const;
+	F8API unsigned copy_legal(MessageBase *to, bool force=false) const;
+
+	/*! Move all fields from this message to 'to' where the field is legal for 'to' and
+		  it is not already present in 'to'; includes nested repeating groups.  Not thread safe.
+		  Source message must be heap based. Source message is invalidated (but can be deleted).
+	    \param to target message
+	    \param force if true move all fields regardless, replacing any existing, adding any new
+	    \return number of fields moved */
+	F8API unsigned move_legal(MessageBase *to, bool force=false);
+
+	/*! Copy _unknown string from this message to given message */
+	void push_unknown(MessageBase *to) const
+	{
+		if (_unknown.size() && to)
+			to->_unknown = _unknown;
+	}
 
 	/*! Check that this field has the realm (domain) pointer set; if not then set.
 	    \param where field to check */
@@ -369,8 +526,8 @@ public:
 	    \param what pointer to field */
 	void add_field_decoder(const unsigned short fnum, const unsigned pos, BaseField *what)
 	{
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert({fnum, what});
+		_pos.insert({pos, what});
 	}
 
 	/*! Add fix field to this message.
@@ -383,13 +540,13 @@ public:
 	{
 		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			glout_debug << _msgType << " replacing field:" << fnum;
 			delete replace(fnum, itr, what);
 			return;
 		}
 
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert({fnum, what});
+		_pos.insert({pos, what});
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
@@ -404,13 +561,13 @@ public:
 		Presence::const_iterator itr(_fp.get_presence().end());
 		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			glout_debug << _msgType << " replacing field:" << fnum;
 			delete replace(fnum, itr, what);
 			return;
 		}
 
-		_fields.insert(fitr, Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert(fitr, {fnum, what});
+		_pos.insert({pos, what});
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
@@ -424,13 +581,13 @@ public:
 		Presence::const_iterator itr(_fp.get_presence().end());
 		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			glout_debug << _msgType << " replacing field:" << fnum;
 			delete replace(fnum, itr, what);
 			return;
 		}
 
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
+		_fields.insert({fnum, what});
+		_pos.insert({pos, what});
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
@@ -473,6 +630,8 @@ public:
 		return false;
 	}
 
+	Groups& get_groups() { return _groups; }
+
 	/*! Add fix field to this message.
 	    \tparam T field type
 	    \param what pointer to field
@@ -509,6 +668,17 @@ public:
 	template<typename T>
 	bool has() const { return _fp.get(T::get_field_id()); }
 
+	/*! Check if a field is legal in a message.
+	    \param fnum field number
+	    \return true if present */
+	bool is_legal(unsigned short fnum) const { return _fp.has(fnum); }
+
+	/*! Check if a field is legal.
+	    \tparam T type of field to check
+	    \return true if present */
+	template<typename T>
+	bool is_legal() const { return _fp.has(T::get_field_id()); }
+
 	/*! Get a pointer to a field. Inplace, 0 copy.
 	    \tparam T type of field to get
 	    \return pointer to field or 0 if not present */
@@ -516,7 +686,7 @@ public:
 	const T *get() const
 	{
 		Fields::const_iterator fitr(_fields.find(T::get_field_id()));
-		return fitr == _fields.end() ? 0 : &fitr->second->from<T>();
+		return fitr == _fields.cend() ? nullptr : &fitr->second->from<T>();
 	}
 
 	/*! Populate supplied field with value from message.
@@ -547,8 +717,8 @@ public:
 	    \return pointer to field or 0 if not found */
 	BaseField *get_field(const unsigned short fnum) const
 	{
-		Fields::const_iterator itr(_fields.find(fnum));
-		return itr != _fields.end() ? itr->second : 0;
+		auto itr(_fields.find(fnum));
+		return itr != _fields.cend() ? itr->second : nullptr;
 	}
 
 	/*! Get an iterator to fields present in this message.
@@ -564,24 +734,30 @@ public:
 		 \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
 	    \param with field to replace with
 	    \return pointer to original field or 0 if not found */
-	BaseField *replace(const unsigned short fnum, Presence::const_iterator itr, BaseField *with);
+	F8API BaseField *replace(const unsigned short fnum, Presence::const_iterator itr, BaseField *with);
 
 	/*! Replace a field value with another field value.
 	    \param fnum field number
 	    \param with field to replace with
 	    \return pointer to original field or 0 if not found */
-	BaseField *replace(const unsigned short fnum, BaseField *with);
+	F8API BaseField *replace(const unsigned short fnum, BaseField *with);
+
+	/*! Replace a group with another group.
+	    \param fnum group field number
+	    \param with group to replace with
+	    \return pointer to original group or 0 if not found */
+	F8API GroupBase *replace(const unsigned short fnum, GroupBase *with);
 
 	/*! Remove a field from this message.
 	    \param fnum field number
 		 \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
 	    \return pointer to original field or 0 if not found */
-	BaseField *remove(const unsigned short fnum, Presence::const_iterator itr);
+	F8API BaseField *remove(const unsigned short fnum, Presence::const_iterator itr);
 
 	/*! Remove a field from this message.
 	    \param fnum field number
 	    \return pointer to original field or 0 if not found */
-	BaseField *remove(const unsigned short fnum);
+	F8API BaseField *remove(const unsigned short fnum);
 
 	/*! Find a group of a specified type.
 	    \tparam T type of group to get
@@ -594,19 +770,40 @@ public:
 	    \return pointer to found group or 0 if not found */
 	GroupBase *find_group(const unsigned short fnum) const
 	{
-		Groups::const_iterator gitr(_groups.find(fnum));
-		return gitr != _groups.end() ? gitr->second : 0;
+		auto gitr(_groups.find(fnum));
+		return gitr != _groups.cend() ? gitr->second : nullptr;
+	}
+
+	/*! Find a group of a specified type. If not found attempt to add.
+	    \tparam T type of group to get
+	    \param grpbase parent group (if group nested) or nullptr if no parent
+	    \return pointer to found group or 0 if not found */
+	template<typename T>
+	GroupBase *find_add_group(GroupBase *grpbase=nullptr) { return find_add_group(T::_fnum, grpbase); }
+
+	/*! Find a group of a specified type. If not found attempt to add.
+	    \param fnum field number
+	    \param grpbase parent group (if group nested) or nullptr if no parent
+	    \return pointer to found group or 0 if not found */
+	GroupBase *find_add_group(const unsigned short fnum, GroupBase *grpbase=nullptr)
+	{
+		auto gitr(_groups.find(fnum));
+		if (gitr != _groups.end())
+			return gitr->second;
+		GroupBase *gb1(grpbase ? grpbase->create_nested_group(fnum) : create_nested_group(fnum));
+		add_group(gb1);
+		return gb1;
 	}
 
 	/*! Add a repeating group at the end of a message group. Assume key is not < last.
 	    \tparam T type of grop being appended
 	    \param what pointer to group to add */
 	template<typename T>
-	void append_group(T *what) { _groups.insert(_groups.end(), Groups::value_type(T::_fnum, what)); }
+	void append_group(T *what) { _groups.insert(_groups.end(), {T::_fnum, what}); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
-	void add_group(GroupBase *what) { _groups.insert(Groups::value_type(what->_fnum, what)); }
+	void add_group(GroupBase *what) { _groups.insert({what->_fnum, what}); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to field
@@ -637,18 +834,18 @@ public:
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
 	    \param depth nesting depth */
-	virtual void print(std::ostream& os, int depth=0) const;
+	F8API virtual void print(std::ostream& os, int depth=0) const;
 
 	/*! Print the field specified by the field num from message to the specified stream.
 	    \param fnum field number
 	    \param os refererence to stream to print to */
-	virtual void print_field(const unsigned short fnum, std::ostream& os) const;
+	F8API virtual void print_field(const unsigned short fnum, std::ostream& os) const;
 
 	/*! Print the repeating group to the specified stream.
 	    \param fnum field number
 	    \param os refererence to stream to print to
 	    \param depth nesting depth */
-	virtual void print_group(const unsigned short fnum, std::ostream& os, int depth=0) const;
+	F8API virtual void print_group(const unsigned short fnum, std::ostream& os, int depth=0) const;
 
 	/*! Get the FieldTraits
 	   \return reference to FieldTraits object */
@@ -734,26 +931,51 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const MessageBase& what) { what.print(os); return os; }
 	friend class Message;
 
+	/*! Set the tabsize used by the printer
+	    \param tabsize number of spaces in a tab */
+	static void set_tabsize (unsigned tabsize) { _tabsize = tabsize; }
+
+	/*! get the tabsize used by the printer
+	    \return tabsize of spaces in a tab */
+	static unsigned get_tabsize () { return _tabsize; }
+
+	/*! Determine if this repeating group count field has any elements (> 0)
+	    \param bf Basefield *
+	    \return true if has count */
+	static bool has_group_count(const BaseField *bf) { return static_cast<const Field<int, 0> *>(bf)->get() > 0; }
+
 	/*! Presence printer
 	    \param os stream to send to */
 	void print_fp(std::ostream& os) { os << _fp; }
 
 	/*! Get pointer to begin_string Field; used by header/trailer.
 	    \return Field */
-	virtual begin_string *get_begin_string() { return 0; }
+	virtual begin_string *get_begin_string() { return nullptr; }
 
 	/*! Get pointer to body_length Field; used by header/trailer.
 	    \return Field */
-	virtual body_length *get_body_length() { return 0; }
+	virtual body_length *get_body_length() { return nullptr; }
 
 	/*! Get pointer to msg_type Field; used by header/trailer.
 	    \return Field */
-	virtual msg_type *get_msg_type() { return 0; }
+	virtual msg_type *get_msg_type() { return nullptr; }
 
 	/*! Get pointer to check_sum Field; used by header/trailer.
 	    \return Field */
-	virtual check_sum *get_check_sum() { return 0; }
+	virtual check_sum *get_check_sum() { return nullptr; }
+
+	/*! Get pass through fields (permissive mode only)
+	    \return string of unknown pass through fields */
+	const f8String& get_unknown() const { return _unknown; }
 };
+
+//-------------------------------------------------------------------------------------------------
+inline void GroupBase::clear(bool reuse)
+{
+	std::for_each (_msgs.begin(), _msgs.end(), [](MessageBase *pp) { delete pp; });
+	if (reuse)
+		_msgs.clear();
+}
 
 //-------------------------------------------------------------------------------------------------
 #if defined CODECTIMING
@@ -777,8 +999,16 @@ class Message : public MessageBase
 protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
-	bool _no_increment;
-	bool _end_of_batch;
+	bool _no_increment, _end_of_batch;
+#if defined RAW_MSG_SUPPORT
+	mutable f8String _rawmsg;
+	mutable int _begin_payload = -1;
+	mutable unsigned _payload_len = 0;
+#endif
+#if defined PREENCODE_MSG_SUPPORT
+	mutable std::array<char, MAX_MSG_LENGTH> _preencode;
+	mutable size_t _preencode_len = 0;
+#endif
 
 public:
 	/*! Ctor.
@@ -791,8 +1021,8 @@ public:
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
 		const FieldTrait_Hash_Array *ftha)
-		: MessageBase(ctx, msgType, begin, cnt, ftha),_header(ctx._mk_hdr()),
-		  _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment(), _end_of_batch(true)
+		: MessageBase(ctx, msgType, begin, cnt, ftha),_header(ctx._mk_hdr(true)),
+		  _trailer(ctx._mk_trl(true)), _custom_seqnum(), _no_increment(), _end_of_batch(true)
 	{}
 
 	/// Dtor.
@@ -814,24 +1044,29 @@ public:
 	    \return number of bytes consumed */
 	unsigned decode(const f8String& from, unsigned offset=0, unsigned ignore=0, bool permissive_mode=false)
 	{
-		const size_t hlen(_header->decode(from, offset, 0, permissive_mode));
-		const size_t blen(MessageBase::decode(from, hlen, 0, permissive_mode));
+		const unsigned hlen(_header->decode(from, offset, 0, permissive_mode));
+		const unsigned blen(MessageBase::decode(from, hlen, 0, permissive_mode));
+#if defined RAW_MSG_SUPPORT
+		_begin_payload = hlen;
+		_payload_len = blen;
+		_rawmsg = from;
+#endif
 		return _trailer->decode(from, blen, ignore, permissive_mode);
 	}
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	size_t encode(f8String& to) const;
+	F8API size_t encode(f8String& to) const;
 
 	/*! Encode message to stream. Perform absolutely minimal copying of output buffer.
 	    \param to pointer to pointer to buffer
 	    \return number of bytes encoded; to ptr is updated with address of start of encoded message string */
-	size_t encode(char **to) const;
+	F8API size_t encode(char **to) const;
 
 	/*! Clone this message. Performs a deep copy.
 	    \return pointer to copy of this message */
-	Message *clone() const;
+	F8API Message *clone() const;
 
 	/*! Initiate callback to appropriate process method from metadata.
 	    \param rt reference to router instance
@@ -853,20 +1088,7 @@ public:
 		MessageBase::clear(reuse);
 	}
 
-	/*! Generate a checksum from an encoded buffer.
-	    \param from source buffer encoded Fix message
-	    \param offset starting offset
-	    \param len maximum length
-	    \return calculated checknum */
-	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
-	{
-		unsigned val(0);
-		const char *eptr(from.c_str() + (len != -1 ? len + offset : from.size() - offset));
-		for (const char *ptr(from.c_str() + offset); ptr < eptr; val += *ptr++);
-		return val % 256;
-	}
-
-	/*! Generate a checksum from an encoded buffer. ULL version.
+	/*! Generate a checksum from an encoded buffer, ULL version.
 	    \param from char *buffer encoded Fix message
 	    \param sz size of msg
 	    \param offset starting offset
@@ -880,19 +1102,28 @@ public:
 		return val % 256;
 	}
 
+	/*! Generate a checksum from an encoded buffer, string version.
+	    \param from source buffer encoded Fix message
+	    \param offset starting offset
+	    \param len maximum length
+	    \return calculated checknum */
+	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
+		{ return calc_chksum(from.c_str(), from.size(), offset, len); }
+
 	/*! Format a checksum into the required 3 digit, 0 padded string.
 	    \param val checksum value
 	    \return string containing formatted value */
 	static f8String fmt_chksum(const unsigned val)
 	{
-		char buf[4] = { '0', '0', '0', 0 };
+		char buf[4] { '0', '0', '0', 0 };
 		itoa<unsigned>(val, buf + (val > 99 ? 0 : val > 9 ? 1 : 2), 10);
 		return f8String(buf);
 	}
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
-	    \param from pointer to raw buffer containing Fix message
+	    \param from pointer to raw buffer containing one complete FIX message string only,
+				no trailing or leading characters
 	    \param no_chksum if true, do not perform chksum verification
 	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
@@ -904,11 +1135,12 @@ public:
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
-	    \param from reference to string raw buffer containing Fix message
+	    \param from reference to string raw buffer containing one complete FIX message string only,
+				no trailing or leading characters
 	    \param no_chksum if true, do not perform chksum verification
 	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
-	static Message *factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum=false, bool permissive_mode=false);
+	F8API static Message *factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum=false, bool permissive_mode=false);
 
 	/*! Set the custom sequence number. Used to override and suppress automatic seqnum assignment.
 	    \param seqnum the outbound sequence number to use for this message. */
@@ -926,10 +1158,88 @@ public:
 	    \return value of _no_increment flag */
 	virtual bool get_no_increment() const { return _no_increment; }
 
+	/*! Get the end of batch flag
+	    \return true or false */
+	bool get_end_of_batch() const { return _end_of_batch; }
+
+	/*! Set the end of batch flag
+	    \param is_end_of_batch true or false */
+	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
+
+	/*! Setup this message to allow it to be resused
+	  This feature is experimental; do not use with pipelined mode */
+	void setup_reuse()
+	{
+		if (_header)
+		{
+			_header->_fp.set(Common_BeginString, FieldTrait::suppress);
+			_header->_fp.set(Common_BodyLength, FieldTrait::suppress);
+			delete _header->remove(Common_MsgSeqNum);
+		}
+		if (_trailer)
+			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
+	}
+
+	/*! Copy _unknown string from this message to given message */
+	void push_unknown(Message *to) const
+	{
+		if (_header)
+			_header->push_unknown(to->_header);
+		MessageBase::push_unknown(to);
+		if (_trailer)
+			_trailer->push_unknown(to->_trailer);
+	}
+
+	/*! Check if a field is present in this message (either header, body or trailer).
+	    \param fnum field number
+	    \return pointer to field or 0 if not found */
+	BaseField *get_field_flattened(const unsigned short fnum) const
+	{
+		auto itr (_fields.find(fnum));
+		return  itr != _fields.end() ? itr->second
+				: (itr = _header->_fields.find(fnum)) != _header->_fields.end() ? itr->second
+				: (itr = _trailer->_fields.find(fnum)) != _trailer->_fields.end() ? itr->second : nullptr;
+	}
+
+#if defined RAW_MSG_SUPPORT
+	/*! Get the raw FIX message that this message was decoded from
+	    \return reference to FIX message string */
+	const f8String& get_rawmsg() const { return _rawmsg; }
+
+	/*! Get iterator to begin of message payload
+	    \return const_iterator to start of payload */
+	f8String::const_iterator begin_payload() const { return f8String::const_iterator(_rawmsg.data() + _begin_payload); }
+
+	/*! Get iterator to end of message payload
+	    \return const_iterator to end of payload */
+	f8String::const_iterator end_payload() const { return f8String::const_iterator(_rawmsg.data() + _begin_payload + _payload_len); }
+
+	/*! Get the payload length
+	    \return payload length */
+	unsigned get_payload_len() const { return _payload_len; }
+
+	/*! Get the offset of payload begin
+	    \return offset of payload begin */
+	unsigned get_payload_begin() const { return _begin_payload; }
+#endif
+#if defined PREENCODE_MSG_SUPPORT
+	/*! Get the pre-encoded (prepared)
+	    \return ptr to message or 0 if not prepared */
+	const char *get_preencode_msg() const { return _preencode_len ? _preencode.data() : nullptr; }
+
+	/*! Get the pre-encoded (prepared) mesage length
+	    \return length */
+	size_t get_preencode_len() const { return _preencode_len; }
+
+	/*! Encode the payload to the prepare array
+	    \return length encoded */
+	size_t preencode() { return _preencode_len = MessageBase::encode(_preencode.data()); }
+#endif
+
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
 	    \param depth not used */
-	virtual void print(std::ostream& os, int depth=0) const;
+	F8API virtual void print(std::ostream& os, int depth=0) const;
 
 	/*! Inserter friend.
 	    \param os stream to send to
@@ -938,12 +1248,9 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
 
 #if defined CODECTIMING
-	static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
-	static void report_codec_timings(const f8String& tag);
+	F8API static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
+	F8API static void report_codec_timings(const f8String& tag);
 #endif
-
-	bool get_end_of_batch() const { return _end_of_batch; }
-	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
 };
 
 //-------------------------------------------------------------------------------------------------
