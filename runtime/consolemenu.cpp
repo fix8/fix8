@@ -67,7 +67,7 @@ const BaseMsgEntry *ConsoleMenu::SelectMsg() const
 			if (nlines % _lpp == 0 || (nlines + _lpp * page) == _ctx._bme.size())
 			{
 				_os << "Page " << (page + 1) << '/' << (1 + (_ctx._bme.size() / _lpp)) << ' ';
-            if ((opt = get_key(_fld_prompt)))
+            if ((opt = get_key(_fld_prompt, true)))
                break;
 				++page;
 				nlines = 0;
@@ -135,7 +135,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 			if (nlines % _lpp == 0 || (nlines + _lpp * page) == msg->get_fp().get_presence().size())
 			{
 				_os << "Page " << (page + 1) << '/' << (1 + (msg->get_fp().get_presence().size() / _lpp)) << ' ';
-				if ((opt = get_key(_fld_prompt)))
+				if ((opt = get_key(_fld_prompt, true)))
 					break;
 				++page;
 				nlines = 0;
@@ -239,7 +239,7 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 			if (nlines % _lpp == 0 || (nlines + _lpp * page) == lst.size())
 			{
 				_os << "Page " << (page + 1) << ' ';
-				if ((opt = get_key(_fld_prompt)))
+				if ((opt = get_key(_fld_prompt, true)))
 					break;
 				++page;
 				nlines = 0;
@@ -359,7 +359,7 @@ int ConsoleMenu::DeleteMsgs(tty_save_state& tty, MsgList& lst) const
 		{
 			if (*itr == msg)
 			{
-				if (get_yn("Delete msg? (y/n):", true))
+				if (get_yn(" Delete msg? (y/n):", true))
 				{
 					delete *itr;
 					lst.erase(itr);

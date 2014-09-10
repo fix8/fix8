@@ -144,6 +144,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { 'p', "Print messages" }, &MyMenu::print_msgs },
 	{ { 's', "Send messages" }, &MyMenu::send_msgs },
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
+	{ { 't', "Toggle heartbeat message display" }, &MyMenu::toggle_heartbeats },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 'L', "Set Lines per page" }, &MyMenu::set_lpp },
@@ -176,6 +177,16 @@ int main(int argc, char **argv)
 	bool server(false), reliable(false);
 	string clcf, replay_file;
 	unsigned next_send(0), next_receive(0);
+
+	// for xterm or if tput is available, export LINES so we can use here
+	const char *gresult(getenv("LINES"));
+	if (gresult && *gresult)
+	{
+		const string result(gresult);
+		const int nlines(stoi(result));
+		if (nlines > 10)
+			lines = nlines - 4;
+	}
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[]
@@ -267,7 +278,6 @@ int main(int argc, char **argv)
 
 			ConsoleMenu cm(TEX::ctx(), cin, cout, lines);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
-			char ch;
 			mymenu.get_tty().set_raw_mode();
 			hypersleep<h_seconds>(1);
 
@@ -275,11 +285,15 @@ int main(int argc, char **argv)
 			if (!replay_file.empty() && mymenu.load_msgs(replay_file))
 				mymenu.send_lst();
 
-			do
+			for(; !term_received;)
 			{
 				cout << endl << "?=help > " << flush;
+				char ch{};
+				mymenu.get_istr().get(ch);
+				cout << ch << endl;
+				if (mymenu.get_istr().bad() || ch == 0x3 || !mymenu.process(ch))
+					break;
 			}
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch));
 
 			mymenu.get_tty().unset_raw_mode();
 		}
@@ -331,7 +345,7 @@ bool MyMenu::help()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::set_lpp()
 {
-	cout << "Enter number of lines per page (currently=" << _cm->get_lpp() << "): " << flush;
+	_ostr << "Enter number of lines per page (currently=" << _cm->get_lpp() << "): " << flush;
 	f8String str;
 	if (!_cm->GetString(_tty, str).empty())
 		_cm->set_lpp(stoi(str));
@@ -391,9 +405,9 @@ bool MyMenu::create_msgs()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::version_info()
 {
-	cout << endl;
+	_ostr << endl;
 	for (const auto& pp : package_info())
-		cout << pp.first << ": " << pp.second << endl;
+		_ostr << pp.first << ": " << pp.second << endl;
 	return true;
 }
 
@@ -414,15 +428,15 @@ bool MyMenu::delete_msgs()
 //-----------------------------------------------------------------------------------------
 void MyMenu::send_lst()
 {
-	for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
-		_session.send(*itr);
+	for (auto *pp : _lst)
+		_session.send(pp);
 	_lst.clear();
 }
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::send_msgs()
 {
-	if (_cm->get_yn("Send messages? (y/n):", true))
+	if (_lst.size() && _cm->get_yn("Send messages? (y/n):", true))
 		send_lst();
 	return true;
 }
@@ -430,8 +444,26 @@ bool MyMenu::send_msgs()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::print_msgs()
 {
-	for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
-		cout << **itr << endl;
+	for (const auto *pp : _lst)
+		_ostr << *pp << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::toggle_heartbeats()
+{
+	if (_session.control() & Session::printnohb)
+	{
+		_session.control().clear(Session::printnohb);
+		_session.control().set(Session::print);
+		get_ostr() << "Heartbeat display on";
+	}
+	else
+	{
+		_session.control().clear(Session::print);
+		_session.control().set(Session::printnohb);
+		get_ostr() << "Heartbeat display off";
+	}
 	return true;
 }
 
@@ -468,7 +500,7 @@ bool MyMenu::load_msgs(const string& fname)
 			++skipped;
 	}
 
-	cout << loaded << " msgs loaded, " << skipped << " msgs skipped" << endl;
+	_ostr << loaded << " msgs loaded, " << skipped << " msgs skipped" << endl;
 
 	return true;
 }
@@ -476,7 +508,7 @@ bool MyMenu::load_msgs(const string& fname)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::read_msgs()
 {
-	cout << "Enter filename: " << flush;
+	_ostr << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())
 		load_msgs(fname);

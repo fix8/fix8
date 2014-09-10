@@ -174,7 +174,12 @@ public:
 	bool process(char ch)
 	{
 		auto itr(_handlers.find({ch}));
-		return itr == _handlers.end() ? true : (this->*itr->second)();
+		if (itr == _handlers.end())
+		{
+			_ostr << "Command not found";
+			return true;
+		}
+		return (this->*itr->second)();
 	}
 
 	bool new_order_single();
@@ -193,6 +198,7 @@ public:
 	bool write_msgs();
 	bool read_msgs();
 	bool set_lpp();
+	bool toggle_heartbeats();
 	bool static_probe();
 	bool new_order_single_alternate();
 	bool new_order_single_recycled();

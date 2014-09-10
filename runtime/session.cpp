@@ -251,6 +251,7 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 bool Session::process(const f8String& from)
 {
 	unsigned seqnum(0);
+	const Message *msg;
 
 	try
 	{
@@ -272,8 +273,7 @@ bool Session::process(const f8String& from)
 				retry_plog = true;
 		}
 
-		const Message *msg(Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag));
-		if (!msg)
+		if (!(msg = Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag)))
 		{
 			glout_fatal << "Fatal: factory failed to generate a valid message";
 			return false;
@@ -339,7 +339,7 @@ application_call:
 
 		if (!e.force_logoff())
 		{
-			send(generate_reject(seqnum, e.what()));
+			send(generate_reject(seqnum, e.what(), msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
 		}
 		else
 		{
@@ -621,7 +621,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		if (!_persist || !msg->get(begin) || !msg->get(end))
 			send(generate_sequence_reset(_next_send_seq + 1, true));
 		else if ((begin() > end() && end()) || begin() == 0)
-			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"));
+			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"), msg->get_msgtype().c_str());
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
@@ -793,12 +793,14 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Session::generate_reject(const unsigned seqnum, const char *what)
+Message *Session::generate_reject(const unsigned seqnum, const char *what, const char *msgtype)
 {
 	Message *msg(create_msg(Common_MsgType_REJECT));
 	*msg << new ref_seq_num(seqnum);
 	if (what)
 		*msg << new text(what);
+	if (msgtype)
+		*msg << new ref_msg_type(msgtype);
 
 	return msg;
 }
