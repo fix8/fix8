@@ -43,7 +43,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <QToolBar>
 #include <QVector>
 using namespace GUI;
-float   Globals::version = 0.5;
+float   Globals::version = 0.6;
 int Globals::databaseVersion;
 QString Globals::versionStr;
 QSize Globals::smallIconSize;
