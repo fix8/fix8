@@ -53,7 +53,7 @@
     <Import Project="root.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>4d6a34db</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>8d870101</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <NMakeOutput>
@@ -103,11 +103,15 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+    <Import Project="packages\fix8.dev.redist.1.3.20140831.1\build\native\fix8.dev.redist.targets" Condition="Exists('packages\fix8.dev.redist.1.3.20140831.1\build\native\fix8.dev.redist.targets')" />
+    <Import Project="packages\fix8.dev.1.3.20140831.1\build\native\fix8.dev.targets" Condition="Exists('packages\fix8.dev.1.3.20140831.1\build\native\fix8.dev.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dev.redist.1.3.20140831.1\build\native\fix8.dev.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dev.redist.1.3.20140831.1\build\native\fix8.dev.redist.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dev.1.3.20140831.1\build\native\fix8.dev.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dev.1.3.20140831.1\build\native\fix8.dev.targets'))" />
   </Target>
 </Project>

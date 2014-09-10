@@ -60,7 +60,7 @@
     <Import Project="test.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>3f143eae</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>0b874412</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -170,6 +170,8 @@
     <Import Project="packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets" Condition="Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" />
     <Import Project="packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets" Condition="Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" />
     <Import Project="packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets" Condition="Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" />
+    <Import Project="packages\fix8.dev.redist.1.2.20140629.1\build\native\fix8.dev.redist.targets" Condition="Exists('packages\fix8.dev.redist.1.2.20140629.1\build\native\fix8.dev.redist.targets')" />
+    <Import Project="packages\fix8.dev.1.2.20140629.1\build\native\fix8.dev.targets" Condition="Exists('packages\fix8.dev.1.2.20140629.1\build\native\fix8.dev.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -184,5 +186,7 @@
     <Error Condition="!Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets'))" />
     <Error Condition="!Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets'))" />
     <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dev.redist.1.2.20140629.1\build\native\fix8.dev.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dev.redist.1.2.20140629.1\build\native\fix8.dev.redist.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dev.1.2.20140629.1\build\native\fix8.dev.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dev.1.2.20140629.1\build\native\fix8.dev.targets'))" />
   </Target>
 </Project>

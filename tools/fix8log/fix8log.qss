@@ -1,0 +1,6 @@
+
+
+QToolButton { /* all types of tool button */
+         border: 0px solid #8f8f91;
+}
+
