@@ -131,8 +131,8 @@ int precomp(XmlElement& xf, ostream& outf);
 void process_group_ordering(const CommonGroupMap& gm);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
-	const string& msname, ostream& outp, ostream& outh, const CommonGroupMap& globmap, const string cls_prefix=string());
-void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh);
+	const string& msname, ostream& outp, ostream& outh, const CommonGroupMap& globmap, const std::string& fixns, const string cls_prefix=string());
+void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh, const std::string& fixns);
 void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, CommonGroupMap& globmap);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 unsigned lookup_component(const Components& compon, const f8String& name);
@@ -693,7 +693,7 @@ unsigned parse_groups(MessageSpec& ritr, const string& name,
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh)
+void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh, const std::string& fixns)
 {
    if (ms._groups.size())
    {
@@ -725,7 +725,7 @@ void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int
 
 //-----------------------------------------------------------------------------------------
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, const string& msname,
-	ostream& outp, ostream& outh, const CommonGroupMap& globmap, const string cls_prefix)
+	ostream& outp, ostream& outh, const CommonGroupMap& globmap, const std::string& fixns, const string cls_prefix)
 {
 	const string dspacer(depth * tabsize, ' '), d2spacer((depth + 1) * tabsize, ' ');
 
@@ -780,15 +780,15 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
       if (tgroup->_group_refcnt > 1)
       {
-         outh << d2spacer << "static const FieldTrait *_traits;" << endl;
-         outh << d2spacer << "static const FieldTrait_Hash_Array& _ftha;" << endl;
-         outh << d2spacer << "static const MsgType& _msgtype;" << endl;
+         outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait *_traits;" << endl;
+         outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait_Hash_Array& _ftha;" << endl;
+         outh << d2spacer << "static F8_" << fixns << "_API const MsgType& _msgtype;" << endl;
       }
       else
       {
-         outh << d2spacer << "static const FieldTrait _traits[];" << endl;
-         outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-         outh << d2spacer << "static const MsgType _msgtype;" << endl;
+          outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait _traits[];" << endl;
+          outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait_Hash_Array _ftha;" << endl;
+          outh << d2spacer << "static F8_" << fixns << "_API const MsgType _msgtype;" << endl;
       }
       outh << d2spacer << "static const unsigned _fieldcnt = " << tgroup->_fields.get_presence().size() << ';' << endl << endl;
 		outh << dspacer << "public:" << endl;
@@ -826,8 +826,8 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		if (!tgroup->_groups.empty())
       {
          outh << endl;
-         generate_nested_group(*tgroup, fspec, depth + 1, outh);
-			generate_group_bodies(*tgroup, fspec, depth + 1, msname, outp, outh, globmap, prefix + ms._name);
+         generate_nested_group(*tgroup, fspec, depth + 1, outh, fixns);
+         generate_group_bodies(*tgroup, fspec, depth + 1, msname, outp, outh, globmap, fixns, prefix + ms._name);
       }
 
 		outh << dspacer << "};" << endl;
@@ -993,7 +993,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
 	osc_hpp << "using " << ctxt._clname << "_BaseMsgEntry = MsgTable;" << endl;
 	osc_hpp << "/// Compiler generated metadata object, accessed through this function." << endl;
-	osc_hpp << "const F8MetaCntx& ctx();" << endl;
+	osc_hpp << "F8_" << ctxt._fixns << "_API " << "const F8MetaCntx& ctx();" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
 
@@ -1099,10 +1099,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
 				<< pp.second._fields.get_presence().size() << ");" << endl;
 			osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
-			osc_hpp << spacer << "static const FieldTrait _traits[];" << endl;
-			osc_hpp << spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-			osc_hpp << spacer << "static const MsgType _msgtype;" << endl;
-			osc_hpp << spacer << "static const unsigned _fieldcnt = " << pp.second._fields.get_presence().size() << ';' << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const MsgType _msgtype;" << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const unsigned _fieldcnt = " << pp.second._fields.get_presence().size() << ';' << endl;
 		}
 
 		if (isHeader)
@@ -1172,8 +1172,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 // =============================== Repeating group nested classes ==============================
 
-      generate_nested_group(pp.second, fspec, 1, osc_hpp);
-		generate_group_bodies(pp.second, fspec, 1, fsitr->second._name, osr_cpp, osc_hpp, globmap);
+        generate_nested_group(pp.second, fspec, 1, osc_hpp, ctxt._fixns);
+		generate_group_bodies(pp.second, fspec, 1, fsitr->second._name, osr_cpp, osc_hpp, globmap, ctxt._fixns);
 
 		osc_hpp << "};" << endl << endl;
 		osc_hpp << _csMap.find(cs_divider)->second << endl;
