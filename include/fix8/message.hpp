@@ -712,12 +712,21 @@ public:
 	    \return iterator to field or Fields::const_iterator::end */
 	Fields::const_iterator find_field(const unsigned short fnum) const { return _fields.find(fnum); }
 
-	/*! Check if a field is present in this message.
+	/*! Search for field in this message.
 	    \param fnum field number
 	    \return pointer to field or 0 if not found */
 	BaseField *get_field(const unsigned short fnum) const
 	{
 		auto itr(_fields.find(fnum));
+		return itr != _fields.cend() ? itr->second : nullptr;
+	}
+
+	/*! Search for field by longname in this message.
+	    \param tag field longname
+	    \return pointer to field or 0 if not found */
+	BaseField *get_field_by_name(const char *tag) const
+	{
+		auto itr(_fields.find(_ctx.reverse_find_fnum(tag)));
 		return itr != _fields.cend() ? itr->second : nullptr;
 	}
 
@@ -1190,7 +1199,7 @@ public:
 			_trailer->push_unknown(to->_trailer);
 	}
 
-	/*! Check if a field is present in this message (either header, body or trailer).
+	/*! Search for field in this message (either header, body or trailer).
 	    \param fnum field number
 	    \return pointer to field or 0 if not found */
 	BaseField *get_field_flattened(const unsigned short fnum) const
@@ -1199,6 +1208,14 @@ public:
 		return  itr != _fields.end() ? itr->second
 				: (itr = _header->_fields.find(fnum)) != _header->_fields.end() ? itr->second
 				: (itr = _trailer->_fields.find(fnum)) != _trailer->_fields.end() ? itr->second : nullptr;
+	}
+
+	/*! Search for field by longname in this message (either header, body or trailer).
+	    \param tag field longname
+	    \return pointer to field or 0 if not found */
+	BaseField *get_field_by_name_flattened(const char *tag) const
+	{
+		return get_field_flattened(_ctx.reverse_find_fnum(tag));
 	}
 
 #if defined RAW_MSG_SUPPORT

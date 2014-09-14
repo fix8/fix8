@@ -192,10 +192,18 @@ public:
 		const time_t insecs(std::chrono::system_clock::to_time_t(_value));
 #ifdef _MSC_VER
 		gmtime_s(&result, &insecs);
-		return &result;
 #else
-		return gmtime_r(&insecs, &result);
+		gmtime_r(&insecs, &result);
 #endif
+		return &result;
+	}
+
+	/*! Get tickval as struct tm
+	  \return tm structure */
+	struct tm get_tm() const
+	{
+		struct tm result;
+		return *as_tm(result);
 	}
 
 	/*! Set from secs/nsecs

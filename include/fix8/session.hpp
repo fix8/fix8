@@ -261,8 +261,7 @@ struct Schedule
 		}
 		else
 		{
-			struct tm result;
-			now.as_tm(result);
+			const tm result(now.get_tm());
 
 			//cout >> now << ' ' >> (today + _start) << ' ' >> (today + _end) << ' ' << result.tm_wday << endl;
 
@@ -780,8 +779,9 @@ public:
 	/*! Generate a reject message.
 	    \param seqnum message sequence number
 	    \param what rejection text
+	    \param msgtype offending msgtype
 	    \return new Message */
-	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what);
+	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what, const char *msgtype=nullptr);
 
 	/*! Generate a business_reject message.
 	    \param seqnum message sequence number

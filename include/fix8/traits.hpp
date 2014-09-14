@@ -80,25 +80,33 @@ struct FieldTrait
 	/*! Check if this FieldType is an int.
 	  \param ftype field to check
 	  \return true if an int */
-	static bool is_int(const FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }
+	static bool is_int(FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }
 
 	/*! Check if this FieldType is a char.
 	  \param ftype field to check
 	  \return true if a char */
-	static bool is_char(const FieldType ftype) { return ft_char <= ftype && ftype <= ft_end_char; }
-
-	/*! Check if this FieldType is a string.
-	  \param ftype field to check
-	  \return true if a string */
-	static bool is_string(const FieldType ftype) { return ft_string <= ftype && ftype <= ft_end_string; }
+	static bool is_char(FieldType ftype) { return ft_char <= ftype && ftype <= ft_end_char; }
 
 	/*! Check if this FieldType is a float.
 	  \param ftype field to check
 	  \return true if a float */
-	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
+	static bool is_float(FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
+
+	/*! Check if this FieldType is a string.
+	  \param ftype field to check
+	  \return true if a string */
+	static bool is_string(FieldType ftype) { return ft_string <= ftype && ftype <= ft_end_string; }
+
+	/*! Return the underlying field type of a given FieldType
+	  \param ftype field to check
+	  \return underlying FieldType */
+	static FieldType underlying_type(FieldType ftype)
+	{
+		return is_int(ftype) ? ft_int : is_char(ftype) ? ft_char : is_float(ftype) ? ft_float : is_string(ftype) ? ft_string : ft_untyped;
+	}
 
 	/// Ctor
-	FieldTrait() {}
+	FieldTrait() = default;
 
 	/// Copy Ctor
 	FieldTrait(const FieldTrait& from) : _fnum(from._fnum), _ftype(from._ftype), _pos(from._pos),
