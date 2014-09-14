@@ -77,6 +77,13 @@ nuget {
 	
 	targets {
 		// We're trying to be standard about these sorts of thing. (Will help with config.h later :D)
-		Defines += {F8_FIX40_API_SHARED, F8_FIX41_API_SHARED, F8_FIX42_API_SHARED, F8_FIX43_API_SHARED, F8_FIX44_API_SHARED, F8_FIX50_API_SHARED, F8_FIX50SP1_API_SHARED, F8_FIX50SP2_API_SHARED};
+		Defines += F8_FIX40_API_SHARED;
+		Defines += F8_FIX41_API_SHARED;
+		Defines += F8_FIX42_API_SHARED;
+		Defines += F8_FIX43_API_SHARED;
+		Defines += F8_FIX44_API_SHARED;
+		Defines += F8_FIX50_API_SHARED;
+		Defines += F8_FIX50SP1_API_SHARED;
+		Defines += F8_FIX50SP2_API_SHARED;
 	};
 }
