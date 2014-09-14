@@ -141,6 +141,7 @@ string bintoaschex(const string& from);
 uint32_t group_hash(const MessageSpec& p1);
 const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key);
 void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
+void generate_export( ostream& to, const string& ns );
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -983,9 +984,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	generate_preamble(osc_hpp, ctxt._out[Ctxt::classes_hpp].first.second, true);
 	osc_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl;
 	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
-	osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
+    generate_export(osc_hpp, ctxt._fixns);
+    osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
 	osc_hpp << endl << "extern \"C\"" << endl << '{' << endl
-      << spacer << "F8API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
+      << spacer << "F8_" << ctxt._fixns << "_API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
@@ -1565,6 +1567,20 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 	to << _csMap.find(cs_divider)->second << endl;
 	to << "// " << fname << endl;
 	to << _csMap.find(cs_divider)->second << endl;
+}
+//-------------------------------------------------------------------------------------------------
+void generate_export(ostream& to, const string& ns)
+{
+    to <<
+        "#if defined(_MSC_VER) && defined(F8_" << ns << "_API_SHARED)\n"
+        "    #if defined(BUILD_F8_" << ns << "_API)\n"
+        "        #define F8_" << ns << "_API __declspec(dllexport)\n"
+        "    #else\n"
+        "        #define F8_" << ns << "_API __declspec(dllimport)\n"
+        "    #endif\n"
+        "#else\n"
+        "    #define F8_" << ns << "_API\n"
+        "#endif\n";
 }
 
 /* vim: set ts=3 sw=3 tw=0 et :*/
