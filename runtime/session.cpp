@@ -251,7 +251,7 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 bool Session::process(const f8String& from)
 {
 	unsigned seqnum(0);
-	const Message *msg;
+	const Message *msg = nullptr;
 
 	try
 	{
