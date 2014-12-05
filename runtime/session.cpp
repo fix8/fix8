@@ -329,26 +329,31 @@ application_call:
 		delete msg;
 		return result && admin_result;
 	}
+	catch (LogfileException& e)
+	{
+		cerr << e.what() << endl;
+	}
 	catch (f8Exception& e)
 	{
-		slout_debug << "process:: f8exception" << ' ' << seqnum << ' ' << e.what();
+		slout_debug << "process: f8exception" << ' ' << seqnum << ' ' << e.what();
 
-		// log to both incase the exception was to do with the logger
-		slout_fatal << e.what();
-		glout_fatal << e.what();
-
-		if (!e.force_logoff())
+		if (e.force_logoff())
 		{
-			send(generate_reject(seqnum, e.what(), msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
-		}
-		else
-		{
+			slout_fatal << e.what() << " - will logoff";
 			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
 				send(generate_logout(e.what()), true, 0, true); // so it won't increment
 				do_state_change(States::st_logoff_sent);
 			}
 			stop();
+		}
+		else
+		{
+			slout_error << e.what() << " - message rejected";
+			send(generate_reject(seqnum, e.what(), msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
+			++_next_receive_seq;
+			delete msg;
+			return true; // message is handled but has errors
 		}
 	}
 	catch (Poco::Net::NetException& e)
