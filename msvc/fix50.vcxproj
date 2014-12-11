@@ -19,34 +19,34 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1A03AAD7-E5FE-45B0-ABF4-331746F59EB9}</ProjectGuid>
+    <ProjectGuid>{99E73022-54CD-4985-8375-7EA08DEC73E7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>harness</RootNamespace>
+    <RootNamespace>FIX50</RootNamespace>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -57,7 +57,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="testf8.props" />
+    <Import Project="root.props"/>
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -70,29 +70,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
-    <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
-    <CustomBuildBeforeTargets>
-    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <CustomBuildAfterTargets />
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
-    <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
-    <CustomBuildBeforeTargets />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PreprocessorDefinitions>BUILD_F8_FIX50_API;F8_FIX50_API_SHARED;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,11 +94,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PreprocessorDefinitions>BUILD_F8_FIX50_API;F8_FIX50_API_SHARED;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,32 +112,25 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_F8_FIX50_API;F8_FIX50_API_SHARED;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Manifest />
     <PreBuildEvent>
       <Command>
       </Command>
     </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-      <TreatOutputAsContent>
-      </TreatOutputAsContent>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -157,38 +138,42 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_F8_FIX50_API;F8_FIX50_API_SHARED;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Manifest />
     <PreBuildEvent>
       <Command>
       </Command>
     </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-      <TreatOutputAsContent>
-      </TreatOutputAsContent>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\test\harness.cpp">
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableLanguageExtensions>
+    <ClCompile Include="..\stocklib\FIX50_classes.cpp" />
+    <ClCompile Include="..\stocklib\FIX50_traits.cpp" />
+    <ClCompile Include="..\stocklib\FIX50_types.cpp" />
+    <ClCompile Include="..\stocklib\precomp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\stocklib\precomp.hpp" />
+    <ClInclude Include="..\stocklib\FIX50_classes.hpp" />
+    <ClInclude Include="..\stocklib\FIX50_router.hpp" />
+    <ClInclude Include="..\stocklib\FIX50_types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -201,6 +186,7 @@
     <Import Project="packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets" Condition="Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" />
     <Import Project="packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets" Condition="Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" />
     <Import Project="packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets" Condition="Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" />
+    <Import Project="packages\fix8.dependencies.gtest.1.7.20140509.1\build\native\fix8.dependencies.gtest.targets" Condition="Exists('packages\fix8.dependencies.gtest.1.7.20140509.1\build\native\fix8.dependencies.gtest.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -215,5 +201,6 @@
     <Error Condition="!Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets'))" />
     <Error Condition="!Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets'))" />
     <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.gtest.1.7.20140509.1\build\native\fix8.dependencies.gtest.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.gtest.1.7.20140509.1\build\native\fix8.dependencies.gtest.targets'))" />
   </Target>
 </Project>

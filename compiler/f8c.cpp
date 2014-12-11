@@ -131,8 +131,8 @@ int precomp(XmlElement& xf, ostream& outf);
 void process_group_ordering(const CommonGroupMap& gm);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
-	const string& msname, ostream& outp, ostream& outh, const CommonGroupMap& globmap, const string cls_prefix=string());
-void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh);
+	const string& msname, ostream& outp, ostream& outh, const CommonGroupMap& globmap, const std::string& fixns, const string cls_prefix=string());
+void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh, const std::string& fixns);
 void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, CommonGroupMap& globmap);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 unsigned lookup_component(const Components& compon, const f8String& name);
@@ -141,6 +141,7 @@ string bintoaschex(const string& from);
 uint32_t group_hash(const MessageSpec& p1);
 const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key);
 void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
+void generate_export( ostream& to, const string& ns );
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -191,10 +192,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "f8c for " PACKAGE " version " VERSION << endl;
-			cout << _csMap.find(cs_copyright_short)->second << insert_year()
-				  << _csMap.find(cs_copyright_short2)->second << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
+			cout << "f8c for " << Session::copyright_string() << endl;
 			return 0;
 		case 'I':
          for (const auto& pp : package_info())
@@ -692,7 +690,7 @@ unsigned parse_groups(MessageSpec& ritr, const string& name,
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh)
+void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh, const std::string& fixns)
 {
    if (ms._groups.size())
    {
@@ -724,7 +722,7 @@ void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int
 
 //-----------------------------------------------------------------------------------------
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, const string& msname,
-	ostream& outp, ostream& outh, const CommonGroupMap& globmap, const string cls_prefix)
+	ostream& outp, ostream& outh, const CommonGroupMap& globmap, const std::string& fixns, const string cls_prefix)
 {
 	const string dspacer(depth * tabsize, ' '), d2spacer((depth + 1) * tabsize, ' ');
 
@@ -779,15 +777,15 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
       if (tgroup->_group_refcnt > 1)
       {
-         outh << d2spacer << "static const FieldTrait *_traits;" << endl;
-         outh << d2spacer << "static const FieldTrait_Hash_Array& _ftha;" << endl;
-         outh << d2spacer << "static const MsgType& _msgtype;" << endl;
+         outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait *_traits;" << endl;
+         outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait_Hash_Array& _ftha;" << endl;
+         outh << d2spacer << "static F8_" << fixns << "_API const MsgType& _msgtype;" << endl;
       }
       else
       {
-         outh << d2spacer << "static const FieldTrait _traits[];" << endl;
-         outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-         outh << d2spacer << "static const MsgType _msgtype;" << endl;
+          outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait _traits[];" << endl;
+          outh << d2spacer << "static F8_" << fixns << "_API const FieldTrait_Hash_Array _ftha;" << endl;
+          outh << d2spacer << "static F8_" << fixns << "_API const MsgType _msgtype;" << endl;
       }
       outh << d2spacer << "static const unsigned _fieldcnt = " << tgroup->_fields.get_presence().size() << ';' << endl << endl;
 		outh << dspacer << "public:" << endl;
@@ -825,8 +823,8 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		if (!tgroup->_groups.empty())
       {
          outh << endl;
-         generate_nested_group(*tgroup, fspec, depth + 1, outh);
-			generate_group_bodies(*tgroup, fspec, depth + 1, msname, outp, outh, globmap, prefix + ms._name);
+         generate_nested_group(*tgroup, fspec, depth + 1, outh, fixns);
+         generate_group_bodies(*tgroup, fspec, depth + 1, msname, outp, outh, globmap, fixns, prefix + ms._name);
       }
 
 		outh << dspacer << "};" << endl;
@@ -983,15 +981,16 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	generate_preamble(osc_hpp, ctxt._out[Ctxt::classes_hpp].first.second, true);
 	osc_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl;
 	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
-	osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
+    generate_export(osc_hpp, ctxt._fixns);
+    osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
 	osc_hpp << endl << "extern \"C\"" << endl << '{' << endl
-      << spacer << "F8API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
+      << spacer << "F8_" << ctxt._fixns << "_API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
 	osc_hpp << "using " << ctxt._clname << "_BaseMsgEntry = MsgTable;" << endl;
 	osc_hpp << "/// Compiler generated metadata object, accessed through this function." << endl;
-	osc_hpp << "const F8MetaCntx& ctx();" << endl;
+	osc_hpp << "F8_" << ctxt._fixns << "_API " << "const F8MetaCntx& ctx();" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
 
@@ -1097,10 +1096,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
 				<< pp.second._fields.get_presence().size() << ");" << endl;
 			osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
-			osc_hpp << spacer << "static const FieldTrait _traits[];" << endl;
-			osc_hpp << spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-			osc_hpp << spacer << "static const MsgType _msgtype;" << endl;
-			osc_hpp << spacer << "static const unsigned _fieldcnt = " << pp.second._fields.get_presence().size() << ';' << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const MsgType _msgtype;" << endl;
+            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const unsigned _fieldcnt = " << pp.second._fields.get_presence().size() << ';' << endl;
 		}
 
 		if (isHeader)
@@ -1170,8 +1169,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 // =============================== Repeating group nested classes ==============================
 
-      generate_nested_group(pp.second, fspec, 1, osc_hpp);
-		generate_group_bodies(pp.second, fspec, 1, fsitr->second._name, osr_cpp, osc_hpp, globmap);
+        generate_nested_group(pp.second, fspec, 1, osc_hpp, ctxt._fixns);
+		generate_group_bodies(pp.second, fspec, 1, fsitr->second._name, osr_cpp, osc_hpp, globmap, ctxt._fixns);
 
 		osc_hpp << "};" << endl << endl;
 		osc_hpp << _csMap.find(cs_divider)->second << endl;
@@ -1565,6 +1564,20 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 	to << _csMap.find(cs_divider)->second << endl;
 	to << "// " << fname << endl;
 	to << _csMap.find(cs_divider)->second << endl;
+}
+//-------------------------------------------------------------------------------------------------
+void generate_export(ostream& to, const string& ns)
+{
+    to <<
+        "#if defined(_MSC_VER) && defined(F8_" << ns << "_API_SHARED)\n"
+        "    #if defined(BUILD_F8_" << ns << "_API)\n"
+        "        #define F8_" << ns << "_API __declspec(dllexport)\n"
+        "    #else\n"
+        "        #define F8_" << ns << "_API __declspec(dllimport)\n"
+        "    #endif\n"
+        "#else\n"
+        "    #define F8_" << ns << "_API\n"
+        "#endif\n";
 }
 
 /* vim: set ts=3 sw=3 tw=0 et :*/

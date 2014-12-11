@@ -84,6 +84,7 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 		{
 			scout_error << e.what();
 			_session.do_state_change(States::st_session_terminated);
+			_session.stop();
 			retval = -1;
 		}
 		catch (exception& e)
@@ -134,6 +135,7 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 			{
 				scout_error << e.what();
 				_session.do_state_change(States::st_session_terminated);
+				_session.stop();
 				retval = -1;
 				break;
 			}

@@ -41,6 +41,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace FIX8;
 using namespace std;
 
+
+//-------------------------------------------------------------------------------------------------
+namespace
+{
+	const string copyright_short { "Copyright (c) 2010-" };
+	const string copyright_short2 { ", David L. Dight <fix@fix8.org>, All rights reserved. [http://www.fix8.org]"};
+}
+
 //-------------------------------------------------------------------------------------------------
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
@@ -153,6 +161,7 @@ Session::~Session()
 int Session::start(Connection *connection, bool wait, const unsigned send_seqnum,
 	const unsigned recv_seqnum, const f8String davi)
 {
+	glout_info << copyright_string();
 	if (_logger)
 		_logger->purge_thread_codes();
 
@@ -248,9 +257,21 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 }
 
 //-------------------------------------------------------------------------------------------------
+void Session::update_persist_seqnums()
+{
+	if (_persist)
+	{
+		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+		_persist->put(_next_send_seq, _next_receive_seq);
+		//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
 	unsigned seqnum(0);
+	const Message *msg = nullptr;
 
 	try
 	{
@@ -272,8 +293,7 @@ bool Session::process(const f8String& from)
 				retry_plog = true;
 		}
 
-		const Message *msg(Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag));
-		if (!msg)
+		if (!(msg = Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag)))
 		{
 			glout_fatal << "Fatal: factory failed to generate a valid message";
 			return false;
@@ -320,35 +340,37 @@ application_call:
 		++_next_receive_seq;
 		if (retry_plog)
 			plog(from, Logger::Info, 1);
-		if (_persist)
-		{
-			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-			_persist->put(_next_send_seq, _next_receive_seq);
-			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
-		}
+
+		update_persist_seqnums();
+
 		delete msg;
 		return result && admin_result;
 	}
+	catch (LogfileException& e)
+	{
+		cerr << e.what() << endl;
+	}
 	catch (f8Exception& e)
 	{
-		slout_debug << "process:: f8exception" << ' ' << seqnum << ' ' << e.what();
+		slout_debug << "process: f8exception" << ' ' << seqnum << ' ' << e.what();
 
-		// log to both incase the exception was to do with the logger
-		slout_fatal << e.what();
-		glout_fatal << e.what();
-
-		if (!e.force_logoff())
+		if (e.force_logoff())
 		{
-			send(generate_reject(seqnum, e.what()));
-		}
-		else
-		{
+			slout_fatal << e.what() << " - will logoff";
 			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
 				send(generate_logout(e.what()), true, 0, true); // so it won't increment
 				do_state_change(States::st_logoff_sent);
 			}
 			stop();
+		}
+		else
+		{
+			slout_error << e.what() << " - message rejected";
+			send(generate_reject(seqnum, e.what(), msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
+			++_next_receive_seq;
+			delete msg;
+			return true; // message is handled but has errors
 		}
 	}
 	catch (Poco::Net::NetException& e)
@@ -621,7 +643,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		if (!_persist || !msg->get(begin) || !msg->get(end))
 			send(generate_sequence_reset(_next_send_seq + 1, true));
 		else if ((begin() > end() && end()) || begin() == 0)
-			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"));
+			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"), msg->get_msgtype().c_str());
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
@@ -752,7 +774,7 @@ bool Session::heartbeat_service()
 				}
 				return true;
 			}
-			else
+			else if (_state != States::st_session_terminated)
 			{
 				ostringstream ostr;
 				ostr << "Have not received anything from remote for ";
@@ -793,12 +815,14 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Session::generate_reject(const unsigned seqnum, const char *what)
+Message *Session::generate_reject(const unsigned seqnum, const char *what, const char *msgtype)
 {
 	Message *msg(create_msg(Common_MsgType_REJECT));
 	*msg << new ref_seq_num(seqnum);
 	if (what)
 		*msg << new text(what);
+	if (msgtype)
+		*msg << new ref_msg_type(msgtype);
 
 	return msg;
 }
@@ -1106,6 +1130,24 @@ void Session::set_affinity(int core_id)
 	slout_error << "set_affinity: not implemented";
 }
 #endif
+
+//-------------------------------------------------------------------------------------------------
+const f8String Session::copyright_string()
+{
+   time_t now(time(0));
+#ifdef _MSC_VER
+   struct tm *ptim(localtime (&now));
+#else
+   struct tm tim;
+   localtime_r(&now, &tim);
+   struct tm *ptim(&tim);
+#endif
+	ostringstream ostr;
+	ostr << PACKAGE_NAME << " version " << PACKAGE_VERSION << endl;
+	ostr << copyright_short << setw(2) << (ptim->tm_year - 100) << copyright_short2;
+	return ostr.str();
+}
+
 
 //-------------------------------------------------------------------------------------------------
 #ifdef HAVE_OPENSSL

@@ -172,6 +172,12 @@ public:
 	template<typename T>
 	T& from() { return *static_cast<T*>(this); }
 
+	/*! Cast this field to the supplied type.
+	  \tparam T target type
+	  \return pointer to the cast field */
+	template<typename T>
+	const T *as() const { return static_cast<T*>(this); }
+
 	/*! Encode this field to the supplied stream.
 	  \param os stream to encode to
 	  \return the number of bytes encoded */
@@ -843,8 +849,12 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 	return begin - bsv;
 }
 
-/// Based on Ghulam M. Babar's "mktime slow? use custom function"
-/// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
+/*! Convert tm to time_t
+	Based on Ghulam M. Babar's "mktime slow? use custom function"
+	see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
+  \param ltm decode from
+  \param utcdiff utc offset in mins
+  \return time_t */
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
    static const int mon_days[] {0,
@@ -880,10 +890,9 @@ enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _s
 	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
 	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
   \return length of formatted string */
-inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndicator ind)
+inline size_t date_time_format(const Tickval& tickval, char *to, TimeIndicator ind)
 {
-   tm result;
-	tickval.as_tm(result);
+   const tm result(tickval.get_tm());
 	const char *start(to);
 
 	if (ind > _time_with_ms)
@@ -926,7 +935,7 @@ inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndic
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
-	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || (*ptr == 'n' && len == 3 && *(ptr + 1) == 'o' && *(ptr + 2) == 'w'))	// special cases initialise to 'now'
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
@@ -966,7 +975,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
   \return ticks decoded */
 inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
-	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || (*ptr == 'n' && len == 3 && *(ptr + 1) == 'o' && *(ptr + 2) == 'w'))	// special cases initialise to 'now'
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
@@ -998,7 +1007,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 
 inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
-	if (len == 0 || *ptr == '!')	// special case initialise to 'now'
+	if (len == 0 || (*ptr == 'n' && len == 3 && *(ptr + 1) == 'o' && *(ptr + 2) == 'w'))	// special cases initialise to 'now'
 		return Tickval(true).get_ticks();
 
    tm tms {};

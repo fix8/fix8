@@ -197,16 +197,16 @@ struct Schedule
 {
 	Tickval _start, _end, _duration;
 	int _utc_offset, _start_day, _end_day;
-	Tickval::sticks _toffset;
+	Tickval::ticks _toffset;
 
 	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
-    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration=0/*Tickval::noticks*/, int utc_offset=0,
+    Schedule(Tickval start, Tickval end, Tickval duration=Tickval(), int utc_offset=0,
 			 int start_day=-1, int end_day=-1) :
 		_start(start), _end(end), _duration(duration),
 		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
-		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
+		_toffset(static_cast<Tickval::ticks>(_utc_offset) * Tickval::minute)
 	{
 	}
 
@@ -261,8 +261,7 @@ struct Schedule
 		}
 		else
 		{
-			struct tm result;
-			now.as_tm(result);
+			const tm result(now.get_tm());
 
 			//cout >> now << ' ' >> (today + _start) << ' ' >> (today + _end) << ' ' << result.tm_wday << endl;
 
@@ -631,6 +630,9 @@ public:
 	    \return true on success */
 	F8API bool send_process(Message *msg);
 
+	/// Force persister to sync next send/receive seqnums
+	F8API void update_persist_seqnums();
+
 	/// stop the session.
 	F8API void stop();
 
@@ -780,8 +782,9 @@ public:
 	/*! Generate a reject message.
 	    \param seqnum message sequence number
 	    \param what rejection text
+	    \param msgtype offending msgtype
 	    \return new Message */
-	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what);
+	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what, const char *msgtype=nullptr);
 
 	/*! Generate a business_reject message.
 	    \param seqnum message sequence number
@@ -823,6 +826,10 @@ public:
 		static const f8String unknown("Unknown");
 		return state < _state_names.size() ? _state_names[state] : unknown;
 	}
+
+	/*! Return the version and copyright for this version
+	    \return string */
+	static const f8String copyright_string();
 };
 
 //-------------------------------------------------------------------------------------------------

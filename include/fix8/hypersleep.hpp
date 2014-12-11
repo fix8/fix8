@@ -72,15 +72,15 @@ namespace
 }
 
 //----------------------------------------------------------------------------------------
-template<const hyperunits_t>
-inline int hypersleep (const unsigned amt);
+template<hyperunits_t>
+inline int hypersleep (unsigned amt);
 
 //----------------------------------------------------------------------------------------
 /*! A more reliable high precision sleep, seconds specialisation
     \param amt amount to sleep
     \return 0 on success */
 template<>
-inline int hypersleep<h_seconds>(const unsigned amt)
+inline int hypersleep<h_seconds>(unsigned amt)
 {
 #if defined HAVE_CLOCK_NANOSLEEP
    timespec ts;
@@ -102,7 +102,7 @@ inline int hypersleep<h_seconds>(const unsigned amt)
     \param amt amount to sleep
     \return 0 on success */
 template<>
-inline int hypersleep<h_milliseconds>(const unsigned amt)
+inline int hypersleep<h_milliseconds>(unsigned amt)
 {
 #if defined HAVE_CLOCK_NANOSLEEP
    timespec ts;
@@ -124,7 +124,7 @@ inline int hypersleep<h_milliseconds>(const unsigned amt)
     \param amt amount to sleep
     \return 0 on success */
 template<>
-inline int hypersleep<h_microseconds>(const unsigned amt)
+inline int hypersleep<h_microseconds>(unsigned amt)
 {
 #if defined HAVE_CLOCK_NANOSLEEP
    timespec ts;
@@ -146,7 +146,7 @@ inline int hypersleep<h_microseconds>(const unsigned amt)
     \param amt amount to sleep
     \return 0 on success */
 template<>
-inline int hypersleep<h_nanoseconds>(const unsigned amt)
+inline int hypersleep<h_nanoseconds>(unsigned amt)
 {
 #if defined HAVE_CLOCK_NANOSLEEP
    timespec ts;
@@ -168,10 +168,10 @@ inline int hypersleep<h_nanoseconds>(const unsigned amt)
     \param amt amount to sleep
     \param units units that sleep value is in
     \return 0 on success */
-inline int hypersleep (const unsigned amt, const hyperunits_t units)
+inline int hypersleep (unsigned amt, hyperunits_t units)
 {
    enum { Div, Mul, Operation };
-   static const unsigned hv[h_count][Operation] =
+   static const unsigned hv[h_count][Operation]
    {
       { 1,            billion 	}, // Seconds
       { thousand,     million    }, // Milliseconds

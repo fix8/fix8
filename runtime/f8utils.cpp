@@ -251,8 +251,12 @@ const Package_info& package_info()
 	{
 		{ "VERSION", VERSION },
 		{ "PACKAGE", PACKAGE },
+#if defined PACKAGE_BUGREPORT
 		{ "PACKAGE_BUGREPORT", PACKAGE_BUGREPORT },
+#endif
+#if defined PACKAGE_URL
 		{ "PACKAGE_URL", PACKAGE_URL },
+#endif
 		{ "MAGIC_NUM", STRINGIFY(MAGIC_NUM) },
 		{ "CONFIGURE_OPTIONS", CONFIGURE_OPTIONS },
 		{ "CPPFLAGS", CPPFLAGS },

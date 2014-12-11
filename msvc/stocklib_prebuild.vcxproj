@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{456316E4-03E5-43DF-946A-D35BEFC480F3}</ProjectGuid>
+    <ProjectGuid>{D03283C9-8BC4-485E-A3AB-590866B804F4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_prebuild</RootNamespace>
+    <RootNamespace>utests_prebuild</RootNamespace>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -57,32 +57,32 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="testf8.props" />
+    <Import Project="utest.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_stocklibs.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_stocklibs.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_stocklibs.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_stocklibs.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_stocklibs.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="f8c_test.cmd" />
+    <None Include="f8c_stocklibs.cmd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
