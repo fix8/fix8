@@ -41,6 +41,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <chrono>
 #ifdef _MSC_VER
 #include <limits.h>
+#undef min
+#undef max
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -58,7 +60,9 @@ public:
 	using duration = f8_time_point::duration;
 	static const ticks noticks = 0; // this should be a signed value
 #ifdef _MSC_VER
-	static const ticks errorticks = LLONG_MAX;	// VS2013 still doesn't seem to support constexpr
+    ///@note: is there a better way to do that like
+    ///static inline const ticks errorticks() { return f8_time_point::max().time_since_epoch().count(); }
+   static const ticks errorticks = (LLONG_MAX / _XTIME_NSECS_PER_TICK) * _XTIME_NSECS_PER_TICK; // count in 100ns
 #else
 	static const ticks errorticks = f8_time_point::max().time_since_epoch().count(); // 2262-04-12 09:47:16.854775807
 #endif
@@ -155,12 +159,12 @@ public:
 	  \return value as a double */
 	double todouble() const
 	{
-		return static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(_value.time_since_epoch()).count() / std::nano::den);
+		return static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(_value.time_since_epoch()).count()) / std::nano::den;
 	}
 
 	/*! See if this Tickval holds an error value
 	  \return true if an error value */
-	bool is_errorval() const { return _value.time_since_epoch().count() == errorticks; }
+    bool is_errorval() const { return get_ticks() == errorticks; }
 
 	/*! See if this Tickval is within the range given
 	  \param a lower boundary

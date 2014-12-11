@@ -630,6 +630,9 @@ public:
 	    \return true on success */
 	F8API bool send_process(Message *msg);
 
+	/// Force persister to sync next send/receive seqnums
+	F8API void update_persist_seqnums();
+
 	/// stop the session.
 	F8API void stop();
 
@@ -823,6 +826,10 @@ public:
 		static const f8String unknown("Unknown");
 		return state < _state_names.size() ? _state_names[state] : unknown;
 	}
+
+	/*! Return the version and copyright for this version
+	    \return string */
+	static const f8String copyright_string();
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -276,7 +276,7 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 #if defined POPULATE_METADATA
 			to->check_set_rlm(nf);
 #endif
-			Presence::const_iterator fpitr(_fp.get_presence().end());
+			Presence::const_iterator fpitr(to->_fp.get_presence().end());
 			if (force && to->_fp.get(pp._fnum, fpitr, FieldTrait::present))
 				delete to->replace(pp._fnum, fpitr, nf);
 			else

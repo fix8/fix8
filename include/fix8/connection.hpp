@@ -58,7 +58,7 @@ protected:
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
-	f8_thread_cancellation_token  _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
 	f8_atomic<bool> _started;
 
 private:
@@ -106,7 +106,16 @@ public:
 
 	/*! Wait till processing thead has finished.
 		 \return 0 on success */
-	int join() { return _started ? _thread.join() : 0; }
+	int join()
+	{
+		if (_started)
+		{
+			_started = false;
+			return _thread.join();
+		}
+
+		return 0;
+	}
 
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };

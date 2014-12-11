@@ -192,10 +192,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "f8c for " PACKAGE " version " VERSION << endl;
-			cout << _csMap.find(cs_copyright_short)->second << insert_year()
-				  << _csMap.find(cs_copyright_short2)->second << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
+			cout << "f8c for " << Session::copyright_string() << endl;
 			return 0;
 		case 'I':
          for (const auto& pp : package_info())
