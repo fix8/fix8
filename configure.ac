@@ -871,7 +871,7 @@ AC_SUBST_FILE([CHANGELOG])
 CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
-						sai/Makefile stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
+						stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
 AC_CONFIG_HEADERS(include/fix8/f8config.h)
 AC_OUTPUT
 
