@@ -51,6 +51,7 @@ endif
 seqedit_LDFLAGS += -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
 if TBBSUPPORT
 GEN_LIBS += -ltbb
+seqedit_LDFLAGS += -ltbb
 endif
 if !USEOSX
 seqedit_LDFLAGS += -rdynamic
