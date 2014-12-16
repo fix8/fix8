@@ -241,7 +241,7 @@ int main(int argc, char **argv)
 
 	try
 	{
-		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
+		const string conf_file(clcf.empty() ? server ? "myfix_server.xml" : "myfix_client.xml" : clcf);
 
 		if (server)
 		{

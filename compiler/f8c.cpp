@@ -140,7 +140,8 @@ void binary_report();
 string bintoaschex(const string& from);
 uint32_t group_hash(const MessageSpec& p1);
 const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key);
-void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
+void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname,
+   const string& prefix, ostream& outp, const string& base_gname=string());
 void generate_export( ostream& to, const string& ns );
 
 //-----------------------------------------------------------------------------------------
@@ -153,35 +154,35 @@ int main(int argc, char **argv)
 #ifdef HAVE_GETOPT_LONG
 	option long_options[]
 	{
-		{ "help",			0,	0,	'h' },
-		{ "version",		0,	0,	'v' },
-		{ "verbose",		0,	0,	'V' },
-		{ "nounique",		0,	0,	'N' },
-		{ "norealm",		0,	0,	'R' },
-		{ "incpath",		0,	0,	'P' },
-		{ "nowarn",		   0,	0,	'W' },
-		{ "odir",			1,	0,	'o' },
-		{ "dump",			0,	0,	'd' },
-		{ "extension",		0,	0,	'e' },
-		{ "ignore",			0,	0,	'i' },
-		{ "nocheck",		0,	0,	'C' },
-		{ "noconst",		0,	0,	'U' },
-		{ "info",		   0,	0,	'I' },
-		{ "fields",			0,	0,	'f' },
-		{ "xfields",		1,	0,	'F' },
-		{ "keep",			0,	0,	'k' },
-		{ "retain",			0,	0,	'r' },
-		{ "binary",			0,	0,	'b' },
-		{ "classes",		1,	0,	'c' },
-		{ "pch",		      1,	0,	'H' },
-		{ "second",			0,	0,	's' },
-		{ "defaulted",		0,	0,	'D' },
-		{ "noshared",		0,	0,	'S' },
-		{ "prefix",			1,	0,	'p' },
-		{ "namespace",		1,	0,	'n' },
-		{ "tabsize",		1,	0,	't' },
-		{ "fixt",			1,	0,	'x' },
-		{ 0 },
+		{ "help",			no_argument,			nullptr,	'h' },
+		{ "version",		no_argument,			nullptr,	'v' },
+		{ "verbose",   	no_argument,		   nullptr,	'V' },
+		{ "nounique",   	no_argument,		   nullptr,	'N' },
+		{ "norealm",   	no_argument,		   nullptr,	'R' },
+		{ "incpath",   	no_argument,		   nullptr,	'P' },
+		{ "nowarn",   	   no_argument,		   nullptr,	'W' },
+		{ "dump",   	   no_argument,		   nullptr,	'd' },
+		{ "extension",    no_argument,		   nullptr,	'e' },
+		{ "ignore",   	   no_argument,		   nullptr,	'i' },
+		{ "nocheck",  	   no_argument,		   nullptr,	'C' },
+		{ "noconst",  	   no_argument,		   nullptr,	'U' },
+		{ "info",   	   no_argument,		   nullptr,	'I' },
+		{ "fields",   	   no_argument,		   nullptr,	'f' },
+		{ "keep",   	   no_argument,		   nullptr,	'k' },
+		{ "retain",   	   no_argument,		   nullptr,	'r' },
+		{ "binary",   	   no_argument,		   nullptr,	'b' },
+		{ "second",   	   no_argument,		   nullptr,	's' },
+		{ "defaulted",    no_argument,		   nullptr,	'D' },
+		{ "noshared",     no_argument,		   nullptr,	'S' },
+		{ "xfields",		required_argument,	nullptr,	'F' },
+		{ "odir",			required_argument,	nullptr,	'o' },
+		{ "classes",		required_argument,	nullptr,	'c' },
+		{ "pch",				required_argument,	nullptr,	'H' },
+		{ "prefix",			required_argument,	nullptr,	'p' },
+		{ "namespace",		required_argument,	nullptr,	'n' },
+		{ "tabsize",		required_argument,	nullptr,	't' },
+		{ "fixt",			required_argument,	nullptr,	'x' },
+		{},
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
@@ -461,12 +462,13 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			trim(number);
 			trim(name);
 			trim(type);
+         int precision(pp->FindAttr("precision", -1));
 			InPlaceStrToUpper(type);
          const auto bmitr(FieldSpec::_baseTypeMap.find(type));
 			FieldTrait::FieldType ft(bmitr == FieldSpec::_baseTypeMap.end() ? FieldTrait::ft_untyped : bmitr->second);
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
-				result = fspec.insert({get_value<unsigned>(number), FieldSpec(name, ft)});
+				result = fspec.insert({get_value<unsigned>(number), FieldSpec(name, ft, precision)});
 			else
 			{
             if (!nowarn)
@@ -752,7 +754,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
          outp << "const FieldTrait *" << prefix << ms._name << "::" << gsitr->second._name << "::_traits("
             << rnme.str() << "_traits);" << endl;
       else
-         generate_group_traits(fspec, *tgroup, rnme.str(), prefix + ms._name + "::", outp);
+         generate_group_traits(fspec, *tgroup, rnme.str(), prefix + ms._name + "::", outp, gsitr->second._name);
 
       if (tgroup->_group_refcnt > 1)
       {
@@ -832,7 +834,8 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
+void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname,
+   const string& prefix, ostream& outp, const string& base_gname)
 {
    if (prefix.empty())
       outp << "const FieldTrait " << gname << "_traits[]"
@@ -877,7 +880,7 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
    {
       outp << "const FieldTrait_Hash_Array " << gname << "_ftha(" << gname << "_traits, "
          << ms._fields.get_presence().size() << ");" << endl;
-      outp << "const MsgType " << gname << "_msgtype(\"" << gname << "\");" << endl;
+      outp << "const MsgType " << gname << "_msgtype(\"" << (base_gname.empty() ? gname : base_gname) << "\");" << endl;
    }
    else
       outp << "const FieldTrait_Hash_Array " << endl << spacer << prefix << gname
@@ -899,7 +902,7 @@ void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, Comm
             ostringstream gostr;
             gostr << gsitr->second._name << 'V' << vers;
 
-            generate_group_traits(fspec, ii.second, gostr.str(), string(), outp);
+            generate_group_traits(fspec, ii.second, gostr.str(), string(), outp, gsitr->second._name);
          }
          ++vers;
       }
@@ -1378,7 +1381,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			ost_hpp << "// " << fitr->second._comment << endl;
       const auto tyitr(FieldSpec::_typeToCPP.find(fitr->second._ftype));
 		ost_hpp << "using " << fitr->second._name << " = Field<"
-         << (tyitr == FieldSpec::_typeToCPP.end() ? "unknown" : tyitr->second.first) << ", " << fitr->first << ">;" << endl;
+         << (tyitr == FieldSpec::_typeToCPP.end() ? "unknown" : tyitr->second.first) << ", " << fitr->first;
+      if (fitr->second._precision != -1)
+         ost_hpp << ", " << fitr->second._precision;
+      ost_hpp << ">;" << endl;
 		if (fitr->second._dvals)
 			process_value_enums(fitr, ost_hpp, ost_cpp);
 		ost_hpp << _csMap.find(cs_divider)->second << endl;
@@ -1396,7 +1402,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << pp.second._name << "_realm), "
 			<< "RealmBase::" << (pp.second._dtype == RealmBase::dt_set ? "dt_set" : "dt_range") << ", "
 			<< "FieldTrait::" << tyitr->second.second << ", "
-			<< pp.second._dvals->size() << ", " << pp.second._name << "_descriptions }," << endl;
+			<< pp.second._dvals->size() << ',' << endl
+         << spacer << spacer << pp.second._name << "_descriptions, "
+         << pp.second._name << "_idx, " << pp.second._name << "_didx }," << endl;
 		pp.second._doffset = dcnt++;
 	}
 	ost_cpp << "};" << endl;
@@ -1557,8 +1565,8 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)
 	{
-		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
+		to << "#if defined F8_MAGIC_NUM && F8_MAGIC_NUM > " << F8_MAGIC_NUM << 'L' << endl;
+		to << "#error " << fname << " version " << F8_PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
 		to << "#endif" << endl;
 	}
 	to << _csMap.find(cs_divider)->second << endl;

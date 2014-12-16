@@ -1247,6 +1247,27 @@ public:
    std::istream& operator()() { return *ifs_; }
 };
 
+//-------------------------------------------------------------------------------------------------
+/// Ensure an external bool is inverted when it goes out of scope
+/*! \tparam T is a bool or bool wrapper */
+template<typename T>
+class scoped_bool
+{
+	T& _value;
+	bool _flip;
+
+public:
+	/*! Ctor.
+	    \param value reference to boolean to operate on
+	    \param flip if true, invert on scope exit else set to false */
+	scoped_bool(T& value, bool flip=true) : _value(value), _flip(flip) {}
+	~scoped_bool() { _flip ? _value = !_value : _value = false; }
+
+	void set(bool what=true) { _value = what; }
+	bool operator=(bool what) { _value = what; return _value; }
+	operator bool() const { return _value; }
+};
+
 //----------------------------------------------------------------------------------------
 #if defined POCO_VERSION && POCO_VERSION <= 0x01040100
 inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b)

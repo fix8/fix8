@@ -826,10 +826,12 @@ XmlElement *XmlElement::Factory(istream& ifs, const char *docpath)
 }
 
 //-----------------------------------------------------------------------------------------
-XmlElement *XmlElement::Factory(const string& fname)
+XmlElement *XmlElement::Factory(const char *fname)
 {
-	ifstream ifs(fname.c_str());
-	return Factory(ifs, fname.c_str());
+	if (!fname)
+		return nullptr;
+	ifstream ifs(fname);
+	return Factory(ifs, fname);
 }
 
 //-----------------------------------------------------------------------------------------

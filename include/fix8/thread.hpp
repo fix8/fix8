@@ -417,8 +417,8 @@ public:
     f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
     f8_scoped_lock_impl(T& mutex, bool disable) : _disabled(disable)
     {
-        if (!_disabled)
-            acquire(mutex);
+		if (!_disabled)
+			acquire(mutex);
     }
 
     ~f8_scoped_lock_impl() { release(); }

@@ -477,7 +477,7 @@ protected:
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	virtual bool handle_reject(const unsigned seqnum, const Message *msg) { return false; }
+	virtual bool handle_reject(const unsigned seqnum, const Message *msg) { return true; }
 
 	/*! Administrative message callback. Called on receipt of all admin messages.
 	    \param seqnum message sequence number

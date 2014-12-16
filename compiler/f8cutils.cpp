@@ -181,7 +181,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 	typestr.insert(0, "const ");
 	typestr += ' ';
 
-	ost_cpp << typestr << itr->second._name << "_realm[]  " << endl << spacer << "{ ";
+	ost_cpp << typestr << itr->second._name << "_realm[]" << endl << spacer << "{ ";
 	unsigned cnt(0);
 	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
@@ -204,16 +204,47 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 	ost_hpp << "const size_t " << itr->second._name << "_realm_els(" << itr->second._dvals->size() << ");" << endl;
 	ost_cpp << " };" << endl;
 
-	ost_cpp << "const char *" << itr->second._name << "_descriptions[]  " << endl << spacer << "{ ";
 	cnt = 0;
-	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
+	map<string, int> descalpha;
+	for (const auto& pp : *itr->second._dvals)
+		descalpha.insert({pp.second, cnt++});
+
+	cnt = 0;
+	ost_cpp << "const char *" << itr->second._name << "_descriptions[]" << endl << spacer << "{ ";
+	for (const auto& pp : descalpha)
 	{
 		if (cnt)
 			ost_cpp << ", ";
-		ost_cpp << '"' << ditr->second << '"';
+		ost_cpp << '"' << pp.first << '"';
 		++cnt;
 	}
 	ost_cpp << " };" << endl;
+
+	ost_cpp << "const unsigned short " << itr->second._name << "_idx[]" << endl << spacer << "{ ";
+	cnt = 0;
+	for (const auto& pp : descalpha)
+	{
+		if (cnt)
+			ost_cpp << ", ";
+		ost_cpp << pp.second;
+		++cnt;
+	}
+	ost_cpp << " };" << endl;
+
+	ost_cpp << "const unsigned short " << itr->second._name << "_didx[]" << endl << spacer << "{ ";
+	cnt = 0;
+	for (const auto& pp : *itr->second._dvals)
+	{
+		auto ditr(descalpha.find(pp.second));
+		if (ditr == descalpha.end())
+			continue;
+		if (cnt)
+			ost_cpp << ", ";
+		ost_cpp << distance(descalpha.begin(), ditr);
+		++cnt;
+	}
+	ost_cpp << " };" << endl;
+
 }
 
 //-----------------------------------------------------------------------------------------
@@ -321,9 +352,9 @@ void print_usage()
 {
 	UsageMan um("f8c", GETARGLIST, "<input xml schema>");
 	um.setdesc("f8c -- compile FIX xml schema");
-	um.add('o', "odir <dir>", "output target directory (default ./)");
-	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
-	um.add('H', "pch <filename>", "use specified precompiled header name for Windows (default none)");
+	um.add('o', "odir", "output target directory (default ./)", "dir");
+	um.add('p', "prefix", "output filename prefix (default Myfix)", "prefix");
+	um.add('H', "pch", "use specified precompiled header name for Windows (default none)", "filename");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
@@ -344,11 +375,11 @@ void print_usage()
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
 	um.add('P', "incpath", "prefix system include path with \"fix8\" in generated compilation units (default yes)");
-	um.add('c', "classes <server|client>", "generate user session classes (default neither)");
-	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
-	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
+	um.add('c', "classes", "generate user session classes (default neither)", "client|server");
+	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)", "width");
+	um.add('x', "fixt", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file", "filename");
 	um.add('V', "verbose", "be more verbose when processing");
-	um.add('n', "namespace <ns>", "namespace to place generated code in (default FIXMmvv e.g. FIX4400)");
+	um.add('n', "namespace", "namespace to place generated code in (default FIXMmvv e.g. FIX4400)", "namespace");
 	um.add("e.g.");
 	um.add("@f8c -p Texfix -n TEX myfix.xml");
 	um.add("@f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml");

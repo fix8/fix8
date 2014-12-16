@@ -192,14 +192,15 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		if (type == "mem")
 			return new MemoryPersister;
 
-		string dir("./"), db("persist_db");
+        string dir("./"), db("persist_db"), db_suffix;
 		which->GetAttr("dir", dir);
 		which->GetAttr("db", db) || which->GetAttr("session_prefix", db);
 
 		if (sid)
-			db += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
+			db_suffix = ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
 		else if (which->FindAttr("use_session_id", false))
-			db += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
+			db_suffix = ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
+	       db += db_suffix;
 
 #if defined HAVE_LIBMEMCACHED
 		if (type == "memcached")

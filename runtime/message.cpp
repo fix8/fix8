@@ -505,7 +505,7 @@ void MessageBase::print(ostream& os, int depth) const
 		os << " (" << pp.second->_fnum << "): ";
 		int idx;
 		if (pp.second->_rlm && (idx = (pp.second->get_rlm_idx())) >= 0)
-			os << pp.second->_rlm->_descriptions[idx] << " (" << *pp.second << ')' << endl;
+			os << pp.second->_rlm->_descriptions[*(pp.second->_rlm->_didx + idx)] << " (" << *pp.second << ')' << endl;
 		else
 			os << *pp.second << endl;
 		if (_fp.is_group(pp.second->_fnum) && has_group_count(pp.second))
@@ -543,7 +543,7 @@ void MessageBase::print_field(const unsigned short fnum, ostream& os) const
 		os << tbe->_name << " (" << fnum << "): ";
 		int idx;
 		if (fitr->second->_rlm && (idx = (fitr->second->get_rlm_idx())) >= 0)
-			os << fitr->second->_rlm->_descriptions[idx] << " (" << *fitr->second << ')';
+			os << fitr->second->_rlm->_descriptions[*(fitr->second->_rlm->_didx + idx)] << " (" << *fitr->second << ')';
 		else
 			os << *fitr->second;
 		if (_fp.is_group(fnum) && has_group_count(fitr->second))
@@ -708,5 +708,149 @@ GroupBase *MessageBase::replace(const unsigned short fnum, GroupBase *with)
 		itr->second = with;
 	}
 	return old;
+}
+
+//-------------------------------------------------------------------------------------------------
+const MessageBase *MessageBase::find_group_element_by_longname(const char *tag, char *& eptr, bool create) const
+{
+	const char *colon(strchr(tag, ':'));
+	if (colon == nullptr) // malformed
+	{
+		glout_debug << "colon not found";
+		return nullptr;
+	}
+	const int grpidx(strtol(colon + 1, &eptr, 10));
+	if (grpidx == 0 || *eptr != '/') // malformed
+	{
+		glout_debug << "grpidx or / not found";
+		return nullptr;
+	}
+	const string grpname(tag, colon);
+	const MessageBase *mptr(get_group_element(grpname.c_str(), grpidx - 1));
+	if (!mptr)
+	{
+		if (create)
+		{
+			GroupBase *grpb(get_group_by_name(grpname.c_str()));
+			if (grpb)
+			{
+				MessageBase *ngrp(grpb->create_group(true));
+				*grpb << ngrp;
+				return ngrp;
+			}
+		}
+		glout_debug << grpname << ':' << grpidx << " not found";
+		return nullptr;
+	}
+
+	return mptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+BaseField *MessageBase::copy_field_by_name(const char *tag) const
+{
+	const BaseField *the_field(get_field_by_name(tag));
+	return the_field ? the_field->copy() : nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+BaseField *MessageBase::get_field_by_name(const char *tag, bool create) const
+{
+// get_field_by_name("Price");
+// get_field_by_name("NoAsgnReqs:1/Parties:1/TradeOriginationDate");
+	auto itr(_fields.find(_ctx.reverse_find_fnum(tag)));
+	if (itr != _fields.cend())	// field was found
+		return itr->second;
+	char *eptr;
+	const MessageBase *mptr(find_group_element_by_longname(tag, eptr, create));
+	return mptr ? mptr->get_field_by_name(eptr + 1) : nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+GroupBase *MessageBase::get_group_by_name(const char *tag, bool create) const
+{
+// get_group_by_name("NoAsgnReqs");
+// get_group_by_name("NoAsgnReqs:1/Parties");
+	auto itr(_groups.find(_ctx.reverse_find_fnum(tag)));
+	if (itr != _groups.cend())	// group was found
+		return itr->second;
+	char *eptr;
+	const MessageBase *mptr(find_group_element_by_longname(tag, eptr, create));
+	return mptr ? mptr->get_group_by_name(eptr + 1) : nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+GroupBase *MessageBase::clone_group(const unsigned short fnum) const
+{
+	const GroupBase *gb(find_group(fnum));
+	if (gb)
+	{
+		GroupBase *ng(create_nested_group(fnum));
+		for (const auto *qq : gb->_msgs)
+		{
+			MessageBase *grc(ng->create_group(true));
+			qq->copy_legal(grc, true);
+			*ng += grc;
+		}
+		return ng;
+	}
+	return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool MessageBase::add_field(const char *tag, const char *from)
+{
+	try
+	{
+	// add_field("NoAsgnReqs:1/Parties:1/TradeOriginationDate", "20140929-23:09:02");
+		if (_fields.find(_ctx.reverse_find_fnum(tag)) != _fields.cend())
+		{
+			glout_debug << tag << " already present";
+			return false;
+		}
+		const BaseEntry *be(_ctx.reverse_find_be(tag));
+		if (be)
+		{
+			if (!from || !*from)
+			{
+				glout_debug << tag << ": empty value";
+				return false;
+			}
+			int rval(-1);
+			if (be->_rlm)
+			{
+				if (*from == ':') // force literal value interpretation, ignore domain string
+					++from;
+				else
+					rval = be->_rlm->get_desc_idx(from);
+			}
+			unique_ptr<BaseField> bf(be->_create._do(from, be->_rlm, rval));
+			if (!bf.get())
+				glout_debug << "Could not create field " << tag;
+			else if (!add_field(bf.get()))
+				glout_debug << "Could not add field " << tag;
+			else
+			{
+				bf.release();
+				return true;
+			}
+			return false;
+		}
+		// if we got here then the tag as supplied did not resolve to a field for the current message
+
+		char *eptr;
+		MessageBase *mptr(const_cast<MessageBase *>(find_group_element_by_longname(tag, eptr, true)));
+		if (!mptr)
+		{
+			glout_debug << "Could not create containing message for " << tag;
+			return false;
+		}
+		return mptr->add_field(eptr + 1, from);
+	}
+	catch(InvalidField& e)
+	{
+		glout_warn << "add_field threw exception: " << e.what();
+	}
+	return false;
 }
 

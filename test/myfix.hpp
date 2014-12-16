@@ -200,6 +200,7 @@ public:
 	bool set_lpp();
 	bool toggle_heartbeats();
 	bool static_probe();
+	bool test_longname_functionality();
 	bool new_order_single_alternate();
 	bool new_order_single_recycled();
 

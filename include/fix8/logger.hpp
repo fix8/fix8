@@ -322,6 +322,11 @@ public:
 		\param le LogElement */
 	F8API virtual void process_logline(LogElement *le);
 
+	/*! Write output to target stream
+		\param str string
+		\param le LogElement */
+	F8API virtual void write(const std::string& str, LogElement *le);
+
 	/// string representation of logflags
 	static const std::vector<std::string> _bit_names;
 

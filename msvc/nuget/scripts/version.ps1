@@ -1,0 +1,4 @@
+$RELEASE_MAJOR = 1
+$RELEASE_MINOR = 4
+$RELEASE_DATE = get-date -uformat "%Y%m%d"
+$RELEASE_REVISION = 1

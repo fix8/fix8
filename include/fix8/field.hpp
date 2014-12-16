@@ -64,9 +64,11 @@ struct RealmBase
 	FieldTrait::FieldType _ftype;
 	const int _sz;
 	const char * const *_descriptions;
+	const unsigned short *_idx, *_didx;
 
-	RealmBase(const void *range, RealmType dtype, FieldTrait::FieldType ftype, int sz, const char * const *descriptions)
-		: _range(range), _dtype(dtype), _ftype(ftype), _sz(sz), _descriptions(descriptions) {}
+	RealmBase(const void *range, RealmType dtype, FieldTrait::FieldType ftype, int sz,
+		const char * const *descriptions, const unsigned short *idx, const unsigned short *didx)
+		: _range(range), _dtype(dtype), _ftype(ftype), _sz(sz), _descriptions(descriptions), _idx(idx), _didx(didx) {}
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \tparam T domain type
@@ -89,7 +91,7 @@ struct RealmBase
 	/*! Get the realm index of this value in the domain set.
 	  \tparam T domain type
 	  \param what the value to check
-	  \return the index in the domain set of this value */
+	  \return the index in the domain set of this value or -1 if not found */
 	template<typename T>
 	int get_rlm_idx(const T& what) const
 	{
@@ -97,6 +99,25 @@ struct RealmBase
 		{
 			const T *rng(static_cast<const T*>(_range)), *res(std::lower_bound(rng, rng + _sz, what));
 			return res != rng + _sz ? res - rng : -1;
+		}
+		return 0;
+	}
+
+	/// Less than operator.
+	/*! \param p1 left to compare
+	    \param p2 right to compare
+	    \return true if less than */
+	static bool _comp(const char *p1, const char *p2) { return ::strcmp(p1, p2) < 0; }
+
+	/*! Get the realm index based on the description of this value in the domain set.
+	  \param what the description to check
+	  \return the index in the domain set of this description or -1 if not found */
+	int get_desc_idx(const char *what) const
+	{
+		if (_dtype == dt_set)
+		{
+            auto res = std::lower_bound( _descriptions, _descriptions + _sz, what, _comp );
+			return res != _descriptions + _sz ? _idx[res - _descriptions] : -1;
 		}
 		return 0;
 	}
@@ -160,7 +181,7 @@ public:
 
 	/*! Copy this field.
 	  \return the copy */
-	virtual BaseField *copy() = 0;
+	virtual BaseField *copy() const = 0;
 
 	/*! Get the realm index of this field.
 	  \return the realm index */
@@ -251,8 +272,9 @@ public:
 //-------------------------------------------------------------------------------------------------
 /// Field template. There will ONLY be partial template specialisations of this template.
 /*! \tparam T field type
-    \tparam field field number (fix tag) */
-template<typename T, unsigned short field>
+    \tparam field field number (fix tag)
+    \tparam precision default precision */
+template<typename T, unsigned short field, int precision=DEFAULT_PRECISION>
 class Field : public BaseField
 {
 	Field() = delete;
@@ -359,7 +381,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -470,7 +492,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -576,7 +598,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -591,9 +613,10 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// Partial specialisation for fp_type field type. fp_type is singe or double
-/*! \tparam field field number (fix tag) */
-template<unsigned short field>
-class Field<fp_type, field> : public BaseField
+/*! \tparam field field number (fix tag)
+	 \tparam precision default precision */
+template<unsigned short field, int precision>
+class Field<fp_type, field, precision> : public BaseField
 {
 protected:
 	fp_type _value;
@@ -608,7 +631,7 @@ public:
 	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
-	Field () : BaseField(field), _value(), _precision(DEFAULT_PRECISION) {}
+	Field () : BaseField(field), _value(), _precision(precision) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -617,7 +640,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(precision) {}
 
 	/*! Value ctor.
 	  \param val value to set
@@ -628,12 +651,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(precision) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(precision) {}
 
 	/// Dtor.
 	virtual ~Field() {}
@@ -652,19 +675,19 @@ public:
 	/*! \param that field to compare
 	    \return true if same */
 	bool operator==(const BaseField& that) const
-		{ return same_base(that) && static_cast<const Field<fp_type, field>&>(that)._value == _value; }
+		{ return same_base(that) && static_cast<const Field<fp_type, field, precision>&>(that)._value == _value; }
 
 	/// Less than operator.
 	/*! \param that field to compare
 	    \return true if less than */
 	bool operator<(const BaseField& that) const
-		{ return same_base(that) && _value < static_cast<const Field<fp_type, field>&>(that)._value; }
+		{ return same_base(that) && _value < static_cast<const Field<fp_type, field, precision>&>(that)._value; }
 
 	/// Greater than operator.
 	/*! \param that field to compare
 	    \return true if greater than */
 	bool operator>(const BaseField& that) const
-		{ return same_base(that) && _value > static_cast<const Field<fp_type, field>&>(that)._value; }
+		{ return same_base(that) && _value > static_cast<const Field<fp_type, field, precision>&>(that)._value; }
 
 	/*! Set the output precision
 	  \param prec precision digits */
@@ -698,7 +721,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -808,7 +831,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -848,6 +871,11 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 		to = (to << 3) + (to << 1) + (*begin++ - '0');
 	return begin - bsv;
 }
+
+/*! Calculate number of days since beginning of epoch
+  \param from time_t time
+  \return number of days since epoch */
+inline unsigned days_since_epoch (time_t from) { return static_cast<unsigned>(from) / 86400; }
 
 /*! Convert tm to time_t
 	Based on Ghulam M. Babar's "mktime slow? use custom function"
@@ -1110,7 +1138,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1213,7 +1241,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1316,7 +1344,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1419,7 +1447,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1523,7 +1551,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1621,7 +1649,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1714,7 +1742,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -2001,7 +2029,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	Field *copy() { return new Field(*this); }
+	Field *copy() const { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -2163,6 +2191,23 @@ using onbehalfof_comp_id = Field<f8String, Common_OnBehalfOfCompID>;
 using onbehalfof_sub_id = Field<f8String, Common_OnBehalfOfSubID>;
 using onbehalfof_location_id = Field<f8String, Common_OnBehalfOfLocationID>;
 using onbehalfof_sending_time = Field<UTCTimestamp, Common_OnBehalfOfSendingTime>;
+
+//-------------------------------------------------------------------------------------------------
+// Tagless Fields
+
+using	char_field = Field<char, 0>;
+using	fp_type_field = Field<fp_type, 0>;
+using	f8string_field = Field<f8String, 0>;
+using	boolean_field = Field<Boolean, 0>;
+using	charptr_field = Field<char *, 0>;
+using	int_field = Field<int, 0>;
+using utctimestamp_field = Field<UTCTimestamp, 0>;
+using utctimeonly_field = Field<UTCTimeOnly, 0>;
+using utcdateonly_field = Field<UTCDateOnly, 0>;
+using localmktdate_field = Field<LocalMktDate, 0>;
+using monthyear_field = Field<MonthYear, 0>;
+using tztimeonly_field = Field<TZTimeOnly, 0>;
+using tztimestamp_field = Field<TZTimestamp, 0>;
 
 //-------------------------------------------------------------------------------------------------
 

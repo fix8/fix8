@@ -37,12 +37,25 @@ seqedit_SOURCES = seqedit.cpp precomp.cpp
 CLEANFILES =
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
-GEN_LIBS = -lstdc++
+GEN_LIBS = -lstdc++ -lfix8
 
 ALL_LIBS = $(GEN_LIBS) -L$(top_srcdir)/runtime
 
 seqedit_LDFLAGS = $(ALL_LIBS)
 
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+if USESSL
+POCO_LIBS += -lPocoNetSSL -lPocoCrypto -lPocoXML
+endif
+
+seqedit_LDFLAGS += -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
+if TBBSUPPORT
+GEN_LIBS += -ltbb
+seqedit_LDFLAGS += -ltbb
+endif
+if !USEOSX
+seqedit_LDFLAGS += -rdynamic
+endif
 if LINK_RT
 GEN_LIBS += -lrt
 endif

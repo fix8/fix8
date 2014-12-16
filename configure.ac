@@ -47,6 +47,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 AC_ENABLE_STATIC(no)
 AC_CONFIG_MACRO_DIR([m4])
 
+AH_TOP([#include <fix8/f8version.h>])
+
 # generate major_version
 VERSION_DASHED=`[echo $VERSION | tr . -]`
 MAJOR_VERSION=`[echo $VERSION | sed 's/^\([0-9]*\.[0-9]*\)\..*/\1/']`
@@ -100,6 +102,7 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 AC_CHECK_TYPES([ptrdiff_t])
+AC_CHECK_SIZEOF(unsigned long)
 
 # Checks for library functions.
 # these are checked before the libraries are added to the compilation flags so that they will link
@@ -140,6 +143,7 @@ esac
 m4_include(m4/ax_check_compile_flag.m4)
 has_assignmentvars=no
 AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
+AX_CHECK_COMPILE_FLAG([-fdiagnostics-color], [CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always"])
 
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
@@ -815,6 +819,34 @@ AC_ARG_ENABLE([experimental-buffered-socket-read],
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --experimental-buffered-socket-read) ;;
 esac])
+
+oktonativeoptimize=no
+AC_ARG_ENABLE([native-o3-lto-optimization],
+[AS_HELP_STRING([--enable-native-o3-lto-optimization],[enables -march=native -O3 -flto (default=no)])],
+[case "${enableval}" in
+	no) oktonativeoptimize=no ;;
+	yes) oktonativeoptimize=yes
+	     CXXFLAGS="-O3 -march=native -flto=4 -g -std=c++11 -Wall"
+	     CFLAGS="-O3 -march=native -flto=4 -g -Wall"
+	     ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-native-o3-lto-optimization) ;;
+esac])
+
+AM_CONDITIONAL(NATIVEOPTIMIZE, [test x$oktonativeoptimize = xyes])
+
+oktofastmathoptimize=no
+AC_ARG_ENABLE([native-fast-math-lto-optimization],
+[AS_HELP_STRING([--enable-native-fast-math-lto-optimization],[enables -march=native -Ofast -flto (default=no)])],
+[case "${enableval}" in
+	no) oktofastmathoptimize=no ;;
+	yes) oktofastmathoptimize=yes
+	     CXXFLAGS="-Ofast -march=native -flto=4 -g -std=c++11 -Wall"
+	     CFLAGS="-Ofast -march=native -flto=4 -g -Wall"
+	     ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-native-fast-math-lto-optimization) ;;
+esac])
+
+AM_CONDITIONAL(FASTMATHOPTIMIZE, [test x$oktofastmathoptimize = xyes])
 
 AC_MSG_CHECKING(checking for /var/run/)
 if test -d /var/run; then

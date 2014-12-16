@@ -36,7 +36,7 @@
 # This is the master version file, called by configure
 #
 #############################################################################################
-MAJOR_VERSION_NUM=1
-MINOR_VERSION_NUM=3
-PATCH_VERSION_NUM=2
+MAJOR_VERSION_NUM=`grep '#define *F8_MAJOR_VERSION_NUM' include/fix8/f8version.h | awk '{ printf("%s",$3) }'`
+MINOR_VERSION_NUM=`grep '#define *F8_MINOR_VERSION_NUM' include/fix8/f8version.h | awk '{ printf("%s",$3) }'`
+PATCH_VERSION_NUM=`grep '#define *F8_PATCH_VERSION_NUM' include/fix8/f8version.h | awk '{ printf("%s",$3) }'`
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

@@ -137,7 +137,6 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rdomN:D:");
 f8_atomic<bool> term_received(false);
 void server_process(ServerSessionBase *srv, int scnt, bool ismulti=false), client_process(ClientSessionBase *mc);
 FIX8::tty_save_state save_tty(0);
@@ -155,6 +154,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
 	{ { 't', "Examine static message traits" }, &MyMenu::static_probe },
+	{ { 'm', "Generate a test message" }, &MyMenu::test_longname_functionality },
 	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 
@@ -178,6 +178,9 @@ void sig_handler(int sig)
 }
 
 //-----------------------------------------------------------------------------------------
+const string GETARGLIST("hl:svqc:R:S:rdomN:D:");
+
+//-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val;
@@ -187,21 +190,22 @@ int main(int argc, char **argv)
 #ifdef HAVE_GETOPT_LONG
 	option long_options[]
 	{
-		{ "help",		0,	0,	'h' },
-		{ "version",	0,	0,	'v' },
-		{ "log",			1,	0,	'l' },
-		{ "delimiter",	1,	0,	'D' },
-		{ "config",		1,	0,	'c' },
-		{ "session",	1,	0,	'N' },
-		{ "once",	   0,	0,	'o' },
-		{ "server",		0,	0,	's' },
-		{ "multi",		0,	0,	'm' },
-		{ "send",		1,	0,	'S' },
-		{ "receive",	1,	0,	'R' },
-		{ "quiet",		0,	0,	'q' },
-		{ "reliable",	0,	0,	'r' },
-		{ "dump",		0,	0,	'd' },
-		{ 0 },
+		{ "help",			no_argument,			nullptr,	'h' },
+		{ "version",		no_argument,			nullptr,	'V' },
+		{ "once",	   	no_argument,			nullptr,	'o' },
+		{ "server",	   	no_argument,			nullptr,	's' },
+		{ "quiet",	   	no_argument,			nullptr,	'q' },
+		{ "multi",	   	no_argument,			nullptr,	'm' },
+		{ "quiet",	   	no_argument,			nullptr,	'q' },
+		{ "dump",	   	no_argument,			nullptr,	'd' },
+		{ "reliable",	  	no_argument,			nullptr,	'r' },
+		{ "log",				required_argument,	nullptr,	'l' },
+		{ "session",		required_argument,	nullptr,	'N' },
+		{ "delimiter",		required_argument,	nullptr,	'D' },
+		{ "config",			required_argument,	nullptr,	'c' },
+		{ "send",			required_argument,	nullptr,	'S' },
+		{ "receive",		required_argument,	nullptr,	'R' },
+		{},
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
@@ -245,7 +249,7 @@ int main(int argc, char **argv)
 
 	try
 	{
-		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
+		const string conf_file(clcf.empty() ? server ? "myfix_server.xml" : "myfix_client.xml" : clcf);
 		f8_atomic<unsigned> scnt(0);
 
 		if (dump)
@@ -400,17 +404,20 @@ void server_process(ServerSessionBase *srv, int scnt, bool ismulti)
 	const ProcessModel pm(srv->get_process_model(srv->_ses));
 	cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
 	inst->start(pm == pm_pipeline, next_send, next_receive);
-	if (inst->session_ptr()->get_connection()->is_secure())
-		cout << "Session is secure (SSL)" << endl;
-	if (!ismulti && !quiet)	// demonstrate use of timer events
+	if (inst->session_ptr())
 	{
-		TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
-		inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
+		if (inst->session_ptr()->get_connection()->is_secure())
+			cout << "Session is secure (SSL)" << endl;
+		if (!ismulti && !quiet)	// demonstrate use of timer events
+		{
+			TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
+			inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
+		}
+		if (pm != pm_pipeline)
+			while (!inst->session_ptr()->is_shutdown())
+				FIX8::hypersleep<h_milliseconds>(100);
+		cout << "Session(" << scnt << ") finished." << endl;
 	}
-	if (pm != pm_pipeline)
-		while (!inst->session_ptr()->is_shutdown())
-			FIX8::hypersleep<h_milliseconds>(100);
-	cout << "Session(" << scnt << ") finished." << endl;
 	inst->stop();
 }
 
@@ -634,6 +641,74 @@ bool MyMenu::new_order_single_recycled()
 }
 
 //-----------------------------------------------------------------------------------------
+bool MyMenu::test_longname_functionality()
+{
+	Message *nm(_session.get_ctx().create_msg_from_longname("StreamAssignmentReport"));
+   nm->add_field("StreamAsgnRptID", "testid");
+   nm->add_field("NoAsgnReqs", "2");
+   nm->add_field("NoAsgnReqs:1/NoPartyIDs", "1");
+   nm->add_field("NoAsgnReqs:1/NoPartyIDs:1/PartyID", "Billiton");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym", "2");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:1/SecurityID", "BHP.AX");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:1/SecurityIDSource", "RIC_CODE");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoSecurityAltID", "1");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoSecurityAltID:1/SecurityAltID", "AU000000BHP4");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoSecurityAltID:1/SecurityAltIDSource", "ISIN");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:2/SecurityID", "TLS.AX");
+   nm->add_field("NoAsgnReqs:1/NoRelatedSym:2/SecurityIDSource", "RIC_CODE");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs", "2");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:1/PartyID", "Amberley1");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:1/NoPartySubIDs", "3");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:1/NoPartySubIDs:1/PartySubID", "Warners");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:1/NoPartySubIDs:2/PartySubID", "McElties");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:1/NoPartySubIDs:3/PartySubID", "Phabaron");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:2/PartyID", "CrossTeam1");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:2/NoPartySubIDs", "2");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:2/NoPartySubIDs:1/PartySubID", "Canters");
+   nm->add_field("NoAsgnReqs:2/NoPartyIDs:2/NoPartySubIDs:2/PartySubID", "Albright");
+	cout << *nm;
+
+	Message *sa(_session.get_ctx().create_msg_from_longname("StreamAssignmentRequest"));
+   sa->add_field("StreamAsgnReqID", "reqid01");
+   sa->add_field("StreamAsgnReqType", "STREAM_ASSIGNMENT_FOR_EXISTING_CUSTOMER");
+   sa->add_field("NoAsgnReqs", "2");
+
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym", "1");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/SecurityID", "BHP.AX");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/SecurityIDSource", ":5");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoComplexEvents", "1");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoComplexEvents:1/ComplexEventType", "TRIGGER");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates", "1");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates:1/ComplexEventStartDate", "20140929-23:09:02");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates:1/NoComplexEventTimes", "1");
+   sa->add_field("NoAsgnReqs:1/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates:1/NoComplexEventTimes:1/ComplexEventStartTime", "12:00:01");
+
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym", "2");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/SecurityID", "TLS.AX");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/SecurityIDSource", "DUTCH");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/NoComplexEvents", "1");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/NoComplexEvents:1/ComplexEventType", "UNDERLYING");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates", "1");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates:1/ComplexEventStartDate", "20140829-23:09:02");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates:1/NoComplexEventTimes", "1");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:1/NoComplexEvents:1/NoComplexEventDates:1/NoComplexEventTimes:1/ComplexEventStartTime", "11:00:01");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/SecurityID", "WMC.AX");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/SecurityIDSource", "ISIN_NUMBER");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents", "1");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/ComplexEventType", "KNOCK_IN_UP");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates", "2");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:1/ComplexEventStartDate", "20140720-23:09:02");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:1/NoComplexEventTimes", "1");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:1/NoComplexEventTimes:1/ComplexEventStartTime", "10:00:01");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:2/ComplexEventStartDate", "20140720-23:09:02");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:2/NoComplexEventTimes", "2");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:2/NoComplexEventTimes:1/ComplexEventStartTime", "10:00:01");
+   sa->add_field("NoAsgnReqs:2/NoRelatedSym:2/NoComplexEvents:1/NoComplexEventDates:2/NoComplexEventTimes:2/ComplexEventStartTime", "18:00:01");
+	cout << *sa;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::static_probe()
 {
 #if defined HAVE_EXTENDED_METADATA
@@ -642,7 +717,7 @@ bool MyMenu::static_probe()
 	const BaseMsgEntry *tbme;
 	if (!get_string(result).empty() && (tbme = _session.get_ctx()._bme.find_ptr(result.c_str())))
 	{
-        function<void( const TraitHelper&, int )> print_traits;
+		function<void(const TraitHelper&, int)> print_traits;
 		print_traits = ([&print_traits, this](const TraitHelper& tr, int depth)
 		{
 			const string spacer(depth * MessageBase::get_tabsize(), ' ');
@@ -874,6 +949,11 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	msg->copy_legal(er);
 	if (!quiet)
 		cout << endl;
+
+	// longname repeating group access
+	BaseField *lnb(msg->get_field_by_name("NoAllocs:1/NoNestedPartyIDs:1/NoNestedPartySubIDs:1/NestedPartySubID"));
+	if (lnb)
+		cout << "Group field extracted using longname: " << static_cast<TEX::NestedPartySubID *>(lnb)->get() << endl;
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;

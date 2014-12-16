@@ -2560,7 +2560,7 @@
   <field number='363' name='EncodedUnderlyingIssuer' type='DATA' />
   <field number='364' name='EncodedUnderlyingSecurityDescLen' type='LENGTH' />
   <field number='365' name='EncodedUnderlyingSecurityDesc' type='DATA' />
-  <field number='366' name='AllocPrice' type='PRICE' />
+  <field number='366' name='AllocPrice' type='PRICE' precision='4' />
   <field number='367' name='QuoteSetValidUntilTime' type='UTCTIMESTAMP' />
   <field number='368' name='QuoteEntryRejectReason' type='INT'>
    <value enum='1' description='UNKNOWN_SYMBOL' />
