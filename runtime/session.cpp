@@ -1143,11 +1143,10 @@ const f8String Session::copyright_string()
    struct tm *ptim(&tim);
 #endif
 	ostringstream ostr;
-	ostr << PACKAGE_NAME << " version " << PACKAGE_VERSION << endl;
+	ostr << F8_PACKAGE_NAME << " version " << F8_PACKAGE_VERSION << endl;
 	ostr << copyright_short << setw(2) << (ptim->tm_year - 100) << copyright_short2;
 	return ostr.str();
 }
-
 
 //-------------------------------------------------------------------------------------------------
 #ifdef HAVE_OPENSSL

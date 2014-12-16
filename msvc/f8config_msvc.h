@@ -38,22 +38,20 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-----------------------------------------------------------------------------------------
 
+#include <fix8/f8version.h>
+
 #ifdef _MSC_VER
-#ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-#endif
-#ifndef NOMINMAX
-    #define NOMINMAX
-#endif
-#include <Windows.h>
-#include <WinSock2.h>
-#include <io.h>
-#include <direct.h>
-#include <process.h>
-#pragma warning (disable : 4800 ) // forcing value to bool
-#pragma warning (disable : 4244 ) // conversion from, possible loss of data
-#define HAVE_GMTOFF
-#undef Yield
+# define WIN32_LEAN_AND_MEAN
+# define NOMINMAX
+# include <Windows.h>
+# include <WinSock2.h>
+# include <io.h>
+# include <direct.h>
+# include <process.h>
+# pragma warning (disable : 4800 ) // forcing value to bool
+# pragma warning (disable : 4244 ) // conversion from, possible loss of data
+# define HAVE_GMTOFF
+# undef Yield
 #endif
 
 /* Define if building universal (internal helper macro) */
@@ -91,14 +89,17 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if using `alloca.c'. */
 /* #undef C_ALLOCA */
 
-/* Define to 1 for debugging extensions */
-/* #undef DEBUG */
-
-/* Default precision for floating point fields (default=2) */
+/* Default number of precision digits for floating point fields (default=2) */
 #define DEFAULT_PRECISION 2
 
 /* Define to 1 to enable experimental socket read */
 /* #undef EXPERIMENTAL_BUFFERED_SOCKET_READ */
+
+/* Define to 1 for debugging support */
+/* #undef F8_DEBUG */
+
+/* Truncate insignificant trailing 0s from floating point numbers on output */
+#define FP_TRUNCATE 1
 
 /* Define to 1 if gtest available */
 #define HAS_GTEST 1
@@ -106,8 +107,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if Poco available */
 #define HAS_POCO 1
 
-/* Define to 1 if TR1 hashmaps are available */
-// #define HAS_TR1_UNORDERED_MAP 1
+/* Define to 1 if you have zeromq */
+/* #undef HAS_ZEROMQ_MBUS */
 
 /* Define to 1 if you have the `alarm' function. */
 #define HAVE_ALARM 1
@@ -128,7 +129,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_CLOCK_GETTIME 1
 
 /* Define if you have clock_nanosleep() */
-//#undef HAVE_CLOCK_NANOSLEEP 1
+/* #undef HAVE_CLOCK_NANOSLEEP */
 
 /* Define to 1 if zlib headers and library were found */
 /* #undef HAVE_COMPRESSION */
@@ -138,6 +139,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to 1 if you have the <crypt.h> header file. */
 #define HAVE_CRYPT_H 1
+
+/* define if the compiler supports basic C++11 syntax */
+/* #undef HAVE_CXX11 */
 
 /* Define to 1 if you have the <db.h> header file. */
 /* #undef HAVE_DB_H */
@@ -152,6 +156,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
+
+/* Define to 1 if you have extended Fix8 metadata enabled */
+#define HAVE_EXTENDED_METADATA 1
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 /* #undef HAVE_FCNTL_H */
@@ -177,6 +184,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
+/* Define to 1 if you have libhiredis */
+/* #undef HAVE_LIBHIREDIS */
+
+/* Define to 1 if you have libmemcached */
+/* #undef HAVE_LIBMEMCACHED */
+
 /* Define to 1 if libz is present */
 #define HAVE_LIBZ 1
 
@@ -194,7 +207,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
    than `double'. */
 #define HAVE_LONG_DOUBLE_WIDER 1
 
-/* Define to 1 if the system has the type `long long int'. */
+/* Define to 1 if the system has the type 'long long int'. */
 #define HAVE_LONG_LONG_INT 1
 
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
@@ -385,20 +398,35 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
    */
 #define LT_OBJDIR ".libs/"
 
-/* Encoded Version */
-#define MAGIC_NUM (MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)
+/* Encode version */
+#define MAGIC_NUM 16793600
+
+/* Encoded Version as expresion */
+#define MAGIC_NUM_EXPR (MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)
 
 /* Major version number */
 #define MAJOR_VERSION_NUM 1
 
+/* std malloc */
+#define MALLOC_STD 3
+
+/* malloc system to use */
+#define MALLOC_SYSTEM MALLOC_STD
+
+/* TBB malloc */
+#define MALLOC_TBB 1
+
+/* tcmalloc */
+#define MALLOC_TCMALLOC 2
+
 /* Maximum length of a FIX field (default=1024) */
-#define MAX_FLD_LENGTH 8192
+#define MAX_FLD_LENGTH 1024
 
 /* Maximum length of a FIX message (default=8192) */
-#define MAX_MSG_LENGTH 16384
+#define MAX_MSG_LENGTH 8192
 
 /* Minor version number */
-#define MINOR_VERSION_NUM 0
+#define MINOR_VERSION_NUM 4
 
 /* FF MPMC */
 #define MPMC_FF 2
@@ -419,7 +447,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define PACKAGE_NAME "fix8"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "fix8 1.0.0"
+#define PACKAGE_STRING "fix8 1.4.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "fix8"
@@ -428,13 +456,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define PACKAGE_URL "http://www.fix8.org"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.0.0"
+#define PACKAGE_VERSION "1.4.0"
 
 /* Patch number */
-#define PATCH_VERSION_NUM 0
+#define PATCH_VERSION_NUM 2
 
 /* Define to 1 to enable metatdata population in encode/decodes */
 /* #undef POPULATE_METADATA */
+
+/* Define to 1 if you wish to pre-encode (prepare) message support */
+#define PREENCODE_MSG_SUPPORT 1
 
 /* Define to 1 if your os supports gprof and you wish to enable profiling */
 /* #undef PROFILING_BUILD */
@@ -442,6 +473,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to necessary symbol if this constant uses a non-standard name on
    your system. */
 /* #undef PTHREAD_CREATE_JOINABLE */
+
+/* Define to 1 if you wish to enable raw FIX message support */
+/* #undef RAW_MSG_SUPPORT */
 
 /* Poco regex system */
 #define REGEX_POCO 1
@@ -457,6 +491,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
+
+/* The size of `unsigned long', as computed by sizeof. */
+/* #undef SIZEOF_UNSIGNED_LONG */
 
 /* Define to 1 if when using fastflow, sleep for VAL ns instead of yield when
    waiting for input */
@@ -482,26 +519,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* std::thread thread system */
 #define THREAD_STDTHREAD 4
 
-/* pthread regex system used */
+/* pthread used for threading */
 #define THREAD_SYSTEM THREAD_STDTHREAD
-
-/* tbb malloc */
-#define MALLOC_TBB 1
-
-/* tc malloc */
-#define MALLOC_TCMALLOC 2
-
-/* std malloc */
-#define MALLOC_STD 3
-
-/* malloc system to use */
-#define MALLOC_SYSTEM MALLOC_TBB
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1
-
-/* Define to 1 if you have extended Fix8 metadata enabled */
-#define HAVE_EXTENDED_METADATA 1
 
 /* Define to 1 if your <sys/time.h> declares `struct tm'. */
 /* #undef TM_IN_SYS_TIME */
@@ -509,8 +531,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 to enable rdtsc for interval timer if available */
 /* #undef USE_RDTSC */
 
+/* Define to 1 if using float precision */
+/* #undef USE_SINGLE_PRECISION */
+
 /* Version number of package */
-#define VERSION "1.0.0"
+#define VERSION "1.4.0"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

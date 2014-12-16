@@ -90,15 +90,15 @@ int main(int argc, char **argv)
 #ifdef HAVE_GETOPT_LONG
 	const option long_options[]
 	{
-		{ "help",		0,	0,	'h' },
-		{ "dump",		0,	0,	'd' },
-		{ "version",	0,	0,	'v' },
-		{ "rawdump",	0,	0,	'D' },
-		{ "index",		0,	0,	'i' },
-		{ "quiet",		0,	0,	'q' },
-		{ "send",		1,	0,	'S' },
-		{ "receive",	1,	0,	'R' },
-		{ 0 },
+		{ "help",			no_argument,			nullptr,	'h' },
+		{ "version",		no_argument,			nullptr,	'v' },
+		{ "dump",	   	no_argument,			nullptr,	'd' },
+		{ "rawdump",	   no_argument,			nullptr,	'D' },
+		{ "quiet",	   	no_argument,			nullptr,	'q' },
+		{ "index",	   	no_argument,			nullptr,	'i' },
+		{ "send",			required_argument,	nullptr,	'S' },
+		{ "receive",		required_argument,	nullptr,	'R' },
+		{},
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
@@ -109,8 +109,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "seqedit for " PACKAGE " version " VERSION << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
+			cout << "seqedit for " << Session::copyright_string() << endl;
 			return 0;
 		case 'h': print_usage(); return 0;
 		case 'D': rawdump = true; // drop through
@@ -127,6 +126,7 @@ int main(int argc, char **argv)
 	if (optind >= argc)
 	{
 		cerr << "no input persistence file prefix specified" << endl;
+		print_usage();
 		return 1;
 	}
 
@@ -238,8 +238,8 @@ void print_usage()
 {
 	UsageMan um("seqedit", GETARGLIST, "<perist file prefix>");
 	um.setdesc("seqedit -- edit next expected send/receive");
-	um.add('R', "receive", "set next expected receive sequence number");
-	um.add('S', "send", "set next send sequence number");
+	um.add('R', "receive", "set next expected receive sequence number", "seqnum");
+	um.add('S', "send", "set next send sequence number", "seqnum");
 	um.add('d', "dump", "dump all the records in both the index and the data file");
 	um.add('D', "rawdump", "dump all the raw data records referenced in the index");
 	um.add('h', "help", "help, this screen");

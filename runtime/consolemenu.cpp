@@ -180,7 +180,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 		int page(0);
 		for (int nlines(0); pp < rb->_sz; ++pp)
 		{
-			_os << '[' << _opt_keys[nlines] << "]  " << *(rb->_descriptions + pp) << " (";
+			_os << '[' << _opt_keys[nlines] << "]  " << rb->_descriptions[*(rb->_didx + pp)] << " (";
 			rb->print(_os, pp);
 			_os << ')' << endl;
 

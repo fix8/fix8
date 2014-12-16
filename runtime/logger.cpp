@@ -181,15 +181,21 @@ void Logger::process_logline(LogElement *msg_ptr)
 	else
 	{
 		f8_scoped_lock guard(_mutex);
-		if (_delim.size() > 1)
-			get_stream() << ostr.str() << _delim[0] << msg_ptr->_str << _delim[1];
-		else
-			get_stream() << ostr.str() << msg_ptr->_str;
-		if (_flags & nolf)
-			get_stream().flush();
-		else
-			get_stream() << endl;
+		write(ostr.str(), msg_ptr);
 	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void Logger::write(const string& str, LogElement *msg_ptr)
+{
+	if (_delim.size() > 1)
+		get_stream() << str << _delim[0] << msg_ptr->_str << _delim[1];
+	else
+		get_stream() << str << msg_ptr->_str;
+	if (_flags & nolf)
+		get_stream().flush();
+	else
+		get_stream() << endl;
 }
 
 //-------------------------------------------------------------------------------------------------

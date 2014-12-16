@@ -315,9 +315,14 @@ public:
 	F8API static XmlElement *Factory(std::istream& istr, const char *docpath=nullptr);
 
 	/*! Create a new root element (and recursively parse) from a given xml istream.
+	  \param const char * fname the xml filename
+	  \return the new element */
+	F8API static XmlElement *Factory(const char *fname);
+
+	/*! Create a new root element (and recursively parse) from a given xml istream.
 	  \param fname the xml filename
 	  \return the new element */
-	F8API static XmlElement *Factory(const std::string& fname);
+	F8API static XmlElement *Factory(const std::string& fname) { return Factory(fname.c_str()); }
 
 	/*! Get an iterator to the first child attribute.
 	  \return const_iterator to first attribute */

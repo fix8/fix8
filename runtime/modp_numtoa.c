@@ -41,6 +41,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <fix8/f8dll.h>
+#include <fix8/f8config.h>
 
 // other interesting references on num to string convesion
 // http://www.jb.man.ac.uk/~slowe/cpp/itoa.html
@@ -139,7 +140,7 @@ F8API size_t modp_dtoa(double value, char* str, int prec) // DD
             /* 1.5 -> 2, but 2.5 -> 2 */
             ++whole;
         }
-    } else {    // these mods DD: remove trailing zero in prec (unless there is only one 0)
+    } else {    // these mods DD: remove trailing zero in prec (unless significant)
         int count = prec, done = 0;
         // now do fractional part, as an unsigned number
         do
@@ -152,13 +153,21 @@ F8API size_t modp_dtoa(double value, char* str, int prec) // DD
         }
         while (frac /= 10);
         // add extra 0s
+#if defined FP_TRUNCATE
+        if (done)
+        {
+            while (count-- > 0) *wstr++ = '0';
+            // add decimal
+            *wstr++ = '.';
+        }
+#else
         if (!done)
-            *wstr++ = '0';
+           *wstr++ = '0';
         else
-            while (count-- > 0)
-                *wstr++ = '0';
+            while (count-- > 0) *wstr++ = '0';
         // add decimal
         *wstr++ = '.';
+#endif
     }
 
     // do whole part

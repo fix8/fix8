@@ -233,7 +233,7 @@ int main(int argc, char **argv)
 
 	try
 	{
-		const string conf_file(server ? clcf.empty() ? "hf_server.xml" : clcf : clcf.empty() ? "hf_client.xml" : clcf);
+		const string conf_file(clcf.empty() ? server ? "hf_server.xml" : "hf_client.xml" : clcf);
 
 		if (server)
 		{
@@ -254,18 +254,21 @@ int main(int argc, char **argv)
 				const FIX8::ProcessModel pm(ms->get_process_model(ms->_ses));
 				inst->start(pm == FIX8::pm_pipeline, next_send, next_receive);
 				cout << (pm == FIX8::pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
-				if (inst->session_ptr()->get_connection()->is_secure())
-					cout << "Session is secure (SSL)" << endl;
-				if (pm != FIX8::pm_pipeline)
-					while (!inst->session_ptr()->is_shutdown())
-						FIX8::hypersleep<FIX8::h_milliseconds>(100);
-				cout << "Session(" << scnt << ") finished." << endl;
-				inst->stop();
+				if (inst->session_ptr()) // ensure license check was ok
+				{
+					if (inst->session_ptr()->get_connection()->is_secure())
+						cout << "Session is secure (SSL)" << endl;
+					if (pm != FIX8::pm_pipeline)
+						while (!inst->session_ptr()->is_shutdown())
+							FIX8::hypersleep<FIX8::h_milliseconds>(100);
+					cout << "Session(" << scnt << ") finished." << endl;
+					inst->stop();
 #if defined CODECTIMING
-				FIX8::Message::report_codec_timings("server");
+					FIX8::Message::report_codec_timings("server");
 #endif
-            if (once)
-               break;
+				}
+				if (once)
+					break;
 			}
 		}
 		else
@@ -282,62 +285,65 @@ int main(int argc, char **argv)
 			else
 				mc->start(false, next_send, next_receive);
 
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			cout << endl << "Menu started. Press '?' for help..." << endl << endl;
-			if (mc->session_ptr()->get_connection()->is_secure())
-				cout << "Session is secure (SSL)" << endl;
-			if (preload_count)
-				mymenu.preload_new_order_single();
-			char ch;
-			mymenu.get_tty().set_raw_mode();
-			if (pm == FIX8::pm_coro)
+			if (mc->session_ptr())	// ensure license check was ok
 			{
-				cout << "Coroutine mode." << endl;
-				fd_set rfds;
-				timeval tv {};
-
-				while (!term_received)
+				MyMenu mymenu(*mc->session_ptr(), 0, cout);
+				cout << endl << "Menu started. Press '?' for help..." << endl << endl;
+				if (mc->session_ptr()->get_connection()->is_secure())
+					cout << "Session is secure (SSL)" << endl;
+				if (preload_count)
+					mymenu.preload_new_order_single();
+				char ch;
+				mymenu.get_tty().set_raw_mode();
+				if (pm == FIX8::pm_coro)
 				{
-					mc->session_ptr()->get_connection()->reader_execute();
-					char ch(0);
-					FD_ZERO(&rfds);
-					FD_SET(0, &rfds);
+					cout << "Coroutine mode." << endl;
+					fd_set rfds;
+					timeval tv {};
+
+					while (!term_received)
+					{
+						mc->session_ptr()->get_connection()->reader_execute();
+						char ch(0);
+						FD_ZERO(&rfds);
+						FD_SET(0, &rfds);
 #ifdef _MSC_VER
-					if (kbhit())
-					{
-						ch = getch();
-#else
-					if (select(1, &rfds, 0, 0, &tv) > 0)
-					{
-						if (read (0, &ch, 1) < 0)
-							break;
-#endif
-						if (ch == 'a')
+						if (kbhit())
 						{
-							cout << "Sending messages..." << endl;
-							coroutine coro;
-							while(mymenu.send_all_preloaded(coro, mc->session_ptr()))
-								mc->session_ptr()->get_connection()->reader_execute();
+							ch = getch();
+#else
+						if (select(1, &rfds, 0, 0, &tv) > 0)
+						{
+							if (read (0, &ch, 1) < 0)
+								break;
+#endif
+							if (ch == 'a')
+							{
+								cout << "Sending messages..." << endl;
+								coroutine coro;
+								while(mymenu.send_all_preloaded(coro, mc->session_ptr()))
+									mc->session_ptr()->get_connection()->reader_execute();
+							}
+							else if (ch == 0x3 || !mymenu.process(ch))
+								break;
 						}
-						else if (ch == 0x3 || !mymenu.process(ch))
-							break;
 					}
 				}
-			}
-			else
-			{
-				cout << (pm == FIX8::pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
-				while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-					;
-			}
-			cout << endl;
+				else
+				{
+					cout << (pm == FIX8::pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+					while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+						;
+				}
+				cout << endl;
 #if defined CODECTIMING
-			FIX8::Message::report_codec_timings("client");
+				FIX8::Message::report_codec_timings("client");
 #endif
-			if (!mc->session_ptr()->is_shutdown())
-				mc->session_ptr()->stop();
+				if (!mc->session_ptr()->is_shutdown())
+					mc->session_ptr()->stop();
 
-			mymenu.get_tty().unset_raw_mode();
+				mymenu.get_tty().unset_raw_mode();
+			}
 		}
 	}
 	catch (FIX8::f8Exception& e)

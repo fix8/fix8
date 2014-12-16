@@ -38,7 +38,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_MESSAGE_HPP_
 
 #include <vector>
-
+#if defined PREENCODE_MSG_SUPPORT
+# include <array>
+#endif
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -78,6 +80,10 @@ public:
 	  \return new message or nullptr if not a valid group for this group */
 	virtual GroupBase *create_nested_group(unsigned short fnum) const { return nullptr; }
 
+	/*! Get the repeating group fnum
+	  \return group fnum */
+	unsigned short get_fnum() const { return _fnum; }
+
 	/*! Add a message to a repeating group
 	  \param what message to add */
 	void add(MessageBase *what) { _msgs.push_back(what); }
@@ -108,6 +114,12 @@ public:
 	/*! Empty messages from container
 	    \param reuse if true clear vector */
 	void clear(bool reuse=true);
+
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what messagebase
+	    \return stream */
+	friend std::ostream& operator<<(std::ostream& os, const GroupBase& what);
 
 	friend class MessageBase;
 };
@@ -263,8 +275,12 @@ struct F8MetaCntx
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *reverse_find_be(const char *fieldstr) const
 	{
-		auto itr(_reverse_fieldtable.find(fieldstr));
-		return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+		if (fieldstr && *fieldstr)
+		{
+			auto itr(_reverse_fieldtable.find(fieldstr));
+			return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+		}
+		return nullptr;
 	}
 
 	/*! Get the field number for this field by tag. Reverse lookup.
@@ -272,8 +288,12 @@ struct F8MetaCntx
 	  \return unsigned short field number */
 	unsigned short reverse_find_fnum(const char *fieldstr) const
 	{
-		auto itr(_reverse_fieldtable.find(fieldstr));
-		return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
+		if (fieldstr && *fieldstr)
+		{
+			auto itr(_reverse_fieldtable.find(fieldstr));
+			return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
+		}
+		return 0;
 	}
 
 	/*! Create a new field of the tag type passed, and from the raw string given.
@@ -289,11 +309,22 @@ struct F8MetaCntx
 	/*! Create a new field of the tag type passed, and from the raw string given.
 	  \param tag const char ptr to longname of field to create
 	  \param from const char ptr to string containing value to construct from
+	  \param use_desc if true, use realm descriptions by default (prefix with ':' to suppress)
 	  \return ptr to BaseField or 0 if fnum not found */
-	BaseField *create_field(const char *tag, const char *from) const
+	BaseField *create_field(const char *tag, const char *from, bool use_desc=false) const
 	{
 		const BaseEntry *be(reverse_find_be(tag));
-		return be ? be->_create._do(from, be->_rlm, -1) : nullptr;
+		if (!be || !from || !*from)
+			return nullptr;
+		int rval(-1);
+		if (use_desc && be->_rlm)
+		{
+			if (*from == ':') // force literal value interpretation, ignore domain string
+				++from;
+			else
+				rval = be->_rlm->get_desc_idx(from);
+		}
+		return be->_create._do(from, be->_rlm, rval);
 	}
 
 	/*! Get the message BaseMsgEntry object for this message.
@@ -630,6 +661,19 @@ public:
 		return false;
 	}
 
+	/*! Add a new field of the tag type passed, and from the raw string given to the current message.
+	  \param tag const char ptr to longname of field to create
+	  \param from const char ptr to string containing value to construct from
+	  		if the field has a domain set, from value is assumed to be the symbolic value, e.g "BUY", taken from the xml schema enum description
+			e.g. add_field("Side", "BUY");
+			if you wish to specify a literal enum value, prefix it with ':'
+			e.g. add_field("Side", ":1");
+			to specifiy a ':' prefix it with another ':'
+	  \return true on success */
+	F8API bool add_field(const char *tag, const char *from);
+
+	/*! Get the groups object
+	  \return reference to the group object */
 	Groups& get_groups() { return _groups; }
 
 	/*! Add fix field to this message.
@@ -723,12 +767,14 @@ public:
 
 	/*! Search for field by longname in this message.
 	    \param tag field longname
+	    \param create if true, create the containing field if not found
 	    \return pointer to field or 0 if not found */
-	BaseField *get_field_by_name(const char *tag) const
-	{
-		auto itr(_fields.find(_ctx.reverse_find_fnum(tag)));
-		return itr != _fields.cend() ? itr->second : nullptr;
-	}
+	F8API BaseField *get_field_by_name(const char *tag, bool create=false) const;
+
+	/*! Search for field by longname in this message, if found return a copy
+	    \param tag field longname
+	    \return pointer to new field or 0 if not found */
+	BaseField *copy_field_by_name(const char *tag) const;
 
 	/*! Get an iterator to fields present in this message.
 	    \return iterator to the first field or Fields::const_iterator::end */
@@ -783,6 +829,51 @@ public:
 		return gitr != _groups.cend() ? gitr->second : nullptr;
 	}
 
+	/*! Search for group by longname in this message.
+	    \param tag group longname
+	    \param create if true, create the containing message if not found
+	    \return pointer to group or 0 if not found */
+	GroupBase *get_group_by_name(const char *tag, bool create=false) const;
+
+	/*! Return the number of repeating group elements for group by longname in this message.
+	    \param tag group longname
+	    \return number of elements */
+	size_t get_group_size_by_name(const char *tag) const
+	{
+		const GroupBase *grpb(get_group_by_name(tag));
+		return grpb ? grpb->size() : 0;
+	}
+
+	/*! Search for group by longname and return the specified repeating element in the group.
+	    \param tag group longname
+	    \param idx index of element to retrieve
+	    \return pointer to MessageBase or 0 if not found */
+	MessageBase *get_group_element(const char *tag, int idx) const
+	{
+		const GroupBase *grpb(get_group_by_name(tag));
+		return grpb ? grpb->get_element(idx) : nullptr;
+	}
+
+	/*! Return the current message's longname
+	    \return pointer to longname or nullptr if not found */
+	const char *get_longname() const
+	{
+		const BaseMsgEntry *bme(_ctx._bme.find_ptr(_msgType.c_str()));
+		return bme ? bme->_name : nullptr;
+	}
+
+	/*! Clone this group
+	    \param fnum field number
+	    \return pointer to new GroupBase or nullptr if not found */
+	F8API GroupBase *clone_group(const unsigned short fnum) const;
+
+	/*! Parse a longname specification, extract group and group index and lookup message
+	    \param tag group longname
+	    \param eptr end tag address for index
+	    \param create if true, create the message if not found
+	    \return pointer to MessageBase or 0 if not found */
+	F8API const MessageBase *find_group_element_by_longname(const char *tag, char *& eptr, bool create=false) const;
+
 	/*! Find a group of a specified type. If not found attempt to add.
 	    \tparam T type of group to get
 	    \param grpbase parent group (if group nested) or nullptr if no parent
@@ -812,7 +903,13 @@ public:
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
-	void add_group(GroupBase *what) { _groups.insert({what->_fnum, what}); }
+	void add_group(GroupBase *what)
+	{
+	 	if (!_groups.insert({what->_fnum, what}).second)
+		{
+			glout_debug << "Failed to add group " << what->_fnum;
+		}
+	}
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to field
@@ -951,7 +1048,7 @@ public:
 	/*! Determine if this repeating group count field has any elements (> 0)
 	    \param bf Basefield *
 	    \return true if has count */
-	static bool has_group_count(const BaseField *bf) { return static_cast<const Field<int, 0> *>(bf)->get() > 0; }
+	static bool has_group_count(const BaseField *bf) { return static_cast<const int_field *>(bf)->get() > 0; }
 
 	/*! Presence printer
 	    \param os stream to send to */
@@ -997,6 +1094,17 @@ struct codec_timings
 };
 
 #endif
+
+//-------------------------------------------------------------------------------------------------
+#if defined SIZEOF_UNSIGNED_LONG && SIZEOF_UNSIGNED_LONG == 8
+#ifndef _MSC_VER
+constexpr unsigned long COLLAPSE_INT64(unsigned long x)
+	{ return x + (x >> 8) + (x >> 16) + (x >> 24) + (x >> 32) + (x >> 40) + (x >> 48) + (x >> 56); }
+#else
+#define COLLAPSE_INT64(x) (x + (x >> 8) + (x >> 16) + (x >> 24) + (x >> 32) + (x >> 40) + (x >> 48) + (x >> 56))
+#endif
+#endif
+
 //-------------------------------------------------------------------------------------------------
 /// A complete Fix message with header, body and trailer
 class Message : public MessageBase
@@ -1105,10 +1213,45 @@ public:
 	    \return calculated checknum */
 	static unsigned calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)
 	{
+#if defined SIZEOF_UNSIGNED_LONG && SIZEOF_UNSIGNED_LONG == 8
+		// steroid chksum algorithm by charles.cooper@lambda-tg.com
+		// Basic strategy is to unroll the loop. normally adding in a loop
+		// is slow because of the dependency, the cpu has to finish each loop
+		// before it starts the next one and is unable to pipeline. one
+		// way to get around this is to have multiple registers and have
+		// multiple adds per loop, then consolidating at the end
+		// as in unroll_checksum.
+		// that is slow though because there is a lot of wasted space and
+		// the cpu has to do a lot of adds.
+		// key is that addition of a word is going to be faster
+		// than addition of two chars, and also each word has 8 chars in it.
+		// so we get 8 adds per loop. long1 + long2 is almost like
+		// looping over two arrays of 8 chars and adding them element wise.
+		// except for the overflow. so we have to keep track of the overflow
+		// and get rid of it at the end.
+
+		const unsigned long OVERFLOW_MASK (1UL << 8 | 1UL << 16 | 1UL << 24 | 1UL << 32 | 1UL << 40 | 1UL << 48 | 1UL << 56);
+		unsigned long ret{}, overflow{};
+		from += offset;
+		const unsigned long elen (len != -1 ? len : sz);
+		size_t ii{};
+		for (; ii < (elen - elen % 8); ii += 8)
+		{
+			unsigned long expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & *reinterpret_cast<const unsigned long*>(from + ii)));
+			ret += *reinterpret_cast<const unsigned long*>(from + ii);
+			overflow += (expected_overflow ^ ret) & OVERFLOW_MASK;
+		}
+		ret = COLLAPSE_INT64(ret);
+		overflow = COLLAPSE_INT64(overflow);
+		for (; ii < elen; ret += from[ii++]); // add up rest one by one
+		return (ret - overflow) & 0xff;
+#else
+		// native chksum algorithm
 		unsigned val(0);
 		const char *eptr(from + (len != -1 ? len + offset : sz - offset));
 		for (const char *ptr(from + offset); ptr < eptr; val += *ptr++);
 		return val % 256;
+#endif
 	}
 
 	/*! Generate a checksum from an encoded buffer, string version.
@@ -1218,6 +1361,12 @@ public:
 		return get_field_flattened(_ctx.reverse_find_fnum(tag));
 	}
 
+	/*! Add a new field of the tag type passed, and from the raw string given, to the header of the current message.
+	  \param tag const char ptr to longname of field to create
+	  \param from const char ptr to string containing value to construct from
+	  \return true on success */
+	bool add_field_header(const char *tag, const char *from) { return _header->add_field(tag, from); }
+
 #if defined RAW_MSG_SUPPORT
 	/*! Get the raw FIX message that this message was decoded from
 	    \return reference to FIX message string */
@@ -1271,6 +1420,12 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+inline std::ostream& operator<<(std::ostream& os, const GroupBase& what)
+{
+	for (const auto *pp : what._msgs)
+		pp->print(os);
+	return os;
+}
 
 } // FIX8
 

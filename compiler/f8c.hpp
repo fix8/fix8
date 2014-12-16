@@ -131,14 +131,15 @@ struct FieldSpec
 
 	std::string _name, _description, _comment;
 	FieldTrait::FieldType _ftype;
+	int _precision;
 	RealmBase::RealmType _dtype;
 	unsigned _doffset;
 	RealmMap *_dvals;
 
 	mutable bool _used;
 
-	FieldSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped)
-		: _name(name), _ftype(ftype), _dtype(RealmBase::dt_set), _doffset(), _dvals(), _used() {}
+	FieldSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped, int precision=-1)
+		: _name(name), _ftype(ftype), _precision(precision), _dtype(RealmBase::dt_set), _doffset(), _dvals(), _used() {}
 
 	virtual ~FieldSpec()
 	{
@@ -193,8 +194,6 @@ enum comp_str
 	cs_divider,
 	cs_copyright,
 	cs_copyright2,
-	cs_copyright_short,
-	cs_copyright_short2,
 	cs_generated_includes,
 	cs_header_preamble,
 	cs_trailer_preamble,

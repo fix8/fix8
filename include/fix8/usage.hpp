@@ -43,8 +43,8 @@ class UsageMan
 {
 	const std::string prognm_, params_;
 	std::string argstr_, description_;
-	using OPTEL = std::map<const char, const std::pair<const std::string, const std::string>>;
-	OPTEL optels_;
+	using Optel = std::map<const char, const std::tuple<const std::string, const std::string, const std::string>>;
+	Optel optels_;
 	std::list<std::string> xtrlines_;
 	const int splen_, argoptlen_;
 
@@ -69,10 +69,11 @@ public:
 	  \param sw the single character switch
 	  \param lsw the string switch (long version)
 	  \param help the associated help string
+	  \param param optional parameter
 	  \return true on success */
-	bool add(const char sw, const std::string& lsw, const std::string& help)
+	bool add(const char sw, const std::string& lsw, const std::string& help, const std::string& param=std::string())
 	{
-		return optels_.insert({sw, std::pair<const std::string, const std::string>(lsw, help)}).second;
+		return optels_.emplace(std::make_pair(sw, std::make_tuple(lsw, help, param))).second;
 	}
 
 	/*! Add an extra help line. Lines prefixed with '@' are indented one tabstop.
@@ -97,20 +98,22 @@ public:
 		if (!description_.empty())
 			os << description_ << std::endl << std::endl;
 		os << "Usage: " << prognm_ << " [-";
-		for (std::string::const_iterator itr(argstr_.begin()); itr != argstr_.end(); ++itr)
-			if (*itr != ':')
-				os << *itr;
+		for (const auto& pp : argstr_)
+			if (pp != ':')
+				os << pp;
 		os << "] " << params_ << std::endl;
 		const std::string spacer(splen_, ' ');
-		for (OPTEL::const_iterator itr(optels_.begin()); itr != optels_.end(); ++itr)
+		for (const auto& pp : optels_)
 		{
 			std::ostringstream ostr;
-			ostr << '-' << itr->first << ",--" << itr->second.first;
+			ostr << '-' << pp.first << ",--" << std::get<0>(pp.second);
+			if (!std::get<2>(pp.second).empty()) // param
+				ostr << " <" << std::get<2>(pp.second) << '>';
 			os << spacer << std::left << std::setw(argoptlen_) << ostr.str()
-				<< ' ' << itr->second.second << std::endl;
+				<< ' ' << std::get<1>(pp.second) << std::endl;
 		}
-		for (std::list<std::string>::const_iterator itr(xtrlines_.begin()); itr != xtrlines_.end(); ++itr)
-			os << *itr << std::endl;
+		for (const auto& pp : xtrlines_)
+			os << pp << std::endl;
 	}
 };
 
