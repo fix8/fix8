@@ -81,7 +81,7 @@ public:
 	    \param key key to store
 	    \param what value string
 	    \return true on success */
-	virtual bool put(const f8String& key, const f8String& what) { return false; }
+	virtual bool put(const f8String& /* key */, const f8String& /* what */) { return false; }
 
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
@@ -100,13 +100,13 @@ public:
 	    \param key key to retrieve
 	    \param to target value string
 	    \return true on success */
-	virtual bool get(const f8String& key, f8String& to) const { return false; }
+	virtual bool get(const f8String& /* key */, f8String& /* to */) const { return false; }
 
 	/*! Delete a generic persisted value by specified key. Depending on specialisation, provide
 		  direct access to the persister implementation
 	    \param key key to delete
 	    \return true on success */
-	virtual bool del(const f8String& key) { return false; }
+	virtual bool del(const f8String& /* key */) { return false; }
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number

@@ -234,10 +234,8 @@ public:
     
 private:
     // WARNING: on 64bit Windows platform sizeof(unsigned long) = 32 !!
-    std::atomic<unsigned long>  pwrite; /// Pointer to the location where to write to
-    long padding1[longxCacheLine-1];
-    std::atomic<unsigned long>  pread;  /// Pointer to the location where to read from
-    long padding2[longxCacheLine-1];
+    alignas(longxCacheLine) std::atomic<unsigned long>  pwrite; /// Pointer to the location where to write to
+    alignas(longxCacheLine) std::atomic<unsigned long>  pread;  /// Pointer to the location where to read from
     element_t *                 buf;
     unsigned long               mask;
 };
@@ -392,10 +390,8 @@ public:
     
 private:
     // WARNING: on 64bit Windows platform sizeof(unsigned long) = 32 !!
-    atomic_long_t  pwrite;
-    long           padding1[longxCacheLine-1];
-    atomic_long_t  pread;
-    long           padding2[longxCacheLine-1];
+    alignas(longxCacheLine) atomic_long_t  pwrite;
+    alignas(longxCacheLine) atomic_long_t  pread;
 protected:
     element_t *    buf;
     unsigned long  mask;
@@ -528,10 +524,8 @@ public:
 
 private:
     // WARNING: on 64bit Windows platform sizeof(unsigned long) = 32 !!
-    atomic_long_t  preadP;
-    long           padding1[longxCacheLine-1];
-    atomic_long_t  preadC;
-    long           padding2[longxCacheLine-1];
+    alignas(longxCacheLine) atomic_long_t  preadP;
+    alignas(longxCacheLine) atomic_long_t  preadC;
 protected:
     data_element_t *  buf;
     sequenceP_t    *  seqP;
@@ -642,10 +636,8 @@ private:
         void    * data;
     } ALIGN_TO_POST(ALIGN_DOUBLE_POINTER);
 
-    Pointer  head;
-    long padding1[longxCacheLine-(sizeof(Pointer)/sizeof(long))];
-    Pointer  tail;
-    long padding2[longxCacheLine-(sizeof(Pointer)/sizeof(long))];
+    alignas(longxCacheLine) Pointer  head;
+    alignas(longxCacheLine) Pointer  tail;
     FFAllocator *delayedAllocator;
 
 private:
@@ -834,12 +826,9 @@ public:
     }
 
 private:
-    atomic_long_t  enqueue;
-    long           padding1[longxCacheLine-1];
-    atomic_long_t  dequeue;
-    long           padding2[longxCacheLine-1];
-    atomic_long_t  count;
-    long           padding3[longxCacheLine-1];
+    alignas(longxCacheLine) atomic_long_t  enqueue;
+    alignas(longxCacheLine) atomic_long_t  dequeue;
+    alignas(longxCacheLine) atomic_long_t  count;
 protected:
     uSWSR_Ptr_Buffer **buf;
     CLHSpinLock *PLock;    
@@ -942,12 +931,9 @@ public:
         return true;
     }
 private:
-    atomic_long_t enqueue;
-    long padding1[longxCacheLine-sizeof(atomic_long_t)];
-    atomic_long_t dequeue;
-    long padding2[longxCacheLine-sizeof(atomic_long_t)];
-    atomic_long_t count;
-    long padding3[longxCacheLine-sizeof(atomic_long_t)];
+    alignas(longxCacheLine) atomic_long_t enqueue;
+    alignas(longxCacheLine) atomic_long_t dequeue;
+    alignas(longxCacheLine) atomic_long_t count;
 protected:
     std::vector<Q> pool;
 };

@@ -684,7 +684,7 @@ if test x"$GCC" != x"yes"; then
 		esac
 else
 	CFLAGS="$CFLAGS -Wall"
-	CXXFLAGS="$CXXFLAGS -Wall"
+	CXXFLAGS="$CXXFLAGS -W -Wall -Wextra -Werror -pedantic"
 fi
 
 AC_ARG_ENABLE([xmlstrictbool],

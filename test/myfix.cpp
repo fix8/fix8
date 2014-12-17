@@ -193,7 +193,7 @@ int main(int argc, char **argv)
 		{ "delimiter",	1,	0,	'D' },
 		{ "config",		1,	0,	'c' },
 		{ "session",	1,	0,	'N' },
-		{ "once",	   0,	0,	'o' },
+		{ "once",	0,	0,	'o' },
 		{ "server",		0,	0,	's' },
 		{ "multi",		0,	0,	'm' },
 		{ "send",		1,	0,	'S' },
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
 		{ "dump",		0,	0,	'd' },
-		{ 0 },
+		{ 0,	0,	0,	0 },
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)

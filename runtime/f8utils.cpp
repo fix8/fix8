@@ -219,7 +219,7 @@ namespace
 	static const string day_names[] { "su", "mo", "tu", "we", "th", "fr", "sa" };
 	static const Day days[] { {'s',0}, {'m',1}, {'t',2}, {'w',3}, {'t',4}, {'f',5}, {'s', 6} };
 	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
-};
+}
 
 int decode_dow (const string& from)
 {

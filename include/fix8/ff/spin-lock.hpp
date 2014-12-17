@@ -184,7 +184,7 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct CLHSpinLock {
 typedef CLHSpinLock clh_lock_t[1];
 
 _INLINE void init_unlocked(clh_lock_t l) { l->init();}
-_INLINE void init_locked(clh_lock_t l) { abort(); }
+_INLINE void init_locked(clh_lock_t /* l */) { abort(); }
 _INLINE void spin_lock(clh_lock_t l, const int pid) { l->spin_lock(pid); }
 _INLINE void spin_unlock(clh_lock_t l, const int pid) { l->spin_unlock(pid); }
 
@@ -215,8 +215,8 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct AtomicFlagWrapper {
 
 typedef AtomicFlagWrapper lock_t[1];
 
-_INLINE void init_unlocked(lock_t l) { }
-_INLINE void init_locked(lock_t l)   { abort(); }
+_INLINE void init_unlocked(lock_t /* l */) { }
+_INLINE void init_locked(lock_t /* l */)   { abort(); }
 _INLINE void spin_lock(lock_t l) { 
     while(l->test_and_set(std::memory_order_acquire)) ;
 }

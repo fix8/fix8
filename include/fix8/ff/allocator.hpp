@@ -312,7 +312,7 @@ struct Buf_ctl {  SlabCache  * ptr; };
  */
 struct Seg_ctl {
     // number of buffers in use
-    DBG(size_t refcount); 
+    DBG(size_t refcount)
              
     // reference to the SlabCache that owns the segment
     SlabCache * cacheentry;   
@@ -353,7 +353,7 @@ struct xThreadData {
      *
      *
      */
-    xThreadData(const bool allocator, size_t nslabs, const pthread_t key) 
+    xThreadData(const bool /* allocator */, size_t /* nslabs */, const pthread_t key) 
                 : leak(0), key(key) { 
         //leak = (uSWSR_Ptr_Buffer*)::malloc(sizeof(uSWSR_Ptr_Buffer));
         leak = (uSWSR_Ptr_Buffer*)getAlignedMemory(128,sizeof(uSWSR_Ptr_Buffer));
@@ -1398,7 +1398,7 @@ public:
     /**
      * It is used to be safe.... - better not to call this one.
      */
-    inline void   free(void * ptr) {  abort();  }
+    inline void   free(void * /* ptr */) {  abort();  }
 
     /**
      * realloc

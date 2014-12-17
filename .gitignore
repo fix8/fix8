@@ -1,6 +1,7 @@
 *.o
 *.lo
 *.la
+*~
 client*.*
 server*.*
 fix8.spec
@@ -99,7 +100,9 @@ utests/.libs
 /utests/session_test
 /utests/utest_classes.cpp
 /include/fix8/f8config.h
+/include/fix8/f8config.h.in
 /include/fix8/stamp-h1
+/stocklib/.deps/
 /stocklib/FIX40_classes.cpp
 /stocklib/FIX40_classes.hpp
 /stocklib/FIX40_router.hpp

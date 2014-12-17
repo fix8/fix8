@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 		{ "quiet",		0,	0,	'q' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
-		{ 0 },
+		{ 0,	0,	0,	0 },
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)

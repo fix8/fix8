@@ -192,7 +192,7 @@ int main(int argc, char **argv)
 		{ "reliable",	0,	0,	'r' },
 		{ "preload",	1,	0,	'p' },
 		{ "update",		1,	0,	'u' },
-		{ 0 },
+		{ 0,	0,	0,	0 },
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
@@ -294,7 +294,8 @@ int main(int argc, char **argv)
 			{
 				cout << "Coroutine mode." << endl;
 				fd_set rfds;
-				timeval tv {};
+				timeval tv;
+				memset(&tv, 0, sizeof(timeval));
 
 				while (!term_received)
 				{
@@ -652,7 +653,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg)
+bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport* /* msg */)
 {
 	static int exrecv(0);
 	if (++exrecv % update_count == 0)

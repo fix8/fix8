@@ -388,7 +388,7 @@ application_call:
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::compid_check(const unsigned seqnum, const Message *msg, const SessionID& id) const
+void Session::compid_check(const unsigned /* seqnum */, const Message *msg, const SessionID& id) const
 {
 	if (_loginParameters._enforce_compids)
 	{
@@ -1070,7 +1070,7 @@ f8String Session::get_thread_policy_string(thread_id_t id)
 {
    int policy;
 	ostringstream ostr;
-   sched_param param {};
+   sched_param param;
    if (!pthread_getschedparam(id,  &policy, &param))
 		return policy == SCHED_OTHER ? "SCHED_OTHER" : policy == SCHED_RR ? "SCHED_RR"
 			  : policy == SCHED_FIFO ? "SCHED_FIFO" : "UNKNOWN";
