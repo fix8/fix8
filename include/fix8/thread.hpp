@@ -109,6 +109,7 @@ public:
 	/// Dtor.
 	virtual ~_f8_threadcore()
 	{
+	  join();
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
 #endif
@@ -128,9 +129,9 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		void *rptr(&_exitval);
-		return pthread_join(_tid, &rptr) ? -1 : _exitval;
+		return getid() != get_threadid() ? pthread_join(_tid, &rptr) ? -1 : _exitval : -1; // prevent self-join
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
-		if (_thread.get() && _thread->joinable())
+      if (_thread.get() && _thread->joinable() && getid() != get_threadid())
 			_thread->join();
 		return _exitval;
 #endif

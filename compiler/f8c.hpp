@@ -193,8 +193,6 @@ enum comp_str
 	cs_divider,
 	cs_copyright,
 	cs_copyright2,
-	cs_copyright_short,
-	cs_copyright_short2,
 	cs_generated_includes,
 	cs_header_preamble,
 	cs_trailer_preamble,

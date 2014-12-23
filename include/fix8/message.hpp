@@ -263,8 +263,12 @@ struct F8MetaCntx
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *reverse_find_be(const char *fieldstr) const
 	{
-		auto itr(_reverse_fieldtable.find(fieldstr));
-		return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+		if (fieldstr && *fieldstr)
+		{
+			auto itr(_reverse_fieldtable.find(fieldstr));
+			return itr != _reverse_fieldtable.cend() ? itr->second : nullptr;
+		}
+		return nullptr;
 	}
 
 	/*! Get the field number for this field by tag. Reverse lookup.
@@ -272,8 +276,12 @@ struct F8MetaCntx
 	  \return unsigned short field number */
 	unsigned short reverse_find_fnum(const char *fieldstr) const
 	{
-		auto itr(_reverse_fieldtable.find(fieldstr));
-		return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
+		if (fieldstr && *fieldstr)
+		{
+			auto itr(_reverse_fieldtable.find(fieldstr));
+			return itr != _reverse_fieldtable.cend() ? itr->second->_fnum : 0;
+		}
+		return 0;
 	}
 
 	/*! Create a new field of the tag type passed, and from the raw string given.

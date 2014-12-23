@@ -829,7 +829,7 @@ public:
 
 	/*! Return the version and copyright for this version
 	    \return string */
-	static const f8String copyright_string();
+	F8API static const f8String copyright_string();
 };
 
 //-------------------------------------------------------------------------------------------------

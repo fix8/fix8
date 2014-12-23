@@ -191,8 +191,6 @@ const CSMap _csMap
 "HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.\n"
 "\n"
 "*/\n"},
-	{ cs_copyright_short, "Copyright (c) 2010-"},
-	{ cs_copyright_short2, ", David L. Dight <fix@fix8.org>, All rights reserved."},
 	{ cs_header_preamble,
 "	begin_string *get_begin_string() { return _begin_string; };\n"
 "	body_length *get_body_length() { return _body_length; };\n"
