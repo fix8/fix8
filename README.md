@@ -70,67 +70,67 @@ and framework; and a set of complete client/server test applications.
     </thead>
     <tbody>
           <tr>
-             <td>./</td>
+             <td><code>./</code></td>
              <td>root directory with configure</td>
           </tr>
           <tr>
-             <td>m4/</td>
+             <td><code>m4/</code></td>
              <td>additional m4 macros needed by configure</td>
           </tr>
           <tr>
-             <td>compiler/</td>
+             <td><code>compiler/</code></td>
              <td>the f8c compiler source</td>
           </tr>
           <tr>
-             <td>doc/</td>
+             <td><code>doc/</code></td>
              <td>Fix8 documentation</td>
           </tr>
           <tr>
-             <td>doc/man</td>
+             <td><code>doc/man</code></td>
              <td>manpages for Fix8 utilities</td>
           </tr>
           <tr>
-             <td>doc/html</td>
+             <td><code>doc/html</code></td>
              <td>doxygen documentation (optionally generated when built)</td>
           </tr>
           <tr>
-             <td>include/</td>
+             <td><code>include/</code></td>
              <td>header files for the runtime library and compiler</td>
           </tr>
           <tr>
-             <td>include/ff/</td>
+             <td><code>include/ff/</code></td>
              <td>header files for FastFlow</td>
           </tr>
           <tr>
-             <td>runtime/</td>
+             <td><code>runtime/</code></td>
              <td>runtime library source</td>
           </tr>
           <tr>
-             <td>stocklib/</td>
+             <td><code>stocklib/</code></td>
              <td>stock FIX library builds</td>
           </tr>
           <tr>
-             <td>util/</td>
+             <td><code>util/</code></td>
              <td>additional utilities source</td>
           </tr>
           <tr>
-             <td>msvc/</td>
+             <td><code>msvc/</code></td>
              <td>Microsoft Visual Studio project files</td>
           </tr>
           <tr>
-             <td>pro/</td>
+             <td><code>pro/</code></td>
              <td>Fix8Pro extensions (commercial version only)</td>
           </tr>
           <tr>
-             <td>schema/</td>
+             <td><code>schema/</code></td>
              <td>quickfix FIX xml schemas</td>
           </tr>
           <tr>
-             <td>test/</td>
+             <td><code>test/</code></td>
              <td>test applications client/server source</td>
           </tr>
           <tr>
-             <td>utests/</td>
+             <td><code>utests/</code></td>
              <td>unit test applications</td>
           </tr>
     </tbody>
