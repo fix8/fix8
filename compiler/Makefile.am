@@ -55,6 +55,12 @@ endif
 if TBBSUPPORT
 f8c_LDFLAGS += -ltbb
 endif
+if LIBMEMCACHEDSUPPORT
+f8c_LDFLAGS += -lmemcached
+endif
+if LIBHIREDISSUPPORT
+f8c_LDFLAGS += -lhiredis
+endif
 
 if USECOMPRESSION
 f8c_LDFLAGS += -lz

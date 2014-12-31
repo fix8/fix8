@@ -46,7 +46,7 @@ using namespace std;
 namespace
 {
 	const string copyright_short { "Copyright (c) 2010-" };
-	const string copyright_short2 { ", David L. Dight <fix@fix8.org>, All rights reserved. [http://www.fix8.org]"};
+	const string copyright_short2 { ", David L. Dight <" PACKAGE_BUGREPORT ">, All rights reserved. [" PACKAGE_URL "]"};
 }
 
 //-------------------------------------------------------------------------------------------------

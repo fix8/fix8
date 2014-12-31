@@ -227,8 +227,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.3.1.tar.gz
-	% cd fix8-1.3.1
+	% tar xvzf 1.3.2.tar.gz
+	% cd fix8-1.3.2
 	% ./bootstrap
 	% ./configure
 	% make
@@ -242,8 +242,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.3.1.tar.gz
-	% cd fix8-1.3.1
+	% tar xvzf 1.3.2.tar.gz
+	% cd fix8-1.3.2
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
@@ -301,15 +301,18 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 for more help and information about the Fix8 project.
 
 ## Making a Pull Request
-If you want to submit a change to the repository, it needs to be made on the dev branch. The following instructions may help:
+If you want to submit a change to the repository, it needs to be *made on the dev branch*. The following instructions may help:
 
 1. Login to github
 1. Create a fork of fix8
-1. If you are using the command line git, clone your fork and choose the dev branch (git clone https://github.com/my_name/fix8.git -b dev)
-1. Make you changes to this branch
+1. If you are using the command line git, clone your fork and choose the dev branch
+
+    <code>% git clone https://github.com/my_name/fix8.git -b dev</code>
+
+1. Make your changes to this branch
 1. Submit changes to your branch and push the branch to your fork
 1. Create a pull request at fix8:dev
-1. Wait for pull request is accepted to fix8:dev
+1. Wait for your pull request to be accepted to fix8:dev
 1. Update your fork with recent fix8:dev
 
 ## License
