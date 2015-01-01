@@ -14,7 +14,7 @@
 - Fixed replace time/date handling (Tickval) with C++11 std::chrono
 - Fixed ReliableClientSession crash when socket connection refused
 - Fixed Fix8 test harness (client) improvements
-- Fixed provide support for longname field lookup on inbound messages
+- Fixed provide support for longname field lookup
 - Fixed add git revision & fix8 version reporting to log during fix8 start
 - Fixed crashing in hftest of Win build
 - Fixed on exit when using std::thread, logger reports "resource deadlock avoided"

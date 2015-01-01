@@ -45,6 +45,7 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace
 {
+	const string package_version { PACKAGE_NAME " version " PACKAGE_VERSION };
 	const string copyright_short { "Copyright (c) 2010-" };
 	const string copyright_short2 { ", David L. Dight <" PACKAGE_BUGREPORT ">, All rights reserved. [" PACKAGE_URL "]"};
 }
@@ -1143,8 +1144,7 @@ const f8String Session::copyright_string()
    struct tm *ptim(&tim);
 #endif
 	ostringstream ostr;
-	ostr << PACKAGE_NAME << " version " << PACKAGE_VERSION << endl;
-	ostr << copyright_short << setw(2) << (ptim->tm_year - 100) << copyright_short2;
+	ostr << endl << package_version << ' ' << copyright_short << setw(2) << (ptim->tm_year - 100) << copyright_short2;
 	return ostr.str();
 }
 
