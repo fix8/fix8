@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -276,7 +276,7 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 #if defined POPULATE_METADATA
 			to->check_set_rlm(nf);
 #endif
-			Presence::const_iterator fpitr(_fp.get_presence().end());
+			Presence::const_iterator fpitr(to->_fp.get_presence().end());
 			if (force && to->_fp.get(pp._fnum, fpitr, FieldTrait::present))
 				delete to->replace(pp._fnum, fpitr, nf);
 			else

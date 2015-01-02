@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -58,7 +58,8 @@ protected:
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
-	f8_thread_cancellation_token  _cancellation_token;
+	f8_thread_cancellation_token _cancellation_token;
+	f8_atomic<bool> _started;
 
 private:
 	f8_thread<AsyncSocket> _thread;
@@ -69,18 +70,18 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _sock(sock), _session(session), _pmodel(pmodel), _thread(std::ref(*this))
-	{
-	}
+		: _sock(sock), _session(session), _pmodel(pmodel), _started(false), _thread(std::ref(*this)) {}
 
 	/// Dtor.
-	virtual ~AsyncSocket()
-	{
-	}
+	virtual ~AsyncSocket() = default;
 
 	/*! Get the number of messages queued on this socket.
 	    \return number of queued messages */
 	size_t queued() const { return _msg_queue.size(); }
+
+	/*! Check if this socket has started
+	    \return true if started */
+	bool started() const { return _started; }
 
 	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
@@ -91,13 +92,13 @@ public:
 	virtual int execute(f8_thread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
-	virtual void start() { _thread.start(); }
+	virtual void start() { _thread.start(); _started = true; }
 
 	/// Start the processing thread.
 	virtual void request_stop() { _thread.request_stop(); }
 
 	/// Stop the processing thread and quit.
-	virtual void quit() { _thread.request_stop(); _thread.join(); }
+	virtual void quit() { _thread.request_stop(); join(); }
 
 	/*! Get the underlying socket object.
 	    \return the socket */
@@ -105,7 +106,16 @@ public:
 
 	/*! Wait till processing thead has finished.
 		 \return 0 on success */
-	int join() { return _thread.join(); }
+	int join()
+	{
+		if (_started)
+		{
+			_started = false;
+			return _thread.join();
+		}
+
+		return 0;
+	}
 
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
@@ -493,12 +503,9 @@ public:
 	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
 				  const ProcessModel pmodel, const unsigned hb_interval, bool secured)
-		: _sock(sock), _addr(addr), _session(session), _role(cn_initiator), _pmodel(pmodel),
+		: _sock(sock), _addr(addr), _connected(false), _session(session), _role(cn_initiator), _pmodel(pmodel),
         _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel),
-		  _secured(secured)
-	{
-		_connected = false;
-	}
+		  _secured(secured) {}
 
 	/*! Ctor. Acceptor.
 	    \param sock connected socket
@@ -510,13 +517,10 @@ public:
 	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
 				  const unsigned hb_interval, const ProcessModel pmodel, bool secured)
-		: _sock(sock), _addr(addr), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
 		  _hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
 		  _reader(sock, session, pmodel), _writer(sock, session, pmodel),
-		  _secured(secured)
-	{
-		_connected = true;
-	}
+		  _secured(secured) {}
 
 	/// Dtor.
 	virtual ~Connection() {}
@@ -590,7 +594,7 @@ public:
 
 	/*! Get the peer socket address
 	    \return peer socket address reference */
-	const Poco::Net::SocketAddress get_peer_socket_address() const { return _sock->peerAddress(); }
+	Poco::Net::SocketAddress get_peer_socket_address() const { return _sock->peerAddress(); }
 
 	/*! Get the socket address
 	    \return socket address reference */

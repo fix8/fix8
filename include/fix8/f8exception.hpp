@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -86,7 +86,7 @@ public:
 
 	/*! Get the force logoff setting.
 	    \return true if force logoff is set */
-	const bool force_logoff() const { return _force_logoff; }
+	bool force_logoff() const { return _force_logoff; }
 
 protected:
 	/*! Format a message to associate with this exception.
@@ -122,14 +122,16 @@ protected:
 template<typename T>
 struct InvalidMetadata : f8Exception
 {
-	InvalidMetadata(const T field) { format("Invalid Metadata", field); }
+	const T _tagid;
+	InvalidMetadata(T field) : _tagid(field) { format("Invalid Metadata", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
 /// A field was decoded in a message that has already been decoded.
 struct DuplicateField : f8Exception
 {
-	DuplicateField(const unsigned field) { format("Duplicate Field", field); }
+	const int _tagid;
+	DuplicateField(unsigned field) : _tagid(field) { format("Duplicate Field", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -138,28 +140,32 @@ struct DuplicateField : f8Exception
 template<typename T>
 struct InvalidDomainValue : f8Exception
 {
-	InvalidDomainValue(const T what) { format("Invalid Domain Value", what); }
+	InvalidDomainValue(T what) { format("Invalid Domain Value", what); }
 };
 
 //-------------------------------------------------------------------------------------------------
 /// An invalid field was requested or added
 struct InvalidField : f8Exception
 {
-	InvalidField(const unsigned field) { format("Invalid Field Added", field); }
+	const int _tagid;
+	InvalidField(unsigned field) : _tagid(field) { format("Invalid Field Added", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
 /// An invalid field was decoded.
 struct UnknownField : f8Exception
 {
-	UnknownField(const unsigned field) { format("Unknown Field Decoded", field); }
+	const int _tagid;
+	UnknownField(unsigned field) : _tagid(field) { format("Unknown Field Decoded", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
 /// A message was received with an out of sequence sequence number.
 struct InvalidMsgSequence : f8Exception
 {
-	InvalidMsgSequence(const unsigned rseqnum, const unsigned eseqnum) : f8Exception(true)
+	const unsigned _rseqnum, _eseqnum;
+	InvalidMsgSequence(unsigned rseqnum, unsigned eseqnum)
+		: f8Exception(true), _rseqnum(rseqnum), _eseqnum(eseqnum)
 		{ format("Invalid Sequence number, received", rseqnum, " expected", eseqnum); }
 };
 
@@ -167,7 +173,9 @@ struct InvalidMsgSequence : f8Exception
 /// A message was received with an out of sequence sequence number.
 struct MsgSequenceTooLow : f8Exception
 {
-	MsgSequenceTooLow(const unsigned rseqnum, const unsigned eseqnum) : f8Exception(true)
+	const unsigned _rseqnum, _eseqnum;
+	MsgSequenceTooLow(unsigned rseqnum, unsigned eseqnum)
+		: f8Exception(true), _rseqnum(rseqnum), _eseqnum(eseqnum)
 		{ format("Message Sequence too low, received", rseqnum, " expected", eseqnum); }
 };
 
@@ -175,7 +183,8 @@ struct MsgSequenceTooLow : f8Exception
 /// A message was decoded with an invalid message body length.
 struct InvalidBodyLength : f8Exception
 {
-	InvalidBodyLength(const unsigned field) { format("Invalid BodyLength", field); }
+	const unsigned _length;
+	InvalidBodyLength(unsigned length) : _length(length) { format("Invalid BodyLength", length); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -219,16 +228,18 @@ struct BadCompidId : f8Exception
 /// An invalid repeating group was found while attempting to encode a message.
 struct InvalidRepeatingGroup : f8Exception
 {
-	InvalidRepeatingGroup(const unsigned field) { format("Invalid Repeating Group", field); }
-	InvalidRepeatingGroup(const unsigned field, const char *str)
-		{ format("Invalid Repeating Group", field, " in", str); }
+	const int _tagid;
+	InvalidRepeatingGroup(unsigned field) : _tagid(field) { format("Invalid Repeating Group", field); }
+	InvalidRepeatingGroup(unsigned field, const char *str)
+	 : _tagid(field)	{ format("Invalid Repeating Group", field, " in", str); }
 };
 
 //-------------------------------------------------------------------------------------------------
 /// An invalid repeating group field was found while decoding a message (first field is mandatory).
 struct MissingRepeatingGroupField : f8Exception
 {
-	MissingRepeatingGroupField(const unsigned field) { format("First Field in a Repeating Group is Mandatory", field); }
+	int _tagid;
+	MissingRepeatingGroupField(unsigned field) : _tagid(field) { format("First Field in a Repeating Group is Mandatory", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -242,15 +253,17 @@ struct MissingMessageComponent : f8Exception
 /// An outbound message was missing a mandatory field.
 struct MissingMandatoryField : f8Exception
 {
-	MissingMandatoryField(const unsigned field) { format("Missing Mandatory Field", field); }
-	MissingMandatoryField(const std::string& reason) { format("Missing Mandatory Field", reason); }
+	const int _tagid;
+	MissingMandatoryField(unsigned field) : _tagid(field) { format("Missing Mandatory Field", field); }
+	MissingMandatoryField(const std::string& reason) : _tagid() { format("Missing Mandatory Field", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------
 /// An inbound message had an invalid (incorrect) checksum.
 struct BadCheckSum : f8Exception
 {
-	BadCheckSum(const unsigned int chkval) { format("Checksum failure", chkval); }
+	const unsigned int _chkval;
+	BadCheckSum(unsigned int chkval) : _chkval(chkval) { format("Checksum failure", chkval); }
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -1,3 +1,24 @@
+* Fri Jan 02 2015 David L. Dight <fix@fix8.org> 1.3.2
+- Fixed Jira tickets FX-394, FX-385, FX-379, FX-372, FX-371, FX-355, FX-353, FX-350, FX-321,
+							FX-328, FX-326, FX-307, FX-332, FX-333, FX-369, FX-354, FX-323
+- Fixed f8test client and server core dumps on exit when compiled with stdthread
+- Fixed copy_legal causes segfault on windows
+- Fixed schedule is_valid() returns true even schedule is invalid under win
+- Fixed Fix8 has empty timestamps under windows
+- Fixed client session reconnect failure after previous abnormal session disconnect
+- Fixed unhandled message and reject problems
+- Fixed invalid tag in test log of Win build
+- Fixed Tickval::todouble returning 0
+- Fixed provide capability to build stock FIX libraries
+- Fixed improve VS2013 build wth stock FIX schemas
+- Fixed replace time/date handling (Tickval) with C++11 std::chrono
+- Fixed ReliableClientSession crash when socket connection refused
+- Fixed Fix8 test harness (client) improvements
+- Fixed provide support for longname field lookup
+- Fixed add git revision & fix8 version reporting to log during fix8 start
+- Fixed crashing in hftest of Win build
+- Fixed on exit when using std::thread, logger reports "resource deadlock avoided"
+
 * Sun Aug 24 2014 David L. Dight <fix@fix8.org> 1.3.1
 - Fixed Jira tickets FX-325
 - 1.3 build bug under Win

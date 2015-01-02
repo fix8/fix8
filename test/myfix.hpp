@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -174,7 +174,12 @@ public:
 	bool process(char ch)
 	{
 		auto itr(_handlers.find({ch}));
-		return itr == _handlers.end() ? true : (this->*itr->second)();
+		if (itr == _handlers.end())
+		{
+			_ostr << "Command not found";
+			return true;
+		}
+		return (this->*itr->second)();
 	}
 
 	bool new_order_single();
@@ -193,6 +198,7 @@ public:
 	bool write_msgs();
 	bool read_msgs();
 	bool set_lpp();
+	bool toggle_heartbeats();
 	bool static_probe();
 	bool new_order_single_alternate();
 	bool new_order_single_recycled();

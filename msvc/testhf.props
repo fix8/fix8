@@ -12,19 +12,19 @@
         <AdditionalIncludeDirectories>../test/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       </ClCompile>
       <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <AdditionalDependencies>f8testlibd.lib;hftestlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>hftestlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <AdditionalDependencies>f8testlib.lib;hftestlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>hftestlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <AdditionalDependencies>f8testlibd.lib;hftestlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>hftestlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <AdditionalDependencies>f8testlib.lib;hftestlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>hftestlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
   </ItemDefinitionGroup>

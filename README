@@ -187,8 +187,8 @@ Building on Linux/UNIX
 The build system is based on automake/autoconf/libtool.
 You **must** have libtool (http://www.gnu.org/software/libtool/) installed to build.
 
-    % tar xvzf 1.3.1.tar.gz
-    % cd fix8-1.3.1
+    % tar xvzf 1.3.2.tar.gz
+    % cd fix8-1.3.2
     % ./bootstrap
     % ./configure
     % make
@@ -203,8 +203,8 @@ Building on OSX
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.1.0.tar.gz
-	% cd fix8-1.1.0
+	% tar xvzf 1.3.2.tar.gz
+	% cd fix8-1.3.2
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
