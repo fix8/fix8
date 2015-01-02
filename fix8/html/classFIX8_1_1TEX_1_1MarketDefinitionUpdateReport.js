@@ -10,7 +10,7 @@ var classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#adc1fd38cbdd733120b6bb1c868c60b1d", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a54396a95794ec895b89854e51ee5a345", null ],
     [ "process", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#aa726e453482f0de5209be6fcfceca578", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a70fb55052274b5c229cc5faf8110f7e1", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a84e285257f4849716c8ddff57176bd40", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a4cf37949401e78d1139fe4af4e778af7", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#ad53b233ecb4544413e988997fc7c90d2", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#aa4e8f02c882d628f46213511f133ae17", null ]

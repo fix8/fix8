@@ -1712,8 +1712,9 @@ var Myfix__classes_8hpp =
     [ "NoDerivativeEvents", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeEvents.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeEvents" ],
     [ "NoDerivativeInstrumentParties", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties" ],
     [ "NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs" ],
+    [ "F8_TEX_API", "Myfix__classes_8hpp.html#acd150befbc93998ceff318a57da820b2", null ],
     [ "FIX8_4D796669785F636C61737365732E687070_", "Myfix__classes_8hpp.html#a156b262b21de1b0af669a3eebb1919ae", null ],
     [ "Myfix_BaseMsgEntry", "Myfix__classes_8hpp.html#a717b11834053e5608178a73bf8d4da89", null ],
-    [ "ctx", "Myfix__classes_8hpp.html#ace47ea6a057b911b89cfe227ae5744c0", null ],
-    [ "TEX_ctx", "Myfix__classes_8hpp.html#a952a7001558f79f582da9396d08923fd", null ]
+    [ "ctx", "Myfix__classes_8hpp.html#afc9f1359200c953b443b55b4ea0e3950", null ],
+    [ "TEX_ctx", "Myfix__classes_8hpp.html#a1026a0bdfe15f47b685d1e3035c923d0", null ]
 ];

@@ -139,7 +139,6 @@ var searchData=
   ['statstype',['StatsType',['../namespaceFIX8_1_1TEX.html#a5b579b25de5f7d13cb5389ee0fee25c3',1,'FIX8::TEX']]],
   ['statustext',['StatusText',['../namespaceFIX8_1_1TEX.html#a290f55e074d84b845f7530162bf85023',1,'FIX8::TEX']]],
   ['statusvalue',['StatusValue',['../namespaceFIX8_1_1TEX.html#a1e123f763b8310c4889e6787c061c7c6',1,'FIX8::TEX']]],
-  ['sticks',['sticks',['../classFIX8_1_1Tickval.html#ae5822f627f73a0cfbe79cb1433ca4005',1,'FIX8::Tickval']]],
   ['stipulationtype',['StipulationType',['../namespaceFIX8_1_1TEX.html#af49e46532c9015cc4d2d2718cfe6f252',1,'FIX8::TEX']]],
   ['stipulationvalue',['StipulationValue',['../namespaceFIX8_1_1TEX.html#a7012cfed7af6694fb4e9f8cb14eb3cf6',1,'FIX8::TEX']]],
   ['stoppx',['StopPx',['../namespaceFIX8_1_1TEX.html#a549da0c2d2d0c0826a78ca56a19b4af3',1,'FIX8::TEX']]],

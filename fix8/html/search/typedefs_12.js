@@ -23,7 +23,7 @@ var searchData=
   ['tickdirection',['TickDirection',['../namespaceFIX8_1_1TEX.html#ae0c0417b48c6d25be7e643feea880657',1,'FIX8::TEX']]],
   ['tickincrement',['TickIncrement',['../namespaceFIX8_1_1TEX.html#a4dab101934f2f67ccab1472a408b73cd',1,'FIX8::TEX']]],
   ['tickruletype',['TickRuleType',['../namespaceFIX8_1_1TEX.html#ac412e08b5d63f9cbe8799f6755c1f20e',1,'FIX8::TEX']]],
-  ['ticks',['ticks',['../classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024',1,'FIX8::Tickval']]],
+  ['ticks',['ticks',['../classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06',1,'FIX8::Tickval']]],
   ['tiercode',['TierCode',['../namespaceFIX8_1_1TEX.html#aebd96e4a31cbe5ad209cd08f935a3212',1,'FIX8::TEX']]],
   ['timebracket',['TimeBracket',['../namespaceFIX8_1_1TEX.html#a3c72d76fefab2d2ed9eca31e3b5d7cc3',1,'FIX8::TEX']]],
   ['timeinforce',['TimeInForce',['../namespaceFIX8_1_1TEX.html#a942e312be5d6a14f19594ab3e6beec5c',1,'FIX8::TEX']]],

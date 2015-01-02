@@ -8,7 +8,7 @@ var classFIX8_1_1TEX_1_1AdjustedPositionReport =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#a1fb824100712ba61344a74b98054e9f6", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#a48c8672d6cfdfbd2fe59d603454a370a", null ],
     [ "process", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#ac4ecf957b2131b83dad56d014ec261d7", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#a8962fc644d645491a66ec32ab3505f86", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#a961d9ffbcd976730d91cb70c6a873383", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#a5ccf0b0fa8399525ebab3f4e7ecf6d21", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#a6db50613604a0516bec1e0cca7f609c6", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html#aa909f1a39128e16908891e926d334682", null ]

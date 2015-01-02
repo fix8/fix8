@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.1</span>
+   &#160;<span id="projectnumber">version  1.3.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -160,6 +160,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a506f5683e733041acc7c6500bf22cd4f inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07611f696bffa6982dfa5b340ee9524f inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a07611f696bffa6982dfa5b340ee9524f">send_process</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
 <tr class="separator:a07611f696bffa6982dfa5b340ee9524f inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d70a7d5c144f3a201c633d2866aec33 inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a0d70a7d5c144f3a201c633d2866aec33">update_persist_seqnums</a> ()</td></tr>
+<tr class="memdesc:a0d70a7d5c144f3a201c633d2866aec33 inherit pub_methods_classFIX8_1_1Session"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force persister to sync next send/receive seqnums.  <a href="#a0d70a7d5c144f3a201c633d2866aec33">More...</a><br /></td></tr>
+<tr class="separator:a0d70a7d5c144f3a201c633d2866aec33 inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4c637cd36d88ddac5a1db2565f82ef1 inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ae4c637cd36d88ddac5a1db2565f82ef1">stop</a> ()</td></tr>
 <tr class="memdesc:ae4c637cd36d88ddac5a1db2565f82ef1 inherit pub_methods_classFIX8_1_1Session"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop the session.  <a href="#ae4c637cd36d88ddac5a1db2565f82ef1">More...</a><br /></td></tr>
 <tr class="separator:ae4c637cd36d88ddac5a1db2565f82ef1 inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -223,8 +226,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7670d7d518853e323a6d9006c4256b5b inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06a794d133478efaa9d08af9e78f0552 inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a06a794d133478efaa9d08af9e78f0552">generate_test_request</a> (const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> &amp;testReqID)</td></tr>
 <tr class="separator:a06a794d133478efaa9d08af9e78f0552 inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c1493ab549b191101c95bb8bb6d0afa inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a2c1493ab549b191101c95bb8bb6d0afa">generate_reject</a> (const unsigned seqnum, const char *what)</td></tr>
-<tr class="separator:a2c1493ab549b191101c95bb8bb6d0afa inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3814dfa0859cbd3e80917ab5c0594ec1 inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a3814dfa0859cbd3e80917ab5c0594ec1">generate_reject</a> (const unsigned seqnum, const char *what, const char *msgtype=nullptr)</td></tr>
+<tr class="separator:a3814dfa0859cbd3e80917ab5c0594ec1 inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c5a82ab7ec72de6ec834d1284446b8f inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a5c5a82ab7ec72de6ec834d1284446b8f">generate_business_reject</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg, const int reason, const char *what)</td></tr>
 <tr class="separator:a5c5a82ab7ec72de6ec834d1284446b8f inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a8cd4559b7e696a743a69c1a5b443cf inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a5a8cd4559b7e696a743a69c1a5b443cf">do_state_change</a> (const <a class="el" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8">States::SessionStates</a> new_state)</td></tr>
@@ -259,6 +262,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:ade27505af2ed36beb24b0f6e135f6e32 inherit pub_static_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afca543f84c04c0fd2710411acb1ade52 inherit pub_static_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#afca543f84c04c0fd2710411acb1ade52">get_session_state_string</a> (const <a class="el" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8">States::SessionStates</a> state)</td></tr>
 <tr class="separator:afca543f84c04c0fd2710411acb1ade52 inherit pub_static_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab44b6fc4a605847c4cb4eb53621567cf inherit pub_static_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ab44b6fc4a605847c4cb4eb53621567cf">copyright_string</a> ()</td></tr>
+<tr class="separator:ab44b6fc4a605847c4cb4eb53621567cf inherit pub_static_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classFIX8_1_1Session"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classFIX8_1_1Session')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classFIX8_1_1Session.html">FIX8::Session</a></td></tr>
 <tr class="memitem:abc077cc755603e29b80291c3072a3165 inherit pro_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#abc077cc755603e29b80291c3072a3165">heartbeat_service</a> ()</td></tr>
 <tr class="memdesc:abc077cc755603e29b80291c3072a3165 inherit pro_methods_classFIX8_1_1Session"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heartbeat generation service thread method.  <a href="#abc077cc755603e29b80291c3072a3165">More...</a><br /></td></tr>
@@ -467,9 +472,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Session.html#aefa3cb593a6da37a4d636e5597bc3a04">FIX8::Session</a>.</p>
 
-<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00314">314</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
+<p>Definition at line <a class="el" href="harness_8cpp_source.html#l00328">328</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l01074">FIX8::Message::process()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l01091">FIX8::Message::process()</a>.</p>
 
 </div>
 </div>
@@ -524,7 +529,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 24 2014 15:15:40. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:29. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

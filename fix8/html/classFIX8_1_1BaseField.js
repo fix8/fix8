@@ -2,6 +2,7 @@ var classFIX8_1_1BaseField =
 [
     [ "BaseField", "classFIX8_1_1BaseField.html#ae49337b990afa5c6545577e5120aadf0", null ],
     [ "~BaseField", "classFIX8_1_1BaseField.html#a10ed2f79aa2bb273414e63e2b2ce0358", null ],
+    [ "as", "classFIX8_1_1BaseField.html#a853cd875ca2097d0d7e1ce082eafc235", null ],
     [ "copy", "classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840", null ],
     [ "encode", "classFIX8_1_1BaseField.html#afd80e9008687fd420a6e85a416dde11e", null ],
     [ "encode", "classFIX8_1_1BaseField.html#a15111906b582376fd97799fb33dba2ca", null ],

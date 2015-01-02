@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.1</span>
+   &#160;<span id="projectnumber">version  1.3.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-15 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -183,12 +183,12 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">template</span>&lt;const hyperunits_t&gt;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">hypersleep</a> (<span class="keyword">const</span> <span class="keywordtype">unsigned</span> amt);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">template</span>&lt;hyperunits_t&gt;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">hypersleep</a> (<span class="keywordtype">unsigned</span> amt);</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">   83</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">hypersleep&lt;h_seconds&gt;</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> amt)</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#aa931fc56e28f80c13fe526c1412dd0e8">   83</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#aa931fc56e28f80c13fe526c1412dd0e8">hypersleep&lt;h_seconds&gt;</a>(<span class="keywordtype">unsigned</span> amt)</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;{</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#if defined HAVE_CLOCK_NANOSLEEP</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   timespec ts;</div>
@@ -207,7 +207,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">  105</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">hypersleep&lt;h_milliseconds&gt;</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> amt)</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">  105</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt;h_milliseconds&gt;</a>(<span class="keywordtype">unsigned</span> amt)</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#if defined HAVE_CLOCK_NANOSLEEP</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   timespec ts;</div>
@@ -226,7 +226,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95">  127</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95">hypersleep&lt;h_microseconds&gt;</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> amt)</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#ab10be737d0150a3c07cb49047fa9f7b3">  127</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#ab10be737d0150a3c07cb49047fa9f7b3">hypersleep&lt;h_microseconds&gt;</a>(<span class="keywordtype">unsigned</span> amt)</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#if defined HAVE_CLOCK_NANOSLEEP</span></div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   timespec ts;</div>
@@ -245,7 +245,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a66f071f031999bd15b1d02749eec1834">  149</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a66f071f031999bd15b1d02749eec1834">hypersleep&lt;h_nanoseconds&gt;</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> amt)</div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8">  149</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8">hypersleep&lt;h_nanoseconds&gt;</a>(<span class="keywordtype">unsigned</span> amt)</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#if defined HAVE_CLOCK_NANOSLEEP</span></div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   timespec ts;</div>
@@ -263,10 +263,10 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;}</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a9b814fa13a57602ba106a62c0b0e2eff">  171</a></span>&#160;<span class="comment"></span><span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">hypersleep</a> (<span class="keyword">const</span> <span class="keywordtype">unsigned</span> amt, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853a">hyperunits_t</a> units)</div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="namespaceFIX8.html#a35d14597957376ef335789f26c9e4df0">  171</a></span>&#160;<span class="comment"></span><span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">hypersleep</a> (<span class="keywordtype">unsigned</span> amt, <a class="code" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853a">hyperunits_t</a> units)</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;{</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   <span class="keyword">enum</span> { Div, Mul, Operation };</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> hv[<a class="code" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa3b38069dac714d6eb49aeaf0395997cf">h_count</a>][Operation] =</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> hv[<a class="code" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa3b38069dac714d6eb49aeaf0395997cf">h_count</a>][Operation]</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;   {</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      { 1,            billion    }, <span class="comment">// Seconds</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      { thousand,     million    }, <span class="comment">// Milliseconds</span></div>
@@ -296,19 +296,19 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
 <div class="ttc" id="namespaceFIX8_html_a065eb2245fc0ee1300739d1b3f1b853aa1194012258667ab9f74441a0a8aedb44"><div class="ttname"><a href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa1194012258667ab9f74441a0a8aedb44">FIX8::h_milliseconds</a></div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00043">hypersleep.hpp:43</a></div></div>
 <div class="ttc" id="namespaceFIX8_html_a065eb2245fc0ee1300739d1b3f1b853a"><div class="ttname"><a href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853a">FIX8::hyperunits_t</a></div><div class="ttdeci">hyperunits_t</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00043">hypersleep.hpp:43</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a5c9d33dafcd63c026afe8d98fd3bbc78"><div class="ttname"><a href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">FIX8::hypersleep&lt; h_milliseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_milliseconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00105">hypersleep.hpp:105</a></div></div>
 <div class="ttc" id="namespaceFIX8_html_a065eb2245fc0ee1300739d1b3f1b853aa3b38069dac714d6eb49aeaf0395997cf"><div class="ttname"><a href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa3b38069dac714d6eb49aeaf0395997cf">FIX8::h_count</a></div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00043">hypersleep.hpp:43</a></div></div>
 <div class="ttc" id="namespaceFIX8_html_a065eb2245fc0ee1300739d1b3f1b853aad9c4b5c939299e14e8652f28a5033058"><div class="ttname"><a href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aad9c4b5c939299e14e8652f28a5033058">FIX8::h_seconds</a></div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00043">hypersleep.hpp:43</a></div></div>
 <div class="ttc" id="namespaceFIX8_html_a065eb2245fc0ee1300739d1b3f1b853aae2b7b4d46ca4b75b248041d45a2d5f36"><div class="ttname"><a href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aae2b7b4d46ca4b75b248041d45a2d5f36">FIX8::h_nanoseconds</a></div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00043">hypersleep.hpp:43</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a0262d06ebae9b3c0acbe90578aa6e6d6"><div class="ttname"><a href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">FIX8::hypersleep&lt; h_seconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_seconds &gt;(const unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00083">hypersleep.hpp:83</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a0a6aaa0459e6c5f52e5b9964bd676f95"><div class="ttname"><a href="namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95">FIX8::hypersleep&lt; h_microseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_microseconds &gt;(const unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00127">hypersleep.hpp:127</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a9bbc54ff449ca37b34f5189b15160e43"><div class="ttname"><a href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">FIX8::hypersleep</a></div><div class="ttdeci">int hypersleep(const unsigned amt)</div></div>
-<div class="ttc" id="namespaceFIX8_html_a66f071f031999bd15b1d02749eec1834"><div class="ttname"><a href="namespaceFIX8.html#a66f071f031999bd15b1d02749eec1834">FIX8::hypersleep&lt; h_nanoseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_nanoseconds &gt;(const unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00149">hypersleep.hpp:149</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_aa5ab254abf3ebbcdf79efa804f1c4266"><div class="ttname"><a href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">FIX8::hypersleep&lt; h_milliseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_milliseconds &gt;(const unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00105">hypersleep.hpp:105</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_ab10be737d0150a3c07cb49047fa9f7b3"><div class="ttname"><a href="namespaceFIX8.html#ab10be737d0150a3c07cb49047fa9f7b3">FIX8::hypersleep&lt; h_microseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_microseconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00127">hypersleep.hpp:127</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_aa931fc56e28f80c13fe526c1412dd0e8"><div class="ttname"><a href="namespaceFIX8.html#aa931fc56e28f80c13fe526c1412dd0e8">FIX8::hypersleep&lt; h_seconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_seconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00083">hypersleep.hpp:83</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a2810967482dcc292a763ee88a886d1be"><div class="ttname"><a href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">FIX8::hypersleep</a></div><div class="ttdeci">int hypersleep(unsigned amt)</div></div>
+<div class="ttc" id="namespaceFIX8_html_a700975293fe5eb36a135c70a3e2383a8"><div class="ttname"><a href="namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8">FIX8::hypersleep&lt; h_nanoseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_nanoseconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00149">hypersleep.hpp:149</a></div></div>
 <div class="ttc" id="namespaceFIX8_html_a065eb2245fc0ee1300739d1b3f1b853aa2896db500f6809fcc632818ad1ea4e02"><div class="ttname"><a href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa2896db500f6809fcc632818ad1ea4e02">FIX8::h_microseconds</a></div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00043">hypersleep.hpp:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 24 2014 15:15:24. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:17. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

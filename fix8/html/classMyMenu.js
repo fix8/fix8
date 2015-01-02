@@ -46,6 +46,7 @@ var classMyMenu =
     [ "send_msgs", "classMyMenu.html#a7e584e8b4c1ed049712cdd31bdfa6d8d", null ],
     [ "set_lpp", "classMyMenu.html#a31c0c972bc1ea0213942f2b7c2f4e6a3", null ],
     [ "static_probe", "classMyMenu.html#a53469ed29a061b14aec50a974311db50", null ],
+    [ "toggle_heartbeats", "classMyMenu.html#a8e3775fd9f658bbf964f8125542aa595", null ],
     [ "version_info", "classMyMenu.html#ad779760c52b0749a91649352737c9bd8", null ],
     [ "write_msgs", "classMyMenu.html#aa702d8304303510898b9938e1dc15c07", null ],
     [ "_cm", "classMyMenu.html#a3be5a89b79d4d00d3edfbc3e30da8d20", null ],

@@ -14,6 +14,7 @@ var classFIX8_1_1Message =
     [ "fmt_chksum", "classFIX8_1_1Message.html#a792c96826b1ae4b76704994e8f9e839d", null ],
     [ "get_custom_seqnum", "classFIX8_1_1Message.html#aadb73f4aee08970d4c42ba702631c3fb", null ],
     [ "get_end_of_batch", "classFIX8_1_1Message.html#ab7aac0add6b7a207a9935991603cb73e", null ],
+    [ "get_field_by_name_flattened", "classFIX8_1_1Message.html#a16a42217f3ff07818ce866092001e8e0", null ],
     [ "get_field_flattened", "classFIX8_1_1Message.html#a3335f685becbf6a6d0242a4cacaea367", null ],
     [ "get_no_increment", "classFIX8_1_1Message.html#a117f8048127b51e211f1f09536a95e50", null ],
     [ "Header", "classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272", null ],

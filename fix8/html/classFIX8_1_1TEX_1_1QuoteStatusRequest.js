@@ -13,7 +13,7 @@ var classFIX8_1_1TEX_1_1QuoteStatusRequest =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#aeeb6a579db839092841bcde90b9e9baf", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a5fd146b253f866d02a195b6bfce2e577", null ],
     [ "process", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a3858c825ef32d3f0839167dfc017cacd", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#acd1cba6de2ba1db150a44317249516ac", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a5676ce19ab3f28a59178f97882441380", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a48ee876358c160e009031b364cb22e9b", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a3c4a665acf4e7486f7357c8b05d3c467", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a680b290b941f43a632d71439c791abf6", null ]

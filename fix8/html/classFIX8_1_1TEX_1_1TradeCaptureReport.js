@@ -16,7 +16,7 @@ var classFIX8_1_1TEX_1_1TradeCaptureReport =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#aa20dab009cdc87b4108bbbe571f2a69a", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#a37e8f770d2720d57542051f9607d447e", null ],
     [ "process", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#ad5945b12b34c772fa833353d00b6f383", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#a8e0752197603088afd1cc443b25dbaf1", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#a9eae2bccd98c61f02c5de12c47558e27", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#ae21baa39f2e8917083a5f69f9b2ef429", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#a99bb82f2b67788d74b890368310ef871", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReport.html#a430e9dbb10f06843242925a419869aa6", null ]

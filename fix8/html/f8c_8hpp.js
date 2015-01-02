@@ -30,8 +30,6 @@ var f8c_8hpp =
       [ "cs_divider", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff", null ],
       [ "cs_copyright", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593", null ],
       [ "cs_copyright2", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e", null ],
-      [ "cs_copyright_short", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25ad02c34ef6de3835378636e9dfc2b030a", null ],
-      [ "cs_copyright_short2", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25a4d57c4b08e5c37770047af42c41f28ac", null ],
       [ "cs_generated_includes", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25a832b3482975fa7fc157af21cb9ff4120", null ],
       [ "cs_header_preamble", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25ad28c368bcc1e5bab98c209fc55c9d2bf", null ],
       [ "cs_trailer_preamble", "f8c_8hpp.html#aa7ee6b7472eaea702e1785fda0d05d25ab245d0223f33478a8d050caca7077477", null ]

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['badchecksum',['BadCheckSum',['../structFIX8_1_1BadCheckSum.html',1,'FIX8']]],
-  ['badchecksum',['BadCheckSum',['../structFIX8_1_1BadCheckSum.html#ac612ffef733b9e36d0827b94bbf8fa8a',1,'FIX8::BadCheckSum']]],
+  ['badchecksum',['BadCheckSum',['../structFIX8_1_1BadCheckSum.html#afde572c8b7dea2b4e7484f388d6923d5',1,'FIX8::BadCheckSum']]],
   ['badcompidid',['BadCompidId',['../structFIX8_1_1BadCompidId.html',1,'FIX8']]],
   ['badcompidid',['BadCompidId',['../structFIX8_1_1BadCompidId.html#a425c2aec2eea19401bd08411724ab8e7',1,'FIX8::BadCompidId']]],
   ['badsendingtime',['BadSendingTime',['../structFIX8_1_1BadSendingTime.html#aff32e67f82462abd3357c248c921e19c',1,'FIX8::BadSendingTime']]],

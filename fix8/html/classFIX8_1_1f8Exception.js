@@ -5,7 +5,7 @@ var classFIX8_1_1f8Exception =
     [ "f8Exception", "classFIX8_1_1f8Exception.html#a7271d5cae6d7b0664de4b0f28b8d5721", null ],
     [ "f8Exception", "classFIX8_1_1f8Exception.html#a40eca7d7acdb0c4f254f6c0a547311fa", null ],
     [ "~f8Exception", "classFIX8_1_1f8Exception.html#aac3188a45269ebd8a06f418a2873efbc", null ],
-    [ "force_logoff", "classFIX8_1_1f8Exception.html#a2b4ab08104073be15cb3af79328753e5", null ],
+    [ "force_logoff", "classFIX8_1_1f8Exception.html#a330a4d6456539bccf8962d6d6b1904e5", null ],
     [ "format", "classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304", null ],
     [ "format", "classFIX8_1_1f8Exception.html#a53e91854a660d4ab73dcaba33afad128", null ],
     [ "what", "classFIX8_1_1f8Exception.html#a479fb74f51273a9a731ef368f4b0c8c7", null ],

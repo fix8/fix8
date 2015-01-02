@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.1</span>
+   &#160;<span id="projectnumber">version  1.3.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -182,6 +182,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af0b6f419afdcc7713735908d3fb7c285 inherit pub_methods_classFIX8_1_1Message"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3335f685becbf6a6d0242a4cacaea367 inherit pub_methods_classFIX8_1_1Message"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#a3335f685becbf6a6d0242a4cacaea367">get_field_flattened</a> (const unsigned short fnum) const </td></tr>
 <tr class="separator:a3335f685becbf6a6d0242a4cacaea367 inherit pub_methods_classFIX8_1_1Message"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16a42217f3ff07818ce866092001e8e0 inherit pub_methods_classFIX8_1_1Message"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#a16a42217f3ff07818ce866092001e8e0">get_field_by_name_flattened</a> (const char *tag) const </td></tr>
+<tr class="separator:a16a42217f3ff07818ce866092001e8e0 inherit pub_methods_classFIX8_1_1Message"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a772d6d76fdb3f7684ad8633e517c60c3 inherit pub_methods_classFIX8_1_1Message"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#a772d6d76fdb3f7684ad8633e517c60c3">print</a> (std::ostream &amp;os, int depth=0) const </td></tr>
 <tr class="separator:a772d6d76fdb3f7684ad8633e517c60c3 inherit pub_methods_classFIX8_1_1Message"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classFIX8_1_1MessageBase"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classFIX8_1_1MessageBase')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classFIX8_1_1MessageBase.html">FIX8::MessageBase</a></td></tr>
@@ -277,6 +279,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a79ef3f2b0c27d9a817384c91d83ae422 inherit pub_methods_classFIX8_1_1MessageBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a846252f7822c3503a40d4515f16b10cf inherit pub_methods_classFIX8_1_1MessageBase"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a846252f7822c3503a40d4515f16b10cf">get_field</a> (const unsigned short fnum) const </td></tr>
 <tr class="separator:a846252f7822c3503a40d4515f16b10cf inherit pub_methods_classFIX8_1_1MessageBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372ad887dbceff48e8061214cca9b9cd inherit pub_methods_classFIX8_1_1MessageBase"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a372ad887dbceff48e8061214cca9b9cd">get_field_by_name</a> (const char *tag) const </td></tr>
+<tr class="separator:a372ad887dbceff48e8061214cca9b9cd inherit pub_methods_classFIX8_1_1MessageBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8a32a1b0f825417e6a7d84af7566f9c inherit pub_methods_classFIX8_1_1MessageBase"><td class="memItemLeft" align="right" valign="top">Fields::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#af8a32a1b0f825417e6a7d84af7566f9c">fields_begin</a> () const </td></tr>
 <tr class="separator:af8a32a1b0f825417e6a7d84af7566f9c inherit pub_methods_classFIX8_1_1MessageBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aade3a679a7a820f5bcd0ac3fb63c8aec inherit pub_methods_classFIX8_1_1MessageBase"><td class="memItemLeft" align="right" valign="top">Fields::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#aade3a679a7a820f5bcd0ac3fb63c8aec">fields_end</a> () const </td></tr>
@@ -365,14 +369,15 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr class="memitem:aaa628a1f6be4563cd81a4ad870eedfce"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#aaa628a1f6be4563cd81a4ad870eedfce">_traits</a> []</td></tr>
+<tr class="memitem:aaa628a1f6be4563cd81a4ad870eedfce"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2">F8_TEX_API</a> const <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#aaa628a1f6be4563cd81a4ad870eedfce">_traits</a> []</td></tr>
 <tr class="separator:aaa628a1f6be4563cd81a4ad870eedfce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3949fb39eeb393a67e31be64860b0e2"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1FieldTrait__Hash__Array.html">FieldTrait_Hash_Array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#aa3949fb39eeb393a67e31be64860b0e2">_ftha</a></td></tr>
+<tr class="memitem:aa3949fb39eeb393a67e31be64860b0e2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2">F8_TEX_API</a> const <br class="typebreak" />
+<a class="el" href="structFIX8_1_1FieldTrait__Hash__Array.html">FieldTrait_Hash_Array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#aa3949fb39eeb393a67e31be64860b0e2">_ftha</a></td></tr>
 <tr class="separator:aa3949fb39eeb393a67e31be64860b0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a075019172f9441491ff72d00fd7c4c56"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#a075019172f9441491ff72d00fd7c4c56">_msgtype</a></td></tr>
+<tr class="memitem:a075019172f9441491ff72d00fd7c4c56"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2">F8_TEX_API</a> const <a class="el" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#a075019172f9441491ff72d00fd7c4c56">_msgtype</a></td></tr>
 <tr class="separator:a075019172f9441491ff72d00fd7c4c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39b5380d0d46dbdc6e0999bda77209de"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#a39b5380d0d46dbdc6e0999bda77209de">_fieldcnt</a> = 4</td></tr>
-<tr class="separator:a39b5380d0d46dbdc6e0999bda77209de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79a7a3202718732bf8cbb7fc4fdd23b4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2">F8_TEX_API</a> const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#a79a7a3202718732bf8cbb7fc4fdd23b4">_fieldcnt</a> = 4</td></tr>
+<tr class="separator:a79a7a3202718732bf8cbb7fc4fdd23b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -412,7 +417,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html" title="UserResponse (BF), application, 4 fields, 0 groups. ">UserResponse</a> (BF), application, 4 fields, 0 groups. </p>
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17672">17672</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17681">17681</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a657e5916006deb741984c31c8723e572"></a>
 <div class="memitem">
@@ -436,7 +441,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17680">17680</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17689">17689</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 </div>
 </div>
@@ -485,9 +490,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17684">17684</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17693">17693</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8hpp_source.html#l17676">_msgtype</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8hpp_source.html#l17685">_msgtype</a>.</p>
 
 </div>
 </div>
@@ -522,12 +527,12 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">FIX8::Message</a>.</p>
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17682">17682</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17691">17691</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a39b5380d0d46dbdc6e0999bda77209de"></a>
+<a class="anchor" id="a79a7a3202718732bf8cbb7fc4fdd23b4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -535,7 +540,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const unsigned FIX8::TEX::UserResponse::_fieldcnt = 4</td>
+          <td class="memname"><a class="el" href="Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2">F8_TEX_API</a> const unsigned FIX8::TEX::UserResponse::_fieldcnt = 4</td>
         </tr>
       </table>
   </td>
@@ -545,7 +550,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17677">17677</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17686">17686</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 </div>
 </div>
@@ -567,7 +572,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17675">17675</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17684">17684</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 </div>
 </div>
@@ -589,9 +594,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17676">17676</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17685">17685</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l17684">get_msgtype()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l17693">get_msgtype()</a>.</p>
 
 </div>
 </div>
@@ -616,7 +621,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">   { 553,15,  2,  0,0x05}, { 923,15,  1,  0,0x05}, { 926, 1,  3,  0,0x04}, { 927,15,  4,  0,0x04}</div>
 <div class="line">}</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17674">17674</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l17683">17683</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 </div>
 </div>
@@ -627,7 +632,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 24 2014 15:16:06. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:52. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

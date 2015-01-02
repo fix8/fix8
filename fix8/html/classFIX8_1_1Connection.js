@@ -11,7 +11,7 @@ var classFIX8_1_1Connection =
     [ "connect", "classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398", null ],
     [ "get_hb_interval", "classFIX8_1_1Connection.html#a4ef6dd0e741a007bf9261cb44f8e5de1", null ],
     [ "get_hb_interval20pc", "classFIX8_1_1Connection.html#aefab997da9ecf3529a3a997e58ccc1cf", null ],
-    [ "get_peer_socket_address", "classFIX8_1_1Connection.html#aabc4df0f2eb00293474121a3778a89d9", null ],
+    [ "get_peer_socket_address", "classFIX8_1_1Connection.html#a87e70b3385057bbf5cb506e421bc225b", null ],
     [ "get_pmodel", "classFIX8_1_1Connection.html#a3a6a98a1b427d9fc8b467a8caf180424", null ],
     [ "get_role", "classFIX8_1_1Connection.html#a5e55875fe93bcfcae541ddbcb250ac0b", null ],
     [ "get_session", "classFIX8_1_1Connection.html#a10936aa571fd03ceef536387a816d3da", null ],

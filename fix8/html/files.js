@@ -139,7 +139,9 @@ var files =
       [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ]
     ] ],
     [ "thread.hpp", "thread_8hpp.html", "thread_8hpp" ],
-    [ "tickval.hpp", "tickval_8hpp.html", "tickval_8hpp" ],
+    [ "tickval.hpp", "tickval_8hpp.html", [
+      [ "Tickval", "classFIX8_1_1Tickval.html", "classFIX8_1_1Tickval" ]
+    ] ],
     [ "timer.hpp", "timer_8hpp.html", [
       [ "Timer", "classFIX8_1_1Timer.html", "classFIX8_1_1Timer" ],
       [ "TimerEvent", "classFIX8_1_1TimerEvent.html", "classFIX8_1_1TimerEvent" ],

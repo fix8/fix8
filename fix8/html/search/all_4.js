@@ -4,7 +4,7 @@ var searchData=
   ['databuf_5f',['dataBuf_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#aa3171ffe459e5c760a03aa1bc9cd1d0c',1,'FIX8::BDBPersister::KeyDataBuffer']]],
   ['databuflen_5f',['dataBufLen_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#a2ac3a5f0857b35341c8d82112eea7c7a',1,'FIX8::BDBPersister::KeyDataBuffer']]],
   ['date_5fparse',['date_parse',['../namespaceFIX8.html#ab164d9631d9191f35859386620d24fc3',1,'FIX8']]],
-  ['date_5ftime_5fformat',['date_time_format',['../namespaceFIX8.html#a9345ebd31f074d22d1898f93eb01d5a2',1,'FIX8']]],
+  ['date_5ftime_5fformat',['date_time_format',['../namespaceFIX8.html#ab7ced82900a44208ed756ae7f60e1d5d',1,'FIX8']]],
   ['date_5ftime_5fparse',['date_time_parse',['../namespaceFIX8.html#afbad3871353598ce0fd0a9b12f83dd88',1,'FIX8']]],
   ['dateddate',['DatedDate',['../namespaceFIX8_1_1TEX.html#ac96fee5d9575737b50dec2b8ba2072db',1,'FIX8::TEX']]],
   ['dateofbirth',['DateOfBirth',['../namespaceFIX8_1_1TEX.html#ae842403fda3c874a311bf178f0952ab5',1,'FIX8::TEX']]],
@@ -293,6 +293,7 @@ var searchData=
   ['duetorelated_5frealm_5fels',['DueToRelated_realm_els',['../namespaceFIX8_1_1TEX.html#aafe5060479c6891994139d5a222eefc4',1,'FIX8::TEX']]],
   ['duetorelated_5fyes',['DueToRelated_YES',['../namespaceFIX8_1_1TEX.html#a9014839ff009d1ad965d9a36660a3cfe',1,'FIX8::TEX']]],
   ['dump_5fcomponents',['dump_components',['../f8precomp_8cpp.html#a65faa14e3ce40cdc92fccac9d9b85c87',1,'f8precomp.cpp']]],
-  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#ab1df1a8ca0df0ef108b6149d6d960d9a',1,'FIX8::DuplicateField']]],
-  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]]
+  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#a3bf88d67fa83a2c4e1697726bd7d9146',1,'FIX8::DuplicateField']]],
+  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]],
+  ['duration',['duration',['../classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170',1,'FIX8::Tickval']]]
 ];

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.1</span>
+   &#160;<span id="projectnumber">version  1.3.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -509,7 +509,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">f8c string realm type.  <a href="structFIX8_1_1StringRealm.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html">Tickval</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">High resolution time in nanosecond ticks. Thread safe.  <a href="classFIX8_1_1Tickval.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html">Timer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">High resolution timer.  <a href="classFIX8_1_1Timer.html#details">More...</a><br /></td></tr>
@@ -771,12 +770,9 @@ Enumerations</h2></td></tr>
 <a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593">cs_copyright</a>, 
 <a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e">cs_copyright2</a>, 
 <br />
-&#160;&#160;<a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ad02c34ef6de3835378636e9dfc2b030a">cs_copyright_short</a>, 
-<a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4d57c4b08e5c37770047af42c41f28ac">cs_copyright_short2</a>, 
-<a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a832b3482975fa7fc157af21cb9ff4120">cs_generated_includes</a>, 
+&#160;&#160;<a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a832b3482975fa7fc157af21cb9ff4120">cs_generated_includes</a>, 
 <a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ad28c368bcc1e5bab98c209fc55c9d2bf">cs_header_preamble</a>, 
-<br />
-&#160;&#160;<a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ab245d0223f33478a8d050caca7077477">cs_trailer_preamble</a>
+<a class="el" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ab245d0223f33478a8d050caca7077477">cs_trailer_preamble</a>
 <br />
  }</td></tr>
 <tr class="separator:aa7ee6b7472eaea702e1785fda0d05d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -901,13 +897,13 @@ Functions</h2></td></tr>
 <tr class="separator:ab33acc417596b865ce5245bbffd4b948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab60900653547f9e56a833e279e2a04f6"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab60900653547f9e56a833e279e2a04f6">time_to_epoch</a> (const tm &amp;ltm, int utcdiff=0)</td></tr>
 <tr class="separator:ab60900653547f9e56a833e279e2a04f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9345ebd31f074d22d1898f93eb01d5a2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9345ebd31f074d22d1898f93eb01d5a2">date_time_format</a> (const <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;tickval, char *to, const <a class="el" href="namespaceFIX8.html#ae1ac9c5a87046b6cd65e52cc8591f077">TimeIndicator</a> ind)</td></tr>
-<tr class="separator:a9345ebd31f074d22d1898f93eb01d5a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbad3871353598ce0fd0a9b12f83dd88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#afbad3871353598ce0fd0a9b12f83dd88">date_time_parse</a> (const char *ptr, size_t len)</td></tr>
+<tr class="memitem:ab7ced82900a44208ed756ae7f60e1d5d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab7ced82900a44208ed756ae7f60e1d5d">date_time_format</a> (const <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;tickval, char *to, <a class="el" href="namespaceFIX8.html#ae1ac9c5a87046b6cd65e52cc8591f077">TimeIndicator</a> ind)</td></tr>
+<tr class="separator:ab7ced82900a44208ed756ae7f60e1d5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbad3871353598ce0fd0a9b12f83dd88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#afbad3871353598ce0fd0a9b12f83dd88">date_time_parse</a> (const char *ptr, size_t len)</td></tr>
 <tr class="separator:afbad3871353598ce0fd0a9b12f83dd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cb4329d66a1fd9d13d5233fe9904703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a1cb4329d66a1fd9d13d5233fe9904703">time_parse</a> (const char *ptr, size_t len, bool timeonly=false)</td></tr>
+<tr class="memitem:a1cb4329d66a1fd9d13d5233fe9904703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a1cb4329d66a1fd9d13d5233fe9904703">time_parse</a> (const char *ptr, size_t len, bool timeonly=false)</td></tr>
 <tr class="separator:a1cb4329d66a1fd9d13d5233fe9904703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab164d9631d9191f35859386620d24fc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab164d9631d9191f35859386620d24fc3">date_parse</a> (const char *ptr, size_t len)</td></tr>
+<tr class="memitem:ab164d9631d9191f35859386620d24fc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab164d9631d9191f35859386620d24fc3">date_parse</a> (const char *ptr, size_t len)</td></tr>
 <tr class="separator:ab164d9631d9191f35859386620d24fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa30604797b7d0eb424f057eea0d40120"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa30604797b7d0eb424f057eea0d40120">Common_MsgType_HEARTBEAT</a> (&quot;0&quot;)</td></tr>
 <tr class="separator:aa30604797b7d0eb424f057eea0d40120"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -995,27 +991,25 @@ Functions</h2></td></tr>
 <tr class="separator:a66be73ea4c4ed492d2b1416419686066"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b10e4e0f9619fa67eb9f27eddc02ec9"><td class="memItemLeft" align="right" valign="top">const unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7b10e4e0f9619fa67eb9f27eddc02ec9">Common_DefaultApplVerID</a> (1137)</td></tr>
 <tr class="separator:a7b10e4e0f9619fa67eb9f27eddc02ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bbc54ff449ca37b34f5189b15160e43"><td class="memTemplParams" colspan="2">template&lt;const hyperunits_t &gt; </td></tr>
-<tr class="memitem:a9bbc54ff449ca37b34f5189b15160e43"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">hypersleep</a> (const unsigned amt)</td></tr>
-<tr class="separator:a9bbc54ff449ca37b34f5189b15160e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0262d06ebae9b3c0acbe90578aa6e6d6"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:a0262d06ebae9b3c0acbe90578aa6e6d6"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">hypersleep&lt; h_seconds &gt;</a> (const unsigned amt)</td></tr>
-<tr class="separator:a0262d06ebae9b3c0acbe90578aa6e6d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5ab254abf3ebbcdf79efa804f1c4266"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:aa5ab254abf3ebbcdf79efa804f1c4266"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">hypersleep&lt; h_milliseconds &gt;</a> (const unsigned amt)</td></tr>
-<tr class="separator:aa5ab254abf3ebbcdf79efa804f1c4266"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6aaa0459e6c5f52e5b9964bd676f95"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:a0a6aaa0459e6c5f52e5b9964bd676f95"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95">hypersleep&lt; h_microseconds &gt;</a> (const unsigned amt)</td></tr>
-<tr class="separator:a0a6aaa0459e6c5f52e5b9964bd676f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66f071f031999bd15b1d02749eec1834"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:a66f071f031999bd15b1d02749eec1834"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a66f071f031999bd15b1d02749eec1834">hypersleep&lt; h_nanoseconds &gt;</a> (const unsigned amt)</td></tr>
-<tr class="separator:a66f071f031999bd15b1d02749eec1834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b814fa13a57602ba106a62c0b0e2eff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9b814fa13a57602ba106a62c0b0e2eff">hypersleep</a> (const unsigned amt, const <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853a">hyperunits_t</a> units)</td></tr>
-<tr class="separator:a9b814fa13a57602ba106a62c0b0e2eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2810967482dcc292a763ee88a886d1be"><td class="memTemplParams" colspan="2">template&lt;hyperunits_t &gt; </td></tr>
+<tr class="memitem:a2810967482dcc292a763ee88a886d1be"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">hypersleep</a> (unsigned amt)</td></tr>
+<tr class="separator:a2810967482dcc292a763ee88a886d1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa931fc56e28f80c13fe526c1412dd0e8"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:aa931fc56e28f80c13fe526c1412dd0e8"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa931fc56e28f80c13fe526c1412dd0e8">hypersleep&lt; h_seconds &gt;</a> (unsigned amt)</td></tr>
+<tr class="separator:aa931fc56e28f80c13fe526c1412dd0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c9d33dafcd63c026afe8d98fd3bbc78"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a5c9d33dafcd63c026afe8d98fd3bbc78"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt; h_milliseconds &gt;</a> (unsigned amt)</td></tr>
+<tr class="separator:a5c9d33dafcd63c026afe8d98fd3bbc78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10be737d0150a3c07cb49047fa9f7b3"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:ab10be737d0150a3c07cb49047fa9f7b3"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab10be737d0150a3c07cb49047fa9f7b3">hypersleep&lt; h_microseconds &gt;</a> (unsigned amt)</td></tr>
+<tr class="separator:ab10be737d0150a3c07cb49047fa9f7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a700975293fe5eb36a135c70a3e2383a8"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a700975293fe5eb36a135c70a3e2383a8"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8">hypersleep&lt; h_nanoseconds &gt;</a> (unsigned amt)</td></tr>
+<tr class="separator:a700975293fe5eb36a135c70a3e2383a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35d14597957376ef335789f26c9e4df0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a35d14597957376ef335789f26c9e4df0">hypersleep</a> (unsigned amt, <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853a">hyperunits_t</a> units)</td></tr>
+<tr class="separator:a35d14597957376ef335789f26c9e4df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f3311ae59b172590afbd844ef95892d"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0f3311ae59b172590afbd844ef95892d">max_global_filename_length</a> (1024)</td></tr>
 <tr class="separator:a0f3311ae59b172590afbd844ef95892d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a940c6354b64d07bee0a6cba1f6ad26a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a940c6354b64d07bee0a6cba1f6ad26a6">current_utc_time</a> (struct timespec *ts)</td></tr>
-<tr class="separator:a940c6354b64d07bee0a6cba1f6ad26a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af710a5253b046cb3aac2c40dca4ff292"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af710a5253b046cb3aac2c40dca4ff292">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a> &amp;what)</td></tr>
 <tr class="separator:af710a5253b046cb3aac2c40dca4ff292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2385354f75d5c8198f90fdb7eedf6dc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a2385354f75d5c8198f90fdb7eedf6dc6">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="classFIX8_1_1FieldTraits.html">FieldTraits</a> &amp;what)</td></tr>
@@ -1040,8 +1034,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa668a47a575df1612f3dee91d3a4b6ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5794a1c039643260424b110ce6ed2695"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a5794a1c039643260424b110ce6ed2695">recover_line</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> &amp;xf)</td></tr>
 <tr class="separator:a5794a1c039643260424b110ce6ed2695"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a952a7001558f79f582da9396d08923fd"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a952a7001558f79f582da9396d08923fd">TEX_ctx</a> ()</td></tr>
-<tr class="separator:a952a7001558f79f582da9396d08923fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1026a0bdfe15f47b685d1e3035c923d0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a1026a0bdfe15f47b685d1e3035c923d0">TEX_ctx</a> ()</td></tr>
+<tr class="separator:a1026a0bdfe15f47b685d1e3035c923d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -1063,7 +1057,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00456">456</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
+<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00457">457</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 </div>
 </div>
@@ -1077,7 +1071,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02010">2010</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02019">2019</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1105,7 +1099,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02125">2125</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02134">2134</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1119,7 +1113,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02136">2136</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02145">2145</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +1127,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02130">2130</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02139">2139</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1147,7 +1141,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01897">1897</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01906">1906</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1161,7 +1155,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02151">2151</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02160">2160</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1191,7 +1185,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02135">2135</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02144">2144</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1287,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02018">2018</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02027">2027</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1307,7 +1301,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00203">203</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00201">201</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1321,7 +1315,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02019">2019</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02028">2028</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1335,7 +1329,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02023">2023</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02032">2032</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1349,7 +1343,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01862">1862</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01871">1871</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1363,7 +1357,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02139">2139</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02148">2148</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1379,7 +1373,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00455">455</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
+<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00456">456</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1387,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00457">457</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
+<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00458">458</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 </div>
 </div>
@@ -1407,7 +1401,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02150">2150</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02159">2159</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1421,7 +1415,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02126">2126</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02135">2135</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1435,7 +1429,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02020">2020</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02029">2029</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1465,7 +1459,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00453">453</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
+<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00454">454</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 </div>
 </div>
@@ -1479,7 +1473,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00454">454</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
+<p>Definition at line <a class="el" href="thread_8hpp_source.html#l00455">455</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 </div>
 </div>
@@ -1507,7 +1501,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00360">360</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00368">368</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
@@ -1591,7 +1585,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02145">2145</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02154">2154</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1661,7 +1655,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02149">2149</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02158">2158</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1675,7 +1669,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02021">2021</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02030">2030</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1689,7 +1683,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01722">1722</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01731">1731</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1703,7 +1697,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01329">1329</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01338">1338</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1745,7 +1739,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01432">1432</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01441">1441</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1773,7 +1767,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02124">2124</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02133">2133</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1787,7 +1781,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02134">2134</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02143">2143</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1829,7 +1823,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02016">2016</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02025">2025</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1843,7 +1837,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02017">2017</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02026">2026</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1857,7 +1851,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02127">2127</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02136">2136</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1871,7 +1865,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01827">1827</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01836">1836</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1885,7 +1879,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02153">2153</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02162">2162</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1899,7 +1893,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02155">2155</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02164">2164</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1913,7 +1907,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02156">2156</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02165">2165</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1927,7 +1921,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02154">2154</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02163">2163</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1941,7 +1935,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02143">2143</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02152">2152</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1969,7 +1963,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02013">2013</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02022">2022</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1983,7 +1977,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00361">361</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00369">369</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
@@ -1997,7 +1991,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02146">2146</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02155">2155</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2011,7 +2005,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00426">426</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00434">434</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -2025,7 +2019,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02011">2011</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02020">2020</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2039,7 +2033,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02012">2012</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02021">2021</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2053,7 +2047,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02009">2009</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02018">2018</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2081,7 +2075,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02140">2140</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02149">2149</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2095,7 +2089,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02128">2128</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02137">2137</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2109,7 +2103,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02147">2147</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02156">2156</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2151,7 +2145,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02132">2132</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02141">2141</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2165,7 +2159,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02142">2142</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02151">2151</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2179,7 +2173,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01792">1792</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01801">1801</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2209,7 +2203,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01757">1757</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01766">1766</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2223,7 +2217,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02133">2133</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02142">2142</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2237,7 +2231,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02137">2137</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02146">2146</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2251,7 +2245,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02138">2138</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02147">2147</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2293,7 +2287,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01536">1536</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01545">1545</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2307,7 +2301,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01629">1629</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01638">1638</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2321,7 +2315,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01226">1226</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01235">1235</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2335,7 +2329,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01123">1123</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01132">1132</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2349,7 +2343,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l01015">1015</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01024">1024</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2363,7 +2357,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02022">2022</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02031">2031</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2393,10 +2387,6 @@ template&lt;typename T &gt; </div>
 <tr><td class="fieldname"><a class="anchor" id="aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593"></a>cs_copyright&#160;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e"></a>cs_copyright2&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="aa7ee6b7472eaea702e1785fda0d05d25ad02c34ef6de3835378636e9dfc2b030a"></a>cs_copyright_short&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="aa7ee6b7472eaea702e1785fda0d05d25a4d57c4b08e5c37770047af42c41f28ac"></a>cs_copyright_short2&#160;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="aa7ee6b7472eaea702e1785fda0d05d25a832b3482975fa7fc157af21cb9ff4120"></a>cs_generated_includes&#160;</td><td class="fielddoc">
 </td></tr>
@@ -2486,7 +2476,7 @@ template&lt;typename T &gt; </div>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00870">870</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00880">880</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -2573,7 +2563,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to modified string </dd></dl>
 
-<p>Referenced by <a class="el" href="filepersist_8cpp_source.html#l00045">FIX8::FilePersister::initialise()</a>, <a class="el" href="f8c_8cpp_source.html#l00146">main()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00077">open_ofile()</a>.</p>
+<p>Referenced by <a class="el" href="filepersist_8cpp_source.html#l00045">FIX8::FilePersister::initialise()</a>, <a class="el" href="f8c_8cpp_source.html#l00147">main()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00077">open_ofile()</a>.</p>
 
 </div>
 </div>
@@ -2625,7 +2615,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l36779">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>, and <a class="el" href="message_8hpp_source.html#l01171">FIX8::Message::setup_reuse()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l36788">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>, and <a class="el" href="message_8hpp_source.html#l01188">FIX8::Message::setup_reuse()</a>.</p>
 
 </div>
 </div>
@@ -2643,7 +2633,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l36779">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>, and <a class="el" href="message_8hpp_source.html#l01171">FIX8::Message::setup_reuse()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l36788">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>, and <a class="el" href="message_8hpp_source.html#l01188">FIX8::Message::setup_reuse()</a>.</p>
 
 </div>
 </div>
@@ -2677,7 +2667,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l40066">FIX8::TEX::trailer::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>, and <a class="el" href="message_8hpp_source.html#l01171">FIX8::Message::setup_reuse()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l40075">FIX8::TEX::trailer::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>, and <a class="el" href="message_8hpp_source.html#l01188">FIX8::Message::setup_reuse()</a>.</p>
 
 </div>
 </div>
@@ -2791,7 +2781,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2809,7 +2799,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2827,7 +2817,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2845,7 +2835,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2863,7 +2853,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2881,7 +2871,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2899,7 +2889,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2917,7 +2907,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00909">FIX8::Session::send_process()</a>, and <a class="el" href="message_8hpp_source.html#l01171">FIX8::Message::setup_reuse()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00934">FIX8::Session::send_process()</a>, and <a class="el" href="message_8hpp_source.html#l01188">FIX8::Message::setup_reuse()</a>.</p>
 
 </div>
 </div>
@@ -2935,7 +2925,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l36779">FIX8::TEX::header::add_preamble()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l36788">FIX8::TEX::header::add_preamble()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00159">process_special_traits()</a>.</p>
 
 </div>
 </div>
@@ -2953,7 +2943,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00807">FIX8::Session::generate_business_reject()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00832">FIX8::Session::generate_business_reject()</a>.</p>
 
 </div>
 </div>
@@ -2971,7 +2961,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00786">FIX8::Session::generate_heartbeat()</a>, and <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00809">FIX8::Session::generate_heartbeat()</a>, and <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -2989,7 +2979,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00839">FIX8::Session::generate_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00864">FIX8::Session::generate_logon()</a>.</p>
 
 </div>
 </div>
@@ -3007,7 +2997,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00853">FIX8::Session::generate_logout()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00878">FIX8::Session::generate_logout()</a>.</p>
 
 </div>
 </div>
@@ -3025,7 +3015,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00796">FIX8::Session::generate_reject()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00819">FIX8::Session::generate_reject()</a>.</p>
 
 </div>
 </div>
@@ -3043,7 +3033,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00863">FIX8::Session::generate_resend_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00888">FIX8::Session::generate_resend_request()</a>.</p>
 
 </div>
 </div>
@@ -3061,7 +3051,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00237">FIX8::Session::enforce()</a>, <a class="el" href="session_8cpp_source.html#l00872">FIX8::Session::generate_sequence_reset()</a>, and <a class="el" href="session_8cpp_source.html#l00909">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00247">FIX8::Session::enforce()</a>, <a class="el" href="session_8cpp_source.html#l00897">FIX8::Session::generate_sequence_reset()</a>, and <a class="el" href="session_8cpp_source.html#l00934">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -3079,7 +3069,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00830">FIX8::Session::generate_test_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00855">FIX8::Session::generate_test_request()</a>.</p>
 
 </div>
 </div>
@@ -3193,7 +3183,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00909">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00934">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -3243,7 +3233,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00424">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00447">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -3261,7 +3251,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00909">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00934">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -3295,7 +3285,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00909">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00934">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -3426,34 +3416,6 @@ template&lt;typename T , typename... Args&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a940c6354b64d07bee0a6cba1f6ad26a6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void FIX8::current_utc_time </td>
-          <td>(</td>
-          <td class="paramtype">struct timespec *&#160;</td>
-          <td class="paramname"><em>ts</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00122">122</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00275">FIX8::Tickval::get_tickval()</a>, and <a class="el" href="tickval_8hpp_source.html#l00266">FIX8::Tickval::get_timespec()</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="ab164d9631d9191f35859386620d24fc3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -3462,7 +3424,7 @@ template&lt;typename T , typename... Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024">Tickval::ticks</a> FIX8::date_parse </td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a> FIX8::date_parse </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
@@ -3486,13 +3448,13 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00999">999</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l01008">1008</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00149">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00213">FIX8::Tickval::get_ticks()</a>, <a class="el" href="field_8hpp_source.html#l00838">parse_decimal()</a>, and <a class="el" href="field_8hpp_source.html#l00848">time_to_epoch()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00071">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00123">FIX8::Tickval::get_ticks()</a>, <a class="el" href="field_8hpp_source.html#l00844">parse_decimal()</a>, and <a class="el" href="field_8hpp_source.html#l00858">time_to_epoch()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9345ebd31f074d22d1898f93eb01d5a2"></a>
+<a class="anchor" id="ab7ced82900a44208ed756ae7f60e1d5d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3514,7 +3476,7 @@ template&lt;typename T , typename... Args&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const TimeIndicator&#160;</td>
+          <td class="paramtype">TimeIndicator&#160;</td>
           <td class="paramname"><em>ind</em>&#160;</td>
         </tr>
         <tr>
@@ -3529,9 +3491,9 @@ template&lt;typename T , typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Format <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe. ">Tickval</a> into a string. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Format <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> into a string. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tickval</td><td>input <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe. ">Tickval</a> object </td></tr>
+    <tr><td class="paramname">tickval</td><td>input <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> object </td></tr>
     <tr><td class="paramname">to</td><td>output buffer, should make sure there is enough space reserved </td></tr>
     <tr><td class="paramname">ind</td><td>indicating whether need millisecond or not _time_only, the format string will be "HH:MM:SS" _time_with_ms, the format string will be "HH:MM:SS.mmm" _short_date_only, the format string will be "YYYYMM" _date_only, the format string will be "YYYYMMDD" _sec_only, the format string will be "YYYYMMDD-HH:MM:SS" _with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm" </td></tr>
   </table>
@@ -3539,11 +3501,11 @@ template&lt;typename T , typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>length of formatted string </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00883">883</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00893">893</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="field_8hpp_source.html#l00870">_date_only</a>, <a class="el" href="field_8hpp_source.html#l00870">_short_date_only</a>, <a class="el" href="field_8hpp_source.html#l00870">_time_with_ms</a>, <a class="el" href="field_8hpp_source.html#l00870">_with_ms</a>, <a class="el" href="tickval_8hpp_source.html#l00302">FIX8::Tickval::as_tm()</a>, <a class="el" href="field_8hpp_source.html#l00824">format0()</a>, and <a class="el" href="tickval_8hpp_source.html#l00225">FIX8::Tickval::msecs()</a>.</p>
+<p>References <a class="el" href="field_8hpp_source.html#l00880">_date_only</a>, <a class="el" href="field_8hpp_source.html#l00880">_short_date_only</a>, <a class="el" href="field_8hpp_source.html#l00880">_time_with_ms</a>, <a class="el" href="field_8hpp_source.html#l00880">_with_ms</a>, <a class="el" href="field_8hpp_source.html#l00830">format0()</a>, <a class="el" href="tickval_8hpp_source.html#l00207">FIX8::Tickval::get_tm()</a>, and <a class="el" href="tickval_8hpp_source.html#l00139">FIX8::Tickval::msecs()</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l01119">FIX8::Field&lt; UTCTimestamp, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01222">FIX8::Field&lt; UTCTimeOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01325">FIX8::Field&lt; UTCDateOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01428">FIX8::Field&lt; LocalMktDate, field &gt;::print()</a>, and <a class="el" href="field_8hpp_source.html#l01532">FIX8::Field&lt; MonthYear, field &gt;::print()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l01128">FIX8::Field&lt; UTCTimestamp, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01231">FIX8::Field&lt; UTCTimeOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01334">FIX8::Field&lt; UTCDateOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01437">FIX8::Field&lt; LocalMktDate, field &gt;::print()</a>, and <a class="el" href="field_8hpp_source.html#l01541">FIX8::Field&lt; MonthYear, field &gt;::print()</a>.</p>
 
 </div>
 </div>
@@ -3555,7 +3517,7 @@ template&lt;typename T , typename... Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024">Tickval::ticks</a> FIX8::date_time_parse </td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a> FIX8::date_time_parse </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
@@ -3587,9 +3549,9 @@ template&lt;typename T , typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ticks decoded </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00927">927</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00936">936</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00149">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00213">FIX8::Tickval::get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00148">FIX8::Tickval::million</a>, <a class="el" href="tickval_8hpp_source.html#l00144">FIX8::Tickval::noticks</a>, <a class="el" href="field_8hpp_source.html#l00838">parse_decimal()</a>, and <a class="el" href="field_8hpp_source.html#l00848">time_to_epoch()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00071">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00123">FIX8::Tickval::get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00070">FIX8::Tickval::million</a>, <a class="el" href="tickval_8hpp_source.html#l00061">FIX8::Tickval::noticks</a>, <a class="el" href="field_8hpp_source.html#l00844">parse_decimal()</a>, and <a class="el" href="field_8hpp_source.html#l00858">time_to_epoch()</a>.</p>
 
 </div>
 </div>
@@ -3654,7 +3616,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>default FIX assignment separator (=) </p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00178">FIX8::BaseField::encode()</a>, and <a class="el" href="message_8hpp_source.html#l00860">FIX8::MessageBase::extract_element()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00184">FIX8::BaseField::encode()</a>, and <a class="el" href="message_8hpp_source.html#l00877">FIX8::MessageBase::extract_element()</a>.</p>
 
 </div>
 </div>
@@ -3674,7 +3636,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>default FIX field separator (^A) </p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00178">FIX8::BaseField::encode()</a>, <a class="el" href="message_8hpp_source.html#l00860">FIX8::MessageBase::extract_element()</a>, <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>, and <a class="el" href="connection_8cpp_source.html#l00202">FIX8::FIXReader::read()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00184">FIX8::BaseField::encode()</a>, <a class="el" href="message_8hpp_source.html#l00877">FIX8::MessageBase::extract_element()</a>, <a class="el" href="session_8cpp_source.html#l00272">FIX8::Session::process()</a>, and <a class="el" href="connection_8cpp_source.html#l00204">FIX8::FIXReader::read()</a>.</p>
 
 </div>
 </div>
@@ -3804,7 +3766,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00715">715</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00691">FIX8::Field&lt; fp_type, field &gt;::set_from_raw()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00697">FIX8::Field&lt; fp_type, field &gt;::set_from_raw()</a>.</p>
 
 </div>
 </div>
@@ -3873,7 +3835,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Package_info string value or an empty string </dd></dl>
 
-<p>Definition at line <a class="el" href="f8utils_8cpp_source.html#l00297">297</a> of file <a class="el" href="f8utils_8cpp_source.html">f8utils.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8cpp_source.html#l00301">301</a> of file <a class="el" href="f8utils_8cpp_source.html">f8utils.cpp</a>.</p>
 
 <p>References <a class="el" href="f8utils_8cpp_source.html#l00247">package_info()</a>.</p>
 
@@ -3926,9 +3888,9 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number bytes decoded </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00824">824</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00830">830</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00883">date_time_format()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00893">date_time_format()</a>.</p>
 
 </div>
 </div>
@@ -4000,7 +3962,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00565">565</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00860">FIX8::MessageBase::extract_element()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00877">FIX8::MessageBase::extract_element()</a>.</p>
 
 </div>
 </div>
@@ -4112,7 +4074,7 @@ template&lt;&gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8cpp_source.html#l00091">91</a> of file <a class="el" href="f8utils_8cpp_source.html">f8utils.cpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00217">FIX8::Tickval::now()</a>, and <a class="el" href="tickval_8hpp_source.html#l00221">FIX8::Tickval::secs()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00127">FIX8::Tickval::now()</a>, and <a class="el" href="tickval_8hpp_source.html#l00135">FIX8::Tickval::secs()</a>.</p>
 
 </div>
 </div>
@@ -4139,7 +4101,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Format <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe. ">Tickval</a> into mini string. 14-07-02 23:15:51 </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Format <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> into mini string. 14-07-02 23:15:51 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">result</td><td>target string </td></tr>
     <tr><td class="paramname">tv</td><td>tickval to use or 0 for current time </td></tr>
@@ -4173,7 +4135,7 @@ template&lt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Format <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe. ">Tickval</a> into mini string. 14-07-02 23:15:51 </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Format <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> into mini string. 14-07-02 23:15:51 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tv</td><td>tickval to use or 0 for current time </td></tr>
   </table>
@@ -4225,7 +4187,7 @@ template&lt;&gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8cpp_source.html#l00051">51</a> of file <a class="el" href="f8utils_8cpp_source.html">f8utils.cpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00217">FIX8::Tickval::now()</a>, <a class="el" href="tickval_8hpp_source.html#l00233">FIX8::Tickval::nsecs()</a>, and <a class="el" href="tickval_8hpp_source.html#l00221">FIX8::Tickval::secs()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00127">FIX8::Tickval::now()</a>, <a class="el" href="tickval_8hpp_source.html#l00153">FIX8::Tickval::nsecs()</a>, and <a class="el" href="tickval_8hpp_source.html#l00135">FIX8::Tickval::secs()</a>.</p>
 
 </div>
 </div>
@@ -4264,7 +4226,7 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Format <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe. ">Tickval</a> into string. 2014-07-02 23:15:51.514776595 </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Format <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> into string. 2014-07-02 23:15:51.514776595 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">result</td><td>target string </td></tr>
     <tr><td class="paramname">tv</td><td>tickval to use or 0 for current time </td></tr>
@@ -4275,7 +4237,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to target string </dd></dl>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l01538">generate_preamble()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00126">GetTimeAsStringMS()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l01537">generate_preamble()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00126">GetTimeAsStringMS()</a>.</p>
 
 </div>
 </div>
@@ -4316,7 +4278,7 @@ template&lt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Format <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe. ">Tickval</a> into string. 2014-07-02 23:15:51.514776595 </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Format <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> into string. 2014-07-02 23:15:51.514776595 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tv</td><td>tickval to use or 0 for current time </td></tr>
     <tr><td class="paramname">dplaces</td><td>number of decimal places to report seconds (default 6) </td></tr>
@@ -4346,15 +4308,15 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="session_8cpp_source.html#l00909">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00093">FIX8::Session::Session()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="session_8cpp_source.html#l00934">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00102">FIX8::Session::Session()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9bbc54ff449ca37b34f5189b15160e43"></a>
+<a class="anchor" id="a2810967482dcc292a763ee88a886d1be"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;const hyperunits_t &gt; </div>
+template&lt;hyperunits_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -4362,7 +4324,7 @@ template&lt;const hyperunits_t &gt; </div>
         <tr>
           <td class="memname">int FIX8::hypersleep </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>amt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4376,7 +4338,7 @@ template&lt;const hyperunits_t &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a9b814fa13a57602ba106a62c0b0e2eff"></a>
+<a class="anchor" id="a35d14597957376ef335789f26c9e4df0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -4386,13 +4348,13 @@ template&lt;const hyperunits_t &gt; </div>
         <tr>
           <td class="memname">int FIX8::hypersleep </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>amt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const hyperunits_t&#160;</td>
+          <td class="paramtype">hyperunits_t&#160;</td>
           <td class="paramname"><em>units</em>&#160;</td>
         </tr>
         <tr>
@@ -4422,7 +4384,7 @@ template&lt;const hyperunits_t &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a0a6aaa0459e6c5f52e5b9964bd676f95"></a>
+<a class="anchor" id="ab10be737d0150a3c07cb49047fa9f7b3"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -4432,9 +4394,9 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa2896db500f6809fcc632818ad1ea4e02">h_microseconds</a> &gt; </td>
+          <td class="memname">int <a class="el" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa2896db500f6809fcc632818ad1ea4e02">h_microseconds</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>amt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4459,7 +4421,7 @@ template&lt;&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="aa5ab254abf3ebbcdf79efa804f1c4266"></a>
+<a class="anchor" id="a5c9d33dafcd63c026afe8d98fd3bbc78"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -4469,9 +4431,9 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa1194012258667ab9f74441a0a8aedb44">h_milliseconds</a> &gt; </td>
+          <td class="memname">int <a class="el" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aa1194012258667ab9f74441a0a8aedb44">h_milliseconds</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>amt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4492,11 +4454,11 @@ template&lt;&gt; </div>
 
 <p>Definition at line <a class="el" href="hypersleep_8hpp_source.html#l00105">105</a> of file <a class="el" href="hypersleep_8hpp_source.html">hypersleep.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8cpp_source.html#l00325">FIX8::ClientConnection::connect()</a>, <a class="el" href="timer_8hpp_source.html#l00144">FIX8::Timer&lt; T &gt;::operator()()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00341">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, <a class="el" href="myfix_8cpp_source.html#l00394">server_process()</a>, and <a class="el" href="session_8cpp_source.html#l00215">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8cpp_source.html#l00327">FIX8::ClientConnection::connect()</a>, <a class="el" href="timer_8hpp_source.html#l00144">FIX8::Timer&lt; T &gt;::operator()()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00345">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, <a class="el" href="myfix_8cpp_source.html#l00394">server_process()</a>, and <a class="el" href="session_8cpp_source.html#l00225">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a66f071f031999bd15b1d02749eec1834"></a>
+<a class="anchor" id="a700975293fe5eb36a135c70a3e2383a8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -4506,9 +4468,9 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aae2b7b4d46ca4b75b248041d45a2d5f36">h_nanoseconds</a> &gt; </td>
+          <td class="memname">int <a class="el" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aae2b7b4d46ca4b75b248041d45a2d5f36">h_nanoseconds</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>amt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4533,7 +4495,7 @@ template&lt;&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a0262d06ebae9b3c0acbe90578aa6e6d6"></a>
+<a class="anchor" id="aa931fc56e28f80c13fe526c1412dd0e8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -4543,9 +4505,9 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aad9c4b5c939299e14e8652f28a5033058">h_seconds</a> &gt; </td>
+          <td class="memname">int <a class="el" href="namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be">FIX8::hypersleep</a>&lt; <a class="el" href="namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853aad9c4b5c939299e14e8652f28a5033058">h_seconds</a> &gt; </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>amt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4566,7 +4528,7 @@ template&lt;&gt; </div>
 
 <p>Definition at line <a class="el" href="hypersleep_8hpp_source.html#l00083">83</a> of file <a class="el" href="hypersleep_8hpp_source.html">hypersleep.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00342">MyMenu::do_logout()</a>, <a class="el" href="harness_8cpp_source.html#l00173">main()</a>, and <a class="el" href="session_8cpp_source.html#l00138">FIX8::Session::~Session()</a>.</p>
+<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00356">MyMenu::do_logout()</a>, <a class="el" href="harness_8cpp_source.html#l00174">main()</a>, and <a class="el" href="session_8cpp_source.html#l00147">FIX8::Session::~Session()</a>.</p>
 
 </div>
 </div>
@@ -4793,7 +4755,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to modified string </dd></dl>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00447">load_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00445">load_fields()</a>.</p>
 
 </div>
 </div>
@@ -4875,7 +4837,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00635">635</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00188">FIX8::BaseField::encode()</a>, and <a class="el" href="field_8hpp_source.html#l00366">FIX8::Field&lt; int, field &gt;::print()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00194">FIX8::BaseField::encode()</a>, and <a class="el" href="field_8hpp_source.html#l00372">FIX8::Field&lt; int, field &gt;::print()</a>.</p>
 
 </div>
 </div>
@@ -4972,7 +4934,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00051">FIX8::MessageBase::extract_header()</a>, <a class="el" href="message_8cpp_source.html#l00205">FIX8::Message::factory()</a>, <a class="el" href="field_8hpp_source.html#l01109">FIX8::Field&lt; UTCTimestamp, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01212">FIX8::Field&lt; UTCTimeOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01315">FIX8::Field&lt; UTCDateOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01418">FIX8::Field&lt; LocalMktDate, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01522">FIX8::Field&lt; MonthYear, field &gt;::print()</a>, and <a class="el" href="connection_8cpp_source.html#l00202">FIX8::FIXReader::read()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00051">FIX8::MessageBase::extract_header()</a>, <a class="el" href="message_8cpp_source.html#l00205">FIX8::Message::factory()</a>, <a class="el" href="field_8hpp_source.html#l01118">FIX8::Field&lt; UTCTimestamp, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01221">FIX8::Field&lt; UTCTimeOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01324">FIX8::Field&lt; UTCDateOnly, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01427">FIX8::Field&lt; LocalMktDate, field &gt;::print()</a>, <a class="el" href="field_8hpp_source.html#l01531">FIX8::Field&lt; MonthYear, field &gt;::print()</a>, and <a class="el" href="connection_8cpp_source.html#l00204">FIX8::FIXReader::read()</a>.</p>
 
 </div>
 </div>
@@ -5020,7 +4982,7 @@ template&lt;&gt; </div>
 
 <p>References <a class="el" href="modp__numtoa_8c_source.html#l00057">pow10_</a>, and <a class="el" href="modp__numtoa_8c_source.html#l00060">strreverse()</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00705">FIX8::Field&lt; fp_type, field &gt;::print()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00711">FIX8::Field&lt; fp_type, field &gt;::print()</a>.</p>
 
 </div>
 </div>
@@ -5220,7 +5182,7 @@ template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </div>
 
 <p>Definition at line <a class="el" href="traits_8cpp_source.html#l00045">45</a> of file <a class="el" href="traits_8cpp_source.html">traits.cpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00146">FIX8::FieldTrait::_component</a>, <a class="el" href="traits_8hpp_source.html#l00147">FIX8::FieldTrait::_field_traits</a>, <a class="el" href="traits_8hpp_source.html#l00144">FIX8::FieldTrait::_fnum</a>, <a class="el" href="traits_8hpp_source.html#l00145">FIX8::FieldTrait::_ftype</a>, <a class="el" href="traits_8hpp_source.html#l00146">FIX8::FieldTrait::_pos</a>, <a class="el" href="traits_8hpp_source.html#l00078">FIX8::FieldTrait::count</a>, <a class="el" href="f8utils_8hpp_source.html#l00912">FIX8::ebitset&lt; T, B &gt;::get()</a>, and <a class="el" href="traits_8cpp_source.html#l00069">FIX8::FieldTrait::get_type_string()</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00154">FIX8::FieldTrait::_component</a>, <a class="el" href="traits_8hpp_source.html#l00155">FIX8::FieldTrait::_field_traits</a>, <a class="el" href="traits_8hpp_source.html#l00152">FIX8::FieldTrait::_fnum</a>, <a class="el" href="traits_8hpp_source.html#l00153">FIX8::FieldTrait::_ftype</a>, <a class="el" href="traits_8hpp_source.html#l00154">FIX8::FieldTrait::_pos</a>, <a class="el" href="traits_8hpp_source.html#l00078">FIX8::FieldTrait::count</a>, <a class="el" href="f8utils_8hpp_source.html#l00912">FIX8::ebitset&lt; T, B &gt;::get()</a>, and <a class="el" href="traits_8cpp_source.html#l00069">FIX8::FieldTrait::get_type_string()</a>.</p>
 
 </div>
 </div>
@@ -5258,7 +5220,7 @@ template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </div>
 
 <p>Definition at line <a class="el" href="traits_8cpp_source.html#l00062">62</a> of file <a class="el" href="traits_8cpp_source.html">traits.cpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00410">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::begin()</a>, <a class="el" href="traits_8hpp_source.html#l00414">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end()</a>, and <a class="el" href="traits_8hpp_source.html#l00650">FIX8::FieldTraits::get_presence()</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00418">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::begin()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end()</a>, and <a class="el" href="traits_8hpp_source.html#l00658">FIX8::FieldTraits::get_presence()</a>.</p>
 
 </div>
 </div>
@@ -5332,9 +5294,9 @@ template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8cpp_source.html#l00247">247</a> of file <a class="el" href="f8utils_8cpp_source.html">f8utils.cpp</a>.</p>
 
-<p>References <a class="el" href="f8config_8h_source.html#l00054">CONFIGURE_OPTIONS</a>, <a class="el" href="f8config_8h_source.html#l00057">CONFIGURE_SDATE</a>, <a class="el" href="f8config_8h_source.html#l00060">CONFIGURE_TIME</a>, <a class="el" href="f8config_8h_source.html#l00063">CONFIGURE_TIME_NUM</a>, <a class="el" href="f8config_8h_source.html#l00066">CPPFLAGS</a>, <a class="el" href="f8config_8h_source.html#l00077">DEFAULT_PRECISION</a>, <a class="el" href="f8config_8h_source.html#l00369">HOST_SYSTEM</a>, <a class="el" href="f8config_8h_source.html#l00372">LDFLAGS</a>, <a class="el" href="f8config_8h_source.html#l00375">LIBS</a>, <a class="el" href="f8config_8h_source.html#l00386">MAGIC_NUM</a>, <a class="el" href="f8config_8h_source.html#l00392">MAJOR_VERSION_NUM</a>, <a class="el" href="f8config_8h_source.html#l00407">MAX_FLD_LENGTH</a>, <a class="el" href="f8config_8h_source.html#l00410">MAX_MSG_LENGTH</a>, <a class="el" href="f8config_8h_source.html#l00413">MINOR_VERSION_NUM</a>, <a class="el" href="f8config_8h_source.html#l00416">MPMC_FF</a>, <a class="el" href="f8config_8h_source.html#l00419">MPMC_SYSTEM</a>, <a class="el" href="f8config_8h_source.html#l00422">MPMC_TBB</a>, <a class="el" href="f8config_8h_source.html#l00425">PACKAGE</a>, <a class="el" href="f8config_8h_source.html#l00428">PACKAGE_BUGREPORT</a>, <a class="el" href="f8config_8h_source.html#l00440">PACKAGE_URL</a>, <a class="el" href="f8config_8h_source.html#l00446">PATCH_VERSION_NUM</a>, <a class="el" href="f8utils_8hpp_source.html#l00067">STRINGIFY</a>, <a class="el" href="f8config_8h_source.html#l00498">THREAD_PTHREAD</a>, <a class="el" href="f8config_8h_source.html#l00501">THREAD_STDTHREAD</a>, <a class="el" href="f8config_8h_source.html#l00504">THREAD_SYSTEM</a>, and <a class="el" href="f8config_8h_source.html#l00519">VERSION</a>.</p>
+<p>References <a class="el" href="f8config_8h_source.html#l00054">CONFIGURE_OPTIONS</a>, <a class="el" href="f8config_8h_source.html#l00057">CONFIGURE_SDATE</a>, <a class="el" href="f8config_8h_source.html#l00060">CONFIGURE_TIME</a>, <a class="el" href="f8config_8h_source.html#l00063">CONFIGURE_TIME_NUM</a>, <a class="el" href="f8config_8h_source.html#l00066">CPPFLAGS</a>, <a class="el" href="f8config_8h_source.html#l00077">DEFAULT_PRECISION</a>, <a class="el" href="f8config_8h_source.html#l00083">F8_DEBUG</a>, <a class="el" href="f8config_8h_source.html#l00369">HOST_SYSTEM</a>, <a class="el" href="f8config_8h_source.html#l00372">LDFLAGS</a>, <a class="el" href="f8config_8h_source.html#l00375">LIBS</a>, <a class="el" href="f8config_8h_source.html#l00386">MAGIC_NUM</a>, <a class="el" href="f8config_8h_source.html#l00392">MAJOR_VERSION_NUM</a>, <a class="el" href="f8config_8h_source.html#l00407">MAX_FLD_LENGTH</a>, <a class="el" href="f8config_8h_source.html#l00410">MAX_MSG_LENGTH</a>, <a class="el" href="f8config_8h_source.html#l00413">MINOR_VERSION_NUM</a>, <a class="el" href="f8config_8h_source.html#l00416">MPMC_FF</a>, <a class="el" href="f8config_8h_source.html#l00419">MPMC_SYSTEM</a>, <a class="el" href="f8config_8h_source.html#l00422">MPMC_TBB</a>, <a class="el" href="f8config_8h_source.html#l00425">PACKAGE</a>, <a class="el" href="f8config_8h_source.html#l00428">PACKAGE_BUGREPORT</a>, <a class="el" href="f8config_8h_source.html#l00440">PACKAGE_URL</a>, <a class="el" href="f8config_8h_source.html#l00446">PATCH_VERSION_NUM</a>, <a class="el" href="f8utils_8hpp_source.html#l00067">STRINGIFY</a>, <a class="el" href="f8config_8h_source.html#l00498">THREAD_PTHREAD</a>, <a class="el" href="f8config_8h_source.html#l00501">THREAD_STDTHREAD</a>, <a class="el" href="f8config_8h_source.html#l00504">THREAD_SYSTEM</a>, and <a class="el" href="f8config_8h_source.html#l00519">VERSION</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00297">find_package_info_string()</a>, <a class="el" href="f8c_8cpp_source.html#l00146">main()</a>, and <a class="el" href="harness_8cpp_source.html#l00392">MyMenu::version_info()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00301">find_package_info_string()</a>, <a class="el" href="f8c_8cpp_source.html#l00147">main()</a>, and <a class="el" href="harness_8cpp_source.html#l00406">MyMenu::version_info()</a>.</p>
 
 </div>
 </div>
@@ -5385,9 +5347,9 @@ template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number bytes decoded </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00838">838</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00844">844</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00999">date_parse()</a>, <a class="el" href="field_8hpp_source.html#l00927">date_time_parse()</a>, and <a class="el" href="field_8hpp_source.html#l00967">time_parse()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l01008">date_parse()</a>, <a class="el" href="field_8hpp_source.html#l00936">date_time_parse()</a>, and <a class="el" href="field_8hpp_source.html#l00976">time_parse()</a>.</p>
 
 </div>
 </div>
@@ -5413,11 +5375,11 @@ template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00206">206</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00204">204</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, and <a class="el" href="xml_8hpp_source.html#l00268">XmlElement::GetLine()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00447">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00525">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00617">parse_groups()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00220">process_message_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00445">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00523">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00615">parse_groups()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00220">process_message_fields()</a>.</p>
 
 </div>
 </div>
@@ -5490,7 +5452,7 @@ template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00230">230</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l01506">group_hash()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l01505">group_hash()</a>.</p>
 
 </div>
 </div>
@@ -5688,7 +5650,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00188">ignore_value()</a>.</p>
 
-<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00439">MyMenu::load_msgs()</a>, <a class="el" href="f8utils_8hpp_source.html#l01201">FIX8::tty_save_state::set_raw_mode()</a>, and <a class="el" href="f8utils_8hpp_source.html#l01184">FIX8::tty_save_state::unset_raw_mode()</a>.</p>
+<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00471">MyMenu::load_msgs()</a>, <a class="el" href="f8utils_8hpp_source.html#l01201">FIX8::tty_save_state::set_raw_mode()</a>, and <a class="el" href="f8utils_8hpp_source.html#l01184">FIX8::tty_save_state::unset_raw_mode()</a>.</p>
 
 </div>
 </div>
@@ -5737,12 +5699,12 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a952a7001558f79f582da9396d08923fd"></a>
+<a class="anchor" id="a1026a0bdfe15f47b685d1e3035c923d0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> const <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp; FIX8::TEX_ctx </td>
+          <td class="memname"><a class="el" href="Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2">F8_TEX_API</a> const <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp; FIX8::TEX_ctx </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -5764,7 +5726,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#a4ad6b6cfd7d41c518eaf94db7cb2c024">Tickval::ticks</a> FIX8::time_parse </td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a> FIX8::time_parse </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
@@ -5803,9 +5765,9 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ticks decoded </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00967">967</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00976">976</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00149">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00213">FIX8::Tickval::get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00148">FIX8::Tickval::million</a>, <a class="el" href="tickval_8hpp_source.html#l00144">FIX8::Tickval::noticks</a>, <a class="el" href="field_8hpp_source.html#l00838">parse_decimal()</a>, and <a class="el" href="field_8hpp_source.html#l00848">time_to_epoch()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00071">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00123">FIX8::Tickval::get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00070">FIX8::Tickval::million</a>, <a class="el" href="tickval_8hpp_source.html#l00061">FIX8::Tickval::noticks</a>, <a class="el" href="field_8hpp_source.html#l00844">parse_decimal()</a>, and <a class="el" href="field_8hpp_source.html#l00858">time_to_epoch()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00152">FIX8::Configuration::get_time_field()</a>.</p>
 
@@ -5842,11 +5804,18 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Based on Ghulam M. Babar's "mktime slow? use custom function" see <a href="http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/">http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/</a> </p>
+<p>Convert tm to time_t Based on Ghulam M. Babar's "mktime slow? use custom function" see <a href="http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/">http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/</a> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ltm</td><td>decode from </td></tr>
+    <tr><td class="paramname">utcdiff</td><td>utc offset in mins </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>time_t </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00848">848</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00858">858</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00999">date_parse()</a>, <a class="el" href="field_8hpp_source.html#l00927">date_time_parse()</a>, and <a class="el" href="field_8hpp_source.html#l00967">time_parse()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l01008">date_parse()</a>, <a class="el" href="field_8hpp_source.html#l00936">date_time_parse()</a>, and <a class="el" href="field_8hpp_source.html#l00976">time_parse()</a>.</p>
 
 </div>
 </div>
@@ -5892,7 +5861,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00153">153</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00256">FIX8::Configuration::create_logger()</a>, <a class="el" href="configuration_8cpp_source.html#l00351">FIX8::Configuration::get_logflags()</a>, <a class="el" href="f8c_8cpp_source.html#l00447">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00146">main()</a>, <a class="el" href="f8utils_8hpp_source.html#l00886">FIX8::ebitset&lt; TraitTypes, unsigned short &gt;::set()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00981">FIX8::ebitset_r&lt; SessionControl &gt;::set()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00256">FIX8::Configuration::create_logger()</a>, <a class="el" href="configuration_8cpp_source.html#l00351">FIX8::Configuration::get_logflags()</a>, <a class="el" href="f8c_8cpp_source.html#l00445">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00147">main()</a>, <a class="el" href="f8utils_8hpp_source.html#l00886">FIX8::ebitset&lt; TraitTypes, unsigned short &gt;::set()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00981">FIX8::ebitset_r&lt; SessionControl &gt;::set()</a>.</p>
 
 </div>
 </div>
@@ -5953,7 +5922,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="f8cstatic_8hpp_source.html#l00126">126</a> of file <a class="el" href="f8cstatic_8hpp_source.html">f8cstatic.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00890">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00726">generate_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l01538">generate_preamble()</a>, <a class="el" href="f8c_8cpp_source.html#l00146">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00912">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00888">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00724">generate_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l01537">generate_preamble()</a>, and <a class="el" href="f8c_8cpp_source.html#l00910">process()</a>.</p>
 
 </div>
 </div>
@@ -5974,7 +5943,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 24 2014 15:15:40. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:29. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

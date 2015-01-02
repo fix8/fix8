@@ -119,11 +119,11 @@ var searchData=
   ['host_5fsystem',['HOST_SYSTEM',['../f8config_8h.html#ae5fab594d5bdd846078cfff1da6d85fa',1,'f8config.h']]],
   ['hostcrossid',['HostCrossID',['../namespaceFIX8_1_1TEX.html#a5939b148453e12001b477d9de672da13',1,'FIX8::TEX']]],
   ['hour',['hour',['../classFIX8_1_1Tickval.html#aff2e83467599b21e896cb61e2d64eb6b',1,'FIX8::Tickval']]],
-  ['hypersleep',['hypersleep',['../namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43',1,'FIX8::hypersleep(const unsigned amt)'],['../namespaceFIX8.html#a9b814fa13a57602ba106a62c0b0e2eff',1,'FIX8::hypersleep(const unsigned amt, const hyperunits_t units)']]],
+  ['hypersleep',['hypersleep',['../namespaceFIX8.html#a2810967482dcc292a763ee88a886d1be',1,'FIX8::hypersleep(unsigned amt)'],['../namespaceFIX8.html#a35d14597957376ef335789f26c9e4df0',1,'FIX8::hypersleep(unsigned amt, hyperunits_t units)']]],
   ['hypersleep_2ehpp',['hypersleep.hpp',['../hypersleep_8hpp.html',1,'']]],
-  ['hypersleep_3c_20h_5fmicroseconds_20_3e',['hypersleep&lt; h_microseconds &gt;',['../namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95',1,'FIX8']]],
-  ['hypersleep_3c_20h_5fmilliseconds_20_3e',['hypersleep&lt; h_milliseconds &gt;',['../namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266',1,'FIX8']]],
-  ['hypersleep_3c_20h_5fnanoseconds_20_3e',['hypersleep&lt; h_nanoseconds &gt;',['../namespaceFIX8.html#a66f071f031999bd15b1d02749eec1834',1,'FIX8']]],
-  ['hypersleep_3c_20h_5fseconds_20_3e',['hypersleep&lt; h_seconds &gt;',['../namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fmicroseconds_20_3e',['hypersleep&lt; h_microseconds &gt;',['../namespaceFIX8.html#ab10be737d0150a3c07cb49047fa9f7b3',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fmilliseconds_20_3e',['hypersleep&lt; h_milliseconds &gt;',['../namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fnanoseconds_20_3e',['hypersleep&lt; h_nanoseconds &gt;',['../namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fseconds_20_3e',['hypersleep&lt; h_seconds &gt;',['../namespaceFIX8.html#aa931fc56e28f80c13fe526c1412dd0e8',1,'FIX8']]],
   ['hyperunits_5ft',['hyperunits_t',['../namespaceFIX8.html#a065eb2245fc0ee1300739d1b3f1b853a',1,'FIX8']]]
 ];

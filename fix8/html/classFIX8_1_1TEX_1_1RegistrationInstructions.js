@@ -8,7 +8,7 @@ var classFIX8_1_1TEX_1_1RegistrationInstructions =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#a57b54f131c10d60d2402edd1abb6e1ae", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#a0a42de45849218b1ac326d8e8d8cfb82", null ],
     [ "process", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#a2cca109fa9a8655a1091873f7235400d", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#a346cb65e09dad93356e3cf1e3d420cbf", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#a3c7317471aeb0b62cf2eaf589a31c36e", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#ab3295cbbfdd48c19fbd801c5d0adf05c", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#aae67e6ec24548f8ae33e50e513972e3a", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1RegistrationInstructions.html#ab981634873a9babce2c12844d26edb31", null ]

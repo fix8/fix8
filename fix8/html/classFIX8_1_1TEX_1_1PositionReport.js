@@ -14,7 +14,7 @@ var classFIX8_1_1TEX_1_1PositionReport =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1PositionReport.html#a815531d3d986da89b928e7b3fcd1915f", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionReport.html#ac926558419d153891ecbbc43a281fe7f", null ],
     [ "process", "classFIX8_1_1TEX_1_1PositionReport.html#a7062431216f4a3228d17e3f4b1c5b78c", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1PositionReport.html#a558adc2f628efdaf90177c96bc1003f0", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1PositionReport.html#aa42ca78cc23b37e6df11f2642d964e94", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport.html#a27006a1b8ff9a9a6bd57cc72b15f3ed6", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport.html#a416c6d9b46d04e24bb2681c56a0030bb", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1PositionReport.html#a0aee02384b905d7e642eaeb2f41d7aaa", null ]

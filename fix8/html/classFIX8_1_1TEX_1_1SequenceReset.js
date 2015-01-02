@@ -10,7 +10,7 @@ var classFIX8_1_1TEX_1_1SequenceReset =
     [ "is_admin", "classFIX8_1_1TEX_1_1SequenceReset.html#a60640f451673495698eb2210987beeec", null ],
     [ "process", "classFIX8_1_1TEX_1_1SequenceReset.html#a6bc511a46d671ca689ded42a737f159a", null ],
     [ "process", "classFIX8_1_1TEX_1_1SequenceReset.html#a6bc511a46d671ca689ded42a737f159a", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SequenceReset.html#a3b369afcb606c60e53772ad45635d9ab", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SequenceReset.html#a2cc24fc59f4dabb77eacf05eae35f500", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SequenceReset.html#af6320e4b9f5b07ab3c846d2b9120c5db", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SequenceReset.html#afb8ef3b865a327301bb407ac790617f4", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SequenceReset.html#a68be8f68124a15be2b5e243feb639119", null ]

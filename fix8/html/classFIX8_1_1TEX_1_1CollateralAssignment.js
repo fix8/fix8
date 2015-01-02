@@ -18,7 +18,7 @@ var classFIX8_1_1TEX_1_1CollateralAssignment =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a719197ed422a54071f68c2f00a5a95ef", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a93046680fd21b440ae65520eec2bcd3c", null ],
     [ "process", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a83e45331c66565866809bcefbcd9bfaf", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a696fa900217746bc43fea7c383e9fc2a", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a769136ebda25d5f6da180e4babfa3c73", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a90b04f2942178e7a8c1bed9554bf6852", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment.html#ab9b7a1aa6f61d7bed79e7199709ef37c", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1CollateralAssignment.html#a0c4c00a69eaa2c428376c9f0174c59db", null ]

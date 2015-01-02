@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.1</span>
+   &#160;<span id="projectnumber">version  1.3.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-15 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -240,8 +240,8 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;o&#39;</span>: offset = get_value&lt;int&gt;(optarg); <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;s&#39;</span>: <a class="code" href="myprint_8cpp.html#a43d94b9738327d443a6288e3b41e69d3">summary</a> = <span class="keyword">true</span>; <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;c&#39;</span>:</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX beginstring:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#ace47ea6a057b911b89cfe227ae5744c0">TEX::ctx</a>().<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">_beginStr</a> &lt;&lt; endl;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX version:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#ace47ea6a057b911b89cfe227ae5744c0">TEX::ctx</a>().<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a>() &lt;&lt; endl;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX beginstring:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">TEX::ctx</a>().<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">_beginStr</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX version:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">TEX::ctx</a>().<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a>() &lt;&lt; endl;</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;          <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      <span class="keywordflow">default</span>: <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      }</div>
@@ -279,7 +279,7 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;         ifs().getline(buffer, <a class="code" href="f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4">MAX_MSG_LENGTH</a>);</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;         <span class="keywordflow">if</span> (buffer[0])</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;         {</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            unique_ptr&lt;Message&gt; msg(Message::factory(<a class="code" href="namespaceFIX8_1_1TEX.html#ace47ea6a057b911b89cfe227ae5744c0">TEX::ctx</a>(), buffer + offset));</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            unique_ptr&lt;Message&gt; msg(Message::factory(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">TEX::ctx</a>(), buffer + offset));</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="myprint_8cpp.html#a43d94b9738327d443a6288e3b41e69d3">summary</a>)</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            {</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;               MessageCount::iterator mitr(mc-&gt;find(msg-&gt;get_msgtype()));</div>
@@ -310,7 +310,7 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;   {</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      <span class="keywordflow">for</span> (MessageCount::const_iterator mitr(mc-&gt;begin()); mitr != mc-&gt;end(); ++mitr)</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      {</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *bme(<a class="code" href="namespaceFIX8_1_1TEX.html#ace47ea6a057b911b89cfe227ae5744c0">TEX::ctx</a>()._bme.find_ptr(mitr-&gt;first.c_str()));</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *bme(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">TEX::ctx</a>()._bme.find_ptr(mitr-&gt;first.c_str()));</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;         cout &lt;&lt; setw(20) &lt;&lt; left &lt;&lt; bme-&gt;<a class="code" href="structFIX8_1_1BaseMsgEntry.html#a4a54e08827d42138108fa0d3d36d4650">_name</a> &lt;&lt; <span class="stringliteral">&quot; (\&quot;&quot;</span> &lt;&lt; mitr-&gt;first &lt;&lt; <span class="stringliteral">&quot;\&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\t&#39;</span> &lt;&lt; mitr-&gt;second &lt;&lt; endl;</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      }</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   }</div>
@@ -343,7 +343,6 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 <div class="ttc" id="structFIX8_1_1BaseMsgEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html">FIX8::BaseMsgEntry</a></div><div class="ttdoc">Message instantiation table entry. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00183">message.hpp:183</a></div></div>
 <div class="ttc" id="f8config_8h_html_aca8570fb706c81df371b7f9bc454ae03"><div class="ttname"><a href="f8config_8h.html#aca8570fb706c81df371b7f9bc454ae03">PACKAGE</a></div><div class="ttdeci">#define PACKAGE</div><div class="ttdef"><b>Definition:</b> <a href="f8config_8h_source.html#l00425">f8config.h:425</a></div></div>
 <div class="ttc" id="classUsageMan_html_a300f3be13eec793f815e06549fcafdf9"><div class="ttname"><a href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">UsageMan::add</a></div><div class="ttdeci">bool add(const char sw, const std::string &amp;lsw, const std::string &amp;help)</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00073">usage.hpp:73</a></div></div>
-<div class="ttc" id="namespaceFIX8_1_1TEX_html_ace47ea6a057b911b89cfe227ae5744c0"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#ace47ea6a057b911b89cfe227ae5744c0">FIX8::TEX::ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; ctx()</div><div class="ttdoc">Compiler generated metadata object, accessed through this function. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8cpp_source.html#l00424">Myfix_classes.cpp:424</a></div></div>
 <div class="ttc" id="f8includes_8hpp_html"><div class="ttname"><a href="f8includes_8hpp.html">f8includes.hpp</a></div></div>
 <div class="ttc" id="consolemenu_8hpp_html"><div class="ttname"><a href="consolemenu_8hpp.html">consolemenu.hpp</a></div></div>
 <div class="ttc" id="myprint_8cpp_html_a5054c36923934387c6f7605dd1a2f3c9"><div class="ttname"><a href="myprint_8cpp.html#a5054c36923934387c6f7605dd1a2f3c9">sig_handler</a></div><div class="ttdeci">void sig_handler(int sig)</div><div class="ttdef"><b>Definition:</b> <a href="myprint_8cpp_source.html#l00105">myprint.cpp:105</a></div></div>
@@ -353,11 +352,12 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 <div class="ttc" id="myprint_8cpp_html_ac47670de2527381421f4d515ac8372df"><div class="ttname"><a href="myprint_8cpp.html#ac47670de2527381421f4d515ac8372df">GETARGLIST</a></div><div class="ttdeci">const string GETARGLIST(&quot;hsvo:c&quot;)</div></div>
 <div class="ttc" id="structFIX8_1_1F8MetaCntx_html_ab60edf3bab787ab4d6447cc3b2cd2439"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">FIX8::F8MetaCntx::_beginStr</a></div><div class="ttdeci">const f8String _beginStr</div><div class="ttdoc">Fix header beginstring. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00219">message.hpp:219</a></div></div>
 <div class="ttc" id="structFIX8_1_1BaseMsgEntry_html_a4a54e08827d42138108fa0d3d36d4650"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html#a4a54e08827d42138108fa0d3d36d4650">FIX8::BaseMsgEntry::_name</a></div><div class="ttdeci">const char * _name</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00186">message.hpp:186</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_afc9f1359200c953b443b55b4ea0e3950"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">FIX8::TEX::ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; ctx()</div><div class="ttdoc">Compiler generated metadata object, accessed through this function. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8cpp_source.html#l00424">Myfix_classes.cpp:424</a></div></div>
 <div class="ttc" id="classFIX8_1_1f8Exception_html"><div class="ttname"><a href="classFIX8_1_1f8Exception.html">FIX8::f8Exception</a></div><div class="ttdoc">Base exception class. </div><div class="ttdef"><b>Definition:</b> <a href="f8exception_8hpp_source.html#l00049">f8exception.hpp:49</a></div></div>
 <div class="ttc" id="classUsageMan_html_a12499b81599f674e728a1e15e31edf8b"><div class="ttname"><a href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">UsageMan::setdesc</a></div><div class="ttdeci">void setdesc(const std::string &amp;desc)</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00091">usage.hpp:91</a></div></div>
 <div class="ttc" id="classUsageMan_html_a9399c7c9c595777c8065264bd40b1009"><div class="ttname"><a href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">UsageMan::print</a></div><div class="ttdeci">void print(std::ostream &amp;os) const </div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00095">usage.hpp:95</a></div></div>
 <div class="ttc" id="Myfix__types_8hpp_html"><div class="ttname"><a href="Myfix__types_8hpp.html">Myfix_types.hpp</a></div></div>
-<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_ab1fc890f19e70e7391e8dbbd82367f39"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">FIX8::F8MetaCntx::version</a></div><div class="ttdeci">unsigned version() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00335">message.hpp:335</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_ab1fc890f19e70e7391e8dbbd82367f39"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">FIX8::F8MetaCntx::version</a></div><div class="ttdeci">unsigned version() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00343">message.hpp:343</a></div></div>
 <div class="ttc" id="classFIX8_1_1filestdin_html"><div class="ttname"><a href="classFIX8_1_1filestdin.html">FIX8::filestdin</a></div><div class="ttdoc">Abstract file or stdin input. </div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01238">f8utils.hpp:1238</a></div></div>
 <div class="ttc" id="myprint_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="myprint_8cpp_source.html#l00118">myprint.cpp:118</a></div></div>
 <div class="ttc" id="classFIX8_1_1f8Exception_html_a479fb74f51273a9a731ef368f4b0c8c7"><div class="ttname"><a href="classFIX8_1_1f8Exception.html#a479fb74f51273a9a731ef368f4b0c8c7">FIX8::f8Exception::what</a></div><div class="ttdeci">const char * what() const </div><div class="ttdef"><b>Definition:</b> <a href="f8exception_8hpp_source.html#l00085">f8exception.hpp:85</a></div></div>
@@ -368,7 +368,7 @@ $(document).ready(function(){initNavTree('myprint_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 24 2014 15:15:39. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:29. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['f8_5fdebug',['F8_DEBUG',['../f8config_8h.html#a0ce9dcd9c61e180823cbdae4faf58791',1,'f8config.h']]],
+  ['f8_5ftex_5fapi',['F8_TEX_API',['../Myfix__classes_8hpp.html#acd150befbc93998ceff318a57da820b2',1,'F8_TEX_API():&#160;Myfix_classes.hpp'],['../Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2',1,'F8_TEX_API():&#160;Perf_classes.hpp']]],
   ['f8api',['F8API',['../f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c',1,'f8dll.h']]],
   ['file_5fline',['FILE_LINE',['../f8utils_8hpp.html#a5b0925ea5ef0baf1f338812dce0273cb',1,'f8utils.hpp']]],
   ['fix8_5f4d796669785f636c61737365732e687070_5f',['FIX8_4D796669785F636C61737365732E687070_',['../Myfix__classes_8hpp.html#a156b262b21de1b0af669a3eebb1919ae',1,'Myfix_classes.hpp']]],

@@ -16,7 +16,7 @@ var classFIX8_1_1TEX_1_1OrderMassActionReport =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#a255eb867382d305eec0fd24108f34f63", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#abdb6dbd010c8e894b5422a8b626d4bce", null ],
     [ "process", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#aadec2cca5899af392ca5f65c046b71d7", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#ac41578b65f9e716c780a7cb1b183d1a5", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#aef3ca937f02f32ebe69f518a6ece8c0c", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#ad8b238654295d456f1047cc54bebdce3", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#a19cac69f75a91bffb8432d7790a51f07", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1OrderMassActionReport.html#a924935ca22abd6b2d37ef421bfe1bd25", null ]

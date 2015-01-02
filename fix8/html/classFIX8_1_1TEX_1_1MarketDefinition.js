@@ -10,7 +10,7 @@ var classFIX8_1_1TEX_1_1MarketDefinition =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1MarketDefinition.html#ab2042bc1afdebb977f0d97f498cc4512", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition.html#a6c82177790622d5b0409c0c030dfe939", null ],
     [ "process", "classFIX8_1_1TEX_1_1MarketDefinition.html#ab37e6d03afa20da69d7c2a8031e875bb", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1MarketDefinition.html#a8c86488de21c6ddb9d30d2b6e361f107", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1MarketDefinition.html#a34a99cc10b2d00058e694d732c19a3c9", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinition.html#a125dd664c5586aac2aa9cf011a977d27", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition.html#a8b4dc438949baf38824a96458f03fe00", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition.html#a3046ca42042a07f36968bac7e971a026", null ]

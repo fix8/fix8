@@ -15,7 +15,7 @@ var classFIX8_1_1TEX_1_1QuoteStatusReport =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a6fdcfddae07607b3c674ec0b061c2732", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ac03eb6c1ace2fb759503f26f8567e743", null ],
     [ "process", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a94957b07b52bce6dcaabc91d4061f6bb", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a3af272e0dbe0344a8f3d37c0f3955450", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#af87962f2edb09ab141703879fc196878", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a2e39f84353870ffa8aa481e3129a3fac", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ab936866dfc8724255560537bfdbf004a", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ad4eaaad01e807f4b0b7a28cf14964d0d", null ]

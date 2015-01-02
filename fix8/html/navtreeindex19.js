@@ -1,5 +1,6 @@
 var NAVTREEINDEX19 =
 {
+"Myfix__types_8hpp.html#afcf38a3999144cfa411204e8be4e728f":[4,0,48,2727],
 "Myfix__types_8hpp.html#afd053564c779aa03ad76ac65e4537c12":[4,0,48,366],
 "Myfix__types_8hpp.html#afd097e03ee89859d57f82d8f7d0dd623":[4,0,48,2681],
 "Myfix__types_8hpp.html#afd0d6691c00366912c90274fc8fe3dcf":[4,0,48,2125],
@@ -60,14 +61,15 @@ var NAVTREEINDEX19 =
 "Myfix__types_8hpp.html#afff44253df074aa7a2b71626a6ac3907":[4,0,48,929],
 "Myfix__types_8hpp_source.html":[4,0,48],
 "Perf__classes_8cpp.html":[4,0,50],
-"Perf__classes_8cpp.html#a952a7001558f79f582da9396d08923fd":[4,0,50,1],
-"Perf__classes_8cpp.html#ace47ea6a057b911b89cfe227ae5744c0":[4,0,50,0],
+"Perf__classes_8cpp.html#a1026a0bdfe15f47b685d1e3035c923d0":[4,0,50,1],
+"Perf__classes_8cpp.html#afc9f1359200c953b443b55b4ea0e3950":[4,0,50,0],
 "Perf__classes_8cpp_source.html":[4,0,50],
 "Perf__classes_8hpp.html":[4,0,51],
-"Perf__classes_8hpp.html#a5cb9fce0834d3d192500bc5c8da6e260":[4,0,51,12],
-"Perf__classes_8hpp.html#a829944fbc593f3a86a1c4e36583594bc":[4,0,51,13],
-"Perf__classes_8hpp.html#a952a7001558f79f582da9396d08923fd":[4,0,51,15],
-"Perf__classes_8hpp.html#ace47ea6a057b911b89cfe227ae5744c0":[4,0,51,14],
+"Perf__classes_8hpp.html#a1026a0bdfe15f47b685d1e3035c923d0":[4,0,51,16],
+"Perf__classes_8hpp.html#a5cb9fce0834d3d192500bc5c8da6e260":[4,0,51,13],
+"Perf__classes_8hpp.html#a829944fbc593f3a86a1c4e36583594bc":[4,0,51,14],
+"Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2":[4,0,51,12],
+"Perf__classes_8hpp.html#afc9f1359200c953b443b55b4ea0e3950":[4,0,51,15],
 "Perf__classes_8hpp_source.html":[4,0,51],
 "Perf__router_8hpp.html":[4,0,52],
 "Perf__router_8hpp.html#ac47f36c9df4707c4ac14b2ab96f3f99a":[4,0,52,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX19 =
 "Perf__types_8hpp.html#a83fc867839870c1cf7adb47d3259d3bc":[4,0,55,38],
 "Perf__types_8hpp.html#a842770f8d8585a1da5b8d36264f23664":[4,0,55,167],
 "Perf__types_8hpp.html#a849d461b7ec9cfd85a6236ef4a50ec11":[4,0,55,121],
-"Perf__types_8hpp.html#a85fa386dc143bac340877bc49de9770d":[4,0,55,265],
-"Perf__types_8hpp.html#a868f8e08633b3f37c193dc05976eb3af":[4,0,55,21],
-"Perf__types_8hpp.html#a87aa82523e2ed39f45bdb42f05b5b821":[4,0,55,183]
+"Perf__types_8hpp.html#a85fa386dc143bac340877bc49de9770d":[4,0,55,265]
 };

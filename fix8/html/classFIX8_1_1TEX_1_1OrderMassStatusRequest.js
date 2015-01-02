@@ -14,7 +14,7 @@ var classFIX8_1_1TEX_1_1OrderMassStatusRequest =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#a5b719674c0e3f2c422180ce28a4bfe86", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#afab26fcfe71757e54cc49aa5a7a13112", null ],
     [ "process", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#aecb4dbf46257ec38cb55487ab0b21e26", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#a067b05c84aa0c49af9a86aa396fcf977", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#aaec4167f81d7fccd9033d81bd2065bfc", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#aa35f265bf3db32d05ae00984eebb87e1", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#a21ebbc0a83a31c74a92726c4c4a99492", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#af0a23e1a735f6427c79de9d176f1c5b1", null ]

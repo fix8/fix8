@@ -120,5 +120,6 @@ var searchData=
   ['dlvyinsttype',['DlvyInstType',['../namespaceFIX8_1_1TEX.html#aaa61d0123dfc8e6e0ffb74918a34b6d0',1,'FIX8::TEX']]],
   ['dthread',['dthread',['../namespaceFIX8.html#afeef78b63d7bc0d81777d7c4d882f188',1,'FIX8']]],
   ['dthread_5fcancellation_5ftoken',['dthread_cancellation_token',['../namespaceFIX8.html#a29719dcf607c32cc705aac2b2165df4f',1,'FIX8']]],
-  ['duetorelated',['DueToRelated',['../namespaceFIX8_1_1TEX.html#a9f4f131911a779c3d76cd6a4c3b28fd9',1,'FIX8::TEX']]]
+  ['duetorelated',['DueToRelated',['../namespaceFIX8_1_1TEX.html#a9f4f131911a779c3d76cd6a4c3b28fd9',1,'FIX8::TEX']]],
+  ['duration',['duration',['../classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170',1,'FIX8::Tickval']]]
 ];

@@ -12,7 +12,7 @@ var classFIX8_1_1TEX_1_1SecurityStatus =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1SecurityStatus.html#a5853909ae35877d8c9e079ce1195f223", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus.html#a197be1d263127f93bd997d1c9abc4332", null ],
     [ "process", "classFIX8_1_1TEX_1_1SecurityStatus.html#a9e23b7fe0a9b689300e0b915832188ad", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SecurityStatus.html#a2abaa31e013fc6e15cc1988f8dceb7a0", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1SecurityStatus.html#a4b6ffcbd7ea950c2714eae36e852eb74", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityStatus.html#a1aeafdee04664514c2a4bc2227ba9ad0", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus.html#ade06ca50cec0c925ef4e92a96f60e2b3", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SecurityStatus.html#a543fe08b7937a835b3dd7e06de3378cd", null ]

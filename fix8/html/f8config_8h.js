@@ -6,6 +6,7 @@ var f8config_8h =
     [ "CONFIGURE_TIME_NUM", "f8config_8h.html#aa9f4b710a2fbad8c48c513fd1e654a05", null ],
     [ "CPPFLAGS", "f8config_8h.html#a4750de4ea54cca67d6fa77427e198f26", null ],
     [ "DEFAULT_PRECISION", "f8config_8h.html#a6d81881a7883657dbc659ca545d9085d", null ],
+    [ "F8_DEBUG", "f8config_8h.html#a0ce9dcd9c61e180823cbdae4faf58791", null ],
     [ "HAS_GTEST", "f8config_8h.html#a818fc31639b2ef683f875d4a372b3138", null ],
     [ "HAS_POCO", "f8config_8h.html#a5dce2e44217226f8c8a4157bcd073c39", null ],
     [ "HAVE__BOOL", "f8config_8h.html#a862ffdbac7ac8323712310a418b7d9a3", null ],

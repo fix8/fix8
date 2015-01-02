@@ -11,7 +11,7 @@ var classFIX8_1_1TEX_1_1Advertisement =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1Advertisement.html#a50196a411d1c65e25db1410ea10cad0b", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Advertisement.html#a2513289a1a65eb7b921fa662a65c0373", null ],
     [ "process", "classFIX8_1_1TEX_1_1Advertisement.html#ac3529a191880d23f3007af3eafc298f8", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1Advertisement.html#a8cbffd75e95bf48fd4f756cd31d879dc", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1Advertisement.html#a6a812292c9c0e59e3d4a81bb838f6369", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1Advertisement.html#ab5d47dc6fc0d06cd3b8885cc1b8a13db", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Advertisement.html#a38c3ff4959bd662ce4ac54b16fd69820", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1Advertisement.html#a286519e39e61377e15f1f3a5be2398b5", null ]

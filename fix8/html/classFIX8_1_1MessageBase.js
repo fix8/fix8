@@ -42,6 +42,7 @@ var classFIX8_1_1MessageBase =
     [ "get_body_length", "classFIX8_1_1MessageBase.html#a63f14cb7f336769ea59fcf87cef37028", null ],
     [ "get_check_sum", "classFIX8_1_1MessageBase.html#a471dd951ea346f8323d26767654d4533", null ],
     [ "get_field", "classFIX8_1_1MessageBase.html#a846252f7822c3503a40d4515f16b10cf", null ],
+    [ "get_field_by_name", "classFIX8_1_1MessageBase.html#a372ad887dbceff48e8061214cca9b9cd", null ],
     [ "get_fp", "classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f", null ],
     [ "get_groups", "classFIX8_1_1MessageBase.html#aa0b2d8ebea27760a7e783590654c6dc9", null ],
     [ "get_msg_type", "classFIX8_1_1MessageBase.html#a5863b1f7a81cdd4a85a4564ba17acbb8", null ],

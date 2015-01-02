@@ -19,7 +19,7 @@ var classFIX8_1_1TEX_1_1Confirmation =
     [ "create_nested_group", "classFIX8_1_1TEX_1_1Confirmation.html#a3f72e97937d27b768baaa31ce181fe39", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Confirmation.html#afdba653f7eea96f018904168317e5f23", null ],
     [ "process", "classFIX8_1_1TEX_1_1Confirmation.html#a3b4b477cf6ac7d7c0eea5d3f61441d20", null ],
-    [ "_fieldcnt", "classFIX8_1_1TEX_1_1Confirmation.html#aea691f6f1eb5a86cb1a750a91e2486b5", null ],
+    [ "_fieldcnt", "classFIX8_1_1TEX_1_1Confirmation.html#ae879493263fb4290db96058130921f1e", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1Confirmation.html#af848a89bab39357f0aa06b7f9c02915f", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Confirmation.html#a86d7024212fda8648a36510d6e08b980", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1Confirmation.html#a72b33788dbf45af4717d3c2ccabb76b8", null ]
