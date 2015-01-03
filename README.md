@@ -8,6 +8,8 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
+[Fix8 Market Tech](http://www.fix8mt.com/) develops and maintains Fix8 and [Fix8Pro](http://www.fix8pro.com), the commercially supported version of Fix8.
+
 ## Contents
 
 1. [Contents](#contents)
@@ -68,67 +70,67 @@ and framework; and a set of complete client/server test applications.
     </thead>
     <tbody>
           <tr>
-             <td>./</td>
+             <td><code>./</code></td>
              <td>root directory with configure</td>
           </tr>
           <tr>
-             <td>m4/</td>
+             <td><code>m4/</code></td>
              <td>additional m4 macros needed by configure</td>
           </tr>
           <tr>
-             <td>compiler/</td>
+             <td><code>compiler/</code></td>
              <td>the f8c compiler source</td>
           </tr>
           <tr>
-             <td>doc/</td>
+             <td><code>doc/</code></td>
              <td>Fix8 documentation</td>
           </tr>
           <tr>
-             <td>doc/man</td>
+             <td><code>doc/man</code></td>
              <td>manpages for Fix8 utilities</td>
           </tr>
           <tr>
-             <td>doc/html</td>
+             <td><code>doc/html</code></td>
              <td>doxygen documentation (optionally generated when built)</td>
           </tr>
           <tr>
-             <td>include/</td>
+             <td><code>include/</code></td>
              <td>header files for the runtime library and compiler</td>
           </tr>
           <tr>
-             <td>include/ff/</td>
+             <td><code>include/ff/</code></td>
              <td>header files for FastFlow</td>
           </tr>
           <tr>
-             <td>runtime/</td>
+             <td><code>runtime/</code></td>
              <td>runtime library source</td>
           </tr>
           <tr>
-             <td>stocklib/</td>
+             <td><code>stocklib/</code></td>
              <td>stock FIX library builds</td>
           </tr>
           <tr>
-             <td>util/</td>
+             <td><code>util/</code></td>
              <td>additional utilities source</td>
           </tr>
           <tr>
-             <td>msvc/</td>
+             <td><code>msvc/</code></td>
              <td>Microsoft Visual Studio project files</td>
           </tr>
           <tr>
-             <td>pro/</td>
+             <td><code>pro/</code></td>
              <td>Fix8Pro extensions (commercial version only)</td>
           </tr>
           <tr>
-             <td>schema/</td>
+             <td><code>schema/</code></td>
              <td>quickfix FIX xml schemas</td>
           </tr>
           <tr>
-             <td>test/</td>
+             <td><code>test/</code></td>
              <td>test applications client/server source</td>
           </tr>
           <tr>
-             <td>utests/</td>
+             <td><code>utests/</code></td>
              <td>unit test applications</td>
           </tr>
     </tbody>
@@ -227,8 +229,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.3.1.tar.gz
-	% cd fix8-1.3.1
+	% tar xvzf 1.3.2.tar.gz
+	% cd fix8-1.3.2
 	% ./bootstrap
 	% ./configure
 	% make
@@ -242,8 +244,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.3.1.tar.gz
-	% cd fix8-1.3.1
+	% tar xvzf 1.3.2.tar.gz
+	% cd fix8-1.3.2
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
@@ -301,15 +303,16 @@ the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-develope
 for more help and information about the Fix8 project.
 
 ## Making a Pull Request
-If you want to submit a change to the repository, it needs to be made on the dev branch. The following instructions may help:
+
+If you want to submit a change to the repository, it needs to be *made on the dev branch*. The following instructions may help:
 
 1. Login to github
 1. Create a fork of fix8
-1. If you are using the command line git, clone your fork and choose the dev branch (git clone https://github.com/my_name/fix8.git -b dev)
-1. Make you changes to this branch
+1. If you are using the command line git, clone your fork and choose the dev branch<br><code>% git clone https://github.com/[your_repo_name]/fix8.git -b dev</code>
+1. Make your changes to this branch
 1. Submit changes to your branch and push the branch to your fork
 1. Create a pull request at fix8:dev
-1. Wait for pull request is accepted to fix8:dev
+1. Wait for your pull request to be accepted to fix8:dev
 1. Update your fork with recent fix8:dev
 
 ## License

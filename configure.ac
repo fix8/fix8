@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 AC_PREREQ(2.66)
@@ -13,7 +13,7 @@ AH_TOP([//----------------------------------------------------------------------
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
 Lesser General Public License as  published by the Free Software Foundation, either version
@@ -871,7 +871,7 @@ AC_SUBST_FILE([CHANGELOG])
 CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
-						sai/Makefile stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
+						stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
 AC_CONFIG_HEADERS(include/fix8/f8config.h)
 AC_OUTPUT
 
