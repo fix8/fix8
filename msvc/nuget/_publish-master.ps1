@@ -12,3 +12,5 @@ Publish-NuGetPackage -ApiKey $API_KEY fix8.stable.$RELEASE_MAJOR.$RELEASE_MINOR.
 Publish-NuGetPackage -ApiKey $API_KEY fix8.stable.symbols.$RELEASE_MAJOR.$RELEASE_MINOR.$RELEASE_DATE.$RELEASE_REVISION.nupkg
 Publish-NuGetPackage -ApiKey $API_KEY fix8.stable.tests.$RELEASE_MAJOR.$RELEASE_MINOR.$RELEASE_DATE.$RELEASE_REVISION.nupkg
 Publish-NuGetPackage -ApiKey $API_KEY fix8.stable.tests.symbols.$RELEASE_MAJOR.$RELEASE_MINOR.$RELEASE_DATE.$RELEASE_REVISION.nupkg
+Publish-NuGetPackage -ApiKey $API_KEY fix8.stable.stocklib.$RELEASE_MAJOR.$RELEASE_MINOR.$RELEASE_DATE.$RELEASE_REVISION.nupkg
+Publish-NuGetPackage -ApiKey $API_KEY fix8.stable.stocklib.symbols.$RELEASE_MAJOR.$RELEASE_MINOR.$RELEASE_DATE.$RELEASE_REVISION.nupkg
