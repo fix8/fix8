@@ -76,7 +76,7 @@ public:
 	/*! Instantiate a new nested group element.
 	    \param fnum field number of group to create
 	  \return new message or nullptr if not a valid group for this group */
-	virtual GroupBase *create_nested_group(unsigned short fnum) const { return nullptr; }
+	virtual GroupBase *create_nested_group(unsigned short /* fnum */) const { return nullptr; }
 
 	/*! Add a message to a repeating group
 	  \param what message to add */
@@ -123,12 +123,12 @@ public:
 	/*! Function operator (const version); overloaded with each generated Fix message type.
 	  \param msg const ptr to message to route
 	  \return true on success */
-	virtual bool operator()(const Message *msg) const { return false; }
+	virtual bool operator()(const Message * /* msg */) const { return false; }
 
 	/*! Function operator; overloaded with each generated Fix message type.
 	  \param msg const ptr to message to route
 	  \return true on success */
-	virtual bool operator()(const Message *msg) { return false; }
+	virtual bool operator()(const Message * /* msg */) { return false; }
 };
 
 /// Structures for framework generated message creation and static trait interrogation
@@ -484,7 +484,7 @@ public:
 	/*! Instantiate a new nested group element.
 	    \param fnum field number of group to create
 	  \return new message */
-	virtual GroupBase *create_nested_group(unsigned short fnum) const { return nullptr; }
+	virtual GroupBase *create_nested_group(unsigned short /* fnum */) const { return nullptr; }
 
 	/*! Check to see if positions of fields are as required.
 	  \return field number of field not in order, 0 if all ok */

@@ -312,7 +312,7 @@ public:
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)
 	   \return true on success */
-	virtual bool rotate(bool force=false) { return true; }
+	virtual bool rotate(bool /* force */ = false) { return true; }
 
 	/*! The logging thread entry point.
 	    \return 0 on success */

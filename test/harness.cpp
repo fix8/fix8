@@ -202,7 +202,7 @@ int main(int argc, char **argv)
 		{ "lines",		1,	0,	'L' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
-		{ 0 },
+		{ 0,	0,	0,	0 },
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
@@ -384,13 +384,13 @@ void print_usage()
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
+bool tex_router_server::operator() (const TEX::NewOrderSingle* /* msg */) const
 {
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
+bool tex_router_client::operator() (const TEX::ExecutionReport* /* msg */) const
 {
 	return true;
 }

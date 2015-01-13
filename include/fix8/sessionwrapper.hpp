@@ -313,7 +313,7 @@ public:
 	  \param send_seqnum next send seqnum
 	  \param recv_seqnum next recv seqnum
 	  \param davi default appl version id (FIXT) */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String /* davi */ =f8String())
 	{
 		_send_seqnum = send_seqnum;
 		_recv_seqnum = recv_seqnum;
@@ -601,11 +601,13 @@ public:
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) {}
+	inline virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0);
 
 	/// Stop the session. Cleanup.
 	virtual void stop() {}
 };
+
+void SessionInstanceBase::start(bool, const unsigned, const unsigned) {}
 
 //-------------------------------------------------------------------------------------------------
 /// Server session instance.

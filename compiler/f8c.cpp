@@ -159,21 +159,21 @@ int main(int argc, char **argv)
 		{ "nounique",		0,	0,	'N' },
 		{ "norealm",		0,	0,	'R' },
 		{ "incpath",		0,	0,	'P' },
-		{ "nowarn",		   0,	0,	'W' },
+		{ "nowarn",		0,	0,	'W' },
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
 		{ "extension",		0,	0,	'e' },
 		{ "ignore",			0,	0,	'i' },
 		{ "nocheck",		0,	0,	'C' },
 		{ "noconst",		0,	0,	'U' },
-		{ "info",		   0,	0,	'I' },
+		{ "info",		0,	0,	'I' },
 		{ "fields",			0,	0,	'f' },
 		{ "xfields",		1,	0,	'F' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
 		{ "binary",			0,	0,	'b' },
 		{ "classes",		1,	0,	'c' },
-		{ "pch",		      1,	0,	'H' },
+		{ "pch",		1,	0,	'H' },
 		{ "second",			0,	0,	's' },
 		{ "defaulted",		0,	0,	'D' },
 		{ "noshared",		0,	0,	'S' },
@@ -181,7 +181,7 @@ int main(int argc, char **argv)
 		{ "namespace",		1,	0,	'n' },
 		{ "tabsize",		1,	0,	't' },
 		{ "fixt",			1,	0,	'x' },
-		{ 0 },
+		{ 0,			0,	0,	0 }
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
@@ -612,7 +612,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 }
 
 //-----------------------------------------------------------------------------------------
-unsigned parse_groups(MessageSpec& ritr, const string& name,
+unsigned parse_groups(MessageSpec& ritr, const string& /* name */,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist,
    const Components& compon, CommonGroupMap& globmap)
 {
@@ -690,7 +690,7 @@ unsigned parse_groups(MessageSpec& ritr, const string& name,
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh, const std::string& fixns)
+void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, ostream& outh, const std::string& /* fixns */)
 {
    if (ms._groups.size())
    {
@@ -832,7 +832,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
+void generate_group_traits(const FieldSpecMap& /* fspec */, const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
 {
    if (prefix.empty())
       outp << "const FieldTrait " << gname << "_traits[]"
@@ -1114,7 +1114,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		osc_hpp << endl;
 
       osc_hpp << "public:" << endl;
-		osc_hpp << spacer << "explicit " << pp.second._name << "(bool deepctor=true)";
+      osc_hpp << spacer << "explicit " << pp.second._name;
+      if (!isHeader && !isTrailer && !pp.second._groups.empty())
+        osc_hpp << "(bool deepctor=true)";
+      else
+        osc_hpp << "(bool = true)";
 		if (pp.second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
 				<< "(ctx(), _msgtype(), _traits, _fieldcnt, &_ftha)";
@@ -1202,10 +1206,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
          osc_cpp << "Type2Type<" << ctxt._fixns << "::" << mitr->second._name << ">()";
 		osc_cpp << ", \"" << mitr->second._name << '"';
 		if (!mitr->second._comment.empty())
-			osc_cpp << ',' << endl << spacer << spacer << '"' << mitr->second._comment << "\" }";
+			osc_cpp << ',' << spacer << '"' << mitr->second._comment << "\" }";
 		else
-			osc_cpp << " }";
+			osc_cpp << ", nullptr }";
 		osc_cpp << " }";
+
 	}
 	osc_cpp << endl << "}; // " << mspec.size() << endl;
 
@@ -1231,7 +1236,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
 	osu_hpp << spacer << "virtual ~" << ctxt._clname << "_Router() {}" << endl << endl;
-   osu_hpp << spacer << "virtual bool operator() (const class Message *msg) ";
+        osu_hpp << spacer << "virtual bool operator() (const class Message* /* msg */) ";
    if (!nconst_router)
       osu_hpp << "const ";
    osu_hpp << "{ return false; }" << endl;
@@ -1239,7 +1244,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		if (pp.second._name == "trailer" || pp.second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator() (const class " << pp.second._name << " *msg)";
+		osu_hpp << spacer << "virtual bool operator() (const class " << pp.second._name << "* /* msg */)";
       if (no_default_routers)
          osu_hpp << ';' << endl;
       else
@@ -1414,37 +1419,36 @@ int process(XmlElement& xf, Ctxt& ctxt)
       << endl << '{' << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		if (!gen_fields && !fitr->second._used)
-			continue;
-		if (fitr != fspec.begin())
-			ost_cpp << ',' << endl;
-		ost_cpp << spacer << "{ " << fitr->first << ", { ";
-		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
-		{
-			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name << ", ";
-         string ttype;
-         if (!FieldTrait::get_type_string(fitr->second._ftype, ttype).empty())
-				ost_cpp << ttype;
-			else
-			{
-				ost_cpp << "unknown";
-				cerr << shortName << ": error: unknown FieldTrait::type in realm '" << fitr->second._name << '\'' << endl;
-				++glob_errors;
-			}
-      }
-      else
-			ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
-      ost_cpp << ">(), \"" << fitr->second._name << "\", " << fitr->first;
-		if (fitr->second._dvals)
-			ost_cpp << ", &" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
-		if (!fitr->second._comment.empty())
-      {
-			ost_cpp << ", ";
-         if (!fitr->second._dvals)
-            ost_cpp << "nullptr, ";
-			ost_cpp << endl << spacer << spacer << '"' << fitr->second._comment << '"';
-      }
-		ost_cpp << " } }";
+          if (!gen_fields && !fitr->second._used)
+            continue;
+          if (fitr != fspec.begin())
+            ost_cpp << ',' << endl;
+          ost_cpp << spacer << "{ " << fitr->first << ", { ";
+          if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
+          {
+            ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name << ", ";
+            string ttype;
+            if (!FieldTrait::get_type_string(fitr->second._ftype, ttype).empty())
+              ost_cpp << ttype;
+            else
+            {
+              ost_cpp << "unknown";
+              cerr << shortName << ": error: unknown FieldTrait::type in realm '" << fitr->second._name << '\'' << endl;
+              ++glob_errors;
+            }
+          }
+          else
+            ost_cpp << "Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
+          ost_cpp << ">(), \"" << fitr->second._name << "\", " << fitr->first;
+          if (fitr->second._dvals)
+            ost_cpp << ", &" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << "], ";
+          else
+            ost_cpp << ", nullptr, ";
+          if (!fitr->second._comment.empty())
+            ost_cpp << spacer << spacer << '"' << fitr->second._comment << '"';
+          else
+            ost_cpp << "nullptr";
+          ost_cpp << " } }";
 	}
 	ost_cpp << endl << "}; // " << fields_generated << endl;
 
@@ -1457,11 +1461,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	if (verbose)
 	{
-		unsigned cnt(0);
-		for (const auto& pp : fspec)
-			if (pp.second._used)
-				++cnt;
-		cout << cnt << " of " << fspec.size() << " fields used in messages" << endl;
+          unsigned cnt(0);
+          for (const auto& pp : fspec)
+            if (pp.second._used)
+              ++cnt;
+          cout << cnt << " of " << fspec.size() << " fields used in messages" << endl;
 	}
 
 	return result;

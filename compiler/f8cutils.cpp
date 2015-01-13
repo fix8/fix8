@@ -71,7 +71,7 @@ string bintoaschex(const string& from);
 namespace
 {
 	const string ident_set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
-};
+}
 
 //-----------------------------------------------------------------------------------------
 ostream *open_ofile(const string& odir, const string& fname, string& target)

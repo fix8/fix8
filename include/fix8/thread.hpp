@@ -125,7 +125,7 @@ public:
 
 	/*! Join the thread.
 	  \return result of join */
-	virtual int join(int timeoutInMs = 0)
+	virtual int join()
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		void *rptr(&_exitval);

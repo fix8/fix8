@@ -940,7 +940,9 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 
 	Tickval::ticks result(Tickval::noticks);
 	int millisecond(0);
-	tm tms {};
+	tm tms;
+        /// @note tm struct is different accross various platforms
+        memset(&tms, 0, sizeof(tm));
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -979,8 +981,9 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
-   int millisecond(0);
-   tm tms {};
+	int millisecond(0);
+	tm tms;
+	memset(&tms, 0, sizeof(tm));
 
 	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
@@ -1010,7 +1013,8 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 	if (len == 0 || (*ptr == 'n' && len == 3 && *(ptr + 1) == 'o' && *(ptr + 2) == 'w'))	// special cases initialise to 'now'
 		return Tickval(true).get_ticks();
 
-   tm tms {};
+	tm tms;
+	memset(&tms, 0, sizeof(tm));
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
 	ptr += parse_decimal(ptr, 2, tms.tm_mon);
@@ -1053,17 +1057,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(date_time_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_time_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(date_time_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1156,17 +1160,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(time_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1259,17 +1263,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(date_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1362,17 +1366,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(date_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(date_parse(from, from ? ::strlen(from) : 0)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1466,17 +1470,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(from ? ::strlen(from) : 0), _value(date_parse(from, _sz)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _sz(from ? ::strlen(from) : 0), _value(date_parse(from, _sz)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1574,7 +1578,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
+	Field (const char* /* from */, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1631,7 +1635,7 @@ public:
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return 0; }  	// TODO
+	size_t print(char* /* to */) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1667,7 +1671,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
+	Field (const char* /* from */, const RealmBase *rlm=nullptr) : BaseField(field, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1724,7 +1728,7 @@ public:
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return 0; }  	// TODO
+	size_t print(char* /* to */) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -2044,7 +2048,7 @@ class Inst
 			\param rv realm value
 			\return new field */
 		template<typename T>
-		static BaseField *_make(const char *from, const RealmBase *db, const int rv)
+		static BaseField *_make(const char *from, const RealmBase *db, const int /* rv */)
 			{ return new T{from, db}; }
 
 		/*! Instantiate a field

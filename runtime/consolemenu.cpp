@@ -348,7 +348,7 @@ int ConsoleMenu::EditMsgs(tty_save_state& tty, MsgList& lst) const
 }
 
 //-------------------------------------------------------------------------------------------------
-int ConsoleMenu::DeleteMsgs(tty_save_state& tty, MsgList& lst) const
+int ConsoleMenu::DeleteMsgs(tty_save_state& /* tty */, MsgList& lst) const
 {
 	for (;;)
 	{

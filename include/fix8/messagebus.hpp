@@ -69,7 +69,7 @@ public:
 	virtual ~MessageBusSubscriber() {}
 
 	/*! Callback method on receipt of message */
-	virtual bool receive_message(const GenericMessage *msg) { return false; }
+	virtual bool receive_message(const GenericMessage * /* msg */) { return false; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -90,16 +90,16 @@ public:
 	virtual bool stop() { return true; }
 
 	/*! Publishes a message to all aubscribers for given topic*/
-	virtual bool publish(const f8String& topic, const GenericMessage *msg) { return false; }
+	virtual bool publish(const f8String& /* topic */, const GenericMessage * /* msg */) { return false; }
 
 	/*! Creates a subscription for the given topic */
-	virtual bool subscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
+	virtual bool subscribe(MessageBusSubscriber * /* subscriber */, const f8String& /* topic */) { return false; }
 
 	/*! Creates a subscription for the given topic, returns new subscriber */
-	virtual MessageBusSubscriber *subscribe(const f8String& topic) { return nullptr; }
+	virtual MessageBusSubscriber *subscribe(const f8String& /* topic */) { return nullptr; }
 
 	/*! Removes a subscription for a given subscriber */
-	virtual bool unsubscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
+	virtual bool unsubscribe(MessageBusSubscriber * /* subscriber */, const f8String& /* topic */) { return false; }
 };
 
 //-------------------------------------------------------------------------------------------------

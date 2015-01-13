@@ -65,12 +65,12 @@ enum { START_TIME=0, STOP_TIME=1, GET_TIME=2 };
 /*!!!----Mehdi-- required for DSRIMANAGER NODE----!!*/
 static inline void waitCall(double milisec, double sec){
   if(milisec!=0.0 || sec!=0.0){
-    struct timespec req = {0};
+    struct timespec req = {0, 0};
     req.tv_sec = sec;
     req.tv_nsec = milisec * 1000000L;
     nanosleep(&req, (struct timespec *)NULL);
   }
-};
+}
 
 static inline void waitSleep(ticks TICKS2WAIT){
     /*!!!----Mehdi--required to change busy wait with nanosleep ----!!*/ 
@@ -84,7 +84,7 @@ static inline void waitSleep(ticks TICKS2WAIT){
      */ 
     struct timespec req = {0, static_cast<long>(TICKS2WAIT)};
     nanosleep(&req, NULL);
-};
+}
 #endif /* __linux__ */
 
 /* NOTE:  nticks should be something less than 1000000 otherwise 
@@ -209,7 +209,7 @@ static inline unsigned int nextMultipleOfIf(unsigned int x, unsigned int m) {
  *
  * \return TODO
  */
-static inline double ffTime(int tag, bool lock=false) {
+static inline double ffTime(int tag, bool /* lock=false */) {
     static struct timeval tv_start = {0,0};
     static struct timeval tv_stop  = {0,0};
     // needed to protect gettimeofday

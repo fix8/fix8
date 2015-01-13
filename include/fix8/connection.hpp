@@ -89,7 +89,7 @@ public:
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute(f8_thread_cancellation_token& cancellation_token) { return 0; }
+	virtual int execute(f8_thread_cancellation_token& /* cancellation_token */) { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); _started = true; }
