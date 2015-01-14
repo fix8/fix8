@@ -96,8 +96,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="span11">
-						<p><h3>We believe performance is one of the distinguishing features of Fix8. Here we will present our comparison test between
-						Fix8 and Quickfix and also our current <i>encode</i> and <i>decode</i> performance stats along
+						<p><h3>We believe performance is one of the distinguishing features of Fix8. Here we will present our
+						current <i>encode</i> and <i>decode</i> performance stats along
 						with a description of our test environment and test methodology.</h3></p>
 						<br>
 					</div>
@@ -111,8 +111,7 @@
 					<ul class="nav nav-list">
 						<li class="nav-header">Sections</li>
 						<li><a href="#1"><h2>1. Our Test Environment</h2></a></li>
-						<li><a href="#2"><h2>2. Comparison With Quickfix</h2></a></li>
-						<li><a href="#3"><h2>3. Encode/Decode Performance Test</h2></a></li>
+						<li><a href="#2"><h2>2. Encode/Decode Performance Test</h2></a></li>
 					</ul>
 				</div>
 			</div>
@@ -144,7 +143,6 @@ gcc version 4.7.2 20121109 (Red Hat 4.7.2-8) (GCC)
 <pre>
 poco version 1.4.6
 gperftools 2.0 (for tcmalloc)
-quickfix version 1.13.3
 tbb version 4.2 (tbb42_20131003oss)
 </pre>
 				</div>
@@ -155,298 +153,10 @@ tbb version 4.2 (tbb42_20131003oss)
 		<div class="hero-divider"></div>
 		<br>
 		<br>
-
 		<div class="container">
 			<div class="row">
 				<div class="span12">
-					<a id="2"><h1 class="green">2. Comparison With Quickfix</h1></a>
-					<p>This is perhaps the most commonly asked question about Fix8. We thought we'd present how we compared the two
-					frameworks, how we tested Fix8 and QuickFix and demonstrate that Fix8 outperforms.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span12">
-					<h2>Our test applications</h2>
-					<p>We have two almost identical applications - one Fix8 and one QuickFix - that generate 100000 <code>NewOrderSingle(D)</code> messages. The encode and
-					decode times are accumulated for each test and reported at test completion.</p>
-					<p><i class="icon-exclamation-sign"></i> Note that we used <code>tcmalloc</code> for this test. See the <a href="faq.html">FAQ</a> for details.</p>
-				</div>
-			</div>
-			<div class="accordion" id="codehead">
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#codehead" href="#codeheadOne"><h3>Quickfix test code</h3></a>
-					</div>
-					<div id="codeheadOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-<pre class="pre-scrollable">
-#include "quickfix/Field.h"
-#include "quickfix/Values.h"
-#include "quickfix/Message.h"
-#include "tbb/tick_count.h"
-
-//-------------------------------------------------------------------------------------------------
-int main(int argc, char *argv[])
-{
-    FIX::Message msg;
-    msg.getHeader().setField( FIX::BeginString( "FIX.4.4" ) );
-    msg.getHeader().setField( FIX::MsgType( FIX::MsgType_NewOrderSingle ) );
-    msg.getHeader().setField( FIX::MsgSeqNum(78));
-    msg.getHeader().setField(FIX::SenderCompID("A12345B"));
-    msg.getHeader().setField(FIX::SenderSubID("2DEFGH4"));
-    msg.getHeader().setField(FIX::SendingTime(FIX::UtcTimeStamp()));
-    msg.getHeader().setField(FIX::TargetCompID("COMPARO"));
-    msg.getHeader().setField(FIX::TargetSubID("G"));
-    msg.getHeader().setField(FIX::SenderLocationID("AU,SY"));
-
-    msg.setField( FIX::Account( "01234567") );
-    msg.setField( FIX::ClOrdID( "4" ) );
-    msg.setField( FIX::OrderQty( 50 ) );
-    msg.setField( FIX::OrdType( FIX::OrdType_LIMIT) );
-    msg.setField( FIX::Price( 400.5) );
-    msg.setField( FIX::HandlInst( '1' ) );
-    msg.setField( FIX::Symbol( "OC") );
-    msg.setField( FIX::Text( "NIGEL") );
-    msg.setField( FIX::Side( FIX::Side_BUY ) );
-    msg.setField( FIX::SecurityDesc( "AOZ3 C02000") );
-    msg.setField( FIX::TimeInForce( FIX::TimeInForce_DAY ) );
-    msg.setField( FIX::TransactTime() );
-    msg.setField( FIX::SecurityType( FIX::SecurityType_OPTION ) );
-
-    std::string output;
-    double tt = 0;
-    for(int i = 0 ; i < 100000; ++i)
-    {
-        FIX::Message msg;
-        msg.getHeader().setField( FIX::BeginString( "FIX.4.4" ) );
-        msg.getHeader().setField( FIX::MsgType( FIX::MsgType_NewOrderSingle ) );
-        msg.getHeader().setField( FIX::MsgSeqNum(78));
-        msg.getHeader().setField(FIX::SenderCompID("A12345B"));
-        msg.getHeader().setField(FIX::SenderSubID("2DEFGH4"));
-        msg.getHeader().setField(FIX::SendingTime(FIX::UtcTimeStamp()));
-        msg.getHeader().setField(FIX::TargetCompID("COMPARO"));
-        msg.getHeader().setField(FIX::TargetSubID("G"));
-        msg.getHeader().setField(FIX::SenderLocationID("AU,SY"));
-
-        msg.setField( FIX::Account( "01234567") );
-        msg.setField( FIX::ClOrdID( "4" ) );
-        msg.setField( FIX::OrderQty( 50 ) );
-        msg.setField( FIX::OrdType( FIX::OrdType_LIMIT) );
-        msg.setField( FIX::Price( 400.5) );
-        msg.setField( FIX::HandlInst( '1' ) );
-        msg.setField( FIX::Symbol( "OC") );
-        msg.setField( FIX::Text( "NIGEL") );
-        msg.setField( FIX::Side( FIX::Side_BUY ) );
-        msg.setField( FIX::SecurityDesc( "AOZ3 C02000") );
-        msg.setField( FIX::TimeInForce( FIX::TimeInForce_DAY ) );
-        msg.setField( FIX::TransactTime() );
-        msg.setField( FIX::SecurityType( FIX::SecurityType_OPTION ) );
-
-        tbb::tick_count start = tbb::tick_count::now();
-        msg.toString(output);
-        tbb::tick_count end = tbb::tick_count::now();
-
-        tt += (end-start).seconds();
-    }
-    std::cout << "to string - " << tt << std::endl;
-
-    FIX::DataDictionary dict("/usr/local/share/quickfix/FIX44.xml");
-    tbb::tick_count start = tbb::tick_count::now();
-    for(int i = 0 ; i < 100000; ++i)
-    {
-        FIX::Message * tmp = new FIX::Message(output, dict);
-        delete tmp;
-    }
-    tbb::tick_count end = tbb::tick_count::now();
-    std::cout << "from string - " << (end-start).seconds() << std::endl;
-    return 0;
-}
-</pre>
-						</div>
-					</div>
-				</div>
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#codehead" href="#codeheadTwo"><h3>Fix8 test code</h3></a>
-					</div>
-					<div id="codeheadTwo" class="accordion-body collapse">
-							<div class="accordion-inner">
-<pre class="pre-scrollable">
-// f8 headers
-#include "f8includes.hpp"
-#include "message.hpp"
-#include "tbb/tick_count.h"
-#include "COMPAROFIX_types.hpp"
-#include "COMPAROFIX_router.hpp"
-#include "COMPAROFIX_classes.hpp"
-
-using namespace FIX8::COMPAROFIX;
-using namespace FIX8;
-
-//-------------------------------------------------------------------------------------------------
-int main(int argc, char *argv[])
-{
-    NewOrderSingle *nos(new NewOrderSingle);
-    *nos->Header() << new msg_seq_num(78)
-                   << new sender_comp_id("A12345B")
-                   << new SenderSubID("2DEFGH4")
-                   << new sending_time
-                   << new target_comp_id("COMPARO")
-                   << new TargetSubID("G")
-                   << new SenderLocationID("AU,SY");
-
-    *nos << new TransactTime
-         << new Account("01234567")
-         << new OrderQty(50)
-         << new Price(400.5)
-         << new ClOrdID("4")
-         << new HandlInst(HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE)
-         << new OrdType(OrdType_LIMIT)
-         << new Side(Side_BUY)
-         << new Symbol("OC")
-         << new Text("NIGEL")
-         << new TimeInForce(TimeInForce_DAY)
-         << new SecurityDesc("AOZ3 C02000")
-         << new SecurityType(SecurityType_OPTION);
-
-    std::string output, tmp;
-    nos->encode(output);
-    double tt = 0;
-
-    // quickfix doesn't encode chksum till send, so we can suppress here
-    Message::set_no_chksum_flag(true);
-
-    for(int i = 0 ; i < 100000; ++i)
-    {
-        NewOrderSingle *nos(new NewOrderSingle);
-        *nos->Header() << new msg_seq_num(78)
-                       << new sender_comp_id("A12345B")
-                       << new SenderSubID("2DEFGH4")
-                       << new sending_time
-                       << new target_comp_id("COMPARO")
-                       << new TargetSubID("G")
-                       << new SenderLocationID("AU,SY");
-
-        *nos  << new TransactTime
-              << new Account("01234567")
-              << new OrderQty(50)
-              << new Price(400.5)
-              << new ClOrdID("4")
-              << new HandlInst(HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE)
-              << new OrdType(OrdType_LIMIT)
-              << new Side(Side_BUY)
-              << new Symbol("OC")
-              << new Text("NIGEL")
-              << new TimeInForce(TimeInForce_DAY)
-              << new SecurityDesc("AOZ3 C02000")
-              << new SecurityType(SecurityType_OPTION);
-
-        tbb::tick_count start = tbb::tick_count::now();
-        nos->encode(tmp);
-        tbb::tick_count end = tbb::tick_count::now();
-        tt += (end-start).seconds();
-
-        delete nos;
-    }
-    std::cout  << "to string- " << tt << std::endl;
-
-    FIX8::Message * msg = NULL;
-    tbb::tick_count start = tbb::tick_count::now();
-    for(int i = 0 ; i < 100000; ++i)
-    {
-        msg = FIX8::Message::factory(FIX8::COMPAROFIX::ctx(), output);
-        delete msg;
-    }
-
-    tbb::tick_count end = tbb::tick_count::now();
-    std::cout << "from string - " <<  (end-start).seconds() << std::endl;
-    return 0;
-}
-</pre>
-						</div>
-					</div>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="span12">
-					<h2>The results</h2>
-					<p>We ran the test 10 times with each version and averaged the result.</p>
-					<table class="table table-striped table-bordered table-condensed">
-						<thead>
-							<tr class="success">
-								<th>Framework</th>
-								<th>Operation</th>
-								<th>Msgs processed</th>
-								<th>Time secs</th>
-								<th>Msgs/sec</th>
-								<th>Average &#xb5;s/msg</th>
-								<th>% Reduction</th>
-								<th>Thoughput</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="success">
-								<td>Quickfix</td>
-								<td>encode</td>
-								<td>100000</td>
-								<td>0.4560319</td>
-								<td>219282</td>
-								<td>4.57</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-							<tr class="success">
-								<td></td>
-								<td>decode</td>
-								<td>100000</td>
-								<td>1.364743</td>
-								<td>73274</td>
-								<td>13.65</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-							<tr class="success">
-								<td>Fix8</td>
-								<td>encode</td>
-								<td>100000</td>
-								<td>0.1429087</td>
-								<td>699747</td>
-								<td><h4>1.43</h4></td>
-								<td><h4>68.7</h4></td>
-								<td><h4>3.2x</h4></td>
-							</tr>
-							<tr class="success">
-								<td></td>
-								<td>decode</td>
-								<td>100000</td>
-								<td>0.4495174</td>
-								<td>222461</td>
-								<td><h4>4.50</h4></td>
-								<td><h4>67.0</h4></td>
-								<td><h4>3.0x</h4></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="span12">
-					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 <u>encodes <em><b>3.2 times faster</b></em></u> and <u>decodes <em><b>3.0 times faster</b></em></u> for an average improvement of <em><b>3.0 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>67%</b></em>.</p>
-				</div>
-			</div>
-		</div>
-		<br>
-		<br>
-		<div class="hero-divider"></div>
-		<br>
-		<br>
-		<div class="container">
-			<div class="row">
-				<div class="span12">
-					<a id="3"><h1 class="green">3. Encode/Decode Performance Test</h1></a>
+					<a id="2"><h1 class="green">2. Encode/Decode Performance Test</h1></a>
 					<p>This section describes the supplied test client/server that <em>you can build and test to compare your performance</em> wth our published
 					results.</p>
 					<p><i class="icon-exclamation-sign"></i> You will need at least <b>16GB</b> of RAM to run the full test. If you have <b>8GB</b>,
