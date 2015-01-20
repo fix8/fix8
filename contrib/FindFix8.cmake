@@ -39,7 +39,7 @@ if (FIX8_F8C_EXECUTABLE)
                     OUTPUT_VARIABLE FIX8_VERSION_STRING_VERBOSE
                     )
     if (_fix8_F8C_VERSION_RESULT EQUAL "0")
-        if("${FIX8_VERSION_STRING_VERBOSE}" MATCHES "fix8 version ([0-9u-\.]+)[ \r\n]+")
+        if("${FIX8_VERSION_STRING_VERBOSE}" MATCHES "fix8 version ([^ \r\n]+)[ \r\n]+")
             set(FIX8_VERSION_STRING "${CMAKE_MATCH_1}")
         endif()
     endif()
