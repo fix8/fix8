@@ -243,8 +243,9 @@ struct Schedule
 	bool test(bool prev=false)
 	{
 		Tickval now(true);
-		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
 		now.adjust(_toffset); // adjust for local utc offset
+		// today represents start of day in local time-zone.
+		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
 		bool active(prev);
 
 		if (_start_day < 0) // start/end day not specified; daily only
