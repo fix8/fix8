@@ -243,8 +243,8 @@ struct Schedule
 	bool test(bool prev=false)
 	{
 		Tickval now(true);
-		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
 		now.adjust(_toffset); // adjust for local utc offset
+		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
 		bool active(prev);
 
 		if (_start_day < 0) // start/end day not specified; daily only
@@ -834,16 +834,16 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 // our buffered RAII ostream log target, ostream Session log target for specified Session ptr
-#define ssout_info(x) if (!x->is_loggable(Logger::Info)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Info, FILE_LINE, std::placeholders::_2)))
+#define ssout_info(x) if (!x->is_loggable(FIX8::Logger::Info)); \
+  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Info, FILE_LINE, std::placeholders::_2)))
 #define ssout(x) ssout_info(x)
 
-#define ssout_warn(x) if (!x->is_loggable(Logger::Warn)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Warn, FILE_LINE, std::placeholders::_2)))
-#define ssout_error(x) if (!x->is_loggable(Logger::Error)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Error, FILE_LINE, std::placeholders::_2)))
-#define ssout_fatal(x) if (!x->is_loggable(Logger::Fatal)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Fatal, FILE_LINE, std::placeholders::_2)))
+#define ssout_warn(x) if (!x->is_loggable(FIX8::Logger::Warn)); \
+  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Warn, FILE_LINE, std::placeholders::_2)))
+#define ssout_error(x) if (!x->is_loggable(FIX8::Logger::Error)); \
+  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Error, FILE_LINE, std::placeholders::_2)))
+#define ssout_fatal(x) if (!x->is_loggable(FIX8::Logger::Fatal)); \
+  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Fatal, FILE_LINE, std::placeholders::_2)))
 #if defined F8_DEBUG
 #define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
 	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, FILE_LINE, std::placeholders::_2)))
