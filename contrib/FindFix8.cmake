@@ -1,4 +1,4 @@
-# Find fix8 headers, libraries, and compiler.
+# Find fix8 include paths and libraries
 # Copyright 2015 (c) Ido Rosen <ido@kernel.org>
 
 # To pass additional search paths/hints:
@@ -13,6 +13,52 @@
 #   FIX8_VERSION_STRING - version of f8c executable
 #   FIX8_F8C_EXECUTABLE - path of f8c executable for generating code
 #   FIX8_COMPILER - path of f8c executable for generating code
+#
+# To generate code using the fix8 compiler:
+#   include_directories(${CMAKE_CURRENT_BINARY_DIR})
+#   FIX8_GENERATE_CPP(FIX8_SRCS FIX8_HDRS /usr/share/fix8/schema/FIX42.xml)
+#   add_executable(bar bar.cpp ${FIX8_SRCS} ${FIX8_HDRS})
+#   target_link_libraries(bar ${FIX8_LIBRARIES} ${POCO_LIBRARIES} ${BerkeleyDB_CXX_LIBRARIES})
+#
+
+function(FIX8_GENERATE_CPP SRCS HDRS)
+  if(NOT ARGN)
+    message(SEND_ERROR "Error: FIX8_GENERATE_CPP() called without any XML schema files")
+    return()
+  endif()
+
+  set(${SRCS})
+  set(${HDRS})
+  foreach(FIL ${ARGN})
+    get_filename_component(ABS_FIL ${FIL} ABSOLUTE)
+    get_filename_component(FIL_WE ${FIL} NAME_WE)
+
+    list(APPEND ${SRCS}
+        "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_classes.cpp"
+        "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_traits.cpp"
+        "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_types.cpp")
+    list(APPEND ${HDRS}
+        "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_classes.hpp"
+        "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_router.hpp"
+        "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_types.hpp")
+    add_custom_command(
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_classes.cpp"
+             "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_classes.hpp"
+             "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_router.hpp"
+             "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_traits.cpp"
+             "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_types.cpp"
+             "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}fix_types.hpp"
+      COMMAND  ${FIX8_COMPILER}
+      ARGS -o ${CMAKE_CURRENT_BINARY_DIR} -p ${FIL_WE}fix -n ${FIL_WE} ${ABS_FIL}
+      DEPENDS ${ABS_FIL}
+      COMMENT "Running C++ fix8 compiler on ${FIL}"
+      VERBATIM )
+  endforeach()
+
+  set_source_files_properties(${${SRCS}} ${${HDRS}} PROPERTIES GENERATED TRUE)
+  set(${SRCS} ${${SRCS}} PARENT_SCOPE)
+  set(${HDRS} ${${HDRS}} PARENT_SCOPE)
+endfunction()
 
 if(FIX8_INCLUDE_DIRS)
     set(FIX8_FIND_QUIETLY TRUE)
@@ -64,4 +110,3 @@ mark_as_advanced(FIX8_INCLUDE_DIRS
     FIX8_COMPILER
     FIX8_VERSION_STRING
     FIX8_VERSION_STRING_VERBOSE)
-
