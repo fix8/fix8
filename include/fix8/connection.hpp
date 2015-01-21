@@ -305,9 +305,8 @@ public:
 
 	/*! Check to see if there is any data waiting to be read
 	    \return true of data ready */
-	bool poll() const
+  bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
 	{
-		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
 
@@ -403,9 +402,8 @@ public:
 
 	/*! Check to see if a write would block
 	    \return true if a write would block */
-	bool poll() const
+  bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
 	{
-		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_WRITE);
 	}
 
@@ -523,7 +521,7 @@ public:
 		  _secured(secured) {}
 
 	/// Dtor.
-	virtual ~Connection() {}
+  virtual ~Connection() { _session.clear_connection(this); }
 
 	/*! Get the role for this connection.
 	    \return the role */
@@ -654,7 +652,7 @@ public:
 
 	/*! Check if the reader will block
 	    \return true if won't block */
-	bool reader_poll() const { return _reader.poll(); }
+  bool reader_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _reader.poll(ts); }
 
 	/*! Call the FIXreader method
 	    \return result of call */
@@ -662,7 +660,7 @@ public:
 
 	/*! Check if the writer will block
 	    \return true if won't block */
-	bool writer_poll() const { return _writer.poll(); }
+  bool writer_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _writer.poll(ts); }
 };
 
 //-------------------------------------------------------------------------------------------------

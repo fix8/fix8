@@ -120,7 +120,7 @@ public:
 	const XmlElement *find_group(group_types type, const std::string& tag) const
 		{ return find_element(tag, _groups[type]); }
 
-private:
+protected:
 	/*! Search the given element for a tag or look in the default element
 	  \param from the xml entity to search
 	  \param tag the tag to find
@@ -175,6 +175,7 @@ private:
 		return def;
 	}
 
+private:
 	/*! Load a repeating group into a supplied map.
 	  \param tag the tag to find
 	  \param map_name the target map
