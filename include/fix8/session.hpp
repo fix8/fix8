@@ -240,7 +240,7 @@ struct Schedule
 	/*! Take the current local time and test if it is within the range of this schedule
 	    \param prev current bool state that we will toggle
 	    \return new toggle state */
-	bool test(bool prev=false)
+	bool test(bool prev=false) const
 	{
 		Tickval now(true);
 		now.adjust(_toffset); // adjust for local utc offset
@@ -570,6 +570,12 @@ public:
 	F8API int start(Connection *connection, bool wait=true, const unsigned send_seqnum=0,
 		const unsigned recv_seqnum=0, const f8String davi=f8String());
 
+  /*! Clear reference to connection.  Called by ~Connection() to clear reference.
+      \param connection being deleted */
+  inline void clear_connection(Connection *connection) {
+    if (connection == _connection) _connection = nullptr;
+  }
+
 	/*! Process inbound messages. Called by connection object.
 	    \param from raw fix message
 	    \return true on success */
@@ -835,22 +841,21 @@ public:
 //-------------------------------------------------------------------------------------------------
 // our buffered RAII ostream log target, ostream Session log target for specified Session ptr
 #define ssout_info(x) if (!x->is_loggable(FIX8::Logger::Info)); \
-  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Info, FILE_LINE, std::placeholders::_2)))
-#define ssout(x) ssout_info(x)
-
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Info, FILE_LINE, std::placeholders::_2)))
 #define ssout_warn(x) if (!x->is_loggable(FIX8::Logger::Warn)); \
-  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Warn, FILE_LINE, std::placeholders::_2)))
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Warn, FILE_LINE, std::placeholders::_2)))
 #define ssout_error(x) if (!x->is_loggable(FIX8::Logger::Error)); \
-  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Error, FILE_LINE, std::placeholders::_2)))
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Error, FILE_LINE, std::placeholders::_2)))
 #define ssout_fatal(x) if (!x->is_loggable(FIX8::Logger::Fatal)); \
-  else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Fatal, FILE_LINE, std::placeholders::_2)))
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Fatal, FILE_LINE, std::placeholders::_2)))
 #if defined F8_DEBUG
 #define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, FILE_LINE, std::placeholders::_2)))
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Debug, FILE_LINE, std::placeholders::_2)))
 #else
 #define ssout_debug(x) true ? null_insert() : null_insert()
 #endif
 
+#define ssout(x) ssout_info(x)
 #define slout ssout(this)
 #define slout_info ssout_info(this)
 #define slout_warn ssout_warn(this)
