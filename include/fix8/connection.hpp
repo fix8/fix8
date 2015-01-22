@@ -304,8 +304,9 @@ public:
 	bool is_socket_error() const { return _socket_error; }
 
 	/*! Check to see if there is any data waiting to be read
+	    \param ts timeout
 	    \return true of data ready */
-  bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
+	bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
 	{
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
@@ -401,8 +402,9 @@ public:
 	}
 
 	/*! Check to see if a write would block
+	    \param ts timeout
 	    \return true if a write would block */
-  bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
+	bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
 	{
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_WRITE);
 	}
@@ -651,16 +653,18 @@ public:
 	int reader_execute() { return _reader.execute(_reader.cancellation_token()); }
 
 	/*! Check if the reader will block
+	    \param ts timeout
 	    \return true if won't block */
-  bool reader_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _reader.poll(ts); }
+	bool reader_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _reader.poll(ts); }
 
 	/*! Call the FIXreader method
 	    \return result of call */
 	int writer_execute() { return _writer.execute(_writer.cancellation_token()); }
 
 	/*! Check if the writer will block
+	    \param ts timeout
 	    \return true if won't block */
-  bool writer_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _writer.poll(ts); }
+	bool writer_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _writer.poll(ts); }
 };
 
 //-------------------------------------------------------------------------------------------------

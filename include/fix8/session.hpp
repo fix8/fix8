@@ -572,9 +572,11 @@ public:
 
   /*! Clear reference to connection.  Called by ~Connection() to clear reference.
       \param connection being deleted */
-  inline void clear_connection(Connection *connection) {
-    if (connection == _connection) _connection = nullptr;
-  }
+	void clear_connection(Connection *connection)
+	{
+		if (connection == _connection)
+			_connection = nullptr;
+	}
 
 	/*! Process inbound messages. Called by connection object.
 	    \param from raw fix message
