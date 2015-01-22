@@ -423,8 +423,8 @@ public:
 	    \param reuse if true clear vector */
 	virtual void clear(bool reuse=true)
 	{
-		std::for_each (_fields.begin(), _fields.end(), [](Fields::value_type& pp) { delete pp.second; });
-		std::for_each (_groups.begin(), _groups.end(), [](Groups::value_type& pp) { delete pp.second; });
+    std::for_each(_fields.begin(), _fields.end(), [](Fields::value_type& pp) { delete pp.second; pp.second = nullptr; });
+    std::for_each(_groups.begin(), _groups.end(), [](Groups::value_type& pp) { delete pp.second; pp.second = nullptr; });
 		if (reuse)
 		{
 			_fields.clear();
