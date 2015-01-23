@@ -804,13 +804,16 @@ public:
 	    \param new_state new session state to set */
 	void do_state_change(const States::SessionStates new_state)
 	{
-		state_change(_state, new_state);
-		_state = new_state;
+    const States::SessionStates old_state = _state.exchange(new_state);
+    if (old_state != new_state)
+    {
+      state_change(old_state, new_state);
+    }
 	}
 
 	/*! Get the current session state enumeration
 	    \return States::SessionStates value */
-	States::SessionStates get_session_state() const { return _state; }
+	States::SessionStates get_session_state() const { return _state.load(); }
 
 	/*! Detach message passed to handle_application. Will set source to 0;
 	    Not thread safe and should never be called across threads. It should
