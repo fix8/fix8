@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -109,6 +109,7 @@ public:
 	/// Dtor.
 	virtual ~_f8_threadcore()
 	{
+	  join();
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
 #endif
@@ -128,9 +129,9 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		void *rptr(&_exitval);
-		return pthread_join(_tid, &rptr) ? -1 : _exitval;
+		return getid() != get_threadid() ? pthread_join(_tid, &rptr) ? -1 : _exitval : -1; // prevent self-join
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
-		if (_thread.get() && _thread->joinable())
+      if (_thread.get() && _thread->joinable() && getid() != get_threadid())
 			_thread->join();
 		return _exitval;
 #endif

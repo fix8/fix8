@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -120,7 +120,7 @@ endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec \
 	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh ${ffincludes} \
-	bootstrap README.md LICENSE runtime/dllmain.cpp stocklib/Makefile.am
+	bootstrap README.md LICENSE runtime/dllmain.cpp stocklib/Makefile.am stocklib/Makefile.in
 
 if USEDOXYGEN
 EXTRA_DIST += doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen

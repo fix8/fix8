@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -93,7 +93,9 @@ struct PocoSslContext
 		{
 			Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> phrase_handler(new Fix8PassPhraseHandler(!client));
 			Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler(new Fix8CertificateHandler(!client));
+#if POCO_VERSION >= 0x01040000
 			Poco::Net::initializeSSL();
+#endif
 			_context = new Poco::Net::Context(
 				client ? Poco::Net::Context::CLIENT_USE : Poco::Net::Context::SERVER_USE,
 				ctx._private_key_file, ctx._certificate_file, ctx._ca_location,
@@ -108,8 +110,10 @@ struct PocoSslContext
 
 	~PocoSslContext()
 	{
+#if POCO_VERSION >= 0x01040000
 		if (_context)
 			Poco::Net::uninitializeSSL();
+#endif
 	}
 
 	Poco::Net::Context::Ptr _context;

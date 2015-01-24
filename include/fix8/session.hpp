@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -197,16 +197,16 @@ struct Schedule
 {
 	Tickval _start, _end, _duration;
 	int _utc_offset, _start_day, _end_day;
-	Tickval::sticks _toffset;
+	Tickval::ticks _toffset;
 
 	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
-    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration=0/*Tickval::noticks*/, int utc_offset=0,
+    Schedule(Tickval start, Tickval end, Tickval duration=Tickval(), int utc_offset=0,
 			 int start_day=-1, int end_day=-1) :
 		_start(start), _end(end), _duration(duration),
 		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
-		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
+		_toffset(static_cast<Tickval::ticks>(_utc_offset) * Tickval::minute)
 	{
 	}
 
@@ -240,11 +240,11 @@ struct Schedule
 	/*! Take the current local time and test if it is within the range of this schedule
 	    \param prev current bool state that we will toggle
 	    \return new toggle state */
-	bool test(bool prev=false)
+	bool test(bool prev=false) const
 	{
 		Tickval now(true);
-		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
 		now.adjust(_toffset); // adjust for local utc offset
+		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
 		bool active(prev);
 
 		if (_start_day < 0) // start/end day not specified; daily only
@@ -261,8 +261,7 @@ struct Schedule
 		}
 		else
 		{
-			struct tm result;
-			now.as_tm(result);
+			const tm result(now.get_tm());
 
 			//cout >> now << ' ' >> (today + _start) << ' ' >> (today + _end) << ' ' << result.tm_wday << endl;
 
@@ -571,6 +570,14 @@ public:
 	F8API int start(Connection *connection, bool wait=true, const unsigned send_seqnum=0,
 		const unsigned recv_seqnum=0, const f8String davi=f8String());
 
+  /*! Clear reference to connection.  Called by ~Connection() to clear reference.
+      \param connection being deleted */
+	void clear_connection(Connection *connection)
+	{
+		if (connection == _connection)
+			_connection = nullptr;
+	}
+
 	/*! Process inbound messages. Called by connection object.
 	    \param from raw fix message
 	    \return true on success */
@@ -630,6 +637,9 @@ public:
 	    \param msg Message
 	    \return true on success */
 	F8API bool send_process(Message *msg);
+
+	/// Force persister to sync next send/receive seqnums
+	F8API void update_persist_seqnums();
 
 	/// stop the session.
 	F8API void stop();
@@ -780,8 +790,9 @@ public:
 	/*! Generate a reject message.
 	    \param seqnum message sequence number
 	    \param what rejection text
+	    \param msgtype offending msgtype
 	    \return new Message */
-	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what);
+	F8API virtual Message *generate_reject(const unsigned seqnum, const char *what, const char *msgtype=nullptr);
 
 	/*! Generate a business_reject message.
 	    \param seqnum message sequence number
@@ -823,27 +834,30 @@ public:
 		static const f8String unknown("Unknown");
 		return state < _state_names.size() ? _state_names[state] : unknown;
 	}
+
+	/*! Return the version and copyright for this version
+	    \return string */
+	F8API static const f8String copyright_string();
 };
 
 //-------------------------------------------------------------------------------------------------
 // our buffered RAII ostream log target, ostream Session log target for specified Session ptr
-#define ssout_info(x) if (!x->is_loggable(Logger::Info)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Info, FILE_LINE, std::placeholders::_2)))
-#define ssout(x) ssout_info(x)
-
-#define ssout_warn(x) if (!x->is_loggable(Logger::Warn)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Warn, FILE_LINE, std::placeholders::_2)))
-#define ssout_error(x) if (!x->is_loggable(Logger::Error)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Error, FILE_LINE, std::placeholders::_2)))
-#define ssout_fatal(x) if (!x->is_loggable(Logger::Fatal)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Fatal, FILE_LINE, std::placeholders::_2)))
+#define ssout_info(x) if (!x->is_loggable(FIX8::Logger::Info)); \
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Info, FILE_LINE, std::placeholders::_2)))
+#define ssout_warn(x) if (!x->is_loggable(FIX8::Logger::Warn)); \
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Warn, FILE_LINE, std::placeholders::_2)))
+#define ssout_error(x) if (!x->is_loggable(FIX8::Logger::Error)); \
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Error, FILE_LINE, std::placeholders::_2)))
+#define ssout_fatal(x) if (!x->is_loggable(FIX8::Logger::Fatal)); \
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Fatal, FILE_LINE, std::placeholders::_2)))
 #if defined F8_DEBUG
 #define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
-	else log_stream(logger_function(std::bind(&Session::enqueue, x, std::placeholders::_1, Logger::Debug, FILE_LINE, std::placeholders::_2)))
+    else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Debug, FILE_LINE, std::placeholders::_2)))
 #else
 #define ssout_debug(x) true ? null_insert() : null_insert()
 #endif
 
+#define ssout(x) ssout_info(x)
 #define slout ssout(this)
 #define slout_info ssout_info(this)
 #define slout_warn ssout_warn(this)

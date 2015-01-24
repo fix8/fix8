@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -150,7 +150,7 @@ Schedule Configuration::create_schedule(const XmlElement *which) const
 		string daytmp;
 		const int start_day(which->GetAttr("start_day", daytmp) ? decode_dow(daytmp) : -1);
 		const int end_day(which->GetAttr("end_day", daytmp) ? decode_dow(daytmp) : start_day < 0 ? -1 : start_day);
-		return {start, end, duration, utc_offset, start_day, end_day};
+		return {start, end, Tickval(static_cast<Tickval::ticks>(duration)), utc_offset, start_day, end_day};
 	}
 
 	return {};
