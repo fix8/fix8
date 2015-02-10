@@ -82,6 +82,10 @@ and framework; and a set of complete client/server test applications.
              <td>the f8c compiler source</td>
           </tr>
           <tr>
+             <td><code>contrib/</code></td>
+             <td>user contributed files</td>
+          </tr>
+          <tr>
              <td><code>doc/</code></td>
              <td>Fix8 documentation</td>
           </tr>

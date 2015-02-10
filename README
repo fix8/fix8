@@ -68,6 +68,9 @@ Directory    Description
      compiler/
              the f8c compiler source
 
+     contrib/
+             user contributed files
+
      doc/
              Fix8 documentation
 
