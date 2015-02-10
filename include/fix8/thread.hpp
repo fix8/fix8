@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //----------------------------------------------------------------------------------------
 #include <atomic>
+#include <cstdint>
 #include <memory>
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
@@ -80,7 +81,7 @@ class _f8_threadcore
 #endif
 
 protected:
-	int _exitval = 0;
+	std::uintptr_t _exitval = 0;
 
 	template<typename T>
 	int _start(void *sub)
@@ -129,7 +130,10 @@ public:
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		void *rptr(&_exitval);
-		return getid() != get_threadid() ? pthread_join(_tid, &rptr) ? -1 : _exitval : -1; // prevent self-join
+		if (0 == ::pthread_equal(getid(), get_threadid()) // prevent self-join
+			if (0==::pthread_join(_tid, &rptr))
+				return _exitval;
+		return -1;
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
       if (_thread.get() && _thread->joinable() && getid() != get_threadid())
 			_thread->join();
