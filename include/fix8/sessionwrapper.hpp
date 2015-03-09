@@ -248,10 +248,18 @@ public:
 	/// Dtor.
 	virtual ~ClientSession ()
 	{
-		delete _persist;
+		session_ptr()->clear_connection( _cc );
 		delete _session;
-		delete _log;
+		_session = nullptr;
+		_persist->stop();
+		delete _persist;
+		_persist = nullptr;
+		_plog->stop();
 		delete _plog;
+		_plog = nullptr;
+		_log->stop();
+		delete _log;
+		_log = nullptr;
 	}
 
 	/*! Get a pointer to the session
