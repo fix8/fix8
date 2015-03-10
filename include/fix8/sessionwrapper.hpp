@@ -254,10 +254,8 @@ public:
 		_persist->stop();
 		delete _persist;
 		_persist = nullptr;
-		_plog->stop();
 		delete _plog;
 		_plog = nullptr;
-		_log->stop();
 		delete _log;
 		_log = nullptr;
 	}
