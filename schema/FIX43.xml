@@ -2357,7 +2357,7 @@
   </field>
   <field number='30' name='LastMkt' type='EXCHANGE' />
   <field number='31' name='LastPx' type='PRICE' />
-  <field number='32' name='LastQty' type='QTY' />
+  <field number='32' name='LastQty' type='INT' />
   <field number='33' name='LinesOfText' type='NUMINGROUP' />
   <field number='34' name='MsgSeqNum' type='SEQNUM' />
   <field number='35' name='MsgType' type='STRING'>
@@ -2432,7 +2432,7 @@
   </field>
   <field number='36' name='NewSeqNo' type='SEQNUM' />
   <field number='37' name='OrderID' type='STRING' />
-  <field number='38' name='OrderQty' type='QTY' />
+  <field number='38' name='OrderQty' type='INT' />
   <field number='39' name='OrdStatus' type='CHAR'>
    <value enum='0' description='NEW' />
    <value enum='1' description='PARTIALLY_FILLED' />
@@ -2698,8 +2698,8 @@
   <field number='107' name='SecurityDesc' type='STRING' />
   <field number='108' name='HeartBtInt' type='INT' />
   <field number='109' name='ClientID' type='STRING' />
-  <field number='110' name='MinQty' type='QTY' />
-  <field number='111' name='MaxFloor' type='QTY' />
+  <field number='110' name='MinQty' type='INT' />
+  <field number='111' name='MaxFloor' type='INT' />
   <field number='112' name='TestReqID' type='STRING' />
   <field number='113' name='ReportToExch' type='BOOLEAN'>
    <value enum='Y' description='YES' />
