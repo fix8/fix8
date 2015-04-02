@@ -623,7 +623,7 @@ class SessionInstance : public SessionInstanceBase
 	Poco::Net::SocketAddress _claddr;
 	Poco::Net::StreamSocket *_sock;
 	T *_session;
-	ServerConnection _sc;
+	ServerConnection *_psc;
 
 public:
 	/// Ctor. Prepares session instance with inbound connection.
@@ -631,7 +631,7 @@ public:
 		_sf(sf),
 		_sock(new Poco::Net::StreamSocket(_sf.accept(_claddr))),
 		_session(new T(_sf._ctx, _sf.get_sender_comp_id(_sf._ses))),
-		_sc(_sock, _claddr, *_session, _sf.get_heartbeat_interval(_sf._ses), _sf.get_process_model(_sf._ses),
+		_psc(new ServerConnection(_sock, _claddr, *_session, _sf.get_heartbeat_interval(_sf._ses), _sf.get_process_model(_sf._ses),
 		_sf.get_tcp_nodelay(_sf._ses), _sf.get_tcp_reuseaddr(_sf._ses), _sf.get_tcp_linger(_sf._ses),
 		_sf.get_tcp_keepalive(_sf._ses),
 #ifdef HAVE_OPENSSL
@@ -639,7 +639,7 @@ public:
 #else
 		false
 #endif
-			)
+			))
 	{
 		_session->set_login_parameters(_sf._loginParameters);
 		_session->set_session_config(&_sf);
@@ -648,9 +648,21 @@ public:
 	/// Dtor.
 	virtual ~SessionInstance ()
 	{
+		if (_psc != nullptr)
+		{
+			_psc->stop();
+			_psc = nullptr;
+		}
+		if (_session != nullptr)
+		{
 		delete _session;
+			_session = nullptr;
+		}
+		if (_sock != nullptr)
+		{
 		delete _sock;
 		_sock = nullptr;
+		}
 	}
 
 	/*! Get a pointer to the session
@@ -662,7 +674,7 @@ public:
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) override
-		{ _session->start(&_sc, wait, send_seqnum, recv_seqnum); }
+		{ _session->start(_psc, wait, send_seqnum, recv_seqnum); }
 
 	/// Stop the session. Cleanup.
 	virtual void stop() override { _session->stop(); }
