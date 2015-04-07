@@ -251,9 +251,14 @@ public:
 		session_ptr()->clear_connection( _cc );
 		delete _session;
 		_session = nullptr;
-		_persist->stop();
-		delete _persist;
-		_persist = nullptr;
+
+		if (_persist != nullptr)
+		{
+			_persist->stop();
+			delete _persist;
+			_persist = nullptr;
+		}
+
 		delete _plog;
 		_plog = nullptr;
 		delete _log;
@@ -648,20 +653,43 @@ public:
 	/// Dtor.
 	virtual ~SessionInstance ()
 	{
-		if (_psc != nullptr)
+		try
 		{
-			_psc->stop();
-			_psc = nullptr;
+			if (_psc != nullptr)
+			{
+				_psc->stop();
+				_psc = nullptr;
+			}
 		}
-		if (_session != nullptr)
+		catch (...)
 		{
-		delete _session;
-			_session = nullptr;
+			std::cerr << "~SessionInstance - psc exception during cleanup" << std::endl;;
 		}
-		if (_sock != nullptr)
+
+		try
 		{
-		delete _sock;
-		_sock = nullptr;
+			if (_session != nullptr)
+			{
+				delete _session;
+				_session = nullptr;
+			}
+		}
+		catch (...)
+		{
+			std::cerr << "~SessionInstance - session exception during cleanup" << std::endl;
+		}
+
+		try
+		{
+			if (_sock != nullptr)
+			{
+				delete _sock;
+				_sock = nullptr;
+			}
+		}
+		catch (...)
+		{
+			std::cerr << "~SessionInstance - _sock exception during cleanup" << std::endl;
 		}
 	}
 
