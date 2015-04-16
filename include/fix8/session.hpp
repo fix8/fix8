@@ -755,7 +755,7 @@ public:
 
 	/*! See if this session is being shutdown.
 	    \return true if shutdown is underway */
-	bool is_shutdown() { return _control.has(shutdown); }
+	bool is_shutdown() { return _control.has(shutdown) || _state == States::st_session_terminated; }
 
 	/* ! Set the SessionConfig object - only for server sessions
 		\param sf pointer to SessionConfig object */
