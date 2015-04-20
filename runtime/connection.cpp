@@ -317,6 +317,7 @@ void Connection::stop()
 	scout_debug << "Connection::stop()";
 	_writer.stop();
 	_writer.join();
+	_writer.socket()->shutdownSend(); 	
 	_reader.stop();
 	_reader.join();
 	_reader.socket()->shutdownReceive();
