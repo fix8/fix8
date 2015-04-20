@@ -73,11 +73,14 @@ const vector<f8String> Session::_state_names
 void SessionID::make_id()
 {
 	ostringstream ostr;
-	ostr << _beginString << ':' << _targetCompID << "->" << _senderCompID;
-	_rid = ostr.str();
-	ostr.str("");
 	ostr << _beginString << ':' << _senderCompID << "->" << _targetCompID;
 	_id = ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+SessionID SessionID::make_reverse_id() const
+{
+	return SessionID(_beginString(), _targetCompID(), _senderCompID());
 }
 
 //-------------------------------------------------------------------------------------------------

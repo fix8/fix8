@@ -85,6 +85,10 @@ public:
 	/*! Create a sessionid and reverse sessionid strings. */
 	F8API void make_id();
 
+	/*! Create a reverse SessionID from the current SessionID
+	    \return reverse SessionID */
+	F8API SessionID make_reverse_id() const;
+
 	/// Create a sessionid string.
 	F8API void from_string(const f8String& from);
 
@@ -572,7 +576,7 @@ public:
 
   /*! Clear reference to connection.  Called by ~Connection() to clear reference.
       \param connection being deleted */
-	void clear_connection(Connection *connection)
+	void clear_connection(const Connection *connection)
 	{
 		if (connection == _connection)
 			_connection = nullptr;
