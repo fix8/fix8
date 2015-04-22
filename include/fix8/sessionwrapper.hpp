@@ -249,9 +249,13 @@ public:
 	virtual ~ClientSession ()
 	{
 		delete _persist;
+		_persist = nullptr;
 		delete _session;
+		_session = nullptr;
 		delete _log;
+		_log = nullptr;
 		delete _plog;
+		_plog = nullptr;
 	}
 
 	/*! Get a pointer to the session
@@ -643,6 +647,7 @@ public:
 	virtual ~SessionInstance ()
 	{
 		delete _session;
+		_session = nullptr;
 		delete _sock;
 		_sock = nullptr;
 	}

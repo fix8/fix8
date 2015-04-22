@@ -80,8 +80,6 @@ class _f8_threadcore
 #endif
 
 protected:
-	int _exitval = 0;
-
 	template<typename T>
 	int _start(void *sub)
 	{
@@ -128,12 +126,11 @@ public:
 	virtual int join(int timeoutInMs = 0)
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
-		void *rptr(&_exitval);
-		return getid() != get_threadid() ? pthread_join(_tid, &rptr) ? -1 : _exitval : -1; // prevent self-join
+		return getid() != get_threadid() ? pthread_join(_tid, nullptr) ? -1 : 0 : -1; // prevent self-join
 #elif (THREAD_SYSTEM == THREAD_STDTHREAD)
       if (_thread.get() && _thread->joinable() && getid() != get_threadid())
 			_thread->join();
-		return _exitval;
+		return 0;
 #endif
 	}
 
