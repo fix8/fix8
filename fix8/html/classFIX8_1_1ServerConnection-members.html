@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.2</span>
+   &#160;<span id="projectnumber">version  1.3.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1ServerConnection.html',''
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a9731f230011390e087e59b05753987a7">is_socket_error</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#ae626e72310afa1b0ef4ca9b4e6c3630b">join</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a544bc4a1bc8ae150f5cb938982f0170f">reader_execute</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a88307c6c8ed08aac1d9c2f4edd48a845">reader_poll</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a038f2089163012bb7eaffe41b8630d7b">reader_poll</a>(const Poco::Timespan &amp;ts=Poco::Timespan()) const </td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Role</a> enum name</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a54605d1259a21986a24bdf3d7f126320">send</a>(const char *from, size_t sz)</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#abfff6f1008357a229125ded4b3946b47">send</a>(const f8String &amp;from)</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -160,13 +160,13 @@ $(document).ready(function(){initNavTree('classFIX8_1_1ServerConnection.html',''
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03">write</a>(Message &amp;from)</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#afb1e8f489a3b24d5c45ae74b7a0c2eee">write_batch</a>(const std::vector&lt; Message * &gt; &amp;msgs, bool destroy)</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#acb5bd49224dd29cbd0f231773f72724c">writer_execute</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#aa7b01c3947687343007ec1362faeb54c">writer_poll</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#aff6f66cf1ac5c32d60f9199b2d7d2091">writer_poll</a>(const Poco::Timespan &amp;ts=Poco::Timespan()) const </td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Connection.html#a8b5e9ade90396694c34c2d10f5ec7321">~Connection</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1ServerConnection.html#a624f820257bd118ee2088f9741429baa">~ServerConnection</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1ServerConnection.html">FIX8::ServerConnection</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:33. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

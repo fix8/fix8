@@ -1,5 +1,9 @@
 var NAVTREEINDEX96 =
 {
+"classFIX8_1_1TEX_1_1TradingSessionListRequest.html#a9f4abf9e86969e97293e672b81ad4f32":[3,0,0,1,113,3],
+"classFIX8_1_1TEX_1_1TradingSessionListRequest.html#abe6caf548fa12294d1082b7a1f389917":[3,0,0,1,113,0],
+"classFIX8_1_1TEX_1_1TradingSessionListRequest.html#ade741022e51ab78dbbf8ac72ea5ce15b":[3,0,0,1,113,1],
+"classFIX8_1_1TEX_1_1TradingSessionListUpdateReport.html":[3,0,0,1,114],
 "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport.html#a2222d35121660f859c2141d072ad2638":[3,0,0,1,114,9],
 "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport.html#a5e45aaae85fc5992d0950652b1b1dc3f":[3,0,0,1,114,3],
 "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport.html#a89a2ae1543ac272f63bacc5a2fb562a9":[3,0,0,1,114,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX96 =
 "classFIX8_1_1TEX_1_1UserResponse.html#a075019172f9441491ff72d00fd7c4c56":[3,0,0,1,120,6],
 "classFIX8_1_1TEX_1_1UserResponse.html#a633d38afa60a9979e1e13f615894c919":[3,0,0,1,120,3],
 "classFIX8_1_1TEX_1_1UserResponse.html#a657e5916006deb741984c31c8723e572":[3,0,0,1,120,0],
-"classFIX8_1_1TEX_1_1UserResponse.html#a79a7a3202718732bf8cbb7fc4fdd23b4":[3,0,0,1,120,4],
-"classFIX8_1_1TEX_1_1UserResponse.html#a8667824330acc45df83db1a2217b6189":[3,0,0,1,120,2],
-"classFIX8_1_1TEX_1_1UserResponse.html#a88eda7db685e14fa1c4e126217b99f79":[3,0,0,1,120,1],
-"classFIX8_1_1TEX_1_1UserResponse.html#aa3949fb39eeb393a67e31be64860b0e2":[3,0,0,1,120,5],
-"classFIX8_1_1TEX_1_1UserResponse.html#aaa628a1f6be4563cd81a4ad870eedfce":[3,0,0,1,120,7]
+"classFIX8_1_1TEX_1_1UserResponse.html#a79a7a3202718732bf8cbb7fc4fdd23b4":[3,0,0,1,120,4]
 };

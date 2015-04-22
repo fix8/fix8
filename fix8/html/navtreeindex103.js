@@ -1,5 +1,10 @@
 var NAVTREEINDEX103 =
 {
+"session_8hpp.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0":[4,0,67,21],
+"session_8hpp.html#a97f275120a691858571f2cdd7bf1d852afd2ee3c3dfde91bf4f9bc487f7866bf0":[4,0,67,26],
+"session_8hpp.html#a97f275120a691858571f2cdd7bf1d852afe4cec891e5ae67b5b1e37dbe7cb9a32":[4,0,67,25],
+"session_8hpp.html#ab575b291fe3119992c4f361728ae325e":[4,0,67,8],
+"session_8hpp.html#abde29b2bf6e562b5b087b3b963141ea5":[4,0,67,28],
 "session_8hpp.html#ad04d95d763173156926abf941ff14b67":[4,0,67,13],
 "session_8hpp.html#ada18d935f0dad64e025d798be60fc3f1":[4,0,67,11],
 "session_8hpp.html#ae9f67d4c5d1c68f1f170c6108eeb37d3":[4,0,67,9],
@@ -244,10 +249,5 @@ var NAVTREEINDEX103 =
 "structFIX8_1_1LoginParameters.html#a2bb31e1498cf5662fa81f580518da15e":[3,0,0,89,0],
 "structFIX8_1_1LoginParameters.html#a35150026e4e97c0fa0bc7f329edca9dd":[3,0,0,89,8],
 "structFIX8_1_1LoginParameters.html#a4b95d2692ef0925b9ee3e26aae630927":[3,0,0,89,1],
-"structFIX8_1_1LoginParameters.html#a5ec1da688c6ee4217065821d226e17f1":[3,0,0,89,20],
-"structFIX8_1_1LoginParameters.html#a655e9cca70befcef8ac0846995ea26a2":[3,0,0,89,10],
-"structFIX8_1_1LoginParameters.html#a7163d383c158b6058a8da9a6556277f1":[3,0,0,89,18],
-"structFIX8_1_1LoginParameters.html#a722081772ee138901bcfdb83b8f014ea":[3,0,0,89,6],
-"structFIX8_1_1LoginParameters.html#a8555e4d6b237991e3e81a742b61a4370":[3,0,0,89,5],
-"structFIX8_1_1LoginParameters.html#a86ab3ecd3d8c560f3dce6d5f9fe1bbcf":[3,0,0,89,12]
+"structFIX8_1_1LoginParameters.html#a5ec1da688c6ee4217065821d226e17f1":[3,0,0,89,20]
 };

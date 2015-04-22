@@ -1,5 +1,9 @@
 var NAVTREEINDEX54 =
 {
+"classFIX8_1_1TEX_1_1MarketDefinition.html#a125dd664c5586aac2aa9cf011a977d27":[3,0,0,1,47,11],
+"classFIX8_1_1TEX_1_1MarketDefinition.html#a3046ca42042a07f36968bac7e971a026":[3,0,0,1,47,13],
+"classFIX8_1_1TEX_1_1MarketDefinition.html#a34a99cc10b2d00058e694d732c19a3c9":[3,0,0,1,47,10],
+"classFIX8_1_1TEX_1_1MarketDefinition.html#a6c82177790622d5b0409c0c030dfe939":[3,0,0,1,47,8],
 "classFIX8_1_1TEX_1_1MarketDefinition.html#a7062d29044082d40bb88ae3deeb1ac06":[3,0,0,1,47,5],
 "classFIX8_1_1TEX_1_1MarketDefinition.html#a78d55a0fc9666df7fb0db0f820bea2fe":[3,0,0,1,47,6],
 "classFIX8_1_1TEX_1_1MarketDefinition.html#a8b4dc438949baf38824a96458f03fe00":[3,0,0,1,47,12],
@@ -245,9 +249,5 @@ var NAVTREEINDEX54 =
 "classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a31461be14233fbf6b891821b7b894380a11a9adde2ed48ab9a6b661bcbdfe062a":[3,0,0,1,51,1,0,2,0,0],
 "classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a51e9c5467ca21d479710e31caa9d9a60":[3,0,0,1,51,1,0,2,0,4],
 "classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a7835cf5ec30ac000ea70486c2526a4e0":[3,0,0,1,51,1,0,2,0,2],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a7aaa8a83fdebd851b4dbdbc5a006f8ee":[3,0,0,1,51,1,0,2,0,7],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a927d8ae766935c1ac0b47e56c3f74a2d":[3,0,0,1,51,1,0,2,0,8],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#aa08a0e24f80abc43dc6152afbccf5f1e":[3,0,0,1,51,1,0,2,0,6],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#aa91f07c816d4967e71f2a8268a569b27":[3,0,0,1,51,1,0,2,0,1],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#ad0a10fd27003f6d05b360771d283fbcd":[3,0,0,1,51,1,0,2,0,3]
+"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a7aaa8a83fdebd851b4dbdbc5a006f8ee":[3,0,0,1,51,1,0,2,0,7]
 };

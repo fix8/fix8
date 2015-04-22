@@ -11,7 +11,7 @@ var searchData=
   ['read',['read',['../classFIX8_1_1FIXReader.html#ad5e35dd10c8a91c2dbc5aacd495d1f52',1,'FIX8::FIXReader']]],
   ['read_5fmsgs',['read_msgs',['../classMyMenu.html#ab64647226fa0f4566edcdb477c90cbdf',1,'MyMenu']]],
   ['reader_5fexecute',['reader_execute',['../classFIX8_1_1Connection.html#a544bc4a1bc8ae150f5cb938982f0170f',1,'FIX8::Connection']]],
-  ['reader_5fpoll',['reader_poll',['../classFIX8_1_1Connection.html#a88307c6c8ed08aac1d9c2f4edd48a845',1,'FIX8::Connection']]],
+  ['reader_5fpoll',['reader_poll',['../classFIX8_1_1Connection.html#a038f2089163012bb7eaffe41b8630d7b',1,'FIX8::Connection']]],
   ['realmbase',['RealmBase',['../structFIX8_1_1RealmBase.html#a7c98c73abe96deec71b0592cf4716779',1,'FIX8::RealmBase']]],
   ['realmobject',['RealmObject',['../classFIX8_1_1RealmObject.html#a92eab4d47ad174a95f3aa59cd76cead5',1,'FIX8::RealmObject']]],
   ['receive_5fmessage',['receive_message',['../classFIX8_1_1MBUS_1_1MessageBusSubscriber.html#a98871874c67f26255a1506a41821311d',1,'FIX8::MBUS::MessageBusSubscriber']]],

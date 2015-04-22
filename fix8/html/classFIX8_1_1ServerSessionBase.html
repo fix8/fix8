@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.2</span>
+   &#160;<span id="projectnumber">version  1.3.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -294,11 +294,22 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:abfd10e9bcc48a413d5302ba4b9be9839 inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61e368460852c06c863eeeeee18802ec inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1SessionConfig.html#a61e368460852c06c863eeeeee18802ec">_session_name</a></td></tr>
 <tr class="separator:a61e368460852c06c863eeeeee18802ec inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classFIX8_1_1Configuration"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classFIX8_1_1Configuration')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td></tr>
+<tr class="memitem:a9e1c5de8b8a5ee4d0f88b8e6c97774ae inherit pro_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a9e1c5de8b8a5ee4d0f88b8e6c97774ae">from_or_default</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> &amp;tag, <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> &amp;target) const </td></tr>
+<tr class="separator:a9e1c5de8b8a5ee4d0f88b8e6c97774ae inherit pro_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7693a3f4a90f3366e6871355e62998c8 inherit pro_methods_classFIX8_1_1Configuration"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7693a3f4a90f3366e6871355e62998c8 inherit pro_methods_classFIX8_1_1Configuration"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const std::string &amp;tag, T &amp;to) const </td></tr>
+<tr class="separator:a7693a3f4a90f3366e6871355e62998c8 inherit pro_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a357ce80f87229e1d20b109dc0d5fab inherit pro_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a5a357ce80f87229e1d20b109dc0d5fab">get_time_field</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const std::string &amp;tag, bool timeonly=false) const </td></tr>
+<tr class="separator:a5a357ce80f87229e1d20b109dc0d5fab inherit pro_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a400b60a7825059747e4e63de81669aec inherit pro_methods_classFIX8_1_1Configuration"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a400b60a7825059747e4e63de81669aec inherit pro_methods_classFIX8_1_1Configuration"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const std::string &amp;tag, const T def) const </td></tr>
+<tr class="separator:a400b60a7825059747e4e63de81669aec inherit pro_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base <a class="el" href="structFIX8_1_1Server.html" title="Class to hold server settings for failoverable sessions. ">Server</a> <a class="el" href="classFIX8_1_1Session.html" title="Fix8 Base Session. User sessions are derived from this class. ">Session</a>. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00494">494</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00498">498</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9bdecf6cf10156feeb91cc6a199854f9"></a>
 <div class="memitem">
@@ -340,7 +351,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Ctor. Prepares session for receiving inbbound connections (acceptor). </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00501">501</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00505">505</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -367,9 +378,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00506">506</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00510">510</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00497">_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00501">_server_sock</a>.</p>
 
 </div>
 </div>
@@ -403,9 +414,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the connected socket </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00525">525</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00529">529</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00497">_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00501">_server_sock</a>.</p>
 
 </div>
 </div>
@@ -461,7 +472,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1ServerSession.html#ad4a62510a423b68ab5842be9168908d3">FIX8::ServerSession&lt; T &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00530">530</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00534">534</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -494,9 +505,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a connection is avaialble </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00519">519</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00523">523</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00497">_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00501">_server_sock</a>.</p>
 
 </div>
 </div>
@@ -519,7 +530,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00532">532</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00536">536</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -542,9 +553,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00497">497</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00501">501</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00525">accept()</a>, <a class="el" href="multisession_8hpp_source.html#l00060">FIX8::ServerManager::add()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00519">poll()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00548">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00506">~ServerSessionBase()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00529">accept()</a>, <a class="el" href="multisession_8hpp_source.html#l00060">FIX8::ServerManager::add()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00523">poll()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00552">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00510">~ServerSessionBase()</a>.</p>
 
 </div>
 </div>
@@ -554,7 +565,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jan 2 2015 15:49:33. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

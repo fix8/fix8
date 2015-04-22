@@ -2,7 +2,7 @@ var searchData=
 [
   ['package',['PACKAGE',['../f8config_8h.html#aca8570fb706c81df371b7f9bc454ae03',1,'f8config.h']]],
   ['package_5fbugreport',['PACKAGE_BUGREPORT',['../f8config_8h.html#a1d1d2d7f8d2f95b376954d649ab03233',1,'f8config.h']]],
-  ['package_5finfo',['package_info',['../namespaceFIX8.html#a162a48764928c05e39c07d8315b183c6',1,'FIX8::package_info()'],['../namespaceFIX8.html#abada2deba773587fe7c9a693136c805a',1,'FIX8::Package_info()']]],
+  ['package_5finfo',['Package_info',['../namespaceFIX8.html#abada2deba773587fe7c9a693136c805a',1,'FIX8::Package_info()'],['../namespaceFIX8.html#a162a48764928c05e39c07d8315b183c6',1,'FIX8::package_info()']]],
   ['package_5fname',['PACKAGE_NAME',['../f8config_8h.html#a1c0439e4355794c09b64274849eb0279',1,'f8config.h']]],
   ['package_5fstring',['PACKAGE_STRING',['../f8config_8h.html#ac73e6f903c16eca7710f92e36e1c6fbf',1,'f8config.h']]],
   ['package_5ftarname',['PACKAGE_TARNAME',['../f8config_8h.html#af415af6bfede0e8d5453708afe68651c',1,'f8config.h']]],
@@ -315,7 +315,7 @@ var searchData=
   ['pm_5fcount',['pm_count',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83ae004040754630fc147bbd4b038088d16',1,'FIX8']]],
   ['pm_5fpipeline',['pm_pipeline',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a2d62ac51b86fdbba00ccdc1c2b7012e4',1,'FIX8']]],
   ['pm_5fthread',['pm_thread',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014',1,'FIX8']]],
-  ['poll',['poll',['../classFIX8_1_1FIXReader.html#a5c9ed76959e89bb0b519605e8b7bb854',1,'FIX8::FIXReader::poll()'],['../classFIX8_1_1FIXWriter.html#a9bf9b87b70d0f1ca2d6aa0dc90bc2432',1,'FIX8::FIXWriter::poll()'],['../classFIX8_1_1ServerSessionBase.html#a731f57bed09a71ab11bc9a614fc5df3f',1,'FIX8::ServerSessionBase::poll()']]],
+  ['poll',['poll',['../classFIX8_1_1FIXReader.html#ad4de0f0b65f3d6fb80ba777c8c5bd91d',1,'FIX8::FIXReader::poll()'],['../classFIX8_1_1FIXWriter.html#ac9c2af0ab21a6bff65134ef8286a0539',1,'FIX8::FIXWriter::poll()'],['../classFIX8_1_1ServerSessionBase.html#a731f57bed09a71ab11bc9a614fc5df3f',1,'FIX8::ServerSessionBase::poll()']]],
   ['pool',['Pool',['../namespaceFIX8_1_1TEX.html#a20edae2bca4793453f42bcf0d15cc2c0',1,'FIX8::TEX']]],
   ['pop',['pop',['../classFIX8_1_1ff__unbounded__queue.html#aa42a2e0b8dd6c111c9d8746916db914f',1,'FIX8::ff_unbounded_queue::pop()'],['../classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html#a462ebd7a013ac5237ef5319a6f69cae1',1,'FIX8::ff_unbounded_queue&lt; T * &gt;::pop()'],['../classhf__session__client.html#a9c13b89344876f8134c5061e5f40a299',1,'hf_session_client::pop()']]],
   ['posamt',['PosAmt',['../namespaceFIX8_1_1TEX.html#ad76a01304d7e8119f7a7a96a276cfd36',1,'FIX8::TEX']]],

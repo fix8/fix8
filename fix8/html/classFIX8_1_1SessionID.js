@@ -12,6 +12,7 @@ var classFIX8_1_1SessionID =
     [ "get_senderCompID", "classFIX8_1_1SessionID.html#ae04a5c1c434de1bc5725b2007ff5f70b", null ],
     [ "get_targetCompID", "classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887", null ],
     [ "make_id", "classFIX8_1_1SessionID.html#a0ce1f3ba3cf5355bff480325f4acce0a", null ],
+    [ "make_reverse_id", "classFIX8_1_1SessionID.html#a1c7135daf30837fb27dc9c205691e37c", null ],
     [ "operator!=", "classFIX8_1_1SessionID.html#a29eb9b074795ab5d2130b41f277945bf", null ],
     [ "operator==", "classFIX8_1_1SessionID.html#a789379d2065f1d0f58c89d4d0e2573f4", null ],
     [ "same_sender_comp_id", "classFIX8_1_1SessionID.html#a1bf9f1d4481a8f1fdcac77cceefa1367", null ],

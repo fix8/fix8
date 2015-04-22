@@ -11,6 +11,6 @@ var searchData=
   ['write_5fbatch',['write_batch',['../classFIX8_1_1FIXWriter.html#a8f584b0f12b6463ba24047b607dd63b5',1,'FIX8::FIXWriter::write_batch()'],['../classFIX8_1_1Connection.html#afb1e8f489a3b24d5c45ae74b7a0c2eee',1,'FIX8::Connection::write_batch()']]],
   ['write_5fmsgs',['write_msgs',['../classMyMenu.html#aa702d8304303510898b9938e1dc15c07',1,'MyMenu']]],
   ['writer_5fexecute',['writer_execute',['../classFIX8_1_1Connection.html#acb5bd49224dd29cbd0f231773f72724c',1,'FIX8::Connection']]],
-  ['writer_5fpoll',['writer_poll',['../classFIX8_1_1Connection.html#aa7b01c3947687343007ec1362faeb54c',1,'FIX8::Connection']]],
+  ['writer_5fpoll',['writer_poll',['../classFIX8_1_1Connection.html#aff6f66cf1ac5c32d60f9199b2d7d2091',1,'FIX8::Connection']]],
   ['wtaverageliquidity',['WtAverageLiquidity',['../namespaceFIX8_1_1TEX.html#a3e57308322a45dcf9211286521d0736b',1,'FIX8::TEX']]]
 ];

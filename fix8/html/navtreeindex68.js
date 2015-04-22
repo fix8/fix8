@@ -1,5 +1,9 @@
 var NAVTREEINDEX68 =
 {
+"classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#af4225600e13cd0091f6165d5c612b360":[3,0,0,1,69,3,0,7],
+"classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html":[3,0,0,1,69,4],
+"classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html#a0c984245e2cdaea24544f2f5c3f8cd34":[3,0,0,1,69,4,7],
+"classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html#a3ee421b631ca543c1b5c878f047f108e":[3,0,0,1,69,4,3],
 "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html#a7b2e18de84e2932118082adaa185df6f":[3,0,0,1,69,4,8],
 "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html#a8d171ab826645cd6ae74f35830df533f":[3,0,0,1,69,4,2],
 "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html#a94321d6eec5523b2a8f53bd9b771b94e":[3,0,0,1,69,4,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX68 =
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a662be6e1270b92dd398cc5b4df7eca2c":[3,0,0,1,70,0,3,4,0,7],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a8989df3e30e19e2c7f516e9219c0611ca6db9f1c2c8ea2b40851b587cb96534e4":[3,0,0,1,70,0,3,4,0,1],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aa194a962e38b8a3a62f6ea4800913566":[3,0,0,1,70,0,3,4,0,6],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aa917b1433de913ee0c297c78b94257cf":[3,0,0,1,70,0,3,4,0,5],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#ae28148a5f54009497cd0b27e29580564":[3,0,0,1,70,0,3,4,0,8],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html":[3,0,0,1,70,0,4],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a667e7f5efcb9dd692eb0836b23ae6b6b":[3,0,0,1,70,0,4,7],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a74a6a12737d7b29cf75469609172ed2f":[3,0,0,1,70,0,4,11]
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aa917b1433de913ee0c297c78b94257cf":[3,0,0,1,70,0,3,4,0,5]
 };

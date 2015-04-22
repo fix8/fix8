@@ -4,7 +4,7 @@ var classFIX8_1_1FIXWriter =
     [ "~FIXWriter", "classFIX8_1_1FIXWriter.html#a3d2612fbcd4ea437476569ffc2257bad", null ],
     [ "execute", "classFIX8_1_1FIXWriter.html#a1f2a3806fce8871fa2101eea6dd8cacb", null ],
     [ "join", "classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d", null ],
-    [ "poll", "classFIX8_1_1FIXWriter.html#a9bf9b87b70d0f1ca2d6aa0dc90bc2432", null ],
+    [ "poll", "classFIX8_1_1FIXWriter.html#ac9c2af0ab21a6bff65134ef8286a0539", null ],
     [ "quit", "classFIX8_1_1FIXWriter.html#ac2966d608d9576f56fd828e36e1492e0", null ],
     [ "send", "classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5", null ],
     [ "start", "classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc", null ],

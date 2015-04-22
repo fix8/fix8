@@ -1,5 +1,9 @@
 var NAVTREEINDEX66 =
 {
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#aa8937342bb933179f1401535ad61038c":[3,0,0,1,66,3,0,7],
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#ab72b9b45b35883b7ec5d8b2ae87acd62ac52f8ad8b6a01a6deedb395bc99b22e2":[3,0,0,1,66,3,0,0],
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#acd902a796310fca652fb3ed1ab0cd40b":[3,0,0,1,66,3,0,5],
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#adbf410ef0887dfaad141e88f08354b53":[3,0,0,1,66,3,0,8],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#aeaeaf6c5fc0eacc51d4f0de791217137":[3,0,0,1,66,3,0,4],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoNotAffectedOrders.html":[3,0,0,1,66,4],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoNotAffectedOrders.html#a53c9a94224a1a14adfa907b6995d56b1":[3,0,0,1,66,4,4],
@@ -245,9 +249,5 @@ var NAVTREEINDEX66 =
 "classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a5d135d22b414e8d9f70e741220d15395":[3,0,0,1,67,8,0,6],
 "classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a630b8dee6ff55b84b0254d46438b3dff":[3,0,0,1,67,8,0,8],
 "classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a931dce589ce334c54db4346c904ade21":[3,0,0,1,67,8,0,5],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a9cd701317281037e7a06c4ad2f6b9a3caaf5b74f9aaa870f1825853bd2e514be8":[3,0,0,1,67,8,0,0],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ad3801afe9b2359d99406dd20d5fb91eb":[3,0,0,1,67,8,0,4],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ae6062844628ce83fe1c000167b6145c5":[3,0,0,1,67,8,0,1],
-"classFIX8_1_1TEX_1_1OrderMassStatusRequest.html":[3,0,0,1,68],
-"classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#a18453de952737c02cb04aed82d30ef71":[3,0,0,1,68,10]
+"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a9cd701317281037e7a06c4ad2f6b9a3caaf5b74f9aaa870f1825853bd2e514be8":[3,0,0,1,67,8,0,0]
 };

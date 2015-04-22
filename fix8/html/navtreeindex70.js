@@ -1,5 +1,9 @@
 var NAVTREEINDEX70 =
 {
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#ab2199acf402223f6b6956883ce824a1b":[3,0,0,1,73,6,5],
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#ac651c6fdf5c5fe1d2021775b8699eddb":[3,0,0,1,73,6,6],
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#ad6229de992f503848c7f896808f07d9c":[3,0,0,1,73,6,4],
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html":[3,0,0,1,73,6,0],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html#a0073e03ba306d3720c91a2cfd55ad9b6":[3,0,0,1,73,6,0,4],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html#a1685f97792481261f066116537f2d690":[3,0,0,1,73,6,0,7],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html#a347219bad6895809e8c2bedee0383abc":[3,0,0,1,73,6,0,2],
@@ -245,9 +249,5 @@ var NAVTREEINDEX70 =
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a39b48187a901ee11baa84dbede7ab4e3":[3,0,0,1,74,6,0,0,7],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a5bc1b6d1c8b4fa0eea1f87f82dadb333":[3,0,0,1,74,6,0,0,5],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a76cbc255bf6e663cae0ba63c02c4f091":[3,0,0,1,74,6,0,0,4],
-"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#aaf4293b80bfe5f56f2e3af96439212b0":[3,0,0,1,74,6,0,0,8],
-"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#ab09519162e867817ef07b333a4e52223a4cdbf3db5ead8612c03676a443409241":[3,0,0,1,74,6,0,0,0],
-"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#ad66144f1a5b808075d0e392a76cccb92":[3,0,0,1,74,6,0,0,1],
-"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#ae4e752079f7ddfb3a4d65a081298da21":[3,0,0,1,74,6,0,0,2],
-"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoSecurityAltID.html":[3,0,0,1,74,7]
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#aaf4293b80bfe5f56f2e3af96439212b0":[3,0,0,1,74,6,0,0,8]
 };

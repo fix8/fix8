@@ -17,5 +17,6 @@ var message_8hpp =
     [ "MsgTable", "message_8hpp.html#ad6e7e238259ac99f6229c4f895db780d", null ],
     [ "Positions", "message_8hpp.html#abbffbb10a480487f66c0a3e14cebc40c", null ],
     [ "ReverseFieldTable", "message_8hpp.html#af3230b51d5c360325e3e147aab7997f0", null ],
-    [ "ReverseMsgTable", "message_8hpp.html#a2803478e4d634cde99e1cf4d47bb1743", null ]
+    [ "ReverseMsgTable", "message_8hpp.html#a2803478e4d634cde99e1cf4d47bb1743", null ],
+    [ "operator<<", "message_8hpp.html#abb9e58f7a66e4c39d492456bfcf6458a", null ]
 ];

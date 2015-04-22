@@ -14,6 +14,5 @@ var classFIX8_1_1__f8__threadcore =
     [ "start", "classFIX8_1_1__f8__threadcore.html#a5880b6f42d2f3d1af4eb671dfdb78dd9", null ],
     [ "yield", "classFIX8_1_1__f8__threadcore.html#a2609a157a5b9dc0653113394ba9b2c28", null ],
     [ "_attr", "classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926", null ],
-    [ "_exitval", "classFIX8_1_1__f8__threadcore.html#a78c95f5d056e49a8a192ea03bdc78d3b", null ],
     [ "_tid", "classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6", null ]
 ];

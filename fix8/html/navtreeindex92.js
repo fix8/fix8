@@ -1,5 +1,9 @@
 var NAVTREEINDEX92 =
 {
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a487e4dce343961b30f914f4d1b902b53":[3,0,0,1,109,5,0,4],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a8e78f16f78370c1d6fdd23c1c812d1f0":[3,0,0,1,109,5,0,1],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a9a3b5745f956d10095ab07037019cf9e":[3,0,0,1,109,5,0,5],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#ab1d52dd97164cefa7f5c1ab63c2045df":[3,0,0,1,109,5,0,3],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#ac4142dc670688de956153ec31d05570bad20d357160b185923cbbfc65127a3342":[3,0,0,1,109,5,0,0],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#ac74771757200051ac3eabbbdb40aee28":[3,0,0,1,109,5,0,2],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#ad42ff51f4a354dee71e188d6fc14f04a":[3,0,0,1,109,5,0,6],
@@ -245,9 +249,5 @@ var NAVTREEINDEX92 =
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html":[3,0,0,1,111],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a4f6d21ba58f832477c685898fb53ec01":[3,0,0,1,111,14],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a938b88b58c4d31df286210bfe22a39ea":[3,0,0,1,111,10],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a960fd12d795f2503cbbbebd2194bfd94":[3,0,0,1,111,7],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a96ebae4a2ebdd9f9f79016706b797f92":[3,0,0,1,111,9],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a9790234de0fe7eedbba6f754aa132e06":[3,0,0,1,111,13],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a9fc99a96160ee2335c98db1ff14299ba":[3,0,0,1,111,8],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#aa6abbcdaabb989ef03f37227fd0a22b2":[3,0,0,1,111,12]
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#a960fd12d795f2503cbbbebd2194bfd94":[3,0,0,1,111,7]
 };

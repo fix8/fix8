@@ -12,6 +12,7 @@ var classFIX8_1_1GroupBase =
     [ "operator[]", "classFIX8_1_1GroupBase.html#ab440a14b144fa2c5c9c842c10a4942f4", null ],
     [ "size", "classFIX8_1_1GroupBase.html#ab6703c76e42e7cef1f74dd8d3726f908", null ],
     [ "MessageBase", "classFIX8_1_1GroupBase.html#a139cd168bbc5193327f4459beb465d83", null ],
+    [ "operator<<", "classFIX8_1_1GroupBase.html#ac45c84c2dde99c971d14f2593414da1d", null ],
     [ "_fnum", "classFIX8_1_1GroupBase.html#a135c1ea18244353d0ae64a083af4eaf4", null ],
     [ "_msgs", "classFIX8_1_1GroupBase.html#aec418dc3f23009cad3f2c4215f78ffac", null ]
 ];

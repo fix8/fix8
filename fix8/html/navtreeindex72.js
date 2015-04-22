@@ -1,5 +1,9 @@
 var NAVTREEINDEX72 =
 {
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a7a233d7624f48e506c253177627ea3f6":[3,0,0,1,75,8,7],
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#ab56b8dbf06c451f6571691241e89bc07":[3,0,0,1,75,8,11],
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#abfa825bb8ad0eec21e3f60ef811dc446":[3,0,0,1,75,8,8],
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingAmounts.html":[3,0,0,1,75,8,0],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingAmounts.html#a0c8471ef09aa8019466f81efb084ad2e":[3,0,0,1,75,8,0,4],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingAmounts.html#a0fa534447561c08452c25b961cac0709":[3,0,0,1,75,8,0,6],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingAmounts.html#a166f73d5ad2fbb56e81c71a28bd7fc90a7576256914002c48024e8fd341ab2128":[3,0,0,1,75,8,0,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX72 =
 "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a1a792348334255b9e1a1b540b3b303a6":[3,0,0,1,77,1,5,2,0,1],
 "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a2d5f7fad840c44c70f1a674c9bd81eb3":[3,0,0,1,77,1,5,2,0,3],
 "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a448d85c3bae2fa25430b82a55ff0ee68":[3,0,0,1,77,1,5,2,0,6],
-"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a5767e55cf4fa045abbc0888a66f3d40e":[3,0,0,1,77,1,5,2,0,7],
-"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ab35489af33a8211551a9e8c8be4db683":[3,0,0,1,77,1,5,2,0,5],
-"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac17b8032e0202fd97016a726d7f41468":[3,0,0,1,77,1,5,2,0,2],
-"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoTargetPartyIDs.html":[3,0,0,1,77,2],
-"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoTargetPartyIDs.html#a2a2f3d418ca954ddb10b770002f01deb":[3,0,0,1,77,2,2]
+"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a5767e55cf4fa045abbc0888a66f3d40e":[3,0,0,1,77,1,5,2,0,7]
 };

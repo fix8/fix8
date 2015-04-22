@@ -1,5 +1,9 @@
 var NAVTREEINDEX65 =
 {
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#a30d84c2c3d8bfff7e0c89fe1e992a84d":[3,0,0,1,64,10,9],
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#a3f31025d923c2bfcd18b040345e3768f":[3,0,0,1,64,10,4],
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#a5d76bda6589129dd968dde104f66d6f5":[3,0,0,1,64,10,3],
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#a6e1fa664276cd21d6f29d97df13b0337":[3,0,0,1,64,10,2],
 "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#a8e086c25a5cd8c55ddd68c0dff53d03f":[3,0,0,1,64,10,8],
 "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#aa2ec2155b3bbe952dee356e5faca8a92":[3,0,0,1,64,10,5],
 "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties.html#ac8cba0611f0fa4b701a66b450c832417af7061918c35bbe625bcc0dc9b6f7ad18":[3,0,0,1,64,10,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX65 =
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a5cf36b1270bc4c370fa493bf64c4c972":[3,0,0,1,66,3,0,2],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a6f6429ffa0d8f0e7d38d64790113078f":[3,0,0,1,66,3,0,6],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a7491e2fde1c03601a92ac539a18f6706":[3,0,0,1,66,3,0,3],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a958504548ba401ad7e2cb53d2691e5e3":[3,0,0,1,66,3,0,1],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#aa8937342bb933179f1401535ad61038c":[3,0,0,1,66,3,0,7],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#ab72b9b45b35883b7ec5d8b2ae87acd62ac52f8ad8b6a01a6deedb395bc99b22e2":[3,0,0,1,66,3,0,0],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#acd902a796310fca652fb3ed1ab0cd40b":[3,0,0,1,66,3,0,5],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#adbf410ef0887dfaad141e88f08354b53":[3,0,0,1,66,3,0,8]
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a958504548ba401ad7e2cb53d2691e5e3":[3,0,0,1,66,3,0,1]
 };

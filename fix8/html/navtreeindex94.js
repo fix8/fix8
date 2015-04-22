@@ -1,5 +1,9 @@
 var NAVTREEINDEX94 =
 {
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoLegs_1_1NoLegSecurityAltID.html#a7bd77435f99fb503030a1446f53e3bea":[3,0,0,1,110,5,0,1],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoLegs_1_1NoLegSecurityAltID.html#a881935dc99966ed30d0075e7a6fb52ba":[3,0,0,1,110,5,0,7],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoLegs_1_1NoLegSecurityAltID.html#aa098dd6b256dcf309929047c164678fb":[3,0,0,1,110,5,0,4],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoLegs_1_1NoLegSecurityAltID.html#acdcffdb04ab8a376c9455b935e53b67d":[3,0,0,1,110,5,0,3],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoLegs_1_1NoLegSecurityAltID.html#ad56f5f9d19377935fbc31574809be926":[3,0,0,1,110,5,0,8],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoLegs_1_1NoLegSecurityAltID.html#adae4c1702b8e472e422d467eb548a541":[3,0,0,1,110,5,0,2],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoPartyIDs.html":[3,0,0,1,110,6],
@@ -245,9 +249,5 @@ var NAVTREEINDEX94 =
 "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html":[3,0,0,1,108,5,0],
 "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a41494b23a08ad8a87e6f56781483ae37":[3,0,0,1,108,5,0,3],
 "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a439796103065e243bfb34d5ee51a546aa8e2bc19f714189cac33d9a69e4239569":[3,0,0,1,108,5,0,0],
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a5ccdaa8e9dfd16e7b34dc5595e3b8d46":[3,0,0,1,108,5,0,1],
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a6fe98ccd779ff16488a4698df97b05a3":[3,0,0,1,108,5,0,8],
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#abac23bff2f24c9fc66892fbaa059c6a3":[3,0,0,1,108,5,0,7],
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#abbb0de8c953e7fb7bb042b7086831570":[3,0,0,1,108,5,0,5],
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#ac27546bac0acfc543aa06c0c82c59936":[3,0,0,1,108,5,0,6]
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a5ccdaa8e9dfd16e7b34dc5595e3b8d46":[3,0,0,1,108,5,0,1]
 };

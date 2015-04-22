@@ -9,7 +9,7 @@ var classFIX8_1_1FIXReader =
     [ "execute", "classFIX8_1_1FIXReader.html#a6f8b7884c71fbfb6b7fef66518b55a58", null ],
     [ "is_socket_error", "classFIX8_1_1FIXReader.html#aa593ee9ffa5f5d709fa96fe6fb6827b3", null ],
     [ "join", "classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd", null ],
-    [ "poll", "classFIX8_1_1FIXReader.html#a5c9ed76959e89bb0b519605e8b7bb854", null ],
+    [ "poll", "classFIX8_1_1FIXReader.html#ad4de0f0b65f3d6fb80ba777c8c5bd91d", null ],
     [ "quit", "classFIX8_1_1FIXReader.html#a99c674abad3c6a569b1a0aba8f9d4f0c", null ],
     [ "read", "classFIX8_1_1FIXReader.html#ad5e35dd10c8a91c2dbc5aacd495d1f52", null ],
     [ "set_preamble_sz", "classFIX8_1_1FIXReader.html#a10fbeb84ec25215d33ea8899ed37e1c8", null ],

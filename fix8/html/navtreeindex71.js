@@ -1,5 +1,9 @@
 var NAVTREEINDEX71 =
 {
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#ab09519162e867817ef07b333a4e52223a4cdbf3db5ead8612c03676a443409241":[3,0,0,1,74,6,0,0,0],
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#ad66144f1a5b808075d0e392a76cccb92":[3,0,0,1,74,6,0,0,1],
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#ae4e752079f7ddfb3a4d65a081298da21":[3,0,0,1,74,6,0,0,2],
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoSecurityAltID.html":[3,0,0,1,74,7],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoSecurityAltID.html#a2404963e81d2ee804ed7295e63479e6f":[3,0,0,1,74,7,5],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoSecurityAltID.html#a3088d15c2bc56319a773db3ca31a493a":[3,0,0,1,74,7,3],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoSecurityAltID.html#a31273321016bfa73623c22e236adce9da3dc3ba5601c053bfe9f0d1b683bdecde":[3,0,0,1,74,7,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX71 =
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a4b608bd0835805c50540557f69255c9f":[3,0,0,1,75,8,12],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a50d0bd1d518e9c07b7875e1618e50d5b":[3,0,0,1,75,8,5],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a57d68a2dccec5d0be3ff875d4ac71417":[3,0,0,1,75,8,6],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a6e2fd817bbbdfd3e6338c74000d0ae31":[3,0,0,1,75,8,10],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a7a233d7624f48e506c253177627ea3f6":[3,0,0,1,75,8,7],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#ab56b8dbf06c451f6571691241e89bc07":[3,0,0,1,75,8,11],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#abfa825bb8ad0eec21e3f60ef811dc446":[3,0,0,1,75,8,8],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingAmounts.html":[3,0,0,1,75,8,0]
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a6e2fd817bbbdfd3e6338c74000d0ae31":[3,0,0,1,75,8,10]
 };

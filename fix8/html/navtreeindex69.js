@@ -1,5 +1,9 @@
 var NAVTREEINDEX69 =
 {
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#ae28148a5f54009497cd0b27e29580564":[3,0,0,1,70,0,3,4,0,8],
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html":[3,0,0,1,70,0,4],
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a667e7f5efcb9dd692eb0836b23ae6b6b":[3,0,0,1,70,0,4,7],
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a74a6a12737d7b29cf75469609172ed2f":[3,0,0,1,70,0,4,11],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a778977a129ead565d871d87d189ee3cd":[3,0,0,1,70,0,4,8],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a84d1e3c48a6bfdfe77b5f44dd1a194c3afb526cba0c759524c5342fe6d1b41386":[3,0,0,1,70,0,4,2],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits.html#a9276ab01d6bf3b331fdca552ad1989a7":[3,0,0,1,70,0,4,9],
@@ -245,9 +249,5 @@ var NAVTREEINDEX69 =
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#a6484e29dc8d4baf2d78f498cc5813b18":[3,0,0,1,73,6,3],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#a91d6fd46fa92b7d31025c3de9bdfa8ce":[3,0,0,1,73,6,10],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#a9788591d4ab52be1a49aa06cd5043660":[3,0,0,1,73,6,8],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#aad7c49e4e5ab4bb7081eb239c8dbe709":[3,0,0,1,73,6,2],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#ab2199acf402223f6b6956883ce824a1b":[3,0,0,1,73,6,5],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#ac651c6fdf5c5fe1d2021775b8699eddb":[3,0,0,1,73,6,6],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#ad6229de992f503848c7f896808f07d9c":[3,0,0,1,73,6,4],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html":[3,0,0,1,73,6,0]
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions.html#aad7c49e4e5ab4bb7081eb239c8dbe709":[3,0,0,1,73,6,2]
 };

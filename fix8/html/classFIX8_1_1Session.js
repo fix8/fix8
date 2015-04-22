@@ -17,6 +17,7 @@ var classFIX8_1_1Session =
     [ "activation_service", "classFIX8_1_1Session.html#acf850844abd2358bae253f15d5030ddc", null ],
     [ "atomic_init", "classFIX8_1_1Session.html#a1a24b94951806e1273f8586ea2e83279", null ],
     [ "authenticate", "classFIX8_1_1Session.html#a9cf063efca0742ad9973ad21cb718355", null ],
+    [ "clear_connection", "classFIX8_1_1Session.html#aa178c658c7401711bba56df7217f69b8", null ],
     [ "compid_check", "classFIX8_1_1Session.html#a15d8b3a3cd190eb296805c357a721d66", null ],
     [ "control", "classFIX8_1_1Session.html#aa983adcf0b53b341a1bddab23861964f", null ],
     [ "copyright_string", "classFIX8_1_1Session.html#ab44b6fc4a605847c4cb4eb53621567cf", null ],

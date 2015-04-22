@@ -96,7 +96,7 @@ var searchData=
   ['have_5fworking_5fvfork',['HAVE_WORKING_VFORK',['../f8config_8h.html#a3f110f0b36f0c6ef25501e5a10e9a0de',1,'f8config.h']]],
   ['have_5fzlib_5fh',['HAVE_ZLIB_H',['../f8config_8h.html#aad5eed50844aa0073171213cb654363d',1,'f8config.h']]],
   ['hb_5finterval',['hb_interval',['../namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d',1,'FIX8::defaults']]],
-  ['header',['header',['../classFIX8_1_1TEX_1_1header.html#ae8f7ddb106e796e6e741e5d10efd0e31',1,'FIX8::TEX::header::header(bool deepctor=true)'],['../classFIX8_1_1TEX_1_1header.html#ae8f7ddb106e796e6e741e5d10efd0e31',1,'FIX8::TEX::header::header(bool deepctor=true)'],['../classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272',1,'FIX8::Message::Header()']]],
+  ['header',['Header',['../classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272',1,'FIX8::Message::Header()'],['../classFIX8_1_1TEX_1_1header.html#ae8f7ddb106e796e6e741e5d10efd0e31',1,'FIX8::TEX::header::header(bool deepctor=true)'],['../classFIX8_1_1TEX_1_1header.html#ae8f7ddb106e796e6e741e5d10efd0e31',1,'FIX8::TEX::header::header(bool deepctor=true)']]],
   ['header',['header',['../classFIX8_1_1TEX_1_1header.html',1,'FIX8::TEX']]],
   ['header_5fcalc_5foffset',['HEADER_CALC_OFFSET',['../namespaceFIX8.html#a0ebb30b10d5fff1e65636454e2ff9b8c',1,'FIX8']]],
   ['headline',['Headline',['../namespaceFIX8_1_1TEX.html#a535889eec9458d916fc10be02138afcf',1,'FIX8::TEX']]],
