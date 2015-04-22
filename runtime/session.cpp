@@ -143,7 +143,7 @@ _ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq
 //-------------------------------------------------------------------------------------------------
 void Session::atomic_init(States::SessionStates st)
 {
-  do_state_change(st);
+	do_state_change(st);
 	_next_send_seq = _next_receive_seq = 1;
 	_active = true;
 }
