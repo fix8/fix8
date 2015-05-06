@@ -166,7 +166,12 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00369">369</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   {</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      <span class="keywordflow">if</span> (pthread_spin_init(&amp;<a class="code" href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">_psl</a>, PTHREAD_PROCESS_PRIVATE))</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;         <span class="keywordflow">throw</span> f8Exception(<span class="stringliteral">&quot;pthread_spin_init failed&quot;</span>);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1f8__spin__lock_html_a75af1567dbffbf77fd7016a9a54c73f9"><div class="ttname"><a href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">FIX8::f8_spin_lock::_psl</a></div><div class="ttdeci">pthread_spinlock_t _psl</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00366">thread.hpp:366</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a12831fb0a3bdbb251b22a8b45aaa06b3"></a>
@@ -191,7 +196,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00375">375</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;{ pthread_spin_destroy(&amp;<a class="code" href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">_psl</a>); };</div>
+<div class="ttc" id="classFIX8_1_1f8__spin__lock_html_a75af1567dbffbf77fd7016a9a54c73f9"><div class="ttname"><a href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">FIX8::f8_spin_lock::_psl</a></div><div class="ttdeci">pthread_spinlock_t _psl</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00366">thread.hpp:366</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -217,7 +224,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00377">377</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;{ pthread_spin_lock(&amp;<a class="code" href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">_psl</a>); }</div>
+<div class="ttc" id="classFIX8_1_1f8__spin__lock_html_a75af1567dbffbf77fd7016a9a54c73f9"><div class="ttname"><a href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">FIX8::f8_spin_lock::_psl</a></div><div class="ttdeci">pthread_spinlock_t _psl</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00366">thread.hpp:366</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8e333aa1f7b3dd93e9bd85c8cdaf2df6"></a>
@@ -242,7 +251,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00378">378</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;{ <span class="keywordflow">return</span> pthread_spin_trylock(&amp;<a class="code" href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">_psl</a>) == 0; }</div>
+<div class="ttc" id="classFIX8_1_1f8__spin__lock_html_a75af1567dbffbf77fd7016a9a54c73f9"><div class="ttname"><a href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">FIX8::f8_spin_lock::_psl</a></div><div class="ttdeci">pthread_spinlock_t _psl</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00366">thread.hpp:366</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae1c999847592862338458dc1358d6ea2"></a>
@@ -267,7 +278,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00379">379</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;{ pthread_spin_unlock(&amp;<a class="code" href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">_psl</a>); }</div>
+<div class="ttc" id="classFIX8_1_1f8__spin__lock_html_a75af1567dbffbf77fd7016a9a54c73f9"><div class="ttname"><a href="classFIX8_1_1f8__spin__lock.html#a75af1567dbffbf77fd7016a9a54c73f9">FIX8::f8_spin_lock::_psl</a></div><div class="ttdeci">pthread_spinlock_t _psl</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00366">thread.hpp:366</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -299,7 +312,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

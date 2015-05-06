@@ -369,7 +369,15 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00218">218</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                                                                                                  : <a class="code" href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">_reserve</a>(reserve),</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>(sz), <a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>(<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> + <a class="code" href="classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a">calc_reserve</a>(<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>, <a class="code" href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">_reserve</a>)), <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>(<span class="keyword">new</span> T[<a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>])</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;         { memcpy(<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, arr_start, <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> * <span class="keyword">sizeof</span>(T)); }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a8f9bcca3bab1083dcf2cd51482e16f5a"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a">FIX8::presorted_set::calc_reserve</a></div><div class="ttdeci">static size_t calc_reserve(size_t sz, size_t res)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00205">f8types.hpp:205</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a691444e20dd1ad0232b769970bbc481f"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">FIX8::presorted_set::_reserve</a></div><div class="ttdeci">const size_t _reserve</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00194">f8types.hpp:194</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a5dc85fdad35fccf35bf618801ebe9f65"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">FIX8::presorted_set::_rsz</a></div><div class="ttdeci">size_t _rsz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af591292b42ba196216d9993d4e57657f"></a>
@@ -405,7 +413,14 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00224">224</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                                            : <a class="code" href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">_reserve</a>(from._reserve),</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>(from._sz), <a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>(from._rsz), <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>(from._arr ? <span class="keyword">new</span> T[<a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>] : 0)</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;         { <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>) memcpy(<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, from._arr, <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> * <span class="keyword">sizeof</span>(T)); }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a691444e20dd1ad0232b769970bbc481f"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">FIX8::presorted_set::_reserve</a></div><div class="ttdeci">const size_t _reserve</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00194">f8types.hpp:194</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a5dc85fdad35fccf35bf618801ebe9f65"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">FIX8::presorted_set::_rsz</a></div><div class="ttdeci">size_t _rsz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a40e195ca97fdf5f5e949284e82cbacd8"></a>
@@ -450,7 +465,14 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 </dl>
 
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00231">231</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                                                                                   : <a class="code" href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">_reserve</a>(reserve),</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>(sz), <a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>(<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> + <a class="code" href="classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a">calc_reserve</a>(<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>, <a class="code" href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">_reserve</a>)), <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>() {}</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a8f9bcca3bab1083dcf2cd51482e16f5a"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a">FIX8::presorted_set::calc_reserve</a></div><div class="ttdeci">static size_t calc_reserve(size_t sz, size_t res)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00205">f8types.hpp:205</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a691444e20dd1ad0232b769970bbc481f"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">FIX8::presorted_set::_reserve</a></div><div class="ttdeci">const size_t _reserve</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00194">f8types.hpp:194</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a5dc85fdad35fccf35bf618801ebe9f65"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">FIX8::presorted_set::_rsz</a></div><div class="ttdeci">size_t _rsz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a803f16346b76937f43f2f31f80d7f29a"></a>
@@ -481,7 +503,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00235">235</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;{ <span class="keyword">delete</span>[] <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -519,7 +543,11 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00285">285</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00363">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;{ <span class="keywordflow">return</span> idx &lt; <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> ? <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> + idx : <a class="code" href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">end</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_af79e02f1933f43a871f721d48b04fbc9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">FIX8::presorted_set::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00363">f8types.hpp:363</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7d0717c238e565e4e5e3140cc02e5d6d"></a>
@@ -549,7 +577,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00359">359</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac97af8b093f989d767bcdbccae03d3e4"></a>
@@ -579,7 +609,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00367">367</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8f9bcca3bab1083dcf2cd51482e16f5a"></a>
@@ -627,7 +659,13 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00205">205</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00290">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>, and <a class="el" href="traits_8hpp_source.html#l00349">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::insert()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      <span class="keywordflow">if</span> (!sz)  <span class="comment">// special case - reserve means number to reserve, not %</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;         <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">size_t</span> val(sz * res / 100);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      <span class="keywordflow">return</span> val ? val : 1;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad53fc2b34e7994bdbc6b77979d92562c"></a>
@@ -657,7 +695,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00343">343</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;{ <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> = 0; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a84d86451900636bf611bfaf1d283c7e9"></a>
@@ -703,7 +743,8 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>distance in elements </dd></dl>
 
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00329">329</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      { <span class="keywordflow">return</span> what_end - what_begin; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa3255ff9a7f5016d277657be9135d514"></a>
@@ -733,7 +774,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00351">351</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> == 0; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af79e02f1933f43a871f721d48b04fbc9"></a>
@@ -765,7 +808,10 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00285">FIX8::presorted_set&lt; K, T, Comp &gt;::at()</a>, <a class="el" href="traits_8hpp_source.html#l00344">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::at()</a>, <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>, <a class="el" href="traits_8hpp_source.html#l00300">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::find()</a>, <a class="el" href="f8types_8hpp_source.html#l00290">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>, and <a class="el" href="traits_8hpp_source.html#l00349">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::insert()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> + <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adcb6c1ab1e9802b262cb379e7f811158"></a>
@@ -795,7 +841,10 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00371">371</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> + <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a269f7a5bf97b124c148fbbb18ca787e9"></a>
@@ -845,7 +894,15 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00290">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>, and <a class="el" href="traits_8hpp_source.html#l00349">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::insert()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;   {</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1presorted__set.html#a78bf8e908428e50111a7e369f2c173c2">internal_result</a> res(std::equal_range (<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> + <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>, what, Comp()));</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      answer = res.first != res.second;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      <span class="keywordflow">return</span> res.first;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a78bf8e908428e50111a7e369f2c173c2"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a78bf8e908428e50111a7e369f2c173c2">FIX8::presorted_set::internal_result</a></div><div class="ttdeci">std::pair&lt; iterator, iterator &gt; internal_result</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00198">f8types.hpp:198</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa0f156e7554cf0a9bc33bf42500eb205"></a>
@@ -895,7 +952,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>References <a class="el" href="f8types_8hpp_source.html#l00252">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00252">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">find</a>(T(key), answer); }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a269f7a5bf97b124c148fbbb18ca787e9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">FIX8::presorted_set::find</a></div><div class="ttdeci">iterator find(const T what, bool &amp;answer)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00241">f8types.hpp:241</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0dfbdbb4cb7ed5c0df80831a2ad99304"></a>
@@ -934,7 +993,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>References <a class="el" href="f8types_8hpp_source.html#l00257">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00257">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">find</a>(T(key)); }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a269f7a5bf97b124c148fbbb18ca787e9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">FIX8::presorted_set::find</a></div><div class="ttdeci">iterator find(const T what, bool &amp;answer)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00241">f8types.hpp:241</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a34343c48b5731821dda432c958b8e31c"></a>
@@ -971,7 +1032,15 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00262">262</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00363">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1presorted__set.html#ae678125d983db715ca36c2ae8b23a0a1">const_internal_result</a> res(std::equal_range (<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> + <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>, what, Comp()));</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <span class="keywordflow">return</span> res.first != res.second ? res.first : <a class="code" href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">end</a>();</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_ae678125d983db715ca36c2ae8b23a0a1"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#ae678125d983db715ca36c2ae8b23a0a1">FIX8::presorted_set::const_internal_result</a></div><div class="ttdeci">std::pair&lt; const_iterator, const_iterator &gt; const_internal_result</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00199">f8types.hpp:199</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_af79e02f1933f43a871f721d48b04fbc9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">FIX8::presorted_set::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00363">f8types.hpp:363</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae689612ea20a73a1396f11e09c874f99"></a>
@@ -1010,7 +1079,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>References <a class="el" href="f8types_8hpp_source.html#l00271">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00271">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">find</a>(T(key)); }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a269f7a5bf97b124c148fbbb18ca787e9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">FIX8::presorted_set::find</a></div><div class="ttdeci">iterator find(const T what, bool &amp;answer)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00241">f8types.hpp:241</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8c488905fb1263e9880cb031f0a3e1d1"></a>
@@ -1047,7 +1118,15 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00276">276</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00363">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   {</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <a class="code" href="classFIX8_1_1presorted__set.html#a78bf8e908428e50111a7e369f2c173c2">internal_result</a> res(std::equal_range (<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> + <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>, what, Comp()));</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      <span class="keywordflow">return</span> res.first != res.second ? res.first : <a class="code" href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">end</a>();</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a78bf8e908428e50111a7e369f2c173c2"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a78bf8e908428e50111a7e369f2c173c2">FIX8::presorted_set::internal_result</a></div><div class="ttdeci">std::pair&lt; iterator, iterator &gt; internal_result</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00198">f8types.hpp:198</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_af79e02f1933f43a871f721d48b04fbc9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">FIX8::presorted_set::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00363">f8types.hpp:363</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a187bc407c739c4bfcdf25d10372ae658"></a>
@@ -1086,7 +1165,49 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>References <a class="el" href="f8types_8hpp_source.html#l00196">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00194">FIX8::presorted_set&lt; K, T, Comp &gt;::_reserve</a>, <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_rsz</a>, <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, <a class="el" href="f8types_8hpp_source.html#l00205">FIX8::presorted_set&lt; K, T, Comp &gt;::calc_reserve()</a>, <a class="el" href="f8types_8hpp_source.html#l00363">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>, and <a class="el" href="f8types_8hpp_source.html#l00241">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00335">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>, and <a class="el" href="traits_8hpp_source.html#l00394">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::insert()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   {</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>)</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      {</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;         <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> = <span class="keyword">new</span> T[<a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>];</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;         memcpy(<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, what, <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;         ++<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a44093950ff2dfbcad795504b6334d4ab">result</a>(<a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      }</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      <span class="keywordtype">bool</span> answer;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      <a class="code" href="classFIX8_1_1presorted__set.html#a19d3f47baa8a7b31efb73e4b4a5d0f20">iterator</a> where(<a class="code" href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">find</a>(*what, answer));</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      <span class="keywordflow">if</span> (answer)</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a44093950ff2dfbcad795504b6334d4ab">result</a>(<a class="code" href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">end</a>(), <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> &lt; <a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>)</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      {</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;         memmove(where + 1, where, (<a class="code" href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">end</a>() - where) * <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;         memcpy(where, what, <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      }</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;         <a class="code" href="classFIX8_1_1presorted__set.html#a19d3f47baa8a7b31efb73e4b4a5d0f20">iterator</a> new_arr(<span class="keyword">new</span> T[<a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a> = <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a> + <a class="code" href="classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a">calc_reserve</a>(<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>, <a class="code" href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">_reserve</a>)]);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;         <span class="keyword">const</span> <span class="keywordtype">size_t</span> wptr(where - <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;         <span class="keywordflow">if</span> (wptr &gt; 0)</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            memcpy(new_arr, <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>, <span class="keyword">sizeof</span>(T) * wptr);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;         memcpy(new_arr + wptr, what, <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;         memcpy(new_arr + wptr + 1, where, (<a class="code" href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">end</a>() - where) * <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;         <span class="keyword">delete</span>[] <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;         <a class="code" href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">_arr</a> = new_arr;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      }</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      ++<a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a44093950ff2dfbcad795504b6334d4ab">result</a>(where, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a8f9bcca3bab1083dcf2cd51482e16f5a"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a">FIX8::presorted_set::calc_reserve</a></div><div class="ttdeci">static size_t calc_reserve(size_t sz, size_t res)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00205">f8types.hpp:205</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a691444e20dd1ad0232b769970bbc481f"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a691444e20dd1ad0232b769970bbc481f">FIX8::presorted_set::_reserve</a></div><div class="ttdeci">const size_t _reserve</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00194">f8types.hpp:194</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a19d3f47baa8a7b31efb73e4b4a5d0f20"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a19d3f47baa8a7b31efb73e4b4a5d0f20">FIX8::presorted_set::iterator</a></div><div class="ttdeci">T * iterator</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00189">f8types.hpp:189</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a5dc85fdad35fccf35bf618801ebe9f65"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">FIX8::presorted_set::_rsz</a></div><div class="ttdeci">size_t _rsz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a44093950ff2dfbcad795504b6334d4ab"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a44093950ff2dfbcad795504b6334d4ab">FIX8::presorted_set::result</a></div><div class="ttdeci">std::pair&lt; iterator, bool &gt; result</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00191">f8types.hpp:191</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a269f7a5bf97b124c148fbbb18ca787e9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a269f7a5bf97b124c148fbbb18ca787e9">FIX8::presorted_set::find</a></div><div class="ttdeci">iterator find(const T what, bool &amp;answer)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00241">f8types.hpp:241</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a43ce741e5784f5aba44659ca5efce7c9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9">FIX8::presorted_set::_arr</a></div><div class="ttdeci">T * _arr</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00196">f8types.hpp:196</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_af79e02f1933f43a871f721d48b04fbc9"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#af79e02f1933f43a871f721d48b04fbc9">FIX8::presorted_set::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00363">f8types.hpp:363</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2f87c3c645fe60416cca6a4276469177"></a>
@@ -1133,7 +1254,14 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00335">335</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00290">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   {</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="keywordflow">for</span> (<a class="code" href="classFIX8_1_1presorted__set.html#a7b7f3a54e954b6a30eb2fa0f1d6aa0e0">const_iterator</a> ptr(what_begin); ptr &lt; what_end; ++ptr)</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658">insert</a>(ptr).second)</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a7b7f3a54e954b6a30eb2fa0f1d6aa0e0"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a7b7f3a54e954b6a30eb2fa0f1d6aa0e0">FIX8::presorted_set::const_iterator</a></div><div class="ttdeci">const T * const_iterator</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00190">f8types.hpp:190</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a187bc407c739c4bfcdf25d10372ae658"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658">FIX8::presorted_set::insert</a></div><div class="ttdeci">result insert(const_iterator what)</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00290">f8types.hpp:290</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9797ef433470128d242dc3a3f14d11ac"></a>
@@ -1163,7 +1291,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00355">355</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_rsz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">_rsz</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_a5dc85fdad35fccf35bf618801ebe9f65"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#a5dc85fdad35fccf35bf618801ebe9f65">FIX8::presorted_set::_rsz</a></div><div class="ttdeci">size_t _rsz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a301d17d8701529ab1a6d59aed8716b02"></a>
@@ -1193,7 +1323,9 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00347">347</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00195">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">_sz</a>; }</div>
+<div class="ttc" id="classFIX8_1_1presorted__set_html_adebdb49bfaab708b484066f4b184c535"><div class="ttname"><a href="classFIX8_1_1presorted__set.html#adebdb49bfaab708b484066f4b184c535">FIX8::presorted_set::_sz</a></div><div class="ttdeci">size_t _sz</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00195">f8types.hpp:195</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -1307,7 +1439,7 @@ template&lt;typename K , typename T , typename Comp &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

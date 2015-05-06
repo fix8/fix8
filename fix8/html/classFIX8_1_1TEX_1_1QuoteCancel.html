@@ -457,7 +457,26 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l33252">33252</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00387">FIX8::MessageBase::_groups</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l33252"></a><span class="lineno">33252</span>&#160;                                            : <a class="code" href="classFIX8_1_1Message.html#a0d005757f292d3823e69e2ce3494d5bb">Message</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">ctx</a>(), <a class="code" href="classFIX8_1_1TEX_1_1QuoteCancel.html#a4bc6e8587afdec5385a399ec4d5e169c">_msgtype</a>(), <a class="code" href="classFIX8_1_1TEX_1_1QuoteCancel.html#a01e051ca801608127422fd19fbcf170a">_traits</a>, <a class="code" href="classFIX8_1_1TEX_1_1QuoteCancel.html#a1b3c8bcabf3dae09ca42a3e6c53189ec">_fieldcnt</a>, &amp;<a class="code" href="classFIX8_1_1TEX_1_1QuoteCancel.html#a352f3069ec82cdd65ea35d1e5d27543f">_ftha</a>)</div>
+<div class="line"><a name="l33253"></a><span class="lineno">33253</span>&#160;   {</div>
+<div class="line"><a name="l33254"></a><span class="lineno">33254</span>&#160;      <span class="keywordflow">if</span> (deepctor)</div>
+<div class="line"><a name="l33255"></a><span class="lineno">33255</span>&#160;         <a class="code" href="classFIX8_1_1MessageBase.html#adfc39cbae7b491807361cbe3e5a9c472">_groups</a>.insert({</div>
+<div class="line"><a name="l33256"></a><span class="lineno">33256</span>&#160;            { 295, <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a15c766f0fd94a060d092f5f887171520">NoQuoteEntries</a> },</div>
+<div class="line"><a name="l33257"></a><span class="lineno">33257</span>&#160;            { 453, <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a44b444931a04a2e70cf0468f801c5518">NoPartyIDs</a> },</div>
+<div class="line"><a name="l33258"></a><span class="lineno">33258</span>&#160;            { 1461, <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a5da805031d70284482a4759261bc31b7">NoTargetPartyIDs</a> },</div>
+<div class="line"><a name="l33259"></a><span class="lineno">33259</span>&#160;         });</div>
+<div class="line"><a name="l33260"></a><span class="lineno">33260</span>&#160;   }</div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a44b444931a04a2e70cf0468f801c5518"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a44b444931a04a2e70cf0468f801c5518">FIX8::TEX::NoPartyIDs</a></div><div class="ttdeci">Field&lt; NumInGroup, 453 &gt; NoPartyIDs</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l02349">Myfix_types.hpp:2349</a></div></div>
+<div class="ttc" id="classFIX8_1_1TEX_1_1QuoteCancel_html_a1b3c8bcabf3dae09ca42a3e6c53189ec"><div class="ttname"><a href="classFIX8_1_1TEX_1_1QuoteCancel.html#a1b3c8bcabf3dae09ca42a3e6c53189ec">FIX8::TEX::QuoteCancel::_fieldcnt</a></div><div class="ttdeci">static F8_TEX_API const unsigned _fieldcnt</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8hpp_source.html#l33249">Myfix_classes.hpp:33249</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_afc9f1359200c953b443b55b4ea0e3950"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">FIX8::TEX::ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; ctx()</div><div class="ttdoc">Compiler generated metadata object, accessed through this function. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8cpp_source.html#l00424">Myfix_classes.cpp:424</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_adfc39cbae7b491807361cbe3e5a9c472"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#adfc39cbae7b491807361cbe3e5a9c472">FIX8::MessageBase::_groups</a></div><div class="ttdeci">Groups _groups</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00387">message.hpp:387</a></div></div>
+<div class="ttc" id="classFIX8_1_1TEX_1_1QuoteCancel_html_a4bc6e8587afdec5385a399ec4d5e169c"><div class="ttname"><a href="classFIX8_1_1TEX_1_1QuoteCancel.html#a4bc6e8587afdec5385a399ec4d5e169c">FIX8::TEX::QuoteCancel::_msgtype</a></div><div class="ttdeci">static F8_TEX_API const MsgType _msgtype</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8hpp_source.html#l33248">Myfix_classes.hpp:33248</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a15c766f0fd94a060d092f5f887171520"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a15c766f0fd94a060d092f5f887171520">FIX8::TEX::NoQuoteEntries</a></div><div class="ttdeci">Field&lt; NumInGroup, 295 &gt; NoQuoteEntries</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l01635">Myfix_types.hpp:1635</a></div></div>
+<div class="ttc" id="classFIX8_1_1TEX_1_1QuoteCancel_html_a352f3069ec82cdd65ea35d1e5d27543f"><div class="ttname"><a href="classFIX8_1_1TEX_1_1QuoteCancel.html#a352f3069ec82cdd65ea35d1e5d27543f">FIX8::TEX::QuoteCancel::_ftha</a></div><div class="ttdeci">static F8_TEX_API const FieldTrait_Hash_Array _ftha</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8hpp_source.html#l33247">Myfix_classes.hpp:33247</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html_a0d005757f292d3823e69e2ce3494d5bb"><div class="ttname"><a href="classFIX8_1_1Message.html#a0d005757f292d3823e69e2ce3494d5bb">FIX8::Message::Message</a></div><div class="ttdeci">Message(const F8MetaCntx &amp;ctx, const f8String &amp;msgType, const InputIterator begin, const size_t cnt, const FieldTrait_Hash_Array *ftha)</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01045">message.hpp:1045</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a5da805031d70284482a4759261bc31b7"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a5da805031d70284482a4759261bc31b7">FIX8::TEX::NoTargetPartyIDs</a></div><div class="ttdeci">Field&lt; NumInGroup, 1461 &gt; NoTargetPartyIDs</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l05949">Myfix_types.hpp:5949</a></div></div>
+<div class="ttc" id="classFIX8_1_1TEX_1_1QuoteCancel_html_a01e051ca801608127422fd19fbcf170a"><div class="ttname"><a href="classFIX8_1_1TEX_1_1QuoteCancel.html#a01e051ca801608127422fd19fbcf170a">FIX8::TEX::QuoteCancel::_traits</a></div><div class="ttdeci">static F8_TEX_API const FieldTrait _traits[]</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8hpp_source.html#l33246">Myfix_classes.hpp:33246</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac4525681916e3d8c18e0d1829ea9126c"></a>
@@ -516,7 +535,19 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classFIX8_1_1MessageBase.html#a3e577319df031042708d88e82c324016">FIX8::MessageBase</a>.</p>
 
 <p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l33265">33265</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l33266"></a><span class="lineno">33266</span>&#160;   {</div>
+<div class="line"><a name="l33267"></a><span class="lineno">33267</span>&#160;      <span class="keywordflow">switch</span>(fnum)</div>
+<div class="line"><a name="l33268"></a><span class="lineno">33268</span>&#160;      {</div>
+<div class="line"><a name="l33269"></a><span class="lineno">33269</span>&#160;      <span class="keywordflow">case</span> 295: <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a15c766f0fd94a060d092f5f887171520">NoQuoteEntries</a>;</div>
+<div class="line"><a name="l33270"></a><span class="lineno">33270</span>&#160;      <span class="keywordflow">case</span> 453: <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a44b444931a04a2e70cf0468f801c5518">NoPartyIDs</a>;</div>
+<div class="line"><a name="l33271"></a><span class="lineno">33271</span>&#160;      <span class="keywordflow">case</span> 1461: <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a5da805031d70284482a4759261bc31b7">NoTargetPartyIDs</a>;</div>
+<div class="line"><a name="l33272"></a><span class="lineno">33272</span>&#160;      <span class="keywordflow">default</span>: <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l33273"></a><span class="lineno">33273</span>&#160;      }</div>
+<div class="line"><a name="l33274"></a><span class="lineno">33274</span>&#160;   }</div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a44b444931a04a2e70cf0468f801c5518"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a44b444931a04a2e70cf0468f801c5518">FIX8::TEX::NoPartyIDs</a></div><div class="ttdeci">Field&lt; NumInGroup, 453 &gt; NoPartyIDs</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l02349">Myfix_types.hpp:2349</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a15c766f0fd94a060d092f5f887171520"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a15c766f0fd94a060d092f5f887171520">FIX8::TEX::NoQuoteEntries</a></div><div class="ttdeci">Field&lt; NumInGroup, 295 &gt; NoQuoteEntries</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l01635">Myfix_types.hpp:1635</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a5da805031d70284482a4759261bc31b7"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a5da805031d70284482a4759261bc31b7">FIX8::TEX::NoTargetPartyIDs</a></div><div class="ttdeci">Field&lt; NumInGroup, 1461 &gt; NoTargetPartyIDs</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l05949">Myfix_types.hpp:5949</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2ac51174e81ae8d7a3fd3f06600410d7"></a>
@@ -543,7 +574,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l33264">33264</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
 
 <p>References <a class="el" href="Myfix__classes_8hpp_source.html#l33248">_msgtype</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l33264"></a><span class="lineno">33264</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1TEX_1_1QuoteCancel.html#a4bc6e8587afdec5385a399ec4d5e169c">_msgtype</a>; }</div>
+<div class="ttc" id="classFIX8_1_1TEX_1_1QuoteCancel_html_a4bc6e8587afdec5385a399ec4d5e169c"><div class="ttname"><a href="classFIX8_1_1TEX_1_1QuoteCancel.html#a4bc6e8587afdec5385a399ec4d5e169c">FIX8::TEX::QuoteCancel::_msgtype</a></div><div class="ttdeci">static F8_TEX_API const MsgType _msgtype</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8hpp_source.html#l33248">Myfix_classes.hpp:33248</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac57f8683c3d2904f3baba0430b7b1016"></a>
@@ -578,7 +611,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">FIX8::Message</a>.</p>
 
 <p>Definition at line <a class="el" href="Myfix__classes_8hpp_source.html#l33262">33262</a> of file <a class="el" href="Myfix__classes_8hpp_source.html">Myfix_classes.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l33262"></a><span class="lineno">33262</span>&#160;{ <span class="keywordflow">return</span> (static_cast&lt;Myfix_Router&amp;&gt;(rt))(<span class="keyword">this</span>); }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -685,7 +719,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:16:03. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:22:40. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

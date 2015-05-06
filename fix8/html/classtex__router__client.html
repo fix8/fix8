@@ -460,7 +460,9 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00053">53</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;: <a class="code" href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">_session</a>(session) {}</div>
+<div class="ttc" id="classtex__router__client_html_a6e1f53d45787af81cffad5faad25221b"><div class="ttname"><a href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">tex_router_client::_session</a></div><div class="ttdeci">hf_session_client &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="hftest_8hpp_source.html#l00048">hftest.hpp:48</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aadbf0242da4317dcdc693e3eba4dc003"></a>
@@ -492,7 +494,9 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00053">53</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;: <a class="code" href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">_session</a>(session) {}</div>
+<div class="ttc" id="classtex__router__client_html_a6e1f53d45787af81cffad5faad25221b"><div class="ttname"><a href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">tex_router_client::_session</a></div><div class="ttdeci">hf_session_client &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="hftest_8hpp_source.html#l00048">hftest.hpp:48</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -527,7 +531,17 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00655">655</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
 <p>References <a class="el" href="hftest_8cpp.html#a2f55ce207b64d7019dc74b39cdecd058">update_count()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;{</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;   <span class="keyword">static</span> <span class="keywordtype">int</span> exrecv(0);</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   <span class="keywordflow">if</span> (++exrecv % <a class="code" href="hftest_8cpp.html#a2f55ce207b64d7019dc74b39cdecd058">update_count</a> == 0)</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   {</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;      cout &lt;&lt; <span class="charliteral">&#39;\r&#39;</span> &lt;&lt; exrecv &lt;&lt; <span class="stringliteral">&quot; ExecutionReport msgs received   &quot;</span>;</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;      cout.flush();</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   }</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;}</div>
+<div class="ttc" id="hftest_8cpp_html_a2f55ce207b64d7019dc74b39cdecd058"><div class="ttname"><a href="hftest_8cpp.html#a2f55ce207b64d7019dc74b39cdecd058">update_count</a></div><div class="ttdeci">unsigned update_count(5000)</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5feb31188d987796bec4e53efd843957"></a>
@@ -559,7 +573,10 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="harness_8cpp_source.html#l00393">393</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;{</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -617,7 +634,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

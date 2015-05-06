@@ -202,7 +202,9 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00073">73</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;: <a class="code" href="classFIX8_1_1RealmObject.html#af48024bfbd8248c288c7083127565c57">_isRange</a>(isRange) {}</div>
+<div class="ttc" id="classFIX8_1_1RealmObject_html_af48024bfbd8248c288c7083127565c57"><div class="ttname"><a href="classFIX8_1_1RealmObject.html#af48024bfbd8248c288c7083127565c57">FIX8::RealmObject::_isRange</a></div><div class="ttdeci">bool _isRange</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00060">f8c.hpp:60</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0606fc489a53abb0a682d73ff30c9360"></a>
@@ -227,7 +229,8 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00074">74</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -308,7 +311,25 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00361">361</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;{</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#a31e3844df743c529c03797c3cab3b971">FieldTrait::is_int</a>(ftype))</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1TypedRealm.html">TypedRealm&lt;int&gt;</a>(get_value&lt;int&gt;(from), isRange);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#aaa5b68ff7c40568ba8f549ab6dada16f">FieldTrait::is_char</a>(ftype))</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structFIX8_1_1CharRealm.html">CharRealm</a>(from[0], isRange);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#a82898f74605c8f89df757d9249333e2d">FieldTrait::is_float</a>(ftype))</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1TypedRealm.html">TypedRealm&lt;fp_type&gt;</a>(get_value&lt;fp_type&gt;(from), isRange);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1FieldTrait.html#a6a2020ef69f65ae95472f184a4240718">FieldTrait::is_string</a>(ftype))</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structFIX8_1_1StringRealm.html">StringRealm</a>(from, isRange);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;}</div>
+<div class="ttc" id="structFIX8_1_1FieldTrait_html_aaa5b68ff7c40568ba8f549ab6dada16f"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#aaa5b68ff7c40568ba8f549ab6dada16f">FIX8::FieldTrait::is_char</a></div><div class="ttdeci">static bool is_char(FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00088">traits.hpp:88</a></div></div>
+<div class="ttc" id="structFIX8_1_1CharRealm_html"><div class="ttname"><a href="structFIX8_1_1CharRealm.html">FIX8::CharRealm</a></div><div class="ttdoc">f8c character realm type. </div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00109">f8c.hpp:109</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait_html_a82898f74605c8f89df757d9249333e2d"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#a82898f74605c8f89df757d9249333e2d">FIX8::FieldTrait::is_float</a></div><div class="ttdeci">static bool is_float(FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00093">traits.hpp:93</a></div></div>
+<div class="ttc" id="structFIX8_1_1StringRealm_html"><div class="ttname"><a href="structFIX8_1_1StringRealm.html">FIX8::StringRealm</a></div><div class="ttdoc">f8c string realm type. </div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00102">f8c.hpp:102</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait_html_a31e3844df743c529c03797c3cab3b971"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#a31e3844df743c529c03797c3cab3b971">FIX8::FieldTrait::is_int</a></div><div class="ttdeci">static bool is_int(FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00083">traits.hpp:83</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait_html_a6a2020ef69f65ae95472f184a4240718"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html#a6a2020ef69f65ae95472f184a4240718">FIX8::FieldTrait::is_string</a></div><div class="ttdeci">static bool is_string(FieldType ftype)</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00098">traits.hpp:98</a></div></div>
+<div class="ttc" id="classFIX8_1_1TypedRealm_html"><div class="ttname"><a href="classFIX8_1_1TypedRealm.html">FIX8::TypedRealm</a></div><div class="ttdoc">f8c typed realm. </div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00089">f8c.hpp:89</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae189670fc2f839510b2c6fd13abf23ab"></a>
@@ -335,7 +356,9 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00076">76</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 <p>References <a class="el" href="f8c_8hpp_source.html#l00060">_isRange</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1RealmObject.html#af48024bfbd8248c288c7083127565c57">_isRange</a>; }</div>
+<div class="ttc" id="classFIX8_1_1RealmObject_html_af48024bfbd8248c288c7083127565c57"><div class="ttname"><a href="classFIX8_1_1RealmObject.html#af48024bfbd8248c288c7083127565c57">FIX8::RealmObject::_isRange</a></div><div class="ttdeci">bool _isRange</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00060">f8c.hpp:60</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a94e8df1cf4778a2a9b722e5c04e136f2"></a>
@@ -398,7 +421,11 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00064">64</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      what.print(os);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -433,7 +460,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

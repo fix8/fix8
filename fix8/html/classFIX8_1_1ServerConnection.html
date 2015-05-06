@@ -342,7 +342,18 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00726">726</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="connection_8hpp_source.html#l00491">FIX8::Connection::_sock</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;                                                                                                    :</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ac962fcd78af386fa108025cddddbded8">Connection</a>(sock, addr, session, <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>, pmodel, secured)</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   {</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setLinger(linger &gt;= 0, linger);</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setNoDelay(no_delay);</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setReuseAddress(reuse_addr);</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setKeepAlive(keepalive);</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00491">connection.hpp:491</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac962fcd78af386fa108025cddddbded8"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac962fcd78af386fa108025cddddbded8">FIX8::Connection::Connection</a></div><div class="ttdeci">Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress &amp;addr, Session &amp;session, const ProcessModel pmodel, const unsigned hb_interval, bool secured)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1defaults_html_a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d"><div class="ttname"><a href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">FIX8::defaults::hb_interval</a></div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00192">session.hpp:192</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a624f820257bd118ee2088f9741429baa"></a>
@@ -369,7 +380,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00738">738</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
@@ -378,7 +390,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

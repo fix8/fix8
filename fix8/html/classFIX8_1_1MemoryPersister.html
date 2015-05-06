@@ -249,7 +249,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Ctor. </p>
 
 <p>Definition at line <a class="el" href="persist_8hpp_source.html#l00299">299</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="afd19d10daa13386b5bb3a495da048391"></a>
@@ -276,7 +277,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="persist_8hpp_source.html#l00301">301</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -323,7 +325,21 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a80aebfa8f8e41b7d25ec958f8ccad8fe">FIX8::Persister</a>.</p>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00401">401</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;{</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   <span class="keywordflow">if</span> (last)</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   {</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> startseqnum(requested); startseqnum &lt;= last; ++startseqnum)</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      {</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;         Store::const_iterator itr(<a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.find(startseqnum));</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;         <span class="keywordflow">if</span> (itr != <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.end())</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;            <span class="keywordflow">return</span> itr-&gt;first;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;      }</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;   }</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0e4f9669fc79dfea1f4f29f7e4219a67"></a>
@@ -369,7 +385,17 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a3e2bdbad7444ae43e26a3fb82bcaf613">FIX8::Persister</a>.</p>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00389">389</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;{</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   <span class="keywordflow">if</span> (!seqnum)</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   Store::const_iterator itr(<a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.find(seqnum));</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   <span class="keywordflow">if</span> (itr == <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.end())</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;   to = itr-&gt;second;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adffcec0b62122c45ca91860731a140ae"></a>
@@ -431,7 +457,53 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00322">322</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
 
 <p>References <a class="el" href="session_8hpp_source.html#l00595">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00738">FIX8::Session::get_next_send_seq()</a>, <a class="el" href="logger_8hpp_source.html#l00606">glout_error</a>, and <a class="el" href="logger_8hpp_source.html#l00604">glout_warn</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;{</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   <span class="keywordtype">unsigned</span> last_seq(0);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <a class="code" href="classFIX8_1_1MemoryPersister.html#a002c13a644b5bf034f6ea949c7cb4a12">get_last_seqnum</a>(last_seq);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   <span class="keywordtype">unsigned</span> recs_sent(0), startSeqNum(<a class="code" href="classFIX8_1_1MemoryPersister.html#a8e8d8c6b0c73e5736596e85d4250fd1e">find_nearest_highest_seqnum</a> (from, last_seq));</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> finish(to == 0 ? last_seq : to);</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <a class="code" href="structFIX8_1_1Session_1_1RetransmissionContext.html">Session::RetransmissionContext</a> rctx(from, to, session.<a class="code" href="classFIX8_1_1Session.html#a3f6daec594c6d7b79fb79d53cd4117fd">get_next_send_seq</a>());</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keywordflow">if</span> (!startSeqNum || from &gt; finish)</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   {</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      <a class="code" href="logger_8hpp.html#aa22f86f7f48ba8176436ca57f631f8d0">glout_warn</a> &lt;&lt; <span class="stringliteral">&quot;No records found&quot;</span>;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      rctx._no_more_records = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      (session.*callback)(<a class="code" href="classFIX8_1_1Session.html#a99696a0a7aec12803f8632762afaec43">Session::SequencePair</a>(0, <span class="stringliteral">&quot;&quot;</span>), rctx);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   Store::const_iterator itr(<a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.find(startSeqNum));</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   <span class="keywordflow">if</span> (itr != <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.end())</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   {</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="keywordflow">do</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      {</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;         <span class="keywordflow">if</span> (!itr-&gt;first || itr-&gt;first &gt; finish)</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;         <a class="code" href="classFIX8_1_1Session.html#a99696a0a7aec12803f8632762afaec43">Session::SequencePair</a> result(itr-&gt;first, itr-&gt;second);</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;         ++recs_sent;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;         <span class="keywordflow">if</span> (!(session.*callback)(result, rctx))</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      }</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      <span class="keywordflow">while</span>(++itr != <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.end());</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      <a class="code" href="classFIX8_1_1Session.html#a99696a0a7aec12803f8632762afaec43">Session::SequencePair</a> result(0, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      rctx._no_more_records = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;      (session.*callback)(result, rctx);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   }</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <a class="code" href="logger_8hpp.html#a5d0cb8d580e88b00a185e52e0800e3b4">glout_error</a> &lt;&lt; <span class="stringliteral">&quot;record not found (&quot;</span> &lt;&lt; startSeqNum &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;   <span class="keywordflow">return</span> recs_sent;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a8e8d8c6b0c73e5736596e85d4250fd1e"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a8e8d8c6b0c73e5736596e85d4250fd1e">FIX8::MemoryPersister::find_nearest_highest_seqnum</a></div><div class="ttdeci">virtual F8API unsigned find_nearest_highest_seqnum(const unsigned requested, const unsigned last) const </div><div class="ttdef"><b>Definition:</b> <a href="persist_8cpp_source.html#l00401">persist.cpp:401</a></div></div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a002c13a644b5bf034f6ea949c7cb4a12"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a002c13a644b5bf034f6ea949c7cb4a12">FIX8::MemoryPersister::get_last_seqnum</a></div><div class="ttdeci">virtual F8API unsigned get_last_seqnum(unsigned &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="persist_8cpp_source.html#l00417">persist.cpp:417</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a99696a0a7aec12803f8632762afaec43"><div class="ttname"><a href="classFIX8_1_1Session.html#a99696a0a7aec12803f8632762afaec43">FIX8::Session::SequencePair</a></div><div class="ttdeci">std::pair&lt; const unsigned, const f8String &gt; SequencePair</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00608">session.hpp:608</a></div></div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html">FIX8::Session::RetransmissionContext</a></div><div class="ttdoc">Provides context to your retrans handler. </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00591">session.hpp:591</a></div></div>
+<div class="ttc" id="logger_8hpp_html_a5d0cb8d580e88b00a185e52e0800e3b4"><div class="ttname"><a href="logger_8hpp.html#a5d0cb8d580e88b00a185e52e0800e3b4">glout_error</a></div><div class="ttdeci">#define glout_error</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00606">logger.hpp:606</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a3f6daec594c6d7b79fb79d53cd4117fd"><div class="ttname"><a href="classFIX8_1_1Session.html#a3f6daec594c6d7b79fb79d53cd4117fd">FIX8::Session::get_next_send_seq</a></div><div class="ttdeci">unsigned get_next_send_seq() const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00738">session.hpp:738</a></div></div>
+<div class="ttc" id="logger_8hpp_html_aa22f86f7f48ba8176436ca57f631f8d0"><div class="ttname"><a href="logger_8hpp.html#aa22f86f7f48ba8176436ca57f631f8d0">glout_warn</a></div><div class="ttdeci">#define glout_warn</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00604">logger.hpp:604</a></div></div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a448754b781f2e18fda7d9589c0338ba8"></a>
@@ -477,7 +549,17 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a4c9b3a3362b5b3175909f5656af73c14">FIX8::Persister</a>.</p>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00377">377</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;{</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;   Store::const_iterator itr(<a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.find(0));</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;   <span class="keywordflow">if</span> (itr == <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.end())</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> *loc(reinterpret_cast&lt;const unsigned *&gt;(&amp;itr-&gt;second));</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   sender_seqnum = *loc++;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   target_seqnum = *loc;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a002c13a644b5bf034f6ea949c7cb4a12"></a>
@@ -512,7 +594,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#aad5124d2eed21a7773da2961b5fe3896">FIX8::Persister</a>.</p>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00417">417</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;{</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;   <span class="keywordflow">return</span> to = (<a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.empty() ? 0 : <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.rbegin()-&gt;first);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a434ff42e2f9eadbbe7b3404d168e0794"></a>
@@ -558,7 +644,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add">FIX8::Persister</a>.</p>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00371">371</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;{</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   <span class="keywordflow">return</span> !seqnum ? <span class="keyword">false</span> : <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.insert({seqnum, what}).second;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8594735493b0ad22f3b548df82e1bfb5"></a>
@@ -604,7 +694,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a90946f09b6189cfcfbc7457200ad71a3">FIX8::Persister</a>.</p>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00364">364</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;{</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> arr[2] { sender_seqnum, target_seqnum };</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">_store</a>.insert({0, <a class="code" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>(reinterpret_cast&lt;const char *&gt;(arr), <span class="keyword">sizeof</span>(arr))}).second;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a7cbf407f589cdbbbdb925ef3ae76c539"><div class="ttname"><a href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">FIX8::f8String</a></div><div class="ttdeci">std::string f8String</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00047">f8types.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -637,7 +733,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:50. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

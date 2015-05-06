@@ -177,7 +177,9 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00129">129</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;: <a class="code" href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">_sock</a>(sock) {}</div>
+<div class="ttc" id="classFIX8_1_1bcoutbuf_html_aa89a0e9e772d023cea19b6918e14cde7"><div class="ttname"><a href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">FIX8::bcoutbuf::_sock</a></div><div class="ttdeci">Poco::Net::DatagramSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00110">logger.hpp:110</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aaf92675000d2ce7d839710a61a54cea7"></a>
@@ -204,7 +206,9 @@ Protected Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00130">130</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00110">_sock</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{ <a class="code" href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">_sock</a>-&gt;close(); <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">_sock</a>; }</div>
+<div class="ttc" id="classFIX8_1_1bcoutbuf_html_aa89a0e9e772d023cea19b6918e14cde7"><div class="ttname"><a href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">FIX8::bcoutbuf::_sock</a></div><div class="ttdeci">Poco::Net::DatagramSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00110">logger.hpp:110</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -233,7 +237,16 @@ Protected Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00112">112</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00110">_sock</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">if</span> (c != traits_type::eof())</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;         <span class="keywordtype">char</span> z(c);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;         <a class="code" href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">_sock</a>-&gt;sendBytes(&amp;z, 1);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">return</span> c;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1bcoutbuf_html_aa89a0e9e772d023cea19b6918e14cde7"><div class="ttname"><a href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">FIX8::bcoutbuf::_sock</a></div><div class="ttdeci">Poco::Net::DatagramSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00110">logger.hpp:110</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7efaa90cb886a76ef0c7461c13a9c025"></a>
@@ -271,7 +284,12 @@ Protected Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00122">122</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00110">_sock</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;   {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <a class="code" href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">_sock</a>-&gt;sendBytes(s, num);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keywordflow">return</span> num;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1bcoutbuf_html_aa89a0e9e772d023cea19b6918e14cde7"><div class="ttname"><a href="classFIX8_1_1bcoutbuf.html#aa89a0e9e772d023cea19b6918e14cde7">FIX8::bcoutbuf::_sock</a></div><div class="ttdeci">Poco::Net::DatagramSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00110">logger.hpp:110</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -305,7 +323,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

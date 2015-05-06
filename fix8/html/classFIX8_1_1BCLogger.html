@@ -360,7 +360,18 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8cpp_source.html#l00341">341</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00181">FIX8::Logger::_flags</a>, <a class="el" href="logger_8hpp_source.html#l00184">FIX8::Logger::_ofs</a>, and <a class="el" href="logger_8hpp_source.html#l00167">FIX8::Logger::broadcast</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   : <a class="code" href="classFIX8_1_1Logger.html#a6db9ce491a011d543234a116f9d86530">Logger</a>(flags, levels, delim, positions), <a class="code" href="classFIX8_1_1BCLogger.html#a56629a19c6b5baf876f824f534f66029">_init_ok</a>(<span class="keyword">true</span>)</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;{</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1bcostream.html">bcostream</a>(sock);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1Logger_html_a6db9ce491a011d543234a116f9d86530"><div class="ttname"><a href="classFIX8_1_1Logger.html#a6db9ce491a011d543234a116f9d86530">FIX8::Logger::Logger</a></div><div class="ttdeci">Logger(const LogFlags flags, const Levels levels=Levels(All), const std::string delim=&quot; &quot;, const LogPositions positions=LogPositions())</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00239">logger.hpp:239</a></div></div>
+<div class="ttc" id="classFIX8_1_1Logger_html_af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e"><div class="ttname"><a href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">FIX8::Logger::broadcast</a></div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00167">logger.hpp:167</a></div></div>
+<div class="ttc" id="classFIX8_1_1Logger_html_a44859ec24a17660efa7afed958fc82aa"><div class="ttname"><a href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">FIX8::Logger::_ofs</a></div><div class="ttdeci">std::ostream * _ofs</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00184">logger.hpp:184</a></div></div>
+<div class="ttc" id="classFIX8_1_1BCLogger_html_a56629a19c6b5baf876f824f534f66029"><div class="ttname"><a href="classFIX8_1_1BCLogger.html#a56629a19c6b5baf876f824f534f66029">FIX8::BCLogger::_init_ok</a></div><div class="ttdeci">bool _init_ok</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00438">logger.hpp:438</a></div></div>
+<div class="ttc" id="classFIX8_1_1bcostream_html"><div class="ttname"><a href="classFIX8_1_1bcostream.html">FIX8::bcostream</a></div><div class="ttdoc">udp stream </div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00134">logger.hpp:134</a></div></div>
+<div class="ttc" id="classFIX8_1_1Logger_html_ae8d1712deee374edc53e6cd280212387"><div class="ttname"><a href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">FIX8::Logger::_flags</a></div><div class="ttdeci">LogFlags _flags</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00181">logger.hpp:181</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="afcaf6fa3f3f67e1af961d0b348088e7c"></a>
@@ -448,7 +459,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00465">465</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -477,7 +489,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00462">462</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00438">_init_ok</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1BCLogger.html#a56629a19c6b5baf876f824f534f66029">_init_ok</a> ? <span class="keyword">this</span> : 0; }</div>
+<div class="ttc" id="classFIX8_1_1BCLogger_html_a56629a19c6b5baf876f824f534f66029"><div class="ttname"><a href="classFIX8_1_1BCLogger.html#a56629a19c6b5baf876f824f534f66029">FIX8::BCLogger::_init_ok</a></div><div class="ttdeci">bool _init_ok</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00438">logger.hpp:438</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -512,7 +526,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -165,7 +165,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01169">1169</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;: <a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>(fd) {}</div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaa7a7d89c5729adc5ed56c7d16ed14d1"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">FIX8::tty_save_state::_fd</a></div><div class="ttdeci">int _fd</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01159">f8utils.hpp:1159</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -194,7 +196,21 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01171">1171</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 <p>References <a class="el" href="f8utils_8hpp_source.html#l01159">_fd</a>, <a class="el" href="f8utils_8hpp_source.html#l01158">_raw_mode</a>, and <a class="el" href="f8utils_8hpp_source.html#l01164">_tty_state</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;   {</div>
+<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;      <span class="keywordflow">if</span> (&amp;from != <span class="keyword">this</span>)</div>
+<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;      {</div>
+<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;         <a class="code" href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">_raw_mode</a> = from._raw_mode;</div>
+<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;         <a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a> = from._fd;</div>
+<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160;         <a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a> = from._tty_state;</div>
+<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;      }</div>
+<div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_ac799ae9efd92818dbfae115417e62c48"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">FIX8::tty_save_state::_raw_mode</a></div><div class="ttdeci">bool _raw_mode</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01158">f8utils.hpp:1158</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaa7a7d89c5729adc5ed56c7d16ed14d1"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">FIX8::tty_save_state::_fd</a></div><div class="ttdeci">int _fd</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01159">f8utils.hpp:1159</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_a69c05cb80510853c68656671fe5c80b8"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">FIX8::tty_save_state::_tty_state</a></div><div class="ttdeci">termio _tty_state</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01164">f8utils.hpp:1164</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a64dbe0f3a2b970a69308bb187909e12a"></a>
@@ -223,7 +239,43 @@ Private Attributes</h2></td></tr>
 <p>References <a class="el" href="f8utils_8hpp_source.html#l01159">_fd</a>, <a class="el" href="f8utils_8hpp_source.html#l01158">_raw_mode</a>, <a class="el" href="f8utils_8hpp_source.html#l01164">_tty_state</a>, and <a class="el" href="f8utils_8cpp_source.html#l00165">FIX8::Str_error()</a>.</p>
 
 <p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00213">MyMenu::get_string()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00289">FIX8::ConsoleMenu::GetString()</a>, and <a class="el" href="harness_8cpp_source.html#l00174">main()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;   {</div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">_raw_mode</a>)</div>
+<div class="line"><a name="l01204"></a><span class="lineno"> 1204</span>&#160;      {</div>
+<div class="line"><a name="l01205"></a><span class="lineno"> 1205</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l01206"></a><span class="lineno"> 1206</span>&#160;<span class="preprocessor">#ifdef __APPLE__</span></div>
+<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;         <span class="keywordflow">if</span> (ioctl(<a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>, TIOCGETA, &amp;<a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a>) &lt; 0)</div>
+<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;         <span class="keywordflow">if</span> (ioctl(<a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>, TCGETA, &amp;<a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a>) &lt; 0)</div>
+<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;         {</div>
+<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;            std::cerr &lt;&lt; <a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">Str_error</a>(errno, <span class="stringliteral">&quot;Cannot get ioctl&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;         }</div>
+<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;<span class="preprocessor">#ifdef __APPLE__</span></div>
+<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;         termios tty_state(<a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a>);</div>
+<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;         termio tty_state(<a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a>);</div>
+<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;         tty_state.c_lflag = 0;</div>
+<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;         tty_state.c_cc[VTIME] = 0;</div>
+<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;         tty_state.c_cc[VMIN] = 1;</div>
+<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;<span class="preprocessor">#ifdef __APPLE__</span></div>
+<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;         <span class="keywordflow">if</span> (ioctl(<a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>, TIOCSETA, &amp;tty_state) &lt; 0)</div>
+<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;         <span class="keywordflow">if</span> (ioctl(<a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>, TCSETA, &amp;tty_state) &lt; 0)</div>
+<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;            std::cerr &lt;&lt; <a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">Str_error</a>(errno, <span class="stringliteral">&quot;Cannot reset ioctl&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;            <a class="code" href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">_raw_mode</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;      }</div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_ac799ae9efd92818dbfae115417e62c48"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">FIX8::tty_save_state::_raw_mode</a></div><div class="ttdeci">bool _raw_mode</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01158">f8utils.hpp:1158</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a7a2717c5631879023e7924bdc42eb235"><div class="ttname"><a href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a></div><div class="ttdeci">F8API std::string Str_error(const int err, const char *str=0)</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8cpp_source.html#l00165">f8utils.cpp:165</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaa7a7d89c5729adc5ed56c7d16ed14d1"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">FIX8::tty_save_state::_fd</a></div><div class="ttdeci">int _fd</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01159">f8utils.hpp:1159</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_a69c05cb80510853c68656671fe5c80b8"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">FIX8::tty_save_state::_tty_state</a></div><div class="ttdeci">termio _tty_state</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01164">f8utils.hpp:1164</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aaecaabf5b98750e1a62a093bea443899"></a>
@@ -252,7 +304,26 @@ Private Attributes</h2></td></tr>
 <p>References <a class="el" href="f8utils_8hpp_source.html#l01159">_fd</a>, <a class="el" href="f8utils_8hpp_source.html#l01158">_raw_mode</a>, <a class="el" href="f8utils_8hpp_source.html#l01164">_tty_state</a>, and <a class="el" href="f8utils_8cpp_source.html#l00165">FIX8::Str_error()</a>.</p>
 
 <p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00213">MyMenu::get_string()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00289">FIX8::ConsoleMenu::GetString()</a>, and <a class="el" href="myfix_8cpp_source.html#l00181">main()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;   {</div>
+<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">_raw_mode</a>)</div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;      {</div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;<span class="preprocessor">#ifdef __APPLE__</span></div>
+<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;         <span class="keywordflow">if</span> (ioctl(<a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>, TIOCSETA, &amp;<a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a>) &lt; 0)</div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;         <span class="keywordflow">if</span> (ioctl(<a class="code" href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">_fd</a>, TCSETA, &amp;<a class="code" href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">_tty_state</a>) &lt; 0)</div>
+<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;            std::cerr &lt;&lt; <a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">Str_error</a>(errno, <span class="stringliteral">&quot;Cannot reset ioctl&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;            <a class="code" href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">_raw_mode</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;      }</div>
+<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_ac799ae9efd92818dbfae115417e62c48"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#ac799ae9efd92818dbfae115417e62c48">FIX8::tty_save_state::_raw_mode</a></div><div class="ttdeci">bool _raw_mode</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01158">f8utils.hpp:1158</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a7a2717c5631879023e7924bdc42eb235"><div class="ttname"><a href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a></div><div class="ttdeci">F8API std::string Str_error(const int err, const char *str=0)</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8cpp_source.html#l00165">f8utils.cpp:165</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaa7a7d89c5729adc5ed56c7d16ed14d1"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaa7a7d89c5729adc5ed56c7d16ed14d1">FIX8::tty_save_state::_fd</a></div><div class="ttdeci">int _fd</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01159">f8utils.hpp:1159</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_a69c05cb80510853c68656671fe5c80b8"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#a69c05cb80510853c68656671fe5c80b8">FIX8::tty_save_state::_tty_state</a></div><div class="ttdeci">termio _tty_state</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01164">f8utils.hpp:1164</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -334,7 +405,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:49. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

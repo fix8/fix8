@@ -217,7 +217,17 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00096">96</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00068">_attr</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      : <a class="code" href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">_attr</a>(), <a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>()</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keywordflow">if</span> (pthread_attr_init(&amp;<a class="code" href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">_attr</a>))</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;         <span class="keywordflow">throw</span> f8_threadException(<span class="stringliteral">&quot;pthread_attr_init failure&quot;</span>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_af69169adc3264ad39e239f8f65b9c5d6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">FIX8::_f8_threadcore::_tid</a></div><div class="ttdeci">pthread_t _tid</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00069">thread.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a6dfbb243e4ba68f2929b16ca739e6926"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">FIX8::_f8_threadcore::_attr</a></div><div class="ttdeci">pthread_attr_t _attr</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00068">thread.hpp:68</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad9d32af55a1ceff227d0ea8cc3607624"></a>
@@ -246,7 +256,15 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00108">108</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00068">_attr</a>, and <a class="el" href="thread_8hpp_source.html#l00126">join()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;     <a class="code" href="classFIX8_1_1__f8__threadcore.html#a2af0a0534ca2611134247cd99c8fcfd6">join</a>();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      pthread_attr_destroy(&amp;<a class="code" href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">_attr</a>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a2af0a0534ca2611134247cd99c8fcfd6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a2af0a0534ca2611134247cd99c8fcfd6">FIX8::_f8_threadcore::join</a></div><div class="ttdeci">virtual int join(int timeoutInMs=0)</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00126">thread.hpp:126</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a6dfbb243e4ba68f2929b16ca739e6926"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">FIX8::_f8_threadcore::_attr</a></div><div class="ttdeci">pthread_attr_t _attr</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00068">thread.hpp:68</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -275,7 +293,8 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00076">76</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{ <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">void</span> *<span class="keyword">&gt;</span>((*<span class="keyword">static_cast&lt;</span>T *<span class="keyword">&gt;</span>(what))()); }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5b5a868cf40fc796b8c5b88eb6486d89"></a>
@@ -305,7 +324,17 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00084">84</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00068">_attr</a>, and <a class="el" href="thread_8hpp_source.html#l00069">_tid</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <span class="keywordflow">return</span> pthread_create(&amp;<a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>, &amp;<a class="code" href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">_attr</a>, _run&lt;T&gt;, sub);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#elif (THREAD_SYSTEM == THREAD_STDTHREAD)</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      _thread.reset(<span class="keyword">new</span> std::thread(_run&lt;T&gt;, sub));</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_af69169adc3264ad39e239f8f65b9c5d6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">FIX8::_f8_threadcore::_tid</a></div><div class="ttdeci">pthread_t _tid</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00069">thread.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a6dfbb243e4ba68f2929b16ca739e6926"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a6dfbb243e4ba68f2929b16ca739e6926">FIX8::_f8_threadcore::_attr</a></div><div class="ttdeci">pthread_attr_t _attr</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00068">thread.hpp:68</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a31595198812a53c00f8aa71570742831"></a>
@@ -335,7 +364,15 @@ template&lt;typename T &gt; </div>
 <p>References <a class="el" href="thread_8hpp_source.html#l00069">_tid</a>.</p>
 
 <p>Referenced by <a class="el" href="thread_8hpp_source.html#l00126">join()</a>, <a class="el" href="thread_8hpp_source.html#l00192">operator!=()</a>, and <a class="el" href="thread_8hpp_source.html#l00180">operator==()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   {</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">#elif (THREAD_SYSTEM == THREAD_STDTHREAD)</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">return</span> _thread.get() ? _thread-&gt;get_id() : std::thread::id();</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_af69169adc3264ad39e239f8f65b9c5d6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">FIX8::_f8_threadcore::_tid</a></div><div class="ttdeci">pthread_t _tid</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00069">thread.hpp:69</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2d8b133e0d285b8bec51f7c258a9a80d"></a>
@@ -363,7 +400,14 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00168">168</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="thread_8hpp_source.html#l00126">join()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   {</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      <span class="keywordflow">return</span> pthread_self();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#elif (THREAD_SYSTEM == THREAD_STDTHREAD)</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordflow">return</span> std::this_thread::get_id();</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2af0a0534ca2611134247cd99c8fcfd6"></a>
@@ -394,7 +438,19 @@ template&lt;typename T &gt; </div>
 <p>References <a class="el" href="thread_8hpp_source.html#l00069">_tid</a>, <a class="el" href="thread_8hpp_source.html#l00157">get_threadid()</a>, and <a class="el" href="thread_8hpp_source.html#l00168">getid()</a>.</p>
 
 <p>Referenced by <a class="el" href="thread_8hpp_source.html#l00108">~_f8_threadcore()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;   {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1__f8__threadcore.html#a2d8b133e0d285b8bec51f7c258a9a80d">getid</a>() != <a class="code" href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">get_threadid</a>() ? pthread_join(<a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>, <span class="keyword">nullptr</span>) ? -1 : 0 : -1; <span class="comment">// prevent self-join</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#elif (THREAD_SYSTEM == THREAD_STDTHREAD)</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      <span class="keywordflow">if</span> (_thread.get() &amp;&amp; _thread-&gt;joinable() &amp;&amp; <a class="code" href="classFIX8_1_1__f8__threadcore.html#a2d8b133e0d285b8bec51f7c258a9a80d">getid</a>() != <a class="code" href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">get_threadid</a>())</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;         _thread-&gt;join();</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a2d8b133e0d285b8bec51f7c258a9a80d"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a2d8b133e0d285b8bec51f7c258a9a80d">FIX8::_f8_threadcore::getid</a></div><div class="ttdeci">static thread_id_t getid()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00168">thread.hpp:168</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_af69169adc3264ad39e239f8f65b9c5d6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">FIX8::_f8_threadcore::_tid</a></div><div class="ttdeci">pthread_t _tid</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00069">thread.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a31595198812a53c00f8aa71570742831"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">FIX8::_f8_threadcore::get_threadid</a></div><div class="ttdeci">thread_id_t get_threadid() const </div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00157">thread.hpp:157</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa9c1923091efa592af7a115f94d8fc23"></a>
@@ -429,7 +485,16 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00192">192</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00069">_tid</a>, and <a class="el" href="thread_8hpp_source.html#l00157">get_threadid()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      <span class="keywordflow">return</span> !pthread_equal(<a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>, that._tid);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">get_threadid</a>() != that.get_threadid();</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_af69169adc3264ad39e239f8f65b9c5d6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">FIX8::_f8_threadcore::_tid</a></div><div class="ttdeci">pthread_t _tid</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00069">thread.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a31595198812a53c00f8aa71570742831"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">FIX8::_f8_threadcore::get_threadid</a></div><div class="ttdeci">thread_id_t get_threadid() const </div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00157">thread.hpp:157</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a885a8d3dc9babdafc84a6347dc4bb503"></a>
@@ -488,7 +553,16 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00180">180</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00069">_tid</a>, and <a class="el" href="thread_8hpp_source.html#l00157">get_threadid()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      <span class="keywordflow">return</span> pthread_equal(<a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>, that._tid);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">get_threadid</a>() == that.get_threadid();</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_af69169adc3264ad39e239f8f65b9c5d6"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">FIX8::_f8_threadcore::_tid</a></div><div class="ttdeci">pthread_t _tid</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00069">thread.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1__f8__threadcore_html_a31595198812a53c00f8aa71570742831"><div class="ttname"><a href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">FIX8::_f8_threadcore::get_threadid</a></div><div class="ttdeci">thread_id_t get_threadid() const </div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00157">thread.hpp:157</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5402caf3c9ec9a0fc36c54a1d803f2f2"></a>
@@ -566,7 +640,15 @@ template&lt;typename T &gt; </div>
 <p>Yield CPU. </p><dl class="section return"><dt>Returns</dt><dd>result of yield </dd></dl>
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00143">143</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;   {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">#if (THREAD_SYSTEM == THREAD_PTHREAD)</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keywordflow">return</span> pthread_yield();</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#elif (THREAD_SYSTEM == THREAD_STDTHREAD)</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      std::this_thread::yield();</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -624,7 +706,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

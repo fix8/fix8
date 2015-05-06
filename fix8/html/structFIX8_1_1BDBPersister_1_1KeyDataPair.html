@@ -157,7 +157,17 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="persist_8hpp_source.html#l00192">192</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 <p>References <a class="el" href="persist_8hpp_source.html#l00190">_data</a>, <a class="el" href="persist_8hpp_source.html#l00190">_key</a>, and <a class="el" href="persist_8hpp_source.html#l00071">FIX8::Persister::MaxMsgLen</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;         : <a class="code" href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#adc113b178ddf4fa7765a8d78d164162a">_key</a>(buf.keyBuf_.char_, <span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span>)), <a class="code" href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#aaeec9afe4fe39c57e944408841611073">_data</a>(buf.dataBuf_, buf.dataBufLen_)</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;      {</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;         <a class="code" href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#adc113b178ddf4fa7765a8d78d164162a">_key</a>.set_flags(DB_DBT_USERMEM);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;         <a class="code" href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#adc113b178ddf4fa7765a8d78d164162a">_key</a>.set_ulen(<span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span>));</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;         <a class="code" href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#aaeec9afe4fe39c57e944408841611073">_data</a>.set_flags(DB_DBT_USERMEM);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;         <a class="code" href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#aaeec9afe4fe39c57e944408841611073">_data</a>.set_ulen(<a class="code" href="classFIX8_1_1Persister.html#a8e21078e64216ca7eb6071e8be249299a6671b0b2d47dc4e4d716424be8e95f89">MaxMsgLen</a>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      }</div>
+<div class="ttc" id="classFIX8_1_1Persister_html_a8e21078e64216ca7eb6071e8be249299a6671b0b2d47dc4e4d716424be8e95f89"><div class="ttname"><a href="classFIX8_1_1Persister.html#a8e21078e64216ca7eb6071e8be249299a6671b0b2d47dc4e4d716424be8e95f89">FIX8::Persister::MaxMsgLen</a></div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00071">persist.hpp:71</a></div></div>
+<div class="ttc" id="structFIX8_1_1BDBPersister_1_1KeyDataPair_html_aaeec9afe4fe39c57e944408841611073"><div class="ttname"><a href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#aaeec9afe4fe39c57e944408841611073">FIX8::BDBPersister::KeyDataPair::_data</a></div><div class="ttdeci">Dbt _data</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00190">persist.hpp:190</a></div></div>
+<div class="ttc" id="structFIX8_1_1BDBPersister_1_1KeyDataPair_html_adc113b178ddf4fa7765a8d78d164162a"><div class="ttname"><a href="structFIX8_1_1BDBPersister_1_1KeyDataPair.html#adc113b178ddf4fa7765a8d78d164162a">FIX8::BDBPersister::KeyDataPair::_key</a></div><div class="ttdeci">Dbt _key</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00190">persist.hpp:190</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -199,7 +209,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

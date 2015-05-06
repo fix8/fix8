@@ -244,7 +244,9 @@ template&lt;typename T&gt; </div>
 </dl>
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00280">280</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;         : <a class="code" href="classFIX8_1_1f8__thread.html#ad970e358bb4d8c933a3519089398c11f">_sub</a>(what, method, cancellation_token_method) {}</div>
+<div class="ttc" id="classFIX8_1_1f8__thread_html_ad970e358bb4d8c933a3519089398c11f"><div class="ttname"><a href="classFIX8_1_1f8__thread.html#ad970e358bb4d8c933a3519089398c11f">FIX8::f8_thread::_sub</a></div><div class="ttdeci">class FIX8::f8_thread::_helper _sub</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a15985752637e51c7765ead63dc35c560"></a>
@@ -273,7 +275,8 @@ template&lt;typename T&gt; </div>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00285">285</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -304,7 +307,11 @@ template&lt;typename T&gt; </div>
 <p>Implements <a class="el" href="classFIX8_1_1__f8__threadcore.html#a5402caf3c9ec9a0fc36c54a1d803f2f2">FIX8::_f8_threadcore</a>.</p>
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00293">293</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;{ <a class="code" href="classFIX8_1_1f8__thread.html#ad970e358bb4d8c933a3519089398c11f">_sub</a>.<a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a8bfec3ca96b5b66daeca2b0e1f457dec">cancellation_token</a>().<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#aec01f3dc6fcd39997bd619c54e7aab65">request_stop</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1f8__thread_html_ad970e358bb4d8c933a3519089398c11f"><div class="ttname"><a href="classFIX8_1_1f8__thread.html#ad970e358bb4d8c933a3519089398c11f">FIX8::f8_thread::_sub</a></div><div class="ttdeci">class FIX8::f8_thread::_helper _sub</div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a8bfec3ca96b5b66daeca2b0e1f457dec"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a8bfec3ca96b5b66daeca2b0e1f457dec">FIX8::f8_thread::_helper::cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token &amp; cancellation_token()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00271">thread.hpp:271</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread__cancellation__token_html_aec01f3dc6fcd39997bd619c54e7aab65"><div class="ttname"><a href="classFIX8_1_1f8__thread__cancellation__token.html#aec01f3dc6fcd39997bd619c54e7aab65">FIX8::f8_thread_cancellation_token::request_stop</a></div><div class="ttdeci">void request_stop()</div><div class="ttdoc">Tell the thread to stop. </div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00219">thread.hpp:219</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a36c2d4e81d9c650827a3a03bcfc2e099"></a>
@@ -334,7 +341,9 @@ template&lt;typename T&gt; </div>
 <p>Implements <a class="el" href="classFIX8_1_1__f8__threadcore.html#a5880b6f42d2f3d1af4eb671dfdb78dd9">FIX8::_f8_threadcore</a>.</p>
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00289">289</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;{ <span class="keywordflow">return</span> _start&lt;_helper&gt;(<span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span> *<span class="keyword">&gt;</span>(&amp;<a class="code" href="classFIX8_1_1f8__thread.html#ad970e358bb4d8c933a3519089398c11f">_sub</a>)); }</div>
+<div class="ttc" id="classFIX8_1_1f8__thread_html_ad970e358bb4d8c933a3519089398c11f"><div class="ttname"><a href="classFIX8_1_1f8__thread.html#ad970e358bb4d8c933a3519089398c11f">FIX8::f8_thread::_sub</a></div><div class="ttdeci">class FIX8::f8_thread::_helper _sub</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -367,7 +376,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

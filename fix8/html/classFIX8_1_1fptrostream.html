@@ -184,7 +184,10 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00087">87</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      : std::ostream(&amp;<a class="code" href="classFIX8_1_1fptrostream.html#a6705c0cf3d249d36cbcabca3749f7273">buf_</a>), <a class="code" href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">fptr_</a>(fptr), <a class="code" href="classFIX8_1_1fptrostream.html#a6705c0cf3d249d36cbcabca3749f7273">buf_</a>(fileno(fptr)) {}</div>
+<div class="ttc" id="classFIX8_1_1fptrostream_html_a91914244a5440245ce8328193d637618"><div class="ttname"><a href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">FIX8::fptrostream::fptr_</a></div><div class="ttdeci">FILE * fptr_</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00079">logger.hpp:79</a></div></div>
+<div class="ttc" id="classFIX8_1_1fptrostream_html_a6705c0cf3d249d36cbcabca3749f7273"><div class="ttname"><a href="classFIX8_1_1fptrostream.html#a6705c0cf3d249d36cbcabca3749f7273">FIX8::fptrostream::buf_</a></div><div class="ttdeci">fdoutbuf buf_</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00082">logger.hpp:82</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a084c0424f19a9b7d827c7c40779094b5"></a>
@@ -213,7 +216,15 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00091">91</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00079">fptr_</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      _pclose(<a class="code" href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">fptr_</a>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      pclose(<a class="code" href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">fptr_</a>);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1fptrostream_html_a91914244a5440245ce8328193d637618"><div class="ttname"><a href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">FIX8::fptrostream::fptr_</a></div><div class="ttdeci">FILE * fptr_</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00079">logger.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -242,7 +253,9 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00102">102</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00079">fptr_</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{ <span class="keywordflow">return</span> fileno(<a class="code" href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">fptr_</a>); }</div>
+<div class="ttc" id="classFIX8_1_1fptrostream_html_a91914244a5440245ce8328193d637618"><div class="ttname"><a href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">FIX8::fptrostream::fptr_</a></div><div class="ttdeci">FILE * fptr_</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00079">logger.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -298,7 +311,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

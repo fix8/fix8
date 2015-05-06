@@ -218,7 +218,11 @@ template&lt;typename T&gt; </div>
 </dl>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00107">107</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;: <a class="code" href="classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f">_monitor</a>(monitor), <a class="code" href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">_thread</a>(std::ref(*<span class="keyword">this</span>)), <a class="code" href="classFIX8_1_1Timer.html#ac1de2d5afb11067dde9b67d39426d8a1">_granularity</a>(granularity) {}</div>
+<div class="ttc" id="classFIX8_1_1Timer_html_ac1de2d5afb11067dde9b67d39426d8a1"><div class="ttname"><a href="classFIX8_1_1Timer.html#ac1de2d5afb11067dde9b67d39426d8a1">FIX8::Timer::_granularity</a></div><div class="ttdeci">unsigned _granularity</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00098">timer.hpp:98</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_ae3390b96c9cadc2a3457c613dcd1232a"><div class="ttname"><a href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">FIX8::Timer::_thread</a></div><div class="ttdeci">f8_thread&lt; Timer &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00096">timer.hpp:96</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a500f5a76dcaa9594bf75af390c23738f"><div class="ttname"><a href="classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f">FIX8::Timer::_monitor</a></div><div class="ttdeci">T &amp; _monitor</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00095">timer.hpp:95</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9dbcccd87c85a483eb47e1d0e23634a4"></a>
@@ -247,7 +251,13 @@ template&lt;typename T&gt; </div>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00110">110</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <a class="code" href="classFIX8_1_1Timer.html#a46e4b8b83e0419eaa729b26896ca5c32">stop</a>();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <a class="code" href="classFIX8_1_1Timer.html#a5b55fe74a9d29f5a28a50fe24d464709">join</a>();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a46e4b8b83e0419eaa729b26896ca5c32"><div class="ttname"><a href="classFIX8_1_1Timer.html#a46e4b8b83e0419eaa729b26896ca5c32">FIX8::Timer::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop the timer thread. </div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00133">timer.hpp:133</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a5b55fe74a9d29f5a28a50fe24d464709"><div class="ttname"><a href="classFIX8_1_1Timer.html#a5b55fe74a9d29f5a28a50fe24d464709">FIX8::Timer::join</a></div><div class="ttdeci">void join()</div><div class="ttdoc">Join timer thread. Wait till exits. </div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00127">timer.hpp:127</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -275,7 +285,9 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00139">139</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Timer.html#a727b1dccf69cbb019946ae76519be677">_cancellation_token</a>;}</div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a727b1dccf69cbb019946ae76519be677"><div class="ttname"><a href="classFIX8_1_1Timer.html#a727b1dccf69cbb019946ae76519be677">FIX8::Timer::_cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token _cancellation_token</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00101">timer.hpp:101</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8459f0c5f91c707601e564a669c21934"></a>
@@ -295,7 +307,22 @@ template&lt;typename T &gt; </div>
 <p>Empty the scheduler of any pending timer events. </p><dl class="section return"><dt>Returns</dt><dd>number of timer events that were waiting on the queue </dd></dl>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00195">195</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;{</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   <span class="keywordtype">size_t</span> result(0);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   <a class="code" href="namespaceFIX8.html#a156967bac272845a5edbbca375e4def8">f8_scoped_spin_lock</a> guard(<a class="code" href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">_spin_lock</a>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   <span class="keywordflow">while</span> (<a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.size())</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      ++result;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      <a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.pop(); <span class="comment">// remove from queue</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   }</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="ttc" id="namespaceFIX8_html_a156967bac272845a5edbbca375e4def8"><div class="ttname"><a href="namespaceFIX8.html#a156967bac272845a5edbbca375e4def8">FIX8::f8_scoped_spin_lock</a></div><div class="ttdeci">f8_scoped_lock_impl&lt; f8_spin_lock &gt; f8_scoped_spin_lock</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00452">thread.hpp:452</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a0e0ba97cc19f31e998c336ff39a2ea95"><div class="ttname"><a href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">FIX8::Timer::_spin_lock</a></div><div class="ttdeci">f8_spin_lock _spin_lock</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00097">timer.hpp:97</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a4a3b6d4434a6719c580b7c72e850c044"><div class="ttname"><a href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">FIX8::Timer::_event_queue</a></div><div class="ttdeci">std::priority_queue&lt; TimerEvent&lt; T &gt; &gt; _event_queue</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00100">timer.hpp:100</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5b55fe74a9d29f5a28a50fe24d464709"></a>
@@ -326,7 +353,9 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00127">127</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="timer_8hpp_source.html#l00110">FIX8::Timer&lt; FIX8::Session &gt;::~Timer()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;{ <a class="code" href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">_thread</a>.join(); }</div>
+<div class="ttc" id="classFIX8_1_1Timer_html_ae3390b96c9cadc2a3457c613dcd1232a"><div class="ttname"><a href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">FIX8::Timer::_thread</a></div><div class="ttdeci">f8_thread&lt; Timer &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00096">timer.hpp:96</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aee0583a2ed07102f6647285427a1b524"></a>
@@ -348,7 +377,64 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00144">144</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00427">FIX8::f8_scoped_lock_impl&lt; T &gt;::acquire()</a>, <a class="el" href="tickval_8hpp_source.html#l00123">FIX8::Tickval::get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00185">FIX8::Tickval::get_tickval()</a>, <a class="el" href="logger_8hpp_source.html#l00601">glout_info</a>, <a class="el" href="hypersleep_8hpp_source.html#l00105">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00070">FIX8::Tickval::million</a>, and <a class="el" href="thread_8hpp_source.html#l00441">FIX8::f8_scoped_lock_impl&lt; T &gt;::release()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;{</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   <span class="keywordtype">unsigned</span> elapsed(0);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   <span class="keywordflow">while</span>(!<a class="code" href="classFIX8_1_1Timer.html#a727b1dccf69cbb019946ae76519be677">_cancellation_token</a>)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   {</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      <span class="keywordtype">bool</span> shouldsleep(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;         <a class="code" href="namespaceFIX8.html#a156967bac272845a5edbbca375e4def8">f8_scoped_spin_lock</a> guard(<a class="code" href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">_spin_lock</a>);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.size())</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;         {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            TimerEvent&lt;T&gt; op(<a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.top());</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="keywordflow">if</span> (!op._t) <span class="comment">// ignore empty timeval</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            {</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;               <a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.pop(); <span class="comment">// remove from queue</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;               <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keyword">const</span> Tickval now(<a class="code" href="classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89">Tickval::get_tickval</a>());</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            <span class="keywordflow">if</span> (op._t &lt;= now)  <span class="comment">// has elapsed</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            {</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;               TimerEvent&lt;T&gt; rop(<a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.top()); <span class="comment">// take a copy</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;               <a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.pop(); <span class="comment">// remove from queue</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;               guard.release();</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;               ++elapsed;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;               <span class="keyword">const</span> <span class="keywordtype">bool</span> result((<a class="code" href="classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f">_monitor</a>.*rop._callback)());</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;               <span class="keywordflow">if</span> (result &amp;&amp; op._repeat) <span class="comment">// don&#39;t repeat if callback returned false</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;               {</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                  op._t = now.get_ticks() + op._intervalMS * <a class="code" href="classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc">Tickval::million</a>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                  guard.acquire(<a class="code" href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">_spin_lock</a>);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                  <a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.push(std::move(op)); <span class="comment">// push back on queue</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;               }</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;               shouldsleep = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;         }</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            shouldsleep = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      }  <span class="comment">// we want the lock to go out of scope before we sleep</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <span class="keywordflow">if</span> (shouldsleep)</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;         <a class="code" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt;h_milliseconds&gt;</a>(<a class="code" href="classFIX8_1_1Timer.html#ac1de2d5afb11067dde9b67d39426d8a1">_granularity</a>);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;   }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   <a class="code" href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a> &lt;&lt; <span class="stringliteral">&quot;Terminating Timer thread (&quot;</span> &lt;&lt; elapsed &lt;&lt; <span class="stringliteral">&quot; elapsed, &quot;</span> &lt;&lt; <a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.size() &lt;&lt; <span class="stringliteral">&quot; queued).&quot;</span>;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
+<div class="ttc" id="namespaceFIX8_html_a156967bac272845a5edbbca375e4def8"><div class="ttname"><a href="namespaceFIX8.html#a156967bac272845a5edbbca375e4def8">FIX8::f8_scoped_spin_lock</a></div><div class="ttdeci">f8_scoped_lock_impl&lt; f8_spin_lock &gt; f8_scoped_spin_lock</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00452">thread.hpp:452</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_ad5111d49e1daf7e5f0494b52c587f3fc"><div class="ttname"><a href="classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc">FIX8::Tickval::million</a></div><div class="ttdeci">static const ticks million</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00070">tickval.hpp:70</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a0543385fc89162739f2159e1fc1bdc89"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89">FIX8::Tickval::get_tickval</a></div><div class="ttdeci">static Tickval get_tickval()</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00185">tickval.hpp:185</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a0e0ba97cc19f31e998c336ff39a2ea95"><div class="ttname"><a href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">FIX8::Timer::_spin_lock</a></div><div class="ttdeci">f8_spin_lock _spin_lock</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00097">timer.hpp:97</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a727b1dccf69cbb019946ae76519be677"><div class="ttname"><a href="classFIX8_1_1Timer.html#a727b1dccf69cbb019946ae76519be677">FIX8::Timer::_cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token _cancellation_token</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00101">timer.hpp:101</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a5c9d33dafcd63c026afe8d98fd3bbc78"><div class="ttname"><a href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">FIX8::hypersleep&lt; h_milliseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_milliseconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00105">hypersleep.hpp:105</a></div></div>
+<div class="ttc" id="logger_8hpp_html_ae10ccece5316fd7564287f16ae01e451"><div class="ttname"><a href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a></div><div class="ttdeci">#define glout_info</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00601">logger.hpp:601</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a4a3b6d4434a6719c580b7c72e850c044"><div class="ttname"><a href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">FIX8::Timer::_event_queue</a></div><div class="ttdeci">std::priority_queue&lt; TimerEvent&lt; T &gt; &gt; _event_queue</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00100">timer.hpp:100</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_ac1de2d5afb11067dde9b67d39426d8a1"><div class="ttname"><a href="classFIX8_1_1Timer.html#ac1de2d5afb11067dde9b67d39426d8a1">FIX8::Timer::_granularity</a></div><div class="ttdeci">unsigned _granularity</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00098">timer.hpp:98</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a500f5a76dcaa9594bf75af390c23738f"><div class="ttname"><a href="classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f">FIX8::Timer::_monitor</a></div><div class="ttdeci">T &amp; _monitor</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00095">timer.hpp:95</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adb663bbca2b27738b4b8bb2701d0ee23"></a>
@@ -388,7 +474,29 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00211">211</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 <p>References <a class="el" href="timer_8hpp_source.html#l00064">FIX8::TimerEvent&lt; T &gt;::_intervalMS</a>, <a class="el" href="tickval_8hpp_source.html#l00185">FIX8::Tickval::get_tickval()</a>, <a class="el" href="tickval_8hpp_source.html#l00070">FIX8::Tickval::million</a>, and <a class="el" href="timer_8hpp_source.html#l00079">FIX8::TimerEvent&lt; T &gt;::set()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;{</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;   Tickval tofire;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;   <span class="keywordflow">if</span> (timeToWait)</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;   {</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      <span class="comment">// Calculate time to fire</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89">Tickval::get_tickval</a>(tofire);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      tofire += timeToWait * <a class="code" href="classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc">Tickval::million</a>;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      what._intervalMS = timeToWait;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   what.set(tofire);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   <a class="code" href="namespaceFIX8.html#a156967bac272845a5edbbca375e4def8">f8_scoped_spin_lock</a> guard(<a class="code" href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">_spin_lock</a>);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   <a class="code" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a>.push(std::move(what));</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
+<div class="ttc" id="namespaceFIX8_html_a156967bac272845a5edbbca375e4def8"><div class="ttname"><a href="namespaceFIX8.html#a156967bac272845a5edbbca375e4def8">FIX8::f8_scoped_spin_lock</a></div><div class="ttdeci">f8_scoped_lock_impl&lt; f8_spin_lock &gt; f8_scoped_spin_lock</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00452">thread.hpp:452</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_ad5111d49e1daf7e5f0494b52c587f3fc"><div class="ttname"><a href="classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc">FIX8::Tickval::million</a></div><div class="ttdeci">static const ticks million</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00070">tickval.hpp:70</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a0543385fc89162739f2159e1fc1bdc89"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89">FIX8::Tickval::get_tickval</a></div><div class="ttdeci">static Tickval get_tickval()</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00185">tickval.hpp:185</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a0e0ba97cc19f31e998c336ff39a2ea95"><div class="ttname"><a href="classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95">FIX8::Timer::_spin_lock</a></div><div class="ttdeci">f8_spin_lock _spin_lock</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00097">timer.hpp:97</a></div></div>
+<div class="ttc" id="classFIX8_1_1Timer_html_a4a3b6d4434a6719c580b7c72e850c044"><div class="ttname"><a href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">FIX8::Timer::_event_queue</a></div><div class="ttdeci">std::priority_queue&lt; TimerEvent&lt; T &gt; &gt; _event_queue</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00100">timer.hpp:100</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa57170841069bcafd9aed79595e3d962"></a>
@@ -417,7 +525,9 @@ template&lt;typename T&gt; </div>
 <p>Start the timer thread. </p>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00130">130</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{ <a class="code" href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">_thread</a>.start(); }</div>
+<div class="ttc" id="classFIX8_1_1Timer_html_ae3390b96c9cadc2a3457c613dcd1232a"><div class="ttname"><a href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">FIX8::Timer::_thread</a></div><div class="ttdeci">f8_thread&lt; Timer &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00096">timer.hpp:96</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a46e4b8b83e0419eaa729b26896ca5c32"></a>
@@ -448,7 +558,9 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00133">133</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="timer_8hpp_source.html#l00110">FIX8::Timer&lt; FIX8::Session &gt;::~Timer()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;{ <a class="code" href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">_thread</a>.request_stop(); }</div>
+<div class="ttc" id="classFIX8_1_1Timer_html_ae3390b96c9cadc2a3457c613dcd1232a"><div class="ttname"><a href="classFIX8_1_1Timer.html#ae3390b96c9cadc2a3457c613dcd1232a">FIX8::Timer::_thread</a></div><div class="ttdeci">f8_thread&lt; Timer &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00096">timer.hpp:96</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -606,7 +718,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:49. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

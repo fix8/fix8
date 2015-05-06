@@ -203,7 +203,9 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00415">415</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;{ <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(mutex); }</div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_aff2f90393c490ad57556690c12bc6d48"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">FIX8::f8_scoped_lock_impl::acquire</a></div><div class="ttdeci">void acquire(T &amp;mutex)</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00427">thread.hpp:427</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5f94c5575f5b17175e4f83192e4c7ac6"></a>
@@ -241,7 +243,14 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00416">416</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                                                : <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a>(disable)</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    {</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a>)</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;            <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(mutex);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    }</div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_a261ae2b1617ab2eb288db663bbb87ea2"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">FIX8::f8_scoped_lock_impl::_disabled</a></div><div class="ttdeci">bool _disabled</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00411">thread.hpp:411</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_aff2f90393c490ad57556690c12bc6d48"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">FIX8::f8_scoped_lock_impl::acquire</a></div><div class="ttdeci">void acquire(T &amp;mutex)</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00427">thread.hpp:427</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a31d7f3851efbb20022510d8c71084343"></a>
@@ -268,7 +277,9 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00422">422</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;{ <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_aa1b520bd4bf807da834ff8b24dd6bd28"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">FIX8::f8_scoped_lock_impl::release</a></div><div class="ttdeci">void release()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00441">thread.hpp:441</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7995162c360d02a35a1d6683a5fec01e"></a>
@@ -325,7 +336,12 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00427">427</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="timer_8hpp_source.html#l00144">FIX8::Timer&lt; T &gt;::operator()()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    {</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;        mutex.lock();</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;        <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    }</div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_acd58cad949e091af80e3a4e3f127d009"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">FIX8::f8_scoped_lock_impl::_local_mutex</a></div><div class="ttdeci">T * _local_mutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00410">thread.hpp:410</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ab3773ba2559aad2ff73f1b901d776070"></a>
@@ -380,7 +396,16 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00441">441</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="timer_8hpp_source.html#l00144">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="logger_8cpp_source.html#l00110">FIX8::Logger::process_logline()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    {</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a> &amp;&amp; <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>)</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        {</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;            <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>-&gt;unlock();</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;            <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        }</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    }</div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_a261ae2b1617ab2eb288db663bbb87ea2"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">FIX8::f8_scoped_lock_impl::_disabled</a></div><div class="ttdeci">bool _disabled</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00411">thread.hpp:411</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_acd58cad949e091af80e3a4e3f127d009"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">FIX8::f8_scoped_lock_impl::_local_mutex</a></div><div class="ttdeci">T * _local_mutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00410">thread.hpp:410</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7ee0e80f261d2da0de8f6572f948163e"></a>
@@ -408,7 +433,14 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00433">433</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    {</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;        <span class="keywordtype">bool</span> result(mutex.try_lock());</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        <span class="keywordflow">if</span> (result)</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;            <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    }</div>
+<div class="ttc" id="classFIX8_1_1f8__scoped__lock__impl_html_acd58cad949e091af80e3a4e3f127d009"><div class="ttname"><a href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">FIX8::f8_scoped_lock_impl::_local_mutex</a></div><div class="ttdeci">T * _local_mutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00410">thread.hpp:410</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -466,7 +498,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

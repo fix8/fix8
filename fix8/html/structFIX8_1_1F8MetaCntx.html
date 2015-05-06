@@ -261,7 +261,46 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00239">239</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00215">_be</a>, <a class="el" href="message_8hpp_source.html#l00213">_bme</a>, <a class="el" href="message_8hpp_source.html#l00221">_flu</a>, <a class="el" href="message_8hpp_source.html#l00219">_flu_sz</a>, <a class="el" href="f8types_8hpp_source.html#l00071">FIX8::_pair&lt; Key, Val &gt;::_key</a>, <a class="el" href="message_8hpp_source.html#l00230">_reverse_fieldtable</a>, <a class="el" href="message_8hpp_source.html#l00229">_reverse_msgtable</a>, <a class="el" href="f8types_8hpp_source.html#l00072">FIX8::_pair&lt; Key, Val &gt;::_value</a>, <a class="el" href="f8types_8hpp_source.html#l00172">FIX8::GeneratedTable&lt; Key, Val &gt;::at()</a>, <a class="el" href="f8types_8hpp_source.html#l00133">FIX8::GeneratedTable&lt; Key, Val &gt;::begin()</a>, <a class="el" href="f8types_8hpp_source.html#l00137">FIX8::GeneratedTable&lt; Key, Val &gt;::end()</a>, and <a class="el" href="f8types_8hpp_source.html#l00176">FIX8::GeneratedTable&lt; Key, Val &gt;::size()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      : <a class="code" href="structFIX8_1_1F8MetaCntx.html#a62a7a8ba6ea319f5217f33a186cbf1cb">_version</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a>), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>(bme), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>(be), <a class="code" href="structFIX8_1_1F8MetaCntx.html#aeb8a2047dcccd133ccff160b36f1af32">_cn</a>(cn),</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      <a class="code" href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">_flu_sz</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a9cf8adacb8ce6e596abd5c71c5429d2c">at</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">size</a>() - 1)-&gt;_key + 1), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a>(<span class="keyword">new</span> <span class="keyword">const</span> BaseEntry *[<a class="code" href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">_flu_sz</a>]),</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      <a class="code" href="structFIX8_1_1F8MetaCntx.html#a5706fd3aa107638391b560bfac4d567a">_mk_hdr</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a8e0dce2778897b030258ed821ddf88f4">find_ref</a>(<span class="stringliteral">&quot;header&quot;</span>)._create._do), <a class="code" href="structFIX8_1_1F8MetaCntx.html#afcf14ed47038ad5b475e653a52935659">_mk_trl</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a8e0dce2778897b030258ed821ddf88f4">find_ref</a>(<span class="stringliteral">&quot;trailer&quot;</span>)._create._do),</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      <a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">_beginStr</a>(bg), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a19322108f7f39324f1553de4e4f3ebcc">_preamble_sz</a>(2 + <a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">_beginStr</a>.size() + 1 + 3),</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      <a class="code" href="structFIX8_1_1F8MetaCntx.html#a0cbe1292150c6d1e6fd121bddfd4e3c4">_reverse_msgtable</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a3e26220d3cba43571894b847d92deaac">_comp</a>), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">_reverse_fieldtable</a>(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a3e26220d3cba43571894b847d92deaac">_comp</a>)</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;   {</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">_flu_sz</a> == 1)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;         <span class="keywordflow">throw</span> f8Exception(<span class="stringliteral">&quot;F8MetaCntx initialisation incomplete&quot;</span>);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      std::fill(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a>, <a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a> + <a class="code" href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">_flu_sz</a>, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> offset(0); offset &lt; <a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">size</a>(); ++offset)</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;         *(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a> + <a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a9cf8adacb8ce6e596abd5c71c5429d2c">at</a>(offset)-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>) = &amp;<a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a9cf8adacb8ce6e596abd5c71c5429d2c">at</a>(offset)-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      std::for_each(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a7f0408c7cc5bb85a422316574658f618">begin</a>(), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#aecee22ab796e52a9926374639b917fe2">end</a>(), [<span class="keyword">this</span>](<span class="keyword">const</span> <a class="code" href="classFIX8_1_1GeneratedTable.html#ae204f4bb95f5adbddb727a1a25acf40c">FieldTable::Pair</a>&amp; pp)</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;         { <a class="code" href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">_reverse_fieldtable</a>.emplace(std::make_pair(pp.second()._name, &amp;pp.second())); });</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      std::for_each(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a7f0408c7cc5bb85a422316574658f618">begin</a>(), <a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#aecee22ab796e52a9926374639b917fe2">end</a>(), [<span class="keyword">this</span>](<span class="keyword">const</span> <a class="code" href="classFIX8_1_1GeneratedTable.html#ae204f4bb95f5adbddb727a1a25acf40c">MsgTable::Pair</a>&amp; pp)</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;         { <a class="code" href="structFIX8_1_1F8MetaCntx.html#a0cbe1292150c6d1e6fd121bddfd4e3c4">_reverse_msgtable</a>.emplace(std::make_pair(pp.second()._name, &amp;pp.second())); });</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a39faf7ddeb0ac08144694cb20b524e2a"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">FIX8::F8MetaCntx::_bme</a></div><div class="ttdeci">const MsgTable &amp; _bme</div><div class="ttdoc">Framework generated lookup table to generate Fix messages. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00213">message.hpp:213</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a3574d2b9caf687e4a9665ad796d87433"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">FIX8::F8MetaCntx::_flu_sz</a></div><div class="ttdeci">const unsigned _flu_sz</div><div class="ttdoc">Number of elements in Hash array. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00219">message.hpp:219</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a7f0408c7cc5bb85a422316574658f618"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a7f0408c7cc5bb85a422316574658f618">FIX8::GeneratedTable::begin</a></div><div class="ttdeci">const_iterator begin() const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00133">f8types.hpp:133</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a62a7a8ba6ea319f5217f33a186cbf1cb"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a62a7a8ba6ea319f5217f33a186cbf1cb">FIX8::F8MetaCntx::_version</a></div><div class="ttdeci">const unsigned _version</div><div class="ttdoc">4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210 </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00210">message.hpp:210</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html_a915567f5488096bc7cc777a4f532dd61"><div class="ttname"><a href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">FIX8::_pair::_value</a></div><div class="ttdeci">Val _value</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00072">f8types.hpp:72</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a0cbe1292150c6d1e6fd121bddfd4e3c4"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a0cbe1292150c6d1e6fd121bddfd4e3c4">FIX8::F8MetaCntx::_reverse_msgtable</a></div><div class="ttdeci">ReverseMsgTable _reverse_msgtable</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00229">message.hpp:229</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_ab60edf3bab787ab4d6447cc3b2cd2439"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">FIX8::F8MetaCntx::_beginStr</a></div><div class="ttdeci">const f8String _beginStr</div><div class="ttdoc">Fix header beginstring. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00225">message.hpp:225</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a3e26220d3cba43571894b847d92deaac"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a3e26220d3cba43571894b847d92deaac">FIX8::F8MetaCntx::_comp</a></div><div class="ttdeci">static bool _comp(const char *p1, const char *p2)</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00231">message.hpp:231</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_ae41ece5825e18111b7ea11e06f09d67a"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">FIX8::GeneratedTable::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00176">f8types.hpp:176</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a19322108f7f39324f1553de4e4f3ebcc"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a19322108f7f39324f1553de4e4f3ebcc">FIX8::F8MetaCntx::_preamble_sz</a></div><div class="ttdeci">const size_t _preamble_sz</div><div class="ttdoc">Preamble length. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00227">message.hpp:227</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a8bc4b6d7280f7171628d84bb9d145946"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">FIX8::F8MetaCntx::_reverse_fieldtable</a></div><div class="ttdeci">ReverseFieldTable _reverse_fieldtable</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00230">message.hpp:230</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_afcf14ed47038ad5b475e653a52935659"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#afcf14ed47038ad5b475e653a52935659">FIX8::F8MetaCntx::_mk_trl</a></div><div class="ttdeci">msg_create _mk_trl</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00223">message.hpp:223</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html_aafc9b182e594f6d4ab97d686cf880d74"><div class="ttname"><a href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">FIX8::_pair::_key</a></div><div class="ttdeci">Key _key</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00071">f8types.hpp:71</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a08944460e4c0a2ff754db5af36b401fd"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">FIX8::F8MetaCntx::_be</a></div><div class="ttdeci">const FieldTable &amp; _be</div><div class="ttdoc">Framework generated lookup table to generate Fix fields. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00215">message.hpp:215</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_ae204f4bb95f5adbddb727a1a25acf40c"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#ae204f4bb95f5adbddb727a1a25acf40c">FIX8::GeneratedTable::Pair</a></div><div class="ttdeci">_pair&lt; Key, Val &gt; Pair</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00103">f8types.hpp:103</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_aeb8a2047dcccd133ccff160b36f1af32"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#aeb8a2047dcccd133ccff160b36f1af32">FIX8::F8MetaCntx::_cn</a></div><div class="ttdeci">const char ** _cn</div><div class="ttdoc">Framework generated component name table. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00217">message.hpp:217</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_ab1fc890f19e70e7391e8dbbd82367f39"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">FIX8::F8MetaCntx::version</a></div><div class="ttdeci">unsigned version() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00349">message.hpp:349</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a5706fd3aa107638391b560bfac4d567a"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a5706fd3aa107638391b560bfac4d567a">FIX8::F8MetaCntx::_mk_hdr</a></div><div class="ttdeci">msg_create _mk_hdr</div><div class="ttdoc">References to the header and trailer create functions. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00223">message.hpp:223</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a9cf8adacb8ce6e596abd5c71c5429d2c"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a9cf8adacb8ce6e596abd5c71c5429d2c">FIX8::GeneratedTable::at</a></div><div class="ttdeci">const_iterator at(const size_t idx) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00172">f8types.hpp:172</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a8e0dce2778897b030258ed821ddf88f4"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a8e0dce2778897b030258ed821ddf88f4">FIX8::GeneratedTable::find_ref</a></div><div class="ttdeci">const Val &amp; find_ref(const Key &amp;key) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00143">f8types.hpp:143</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a4282d2a514a121d997d90cccbf55175f"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">FIX8::F8MetaCntx::_flu</a></div><div class="ttdeci">const BaseEntry ** _flu</div><div class="ttdoc">Hash array for field lookup (built by ctor) </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00221">message.hpp:221</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_aecee22ab796e52a9926374639b917fe2"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#aecee22ab796e52a9926374639b917fe2">FIX8::GeneratedTable::end</a></div><div class="ttdeci">const_iterator end() const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00137">f8types.hpp:137</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a4282ab111c17d03a30da639f3a900bd3"></a>
@@ -290,7 +329,9 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00259">259</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00221">_flu</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;{ <span class="keyword">delete</span>[] <a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a>; <a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a> = <span class="keyword">nullptr</span>; }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a4282d2a514a121d997d90cccbf55175f"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">FIX8::F8MetaCntx::_flu</a></div><div class="ttdeci">const BaseEntry ** _flu</div><div class="ttdoc">Hash array for field lookup (built by ctor) </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00221">message.hpp:221</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -327,7 +368,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00231">231</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;{ return ::strcmp(p1, p2) &lt; 0; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a16fbf7491cb76a42b038f74eae8f5a59"></a>
@@ -373,7 +415,12 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00297">297</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l02073">FIX8::BaseEntry::_create</a>, <a class="el" href="field_8hpp_source.html#l02065">FIX8::Inst::_do</a>, <a class="el" href="field_8hpp_source.html#l02076">FIX8::BaseEntry::_rlm</a>, and <a class="el" href="message_8hpp_source.html#l00264">find_be()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;   {</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      <span class="keyword">const</span> BaseEntry *be(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">find_be</a>(fnum));</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      <span class="keywordflow">return</span> be ? be-&gt;_create._do(from, be-&gt;_rlm, -1) : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a2ebbb7ab0c2b070a24bacaee8130f03e"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">FIX8::F8MetaCntx::find_be</a></div><div class="ttdeci">const BaseEntry * find_be(const unsigned short fnum) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00264">message.hpp:264</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="acb4aeeefdc0e2b0e15ec36fa5d517e36"></a>
@@ -419,7 +466,12 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00307">307</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l02073">FIX8::BaseEntry::_create</a>, <a class="el" href="field_8hpp_source.html#l02065">FIX8::Inst::_do</a>, <a class="el" href="field_8hpp_source.html#l02076">FIX8::BaseEntry::_rlm</a>, and <a class="el" href="message_8hpp_source.html#l00270">reverse_find_be()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <span class="keyword">const</span> BaseEntry *be(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a33fe79d7629082d81817557e8201caed">reverse_find_be</a>(tag));</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      <span class="keywordflow">return</span> be ? be-&gt;_create._do(from, be-&gt;_rlm, -1) : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a33fe79d7629082d81817557e8201caed"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a33fe79d7629082d81817557e8201caed">FIX8::F8MetaCntx::reverse_find_be</a></div><div class="ttdeci">const BaseEntry * reverse_find_be(const char *fieldstr) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00270">message.hpp:270</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8825938cd2cf97b228055f890d777e46"></a>
@@ -465,7 +517,12 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00341">341</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00191">FIX8::BaseMsgEntry::_create</a>, <a class="el" href="message_8hpp_source.html#l00173">FIX8::Minst::_do</a>, and <a class="el" href="message_8hpp_source.html#l00316">find_bme()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      <span class="keyword">const</span> BaseMsgEntry *bme(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a59b5c19678499a4e71986650bf1dcb18">find_bme</a>(tag));</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      <span class="keywordflow">return</span> bme ? bme-&gt;_create._do(deepctor) : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a59b5c19678499a4e71986650bf1dcb18"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a59b5c19678499a4e71986650bf1dcb18">FIX8::F8MetaCntx::find_bme</a></div><div class="ttdeci">const BaseMsgEntry * find_bme(const char *tag) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00316">message.hpp:316</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aad0a75ce713f1126fba0101ce61e8d32"></a>
@@ -511,7 +568,12 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00331">331</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00191">FIX8::BaseMsgEntry::_create</a>, <a class="el" href="message_8hpp_source.html#l00173">FIX8::Minst::_do</a>, and <a class="el" href="message_8hpp_source.html#l00321">reverse_find_bme()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   {</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      <span class="keyword">const</span> BaseMsgEntry *bme(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a900c239d1e445fc9484df04d3bcec62c">reverse_find_bme</a>(tag));</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      <span class="keywordflow">return</span> bme ? bme-&gt;_create._do(deepctor) : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a900c239d1e445fc9484df04d3bcec62c"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a900c239d1e445fc9484df04d3bcec62c">FIX8::F8MetaCntx::reverse_find_bme</a></div><div class="ttdeci">const BaseMsgEntry * reverse_find_bme(const char *msgstr) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00321">message.hpp:321</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2ebbb7ab0c2b070a24bacaee8130f03e"></a>
@@ -548,7 +610,10 @@ Public Attributes</h2></td></tr>
 <p>References <a class="el" href="message_8hpp_source.html#l00221">_flu</a>, and <a class="el" href="message_8hpp_source.html#l00219">_flu_sz</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8hpp_source.html#l00523">FIX8::MessageBase::check_set_rlm()</a>, and <a class="el" href="message_8hpp_source.html#l00297">create_field()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      { <span class="keywordflow">return</span> fnum &lt; <a class="code" href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">_flu_sz</a> ? <a class="code" href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">_flu</a>[fnum] : <span class="keyword">nullptr</span>; }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a3574d2b9caf687e4a9665ad796d87433"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a3574d2b9caf687e4a9665ad796d87433">FIX8::F8MetaCntx::_flu_sz</a></div><div class="ttdeci">const unsigned _flu_sz</div><div class="ttdoc">Number of elements in Hash array. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00219">message.hpp:219</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a4282d2a514a121d997d90cccbf55175f"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a4282d2a514a121d997d90cccbf55175f">FIX8::F8MetaCntx::_flu</a></div><div class="ttdeci">const BaseEntry ** _flu</div><div class="ttdoc">Hash array for field lookup (built by ctor) </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00221">message.hpp:221</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a59b5c19678499a4e71986650bf1dcb18"></a>
@@ -585,7 +650,10 @@ Public Attributes</h2></td></tr>
 <p>References <a class="el" href="message_8hpp_source.html#l00213">_bme</a>, and <a class="el" href="f8types_8hpp_source.html#l00154">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8hpp_source.html#l00341">create_msg()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a1e1f16da5756832418875fdace532c2b">find_ptr</a>(tag); }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a39faf7ddeb0ac08144694cb20b524e2a"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">FIX8::F8MetaCntx::_bme</a></div><div class="ttdeci">const MsgTable &amp; _bme</div><div class="ttdoc">Framework generated lookup table to generate Fix messages. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00213">message.hpp:213</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a1e1f16da5756832418875fdace532c2b"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a1e1f16da5756832418875fdace532c2b">FIX8::GeneratedTable::find_ptr</a></div><div class="ttdeci">const Val * find_ptr(const Key &amp;key) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00154">f8types.hpp:154</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af949031800c5f669962b6a3c1a26669d"></a>
@@ -613,7 +681,9 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00353">353</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00225">_beginStr</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">_beginStr</a>; }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_ab60edf3bab787ab4d6447cc3b2cd2439"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">FIX8::F8MetaCntx::_beginStr</a></div><div class="ttdeci">const f8String _beginStr</div><div class="ttdoc">Fix header beginstring. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00225">message.hpp:225</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a33fe79d7629082d81817557e8201caed"></a>
@@ -650,7 +720,16 @@ Public Attributes</h2></td></tr>
 <p>References <a class="el" href="message_8hpp_source.html#l00230">_reverse_fieldtable</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8hpp_source.html#l00307">create_field()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      <span class="keywordflow">if</span> (fieldstr &amp;&amp; *fieldstr)</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;         <span class="keyword">auto</span> itr(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">_reverse_fieldtable</a>.find(fieldstr));</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;         <span class="keywordflow">return</span> itr != <a class="code" href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">_reverse_fieldtable</a>.cend() ? itr-&gt;second : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      }</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a8bc4b6d7280f7171628d84bb9d145946"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">FIX8::F8MetaCntx::_reverse_fieldtable</a></div><div class="ttdeci">ReverseFieldTable _reverse_fieldtable</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00230">message.hpp:230</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a900c239d1e445fc9484df04d3bcec62c"></a>
@@ -687,7 +766,12 @@ Public Attributes</h2></td></tr>
 <p>References <a class="el" href="message_8hpp_source.html#l00229">_reverse_msgtable</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8hpp_source.html#l00331">create_msg_from_longname()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   {</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      <span class="keyword">auto</span> itr(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a0cbe1292150c6d1e6fd121bddfd4e3c4">_reverse_msgtable</a>.find(msgstr));</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      <span class="keywordflow">return</span> itr != <a class="code" href="structFIX8_1_1F8MetaCntx.html#a0cbe1292150c6d1e6fd121bddfd4e3c4">_reverse_msgtable</a>.cend() ? itr-&gt;second : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a0cbe1292150c6d1e6fd121bddfd4e3c4"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a0cbe1292150c6d1e6fd121bddfd4e3c4">FIX8::F8MetaCntx::_reverse_msgtable</a></div><div class="ttdeci">ReverseMsgTable _reverse_msgtable</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00229">message.hpp:229</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad758dbe0ce31fb30cdde9f8d2db9020f"></a>
@@ -724,7 +808,16 @@ Public Attributes</h2></td></tr>
 <p>References <a class="el" href="message_8hpp_source.html#l00230">_reverse_fieldtable</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8hpp_source.html#l00741">FIX8::MessageBase::get_field_by_name()</a>, and <a class="el" href="message_8hpp_source.html#l01230">FIX8::Message::get_field_by_name_flattened()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;   {</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      <span class="keywordflow">if</span> (fieldstr &amp;&amp; *fieldstr)</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;         <span class="keyword">auto</span> itr(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">_reverse_fieldtable</a>.find(fieldstr));</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;         <span class="keywordflow">return</span> itr != <a class="code" href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">_reverse_fieldtable</a>.cend() ? itr-&gt;second-&gt;_fnum : 0;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      }</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a8bc4b6d7280f7171628d84bb9d145946"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a8bc4b6d7280f7171628d84bb9d145946">FIX8::F8MetaCntx::_reverse_fieldtable</a></div><div class="ttdeci">ReverseFieldTable _reverse_fieldtable</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00230">message.hpp:230</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ab1fc890f19e70e7391e8dbbd82367f39"></a>
@@ -754,7 +847,9 @@ Public Attributes</h2></td></tr>
 <p>References <a class="el" href="message_8hpp_source.html#l00210">_version</a>.</p>
 
 <p>Referenced by <a class="el" href="hfprint_8cpp_source.html#l00118">main()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html#a62a7a8ba6ea319f5217f33a186cbf1cb">_version</a>; }</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a62a7a8ba6ea319f5217f33a186cbf1cb"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a62a7a8ba6ea319f5217f33a186cbf1cb">FIX8::F8MetaCntx::_version</a></div><div class="ttdeci">const unsigned _version</div><div class="ttdoc">4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210 </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00210">message.hpp:210</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -966,7 +1061,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -187,7 +187,9 @@ Friends</h2></td></tr>
 </table>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00312">312</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;{ <a class="code" href="classFIX8_1_1RegMatch.html#a6bb4e56c48b8cec75db80a8dfc7e3fe0a58b255649a49f4e7bd77c790d4ec71bb">SubLimit_</a> = 32 };</div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_a6bb4e56c48b8cec75db80a8dfc7e3fe0a58b255649a49f4e7bd77c790d4ec71bb"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#a6bb4e56c48b8cec75db80a8dfc7e3fe0a58b255649a49f4e7bd77c790d4ec71bb">FIX8::RegMatch::SubLimit_</a></div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00312">f8utils.hpp:312</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -215,7 +217,12 @@ Friends</h2></td></tr>
 <p>Ctor. </p>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00321">321</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      : <a class="code" href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">subexprs_</a>(), <a class="code" href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">subCnt_</a>()</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    {}</div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ae6d7e06f865d94727dbe85c8180f90bc"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">FIX8::RegMatch::subexprs_</a></div><div class="ttdeci">regmatch_t subexprs_[SubLimit_]</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00313">f8utils.hpp:313</a></div></div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ab75c65e07a64eadb76274e0f11282b20"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">FIX8::RegMatch::subCnt_</a></div><div class="ttdeci">int subCnt_</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00314">f8utils.hpp:314</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a743f5179f5d8e32f023fd00d1aec1d7d"></a>
@@ -242,7 +249,8 @@ Friends</h2></td></tr>
 <p>Ctor. </p>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00328">328</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -273,7 +281,15 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00314">subCnt_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00471">FIX8::RegExp::Erase()</a>, <a class="el" href="f8utils_8hpp_source.html#l00489">FIX8::RegExp::Replace()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00452">FIX8::RegExp::SubExpr()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="preprocessor">#if REGEX_SYSTEM == REGEX_REGEX_H</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">subCnt_</a>;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="preprocessor">#elif REGEX_SYSTEM == REGEX_POCO</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(_matchVec.size());</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ab75c65e07a64eadb76274e0f11282b20"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">FIX8::RegMatch::subCnt_</a></div><div class="ttdeci">int subCnt_</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00314">f8utils.hpp:314</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac8da32633c0f9a472c1a20d08ef6b726"></a>
@@ -310,7 +326,16 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00314">subCnt_</a>, and <a class="el" href="f8utils_8hpp_source.html#l00313">subexprs_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00471">FIX8::RegExp::Erase()</a>, <a class="el" href="f8utils_8hpp_source.html#l00489">FIX8::RegExp::Replace()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00452">FIX8::RegExp::SubExpr()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   {</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="preprocessor">#if REGEX_SYSTEM == REGEX_REGEX_H</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      <span class="keywordflow">return</span> which &lt; <a class="code" href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">subCnt_</a> ? <a class="code" href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">subexprs_</a>[which].rm_so : -1;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="preprocessor">#elif REGEX_SYSTEM == REGEX_POCO</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;      <span class="keywordflow">return</span> which &lt; static_cast&lt;int&gt;(_matchVec.size()) ? static_cast&lt;int&gt;(_matchVec[which].offset) : -1;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ae6d7e06f865d94727dbe85c8180f90bc"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">FIX8::RegMatch::subexprs_</a></div><div class="ttdeci">regmatch_t subexprs_[SubLimit_]</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00313">f8utils.hpp:313</a></div></div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ab75c65e07a64eadb76274e0f11282b20"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">FIX8::RegMatch::subCnt_</a></div><div class="ttdeci">int subCnt_</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00314">f8utils.hpp:314</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a37077b7d7fcf44fcb9286e062ad4bd05"></a>
@@ -347,7 +372,16 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00314">subCnt_</a>, and <a class="el" href="f8utils_8hpp_source.html#l00313">subexprs_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00471">FIX8::RegExp::Erase()</a>, <a class="el" href="f8utils_8hpp_source.html#l00489">FIX8::RegExp::Replace()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00452">FIX8::RegExp::SubExpr()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   {</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="preprocessor">#if REGEX_SYSTEM == REGEX_REGEX_H</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      <span class="keywordflow">return</span> which &lt; <a class="code" href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">subCnt_</a> ? <a class="code" href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">subexprs_</a>[which].rm_eo - <a class="code" href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">subexprs_</a>[which].rm_so : -1;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="preprocessor">#elif REGEX_SYSTEM == REGEX_POCO</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      <span class="keywordflow">return</span> which &lt; static_cast&lt;int&gt;(_matchVec.size()) ? _matchVec[which].length : -1;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ae6d7e06f865d94727dbe85c8180f90bc"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ae6d7e06f865d94727dbe85c8180f90bc">FIX8::RegMatch::subexprs_</a></div><div class="ttdeci">regmatch_t subexprs_[SubLimit_]</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00313">f8utils.hpp:313</a></div></div>
+<div class="ttc" id="classFIX8_1_1RegMatch_html_ab75c65e07a64eadb76274e0f11282b20"><div class="ttname"><a href="classFIX8_1_1RegMatch.html#ab75c65e07a64eadb76274e0f11282b20">FIX8::RegMatch::subCnt_</a></div><div class="ttdeci">int subCnt_</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00314">f8utils.hpp:314</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
@@ -428,7 +462,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

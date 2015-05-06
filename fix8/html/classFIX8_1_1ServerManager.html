@@ -201,7 +201,9 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="multisession_8hpp_source.html#l00054">54</a> of file <a class="el" href="multisession_8hpp_source.html">multisession.hpp</a>.</p>
 
 <p>References <a class="el" href="multisession_8hpp_source.html#l00047">_servermap</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      { std::for_each (<a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>.begin(), <a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>.end(), [](decltype(<a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>)::value_type&amp; pp){ <span class="keyword">delete</span> pp.second; }); }</div>
+<div class="ttc" id="classFIX8_1_1ServerManager_html_ab3f6ce4b8667f686095686657259c514"><div class="ttname"><a href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">FIX8::ServerManager::_servermap</a></div><div class="ttdeci">std::map&lt; Poco::Net::ServerSocket, ServerSessionBase * &gt; _servermap</div><div class="ttdef"><b>Definition:</b> <a href="multisession_8hpp_source.html#l00047">multisession.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -237,7 +239,14 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="multisession_8hpp_source.html#l00060">60</a> of file <a class="el" href="multisession_8hpp_source.html">multisession.hpp</a>.</p>
 
 <p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00501">FIX8::ServerSessionBase::_server_sock</a>, and <a class="el" href="multisession_8hpp_source.html#l00047">_servermap</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordflow">if</span> (!what || !what-&gt;_server_sock)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;         <span class="keywordflow">throw</span> f8Exception(<span class="stringliteral">&quot;bad or missing server socket&quot;</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>.insert({*what-&gt;_server_sock, what});</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1ServerManager_html_ab3f6ce4b8667f686095686657259c514"><div class="ttname"><a href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">FIX8::ServerManager::_servermap</a></div><div class="ttdeci">std::map&lt; Poco::Net::ServerSocket, ServerSessionBase * &gt; _servermap</div><div class="ttdef"><b>Definition:</b> <a href="multisession_8hpp_source.html#l00047">multisession.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a037c67199973216cbb3f083f25cf61d3"></a>
@@ -272,7 +281,15 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="multisession_8hpp_source.html#l00072">72</a> of file <a class="el" href="multisession_8hpp_source.html">multisession.hpp</a>.</p>
 
 <p>References <a class="el" href="multisession_8hpp_source.html#l00047">_servermap</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      Poco::Net::Socket::SocketList readList, writeList, exceptList;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; pp : <a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>)</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;         readList.push_back(pp.first);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">return</span> Poco::Net::Socket::select(readList, writeList, exceptList, timeout) &amp;&amp; !readList.empty()</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;         ? _servermap.find(readList[0])-&gt;second : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1ServerManager_html_ab3f6ce4b8667f686095686657259c514"><div class="ttname"><a href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">FIX8::ServerManager::_servermap</a></div><div class="ttdeci">std::map&lt; Poco::Net::ServerSocket, ServerSessionBase * &gt; _servermap</div><div class="ttdef"><b>Definition:</b> <a href="multisession_8hpp_source.html#l00047">multisession.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a86f1e11ea4fe07edca695538046c5209"></a>
@@ -318,7 +335,18 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="multisession_8hpp_source.html#l00086">86</a> of file <a class="el" href="multisession_8hpp_source.html">multisession.hpp</a>.</p>
 
 <p>References <a class="el" href="multisession_8hpp_source.html#l00047">_servermap</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;   {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      result.clear();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      Poco::Net::Socket::SocketList readList, writeList, exceptList;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; pp : <a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;         readList.push_back(pp.first);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordflow">if</span> (Poco::Net::Socket::select(readList, writeList, exceptList, timeout) &amp;&amp; !readList.empty())</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;         std::for_each(readList.begin(), readList.end(), [&amp;](decltype(readList)::value_type&amp; pp)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            { result.push_back(_servermap.find(pp)-&gt;second); });</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">return</span> result.size();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1ServerManager_html_ab3f6ce4b8667f686095686657259c514"><div class="ttname"><a href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">FIX8::ServerManager::_servermap</a></div><div class="ttdeci">std::map&lt; Poco::Net::ServerSocket, ServerSessionBase * &gt; _servermap</div><div class="ttdef"><b>Definition:</b> <a href="multisession_8hpp_source.html#l00047">multisession.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a14f09cae35d96eb6fad106ba8015d53c"></a>
@@ -346,7 +374,9 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="multisession_8hpp_source.html#l00100">100</a> of file <a class="el" href="multisession_8hpp_source.html">multisession.hpp</a>.</p>
 
 <p>References <a class="el" href="multisession_8hpp_source.html#l00047">_servermap</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(<a class="code" href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">_servermap</a>.size()); }</div>
+<div class="ttc" id="classFIX8_1_1ServerManager_html_ab3f6ce4b8667f686095686657259c514"><div class="ttname"><a href="classFIX8_1_1ServerManager.html#ab3f6ce4b8667f686095686657259c514">FIX8::ServerManager::_servermap</a></div><div class="ttdeci">std::map&lt; Poco::Net::ServerSocket, ServerSessionBase * &gt; _servermap</div><div class="ttdef"><b>Definition:</b> <a href="multisession_8hpp_source.html#l00047">multisession.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -380,7 +410,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

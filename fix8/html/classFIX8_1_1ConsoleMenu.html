@@ -234,7 +234,13 @@ Static Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="consolemenu_8hpp_source.html#l00062">62</a> of file <a class="el" href="consolemenu_8hpp_source.html">consolemenu.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      : <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">ctx</a>), <a class="code" href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">_is</a>(is), <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a>(os), <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>(lpp) {}</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_afc9f1359200c953b443b55b4ea0e3950"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">FIX8::TEX::ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; ctx()</div><div class="ttdoc">Compiler generated metadata object, accessed through this function. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8cpp_source.html#l00424">Myfix_classes.cpp:424</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab813d30ef8f59bf4a1fd71c7ac641f14"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">FIX8::ConsoleMenu::_ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; _ctx</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00050">consolemenu.hpp:50</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ada23748f981b22695c8120d1db128920"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">FIX8::ConsoleMenu::_is</a></div><div class="ttdeci">std::istream &amp; _is</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00051">consolemenu.hpp:51</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a6972ba0c57115ca2f359789eb50ad7c1"></a>
@@ -261,7 +267,8 @@ Static Private Attributes</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="consolemenu_8hpp_source.html#l00066">66</a> of file <a class="el" href="consolemenu_8hpp_source.html">consolemenu.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -300,7 +307,31 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00269">269</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00191">FIX8::BaseMsgEntry::_create</a>, and <a class="el" href="message_8hpp_source.html#l00173">FIX8::Minst::_do</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;{</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *mc(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">SelectMsg</a>());</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keywordflow">if</span> (!mc)</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(mc-&gt;_create._do(<span class="keyword">true</span>));</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <span class="keywordflow">while</span>((fld = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">SelectField</a>(msg)))</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">EditMsg</a>(tty, fld, msg);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(msg) &lt;&lt; endl;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ConsoleMenu.html#ad755f5115890caa721c47c7b02bab2d7">get_yn</a>(<span class="stringliteral">&quot;Add to list? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;         lst.push_back(msg);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   }</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(lst.size());</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;}</div>
+<div class="ttc" id="structFIX8_1_1BaseMsgEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseMsgEntry.html">FIX8::BaseMsgEntry</a></div><div class="ttdoc">Message instantiation table entry. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00189">message.hpp:189</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html"><div class="ttname"><a href="structFIX8_1_1__pair.html">FIX8::_pair</a></div><div class="ttdoc">Pair abstraction for use with GeneratedTable. </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00069">f8types.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ae692e3799138928c0694ad8828d60405"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">FIX8::ConsoleMenu::EditMsg</a></div><div class="ttdeci">F8API void EditMsg(tty_save_state &amp;tty, const FieldTable::Pair *fld, Message *msg) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00299">consolemenu.cpp:299</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html"><div class="ttname"><a href="classFIX8_1_1Message.html">FIX8::Message</a></div><div class="ttdoc">A complete Fix message with header, body and trailer. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01016">message.hpp:1016</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ad755f5115890caa721c47c7b02bab2d7"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ad755f5115890caa721c47c7b02bab2d7">FIX8::ConsoleMenu::get_yn</a></div><div class="ttdeci">bool get_yn(const f8String &amp;prompt, bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00080">consolemenu.hpp:80</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a7ca30ac342ef4e3d4d2d14255b3ad93f"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">FIX8::ConsoleMenu::SelectField</a></div><div class="ttdeci">virtual F8API const FieldTable::Pair * SelectField(const Message *msg, int groupid=0) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00101">consolemenu.cpp:101</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac66df1e977b51e2e3dcb831250ab2588"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588">FIX8::ConsoleMenu::SelectMsg</a></div><div class="ttdeci">virtual F8API const BaseMsgEntry * SelectMsg() const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00050">consolemenu.cpp:50</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5ea6b1ab9375c4ecc4c88e07458a5992"></a>
@@ -336,7 +367,32 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00351">351</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;{</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   {</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(<a class="code" href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">SelectFromMsg</a>(lst));</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      <span class="keywordflow">if</span> (!msg)</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">for</span> (MsgList::iterator itr(lst.begin()); itr != lst.end(); ++itr)</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      {</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;         <span class="keywordflow">if</span> (*itr == msg)</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;         {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ConsoleMenu.html#ad755f5115890caa721c47c7b02bab2d7">get_yn</a>(<span class="stringliteral">&quot; Delete msg? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;            {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;               <span class="keyword">delete</span> *itr;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;               lst.erase(itr);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;            }</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;         }</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      }</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   }</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(lst.size());</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a20384bd6310b1a907449579ec0df8abd"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">FIX8::ConsoleMenu::SelectFromMsg</a></div><div class="ttdeci">F8API Message * SelectFromMsg(MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00218">consolemenu.cpp:218</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html"><div class="ttname"><a href="classFIX8_1_1Message.html">FIX8::Message</a></div><div class="ttdoc">A complete Fix message with header, body and trailer. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01016">message.hpp:1016</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ad755f5115890caa721c47c7b02bab2d7"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ad755f5115890caa721c47c7b02bab2d7">FIX8::ConsoleMenu::get_yn</a></div><div class="ttdeci">bool get_yn(const f8String &amp;prompt, bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00080">consolemenu.hpp:80</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae692e3799138928c0694ad8828d60405"></a>
@@ -372,7 +428,57 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00299">299</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00071">FIX8::_pair&lt; Key, Val &gt;::_key</a>, <a class="el" href="f8types_8hpp_source.html#l00072">FIX8::_pair&lt; Key, Val &gt;::_value</a>, <a class="el" href="message_8hpp_source.html#l00553">FIX8::MessageBase::add_field()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end()</a>, <a class="el" href="message_8hpp_source.html#l00789">FIX8::MessageBase::find_group()</a>, <a class="el" href="message_8hpp_source.html#l00875">FIX8::MessageBase::get_fp()</a>, <a class="el" href="traits_8hpp_source.html#l00658">FIX8::FieldTraits::get_presence()</a>, <a class="el" href="field_8hpp_source.html#l00145">FIX8::BaseField::get_tag()</a>, and <a class="el" href="traits_8hpp_source.html#l00602">FIX8::FieldTraits::is_group()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;{</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   <span class="keywordtype">string</span> txt;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   <span class="keywordtype">int</span> rval(-1);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <span class="keywordflow">if</span> (fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm)</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      rval = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">SelectRealm</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>, fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   {</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl &lt;&lt; fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._name &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; flush;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">GetString</a>(tty, txt);</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">is_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>))</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      {</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;         <span class="keywordtype">int</span> cnt(get_value&lt;int&gt;(txt));</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;         <a class="code" href="classFIX8_1_1GroupBase.html">GroupBase</a> *gb(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">_key</a>));</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;         <span class="keywordflow">if</span> (gb &amp;&amp; cnt)</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;         {</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ii(0); ii &lt; cnt; ++ii)</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;               <a class="code" href="classFIX8_1_1Message.html">Message</a> *gmsg(static_cast&lt;Message *&gt;(gb-&gt;create_group(<span class="keyword">true</span>)));</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;               <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;               <span class="keywordflow">while</span>((fld = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">SelectField</a>(gmsg, ii + 1)))</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                  <a class="code" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">EditMsg</a>(tty, fld, gmsg);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;               _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(gmsg) &lt;&lt; endl;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;               <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ConsoleMenu.html#ad755f5115890caa721c47c7b02bab2d7">get_yn</a>(<span class="stringliteral">&quot;Add group to msg? (y/n):&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                  *gb += gmsg;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;         }</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   }</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <a class="code" href="classFIX8_1_1BaseField.html">BaseField</a> *bf(fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._create._do(txt.c_str(), fld-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>._rlm, rval));</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19">add_field</a>(bf-&gt;get_tag(), msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), 0, bf, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a907a9fa546c6d3bf53e725b6e918abf8"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a907a9fa546c6d3bf53e725b6e918abf8">FIX8::ConsoleMenu::GetString</a></div><div class="ttdeci">F8API f8String &amp; GetString(tty_save_state &amp;tty, f8String &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00289">consolemenu.cpp:289</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html"><div class="ttname"><a href="structFIX8_1_1__pair.html">FIX8::_pair</a></div><div class="ttdoc">Pair abstraction for use with GeneratedTable. </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00069">f8types.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a223669d4050b4c6c4003caf9cff32223"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">FIX8::MessageBase::find_group</a></div><div class="ttdeci">GroupBase * find_group() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00789">message.hpp:789</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html_a915567f5488096bc7cc777a4f532dd61"><div class="ttname"><a href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">FIX8::_pair::_value</a></div><div class="ttdeci">Val _value</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00072">f8types.hpp:72</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_af4c20474cbeb7688bc65a5527d0210fa"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">FIX8::FieldTraits::get_presence</a></div><div class="ttdeci">const Presence &amp; get_presence() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00658">traits.hpp:658</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ae692e3799138928c0694ad8828d60405"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">FIX8::ConsoleMenu::EditMsg</a></div><div class="ttdeci">F8API void EditMsg(tty_save_state &amp;tty, const FieldTable::Pair *fld, Message *msg) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00299">consolemenu.cpp:299</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a4ae3d8ee9fe65df88792bcacdd375508"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508">FIX8::ConsoleMenu::SelectRealm</a></div><div class="ttdeci">virtual F8API int SelectRealm(const unsigned short fnum, const RealmBase *rb) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00166">consolemenu.cpp:166</a></div></div>
+<div class="ttc" id="classFIX8_1_1GroupBase_html"><div class="ttname"><a href="classFIX8_1_1GroupBase.html">FIX8::GroupBase</a></div><div class="ttdoc">Abstract base class for all repeating groups. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00056">message.hpp:56</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a6ea491f605d31ff936c4001f32d0d400"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00422">traits.hpp:422</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html_aafc9b182e594f6d4ab97d686cf880d74"><div class="ttname"><a href="structFIX8_1_1__pair.html#aafc9b182e594f6d4ab97d686cf880d74">FIX8::_pair::_key</a></div><div class="ttdeci">Key _key</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00071">f8types.hpp:71</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html"><div class="ttname"><a href="classFIX8_1_1Message.html">FIX8::Message</a></div><div class="ttdoc">A complete Fix message with header, body and trailer. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01016">message.hpp:1016</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_a1f2657879503207b0c1a43b4fd181603"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">FIX8::FieldTraits::is_group</a></div><div class="ttdeci">bool is_group(const unsigned short field, Presence::const_iterator &amp;itr) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00602">traits.hpp:602</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a1c3a817c478e0dcb8a373206d4fef58f"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">FIX8::MessageBase::get_fp</a></div><div class="ttdeci">const FieldTraits &amp; get_fp() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00875">message.hpp:875</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_af9a792a046a67021b4f77e79c59edc19"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19">FIX8::MessageBase::add_field</a></div><div class="ttdeci">void add_field(const unsigned short fnum, Presence::const_iterator itr, const unsigned pos, BaseField *what, bool check)</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00553">message.hpp:553</a></div></div>
+<div class="ttc" id="classFIX8_1_1BaseField_html"><div class="ttname"><a href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></div><div class="ttdoc">The base field class (ABC) for all fields. </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00127">field.hpp:127</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ad755f5115890caa721c47c7b02bab2d7"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ad755f5115890caa721c47c7b02bab2d7">FIX8::ConsoleMenu::get_yn</a></div><div class="ttdeci">bool get_yn(const f8String &amp;prompt, bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00080">consolemenu.hpp:80</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a7ca30ac342ef4e3d4d2d14255b3ad93f"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">FIX8::ConsoleMenu::SelectField</a></div><div class="ttdeci">virtual F8API const FieldTable::Pair * SelectField(const Message *msg, int groupid=0) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00101">consolemenu.cpp:101</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac5659cc05eda4c1260bfd7bce88361a5"></a>
@@ -408,7 +514,26 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00334">334</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;{</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   {</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      <a class="code" href="classFIX8_1_1Message.html">Message</a> *msg(<a class="code" href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">SelectFromMsg</a>(lst));</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      <span class="keywordflow">if</span> (!msg)</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">FieldTable::Pair</a> *fld;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="keywordflow">while</span>((fld = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">SelectField</a>(msg)))</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">EditMsg</a>(tty, fld, msg);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      _os &lt;&lt; endl &lt;&lt; endl &lt;&lt; *static_cast&lt;MessageBase *&gt;(msg) &lt;&lt; endl;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   }</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(lst.size());</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;}</div>
+<div class="ttc" id="structFIX8_1_1__pair_html"><div class="ttname"><a href="structFIX8_1_1__pair.html">FIX8::_pair</a></div><div class="ttdoc">Pair abstraction for use with GeneratedTable. </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00069">f8types.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ae692e3799138928c0694ad8828d60405"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ae692e3799138928c0694ad8828d60405">FIX8::ConsoleMenu::EditMsg</a></div><div class="ttdeci">F8API void EditMsg(tty_save_state &amp;tty, const FieldTable::Pair *fld, Message *msg) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00299">consolemenu.cpp:299</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a20384bd6310b1a907449579ec0df8abd"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd">FIX8::ConsoleMenu::SelectFromMsg</a></div><div class="ttdeci">F8API Message * SelectFromMsg(MsgList &amp;lst) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00218">consolemenu.cpp:218</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html"><div class="ttname"><a href="classFIX8_1_1Message.html">FIX8::Message</a></div><div class="ttdoc">A complete Fix message with header, body and trailer. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01016">message.hpp:1016</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a7ca30ac342ef4e3d4d2d14255b3ad93f"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f">FIX8::ConsoleMenu::SelectField</a></div><div class="ttdeci">virtual F8API const FieldTable::Pair * SelectField(const Message *msg, int groupid=0) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8cpp_source.html#l00101">consolemenu.cpp:101</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0f1f0ec603b022f3b698ccc59a89c39e"></a>
@@ -448,7 +573,23 @@ Static Private Attributes</h2></td></tr>
 <p>References <a class="el" href="consolemenu_8hpp_source.html#l00051">_is</a>, and <a class="el" href="consolemenu_8hpp_source.html#l00052">_os</a>.</p>
 
 <p>Referenced by <a class="el" href="consolemenu_8hpp_source.html#l00080">get_yn()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <span class="keywordtype">char</span> ch(0);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">_is</a>.clear();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <span class="keywordflow">if</span> (!prompt.empty())</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; prompt &lt;&lt; std::flush;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">_is</a>.get(ch);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">_is</a>.bad() &amp;&amp; ch != 0x3 &amp;&amp; ch != 0xa)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;         <span class="keywordflow">if</span> (echo)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; ch;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;         <span class="keywordflow">return</span> ch;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ada23748f981b22695c8120d1db128920"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">FIX8::ConsoleMenu::_is</a></div><div class="ttdeci">std::istream &amp; _is</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00051">consolemenu.hpp:51</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a76e75a01612e190174effdd8c12dd326"></a>
@@ -475,7 +616,9 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8hpp_source.html#l00077">77</a> of file <a class="el" href="consolemenu_8hpp_source.html">consolemenu.hpp</a>.</p>
 
 <p>References <a class="el" href="consolemenu_8hpp_source.html#l00053">_lpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>; }</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad755f5115890caa721c47c7b02bab2d7"></a>
@@ -513,7 +656,9 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8hpp_source.html#l00080">80</a> of file <a class="el" href="consolemenu_8hpp_source.html">consolemenu.hpp</a>.</p>
 
 <p>References <a class="el" href="consolemenu_8hpp_source.html#l00081">get_key()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{ <span class="keywordflow">return</span> toupper(<a class="code" href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">get_key</a>(prompt, echo)) == <span class="charliteral">&#39;Y&#39;</span>; }</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a0f1f0ec603b022f3b698ccc59a89c39e"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">FIX8::ConsoleMenu::get_key</a></div><div class="ttdeci">char get_key(const f8String &amp;prompt=std::string(), bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00081">consolemenu.hpp:81</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a907a9fa546c6d3bf53e725b6e918abf8"></a>
@@ -543,7 +688,17 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00289">289</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="f8utils_8hpp_source.html#l01201">FIX8::tty_save_state::set_raw_mode()</a>, and <a class="el" href="f8utils_8hpp_source.html#l01184">FIX8::tty_save_state::unset_raw_mode()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;{</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   <span class="keywordtype">char</span> buff[128] {};</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   tty.<a class="code" href="classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899">unset_raw_mode</a>();</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   <a class="code" href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">_is</a>.getline(buff, <span class="keyword">sizeof</span>(buff));</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   tty.<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   <span class="keywordflow">return</span> to = buff;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_a64dbe0f3a2b970a69308bb187909e12a"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">FIX8::tty_save_state::set_raw_mode</a></div><div class="ttdeci">void set_raw_mode()</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01201">f8utils.hpp:1201</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ada23748f981b22695c8120d1db128920"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920">FIX8::ConsoleMenu::_is</a></div><div class="ttdeci">std::istream &amp; _is</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00051">consolemenu.hpp:51</a></div></div>
+<div class="ttc" id="classFIX8_1_1tty__save__state_html_aaecaabf5b98750e1a62a093bea443899"><div class="ttname"><a href="classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899">FIX8::tty_save_state::unset_raw_mode</a></div><div class="ttdeci">void unset_raw_mode()</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l01184">f8utils.hpp:1184</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7ca30ac342ef4e3d4d2d14255b3ad93f"></a>
@@ -581,7 +736,92 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00101">101</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="traits_8hpp_source.html#l00344">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::at()</a>, <a class="el" href="traits_8hpp_source.html#l00418">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::begin()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end()</a>, <a class="el" href="message_8hpp_source.html#l00875">FIX8::MessageBase::get_fp()</a>, <a class="el" href="message_8hpp_source.html#l00535">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="traits_8hpp_source.html#l00658">FIX8::FieldTraits::get_presence()</a>, <a class="el" href="message_8hpp_source.html#l00722">FIX8::MessageBase::have()</a>, <a class="el" href="traits_8hpp_source.html#l00596">FIX8::FieldTraits::is_mandatory()</a>, <a class="el" href="message_8cpp_source.html#l00535">FIX8::MessageBase::print_field()</a>, and <a class="el" href="traits_8hpp_source.html#l00406">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::size()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   ostringstream ostr;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordflow">if</span> (grpid)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      ostr &lt;&lt; msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; grpid &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      ostr &lt;&lt; <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a1e1f16da5756832418875fdace532c2b">find_ptr</a>(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>().c_str())-&gt;_name;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <a class="code" href="structFIX8_1_1FieldTrait.html">Presence::const_iterator</a> itr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>());</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; ostr.str() &lt;&lt; <span class="stringliteral">&quot;: Select field to add (*:mandatory +:present)&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); itr != msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(); ++itr)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseEntry.html">BaseEntry</a> *tbe(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">find_be</a>(itr-&gt;_fnum));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>[nlines] &lt;&lt; <span class="stringliteral">&quot;] &quot;</span>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;         <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0">have</a>(itr-&gt;_fnum))</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;         {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39;+&#39;</span>;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39">print_field</a>(itr-&gt;_fnum, <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;         }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2">is_mandatory</a>(itr-&gt;_fnum) ? <span class="charliteral">&#39;*&#39;</span> : <span class="charliteral">&#39; &#39;</span>)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;               &lt;&lt; tbe-&gt;_name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; itr-&gt;_fnum &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;         if (nlines % <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> == 0 || (nlines + <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> * page) == msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">size</a>())</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;         {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">size</a>() / <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">if</span> ((opt = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">get_key</a>(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">_fld_prompt</a>, <span class="keyword">true</span>)))</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            ++page;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;         }</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;         <span class="keywordflow">if</span> ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;         {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            idx += (page * <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <a class="code" href="structFIX8_1_1FieldTrait.html">Presence::const_iterator</a> fitr(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75">at</a>(idx));</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            <span class="keywordflow">if</span> (fitr != msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>())</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;               <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">_be</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#aff31104960d24233e8c9cba53ce28b8b">find_pair_ptr</a>(fitr-&gt;_fnum);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;         }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a39faf7ddeb0ac08144694cb20b524e2a"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">FIX8::F8MetaCntx::_bme</a></div><div class="ttdeci">const MsgTable &amp; _bme</div><div class="ttdoc">Framework generated lookup table to generate Fix messages. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00213">message.hpp:213</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a3552b4cf9b335f3d60ab579c27df12f0"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0">FIX8::MessageBase::have</a></div><div class="ttdeci">bool have(const unsigned short fnum) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00722">message.hpp:722</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_aff31104960d24233e8c9cba53ce28b8b"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#aff31104960d24233e8c9cba53ce28b8b">FIX8::GeneratedTable::find_pair_ptr</a></div><div class="ttdeci">const_iterator find_pair_ptr(const Key &amp;key) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00163">f8types.hpp:163</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_acfd0463dcfa622305a755f171dc1cd39"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#acfd0463dcfa622305a755f171dc1cd39">FIX8::MessageBase::print_field</a></div><div class="ttdeci">virtual F8API void print_field(const unsigned short fnum, std::ostream &amp;os) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8cpp_source.html#l00535">message.cpp:535</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_aee670bbc6f3e6f1a460e261789a36dd2"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2">FIX8::FieldTraits::is_mandatory</a></div><div class="ttdeci">bool is_mandatory(const unsigned short field) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00596">traits.hpp:596</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="classFIX8_1_1FieldTraits_html_af4c20474cbeb7688bc65a5527d0210fa"><div class="ttname"><a href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">FIX8::FieldTraits::get_presence</a></div><div class="ttdeci">const Presence &amp; get_presence() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00658">traits.hpp:658</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_af76f7d71c7a01ff071449bb54329ce05"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::begin</a></div><div class="ttdeci">iterator begin()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00418">traits.hpp:418</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab1de34dd2ce3443ea557640054cb1abb"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">FIX8::ConsoleMenu::_fld_prompt</a></div><div class="ttdeci">static const f8String _fld_prompt</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait_html"><div class="ttname"><a href="structFIX8_1_1FieldTrait.html">FIX8::FieldTrait</a></div><div class="ttdoc">Used for static trait interrogation. </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00057">traits.hpp:57</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a1ba1d5c6e34f997efa4e384d60f61f75"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::at</a></div><div class="ttdeci">const_iterator at(const size_t idx) const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00344">traits.hpp:344</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_afdb890848e89e7f3b0b941f20c02a1f1"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">FIX8::MessageBase::get_msgtype</a></div><div class="ttdeci">const f8String &amp; get_msgtype() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00535">message.hpp:535</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a6ea491f605d31ff936c4001f32d0d400"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00422">traits.hpp:422</a></div></div>
+<div class="ttc" id="structFIX8_1_1BaseEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseEntry.html">FIX8::BaseEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02071">field.hpp:2071</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a08944460e4c0a2ff754db5af36b401fd"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a08944460e4c0a2ff754db5af36b401fd">FIX8::F8MetaCntx::_be</a></div><div class="ttdeci">const FieldTable &amp; _be</div><div class="ttdoc">Framework generated lookup table to generate Fix fields. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00215">message.hpp:215</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab813d30ef8f59bf4a1fd71c7ac641f14"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">FIX8::ConsoleMenu::_ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; _ctx</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00050">consolemenu.hpp:50</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a0f1f0ec603b022f3b698ccc59a89c39e"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">FIX8::ConsoleMenu::get_key</a></div><div class="ttdeci">char get_key(const f8String &amp;prompt=std::string(), bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00081">consolemenu.hpp:81</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a2ebbb7ab0c2b070a24bacaee8130f03e"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">FIX8::F8MetaCntx::find_be</a></div><div class="ttdeci">const BaseEntry * find_be(const unsigned short fnum) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00264">message.hpp:264</a></div></div>
+<div class="ttc" id="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4_html_a9d41259e89ee0a82a038b14c2e2d13ac"><div class="ttname"><a href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00406">traits.hpp:406</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a1c3a817c478e0dcb8a373206d4fef58f"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">FIX8::MessageBase::get_fp</a></div><div class="ttdeci">const FieldTraits &amp; get_fp() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00875">message.hpp:875</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a1e1f16da5756832418875fdace532c2b"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a1e1f16da5756832418875fdace532c2b">FIX8::GeneratedTable::find_ptr</a></div><div class="ttdeci">const Val * find_ptr(const Key &amp;key) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00154">f8types.hpp:154</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac4bb9b67f1a8607d86a8c23ce61883c4"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">FIX8::ConsoleMenu::_opt_keys</a></div><div class="ttdeci">static const f8String _opt_keys</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a20384bd6310b1a907449579ec0df8abd"></a>
@@ -601,7 +841,64 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00218">218</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00071">FIX8::_pair&lt; Key, Val &gt;::_key</a>, and <a class="el" href="f8types_8hpp_source.html#l00072">FIX8::_pair&lt; Key, Val &gt;::_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;{</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   <span class="keywordflow">if</span> (lst.empty())</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   {</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      MsgList::const_iterator itr(lst.begin());</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;Select from &quot;</span> &lt;&lt; lst.size() &lt;&lt; <span class="stringliteral">&quot; messages&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); itr != lst.end(); ++itr)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *tbme(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#aff31104960d24233e8c9cba53ce28b8b">find_pair_ptr</a>((*itr)-&gt;get_msgtype().c_str()));</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; tbme-&gt;_value._name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; tbme-&gt;_key &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;         <span class="keywordflow">if</span> (nlines % <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> == 0 || (nlines + <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> * page) == lst.size())</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;         {</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <span class="keywordflow">if</span> ((opt = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">get_key</a>(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">_fld_prompt</a>, <span class="keyword">true</span>)))</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            ++page;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;         }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      }</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      {</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;         <span class="keywordflow">if</span> ((idx = <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>.find_first_of(opt)) != f8String::npos)</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;         {</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            idx += (page * <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            <span class="keywordflow">if</span> (idx &lt; lst.size())</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;               <span class="keywordflow">return</span> lst[idx];</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;         }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a39faf7ddeb0ac08144694cb20b524e2a"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">FIX8::F8MetaCntx::_bme</a></div><div class="ttdeci">const MsgTable &amp; _bme</div><div class="ttdoc">Framework generated lookup table to generate Fix messages. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00213">message.hpp:213</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_aff31104960d24233e8c9cba53ce28b8b"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#aff31104960d24233e8c9cba53ce28b8b">FIX8::GeneratedTable::find_pair_ptr</a></div><div class="ttdeci">const_iterator find_pair_ptr(const Key &amp;key) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00163">f8types.hpp:163</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html"><div class="ttname"><a href="structFIX8_1_1__pair.html">FIX8::_pair</a></div><div class="ttdoc">Pair abstraction for use with GeneratedTable. </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00069">f8types.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab1de34dd2ce3443ea557640054cb1abb"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">FIX8::ConsoleMenu::_fld_prompt</a></div><div class="ttdeci">static const f8String _fld_prompt</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab813d30ef8f59bf4a1fd71c7ac641f14"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">FIX8::ConsoleMenu::_ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; _ctx</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00050">consolemenu.hpp:50</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a0f1f0ec603b022f3b698ccc59a89c39e"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">FIX8::ConsoleMenu::get_key</a></div><div class="ttdeci">char get_key(const f8String &amp;prompt=std::string(), bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00081">consolemenu.hpp:81</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac4bb9b67f1a8607d86a8c23ce61883c4"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">FIX8::ConsoleMenu::_opt_keys</a></div><div class="ttdeci">static const f8String _opt_keys</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac66df1e977b51e2e3dcb831250ab2588"></a>
@@ -628,7 +925,68 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00050">50</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00072">FIX8::_pair&lt; Key, Val &gt;::_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;   {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *pp(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a7f0408c7cc5bb85a422316574658f618">begin</a>());</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot; Select message to create&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> nlines(0); pp != <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#aecee22ab796e52a9926374639b917fe2">end</a>(); ++pp)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; pp-&gt;_value._name &lt;&lt; <span class="charliteral">&#39;(&#39;</span> &lt;&lt; pp-&gt;_key &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;         <span class="keywordflow">if</span> (nlines % <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> == 0 || (nlines + <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> * page) == <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">size</a>())</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;         {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">size</a>() / <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">if</span> ((opt = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">get_key</a>(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">_fld_prompt</a>, <span class="keyword">true</span>)))</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            ++page;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;         }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <span class="keywordtype">size_t</span> idx;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;         <span class="keywordflow">if</span> ((idx = <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>.find_first_of(opt)) != f8String::npos)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;         {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            idx += (page * <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">if</span> (idx &lt; <a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">size</a>())</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;               <span class="keyword">const</span> <a class="code" href="structFIX8_1_1__pair.html">MsgTable::Pair</a> *pr(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">_bme</a>.<a class="code" href="classFIX8_1_1GeneratedTable.html#a9cf8adacb8ce6e596abd5c71c5429d2c">at</a>(idx));</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;               <span class="keywordflow">if</span> (pr)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                  <span class="keywordflow">return</span> &amp;pr-&gt;<a class="code" href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">_value</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;         }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a39faf7ddeb0ac08144694cb20b524e2a"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a39faf7ddeb0ac08144694cb20b524e2a">FIX8::F8MetaCntx::_bme</a></div><div class="ttdeci">const MsgTable &amp; _bme</div><div class="ttdoc">Framework generated lookup table to generate Fix messages. </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00213">message.hpp:213</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a7f0408c7cc5bb85a422316574658f618"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a7f0408c7cc5bb85a422316574658f618">FIX8::GeneratedTable::begin</a></div><div class="ttdeci">const_iterator begin() const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00133">f8types.hpp:133</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html"><div class="ttname"><a href="structFIX8_1_1__pair.html">FIX8::_pair</a></div><div class="ttdoc">Pair abstraction for use with GeneratedTable. </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00069">f8types.hpp:69</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+<div class="ttc" id="structFIX8_1_1__pair_html_a915567f5488096bc7cc777a4f532dd61"><div class="ttname"><a href="structFIX8_1_1__pair.html#a915567f5488096bc7cc777a4f532dd61">FIX8::_pair::_value</a></div><div class="ttdeci">Val _value</div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00072">f8types.hpp:72</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab1de34dd2ce3443ea557640054cb1abb"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">FIX8::ConsoleMenu::_fld_prompt</a></div><div class="ttdeci">static const f8String _fld_prompt</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_ae41ece5825e18111b7ea11e06f09d67a"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">FIX8::GeneratedTable::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00176">f8types.hpp:176</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab813d30ef8f59bf4a1fd71c7ac641f14"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">FIX8::ConsoleMenu::_ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; _ctx</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00050">consolemenu.hpp:50</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a0f1f0ec603b022f3b698ccc59a89c39e"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">FIX8::ConsoleMenu::get_key</a></div><div class="ttdeci">char get_key(const f8String &amp;prompt=std::string(), bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00081">consolemenu.hpp:81</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_a9cf8adacb8ce6e596abd5c71c5429d2c"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#a9cf8adacb8ce6e596abd5c71c5429d2c">FIX8::GeneratedTable::at</a></div><div class="ttdeci">const_iterator at(const size_t idx) const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00172">f8types.hpp:172</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac4bb9b67f1a8607d86a8c23ce61883c4"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">FIX8::ConsoleMenu::_opt_keys</a></div><div class="ttdeci">static const f8String _opt_keys</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+<div class="ttc" id="classFIX8_1_1GeneratedTable_html_aecee22ab796e52a9926374639b917fe2"><div class="ttname"><a href="classFIX8_1_1GeneratedTable.html#aecee22ab796e52a9926374639b917fe2">FIX8::GeneratedTable::end</a></div><div class="ttdeci">const_iterator end() const </div><div class="ttdef"><b>Definition:</b> <a href="f8types_8hpp_source.html#l00137">f8types.hpp:137</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a4ae3d8ee9fe65df88792bcacdd375508"></a>
@@ -666,7 +1024,67 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8cpp_source.html#l00166">166</a> of file <a class="el" href="consolemenu_8cpp_source.html">consolemenu.cpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l00066">FIX8::RealmBase::_descriptions</a>, <a class="el" href="field_8hpp_source.html#l00065">FIX8::RealmBase::_sz</a>, and <a class="el" href="field_8hpp_source.html#l00116">FIX8::RealmBase::print()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;{</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseEntry.html">BaseEntry</a> *be(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">_ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">find_be</a>(fnum));</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordtype">int</span> pp(0);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordtype">char</span> opt(0);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; be-&gt;_name &lt;&lt; <span class="stringliteral">&quot;: Select realm value to add&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;--------------------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordtype">int</span> page(0);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> nlines(0); pp &lt; rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a>; ++pp)</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      {</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; <a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>[nlines] &lt;&lt; <span class="stringliteral">&quot;]  &quot;</span> &lt;&lt; *(rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a6c2cd88cb11e690cced3022e6d2a618b">_descriptions</a> + pp) &lt;&lt; <span class="stringliteral">&quot; (&quot;</span>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;         rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#a10be4df36c6edcd7a8aeb0b79183ca4c">print</a>(<a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a>, pp);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;         ++nlines;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;         <span class="keywordflow">if</span> (nlines % <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> == 0 || (nlines + <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> * page) == rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a>)</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;         {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; <span class="stringliteral">&quot;Page &quot;</span> &lt;&lt; (page + 1) &lt;&lt; <span class="charliteral">&#39;/&#39;</span> &lt;&lt; (1 + (rb-&gt;<a class="code" href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">_sz</a> / <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>)) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            <span class="keywordflow">if</span> ((opt = <a class="code" href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">get_key</a>(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">_fld_prompt</a>, <span class="keyword">true</span>)))</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            ++page;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            nlines = 0;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            <a class="code" href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">_os</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;         }</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      }</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      <span class="keywordtype">int</span> idx;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      <span class="keywordflow">if</span> (opt)</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;         <span class="keywordflow">if</span> (opt == <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;         <span class="keywordflow">if</span> (static_cast&lt;size_t&gt;((idx = (static_cast&lt;int&gt;(<a class="code" href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">_opt_keys</a>.find_first_of(opt))))) != f8String::npos)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;         {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            idx += (page * <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a>);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            <span class="keywordflow">if</span> (idx &lt; rb-&gt;_sz)</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;               <span class="keywordflow">return</span> idx;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;         }</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      }</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aee7aef01632fb82385d2b65f8ab8b712"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712">FIX8::ConsoleMenu::_os</a></div><div class="ttdeci">std::ostream &amp; _os</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00052">consolemenu.hpp:52</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab1de34dd2ce3443ea557640054cb1abb"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab1de34dd2ce3443ea557640054cb1abb">FIX8::ConsoleMenu::_fld_prompt</a></div><div class="ttdeci">static const f8String _fld_prompt</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+<div class="ttc" id="structFIX8_1_1RealmBase_html_ac46bffe960fc8075257b6b85327f64af"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#ac46bffe960fc8075257b6b85327f64af">FIX8::RealmBase::_sz</a></div><div class="ttdeci">const int _sz</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00065">field.hpp:65</a></div></div>
+<div class="ttc" id="structFIX8_1_1BaseEntry_html"><div class="ttname"><a href="structFIX8_1_1BaseEntry.html">FIX8::BaseEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02071">field.hpp:2071</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ab813d30ef8f59bf4a1fd71c7ac641f14"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ab813d30ef8f59bf4a1fd71c7ac641f14">FIX8::ConsoleMenu::_ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; _ctx</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00050">consolemenu.hpp:50</a></div></div>
+<div class="ttc" id="structFIX8_1_1RealmBase_html_a10be4df36c6edcd7a8aeb0b79183ca4c"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a10be4df36c6edcd7a8aeb0b79183ca4c">FIX8::RealmBase::print</a></div><div class="ttdeci">std::ostream &amp; print(std::ostream &amp;os, int idx) const </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00116">field.hpp:116</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_a0f1f0ec603b022f3b698ccc59a89c39e"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#a0f1f0ec603b022f3b698ccc59a89c39e">FIX8::ConsoleMenu::get_key</a></div><div class="ttdeci">char get_key(const f8String &amp;prompt=std::string(), bool echo=false) const </div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00081">consolemenu.hpp:81</a></div></div>
+<div class="ttc" id="structFIX8_1_1F8MetaCntx_html_a2ebbb7ab0c2b070a24bacaee8130f03e"><div class="ttname"><a href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">FIX8::F8MetaCntx::find_be</a></div><div class="ttdeci">const BaseEntry * find_be(const unsigned short fnum) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00264">message.hpp:264</a></div></div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_ac4bb9b67f1a8607d86a8c23ce61883c4"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4">FIX8::ConsoleMenu::_opt_keys</a></div><div class="ttdeci">static const f8String _opt_keys</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00054">consolemenu.hpp:54</a></div></div>
+<div class="ttc" id="structFIX8_1_1RealmBase_html_a6c2cd88cb11e690cced3022e6d2a618b"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a6c2cd88cb11e690cced3022e6d2a618b">FIX8::RealmBase::_descriptions</a></div><div class="ttdeci">const char *const * _descriptions</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00066">field.hpp:66</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0660f146df7b6a7b98b34d9a2e63d2c4"></a>
@@ -694,7 +1112,9 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="consolemenu_8hpp_source.html#l00078">78</a> of file <a class="el" href="consolemenu_8hpp_source.html">consolemenu.hpp</a>.</p>
 
 <p>References <a class="el" href="consolemenu_8hpp_source.html#l00053">_lpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{ <a class="code" href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">_lpp</a> = lpp; }</div>
+<div class="ttc" id="classFIX8_1_1ConsoleMenu_html_aae2c340e558b263d1c4bc68391205750"><div class="ttname"><a href="classFIX8_1_1ConsoleMenu.html#aae2c340e558b263d1c4bc68391205750">FIX8::ConsoleMenu::_lpp</a></div><div class="ttdeci">int _lpp</div><div class="ttdef"><b>Definition:</b> <a href="consolemenu_8hpp_source.html#l00053">consolemenu.hpp:53</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -843,7 +1263,7 @@ Static Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

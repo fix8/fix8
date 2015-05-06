@@ -166,7 +166,12 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00304">304</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   {</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <span class="keywordflow">if</span> (pthread_mutex_init(&amp;<a class="code" href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">_pmutex</a>, 0))</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;         <span class="keywordflow">throw</span> f8Exception(<span class="stringliteral">&quot;pthread_mutex_init failed&quot;</span>);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1f8__mutex_html_a3c9769a4eaa31bf575dcabf456ed5434"><div class="ttname"><a href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">FIX8::f8_mutex::_pmutex</a></div><div class="ttdeci">pthread_mutex_t _pmutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00301">thread.hpp:301</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a59c5bdbd882e16b7555cb11d58ede525"></a>
@@ -191,7 +196,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00310">310</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;{ pthread_mutex_destroy(&amp;<a class="code" href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">_pmutex</a>); };</div>
+<div class="ttc" id="classFIX8_1_1f8__mutex_html_a3c9769a4eaa31bf575dcabf456ed5434"><div class="ttname"><a href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">FIX8::f8_mutex::_pmutex</a></div><div class="ttdeci">pthread_mutex_t _pmutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00301">thread.hpp:301</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -217,7 +224,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00312">312</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;{ pthread_mutex_lock(&amp;<a class="code" href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">_pmutex</a>); }</div>
+<div class="ttc" id="classFIX8_1_1f8__mutex_html_a3c9769a4eaa31bf575dcabf456ed5434"><div class="ttname"><a href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">FIX8::f8_mutex::_pmutex</a></div><div class="ttdeci">pthread_mutex_t _pmutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00301">thread.hpp:301</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a97de5cd4d89aa3a5f6e6dafae701aec4"></a>
@@ -242,7 +251,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00313">313</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{ <span class="keywordflow">return</span> pthread_mutex_trylock(&amp;<a class="code" href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">_pmutex</a>) == 0; }</div>
+<div class="ttc" id="classFIX8_1_1f8__mutex_html_a3c9769a4eaa31bf575dcabf456ed5434"><div class="ttname"><a href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">FIX8::f8_mutex::_pmutex</a></div><div class="ttdeci">pthread_mutex_t _pmutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00301">thread.hpp:301</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a225309cc94ff574fdb0e9ce03ac1233d"></a>
@@ -267,7 +278,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00314">314</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;{ pthread_mutex_unlock(&amp;<a class="code" href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">_pmutex</a>); }</div>
+<div class="ttc" id="classFIX8_1_1f8__mutex_html_a3c9769a4eaa31bf575dcabf456ed5434"><div class="ttname"><a href="classFIX8_1_1f8__mutex.html#a3c9769a4eaa31bf575dcabf456ed5434">FIX8::f8_mutex::_pmutex</a></div><div class="ttdeci">pthread_mutex_t _pmutex</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00301">thread.hpp:301</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -299,7 +312,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

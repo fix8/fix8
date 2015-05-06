@@ -177,7 +177,9 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00072">72</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;: <a class="code" href="classFIX8_1_1fdoutbuf.html#a325701ebfc5aead191a4b997f04adf12">fd</a>(_fd) {}</div>
+<div class="ttc" id="classFIX8_1_1fdoutbuf_html_a325701ebfc5aead191a4b997f04adf12"><div class="ttname"><a href="classFIX8_1_1fdoutbuf.html#a325701ebfc5aead191a4b997f04adf12">FIX8::fdoutbuf::fd</a></div><div class="ttdeci">int fd</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00053">logger.hpp:53</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="acfb6edcd0e8ae08b6c171c6f749621a6"></a>
@@ -202,7 +204,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00073">73</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -231,7 +234,17 @@ Protected Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00055">55</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00053">fd</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;   {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordflow">if</span> (c != traits_type::eof())</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;         <span class="keywordtype">char</span> z(c);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;         <span class="keywordflow">if</span> (write(<a class="code" href="classFIX8_1_1fdoutbuf.html#a325701ebfc5aead191a4b997f04adf12">fd</a>, &amp;z, 1) != 1)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> traits_type::eof();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      <span class="keywordflow">return</span> c;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1fdoutbuf_html_a325701ebfc5aead191a4b997f04adf12"><div class="ttname"><a href="classFIX8_1_1fdoutbuf.html#a325701ebfc5aead191a4b997f04adf12">FIX8::fdoutbuf::fd</a></div><div class="ttdeci">int fd</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00053">logger.hpp:53</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8db9d9c44ddfe4f34d05b0042c660226"></a>
@@ -269,7 +282,11 @@ Protected Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00066">66</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00053">fd</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;   {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="keywordflow">return</span> write (<a class="code" href="classFIX8_1_1fdoutbuf.html#a325701ebfc5aead191a4b997f04adf12">fd</a>, s, num);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1fdoutbuf_html_a325701ebfc5aead191a4b997f04adf12"><div class="ttname"><a href="classFIX8_1_1fdoutbuf.html#a325701ebfc5aead191a4b997f04adf12">FIX8::fdoutbuf::fd</a></div><div class="ttdeci">int fd</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00053">logger.hpp:53</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -303,7 +320,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

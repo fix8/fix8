@@ -240,7 +240,13 @@ template&lt;typename T&gt; </div>
 </dl>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00073">73</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      : <a class="code" href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">_sock</a>(sock), <a class="code" href="classFIX8_1_1AsyncSocket.html#a8ab8f034fe13cf89370423a0d05485f7">_session</a>(session), <a class="code" href="classFIX8_1_1AsyncSocket.html#ab16272b8e50303bb0e33cfdc72a16233">_pmodel</a>(pmodel), <a class="code" href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">_started</a>(<span class="keyword">false</span>), <a class="code" href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">_thread</a>(std::ref(*<span class="keyword">this</span>)) {}</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a8ab8f034fe13cf89370423a0d05485f7"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a8ab8f034fe13cf89370423a0d05485f7">FIX8::AsyncSocket::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00059">connection.hpp:59</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_ab16272b8e50303bb0e33cfdc72a16233"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#ab16272b8e50303bb0e33cfdc72a16233">FIX8::AsyncSocket::_pmodel</a></div><div class="ttdeci">ProcessModel _pmodel</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00060">connection.hpp:60</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7817c7fa26d56bfc9531e46cd824da31"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">FIX8::AsyncSocket::_thread</a></div><div class="ttdeci">f8_thread&lt; AsyncSocket &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00066">connection.hpp:66</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_ae5040119022950e65597c0159c19c3c1"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">FIX8::AsyncSocket::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00057">connection.hpp:57</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a2b43694d385f2592a4c266c2a4377e9e"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">FIX8::AsyncSocket::_started</a></div><div class="ttdeci">bool _started</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00063">connection.hpp:63</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8b99236e57574f71d0afcef341d49ee1"></a>
@@ -297,7 +303,9 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00127">127</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00663">FIX8::Connection::reader_execute()</a>, and <a class="el" href="connection_8hpp_source.html#l00672">FIX8::Connection::writer_execute()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1AsyncSocket.html#a7002a8f57e133bb7481c3fff8429e728">_cancellation_token</a>; }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7002a8f57e133bb7481c3fff8429e728"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7002a8f57e133bb7481c3fff8429e728">FIX8::AsyncSocket::_cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token _cancellation_token</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00061">connection.hpp:61</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a355daba80b924ed26d3386312826f66c"></a>
@@ -330,7 +338,8 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00093">93</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00089">FIX8::AsyncSocket&lt; f8String &gt;::operator()()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{ <span class="keywordflow">return</span> 0; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a00154a47b8c62ff878567f4469d9dab9"></a>
@@ -360,7 +369,21 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00115">115</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00305">FIX8::FIXReader::join()</a>, <a class="el" href="connection_8hpp_source.html#l00399">FIX8::FIXWriter::join()</a>, and <a class="el" href="connection_8hpp_source.html#l00107">FIX8::AsyncSocket&lt; f8String &gt;::quit()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <a class="code" href="namespaceFIX8.html#ae0cd7643d00276db9ceda89db184302a">f8_scoped_lock</a> guard(<a class="code" href="classFIX8_1_1AsyncSocket.html#a2ad08b91c6cb2fe1f96f21f2d89f530c">_mutex</a>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">_started</a>)</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;         <a class="code" href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">_started</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">_thread</a>.join();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;   }</div>
+<div class="ttc" id="namespaceFIX8_html_ae0cd7643d00276db9ceda89db184302a"><div class="ttname"><a href="namespaceFIX8.html#ae0cd7643d00276db9ceda89db184302a">FIX8::f8_scoped_lock</a></div><div class="ttdeci">f8_scoped_lock_impl&lt; f8_mutex &gt; f8_scoped_lock</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00451">thread.hpp:451</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7817c7fa26d56bfc9531e46cd824da31"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">FIX8::AsyncSocket::_thread</a></div><div class="ttdeci">f8_thread&lt; AsyncSocket &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00066">connection.hpp:66</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a2ad08b91c6cb2fe1f96f21f2d89f530c"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a2ad08b91c6cb2fe1f96f21f2d89f530c">FIX8::AsyncSocket::_mutex</a></div><div class="ttdeci">f8_mutex _mutex</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00062">connection.hpp:62</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a2b43694d385f2592a4c266c2a4377e9e"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">FIX8::AsyncSocket::_started</a></div><div class="ttdeci">bool _started</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00063">connection.hpp:63</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a38b27e4f04fe0819875c1ba4a159d5a4"></a>
@@ -388,7 +411,10 @@ template&lt;typename T&gt; </div>
 <p>Function operator. Called by thread to process message on queue. </p><dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00089">89</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1AsyncSocket.html#a355daba80b924ed26d3386312826f66c">execute</a>(<a class="code" href="classFIX8_1_1AsyncSocket.html#a7002a8f57e133bb7481c3fff8429e728">_cancellation_token</a>); }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a355daba80b924ed26d3386312826f66c"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a355daba80b924ed26d3386312826f66c">FIX8::AsyncSocket::execute</a></div><div class="ttdeci">virtual int execute(f8_thread_cancellation_token &amp;cancellation_token)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00093">connection.hpp:93</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7002a8f57e133bb7481c3fff8429e728"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7002a8f57e133bb7481c3fff8429e728">FIX8::AsyncSocket::_cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token _cancellation_token</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00061">connection.hpp:61</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a324f323586a49e9086934b6c9a2fca91"></a>
@@ -416,7 +442,9 @@ template&lt;typename T&gt; </div>
 <p>Get the number of messages queued on this socket. </p><dl class="section return"><dt>Returns</dt><dd>number of queued messages </dd></dl>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00081">81</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1AsyncSocket.html#acf00e6f0363973453a9043ef1d0890f5">_msg_queue</a>.size(); }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_acf00e6f0363973453a9043ef1d0890f5"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#acf00e6f0363973453a9043ef1d0890f5">FIX8::AsyncSocket::_msg_queue</a></div><div class="ttdeci">f8_concurrent_queue&lt; T &gt; _msg_queue</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00058">connection.hpp:58</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa45898da59dda69cba22844ae2dad65a"></a>
@@ -449,7 +477,10 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00107">107</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00274">FIX8::FIXReader::quit()</a>, and <a class="el" href="connection_8hpp_source.html#l00474">FIX8::FIXWriter::quit()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;{ <a class="code" href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">_thread</a>.request_stop(); <a class="code" href="classFIX8_1_1AsyncSocket.html#a00154a47b8c62ff878567f4469d9dab9">join</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a00154a47b8c62ff878567f4469d9dab9"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a00154a47b8c62ff878567f4469d9dab9">FIX8::AsyncSocket::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00115">connection.hpp:115</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7817c7fa26d56bfc9531e46cd824da31"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">FIX8::AsyncSocket::_thread</a></div><div class="ttdeci">f8_thread&lt; AsyncSocket &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00066">connection.hpp:66</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad73ec5b3ac2e8bcb402df82fa27a039e"></a>
@@ -480,7 +511,9 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00104">104</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00286">FIX8::FIXReader::stop()</a>, and <a class="el" href="connection_8hpp_source.html#l00462">FIX8::FIXWriter::stop()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{ <a class="code" href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">_thread</a>.request_stop(); }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7817c7fa26d56bfc9531e46cd824da31"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">FIX8::AsyncSocket::_thread</a></div><div class="ttdeci">f8_thread&lt; AsyncSocket &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00066">connection.hpp:66</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af65b0d2ed1dce75137f0276a702ac168"></a>
@@ -508,7 +541,9 @@ template&lt;typename T&gt; </div>
 <p>Get the underlying socket object. </p><dl class="section return"><dt>Returns</dt><dd>the socket </dd></dl>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00111">111</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">_sock</a>; }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_ae5040119022950e65597c0159c19c3c1"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">FIX8::AsyncSocket::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00057">connection.hpp:57</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a074e7a0924043facefeeea76504a633d"></a>
@@ -541,7 +576,16 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00096">96</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00261">FIX8::FIXReader::start()</a>, and <a class="el" href="connection_8hpp_source.html#l00455">FIX8::FIXWriter::start()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <a class="code" href="namespaceFIX8.html#ae0cd7643d00276db9ceda89db184302a">f8_scoped_lock</a> guard(<a class="code" href="classFIX8_1_1AsyncSocket.html#a2ad08b91c6cb2fe1f96f21f2d89f530c">_mutex</a>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <a class="code" href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">_started</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">_thread</a>.start();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   }</div>
+<div class="ttc" id="namespaceFIX8_html_ae0cd7643d00276db9ceda89db184302a"><div class="ttname"><a href="namespaceFIX8.html#ae0cd7643d00276db9ceda89db184302a">FIX8::f8_scoped_lock</a></div><div class="ttdeci">f8_scoped_lock_impl&lt; f8_mutex &gt; f8_scoped_lock</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00451">thread.hpp:451</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a7817c7fa26d56bfc9531e46cd824da31"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31">FIX8::AsyncSocket::_thread</a></div><div class="ttdeci">f8_thread&lt; AsyncSocket &gt; _thread</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00066">connection.hpp:66</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a2ad08b91c6cb2fe1f96f21f2d89f530c"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a2ad08b91c6cb2fe1f96f21f2d89f530c">FIX8::AsyncSocket::_mutex</a></div><div class="ttdeci">f8_mutex _mutex</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00062">connection.hpp:62</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a2b43694d385f2592a4c266c2a4377e9e"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">FIX8::AsyncSocket::_started</a></div><div class="ttdeci">bool _started</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00063">connection.hpp:63</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad1d0979615be2f70256a1cb1a4283dc1"></a>
@@ -569,7 +613,9 @@ template&lt;typename T&gt; </div>
 <p>Check if this socket has started </p><dl class="section return"><dt>Returns</dt><dd>true if started </dd></dl>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00085">85</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">_started</a>; }</div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a2b43694d385f2592a4c266c2a4377e9e"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a2b43694d385f2592a4c266c2a4377e9e">FIX8::AsyncSocket::_started</a></div><div class="ttdeci">bool _started</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00063">connection.hpp:63</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -807,7 +853,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

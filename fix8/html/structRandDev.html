@@ -179,7 +179,15 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00219">219</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00358">MyMenu::batch_preload_new_order_single()</a>, <a class="el" href="myfix_8cpp_source.html#l00521">MyMenu::generate_new_order_single()</a>, <a class="el" href="myfix_8cpp_source.html#l00448">MyMenu::generate_new_order_single_alternate()</a>, <a class="el" href="myfix_8cpp_source.html#l00181">main()</a>, <a class="el" href="hftest_8cpp_source.html#l00419">MyMenu::new_order_single()</a>, <a class="el" href="hftest_8cpp_source.html#l00585">tex_router_server::operator()()</a>, and <a class="el" href="hftest_8cpp_source.html#l00491">MyMenu::preload_new_order_single()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;       T target(rand());</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      T target(random());</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      <span class="keywordflow">return</span> range ? target / (RAND_MAX / range + 1) : target;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9a8d55131bfeb21c13346711ce430864"></a>
@@ -207,7 +215,15 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00238">238</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;   {</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;       T target(rand());</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;       T target(random());</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;       <span class="keywordflow">return</span> range ? target / (RAND_MAX / range + 1) : target;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8afa9d5ccdd10bdfba6a499854fb2575"></a>
@@ -236,7 +252,14 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00205">205</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="harness_8cpp_source.html#l00174">main()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      srand (static_cast&lt;unsigned&gt;(time(0) % _getpid()));</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      srandom (static_cast&lt;unsigned&gt;(time(0) % getpid()));</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8afa9d5ccdd10bdfba6a499854fb2575"></a>
@@ -261,7 +284,15 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00227">227</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;   {</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      time_t tval(time(0));</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      srand (static_cast&lt;unsigned&gt;(((tval % _getpid()) * tval)));</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      srandom (static_cast&lt;unsigned&gt;(((tval % getpid()) * tval)));</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following files:<ul>
@@ -271,7 +302,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

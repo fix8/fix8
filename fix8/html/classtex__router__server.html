@@ -460,7 +460,9 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00115">115</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;: <a class="code" href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">_session</a>(session) {}</div>
+<div class="ttc" id="classtex__router__server_html_ae52dd3945c87b0103a6195515048d1c5"><div class="ttname"><a href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">tex_router_server::_session</a></div><div class="ttdeci">hf_session_server &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="hftest_8hpp_source.html#l00110">hftest.hpp:110</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5f59f85d3c34fba4ea0c1eb34fd96178"></a>
@@ -492,7 +494,9 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00102">102</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;: <a class="code" href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">_session</a>(session) {}</div>
+<div class="ttc" id="classtex__router__server_html_ae52dd3945c87b0103a6195515048d1c5"><div class="ttname"><a href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">tex_router_server::_session</a></div><div class="ttdeci">hf_session_server &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="hftest_8hpp_source.html#l00110">hftest.hpp:110</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -525,7 +529,10 @@ Private Attributes</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="harness_8cpp_source.html#l00387">387</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;{</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a36e0c23479170de20904cc2ccebdb454"></a>
@@ -559,7 +566,98 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00585">585</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
 <p>References <a class="el" href="message_8cpp_source.html#l00256">FIX8::MessageBase::copy_legal()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#afc0b830a3c0cd378ce8a4946cd1458ac">FIX8::TEX::ExecTransType_NEW()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#ae9eb8ffd363d42b11b748d14951551c5">FIX8::TEX::ExecType_NEW()</a>, <a class="el" href="message_8hpp_source.html#l00668">FIX8::MessageBase::get()</a>, <a class="el" href="hftest_8hpp_source.html#l00219">RandDev::getrandom()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#afa15edfb0bb02793e8a4da5ab24a2982">FIX8::TEX::OrdStatus_CANCELED()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#ac38ed139cc34378b3418f74e044a3934">FIX8::TEX::OrdStatus_FILLED()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a67912a9350ad4141a5037ab391b67985">FIX8::TEX::OrdStatus_NEW()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#aeabc14b6114f38de66eea02e78ebc4c5">FIX8::TEX::OrdStatus_PARTIALLY_FILLED()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a2d1fe542303b63d23a93a01e728f71c7">FIX8::TEX::OrdStatus_REJECTED()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;{</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   <span class="keyword">static</span> <span class="keywordtype">unsigned</span> oid(0), eoid(0);</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   <a class="code" href="classFIX8_1_1Field.html">FIX8::TEX::OrderQty</a> qty;</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;   <a class="code" href="classFIX8_1_1Field.html">FIX8::TEX::Price</a> <a class="code" href="namespaceFIX8.html#a489f8ba2b537fce7f069d92884182093">price</a>;</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a5931e37660892b4ecb237dec4615ee50">get</a>(qty);</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;   msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a5931e37660892b4ecb237dec4615ee50">get</a>(price);</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;   <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a> *er(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a>);</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;   msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1ce4da0089afb03b17ec13f480fafa65">copy_legal</a>(er);</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;   ostringstream oistr;</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;   oistr &lt;&lt; <span class="stringliteral">&quot;ord&quot;</span> &lt;&lt; ++oid;</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;   *er &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#aa2631fd171b806bd465865bf9020a18f">FIX8::TEX::OrderID</a>(oistr.str())</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;       &lt;&lt; <span class="keyword">new</span> <a class="code" href="classFIX8_1_1Field.html">FIX8::TEX::ExecType</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ae9eb8ffd363d42b11b748d14951551c5">FIX8::TEX::ExecType_NEW</a>);</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;   <span class="keywordtype">unsigned</span> ordResult(<a class="code" href="structRandDev.html#a9a8d55131bfeb21c13346711ce430864">RandDev::getrandom</a>(3));</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;   <span class="keywordflow">switch</span> (ordResult)</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;   {</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;   <span class="keywordflow">case</span> 0:</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;      *er &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a090385273ee79628c1f04473f87e46a2">FIX8::TEX::OrdStatus</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a67912a9350ad4141a5037ab391b67985">FIX8::TEX::OrdStatus_NEW</a>);</div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;   <span class="keywordflow">case</span> 1:</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;      *er &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a090385273ee79628c1f04473f87e46a2">FIX8::TEX::OrdStatus</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afa15edfb0bb02793e8a4da5ab24a2982">FIX8::TEX::OrdStatus_CANCELED</a>);</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   <span class="keywordflow">case</span> 2:</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;      *er &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a090385273ee79628c1f04473f87e46a2">FIX8::TEX::OrdStatus</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a2d1fe542303b63d23a93a01e728f71c7">FIX8::TEX::OrdStatus_REJECTED</a>);</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   }</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;   *er   &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ad9f732f764f51d2cef7ecf8f56626c98">FIX8::TEX::LeavesQty</a>(qty())</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ae9cbe7c636afc6d2d04872ecf4d1ecb2">FIX8::TEX::CumQty</a>(0.)</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab2c57f51a6e19ab971196ae6f3bbc3b7">FIX8::TEX::AvgPx</a>(0.)</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#aa3eb8c08bff7a44ec8dc7c5b837e409f">FIX8::TEX::LastCapacity</a>(<span class="charliteral">&#39;5&#39;</span>)</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#af53792e0125fabfec430d76cccb11323">FIX8::TEX::ReportToExch</a>(<span class="charliteral">&#39;Y&#39;</span>)</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a371e7c0b6c20a934c4b212ba027b5278">FIX8::TEX::ExecTransType</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc0b830a3c0cd378ce8a4946cd1458ac">FIX8::TEX::ExecTransType_NEW</a>)</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a14d5cb3234d9ef9fb76734487830392d">FIX8::TEX::ExecID</a>(oistr.str());</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;   <a class="code" href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">_session</a>.<a class="code" href="classFIX8_1_1Session.html#a6c47fc8e186e75cd09a123976015f441">send</a>(er);</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;   <span class="keywordflow">if</span> (ordResult == 0)</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;   {</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;      <span class="keywordtype">unsigned</span> remaining_qty(qty()), cum_qty(0);</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;      <span class="keywordflow">while</span> (remaining_qty &gt; 0)</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;      {</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;         <span class="keywordtype">unsigned</span> trdqty(1 + <a class="code" href="structRandDev.html#a9a8d55131bfeb21c13346711ce430864">RandDev::getrandom</a>(remaining_qty));</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;         remaining_qty -= trdqty;</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;         cum_qty += trdqty;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;         <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a> *ner(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a>);</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;         msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1ce4da0089afb03b17ec13f480fafa65">copy_legal</a>(ner);</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;         ostringstream eistr;</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;         eistr &lt;&lt; <span class="stringliteral">&quot;exec&quot;</span> &lt;&lt; ++eoid;</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;         *ner  &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a14d5cb3234d9ef9fb76734487830392d">FIX8::TEX::ExecID</a>(eistr.str())</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="classFIX8_1_1Field.html">FIX8::TEX::OrderID</a>(oistr.str())</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="classFIX8_1_1Field.html">FIX8::TEX::ExecType</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ae9eb8ffd363d42b11b748d14951551c5">FIX8::TEX::ExecType_NEW</a>)</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a090385273ee79628c1f04473f87e46a2">FIX8::TEX::OrdStatus</a>(remaining_qty == trdqty ? <a class="code" href="namespaceFIX8_1_1TEX.html#ac38ed139cc34378b3418f74e044a3934">FIX8::TEX::OrdStatus_FILLED</a> : <a class="code" href="namespaceFIX8_1_1TEX.html#aeabc14b6114f38de66eea02e78ebc4c5">FIX8::TEX::OrdStatus_PARTIALLY_FILLED</a>)</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ad9f732f764f51d2cef7ecf8f56626c98">FIX8::TEX::LeavesQty</a>(remaining_qty)</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ae9cbe7c636afc6d2d04872ecf4d1ecb2">FIX8::TEX::CumQty</a>(cum_qty)</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a371e7c0b6c20a934c4b212ba027b5278">FIX8::TEX::ExecTransType</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc0b830a3c0cd378ce8a4946cd1458ac">FIX8::TEX::ExecTransType_NEW</a>)</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;               &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab2c57f51a6e19ab971196ae6f3bbc3b7">FIX8::TEX::AvgPx</a>(<a class="code" href="namespaceFIX8.html#a489f8ba2b537fce7f069d92884182093">price</a>());</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;         <a class="code" href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">_session</a>.<a class="code" href="classFIX8_1_1Session.html#a6c47fc8e186e75cd09a123976015f441">send</a>(ner);</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;      }</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   }</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;}</div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_ae9cbe7c636afc6d2d04872ecf4d1ecb2"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#ae9cbe7c636afc6d2d04872ecf4d1ecb2">FIX8::TEX::CumQty</a></div><div class="ttdeci">Field&lt; Qty, 14 &gt; CumQty</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00106">Myfix_types.hpp:106</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_afc0b830a3c0cd378ce8a4946cd1458ac"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afc0b830a3c0cd378ce8a4946cd1458ac">FIX8::TEX::ExecTransType_NEW</a></div><div class="ttdeci">const char ExecTransType_NEW('0')</div></div>
+<div class="ttc" id="structRandDev_html_a9a8d55131bfeb21c13346711ce430864"><div class="ttname"><a href="structRandDev.html#a9a8d55131bfeb21c13346711ce430864">RandDev::getrandom</a></div><div class="ttdeci">static T getrandom(const T range=0)</div><div class="ttdef"><b>Definition:</b> <a href="hftest_8hpp_source.html#l00219">hftest.hpp:219</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a090385273ee79628c1f04473f87e46a2"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a090385273ee79628c1f04473f87e46a2">FIX8::TEX::OrdStatus</a></div><div class="ttdeci">Field&lt; char, 39 &gt; OrdStatus</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00374">Myfix_types.hpp:374</a></div></div>
+<div class="ttc" id="classFIX8_1_1TEX_1_1ExecutionReport_html"><div class="ttname"><a href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a></div><div class="ttdoc">ExecutionReport (8), application, 326 fields, 16 groups. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8hpp_source.html#l01081">Myfix_classes.hpp:1081</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_af53792e0125fabfec430d76cccb11323"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#af53792e0125fabfec430d76cccb11323">FIX8::TEX::ReportToExch</a></div><div class="ttdeci">Field&lt; Boolean, 113 &gt; ReportToExch</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00704">Myfix_types.hpp:704</a></div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a1ce4da0089afb03b17ec13f480fafa65"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a1ce4da0089afb03b17ec13f480fafa65">FIX8::MessageBase::copy_legal</a></div><div class="ttdeci">F8API unsigned copy_legal(MessageBase *to, bool force=false) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8cpp_source.html#l00256">message.cpp:256</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_ac38ed139cc34378b3418f74e044a3934"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#ac38ed139cc34378b3418f74e044a3934">FIX8::TEX::OrdStatus_FILLED</a></div><div class="ttdeci">const char OrdStatus_FILLED('2')</div></div>
+<div class="ttc" id="classFIX8_1_1MessageBase_html_a5931e37660892b4ecb237dec4615ee50"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a5931e37660892b4ecb237dec4615ee50">FIX8::MessageBase::get</a></div><div class="ttdeci">bool get(T &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00668">message.hpp:668</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a6c47fc8e186e75cd09a123976015f441"><div class="ttname"><a href="classFIX8_1_1Session.html#a6c47fc8e186e75cd09a123976015f441">FIX8::Session::send</a></div><div class="ttdeci">virtual F8API bool send(Message *msg, bool destroy=true, const unsigned custom_seqnum=0, const bool no_increment=false)</div><div class="ttdef"><b>Definition:</b> <a href="session_8cpp_source.html#l00914">session.cpp:914</a></div></div>
+<div class="ttc" id="classtex__router__server_html_ae52dd3945c87b0103a6195515048d1c5"><div class="ttname"><a href="classtex__router__server.html#ae52dd3945c87b0103a6195515048d1c5">tex_router_server::_session</a></div><div class="ttdeci">hf_session_server &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="hftest_8hpp_source.html#l00110">hftest.hpp:110</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a371e7c0b6c20a934c4b212ba027b5278"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a371e7c0b6c20a934c4b212ba027b5278">FIX8::TEX::ExecTransType</a></div><div class="ttdeci">Field&lt; char, 20 &gt; ExecTransType</div><div class="ttdef"><b>Definition:</b> <a href="Perf__types_8hpp_source.html#l00122">Perf_types.hpp:122</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_ab2c57f51a6e19ab971196ae6f3bbc3b7"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#ab2c57f51a6e19ab971196ae6f3bbc3b7">FIX8::TEX::AvgPx</a></div><div class="ttdeci">Field&lt; price, 6 &gt; AvgPx</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00083">Myfix_types.hpp:83</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_afa15edfb0bb02793e8a4da5ab24a2982"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afa15edfb0bb02793e8a4da5ab24a2982">FIX8::TEX::OrdStatus_CANCELED</a></div><div class="ttdeci">const char OrdStatus_CANCELED('4')</div></div>
+<div class="ttc" id="classFIX8_1_1Field_html"><div class="ttname"><a href="classFIX8_1_1Field.html">FIX8::Field</a></div><div class="ttdoc">Field template. There will ONLY be partial template specialisations of this template. </div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00256">field.hpp:256</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_aa3eb8c08bff7a44ec8dc7c5b837e409f"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#aa3eb8c08bff7a44ec8dc7c5b837e409f">FIX8::TEX::LastCapacity</a></div><div class="ttdeci">Field&lt; char, 29 &gt; LastCapacity</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00230">Myfix_types.hpp:230</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_aeabc14b6114f38de66eea02e78ebc4c5"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#aeabc14b6114f38de66eea02e78ebc4c5">FIX8::TEX::OrdStatus_PARTIALLY_FILLED</a></div><div class="ttdeci">const char OrdStatus_PARTIALLY_FILLED('1')</div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_aa2631fd171b806bd465865bf9020a18f"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#aa2631fd171b806bd465865bf9020a18f">FIX8::TEX::OrderID</a></div><div class="ttdeci">Field&lt; f8String, 37 &gt; OrderID</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00370">Myfix_types.hpp:370</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a2d1fe542303b63d23a93a01e728f71c7"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a2d1fe542303b63d23a93a01e728f71c7">FIX8::TEX::OrdStatus_REJECTED</a></div><div class="ttdeci">const char OrdStatus_REJECTED('8')</div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a67912a9350ad4141a5037ab391b67985"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a67912a9350ad4141a5037ab391b67985">FIX8::TEX::OrdStatus_NEW</a></div><div class="ttdeci">const char OrdStatus_NEW('0')</div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_ae9eb8ffd363d42b11b748d14951551c5"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#ae9eb8ffd363d42b11b748d14951551c5">FIX8::TEX::ExecType_NEW</a></div><div class="ttdeci">const char ExecType_NEW('0')</div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_ad9f732f764f51d2cef7ecf8f56626c98"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#ad9f732f764f51d2cef7ecf8f56626c98">FIX8::TEX::LeavesQty</a></div><div class="ttdeci">Field&lt; Qty, 151 &gt; LeavesQty</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00834">Myfix_types.hpp:834</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1TEX_html_a14d5cb3234d9ef9fb76734487830392d"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#a14d5cb3234d9ef9fb76734487830392d">FIX8::TEX::ExecID</a></div><div class="ttdeci">Field&lt; f8String, 17 &gt; ExecID</div><div class="ttdef"><b>Definition:</b> <a href="Myfix__types_8hpp_source.html#l00112">Myfix_types.hpp:112</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a489f8ba2b537fce7f069d92884182093"><div class="ttname"><a href="namespaceFIX8.html#a489f8ba2b537fce7f069d92884182093">FIX8::price</a></div><div class="ttdeci">fp_type price</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02020">field.hpp:2020</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -617,7 +715,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

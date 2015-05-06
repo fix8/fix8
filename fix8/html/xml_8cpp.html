@@ -157,13 +157,60 @@ Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="xml_8cpp_source.html#l00071">71</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00076">XmlElement::attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00087">XmlElement::children_</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::decl_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::depth_</a>, <a class="el" href="xml_8hpp_source.html#l00091">XmlElement::ordchildren_</a>, <a class="el" href="f8c_8cpp_source.html#l00096">spacer</a>, <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::tag_</a>, <a class="el" href="xml_8hpp_source.html#l00063">XmlElement::txtline_</a>, and <a class="el" href="xml_8hpp_source.html#l00062">XmlElement::value_</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a>(en.<a class="code" href="classXmlElement.html#a0a2381bd30c98c1a2880611dcb3234b3">depth_</a> * 3, <span class="charliteral">&#39; &#39;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <span class="keywordflow">if</span> (en.<a class="code" href="classXmlElement.html#a1eae339d9df1eb9f30fc20f1347316bc">decl_</a>)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      os &lt;&lt; *en.<a class="code" href="classXmlElement.html#a1eae339d9df1eb9f30fc20f1347316bc">decl_</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   os &lt;&lt; <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a> &lt;&lt; en.<a class="code" href="classXmlElement.html#aaeb54b7e5f68b7466613adef10f19212">tag_</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordflow">if</span> (en.<a class="code" href="classXmlElement.html#abec81c91dcda1ceedc63b7a957ce57cc">value_</a>)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;=\&quot;&quot;</span> &lt;&lt; *en.<a class="code" href="classXmlElement.html#abec81c91dcda1ceedc63b7a957ce57cc">value_</a> &lt;&lt; <span class="charliteral">&#39;\&quot;&#39;</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   <span class="keywordflow">if</span> (en.<a class="code" href="classXmlElement.html#a0834fde8a20a3d3ccf373fb4c70d6250">attrs_</a>)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot; [&quot;</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <span class="keywordtype">bool</span> first(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <span class="keywordflow">for</span> (XmlElement::XmlAttrs::iterator itr(en.<a class="code" href="classXmlElement.html#a0834fde8a20a3d3ccf373fb4c70d6250">attrs_</a>-&gt;begin()); itr != en.<a class="code" href="classXmlElement.html#a0834fde8a20a3d3ccf373fb4c70d6250">attrs_</a>-&gt;end(); ++itr)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;         <span class="keywordflow">if</span> (first)</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            first = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            os &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;         os &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;=\&quot;&quot;</span> &lt;&lt; itr-&gt;second &lt;&lt; <span class="charliteral">&#39;&quot;&#39;</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      os &lt;&lt; <span class="charliteral">&#39;]&#39;</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   <span class="keywordflow">if</span> (en.<a class="code" href="classXmlElement.html#a86de20c2d85b158c970fb92298fb6085">txtline_</a>)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot; #&quot;</span> &lt;&lt; en.<a class="code" href="classXmlElement.html#a86de20c2d85b158c970fb92298fb6085">txtline_</a>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   os &lt;&lt; endl;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   <span class="keywordflow">if</span> (en.<a class="code" href="classXmlElement.html#a543a0defe1fabd9b06b0d362bcf9ae16">children_</a>)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      os &lt;&lt; <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a> &lt;&lt; <span class="charliteral">&#39;{&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      <span class="keywordflow">for</span> (XmlElement::XmlSet::iterator itr(en.<a class="code" href="classXmlElement.html#a1379e6ffd7eb376e23b242a71a466d25">ordchildren_</a>-&gt;begin()); itr != en.<a class="code" href="classXmlElement.html#a1379e6ffd7eb376e23b242a71a466d25">ordchildren_</a>-&gt;end(); ++itr)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;         os &lt;&lt; **itr;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      os &lt;&lt; <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a> &lt;&lt; <span class="charliteral">&#39;}&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="ttc" id="classXmlElement_html_a1379e6ffd7eb376e23b242a71a466d25"><div class="ttname"><a href="classXmlElement.html#a1379e6ffd7eb376e23b242a71a466d25">XmlElement::ordchildren_</a></div><div class="ttdeci">XmlSet * ordchildren_</div><div class="ttdoc">Set of all child elements in file order. </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00091">xml.hpp:91</a></div></div>
+<div class="ttc" id="classXmlElement_html_a543a0defe1fabd9b06b0d362bcf9ae16"><div class="ttname"><a href="classXmlElement.html#a543a0defe1fabd9b06b0d362bcf9ae16">XmlElement::children_</a></div><div class="ttdeci">XmlSubEls * children_</div><div class="ttdoc">simple n-ary tree </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00087">xml.hpp:87</a></div></div>
+<div class="ttc" id="classXmlElement_html_a0a2381bd30c98c1a2880611dcb3234b3"><div class="ttname"><a href="classXmlElement.html#a0a2381bd30c98c1a2880611dcb3234b3">XmlElement::depth_</a></div><div class="ttdeci">int depth_</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00063">xml.hpp:63</a></div></div>
+<div class="ttc" id="f8c_8cpp_html_ace2465f840cdd8763c991859ffe224ce"><div class="ttname"><a href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a></div><div class="ttdeci">string spacer</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8cpp_source.html#l00096">f8c.cpp:96</a></div></div>
+<div class="ttc" id="classXmlElement_html_abec81c91dcda1ceedc63b7a957ce57cc"><div class="ttname"><a href="classXmlElement.html#abec81c91dcda1ceedc63b7a957ce57cc">XmlElement::value_</a></div><div class="ttdeci">std::string * value_</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00062">xml.hpp:62</a></div></div>
+<div class="ttc" id="classXmlElement_html_a0834fde8a20a3d3ccf373fb4c70d6250"><div class="ttname"><a href="classXmlElement.html#a0834fde8a20a3d3ccf373fb4c70d6250">XmlElement::attrs_</a></div><div class="ttdeci">XmlAttrs * attrs_</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00076">xml.hpp:76</a></div></div>
+<div class="ttc" id="classXmlElement_html_a1eae339d9df1eb9f30fc20f1347316bc"><div class="ttname"><a href="classXmlElement.html#a1eae339d9df1eb9f30fc20f1347316bc">XmlElement::decl_</a></div><div class="ttdeci">std::string * decl_</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00062">xml.hpp:62</a></div></div>
+<div class="ttc" id="classXmlElement_html_a86de20c2d85b158c970fb92298fb6085"><div class="ttname"><a href="classXmlElement.html#a86de20c2d85b158c970fb92298fb6085">XmlElement::txtline_</a></div><div class="ttdeci">int txtline_</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00063">xml.hpp:63</a></div></div>
+<div class="ttc" id="classXmlElement_html_aaeb54b7e5f68b7466613adef10f19212"><div class="ttname"><a href="classXmlElement.html#aaeb54b7e5f68b7466613adef10f19212">XmlElement::tag_</a></div><div class="ttdeci">std::string tag_</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00062">xml.hpp:62</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

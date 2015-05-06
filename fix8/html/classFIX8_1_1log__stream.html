@@ -205,7 +205,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00586">586</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;      : <a class="code" href="classFIX8_1_1log__stream.html#ada2facaaabe8c2b65eb41028255afa88">_logger</a>(func), <a class="code" href="classFIX8_1_1log__stream.html#a26730bcf6c7a5732e07d73797f770e9a">_lev</a>(lev), <a class="code" href="classFIX8_1_1log__stream.html#a09faa85a92b9830d2226406a03944c11">_loc</a>(loc), <a class="code" href="classFIX8_1_1log__stream.html#ade3bb4fcc5573f9bba1e013dc8b67674">_value</a>(value) {}</div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_a26730bcf6c7a5732e07d73797f770e9a"><div class="ttname"><a href="classFIX8_1_1log__stream.html#a26730bcf6c7a5732e07d73797f770e9a">FIX8::log_stream::_lev</a></div><div class="ttdeci">const Logger::Level _lev</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00581">logger.hpp:581</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_ade3bb4fcc5573f9bba1e013dc8b67674"><div class="ttname"><a href="classFIX8_1_1log__stream.html#ade3bb4fcc5573f9bba1e013dc8b67674">FIX8::log_stream::_value</a></div><div class="ttdeci">const unsigned _value</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00583">logger.hpp:583</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_a09faa85a92b9830d2226406a03944c11"><div class="ttname"><a href="classFIX8_1_1log__stream.html#a09faa85a92b9830d2226406a03944c11">FIX8::log_stream::_loc</a></div><div class="ttdeci">const char * _loc</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00582">logger.hpp:582</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_ada2facaaabe8c2b65eb41028255afa88"><div class="ttname"><a href="classFIX8_1_1log__stream.html#ada2facaaabe8c2b65eb41028255afa88">FIX8::log_stream::_logger</a></div><div class="ttdeci">logger_function _logger</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00580">logger.hpp:580</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="abf2bdca255d209ff11b01b66b92bc74d"></a>
@@ -232,7 +237,14 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="logger_8hpp_source.html#l00588">588</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00568">FIX8::buffered_ostream::_buf</a>, <a class="el" href="logger_8hpp_source.html#l00581">_lev</a>, <a class="el" href="logger_8hpp_source.html#l00582">_loc</a>, <a class="el" href="logger_8hpp_source.html#l00580">_logger</a>, <a class="el" href="logger_8hpp_source.html#l00583">_value</a>, and <a class="el" href="logger_8hpp_source.html#l00565">FIX8::buffered_ostream::tsbuf::get()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;{ <a class="code" href="classFIX8_1_1log__stream.html#ada2facaaabe8c2b65eb41028255afa88">_logger</a>(<a class="code" href="classFIX8_1_1buffered__ostream.html#aa89aa80be61431f800ad2ffe6e7dd6ca">_buf</a>.<a class="code" href="classFIX8_1_1buffered__ostream_1_1tsbuf.html#a85687e1d203c3ba2f780e115564acba1">get</a>(), <a class="code" href="classFIX8_1_1log__stream.html#a26730bcf6c7a5732e07d73797f770e9a">_lev</a>, <a class="code" href="classFIX8_1_1log__stream.html#a09faa85a92b9830d2226406a03944c11">_loc</a>, <a class="code" href="classFIX8_1_1log__stream.html#ade3bb4fcc5573f9bba1e013dc8b67674">_value</a>); }</div>
+<div class="ttc" id="classFIX8_1_1buffered__ostream_html_aa89aa80be61431f800ad2ffe6e7dd6ca"><div class="ttname"><a href="classFIX8_1_1buffered__ostream.html#aa89aa80be61431f800ad2ffe6e7dd6ca">FIX8::buffered_ostream::_buf</a></div><div class="ttdeci">tsbuf _buf</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00568">logger.hpp:568</a></div></div>
+<div class="ttc" id="classFIX8_1_1buffered__ostream_1_1tsbuf_html_a85687e1d203c3ba2f780e115564acba1"><div class="ttname"><a href="classFIX8_1_1buffered__ostream_1_1tsbuf.html#a85687e1d203c3ba2f780e115564acba1">FIX8::buffered_ostream::tsbuf::get</a></div><div class="ttdeci">const std::string &amp; get() const </div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00565">logger.hpp:565</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_a26730bcf6c7a5732e07d73797f770e9a"><div class="ttname"><a href="classFIX8_1_1log__stream.html#a26730bcf6c7a5732e07d73797f770e9a">FIX8::log_stream::_lev</a></div><div class="ttdeci">const Logger::Level _lev</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00581">logger.hpp:581</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_ade3bb4fcc5573f9bba1e013dc8b67674"><div class="ttname"><a href="classFIX8_1_1log__stream.html#ade3bb4fcc5573f9bba1e013dc8b67674">FIX8::log_stream::_value</a></div><div class="ttdeci">const unsigned _value</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00583">logger.hpp:583</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_a09faa85a92b9830d2226406a03944c11"><div class="ttname"><a href="classFIX8_1_1log__stream.html#a09faa85a92b9830d2226406a03944c11">FIX8::log_stream::_loc</a></div><div class="ttdeci">const char * _loc</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00582">logger.hpp:582</a></div></div>
+<div class="ttc" id="classFIX8_1_1log__stream_html_ada2facaaabe8c2b65eb41028255afa88"><div class="ttname"><a href="classFIX8_1_1log__stream.html#ada2facaaabe8c2b65eb41028255afa88">FIX8::log_stream::_logger</a></div><div class="ttdeci">logger_function _logger</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00580">logger.hpp:580</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -338,7 +350,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:50. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

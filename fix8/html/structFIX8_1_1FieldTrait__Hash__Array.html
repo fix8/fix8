@@ -177,7 +177,16 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00203">203</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 <p>References <a class="el" href="traits_8hpp_source.html#l00201">_arr</a>, <a class="el" href="traits_8hpp_source.html#l00200">_els</a>, and <a class="el" href="traits_8hpp_source.html#l00200">_sz</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;      : <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#a5515e91d3a4a5a4b693f3d6fd8722e61">_els</a>(static_cast&lt;unsigned&gt;(els)), <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#a3128e41e1f3bc6d9f6df100fc99b9d9e">_sz</a>((from + <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#a5515e91d3a4a5a4b693f3d6fd8722e61">_els</a> - 1)-&gt;_fnum + 1), <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">_arr</a>(<span class="keyword">new</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> [<a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#a3128e41e1f3bc6d9f6df100fc99b9d9e">_sz</a>])</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   {</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      std::fill(<a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">_arr</a>, <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">_arr</a> + _sz, 0);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> offset(0); offset &lt; <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#a5515e91d3a4a5a4b693f3d6fd8722e61">_els</a>; ++offset)</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;         *(<a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">_arr</a> + (from + offset)-&gt;_fnum) = offset;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;   }</div>
+<div class="ttc" id="structFIX8_1_1FieldTrait__Hash__Array_html_a5515e91d3a4a5a4b693f3d6fd8722e61"><div class="ttname"><a href="structFIX8_1_1FieldTrait__Hash__Array.html#a5515e91d3a4a5a4b693f3d6fd8722e61">FIX8::FieldTrait_Hash_Array::_els</a></div><div class="ttdeci">const unsigned _els</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00200">traits.hpp:200</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait__Hash__Array_html_a3128e41e1f3bc6d9f6df100fc99b9d9e"><div class="ttname"><a href="structFIX8_1_1FieldTrait__Hash__Array.html#a3128e41e1f3bc6d9f6df100fc99b9d9e">FIX8::FieldTrait_Hash_Array::_sz</a></div><div class="ttdeci">const unsigned _sz</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00200">traits.hpp:200</a></div></div>
+<div class="ttc" id="structFIX8_1_1FieldTrait__Hash__Array_html_ad331276fc97a08774414246e279f6acc"><div class="ttname"><a href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">FIX8::FieldTrait_Hash_Array::_arr</a></div><div class="ttdeci">unsigned short * _arr</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00201">traits.hpp:201</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9bdd7926e87e1e143fd56db06df30b7a"></a>
@@ -204,7 +213,9 @@ Public Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00211">211</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 <p>References <a class="el" href="traits_8hpp_source.html#l00201">_arr</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;{ <span class="keyword">delete</span>[] <a class="code" href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">_arr</a>; }</div>
+<div class="ttc" id="structFIX8_1_1FieldTrait__Hash__Array_html_ad331276fc97a08774414246e279f6acc"><div class="ttname"><a href="structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc">FIX8::FieldTrait_Hash_Array::_arr</a></div><div class="ttdeci">unsigned short * _arr</div><div class="ttdef"><b>Definition:</b> <a href="traits_8hpp_source.html#l00201">traits.hpp:201</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -262,7 +273,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

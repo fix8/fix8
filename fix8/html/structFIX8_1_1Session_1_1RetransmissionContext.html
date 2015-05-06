@@ -189,7 +189,13 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="session_8hpp_source.html#l00597">597</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;         : <a class="code" href="structFIX8_1_1Session_1_1RetransmissionContext.html#ae1b896885ae42bc613e2b686ac7315bd">_begin</a>(begin), <a class="code" href="structFIX8_1_1Session_1_1RetransmissionContext.html#aa1f9b776075735463bb8d213caabd3dc">_end</a>(end), <a class="code" href="structFIX8_1_1Session_1_1RetransmissionContext.html#a5bcc392356fcb1cb10f32b7546042a7e">_interrupted_seqnum</a>(interrupted_seqnum), <a class="code" href="structFIX8_1_1Session_1_1RetransmissionContext.html#a90c43f8d2aeb61210d1879f7708daded">_last</a>(), <a class="code" href="structFIX8_1_1Session_1_1RetransmissionContext.html#a33b84ac348192c6eab1ebd457c12c4e4">_no_more_records</a>() {}</div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html_a33b84ac348192c6eab1ebd457c12c4e4"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html#a33b84ac348192c6eab1ebd457c12c4e4">FIX8::Session::RetransmissionContext::_no_more_records</a></div><div class="ttdeci">bool _no_more_records</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00595">session.hpp:595</a></div></div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html_aa1f9b776075735463bb8d213caabd3dc"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html#aa1f9b776075735463bb8d213caabd3dc">FIX8::Session::RetransmissionContext::_end</a></div><div class="ttdeci">const unsigned _end</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00593">session.hpp:593</a></div></div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html_a5bcc392356fcb1cb10f32b7546042a7e"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html#a5bcc392356fcb1cb10f32b7546042a7e">FIX8::Session::RetransmissionContext::_interrupted_seqnum</a></div><div class="ttdeci">const unsigned _interrupted_seqnum</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00593">session.hpp:593</a></div></div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html_a90c43f8d2aeb61210d1879f7708daded"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html#a90c43f8d2aeb61210d1879f7708daded">FIX8::Session::RetransmissionContext::_last</a></div><div class="ttdeci">unsigned _last</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00594">session.hpp:594</a></div></div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html_ae1b896885ae42bc613e2b686ac7315bd"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html#ae1b896885ae42bc613e2b686ac7315bd">FIX8::Session::RetransmissionContext::_begin</a></div><div class="ttdeci">const unsigned _begin</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00593">session.hpp:593</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
@@ -226,7 +232,12 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="session_8hpp_source.html#l00600">600</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;      {</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;         os &lt;&lt; <span class="stringliteral">&quot;end:&quot;</span> &lt;&lt; what._end &lt;&lt; <span class="stringliteral">&quot; last:&quot;</span> &lt;&lt; what._last &lt;&lt; <span class="stringliteral">&quot; interrupted seqnum:&quot;</span></div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;            &lt;&lt; what._interrupted_seqnum &lt;&lt; <span class="stringliteral">&quot; no_more_records:&quot;</span> &lt;&lt; std::boolalpha &lt;&lt; what._no_more_records;</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;         <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;      }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -316,7 +327,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

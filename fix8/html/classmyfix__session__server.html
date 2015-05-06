@@ -428,7 +428,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00124">124</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                                                               : <a class="code" href="classFIX8_1_1Session.html#a4484e3bc28205f2cdc149b8d1beca828">Session</a>(ctx, sci, persist, logger, plogger),</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <a class="code" href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">_router</a>(*<span class="keyword">this</span>) {}</div>
+<div class="ttc" id="classmyfix__session__server_html_afdcbf5cb0e753990a5c9c47cd65a4675"><div class="ttname"><a href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">myfix_session_server::_router</a></div><div class="ttdeci">tex_router_server _router</div><div class="ttdef"><b>Definition:</b> <a href="myfix_8hpp_source.html#l00115">myfix.hpp:115</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a4484e3bc28205f2cdc149b8d1beca828"><div class="ttname"><a href="classFIX8_1_1Session.html#a4484e3bc28205f2cdc149b8d1beca828">FIX8::Session::Session</a></div><div class="ttdeci">F8API Session(const F8MetaCntx &amp;ctx, const SessionID &amp;sid, Persister *persist=nullptr, Logger *logger=nullptr, Logger *plogger=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="session_8cpp_source.html#l00105">session.cpp:105</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -477,7 +481,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="harness_8cpp_source.html#l00328">328</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l01097">FIX8::Message::process()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;{</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Session.html#a755535b6a25422b7e13d32368113f5b4">enforce</a>(seqnum, msg) || msg-&gt;<a class="code" href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">process</a>(<a class="code" href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">_router</a>);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;}</div>
+<div class="ttc" id="classmyfix__session__server_html_afdcbf5cb0e753990a5c9c47cd65a4675"><div class="ttname"><a href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">myfix_session_server::_router</a></div><div class="ttdeci">tex_router_server _router</div><div class="ttdef"><b>Definition:</b> <a href="myfix_8hpp_source.html#l00115">myfix.hpp:115</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html_aa0401c5177edcff1252808d9842c5c1a"><div class="ttname"><a href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">FIX8::Message::process</a></div><div class="ttdeci">virtual bool process(Router &amp;rt) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01097">message.hpp:1097</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a755535b6a25422b7e13d32368113f5b4"><div class="ttname"><a href="classFIX8_1_1Session.html#a755535b6a25422b7e13d32368113f5b4">FIX8::Session::enforce</a></div><div class="ttdeci">F8API bool enforce(const unsigned seqnum, const Message *msg)</div><div class="ttdef"><b>Definition:</b> <a href="session_8cpp_source.html#l00252">session.cpp:252</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac998ffef3ed701b82c86ef1ccbce4d39"></a>
@@ -497,7 +507,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00441">441</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="myfix_8cpp_source.html#l00394">server_process()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;{</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;   cout &lt;&lt; <span class="stringliteral">&quot;myfix_session_server::sample_scheduler_callback Hello!&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -531,7 +545,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

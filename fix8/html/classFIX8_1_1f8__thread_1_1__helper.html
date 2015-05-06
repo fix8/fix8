@@ -182,7 +182,11 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00254">254</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;         : <a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a7946f5b7d01c495e0aec8cf8d3e0f5c5">_what</a>(what), <a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a2e62f17c85f5ae00f358c93cdd7eb6ce">_method</a>(method), <a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a36dd704aa50352382a80e1ad1c25854b">_cancellation_token_method</a>(cancellation_token_method) {}</div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a36dd704aa50352382a80e1ad1c25854b"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a36dd704aa50352382a80e1ad1c25854b">FIX8::f8_thread::_helper::_cancellation_token_method</a></div><div class="ttdeci">f8_thread_cancellation_token &amp;(T::* _cancellation_token_method)()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00251">thread.hpp:251</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a7946f5b7d01c495e0aec8cf8d3e0f5c5"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a7946f5b7d01c495e0aec8cf8d3e0f5c5">FIX8::f8_thread::_helper::_what</a></div><div class="ttdeci">T &amp; _what</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00249">thread.hpp:249</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a2e62f17c85f5ae00f358c93cdd7eb6ce"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a2e62f17c85f5ae00f358c93cdd7eb6ce">FIX8::f8_thread::_helper::_method</a></div><div class="ttdeci">int(T::* _method)()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00250">thread.hpp:250</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -210,7 +214,10 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00271">271</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;{ <span class="keywordflow">return</span> (<a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a7946f5b7d01c495e0aec8cf8d3e0f5c5">_what</a>.*<a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a36dd704aa50352382a80e1ad1c25854b">_cancellation_token_method</a>)(); }</div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a36dd704aa50352382a80e1ad1c25854b"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a36dd704aa50352382a80e1ad1c25854b">FIX8::f8_thread::_helper::_cancellation_token_method</a></div><div class="ttdeci">f8_thread_cancellation_token &amp;(T::* _cancellation_token_method)()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00251">thread.hpp:251</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a7946f5b7d01c495e0aec8cf8d3e0f5c5"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a7946f5b7d01c495e0aec8cf8d3e0f5c5">FIX8::f8_thread::_helper::_what</a></div><div class="ttdeci">T &amp; _what</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00249">thread.hpp:249</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ac59d97d61be8d86c508d898fbaabbea7"></a>
@@ -239,7 +246,27 @@ template&lt;typename T&gt; </div>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00256">256</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00230">FIX8::f8_thread_cancellation_token::Running</a>, and <a class="el" href="thread_8hpp_source.html#l00230">FIX8::f8_thread_cancellation_token::Stopped</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      {</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;         <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;         {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            <a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a8bfec3ca96b5b66daeca2b0e1f457dec">cancellation_token</a>().<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#a5c20cd74eee4fc2d5fd20aa69b14f9bf">thread_state</a>(<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#a9867d4371e82238aa022f316cdca0779a1a65d1895faeee08263bda0ff07f6bae">f8_thread_cancellation_token::Running</a>);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> ret((<a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a7946f5b7d01c495e0aec8cf8d3e0f5c5">_what</a>.*<a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a2e62f17c85f5ae00f358c93cdd7eb6ce">_method</a>)());</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            <a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a8bfec3ca96b5b66daeca2b0e1f457dec">cancellation_token</a>().<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#a5c20cd74eee4fc2d5fd20aa69b14f9bf">thread_state</a>(<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#a9867d4371e82238aa022f316cdca0779a45de6fc606446e34e2c75bceedcb665a">f8_thread_cancellation_token::Stopped</a>);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;         }</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;         <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception&amp;)</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;         {</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            <a class="code" href="classFIX8_1_1f8__thread_1_1__helper.html#a8bfec3ca96b5b66daeca2b0e1f457dec">cancellation_token</a>().<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#a5c20cd74eee4fc2d5fd20aa69b14f9bf">thread_state</a>(<a class="code" href="classFIX8_1_1f8__thread__cancellation__token.html#a9867d4371e82238aa022f316cdca0779a45de6fc606446e34e2c75bceedcb665a">f8_thread_cancellation_token::Stopped</a>);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            <span class="keywordflow">throw</span>;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;         }</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      }</div>
+<div class="ttc" id="classFIX8_1_1f8__thread__cancellation__token_html_a9867d4371e82238aa022f316cdca0779a1a65d1895faeee08263bda0ff07f6bae"><div class="ttname"><a href="classFIX8_1_1f8__thread__cancellation__token.html#a9867d4371e82238aa022f316cdca0779a1a65d1895faeee08263bda0ff07f6bae">FIX8::f8_thread_cancellation_token::Running</a></div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00230">thread.hpp:230</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a7946f5b7d01c495e0aec8cf8d3e0f5c5"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a7946f5b7d01c495e0aec8cf8d3e0f5c5">FIX8::f8_thread::_helper::_what</a></div><div class="ttdeci">T &amp; _what</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00249">thread.hpp:249</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a2e62f17c85f5ae00f358c93cdd7eb6ce"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a2e62f17c85f5ae00f358c93cdd7eb6ce">FIX8::f8_thread::_helper::_method</a></div><div class="ttdeci">int(T::* _method)()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00250">thread.hpp:250</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread__cancellation__token_html_a9867d4371e82238aa022f316cdca0779a45de6fc606446e34e2c75bceedcb665a"><div class="ttname"><a href="classFIX8_1_1f8__thread__cancellation__token.html#a9867d4371e82238aa022f316cdca0779a45de6fc606446e34e2c75bceedcb665a">FIX8::f8_thread_cancellation_token::Stopped</a></div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00230">thread.hpp:230</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread_1_1__helper_html_a8bfec3ca96b5b66daeca2b0e1f457dec"><div class="ttname"><a href="classFIX8_1_1f8__thread_1_1__helper.html#a8bfec3ca96b5b66daeca2b0e1f457dec">FIX8::f8_thread::_helper::cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token &amp; cancellation_token()</div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00271">thread.hpp:271</a></div></div>
+<div class="ttc" id="classFIX8_1_1f8__thread__cancellation__token_html_a5c20cd74eee4fc2d5fd20aa69b14f9bf"><div class="ttname"><a href="classFIX8_1_1f8__thread__cancellation__token.html#a5c20cd74eee4fc2d5fd20aa69b14f9bf">FIX8::f8_thread_cancellation_token::thread_state</a></div><div class="ttdeci">int thread_state() const </div><div class="ttdef"><b>Definition:</b> <a href="thread_8hpp_source.html#l00234">thread.hpp:234</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -321,7 +348,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

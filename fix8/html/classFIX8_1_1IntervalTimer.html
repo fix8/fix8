@@ -178,7 +178,9 @@ Friends</h2></td></tr>
 <p>Ctor. RAII. </p>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00256">256</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;: <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>(<span class="keyword">true</span>) {}</div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_ac61f4cb8c2b93c84b974860ffea30d61"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">FIX8::IntervalTimer::startTime_</a></div><div class="ttdeci">Tickval startTime_</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00248">timer.hpp:248</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="acffab45de363ef1efe9dbfdd6cf0c42e"></a>
@@ -205,7 +207,8 @@ Friends</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00260">260</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -236,7 +239,10 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="timer_8hpp_source.html#l00248">delta_</a>, and <a class="el" href="tickval_8hpp_source.html#l00160">FIX8::Tickval::todouble()</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00205">FIX8::Message::factory()</a>, and <a class="el" href="timer_8hpp_source.html#l00285">Reset()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">delta_</a>.<a class="code" href="classFIX8_1_1Tickval.html#aa2a5d6ca7ad5efa2821cd0e43a893b04">todouble</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_a3f725a9fac0a0c58f08da3567141657f"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">FIX8::IntervalTimer::delta_</a></div><div class="ttdeci">Tickval delta_</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00248">timer.hpp:248</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_aa2a5d6ca7ad5efa2821cd0e43a893b04"><div class="ttname"><a href="classFIX8_1_1Tickval.html#aa2a5d6ca7ad5efa2821cd0e43a893b04">FIX8::Tickval::todouble</a></div><div class="ttdeci">double todouble() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00160">tickval.hpp:160</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0aa09b40c3fa1d9ebe45cf6e63c8f654"></a>
@@ -266,7 +272,19 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="timer_8hpp_source.html#l00248">delta_</a>, and <a class="el" href="timer_8hpp_source.html#l00248">startTime_</a>.</p>
 
 <p>Referenced by <a class="el" href="message_8cpp_source.html#l00403">FIX8::Message::encode()</a>, and <a class="el" href="message_8cpp_source.html#l00205">FIX8::Message::factory()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor">#if defined USE_RDTSC &amp;&amp; defined HAVE_RDTSC</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a> now(rdtsc());</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      Tickval now(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      <a class="code" href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">delta_</a> = now - <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_ac61f4cb8c2b93c84b974860ffea30d61"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">FIX8::IntervalTimer::startTime_</a></div><div class="ttdeci">Tickval startTime_</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00248">timer.hpp:248</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a3901cc251f3e97ebff66c07c9346ed06"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">FIX8::Tickval::ticks</a></div><div class="ttdeci">decltype(f8_time_point::min().time_since_epoch().count()) ticks</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00059">tickval.hpp:59</a></div></div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_a3f725a9fac0a0c58f08da3567141657f"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">FIX8::IntervalTimer::delta_</a></div><div class="ttdeci">Tickval delta_</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00248">timer.hpp:248</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7bd5eb8991415c4d52e01d3da4764bc5"></a>
@@ -294,7 +312,22 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00285">285</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 <p>References <a class="el" href="timer_8hpp_source.html#l00280">AsDouble()</a>, <a class="el" href="timer_8hpp_source.html#l00248">delta_</a>, <a class="el" href="tickval_8hpp_source.html#l00127">FIX8::Tickval::now()</a>, and <a class="el" href="timer_8hpp_source.html#l00248">startTime_</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;   {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="preprocessor">#if defined USE_RDTSC &amp;&amp; defined HAVE_RDTSC</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">Tickval::ticks</a> curr(<a class="code" href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">delta_</a>);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a> = rdtsc();</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> curr(<a class="code" href="classFIX8_1_1IntervalTimer.html#a4e3c35ffe71c182366bd7897f61c720c">AsDouble</a>());</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>.<a class="code" href="classFIX8_1_1Tickval.html#a9a7c3f6ef8335a4b201d075b798896b2">now</a>();</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;      <span class="keywordflow">return</span> curr;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_ac61f4cb8c2b93c84b974860ffea30d61"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">FIX8::IntervalTimer::startTime_</a></div><div class="ttdeci">Tickval startTime_</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00248">timer.hpp:248</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a9a7c3f6ef8335a4b201d075b798896b2"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a9a7c3f6ef8335a4b201d075b798896b2">FIX8::Tickval::now</a></div><div class="ttdeci">Tickval &amp; now()</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00127">tickval.hpp:127</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a3901cc251f3e97ebff66c07c9346ed06"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06">FIX8::Tickval::ticks</a></div><div class="ttdeci">decltype(f8_time_point::min().time_since_epoch().count()) ticks</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00059">tickval.hpp:59</a></div></div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_a4e3c35ffe71c182366bd7897f61c720c"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#a4e3c35ffe71c182366bd7897f61c720c">FIX8::IntervalTimer::AsDouble</a></div><div class="ttdeci">double AsDouble() const </div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00280">timer.hpp:280</a></div></div>
+<div class="ttc" id="classFIX8_1_1IntervalTimer_html_a3f725a9fac0a0c58f08da3567141657f"><div class="ttname"><a href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">FIX8::IntervalTimer::delta_</a></div><div class="ttdeci">Tickval delta_</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00248">timer.hpp:248</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
@@ -339,7 +372,18 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the stream, os </dd></dl>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00301">301</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   {</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      std::ostringstream ostr;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      ostr.setf(std::ios::showpoint);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      ostr.setf(std::ios::fixed);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="preprocessor">#if defined USE_RDTSC &amp;&amp; defined HAVE_RDTSC</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      ostr &lt;&lt; std::setprecision(9) &lt;&lt; what;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      ostr &lt;&lt; std::setprecision(9) &lt;&lt; what.AsDouble();</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      <span class="keywordflow">return</span> os &lt;&lt; ostr.str();</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -397,7 +441,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:50. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

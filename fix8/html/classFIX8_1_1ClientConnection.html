@@ -325,7 +325,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00696">696</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;       : <a class="code" href="classFIX8_1_1Connection.html#ac962fcd78af386fa108025cddddbded8">Connection</a>(sock, addr, session, pmodel, <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>, secured), <a class="code" href="classFIX8_1_1ClientConnection.html#a56560ce0bf180e265dfee1b213370055">_no_delay</a>(no_delay) {}</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac962fcd78af386fa108025cddddbded8"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac962fcd78af386fa108025cddddbded8">FIX8::Connection::Connection</a></div><div class="ttdeci">Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress &amp;addr, Session &amp;session, const ProcessModel pmodel, const unsigned hb_interval, bool secured)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="namespaceFIX8_1_1defaults_html_a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d"><div class="ttname"><a href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">FIX8::defaults::hb_interval</a></div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00192">session.hpp:192</a></div></div>
+<div class="ttc" id="classFIX8_1_1ClientConnection_html_a56560ce0bf180e265dfee1b213370055"><div class="ttname"><a href="classFIX8_1_1ClientConnection.html#a56560ce0bf180e265dfee1b213370055">FIX8::ClientConnection::_no_delay</a></div><div class="ttdeci">const bool _no_delay</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00684">connection.hpp:684</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae3c14ed45a28ad50c1c703bf0c29586a"></a>
@@ -352,7 +356,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00702">702</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -383,7 +388,62 @@ Additional Inherited Members</h2></td></tr>
 <p>Definition at line <a class="el" href="connection_8cpp_source.html#l00327">327</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>References <a class="el" href="hypersleep_8hpp_source.html#l00105">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>, <a class="el" href="connection_8hpp_source.html#l00746">scout_error</a>, and <a class="el" href="connection_8hpp_source.html#l00744">scout_info</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;{</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <span class="keywordtype">unsigned</span> attempts(0);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="keyword">const</span> <a class="code" href="structFIX8_1_1LoginParameters.html">LoginParameters</a>&amp; lparam(<a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>.<a class="code" href="classFIX8_1_1Session.html#a84cdcfcd788458a70294b086d5709711">get_login_parameters</a>());</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keyword">const</span> Poco::Timespan timeout(lparam._connect_timeout, 0);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   <span class="keywordflow">while</span> (attempts &lt; (lparam._reliable ? 1 : lparam._login_retries))</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   {</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      {</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a> == Poco::Net::SocketAddress())</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;            <span class="keywordflow">throw</span> Poco::Net::InvalidAddressException(<span class="stringliteral">&quot;empty address&quot;</span>);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;         <a class="code" href="connection_8hpp.html#a65c2cca4dd12d6f7388fd8b254c65f82">scout_info</a> &lt;&lt; <span class="stringliteral">&quot;Trying to connect to: &quot;</span> &lt;&lt; <a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>.toString() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; ++attempts &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; ( <a class="code" href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">_secured</a> ? <span class="stringliteral">&quot; secured&quot;</span> : <span class="stringliteral">&quot; not-secured&quot;</span>);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;connect(<a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>, timeout);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;         <span class="keywordflow">if</span> (lparam._recv_buf_sz)</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;            <a class="code" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">set_recv_buf_sz</a>(lparam._recv_buf_sz);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;         <span class="keywordflow">if</span> (lparam._send_buf_sz)</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;            <a class="code" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">set_send_buf_sz</a>(lparam._send_buf_sz);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setLinger(<span class="keyword">false</span>, 0);</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setNoDelay(<a class="code" href="classFIX8_1_1ClientConnection.html#a56560ce0bf180e265dfee1b213370055">_no_delay</a>);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;         <a class="code" href="connection_8hpp.html#a65c2cca4dd12d6f7388fd8b254c65f82">scout_info</a> &lt;&lt; <span class="stringliteral">&quot;Connection successful&quot;</span>;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      }</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      <span class="keywordflow">catch</span> (Poco::Exception&amp; e)</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      {</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;         <span class="keywordflow">if</span> (lparam._reliable)</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;            <span class="keywordflow">throw</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;         <a class="code" href="connection_8hpp.html#afe4a54490038a077dbd6c4455de97f57">scout_error</a> &lt;&lt; <span class="stringliteral">&quot;exception: &quot;</span> &lt;&lt; e.displayText();</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;         <a class="code" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt;h_milliseconds&gt;</a>(lparam._login_retry_interval);</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      }</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">catch</span> (exception&amp; e)</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      {</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;         <span class="keywordflow">if</span> (lparam._reliable)</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;            <span class="keywordflow">throw</span>;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;         <a class="code" href="connection_8hpp.html#afe4a54490038a077dbd6c4455de97f57">scout_error</a> &lt;&lt; <span class="stringliteral">&quot;exception: &quot;</span> &lt;&lt; e.what();</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;         <a class="code" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt;h_milliseconds&gt;</a>(lparam._login_retry_interval);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      }</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <a class="code" href="connection_8hpp.html#afe4a54490038a077dbd6c4455de97f57">scout_error</a> &lt;&lt; <span class="stringliteral">&quot;Connection failed&quot;</span>;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00493">connection.hpp:493</a></div></div>
+<div class="ttc" id="structFIX8_1_1LoginParameters_html"><div class="ttname"><a href="structFIX8_1_1LoginParameters.html">FIX8::LoginParameters</a></div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00301">session.hpp:301</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a9cff80bec2b2243a458ab2f939697c6e"><div class="ttname"><a href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">FIX8::Connection::set_recv_buf_sz</a></div><div class="ttdeci">static void set_recv_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00622">connection.hpp:622</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00491">connection.hpp:491</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a95bcc108abf0a366438731b5b81606b2"><div class="ttname"><a href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">FIX8::Connection::set_send_buf_sz</a></div><div class="ttdeci">static void set_send_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00633">connection.hpp:633</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a5c9d33dafcd63c026afe8d98fd3bbc78"><div class="ttname"><a href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">FIX8::hypersleep&lt; h_milliseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_milliseconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00105">hypersleep.hpp:105</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ae4ec42558e822168adb359b7cf9f1dce"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">FIX8::Connection::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00492">connection.hpp:492</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a7b82969fae910a4d93daeb38a383bd2c"><div class="ttname"><a href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">FIX8::Connection::_secured</a></div><div class="ttdeci">bool _secured</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00501">connection.hpp:501</a></div></div>
+<div class="ttc" id="connection_8hpp_html_a65c2cca4dd12d6f7388fd8b254c65f82"><div class="ttname"><a href="connection_8hpp.html#a65c2cca4dd12d6f7388fd8b254c65f82">scout_info</a></div><div class="ttdeci">#define scout_info</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00744">connection.hpp:744</a></div></div>
+<div class="ttc" id="classFIX8_1_1ClientConnection_html_a56560ce0bf180e265dfee1b213370055"><div class="ttname"><a href="classFIX8_1_1ClientConnection.html#a56560ce0bf180e265dfee1b213370055">FIX8::ClientConnection::_no_delay</a></div><div class="ttdeci">const bool _no_delay</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00684">connection.hpp:684</a></div></div>
+<div class="ttc" id="connection_8hpp_html_afe4a54490038a077dbd6c4455de97f57"><div class="ttname"><a href="connection_8hpp.html#afe4a54490038a077dbd6c4455de97f57">scout_error</a></div><div class="ttdeci">#define scout_error</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00746">connection.hpp:746</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a84cdcfcd788458a70294b086d5709711"><div class="ttname"><a href="classFIX8_1_1Session.html#a84cdcfcd788458a70294b086d5709711">FIX8::Session::get_login_parameters</a></div><div class="ttdeci">void get_login_parameters(LoginParameters &amp;loginParamaters) const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00746">session.hpp:746</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -416,7 +476,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

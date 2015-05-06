@@ -253,7 +253,16 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00058">58</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
 <p>References <a class="el" href="usage_8hpp_source.html#l00045">argstr_</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      : <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a>(prognm), <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a>(params), <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>(argstr), <a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>(splen), <a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>(argoptlen)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      std::sort(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin(), <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end());</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   }</div>
+<div class="ttc" id="classUsageMan_html_a69df0ec6e67eceb23302a50c05ee0a68"><div class="ttname"><a href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">UsageMan::argstr_</a></div><div class="ttdeci">std::string argstr_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00045">usage.hpp:45</a></div></div>
+<div class="ttc" id="classUsageMan_html_ac623dc89a037aac508b8118a5eeaa00d"><div class="ttname"><a href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">UsageMan::splen_</a></div><div class="ttdeci">const int splen_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00049">usage.hpp:49</a></div></div>
+<div class="ttc" id="classUsageMan_html_a2017c3dd570bf1fc8d07200a18e67146"><div class="ttname"><a href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">UsageMan::prognm_</a></div><div class="ttdeci">const std::string prognm_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00044">usage.hpp:44</a></div></div>
+<div class="ttc" id="classUsageMan_html_a153b1c2d85310c3ebcb7dc4f3d63a562"><div class="ttname"><a href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">UsageMan::argoptlen_</a></div><div class="ttdeci">const int argoptlen_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00049">usage.hpp:49</a></div></div>
+<div class="ttc" id="classUsageMan_html_a0b4394654be8eba6a54cbec99a6ea84c"><div class="ttname"><a href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">UsageMan::params_</a></div><div class="ttdeci">const std::string params_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00044">usage.hpp:44</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad77f88bfb1c272c7d898310bff489dd2"></a>
@@ -280,7 +289,8 @@ Private Attributes</h2></td></tr>
 <p>Dtor. </p>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00066">66</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -336,7 +346,11 @@ Private Attributes</h2></td></tr>
 <p>References <a class="el" href="usage_8hpp_source.html#l00047">optels_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00320">print_usage()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.insert({sw, std::pair&lt;const std::string, const std::string&gt;(lsw, help)}).second;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   }</div>
+<div class="ttc" id="classUsageMan_html_a91d6ccc4fbbb0b240377baacf7aa25d6"><div class="ttname"><a href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">UsageMan::optels_</a></div><div class="ttdeci">OPTEL optels_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00047">usage.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa366b62c393d3dbfaf9fd575aa68c562"></a>
@@ -370,7 +384,16 @@ Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00080">80</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
 <p>References <a class="el" href="usage_8hpp_source.html#l00049">splen_</a>, and <a class="el" href="usage_8hpp_source.html#l00048">xtrlines_</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      std::string topush(xtr);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      std::string::size_type spos;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <span class="keywordflow">while</span> ((spos = topush.find_first_of(<span class="charliteral">&#39;@&#39;</span>)) != std::string::npos)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;         topush.replace(spos, 1, std::string(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>));</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.push_back(topush);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;   }</div>
+<div class="ttc" id="classUsageMan_html_a81757aece90fa8e4f235a81a17fd3f76"><div class="ttname"><a href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">UsageMan::xtrlines_</a></div><div class="ttdeci">std::list&lt; std::string &gt; xtrlines_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00048">usage.hpp:48</a></div></div>
+<div class="ttc" id="classUsageMan_html_ac623dc89a037aac508b8118a5eeaa00d"><div class="ttname"><a href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">UsageMan::splen_</a></div><div class="ttdeci">const int splen_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00049">usage.hpp:49</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9399c7c9c595777c8065264bd40b1009"></a>
@@ -406,7 +429,35 @@ Private Attributes</h2></td></tr>
 <p>References <a class="el" href="usage_8hpp_source.html#l00049">argoptlen_</a>, <a class="el" href="usage_8hpp_source.html#l00045">argstr_</a>, <a class="el" href="usage_8hpp_source.html#l00045">description_</a>, <a class="el" href="usage_8hpp_source.html#l00047">optels_</a>, <a class="el" href="usage_8hpp_source.html#l00044">params_</a>, <a class="el" href="usage_8hpp_source.html#l00044">prognm_</a>, <a class="el" href="f8c_8cpp_source.html#l00096">spacer</a>, <a class="el" href="usage_8hpp_source.html#l00049">splen_</a>, and <a class="el" href="usage_8hpp_source.html#l00048">xtrlines_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00320">print_usage()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>.empty())</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;         os &lt;&lt; <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> &lt;&lt; std::endl &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;Usage: &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a> &lt;&lt; <span class="stringliteral">&quot; [-&quot;</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keywordflow">for</span> (std::string::const_iterator itr(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end(); ++itr)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;         <span class="keywordflow">if</span> (*itr != <span class="charliteral">&#39;:&#39;</span>)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            os &lt;&lt; *itr;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <span class="keyword">const</span> std::string <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a>(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <span class="keywordflow">for</span> (OPTEL::const_iterator itr(<a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.end(); ++itr)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;         std::ostringstream ostr;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;         ostr &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;,--&quot;</span> &lt;&lt; itr-&gt;second.first;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;         os &lt;&lt; <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a> &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>) &lt;&lt; ostr.str()</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; itr-&gt;second.second &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(<a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.end(); ++itr)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;         os &lt;&lt; *itr &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   }</div>
+<div class="ttc" id="classUsageMan_html_a69df0ec6e67eceb23302a50c05ee0a68"><div class="ttname"><a href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">UsageMan::argstr_</a></div><div class="ttdeci">std::string argstr_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00045">usage.hpp:45</a></div></div>
+<div class="ttc" id="classUsageMan_html_a81757aece90fa8e4f235a81a17fd3f76"><div class="ttname"><a href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">UsageMan::xtrlines_</a></div><div class="ttdeci">std::list&lt; std::string &gt; xtrlines_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00048">usage.hpp:48</a></div></div>
+<div class="ttc" id="classUsageMan_html_ac623dc89a037aac508b8118a5eeaa00d"><div class="ttname"><a href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">UsageMan::splen_</a></div><div class="ttdeci">const int splen_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00049">usage.hpp:49</a></div></div>
+<div class="ttc" id="classUsageMan_html_a91d6ccc4fbbb0b240377baacf7aa25d6"><div class="ttname"><a href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">UsageMan::optels_</a></div><div class="ttdeci">OPTEL optels_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00047">usage.hpp:47</a></div></div>
+<div class="ttc" id="classUsageMan_html_a2017c3dd570bf1fc8d07200a18e67146"><div class="ttname"><a href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">UsageMan::prognm_</a></div><div class="ttdeci">const std::string prognm_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00044">usage.hpp:44</a></div></div>
+<div class="ttc" id="f8c_8cpp_html_ace2465f840cdd8763c991859ffe224ce"><div class="ttname"><a href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a></div><div class="ttdeci">string spacer</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8cpp_source.html#l00096">f8c.cpp:96</a></div></div>
+<div class="ttc" id="classUsageMan_html_a153b1c2d85310c3ebcb7dc4f3d63a562"><div class="ttname"><a href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">UsageMan::argoptlen_</a></div><div class="ttdeci">const int argoptlen_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00049">usage.hpp:49</a></div></div>
+<div class="ttc" id="classUsageMan_html_a46432651448ab48dface52dfbbd92977"><div class="ttname"><a href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">UsageMan::description_</a></div><div class="ttdeci">std::string description_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00045">usage.hpp:45</a></div></div>
+<div class="ttc" id="classUsageMan_html_a0b4394654be8eba6a54cbec99a6ea84c"><div class="ttname"><a href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">UsageMan::params_</a></div><div class="ttdeci">const std::string params_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00044">usage.hpp:44</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a12499b81599f674e728a1e15e31edf8b"></a>
@@ -442,7 +493,9 @@ Private Attributes</h2></td></tr>
 <p>References <a class="el" href="usage_8hpp_source.html#l00045">description_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00320">print_usage()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{ <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> = desc; }</div>
+<div class="ttc" id="classUsageMan_html_a46432651448ab48dface52dfbbd92977"><div class="ttname"><a href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">UsageMan::description_</a></div><div class="ttdeci">std::string description_</div><div class="ttdef"><b>Definition:</b> <a href="usage_8hpp_source.html#l00045">usage.hpp:45</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -644,7 +697,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

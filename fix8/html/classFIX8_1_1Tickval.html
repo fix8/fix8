@@ -327,7 +327,10 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00084">84</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00185">get_tickval()</a>, and <a class="el" href="tickval_8hpp_source.html#l00216">set()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      : <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>(settonow ? std::chrono::high_resolution_clock::now() : <a class="code" href="classFIX8_1_1Tickval.html#ab2c0d0c97885a8ee2b6bdb208fa03437">f8_time_point</a>(f8_time_point::duration::zero())) {}</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_ab2c0d0c97885a8ee2b6bdb208fa03437"><div class="ttname"><a href="classFIX8_1_1Tickval.html#ab2c0d0c97885a8ee2b6bdb208fa03437">FIX8::Tickval::f8_time_point</a></div><div class="ttdeci">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; f8_time_point</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00058">tickval.hpp:58</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="afe1532639eeef863084c1d6a83f447ce"></a>
@@ -354,7 +357,9 @@ Friends</h2></td></tr>
 <p>Copy Ctor. </p>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00088">88</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;: <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>(from._value) {}</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="afc88a72546030a4911a3e07c2d0a880a"></a>
@@ -386,7 +391,9 @@ Friends</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00092">92</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;: <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>(std::chrono::duration_cast&lt;duration&gt;(std::chrono::nanoseconds(from))) {}</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adb972afd2366eced160b65d7b4968d45"></a>
@@ -418,7 +425,9 @@ Friends</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00096">96</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;: <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>(from) {}</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2d474096d0cffdc29b749bdb94098fb9"></a>
@@ -461,7 +470,11 @@ Friends</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00101">101</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      : <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>(std::chrono::high_resolution_clock::from_time_t(<a class="code" href="classFIX8_1_1Tickval.html#a9d5902f81c202a69e38ac20674769377">secs</a>) + std::chrono::duration_cast&lt;duration&gt;(std::chrono::nanoseconds(<a class="code" href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">nsecs</a>))) {}</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a3af59e09beed4c914f5011746e8268ec"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">FIX8::Tickval::nsecs</a></div><div class="ttdeci">unsigned nsecs() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00153">tickval.hpp:153</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a9d5902f81c202a69e38ac20674769377"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a9d5902f81c202a69e38ac20674769377">FIX8::Tickval::secs</a></div><div class="ttdeci">time_t secs() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00135">tickval.hpp:135</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -497,7 +510,8 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00181">181</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8hpp_source.html#l00247">FIX8::Schedule::test()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;{ <span class="keywordflow">return</span> *<span class="keyword">this</span> += by; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a180a26768b567214178f746bacae4111"></a>
@@ -534,7 +548,17 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00207">get_tm()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   {</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      <span class="keyword">const</span> time_t insecs(std::chrono::system_clock::to_time_t(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>));</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      gmtime_s(&amp;result, &amp;insecs);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      gmtime_r(&amp;insecs, &amp;result);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      <span class="keywordflow">return</span> &amp;result;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad790963ef8cb2b3ed63bab122562d7fa"></a>
@@ -564,7 +588,9 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00131">FIX8::Configuration::create_schedule()</a>, <a class="el" href="field_8hpp_source.html#l01008">FIX8::date_parse()</a>, <a class="el" href="field_8hpp_source.html#l00936">FIX8::date_time_parse()</a>, <a class="el" href="tickval_8hpp_source.html#l00167">is_errorval()</a>, <a class="el" href="timer_8hpp_source.html#l00144">FIX8::Timer&lt; T &gt;::operator()()</a>, <a class="el" href="session_8hpp_source.html#l00247">FIX8::Schedule::test()</a>, and <a class="el" href="field_8hpp_source.html#l00976">FIX8::time_parse()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{ <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch()).count(); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a0543385fc89162739f2159e1fc1bdc89"></a>
@@ -594,7 +620,9 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00084">Tickval()</a>.</p>
 
 <p>Referenced by <a class="el" href="timer_8hpp_source.html#l00144">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="timer_8hpp_source.html#l00211">FIX8::Timer&lt; T &gt;::schedule()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">Tickval</a>(<span class="keyword">true</span>); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a7938b3ad3c58c8281b4b5d17771cff27"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">FIX8::Tickval::Tickval</a></div><div class="ttdeci">Tickval(bool settonow=false)</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00084">tickval.hpp:84</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aebd35b770a0e564ba0f6ef04a0109f07"></a>
@@ -623,7 +651,9 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00189">189</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00084">Tickval()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;{ <span class="keywordflow">return</span> to = <a class="code" href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">Tickval</a>(<span class="keyword">true</span>); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a7938b3ad3c58c8281b4b5d17771cff27"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">FIX8::Tickval::Tickval</a></div><div class="ttdeci">Tickval(bool settonow=false)</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00084">tickval.hpp:84</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ade7eaa5a428deec1702bc584d77100ac"></a>
@@ -653,7 +683,12 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00194">as_tm()</a>.</p>
 
 <p>Referenced by <a class="el" href="field_8hpp_source.html#l00893">FIX8::date_time_format()</a>, and <a class="el" href="session_8hpp_source.html#l00247">FIX8::Schedule::test()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;   {</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keyword">struct </span>tm result;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      <span class="keywordflow">return</span> *<a class="code" href="classFIX8_1_1Tickval.html#a180a26768b567214178f746bacae4111">as_tm</a>(result);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a180a26768b567214178f746bacae4111"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a180a26768b567214178f746bacae4111">FIX8::Tickval::as_tm</a></div><div class="ttdeci">struct tm * as_tm(struct tm &amp;result) const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00194">tickval.hpp:194</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af7dfdc3391c1bad8bff67719e02ae6ea"></a>
@@ -701,7 +736,10 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00167">is_errorval()</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8hpp_source.html#l00247">FIX8::Schedule::test()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordflow">return</span> !b.is_errorval() ? a &lt;= *<span class="keyword">this</span> &amp;&amp; *<span class="keyword">this</span> &lt;= b : a &lt;= *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad325059e253c91c0ebae4c1005178157"></a>
@@ -731,7 +769,10 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00067">errorticks</a>, and <a class="el" href="tickval_8hpp_source.html#l00123">get_ticks()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00131">FIX8::Configuration::create_schedule()</a>, <a class="el" href="tickval_8hpp_source.html#l00173">in_range()</a>, and <a class="el" href="session_8hpp_source.html#l00242">FIX8::Schedule::is_valid()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#ad790963ef8cb2b3ed63bab122562d7fa">get_ticks</a>() == <a class="code" href="classFIX8_1_1Tickval.html#a712dda65e790eea5cfbe49121d7b117e">errorticks</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a712dda65e790eea5cfbe49121d7b117e"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a712dda65e790eea5cfbe49121d7b117e">FIX8::Tickval::errorticks</a></div><div class="ttdeci">static const ticks errorticks</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00067">tickval.hpp:67</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_ad790963ef8cb2b3ed63bab122562d7fa"><div class="ttname"><a href="classFIX8_1_1Tickval.html#ad790963ef8cb2b3ed63bab122562d7fa">FIX8::Tickval::get_ticks</a></div><div class="ttdeci">ticks get_ticks() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00123">tickval.hpp:123</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a5d3c5e5a834e7852b2f619f8ccacd7e4"></a>
@@ -761,7 +802,11 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="field_8hpp_source.html#l00893">FIX8::date_time_format()</a>, <a class="el" href="logger_8cpp_source.html#l00110">FIX8::Logger::process_logline()</a>, and <a class="el" href="logger_8cpp_source.html#l00371">FIX8::XmlFileLogger::process_logline()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;   {</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch()).count() % std::milli::den;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9a7c3f6ef8335a4b201d075b798896b2"></a>
@@ -791,7 +836,12 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00091">FIX8::GetTimeAsStringMini()</a>, <a class="el" href="f8utils_8cpp_source.html#l00051">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00744">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00285">FIX8::IntervalTimer::Reset()</a>, <a class="el" href="session_8cpp_source.html#l00939">FIX8::Session::send_process()</a>, <a class="el" href="session_8hpp_source.html#l00706">FIX8::Session::update_received()</a>, and <a class="el" href="session_8hpp_source.html#l00703">FIX8::Session::update_sent()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a> = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a3af59e09beed4c914f5011746e8268ec"></a>
@@ -821,7 +871,11 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00051">FIX8::GetTimeAsStringMS()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   {</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch()).count() % std::nano::den;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a017190060932a16c5b4a204c552ffbf2"></a>
@@ -849,7 +903,9 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00232">232</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00160">todouble()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#aa2a5d6ca7ad5efa2821cd0e43a893b04">todouble</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_aa2a5d6ca7ad5efa2821cd0e43a893b04"><div class="ttname"><a href="classFIX8_1_1Tickval.html#aa2a5d6ca7ad5efa2821cd0e43a893b04">FIX8::Tickval::todouble</a></div><div class="ttdeci">double todouble() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00160">tickval.hpp:160</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a208287f4b9f743875f16b5764bd1059b"></a>
@@ -877,7 +933,9 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00228">228</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch().count(); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a170c7130be5d4fa9ab164823719403b2"></a>
@@ -905,7 +963,9 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00224">224</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch() == std::chrono::nanoseconds::zero() ? <span class="keyword">nullptr</span> : <span class="keyword">this</span>; }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a15b03bebe123fa5fafff16a582addd7d"></a>
@@ -933,7 +993,9 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00220">220</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch() == std::chrono::nanoseconds::zero(); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ab9c14be3e5dabee179bb859c0e76a61f"></a>
@@ -962,7 +1024,13 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00105">105</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;that)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;         <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a> = that._value;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ace9f9559f3680074e408a3ec91c854ab"></a>
@@ -997,7 +1065,13 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00115">115</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a> = <a class="code" href="classFIX8_1_1Tickval.html#ab2c0d0c97885a8ee2b6bdb208fa03437">f8_time_point</a>(std::chrono::duration_cast&lt;duration&gt;(std::chrono::nanoseconds(that)));</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_ab2c0d0c97885a8ee2b6bdb208fa03437"><div class="ttname"><a href="classFIX8_1_1Tickval.html#ab2c0d0c97885a8ee2b6bdb208fa03437">FIX8::Tickval::f8_time_point</a></div><div class="ttdeci">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt; f8_time_point</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00058">tickval.hpp:58</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9d5902f81c202a69e38ac20674769377"></a>
@@ -1027,7 +1101,9 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00091">FIX8::GetTimeAsStringMini()</a>, <a class="el" href="f8utils_8cpp_source.html#l00051">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00744">FIX8::Session::heartbeat_service()</a>, <a class="el" href="logger_8cpp_source.html#l00110">FIX8::Logger::process_logline()</a>, and <a class="el" href="logger_8cpp_source.html#l00371">FIX8::XmlFileLogger::process_logline()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;{ <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::seconds&gt;(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch()).count(); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a8561acd02b2f567686db455e915f7d76"></a>
@@ -1072,7 +1148,12 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00216">216</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00084">Tickval()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;{ <a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a> = <a class="code" href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">Tickval</a>(<a class="code" href="classFIX8_1_1Tickval.html#a9d5902f81c202a69e38ac20674769377">secs</a>, <a class="code" href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">nsecs</a>)._value; }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a3af59e09beed4c914f5011746e8268ec"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">FIX8::Tickval::nsecs</a></div><div class="ttdeci">unsigned nsecs() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00153">tickval.hpp:153</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a9d5902f81c202a69e38ac20674769377"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a9d5902f81c202a69e38ac20674769377">FIX8::Tickval::secs</a></div><div class="ttdeci">time_t secs() const </div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00135">tickval.hpp:135</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a7938b3ad3c58c8281b4b5d17771cff27"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">FIX8::Tickval::Tickval</a></div><div class="ttdeci">Tickval(bool settonow=false)</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00084">tickval.hpp:84</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa2a5d6ca7ad5efa2821cd0e43a893b04"></a>
@@ -1102,7 +1183,11 @@ Friends</h2></td></tr>
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
 
 <p>Referenced by <a class="el" href="timer_8hpp_source.html#l00280">FIX8::IntervalTimer::AsDouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00232">operator double()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch()).count()) / std::nano::den;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a3ae26a7795ddbd4c927f99a613c63984"></a>
@@ -1130,7 +1215,11 @@ Friends</h2></td></tr>
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00146">146</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00079">_value</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(<a class="code" href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">_value</a>.time_since_epoch()).count() % std::micro::den;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a02e07dc3fbf8bcdf7788aa8ebb3ab1d3"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3">FIX8::Tickval::_value</a></div><div class="ttdeci">f8_time_point _value</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
@@ -1175,7 +1264,8 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if not equal </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00278">278</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;{ <span class="keywordflow">return</span> a._value != b._value; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aec351208ee651f708df2bff0d8258549"></a>
@@ -1219,7 +1309,9 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00255">255</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">Tickval</a>(newtime._value + oldtime._value.time_since_epoch()); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a7938b3ad3c58c8281b4b5d17771cff27"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">FIX8::Tickval::Tickval</a></div><div class="ttdeci">Tickval(bool settonow=false)</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00084">tickval.hpp:84</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a96d0830f7f7ea4de76141e6a85aa6091"></a>
@@ -1263,7 +1355,11 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>resulting oldtime </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00262">262</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      oldtime._value += newtime._value.time_since_epoch();</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <span class="keywordflow">return</span> oldtime;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af152345b4e1d4f30b9f360e4f89ed710"></a>
@@ -1307,7 +1403,12 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00308">308</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   {</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      oldtime._value += std::chrono::duration_cast&lt;<a class="code" href="classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170">duration</a>&gt;(std::chrono::nanoseconds(ns));</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      <span class="keywordflow">return</span> oldtime;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a3e12db92c5dfa175baac730ba11e5170"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170">FIX8::Tickval::duration</a></div><div class="ttdeci">f8_time_point::duration duration</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00060">tickval.hpp:60</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adb836c1cfdceb6fd61106a7415e9d7af"></a>
@@ -1351,7 +1452,9 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00238">238</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">Tickval</a>(newtime._value - oldtime._value.time_since_epoch()); }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a7938b3ad3c58c8281b4b5d17771cff27"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27">FIX8::Tickval::Tickval</a></div><div class="ttdeci">Tickval(bool settonow=false)</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00084">tickval.hpp:84</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a25440ea9b0be719905c9ccfbd63663dc"></a>
@@ -1395,7 +1498,11 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>resulting oldtime </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00245">245</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   {</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      oldtime._value -= newtime._value.time_since_epoch();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      <span class="keywordflow">return</span> oldtime;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;   }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a43725426d77962cca5ac8b826be6a52e"></a>
@@ -1439,7 +1546,12 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00318">318</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   {</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      oldtime._value -= std::chrono::duration_cast&lt;<a class="code" href="classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170">duration</a>&gt;(std::chrono::nanoseconds(ns));</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      <span class="keywordflow">return</span> oldtime;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_a3e12db92c5dfa175baac730ba11e5170"><div class="ttname"><a href="classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170">FIX8::Tickval::duration</a></div><div class="ttdeci">f8_time_point::duration duration</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00060">tickval.hpp:60</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a94d688d9a94d88787d0e10afd1aaf28c"></a>
@@ -1483,7 +1595,8 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if a is less than b </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00290">290</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;{ <span class="keywordflow">return</span> a._value &lt; b._value; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ab4892ea0da50b4264733b00adff9cf4c"></a>
@@ -1527,7 +1640,12 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>ostream object </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00328">328</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   {</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      std::string result;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      <span class="keywordflow">return</span> os &lt;&lt; <a class="code" href="namespaceFIX8.html#acefe9c8f986e5fa51b83d2ac142bc5eb">GetTimeAsStringMS</a>(result, &amp;what, 9, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   }</div>
+<div class="ttc" id="namespaceFIX8_html_acefe9c8f986e5fa51b83d2ac142bc5eb"><div class="ttname"><a href="namespaceFIX8.html#acefe9c8f986e5fa51b83d2ac142bc5eb">FIX8::GetTimeAsStringMS</a></div><div class="ttdeci">F8API const std::string &amp; GetTimeAsStringMS(std::string &amp;result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false)</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aad875ce041dce877baa3715cb5903ddf"></a>
@@ -1571,7 +1689,8 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if a is less than or equal to b </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00302">302</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;{ <span class="keywordflow">return</span> a._value &lt;= b._value; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a015fb50965a327bf902dbe906da6eeae"></a>
@@ -1615,7 +1734,8 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if equal </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00272">272</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;{ <span class="keywordflow">return</span> a._value == b._value; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa23c4ad1bee7331955e0d66f792cb5d0"></a>
@@ -1659,7 +1779,8 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if a is greater than b </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00284">284</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;{ <span class="keywordflow">return</span> a._value &gt; b._value; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a37fe6a09372d6ff92a73138d9ff53df6"></a>
@@ -1703,7 +1824,8 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if a is greater than or equal to b </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00296">296</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;{ <span class="keywordflow">return</span> a._value &gt;= b._value; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae8377b93c69d3970266d69b87ce2a9e9"></a>
@@ -1747,7 +1869,12 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>ostream object </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00338">338</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   {</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      std::string result;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <span class="keywordflow">return</span> os &lt;&lt; <a class="code" href="namespaceFIX8.html#acefe9c8f986e5fa51b83d2ac142bc5eb">GetTimeAsStringMS</a>(result, &amp;what, 9, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   }</div>
+<div class="ttc" id="namespaceFIX8_html_acefe9c8f986e5fa51b83d2ac142bc5eb"><div class="ttname"><a href="namespaceFIX8.html#acefe9c8f986e5fa51b83d2ac142bc5eb">FIX8::GetTimeAsStringMS</a></div><div class="ttdeci">F8API const std::string &amp; GetTimeAsStringMS(std::string &amp;result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false)</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -2013,7 +2140,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:51. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:49. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

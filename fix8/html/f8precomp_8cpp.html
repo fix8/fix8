@@ -198,7 +198,23 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00299">299</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;{</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   <span class="keywordflow">if</span> (components.empty())</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   <span class="keywordtype">int</span> depth(1);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   outf &lt;&lt; string(depth * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;components&gt;&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   <span class="keywordflow">for</span> (Components::const_iterator citr(components.begin()); citr != components.end(); ++citr)</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   {</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      outf &lt;&lt; string((depth + 1) * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;component name=\&quot;&quot;</span>;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      outf &lt;&lt; citr-&gt;first &lt;&lt; <span class="stringliteral">&quot;\&quot; id=\&quot;&quot;</span> &lt;&lt; (1 + distance(components.begin(), citr)) &lt;&lt; <span class="stringliteral">&quot;\&quot;/&gt;&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   }</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   outf &lt;&lt; string(depth * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;/components&gt;&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa437cee33ac1718a82282129fa8cbc23"></a>
@@ -216,7 +232,23 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00163">163</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;{</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;   <span class="keyword">using</span> UniqueFieldMap = map&lt;string, const XmlElement *&gt;;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;   UniqueFieldMap ufm;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;   <span class="keywordtype">unsigned</span> dupls(0);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> *pp : fldlist)</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   {</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      pp-&gt;GetAttr(<span class="stringliteral">&quot;name&quot;</span>, name);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordflow">if</span> (!ufm.insert({name, pp}).second)</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;         ++dupls; <span class="comment">// cerr &lt;&lt; &quot;Duplicate field: &quot; &lt;&lt; name &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;   fldlist.clear();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;   <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; pp : ufm)</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      fldlist.insert(pp.second);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ae904cefc9d0304eca29c020df2c9ab1d"></a>
@@ -246,7 +278,15 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00182">182</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00071">precomp()</a>, and <a class="el" href="f8c_8cpp_source.html#l00910">process()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;{</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;   <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> *pp : comlist)</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;   {</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      <span class="keywordflow">if</span> (pp-&gt;GetAttr(<span class="stringliteral">&quot;name&quot;</span>, name))</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;         components.insert({name, pp});</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   }</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a60ea16dc30ac209c69bdfad40ad0ec58"></a>
@@ -284,7 +324,17 @@ Variables</h2></td></tr>
 <p>References <a class="el" href="xml_8hpp_source.html#l00324">XmlElement::abegin()</a>, <a class="el" href="xml_8hpp_source.html#l00328">XmlElement::aend()</a>, and <a class="el" href="xml_8hpp_source.html#l00268">XmlElement::GetLine()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00071">precomp()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00251">process_messages()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;{</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;   <span class="keywordflow">for</span> (XmlElement::XmlAttrs::const_iterator itr(xf.<a class="code" href="classXmlElement.html#a13c9826a8f215b1ca418a29245f67092">abegin</a>()); itr != xf.<a class="code" href="classXmlElement.html#ae5fc48d859a0735b23a9a7877efcbd32">aend</a>(); ++itr)</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      outf &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;=&#39;&quot;</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;         &lt;&lt; (itr-&gt;first == <span class="stringliteral">&quot;required&quot;</span> &amp;&amp; itr-&gt;second == <span class="stringliteral">&quot;Y&quot;</span> &amp;&amp; !required ? <span class="stringliteral">&quot;N&quot;</span> : itr-&gt;second) &lt;&lt; <span class="charliteral">&#39;\&#39;&#39;</span>;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   <span class="keywordflow">if</span> (xf.<a class="code" href="classXmlElement.html#a1b0190a4c180322f81f7f4ae7e73cc9c">GetLine</a>())</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      outf &lt;&lt; <span class="stringliteral">&quot; line=\&#39;&quot;</span> &lt;&lt; xf.<a class="code" href="classXmlElement.html#a1b0190a4c180322f81f7f4ae7e73cc9c">GetLine</a>() &lt;&lt; <span class="charliteral">&#39;\&#39;&#39;</span>;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;}</div>
+<div class="ttc" id="classXmlElement_html_a1b0190a4c180322f81f7f4ae7e73cc9c"><div class="ttname"><a href="classXmlElement.html#a1b0190a4c180322f81f7f4ae7e73cc9c">XmlElement::GetLine</a></div><div class="ttdeci">int GetLine() const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00268">xml.hpp:268</a></div></div>
+<div class="ttc" id="classXmlElement_html_a13c9826a8f215b1ca418a29245f67092"><div class="ttname"><a href="classXmlElement.html#a13c9826a8f215b1ca418a29245f67092">XmlElement::abegin</a></div><div class="ttdeci">XmlAttrs::const_iterator abegin() const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00324">xml.hpp:324</a></div></div>
+<div class="ttc" id="classXmlElement_html_ae5fc48d859a0735b23a9a7877efcbd32"><div class="ttname"><a href="classXmlElement.html#ae5fc48d859a0735b23a9a7877efcbd32">XmlElement::aend</a></div><div class="ttdeci">XmlAttrs::const_iterator aend() const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00328">xml.hpp:328</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa394845269eec5ffe625d6c6fadf1107"></a>
@@ -332,7 +382,15 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00219">219</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00239">process_elements()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;{</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   outf &lt;&lt; string(depth * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;field&quot;</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   <a class="code" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a>(xf, outf, required);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordflow">if</span> (!compon.empty())</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      outf &lt;&lt; <span class="stringliteral">&quot; component=\&#39;&quot;</span> &lt;&lt; compon &lt;&lt; <span class="charliteral">&#39;\&#39;&#39;</span>;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   outf &lt;&lt; <span class="stringliteral">&quot;/&gt;&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;}</div>
+<div class="ttc" id="f8precomp_8cpp_html_a60ea16dc30ac209c69bdfad40ad0ec58"><div class="ttname"><a href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a></div><div class="ttdeci">void output_attributes(const XmlElement &amp;xf, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00229">f8precomp.cpp:229</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a963dbf903d5c9d14bf862bda88d761d8"></a>
@@ -364,7 +422,52 @@ Variables</h2></td></tr>
 <p>References <a class="el" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype()</a>, <a class="el" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find()</a>, <a class="el" href="xml_8hpp_source.html#l00292">XmlElement::GetTag()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00182">load_components()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00229">output_attributes()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00147">main()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keywordtype">int</span> depth(1);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <a class="code" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> fldlist;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   xf.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/fields/field&quot;</span>, fldlist);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   <a class="code" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> comlist;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   xf.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/components/component&quot;</span>, comlist);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;   <a class="code" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> components;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   <a class="code" href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a>(comlist, components);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   <a class="code" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> msglist;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   xf.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/messages/message&quot;</span>, msglist);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   outf &lt;&lt; <a class="code" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   outf &lt;&lt; <span class="charliteral">&#39;&lt;&#39;</span> &lt;&lt; xf.<a class="code" href="classXmlElement.html#aeefff68f10c9356d54cd52d20d52e8a7">GetTag</a>();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;   <a class="code" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a>(xf, outf);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;   outf &lt;&lt; &#39;&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="stringliteral">   const XmlElement *header(xf.find(&quot;fix/header&quot;));</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="stringliteral">   if (header)</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="stringliteral">      process_messages(*header, components, &quot;header&quot;, 0, outf);</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="stringliteral">   const XmlElement *trailer(xf.find(&quot;fix/trailer&quot;));</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="stringliteral">   if (trailer)</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="stringliteral">      process_messages(*trailer, components, &quot;trailer&quot;, 0, outf);</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="stringliteral">   outf &lt;&lt; string(depth * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;messages&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="stringliteral">   for(auto const *pp : msglist)</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="stringliteral">      process_messages(*pp, components, &quot;message&quot;, depth, outf);</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="stringliteral">   outf &lt;&lt; string(depth * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;/messages&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="stringliteral">   process_fields(fldlist, depth, outf);</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="stringliteral">   dump_components(components, outf);</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="stringliteral">   outf &lt;&lt; &quot;&lt;/&quot; &lt;&lt; xf.GetTag() &lt;&lt; &#39;</span>&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="stringliteral">   return 0;</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="stringliteral">}</span></div>
+<div class="ttc" id="f8precomp_8cpp_html_a60ea16dc30ac209c69bdfad40ad0ec58"><div class="ttname"><a href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a></div><div class="ttdeci">void output_attributes(const XmlElement &amp;xf, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00229">f8precomp.cpp:229</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_ac8c59ca70c47351be5476e5a54a28ed3"><div class="ttname"><a href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">FIX8::Components</a></div><div class="ttdeci">std::map&lt; std::string, const XmlElement * &gt; Components</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00183">f8c.hpp:183</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_ae904cefc9d0304eca29c020df2c9ab1d"><div class="ttname"><a href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a></div><div class="ttdeci">void load_components(const XmlElement::XmlSet &amp;comlist, Components &amp;components)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00182">f8precomp.cpp:182</a></div></div>
+<div class="ttc" id="classXmlElement_html_a698efd439f8e23c43a1c955c94d72907"><div class="ttname"><a href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a></div><div class="ttdeci">std::set&lt; const XmlElement *, EntityOrderComp &gt; XmlSet</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00074">xml.hpp:74</a></div></div>
+<div class="ttc" id="classXmlElement_html_aeefff68f10c9356d54cd52d20d52e8a7"><div class="ttname"><a href="classXmlElement.html#aeefff68f10c9356d54cd52d20d52e8a7">XmlElement::GetTag</a></div><div class="ttdeci">const std::string &amp; GetTag() const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00292">xml.hpp:292</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_a678a16a4d9c31d88739418fadb30a8fa"><div class="ttname"><a href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype</a></div><div class="ttdeci">const string doctype(&quot;&lt;?xml version='1.0' encoding='ISO-8859-1'?&gt;&quot;)</div></div>
+<div class="ttc" id="classXmlElement_html_ae55a4202014857542e79ba2ec953da1e"><div class="ttname"><a href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find</a></div><div class="ttdeci">F8API const XmlElement * find(const std::string &amp;what, const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const </div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a72a0107026d73fadd3fab65579797305"></a>
@@ -406,7 +509,63 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00112">112</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00147">main()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;{</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   <span class="keywordtype">int</span> depth(1);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   <a class="code" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> fldlist;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   xft.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/fields/field&quot;</span>, fldlist);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   xf.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/fields/field&quot;</span>, fldlist);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   <span class="keywordflow">if</span> (!nounique)</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <a class="code" href="f8precomp_8cpp.html#aa437cee33ac1718a82282129fa8cbc23">filter_unique</a>(fldlist);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   <a class="code" href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a> comlist, comlistfixt;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   <a class="code" href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">Components</a> components, componentsfixt;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;   xft.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/components/component&quot;</span>, comlistfixt);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   xf.<a class="code" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">find</a>(<span class="stringliteral">&quot;fix/components/component&quot;</span>, comlist);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;   <a class="code" href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a>(comlistfixt, componentsfixt);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;   <a class="code" href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a>(comlist, components);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   outf &lt;&lt; <a class="code" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;   outf &lt;&lt; <span class="charliteral">&#39;&lt;&#39;</span> &lt;&lt; xft.<a class="code" href="classXmlElement.html#aeefff68f10c9356d54cd52d20d52e8a7">GetTag</a>();</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <a class="code" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a>(xft, outf);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   outf &lt;&lt; &#39;&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="stringliteral">   const XmlElement *header(xft.find(&quot;fix/header&quot;));</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="stringliteral">   if (header)</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="stringliteral">      process_messages(*header, componentsfixt, &quot;header&quot;, 0, outf);</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="stringliteral">   const XmlElement *trailer(xft.find(&quot;fix/trailer&quot;));</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="stringliteral">   if (trailer)</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="stringliteral">      process_messages(*trailer, componentsfixt, &quot;trailer&quot;, 0, outf);</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="stringliteral">   outf &lt;&lt; string(depth * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;messages&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="stringliteral">   XmlElement::XmlSet msglist;</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="stringliteral">   xft.find(&quot;fix/messages/message&quot;, msglist);</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="stringliteral">   for(auto const *pp : msglist)</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="stringliteral">      process_messages(*pp, componentsfixt, &quot;message&quot;, depth, outf);</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="stringliteral">   msglist.clear();</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="stringliteral">   xf.find(&quot;fix/messages/message&quot;, msglist);</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="stringliteral">   for(auto const *pp : msglist)</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="stringliteral">      process_messages(*pp, components, &quot;message&quot;, depth, outf);</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="stringliteral">   outf &lt;&lt; string(depth * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;/messages&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="stringliteral">   process_fields(fldlist, depth, outf);</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="stringliteral">   dump_components(components, outf);</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="stringliteral">   outf &lt;&lt; &quot;&lt;/&quot; &lt;&lt; xft.GetTag() &lt;&lt; &#39;</span>&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="stringliteral">   return 0;</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="stringliteral">}</span></div>
+<div class="ttc" id="f8precomp_8cpp_html_aa437cee33ac1718a82282129fa8cbc23"><div class="ttname"><a href="f8precomp_8cpp.html#aa437cee33ac1718a82282129fa8cbc23">filter_unique</a></div><div class="ttdeci">void filter_unique(XmlElement::XmlSet &amp;fldlist)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00163">f8precomp.cpp:163</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_a60ea16dc30ac209c69bdfad40ad0ec58"><div class="ttname"><a href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a></div><div class="ttdeci">void output_attributes(const XmlElement &amp;xf, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00229">f8precomp.cpp:229</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_ac8c59ca70c47351be5476e5a54a28ed3"><div class="ttname"><a href="namespaceFIX8.html#ac8c59ca70c47351be5476e5a54a28ed3">FIX8::Components</a></div><div class="ttdeci">std::map&lt; std::string, const XmlElement * &gt; Components</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00183">f8c.hpp:183</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_ae904cefc9d0304eca29c020df2c9ab1d"><div class="ttname"><a href="f8precomp_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a></div><div class="ttdeci">void load_components(const XmlElement::XmlSet &amp;comlist, Components &amp;components)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00182">f8precomp.cpp:182</a></div></div>
+<div class="ttc" id="classXmlElement_html_a698efd439f8e23c43a1c955c94d72907"><div class="ttname"><a href="classXmlElement.html#a698efd439f8e23c43a1c955c94d72907">XmlElement::XmlSet</a></div><div class="ttdeci">std::set&lt; const XmlElement *, EntityOrderComp &gt; XmlSet</div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00074">xml.hpp:74</a></div></div>
+<div class="ttc" id="classXmlElement_html_aeefff68f10c9356d54cd52d20d52e8a7"><div class="ttname"><a href="classXmlElement.html#aeefff68f10c9356d54cd52d20d52e8a7">XmlElement::GetTag</a></div><div class="ttdeci">const std::string &amp; GetTag() const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00292">xml.hpp:292</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_a678a16a4d9c31d88739418fadb30a8fa"><div class="ttname"><a href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype</a></div><div class="ttdeci">const string doctype(&quot;&lt;?xml version='1.0' encoding='ISO-8859-1'?&gt;&quot;)</div></div>
+<div class="ttc" id="classXmlElement_html_ae55a4202014857542e79ba2ec953da1e"><div class="ttname"><a href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find</a></div><div class="ttdeci">F8API const XmlElement * find(const std::string &amp;what, const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const </div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2a46590edfab021673f34507b0b2b089"></a>
@@ -454,7 +613,31 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00263">263</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00239">process_elements()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;{</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;   xf.<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;name&quot;</span>, name);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   <span class="keywordtype">bool</span> comp_required(xf.<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;required&quot;</span>, <span class="keyword">false</span>));</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;   Components::const_iterator citr(components.find(name));</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;   <span class="keywordflow">if</span> (citr == components.end())</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      cerr &lt;&lt; <a class="code" href="f8precomp_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9">shortName</a> &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; <a class="code" href="namespaceFIX8.html#a5794a1c039643260424b110ce6ed2695">recover_line</a>(xf) &lt;&lt; <span class="stringliteral">&quot;: error: Could not find component &#39;&quot;</span> &lt;&lt; name &lt;&lt; <span class="charliteral">&#39;\&#39;&#39;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      ++<a class="code" href="f8precomp_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   {</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keywordflow">for</span>(XmlElement::XmlSet::const_iterator itr(citr-&gt;second-&gt;begin()); itr != citr-&gt;second-&gt;end(); ++itr)</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;         <a class="code" href="f8precomp_8cpp.html#ad5ad5ab8370cc0b48ccf237af7ae82ba">process_elements</a>(itr, components, depth, outf, name,</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            depth == 3 ? comp_required : comp_required &amp;&amp; required);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   }</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
+<div class="ttc" id="classXmlElement_html_a9bcc420674262afdd97a18c1639349a2"><div class="ttname"><a href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">XmlElement::FindAttr</a></div><div class="ttdeci">T FindAttr(const std::string &amp;what, const T defValue) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00209">xml.hpp:209</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_ada41a588babf5bdab7e6b8281e4d2cb9"><div class="ttname"><a href="f8precomp_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9">shortName</a></div><div class="ttdeci">string shortName</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8cpp_source.html#l00096">f8c.cpp:96</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_ad5ad5ab8370cc0b48ccf237af7ae82ba"><div class="ttname"><a href="f8precomp_8cpp.html#ad5ad5ab8370cc0b48ccf237af7ae82ba">process_elements</a></div><div class="ttdeci">void process_elements(XmlElement::XmlSet::const_iterator itr, const Components &amp;components, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00239">f8precomp.cpp:239</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a5794a1c039643260424b110ce6ed2695"><div class="ttname"><a href="namespaceFIX8.html#a5794a1c039643260424b110ce6ed2695">FIX8::recover_line</a></div><div class="ttdeci">int recover_line(const XmlElement &amp;xf)</div><div class="ttdef"><b>Definition:</b> <a href="f8c_8hpp_source.html#l00204">f8c.hpp:204</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_aa2fea8f86294eff5752199c5a61714fa"><div class="ttname"><a href="f8precomp_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a></div><div class="ttdeci">unsigned glob_errors</div></div>
+<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00743">xml.cpp:743</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad5ad5ab8370cc0b48ccf237af7ae82ba"></a>
@@ -508,7 +691,18 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00239">239</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>References <a class="el" href="f8precomp_8cpp_source.html#l00219">output_field()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00263">process_component()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00284">process_group()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;{</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;   <span class="keywordflow">if</span> ((*itr)-&gt;GetTag() == <span class="stringliteral">&quot;field&quot;</span>)</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      <a class="code" href="f8precomp_8cpp.html#aa394845269eec5ffe625d6c6fadf1107">output_field</a>(**itr, depth, outf, compon, required);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((*itr)-&gt;GetTag() == <span class="stringliteral">&quot;component&quot;</span>)</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      <a class="code" href="f8precomp_8cpp.html#a2a46590edfab021673f34507b0b2b089">process_component</a>(**itr, components, depth, outf, required);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((*itr)-&gt;GetTag() == <span class="stringliteral">&quot;group&quot;</span>)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      <a class="code" href="f8precomp_8cpp.html#a7028b746ea18ea4f1190aca8b9f7036c">process_group</a>(**itr, components, depth, outf, compon, required);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}</div>
+<div class="ttc" id="f8precomp_8cpp_html_a7028b746ea18ea4f1190aca8b9f7036c"><div class="ttname"><a href="f8precomp_8cpp.html#a7028b746ea18ea4f1190aca8b9f7036c">process_group</a></div><div class="ttdeci">void process_group(const XmlElement &amp;xf, const Components &amp;components, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00284">f8precomp.cpp:284</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_a2a46590edfab021673f34507b0b2b089"><div class="ttname"><a href="f8precomp_8cpp.html#a2a46590edfab021673f34507b0b2b089">process_component</a></div><div class="ttdeci">void process_component(const XmlElement &amp;xf, const Components &amp;components, const int depth, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00263">f8precomp.cpp:263</a></div></div>
+<div class="ttc" id="f8precomp_8cpp_html_aa394845269eec5ffe625d6c6fadf1107"><div class="ttname"><a href="f8precomp_8cpp.html#aa394845269eec5ffe625d6c6fadf1107">output_field</a></div><div class="ttdeci">void output_field(const XmlElement &amp;xf, const int depth, ostream &amp;outf, const string &amp;compon=string(), bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00219">f8precomp.cpp:219</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af3faf45403728831f040875bfdb0e95c"></a>
@@ -548,7 +742,31 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00193">193</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;{</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   outf &lt;&lt; string(depth * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;fields&gt;&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   <span class="keywordflow">for</span>(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   {</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      outf &lt;&lt; string((depth + 1) * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;field&quot;</span>;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      <a class="code" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a>(**itr, outf, required);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      <span class="keywordflow">if</span> ((*itr)-&gt;GetChildCnt())</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      {</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;         outf &lt;&lt; &#39;&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="stringliteral">         for(XmlElement::XmlSet::const_iterator fitr((*itr)-&gt;begin()); fitr != (*itr)-&gt;end(); ++fitr)</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="stringliteral">         {</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="stringliteral">            outf &lt;&lt; string((depth + 2) * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &#39;</span>&lt;<span class="stringliteral">&#39; &lt;&lt; (*fitr)-&gt;GetTag();</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="stringliteral">            output_attributes(**fitr, outf, required);</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="stringliteral">            outf &lt;&lt; &quot;/&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="stringliteral">         }</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="stringliteral">         outf &lt;&lt; string((depth + 1) * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;/field&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="stringliteral">      }</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="stringliteral">      else</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="stringliteral">         outf &lt;&lt; &quot;/&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="stringliteral">   }</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="stringliteral">   outf &lt;&lt; string(depth * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;/fields&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="stringliteral">}</span></div>
+<div class="ttc" id="f8precomp_8cpp_html_a60ea16dc30ac209c69bdfad40ad0ec58"><div class="ttname"><a href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a></div><div class="ttdeci">void output_attributes(const XmlElement &amp;xf, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00229">f8precomp.cpp:229</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a7028b746ea18ea4f1190aca8b9f7036c"></a>
@@ -602,7 +820,19 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00284">284</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00239">process_elements()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;{</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   outf &lt;&lt; string(depth * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="stringliteral">&quot;&lt;group&quot;</span>;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <a class="code" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a>(xf, outf, required);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;   <span class="keywordflow">if</span> (!compon.empty())</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      outf &lt;&lt; <span class="stringliteral">&quot; component=\&#39;&quot;</span> &lt;&lt; compon &lt;&lt; <span class="charliteral">&#39;\&#39;&#39;</span>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   outf &lt;&lt; &#39;&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="stringliteral">   for(XmlElement::XmlSet::const_iterator itr(xf.begin()); itr != xf.end(); ++itr)</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="stringliteral">      process_elements(itr, components, depth + 1, outf, string(), required);</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="stringliteral">   outf &lt;&lt; string(depth * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;/group&gt;&quot; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="stringliteral">}</span></div>
+<div class="ttc" id="f8precomp_8cpp_html_a60ea16dc30ac209c69bdfad40ad0ec58"><div class="ttname"><a href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a></div><div class="ttdeci">void output_attributes(const XmlElement &amp;xf, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00229">f8precomp.cpp:229</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ad9ea0df9237ed0f8742a4c6f3d8007d5"></a>
@@ -656,7 +886,17 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00251">251</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
 <p>References <a class="el" href="f8precomp_8cpp_source.html#l00229">output_attributes()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;   outf &lt;&lt; string((depth + 1) * 2, <span class="charliteral">&#39; &#39;</span>) &lt;&lt; <span class="charliteral">&#39;&lt;&#39;</span> &lt;&lt; tag;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;   <a class="code" href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a>(xf, outf, required);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;   outf &lt;&lt; &#39;&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="stringliteral">   for(XmlElement::XmlSet::const_iterator mitr(xf.begin()); mitr != xf.end(); ++mitr)</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="stringliteral">      process_elements(mitr, components, depth + 2, outf, string(), required);</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="stringliteral">   outf &lt;&lt; string((depth + 1) * 2, &#39;</span> <span class="stringliteral">&#39;) &lt;&lt; &quot;&lt;/&quot; &lt;&lt; tag &lt;&lt; &#39;</span>&gt;<span class="stringliteral">&#39; &lt;&lt; endl;</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="stringliteral">}</span></div>
+<div class="ttc" id="f8precomp_8cpp_html_a60ea16dc30ac209c69bdfad40ad0ec58"><div class="ttname"><a href="f8precomp_8cpp.html#a60ea16dc30ac209c69bdfad40ad0ec58">output_attributes</a></div><div class="ttdeci">void output_attributes(const XmlElement &amp;xf, ostream &amp;outf, bool required=true)</div><div class="ttdef"><b>Definition:</b> <a href="f8precomp_8cpp_source.html#l00229">f8precomp.cpp:229</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -691,7 +931,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

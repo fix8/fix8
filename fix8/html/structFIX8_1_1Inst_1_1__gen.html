@@ -184,7 +184,8 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>new field </dd></dl>
 
 <p>Definition at line <a class="el" href="field_8hpp_source.html#l02047">2047</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l02048"></a><span class="lineno"> 2048</span>&#160;         { <span class="keywordflow">return</span> <span class="keyword">new</span> T{from, db}; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="afcacddb65526406f28944ac6f8211003"></a>
@@ -245,7 +246,12 @@ template&lt;typename T , typename R &gt; </div>
 <p>Definition at line <a class="el" href="field_8hpp_source.html#l02057">2057</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l00063">FIX8::RealmBase::_dtype</a>, <a class="el" href="field_8hpp_source.html#l00065">FIX8::RealmBase::_sz</a>, <a class="el" href="field_8hpp_source.html#l00060">FIX8::RealmBase::dt_set</a>, and <a class="el" href="field_8hpp_source.html#l00087">FIX8::RealmBase::get_rlm_val()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l02058"></a><span class="lineno"> 2058</span>&#160;      {</div>
+<div class="line"><a name="l02059"></a><span class="lineno"> 2059</span>&#160;         <span class="keywordflow">return</span> !db || rv &lt; 0 || rv &gt;= db-&gt;_sz || db-&gt;_dtype != <a class="code" href="structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82">RealmBase::dt_set</a></div>
+<div class="line"><a name="l02060"></a><span class="lineno"> 2060</span>&#160;            ? <span class="keyword">new</span> T(from, db) : new T(db-&gt;get_rlm_val&lt;R&gt;(rv), db);</div>
+<div class="line"><a name="l02061"></a><span class="lineno"> 2061</span>&#160;      }</div>
+<div class="ttc" id="structFIX8_1_1RealmBase_html_a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82">FIX8::RealmBase::dt_set</a></div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00060">field.hpp:60</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
@@ -254,7 +260,7 @@ template&lt;typename T , typename R &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:50. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

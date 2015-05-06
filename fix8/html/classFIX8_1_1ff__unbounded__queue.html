@@ -238,7 +238,9 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00058">58</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
 <p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00047">FIX8::ff_unbounded_queue&lt; T &gt;::_queue</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{ <a class="code" href="classFIX8_1_1ff__unbounded__queue.html#af220d0b7085fd140d2df9d519dbe1841">_queue</a>.init(); }</div>
+<div class="ttc" id="classFIX8_1_1ff__unbounded__queue_html_af220d0b7085fd140d2df9d519dbe1841"><div class="ttname"><a href="classFIX8_1_1ff__unbounded__queue.html#af220d0b7085fd140d2df9d519dbe1841">FIX8::ff_unbounded_queue::_queue</a></div><div class="ttdeci">ff::uMPMC_Ptr_Queue _queue</div><div class="ttdef"><b>Definition:</b> <a href="ff__wrapper_8hpp_source.html#l00047">ff_wrapper.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="af9dead1da34450f204b52041ff8bd659"></a>
@@ -265,7 +267,8 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00059">59</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -296,7 +299,28 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00065">65</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
 <p>References <a class="el" href="hypersleep_8hpp_source.html#l00149">FIX8::hypersleep&lt; h_nanoseconds &gt;()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00064">FIX8::ff_unbounded_queue&lt; T &gt;::try_pop()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#if defined SLEEP_NO_YIELD</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> cnt_rnd(3);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="keywordtype">unsigned</span> cnt(0);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <span class="keywordflow">for</span>(;;)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ff__unbounded__queue.html#a4c9d202eb2a20e69fbf9419b62138c30">try_pop</a>(target))</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#if defined SLEEP_NO_YIELD</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;         <span class="keywordflow">if</span> ((++cnt %= cnt_rnd) == 0)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <a class="code" href="namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8">hypersleep&lt;h_nanoseconds&gt;</a>(SLEEP_NO_YIELD);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            sched_yield();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      }</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1ff__unbounded__queue_html_a4c9d202eb2a20e69fbf9419b62138c30"><div class="ttname"><a href="classFIX8_1_1ff__unbounded__queue.html#a4c9d202eb2a20e69fbf9419b62138c30">FIX8::ff_unbounded_queue::try_pop</a></div><div class="ttdeci">bool try_pop(T *&amp;target)</div><div class="ttdef"><b>Definition:</b> <a href="ff__wrapper_8hpp_source.html#l00064">ff_wrapper.hpp:64</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a700975293fe5eb36a135c70a3e2383a8"><div class="ttname"><a href="namespaceFIX8.html#a700975293fe5eb36a135c70a3e2383a8">FIX8::hypersleep&lt; h_nanoseconds &gt;</a></div><div class="ttdeci">int hypersleep&lt; h_nanoseconds &gt;(unsigned amt)</div><div class="ttdef"><b>Definition:</b> <a href="hypersleep_8hpp_source.html#l00149">hypersleep.hpp:149</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa72a18873f5d3b38048664b0411f831b"></a>
@@ -326,7 +350,9 @@ template&lt;typename T &gt; </div>
 <p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00063">63</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
 <p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00061">FIX8::ff_unbounded_queue&lt; T &gt;::try_push()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{ <a class="code" href="classFIX8_1_1ff__unbounded__queue.html#a9f9b7c17c86bb01697b315cb6a960724">try_push</a>(source); }</div>
+<div class="ttc" id="classFIX8_1_1ff__unbounded__queue_html_a9f9b7c17c86bb01697b315cb6a960724"><div class="ttname"><a href="classFIX8_1_1ff__unbounded__queue.html#a9f9b7c17c86bb01697b315cb6a960724">FIX8::ff_unbounded_queue::try_push</a></div><div class="ttdeci">bool try_push(const T &amp;source)</div><div class="ttdef"><b>Definition:</b> <a href="ff__wrapper_8hpp_source.html#l00061">ff_wrapper.hpp:61</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a2ae5585e4c4308ed484a03b60851e2f8"></a>
@@ -354,7 +380,8 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00085">85</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{ ::ff::ff_free(source); }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a4c9d202eb2a20e69fbf9419b62138c30"></a>
@@ -386,7 +413,9 @@ template&lt;typename T &gt; </div>
 <p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00047">FIX8::ff_unbounded_queue&lt; T &gt;::_queue</a>.</p>
 
 <p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00065">FIX8::ff_unbounded_queue&lt; T &gt;::pop()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ff__unbounded__queue.html#af220d0b7085fd140d2df9d519dbe1841">_queue</a>.pop(reinterpret_cast&lt;void**&gt;(&amp;target)); }</div>
+<div class="ttc" id="classFIX8_1_1ff__unbounded__queue_html_af220d0b7085fd140d2df9d519dbe1841"><div class="ttname"><a href="classFIX8_1_1ff__unbounded__queue.html#af220d0b7085fd140d2df9d519dbe1841">FIX8::ff_unbounded_queue::_queue</a></div><div class="ttdeci">ff::uMPMC_Ptr_Queue _queue</div><div class="ttdef"><b>Definition:</b> <a href="ff__wrapper_8hpp_source.html#l00047">ff_wrapper.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a9f9b7c17c86bb01697b315cb6a960724"></a>
@@ -418,7 +447,9 @@ template&lt;typename T &gt; </div>
 <p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00047">FIX8::ff_unbounded_queue&lt; T &gt;::_queue</a>.</p>
 
 <p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00063">FIX8::ff_unbounded_queue&lt; T &gt;::push()</a>.</p>
-
+<div class="fragment"><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ff__unbounded__queue.html#af220d0b7085fd140d2df9d519dbe1841">_queue</a>.push(<span class="keyword">new</span> (::ff::ff_malloc(<span class="keyword">sizeof</span>(T))) T(source)); }</div>
+<div class="ttc" id="classFIX8_1_1ff__unbounded__queue_html_af220d0b7085fd140d2df9d519dbe1841"><div class="ttname"><a href="classFIX8_1_1ff__unbounded__queue.html#af220d0b7085fd140d2df9d519dbe1841">FIX8::ff_unbounded_queue::_queue</a></div><div class="ttdeci">ff::uMPMC_Ptr_Queue _queue</div><div class="ttdef"><b>Definition:</b> <a href="ff__wrapper_8hpp_source.html#l00047">ff_wrapper.hpp:47</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -454,7 +485,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed Apr 22 2015 16:15:47. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Wed May 6 2015 14:21:44. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
