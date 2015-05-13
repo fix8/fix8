@@ -233,8 +233,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.3.2.tar.gz
-	% cd fix8-1.3.2
+	% tar xvzf 1.3.3.tar.gz
+	% cd fix8-1.3.3
 	% ./bootstrap
 	% ./configure
 	% make
@@ -248,8 +248,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.3.2.tar.gz
-	% cd fix8-1.3.2
+	% tar xvzf 1.3.3.tar.gz
+	% cd fix8-1.3.3
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
@@ -272,6 +272,7 @@ Please refer to the following pages for help:
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
 - [Wiki](https://fix8engine.atlassian.net/wiki)
+- [Twitter](https://twitter.com/fix8engine)
 
 ## Downloads
 
@@ -284,13 +285,15 @@ Please refer to the following page:
 the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
 If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- Please refrain from emailing us directly. **Support questions sent directly to us will be redirected to the support group.**
+- Please *do not* email us directly. **Support questions sent directly to us will be redirected to the support group.**
+
+- Please *do not* post the same question to both fix8-support and fix8-developer groups.
 
 - If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
 register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
 sample configuruation files, config.log, etc.
 
-- If you have already implemented a fix, and wish to make a pull request on Github please create an issue in Jira first.
+- If you have already implemented a fix, and wish to make a pull request on Github, *create an issue in Jira first*.
 This will help us track the problem and ensure that the solution is properly tested.
 
 - When considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
@@ -310,6 +313,7 @@ for more help and information about the Fix8 project.
 
 If you want to submit a change to the repository, it needs to be *made on the dev branch*. The following instructions may help:
 
+1. Login to Jira, create a ticket for your changes, describing in detail the bug fix or improvement
 1. Login to github
 1. Create a fork of fix8
 1. If you are using the command line git, clone your fork and choose the dev branch<br><code>% git clone https://github.com/[your_repo_name]/fix8.git -b dev</code>
@@ -331,6 +335,8 @@ See [License](http://fix8.org/faq.html#license) for more information.
 Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
 Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
 Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
+
+For more information about Fix8Pro see the [Fix8Pro website.](http://www.fix8pro.com)
 
 ## More Information
 
