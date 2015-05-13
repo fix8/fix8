@@ -85,6 +85,10 @@ public:
 	/*! Create a sessionid and reverse sessionid strings. */
 	F8API void make_id();
 
+	/*! Create a reverse SessionID from the current SessionID
+	    \return reverse SessionID */
+	F8API SessionID make_reverse_id() const;
+
 	/// Create a sessionid string.
 	F8API void from_string(const f8String& from);
 
@@ -572,7 +576,7 @@ public:
 
   /*! Clear reference to connection.  Called by ~Connection() to clear reference.
       \param connection being deleted */
-	void clear_connection(Connection *connection)
+	void clear_connection(const Connection *connection)
 	{
 		if (connection == _connection)
 			_connection = nullptr;
@@ -755,7 +759,7 @@ public:
 
 	/*! See if this session is being shutdown.
 	    \return true if shutdown is underway */
-	bool is_shutdown() { return _control.has(shutdown); }
+	bool is_shutdown() { return _control.has(shutdown) || _state == States::st_session_terminated; }
 
 	/* ! Set the SessionConfig object - only for server sessions
 		\param sf pointer to SessionConfig object */
@@ -806,8 +810,9 @@ public:
 	    \param new_state new session state to set */
 	void do_state_change(const States::SessionStates new_state)
 	{
-		state_change(_state, new_state);
-		_state = new_state;
+		const States::SessionStates old_state(_state.exchange(new_state));
+		if (old_state != new_state)
+			state_change(old_state, new_state);
 	}
 
 	/*! Get the current session state enumeration

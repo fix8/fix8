@@ -109,6 +109,12 @@ public:
 	    \param reuse if true clear vector */
 	void clear(bool reuse=true);
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what messagebase
+	    \return stream */
+	friend std::ostream& operator<<(std::ostream& os, const GroupBase& what);
+
 	friend class MessageBase;
 };
 
@@ -1279,6 +1285,12 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+inline std::ostream& operator<<(std::ostream& os, const GroupBase& what)
+{
+	for (const auto *pp : what._msgs)
+		pp->print(os);
+	return os;
+}
 
 } // FIX8
 

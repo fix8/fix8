@@ -248,21 +248,14 @@ public:
 	/// Dtor.
 	virtual ~ClientSession ()
 	{
-		session_ptr()->clear_connection( _cc );
+		delete _persist;
+		_persist = nullptr;
 		delete _session;
 		_session = nullptr;
-
-		if (_persist != nullptr)
-		{
-			_persist->stop();
-			delete _persist;
-			_persist = nullptr;
-		}
-
-		delete _plog;
-		_plog = nullptr;
 		delete _log;
 		_log = nullptr;
+		delete _plog;
+		_plog = nullptr;
 	}
 
 	/*! Get a pointer to the session
@@ -658,6 +651,7 @@ public:
 			if (_psc != nullptr)
 			{
 				_psc->stop();
+				delete _psc;
 				_psc = nullptr;
 			}
 		}
@@ -668,11 +662,8 @@ public:
 
 		try
 		{
-			if (_session != nullptr)
-			{
-				delete _session;
-				_session = nullptr;
-			}
+			delete _session;
+			_session = nullptr;
 		}
 		catch (...)
 		{
@@ -681,11 +672,8 @@ public:
 
 		try
 		{
-			if (_sock != nullptr)
-			{
-				delete _sock;
-				_sock = nullptr;
-			}
+			delete _sock;
+			_sock = nullptr;
 		}
 		catch (...)
 		{

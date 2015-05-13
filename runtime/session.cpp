@@ -73,11 +73,14 @@ const vector<f8String> Session::_state_names
 void SessionID::make_id()
 {
 	ostringstream ostr;
-	ostr << _beginString << ':' << _targetCompID << "->" << _senderCompID;
-	_rid = ostr.str();
-	ostr.str("");
 	ostr << _beginString << ':' << _senderCompID << "->" << _targetCompID;
 	_id = ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+SessionID SessionID::make_reverse_id() const
+{
+	return SessionID(_beginString(), _targetCompID(), _senderCompID());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,7 +103,8 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+_state(States::st_none),
+_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
@@ -126,7 +130,8 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+_state(States::st_none),
+_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
@@ -138,7 +143,7 @@ Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *pe
 //-------------------------------------------------------------------------------------------------
 void Session::atomic_init(States::SessionStates st)
 {
-	state_change(States::st_none, _state = st);
+	do_state_change(st);
 	_next_send_seq = _next_receive_seq = 1;
 	_active = true;
 }
