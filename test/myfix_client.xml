@@ -22,6 +22,8 @@
 	<session name="DLD1"
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX1_DLD"
+				tcp_recv_buffer="100663296"
+				tcp_send_buffer="100663296"
 				port="11001"
 				noport="1001"
 				active="true" />

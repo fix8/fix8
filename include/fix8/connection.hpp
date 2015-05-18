@@ -59,7 +59,8 @@ protected:
 	Session& _session;
 	ProcessModel _pmodel;
 	f8_thread_cancellation_token _cancellation_token;
-	f8_atomic<bool> _started;
+	f8_mutex _mutex;
+	bool _started;
 
 private:
 	f8_thread<AsyncSocket> _thread;
@@ -92,7 +93,12 @@ public:
 	virtual int execute(f8_thread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
-	virtual void start() { _thread.start(); _started = true; }
+	virtual void start()
+	{
+		f8_scoped_lock guard(_mutex);
+		_started = true;
+	 	_thread.start();
+	}
 
 	/// Start the processing thread.
 	virtual void request_stop() { _thread.request_stop(); }
@@ -108,6 +114,7 @@ public:
 		 \return 0 on success */
 	int join()
 	{
+		f8_scoped_lock guard(_mutex);
 		if (_started)
 		{
 			_started = false;
@@ -246,7 +253,8 @@ public:
 	/// Dtor.
 	virtual ~FIXReader()
 	{
-		quit();
+		//quit();
+		stop();
 	}
 
 	/// Start the processing threads.
@@ -304,10 +312,10 @@ public:
 	bool is_socket_error() const { return _socket_error; }
 
 	/*! Check to see if there is any data waiting to be read
+	    \param ts timeout
 	    \return true of data ready */
-	bool poll() const
+	bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
 	{
-		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
 
@@ -402,10 +410,10 @@ public:
 	}
 
 	/*! Check to see if a write would block
+	    \param ts timeout
 	    \return true if a write would block */
-	bool poll() const
+	bool poll(const Poco::Timespan &ts = Poco::Timespan()) const
 	{
-		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_WRITE);
 	}
 
@@ -523,7 +531,7 @@ public:
 		  _secured(secured) {}
 
 	/// Dtor.
-	virtual ~Connection() {}
+  virtual ~Connection() { _session.clear_connection(this); }
 
 	/*! Get the role for this connection.
 	    \return the role */
@@ -615,7 +623,8 @@ public:
 	{
 		const unsigned current_sz(sock->getReceiveBufferSize());
 		sock->setReceiveBufferSize(sz);
-		glout_info << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
+		glout_info << "fd(" << sock->impl()->sockfd() << ") ReceiveBufferSize old:" << current_sz
+			<< " requested:" << sz << " new:" << sock->getReceiveBufferSize();
 	}
 
 	/*! Set the socket send buffer sz
@@ -625,7 +634,8 @@ public:
 	{
 		const unsigned current_sz(sock->getSendBufferSize());
 		sock->setSendBufferSize(sz);
-		glout_info << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
+		glout_info << "fd(" << sock->impl()->sockfd() << ") SendBufferSize old:" << current_sz
+			<< " requested:" << sz << " new:" << sock->getSendBufferSize();
 	}
 	/*! Set the socket recv buffer sz
 	    \param sz new size */
@@ -653,16 +663,18 @@ public:
 	int reader_execute() { return _reader.execute(_reader.cancellation_token()); }
 
 	/*! Check if the reader will block
+	    \param ts timeout
 	    \return true if won't block */
-	bool reader_poll() const { return _reader.poll(); }
+	bool reader_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _reader.poll(ts); }
 
 	/*! Call the FIXreader method
 	    \return result of call */
 	int writer_execute() { return _writer.execute(_writer.cancellation_token()); }
 
 	/*! Check if the writer will block
+	    \param ts timeout
 	    \return true if won't block */
-	bool writer_poll() const { return _writer.poll(); }
+	bool writer_poll(const Poco::Timespan &ts = Poco::Timespan()) const { return _writer.poll(ts); }
 };
 
 //-------------------------------------------------------------------------------------------------

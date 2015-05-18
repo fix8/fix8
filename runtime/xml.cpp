@@ -372,11 +372,13 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 		case value:
 			if (c == '<')
 			{
+				/*	// FIXME - breaks comments
 				if (ifsptr->peek() == '!')
 				{
 					state = cdata0;
 					break;
 				}
+				*/
 				if (ifsptr->peek() != '/')
 				{
 					ifsptr->putback(c);
