@@ -203,7 +203,7 @@ struct Schedule
 	int _utc_offset, _start_day, _end_day;
 	Tickval::ticks _toffset;
 
-	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
+	Schedule() : _start(Tickval::errorticks()), _end(Tickval::errorticks()), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
     Schedule(Tickval start, Tickval end, Tickval duration=Tickval(), int utc_offset=0,
@@ -641,6 +641,11 @@ public:
 	    \param msg Message
 	    \return true on success */
 	F8API bool send_process(Message *msg);
+
+	/*! Modify the header if desired. Called when message is sent.
+	    \param msg Message
+	    \return number of fields added/modifed */
+	F8API virtual int modify_header(MessageBase *msg);
 
 	/// Force persister to sync next send/receive seqnums
 	F8API void update_persist_seqnums();

@@ -936,6 +936,12 @@ size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 }
 
 //-------------------------------------------------------------------------------------------------
+int Session::modify_header(MessageBase *msg)
+{
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
 	//cout << "send_process()" << endl;
@@ -977,6 +983,13 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
 	}
 	*msg->Header() << new sending_time;
+
+	// allow session to modify the header of this message before sending
+	const int fields_modified(modify_header(msg->Header()));
+	if (fields_modified)
+	{
+		slout_debug << "send_process: " << fields_modified << " header fields added/modified";
+	}
 
 	try
 	{

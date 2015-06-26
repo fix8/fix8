@@ -1011,6 +1011,17 @@ struct codec_timings
 };
 
 #endif
+
+//-------------------------------------------------------------------------------------------------
+#if defined SIZEOF_UNSIGNED_LONG && SIZEOF_UNSIGNED_LONG == 8
+#ifndef _MSC_VER
+constexpr unsigned long COLLAPSE_INT64(unsigned long x)
+	   { return x + (x >> 8) + (x >> 16) + (x >> 24) + (x >> 32) + (x >> 40) + (x >> 48) + (x >> 56); }
+#else
+#define COLLAPSE_INT64(x) (x + (x >> 8) + (x >> 16) + (x >> 24) + (x >> 32) + (x >> 40) + (x >> 48) + (x >> 56))
+#endif
+#endif
+
 //-------------------------------------------------------------------------------------------------
 /// A complete Fix message with header, body and trailer
 class Message : public MessageBase
@@ -1119,10 +1130,45 @@ public:
 	    \return calculated checknum */
 	static unsigned calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)
 	{
+#if defined SIZEOF_UNSIGNED_LONG && SIZEOF_UNSIGNED_LONG == 8
+		// steroid chksum algorithm by charles.cooper@lambda-tg.com
+		// Basic strategy is to unroll the loop. normally adding in a loop
+		// is slow because of the dependency, the cpu has to finish each loop
+		// before it starts the next one and is unable to pipeline. one
+		// way to get around this is to have multiple registers and have
+		// multiple adds per loop, then consolidating at the end
+		// as in unroll_checksum.
+		// that is slow though because there is a lot of wasted space and
+		// the cpu has to do a lot of adds.
+		// key is that addition of a word is going to be faster
+		// than addition of two chars, and also each word has 8 chars in it.
+		// so we get 8 adds per loop. long1 + long2 is almost like
+		// looping over two arrays of 8 chars and adding them element wise.
+		// except for the overflow. so we have to keep track of the overflow
+		// and get rid of it at the end.
+
+		const unsigned long OVERFLOW_MASK (1UL << 8 | 1UL << 16 | 1UL << 24 | 1UL << 32 | 1UL << 40 | 1UL << 48 | 1UL << 56);
+		unsigned long ret{}, overflow{};
+		from += offset;
+		const unsigned long elen (len != -1 ? len : sz);
+		size_t ii{};
+		for (; ii < (elen - elen % 8); ii += 8)
+		{
+			unsigned long expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & *reinterpret_cast<const unsigned long*>(from + ii)));
+			ret += *reinterpret_cast<const unsigned long*>(from + ii);
+			overflow += (expected_overflow ^ ret) & OVERFLOW_MASK;
+		}
+		ret = COLLAPSE_INT64(ret);
+		overflow = COLLAPSE_INT64(overflow);
+		for (; ii < elen; ret += from[ii++]); // add up rest one by one
+		return (ret - overflow) & 0xff;
+#else
+		// native chksum algorithm
 		unsigned val(0);
 		const char *eptr(from + (len != -1 ? len + offset : sz - offset));
 		for (const char *ptr(from + offset); ptr < eptr; val += *ptr++);
 		return val % 256;
+#endif
 	}
 
 	/*! Generate a checksum from an encoded buffer, string version.

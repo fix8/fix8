@@ -881,7 +881,7 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
    }
    else
       outp << "const FieldTrait_Hash_Array " << endl << spacer << prefix << gname
-         << "::_ftha(" << prefix << gname << "::_traits, " << ms._fields.get_presence().size() << ");" << endl;
+         << "::_ftha(" << prefix << gname << "::_traits, " << gname << "::_fieldcnt);" << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1094,7 +1094,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
-				<< pp.second._fields.get_presence().size() << ");" << endl;
+            << pp.second._name << "::_fieldcnt);" << endl;
 			osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
             osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
             osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;

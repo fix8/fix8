@@ -100,6 +100,7 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 AC_CHECK_TYPES([ptrdiff_t])
+AC_CHECK_SIZEOF(unsigned long)
 
 # Checks for library functions.
 # these are checked before the libraries are added to the compilation flags so that they will link

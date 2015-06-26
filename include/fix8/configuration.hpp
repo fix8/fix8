@@ -152,8 +152,8 @@ protected:
 	Tickval::ticks get_time_field(const XmlElement *from, const std::string& tag, bool timeonly=false) const
 	{
 		std::string time_str;
-		return from && from->GetAttr(tag, time_str) && time_str.size() == 8 ? time_parse(time_str.c_str(), 8, timeonly)
-																								  : Tickval::errorticks;
+		return from && from->GetAttr(tag, time_str) && time_str.size() == 8
+			? time_parse(time_str.c_str(), 8, timeonly) : Tickval::errorticks();
 	}
 
 	/*! Find an attribute in the given XmlElement
