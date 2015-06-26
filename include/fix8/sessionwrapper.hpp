@@ -655,9 +655,17 @@ public:
 				_psc = nullptr;
 			}
 		}
-		catch (...)
+		catch (f8Exception& e)
 		{
-			std::cerr << "~SessionInstance - psc exception during cleanup" << std::endl;;
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (Poco::Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (std::exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
 		}
 
 		try
@@ -665,9 +673,17 @@ public:
 			delete _session;
 			_session = nullptr;
 		}
-		catch (...)
+		catch (f8Exception& e)
 		{
-			std::cerr << "~SessionInstance - session exception during cleanup" << std::endl;
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (Poco::Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (std::exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
 		}
 
 		try
@@ -675,9 +691,17 @@ public:
 			delete _sock;
 			_sock = nullptr;
 		}
-		catch (...)
+		catch (f8Exception& e)
 		{
-			std::cerr << "~SessionInstance - _sock exception during cleanup" << std::endl;
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (Poco::Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (std::exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
 		}
 	}
 

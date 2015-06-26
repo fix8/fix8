@@ -1,3 +1,4 @@
+<!-- This is a modified Fix 4.3 specification for the TSX Exchange -->
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <fix major='4' type='FIX' servicepack='0' minor='3'>
  <header>
