@@ -140,12 +140,12 @@ int main(int argc, char **argv)
 	}
 	fds;
 
-	if ((fds.fod = open(dbFname.c_str(), O_RDONLY)) < 0)
+	if ((fds.fod = open(dbFname.c_str(), O_RDONLY | O_BINARY)) < 0)
 	{
 		cerr << "Error opening existing database: " << dbFname << " (" << strerror(errno) << ')' << endl;
 		return 1;
 	}
-	if ((fds.iod = open(dbIname.c_str(), O_RDWR)) < 0)
+	if ((fds.iod = open(dbIname.c_str(), O_RDWR | O_BINARY)) < 0)
 	{
 		cerr << "Error opening existing database index: " << dbIname << " (" << strerror(errno) << ')' << endl;
 		return 1;
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 			cerr << "Error reading existing database index: " << dbIname << " (" << strerror(errno) << ')' << endl;
 			return 1;
 		}
-		else if (blrd == 0)
+		if (blrd == 0)
 			break; // eof
 
 		if (!rawdump)
@@ -218,9 +218,12 @@ int main(int argc, char **argv)
 			return 1;
 		}
 
-		if (read(fds.fod, buff, iprec._prec._size) != iprec._prec._size)
+		int bytes_read = 0;
+		if ((bytes_read = read(fds.fod, buff, iprec._prec._size)) != iprec._prec._size)
 		{
-			cerr << "Error could not read message record for seqnum " << iprec._seq << " from: " << dbFname << endl;
+			cerr << "Error could not read message record for seqnum " << iprec._seq << " from: " << dbFname
+					<< ": trying to read " << iprec._prec._size << ", but available " << bytes_read
+					<< endl;
 			return 1;
 		}
 

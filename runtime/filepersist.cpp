@@ -83,12 +83,12 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 			}
 		}
 
-		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
+		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0600)) < 0)
 		{
 			glout_error << "Error: creating database: " << _dbFname << " (" << strerror(errno) << ')';
 			return false;
 		}
-		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
+		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0600)) < 0)
 		{
 			glout_error << "Error: creating database index: " << _dbIname << " (" << strerror(errno) << ')';
 			return false;
@@ -103,12 +103,12 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 	}
 	else
 	{
-		if ((_fod = open(_dbFname.c_str(), O_RDWR)) < 0)
+		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_BINARY)) < 0)
 		{
 			glout_error << "Error: opening existing database: " << _dbFname << " (" << strerror(errno) << ')';
 			return false;
 		}
-		if ((_iod = open(_dbIname.c_str(), O_RDWR)) < 0)
+		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_BINARY)) < 0)
 		{
 			glout_error << "Error: opening existing database index: " << _dbIname << " (" << strerror(errno) << ')';
 			return false;

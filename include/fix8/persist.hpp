@@ -346,6 +346,13 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+#ifndef _MSC_VER
+# define O_BINARY 0
+#endif
+
+//-------------------------------------------------------------------------------------------------
+#pragma pack(push, 1)
+//-------------------------------------------------------------------------------------------------
 /// File persister
 struct Prec
 {
@@ -379,6 +386,7 @@ struct IPrec
 	friend std::ostream& operator<<(std::ostream& os, const IPrec& what)
 		{ return os << "seq:" << what._seq << ' ' << what._prec; }
 };
+#pragma pack(pop)
 
 class FilePersister : public Persister
 {

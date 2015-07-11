@@ -1013,43 +1013,32 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 				return false;
 			}
 			_last_sent.now();
-
-			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(optr, Logger::Info);
-
-			//cout << "send_process" << endl;
-
-			if (!is_dup)
-			{
-				if (_persist)
-				{
-					f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
-					if (!msg->is_admin())
-						_persist->put(_next_send_seq, ptr);
-					_persist->put(_next_send_seq + 1, _next_receive_seq);
-					//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
-				}
-				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
-				{
-					++_next_send_seq;
-					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
-				}
-			}
 			_batchmsgs_buffer.clear();
 		}
 		else
 		{
 			_batchmsgs_buffer.append(ptr);
-			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(ptr, Logger::Info);
+		}
 
-			if (!is_dup)
+		if (_plogger && _plogger->has_flag(Logger::outbound))
+			plog(optr, Logger::Info);
+
+		//cout << "send_process" << endl;
+
+		if (!is_dup)
+		{
+			if (_persist)
 			{
-				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
-				{
-					++_next_send_seq;
-					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
-				}
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
+				if (!msg->is_admin())
+					_persist->put(_next_send_seq, ptr);
+				_persist->put(_next_send_seq + 1, _next_receive_seq);
+				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+			}
+			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+			{
+				++_next_send_seq;
+				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
 			}
 		}
 	}
