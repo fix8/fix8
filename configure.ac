@@ -388,13 +388,13 @@ AC_DEFINE(MALLOC_SYSTEM, MALLOC_STD, [malloc system to use])
 
 if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
 	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
-	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TBB, [malloc system to use])
+	AC_DEFINE(MALLOC_SYSTEM, FIX8_MALLOC_TBB, [malloc system to use])
 else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc_minimal"
-	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
+	AC_DEFINE(MALLOC_SYSTEM, FIX8_MALLOC_TCMALLOC, [malloc system to use])
 else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc"
-	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
+	AC_DEFINE(MALLOC_SYSTEM, FIX8_MALLOC_TCMALLOC, [malloc system to use])
 fi
 fi
 fi
@@ -409,7 +409,7 @@ AC_ARG_WITH(poco,
   AS_HELP_STRING([--with-poco=DIR],[location of Poco]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
-	LDFLAGS="$LDFLAGS -L${withval}/lib"
+	LDFLAGS="$LDFLAGS -L${withval}OD/lib"
 ],[])
 
 AC_MSG_CHECKING(for Poco)
