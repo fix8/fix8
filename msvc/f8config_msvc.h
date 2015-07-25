@@ -681,7 +681,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* regex.h system used */
 #ifndef FIX8_REGEX_SYSTEM
-#define FIX8_REGEX_SYSTEM FIX8_REGEX_REGEX_H
+#define FIX8_REGEX_SYSTEM FIX8_REGEX_POCO
 #endif
 
 /* Percentage of message fields to reserve for additional fields */
@@ -695,9 +695,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 /* The size of `unsigned long', as computed by sizeof. */
-#ifndef FIX8_SIZEOF_UNSIGNED_LONG
-#define FIX8_SIZEOF_UNSIGNED_LONG 8
-#endif
+/* #undef FIX8_SIZEOF_UNSIGNED_LONG */
 
 /* Define to 1 if when using fastflow, sleep for VAL ns instead of yield when
    waiting for input */

@@ -38,6 +38,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_MESSAGE_HPP_
 
 #include <vector>
+#if defined FIX8_PREENCODE_MSG_SUPPORT
+#include <array>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
