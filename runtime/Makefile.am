@@ -42,30 +42,35 @@ libfix8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
 
 libfix8_la_LDFLAGS = -version-info $(libfix8_la_version_info)
 
-AM_LDFLAGS = -ggdb -shared -lpthread
+libfix8_la_LDFLAGS += -ggdb -shared -lpthread
 if !USEOSX
-AM_LDFLAGS += -rdynamic
+libfix8_la_LDFLAGS += -rdynamic
 endif
 
 if USECOMPRESSION
 libfix8_la_SOURCES += gzstream.cpp
-AM_LDFLAGS += -lz
+libfix8_la_LDFLAGS += -lz
 endif
-AM_LDFLAGS += -lz
+libfix8_la_LDFLAGS += -lz
 
 if USECCRYPT
-AM_LDFLAGS += -lcrypt
+libfix8_la_LDFLAGS += -lcrypt
 endif
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 if USESSL
-AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto -lPocoXML
+POCO_LIBS += -lPocoNetSSL -lPocoCrypto -lPocoXML
+endif
+libfix8_la_LDFLAGS += $(POCO_LIBS)
+if TBBSUPPORT
+libfix8_la_LDFLAGS += -ltbb
 endif
 
 if LIBMEMCACHEDSUPPORT
 libfix8_la_SOURCES += memcachedpersist.cpp
-AM_LDFLAGS += -lmemcached
+libfix8_la_LDFLAGS += -lmemcached
 endif
 if LIBHIREDISSUPPORT
 libfix8_la_SOURCES += redispersist.cpp
-AM_LDFLAGS += -lhiredis
+libfix8_la_LDFLAGS += -lhiredis
 endif
 
