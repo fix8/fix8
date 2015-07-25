@@ -100,4 +100,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_CONSOLEMENU_HPP_
+#endif // FIX8_CONSOLEMENU_HPP_

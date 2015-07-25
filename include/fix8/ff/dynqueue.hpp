@@ -30,19 +30,19 @@
  ****************************************************************************
  */
 
-/* Dynamic (list-based) Single-Writer Single-Reader 
+/* Dynamic (list-based) Single-Writer Single-Reader
  * (or Single-Producer Single-Consumer) unbounded queue.
  *
  * No lock is needed around pop and push methods.
  * See also ubuffer.hpp for a more efficient SPSC unbounded queue.
- * 
+ *
  *
  */
 
 #include <stdlib.h>
-#include <ff/buffer.hpp>
-#include <ff/spin-lock.hpp> // used only for mp_push and mp_pop
-#include <ff/sysdep.h>
+#include <fix8/ff/buffer.hpp>
+#include <fix8/ff/spin-lock.hpp> // used only for mp_push and mp_pop
+#include <fix8/ff/sysdep.h>
 
 namespace ff {
 
@@ -75,12 +75,12 @@ private:
     long padding2[longxCacheLine-(sizeof(Node*)/sizeof(long))];
 
     /* ----- two-lock used only in the mp_push and mp_pop methods ------- */
-    /*                                                                    */    
+    /*                                                                    */
     /*  By using the mp_push and mp_pop methods as standard push and pop, */
     /*  the dynqueue algorithm basically implements the well-known        */
-    /*  Michael and Scott 2-locks MPMC queue.                             */    
+    /*  Michael and Scott 2-locks MPMC queue.                             */
     /*                                                                    */
-    /*                                                                    */    
+    /*                                                                    */
     union {
         lock_t P_lock;
         char padding3[CACHE_LINE_SIZE];
@@ -89,7 +89,7 @@ private:
         lock_t C_lock;
         char padding4[CACHE_LINE_SIZE];
     };
-    
+
     /* -------------------------------------------------------------- */
 
     // internal cache
@@ -150,7 +150,7 @@ public:
                 if (n) cache.push(n);
             }
         }
-        init_unlocked(P_lock); 
+        init_unlocked(P_lock);
         init_unlocked(C_lock);
         // Avoid unused private field warning on padding vars
         (void) padding1; (void) padding2 ; (void) padding3; (void) padding4;
@@ -174,7 +174,7 @@ public:
         }
         if (head) free((void*)head);
     }
-    
+
     /**
      * TODO
      */
@@ -192,12 +192,12 @@ public:
     /**
      * TODO
      */
-    inline bool  pop(void ** data) {        
+    inline bool  pop(void ** data) {
         if (!data) return false;
 #if defined(STRONG_WAIT_FREE)
         if (head == tail) return false;
 #else
-        if (head->next) 
+        if (head->next)
 #endif
         {
             Node * n = (Node *)head;
@@ -207,11 +207,11 @@ public:
             if (!cache.push(n)) ::free(n);
 #else
             ::free(n);
-#endif      
+#endif
             return true;
         }
         return false;
-    }    
+    }
 
     /**
      * TODO
@@ -219,7 +219,7 @@ public:
     inline unsigned long length() const { return 0;}
 
     /**
-     * MS 2-lock MPMC algorithm PUSH method 
+     * MS 2-lock MPMC algorithm PUSH method
      */
     inline bool mp_push(void * const data) {
         if (!data) return false;
@@ -233,9 +233,9 @@ public:
     }
 
     /**
-     * MS 2-lock MPMC algorithm POP method 
+     * MS 2-lock MPMC algorithm POP method
      */
-    inline bool  mp_pop(void ** data) {        
+    inline bool  mp_pop(void ** data) {
         if (!data) return false;
         spin_lock(C_lock);
         if (head->next) {
@@ -249,11 +249,11 @@ public:
         }
         spin_unlock(C_lock);
         return false;
-    }    
+    }
 };
 
 #else // _FF_DYNQUEUE_OPTIMIZATION
-/* 
+/*
  * Experimental code
  */
 
@@ -289,16 +289,16 @@ private:
      * TODO
      */
     inline bool cachepush(void * const data) {
-        
+
         if (!cache[pwrite]) {
-            /* Write Memory Barrier: ensure all previous memory write 
+            /* Write Memory Barrier: ensure all previous memory write
              * are visible to the other processors before any later
              * writes are executed.  This is an "expensive" memory fence
-             * operation needed in all the architectures with a weak-ordering 
-             * memory model where stores can be executed out-or-order 
+             * operation needed in all the architectures with a weak-ordering
+             * memory model where stores can be executed out-or-order
              * (e.g. Powerpc). This is a no-op on Intel x86/x86-64 CPUs.
              */
-            WMB(); 
+            WMB();
             cache[pwrite] = data;
             pwrite += (pwrite+1 >= cachesize) ? (1-cachesize): 1;
             return true;
@@ -311,13 +311,13 @@ private:
      */
     inline bool  cachepop(void ** data) {
         if (!cache[pread]) return false;
-        
+
         *data = cache[pread];
         cache[pread]=NULL;
-        pread += (pread+1 >= cachesize) ? (1-cachesize): 1;    
+        pread += (pread+1 >= cachesize) ? (1-cachesize): 1;
         return true;
-    }    
-    
+    }
+
 public:
     /**
      * TODO
@@ -370,7 +370,7 @@ public:
         union { Node * n; void * n2; } p;
         if (!cachepop(&p.n2))
             p.n = (Node *)::malloc(sizeof(Node));
-        
+
         p.n->data = data; p.n->next = NULL;
         WMB();
         tail->next = p.n;
@@ -393,7 +393,7 @@ public:
             return true;
         }
         return false;
-    }    
+    }
 };
 
 #endif // _FF_DYNQUEUE_OPTIMIZATION

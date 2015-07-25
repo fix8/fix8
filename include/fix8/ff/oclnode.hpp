@@ -8,7 +8,7 @@
  * \brief Defines the OpenCL implementation of FastFlow node
  *
  * This files defines the FastFlow implementation of OpenCL. This
- * implementation enables us to support FastFlow on the GPGPUs. 
+ * implementation enables us to support FastFlow on the GPGPUs.
  *
  */
 
@@ -42,8 +42,8 @@
 #ifndef FF_OCLNODE_HPP
 #define FF_OCLNODE_HPP
 
-#include <ff/ocl/clEnvironment.hpp>
-#include <ff/node.hpp>
+#include <fix8/ff/ocl/clEnvironment.hpp>
+#include <fix8/ff/node.hpp>
 
 namespace ff{
 
@@ -64,7 +64,7 @@ namespace ff{
  * This class is defined in \ref ff_oclnode.hpp
  *
  */
-class ff_oclNode : public ff_node, public Ocl_Utilities { 
+class ff_oclNode : public ff_node, public Ocl_Utilities {
 public:
 
     /**
@@ -75,7 +75,7 @@ public:
      * \parm id is the identifier of the opencl device
      */
     virtual void svc_SetUpOclObjects(cl_device_id id)=0;
-    
+
     /**
      * \brief Releases OCL object
      *
@@ -84,13 +84,13 @@ public:
      *
      */
     virtual void svc_releaseOclObjects()=0;
-     
+
 protected:
-   
+
     /**
      * \brief Intializes OpenCL instance
      *
-     * It initializes the OpenCL instance. 
+     * It initializes the OpenCL instance.
      *
      * \return If successful \p true is returned, otherwise \p false is
      * returned.
@@ -103,7 +103,7 @@ protected:
         }
         return false;
     }
-    
+
     /**
      * \brief Constructor
      *
@@ -111,7 +111,7 @@ protected:
      *
      */
     ff_oclNode():tId(-1), baseclass_ocl_node_deviceId(NULL) { }
-    
+
     /**
      * \brief Device rules
      *
@@ -122,7 +122,7 @@ protected:
      * \return \p true is always returned
      */
     bool  device_rules(cl_device_id id){ return true;}
-    
+
     /**
      * \brief Creates OpenCL
      *
@@ -141,17 +141,17 @@ protected:
             svc_releaseOclObjects();
             svc_SetUpOclObjects(baseclass_ocl_node_deviceId);
         }
-    } 
-    
+    }
+
     /**
      * \brief Releases OpenCL
      *
      * It releases OpenCL instance.
      */
-    inline void svc_releaseOCL(){ 
+    inline void svc_releaseOCL(){
         svc_releaseOclObjects();
     }
-    
+
     /**
      * \brief Evaluation
      *
@@ -160,14 +160,14 @@ protected:
      * \return If successful \p true, otherwise \p false
      */
     inline bool evaluation(){
-        cl_device_id nDId = Environment::instance()->reallocation(tId); 
+        cl_device_id nDId = Environment::instance()->reallocation(tId);
         if (nDId != baseclass_ocl_node_deviceId) {
-            baseclass_ocl_node_deviceId = nDId; 
+            baseclass_ocl_node_deviceId = nDId;
             return true;
         }
         return false;
     }
-    
+
 private:
     int tId; // the node id
     cl_device_id baseclass_ocl_node_deviceId; // is the id which is provided for user

@@ -1,12 +1,12 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-/*! 
+/*!
  *  \link
  *  \file mdf.hpp
  *  \ingroup high_level_patterns_shared_memory
  *
  *  \brief This file implements the macro dataflow pattern.
  */
- 
+
 #ifndef FF_MDF_HPP
 #define FF_MDF_HPP
 /* ***************************************************************************
@@ -27,13 +27,13 @@
  ****************************************************************************
  */
 
-/* 
+/*
  * Author: Massimo Torquati (October 2013)
  *
  *
  * Acknowledgement:
  * This implementation is a refinement of the first implementation developed
- * at the Computer Science Department of University of Pisa in the early 2013 
+ * at the Computer Science Department of University of Pisa in the early 2013
  * together with:
  *  - Daniele Buono       (d.buono@di.unipi.it)
  *  - Tiziano De Matteis  (dematteis@di.unipi.it)
@@ -47,10 +47,10 @@
 #include <deque>
 #include <queue>
 #include <vector>
-#include <ff/node.hpp>
-#include <ff/pipeline.hpp>
-#include <ff/farm.hpp>
-#include <ff/allocator.hpp>
+#include <fix8/ff/node.hpp>
+#include <fix8/ff/pipeline.hpp>
+#include <fix8/ff/farm.hpp>
+#include <fix8/ff/allocator.hpp>
 #include "./icl_hash.h"
 
 
@@ -89,7 +89,7 @@ inline auto apply(F && f, T && t)
     return Apply< ::std::tuple_size<typename ::std::decay<T>::type>::value>::apply(::std::forward<F>(f), ::std::forward<T>(t));
 }
 /* --------------------------------------- */
-/* ---------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------
  *Hashing funtions
  * Well known hash function: Fowler/Noll/Vo - 32 bit version
  */
@@ -141,22 +141,22 @@ protected:
     typedef enum {NOT_READY, READY, DONE} status_t;
     struct base_f_t {
         virtual inline void call() {};
-    };    
+    };
     template<typename... Param>
     struct worker_task_t: public base_f_t {
         worker_task_t(void(*F)(Param...), Param&... a):F(F) {
             args = std::make_tuple(a...);
-        }	
+        }
         inline void call() { apply(F, args);  }
         void (*F)(Param...);
-        std::tuple<Param...> args;	
+        std::tuple<Param...> args;
     };
-    
-    struct task_t { 
+
+    struct task_t {
         std::vector<param_info> P;  // svector could be used here
         base_f_t *wtask;
     };
-    
+
     struct hash_task_t {
         union{
             struct {
@@ -175,7 +175,7 @@ protected:
             char padding[64];
         };
     };
-    
+
     /* --------------  graph descriptor ---------------------- */
     struct base_gd: public ff_node {
         virtual inline void setMaxTasks(size_t) {}
@@ -218,7 +218,7 @@ protected:
         unsigned long ntasks, maxMsgs;
         std::vector<task_t> TASKS;
     };
-    
+
     /* --------------  generic workers ----------------------- */
     class Worker:public ff_node {
     public:
@@ -228,7 +228,7 @@ protected:
             return task;
         }
     };
-    
+
     /* --------------  scheduler ----------------------------- */
     class Scheduler: public ff_node {
     private:
@@ -240,7 +240,7 @@ protected:
             }
         };
         typedef std::priority_queue<hash_task_t*, std::vector<hash_task_t*>, CompareTask> priority_queue_t;
-        
+
     protected:
         enum { UNBLOCK_SIZE=16, TASK_PER_WORKER=128};
         enum { RELAX_MIN_BACKOFF=1, RELAX_MAX_BACKOFF=32};
@@ -253,26 +253,26 @@ protected:
 #define MALLOC(size)          (FFALLOC malloc(size))
 #define FREE(ptr)             (FFALLOC free(ptr))
 #define REALLOC(ptr,newsize)  (FFALLOC realloc(ptr,newsize))
-        
+
         inline hash_task_t* createTask(unsigned long id, status_t status, base_f_t *wtask) {
             hash_task_t *t=(hash_task_t*)MALLOC(sizeof(hash_task_t));
-            
+
             t->id=id;  t->status=status;  t->remaining_dep=0;
             t->unblock_numb=0; t->wtask=wtask; t->is_dummy=false;
             t->unblock_task_ids=(unsigned long *)MALLOC(UNBLOCK_SIZE*sizeof(unsigned long));
             t->unblock_act_numb=UNBLOCK_SIZE;  t->num_out=0;
-            return t;        
+            return t;
         }
         inline void insertTask(task_t *const msg) {
             unsigned long act_id=task_id++;
-            hash_task_t *act_task=createTask(act_id,NOT_READY,msg->wtask);	    
-            icl_hash_insert(task_set, &act_task->id, act_task); 
-            
+            hash_task_t *act_task=createTask(act_id,NOT_READY,msg->wtask);
+            icl_hash_insert(task_set, &act_task->id, act_task);
+
             for (auto p: msg->P) {
                 auto d    = p.tag;
                 auto dir  = p.dir;
                 if(dir==INPUT) {
-                    hash_task_t * t=(hash_task_t *)icl_hash_find(address_set,(void*)d);			    
+                    hash_task_t * t=(hash_task_t *)icl_hash_find(address_set,(void*)d);
                     if(t==NULL) { // no writier for this tag
                         hash_task_t *dummy=createTask(task_id,DONE,NULL);
                         dummy->is_dummy=true;
@@ -296,10 +296,10 @@ protected:
                 } else
                     if (dir==OUTPUT) {
                         hash_task_t * t=(hash_task_t *)icl_hash_find(address_set,(void*)d);
-                        if(t != NULL) { // the task has been already written 
+                        if(t != NULL) { // the task has been already written
                             if(t->unblock_numb>0) {
                                 // for each unblocked task, checks if that task unblock also act_task (WAR dependency)
-                                for(long ii=0;ii<t->unblock_numb;ii++) {							
+                                for(long ii=0;ii<t->unblock_numb;ii++) {
                                     hash_task_t* t2=(hash_task_t*)icl_hash_find(task_set,&t->unblock_task_ids[ii]);
                                     if(t2!=NULL && t2!=act_task && t2->status!=DONE) {
                                         if(t2->unblock_numb == t2->unblock_act_numb) {
@@ -311,7 +311,7 @@ protected:
                                         act_task->remaining_dep++;
                                     }
                                 }
-                            } else { 
+                            } else {
                                 if(t->status!=DONE) {
                                     t->unblock_task_ids[0]=act_id;
                                     t->unblock_numb++;
@@ -361,7 +361,7 @@ protected:
                 }
             }
         }
-        
+
         inline void handleCompletedTask(hash_task_t *t, int workerid) {
             for(long i=0;i<t->unblock_numb;i++) {
                 hash_task_t *tmp=(hash_task_t*)icl_hash_find(task_set,&t->unblock_task_ids[i]);
@@ -372,20 +372,20 @@ protected:
                     ready_queues[workerid].push(tmp);
                 }
             }
-            
+
             schedule_task(0);
-            
+
             t->status=DONE;
             if(t->num_out==0) {
                 icl_hash_delete(task_set,&t->id,NULL,NULL);
                 FREE(t->unblock_task_ids); FREE(t);
             }
         }
-        
+
         inline bool fromInput() { return (lb->get_channel_id() == -1);	}
-        
+
     public:
-        
+
         Scheduler(ff_loadbalancer* lb, const int maxnw, void (*schedRelaxF)(unsigned long)):
             lb(lb),ffalloc(NULL),runningworkers(0),address_set(NULL),task_set(NULL),
             task_id(1),task_numb(0),task_completed(0),bk_count(0),schedRelaxF(schedRelaxF),
@@ -398,8 +398,8 @@ protected:
                 error("FATAL ERROR: allocator init failed\n");
                 abort();
             }
-#endif            
-            
+#endif
+
             LOWER_TH = std::max(1024, TASK_PER_WORKER*maxnw); //FIX: potrebbe comunque stallare ..
             UPPER_TH = LOWER_TH+TASK_PER_WORKER;
         }
@@ -424,9 +424,9 @@ protected:
 
             if (task_set) icl_hash_destroy(task_set,NULL,NULL);
             if (task_set) icl_hash_destroy(address_set,NULL,NULL);
-            task_set    = icl_hash_create( UPPER_TH*8, ulong_hash_function, ulong_key_compare ); 
+            task_set    = icl_hash_create( UPPER_TH*8, ulong_hash_function, ulong_key_compare );
             address_set = icl_hash_create( 0x01<<12, address_hash_function, address_key_compare);
-            
+
             return 0;
         }
         void* svc(void* task) {
@@ -449,20 +449,20 @@ protected:
                 schedule_task(0);
                 if ((task_numb-task_completed)>(unsigned long)LOWER_TH) {
                     ff_node::input_active(false); // stop receiving from input channel
-                } 
-                return GO_ON;     
-            }            
+                }
+                return GO_ON;
+            }
             hash_task_t * t = (hash_task_t *)task;
             ++task_completed;
             handleCompletedTask(t,lb->get_channel_id());
-            
+
             --nscheduled[lb->get_channel_id()];
             schedule_task(1); // once more
-            
+
             if(task_numb==task_completed && gd_ended)  return NULL;
             return GO_ON;
         }
-        
+
         void eosnotify(int id) { lb->broadcast_task(EOS);}
 
         int wait_freezing() {
@@ -486,7 +486,7 @@ protected:
     inline void reset() {
         gd->reset(); farm->reset(); sched->reset();
     }
-	
+
 public:
     /**
      *  \brief Constructor
@@ -499,23 +499,23 @@ public:
     template<typename T1>
     ff_mdf(void (*F)(T1*const), T1*const args, size_t outstandingTasks=DEFAULT_OUTSTANDING_TASKS,
            int maxnw=ff_numCores(), void (*schedRelaxF)(unsigned long)=NULL):
-        farmworkers(maxnw),pipe(false,outstandingTasks) { //NOTE: pipe has fixed size queue by default 
+        farmworkers(maxnw),pipe(false,outstandingTasks) { //NOTE: pipe has fixed size queue by default
         GD<T1> *_gd   = new GD<T1>(F,args);
         _gd->setMaxTasks(outstandingTasks+16); // NOTE: TASKS must be greater than pipe's queue!
         farm = new ff_farm<>(false,640*maxnw,1024*maxnw,true,maxnw,true);
-	    
-        std::vector<ff_node *> w;
+
+        std::vector<fix8/ff_node *> w;
         // NOTE: Worker objects are going to be destroyed by the farm destructor
         for(int i=0;i<maxnw;++i) w.push_back(new Worker);
         farm->add_workers(w);
         farm->add_emitter(sched = new Scheduler(farm->getlb(), maxnw, schedRelaxF));
         farm->wrap_around(true);
-	    
+
         pipe.add_stage(_gd);
         pipe.add_stage(farm);
         if (pipe.run_then_freeze()<0) {
             error("ff_mdf: running pipeline\n");
-        } else { 
+        } else {
             pipe.wait_freezing();
             _gd->activate(true);
             gd = _gd;
@@ -529,25 +529,25 @@ public:
     }
 
     template<typename... Param>
-    inline void AddTask(std::vector<param_info> &P, void(*F)(Param...), Param... args) {	
+    inline void AddTask(std::vector<param_info> &P, void(*F)(Param...), Param... args) {
         worker_task_t<Param...> *wtask = new worker_task_t<Param...>(F, args...);
         gd->alloc_and_send(P,wtask);
     }
 
-    void setNumWorkers(int nw) { 
+    void setNumWorkers(int nw) {
         if (nw > ff_numCores())
-            error("ff_mdf: setNumWorkers: too much workers, setting num worker to %d\n", ff_numCores());         
-        farmworkers=std::min(ff_numCores(),nw); 
-    }	
+            error("ff_mdf: setNumWorkers: too much workers, setting num worker to %d\n", ff_numCores());
+        farmworkers=std::min(ff_numCores(),nw);
+    }
     void setThreshold(size_t th=0) {} // <----------
-	
+
 
     // FIX: TODO
-    void *svc(void*) { 
+    void *svc(void*) {
         // FIX: hashing tables on stream ?
         return NULL;
     }
-    
+
     virtual inline int run_and_wait_end() {
         gd->thaw(true);
         farm->thaw(true,farmworkers);
@@ -558,7 +558,7 @@ public:
 
     double ffTime() { return pipe.ffTime(); }
     double ffwTime() { return pipe.ffwTime(); }
-    
+
 protected:
     int farmworkers;
     ff_pipeline pipe;

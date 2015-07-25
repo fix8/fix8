@@ -37,7 +37,7 @@
 //#include <unistd.h> // Not availbe on windows - to be managed
 #include <iostream>
 //#if (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
-#include <ff/platforms/platform.h>
+#include <fix8/ff/platforms/platform.h>
 //#else
 //#include <pthread.h>
 //#include <sys/time.h>
@@ -45,8 +45,8 @@
 
 #include <string.h>
 
-#include <ff/cycle.h>
-#include <ff/spin-lock.hpp>
+#include <fix8/ff/cycle.h>
+#include <fix8/ff/spin-lock.hpp>
 
 namespace ff {
 
@@ -73,7 +73,7 @@ static inline void waitCall(double milisec, double sec){
 };
 
 static inline void waitSleep(ticks TICKS2WAIT){
-    /*!!!----Mehdi--required to change busy wait with nanosleep ----!!*/ 
+    /*!!!----Mehdi--required to change busy wait with nanosleep ----!!*/
     //struct timespac req = {0};
     //req.tv_sec = static_cast<int>((static_cast<double>(TICKS2WAIT))/CLOCKS_PER_SEC);
     //req.tv_nsec =(((static_cast<double>(TICKS2WAIT))/CLOCKS_PER_SEC)-static_cast<int>((static_cast<double>(TICKS2WAIT))/CLOCKS_PER_SEC))*1.0e9;
@@ -81,13 +81,13 @@ static inline void waitSleep(ticks TICKS2WAIT){
 
     /* NOTE: The following implementation is not correct because we don't take into account
      *       the (current) CPU frequency. Anyway, this works well enough for internal FastFlow usage.
-     */ 
+     */
     struct timespec req = {0, static_cast<long>(TICKS2WAIT)};
     nanosleep(&req, NULL);
 };
 #endif /* __linux__ */
 
-/* NOTE:  nticks should be something less than 1000000 otherwise 
+/* NOTE:  nticks should be something less than 1000000 otherwise
  *        better to use something else.
  */
 static inline ticks ticks_wait(ticks nticks) {
@@ -102,7 +102,7 @@ static inline ticks ticks_wait(ticks nticks) {
 #endif
 }
 
-/* NOTE: Does not make sense to use 'us' grather than or equal to 1000000 */ 
+/* NOTE: Does not make sense to use 'us' grather than or equal to 1000000 */
 static inline void ff_relax(unsigned long us) {
 #if defined(__linux__)
     struct timespec req = {0, static_cast<long>(us*1000L)};
@@ -133,7 +133,7 @@ static inline void error(const char * str, ...) {
 }
 
 /**
- * It returns the current time in usec 
+ * It returns the current time in usec
  */
 static inline unsigned long getusec() {
     struct timeval tv;
@@ -144,11 +144,11 @@ static inline unsigned long getusec() {
 /**
  * Compute a-b and return the difference in msec
  */
-static inline double diffmsec(const struct timeval & a, 
+static inline double diffmsec(const struct timeval & a,
                               const struct timeval & b) {
     long sec  = (a.tv_sec  - b.tv_sec);
     long usec = (a.tv_usec - b.tv_usec);
-    
+
     if(usec < 0) {
         --sec;
         usec += 1000000;
@@ -161,7 +161,7 @@ static inline double diffmsec(const struct timeval & a,
  */
 static inline bool time_compare(struct timeval & a, struct timeval & b) {
     double t1= a.tv_sec*1000 + (double)(a.tv_usec)/1000.0;
-    double t2= b.tv_sec*1000 + (double)(b.tv_usec)/1000.0;        
+    double t2= b.tv_sec*1000 + (double)(b.tv_usec)/1000.0;
     return (t1<t2);
 }
 
@@ -177,7 +177,7 @@ static inline bool time_iszero(const struct timeval & a) {
  * TODO
  */
 static inline void time_setzero(struct timeval & a) {
-    a.tv_sec=0;  
+    a.tv_sec=0;
     a.tv_usec=0;
 }
 
@@ -200,7 +200,7 @@ static inline unsigned int nextPowerOf2(unsigned int x) {
 
 static inline unsigned int nextMultipleOfIf(unsigned int x, unsigned int m) {
     unsigned r = x % m;
-    return (r ? (x-r+m):x); 
+    return (r ? (x-r+m):x);
 }
 
 
@@ -233,12 +233,12 @@ static inline double ffTime(int tag, bool lock=false) {
         spin_unlock(L);
         res = diffmsec(tv_stop,tv_start);
     } break;
-    case GET_TIME: {        
+    case GET_TIME: {
         res = diffmsec(tv_stop,tv_start);
     } break;
     default:
         res=0;
-    }    
+    }
     return res;
 }
 

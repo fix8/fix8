@@ -62,7 +62,7 @@ e.g.\n
 #include <fix8/f8includes.hpp>
 #include <fix8/usage.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
 	int val;
 	unsigned next_send(0), next_receive(0);
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	const option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "seqedit for " PACKAGE " version " VERSION << endl;
+			cout << "seqedit for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case 'h': print_usage(); return 0;
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
 		if (iprec._seq == 0)
 			continue;
 
-		char buff[MAX_MSG_LENGTH] {};
+		char buff[FIX8_MAX_MSG_LENGTH] {};
 
 		if (lseek(fds.fod, iprec._prec._offset, SEEK_SET) < 0)
 		{
@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 void print_usage()
 {
 	UsageMan um("seqedit", GETARGLIST, "<perist file prefix>");
-	um.setdesc("seqedit -- edit next expected send/receive");
+	um.setdesc("seqedit -- edit next expected send/receive for file based persister. Note: fix8pro users should use f8pseqedit which works with any persister");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('d', "dump", "dump all the records in both the index and the data file");

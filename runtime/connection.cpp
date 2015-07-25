@@ -165,7 +165,7 @@ int FIXReader::callback_processor()
    for (; !_cancellation_token && !_session.is_shutdown();)
    {
 		f8String *msg_ptr(0);
-#if (MPMC_SYSTEM == MPMC_TBB)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_TBB)
       f8String msg;
 		_msg_queue.pop (msg); // will block
       if (msg.empty())  // means exit
@@ -184,7 +184,7 @@ int FIXReader::callback_processor()
 		}
 		else
 			++processed;
-#if (MPMC_SYSTEM == MPMC_FF)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 		_msg_queue.release(msg_ptr);
 #endif
    }
@@ -221,7 +221,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		while (bt != default_field_separator && offs < _max_msg_len);
 		to.assign(msg_buf, offs);
 
-		char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
+		char tag[MAX_MSGTYPE_FIELD_LEN], val[FIX8_MAX_FLD_LENGTH];
 		unsigned result;
 		if ((result = MessageBase::extract_element(to.data(), static_cast<unsigned>(to.size()), tag, val)))
 		{

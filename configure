@@ -1549,7 +1549,7 @@ Optional Features:
   --enable-valgrind       enable internal support for valgrind (default=no)
   --enable-gprof          enable internal support for gprof (default=no)
   --enable-codectiming    enable CODEC timing testing code (default=no)
-  --enable-debug          enable DEBUG support (F8_DEBUG) (default=no)
+  --enable-debug          enable DEBUG support (DEBUG) (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
   --enable-experimental-buffered-socket-read
                           enable experimental buffered socket read
@@ -3668,7 +3668,7 @@ _ACEOF
 
 
 cat >>confdefs.h <<_ACEOF
-#define MAGIC_NUM_EXPR (MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)
+#define MAGIC_NUM_EXPR (FIX8_MAJOR_VERSION_NUM << 24 | FIX8_MINOR_VERSION_NUM << 12 | FIX8_PATCH_VERSION_NUM)
 _ACEOF
 
 
@@ -20421,7 +20421,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 					 { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
-$as_echo "#define MPMC_SYSTEM MPMC_TBB" >>confdefs.h
+$as_echo "#define MPMC_SYSTEM FIX8_MPMC_TBB" >>confdefs.h
 
 				else
 					 { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
@@ -20444,7 +20444,7 @@ fi
 if test "$mpmc_set" = no; then
 	using_ff=yes
 
-$as_echo "#define MPMC_SYSTEM MPMC_FF" >>confdefs.h
+$as_echo "#define MPMC_SYSTEM FIX8_MPMC_FF" >>confdefs.h
 
 fi
 
@@ -20635,14 +20635,6 @@ $as_echo "no" >&6; }
 		 exit 1
 	fi
 
-
-$as_echo "#define MPMC_TBB 1" >>confdefs.h
-
-
-$as_echo "#define MPMC_FF 2" >>confdefs.h
-
-
-
 #Check for OSX
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for OSX/Darwin" >&5
 $as_echo_n "checking for OSX/Darwin... " >&6; }
@@ -20695,7 +20687,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 					 { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
-$as_echo "#define REGEX_SYSTEM REGEX_REGEX_H" >>confdefs.h
+$as_echo "#define REGEX_SYSTEM FIX8_REGEX_REGEX_H" >>confdefs.h
 
 				else
 					 { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
@@ -20723,11 +20715,11 @@ $as_echo "#define REGEX_REGEX_H 2" >>confdefs.h
 
 if test "$using_poco_regex" = yes; then
 
-$as_echo "#define REGEX_SYSTEM REGEX_POCO" >>confdefs.h
+$as_echo "#define REGEX_SYSTEM FIX8_REGEX_POCO" >>confdefs.h
 
 else
 
-$as_echo "#define REGEX_SYSTEM REGEX_REGEX_H" >>confdefs.h
+$as_echo "#define REGEX_SYSTEM FIX8_REGEX_REGEX_H" >>confdefs.h
 
 fi
 
@@ -21182,7 +21174,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 				thread_set=yes
 
-$as_echo "#define THREAD_SYSTEM THREAD_PTHREAD" >>confdefs.h
+$as_echo "#define THREAD_SYSTEM FIX8_THREAD_PTHREAD" >>confdefs.h
 
 				;;
 	stdthread)
@@ -21631,7 +21623,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 				using_std_thread=yes
 				thread_set=yes
 
-$as_echo "#define THREAD_SYSTEM THREAD_STDTHREAD" >>confdefs.h
+$as_echo "#define THREAD_SYSTEM FIX8_THREAD_STDTHREAD" >>confdefs.h
 
 				;;
 	*) echo
@@ -21651,7 +21643,7 @@ $as_echo "#define THREAD_STDTHREAD 4" >>confdefs.h
 if test "$thread_set" = no; then
 	using_std_thread=no
 
-$as_echo "#define THREAD_SYSTEM THREAD_PTHREAD" >>confdefs.h
+$as_echo "#define THREAD_SYSTEM FIX8_THREAD_PTHREAD" >>confdefs.h
 
 fi
 
@@ -24789,7 +24781,7 @@ fi
 if test "${enable_debug+set}" = set; then :
   enableval=$enable_debug; case "${enableval}" in
 	yes)
-$as_echo "#define F8_DEBUG 1" >>confdefs.h
+$as_echo "#define DEBUG 1" >>confdefs.h
  ;;
 	no)  ;;
 	*) as_fn_error $? "bad value ${enableval} for --enable-debug" "$LINENO" 5 ;;
@@ -25026,7 +25018,10 @@ CHANGELOG=$srcdir/ChangeLog
 
 ac_config_files="$ac_config_files Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml"
 
-ac_config_headers="$ac_config_headers include/fix8/f8config.h"
+ac_config_headers="$ac_config_headers intermediate_config.h"
+
+
+ac_config_commands="$ac_config_commands include/fix8/f8config.h"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -26197,6 +26192,7 @@ fi
 
 
 
+PACKAGE="$PACKAGE"
 
 _ACEOF
 
@@ -26220,7 +26216,8 @@ do
     "fix8.spec") CONFIG_FILES="$CONFIG_FILES fix8.spec" ;;
     "doc/man/f8c.1.xml") CONFIG_FILES="$CONFIG_FILES doc/man/f8c.1.xml" ;;
     "doc/man/seqedit.1.xml") CONFIG_FILES="$CONFIG_FILES doc/man/seqedit.1.xml" ;;
-    "include/fix8/f8config.h") CONFIG_HEADERS="$CONFIG_HEADERS include/fix8/f8config.h" ;;
+    "intermediate_config.h") CONFIG_HEADERS="$CONFIG_HEADERS intermediate_config.h" ;;
+    "include/fix8/f8config.h") CONFIG_COMMANDS="$CONFIG_COMMANDS include/fix8/f8config.h" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -27744,6 +27741,95 @@ compiler_lib_search_path=$lt_compiler_lib_search_path_CXX
 # ### END LIBTOOL TAG CONFIG: CXX
 _LT_EOF
 
+ ;;
+    "include/fix8/f8config.h":C) ac_prefix_conf_OUT=`echo include/fix8/f8config.h`
+ac_prefix_conf_DEF=`echo _$ac_prefix_conf_OUT | sed -e "y:abcdefghijklmnopqrstuvwxyz:ABCDEFGHIJKLMNOPQRSTUVWXYZ:" -e "s/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]/_/g"`
+ac_prefix_conf_PKG=`echo $PACKAGE`
+ac_prefix_conf_LOW=`echo _$ac_prefix_conf_PKG | sed -e "y:ABCDEFGHIJKLMNOPQRSTUVWXYZ-:abcdefghijklmnopqrstuvwxyz_:"`
+ac_prefix_conf_UPP=`echo $ac_prefix_conf_PKG | sed -e "y:abcdefghijklmnopqrstuvwxyz-:ABCDEFGHIJKLMNOPQRSTUVWXYZ_:"  -e "/^[0123456789]/s/^/_/"`
+ac_prefix_conf_INP=`echo "" | sed -e 's/ *//'`
+if test ".$ac_prefix_conf_INP" = "."; then
+   for ac_file in : $CONFIG_HEADERS; do test "_$ac_file" = _: && continue
+     case "$ac_file" in
+        *.h) ac_prefix_conf_INP=$ac_file ;;
+        *)
+     esac
+     test ".$ac_prefix_conf_INP" != "." && break
+   done
+fi
+if test ".$ac_prefix_conf_INP" = "."; then
+   case "$ac_prefix_conf_OUT" in
+      */*) ac_prefix_conf_INP=`basename "$ac_prefix_conf_OUT"`
+      ;;
+      *-*) ac_prefix_conf_INP=`echo "$ac_prefix_conf_OUT" | sed -e "s/[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_]*-//"`
+      ;;
+      *) ac_prefix_conf_INP=config.h
+      ;;
+   esac
+fi
+if test -z "$ac_prefix_conf_PKG" ; then
+   as_fn_error $? "no prefix for _PREFIX_PKG_CONFIG_H" "$LINENO" 5
+else
+  if test ! -f "$ac_prefix_conf_INP" ; then if test -f "$srcdir/$ac_prefix_conf_INP" ; then
+     ac_prefix_conf_INP="$srcdir/$ac_prefix_conf_INP"
+  fi fi
+  { $as_echo "$as_me:${as_lineno-$LINENO}: creating $ac_prefix_conf_OUT - prefix $ac_prefix_conf_UPP for $ac_prefix_conf_INP defines" >&5
+$as_echo "$as_me: creating $ac_prefix_conf_OUT - prefix $ac_prefix_conf_UPP for $ac_prefix_conf_INP defines" >&6;}
+  if test -f $ac_prefix_conf_INP ; then
+    $as_echo "s/^#undef  *\\([ABCDEFGHIJKLMNOPQRSTUVWXYZ_]\\)/#undef $ac_prefix_conf_UPP""_\\1/" > conftest.prefix
+    $as_echo "s/^#undef  *\\([abcdefghijklmnopqrstuvwxyz]\\)/#undef $ac_prefix_conf_LOW""_\\1/" >> conftest.prefix
+    $as_echo "s/^#define  *\\([ABCDEFGHIJKLMNOPQRSTUVWXYZ_][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_]*\\)\\(.*\\)/#ifndef $ac_prefix_conf_UPP""_\\1\\" >> conftest.prefix
+    $as_echo "#define $ac_prefix_conf_UPP""_\\1\\2\\" >> conftest.prefix
+    $as_echo "#endif/" >> conftest.prefix
+    $as_echo "s/^#define  *\\([abcdefghijklmnopqrstuvwxyz][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_]*\\)\\(.*\\)/#ifndef $ac_prefix_conf_LOW""_\\1\\" >> conftest.prefix
+    $as_echo "#define $ac_prefix_conf_LOW""_\\1\\2\\" >> conftest.prefix
+    $as_echo "#endif/" >> conftest.prefix
+    # now executing _script on _DEF input to create _OUT output file
+    echo "#ifndef $ac_prefix_conf_DEF"      >$tmp/pconfig.h
+    echo "#define $ac_prefix_conf_DEF 1" >>$tmp/pconfig.h
+    echo ' ' >>$tmp/pconfig.h
+    echo /'*' $ac_prefix_conf_OUT. Generated automatically at end of configure. '*'/ >>$tmp/pconfig.h
+
+    sed -f conftest.prefix $ac_prefix_conf_INP >>$tmp/pconfig.h
+    echo ' ' >>$tmp/pconfig.h
+    echo '/* once:' $ac_prefix_conf_DEF '*/' >>$tmp/pconfig.h
+    echo "#endif" >>$tmp/pconfig.h
+    if cmp -s $ac_prefix_conf_OUT $tmp/pconfig.h 2>/dev/null; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: $ac_prefix_conf_OUT is unchanged" >&5
+$as_echo "$as_me: $ac_prefix_conf_OUT is unchanged" >&6;}
+    else
+      ac_dir=`$as_dirname -- "$ac_prefix_conf_OUT" ||
+$as_expr X"$ac_prefix_conf_OUT" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+	 X"$ac_prefix_conf_OUT" : 'X\(//\)[^/]' \| \
+	 X"$ac_prefix_conf_OUT" : 'X\(//\)$' \| \
+	 X"$ac_prefix_conf_OUT" : 'X\(/\)' \| . 2>/dev/null ||
+$as_echo X"$ac_prefix_conf_OUT" |
+    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
+	    s//\1/
+	    q
+	  }
+	  /^X\(\/\/\)[^/].*/{
+	    s//\1/
+	    q
+	  }
+	  /^X\(\/\/\)$/{
+	    s//\1/
+	    q
+	  }
+	  /^X\(\/\).*/{
+	    s//\1/
+	    q
+	  }
+	  s/.*/./; q'`
+      as_dir="$ac_dir"; as_fn_mkdir_p
+      rm -f "$ac_prefix_conf_OUT"
+      mv $tmp/pconfig.h "$ac_prefix_conf_OUT"
+    fi
+  else
+    as_fn_error $? "input file $ac_prefix_conf_INP does not exist - skip generating $ac_prefix_conf_OUT" "$LINENO" 5
+  fi
+  rm -f conftest.*
+fi
  ;;
 
   esac

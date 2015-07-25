@@ -131,13 +131,13 @@ public:
 /// Fix message reader
 class FIXReader : public AsyncSocket<f8String>
 {
-	enum { _max_msg_len = MAX_MSG_LENGTH, _chksum_sz = 7 };
+	enum { _max_msg_len = FIX8_MAX_MSG_LENGTH, _chksum_sz = 7 };
 	f8_atomic<bool> _socket_error;
 
 	f8_thread<FIXReader> _callback_thread;
 	f8_thread_cancellation_token _callback_cancellation_token;
 
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
 #endif
@@ -153,7 +153,7 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
 	/*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
         \param where buffer to place bytes in
         \param sz number of bytes to read
@@ -242,7 +242,7 @@ public:
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(std::ref(*this), &FIXReader::callback_processor)
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
 		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
 #endif
 		, _bg_sz()
@@ -751,4 +751,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_CONNECTION_HPP_
+#endif // FIX8_CONNECTION_HPP_

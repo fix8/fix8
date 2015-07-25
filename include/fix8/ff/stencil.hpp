@@ -24,9 +24,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
-#include <ff/utils.hpp>
-#include <ff/node.hpp>
-#include <ff/parallel_for.hpp>
+#include <fix8/ff/utils.hpp>
+#include <fix8/ff/node.hpp>
+#include <fix8/ff/parallel_for.hpp>
 
 
 namespace ff {
@@ -36,30 +36,30 @@ template<typename T>
 class stencilTask {
 public:
     typedef T base_type;
-    
+
     stencilTask():InTask(NULL),OutTask(NULL),Xsize(0),Ysize(0),Zsize(0),
                   Xstart(0),Xstop(0),Xstep(0),
                   Ystart(0),Ystop(0),Ystep(0),
                   Zstart(0),Zstop(0),Zstep(0),
                   Youtsize(0) {}
-    stencilTask(T *t, 
+    stencilTask(T *t,
                 size_t Xsize, size_t Xstart, size_t Xstop, size_t Xstep):
         InTask(t),Xsize(Xsize),Ysize(1),Zsize(1),
         Xstart(Xstart),Xstop(Xstop),Xstep(Xstep),
-        Ystart(0),Ystop(0),Ystep(0), 
+        Ystart(0),Ystop(0),Ystep(0),
         Zstart(0),Zstop(0),Zstep(0),
         Youtsize(0) {}
-    stencilTask(T *t, 
-                size_t Xsize, size_t Xstart, size_t Xstop, size_t Xstep, 
+    stencilTask(T *t,
+                size_t Xsize, size_t Xstart, size_t Xstop, size_t Xstep,
                 size_t Ysize, size_t Ystart, size_t Ystop, size_t Ystep):
         InTask(t),Xsize(Xsize),Ysize(Ysize),Zsize(1),
         Xstart(Xstart),Xstop(Xstop),Xstep(Xstep),
         Ystart(Ystart),Ystop(Ystop),Ystep(Ystep),
         Zstart(0),Zstop(1),Zstep(0),
         Youtsize(0) {}
-    stencilTask(T *t, 
-                size_t Xsize, size_t Xstart, size_t Xstop, size_t Xstep, 
-                size_t Ysize, size_t Ystart, size_t Ystop, size_t Ystep, 
+    stencilTask(T *t,
+                size_t Xsize, size_t Xstart, size_t Xstop, size_t Xstep,
+                size_t Ysize, size_t Ystart, size_t Ystop, size_t Ystep,
                 size_t Zsize, size_t Zstart, size_t Zstop, size_t Zstep):
         InTask(t),Xsize(Xsize),Ysize(Ysize),Zsize(Zsize),
         Xstart(Xstart),Xstop(Xstop),Xstep(Xstep),
@@ -67,17 +67,17 @@ public:
         Zstart(Zstart),Zstop(Zstop),Zstep(Zstep),
         Youtsize(0) {}
 
-    stencilTask& operator=(const stencilTask &t) { 
+    stencilTask& operator=(const stencilTask &t) {
         InTask = t.getInPtr(); OutTask=t.getOutPtr();
         Xsize=t.X_size(); Ysize=t.Y_size(); Zsize=t.Z_size();
         Xstart=t.X_start(); Xstop=t.X_stop(); Xstep=t.X_step();
         Ystart=t.Y_start(); Ystop=t.Y_stop(); Ystep=t.Y_step();
         Zstart=t.Z_start(); Zstop=t.Z_stop(); Zstep=t.Z_step();
         Youtsize=t.Y_osize();
-        return *this; 
+        return *this;
     }
 
-    
+
     inline const size_t X_start()  const { return Xstart; }
     inline const size_t X_stop()   const { return Xstop; }
     inline const size_t X_step()   const { return Xstep; }
@@ -92,8 +92,8 @@ public:
     inline const size_t Z_size()   const { return Zsize; }
     inline const size_t Y_osize()  const { return Youtsize; }
     inline const size_t size()     const { return X_size()*Y_size()*Z_size(); }
-    inline const size_t bytesize() const { return size()*sizeof(T); } 
-    
+    inline const size_t bytesize() const { return size()*sizeof(T); }
+
     void   setX(size_t x1, size_t x2, size_t x3) {
         Xstart = x1; Xstop = x2; Xstep = x3;
     }
@@ -104,26 +104,26 @@ public:
         Zstart = z1; Zstop = z2; Zstep = z3;
     }
 
-    void   setInTask(T *t, size_t X) { 
-        if (t) InTask=t; 
+    void   setInTask(T *t, size_t X) {
+        if (t) InTask=t;
         Xsize=X; Ysize=1; Zsize=1;
     }
     void   setInTask(T *t, size_t X, size_t Y) {
-        if (t) InTask=t; 
+        if (t) InTask=t;
         Xsize=X; Ysize=Y; Zsize=1;
     }
     void   setInTask(T *t, size_t X, size_t Y, size_t Z) {
-        if (t) InTask=t; 
+        if (t) InTask=t;
         Xsize=X; Ysize=Y; Zsize=Z;
     }
-    void   setOutTask(T *t, size_t Yout) { 
-        if (t) OutTask=t; 
+    void   setOutTask(T *t, size_t Yout) {
+        if (t) OutTask=t;
         Youtsize=Yout;
     }
 
     T*     getInPtr() const  { return InTask;}
     T*     getOutPtr() const { return OutTask;}
-    
+
     inline void  swap() { T *tmp=InTask; InTask=OutTask; OutTask=tmp;}
 
 protected:
@@ -140,14 +140,14 @@ protected:
 template<typename T>
 class stencil2D: public ff_node {
     typedef std::function<T(size_t i, size_t j, void *)>                                    init_F_t;
-    typedef std::function<void(ff_forall_farm<T> *loopInit, T *M, 
+    typedef std::function<void(ff_forall_farm<T> *loopInit, T *M,
                                const size_t Xsize, const size_t Ysize)>                     init2_F_t;
     typedef std::function<T(long i, long j, T *in, const size_t X, const size_t Y)>         compute_F_t;
-    typedef std::function<T(long i, long j, T *in, const size_t X, const size_t Y, 
+    typedef std::function<T(long i, long j, T *in, const size_t X, const size_t Y,
                             T& reduceVar)>                                                  reduce_F_t;
-    typedef std::function<void(ff_forall_farm<T> *loopCompute, T *in, T *out, 
-                               const size_t Xsize, const size_t Xstart, const size_t Xstop, 
-                               const size_t Ysize, const size_t Ystart, const size_t Ystop, 
+    typedef std::function<void(ff_forall_farm<T> *loopCompute, T *in, T *out,
+                               const size_t Xsize, const size_t Xstart, const size_t Xstop,
+                               const size_t Ysize, const size_t Ystart, const size_t Ystop,
                                T& reduceVar)>                                               reduce2_F_t;
     typedef std::function<void(T *inout, const size_t X, const size_t Y, T& reduceVar)>     prepost_F_t;
     typedef std::function<void(T& reduceVar, T val)>                                        reduceOp_F_t;
@@ -157,115 +157,115 @@ class stencil2D: public ff_node {
     enum { DEFAULT_STENCIL_CHUNKSIZE = 8 };
 
     static void reduceOpDefault(T&, T) {}
-    
+
 public:
     stencil2D(T *Min, T *Mout, const size_t Xsize, const size_t Ysize, const size_t Youtsize,
-              int nw, int Yradius=1,int Xradius=1,bool ghostcells=false, 
+              int nw, int Yradius=1,int Xradius=1,bool ghostcells=false,
               const size_t chunksize=DEFAULT_STENCIL_CHUNKSIZE):
         oneShot(true), ghosts(ghostcells),nw(nw), Yradius(Yradius), Xradius(Xradius),
         chunkSize(chunksize),
         extraInitInParam(NULL),extraInitOutParam(NULL),
-        initInF1(NULL), initOutF1(NULL),initInF2(NULL),initOutF2(NULL), 
+        initInF1(NULL), initOutF1(NULL),initInF2(NULL),initOutF2(NULL),
         beforeFor(NULL), computeF(NULL), computeFReduce1(NULL), computeFReduce2(NULL), afterFor(NULL),
         reduceOp(reduceOpDefault), iterCondition(NULL), identityValue((T)0), reduceVar((T)0),
-        maxIter(1) { 
+        maxIter(1) {
 
         Task.setInTask(Min, Xsize, Ysize);
         // TODO
         assert(Ysize==Youtsize);
         Task.setOutTask(Mout, Youtsize);
-        
+
         skipfirstpop();
         FF_PARFORREDUCE_ASSIGN(loopInitIn, T, nw);
         FF_PARFORREDUCE_ASSIGN(loopInitOut,T, nw);
         FF_PARFORREDUCE_ASSIGN(loopCompute,T, nw);
     }
-    
+
     stencil2D(int nw, int Yradius=1, int Xradius=1,bool ghostcells=false,
               const size_t chunksize=DEFAULT_STENCIL_CHUNKSIZE):
         oneShot(false), ghosts(ghostcells),nw(nw),Yradius(Yradius),Xradius(Xradius),
         chunkSize(chunksize),
         extraInitInParam(NULL),extraInitOutParam(NULL),
-        initInF1(NULL), initOutF1(NULL),initInF2(NULL),initOutF2(NULL), 
+        initInF1(NULL), initOutF1(NULL),initInF2(NULL),initOutF2(NULL),
         beforeFor(NULL), computeF(NULL), computeFReduce1(NULL), computeFReduce2(NULL),
         afterFor(NULL),
         reduceOp(reduceOpDefault), iterCondition(NULL), identityValue((T)0), reduceVar((T)0),
-        maxIter(1) { 
+        maxIter(1) {
 
         FF_PARFORREDUCE_ASSIGN(loopInitIn, T, nw);
         FF_PARFORREDUCE_ASSIGN(loopInitOut,T, nw);
         FF_PARFORREDUCE_ASSIGN(loopCompute,T, nw);
     }
-    
+
     ~stencil2D() {
         FF_PARFORREDUCE_DONE(loopInitIn);
         FF_PARFORREDUCE_DONE(loopInitOut);
         FF_PARFORREDUCE_DONE(loopCompute);
     }
-    
-    void initInFunc(init_F_t F, void *extra) { 
+
+    void initInFunc(init_F_t F, void *extra) {
         if (!oneShot) {
             error("stencil2D: initInFunc: the provided init function will not be called in this configuration\n");
         }
-        initInF1 = F; extraInitInParam = extra; 
-    } 
-    void initInFuncAll(init2_F_t F) { 
+        initInF1 = F; extraInitInParam = extra;
+    }
+    void initInFuncAll(init2_F_t F) {
         if (!oneShot) {
             error("stencil2D: initInFunc: the provided init function will not be called in this configuration\n");
         }
         initInF2 = F;
-    } 
-    void initOutFunc(init_F_t F, void *extra) { 
+    }
+    void initOutFunc(init_F_t F, void *extra) {
         if (!oneShot) {
             error("stencil2D: initOutFunc: the provided init function will not be called in this configuration\n");
         }
-        initOutF1 = F; extraInitOutParam = extra; 
-    } 
-    void initOutFuncAll(init2_F_t F) { 
+        initOutF1 = F; extraInitOutParam = extra;
+    }
+    void initOutFuncAll(init2_F_t F) {
         if (!oneShot) {
             error("stencil2D: initOutFunc: the provided init function will not be called in this configuration\n");
         }
-        initOutF2 = F; 
-    } 
+        initOutF2 = F;
+    }
 
     void preFunc(prepost_F_t F)          { beforeFor       = F; }
 
     void computeFunc(reduce_F_t F,
                      size_t xstart=0, size_t xstop=0, size_t xstep=1,
                      size_t ystart=0, size_t ystop=0, size_t ystep=1,
-                     size_t zstart=0, size_t zstop=0, size_t zstep=1) { 
+                     size_t zstart=0, size_t zstop=0, size_t zstep=1) {
         Task.setX(xstart,xstop?xstop:Task.X_size(),xstep);
         Task.setY(ystart,ystop?ystop:Task.Y_size(),ystep);
         Task.setZ(zstart,zstop?zstop:Task.Z_size(),zstep);
-        computeFReduce1  = F; 
+        computeFReduce1  = F;
     }
     void computeFuncAll(reduce2_F_t F,
                      size_t xstart=0, size_t xstop=0, size_t xstep=1,
                      size_t ystart=0, size_t ystop=0, size_t ystep=1,
-                     size_t zstart=0, size_t zstop=0, size_t zstep=1) { 
+                     size_t zstart=0, size_t zstop=0, size_t zstep=1) {
         Task.setX(xstart,xstop?xstop:Task.X_size(),xstep);
         Task.setY(ystart,ystop?ystop:Task.Y_size(),ystep);
         Task.setZ(zstart,zstop?zstop:Task.Z_size(),zstep);
-        computeFReduce2  = F; 
+        computeFReduce2  = F;
     }
     void postFunc(prepost_F_t F)         { afterFor        = F; }
-    
-    void reduceFunc(iterCond_F_t I, size_t maxI, 
-                    reduceOp_F_t R, T iV) { 
+
+    void reduceFunc(iterCond_F_t I, size_t maxI,
+                    reduceOp_F_t R, T iV) {
         iterCondition = I;
         maxIter = maxI;
-        reduceOp = R; 
+        reduceOp = R;
         identityValue=iV;
     }
-    
-    // swaps input and output matrices 
+
+    // swaps input and output matrices
     inline void swap() {  Task.swap(); }
-    
-    inline void *svc(void *task) { 
+
+    inline void *svc(void *task) {
         if (task != NULL) Task = *((stencilTask<T>*)task);
         T *Min  = Task.getInPtr();
         T *Mout = Task.getOutPtr();
-        
+
         if (oneShot && (initInF1 || initInF2)) {
             const size_t& Xsize  = Task.X_size();
             const size_t& Ysize  = Task.Y_size();
@@ -303,44 +303,44 @@ public:
             const size_t& Ystop  = Task.Y_stop();
             const size_t& Ystep  = Task.Y_step();
 
-            T rVar = reduceVar;            
+            T rVar = reduceVar;
             rVar = identityValue;
             iter = 0;
-            swap(); // because of the next swap op 
+            swap(); // because of the next swap op
             if (computeFReduce1) {
                 do {
                     swap();
                     Min  = Task.getInPtr(); Mout = Task.getOutPtr();
-                    
+
                     if (beforeFor) beforeFor(Min,Xsize, Ysize, rVar);
                     FF_PARFORREDUCE_START(loopCompute, rVar, identityValue, i, Xstart, Xstop, Xstep, chunkSize, nw) {
                         for(long j=Ystart; j< Ystop; j+=Ystep) {
-                            Mout[i*Xsize+j] = computeFReduce1(i,j,Min,Xsize,Ysize,rVar);		
+                            Mout[i*Xsize+j] = computeFReduce1(i,j,Min,Xsize,Ysize,rVar);
                         }
                     } FF_PARFORREDUCE_F_STOP(loopCompute,rVar,reduceOp);
                     if (afterFor) afterFor(Mout,Xsize, Ysize, rVar);
-                    
+
                 } while(++iter<maxIter && iterCondition(rVar, iter));
             } else {
                 do {
                     swap();
                     Min  = Task.getInPtr(); Mout = Task.getOutPtr();
-                    
+
                     if (beforeFor) beforeFor(Min,Xsize, Ysize, rVar);
-                    computeFReduce2(loopCompute, Min,Mout,Xsize, Xstart,Xstop, Ysize,Ystart,Ystop,rVar);		
+                    computeFReduce2(loopCompute, Min,Mout,Xsize, Xstart,Xstop, Ysize,Ystart,Ystop,rVar);
                     if (afterFor) afterFor(Mout,Xsize, Ysize, rVar);
-                    
+
                 } while(++iter<maxIter && iterCondition(rVar, iter));
             }
             reduceVar = rVar;
-        }   
-        
+        }
+
         return (oneShot?NULL:task);
     }
-    
+
     const size_t  getIter() const { return iter; }
     const T getReduceVar() const { return reduceVar; }
-    
+
     virtual inline int run_and_wait_end() {
         if (isfrozen()) {
             stop();
@@ -385,7 +385,7 @@ protected:
     FF_PARFORREDUCE_DECL(loopInitOut, T);
     FF_PARFORREDUCE_DECL(loopCompute, T);
 };
-    
+
 } // namespace
 
 #endif /* FF_STENCIL_HPP */

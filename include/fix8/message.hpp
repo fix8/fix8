@@ -156,7 +156,7 @@ class Minst
 		template<typename T, typename R>
 		static Message *_make(bool deepctor) { return reinterpret_cast<Message *>(new T(deepctor)); }
 
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 		/*! SIOF static TraitHelper
 			\tparam T type to instantiate
 			\return ref to static TraitHelper */
@@ -171,7 +171,7 @@ class Minst
 
 public:
 	std::function<Message *(bool)> _do;
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 	const TraitHelper& (&_get_traits)();
 #endif
 
@@ -179,7 +179,7 @@ public:
 	  \tparam T type to instantiate */
    template<typename T, typename... args>
    Minst(Type2Type<T, args...>) : _do(_gen::_make<T, args...>)
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 		 , _get_traits(_gen::_make_traits<T, args...>)
 #endif
 	{}
@@ -352,7 +352,7 @@ struct F8MetaCntx
 	  \return beginstring */
 	const f8String& get_beginStr() const { return _beginStr; }
 
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 	//----------------------------------------------------------------------------------------------
 	// The following methods can be used to iterate and interrogate static traits
 	//----------------------------------------------------------------------------------------------
@@ -1001,7 +1001,7 @@ inline void GroupBase::clear(bool reuse)
 }
 
 //-------------------------------------------------------------------------------------------------
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 struct codec_timings
 {
 	double _cpu_used;
@@ -1013,7 +1013,7 @@ struct codec_timings
 #endif
 
 //-------------------------------------------------------------------------------------------------
-#if defined SIZEOF_UNSIGNED_LONG && SIZEOF_UNSIGNED_LONG == 8
+#if defined FIX8_SIZEOF_UNSIGNED_LONG && FIX8_SIZEOF_UNSIGNED_LONG == 8
 #ifndef _MSC_VER
 constexpr unsigned long COLLAPSE_INT64(unsigned long x)
 	   { return x + (x >> 8) + (x >> 16) + (x >> 24) + (x >> 32) + (x >> 40) + (x >> 48) + (x >> 56); }
@@ -1026,7 +1026,7 @@ constexpr unsigned long COLLAPSE_INT64(unsigned long x)
 /// A complete Fix message with header, body and trailer
 class Message : public MessageBase
 {
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	static codec_timings _encode_timings, _decode_timings;
 #endif
 
@@ -1034,13 +1034,13 @@ protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment, _end_of_batch;
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	mutable f8String _rawmsg;
 	mutable int _begin_payload = -1;
 	mutable unsigned _payload_len = 0;
 #endif
-#if defined PREENCODE_MSG_SUPPORT
-	mutable std::array<char, MAX_MSG_LENGTH> _preencode;
+#if defined FIX8_PREENCODE_MSG_SUPPORT
+	mutable std::array<char, FIX8_MAX_MSG_LENGTH> _preencode;
 	mutable size_t _preencode_len = 0;
 #endif
 
@@ -1080,7 +1080,7 @@ public:
 	{
 		const unsigned hlen(_header->decode(from, offset, 0, permissive_mode));
 		const unsigned blen(MessageBase::decode(from, hlen, 0, permissive_mode));
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 		_begin_payload = hlen;
 		_payload_len = blen;
 		_rawmsg = from;
@@ -1130,7 +1130,7 @@ public:
 	    \return calculated checknum */
 	static unsigned calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)
 	{
-#if defined SIZEOF_UNSIGNED_LONG && SIZEOF_UNSIGNED_LONG == 8
+#if defined FIX8_SIZEOF_UNSIGNED_LONG && FIX8_SIZEOF_UNSIGNED_LONG == 8
 		// steroid chksum algorithm by charles.cooper@lambda-tg.com
 		// Basic strategy is to unroll the loop. normally adding in a loop
 		// is slow because of the dependency, the cpu has to finish each loop
@@ -1278,7 +1278,7 @@ public:
 		return get_field_flattened(_ctx.reverse_find_fnum(tag));
 	}
 
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	/*! Get the raw FIX message that this message was decoded from
 	    \return reference to FIX message string */
 	const f8String& get_rawmsg() const { return _rawmsg; }
@@ -1299,7 +1299,7 @@ public:
 	    \return offset of payload begin */
 	unsigned get_payload_begin() const { return _begin_payload; }
 #endif
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 	/*! Get the pre-encoded (prepared)
 	    \return ptr to message or 0 if not prepared */
 	const char *get_preencode_msg() const { return _preencode_len ? _preencode.data() : nullptr; }
@@ -1324,7 +1324,7 @@ public:
 	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
 
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	F8API static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
 	F8API static void report_codec_timings(const f8String& tag);
 #endif
@@ -1340,4 +1340,4 @@ inline std::ostream& operator<<(std::ostream& os, const GroupBase& what)
 
 } // FIX8
 
-#endif // _FIX8_MESSAGE_HPP_
+#endif // FIX8_MESSAGE_HPP_

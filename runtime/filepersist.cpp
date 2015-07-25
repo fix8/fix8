@@ -186,7 +186,7 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 	Index::const_iterator itr(_index.find(startSeqNum));
 	if (itr != _index.end())
 	{
-		char buff[MAX_MSG_LENGTH];
+		char buff[FIX8_MAX_MSG_LENGTH];
 
 		do
 		{
@@ -324,7 +324,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 		return false;
 	}
 
-	char buff[MAX_MSG_LENGTH];
+	char buff[FIX8_MAX_MSG_LENGTH];
 	if (read (_fod, buff, itr->second._size) != itr->second._size)
 	{
 		glout_error << "Error: could not read message record for seqnum " << seqnum << " from: " << _dbFname;

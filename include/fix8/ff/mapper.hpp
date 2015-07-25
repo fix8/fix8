@@ -7,7 +7,7 @@
  *
  *  \brief This file contains the thread mapper definition used in FastFlow
  */
-  
+
 #ifndef __THREAD_MAPPER_HPP_
 #define __THREAD_MAPPER_HPP_
 
@@ -30,11 +30,11 @@
  */
 
 #include <stdlib.h>
-#include <ff/svector.hpp>
-#include <ff/utils.hpp>
-#include <ff/mapping_utils.hpp>
+#include <fix8/ff/svector.hpp>
+#include <fix8/ff/utils.hpp>
+#include <fix8/ff/mapping_utils.hpp>
 
-#if defined(FF_CUDA) 
+#if defined(FF_CUDA)
 #include <cuda.h>
 #endif
 
@@ -46,7 +46,7 @@ namespace ff {
  *  @{
  */
 
-/*! 
+/*!
   * \class threadMapper
   * \ingroup shared_memory_fastflow
   *
@@ -62,11 +62,11 @@ namespace ff {
   *
   * This class is defined in \ref mapper.hpp
   *
-  */ 
+  */
 class threadMapper {
 public:
-    /** 
-     * Get a static instance of the threadMapper object 
+    /**
+     * Get a static instance of the threadMapper object
      *
      * \return TODO
      */
@@ -74,9 +74,9 @@ public:
         static threadMapper thm;
         return &thm;
     }
-    
+
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     threadMapper():rrcnt(-1),mask(0) {
         int nc = ff_numCores();
@@ -144,15 +144,15 @@ public:
         for(size_t i=List.size(),j=0; i<size;++i,j++) List.push_back(List[j]);
         CList=List;
     }
-    
+
     /**
      *  Returns the next CPU id using a round-robin mapping access on the
      *  mapping list. This is clearly a raound robind scheduling!
      *
      *  \return The identifier of the core.
-     */ 
+     */
 
-    int getCoreId() { 
+    int getCoreId() {
         assert(rrcnt>=0);
         int id=CList[rrcnt++];
         rrcnt &= mask;
@@ -182,7 +182,7 @@ public:
      *
      * \return The identifier of the core.
      */
-    int getCoreId(unsigned int tid) { 
+    int getCoreId(unsigned int tid) {
         int id=CList[tid & mask];
         //std::cerr << "Mask is " << mask << "\n";
         //int id = CList[tid % (mask+1)];
@@ -199,7 +199,7 @@ public:
         return ((unsigned)cpuId < num_cores);
     }
 
-#if defined(FF_CUDA) 
+#if defined(FF_CUDA)
     inline int getNumCUDADevices() const {
         int deviceCount=0;
         cudaError_t error_id = cudaGetDeviceCount(&deviceCount);

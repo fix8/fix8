@@ -64,7 +64,7 @@ public:
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
 	bool pop(T* &target)
 	{
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 		const unsigned cnt_rnd(3);
 		unsigned cnt(0);
 #endif
@@ -72,9 +72,9 @@ public:
 		{
 			if (try_pop(target))
 				return true;
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 			if ((++cnt %= cnt_rnd) == 0)
-				hypersleep<h_nanoseconds>(SLEEP_NO_YIELD);
+				hypersleep<h_nanoseconds>(FIX8_SLEEP_NO_YIELD);
 			else
 #endif
 				sched_yield();
@@ -108,7 +108,7 @@ public:
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
 	bool pop(T* &target)
 	{
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 		const unsigned cnt_rnd(3);
 		unsigned cnt(0);
 #endif
@@ -116,9 +116,9 @@ public:
 		{
 			if (try_pop(target))
 				return true;
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 			if ((++cnt %= cnt_rnd) == 0)
-				hypersleep<h_nanoseconds>(SLEEP_NO_YIELD);
+				hypersleep<h_nanoseconds>(FIX8_SLEEP_NO_YIELD);
 			else
 #endif
 				sched_yield();
@@ -132,5 +132,5 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_FF_WRAPPER_HPP_
+#endif // FIX8_FF_WRAPPER_HPP_
 

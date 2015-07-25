@@ -44,7 +44,7 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 #include "precomp.hpp"
 #include <fix8/f8config.h>
 
-#ifdef PROFILING_BUILD
+#ifdef FIX8_PROFILING_BUILD
 #include <sys/gmon.h>
 #endif
 

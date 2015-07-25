@@ -348,4 +348,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_TICKVAL_HPP_
+#endif // FIX8_TICKVAL_HPP_

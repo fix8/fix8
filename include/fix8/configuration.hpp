@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef FIX8_CONFIGURATION_HPP_
 #define FIX8_CONFIGURATION_HPP_
 
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 #include <openssl/ssl.h>
 #else
 #define SSL_VERIFY_PEER 0
@@ -445,7 +445,7 @@ public:
 	target_comp_id get_target_comp_id(const XmlElement *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
 	  \return ssl context */

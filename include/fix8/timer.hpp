@@ -242,7 +242,7 @@ inline Tickval::ticks rdtsc()
 /// High resolution interval timer.
 class IntervalTimer
 {
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
 	Tickval::ticks startTime_, delta_;
 #else
    Tickval startTime_, delta_;
@@ -250,7 +250,7 @@ class IntervalTimer
 
 public:
 	/// Ctor. RAII.
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
    IntervalTimer() : startTime_(rdtsc()) {}
 #else
    IntervalTimer() : startTime_(true) {}
@@ -263,7 +263,7 @@ public:
 	  \return reference to this object */
    const IntervalTimer& Calculate()
    {
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
 		Tickval::ticks now(rdtsc());
 #else
       Tickval now(true);
@@ -274,7 +274,7 @@ public:
 
 	/*! Get delta as a double.
 	  \return delta as double */
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
    double AsDouble() const { return delta_; }
 #else
    double AsDouble() const { return delta_.todouble(); }
@@ -284,7 +284,7 @@ public:
 	  \return the old delta as double */
    double Reset()
    {
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
       const Tickval::ticks curr(delta_);
 		startTime_ = rdtsc();
 #else
@@ -303,7 +303,7 @@ public:
       std::ostringstream ostr;
       ostr.setf(std::ios::showpoint);
       ostr.setf(std::ios::fixed);
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
       ostr << std::setprecision(9) << what;
 #else
       ostr << std::setprecision(9) << what.AsDouble();
@@ -314,4 +314,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_TIMER_HPP_
+#endif // FIX8_TIMER_HPP_

@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
-#if defined HAVE_LIBMEMCACHED
+#if defined FIX8_HAVE_LIBMEMCACHED
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
@@ -230,5 +230,5 @@ unsigned MemcachedPersister::find_nearest_seqnum (unsigned requested) const
 	return 0;
 }
 
-#endif // HAVE_LIBMEMCACHED
+#endif // FIX8_HAVE_LIBMEMCACHED
 

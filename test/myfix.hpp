@@ -246,5 +246,5 @@ struct RandDev
 	}
 };
 
-#endif // _FIX8_MYFIX_HPP_
+#endif // FIX8_MYFIX_HPP_
 

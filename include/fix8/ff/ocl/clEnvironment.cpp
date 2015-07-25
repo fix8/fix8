@@ -11,7 +11,7 @@
 
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License version 2 as 
+ *  it under the terms of the GNU General Public License version 2 as
  *  published by the Free Software Foundation.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -35,7 +35,7 @@
  ****************************************************************************
  Mehdi Goli: m.goli@rgu.ac.uk */
 
-#include <ff/ocl/clEnvironment.hpp>
+#include <fix8/ff/ocl/clEnvironment.hpp>
 
 /*!
  * \ingroup streaming_network_simple_shared_memory
@@ -55,24 +55,24 @@ Environment::Environment(){
     }
 
     nodeId =0;
-    
+
     //cl_int status;
     cl_platform_id *platforms = NULL;
     cl_uint numPlatforms;
-    
+
     clGetPlatformIDs(0, NULL, &(numPlatforms));
     platforms =new cl_platform_id[numPlatforms];
     clGetPlatformIDs(numPlatforms, platforms,NULL);
-    
+
     for (unsigned i = 0; i<numPlatforms; i++){
         cl_uint numDevices;
         clGetDeviceIDs(platforms[i],CL_DEVICE_TYPE_ALL,0,NULL,&(numDevices));
         cl_device_id* deviceIds =new cl_device_id[numDevices];
         // Fill in CLDevice with clGetDeviceIDs()
         clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,numDevices,deviceIds,NULL);
-        
+
         for(unsigned j=0; j<numDevices; j++){
-            // estimating max number of thread per device 
+            // estimating max number of thread per device
             cl_ulong memSize;
             cl_device_type d;
             cl_bool b;
@@ -82,7 +82,7 @@ Environment::Environment(){
             clGetDeviceInfo(deviceIds[j], CL_DEVICE_GLOBAL_MEM_SIZE, sizeof(cl_ulong), &(memSize), NULL);
             clGetDeviceInfo(deviceIds[j], CL_DEVICE_AVAILABLE, sizeof(cl_bool), &(b), NULL);
             context = clCreateContext(NULL,1,&deviceIds[j],NULL,NULL,&status);
-            
+
             if((b & CL_TRUE) && (status == CL_SUCCESS)){
                 CLDevice *clDevice = new CLDevice;
                 clDevice->deviceId = deviceIds[j];
@@ -109,12 +109,12 @@ int Environment::staticSelectionPolicy(cl_device_type d, Ocl_Utilities* ocl_util
     float proportion=1;
     int i=-1;
     //int size =Environment::instance()->clDevices.size();
-    for(std::vector<CLDevice*>::iterator iter=Environment::instance()->clDevices.begin(); 
+    for(std::vector<CLDevice*>::iterator iter=Environment::instance()->clDevices.begin();
         iter< Environment::instance()->clDevices.end(); ++iter){
-        
+
         if (((*iter)->d_type & d) && (((*iter)->runningApp)/((*iter)->maxNum) < proportion ) && ocl_utilities->device_rules((*iter)->deviceId)){
             proportion= ((*iter)->runningApp)/((*iter)->maxNum);
-            i= distance(Environment::instance()->clDevices.begin(), iter); //becase iter is the current one. 
+            i= distance(Environment::instance()->clDevices.begin(), iter); //becase iter is the current one.
         }
     }
     return i;
@@ -125,20 +125,20 @@ int Environment::staticSelectionPolicy(cl_device_type d, Ocl_Utilities* ocl_util
  */
 cl_device_id Environment::reallocation(int t_id) {
     return Environment::instance()->clDevices.at(Environment::instance()->clNodesDevice.at(t_id))->deviceId;// this should change to dynamic policy
-    
+
 }
 
 /**
  * TODO
  */
-Environment * Environment::instance(){ 
+Environment * Environment::instance(){
     if (!m_Environment){
         pthread_mutex_lock(&instanceMutex);
         if (!m_Environment)
             m_Environment = new Environment();
         pthread_mutex_unlock(&instanceMutex);
     }
-    return m_Environment; 
+    return m_Environment;
 }
 
 /**
@@ -152,7 +152,7 @@ cl_device_id Environment::getDeviceId(int t_id){
  * TODO
  */
 void Environment::createEntry(int& t_id , Ocl_Utilities* ocl_utilities){
-    
+
     pthread_mutex_lock(&(Environment::instance()->mutex_set_policy));
     int id = staticSelectionPolicy(CL_DEVICE_TYPE_GPU, ocl_utilities);
     if (id!=-1) {
@@ -169,7 +169,7 @@ void Environment::createEntry(int& t_id , Ocl_Utilities* ocl_utilities){
         }
     }
     Environment::instance()->clDevices.at(id)->runningApp++;
-    pthread_mutex_unlock(&(Environment::instance()->mutex_set_policy)); 
+    pthread_mutex_unlock(&(Environment::instance()->mutex_set_policy));
 }
 
 /*!

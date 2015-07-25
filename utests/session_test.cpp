@@ -38,7 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "precomp.hpp"
 #include <fix8/f8config.h>
 
-#ifdef PROFILING_BUILD
+#ifdef FIX8_PROFILING_BUILD
 #include <sys/gmon.h>
 #endif
 

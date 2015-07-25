@@ -30,7 +30,7 @@
 #define GZSTREAM_H 1
 
 #include <fix8/f8config.h>
-#ifdef HAVE_ZLIB_H
+#ifdef FIX8_HAVE_ZLIB_H
 
 // standard C++ with new header file names and std:: namespace
 #include <iostream>
@@ -108,7 +108,7 @@ public:
 } // namespace GZSTREAM_NAMESPACE
 #endif
 
-#endif // HAVE_ZLIB_H
+#endif // FIX8_HAVE_ZLIB_H
 #endif // GZSTREAM_H
 // ============================================================================
 // EOF //

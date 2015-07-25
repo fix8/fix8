@@ -114,7 +114,7 @@ Usage: harness [-LRSchlpqrsv] \n
 // f8 headers
 #include <fix8/f8includes.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
 			lines = nlines - 4;
 	}
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
@@ -213,7 +213,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for " PACKAGE " version " VERSION << endl;
+			cout << argv[0] << " for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
@@ -477,11 +477,11 @@ bool MyMenu::load_msgs(const string& fname)
 		return false;
 	}
 
-	char buffer[MAX_MSG_LENGTH];
+	char buffer[FIX8_MAX_MSG_LENGTH];
 	unsigned loaded(0), skipped(0);
 	while (!ifs.eof())
 	{
-		ifs.getline(buffer, MAX_MSG_LENGTH - 1);
+		ifs.getline(buffer, FIX8_MAX_MSG_LENGTH - 1);
 		if (!buffer[0])
 			continue;
 		Message *msg(Message::factory(TEX::ctx(), buffer));

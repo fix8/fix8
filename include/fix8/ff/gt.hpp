@@ -1,6 +1,6 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \file gt.hpp
  *  \ingroup streaming_network_arbitrary_shared_memory
  *
@@ -12,7 +12,7 @@
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *  it under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -33,9 +33,9 @@
 
 #include <iostream>
 #include <deque>
-#include <ff/svector.hpp>
-#include <ff/utils.hpp>
-#include <ff/node.hpp>
+#include <fix8/ff/svector.hpp>
+#include <fix8/ff/utils.hpp>
+#include <fix8/ff/node.hpp>
 
 namespace ff {
 
@@ -76,15 +76,15 @@ protected:
 
     /**
      * \brief Selects a worker.
-     * 
+     *
      * It gets the next worker using the Round Robin policy. The selected
      * worker has to be alive (and kicking).
      *
      * \return The next worker to be selected.
      *
      */
-    virtual inline int selectworker() { 
-        do 
+    virtual inline int selectworker() {
+        do
             nextr = (nextr+1) % running;
         while(offline[nextr]);
         return nextr;
@@ -100,7 +100,7 @@ protected:
     /**
      * \brief Gets the number of tentatives.
      *
-     * The number of tentative before wasting some times and than retry 
+     * The number of tentative before wasting some times and than retry
      */
     virtual inline size_t ntentative() { return getnworkers();}
 
@@ -110,21 +110,21 @@ protected:
      * It is a virutal function which defines the number of ticks to be waited.
      *
      */
-    virtual inline void losetime_out() { 
+    virtual inline void losetime_out() {
         FFTRACE(lostpushticks+=TICKS2WAIT;++pushwait);
-        ticks_wait(TICKS2WAIT); 
+        ticks_wait(TICKS2WAIT);
     }
-    
+
     /**
-     * \brief Loses the time in 
+     * \brief Loses the time in
      *
      * It is a virutal function which defines the number of ticks to be waited.
      *
      */
-    virtual inline void losetime_in() { 
+    virtual inline void losetime_in() {
         FFTRACE(lostpopticks+=TICKS2WAIT;++popwait);
         ticks_wait(TICKS2WAIT);
-    }    
+    }
 
     /**
      * \brief It gathers the tasks.
@@ -156,7 +156,7 @@ protected:
     /**
      * \brief Pushes the task in the tasks queue.
      *
-     * It pushes the tasks in a queue. 
+     * It pushes the tasks in a queue.
      */
 
     void push(void * task) {
@@ -166,9 +166,9 @@ protected:
                 // if (ch->thxcore>1) {
                 // if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
                 //    else ticks_wait(TICKS2WAIT);
-                //} else 
+                //} else
                 losetime_out();
-            }     
+            }
             return;
         }
 
@@ -176,7 +176,7 @@ protected:
             // if (ch->thxcore>1) {
             // if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
             //    else ticks_wait(TICKS2WAIT);
-            //} else 
+            //} else
             losetime_out();
         }
     }
@@ -190,11 +190,11 @@ protected:
      *
      */
     bool pop(void ** task) {
-        //register int cnt = 0;       
+        //register int cnt = 0;
         if (!get_out_buffer()) return false;
         while (! buffer->pop(task)) {
             losetime_in();
-        } 
+        }
         return true;
     }
 
@@ -235,7 +235,7 @@ public:
      *
      * \return 0 if successful, otherwise a negative value is returned.
      */
-    int set_filter(ff_node * f) { 
+    int set_filter(ff_node * f) {
         if (filter) {
             error("GT, setting collector filter\n");
             return -1;
@@ -268,7 +268,7 @@ public:
      * \return Number of worker threads
      */
     inline size_t getnworkers() const { return (size_t)(running-neos-neosnofreeze); }
-    
+
     /**
      * \brief Get the number of workers
      *
@@ -293,7 +293,7 @@ public:
      *
      * It gets the output buffer
      *
-     * \return \p buffer is returned. 
+     * \return \p buffer is returned.
      */
     FFBUFFER * get_out_buffer() const { return buffer;}
 
@@ -320,10 +320,10 @@ public:
      *
      * \return It returns the task if successful, otherwise 0 is returned.
      */
-    virtual int svc_init() { 
+    virtual int svc_init() {
         gettimeofday(&tstart,NULL);
         for(unsigned i=0;i<workers.size();++i)  offline[i]=false;
-        if (filter) return filter->svc_init(); 
+        if (filter) return filter->svc_init();
         return 0;
     }
 
@@ -345,12 +345,12 @@ public:
             outpresent=true;
             set_out_buffer(filter->get_in_buffer());
         }
-       
+
         gettimeofday(&wtstart,NULL);
         do {
             task = NULL;
-            if (!skipfirstpop) 
-                nextr = gather_task(&task); 
+            if (!skipfirstpop)
+                nextr = gather_task(&task);
             else skipfirstpop=false;
 
             if (task == EOS) {
@@ -375,7 +375,7 @@ public:
                     tickstot +=diff;
                     ticksmin=(std::min)(ticksmin,diff);
                     ticksmax=(std::max)(ticksmax,diff);
-#endif    
+#endif
                 }
 
                 // if the filter returns NULL we exit immediatly
@@ -387,7 +387,7 @@ public:
                 if (!task || (task == EOS)) {
                     ret = EOS;
                     break;
-                }                
+                }
                 if (outpresent) push(task);
             }
         } while((neos<(size_t)running) && (neosnofreeze<(size_t)running));
@@ -424,10 +424,10 @@ public:
      *
      * \return 0 if successful, otherwise -1 is returned.
      */
-    int run(bool=false) {  
+    int run(bool=false) {
         if (this->spawn(filter?filter->getCPUId():-1)== -2) {
             error("GT, spawning GT thread\n");
-            return -1; 
+            return -1;
         }
         running = workers.size();
         return 0;
@@ -444,7 +444,7 @@ public:
      *
      * \brief It gathers all tasks.
      *
-     * It is a virtual function, and gathers results from the workers. 
+     * It is a virtual function, and gathers results from the workers.
      *
      * \return It returns 0 if the tasks from all the workers are collected.
      * Otherwise a negative value is returned.
@@ -453,8 +453,8 @@ public:
     virtual int all_gather(void *task, void **V) {
         V[channelid]=task;
         size_t nw=getnworkers();
-        svector<ff_node*> _workers(nw);
-        for(ssize_t i=0;i<running;++i) 
+        svector<fix8/ff_node*> _workers(nw);
+        for(ssize_t i=0;i<running;++i)
             if (!offline[i]) _workers.push_back(workers[i]);
         svector<int> retry(nw);
 
@@ -478,7 +478,7 @@ public:
     /**
      * \brief Thaws all threads register with the gt and the gt itself
      *
-     * 
+     *
      */
     inline void thaw(bool _freeze=false, ssize_t nw=-1) {
         assert(running==-1);
@@ -489,7 +489,7 @@ public:
 
     /**
      *  \brief Resets output buffer
-     *  
+     *
      *   Warning resetting the buffer while the node is running may produce unexpected results.
      */
     void reset() { if (buffer) buffer->reset();}
@@ -522,14 +522,14 @@ public:
     virtual const struct timeval & getwstartime() const { return wtstart;}
     virtual const struct timeval & getwstoptime() const { return wtstop;}
 
-#if defined(TRACE_FASTFLOW)  
+#if defined(TRACE_FASTFLOW)
     /**
      * \brief The trace of FastFlow
      *
      * It prints the trace for FastFlow.
      *
      */
-    virtual void ffStats(std::ostream & out) { 
+    virtual void ffStats(std::ostream & out) {
         out << "Collector: "
             << "  work-time (ms): " << wttime    << "\n"
             << "  n. tasks      : " << taskcnt   << "\n"
@@ -549,7 +549,7 @@ private:
     ssize_t           channelid;
 
     ff_node         * filter;
-    svector<ff_node*> workers;
+    svector<fix8/ff_node*> workers;
     svector<bool>     offline;
     FFBUFFER        * buffer;
     bool              skip1pop;

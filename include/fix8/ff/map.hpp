@@ -1,6 +1,6 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \link
  *  \file map.hpp
  *  \ingroup high_level_patterns_shared_memory
@@ -26,29 +26,29 @@
  ****************************************************************************
  */
 
- 
+
 #ifndef FF_MAP_HPP
 #define FF_MAP_HPP
 
 #include <vector>
-#include <ff/svector.hpp>
-#include <ff/gt.hpp>
-#include <ff/lb.hpp>
-#include <ff/node.hpp>
-#include <ff/farm.hpp>
-#include <ff/partitioners.hpp>
+#include <fix8/ff/svector.hpp>
+#include <fix8/ff/gt.hpp>
+#include <fix8/ff/lb.hpp>
+#include <fix8/ff/node.hpp>
+#include <fix8/ff/farm.hpp>
+#include <fix8/ff/partitioners.hpp>
 
 // NOTE: A better check would be needed !
-// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used 
+// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used
 // (icpc -E -dM -std=c++11 -x c++ /dev/null | grep GXX_EX)
 #if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_AUTO) && defined(HAS_CXX11_LAMBDA))
-#include <ff/parallel_for.hpp>
+#include <fix8/ff/parallel_for.hpp>
 #else
 #pragma message("C++ >= 201103L required, build will fail")
 #endif
 
 #if defined(FF_OCL)
-#include <ff/oclnode.hpp>
+#include <fix8/ff/oclnode.hpp>
 #endif
 
 #if defined(FF_CUDA)
@@ -119,11 +119,11 @@ public:
      * \param max_num_workers max number of workers
      */
     map_lb(int max_num_workers):ff_loadbalancer(max_num_workers) {}
-    
+
     /// Broadcast the task to all workers
     void broadcast(void * task) {
         ff_loadbalancer::broadcast_task(task);
-    }   
+    }
 };
 
 /*!
@@ -145,7 +145,7 @@ public:
      * \param max_num_workers max number of workers
      */
     map_gt(int max_num_workers):ff_gatherer(max_num_workers) {}
-    
+
     /**
      * It collects results from all tasks.
      *
@@ -153,7 +153,7 @@ public:
      */
     int all_gather(void * task, void **V) {
         return ff_gatherer::all_gather(task,V);
-    }   
+    }
 };
 
 /*!
@@ -165,7 +165,7 @@ public:
  * The map skeleton, that extends the \p farm skeleton.
  *
  * This class is defined in \ref map.hpp
- * 
+ *
  */
 class ff_map: public ff_farm<map_lb,map_gt> {
 public:
@@ -173,8 +173,8 @@ public:
     /**
      *  worker function type
      *  Function called by each worker thread as soon as an input task is received.
-     *  The first parameter is the partitioner (that can be user-defined or one 
-     *  of those provided in the partitioners.hpp file) used the get a task 
+     *  The first parameter is the partitioner (that can be user-defined or one
+     *  of those provided in the partitioners.hpp file) used the get a task
      *  partition for the worker.
      *  tid is the worker/thread id (from 0 to mapWorkers-1).
      */
@@ -182,12 +182,12 @@ public:
 
     /**
      *  reduce function type
-     *  It gets in input the array of tasks sent by each worker 
+     *  It gets in input the array of tasks sent by each worker
      *  (one for each worker).
      *  vsize is the size of the V array.
      */
     typedef void* (*reduce_F_t) (void** V, int vsize);
-    
+
 private:
     // Emitter, Collector and Worker of the farm.
     /**
@@ -197,9 +197,9 @@ private:
      */
     class mapE: public ff_node {
     public:
-        mapE(map_lb * const lb, void* oneShotTask): lb(lb),ost(oneShotTask) {}	
+        mapE(map_lb * const lb, void* oneShotTask): lb(lb),ost(oneShotTask) {}
         void * svc(void * task) {
-            if (task==NULL) { 
+            if (task==NULL) {
                 if (ost) lb->broadcast(ost);
                 return NULL;
             }
@@ -210,7 +210,7 @@ private:
         map_lb* lb;
         void*   ost;
     };
-    
+
     /**
      * Collector
      *
@@ -218,8 +218,8 @@ private:
      */
     class mapC: public ff_node {
     public:
-        mapC(map_gt * const gt, reduce_F_t reduceF): gt(gt),reduceF(reduceF) {}	
-        
+        mapC(map_gt * const gt, reduce_F_t reduceF): gt(gt),reduceF(reduceF) {}
+
         void * svc(void *task) {
             int nw= gt->getnworkers();
             svector<void*> Task(nw);
@@ -231,7 +231,7 @@ private:
         map_gt* const gt;
         reduce_F_t reduceF;
     };
-    
+
     /**
      * Worker
      *
@@ -251,7 +251,7 @@ private:
 
 public:
 
-    /**  
+    /**
      *  Public Constructor (1).
      *
      *  This constructor allows to activate the map for working on a stream of
@@ -268,48 +268,48 @@ public:
      *  \param input_ch Specifies whether the map skeleton is used as an
      *  accelerator. Default is \p false.
      */
-    ff_map ( map_worker_F_t mapF, 
+    ff_map ( map_worker_F_t mapF,
              basePartitioner* mapP,
-             reduce_F_t reduceF=NULL, 
+             reduce_F_t reduceF=NULL,
              bool input_ch=false
-           ) : ff_farm<map_lb,map_gt>(input_ch), mapP(mapP) 
+           ) : ff_farm<map_lb,map_gt>(input_ch), mapP(mapP)
     {
         add_emitter(new mapE(getlb(),NULL));
         add_collector(new mapC(getgt(), reduceF));
-        std::vector<ff_node *> w;
+        std::vector<fix8/ff_node *> w;
         for(size_t i=0;i<mapP->getParts();++i) w.push_back(new mapW(mapF,mapP));
         add_workers(w);
     }
 
-    /**  
+    /**
      *  Public Constructor (2).
      *
      *  This constructor allows to activate the map for the computation of
      *  just one task
      *
      *  \param mapF Specifies the \p Worker object that will execute the operations.
-     *  \param mapP It is the partitioner that is responsible to partition the 
+     *  \param mapP It is the partitioner that is responsible to partition the
      *                 problem.
      *  \param task The task to be executed.
-     *  \param reduceF The \p Reduce object. This parameter is optional and is 
+     *  \param reduceF The \p Reduce object. This parameter is optional and is
      * to be specified when using a \a MapReduce skeleton. Defult is \p NULL.
      */
-    ff_map ( map_worker_F_t mapF, 
+    ff_map ( map_worker_F_t mapF,
              basePartitioner* mapP,
-             void* task, 
+             void* task,
              reduce_F_t reduceF=NULL
-           ) : ff_farm<map_lb,map_gt>(false), mapP(mapP) 
+           ) : ff_farm<map_lb,map_gt>(false), mapP(mapP)
     {
         add_emitter(new mapE(getlb(), task));
         if (reduceF)
             add_collector(new mapC(getgt(),reduceF));
-        std::vector<ff_node *> w;
+        std::vector<fix8/ff_node *> w;
         for(size_t i=0;i<mapP->getParts();++i) w.push_back(new mapW(mapF,mapP));
         add_workers(w);
     }
-    
-    /** 
-     * Destructor 
+
+    /**
+     * Destructor
      *
      * \return TODO
      */
@@ -318,24 +318,24 @@ public:
         delete (mapE*)(getEmitter());
         mapC* C = (mapC*)(getCollector());
         if (C) delete C;
-        const svector<ff_node*>& w= getWorkers();
-        for(size_t i=0;i<w.size();++i) delete (mapW*)(w[i]);	
+        const svector<fix8/ff_node*>& w= getWorkers();
+        for(size_t i=0;i<w.size();++i) delete (mapW*)(w[i]);
     }
 
     int   get_my_id() const { return -1; };
-    
+
     /**
      * This method sets the affinity for the emitter and collector threads,
      * both are pinned on the same core.
      *
-     * \param cpuID the ID of the cpu to which the threads will be pinned 
+     * \param cpuID the ID of the cpu to which the threads will be pinned
      */
-    void  setAffinity(int cpuID) { 
+    void  setAffinity(int cpuID) {
         if (cpuID<0 || !threadMapper::instance()->checkCPUId(cpuID) ) {
             error("MAP, setAffinity, invalid cpuID\n");
         }
         ((mapE*)getEmitter())->setAffinity(cpuID);
-        if (getCollector()) 
+        if (getCollector())
             ((mapC*)getCollector())->setAffinity(cpuID);
 
         ff_node::setAffinity(cpuID);
@@ -361,17 +361,17 @@ private:
 };
 
 
-// map base task for OpenCL and CUDA implementation 
+// map base task for OpenCL and CUDA implementation
 class baseTask {
 public:
     baseTask():task(NULL) {}
     baseTask(void*t):task(t) {}
-    
+
 
     /* input size and bytesize */
     virtual size_t size() const =0;
     virtual size_t bytesize() const =0;
-    
+
     virtual void   setTask(void* t) { if (t) task=t;}
     virtual void*  getInPtr()     { return task;}
     // by default the map works in-place
@@ -384,7 +384,7 @@ protected:
 
 
 #if defined(FF_OCL)
-    
+
     /* The following OpenCL code macros have been derived from the SkePU OpenCL code
      * http://www.ida.liu.se/~chrke/skepu/
      *
@@ -434,7 +434,7 @@ protected:
 "        if(blockSize >=   2) { if (tid <   1 && tid +   1 < n) { sdata[tid] = f" #name "(sdata[tid], sdata[tid +   1]); } barrier(CLK_LOCAL_MEM_FENCE); }\n" \
 "        if(tid == 0) output[get_group_id(0)] = sdata[tid];\n"          \
 "}\n"
-    
+
 
 #define NEWMAP(name, task_t, f, input, sz)               \
     ff_mapOCL<task_t > *name =                           \
@@ -460,7 +460,7 @@ protected:
  * The map skeleton using OpenCL
  *
  * This class is defined in \ref map.hpp
- * 
+ *
  */
 template<typename T>
 class ff_ocl: public ff_oclNode {
@@ -472,13 +472,13 @@ private:
         const std::string &tmpstr = codestr.substr(n+1);
         n = tmpstr.find("|");
         assert(n>0);
-        
+
         // check double type
         if (tmpstr.substr(0,n) == "double") {
             kernel_code = "#pragma OPENCL EXTENSION cl_khr_fp64: enable\n" +
                 tmpstr.substr(n+1);
         } else
-            kernel_code  = tmpstr.substr(n+1);        
+            kernel_code  = tmpstr.substr(n+1);
     }
 
 public:
@@ -487,7 +487,7 @@ public:
         oldSize = 0;
         oldOutPtr = false;
     }
-    ff_ocl(const std::string &codestr, 
+    ff_ocl(const std::string &codestr,
            typename T::base_type* task, size_t s):oneshot(true), Task(task,s) {
         setcode(codestr);
         oldSize = 0;
@@ -502,55 +502,55 @@ protected:
             printOCLErrorString(s,std::cerr);
         }
     }
-    
-    void svc_SetUpOclObjects(cl_device_id dId) {	                        
-        cl_int status;							
-        context = clCreateContext(NULL,1,&dId,NULL,NULL,&status);		
-        checkResult(status, "creating context");				
-        
-        cmd_queue = clCreateCommandQueue (context, dId, 0, &status);	
-        checkResult(status, "creating command-queue");			
-        
+
+    void svc_SetUpOclObjects(cl_device_id dId) {
+        cl_int status;
+        context = clCreateContext(NULL,1,&dId,NULL,NULL,&status);
+        checkResult(status, "creating context");
+
+        cmd_queue = clCreateCommandQueue (context, dId, 0, &status);
+        checkResult(status, "creating command-queue");
+
         size_t sourceSize = kernel_code.length();
-        
+
         const char* code = kernel_code.c_str();
 
         //printf("code=\n%s\n", code);
-        program = clCreateProgramWithSource(context,1, &code, &sourceSize,&status);    
-        checkResult(status, "creating program with source");		        
+        program = clCreateProgramWithSource(context,1, &code, &sourceSize,&status);
+        checkResult(status, "creating program with source");
 
-        status = clBuildProgram(program,1,&dId,NULL,NULL,NULL);		
-        checkResult(status, "building program");				
-        
-        kernel = clCreateKernel(program, kernel_name.c_str(), &status);			
-        checkResult(status, "CreateKernel");				
-        
-        status = clGetKernelWorkGroupInfo(kernel, dId,			
-                                          CL_KERNEL_WORK_GROUP_SIZE,sizeof(size_t), &workgroup_size,0); 
-        checkResult(status, "GetKernelWorkGroupInfo");			
+        status = clBuildProgram(program,1,&dId,NULL,NULL,NULL);
+        checkResult(status, "building program");
+
+        kernel = clCreateKernel(program, kernel_name.c_str(), &status);
+        checkResult(status, "CreateKernel");
+
+        status = clGetKernelWorkGroupInfo(kernel, dId,
+                                          CL_KERNEL_WORK_GROUP_SIZE,sizeof(size_t), &workgroup_size,0);
+        checkResult(status, "GetKernelWorkGroupInfo");
 
         // allocate memory on device having the initial size
         if (Task.bytesize()>0) {
-            inputBuffer = clCreateBuffer(context, CL_MEM_READ_WRITE,		
-                                         Task.bytesize(), NULL, &status);              
-            checkResult(status, "CreateBuffer input (1)");	
+            inputBuffer = clCreateBuffer(context, CL_MEM_READ_WRITE,
+                                         Task.bytesize(), NULL, &status);
+            checkResult(status, "CreateBuffer input (1)");
             oldSize = Task.bytesize();
         }
-    }									
+    }
 
-    void svc_releaseOclObjects(){						
-        clReleaseKernel(kernel);						
-        clReleaseProgram(program);						
-        clReleaseCommandQueue(cmd_queue);					
+    void svc_releaseOclObjects(){
+        clReleaseKernel(kernel);
+        clReleaseProgram(program);
+        clReleaseCommandQueue(cmd_queue);
         clReleaseMemObject(inputBuffer);
         if (oldOutPtr)
-            clReleaseMemObject(outputBuffer);					
-        clReleaseContext(context);						
-    }									
+            clReleaseMemObject(outputBuffer);
+        clReleaseContext(context);
+    }
 
     cl_mem* getInputBuffer()  const { return (cl_mem*)&inputBuffer;}
     cl_mem* getOutputBuffer() const { return (cl_mem*)&outputBuffer;}
-    
+
 protected:
     const bool oneshot;
     T Task;
@@ -559,13 +559,13 @@ protected:
     size_t workgroup_size;
     size_t oldSize;
     bool   oldOutPtr;
-    cl_context context;							
-    cl_program program;							
-    cl_command_queue cmd_queue;						
-    cl_mem inputBuffer;							
-    cl_mem outputBuffer;							
-    cl_kernel kernel;							
-    cl_int status;							
+    cl_context context;
+    cl_program program;
+    cl_command_queue cmd_queue;
+    cl_mem inputBuffer;
+    cl_mem outputBuffer;
+    cl_kernel kernel;
+    cl_int status;
 };
 
 
@@ -579,27 +579,27 @@ protected:
  * The map skeleton using OpenCL
  *
  * This class is defined in \ref map.hpp
- * 
+ *
  */
 template<typename T>
 class ff_mapOCL: public ff_ocl<T> {
 public:
 
-    ff_mapOCL(std::string codestr):ff_ocl<T>(codestr) { 
-    }    
+    ff_mapOCL(std::string codestr):ff_ocl<T>(codestr) {
+    }
 
 
     ff_mapOCL(std::string codestr, void* task, size_t s):
-        ff_ocl<T>(codestr, (typename T::base_type*)task,s) { 
+        ff_ocl<T>(codestr, (typename T::base_type*)task,s) {
         assert(task);
         ff_node::skipfirstpop(true);
-    }    
-    
-    int  run(bool=false) { return  ff_node::run(); }    
-    int  wait() { return ff_node::wait(); }    
+    }
+
+    int  run(bool=false) { return  ff_node::run(); }
+    int  wait() { return ff_node::wait(); }
 
     int run_and_wait_end() {
-        if (run()<0) return -1;           
+        if (run()<0) return -1;
         if (wait()<0) return -1;
         return 0;
     }
@@ -608,72 +608,72 @@ public:
     double ffwTime() { return ff_node::wffTime(); }
 
     const T* getTask() const { return ff_ocl<T>::getTask(); }
-    
+
 protected:
-    
-    void * svc(void* task) {				                        
+
+    void * svc(void* task) {
         cl_int   status;
         cl_event events[2];
         size_t globalThreads[1];
         size_t localThreads[1];
-        
+
         ff_ocl<T>::Task.setTask(task);
         size_t size = ff_ocl<T>::Task.size();
         void* inPtr  = ff_ocl<T>::Task.getInPtr();
         void* outPtr = ff_ocl<T>::Task.newOutPtr();
 
-        if (size  < ff_ocl<T>::workgroup_size) {					
-            localThreads[0]  = size;					
-            globalThreads[0] = size;					
-        } else {								
-            localThreads[0]  = ff_ocl<T>::workgroup_size;					
-            globalThreads[0] = nextMultipleOfIf(size,ff_ocl<T>::workgroup_size);	
-        }									
+        if (size  < ff_ocl<T>::workgroup_size) {
+            localThreads[0]  = size;
+            globalThreads[0] = size;
+        } else {
+            localThreads[0]  = ff_ocl<T>::workgroup_size;
+            globalThreads[0] = nextMultipleOfIf(size,ff_ocl<T>::workgroup_size);
+        }
 
         if ( ff_ocl<T>::oldSize < ff_ocl<T>::Task.bytesize() ) {
             if (ff_ocl<T>::oldSize != 0) clReleaseMemObject(ff_ocl<T>::inputBuffer);
-            ff_ocl<T>::inputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_WRITE,		
-                                                    ff_ocl<T>::Task.bytesize(), NULL, &status); 
-            ff_ocl<T>::checkResult(status, "CreateBuffer input (2)");	
+            ff_ocl<T>::inputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_WRITE,
+                                                    ff_ocl<T>::Task.bytesize(), NULL, &status);
+            ff_ocl<T>::checkResult(status, "CreateBuffer input (2)");
             ff_ocl<T>::oldSize = ff_ocl<T>::Task.bytesize();
         }
-        
-        if (inPtr == outPtr) {                       
+
+        if (inPtr == outPtr) {
             ff_ocl<T>::outputBuffer = ff_ocl<T>::inputBuffer;
         } else {
             if (ff_ocl<T>::oldOutPtr) clReleaseMemObject(ff_ocl<T>::outputBuffer);
-            ff_ocl<T>::outputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_WRITE,		
-                                                     ff_ocl<T>::Task.bytesize(), NULL, &status);              
-            ff_ocl<T>::checkResult(status, "CreateBuffer output");	
+            ff_ocl<T>::outputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_WRITE,
+                                                     ff_ocl<T>::Task.bytesize(), NULL, &status);
+            ff_ocl<T>::checkResult(status, "CreateBuffer output");
             ff_ocl<T>::oldOutPtr = true;
         }
-        
+
         status = clSetKernelArg(ff_ocl<T>::kernel, 0, sizeof(cl_mem), ff_ocl<T>::getInputBuffer());
-        ff_ocl<T>::checkResult(status, "setKernelArg input");				
+        ff_ocl<T>::checkResult(status, "setKernelArg input");
         status = clSetKernelArg(ff_ocl<T>::kernel, 1, sizeof(cl_mem), ff_ocl<T>::getOutputBuffer());
-        ff_ocl<T>::checkResult(status, "setKernelArg output");				
-        status = clSetKernelArg(ff_ocl<T>::kernel, 2, sizeof(cl_uint), (void *)&size);				
-        ff_ocl<T>::checkResult(status, "setKernelArg size");				
-        
-        status = clEnqueueWriteBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::inputBuffer,CL_FALSE,0,	
+        ff_ocl<T>::checkResult(status, "setKernelArg output");
+        status = clSetKernelArg(ff_ocl<T>::kernel, 2, sizeof(cl_uint), (void *)&size);
+        ff_ocl<T>::checkResult(status, "setKernelArg size");
+
+        status = clEnqueueWriteBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::inputBuffer,CL_FALSE,0,
                                       ff_ocl<T>::Task.bytesize(), ff_ocl<T>::Task.getInPtr(),
-                                      0,NULL,NULL);			
-        ff_ocl<T>::checkResult(status, "copying Task to device input-buffer");		
-        
-        status = clEnqueueNDRangeKernel(ff_ocl<T>::cmd_queue,ff_ocl<T>::kernel,1,NULL,		
-                                        globalThreads, localThreads,0,NULL,&events[0]);             
+                                      0,NULL,NULL);
+        ff_ocl<T>::checkResult(status, "copying Task to device input-buffer");
+
+        status = clEnqueueNDRangeKernel(ff_ocl<T>::cmd_queue,ff_ocl<T>::kernel,1,NULL,
+                                        globalThreads, localThreads,0,NULL,&events[0]);
 
         status |= clWaitForEvents(1, &events[0]);
-        status |= clEnqueueReadBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::outputBuffer,CL_TRUE, 0,	
-                                      ff_ocl<T>::Task.bytesize(), outPtr,0,NULL,&events[1]);     
-        status |= clWaitForEvents(1, &events[1]);				
+        status |= clEnqueueReadBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::outputBuffer,CL_TRUE, 0,
+                                      ff_ocl<T>::Task.bytesize(), outPtr,0,NULL,&events[1]);
+        status |= clWaitForEvents(1, &events[1]);
 
-        clReleaseEvent(events[0]);					
-        clReleaseEvent(events[1]);					
-         
+        clReleaseEvent(events[0]);
+        clReleaseEvent(events[1]);
+
         //return (ff_ocl<T>::oneshot?NULL:task);
         return (ff_ocl<T>::oneshot?NULL:outPtr);
-    }   
+    }
 };
 
 
@@ -684,26 +684,26 @@ protected:
  *
  * \brief The reduce skeleton using OpenCL
  *
- * 
+ *
  */
 template<typename T>
 class ff_reduceOCL: public ff_ocl<T> {
 public:
 
-    ff_reduceOCL(std::string codestr):ff_ocl<T>(codestr) {}    
+    ff_reduceOCL(std::string codestr):ff_ocl<T>(codestr) {}
 
 
     ff_reduceOCL(std::string codestr, void* task, size_t s):
-        ff_ocl<T>(codestr, (typename T::base_type*)task,s) { 
+        ff_ocl<T>(codestr, (typename T::base_type*)task,s) {
 
         ff_node::skipfirstpop(true);
-    }    
-    
-    int  run(bool=false) { return  ff_node::run(); }    
-    int  wait() { return ff_node::wait(); }    
+    }
+
+    int  run(bool=false) { return  ff_node::run(); }
+    int  wait() { return ff_node::wait(); }
 
     int run_and_wait_end() {
-        if (run()<0) return -1;           
+        if (run()<0) return -1;
         if (wait()<0) return -1;
         return 0;
     }
@@ -724,8 +724,8 @@ protected:
     /*!
      * Computes the number of threads and blocks to use for the reduction kernel.
      */
-    inline void getBlocksAndThreads(const size_t size, 
-                                    const size_t maxBlocks, const size_t maxThreads, 
+    inline void getBlocksAndThreads(const size_t size,
+                                    const size_t maxBlocks, const size_t maxThreads,
                                     size_t & blocks, size_t &threads) {
 
         threads = (size < maxThreads*2) ? nextPowerOf2((size + 1)/ 2) : maxThreads;
@@ -733,12 +733,12 @@ protected:
         blocks  = std::min(maxBlocks, blocks);
     }
 
-    void * svc(void* task) {				                        
+    void * svc(void* task) {
         cl_int   status = CL_SUCCESS;
         cl_event events[2];
         size_t globalThreads[1];
         size_t localThreads[1];
-        
+
         ff_ocl<T>::Task.setTask(task);
         size_t size = ff_ocl<T>::Task.size();
         size_t elemSize = ff_ocl<T>::Task.bytesize()/size;
@@ -748,32 +748,32 @@ protected:
         /* 64 and 256 are the max number of blocks and threads we want to use */
         getBlocksAndThreads(size, 64, 256, numBlocks, numThreads);
 
-        size_t outMemSize = 
-            (numThreads <= 32) ? (2 * numThreads * elemSize) : (numThreads * elemSize); 
+        size_t outMemSize =
+            (numThreads <= 32) ? (2 * numThreads * elemSize) : (numThreads * elemSize);
 
         localThreads[0]  = numThreads;
         globalThreads[0] = numBlocks * numThreads;
 
-        ff_ocl<T>::inputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_ONLY,ff_ocl<T>::Task.bytesize(), NULL, &status);     
+        ff_ocl<T>::inputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_ONLY,ff_ocl<T>::Task.bytesize(), NULL, &status);
         ff_ocl<T>::checkResult(status, "CreateBuffer input (3)");
 
         ff_ocl<T>::outputBuffer = clCreateBuffer(ff_ocl<T>::context, CL_MEM_READ_WRITE,numBlocks*elemSize, NULL, &status);
-        ff_ocl<T>::checkResult(status, "CreateBuffer output");					
-        
-        status |= clSetKernelArg(ff_ocl<T>::kernel, 0, sizeof(cl_mem), ff_ocl<T>::getInputBuffer());			
+        ff_ocl<T>::checkResult(status, "CreateBuffer output");
+
+        status |= clSetKernelArg(ff_ocl<T>::kernel, 0, sizeof(cl_mem), ff_ocl<T>::getInputBuffer());
         status |= clSetKernelArg(ff_ocl<T>::kernel, 1, sizeof(cl_mem), ff_ocl<T>::getOutputBuffer());
-        status |= clSetKernelArg(ff_ocl<T>::kernel, 2, sizeof(cl_uint), (void *)&size);				
+        status |= clSetKernelArg(ff_ocl<T>::kernel, 2, sizeof(cl_uint), (void *)&size);
         status != clSetKernelArg(ff_ocl<T>::kernel, 3, outMemSize, NULL);
-        checkResult(status, "setKernelArg ");				
-        
-        status = clEnqueueWriteBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::inputBuffer,CL_FALSE,0,	
+        checkResult(status, "setKernelArg ");
+
+        status = clEnqueueWriteBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::inputBuffer,CL_FALSE,0,
                                       ff_ocl<T>::Task.bytesize(), ff_ocl<T>::Task.getInPtr(),
-                                      0,NULL,NULL);			
-        ff_ocl<T>::checkResult(status, "copying Task to device input-buffer");		
-        
-        status = clEnqueueNDRangeKernel(ff_ocl<T>::cmd_queue,ff_ocl<T>::kernel,1,NULL,		
-                                        globalThreads,localThreads,0,NULL,&events[0]);             
-        status = clWaitForEvents(1, &events[0]);				
+                                      0,NULL,NULL);
+        ff_ocl<T>::checkResult(status, "copying Task to device input-buffer");
+
+        status = clEnqueueNDRangeKernel(ff_ocl<T>::cmd_queue,ff_ocl<T>::kernel,1,NULL,
+                                        globalThreads,localThreads,0,NULL,&events[0]);
+        status = clWaitForEvents(1, &events[0]);
 
         // Sets the kernel arguments for second reduction
         size = numBlocks;
@@ -781,26 +781,26 @@ protected:
         status |= clSetKernelArg(ff_ocl<T>::kernel, 1, sizeof(cl_mem),ff_ocl<T>::getOutputBuffer());
         status |= clSetKernelArg(ff_ocl<T>::kernel, 2, sizeof(cl_uint),(void*)&size);
         status |= clSetKernelArg(ff_ocl<T>::kernel, 3, outMemSize, NULL);
-        ff_ocl<T>::checkResult(status, "setKernelArg ");			
+        ff_ocl<T>::checkResult(status, "setKernelArg ");
 
         localThreads[0]  = numThreads;
         globalThreads[0] = numThreads;
 
-        status = clEnqueueNDRangeKernel(ff_ocl<T>::cmd_queue,ff_ocl<T>::kernel,1,NULL,		
-                                        globalThreads,localThreads,0,NULL,&events[0]); 
+        status = clEnqueueNDRangeKernel(ff_ocl<T>::cmd_queue,ff_ocl<T>::kernel,1,NULL,
+                                        globalThreads,localThreads,0,NULL,&events[0]);
         void* outPtr = ff_ocl<T>::Task.newOutPtr();
         status |= clWaitForEvents(1, &events[0]);
-        status |= clEnqueueReadBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::outputBuffer,CL_TRUE, 0,	
-                                      elemSize, outPtr ,0,NULL,&events[1]);          
+        status |= clEnqueueReadBuffer(ff_ocl<T>::cmd_queue,ff_ocl<T>::outputBuffer,CL_TRUE, 0,
+                                      elemSize, outPtr ,0,NULL,&events[1]);
         status |= clWaitForEvents(1, &events[1]);
-        ff_ocl<T>::checkResult(status, "ERROR during OpenCL computation");		
+        ff_ocl<T>::checkResult(status, "ERROR during OpenCL computation");
 
-        clReleaseEvent(events[0]);					
-        clReleaseEvent(events[1]);					
+        clReleaseEvent(events[0]);
+        clReleaseEvent(events[1]);
 
         //return (ff_ocl<T>::oneshot?NULL:task);
         return (ff_ocl<T>::oneshot?NULL:outPtr);
-    }									
+    }
 };
 
 
@@ -833,7 +833,7 @@ struct name {                                                    \
     { name->cleanup(); delete name; }
 
 
-/* The following code (mapCUDAKernerl, SharedMemory and reduceCUDAKernel) 
+/* The following code (mapCUDAKernerl, SharedMemory and reduceCUDAKernel)
  * has been taken from the SkePU CUDA code
  * http://www.ida.liu.se/~chrke/skepu/
  *
@@ -843,7 +843,7 @@ template <typename T, typename kernelF>
 __global__ void mapCUDAKernel(kernelF K, T* input, T* output, size_t size) {
     unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int gridSize = blockDim.x*gridDim.x;
-    
+
     while(i < size) {
         output[i] = K.K(input[i]);
         i += gridSize;
@@ -870,7 +870,7 @@ struct SharedMemory
     }
 };
 
-// specialize for double to avoid unaligned memory 
+// specialize for double to avoid unaligned memory
 // access compile errors
 template<>
 struct SharedMemory<double>
@@ -899,40 +899,40 @@ __global__ void reduceCUDAKernel(kernelF K, T *input, T *output, size_t sizen) {
     unsigned int tid = threadIdx.x;
     unsigned int i = blockIdx.x*blockSize*2 + threadIdx.x;
     unsigned int gridSize = blockSize*2*gridDim.x;
-    
+
     T result = 0;
-    
+
     if(i < size) {
         result = input[i];
         // ensure we don't read out of bounds -- this is optimized away for powerOf2 sized arrays
 
         // There we pass it always false
-        if (nIsPow2 || i + blockSize < n) 
+        if (nIsPow2 || i + blockSize < n)
             result = K.K(result, input[i+blockSize]);
         i += gridSize;
     }
 
-	// we reduce multiple elements per thread.  The number is determined by the 
+	// we reduce multiple elements per thread.  The number is determined by the
     // number of active thread blocks (via gridDim).  More blocks will result
     // in a larger gridSize and therefore fewer elements per thread
     while(i < size) {
         result = reduceFunc.CU(result, input[i]);
         // ensure we don't read out of bounds -- this is optimized away for powerOf2 sized arrays
-        if (nIsPow2 || i + blockSize < n) 
+        if (nIsPow2 || i + blockSize < n)
             result = K.K(result, input[i+blockSize]);
         i += gridSize;
     }
 
-    // each thread puts its local sum into shared memory 
+    // each thread puts its local sum into shared memory
     sdata[tid] = result;
-    
+
     __syncthreads();
 
     // do reduction in shared mem
     if (blockSize >= 512) { if (tid < 256) { sdata[tid] = result = K.K(result, sdata[tid + 256]); } __syncthreads(); }
     if (blockSize >= 256) { if (tid < 128) { sdata[tid] = result = K.K(result, sdata[tid + 128]); } __syncthreads(); }
     if (blockSize >= 128) { if (tid <  64) { sdata[tid] = result = K.K(result, sdata[tid +  64]); } __syncthreads(); }
-    
+
     if (tid < 32)  {
         // now that we are using warp-synchronous programming (below)
         // we need to declare our shared memory volatile so that the compiler
@@ -945,9 +945,9 @@ __global__ void reduceCUDAKernel(kernelF K, T *input, T *output, size_t sizen) {
         if (blockSize >=   4) { smem[tid] = result = K.K(result, smem[tid +  2]); }
         if (blockSize >=   2) { smem[tid] = result = K.K(result, smem[tid +  1]); }
     }
-    
-    // write result for this block to global mem 
-    if (tid == 0) 
+
+    // write result for this block to global mem
+    if (tid == 0)
         output[blockIdx.x] = sdata[0];
 }
 #endif
@@ -962,7 +962,7 @@ __global__ void reduceCUDAKernel(kernelF K, T *input, T *output, size_t sizen) {
  * The map skeleton using OpenCL
  *
  * This class is defined in \ref map.hpp
- * 
+ *
  */
 template<typename T, typename kernelF>
 class ff_mapCUDA: public ff_node {
@@ -972,22 +972,22 @@ public:
         maxThreads=maxBlocks=0;
         oldSize=0;
         in_buffer = out_buffer = NULL;
-    }    
+    }
 
     ff_mapCUDA(kernelF *mapF, void* task, size_t s):
-        oneshot(true),Task((typename T::base_type*)task,s), kernel(mapF) { 
+        oneshot(true),Task((typename T::base_type*)task,s), kernel(mapF) {
         assert(task);
         ff_node::skipfirstpop(true);
         maxThreads=maxBlocks=0;
         oldSize=0;
         in_buffer = out_buffer = NULL;
-    }    
-    
-    int  run(bool=false) { return  ff_node::run(); }    
-    int  wait() { return ff_node::wait(); }    
+    }
+
+    int  run(bool=false) { return  ff_node::run(); }
+    int  wait() { return ff_node::wait(); }
 
     int run_and_wait_end() {
-        if (run()<0) return -1;           
+        if (run()<0) return -1;
         if (wait()<0) return -1;
         return 0;
     }
@@ -998,35 +998,35 @@ public:
     const T* getTask() const { return &Task; }
 
     void cleanup() { if (kernel) delete kernel; }
-    
+
 protected:
-    
+
     int svc_init() {
         int deviceID = 0;         // FIX:  we have to manage multiple devices
         cudaDeviceProp deviceProp;
 
-        cudaSetDevice(deviceID);         
+        cudaSetDevice(deviceID);
         if (cudaGetDeviceProperties(&deviceProp, deviceID) != cudaSuccess)
             error("mapCUDA, error getting device properties\n");
-        
-        if(deviceProp.major == 1 && deviceProp.minor < 2) 
+
+        if(deviceProp.major == 1 && deviceProp.minor < 2)
             maxThreads = 256;
         else
             maxThreads = deviceProp.maxThreadsPerBlock;
         maxBlocks = deviceProp.maxGridSize[0];
-        
+
         if(cudaStreamCreate(&stream) != cudaSuccess)
             error("mapCUDA, error creating stream\n");
 
         // allocate memory on device having the initial size
-        if(cudaMalloc(&in_buffer, Task.bytesize()) != cudaSuccess) 
+        if(cudaMalloc(&in_buffer, Task.bytesize()) != cudaSuccess)
             error("mapCUDA error while allocating mmemory on device\n");
         oldSize = Task.bytesize();
 
         return 0;
     }
-    
-    void * svc(void* task) {				                        
+
+    void * svc(void* task) {
         Task.setTask(task);
         size_t size = Task.size();
 
@@ -1035,19 +1035,19 @@ protected:
 
         if (oldSize < Task.bytesize()) {
             cudaFree(in_buffer);
-            if(cudaMalloc(&in_buffer, Task.bytesize()) != cudaSuccess) 
+            if(cudaMalloc(&in_buffer, Task.bytesize()) != cudaSuccess)
                 error("mapCUDA error while allocating mmemory on device\n");
         }
-        
+
         // async transfer data to GPU
-        cudaMemcpyAsync(in_buffer, inPtr, Task.bytesize(), cudaMemcpyHostToDevice, stream); 
+        cudaMemcpyAsync(in_buffer, inPtr, Task.bytesize(), cudaMemcpyHostToDevice, stream);
 
         if (inPtr == outPtr) {
             out_buffer = in_buffer;
         } else {
             if (oldSize < Task.bytesize()) {
                 if (out_buffer) cudaFree(out_buffer);
-                if(cudaMalloc(&out_buffer, Task.bytesize()) != cudaSuccess) 
+                if(cudaMalloc(&out_buffer, Task.bytesize()) != cudaSuccess)
                     error("mapCUDA error while allocating mmemory on device (output buffer)\n");
             }
         }
@@ -1055,27 +1055,27 @@ protected:
 
         size_t thxblock = std::min(maxThreads, size);
         size_t blockcnt = std::min(size/thxblock + (size%thxblock == 0 ?0:1), maxBlocks);
-            
-        mapCUDAKernel<<<blockcnt,thxblock,0,stream>>>(*kernel, in_buffer, out_buffer, size); 
-        cudaMemcpyAsync(outPtr, out_buffer, Task.bytesize(), cudaMemcpyDeviceToHost, stream); 
-        cudaStreamSynchronize(stream); 
-        
+
+        mapCUDAKernel<<<blockcnt,thxblock,0,stream>>>(*kernel, in_buffer, out_buffer, size);
+        cudaMemcpyAsync(outPtr, out_buffer, Task.bytesize(), cudaMemcpyDeviceToHost, stream);
+        cudaStreamSynchronize(stream);
+
         //return (oneshot?NULL:task);
         return (oneshot?NULL:outPtr);
-    }   
+    }
 
     void svc_end() {
-        if (in_buffer != out_buffer) 
+        if (in_buffer != out_buffer)
             if (out_buffer) cudaFree(out_buffer);
         if (in_buffer) cudaFree(in_buffer);
-        if(cudaStreamDestroy(stream) != cudaSuccess) 
+        if(cudaStreamDestroy(stream) != cudaSuccess)
             error("mapCUDA, error destroying stream\n");
     }
 private:
     const bool   oneshot;
     T            Task;
     kernelF     *kernel;     // user function
-    cudaStream_t stream;     
+    cudaStream_t stream;
     size_t       maxThreads;
     size_t       maxBlocks;
     size_t       oldSize;
@@ -1084,12 +1084,12 @@ private:
 };
 
 #endif /* FF_CUDA */
-    
+
 /*!
 *  @}
 *  \endlink
 */
-    
+
 } // namespace ff
 
 #endif /* FF_MAP_HPP */

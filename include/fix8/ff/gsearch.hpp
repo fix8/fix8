@@ -1,13 +1,13 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \link
  *  \file gsearch.hpp
  *  \ingroup high_level_patterns_shared_memory
  *
  *  \brief This file implements the graph search skeleton.
  */
- 
+
 #ifndef FF_GSEARCH_HPP
 #define FF_GSEARCH_HPP
 /* ***************************************************************************
@@ -33,7 +33,7 @@
 #include <bitset>
 #include <algorithm>
 
-#include <ff/farm.hpp>
+#include <fix8/ff/farm.hpp>
 
 namespace ff {
 
@@ -42,21 +42,21 @@ template <typename T>
 class gnode_t {
 public:
     typedef T node_type;
-    
+
     gnode_t(const long nodeid, const T& elem):nodeid(nodeid),elem(elem) {}
-    
+
     /// compare operator
     inline bool operator==(const gnode_t &node) const {
 	return (elem == node.getElement());
     }
-    
+
     /// returns the list of output nodes
     inline void out_nodes(std::deque<gnode_t*> &out) const {
 	out = outNodes;
     }
-    
+
     /// adds one node to the graph
-    inline void add_node(gnode_t*const t) { outNodes.push_back(t); }  
+    inline void add_node(gnode_t*const t) { outNodes.push_back(t); }
     /// returns the base element of the node
     inline const T& getElement() const { return elem;}
     /// returns the node identifier
@@ -76,20 +76,20 @@ protected:
     // worker class
     class Worker: public ff_node {
     public:
-	Worker(long *flag, bool all=false): 
+	Worker(long *flag, bool all=false):
 	    tosearch(NULL),foundflag(flag),all(all) {}
-	
-	void setNodeToSearch(T*const n, bool a=false) { 
-	    tosearch=n; 
+
+	void setNodeToSearch(T*const n, bool a=false) {
+	    tosearch=n;
 	    found.clear();
 	    all=a;
 	}
 	inline void *svc(void *t) {
-	    if (!all && *foundflag) return NULL;       
+	    if (!all && *foundflag) return NULL;
 	    T *node = static_cast<T*>(t);
-	    if (*tosearch == *node) { 
-		found.push_back(node); 
-		*foundflag=true; 
+	    if (*tosearch == *node) {
+		found.push_back(node);
+		*foundflag=true;
 		return (all?t:NULL);
 	    }
 	    return t;
@@ -104,21 +104,21 @@ protected:
 
     // scheduler class
     class Emitter: public ff_node {
-    public:	
+    public:
 	enum {CHECK_FOUND_N=256};
 
-	Emitter(const std::vector<ff_node*> &W, const long &foundflag, const bool all=false):
+	Emitter(const std::vector<fix8/ff_node*> &W, const long &foundflag, const bool all=false):
 	    foundflag(foundflag),W(W),start(NULL),counter(0),all(all) {}
-	
-	void setStart(T*const n) { start = n;}    
+
+	void setStart(T*const n) { start = n;}
 	void setNodeToSearch(T*const n, bool a=false) {
 	    all = a;
 	    for(auto w: W) ((Worker*)w)->setNodeToSearch(n,all);
 	}
-	
-	inline int svc_init() { 
-	    mask.reset(); 
-	    counter=0; 
+
+	inline int svc_init() {
+	    mask.reset();
+	    counter=0;
 	    return 0;
 	}
 	inline void *svc(void *t) {
@@ -134,12 +134,12 @@ protected:
 		    mask.set(n->getId());
 		    ff_send_out((void*)n);
 		}
-		return GO_ON;      
+		return GO_ON;
 	    }
 	    --counter;
 	    if (!all && foundflag>0) return NULL;
 	    const T &node = *(static_cast<T*>(t));
-	    
+
 	    std::deque<T*> outNodes;
 	    node.out_nodes(outNodes);
 	    auto k =0;
@@ -159,7 +159,7 @@ protected:
 	}
     protected:
 	const long                    &foundflag;
-	const std::vector<ff_node*>   &W;
+	const std::vector<fix8/ff_node*>   &W;
 	T                             *start;
 	unsigned long                  counter;
 	bool                           all;
@@ -173,10 +173,10 @@ private:
     ff_farm<>  *farm;
     Emitter    *scheduler;
     T          *start;
-    std::vector<ff_node*> W;
+    std::vector<fix8/ff_node*> W;
     bool        all;
 public:
-    
+
     ff_graphsearch(const int nw=ff_numCores(), const bool all=false):found(0),start(NULL),all(all) {
         for(int i=0;i<nw;++i) W.push_back(new Worker(&found,all));
         farm = new ff_farm<>(false, 524288*nw, 524800*nw, false, nw, true);
@@ -188,7 +188,7 @@ public:
             error("running farm ff_graphsearch\n");
         } else farm->wait_freezing();
     }
-    
+
     ~ff_graphsearch() {
         found = 1;
         if (farm) farm->run_and_wait_end();
@@ -200,10 +200,10 @@ public:
         if (scheduler) delete scheduler;
         if (farm) delete farm;
     }
-    
+
     /// sets the starting node
     void setStart(T *const st) { start = st;}
-    
+
     // One shot search. It returns just one result (valid only if the return value is true)
     inline bool search(T *const st, T* const search, T *&result, const int nw=-1) {
         if (nw > (int)W.size()) {
@@ -211,13 +211,13 @@ public:
         }
         found = 0;
         scheduler->setStart(st);
-        scheduler->setNodeToSearch(search); 
+        scheduler->setNodeToSearch(search);
         resetqueues();
         farm->run_then_freeze(nw);
         farm->wait_freezing();
         if (found > 0) {
             for(auto w : W) {
-                const std::deque<T*> &r = ((Worker*)w)->Found(); 
+                const std::deque<T*> &r = ((Worker*)w)->Found();
                 if (r.size()) {
                     result = r.back();
                     return true;
@@ -226,7 +226,7 @@ public:
         }
         return false;
     }
-    
+
     /// One shot search. It returns all results.
     inline bool search(T *const st, T* const search, std::deque<T*> &result, const int nw=-1) {
         if (nw > (int)W.size()) {
@@ -234,13 +234,13 @@ public:
         }
         found = 0;
         scheduler->setStart(st);
-        scheduler->setNodeToSearch(search,true); 
+        scheduler->setNodeToSearch(search,true);
         resetqueues();
         farm->run_then_freeze(nw);
         farm->wait_freezing();
         if (found > 0) {
             for(auto w : W) {
-                const std::deque<T*> &r = ((Worker*)w)->Found(); 
+                const std::deque<T*> &r = ((Worker*)w)->Found();
                 if (r.size()) {
                     for(auto r1: r) result.push_back(r1);
                 }
@@ -249,7 +249,7 @@ public:
         }
         return false;
     }
-    
+
     int svc_init() {
         if (!start) {
             error("ff_graphsearch:svc_init starting pointer not set\n");
@@ -257,7 +257,7 @@ public:
         }
         return 0;
     }
-    inline void *svc(void *task) {	
+    inline void *svc(void *task) {
         T *tosearch  = static_cast<T*>(task);
         T *result    = tosearch;
         search(start, tosearch, result);

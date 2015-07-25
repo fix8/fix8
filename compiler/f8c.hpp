@@ -206,14 +206,14 @@ inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.Ge
 //-----------------------------------------------------------------------------------------
 class push_dir
 {
-	char _cwd[MAX_FLD_LENGTH];
+	char _cwd[FIX8_MAX_FLD_LENGTH];
 
 	void getdir()
 	{
 #ifdef _MSC_VER
-		if (_getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+		if (_getcwd(_cwd, FIX8_MAX_FLD_LENGTH) == 0)
 #else
-		if (::getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+		if (::getcwd(_cwd, FIX8_MAX_FLD_LENGTH) == 0)
 #endif
 		{
 			std::ostringstream ostr;
@@ -247,4 +247,4 @@ public:
 
 } // FIX8
 
-#endif // _F8_F8C_HPP_
+#endif // FIX8_F8C_HPP_
