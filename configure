@@ -20594,7 +20594,7 @@ fi
 if test "${with_poco+set}" = set; then :
   withval=$with_poco;
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
-	LDFLAGS="$LDFLAGS -L${withval}OD/lib"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
 
 fi
 
