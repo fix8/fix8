@@ -409,7 +409,7 @@ AC_ARG_WITH(poco,
   AS_HELP_STRING([--with-poco=DIR],[location of Poco]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
-	LDFLAGS="$LDFLAGS -L${withval}OD/lib"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
 AC_MSG_CHECKING(for Poco)
