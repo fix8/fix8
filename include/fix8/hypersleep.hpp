@@ -197,5 +197,5 @@ inline int hypersleep (unsigned amt, hyperunits_t units)
 //----------------------------------------------------------------------------------------
 } // namespace FIX8_HYPERSLEEP_HPP_
 
-#endif //
+#endif // FIX8_HYPERSLEEP_HPP_
 

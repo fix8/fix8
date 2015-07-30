@@ -267,7 +267,7 @@ void Session::update_persist_seqnums()
 {
 	if (_persist)
 	{
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+		f8_scoped_spin_lock guard(_per_spl, _connection && _connection->get_pmodel() == pm_coro);
 		_persist->put(_next_send_seq, _next_receive_seq);
 		//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 	}

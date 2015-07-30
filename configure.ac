@@ -269,11 +269,11 @@ AC_ARG_WITH(maxmsglen,
 	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=8192)])
 ],[])
 
-AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 1024, [Maximum length of a FIX field in bytes])
+AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 2048, [Maximum length of a FIX field in bytes])
 AC_ARG_WITH(maxfldlen,
-  AS_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=1024)]),
+  AS_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=2048)]),
 [
-	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
+	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=2048)])
 ],[])
 
 AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default number of precision digits for floating point fields])

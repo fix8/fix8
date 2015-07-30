@@ -213,7 +213,7 @@ public:
 		_groups(g_count)
 	{
 		if (!exist(xmlfile))
-			throw ConfigurationError("server config file not found", xmlfile);
+			throw ConfigurationError("config file not found", xmlfile);
 		if (do_process)
 			process();
 	}
