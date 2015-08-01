@@ -1567,7 +1567,7 @@ Optional Packages:
                           Percentage of message fields to reserve for
                           additional fields
   --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
-  --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
+  --with-maxfldlen=VALUE  Maximum length of a FIX field (default=2048)
   --with-precision-digits=VALUE
                           Default number of precision digits for floating
                           point fields (default=2)
@@ -20271,7 +20271,7 @@ fi
 
 
 cat >>confdefs.h <<_ACEOF
-#define MAX_FLD_LENGTH 1024
+#define MAX_FLD_LENGTH 2048
 _ACEOF
 
 

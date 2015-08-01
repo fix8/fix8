@@ -1073,6 +1073,14 @@ public:
 	    \return pointer to trailer */
 	MessageBase *Trailer() const { return _trailer; }
 
+	/*! Get a pointer to the message header, non const version.
+	    \return pointer to header */
+	MessageBase *Header() { return _header; }
+
+	/*! Get a pointer to the message trailer, non const version.
+	    \return pointer to trailer */
+	MessageBase *Trailer() { return _trailer; }
+
 	/*! Decode from string.
 	    \param from source string
 	    \param offset in bytes to decode from

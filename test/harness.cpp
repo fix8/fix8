@@ -494,6 +494,8 @@ bool MyMenu::load_msgs(const string& fname)
 		if (_session.get_sid().same_side_sender_comp_id(sci) && _session.get_sid().same_side_target_comp_id(tci))
 		{
 			++loaded;
+			delete msg->Header()->remove(Common_SendingTime); // will re-add on send
+			msg->setup_reuse();
 			_lst.push_back(msg);
 		}
 		else
