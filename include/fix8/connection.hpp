@@ -59,8 +59,7 @@ protected:
 	Session& _session;
 	ProcessModel _pmodel;
 	f8_thread_cancellation_token _cancellation_token;
-	f8_mutex _mutex;
-	bool _started;
+	f8_atomic<bool> _started;
 
 private:
 	f8_thread<AsyncSocket> _thread;
@@ -95,9 +94,15 @@ public:
 	/// Start the processing thread.
 	virtual void start()
 	{
-		f8_scoped_lock guard(_mutex);
-		_started = true;
-	 	_thread.start();
+		if (!_started)
+		{
+			_started = true;
+			_thread.start();
+		}
+		else
+		{
+			glout_warn << "AsyncSocket already started.";
+		}
 	}
 
 	/// Start the processing thread.
@@ -114,7 +119,6 @@ public:
 		 \return 0 on success */
 	int join()
 	{
-		f8_scoped_lock guard(_mutex);
 		if (_started)
 		{
 			_started = false;
