@@ -117,17 +117,10 @@ public:
 
 	/*! Wait till processing thead has finished.
 		 \return 0 on success */
-	int join()
-	{
-		if (_started)
-		{
-			_started = false;
-			return _thread.join();
-		}
+	int join() { return _started ? _thread.join() : 0; }
 
-		return 0;
-	}
-
+	/*! Obtain the thread cancellation token
+		 \return the token */
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
