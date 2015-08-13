@@ -478,6 +478,9 @@ bool MyMenu::send_msg()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::save_msg(const string& fname, Message *msg)
 {
+#if !defined FIX8_RAW_MSG_SUPPORT
+	cerr << endl << "RAW_MSG_SUPPORT support not enabled. Run configure with --enable-rawmsgsupport" << endl;
+#else
 	if (exist(fname))
 		_ostr << endl << fname << " exists, will append message" << endl;
 	ofstream ofs(fname.c_str(), ios::app);
@@ -487,6 +490,7 @@ bool MyMenu::save_msg(const string& fname, Message *msg)
 		return false;
 	}
 	ofs << msg->get_rawmsg() << endl; // requires fix8 built with --enable-rawmsgsupport
+#endif
 	return true;
 }
 
