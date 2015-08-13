@@ -651,8 +651,8 @@ Message *Message::clone() const
 	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType.c_str()));
 	Message *msg(bme._create._do(true));
 	copy_legal(msg, true);
-	_header->copy_legal(msg->_header, true);
-	_trailer->copy_legal(msg->_trailer, true);
+	//_header->copy_legal(msg->_header, true);
+	//_trailer->copy_legal(msg->_trailer, true);
 	return msg;
 }
 
