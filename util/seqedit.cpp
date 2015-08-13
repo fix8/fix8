@@ -117,8 +117,8 @@ int main(int argc, char **argv)
 		case 'd': dump = true; break;
 		case 'i': indexonly = true; break;
 		case 'q': quiet = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
 		case ':': case '?': return 1;
 		default: break;
 		}

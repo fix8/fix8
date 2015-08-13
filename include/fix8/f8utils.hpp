@@ -559,22 +559,6 @@ struct StringLessThanNoCase
 /*! Extract a typed value from a string.
   \tparam typename
   \param source source string
-  \param defval value to return if source string is empty
-  \return the extracted value. */
-template<typename T>
-inline T get_value(const std::string& source, T defval)
-{
-	if (source.empty())
-		return defval;
-	std::istringstream istr(source);
-	T result(defval);
-	istr >> result;
-	return result;
-}
-
-/*! Extract a typed value from a string.
-  \tparam typename
-  \param source source string
   \return the extracted value. */
 template<typename T>
 inline T get_value(const std::string& source)
@@ -585,6 +569,34 @@ inline T get_value(const std::string& source)
 	return result;
 }
 
+/*! Extract a unsigned value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline unsigned get_value(const std::string& source) { return std::stoul(source); }
+
+/*! Extract a int value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline int get_value(const std::string& source) { return std::stoi(source); }
+
+/*! Extract a double value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline double get_value(const std::string& source) { return std::stod(source); }
+
+/*! Extract a float value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline float get_value(const std::string& source) { return std::stof(source); }
+
 /*! Extract a bool value from a string.
   \tparam typename
   \param source source string
@@ -594,7 +606,7 @@ inline bool get_value(const std::string& source)
 {
 	if (source.empty())
 		return false;
-#if !defined XMLENTITY_STRICT_BOOL
+#if !defined FIX8_XMLENTITY_STRICT_BOOL
 	return source % "true" || source % "yes" || source % "y" || source == "1";
 #else
 	bool result(false);

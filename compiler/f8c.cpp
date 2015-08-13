@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 		case 's': second_only = true; break;
 		case 'S': no_shared_groups = true; break;
 		case 'D': no_default_routers = true; break;
-		case 't': tabsize = get_value<unsigned>(optarg); break;
+		case 't': tabsize = stoul(optarg); break;
 		case 'p': prefix = optarg; break;
 		case 'H': precompHdr = optarg; break;
 		case 'b': binary_report(); return 0;
@@ -466,7 +466,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			FieldTrait::FieldType ft(bmitr == FieldSpec::_baseTypeMap.end() ? FieldTrait::ft_untyped : bmitr->second);
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
-				result = fspec.insert({get_value<unsigned>(number), FieldSpec(name, ft)});
+				result = fspec.insert({stoul(number), FieldSpec(name, ft)});
 			else
 			{
             if (!nowarn)

@@ -195,6 +195,7 @@ public:
 	bool delete_msgs();
 	bool print_msgs();
 	bool send_msgs();
+	bool send_msg();
 	bool write_msgs();
 	bool read_msgs();
 	bool set_lpp();
@@ -207,6 +208,7 @@ public:
 	FIX8::Message *generate_new_order_single();
 	FIX8::Message *generate_new_order_single_alternate();
 	void send_lst();
+	bool save_msg(const std::string& fname, FIX8::Message *msg);
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
 

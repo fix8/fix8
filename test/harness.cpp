@@ -144,6 +144,7 @@ const MyMenu::Handlers MyMenu::_handlers
 	{ { 'p', "Print messages" }, &MyMenu::print_msgs },
 	{ { 's', "Send messages" }, &MyMenu::send_msgs },
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
+	{ { 'S', "Send one message, optionally save before send" }, &MyMenu::send_msg },
 	{ { 't', "Toggle heartbeat message display" }, &MyMenu::toggle_heartbeats },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
@@ -222,9 +223,9 @@ int main(int argc, char **argv)
 		case 'p': replay_file = optarg; break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
-		case 'L': lines = get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
+		case 'L': lines = stoul(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -446,6 +447,46 @@ bool MyMenu::print_msgs()
 {
 	for (const auto *pp : _lst)
 		_ostr << *pp << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::send_msg()
+{
+	unique_ptr<Message> msg(_cm->RemoveMsg(_tty, _lst));
+	if (msg.get())
+	{
+		string fname;
+		_ostr << endl;
+		bool save(_cm->get_yn("Save message after send? (y/n):", true));
+		if (save)
+		{
+			_ostr << endl;
+			_ostr << "Enter filename: " << flush;
+			_cm->GetString(_tty, fname);
+		}
+		if (_cm->get_yn("Send message? (y/n):", true))
+		{
+			_session.send(msg.get(), false);
+			if (save && !fname.empty())
+				save_msg(fname, msg.get());
+		}
+	}
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::save_msg(const string& fname, Message *msg)
+{
+	if (exist(fname))
+		_ostr << endl << fname << " exists, will append message" << endl;
+	ofstream ofs(fname.c_str(), ios::app);
+	if (!ofs)
+	{
+		cerr << Str_error(errno, "Could not open file");
+		return false;
+	}
+	ofs << msg->get_rawmsg() << endl; // requires fix8 built with --enable-rawmsgsupport
 	return true;
 }
 

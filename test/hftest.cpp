@@ -210,13 +210,13 @@ int main(int argc, char **argv)
 		case 'h': print_usage(); return 0;
 		case 'l': FIX8::GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
-		case 'b': batch_size = FIX8::get_value<unsigned>(optarg); break;
-		case 'p': preload_count = FIX8::get_value<unsigned>(optarg); break;
-		case 'u': update_count = FIX8::get_value<unsigned>(optarg); break;
+		case 'b': batch_size = stoul(optarg); break;
+		case 'p': preload_count = stoul(optarg); break;
+		case 'u': update_count = stoul(optarg); break;
 		case 's': server = true; break;
 		case 'o': once = true; break;
-		case 'S': next_send = FIX8::get_value<unsigned>(optarg); break;
-		case 'R': next_receive = FIX8::get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
 		case 'q': quiet = false; break;
 		case 'r': reliable = true; break;
 		default: break;

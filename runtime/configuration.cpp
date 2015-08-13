@@ -295,7 +295,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					f8String ip, port;
 					_ipexp.SubExpr(match, logname, ip, 0, 1);
 					_ipexp.SubExpr(match, logname, port, 0, 2);
-					return new BCLogger(ip, get_value<unsigned>(port), flags, levels, delim, positions);
+					return new BCLogger(ip, stoul(port), flags, levels, delim, positions);
 				}
 
 				get_logname(which, logname, sid); // only applies to file loggers

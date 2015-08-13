@@ -224,8 +224,8 @@ int main(int argc, char **argv)
 		case 'N': session = optarg; break;
 		case 'm': multi = true; break;
 		case 'o': once = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		case 'd': dump = true; break;
