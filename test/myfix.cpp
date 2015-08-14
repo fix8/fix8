@@ -353,7 +353,7 @@ int main(int argc, char **argv)
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
-		cerr << "exception: " << e.what() << endl;
+		cerr << "std::exception: " << e.what() << endl;
 		restore_tty = true;
 		glout_error << e.what();
 	}
