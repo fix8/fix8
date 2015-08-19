@@ -74,6 +74,7 @@ public:
 	F8API void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
 	F8API virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
 	F8API virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API virtual int DeleteAllMsgs(tty_save_state& tty, MsgList& lst) const;
 
 	int get_lpp() const { return _lpp; }
 	void set_lpp(int lpp) { _lpp = lpp; }

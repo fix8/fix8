@@ -748,7 +748,7 @@ AC_ARG_ENABLE([codectiming],
 esac])
 
 AC_ARG_ENABLE([debug],
-[AS_HELP_STRING([--enable-debug],[enable DEBUG support (DEBUG) (default=no)])],
+[AS_HELP_STRING([--enable-debug],[enable DEBUG support (FIX8_DEBUG) (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging support]) ;;
 	no)  ;;

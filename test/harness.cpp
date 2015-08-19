@@ -140,7 +140,8 @@ const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'c', "Create messages" }, &MyMenu::create_msgs },
 	{ { 'e', "Edit messages" }, &MyMenu::edit_msgs },
-	{ { 'd', "Delete messages" }, &MyMenu::delete_msgs },
+	{ { 'd', "Delete one message" }, &MyMenu::delete_msg },
+	{ { 'D', "Delete all messages" }, &MyMenu::delete_msgs },
 	{ { 'p', "Print messages" }, &MyMenu::print_msgs },
 	{ { 's', "Send messages" }, &MyMenu::send_msgs },
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
@@ -288,7 +289,10 @@ int main(int argc, char **argv)
 
 			for(; !term_received;)
 			{
-				cout << endl << "?=help > " << flush;
+				cout << endl;
+				if (mymenu.get_msg_cnt())
+					cout << '[' << mymenu.get_msg_cnt() << "] msgs; ";
+				cout << "?=help > " << flush;
 				char ch{};
 				mymenu.get_istr().get(ch);
 				cout << ch << endl;
@@ -329,6 +333,12 @@ void myfix_session_client::state_change(const FIX8::States::SessionStates before
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
+}
+
+//-----------------------------------------------------------------------------------------
+void myfix_session_server::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -420,9 +430,16 @@ bool MyMenu::edit_msgs()
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::delete_msgs()
+bool MyMenu::delete_msg()
 {
 	_cm->DeleteMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::delete_msgs()
+{
+	_cm->DeleteAllMsgs(_tty, _lst);
 	return true;
 }
 
@@ -459,9 +476,9 @@ bool MyMenu::send_msg()
 		string fname;
 		_ostr << endl;
 		bool save(_cm->get_yn("Save message after send? (y/n):", true));
+		_ostr << endl;
 		if (save)
 		{
-			_ostr << endl;
 			_ostr << "Enter filename: " << flush;
 			_cm->GetString(_tty, fname);
 		}
@@ -531,7 +548,10 @@ bool MyMenu::load_msgs(const string& fname)
 			continue;
 		Message *msg(Message::factory(TEX::ctx(), buffer));
 		if (msg->is_admin())
+		{
+			++skipped;
 			continue;
+		}
 		sender_comp_id sci;
 		msg->Header()->get(sci);
 		target_comp_id tci;
@@ -555,6 +575,16 @@ bool MyMenu::load_msgs(const string& fname)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::read_msgs()
 {
+   char cwd[FIX8_MAX_FLD_LENGTH];
+   _ostr << "Playback (*.playback) files in ";
+#ifdef _MSC_VER
+	_ostr << _getcwd(cwd, sizeof(cwd)) << endl;
+   if (system("dir *.playback"));
+#else
+	_ostr << getcwd(cwd, sizeof(cwd)) << endl;
+   if (system("ls -l *.playback"));
+#endif
+   _ostr << endl;
 	_ostr << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())

@@ -374,6 +374,18 @@ Message *ConsoleMenu::RemoveMsg(tty_save_state& tty, MsgList& lst) const
 }
 
 //-------------------------------------------------------------------------------------------------
+int ConsoleMenu::DeleteAllMsgs(tty_save_state& tty, MsgList& lst) const
+{
+	if (lst.size() && get_yn("Delete all msgs? (y/n):", true))
+	{
+		for_each(lst.begin(), lst.end(), [](const Message *pp){ delete pp; });
+		lst.clear();
+	}
+
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
 int ConsoleMenu::DeleteMsgs(tty_save_state& tty, MsgList& lst) const
 {
 	for (;;)

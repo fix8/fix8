@@ -438,6 +438,12 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
+void myfix_session_server::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
+}
+
+//-----------------------------------------------------------------------------------------
 bool myfix_session_server::sample_scheduler_callback()
 {
 	cout << "myfix_session_server::sample_scheduler_callback Hello!" << endl;
