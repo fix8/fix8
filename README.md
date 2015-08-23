@@ -285,13 +285,13 @@ Please refer to the following page:
 the **[Fix8 Developer Group](https://groups.google.com/forum/#!forum/fix8-developer)**.
 If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-1. *Do not* email us directly. **Support questions sent directly to us will be anonymously redirected to the support group.**
+1. *Do not* email us directly. **Support questions sent directly to us will be redirected to the support group.**
 
 1. *Do not* post the same question to both fix8-support and fix8-developer groups.
 
 1. If you are considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
-These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes and some will relate
-to your build, your code and your configuration and will not be a problem with the framework implementation. Make sure you have eliminated
+These aren't the same thing. So, for example, if your application is crashing, there are many possible causes and some will relate
+to your build, your code and your configuration and will *not be a problem with the framework implementation*. Make sure you have eliminated
 these possibilities and that you have reviewed topics in the [Fix8 Support Group](https://groups.google.com/forum/#!forum/fix8-support) and
 the [Fix8 Developer Group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
 
