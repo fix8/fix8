@@ -203,7 +203,7 @@ struct Schedule
 	int _utc_offset, _start_day, _end_day;
 	Tickval::ticks _toffset;
 
-	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
+	Schedule() : _start(Tickval::errorticks()), _end(Tickval::errorticks()), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
     Schedule(Tickval start, Tickval end, Tickval duration=Tickval(), int utc_offset=0,
@@ -526,7 +526,7 @@ protected:
 		return bme->_create._do(true);
 	}
 
-#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 	/*! Get a string representing the current thread policy for the given thread
 	  e.g. SCHED_OTHER, SCHED_RR, SCHED_FIFO
 	    \param id thread id
@@ -641,6 +641,11 @@ public:
 	    \param msg Message
 	    \return true on success */
 	F8API bool send_process(Message *msg);
+
+	/*! Modify the header if desired. Called when message is sent.
+	    \param msg Message
+	    \return number of fields added/modifed */
+	F8API virtual int modify_header(MessageBase *msg);
 
 	/// Force persister to sync next send/receive seqnums
 	F8API void update_persist_seqnums();
@@ -855,7 +860,7 @@ public:
     else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Error, FILE_LINE, std::placeholders::_2)))
 #define ssout_fatal(x) if (!x->is_loggable(FIX8::Logger::Fatal)); \
     else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Fatal, FILE_LINE, std::placeholders::_2)))
-#if defined F8_DEBUG
+#if defined FIX8_DEBUG
 #define ssout_debug(x) if (!x->is_loggable(Logger::Debug)); \
     else FIX8::log_stream(FIX8::logger_function(std::bind(&FIX8::Session::enqueue, x, std::placeholders::_1, FIX8::Logger::Debug, FILE_LINE, std::placeholders::_2)))
 #else
@@ -874,4 +879,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_SESSION_HPP_
+#endif // FIX8_SESSION_HPP_

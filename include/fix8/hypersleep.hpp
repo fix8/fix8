@@ -58,7 +58,7 @@ namespace
 	const unsigned million(thousand * thousand);
 	const int billion(thousand * million);
 
-#if defined HAVE_CLOCK_NANOSLEEP
+#if defined FIX8_HAVE_CLOCK_NANOSLEEP
 	inline int execute_clock_nanosleep(timespec ts)
 	{
 		if (ts.tv_nsec >= billion)
@@ -82,7 +82,7 @@ inline int hypersleep (unsigned amt);
 template<>
 inline int hypersleep<h_seconds>(unsigned amt)
 {
-#if defined HAVE_CLOCK_NANOSLEEP
+#if defined FIX8_HAVE_CLOCK_NANOSLEEP
    timespec ts;
    clock_gettime(CLOCK_MONOTONIC, &ts);
    ts.tv_sec += amt;
@@ -104,7 +104,7 @@ inline int hypersleep<h_seconds>(unsigned amt)
 template<>
 inline int hypersleep<h_milliseconds>(unsigned amt)
 {
-#if defined HAVE_CLOCK_NANOSLEEP
+#if defined FIX8_HAVE_CLOCK_NANOSLEEP
    timespec ts;
    clock_gettime(CLOCK_MONOTONIC, &ts);
    ts.tv_sec += (amt / thousand);
@@ -126,7 +126,7 @@ inline int hypersleep<h_milliseconds>(unsigned amt)
 template<>
 inline int hypersleep<h_microseconds>(unsigned amt)
 {
-#if defined HAVE_CLOCK_NANOSLEEP
+#if defined FIX8_HAVE_CLOCK_NANOSLEEP
    timespec ts;
    clock_gettime(CLOCK_MONOTONIC, &ts);
    ts.tv_sec += (amt / million);
@@ -148,7 +148,7 @@ inline int hypersleep<h_microseconds>(unsigned amt)
 template<>
 inline int hypersleep<h_nanoseconds>(unsigned amt)
 {
-#if defined HAVE_CLOCK_NANOSLEEP
+#if defined FIX8_HAVE_CLOCK_NANOSLEEP
    timespec ts;
    clock_gettime(CLOCK_MONOTONIC, &ts);
    ts.tv_sec += (amt / billion);
@@ -179,7 +179,7 @@ inline int hypersleep (unsigned amt, hyperunits_t units)
       { billion,   	 1  			}, // Nanoseconds
    };
 
-#if defined HAVE_CLOCK_NANOSLEEP
+#if defined FIX8_HAVE_CLOCK_NANOSLEEP
    timespec ts;
    clock_gettime(CLOCK_MONOTONIC, &ts);
    ts.tv_sec += (amt / hv[units][Div]);    // calculate time to sleep in secs
@@ -195,7 +195,7 @@ inline int hypersleep (unsigned amt, hyperunits_t units)
 }
 
 //----------------------------------------------------------------------------------------
-} // namespace FIX8
+} // namespace FIX8_HYPERSLEEP_HPP_
 
-#endif // _F8_HYPERSLEEP_
+#endif // FIX8_HYPERSLEEP_HPP_
 

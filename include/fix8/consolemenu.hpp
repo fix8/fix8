@@ -70,9 +70,11 @@ public:
 	F8API virtual int SelectRealm(const unsigned short fnum, const RealmBase *rb) const;
 	F8API Message *SelectFromMsg(MsgList& lst) const;
 	F8API virtual int CreateMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API Message *RemoveMsg(tty_save_state& tty, MsgList& lst) const;
 	F8API void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
 	F8API virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;
 	F8API virtual int DeleteMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API virtual int DeleteAllMsgs(tty_save_state& tty, MsgList& lst) const;
 
 	int get_lpp() const { return _lpp; }
 	void set_lpp(int lpp) { _lpp = lpp; }
@@ -100,4 +102,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_CONSOLEMENU_HPP_
+#endif // FIX8_CONSOLEMENU_HPP_

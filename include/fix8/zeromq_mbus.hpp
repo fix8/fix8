@@ -38,7 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_ZEROMQ_MBUS_
 
 //-------------------------------------------------------------------------------------------------
-#if defined HAS_ZEROMQ_MBUS
+#if defined FIX8_HAS_ZEROMQ_MBUS
 #include <zmq.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -111,5 +111,5 @@ public:
 } // MBUS
 } // FIX8
 
-#endif // HAS_ZEROMQ_MBUS
+#endif // FIX8_HAS_ZEROMQ_MBUS
 #endif // FIX8_ZEROMQ_MBUS_

@@ -1,12 +1,12 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \file partitioners.hpp
  *  \ingroup shared_memory_fastflow
  *
  *  \brief This file describes the partitioner used in the map skeleton.
  */
- 
+
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
 
 
 
-#include <ff/svector.hpp>
+#include <fix8/ff/svector.hpp>
 
 namespace ff {
 
@@ -51,12 +51,12 @@ namespace ff {
  */
 struct basePartition {
     basePartition():task(NULL), len(0) {}
-    
+
     inline void   setData(void* t) {task=t;}
     inline void   setLength(size_t l) {len=l;}
     inline void*  getData() { return task;}
     inline size_t getLength() { return len;}
-    
+
     void*  task;
     size_t len;
 };
@@ -70,7 +70,7 @@ struct basePartition {
  * \This struct is defined in \ref partitioners.hpp
  */
 struct basePartitionList: public basePartition {
-    basePartition& operator[](size_t n) { return pList[n]; }    
+    basePartition& operator[](size_t n) { return pList[n]; }
     const basePartition& operator[](size_t n) const { return pList[n]; }
 
     svector<basePartition> pList;
@@ -83,7 +83,7 @@ struct basePartitionList: public basePartition {
  * \brief A basic interface for the partitioner used by the Map skeleton.
  *
  * This class is defined in \ref partitioners.hpp
- */    
+ */
 class basePartitioner {
 public:
     /**
@@ -101,7 +101,7 @@ public:
      */
     virtual size_t getParts() const = 0;
 };
-    
+
 /*!
  * \class LinearPartitioner
  * \ingroup shared_memory_fastflow
@@ -117,13 +117,13 @@ class LinearPartitioner: public basePartitioner {
 public:
     typedef basePartition partition_t;
 
-    /** 
-     * Default constructor 
+    /**
+     * Default constructor
      */
     LinearPartitioner(size_t nElements, int nThreads) :
-         task(NULL), 
-         p((nElements>(size_t)nThreads) ? nThreads : nElements), 
-         q(nElements / nThreads), r(nElements % nThreads) 
+         task(NULL),
+         p((nElements>(size_t)nThreads) ? nThreads : nElements),
+         q(nElements / nThreads), r(nElements % nThreads)
     {
     }
 
@@ -135,7 +135,7 @@ public:
         P.setData(task+start);
         P.setLength(((size_t)threadId<r)?(q+1):q);
     }
-    
+
     /**
      * It sets the task.
      */
@@ -165,20 +165,20 @@ public:
 
     /** Default constructor */
     LinearPartitionerList(size_t nElements, int nThreads) :
-        task(NULL), 
-        p((nElements>(size_t)nThreads) ? nThreads : nElements), 
-        q(nElements / nThreads), r(nElements % nThreads) 
+        task(NULL),
+        p((nElements>(size_t)nThreads) ? nThreads : nElements),
+        q(nElements / nThreads), r(nElements % nThreads)
     {
     }
-    
+
     /**
      *  Get a partition
      */
     inline void getPartition(const int threadId, basePartition& P) {
         const size_t start = (threadId * q) + ((r >= (size_t)threadId) ? threadId : r);
-        
+
         basePartitionList& pList = *(basePartitionLinst*)&P;
-        
+
         T::iterator b=T->begin(), e=T->end();
         for(int i=0; b!=e; ++b, ++i) {
             if (pList[i]......) {
@@ -190,7 +190,7 @@ public:
             }
         }
     }
-    
+
     inline void setTask(void* t) { task = (T*)t; }
 
     // Returns the n. of partitions
@@ -202,7 +202,7 @@ protected:
     const size_t q;  // Num_of_Elements / Num_of_threads
     const size_t r;  // Num_of_Elements % Num_of_threads
 };
-    
+
 #endif
 
 /*!

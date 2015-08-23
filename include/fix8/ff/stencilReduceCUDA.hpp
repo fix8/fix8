@@ -21,8 +21,8 @@
  *
  *  Author:
  *    Maurizio Drocco
- *  Contributors:  
- *     Guilherme Peretti Pezzi 
+ *  Contributors:
+ *     Guilherme Peretti Pezzi
  *     Marco Aldinucci
  *     Massimo Torquati
  *
@@ -35,8 +35,8 @@
 // FF_CUDA must be defined in order to use this code!!!!
 #ifdef FF_CUDA
 #include <cuda.h>
-#include <ff/mapper.hpp>
-#include <ff/node.hpp>
+#include <fix8/ff/mapper.hpp>
+#include <fix8/ff/node.hpp>
 
 namespace ff {
 
@@ -53,23 +53,23 @@ public:
     typedef Tenv4_ Tenv4;
     typedef Tenv5_ Tenv5;
     typedef Tenv6_ Tenv6;
-    
-    baseCUDATask() : inPtr(NULL), outPtr(NULL), env1Ptr(NULL), env2Ptr(NULL), 
+
+    baseCUDATask() : inPtr(NULL), outPtr(NULL), env1Ptr(NULL), env2Ptr(NULL),
                      env3Ptr(NULL), env4Ptr(NULL), env5Ptr(NULL), env6Ptr(NULL),
-                     inDevicePtr(NULL), outDevicePtr(NULL), env1DevicePtr(NULL), 
-                     env2DevicePtr(NULL), env3DevicePtr(NULL), env4DevicePtr(NULL), 
+                     inDevicePtr(NULL), outDevicePtr(NULL), env1DevicePtr(NULL),
+                     env2DevicePtr(NULL), env3DevicePtr(NULL), env4DevicePtr(NULL),
                      env5DevicePtr(NULL), env6DevicePtr(NULL) {
         size_in = size_env1 = size_env2 = size_env3 = size_env4 = size_env5 = size_env6 = 0;
     }
     virtual ~baseCUDATask() { }
-    
+
     // user must override this method
     virtual void setTask(void* t) = 0;
     //user may override this code - BEGIN
     virtual void startMR()        {}
     virtual void beforeMR()       {}
     virtual void afterMR(void *)  {}
-    virtual void endMR()          {}    
+    virtual void endMR()          {}
     virtual bool iterCondition(Tout rVar, size_t iter) { return true; }
     virtual void swap() {}
     //user may override this code - END
@@ -93,7 +93,7 @@ public:
 
     size_t getSizeIn()   const { return size_in;   }
     size_t getSizeEnv1() const { return size_env1; }
-    size_t getSizeEnv2() const { return size_env2; }    
+    size_t getSizeEnv2() const { return size_env2; }
     size_t getSizeEnv3() const { return size_env3; }
     size_t getSizeEnv4() const { return size_env4; }
     size_t getSizeEnv5() const { return size_env5; }
@@ -138,7 +138,7 @@ public:
 
     void setReduceVar(Tout r) {	reduceVar = r;  }
     Tout getReduceVar() const { return reduceVar;  }
-    
+
 protected:
     Tin *inPtr, *inDevicePtr;
     Tout *outPtr, *outDevicePtr;
@@ -158,21 +158,21 @@ struct name {                                           \
      code                                             	\
  }                                                      \
 }
-    
+
 #define FFMAPFUNC5(name, outT, inT, param, env1T, param1, env2T, param2, env3T, param3, env4T, param4, env5T, param5, code) \
     struct name {                                                       \
         __device__ outT K(inT param, env1T *param1, env2T *param2, env3T *param3, env4T *param4, env5T *param5, void *dummy1) { \
             code                                                       \
         }                                                              \
     }
-    
+
 #define FFMAPFUNC6(name, outT, inT, param, env1T, param1, env2T, param2, env3T, param3, env4T, param4, env5T, param5, env6T, param6, code) \
     struct name {                                                       \
         __device__ outT K(inT param, env1T *param1, env2T *param2, env3T *param3, env4T *param4, env5T *param5, env6T *param6) { \
             code                                                        \
         }                                                               \
     }
-    
+
 #define FFREDUCEFUNC(name, T, param1, param2, code)	\
     struct device##name {                       \
         __device__ T K(T param1, T param2) {	\
@@ -184,7 +184,7 @@ struct name {                                           \
             code                                \
         }                                       \
     }
-    
+
 #define FFSTENCILREDUCECUDA(taskT, mapT, reduceT)			 \
     ff_stencilReduceCUDA<taskT, mapT, device##reduceT, host##reduceT>
 
@@ -206,13 +206,13 @@ template<typename T>
 __global__ void initCUDAKernel(T* data, T value, size_t size) {
     unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int gridSize = blockDim.x * gridDim.x;
-    
+
     while (i < size) {
 	data[i] = value;
 	i += gridSize;
     }
 }
-    
+
 /* The following code (mapCUDAKernerl, SharedMemory and reduceCUDAKernel)
  * has been taken from the SkePU CUDA code
  * http://www.ida.liu.se/~chrke/skepu/
@@ -222,7 +222,7 @@ template<typename kernelF, typename Tin, typename Tout, typename Tenv1, typename
 __global__ void mapCUDAKernel(kernelF K, Tin* input, Tout* output, Tenv1 *env1, Tenv2 *env2, Tenv3 *env3, Tenv4 *env4, Tenv5 *env5, Tenv6 *env6, size_t size) {
     unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int gridSize = blockDim.x * gridDim.x;
-    
+
     while (i < size) {
 	output[i] = K.K(input[i], env1, env2, env3, env4, env5, env6);
 	i += gridSize;
@@ -237,14 +237,14 @@ struct SharedMemory {
 	extern __shared__ int __smem[];
 	return (T*)__smem;
     }
-    
+
     __device__ inline operator const T*() const {
 	extern __shared__ int __smem[];
 	return (T*)__smem;
     }
 };
 
-// specialize for double to avoid unaligned memory 
+// specialize for double to avoid unaligned memory
 // access compile errors
 template<> struct SharedMemory<double> {
     __device__ inline operator double*() {
@@ -258,7 +258,7 @@ template<> struct SharedMemory<double> {
 };
 
 template<typename kernelF, typename T, typename Tenv1, typename Tenv2, typename Tenv3, typename Tenv4, typename Tenv5, typename Tenv6>
-__global__ void reduceCUDAKernel(kernelF K, T *output, T *input, Tenv1 *env1, Tenv2 *env2, Tenv3 *env3, Tenv4 *env4, Tenv5 *env5, Tenv6 *env6, 
+__global__ void reduceCUDAKernel(kernelF K, T *output, T *input, Tenv1 *env1, Tenv2 *env2, Tenv3 *env3, Tenv4 *env4, Tenv5 *env5, Tenv6 *env6,
 				 size_t size, unsigned int blockSize, bool nIsPow2) {
 
     T *sdata = SharedMemory<T>();
@@ -268,19 +268,19 @@ __global__ void reduceCUDAKernel(kernelF K, T *output, T *input, Tenv1 *env1, Te
     unsigned int tid = threadIdx.x;
     unsigned int i = blockIdx.x*blockSize*2 + threadIdx.x;
     unsigned int gridSize = blockSize*2*gridDim.x;
-    
+
     T result = 0;
-    
+
     if(i < size) {
 	result = input[i];
 	// ensure we don't read out of bounds -- this is optimized away for powerOf2 sized arrays
-	
+
 	// There we pass it always false
 	if (nIsPow2 || i + blockSize < size)
 	    result = K.K(result, input[i+blockSize]);
 	i += gridSize;
     }
-    
+
     // we reduce multiple elements per thread.  The number is determined by the
     // number of active thread blocks (via gridDim).  More blocks will result
     // in a larger gridSize and therefore fewer elements per thread
@@ -291,17 +291,17 @@ __global__ void reduceCUDAKernel(kernelF K, T *output, T *input, Tenv1 *env1, Te
 	    result = K.K(result, input[i+blockSize]);
 	i += gridSize;
     }
-    
+
     // each thread puts its local sum into shared memory
     sdata[tid] = result;
-    
+
     __syncthreads();
-    
+
     // do reduction in shared mem
     if (blockSize >= 512) {if (tid < 256) {sdata[tid] = result = K.K(result, sdata[tid + 256]);}__syncthreads();}
     if (blockSize >= 256) {if (tid < 128) {sdata[tid] = result = K.K(result, sdata[tid + 128]);}__syncthreads();}
     if (blockSize >= 128) {if (tid < 64) {sdata[tid] = result = K.K(result, sdata[tid + 64]);}__syncthreads();}
-    
+
     if (tid < 32) {
 	// now that we are using warp-synchronous programming (below)
 	// we need to declare our shared memory volatile so that the compiler
@@ -314,12 +314,12 @@ __global__ void reduceCUDAKernel(kernelF K, T *output, T *input, Tenv1 *env1, Te
 	if (blockSize >= 4) {smem[tid] = result = K.K(result, smem[tid + 2]);}
 	if (blockSize >= 2) {smem[tid] = result = K.K(result, smem[tid + 1]);}
     }
-    
+
     // write result for this block to global mem
     if (tid == 0)
 	output[blockIdx.x] = sdata[0];
 }
-    
+
 template<typename taskT, typename TkernelMap, typename TkernelReduce, typename ThostReduce>
 class ff_stencilReduceCUDA: public ff_node {
 public:
@@ -331,7 +331,7 @@ public:
     typedef typename taskT::Tenv4 Tenv4;
     typedef typename taskT::Tenv5 Tenv5;
     typedef typename taskT::Tenv6 Tenv6;
-    
+
     ff_stencilReduceCUDA(size_t maxIter_ = 1, Tout identityValue_ = (Tout)0) :
         oneShot(false), identityValue(identityValue_), iter(0), maxIter(maxIter_) {
         maxThreads = maxBlocks = 0;
@@ -342,7 +342,7 @@ public:
         kernelReduce = new TkernelReduce();
         hostReduce = new ThostReduce();
         assert(kernelMap != NULL && kernelReduce != NULL && hostReduce != NULL);
-        in_buffer   = NULL;   out_buffer  = NULL; 
+        in_buffer   = NULL;   out_buffer  = NULL;
         env1_buffer = NULL;   env2_buffer = NULL;
         env3_buffer = NULL;   env4_buffer = NULL;
         env5_buffer = NULL;   env6_buffer = NULL;
@@ -357,49 +357,49 @@ public:
         kernelReduce = new TkernelReduce();
         hostReduce = new ThostReduce();
         assert(kernelMap != NULL && kernelReduce != NULL && hostReduce != NULL);
-        in_buffer   = NULL;   out_buffer  = NULL; 
+        in_buffer   = NULL;   out_buffer  = NULL;
         env1_buffer = NULL;   env2_buffer = NULL;
         env3_buffer = NULL;   env4_buffer = NULL;
         env5_buffer = NULL;   env6_buffer = NULL;
         Task.setTask((void *)&task);
     }
 
-    virtual void setMaxThreads(const size_t mt) { maxThreads = mt; } 
+    virtual void setMaxThreads(const size_t mt) { maxThreads = mt; }
 
 protected:
     virtual ~ff_stencilReduceCUDA() {}
-    
+
     virtual bool isPureMap() {return false;}
     virtual bool isPureReduce() {return false;}
-    
+
     inline int svc_init() {
         // set the CUDA device where the node will be executed
         deviceID = get_my_id() % threadMapper::instance()->getNumCUDADevices();
         cudaDeviceProp deviceProp;
-        
+
         cudaSetDevice(deviceID);
         if (cudaGetDeviceProperties(&deviceProp, deviceID) != cudaSuccess)
             error("mapCUDA, error getting device properties\n");
-        
+
         const size_t mtxb = deviceProp.maxThreadsPerBlock;
         if (maxThreads == 0) {
             if (deviceProp.major == 1 && deviceProp.minor < 2)
                 maxThreads = 256;
             else
                 maxThreads = mtxb;
-        } else 
+        } else
             maxThreads = std::min(maxThreads, mtxb);
-        
+
         maxBlocks = deviceProp.maxGridSize[0];
-        
+
         if (cudaStreamCreate(&stream) != cudaSuccess)
             error("mapCUDA, error creating stream\n");
-        
+
         // allocate memory on device having the initial size
         //			if (cudaMalloc(&in_buffer, Task.getBytesizeIn()) != cudaSuccess)
         //			error("mapCUDA error while allocating memory on device\n");
         //			oldSize_in = Task.getBytesizeIn();
-        
+
         return 0;
     }
 
@@ -416,7 +416,7 @@ protected:
         if(cudaStreamDestroy(stream) != cudaSuccess)
             error("mapCUDA, error destroying stream\n");
     }
-    
+
     inline void *svc(void *task) {
         if (task) Task.setTask(task);
         size_t size    = Task.getSizeIn();
@@ -428,14 +428,14 @@ protected:
         Tenv4 *env4Ptr = Task.getEnv4Ptr();
         Tenv5 *env5Ptr = Task.getEnv5Ptr();
         Tenv6 *env6Ptr = Task.getEnv6Ptr();
-        
+
         size_t thxblock = std::min(maxThreads, size);
         size_t blockcnt = std::min(size / thxblock + (size % thxblock == 0 ? 0 : 1), maxBlocks);
-        
+
         size_t padded_size = (size_t)pow(2, ceil(log2((float)size)));
         size_t thxblock_r = std::min(maxThreads, padded_size);
         size_t blockcnt_r = std::min(padded_size / thxblock_r + (padded_size % thxblock_r == 0 ? 0 : 1), maxBlocks);
-        
+
         //in
         if (oldSize_in < Task.getBytesizeIn()) {
             cudaFree(in_buffer);
@@ -447,7 +447,7 @@ protected:
         initCUDAKernel<Tin><<<blockcnt_r, thxblock_r, 0, stream>>>(Task.getInDevicePtr(), (Tin)identityValue, padded_size);
         cudaMemcpyAsync(in_buffer, inPtr, Task.getBytesizeIn(),
                         cudaMemcpyHostToDevice, stream);
-        
+
         //env1
         if(env1Ptr) {
             if (oldSize_env1 < Task.getBytesizeEnv1()) {
@@ -459,7 +459,7 @@ protected:
             Task.setEnv1DevicePtr(env1_buffer);
             cudaMemcpyAsync(env1_buffer, env1Ptr, Task.getBytesizeEnv1(), cudaMemcpyHostToDevice, stream);
         }
-        
+
         //env2
         if(env2Ptr) {
             if (oldSize_env2 < Task.getBytesizeEnv2()) {
@@ -471,7 +471,7 @@ protected:
             Task.setEnv2DevicePtr(env2_buffer);
             cudaMemcpyAsync(env2_buffer, env2Ptr, Task.getBytesizeEnv2(), cudaMemcpyHostToDevice, stream);
         }
-        
+
         //env3
         if(env3Ptr) {
             if (oldSize_env3 < Task.getBytesizeEnv3()) {
@@ -483,7 +483,7 @@ protected:
             Task.setEnv3DevicePtr(env3_buffer);
             cudaMemcpyAsync(env3_buffer, env3Ptr, Task.getBytesizeEnv3(), cudaMemcpyHostToDevice, stream);
         }
-        
+
         //env4
         if(env4Ptr) {
             if (oldSize_env4 < Task.getBytesizeEnv4()) {
@@ -495,7 +495,7 @@ protected:
             Task.setEnv4DevicePtr(env4_buffer);
             cudaMemcpyAsync(env4_buffer, env4Ptr, Task.getBytesizeEnv4(), cudaMemcpyHostToDevice, stream);
         }
-	
+
         //env5
         if(env5Ptr) {
             if (oldSize_env5 < Task.getBytesizeEnv5()) {
@@ -507,7 +507,7 @@ protected:
             Task.setEnv5DevicePtr(env5_buffer);
             cudaMemcpyAsync(env5_buffer, env5Ptr, Task.getBytesizeEnv5(), cudaMemcpyHostToDevice, stream);
         }
-        
+
         //env6
         if(env6Ptr) {
             if (oldSize_env6 < Task.getBytesizeEnv6()) {
@@ -519,7 +519,7 @@ protected:
             Task.setEnv6DevicePtr(env6_buffer);
             cudaMemcpyAsync(env6_buffer, env6Ptr, Task.getBytesizeEnv6(), cudaMemcpyHostToDevice, stream);
         }
-        
+
         //TODO: in-place
         //if (inPtr == outPtr) {
         //	out_buffer = in_buffer;
@@ -534,41 +534,41 @@ protected:
         }
         Task.setOutDevicePtr(out_buffer);
         //}
-        
+
         //init kernels
         initCUDAKernel<Tout><<<blockcnt_r, thxblock_r, 0, stream>>>(Task.getOutDevicePtr(), (Tout)identityValue, padded_size);
-        
+
         //allocate memory for reduce
         Tout *reduceBlocksPtr, *reduce_buffer;
         reduceBlocksPtr = (Tout *)malloc(blockcnt_r * sizeof(Tout));
         if (cudaMalloc(&reduce_buffer, blockcnt_r * sizeof(Tout)) != cudaSuccess)
             error("mapCUDA error while allocating memory on device (reduce buffer)\n");
-        
-        iter = 0;        
-        Task.startMR();        
+
+        iter = 0;
+        Task.startMR();
         if(isPureMap()) {
             Task.swap();			// because of the next swap op
             do {
                 Task.swap();
-                
+
                 Task.beforeMR();
-                
+
                 //CUDA Map
                 mapCUDAKernel<TkernelMap, Tin, Tout, Tenv1, Tenv2, Tenv3, Tenv4, Tenv5, Tenv6><<<blockcnt, thxblock, 0, stream>>>(*kernelMap, Task.getInDevicePtr(), Task.getOutDevicePtr(), Task.getEnv1DevicePtr(), Task.getEnv2DevicePtr(), Task.getEnv3DevicePtr(), Task.getEnv4DevicePtr(), Task.getEnv5DevicePtr(), Task.getEnv6DevicePtr(), size);
-                
+
                 Task.afterMR(task);
-                
+
             }while (++iter < maxIter && Task.iterCondition(reduceVar, iter));
-            
+
             cudaMemcpyAsync(Task.getOutPtr(), Task.getOutDevicePtr(), Task.getBytesizeOut(), cudaMemcpyDeviceToHost, stream);
             cudaStreamSynchronize(stream);
-            
+
             Task.endMR();
-            
+
             free(reduceBlocksPtr);
             cudaFree(reduce_buffer);
         }
-        
+
         else if(isPureReduce()) {
             Task.beforeMR();
             //Reduce
@@ -582,24 +582,24 @@ protected:
             for(size_t i=0; i<blockcnt_r; ++i)
                 reduceVar = hostReduce->K(reduceVar, reduceBlocksPtr[i]);
             Task.setReduceVar(reduceVar);
-            
+
             Task.afterMR(task);
             Task.endMR();
-            
+
             free(reduceBlocksPtr);
             cudaFree(reduce_buffer);
         }
-        
+
         else {
             Task.swap();			// because of the next swap op
             do {
                 Task.swap();
-                
+
                 Task.beforeMR();
-                
+
                 //CUDA Map
                 mapCUDAKernel<TkernelMap, Tin, Tout, Tenv1, Tenv2, Tenv3, Tenv4, Tenv5, Tenv6><<<blockcnt, thxblock, 0, stream>>>(*kernelMap, Task.getInDevicePtr(), Task.getOutDevicePtr(), Task.getEnv1DevicePtr(), Task.getEnv2DevicePtr(), Task.getEnv3DevicePtr(), Task.getEnv4DevicePtr(), Task.getEnv5DevicePtr(), Task.getEnv6DevicePtr(), size);
-                
+
                 //Reduce
                 //CUDA: blockwise reduce
                 reduceCUDAKernel<TkernelReduce, Tout, Tenv1, Tenv2, Tenv3, Tenv4, Tenv5, Tenv6><<<blockcnt_r, thxblock_r, thxblock_r * sizeof(Tout), stream>>>(*kernelReduce, reduce_buffer, Task.getOutDevicePtr(), Task.getEnv1DevicePtr(), Task.getEnv2DevicePtr(), Task.getEnv3DevicePtr(), Task.getEnv4DevicePtr(), Task.getEnv5DevicePtr(), Task.getEnv6DevicePtr(), padded_size, thxblock_r, false);
@@ -611,26 +611,26 @@ protected:
                 for(size_t i=0; i<blockcnt_r; ++i)
                     reduceVar = hostReduce->K(reduceVar, reduceBlocksPtr[i]);
                 Task.setReduceVar(reduceVar);
-                
+
                 Task.afterMR(task);
-                
+
             }while (++iter < maxIter && Task.iterCondition(reduceVar, iter));
-            
+
             cudaMemcpyAsync(Task.getOutPtr(), Task.getOutDevicePtr(), Task.getBytesizeOut(), cudaMemcpyDeviceToHost, stream);
             cudaStreamSynchronize(stream);
-            
+
             Task.endMR();
-            
+
             free(reduceBlocksPtr);
             cudaFree(reduce_buffer);
         }
-        
+
         return (oneShot?NULL:task);
     }
-    
+
     size_t getIter()     const { return iter; }
     int    getDeviceID() const { return deviceID;}
-    
+
 public:
     virtual inline int run_and_wait_end() {
             if (isfrozen()) {
@@ -644,14 +644,14 @@ public:
             if (wait() < 0) return -1;
             return 0;
         }
-    
+
 protected:
     const bool oneShot;
     Tout identityValue;
     size_t iter;
     size_t maxIter;
     taskT Task;
-    
+
 private:
     int deviceID;
     cudaStream_t stream;
@@ -672,23 +672,23 @@ private:
     Tenv5* env5_buffer;
     Tenv6* env6_buffer;
 };
-    
+
 template<typename taskT>
 struct dummyMapF {
     __device__ typename taskT::Tout K(typename taskT::Tin, typename taskT::Tenv1 *, typename taskT::Tenv2 *, typename taskT::Tenv3 *, typename taskT::Tenv4 *, typename taskT::Tenv5 *, typename taskT::Tenv6 *)
     {	return (typename taskT::Tout)0;}
 };
-    
+
 template<typename taskT>
 struct dummyReduceF {
     __device__ typename taskT::Tout K(typename taskT::Tout a, typename taskT::Tout) {return a;}
 };
-    
+
 template<typename taskT>
 struct dummyHostReduceF {
     typename taskT::Tout K(typename taskT::Tout a, typename taskT::Tout) {return a;}
 };
-    
+
 template<typename taskT, typename TkernelMap>
 class ff_mapCUDA: public ff_stencilReduceCUDA<taskT, TkernelMap, dummyReduceF<taskT>, dummyHostReduceF<taskT> > {
     bool isPureMap() {return true;}
@@ -698,7 +698,7 @@ public:
     ff_mapCUDA(const taskT &task, size_t maxIter = 1, typename taskT::Tout identityValue = (typename taskT::Tout)0) :
         	ff_stencilReduceCUDA<taskT, TkernelMap, dummyReduceF<taskT>, dummyHostReduceF<taskT> >(task, maxIter, identityValue) {}
 };
-    
+
 template<typename taskT, typename TkernelReduce, typename ThostReduce>
 class ff_reduceCUDA: public ff_stencilReduceCUDA<taskT, dummyMapF<taskT>, TkernelReduce, ThostReduce> {
     bool isPureReduce() {return true;}
@@ -708,9 +708,9 @@ public:
     ff_reduceCUDA(const taskT &task, size_t maxIter = 1, typename taskT::Tout identityValue = (typename taskT::Tout)0) :
     	ff_stencilReduceCUDA<taskT, dummyMapF<taskT>, TkernelReduce, ThostReduce>(task, maxIter, identityValue) {}
 };
-    
+
 } //namespace
 
-#endif  // FF_CUDA 
+#endif  // FF_CUDA
 
 #endif /* FF_STENCILCUDA_HPP */

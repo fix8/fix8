@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- * \link 
+ * \link
  * \file clEnvironment.hpp
  * \ingroup opencl_fastflow
  *
@@ -10,7 +10,7 @@
 
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License version 2 as 
+ *  it under the terms of the GNU General Public License version 2 as
  *  published by the Free Software Foundation.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -41,8 +41,8 @@
 #include <pthread.h>
 #include <cstdio>
 #include <cstdlib>
-#include <ff/ocl/clDeviceInfo.hpp>
-#include <ff/ocl/ocl_utilities.hpp>
+#include <fix8/ff/ocl/clDeviceInfo.hpp>
+#include <fix8/ff/ocl/ocl_utilities.hpp>
 
 #define THRESHOLD (512*1024*1024)
 
@@ -65,26 +65,26 @@ pthread_mutex_t instanceMutex = PTHREAD_MUTEX_INITIALIZER;
 class Environment{
 
 private:
-  
+
   static Environment * m_Environment;
   std::vector<int> clNodesDevice;
   std::vector<CLDevice*> clDevices;
   pthread_mutex_t mutex_set_policy;
   int nodeId;
-  
+
   Environment ();
   Environment(Environment const&){};
   Environment& operator=(Environment const&){ return *this;};
   int staticSelectionPolicy(cl_device_type, Ocl_Utilities*);
-   
-public:   
+
+public:
   cl_device_id getDeviceId(int);
   void createEntry(int&,  Ocl_Utilities*);
   static Environment * instance();
   cl_device_id reallocation(int);
 };
 
-#include <ff/ocl/clEnvironment.cpp>  
+#include <fix8/ff/ocl/clEnvironment.cpp>
 
 /*!
  * @}

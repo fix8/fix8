@@ -59,8 +59,7 @@ protected:
 	Session& _session;
 	ProcessModel _pmodel;
 	f8_thread_cancellation_token _cancellation_token;
-	f8_mutex _mutex;
-	bool _started;
+	f8_atomic<bool> _started;
 
 private:
 	f8_thread<AsyncSocket> _thread;
@@ -95,9 +94,15 @@ public:
 	/// Start the processing thread.
 	virtual void start()
 	{
-		f8_scoped_lock guard(_mutex);
-		_started = true;
-	 	_thread.start();
+		if (!_started)
+		{
+			_started = true;
+			_thread.start();
+		}
+		else
+		{
+			glout_warn << "AsyncSocket already started.";
+		}
 	}
 
 	/// Start the processing thread.
@@ -112,18 +117,10 @@ public:
 
 	/*! Wait till processing thead has finished.
 		 \return 0 on success */
-	int join()
-	{
-		f8_scoped_lock guard(_mutex);
-		if (_started)
-		{
-			_started = false;
-			return _thread.join();
-		}
+	int join() { return _started ? _thread.join() : 0; }
 
-		return 0;
-	}
-
+	/*! Obtain the thread cancellation token
+		 \return the token */
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
@@ -131,13 +128,13 @@ public:
 /// Fix message reader
 class FIXReader : public AsyncSocket<f8String>
 {
-	enum { _max_msg_len = MAX_MSG_LENGTH, _chksum_sz = 7 };
+	enum { _max_msg_len = FIX8_MAX_MSG_LENGTH, _chksum_sz = 7 };
 	f8_atomic<bool> _socket_error;
 
 	f8_thread<FIXReader> _callback_thread;
 	f8_thread_cancellation_token _callback_cancellation_token;
 
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
 #endif
@@ -153,7 +150,7 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
 	/*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
         \param where buffer to place bytes in
         \param sz number of bytes to read
@@ -242,7 +239,7 @@ public:
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(std::ref(*this), &FIXReader::callback_processor)
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
 		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
 #endif
 		, _bg_sz()
@@ -751,4 +748,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_CONNECTION_HPP_
+#endif // FIX8_CONNECTION_HPP_

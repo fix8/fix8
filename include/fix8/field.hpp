@@ -608,7 +608,7 @@ public:
 	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
-	Field () : BaseField(field), _value(), _precision(DEFAULT_PRECISION) {}
+	Field () : BaseField(field), _value(), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -617,7 +617,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/*! Value ctor.
 	  \param val value to set
@@ -628,12 +628,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/// Dtor.
 	virtual ~Field() {}
@@ -2168,5 +2168,4 @@ using onbehalfof_sending_time = Field<UTCTimestamp, Common_OnBehalfOfSendingTime
 
 } // FIX8
 
-#endif // _FIX8_FIELD_HPP_
-/* vim: set ts=3 sw=3 tw=0 noet :*/
+#endif // FIX8_FIELD_HPP_

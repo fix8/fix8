@@ -134,7 +134,7 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 	fix->GetAttr("type", type);
 
 	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
-	ctxt._version = get_value<int>(major) * 1000 + get_value<int>(minor) * 100 + get_value<int>(revision);
+	ctxt._version = stoi(major) * 1000 + stoi(minor) * 100 + stoi(revision);
 	if (type == "FIX" && ctxt._version < 4000)
 	{
 		cerr << "Unsupported FIX version " << ctxt._version << " from fix header in " << shortName << endl;
@@ -361,7 +361,7 @@ void print_usage()
 RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
 {
 	if (FieldTrait::is_int(ftype))
-		return new TypedRealm<int>(get_value<int>(from), isRange);
+		return new TypedRealm<int>(stoi(from), isRange);
 	if (FieldTrait::is_char(ftype))
 		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))

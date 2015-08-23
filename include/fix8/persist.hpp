@@ -37,13 +37,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef FIX8_PERSIST_HPP_
 #define FIX8_PERSIST_HPP_
 
-#if defined HAVE_BDB
+#if defined FIX8_HAVE_BDB
 # include <db_cxx.h>
 #endif
 #if defined HAVE_LIBMEMCACHED
 # include <libmemcached/memcached.h>
 #endif
-#if defined HAVE_LIBHIREDIS
+#if defined FIX8_HAVE_LIBHIREDIS
 # include <hiredis/hiredis.h>
 #endif
 
@@ -68,7 +68,7 @@ public:
 	Persister& operator=(const Persister&) = delete;
 
 	/// Maximum length of persisted FIX message.
-	enum { MaxMsgLen = MAX_MSG_LENGTH };
+	enum { MaxMsgLen = FIX8_MAX_MSG_LENGTH };
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
@@ -143,7 +143,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-#if defined HAVE_BDB
+#if defined FIX8_HAVE_BDB
 
 /// BerkeleyDB backed message persister.
 class BDBPersister : public Persister
@@ -285,7 +285,7 @@ public:
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
 
-#endif // HAVE_BDB
+#endif // FIX8_HAVE_BDB
 
 //-------------------------------------------------------------------------------------------------
 /// Memory based message persister.
@@ -346,6 +346,13 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+#ifndef _MSC_VER
+# define O_BINARY 0
+#endif
+
+//-------------------------------------------------------------------------------------------------
+#pragma pack(push, 1)
+//-------------------------------------------------------------------------------------------------
 /// File persister
 struct Prec
 {
@@ -379,6 +386,7 @@ struct IPrec
 	friend std::ostream& operator<<(std::ostream& os, const IPrec& what)
 		{ return os << "seq:" << what._seq << ' ' << what._prec; }
 };
+#pragma pack(pop)
 
 class FilePersister : public Persister
 {
@@ -604,7 +612,7 @@ public:
 #endif // HAVE_LIBMEMCACHED
 
 //-------------------------------------------------------------------------------------------------
-#if defined HAVE_LIBHIREDIS
+#if defined FIX8_HAVE_LIBHIREDIS
 /// redis message persister.
 class HiredisPersister : public Persister
 {
@@ -691,10 +699,10 @@ public:
 	F8API virtual bool del(const f8String& key);
 };
 
-#endif // HAVE_LIBHIREDIS
+#endif // FIX8_HAVE_LIBHIREDIS
 
 //-------------------------------------------------------------------------------------------------
 
 } // FIX8
 
-#endif // _FIX8_PERSIST_HPP_
+#endif // FIX8_PERSIST_HPP_

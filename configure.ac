@@ -62,7 +62,7 @@ AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
 MAGIC_NUM=$(($MAJOR_VERSION_NUM << 24 | $MINOR_VERSION_NUM << 12 | $PATCH_VERSION_NUM))
 
 AC_DEFINE_UNQUOTED([MAGIC_NUM], [$MAGIC_NUM], [Encode version])
-AC_DEFINE_UNQUOTED([MAGIC_NUM_EXPR], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version as expresion])
+AC_DEFINE_UNQUOTED([MAGIC_NUM_EXPR], [(FIX8_MAJOR_VERSION_NUM << 24 | FIX8_MINOR_VERSION_NUM << 12 | FIX8_PATCH_VERSION_NUM)], [Encoded Version as expresion])
 
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
@@ -100,6 +100,7 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 AC_CHECK_TYPES([ptrdiff_t])
+AC_CHECK_SIZEOF(unsigned long)
 
 # Checks for library functions.
 # these are checked before the libraries are added to the compilation flags so that they will link
@@ -268,11 +269,11 @@ AC_ARG_WITH(maxmsglen,
 	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=8192)])
 ],[])
 
-AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 1024, [Maximum length of a FIX field in bytes])
+AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 2048, [Maximum length of a FIX field in bytes])
 AC_ARG_WITH(maxfldlen,
-  AS_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=1024)]),
+  AS_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=2048)]),
 [
-	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
+	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=2048)])
 ],[])
 
 AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default number of precision digits for floating point fields])
@@ -321,8 +322,8 @@ AC_ARG_WITH(gperf,
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
-AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
-AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+AC_DEFINE(MPMC_TBB, 1, [FIX8_TBB MPMC])
+AC_DEFINE(MPMC_FF, 2, [FIX8_FF MPMC])
 
 AC_MSG_CHECKING(for precision)
 using_double_precision=yes
@@ -354,7 +355,7 @@ AC_ARG_WITH([mpmc],
 					have_tbb=yes, have_tbb=no)
 				if test "$have_tbb" = yes; then
 					 AC_MSG_RESULT(yes)
-					 AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
+					 AC_DEFINE(MPMC_SYSTEM, FIX8_MPMC_TBB, [MPMC system used])
 				else
 					 AC_MSG_RESULT(no)
 					 echo
@@ -372,7 +373,7 @@ esac])
 
 if test "$mpmc_set" = no; then
 	using_ff=yes
-	AC_DEFINE(MPMC_SYSTEM, MPMC_FF, [MPMC system used])
+	AC_DEFINE(MPMC_SYSTEM, FIX8_MPMC_FF, [MPMC system used])
 fi
 
 AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
@@ -387,13 +388,13 @@ AC_DEFINE(MALLOC_SYSTEM, MALLOC_STD, [malloc system to use])
 
 if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
 	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
-	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TBB, [malloc system to use])
+	AC_DEFINE(MALLOC_SYSTEM, FIX8_MALLOC_TBB, [malloc system to use])
 else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc_minimal"
-	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
+	AC_DEFINE(MALLOC_SYSTEM, FIX8_MALLOC_TCMALLOC, [malloc system to use])
 else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc"
-	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
+	AC_DEFINE(MALLOC_SYSTEM, FIX8_MALLOC_TCMALLOC, [malloc system to use])
 fi
 fi
 fi
@@ -433,10 +434,6 @@ AC_MSG_CHECKING(for Poco)
 		 exit 1
 	fi
 
-AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
-AC_DEFINE(MPMC_FF, 2, [FF MPMC])
-
-
 #Check for OSX
 AC_MSG_CHECKING([for OSX/Darwin])
 have_osx=no
@@ -461,7 +458,7 @@ AC_ARG_WITH([regex],
 					have_regex=yes, have_regex=no)
 				if test "$have_regex" = yes; then
 					 AC_MSG_RESULT(yes)
-					 AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+					 AC_DEFINE(REGEX_SYSTEM, FIX8_REGEX_REGEX_H, [regex.h system used])
 				else
 					 AC_MSG_RESULT(no)
 					 echo
@@ -480,9 +477,9 @@ esac])
 AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
 AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
 if test "$using_poco_regex" = yes; then
-	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO system used])
+	AC_DEFINE(REGEX_SYSTEM, FIX8_REGEX_POCO, [POCO system used])
 else
-	AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+	AC_DEFINE(REGEX_SYSTEM, FIX8_REGEX_REGEX_H, [regex.h system used])
 fi
 
 thread_set=no
@@ -496,7 +493,7 @@ AC_ARG_WITH([thread],
 				CC="$PTHREAD_CC"],
 				[AC_MSG_ERROR([Pthread API support is required.])])
 				thread_set=yes
-				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
+				AC_DEFINE(THREAD_SYSTEM, FIX8_THREAD_PTHREAD, [pthread system used])
 				;;
 	stdthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
 				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
@@ -505,7 +502,7 @@ AC_ARG_WITH([thread],
 				[AC_MSG_ERROR([Pthread API support is required.])])
 				using_std_thread=yes
 				thread_set=yes
-				AC_DEFINE(THREAD_SYSTEM, THREAD_STDTHREAD, [std::thread system used])
+				AC_DEFINE(THREAD_SYSTEM, FIX8_THREAD_STDTHREAD, [std::thread system used])
 				;;
 	*) echo
 		echo "ERROR: Unknown value ${withval} for REGEX given."
@@ -517,7 +514,7 @@ AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
 AC_DEFINE(THREAD_STDTHREAD, 4, [std::thread thread system])
 if test "$thread_set" = no; then
 	using_std_thread=no
-	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread used for threading])
+	AC_DEFINE(THREAD_SYSTEM, FIX8_THREAD_PTHREAD, [pthread used for threading])
 fi
 
 oktogtest=yes
@@ -751,9 +748,9 @@ AC_ARG_ENABLE([codectiming],
 esac])
 
 AC_ARG_ENABLE([debug],
-[AS_HELP_STRING([--enable-debug],[enable DEBUG support (F8_DEBUG) (default=no)])],
+[AS_HELP_STRING([--enable-debug],[enable DEBUG support (FIX8_DEBUG) (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(F8_DEBUG, 1, [Define to 1 for debugging support]) ;;
+	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging support]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
 esac])
@@ -872,7 +869,8 @@ CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
 						stocklib/Makefile fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
-AC_CONFIG_HEADERS(include/fix8/f8config.h)
+AC_CONFIG_HEADERS(intermediate_config.h)
+AX_PREFIX_CONFIG_H(include/fix8/f8config.h)
 AC_OUTPUT
 
 AC_SUBST(CONFIG_SHELL)

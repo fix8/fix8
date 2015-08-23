@@ -45,7 +45,7 @@ namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
 using f8String = std::string;
-#if defined USE_SINGLE_PRECISION
+#if defined FIX8_USE_SINGLE_PRECISION
 using fp_type = float;
 #else
 using fp_type = double;
@@ -215,7 +215,7 @@ public:
 	  \param arr_start pointer to start of static array to copy elements from
 	  \param sz number of elements in set to copy
 	  \param reserve percentage of sz to keep in reserve */
-	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
+	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=FIX8_RESERVE_PERCENT) : _reserve(reserve),
 		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new T[_rsz])
 			{ memcpy(_arr, arr_start, _sz * sizeof(T)); }
 
@@ -228,7 +228,7 @@ public:
 	/*! ctor - initialise an empty set; defer memory allocation;
 	  \param sz number of elements to initially allocate
 	  \param reserve percentage of sz to keep in reserve */
-	explicit presorted_set(const size_t sz=0, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
+	explicit presorted_set(const size_t sz=0, const size_t reserve=FIX8_RESERVE_PERCENT) : _reserve(reserve),
 		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr() {}
 
 	/// dtor
@@ -383,4 +383,4 @@ struct null_insert { template <typename T> null_insert& operator<<(const T&) { r
 
 } // FIX8
 
-#endif // _F8_TYPES_HPP_
+#endif // F8_TYPES_HPP_

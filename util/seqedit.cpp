@@ -62,7 +62,7 @@ e.g.\n
 #include <fix8/f8includes.hpp>
 #include <fix8/usage.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
 	int val;
 	unsigned next_send(0), next_receive(0);
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	const option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "seqedit for " PACKAGE " version " VERSION << endl;
+			cout << "seqedit for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case 'h': print_usage(); return 0;
@@ -117,8 +117,8 @@ int main(int argc, char **argv)
 		case 'd': dump = true; break;
 		case 'i': indexonly = true; break;
 		case 'q': quiet = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
 		case ':': case '?': return 1;
 		default: break;
 		}
@@ -140,12 +140,12 @@ int main(int argc, char **argv)
 	}
 	fds;
 
-	if ((fds.fod = open(dbFname.c_str(), O_RDONLY)) < 0)
+	if ((fds.fod = open(dbFname.c_str(), O_RDONLY | O_BINARY)) < 0)
 	{
 		cerr << "Error opening existing database: " << dbFname << " (" << strerror(errno) << ')' << endl;
 		return 1;
 	}
-	if ((fds.iod = open(dbIname.c_str(), O_RDWR)) < 0)
+	if ((fds.iod = open(dbIname.c_str(), O_RDWR | O_BINARY)) < 0)
 	{
 		cerr << "Error opening existing database index: " << dbIname << " (" << strerror(errno) << ')' << endl;
 		return 1;
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 			cerr << "Error reading existing database index: " << dbIname << " (" << strerror(errno) << ')' << endl;
 			return 1;
 		}
-		else if (blrd == 0)
+		if (blrd == 0)
 			break; // eof
 
 		if (!rawdump)
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
 		if (iprec._seq == 0)
 			continue;
 
-		char buff[MAX_MSG_LENGTH] {};
+		char buff[FIX8_MAX_MSG_LENGTH] {};
 
 		if (lseek(fds.fod, iprec._prec._offset, SEEK_SET) < 0)
 		{
@@ -218,9 +218,12 @@ int main(int argc, char **argv)
 			return 1;
 		}
 
-		if (read(fds.fod, buff, iprec._prec._size) != iprec._prec._size)
+		int bytes_read = 0;
+		if ((bytes_read = read(fds.fod, buff, iprec._prec._size)) != iprec._prec._size)
 		{
-			cerr << "Error could not read message record for seqnum " << iprec._seq << " from: " << dbFname << endl;
+			cerr << "Error could not read message record for seqnum " << iprec._seq << " from: " << dbFname
+					<< ": trying to read " << iprec._prec._size << ", but available " << bytes_read
+					<< endl;
 			return 1;
 		}
 
@@ -237,7 +240,7 @@ int main(int argc, char **argv)
 void print_usage()
 {
 	UsageMan um("seqedit", GETARGLIST, "<perist file prefix>");
-	um.setdesc("seqedit -- edit next expected send/receive");
+	um.setdesc("seqedit -- edit next expected send/receive for file based persister. Note: fix8pro users should use f8pseqedit which works with any persister");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('d', "dump", "dump all the records in both the index and the data file");

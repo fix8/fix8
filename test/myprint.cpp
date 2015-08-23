@@ -79,7 +79,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // f8 headers
 #include <fix8/f8includes.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -119,7 +119,7 @@ int main(int argc, char **argv)
 {
 	int val, offset(0);
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
@@ -138,12 +138,12 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for " PACKAGE " version " VERSION << endl;
+			cout << argv[0] << " for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
-		case 'o': offset = get_value<int>(optarg); break;
+		case 'o': offset = stoi(optarg); break;
 		case 's': summary = true; break;
 		case 'c':
 			 cout << "Context FIX beginstring:" << TEX::ctx()._beginStr << endl;
@@ -176,13 +176,13 @@ int main(int argc, char **argv)
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
-	char buffer[MAX_MSG_LENGTH];
+	char buffer[FIX8_MAX_MSG_LENGTH];
 
 	try
 	{
 		while (!ifs().eof() && !term_received)
 		{
-			ifs().getline(buffer, MAX_MSG_LENGTH);
+			ifs().getline(buffer, FIX8_MAX_MSG_LENGTH);
 			if (buffer[0])
 			{
 				unique_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));

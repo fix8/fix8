@@ -1,3 +1,20 @@
+* Sun Aug 23 2015 David L. Dight <fix@fix8.org> 1.3.4
+- Fixed Jira tickets FX-508, FX-511, FX-490, FX-491, FX-480, FX-470, FX-336, FX-525, FX-524,
+							FX-523, FX-520, FX-516, FX-527
+- Client logout crashes FIX server
+- SessionWrapper needs to be cleaned up in the destructor
+- Fixed Seqedit reports corrupted persister index
+- Fixed compile errors on OSX
+- Fixed Provide hook in Session to modify header before sending
+- Fixed ReliableClientSession crash when connection failed
+- Fixed Crash on sending cloned message
+- Added Provide optional improved checksum calculation
+- Added Provide Consolemenu method to remove msg from list and return to application
+- Fixed Replace get_value<> with stoi, stoul, stof, etc
+- Added Provide non-const header and trailer accessors
+- Fixed With f8config installed in system includes, #defines causes namespace pollution
+- Fixed Test harness improvements, testing
+
 * Fri Apr 24 2015 David L. Dight <fix@fix8.org> 1.3.3
 - Fixed Jira tickets FX-321, FX-319, FX-336, FX-480
 - Fixed Provide capability to build stock FIX libraries

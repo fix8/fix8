@@ -1,6 +1,6 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \link
  *  \file lb.hpp
  *  \ingroup streaming_network_arbitrary_shared_memory
@@ -11,7 +11,7 @@
 
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *  it under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -27,15 +27,15 @@
  ****************************************************************************
  */
 
- 
+
 #ifndef FF_LB_HPP
 #define FF_LB_HPP
 
 #include <iostream>
 #include <deque>
 
-#include <ff/utils.hpp>
-#include <ff/node.hpp>
+#include <fix8/ff/utils.hpp>
+#include <fix8/ff/node.hpp>
 
 namespace ff {
 
@@ -69,7 +69,7 @@ namespace ff {
 
 class ff_loadbalancer: public ff_thread {
     template <typename T1, typename T2>  friend class ff_farm;
-public:    
+public:
 
     // NOTE:
     //  - TICKS2WAIT should be a valued profiled for the application
@@ -89,9 +89,9 @@ protected:
         void * eos = nofreeze?EOS_NOFREEZE:EOS;
         for(register ssize_t i=0;i<running;++i) {
             while(!workers[i]->put(eos)) {
-                //if (sched_emitter && (++cnt>PUSH_CNT_EMIT)) { 
+                //if (sched_emitter && (++cnt>PUSH_CNT_EMIT)) {
                 // cnt=0;sched_yield();}
-                //else 
+                //else
                 losetime_out();
             }
         }
@@ -104,9 +104,9 @@ protected:
             }
         }
     }
-        
 
-    /** 
+
+    /**
      * \brief Virtual function that can be redefined to implement a new scheduling
      * policy.
      *
@@ -132,7 +132,7 @@ protected:
      * \brief Defines callback
      *
      * It defines the callback and returns a pointer.
-     * 
+     *
      * \parm n TODO
      * \parm task is a void pointer
      *
@@ -156,9 +156,9 @@ protected:
      * It loses some time before the message is sent to the output buffer.
      *
      */
-    virtual inline void losetime_out() { 
+    virtual inline void losetime_out() {
         FFTRACE(lostpushticks+=TICKS2WAIT;++pushwait);
-        ticks_wait(TICKS2WAIT); 
+        ticks_wait(TICKS2WAIT);
     }
 
     /**
@@ -166,16 +166,16 @@ protected:
      *
      * It loses time before retrying to get a message from the input buffer.
      */
-    virtual inline void losetime_in() { 
+    virtual inline void losetime_in() {
         FFTRACE(lostpopticks+=TICKS2WAIT;++popwait);
-        ticks_wait(TICKS2WAIT); 
+        ticks_wait(TICKS2WAIT);
     }
 
-    /** 
+    /**
      * \brief Scheduling of tasks
      *
      * It is the main scheduling function. This is a virtual function and can
-     * be redefined to implement a custom scheduling policy. 
+     * be redefined to implement a custom scheduling policy.
      *
      * \parm task is a void pointer
      * \parm retry is the number of tries to schedule a task
@@ -202,7 +202,7 @@ protected:
                     //std::cerr << ".";
                     ++cnt;
                     if (cnt>=retry) { nextw=-1; return false; }
-                    if (cnt == ntentative()) break; 
+                    if (cnt == ntentative()) break;
                 }
             } while(1);
             losetime_out();
@@ -223,17 +223,17 @@ protected:
      *
      * \return The deque of the tasks.
      */
-    virtual std::deque<ff_node *>::iterator  collect_task(void ** task, 
-                                                           std::deque<ff_node *> & availworkers,
-                                                           std::deque<ff_node *>::iterator & start) {
+    virtual std::deque<fix8/ff_node *>::iterator  collect_task(void ** task,
+                                                           std::deque<fix8/ff_node *> & availworkers,
+                                                           std::deque<fix8/ff_node *>::iterator & start) {
         register int cnt, nw= (int)(availworkers.end()-availworkers.begin());
-        const std::deque<ff_node *>::iterator & ite(availworkers.end());
+        const std::deque<fix8/ff_node *>::iterator & ite(availworkers.end());
         do {
             cnt=0;
             do {
                 if (++start == ite) start=availworkers.begin();
                 if((*start)->get(task)) {
-                    channelid = 
+                    channelid =
                         ((start-availworkers.begin()) >= (ssize_t)multi_input_start) ? -1:(*start)->get_my_id();
                     return start;
                 }
@@ -261,27 +261,27 @@ protected:
      * \return \p true if successful
      */
     bool pop(void ** task) {
-        //register int cnt = 0;       
+        //register int cnt = 0;
         if (!filter) {
             while (! buffer->pop(task)) {
                 //    if (ch->thxcore>1) {
                 //if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
                 //else ticks_wait(TICKS2WAIT);
-                //} else 
+                //} else
                 losetime_in();
-            } 
+            }
             return true;
         }
         while (! filter->pop(task)) {
             //    if (ch->thxcore>1) {
             //if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
             //else ticks_wait(TICKS2WAIT);
-            //} else 
+            //} else
             losetime_in();
-        } 
+        }
         return true;
     }
-    
+
     /**
      *
      * \brief Task scheduler
@@ -295,7 +295,7 @@ protected:
         return ((ff_loadbalancer *)obj)->schedule_task(task, retry, ticks);
     }
 
-    int set_internal_multi_input(svector<ff_node*> &mi) {
+    int set_internal_multi_input(svector<fix8/ff_node*> &mi) {
         if (mi.size() == 0) {
             error("LB, invalid internal multi-input vector size\n");
             return -1;
@@ -304,24 +304,24 @@ protected:
         return 0;
     }
 
-    void absorb_eos(svector<ff_node*>& W) {
+    void absorb_eos(svector<fix8/ff_node*>& W) {
         void *task;
         for(size_t i=0;i<W.size();++i) {
             do ; while(!W[i]->get(&task));
             assert((task == (void*)FF_EOS) || (task == EOS_NOFREEZE));
         }
     }
-    
+
 
 public:
-    /** 
-     *  \brief Default constructor 
+    /**
+     *  \brief Default constructor
      *
-     *  It is the defauls constructor 
+     *  It is the defauls constructor
      *
      *  \param max_num_workers The max number of workers allowed
      */
-    ff_loadbalancer(size_t max_num_workers): 
+    ff_loadbalancer(size_t max_num_workers):
         running(-1),max_nworkers(max_num_workers),nextw(-1),channelid(-2),
         filter(NULL),workers(max_num_workers),
         buffer(NULL),skip1pop(false),master_worker(false),
@@ -333,7 +333,7 @@ public:
         FFTRACE(taskcnt=0;lostpushticks=0;pushwait=0;lostpopticks=0;popwait=0;ticksmin=(ticks)-1;ticksmax=0;tickstot=0);
     }
 
-    /** 
+    /**
      *  \brief Destructor
      *
      *  It deallocates dynamic memory spaces previoulsy allocated for workers.
@@ -347,9 +347,9 @@ public:
      *
      * \parm f is FastFlow node
      *
-     * \return 0 if successful, otherwise -1 
+     * \return 0 if successful, otherwise -1
      */
-    int set_filter(ff_node * f) { 
+    int set_filter(ff_node * f) {
         if (filter) {
             error("LB, setting emitter filter\n");
             return -1;
@@ -367,8 +367,8 @@ public:
      *
      * \parm buff is a pointer of FFBUFFER
      */
-    void set_in_buffer(FFBUFFER * const buff) { 
-        buffer=buff; 
+    void set_in_buffer(FFBUFFER * const buff) {
+        buffer=buff;
         skip1pop=false;
     }
 
@@ -380,7 +380,7 @@ public:
      * \return The buffer
      */
     FFBUFFER * get_in_buffer() const { return buffer;}
-    
+
     /**
      *
      * \brief Gets channel id
@@ -401,7 +401,7 @@ public:
 
     /**
      *  \brief Resets input buffer
-     *  
+     *
      *   Warning resetting the buffer while the node is running may produce unexpected results.
      */
     void reset() { if (buffer) buffer->reset();}
@@ -413,7 +413,7 @@ public:
      *
      * \return Number of worker
      */
-    inline size_t getnworkers() const { return (size_t)running;} 
+    inline size_t getnworkers() const { return (size_t)running;}
 
     /**
      * \brief Get the number of workers
@@ -425,7 +425,7 @@ public:
     inline size_t getNWorkers() const { return workers.size();}
 
     // AGGIUNTO
-    const svector<ff_node*>& getWorkers() const { return workers; }
+    const svector<fix8/ff_node*>& getWorkers() const { return workers; }
 
     /**
      * \brief Skips first pop
@@ -434,7 +434,7 @@ public:
      *
      */
     void skipfirstpop() { skip1pop=true;}
-    
+
     /**
      * \brief Decides master-worker schema
      *
@@ -455,7 +455,7 @@ public:
     inline int getTid(ff_node *node) const {
         return node->getTid();
     }
-    
+
     /**
      * \brief Sets multiple input buffers
      *
@@ -463,7 +463,7 @@ public:
      *
      * \return 0 if successful, otherwise -1.
      */
-    int set_input(svector<ff_node*> &mi) {
+    int set_input(svector<fix8/ff_node*> &mi) {
         if (mi.size() == 0) {
             error("LB, set_input, invalid multi-input vector size\n");
             return -1;
@@ -481,8 +481,8 @@ public:
         return workers[id]->put(task);
     }
 
-    /** 
-     * \brief Send the same task to all workers 
+    /**
+     * \brief Send the same task to all workers
      *
      * \parm task is a void pointer
      *
@@ -512,7 +512,7 @@ public:
      *
      */
     bool masterworker() const { return master_worker;}
-    
+
     /**
      * \brief Registers the given node into the workers' list
      *
@@ -566,10 +566,10 @@ public:
                 if (inpresent) {
                     if (!skipfirstpop) pop(&task);
                     else skipfirstpop=false;
-                    
+
                     if (task == EOS) {
                         if (filter) filter->eosnotify();
-                        push_eos(); 
+                        push_eos();
                         break;
                     } else if (task == EOS_NOFREEZE) {
                         if (filter) filter->eosnotify();
@@ -577,7 +577,7 @@ public:
                         break;
                     }
                 }
-                
+
                 if (filter) {
                     FFTRACE(register ticks t0 = getticks());
 
@@ -588,7 +588,7 @@ public:
                     tickstot +=diff;
                     ticksmin=(std::min)(ticksmin,diff);
                     ticksmax=(std::max)(ticksmax,diff);
-#endif  
+#endif
                     if (task == GO_ON) continue; // going to get another task
                     if ((task == GO_OUT) || (task == EOS_NOFREEZE)) {
                         ret = task;
@@ -600,16 +600,16 @@ public:
                         ret = EOS;
                         break;
                     }
-                } else 
+                } else
                     if (!inpresent) { push_goon(); push_eos(); ret=(void*)FF_EOS; break;}
-                
+
                 const bool r = schedule_task(task);
                 assert(r); (void)r;
             } while(true);
         } else {
-            size_t nw=0;            
+            size_t nw=0;
             // contains current worker
-            std::deque<ff_node *> availworkers; 
+            std::deque<fix8/ff_node *> availworkers;
 
             //assert( master_worker ^ ( multi_input != NULL) );
 
@@ -629,19 +629,19 @@ public:
                 for(size_t i=0;i<multi_input.size();++i)
                     availworkers.push_back(multi_input[i]);
                 nw += multi_input.size();
-            } 
+            }
             if ((master_worker || int_multi_input.size()>0) && inpresent) {
                 assert(multi_input.size() == 0);
                 nw += 1;
             }
-            std::deque<ff_node *>::iterator start(availworkers.begin());
-            std::deque<ff_node *>::iterator victim(availworkers.begin());
+            std::deque<fix8/ff_node *>::iterator start(availworkers.begin());
+            std::deque<fix8/ff_node *>::iterator victim(availworkers.begin());
             do {
-                if (!skipfirstpop) {  
+                if (!skipfirstpop) {
                     victim=collect_task(&task, availworkers, start);
                 } else skipfirstpop=false;
-                
-                if ((task == EOS) || 
+
+                if ((task == EOS) ||
                     (task == EOS_NOFREEZE)) {
                     if (filter) filter->eosnotify(channelid);
                     if ((victim != availworkers.end())) {
@@ -652,9 +652,9 @@ public:
                         }
                     }
 
-                    //if (master_worker || 
-                    //    (channelid==-1 && multi_input.size()>0) || 
-                    //    (channelid>=0 && int_multi_input.size()>0)) { 
+                    //if (master_worker ||
+                    //    (channelid==-1 && multi_input.size()>0) ||
+                    //    (channelid>=0 && int_multi_input.size()>0)) {
                     if (!--nw) {
                         // this conditions means there is a loop
                         // so in this case I don't want to send an additional
@@ -677,7 +677,7 @@ public:
                         tickstot +=diff;
                         ticksmin=(std::min)(ticksmin,diff);
                         ticksmax=(std::max)(ticksmax,diff);
-#endif  
+#endif
 
                         if (task == GO_ON) continue;
                         if ((task == GO_OUT) || (task == EOS_NOFREEZE)){
@@ -687,7 +687,7 @@ public:
                         // if the filter returns NULL we exit immediatly
                         if (!task || (task==(void*)FF_EOS)) {
                             push_eos();
-                            // try to remove the additional EOS due to 
+                            // try to remove the additional EOS due to
                             // the feedback channel
                             if (inpresent || multi_input.size()>0) {
                                 if (master_worker) absorb_eos(workers);
@@ -715,10 +715,10 @@ public:
      * \return 0 if successful, otherwise -1 is returned.
      *
      */
-    virtual int svc_init() { 
+    virtual int svc_init() {
         gettimeofday(&tstart,NULL);
 
-        if (filter && filter->svc_init() <0) return -1;        
+        if (filter && filter->svc_init() <0) return -1;
 
         return 0;
     }
@@ -758,14 +758,14 @@ public:
                 if (workers[i]->freeze_and_run()<0) {
                     error("LB, spawning worker thread\n");
                     return -1;
-                }            
+                }
             }
         } else {
             for(size_t i=0;i<(size_t)running;++i) {
                 if (workers[i]->run()<0) {
                     error("LB, spawning worker thread\n");
                     return -1;
-                }            
+                }
             }
         }
         return 0;
@@ -809,21 +809,21 @@ public:
         if (this->spawn(filter?filter->getCPUId():-1) == -2) {
             error("LB, spawning LB thread\n");
             return -1;
-        }        
+        }
         if (isfrozen()) {
             for(size_t i=0;i<workers.size();++i) {
                 if (workers[i]->freeze_and_run(true)<0) {
                     error("LB, spawning worker thread\n");
                     return -1;
-                }            
-            }                
-        } else {            
+                }
+            }
+        } else {
             for(size_t i=0;i<workers.size();++i) {
                 if (workers[i]->run(true)<0) {
                     error("LB, spawning worker thread\n");
                     return -1;
-                }            
-            }                
+                }
+            }
         }
         return 0;
     }
@@ -944,7 +944,7 @@ public:
     /**
      * \brief Thaws all threads register with the lb and the lb itself
      *
-     * 
+     *
      */
     virtual inline void thaw(bool _freeze=false, ssize_t nw=-1) {
         if (nw == -1 || (size_t)nw > workers.size()) running = workers.size();
@@ -954,7 +954,7 @@ public:
     }
 
     /**
-     * \brief Thaws one single worker thread 
+     * \brief Thaws one single worker thread
      *
      */
     inline void thaw(const size_t n, bool _freeze=false) {
@@ -988,14 +988,14 @@ public:
     virtual const struct timeval & getstoptime()  const { return tstop;}
     virtual const struct timeval & getwstartime() const { return wtstart;}
     virtual const struct timeval & getwstoptime() const { return wtstop;}
-    
-#if defined(TRACE_FASTFLOW) 
+
+#if defined(TRACE_FASTFLOW)
     /**
      * \brief Prints the FastFlow trace
      *
      * It prints the trace of FastFlow.
      */
-    virtual void ffStats(std::ostream & out) { 
+    virtual void ffStats(std::ostream & out) {
         out << "Emitter: "
             << "  work-time (ms): " << wttime    << "\n"
             << "  n. tasks      : " << taskcnt   << "\n"
@@ -1009,15 +1009,15 @@ private:
     ssize_t            running;             /// Number of workers running
     size_t             max_nworkers;        /// Max number of workers allowed
     ssize_t            nextw;               // out index
-    ssize_t            channelid; 
+    ssize_t            channelid;
     ff_node         *  filter;
-    svector<ff_node*>  workers;
+    svector<fix8/ff_node*>  workers;
     FFBUFFER        *  buffer;
     bool               skip1pop;
     bool               master_worker;
-    svector<ff_node*>  multi_input;
+    svector<fix8/ff_node*>  multi_input;
     size_t             multi_input_start;   // position in the availworkers array
-    svector<ff_node*>  int_multi_input;
+    svector<fix8/ff_node*>  int_multi_input;
 
     struct timeval tstart;
     struct timeval tstop;

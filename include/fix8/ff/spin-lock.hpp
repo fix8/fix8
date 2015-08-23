@@ -9,7 +9,7 @@
  */
 
 /* ***************************************************************************
- *  
+ *
  *  This program is free software; you can redistribute it and/or modify it
  *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
@@ -25,27 +25,27 @@
  *
  ****************************************************************************
  */
-/* 
- *   Author: 
- *      Massimo Torquati <torquati@di.unipi.it> or <massimotor@gmail.com>    
- * 
- *    - April 2013 added CLHSpinLock 
+/*
+ *   Author:
+ *      Massimo Torquati <torquati@di.unipi.it> or <massimotor@gmail.com>
+ *
+ *    - April 2013 added CLHSpinLock
  *    - February 2014 added AtomicFlagWrapper-based spin-lock
  *
  */
- 
+
 #ifndef FF_SPINLOCK_HPP
 #define FF_SPINLOCK_HPP
- 
+
 // REW -- documentation
 //#include <iostream>
-#include <ff/sysdep.h>
-#include <ff/platforms/platform.h>
-#include <ff/config.hpp>
-#include <ff/atomic/abstraction_dcas.h>
+#include <fix8/ff/sysdep.h>
+#include <fix8/ff/platforms/platform.h>
+#include <fix8/ff/config.hpp>
+#include <fix8/ff/atomic/abstraction_dcas.h>
 
 // NOTE: A better check would be needed !
-// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used 
+// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used
 // (icpc -E -dM -std=c++11 -x c++ /dev/null | grep GXX_EX)
 #if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_VARIADIC_TEMPLATES))
 #include <atomic>
@@ -120,14 +120,14 @@ static __always_inline void spin_unlock(lock_t lock)
 
 #if defined(__GNUC__) || defined(_MSC_VER) || defined(__APPLE__)
 /*
- * CLH spin-lock is a FIFO lock implementation which uses only the 
- * atomic swap operation. More info can be found in:  
+ * CLH spin-lock is a FIFO lock implementation which uses only the
+ * atomic swap operation. More info can be found in:
  *
  * "Building FIFO and Priority-Queuing Spin Locks from Atomic Swap"
  * by Travis S. Craig in Techical Report 93-02-02 University of Washington
- * 
+ *
  * The following code is based on the implementation presented
- * in the synch1.0.1 (http://code.google.com/p/sim-universal-construction/) 
+ * in the synch1.0.1 (http://code.google.com/p/sim-universal-construction/)
  * by Nikolaos D. Kallimanis (released under the New BSD licence).
  *
  */
@@ -137,7 +137,7 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct CLHSpinLock {
         bool locked;
         char align[CACHE_LINE_SIZE];
     } CLHLockNode;
-    
+
     volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *Tail                    ALIGN_TO_POST(CACHE_LINE_SIZE);
     volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *MyNode[MAX_NUM_THREADS] ALIGN_TO_POST(CACHE_LINE_SIZE);
     volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *MyPred[MAX_NUM_THREADS] ALIGN_TO_POST(CACHE_LINE_SIZE);
@@ -150,16 +150,16 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct CLHSpinLock {
     }
     ~CLHSpinLock() {
         if (Tail) freeAlignedMemory((void*)Tail);
-        for (int j = 0; j < MAX_NUM_THREADS; j++) 
+        for (int j = 0; j < MAX_NUM_THREADS; j++)
             if (MyNode[j]) freeAlignedMemory((void*)(MyNode[j]));
     }
     int init() {
         if (Tail != NULL) return -1;
         Tail = (CLHLockNode*)getAlignedMemory(CACHE_LINE_SIZE, sizeof(CLHLockNode));
         Tail->locked = false;
-        for (int j = 0; j < MAX_NUM_THREADS; j++) 
+        for (int j = 0; j < MAX_NUM_THREADS; j++)
             MyNode[j] = (CLHLockNode*)getAlignedMemory(CACHE_LINE_SIZE, sizeof(CLHLockNode));
-        
+
         return 0;
     }
 
@@ -173,14 +173,14 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct CLHSpinLock {
 #endif
     while (MyPred[pid]->locked == true) ;
     }
-    
+
     inline void spin_unlock(const int pid) {
         MyNode[pid]->locked = false;
         MyNode[pid]= MyPred[pid];
     }
-    
+
 } ALIGN_TO_POST(CACHE_LINE_SIZE);
-    
+
 typedef CLHSpinLock clh_lock_t[1];
 
 _INLINE void init_unlocked(clh_lock_t l) { l->init();}
@@ -188,36 +188,36 @@ _INLINE void init_locked(clh_lock_t l) { abort(); }
 _INLINE void spin_lock(clh_lock_t l, const int pid) { l->spin_lock(pid); }
 _INLINE void spin_unlock(clh_lock_t l, const int pid) { l->spin_unlock(pid); }
 
-#endif 
+#endif
 
 // NOTE: A better check would be needed !
-// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used 
+// both GNU g++ and Intel icpc define __GXX_EXPERIMENTAL_CXX0X__ if -std=c++0x or -std=c++11 is used
 // (icpc -E -dM -std=c++11 -x c++ /dev/null | grep GXX_EX)
 #if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_VARIADIC_TEMPLATES))
 
 ALIGN_TO_PRE(CACHE_LINE_SIZE) struct AtomicFlagWrapper {
     AtomicFlagWrapper():F(ATOMIC_FLAG_INIT) {}
-    
+
     // std::atomic_flag isn't copy-constructible, nor copy-assignable
-    
+
     bool test_and_set(std::memory_order mo) {
         return F.test_and_set(mo);
     }
     void clear(std::memory_order mo) {
         F.clear(mo);
     }
-    
+
     union {
         std::atomic_flag F;
         char padding[64];
-    };    
+    };
 }ALIGN_TO_POST(CACHE_LINE_SIZE);
 
 typedef AtomicFlagWrapper lock_t[1];
 
 _INLINE void init_unlocked(lock_t l) { }
 _INLINE void init_locked(lock_t l)   { abort(); }
-_INLINE void spin_lock(lock_t l) { 
+_INLINE void spin_lock(lock_t l) {
     while(l->test_and_set(std::memory_order_acquire)) ;
 }
 _INLINE void spin_unlock(lock_t l) { l->clear(std::memory_order_release);}
@@ -225,7 +225,7 @@ _INLINE void spin_unlock(lock_t l) { l->clear(std::memory_order_release);}
 #else  // non C++11
 
 /* -------- XCHG-based spin-lock --------- */
-    
+
 enum { UNLOCKED=0 };
 typedef volatile int lock_t[1];
 
@@ -233,8 +233,8 @@ _INLINE void init_unlocked(lock_t l) { l[0]=UNLOCKED;}
 _INLINE void init_locked(lock_t l)   { l[0]=!UNLOCKED;}
 
 /*
- * NOTE: 
- *  The following 2 functions has been taken from Cilk (version 5.4.6). 
+ * NOTE:
+ *  The following 2 functions has been taken from Cilk (version 5.4.6).
  *  The Cilk Project web site is  http://supertech.csail.mit.edu/cilk/
  *
  */
@@ -243,7 +243,7 @@ _INLINE void init_locked(lock_t l)   { l[0]=!UNLOCKED;}
 #include <WinBase.h>
 // windows platform
 _INLINE void spin_lock(lock_t l) {
-    while (InterlockedExchange((long *)l, 1) != UNLOCKED) {	
+    while (InterlockedExchange((long *)l, 1) != UNLOCKED) {
         while (l[0]) ;  /* spin using only reads - reduces bus traffic */
     }
 }
@@ -252,7 +252,7 @@ _INLINE void spin_unlock(lock_t l) {
     /*
      *  Ensure that all previous writes are globally visible before any
      *  future writes become visible.
-     */    
+     */
     WMB();
     l[0]=UNLOCKED;
 }
@@ -269,7 +269,7 @@ _INLINE void spin_unlock(lock_t l) {
     /*
      *  Ensure that all previous writes are globally visible before any
      *  future writes become visible.
-     */    
+     */
     WMB();
     l[0]=UNLOCKED;
 }

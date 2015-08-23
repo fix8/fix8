@@ -53,9 +53,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # include <io.h>
 #endif
 
-#if (REGEX_SYSTEM == REGEX_REGEX_H)
+#if (FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H)
 #include <regex.h>
-#elif (REGEX_SYSTEM == REGEX_POCO)
+#elif (FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO)
 #include <Poco/RegularExpression.h>
 #include <Poco/Exception.h>
 #endif
@@ -307,19 +307,19 @@ F8API void create_path(const std::string& path);
 /// A class to contain regex matches using RegExp.
 class RegMatch
 {
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 	/// Maximum number of sub-expressions.
 	enum { SubLimit_ = 32 };
 	regmatch_t subexprs_[SubLimit_];
 	int subCnt_;
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 	Poco::RegularExpression::MatchVec _matchVec;
 #endif
 
 public:
 	/// Ctor.
 	RegMatch()
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		: subexprs_(), subCnt_()
 #endif
     {}
@@ -331,9 +331,9 @@ public:
 	  \return number of sub-expression */
 	unsigned SubCnt() const
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		return subCnt_;
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 		return static_cast<unsigned>(_matchVec.size());
 #endif
 	}
@@ -343,9 +343,9 @@ public:
 	  \return size of sub-expression, -1 if not found */
 	size_t SubSize(const int which=0) const
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1;
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 		return which < static_cast<int>(_matchVec.size()) ? _matchVec[which].length : -1;
 #endif
 	}
@@ -355,9 +355,9 @@ public:
 	  \return offset of the sub-expression, -1 if not found */
 	unsigned SubPos(const int which=0) const
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		return which < subCnt_ ? subexprs_[which].rm_so : -1;
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 		return which < static_cast<int>(_matchVec.size()) ? static_cast<int>(_matchVec[which].offset) : -1;
 #endif
 	}
@@ -370,12 +370,12 @@ public:
 class RegExp
 {
 	const std::string pattern_;
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 	/// Maximum length of an error message.
 	enum { MaxErrLen_ = 256 };
 
 	regex_t reg_;
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 	Poco::RegularExpression * _regexp;
 #endif
 	std::string errString;
@@ -386,7 +386,7 @@ public:
 	  \param pattern regular expression to compile. errCode and errString set on error.
 	  \param flags POSIX regcomp flags */
 	RegExp(const char *pattern, const int flags=0)
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		: pattern_(pattern)
 	{
 		if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
@@ -396,7 +396,7 @@ public:
 			errString = rbuf;
 		}
 	}
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 		: pattern_(pattern), _regexp()
 	{
 		try
@@ -414,10 +414,10 @@ public:
 	/// Dtor. Destroys internal compiled expression.
 	virtual ~RegExp()
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		if (errCode_ == 0)
 			regfree(&reg_);
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 		delete _regexp;
 #endif
 	}
@@ -430,13 +430,13 @@ public:
 	  \return number of sub-expressions found (0=none) */
 	int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset=0) const
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		match.subCnt_ = 0;
 		if (regexec(&reg_, source.c_str() + offset, subExpr <= RegMatch::SubLimit_ ? subExpr : RegMatch::SubLimit_, match.subexprs_, 0) == 0)
 			while (match.subCnt_ < subExpr && match.subexprs_[match.subCnt_].rm_so != -1)
 				++match.subCnt_;
 		return match.subCnt_;
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
 		match._matchVec.clear();
 		return _regexp ? _regexp->match(source, offset, match._matchVec) : 0;
 #endif
@@ -451,10 +451,10 @@ public:
 	  \return the target string */
 	static std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0)
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		if (num < match.subCnt_)
 			target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
       if (num < static_cast<int>(match.SubCnt()))
          target = source.substr(offset + match.SubPos(num), match.SubSize(num));
 #endif
@@ -470,10 +470,10 @@ public:
 	  \return the source string */
 	static std::string& Erase(RegMatch& match, std::string& source, const int num=0)
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		if (num < match.subCnt_)
 			source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
       if (num < static_cast<int>(match.SubCnt()))
          source.erase(match.SubPos(num), match.SubSize(num));
 #endif
@@ -488,10 +488,10 @@ public:
 	  \return the source string */
 	static std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0)
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		if (num < match.subCnt_)
 			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
       if (num < static_cast<int>(match.SubCnt()))
          source.replace(match.SubPos(num), match.SubSize(num), with);
 #endif
@@ -506,10 +506,10 @@ public:
 	  \return the source string */
 	static std::string& Replace(RegMatch& match, std::string& source, const char with, const int num=0)
 	{
-#if REGEX_SYSTEM == REGEX_REGEX_H
+#if FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H
 		if (num < match.subCnt_)
 			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, 1, with);
-#elif REGEX_SYSTEM == REGEX_POCO
+#elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
       if (num < static_cast<int>(match.SubCnt()))
          source.replace(match.SubPos(num), match.SubSize(num), 1, with);
 #endif
@@ -559,22 +559,6 @@ struct StringLessThanNoCase
 /*! Extract a typed value from a string.
   \tparam typename
   \param source source string
-  \param defval value to return if source string is empty
-  \return the extracted value. */
-template<typename T>
-inline T get_value(const std::string& source, T defval)
-{
-	if (source.empty())
-		return defval;
-	std::istringstream istr(source);
-	T result(defval);
-	istr >> result;
-	return result;
-}
-
-/*! Extract a typed value from a string.
-  \tparam typename
-  \param source source string
   \return the extracted value. */
 template<typename T>
 inline T get_value(const std::string& source)
@@ -585,6 +569,34 @@ inline T get_value(const std::string& source)
 	return result;
 }
 
+/*! Extract a unsigned value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline unsigned get_value(const std::string& source) { return std::stoul(source); }
+
+/*! Extract a int value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline int get_value(const std::string& source) { return std::stoi(source); }
+
+/*! Extract a double value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline double get_value(const std::string& source) { return std::stod(source); }
+
+/*! Extract a float value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
+template<>
+inline float get_value(const std::string& source) { return std::stof(source); }
+
 /*! Extract a bool value from a string.
   \tparam typename
   \param source source string
@@ -594,7 +606,7 @@ inline bool get_value(const std::string& source)
 {
 	if (source.empty())
 		return false;
-#if !defined XMLENTITY_STRICT_BOOL
+#if !defined FIX8_XMLENTITY_STRICT_BOOL
 	return source % "true" || source % "yes" || source % "y" || source == "1";
 #else
 	bool result(false);
@@ -770,7 +782,7 @@ inline fp_type fast_atof (const char *p)
 			expon = expon * 10 + (*p - '0');
 			++p;
 		}
-#if defined USE_SINGLE_PRECISION
+#if defined FIX8_USE_SINGLE_PRECISION
 		if (expon > 38)
 			expon = 38;
 #else

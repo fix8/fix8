@@ -114,7 +114,7 @@ Usage: harness [-LRSchlpqrsv] \n
 // f8 headers
 #include <fix8/f8includes.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -140,10 +140,12 @@ const MyMenu::Handlers MyMenu::_handlers
 {
 	{ { 'c', "Create messages" }, &MyMenu::create_msgs },
 	{ { 'e', "Edit messages" }, &MyMenu::edit_msgs },
-	{ { 'd', "Delete messages" }, &MyMenu::delete_msgs },
+	{ { 'd', "Delete one message" }, &MyMenu::delete_msg },
+	{ { 'D', "Delete all messages" }, &MyMenu::delete_msgs },
 	{ { 'p', "Print messages" }, &MyMenu::print_msgs },
 	{ { 's', "Send messages" }, &MyMenu::send_msgs },
 	{ { 'r', "Read messages from disk" }, &MyMenu::read_msgs },
+	{ { 'S', "Send one message, optionally save before send" }, &MyMenu::send_msg },
 	{ { 't', "Toggle heartbeat message display" }, &MyMenu::toggle_heartbeats },
 	{ { '?', "Help" }, &MyMenu::help },
 	{ { 'l', "Logout" }, &MyMenu::do_logout },
@@ -188,7 +190,7 @@ int main(int argc, char **argv)
 			lines = nlines - 4;
 	}
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
@@ -213,7 +215,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for " PACKAGE " version " VERSION << endl;
+			cout << argv[0] << " for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
@@ -222,9 +224,9 @@ int main(int argc, char **argv)
 		case 'p': replay_file = optarg; break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
-		case 'L': lines = get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
+		case 'L': lines = stoul(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -287,7 +289,10 @@ int main(int argc, char **argv)
 
 			for(; !term_received;)
 			{
-				cout << endl << "?=help > " << flush;
+				cout << endl;
+				if (mymenu.get_msg_cnt())
+					cout << '[' << mymenu.get_msg_cnt() << "] msgs; ";
+				cout << "?=help > " << flush;
 				char ch{};
 				mymenu.get_istr().get(ch);
 				cout << ch << endl;
@@ -328,6 +333,12 @@ void myfix_session_client::state_change(const FIX8::States::SessionStates before
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
+}
+
+//-----------------------------------------------------------------------------------------
+void myfix_session_server::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -419,9 +430,16 @@ bool MyMenu::edit_msgs()
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::delete_msgs()
+bool MyMenu::delete_msg()
 {
 	_cm->DeleteMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::delete_msgs()
+{
+	_cm->DeleteAllMsgs(_tty, _lst);
 	return true;
 }
 
@@ -446,6 +464,50 @@ bool MyMenu::print_msgs()
 {
 	for (const auto *pp : _lst)
 		_ostr << *pp << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::send_msg()
+{
+	unique_ptr<Message> msg(_cm->RemoveMsg(_tty, _lst));
+	if (msg.get())
+	{
+		string fname;
+		_ostr << endl;
+		bool save(_cm->get_yn("Save message after send? (y/n):", true));
+		_ostr << endl;
+		if (save)
+		{
+			_ostr << "Enter filename: " << flush;
+			_cm->GetString(_tty, fname);
+		}
+		if (_cm->get_yn("Send message? (y/n):", true))
+		{
+			_session.send(msg.get(), false);
+			if (save && !fname.empty())
+				save_msg(fname, msg.get());
+		}
+	}
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::save_msg(const string& fname, Message *msg)
+{
+#if !defined FIX8_RAW_MSG_SUPPORT
+	cerr << endl << "RAW_MSG_SUPPORT support not enabled. Run configure with --enable-rawmsgsupport" << endl;
+#else
+	if (exist(fname))
+		_ostr << endl << fname << " exists, will append message" << endl;
+	ofstream ofs(fname.c_str(), ios::app);
+	if (!ofs)
+	{
+		cerr << Str_error(errno, "Could not open file");
+		return false;
+	}
+	ofs << msg->get_rawmsg() << endl; // requires fix8 built with --enable-rawmsgsupport
+#endif
 	return true;
 }
 
@@ -477,16 +539,19 @@ bool MyMenu::load_msgs(const string& fname)
 		return false;
 	}
 
-	char buffer[MAX_MSG_LENGTH];
+	char buffer[FIX8_MAX_MSG_LENGTH];
 	unsigned loaded(0), skipped(0);
 	while (!ifs.eof())
 	{
-		ifs.getline(buffer, MAX_MSG_LENGTH - 1);
+		ifs.getline(buffer, FIX8_MAX_MSG_LENGTH - 1);
 		if (!buffer[0])
 			continue;
 		Message *msg(Message::factory(TEX::ctx(), buffer));
 		if (msg->is_admin())
+		{
+			++skipped;
 			continue;
+		}
 		sender_comp_id sci;
 		msg->Header()->get(sci);
 		target_comp_id tci;
@@ -494,6 +559,8 @@ bool MyMenu::load_msgs(const string& fname)
 		if (_session.get_sid().same_side_sender_comp_id(sci) && _session.get_sid().same_side_target_comp_id(tci))
 		{
 			++loaded;
+			delete msg->Header()->remove(Common_SendingTime); // will re-add on send
+			msg->setup_reuse();
 			_lst.push_back(msg);
 		}
 		else
@@ -508,6 +575,16 @@ bool MyMenu::load_msgs(const string& fname)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::read_msgs()
 {
+   char cwd[FIX8_MAX_FLD_LENGTH];
+   _ostr << "Playback (*.playback) files in ";
+#ifdef _MSC_VER
+	_ostr << _getcwd(cwd, sizeof(cwd)) << endl;
+   if (system("dir *.playback"));
+#else
+	_ostr << getcwd(cwd, sizeof(cwd)) << endl;
+   if (system("ls -l *.playback"));
+#endif
+   _ostr << endl;
 	_ostr << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())

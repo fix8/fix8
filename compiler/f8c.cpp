@@ -81,7 +81,7 @@ e.g.\n
 #include <fix8/f8includes.hpp>
 #include <f8c.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 	bool dump(false), keep_failed(false), retain_precomp(false), second_only(false), nounique(false);
 	Ctxt ctxt;
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 		case 's': second_only = true; break;
 		case 'S': no_shared_groups = true; break;
 		case 'D': no_default_routers = true; break;
-		case 't': tabsize = get_value<unsigned>(optarg); break;
+		case 't': tabsize = stoul(optarg); break;
 		case 'p': prefix = optarg; break;
 		case 'H': precompHdr = optarg; break;
 		case 'b': binary_report(); return 0;
@@ -466,7 +466,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			FieldTrait::FieldType ft(bmitr == FieldSpec::_baseTypeMap.end() ? FieldTrait::ft_untyped : bmitr->second);
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
-				result = fspec.insert({get_value<unsigned>(number), FieldSpec(name, ft)});
+				result = fspec.insert({stoul(number), FieldSpec(name, ft)});
 			else
 			{
             if (!nowarn)
@@ -807,14 +807,14 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
             outh << endl;
             for (const auto& qq : tgroup->_groups)
                outh << d2spacer << spacer << spacer << spacer << "{ " << qq.first << ", new " << qq.second._name << " }," << endl;
-            outh << d2spacer << spacer << "});" << endl;
+            outh << d2spacer << spacer << spacer << "});" << endl;
          }
 
 			outh << d2spacer << spacer << "return mb;" << endl;
 			outh << d2spacer << '}' << endl;
 		}
 		outh << endl << d2spacer << "static const " << msname << "& get_msgtype() { return _msgtype; }" << endl;
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
       outh << d2spacer << "static const FieldTrait *get_traits() { return _traits; };" << endl;
       outh << d2spacer << "static const unsigned get_fieldcnt() { return _fieldcnt; };" << endl;
 #endif
@@ -859,7 +859,7 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
       outp << '{' << setw(4) << right << flitr->_fnum << ',' << setw(2)
          << right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
          ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
       if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
       {
          outp << ", " << endl << spacer << spacer;
@@ -881,7 +881,7 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
    }
    else
       outp << "const FieldTrait_Hash_Array " << endl << spacer << prefix << gname
-         << "::_ftha(" << prefix << gname << "::_traits, " << ms._fields.get_presence().size() << ");" << endl;
+         << "::_ftha(" << prefix << gname << "::_traits, " << gname << "::_fieldcnt);" << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1027,7 +1027,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
       generate_common_group_bodies(fspec, osr_cpp, globmap);
       osr_cpp << "} // namespace" << endl << endl;
    }
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
    else
    {
       osr_cpp << "//" << endl;
@@ -1079,7 +1079,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				osr_cpp << '{' << setw(4) << right << flitr->_fnum << ','
 					<< setw(2) << right << flitr->_ftype << ',' << setw(3) << right
 					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
             if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
             {
                osr_cpp << ", " << endl << spacer << spacer;
@@ -1094,7 +1094,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
-				<< pp.second._fields.get_presence().size() << ");" << endl;
+            << pp.second._name << "::_fieldcnt);" << endl;
 			osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
             osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
             osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;
@@ -1158,7 +1158,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		}
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << "& get_msgtype() { return _msgtype; }" << endl;
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
       osc_hpp << spacer << "static const FieldTrait *get_traits() { return _traits; };" << endl;
       osc_hpp << spacer << "static const unsigned get_fieldcnt() { return _fieldcnt; };" << endl;
 #endif
@@ -1557,8 +1557,8 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)
 	{
-		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
+		to << "#if defined FIX8_MAGIC_NUM && FIX8_MAGIC_NUM > " << FIX8_MAGIC_NUM << 'L' << endl;
+		to << "#error " << fname << " version " << FIX8_PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
 		to << "#endif" << endl;
 	}
 	to << _csMap.find(cs_divider)->second << endl;

@@ -45,9 +45,9 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace
 {
-	const string package_version { PACKAGE_NAME " version " PACKAGE_VERSION };
+	const string package_version { FIX8_PACKAGE_NAME " version " FIX8_PACKAGE_VERSION };
 	const string copyright_short { "Copyright (c) 2010-" };
-	const string copyright_short2 { ", David L. Dight <" PACKAGE_BUGREPORT ">, All rights reserved. [" PACKAGE_URL "]"};
+	const string copyright_short2 { ", David L. Dight <" FIX8_PACKAGE_BUGREPORT ">, All rights reserved. [" FIX8_PACKAGE_URL "]"};
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ _ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 
 	if (!_logger)
 	{
@@ -137,7 +137,7 @@ _ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq
 	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ void Session::update_persist_seqnums()
 {
 	if (_persist)
 	{
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+		f8_scoped_spin_lock guard(_per_spl, _connection && _connection->get_pmodel() == pm_coro);
 		_persist->put(_next_send_seq, _next_receive_seq);
 		//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 	}
@@ -936,6 +936,12 @@ size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 }
 
 //-------------------------------------------------------------------------------------------------
+int Session::modify_header(MessageBase *msg)
+{
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
 	//cout << "send_process()" << endl;
@@ -978,11 +984,18 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	}
 	*msg->Header() << new sending_time;
 
+	// allow session to modify the header of this message before sending
+	const int fields_modified(modify_header(msg->Header()));
+	if (fields_modified)
+	{
+		slout_debug << "send_process: " << fields_modified << " header fields added/modified";
+	}
+
 	try
 	{
 		slout_debug << "Sending:" << *msg;
 		modify_outbound(msg);
-		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		size_t enclen(msg->encode(&ptr));
 		const char *optr(ptr);
 		if (msg->get_end_of_batch())
@@ -1000,43 +1013,32 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 				return false;
 			}
 			_last_sent.now();
-
-			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(optr, Logger::Info);
-
-			//cout << "send_process" << endl;
-
-			if (!is_dup)
-			{
-				if (_persist)
-				{
-					f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
-					if (!msg->is_admin())
-						_persist->put(_next_send_seq, ptr);
-					_persist->put(_next_send_seq + 1, _next_receive_seq);
-					//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
-				}
-				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
-				{
-					++_next_send_seq;
-					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
-				}
-			}
 			_batchmsgs_buffer.clear();
 		}
 		else
 		{
 			_batchmsgs_buffer.append(ptr);
-			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(ptr, Logger::Info);
+		}
 
-			if (!is_dup)
+		if (_plogger && _plogger->has_flag(Logger::outbound))
+			plog(optr, Logger::Info);
+
+		//cout << "send_process" << endl;
+
+		if (!is_dup)
+		{
+			if (_persist)
 			{
-				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
-				{
-					++_next_send_seq;
-					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
-				}
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
+				if (!msg->is_admin())
+					_persist->put(_next_send_seq, ptr);
+				_persist->put(_next_send_seq + 1, _next_receive_seq);
+				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+			}
+			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+			{
+				++_next_send_seq;
+				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
 			}
 		}
 	}
@@ -1071,7 +1073,7 @@ void Session::recover_seqnums()
 }
 
 //-------------------------------------------------------------------------------------------------
-#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 f8String Session::get_thread_policy_string(thread_id_t id)
 {
    int policy;
@@ -1155,7 +1157,7 @@ const f8String Session::copyright_string()
 
 
 //-------------------------------------------------------------------------------------------------
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
 {
    const Poco::Net::X509Certificate& cert(errorCert.certificate());
@@ -1173,7 +1175,7 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 	glout_warn << "warning: privatekey passphrase requested and ignored!";
 }
 
-#endif // HAVE_OPENSSL
+#endif // FIX8_HAVE_OPENSSL
 //-------------------------------------------------------------------------------------------------
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -38,14 +38,14 @@
  * Date: Mar 27, 2011: some win platform support
  *
  */
- 
+
 #ifndef FF_MAPPING_UTILS_HPP
 #define FF_MAPPING_UTILS_HPP
 
 
 #include <iostream>
 #include <errno.h>
-#include <ff/config.hpp>
+#include <fix8/ff/config.hpp>
 #if defined(__linux__)
 #include <sys/types.h>
 #include <sys/resource.h>
@@ -57,19 +57,19 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <sys/syscall.h>
-#include <mach/mach.h> 
+#include <mach/mach.h>
 #include <mach/mach_init.h>
-#include <mach/thread_policy.h> 
+#include <mach/thread_policy.h>
 // If you don't include mach/mach.h, it doesn't work.
 // In theory mach/thread_policy.h should be enough
 #elif (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
-#include <ff/platforms/platform.h>
+#include <fix8/ff/platforms/platform.h>
 //extern "C" {
 //#include <Powrprof.h>
 //}
 #endif
 
-/** 
+/**
  *  \brief Returns the ID of the calling thread
  *
  *  It returns the ID of the calling thread. It works on Linux OS, Apple OS,
@@ -92,12 +92,12 @@ static inline long ff_getThreadID() {
     return -1;
 }
 
-/** 
+/**
  *  \brief Returnes the frequency of the CPU
  *
  *  It returns the frequency of the CPUs (On a shared memory system, all cores
  *  have the same frequency). It works on Linux OS and Apple OS.
- *  
+ *
  *  \return An integer value showing the frequency of the core.
  */
 static inline unsigned long ff_getCpuFreq() {
@@ -136,7 +136,7 @@ static inline unsigned long ff_getCpuFreq() {
 static inline int ff_numCores() {
     int  n=-1;
 #if defined(__linux__)
-    FILE       *f;    
+    FILE       *f;
     f = popen("cat /proc/cpuinfo |grep processor | wc -l", "r");
     if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
     pclose(f);
@@ -156,7 +156,7 @@ static inline int ff_numCores() {
 
 
 /**
- *  \brief Returns the real number of cores in the system without considering 
+ *  \brief Returns the real number of cores in the system without considering
  *  HT or HMT
  *
  *  It returns the number of cores present in the system. It works on Linux OS
@@ -166,7 +166,7 @@ static inline int ff_numCores() {
 static inline int ff_realNumCores() {
     int  n=-1;
 #if defined(__linux__)
-    FILE       *f;    
+    FILE       *f;
     f = popen("cat /proc/cpuinfo|egrep 'core id|physical id'|tr -d '\n'|sed 's/physical/\\nphysical/g'|grep -v ^$|sort|uniq|wc -l", "r");
     if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
     pclose(f);
@@ -186,7 +186,7 @@ static inline int ff_realNumCores() {
 static inline int ff_numSockets() {
     int  n=-1;
 #if defined(__linux__)
-    FILE       *f;    
+    FILE       *f;
     f = popen("cat /proc/cpuinfo|grep 'physical id'|sort|uniq|wc -l", "r");
     if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
     pclose(f);
@@ -222,7 +222,7 @@ static inline int ff_setPriority(int priority_level=0) {
             ret = EINVAL;
         }
     //}
-#elif defined(__APPLE__) 
+#elif defined(__APPLE__)
     if (setpriority(PRIO_DARWIN_THREAD, 0 /*myself */ ,priority_level) != 0) {
             perror("setpriority:");
             ret = EINVAL;
@@ -262,12 +262,12 @@ if (ret!=0) perror("ff_setPriority");
     return ret;
 }
 
-/** 
- *  \brief Returns the ID of the core 
+/**
+ *  \brief Returns the ID of the core
  *
  *  It returns the ID of the core where the calling thread is running. It works
  *  on Linux OS and Apple OS.
- * 
+ *
  *  \return An integer value showing the ID of the core. If the ID of the core
  *  is not found, then -1 is returned.
  */
@@ -279,7 +279,7 @@ static inline int ff_getMyCore() {
         perror("sched_getaffinity");
         return EINVAL;
     }
-    for(int i=0;i<CPU_SETSIZE;++i) 
+    for(int i=0;i<CPU_SETSIZE;++i)
         if (CPU_ISSET(i,&mask)) return i;
 #elif defined(__APPLE__) && MAC_OS_X_HAS_AFFINITY
     // Not tested
@@ -294,7 +294,7 @@ static inline int ff_getMyCore() {
 #else
 #if __GNUC__
 #warning "ff_getMyCpu not supported"
-#else 
+#else
 std::cerr << "---> ff_getMyCpu not supported\n";
 #pragma message( "ff_getMyCpu not supported")
 #endif
@@ -304,7 +304,7 @@ return -1;
 // NOTE: this function will be discarded, please use ff_getMyCore() instead
 static inline int ff_getMyCpu() { return ff_getMyCore(); }
 
-/** 
+/**
  *  \brief Maps the calling thread to the given CPU.
  *
  *  It maps the calling thread to the given core. It works on Linux OS, Apple
@@ -322,13 +322,13 @@ static inline int ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
     cpu_set_t mask;
     CPU_ZERO(&mask);
     CPU_SET(cpu_id, &mask);
-    if (sched_setaffinity(gettid(), sizeof(mask), &mask) != 0) 
+    if (sched_setaffinity(gettid(), sizeof(mask), &mask) != 0)
         return EINVAL;
     return (ff_setPriority(priority_level));
 #elif defined(__APPLE__) && MAC_OS_X_HAS_AFFINITY
     // Mac OS does not implement direct pinning of threads onto cores.
     // Threads can be organised in affinity set. Using requested CPU
-    // tag for the set. Cores under the same L2 cache are not distinguished. 
+    // tag for the set. Cores under the same L2 cache are not distinguished.
     // Should be called before running the thread.
 #define CACHE_LEVELS 3
     #define CACHE_L2 2
@@ -352,7 +352,7 @@ static inline int ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
       std::cerr << "Setting affinity of thread ? (" << mach_thread_self() << ") failed!" << std::endl;
       return EINVAL;
       } // else {
-      //   std::cerr << "Sucessfully set affinity of thread (" << 
+      //   std::cerr << "Sucessfully set affinity of thread (" <<
       //   mach_thread_self() << ") to core " << cpu_id/cacheconfig[CACHE_L2] << "\n";
       // }
       }
@@ -365,7 +365,7 @@ static inline int ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
         return EINVAL;
     }
     //std::cerr << "Successfully set affinity of thread " << GetCurrentThreadId() << " to core " << cpu_id << "\n";
-#else 
+#else
 #warning "CPU_SET not defined, cannot map thread to specific CPU"
 #endif
     return 0;
@@ -445,9 +445,9 @@ static inline size_t cache_line_size() {
     p = fopen("/sys/devices/system/cpu/cpu0/cache/index0/coherency_line_size", "r");
     unsigned int i = 0;
     if (p) {
-        if (fscanf(p, "%ud", &i) == EOF) { 
+        if (fscanf(p, "%ud", &i) == EOF) {
             perror("fscanf");
-            if (fclose(p) != 0) perror("fclose"); 
+            if (fclose(p) != 0) perror("fclose");
             return 0;
         }
         if (fclose(p) != 0) {

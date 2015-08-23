@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef FIX8_CONFIGURATION_HPP_
 #define FIX8_CONFIGURATION_HPP_
 
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 #include <openssl/ssl.h>
 #else
 #define SSL_VERIFY_PEER 0
@@ -152,8 +152,8 @@ protected:
 	Tickval::ticks get_time_field(const XmlElement *from, const std::string& tag, bool timeonly=false) const
 	{
 		std::string time_str;
-		return from && from->GetAttr(tag, time_str) && time_str.size() == 8 ? time_parse(time_str.c_str(), 8, timeonly)
-																								  : Tickval::errorticks;
+		return from && from->GetAttr(tag, time_str) && time_str.size() == 8
+			? time_parse(time_str.c_str(), 8, timeonly) : Tickval::errorticks();
 	}
 
 	/*! Find an attribute in the given XmlElement
@@ -213,7 +213,7 @@ public:
 		_groups(g_count)
 	{
 		if (!exist(xmlfile))
-			throw ConfigurationError("server config file not found", xmlfile);
+			throw ConfigurationError("config file not found", xmlfile);
 		if (do_process)
 			process();
 	}
@@ -445,7 +445,7 @@ public:
 	target_comp_id get_target_comp_id(const XmlElement *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
 	  \return ssl context */

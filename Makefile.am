@@ -83,11 +83,13 @@ testdir = ${sharedir}/test
 fix8htmldir = $(sharedir)/html
 schemadir = ${sharedir}/schema
 contribdir = ${sharedir}/contrib
+exchangecontribdir = ${contribdir}/exchangeSchemas
 
 xmltoman=$(mandir)/xmltoman
 PROCESS_MAN_PAGES = $(mandir)/f8c.1 $(mandir)/seqedit.1
 
 INSTALL_DATA_CONTRIB = contrib/FindFix8.cmake
+INSTALL_DATA_EXCHANGE_CONTRIB = contrib/exchangeSchemas/*
 
 INSTALL_DATA_LOCAL_TEST = test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml \
 	test/hf_server.xml test/myfix_server.xml
@@ -103,10 +105,11 @@ INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 install-data-local:
 	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(testdir)/run $(DESTDIR)$(schemadir)
 	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic $(DESTDIR)$(ffdir)/ocl
-	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir) $(DESTDIR)$(contribdir)
+	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir) $(DESTDIR)$(contribdir) $(DESTDIR)$(exchangecontribdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(DESTDIR)$(schemadir)
 	$(INSTALL_DATA) $(INSTALL_DATA_CONTRIB) $(DESTDIR)$(contribdir)
+	$(INSTALL_DATA) $(INSTALL_DATA_EXCHANGE_CONTRIB) $(DESTDIR)$(exchangecontribdir)
 	$(INSTALL_DATA) ${ffincdir}/*.hpp ${ffincdir}/*.h $(DESTDIR)$(ffdir)
 	$(INSTALL_DATA) ${ffincdir}/d/*.hpp $(DESTDIR)$(ffdir)/d
 	$(INSTALL_DATA) ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h $(DESTDIR)$(ffdir)/ocl
@@ -123,7 +126,7 @@ if USEDOXYGEN
 endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec \
-	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) ${ffincludes} $(INSTALL_DATA_CONTRIB) \
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) ${ffincludes} $(INSTALL_DATA_CONTRIB) $(INSTALL_DATA_EXCHANGE_CONTRIB) \
 	version.sh bootstrap README.md LICENSE CONTRIBUTORS runtime/dllmain.cpp stocklib/Makefile.am stocklib/Makefile.in
 
 if USEDOXYGEN

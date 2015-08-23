@@ -234,7 +234,7 @@ public:
 
     virtual bool write(Message *from, bool)
     {
-		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		  char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
         from->encode(&ptr);
         _output.push_back(ptr);
         return true;
@@ -245,7 +245,7 @@ public:
           \return always return true*/
 	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
 	{
-		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		for(std::vector<Message*>::const_iterator cit=msgs.begin(); cit != msgs.end(); ++cit)
 		{
 			(*cit)->encode(&ptr);
@@ -260,7 +260,7 @@ public:
 
     virtual bool write(Message& from)
     {
-		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		  char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
         from.encode(&ptr);
         _output.push_back(ptr);
         return true;
@@ -397,5 +397,5 @@ public:
 
 }
 
-#endif // _FIX8_CONNECTION_HPP_
+#endif // FIX8_CONNECTION_HPP_
 

@@ -83,12 +83,12 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 			}
 		}
 
-		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
+		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0600)) < 0)
 		{
 			glout_error << "Error: creating database: " << _dbFname << " (" << strerror(errno) << ')';
 			return false;
 		}
-		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
+		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0600)) < 0)
 		{
 			glout_error << "Error: creating database index: " << _dbIname << " (" << strerror(errno) << ')';
 			return false;
@@ -103,12 +103,12 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 	}
 	else
 	{
-		if ((_fod = open(_dbFname.c_str(), O_RDWR)) < 0)
+		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_BINARY)) < 0)
 		{
 			glout_error << "Error: opening existing database: " << _dbFname << " (" << strerror(errno) << ')';
 			return false;
 		}
-		if ((_iod = open(_dbIname.c_str(), O_RDWR)) < 0)
+		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_BINARY)) < 0)
 		{
 			glout_error << "Error: opening existing database index: " << _dbIname << " (" << strerror(errno) << ')';
 			return false;
@@ -186,7 +186,7 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 	Index::const_iterator itr(_index.find(startSeqNum));
 	if (itr != _index.end())
 	{
-		char buff[MAX_MSG_LENGTH];
+		char buff[FIX8_MAX_MSG_LENGTH];
 
 		do
 		{
@@ -324,7 +324,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 		return false;
 	}
 
-	char buff[MAX_MSG_LENGTH];
+	char buff[FIX8_MAX_MSG_LENGTH];
 	if (read (_fod, buff, itr->second._size) != itr->second._size)
 	{
 		glout_error << "Error: could not read message record for seqnum " << seqnum << " from: " << _dbFname;

@@ -233,7 +233,9 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 		for (unsigned nlines(0); itr != lst.end(); ++itr)
 		{
 			const MsgTable::Pair *tbme(_ctx._bme.find_pair_ptr((*itr)->get_msgtype().c_str()));
-         _os << '[' << _opt_keys[nlines] << "]  " << tbme->_value._name << '(' << tbme->_key << ')' << endl;
+			text txt;
+			(*itr)->get(txt);
+         _os << '[' << _opt_keys[nlines] << "]  " << tbme->_value._name << '(' << tbme->_key << ")\t" << txt() << endl;
 
 			++nlines;
 			if (nlines % _lpp == 0 || (nlines + _lpp * page) == lst.size())
@@ -308,7 +310,7 @@ void ConsoleMenu::EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Mess
 		GetString(tty, txt);
 		if (msg->get_fp().is_group(fld->_key))
 		{
-			int cnt(get_value<int>(txt));
+			int cnt(stoi(txt));
 			GroupBase *gb(msg->find_group(fld->_key));
 			if (gb && cnt)
 			{
@@ -345,6 +347,42 @@ int ConsoleMenu::EditMsgs(tty_save_state& tty, MsgList& lst) const
 	}
 
 	return static_cast<int>(lst.size());
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *ConsoleMenu::RemoveMsg(tty_save_state& tty, MsgList& lst) const
+{
+	Message *msg(SelectFromMsg(lst));
+	if (msg)
+	{
+		for (MsgList::iterator itr(lst.begin()); itr != lst.end(); ++itr)
+		{
+			if (*itr == msg)
+			{
+				_os << endl;
+				if (get_yn("Remove msg from list? (y/n, n=return a copy):", true))
+				{
+					lst.erase(itr);
+					return msg;
+				}
+				return msg->clone();
+			}
+		}
+	}
+
+	return nullptr;;
+}
+
+//-------------------------------------------------------------------------------------------------
+int ConsoleMenu::DeleteAllMsgs(tty_save_state& tty, MsgList& lst) const
+{
+	if (lst.size() && get_yn("Delete all msgs? (y/n):", true))
+	{
+		for_each(lst.begin(), lst.end(), [](const Message *pp){ delete pp; });
+		lst.clear();
+	}
+
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------

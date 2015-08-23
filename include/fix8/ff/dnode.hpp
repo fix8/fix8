@@ -1,10 +1,10 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \link
  *  \file dnode.hpp
  *  \ingroup streaming_network_arbitrary_distributed_memory
- *  
+ *
  *  \brief Defines the distributed version of FastFlow node
  *
  *  It contains the definition of the \p ff_dnode class, which is an
@@ -31,7 +31,7 @@
  ****************************************************************************
  */
 
- 
+
 #ifndef FF_DNODE_HPP
 #define FF_DNODE_HPP
 
@@ -44,14 +44,14 @@
 #include <stdint.h>
 #include <cstdlib>
 #include <vector>
-#include <ff/platforms/platform.h>
+#include <fix8/ff/platforms/platform.h>
 #if !defined(_WIN32)
  #include <sys/uio.h>
 #endif
-#include <ff/d/zmqTransport.hpp>
-#include <ff/d/zmqImpl.hpp>
-#include <ff/node.hpp>
-#include <ff/svector.hpp>
+#include <fix8/ff/d/zmqTransport.hpp>
+#include <fix8/ff/d/zmqImpl.hpp>
+#include <fix8/ff/node.hpp>
+#include <fix8/ff/svector.hpp>
 
 
 namespace ff {
@@ -100,17 +100,17 @@ public:
      * Implements communication transport layer
      */
     typedef typename CommImpl::TransportImpl::msg_t msg_t;
-    
+
     /**
      * Defines sender and receiver
      */
     enum {SENDER=true, RECEIVER=false};
 
-protected:    
-    // this is called once as soon as the message just sent 
+protected:
+    // this is called once as soon as the message just sent
     // is no longer in use by the run-time
     static dnode_cbk_t cb;
-    
+
     /**
      * \brief Free the message
      *
@@ -140,7 +140,7 @@ protected:
      * \brief Checks EOS
      *
      * It checks if it is EOS of the message.
-     * 
+     *
      * \parm data is the array of messages
      *
      * \return The EOS of the message
@@ -148,14 +148,14 @@ protected:
     inline bool isEos(const char data[msg_t::HEADER_LENGTH]) const {
         return !(data[0]-'E' + data[1]-'O' + data[2]-'S' + data[3]-'\0');
     }
-    
+
     /**
      * \brief Constructor
      *
      * It builds the FastFlow node.
      */
     ff_dnode():ff_node(),skipdnode(true),neos(0) {}
-    
+
     /**
      * \brief Destructor
      *
@@ -177,47 +177,47 @@ protected:
      * \return If successful \p true, otherwise \p false.
      */
     template<typename CI>
-    inline bool internal_push(void * ptr, CI& comm) { 
+    inline bool internal_push(void * ptr, CI& comm) {
         // gets the peers involved in one single communication
         const int peers=comm.getDescriptor()->getPeers();
         if (ptr == (void*)FF_EOS) {
             //std::cerr << "DNODE prepare to send FF_DEOS to " << peers <<" peers\n";
             for(int i=0;i<peers;++i) {
-                msg_t msg; 
+                msg_t msg;
                 msg.init(FF_DEOS,msg_t::HEADER_LENGTH);
                 if (!comm.put(msg,i)) return false;
                 //std::cerr << "DNODE sends FF_DEOS to " << i <<"\n";
             }
             return true;
         }
-        
+
         if (CI::MULTIPUT) {
             svector<iovec> v;
             for(int i=0;i<peers;++i) {
                 v.clear();
                 callbackArg.resize(0);
                 prepare(v, ptr, i);
-                
+
                 msg_t hdr(new uint32_t(v.size()), msg_t::HEADER_LENGTH, freeHdr);
                 comm.putmore(hdr,i);
-                callbackArg.resize(v.size());  
+                callbackArg.resize(v.size());
                 for(size_t j=0;j<v.size()-1;++j) {
-                    msg_t msg(v[j].iov_base, v[j].iov_len,freeMsg,callbackArg[j]); 
+                    msg_t msg(v[j].iov_base, v[j].iov_len,freeMsg,callbackArg[j]);
                     comm.putmore(msg,i);
                 }
                 msg_t msg(v[v.size()-1].iov_base, v[v.size()-1].iov_len,freeMsg,callbackArg[v.size()-1]);
-                if (!comm.put(msg,i)) return false;            
+                if (!comm.put(msg,i)) return false;
             }
         } else {
             svector<iovec> v;
             callbackArg.resize(0);
             prepare(v, ptr);
-                       
+
             msg_t hdr(new uint32_t(v.size()), msg_t::HEADER_LENGTH, freeHdr);
             comm.putmore(hdr);
             callbackArg.resize(v.size());
             for(size_t j=0;j<v.size()-1;++j) {
-                msg_t msg(v[j].iov_base, v[j].iov_len,freeMsg,callbackArg[j]); 
+                msg_t msg(v[j].iov_base, v[j].iov_len,freeMsg,callbackArg[j]);
                 comm.putmore(msg);
             }
             msg_t msg(v[v.size()-1].iov_base, v[v.size()-1].iov_len,freeMsg,callbackArg[v.size()-1]);
@@ -229,18 +229,18 @@ protected:
     /**
      * \brief Pushes the data
      *
-     * It overrides \p ff_node's \p push method 
+     * It overrides \p ff_node's \p push method
      *
      * \parm ptr points to the data
      *
      * \return The status of \p internal_push() as Boolean value.
      */
-    virtual inline bool push(void * ptr) { 
+    virtual inline bool push(void * ptr) {
         if (skipdnode || !P) return ff_node::push(ptr);
         return internal_push(ptr, com);
     }
-    
-    /** 
+
+    /**
      * \brief Pops the data
      *
      * It overrides \p ff_node 's \p pop method.
@@ -249,7 +249,7 @@ protected:
      *
      * \return If successful \p true is returned, otherwise \p false.
      */
-    virtual inline bool pop(void ** ptr) { 
+    virtual inline bool pop(void ** ptr) {
         if (skipdnode || P) return ff_node::pop(ptr);
 
         // gets the peers involved in one single communication
@@ -283,7 +283,7 @@ protected:
             register int ventry   = (sendingPeers==1)?0:sender;
             prepare(v[ventry], len, sender);
             assert(v[ventry]->size() == len);
-            
+
             for(size_t j=0;j<len;++j)
                 if (!com.get(*(v[ventry]->operator[](j)),sender)) {
                     error("dnode:pop: ERROR: receiving data from peer");
@@ -292,12 +292,12 @@ protected:
                 }
         }
         com.done();
-        
+
         unmarshalling(v, sendingPeers, *ptr);
         // free (v) // Win32
         return true;
-    } 
-    
+    }
+
 public:
     /**
      *  \brief Initializes external communication channel
@@ -308,31 +308,31 @@ public:
      *  \param address is the address where to listen or connect to
      *  \param peers is the number of peers
      *  \param transp is the transport layer to be used
-     *  \param p is a flag saying whether the current \a dnode is the producer (\p p \p = \p true) 
+     *  \param p is a flag saying whether the current \a dnode is the producer (\p p \p = \p true)
      *               or the consumer (\p p \p = \p false) w.r.t. the communication pattern used
      *  \param nodeId is the ID of the node
-     *  \param cbk is the callback function that will be called once when a message just sent 
+     *  \param cbk is the callback function that will be called once when a message just sent
      *                 is no longer in use by the run-time
      *
      *  \return The status of \p com.init() as an integer value
      */
     int init(const std::string& name, const std::string& address,
-             const int peers, typename CommImpl::TransportImpl* const transp, 
+             const int peers, typename CommImpl::TransportImpl* const transp,
              const bool p, const int nodeId=-1, dnode_cbk_t cbk=0) {
         if (!p && cbk) {
             error("dnode:init: WARNING: callback does not make sense for consumer end-point, ignoring it...\n");
             cbk=NULL;
         }
         skipdnode=false;
-        P=p; 
+        P=p;
         neos=0;
-        ff_dnode::cb=cbk;                               
-        if (P) ff_node::create_output_buffer(1,true);            
+        ff_dnode::cb=cbk;
+        if (P) ff_node::create_output_buffer(1,true);
         else ff_node::create_input_buffer(1);
         com.setDescriptor(new typename CommImpl::descriptor(name,peers,transp,P));
         return com.init(address,nodeId);
     }
-        
+
     /*
      * serialization/deserialization methods
      * The first prepare is used by the Producer (p=true in the init method)
@@ -340,10 +340,10 @@ public:
      * by the Consumer (p=false in the init method).
      */
 
-    /** 
+    /**
      *  \brief Prepares output message
      *
-     *  It is used to prepare (non contiguous) output messages 
+     *  It is used to prepare (non contiguous) output messages
      *
      *  \param v is a vector containing the pool of messages
      *  \param ptr is pointer to the data
@@ -356,14 +356,14 @@ public:
     }
 
     /*
-     * COMMENT: 
+     * COMMENT:
      * When using ZeroMQ (from zguide.zeromq.org): "There is no way to do
      * zero-copy on receive: ØMQ delivers you a buffer that you can store as
      * long as you wish but it will not write data directly into application
      * buffers."
      */
-    
-    /** 
+
+    /**
      *  \brief Prepars a pool of messages
      *
      *  It is used to give to the run-time a pool of messages on which
@@ -383,21 +383,21 @@ public:
         }
         v = v2;
     }
-    
+
     /**
      *  \brief Unmarshalling
      *
      *  It is called once, when all frames composing the message
      *  have been received by the run-time. Within that method, it is possible
      *  to convert or re-arrange all the frames back to their original data or
-     *  object layout. 
+     *  object layout.
      *
      *  \parm v is vector of messages
      *  \parm vlen is the length of the vector
      *  \parm task pointer to the task
      */
     virtual void unmarshalling(svector<msg_t*>* const v[], const int vlen, void *& task) {
-        assert(vlen==1 && v[0]->size()==1); 
+        assert(vlen==1 && v[0]->size()==1);
         task = v[0]->operator[](0)->getData();
         delete v[0];
     }
@@ -412,8 +412,8 @@ public:
      * \parm arg points to the arguments to be pussed to the callback
      */
     void setCallbackArg(void* arg) { callbackArg.push_back(arg);}
-    
-    /** 
+
+    /**
      *  \brief Executes the FastFlow dnode
      *
      *  It runs the \p dnode as a stand-alone thread. Typically, it should not
@@ -432,7 +432,7 @@ public:
      * \return The status of \p wait() method.
      */
     int  wait() { return ff_node::wait(); }
-    
+
     /**
      * \brief Skips first pop
      *
@@ -447,7 +447,7 @@ public:
 
 protected:
     bool     skipdnode;
-    bool     P;   
+    bool     P;
     int      neos;
     svector<void*> callbackArg;
     CommImpl com;
@@ -490,8 +490,8 @@ protected:
         comOut.close();
         delete comOut.getDescriptor();
     }
-    
-    /** 
+
+    /**
      * \brief Pushes the task
      *
      * It overrides \p ff_dnode's \p push method.
@@ -500,10 +500,10 @@ protected:
      *
      * \return The status of \p internal_push() method.
      */
-    virtual inline bool push(void * ptr) { 
+    virtual inline bool push(void * ptr) {
         return ff_dnode<CommImplIn>::internal_push(ptr, comOut);
     }
-    
+
 public:
     /**
      * \brief Initializes input communication channels
@@ -527,7 +527,7 @@ public:
         ff_dnode<CommImplIn>::ff_node::create_input_buffer(1);
         ff_dnode<CommImplIn>::com.setDescriptor(new typename CommImplIn::descriptor(name,peers,transp,
                                                               ff_dnode<CommImplIn>::RECEIVER));
-        return ff_dnode<CommImplIn>::com.init(address,nodeId); 
+        return ff_dnode<CommImplIn>::com.init(address,nodeId);
     }
 
     /**
@@ -540,19 +540,19 @@ public:
      * \parm peers are the number of peers involve in the communication
      * \parm transp is the transport address
      * \pame nodeId is the identifier of the node
-     * \parm cbk is the callback 
+     * \parm cbk is the callback
      *
      * \return The status of \p comOut.init() method.
      */
     int initOut(const std::string& name, const std::string& address,
-                const int peers, typename CommImplOut::TransportImpl* const transp, 
+                const int peers, typename CommImplOut::TransportImpl* const transp,
                 const int nodeId=-1, dnode_cbk_t cbk=0) {
 
         ff_dnode<CommImplOut>::skipdnode=false;
-        ff_dnode<CommImplOut>::cb=cbk;  
+        ff_dnode<CommImplOut>::cb=cbk;
         ff_dnode<CommImplOut>::ff_node::create_output_buffer(1,true);
         comOut.setDescriptor(new typename CommImplOut::descriptor(name,peers,transp,ff_dnode<CommImplOut>::SENDER));
-        
+
         return comOut.init(address,nodeId);
     }
 

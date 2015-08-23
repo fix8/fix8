@@ -38,7 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_SESSIONWRAPPER_HPP_
 
 #include <Poco/Net/ServerSocket.h>
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 #include <Poco/Net/SecureStreamSocket.h>
 #include <Poco/Net/SecureServerSocket.h>
 #include <Poco/SharedPtr.h>
@@ -51,7 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 
 /// A Fix8CertificateHandler is invoked whenever an error occurs verifying the certificate.
 /// The certificate is printed to the global logger with an error message
@@ -207,7 +207,7 @@ protected:
 	Poco::Net::StreamSocket *_sock = nullptr;
 	Poco::Net::SocketAddress _addr;
 	ClientConnection *_cc = nullptr;
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 	PocoSslContext _ssl;
 #endif
 
@@ -223,13 +223,13 @@ public:
 		_persist(create_persister(_ses, nullptr, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_addr(get_address(_ses))
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 		,_ssl(get_ssl_context(_ses), true)
 #endif
 	{
 		if (!init_con_later)
 		{
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 			bool secured(_ssl.is_secure());
 			_sock = secured
 				? new Poco::Net::SecureStreamSocket(_ssl._context)
@@ -365,7 +365,7 @@ public:
 				}
 
 				//std::cout << "operator()():try" << std::endl;
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 				bool secured(this->_ssl.is_secure());
 				this->_sock = secured
 					? new Poco::Net::SecureStreamSocket(this->_ssl._context)
@@ -543,7 +543,7 @@ template<typename T>
 class ServerSession : public ServerSessionBase
 {
 	Poco::Net::SocketAddress _addr;
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 	PocoSslContext _ssl;
 #endif
 
@@ -552,12 +552,12 @@ public:
 	ServerSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
 		ServerSessionBase(ctx, conf_file, session_name),
 		_addr(get_address(_ses))
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 		,_ssl(get_ssl_context(_ses), false)
 #endif
 	{
 		_server_sock =
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 			_ssl.is_secure() ? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context) :
 #endif
 			new Poco::Net::ServerSocket(_addr);
@@ -579,7 +579,7 @@ public:
 	using ServerSession_ptr = std::unique_ptr<ServerSession<T>>;
 
 	virtual bool is_secure() const
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 		{ return _ssl.is_secure(); }
 #else
 		{ return false; }
@@ -621,7 +621,7 @@ class SessionInstance : public SessionInstanceBase
 	Poco::Net::SocketAddress _claddr;
 	Poco::Net::StreamSocket *_sock;
 	T *_session;
-	ServerConnection _sc;
+	ServerConnection *_psc;
 
 public:
 	/// Ctor. Prepares session instance with inbound connection.
@@ -629,15 +629,15 @@ public:
 		_sf(sf),
 		_sock(new Poco::Net::StreamSocket(_sf.accept(_claddr))),
 		_session(new T(_sf._ctx, _sf.get_sender_comp_id(_sf._ses))),
-		_sc(_sock, _claddr, *_session, _sf.get_heartbeat_interval(_sf._ses), _sf.get_process_model(_sf._ses),
+		_psc(new ServerConnection(_sock, _claddr, *_session, _sf.get_heartbeat_interval(_sf._ses), _sf.get_process_model(_sf._ses),
 		_sf.get_tcp_nodelay(_sf._ses), _sf.get_tcp_reuseaddr(_sf._ses), _sf.get_tcp_linger(_sf._ses),
 		_sf.get_tcp_keepalive(_sf._ses),
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 		_sf.is_secure()
 #else
 		false
 #endif
-			)
+			))
 	{
 		_session->set_login_parameters(_sf._loginParameters);
 		_session->set_session_config(&_sf);
@@ -646,10 +646,63 @@ public:
 	/// Dtor.
 	virtual ~SessionInstance ()
 	{
-		delete _session;
-		_session = nullptr;
-		delete _sock;
-		_sock = nullptr;
+		try
+		{
+			if (_psc != nullptr)
+			{
+				_psc->stop();
+				delete _psc;
+				_psc = nullptr;
+			}
+		}
+		catch (f8Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (Poco::Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (std::exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+
+		try
+		{
+			delete _session;
+			_session = nullptr;
+		}
+		catch (f8Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (Poco::Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (std::exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+
+		try
+		{
+			delete _sock;
+			_sock = nullptr;
+		}
+		catch (f8Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (Poco::Exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
+		catch (std::exception& e)
+		{
+			this->_session->log(e.what(), Logger::Error);
+		}
 	}
 
 	/*! Get a pointer to the session
@@ -661,7 +714,7 @@ public:
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) override
-		{ _session->start(&_sc, wait, send_seqnum, recv_seqnum); }
+		{ _session->start(_psc, wait, send_seqnum, recv_seqnum); }
 
 	/// Stop the session. Cleanup.
 	virtual void stop() override { _session->stop(); }

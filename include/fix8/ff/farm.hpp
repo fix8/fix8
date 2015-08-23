@@ -1,16 +1,16 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
+/*!
  *  \link
  *  \file farm.hpp
  *  \ingroup high_level_patterns_shared_memory
- *  
+ *
  *
  *  \brief This file describes the farm skeleton.
  */
 
 /* ***************************************************************************
- *  
+ *
  *  This program is free software; you can redistribute it and/or modify it
  *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
@@ -26,7 +26,7 @@
  *
  ****************************************************************************
  */
- 
+
 #ifndef FF_FARM_HPP
 #define FF_FARM_HPP
 
@@ -37,21 +37,21 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <ff/platforms/platform.h>
-#include <ff/lb.hpp>
-#include <ff/gt.hpp>
-#include <ff/node.hpp>
+#include <fix8/ff/platforms/platform.h>
+#include <fix8/ff/lb.hpp>
+#include <fix8/ff/gt.hpp>
+#include <fix8/ff/node.hpp>
 
 
 namespace ff {
 
 /* ---------------- basic high-level macros ----------------------- */
 
-    /* FF_FARMA creates an accelerator farm with 'nworkers' workers. 
-     * The functions called in each worker must have the following 
+    /* FF_FARMA creates an accelerator farm with 'nworkers' workers.
+     * The functions called in each worker must have the following
      * signature:
      *   bool (*F)(type &)
-     * If the function F returns false an EOS is produced in the 
+     * If the function F returns false an EOS is produced in the
      * output channel.
      */
 
@@ -67,7 +67,7 @@ namespace ff {
     ff_farm<> _FF_node_##farmname(true,qlen,qlen,true,nworkers,true);   \
     _FF_node_##farmname.cleanup_workers();                              \
     _FF_node_##farmname.set_scheduling_ondemand();                      \
-    std::vector<ff_node*> w_##farmname;                                 \
+    std::vector<fix8/ff_node*> w_##farmname;                                 \
     for(int i=0;i<nworkers;++i)                                         \
         w_##farmname.push_back(new _FF_node_##farmname_##F);            \
     _FF_node_##farmname.add_workers(w_##farmname);                      \
@@ -110,16 +110,16 @@ protected:
      * \brief Cardinality of the Farm
      *
      * It defines the cardinality of the farm.
-     * 
+     *
      * \parm barrier is a parameter of type \p BARRIER_T
      *
      * \return An integer value showing the cardinality.
      */
-    inline int cardinality(BARRIER_T * const barrier)  { 
+    inline int cardinality(BARRIER_T * const barrier)  {
         int card=0;
-        for(size_t i=0;i<workers.size();++i) 
+        for(size_t i=0;i<workers.size();++i)
             card += workers[i]->cardinality(barrier);
-        
+
         lb->set_barrier(barrier);
         if (gt) gt->set_barrier(barrier);
 
@@ -136,11 +136,11 @@ protected:
     inline int prepare() {
         size_t nworkers = workers.size();
         for(size_t i=0;i<nworkers;++i) {
-            if (workers[i]->create_input_buffer((ondemand ? ondemand: (in_buffer_entries/nworkers + 1)), 
+            if (workers[i]->create_input_buffer((ondemand ? ondemand: (in_buffer_entries/nworkers + 1)),
                                                 (ondemand ? true: fixedsize))<0) return -1;
-            if (collector || lb->masterworker() || collector_removed) 
+            if (collector || lb->masterworker() || collector_removed)
                 // NOTE: force unbounded queue if masterworker
-                if (workers[i]->create_output_buffer(out_buffer_entries/nworkers + DEF_IN_OUT_DIFF, 
+                if (workers[i]->create_output_buffer(out_buffer_entries/nworkers + DEF_IN_OUT_DIFF,
                                                      (lb->masterworker()?false:fixedsize))<0)
                     return -1;
             lb->register_worker(workers[i]);
@@ -161,7 +161,7 @@ protected:
         if (!prepared) if (prepare()<0) return -1;
         freeze();
         return run(true);
-    } 
+    }
 
     // template<typename T>
     // struct ff_node_F: public ff_node {
@@ -172,7 +172,7 @@ protected:
     // };
 
 #if defined( HAS_CXX11_VARIADIC_TEMPLATES )
-    // NOTE: std::function can introduce a bit of extra overhead. 
+    // NOTE: std::function can introduce a bit of extra overhead.
     template<typename T>
     struct ff_node_F: public ff_node {
         ff_node_F(std::function<T*(T*,ff_node*const)> F):F(F) {};
@@ -181,17 +181,17 @@ protected:
     };
 #endif
 
-    inline void skipfirstpop(bool sk)   { 
+    inline void skipfirstpop(bool sk)   {
         if (sk) lb->skipfirstpop();
         skip1pop=sk;
     }
 
-    
+
 public:
     /*
      *TODO
      */
-    enum { DEF_MAX_NUM_WORKERS=(MAX_NUM_THREADS-2), DEF_IN_BUFF_ENTRIES=2048, DEF_IN_OUT_DIFF=128, 
+    enum { DEF_MAX_NUM_WORKERS=(MAX_NUM_THREADS-2), DEF_IN_BUFF_ENTRIES=2048, DEF_IN_OUT_DIFF=128,
            DEF_OUT_BUFF_ENTRIES=(DEF_IN_BUFF_ENTRIES+DEF_IN_OUT_DIFF)};
 
     /**
@@ -204,9 +204,9 @@ public:
      */
     typedef gt_t Gatherer_t;
 
-    /**                                                                                                                                 
-     *  \brief Constructor  
-     * 
+    /**
+     *  \brief Constructor
+     *
      *  This is the basic (the simplest) farm that can be built.
      *  It has a default emitter and a default collector.
      */
@@ -222,11 +222,11 @@ public:
         lb(new lb_t(nw)),gt(new gt_t(nw)),
         workers(nw),fixedsize(false) {
 
-        std::vector<ff_node*> w(nw);        
+        std::vector<fix8/ff_node*> w(nw);
         for(int i=0;i<nw;++i) w[i]=new ff_node_F<T>(F);
         add_workers(w);
         add_collector(NULL);
-        if (has_input_channel) { 
+        if (has_input_channel) {
             if (create_input_buffer(in_buffer_entries, fixedsize)<0) {
                 error("FARM, creating input buffer\n");
             }
@@ -234,7 +234,7 @@ public:
     }
 #endif
 
-    ff_farm(std::vector<ff_node*>& W, ff_node *const Emitter=NULL, ff_node *const Collector=NULL, bool input_ch=false):
+    ff_farm(std::vector<fix8/ff_node*>& W, ff_node *const Emitter=NULL, ff_node *const Collector=NULL, bool input_ch=false):
         has_input_channel(input_ch),prepared(false),collector_removed(false),ondemand(0),
         in_buffer_entries(DEF_IN_BUFF_ENTRIES),
         out_buffer_entries(DEF_OUT_BUFF_ENTRIES),
@@ -247,13 +247,13 @@ public:
         assert(W.size()>0);
         add_workers(W);
 
-        if (Emitter) add_emitter(Emitter); 
+        if (Emitter) add_emitter(Emitter);
 
-        // add default collector even if Collector is NULL, 
+        // add default collector even if Collector is NULL,
         // if you don't want the collector you have to call remove_collector
-        add_collector(Collector); 
+        add_collector(Collector);
 
-        if (has_input_channel) { 
+        if (has_input_channel) {
             if (create_input_buffer(in_buffer_entries, fixedsize)<0) {
                 error("FARM, creating input buffer\n");
             }
@@ -273,7 +273,7 @@ public:
      *  \param fixedsize = true uses only fixed size queue
      */
     ff_farm(bool input_ch=false,
-            int in_buffer_entries=DEF_IN_BUFF_ENTRIES, 
+            int in_buffer_entries=DEF_IN_BUFF_ENTRIES,
             int out_buffer_entries=DEF_OUT_BUFF_ENTRIES,
             bool worker_cleanup=false,
             int max_num_workers=DEF_MAX_NUM_WORKERS,
@@ -288,29 +288,29 @@ public:
         workers(max_num_workers),fixedsize(fixedsize) {
         for(int i=0;i<max_num_workers;++i) workers[i]=NULL;
 
-        if (has_input_channel) { 
+        if (has_input_channel) {
             if (create_input_buffer(in_buffer_entries, fixedsize)<0) {
                 error("FARM, creating input buffer\n");
             }
         }
     }
 
-    /** 
+    /**
      * \brief Destructor
      *
      * This is the default destructor, which delete the load balancer, the
      * gatherer, all the workers, and the barriers.
      *
      */
-    ~ff_farm() { 
-        if (end_callback) { 
+    ~ff_farm() {
+        if (end_callback) {
             end_callback(end_callback_param);
             end_callback = NULL;
         }
         if (lb) { delete lb; lb=NULL;}
         if (gt) { delete gt; gt=NULL;}
         if (worker_cleanup) {
-            for(int i=0;i<max_nworkers; ++i) 
+            for(int i=0;i<max_nworkers; ++i)
                 if (workers[i]) delete workers[i];
         }
         for(size_t i=0;i<internalSupportNodes.size();++i) {
@@ -321,23 +321,23 @@ public:
         if (barrier) {delete barrier; barrier=NULL;}
     }
 
-    /** 
+    /**
      *
      *  \brief Adds the emitter
      *
      *  It adds an Emitter to the Farm. The Emitter is of type \p ff_node and
-     *  there can be only one Emitter in a Farm skeleton. 
-     *  
-     *  \param e the \p ff_node acting as an Emitter 
+     *  there can be only one Emitter in a Farm skeleton.
+     *
+     *  \param e the \p ff_node acting as an Emitter
      *
      *  \return Returns 0 if successful -1 otherwise
      *
      */
-    int add_emitter(ff_node * e) { 
+    int add_emitter(ff_node * e) {
         assert(e!=NULL);
         if (emitter) {
             error("FARM, add_emitter: emitter already present\n");
-            return -1; 
+            return -1;
         }
         if (e->isMultiInput()) {
             error("FARM, add_emitter: the node is a multi-input node, please do use ff_node instead together with ff_farm::setMultiInput() method\n");
@@ -369,7 +369,7 @@ public:
      * threads.
      *
      */
-    void set_scheduling_ondemand(const int inbufferentries=1) { 
+    void set_scheduling_ondemand(const int inbufferentries=1) {
         if (inbufferentries<=0) ondemand=1;
         else ondemand=inbufferentries;
     }
@@ -387,15 +387,15 @@ public:
      *
      *  \return 0 if successsful, otherwise -1 is returned.
      */
-    int add_workers(std::vector<ff_node *> & w) { 
+    int add_workers(std::vector<fix8/ff_node *> & w) {
         if ((workers.size()+w.size())> (size_t)max_nworkers) {
             error("FARM, try to add too many workers, please increase max_nworkers\n");
-            return -1; 
+            return -1;
         }
         if (w.size()==0) {
             error("FARM, try to add zero workers!\n");
-            return -1; 
-        }        
+            return -1;
+        }
         for(size_t i=0;i<w.size();++i) {
             workers.push_back(w[i]);
             (workers.back())->set_id(i);
@@ -409,7 +409,7 @@ public:
      *  It adds the Collector filter to the farm skeleton. If no object is
      *  passed as a colelctor, than a default collector will be added (i.e.
      *  \link ff_gatherer \endlink). Note that it is not possible to add more
-     *  than one collector. 
+     *  than one collector.
      *
      *  \param c the \p ff_node acting as Collector node.
      *  \parm outpresent TODO
@@ -417,22 +417,22 @@ public:
      *  \return The status of \p set_filter(x) if successful, otherwise -1 is
      *  returned.
      */
-    int add_collector(ff_node * c, bool outpresent=false) { 
+    int add_collector(ff_node * c, bool outpresent=false) {
         if (collector) {
             error("add_collector: collector already defined!\n");
-            return -1; 
+            return -1;
         }
-        if (!gt) return -1; 
+        if (!gt) return -1;
 
         collector = ((c!=NULL)?c:(ff_node*)gt);
-        
+
         if (has_input_channel) { /* it's an accelerator */
             if (create_output_buffer(out_buffer_entries, false)<0) return -1;
         }
-        
+
         return gt->set_filter(c);
     }
-    
+
     /**
      *
      * \brief Sets the feedback channel from the collector to the emitter
@@ -489,7 +489,7 @@ public:
      *
      * \return 0 is always returned.
      */
-    int remove_collector() { 
+    int remove_collector() {
         collector_removed = true;
         return 0;
     }
@@ -502,18 +502,18 @@ public:
      *
      * \return The status of \p set_input(x) otherwise -1 is returned.
      */
-    inline int set_input(svector<ff_node *> & w) { 
+    inline int set_input(svector<fix8/ff_node *> & w) {
         assert(isMultiInput());
         return lb->set_input(w);
     }
 
-    inline int set_input(ff_node *node) { 
+    inline int set_input(ff_node *node) {
         assert(isMultiInput());
         return lb->set_input(node);
     }
 
-    inline void setMultiInput() { 
-        ff_node::setMultiInput();        
+    inline void setMultiInput() {
+        ff_node::setMultiInput();
     }
 
 
@@ -526,7 +526,7 @@ public:
     }
 
     /**
-     * \brief Execute the Farm 
+     * \brief Execute the Farm
      *
      * It executes the form.
      *
@@ -540,9 +540,9 @@ public:
 #if 0
         if(is_profiling_root() )
             DSRIManger::instance()->config_and_run(this);
-#endif        
+#endif
         if (!skip_init) {
-            // set the initial value for the barrier 
+            // set the initial value for the barrier
 
             if (!barrier)  barrier = new BARRIER_T;
             const int nthreads = cardinality(barrier);
@@ -551,14 +551,14 @@ public:
                 return -1;
             }
 
-            barrier->barrierSetup(nthreads);            
+            barrier->barrierSetup(nthreads);
         }
-        
+
         if (!prepared) if (prepare()<0) return -1;
 
         if (lb->run()<0) {
             error("FARM, running load-balancer module\n");
-            return -1;        
+            return -1;
         }
         if (!collector_removed)
             if (collector && gt->run()<0) {
@@ -569,7 +569,7 @@ public:
         return 0;
     }
 
-    /** 
+    /**
      * \brief Executs the farm and wait for workers to complete
      *
      * It executes the farm and waits for all workers to complete their
@@ -590,7 +590,7 @@ public:
         return 0;
     }
 
-    /** 
+    /**
      * \brief Executes the farm and then freeze.
      *
      * It executs the form and then freezes the form.
@@ -601,15 +601,15 @@ public:
     virtual int run_then_freeze(int nw=-1) {
         if (isfrozen()) {
             // true means that next time threads are frozen again
-            thaw(true, nw); 
+            thaw(true, nw);
             return 0;
         }
         if (!prepared) if (prepare()<0) return -1;
         freeze();
         return run();
     }
-    
-    /** 
+
+    /**
      * \brief Puts the thread in waiting state
      *
      * It puts the thread in waiting state.
@@ -621,13 +621,13 @@ public:
         if (lb->wait()<0) ret=-1;
         if (collector) if (gt->wait()<0) ret=-1;
 #if 0
-        if(is_profiling_root()) 
+        if(is_profiling_root())
             DSRIManger::instance()->finalise();
 #endif
         return ret;
     }
 
-    /** 
+    /**
      * \brief Waits for freezing
      *
      * It waits for thread to freeze.
@@ -638,20 +638,20 @@ public:
         int ret=0;
         if (lb->wait_freezing()<0) ret=-1;
         if (collector) if (gt->wait_freezing()<0) ret=-1;
-        return ret; 
-    } 
+        return ret;
+    }
 
-    /** 
+    /**
      * \brief Forces a thread to Stop
      *
-     * It forces the thread to stop at the next EOS signal. 
+     * It forces the thread to stop at the next EOS signal.
      */
     inline void stop() {
         lb->stop();
         if (collector) gt->stop();
     }
 
-    /** 
+    /**
      * \brief Forces the thread to freeze at next FF_EOS.
      *
      * It forces a thread to Freeze itself.
@@ -664,7 +664,7 @@ public:
     /**
      * \brief Thaws the thread
      *
-     * If the thread is frozen, then thaw it. 
+     * If the thread is frozen, then thaw it.
      */
     inline void thaw(bool _freeze=false, int nw=-1) {
         lb->thaw(_freeze, nw);
@@ -693,18 +693,18 @@ public:
      */
     inline bool offload(void * task,
                         unsigned int retry=((unsigned int)-1),
-                        unsigned int ticks=ff_loadbalancer::TICKS2WAIT) { 
+                        unsigned int ticks=ff_loadbalancer::TICKS2WAIT) {
         FFBUFFER * inbuffer = get_in_buffer();
 
         if (inbuffer) {
             for(unsigned int i=0;i<retry;++i) {
                 if (inbuffer->push(task)) return true;
                 ticks_wait(ticks);
-            }     
+            }
             return false;
         }
-        
-        if (!has_input_channel) 
+
+        if (!has_input_channel)
             error("FARM: accelerator is not set, offload not available");
         else
             error("FARM: input buffer creation failed");
@@ -751,7 +751,7 @@ public:
         if (!collector) return false;
         return gt->pop_nb(task);
     }
-    
+
     /**
      * \brief Gets Emitter node
      *
@@ -778,7 +778,7 @@ public:
      *
      * \return A list of workers is returned.
      */
-    const svector<ff_node*>& getWorkers() const { return workers; }
+    const svector<fix8/ff_node*>& getWorkers() const { return workers; }
 
 
     /**
@@ -790,19 +790,19 @@ public:
      */
     size_t getNWorkers() const { return workers.size();}
 
-    inline void get_out_nodes(svector<ff_node*>&w) {
+    inline void get_out_nodes(svector<fix8/ff_node*>&w) {
         if (collector && !collector_removed) {
             w.push_back(collector);
             return;
         }
         w = workers;
     }
-        
+
 
 
 
     /** \brief Resets input/output queues.
-     * 
+     *
      *  Warning resetting queues while the node is running may produce unexpected results.
      */
     void reset() {
@@ -853,7 +853,7 @@ public:
      *
      * \return A struct of type timeval showing the starting time.
      */
-    const struct timeval  getwstartime() const { return lb->getwstartime(); }    
+    const struct timeval  getwstartime() const { return lb->getwstartime(); }
 
     /**
      * \brief Gets the finishing time
@@ -876,7 +876,7 @@ public:
             std::max_element(workertime.begin(),workertime.end(),time_compare);
         return (*it);
     }
-    
+
     /**
      * \brief Gets the time spent in \p svc_init
      *
@@ -914,7 +914,7 @@ public:
      *
      * \parm out determines the output terminal.
      */
-    void ffStats(std::ostream & out) { 
+    void ffStats(std::ostream & out) {
         out << "--- farm:\n";
         lb->ffStats(out);
         for(size_t i=0;i<workers.size();++i) workers[i]->ffStats(out);
@@ -930,7 +930,7 @@ public:
      *
      * \parm out determines the output terminal.
      */
-    void ffStats(std::ostream & out) { 
+    void ffStats(std::ostream & out) {
         out << "FastFlow trace not enabled\n";
     }
 #endif
@@ -968,7 +968,7 @@ protected:
     /**
      * \brief Gets the thread id
      *
-     * It returns the thread is 
+     * It returns the thread is
      *
      * \return An integer value showing the id of the thread.
      *
@@ -981,7 +981,7 @@ protected:
      * It sets the affinity of the farm
      *
      */
-    void setAffinity(int) { 
+    void setAffinity(int) {
         error("FARM, setAffinity: cannot set affinity for the farm\n");
     }
 
@@ -995,14 +995,14 @@ protected:
      */
     int getCPUId() const { return -1;}
 
-    /** 
+    /**
      *  \brief Creates the input buffer for the emitter node
      *
      *  This function redefines the ff_node's virtual method of the same name.
-     *  It creates an input buffer for the Emitter node. 
+     *  It creates an input buffer for the Emitter node.
      *
      *  \param nentries the size of the buffer
-     *  \param fixedsize flag to decide whether the buffer is resizable. 
+     *  \param fixedsize flag to decide whether the buffer is resizable.
      *
      *  \return If successful 0, otherwsie a negative value.
      */
@@ -1025,15 +1025,15 @@ protected:
 
         return 0;
     }
-    
-    /** 
+
+    /**
      *  \brief Creates the output buffer for the collector
      *
      *  This function redefines the ff_node's virtual method of the same name.
      *  It create an output buffer for the Collector
      *
      *  \param nentries the size of the buffer
-     *  \param fixedsize flag to decide whether the buffer is resizable. 
+     *  \param fixedsize flag to decide whether the buffer is resizable.
      *  Default is \p false
      *
      *  \return If successful 0, otherwise a negative value.
@@ -1042,7 +1042,7 @@ protected:
         if (!collector && !collector_removed) {
             error("FARM with no collector, cannot create output buffer\n");
             return -1;
-        }        
+        }
         if (out) {
             error("FARM create_output_buffer, buffer already present\n");
             return -1;
@@ -1053,14 +1053,14 @@ protected:
         return 0;
     }
 
-    /** 
+    /**
      *
-     *  \brief Sets the output buffer of the collector 
+     *  \brief Sets the output buffer of the collector
      *
      *  This function redefines the ff_node's virtual method of the same name.
      *  Set the output buffer for the Collector.
      *
-     *  \param o a buffer object, which can be of type \p SWSR_Ptr_Buffer or 
+     *  \param o a buffer object, which can be of type \p SWSR_Ptr_Buffer or
      *  \p uSWSR_Ptr_Buffer
      *
      *  \return 0 if successful, otherwise -1 is returned.
@@ -1086,12 +1086,12 @@ protected:
 
     /**
      * \brief Gets collector
-     * 
+     *
      * It returns a pointer to the collector.
      *
      * \return A pointer to collector node if exists, otherwise a \p NULL
      */
-    ff_node* getCollector() { 
+    ff_node* getCollector() {
         if (collector == (ff_node*)gt) return NULL;
         return collector;
     }
@@ -1111,15 +1111,15 @@ protected:
 
     lb_t             * lb;
     gt_t             * gt;
-    svector<ff_node*>  workers;
-    svector<ff_node*>  internalSupportNodes;
+    svector<fix8/ff_node*>  workers;
+    svector<fix8/ff_node*>  internalSupportNodes;
     bool               fixedsize;
 };
 
 
 /*!
  * \ingroup high_level_patterns_shared_memory
- *  
+ *
  *  \brief Ordered farm
  *
  *  This class defines the ordered form.
@@ -1200,9 +1200,9 @@ public:
      *
      * \return \p true if successful, otherwise \p false.
      */
-    inline bool set_victim(int v) { 
-        if (dead[v]) return false; 
-        victim=v; 
+    inline bool set_victim(int v) {
+        if (dead[v]) return false;
+        victim=v;
         return true;
     }
 
@@ -1216,7 +1216,7 @@ public:
     inline void set_dead(int v)   { dead[v]=true;}
 
     /**
-     * 
+     *
      * It makes the element in the dead vector as false i.e. makes it alive.
      *
      */
@@ -1288,7 +1288,7 @@ private:
             nextone = 0;
             lb->set_victim(nextone);
             return ret;
-        }  
+        }
 
         /**
          * \brief \p svc method
@@ -1393,7 +1393,7 @@ private:
          * \It notifies the EOS.
          *
          */
-        void eosnotify(int id) { 
+        void eosnotify(int id) {
             gt->set_dead(id);
             if (nextone == (size_t)id) {
                 nextone= (nextone+1) % nworkers;
@@ -1414,7 +1414,7 @@ private:
         ofarm_gt * gt;
         ff_node* C_f;
     };
-    
+
 public:
     /**
      * \brief Constructor
@@ -1430,7 +1430,7 @@ public:
      *
      */
     ff_ofarm(bool input_ch=false,
-            int in_buffer_entries=DEF_IN_BUFF_ENTRIES, 
+            int in_buffer_entries=DEF_IN_BUFF_ENTRIES,
             int out_buffer_entries=DEF_OUT_BUFF_ENTRIES,
             bool worker_cleanup=false,
             int max_num_workers=DEF_MAX_NUM_WORKERS,
@@ -1443,7 +1443,7 @@ public:
     }
 
     /**
-     * \brief Destructor 
+     * \brief Destructor
      *
      * It clean emitter and collector.
      */
@@ -1469,7 +1469,7 @@ public:
      * \parm f is the FastFlow node.
      */
     void setCollectorF(ff_node* f) { C_f = f; }
-    
+
     /**
      * \brief Runs the farm
      *
@@ -1518,7 +1518,7 @@ protected:
      *
      * \return 1 is alway returned.
      */
-    inline int cardinality(BARRIER_T * const barrier)  { 
+    inline int cardinality(BARRIER_T * const barrier)  {
         gt->set_barrier(barrier);
         return 1;
     }
@@ -1530,7 +1530,7 @@ protected:
      *
      * \return >=0 if successful, otherwise -1 is returned.
      */
-    int create_input_buffer(int nentries, bool fixedsize=true) {      
+    int create_input_buffer(int nentries, bool fixedsize=true) {
         if (inputNodes.size()==0) {
             int r = ff_node::create_input_buffer(nentries, fixedsize);
             if (r!=0) return r;
@@ -1540,13 +1540,13 @@ protected:
     }
 
     /**
-     * \brief Waits 
+     * \brief Waits
      *
      * It wait for TODO?
      *
      * \return 0 if successful, otherwise -1 is returned.
      */
-    int  wait(/* timeout */) { 
+    int  wait(/* timeout */) {
         if (gt->wait()<0) return -1;
         return 0;
     }
@@ -1564,33 +1564,33 @@ public:
         ff_node(), gt(new ff_gatherer(max_num_workers)) { ff_node::setMultiInput(); }
 
     /**
-     * \brief Destructor 
+     * \brief Destructor
      *
      * It deletes the gatherer.
      */
     ~ff_minode() {
         if (gt) delete gt;
     }
-    
+
     /**
      * \brief Sets input buffer
      *
      * It is a virtual function to set the input buffer.
      */
-    virtual inline int set_input(svector<ff_node *> & w) { 
+    virtual inline int set_input(svector<fix8/ff_node *> & w) {
         inputNodes += w;
-        return 0; 
+        return 0;
     }
 
-    virtual inline int set_input(ff_node *node) { 
-        inputNodes.push_back(node); 
+    virtual inline int set_input(ff_node *node) {
+        inputNodes.push_back(node);
         return 0;
     }
 
     virtual bool isMultiInput() const { return true;}
 
 
-    virtual inline void get_out_nodes(svector<ff_node*>&w) {
+    virtual inline void get_out_nodes(svector<fix8/ff_node*>&w) {
         w.push_back(this);
     }
 
@@ -1615,7 +1615,7 @@ public:
 
         for(size_t i=0;i<inputNodes.size();++i)
             gt->register_worker(inputNodes[i]);
-        if (ff_node::skipfirstpop()) gt->skipfirstpop();       
+        if (ff_node::skipfirstpop()) gt->skipfirstpop();
         if (gt->run()<0) {
             error("ff_minode, running gather module\n");
             return -1;
@@ -1638,19 +1638,19 @@ public:
      */
     inline ff_gatherer * getgt() const { return gt;}
 
-#if defined(TRACE_FASTFLOW) 
+#if defined(TRACE_FASTFLOW)
     /**
      * \brief Prints the FastFlow trace
      *
      * It prints the trace of FastFlow.
      */
-    inline void ffStats(std::ostream & out) { 
+    inline void ffStats(std::ostream & out) {
         gt->ffStats(out);
     }
 #endif
 
 private:
-    svector<ff_node*> inputNodes;
+    svector<fix8/ff_node*> inputNodes;
     ff_gatherer* gt;
 };
 
@@ -1676,7 +1676,7 @@ protected:
      *
      * \return 1 is always returned.
      */
-    inline int   cardinality(BARRIER_T * const barrier)  { 
+    inline int   cardinality(BARRIER_T * const barrier)  {
         lb->set_barrier(barrier);
         return 1;
     }
@@ -1688,7 +1688,7 @@ protected:
      *
      * \return 0 if successful, otherwise -1 is returned.
      */
-    int  wait(/* timeout */) { 
+    int  wait(/* timeout */) {
         if (lb->waitlb()<0) return -1;
         return 0;
     }
@@ -1707,33 +1707,33 @@ public:
         ff_node(), lb(new ff_loadbalancer(max_num_workers)) {}
 
     /**
-     * \brief Destructor 
+     * \brief Destructor
      *
      * It deletes the load balancer.
      */
     ~ff_monode() {
         if (lb) delete lb;
     }
-    
+
     /**
      * \brief Sets the output buffer
      *
      * It is a virtual function which sets the output buffer.
      */
-    virtual inline int set_output(svector<ff_node *> & w) {
+    virtual inline int set_output(svector<fix8/ff_node *> & w) {
         for(size_t i=0;i<w.size();++i)
             outputNodes.push_back(w[i]);
-        return 0; 
+        return 0;
     }
 
-    virtual inline int set_output(ff_node *node) { 
-        outputNodes.push_back(node); 
+    virtual inline int set_output(ff_node *node) {
+        outputNodes.push_back(node);
         return 0;
     }
 
     virtual bool isMultiOutput() const { return true;}
 
-    virtual inline void get_out_nodes(svector<ff_node*>&w) {
+    virtual inline void get_out_nodes(svector<fix8/ff_node*>&w) {
         w = outputNodes;
     }
 
@@ -1753,7 +1753,7 @@ public:
     inline bool ff_send_out_to(void *task, int id) {
         return lb->ff_send_out_to(task,id);
     }
-    
+
     /**
      * \brief Executes the farm
      *
@@ -1769,7 +1769,7 @@ public:
 
         for(size_t i=0;i<outputNodes.size();++i)
             lb->register_worker(outputNodes[i]);
-        if (ff_node::skipfirstpop()) lb->skipfirstpop();       
+        if (ff_node::skipfirstpop()) lb->skipfirstpop();
         if (lb->runlb()<0) {
             error("ff_monode, running loadbalancer module\n");
             return -1;
@@ -1786,19 +1786,19 @@ public:
      */
     inline ff_loadbalancer * getlb() const { return lb;}
 
-#if defined(TRACE_FASTFLOW) 
+#if defined(TRACE_FASTFLOW)
     /**
      * \brief Prints the FastFlow trace
      *
      * It prints the trace of FastFlow.
      */
-    inline void ffStats(std::ostream & out) { 
+    inline void ffStats(std::ostream & out) {
         lb->ffStats(out);
     }
 #endif
 
 private:
-    svector<ff_node*> outputNodes;
+    svector<fix8/ff_node*> outputNodes;
     ff_loadbalancer* lb;
 };
 

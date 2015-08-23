@@ -40,10 +40,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //----------------------------------------------------------------------------------------
 #include <atomic>
 #include <memory>
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 #include<thread>
 #include<mutex>
 #endif
@@ -54,9 +54,9 @@ namespace FIX8
 
 template<typename T> using f8_atomic = std::atomic <T>;
 
-#if (THREAD_SYSTEM == THREAD_STDTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 	using thread_id_t = std::thread::id;
-#elif (THREAD_SYSTEM == THREAD_PTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 	using thread_id_t = pthread_t;
 #endif
 
@@ -64,14 +64,14 @@ template<typename T> using f8_atomic = std::atomic <T>;
 /// pthread wrapper abstract base
 class _f8_threadcore
 {
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 	pthread_attr_t _attr;
 	pthread_t _tid;
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 	std::unique_ptr<std::thread> _thread;
 #endif
 
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 	template<typename T>
 	static void *_run(void *what) { return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
 #else
@@ -83,9 +83,9 @@ protected:
 	template<typename T>
 	int _start(void *sub)
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return pthread_create(&_tid, &_attr, _run<T>, sub);
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 		_thread.reset(new std::thread(_run<T>, sub));
 #endif
 		return 0;
@@ -94,7 +94,7 @@ protected:
 public:
 	/*! Ctor. */
 	_f8_threadcore()
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		: _attr(), _tid()
 	{
 		if (pthread_attr_init(&_attr))
@@ -108,7 +108,7 @@ public:
 	virtual ~_f8_threadcore()
 	{
 	  join();
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
 #endif
 	}
@@ -125,9 +125,9 @@ public:
 	  \return result of join */
 	virtual int join(int timeoutInMs = 0)
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return getid() != get_threadid() ? pthread_join(_tid, nullptr) ? -1 : 0 : -1; // prevent self-join
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
       if (_thread.get() && _thread->joinable() && getid() != get_threadid())
 			_thread->join();
 		return 0;
@@ -142,9 +142,9 @@ public:
 #else
 	int yield() const
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return pthread_yield();
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 		std::this_thread::yield();
 #endif
 		return 0;
@@ -156,9 +156,9 @@ public:
 	  \return the thread id */
 	thread_id_t get_threadid() const
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return _tid;
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 		return _thread.get() ? _thread->get_id() : std::thread::id();
 #endif
 	}
@@ -167,9 +167,9 @@ public:
 	  \return the thread id */
 	static thread_id_t getid()
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return pthread_self();
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 		return std::this_thread::get_id();
 #endif
 	}
@@ -179,7 +179,7 @@ public:
 	  \return true if the threads are equal */
 	bool operator==(const _f8_threadcore& that) const
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return pthread_equal(_tid, that._tid);
 #else
 		return get_threadid() == that.get_threadid();
@@ -191,7 +191,7 @@ public:
 	  \return true if the threads are unequal */
 	bool operator!=(const _f8_threadcore& that) const
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 		return !pthread_equal(_tid, that._tid);
 #else
 		return get_threadid() != that.get_threadid();
@@ -295,7 +295,7 @@ public:
 
 //----------------------------------------------------------------------------------------
 /// generic pthread_mutex wrapper
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 class f8_mutex
 {
 	pthread_mutex_t _pmutex;
@@ -360,7 +360,7 @@ public:
 	}
 };
 #else
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 class f8_spin_lock
 {
 	pthread_spinlock_t _psl;
@@ -378,7 +378,7 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 using f8_mutex = std::mutex;
 class f8_spin_lock
 {

@@ -61,4 +61,4 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <errno.h>
 #include <string.h>
 
-#endif // _FIX8_F8HEADERS_HPP_
+#endif // FIX8_F8HEADERS_HPP_

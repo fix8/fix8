@@ -31,8 +31,8 @@
  */
 
 #include <stdlib.h>
-#include <ff/buffer.hpp>
-#include <ff/sysdep.h>
+#include <fix8/ff/buffer.hpp>
+#include <fix8/ff/sysdep.h>
 #include <assert.h>
 
 namespace ff {
@@ -69,7 +69,7 @@ private:
         void        * data;
         struct Node * next;
         void        * next_data;
-        long padding[longxCacheLine-((sizeof(void*)*3)/sizeof(long))]; 
+        long padding[longxCacheLine-((sizeof(void*)*3)/sizeof(long))];
     };
 
     volatile Node *    head;
@@ -78,7 +78,7 @@ private:
     long padding2[longxCacheLine-(sizeof(Node*)/sizeof(long))];
     //SWSR_Ptr_Buffer    cache;
     /*
-      This is a vector of Node elemens.  
+      This is a vector of Node elemens.
       The len is equal to cachesize
      */
     Node * min_cache;
@@ -91,8 +91,8 @@ private:
     bool isincahce(Node * n){
         if(((unsigned long) n ) - ((unsigned long)min_cache) < 0){
             return false;
-        }  
-        
+        }
+
         if(((unsigned long) n ) - ((unsigned long)min_cache) > min_cache_size - sizeof(Node)){
             return false;
         }
@@ -118,22 +118,22 @@ public:
                                  );
         }
         min_cache_size = cachesize;
-        
-        
+
+
         for(int i=0; i<cachesize-1; i++){
             min_cache[i].next = &min_cache[i+1];
             min_cache[i].next_data = &min_cache[i+1].data;
             min_cache[i].data = NULL;
         }
-        
-        min_cache[cachesize-1].next = &min_cache[0]; 
-        min_cache[cachesize-1].next_data = &min_cache[0].data; 
+
+        min_cache[cachesize-1].next = &min_cache[0];
+        min_cache[cachesize-1].next_data = &min_cache[0].data;
         min_cache[cachesize-1].data = NULL;
-        
+
         head = &min_cache[0];
         tail = &min_cache[0];
     }
-    
+
     /**
      * TODO
      */
@@ -151,7 +151,7 @@ public:
         }
         free(cache_mem);
     }
-    
+
     /**
      * TODO
      */
@@ -165,7 +165,7 @@ public:
         }
 
         Node * n = (Node *)::malloc(sizeof(Node*));
-        n->data = data; 
+        n->data = data;
         n->next = tail->next;
         n->next_data = &tail->next.data;
         tail->next = n;

@@ -114,7 +114,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // f8 headers
 #include <fix8/f8includes.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
 	string clcf;
 	unsigned next_send(0), next_receive(0);
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
@@ -203,20 +203,20 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for " PACKAGE " version " VERSION << endl;
+			cout << argv[0] << " for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': FIX8::GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
-		case 'b': batch_size = FIX8::get_value<unsigned>(optarg); break;
-		case 'p': preload_count = FIX8::get_value<unsigned>(optarg); break;
-		case 'u': update_count = FIX8::get_value<unsigned>(optarg); break;
+		case 'b': batch_size = stoul(optarg); break;
+		case 'p': preload_count = stoul(optarg); break;
+		case 'u': update_count = stoul(optarg); break;
 		case 's': server = true; break;
 		case 'o': once = true; break;
-		case 'S': next_send = FIX8::get_value<unsigned>(optarg); break;
-		case 'R': next_receive = FIX8::get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
 		case 'q': quiet = false; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 						FIX8::hypersleep<FIX8::h_milliseconds>(100);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 				FIX8::Message::report_codec_timings("server");
 #endif
             if (once)
@@ -331,7 +331,7 @@ int main(int argc, char **argv)
 					;
 			}
 			cout << endl;
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 			FIX8::Message::report_codec_timings("client");
 #endif
 			if (!mc->session_ptr()->is_shutdown())
@@ -386,7 +386,7 @@ bool MyMenu::batch_preload_new_order_single()
 				  << new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3)
 				  << new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
 
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 			ptr->preencode();
 #endif
 			_session.push(ptr);
@@ -521,7 +521,7 @@ bool MyMenu::preload_new_order_single()
 				<< new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3) // precision=3
 				<< new FIX8::TEX::ClOrdID(oistr.str())
 				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 		ptr->preencode(); // pre-encode message payload (not header or trailer)
 #endif
 		_session.push(ptr);

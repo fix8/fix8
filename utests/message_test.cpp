@@ -335,8 +335,8 @@ TEST(message, fmt_chksum)
 
 void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val)
 {
-    char cVal[MAX_FLD_LENGTH];
-    char cTag[MAX_FLD_LENGTH];
+    char cVal[FIX8_MAX_FLD_LENGTH];
+    char cTag[FIX8_MAX_FLD_LENGTH];
     MessageBase::extract_element(msg.c_str(), static_cast<unsigned>(msg.length()), cTag, cVal);
     EXPECT_EQ(expect_val, f8String(cVal));
     EXPECT_EQ(expect_tag, f8String(cTag));

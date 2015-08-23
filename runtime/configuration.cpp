@@ -36,7 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 #include "precomp.hpp"
 #include <fix8/f8config.h>
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 #include <Poco/Net/Context.h>
 #endif
 #include <fix8/f8includes.hpp>
@@ -201,7 +201,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		else if (which->FindAttr("use_session_id", false))
 			db += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
 
-#if defined HAVE_LIBMEMCACHED
+#if defined FIX8_HAVE_LIBMEMCACHED
 		if (type == "memcached")
 		{
 			string config_str;
@@ -216,7 +216,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		}
 		else
 #endif
-#if defined HAVE_LIBHIREDIS
+#if defined FIX8_HAVE_LIBHIREDIS
 		if (type == "redis")
 		{
 			string host_str;
@@ -232,7 +232,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		}
 		else
 #endif
-#if defined HAVE_BDB
+#if defined FIX8_HAVE_BDB
 		if (type == "bdb")
 		{
 			unique_ptr<BDBPersister> result(new BDBPersister);
@@ -283,7 +283,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 
 				if (logname[0] == '|')
 				{
-#ifndef HAVE_POPEN
+#ifndef FIX8_HAVE_POPEN
 					throw ConfigurationError("popen not supported on your platform");
 #endif
 					return new PipeLogger(logname, flags, levels, delim, positions);
@@ -295,7 +295,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					f8String ip, port;
 					_ipexp.SubExpr(match, logname, ip, 0, 1);
 					_ipexp.SubExpr(match, logname, port, 0, 2);
-					return new BCLogger(ip, get_value<unsigned>(port), flags, levels, delim, positions);
+					return new BCLogger(ip, stoul(port), flags, levels, delim, positions);
 				}
 
 				get_logname(which, logname, sid); // only applies to file loggers
@@ -387,7 +387,7 @@ ProcessModel Configuration::get_process_model(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 SslContext Configuration::get_ssl_context(const XmlElement *from) const
 {
 	SslContext target;

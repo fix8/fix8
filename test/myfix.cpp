@@ -118,7 +118,7 @@ Usage: f8test [-NRScdhlmoqrsv]\n
 #include <fix8/f8includes.hpp>
 //#include <fix8/zeromq_mbus.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -184,7 +184,7 @@ int main(int argc, char **argv)
 	bool server(false), reliable(false), once(false), dump(false), multi(false);
 	string clcf, session;
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
@@ -212,7 +212,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for " PACKAGE " version " VERSION << endl;
+			cout << argv[0] << " for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
@@ -224,8 +224,8 @@ int main(int argc, char **argv)
 		case 'N': session = optarg; break;
 		case 'm': multi = true; break;
 		case 'o': once = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'S': next_send = stoul(optarg); break;
+		case 'R': next_receive = stoul(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		case 'd': dump = true; break;
@@ -353,7 +353,7 @@ int main(int argc, char **argv)
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
-		cerr << "exception: " << e.what() << endl;
+		cerr << "std::exception: " << e.what() << endl;
 		restore_tty = true;
 		glout_error << e.what();
 	}
@@ -435,6 +435,12 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 	if (!msg->process(_router)) // false means I have taken ownership of the message
 		detach(msg);
 	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+void myfix_session_server::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -623,7 +629,7 @@ bool MyMenu::new_order_single_recycled()
 		cout << "Sending recycled new_order_single" << endl;
 		_session.send(msg, false);
 	}
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	// demonstrate access to outbound raw fix message and payload
 	cout << msg->get_rawmsg() << endl;
 	copy(msg->begin_payload(), msg->end_payload(), ostream_iterator<char>(cout, ""));
@@ -636,7 +642,7 @@ bool MyMenu::new_order_single_recycled()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::static_probe()
 {
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 	(cout << "Enter message tag:").flush();
 	f8String result;
 	const BaseMsgEntry *tbme;
@@ -763,7 +769,7 @@ void print_usage()
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	// demonstrate access to inbound raw fix message and payload
 	cout << msg->get_rawmsg() << endl;
 	copy(msg->begin_payload(), msg->end_payload(), ostream_iterator<char>(cout, ""));

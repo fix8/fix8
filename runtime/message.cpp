@@ -42,7 +42,7 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
 unsigned MessageBase::_tabsize = defaults::tabsize;
@@ -52,7 +52,7 @@ unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtyp
 {
 	const char *dptr(from.data());
 	const unsigned flen(static_cast<unsigned>(from.size()));
-	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
+	char tag[MAX_MSGTYPE_FIELD_LEN], val[FIX8_MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
 
 	if ((result = extract_element(dptr, flen, tag, val)))
@@ -89,7 +89,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore), npos(0xffffffff);
 	unsigned pos(static_cast<unsigned>(_pos.size())), last_valid_pos(npos);
 	const char *dptr(from.data());
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	char tag[FIX8_MAX_FLD_LENGTH], val[FIX8_MAX_FLD_LENGTH];
 	size_t last_valid_offset(0);
 
 	for (unsigned result; s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
@@ -152,7 +152,7 @@ unsigned MessageBase::decode_group(GroupBase *grpbase, const unsigned short fnum
 		throw InvalidRepeatingGroup(fnum, FILE_LINE);
 	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore);
 	const char *dptr(from.data());
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	char tag[FIX8_MAX_FLD_LENGTH], val[FIX8_MAX_FLD_LENGTH];
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
@@ -218,18 +218,18 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 	if (!bme)
 		throw InvalidMessage(mtype, FILE_LINE);
 	Message *msg(bme->_create._do(false)); // shallow create
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	IntervalTimer itm;
 #endif
 	msg->decode(from, hlen, 7, permissive_mode); // skip already decoded mandatory 8, 9, 35 and 10
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	_decode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_decode_timings._msg_count;
 #endif
 
 	msg->_header->get_body_length()->set(mlen);
 	msg->_header->get_msg_type()->set(mtype);
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 	msg->check_set_rlm(fitr->second);
 #endif
 
@@ -273,7 +273,7 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 			}
 
 			BaseField *nf(get_field(pp._fnum)->copy());
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 			to->check_set_rlm(nf);
 #endif
 			Presence::const_iterator fpitr(to->_fp.get_presence().end());
@@ -332,7 +332,7 @@ size_t MessageBase::encode(char *to) const
 	const char *where(to);
 	for (const auto& pp : _pos)
 	{
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 		check_set_rlm(pp.second);
 #endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
@@ -356,7 +356,7 @@ size_t MessageBase::encode(ostream& to) const
 	const std::ios::pos_type where(to.tellp());
 	for (const auto& pp : _pos)
 	{
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 		check_set_rlm(pp.second);
 #endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
@@ -404,7 +404,7 @@ size_t Message::encode(char **hmsg_store) const
 {
 	char *moffs(*hmsg_store + HEADER_CALC_OFFSET), *msg(moffs);
 
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	IntervalTimer itm;
 #endif
 
@@ -412,9 +412,9 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMessageComponent("header");
 	_header->get_msg_type()->set(_msgType);
 
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	msg += (_begin_payload = _header->encode(msg)); // start
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 	if (_preencode_len)
 	{
 		::memcpy(msg, _preencode.data(), _payload_len =_preencode_len);
@@ -425,7 +425,7 @@ size_t Message::encode(char **hmsg_store) const
 		msg += (_payload_len = MessageBase::encode(msg));
 #else
 	msg += _header->encode(msg); // start
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 	if (_preencode_len)
 	{
 		::memcpy(msg, _preencode.data(), _preencode_len);
@@ -464,14 +464,14 @@ size_t Message::encode(char **hmsg_store) const
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	msg += _trailer->get_check_sum()->encode(msg);
 
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	_encode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_encode_timings._msg_count;
 #endif
 
 	*msg = 0;
 	const size_t rlen(msg - *hmsg_store);
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	_rawmsg.assign(*hmsg_store, rlen);
 #endif
 	return rlen;
@@ -480,7 +480,7 @@ size_t Message::encode(char **hmsg_store) const
 //-------------------------------------------------------------------------------------------------
 size_t Message::encode(f8String& to) const
 {
-	char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+	char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 	const size_t msgLen(encode(&ptr));
 	to.assign(ptr, msgLen);
 	return to.size();
@@ -650,9 +650,10 @@ Message *Message::clone() const
 {
 	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType.c_str()));
 	Message *msg(bme._create._do(true));
-	copy_legal(msg, true);
-	_header->copy_legal(msg->_header, true);
-	_trailer->copy_legal(msg->_trailer, true);
+	// important not to pass force as true with copy_legal here
+	copy_legal(msg);
+	_header->copy_legal(msg->_header);
+	_trailer->copy_legal(msg->_trailer);
 	return msg;
 }
 
@@ -671,7 +672,7 @@ void Message::print(ostream& os, int) const
 }
 
 //-------------------------------------------------------------------------------------------------
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 void Message::format_codec_timings(const f8String& str, ostream& os, codec_timings& ct)
 {
 	os << str << ": " << setprecision(9) << ct._cpu_used << " secs, "

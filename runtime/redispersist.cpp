@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
-#if defined HAVE_LIBHIREDIS
+#if defined FIX8_HAVE_LIBHIREDIS
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
@@ -332,5 +332,5 @@ unsigned HiredisPersister::find_nearest_highest_seqnum (const unsigned requested
 	return 0;
 }
 
-#endif // HAVE_LIBHIREDIS
+#endif // FIX8_HAVE_LIBHIREDIS
 

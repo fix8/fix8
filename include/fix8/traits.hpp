@@ -44,7 +44,7 @@ namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
 /// Used for static trait interrogation
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 struct TraitHelper
 {
 	const struct FieldTrait *_traits;
@@ -121,12 +121,12 @@ struct FieldTrait
 	  \param group ptr ot traits if group
 	  \param fieldcnt number of fields in group if group */
 	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 		, const FieldTrait *group=nullptr, unsigned fieldcnt=0
 #endif
 		)
 		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
 		, _group(TraitHelper{group, fieldcnt})
 #endif
 	{}
@@ -153,7 +153,7 @@ struct FieldTrait
 	FieldType _ftype;
 	mutable unsigned short _pos, _component;
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
     const TraitHelper _group = TraitHelper{ nullptr, 0 };
 #endif
 
@@ -256,7 +256,7 @@ public:
 	  \param arr_start pointer to start of static array to copy elements from
 	  \param sz number of elements to initially allocate
 	  \param reserve percentage of sz to keep in reserve */
-	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
+	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=FIX8_RESERVE_PERCENT) : _reserve(reserve),
 		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new FieldTrait[_rsz]), _ftha()
 			{ memcpy(_arr, arr_start, _sz * sizeof(FieldTrait)); }
 
@@ -269,7 +269,7 @@ public:
 	/*! ctor - initialise an empty set; defer memory allocation;
 	  \param sz number of elements to initially allocate
 	  \param reserve percentage of sz to keep in reserve */
-	explicit presorted_set(const size_t sz=0, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
+	explicit presorted_set(const size_t sz=0, const size_t reserve=FIX8_RESERVE_PERCENT) : _reserve(reserve),
 		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(), _ftha() {}
 
 	/// dtor
@@ -668,4 +668,4 @@ F8API std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 
 } // FIX8
 
-#endif // _FIX8_TRAITS_HPP_
+#endif // FIX8_TRAITS_HPP_
