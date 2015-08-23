@@ -15,7 +15,6 @@ var namespaceFIX8 =
     [ "BCLogger", "classFIX8_1_1BCLogger.html", "classFIX8_1_1BCLogger" ],
     [ "bcostream", "classFIX8_1_1bcostream.html", "classFIX8_1_1bcostream" ],
     [ "bcoutbuf", "classFIX8_1_1bcoutbuf.html", "classFIX8_1_1bcoutbuf" ],
-    [ "BDBPersister", "classFIX8_1_1BDBPersister.html", "classFIX8_1_1BDBPersister" ],
     [ "buffered_ostream", "classFIX8_1_1buffered__ostream.html", "classFIX8_1_1buffered__ostream" ],
     [ "CharRealm", "structFIX8_1_1CharRealm.html", "structFIX8_1_1CharRealm" ],
     [ "ClientConnection", "classFIX8_1_1ClientConnection.html", "classFIX8_1_1ClientConnection" ],

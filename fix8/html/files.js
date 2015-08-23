@@ -106,17 +106,7 @@ var files =
     [ "Perf_types.cpp", "Perf__types_8cpp.html", null ],
     [ "Perf_types.hpp", "Perf__types_8hpp.html", "Perf__types_8hpp" ],
     [ "persist.cpp", "persist_8cpp.html", "persist_8cpp" ],
-    [ "persist.hpp", "persist_8hpp.html", [
-      [ "Persister", "classFIX8_1_1Persister.html", "classFIX8_1_1Persister" ],
-      [ "BDBPersister", "classFIX8_1_1BDBPersister.html", "classFIX8_1_1BDBPersister" ],
-      [ "KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer" ],
-      [ "Ubuf", "unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html", "unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf" ],
-      [ "KeyDataPair", "structFIX8_1_1BDBPersister_1_1KeyDataPair.html", "structFIX8_1_1BDBPersister_1_1KeyDataPair" ],
-      [ "MemoryPersister", "classFIX8_1_1MemoryPersister.html", "classFIX8_1_1MemoryPersister" ],
-      [ "Prec", "structFIX8_1_1Prec.html", "structFIX8_1_1Prec" ],
-      [ "IPrec", "structFIX8_1_1IPrec.html", "structFIX8_1_1IPrec" ],
-      [ "FilePersister", "classFIX8_1_1FilePersister.html", "classFIX8_1_1FilePersister" ]
-    ] ],
+    [ "persist.hpp", "persist_8hpp.html", "persist_8hpp" ],
     [ "runtime/precomp.cpp", "runtime_2precomp_8cpp.html", null ],
     [ "compiler/precomp.cpp", "compiler_2precomp_8cpp.html", null ],
     [ "util/precomp.cpp", "util_2precomp_8cpp.html", null ],

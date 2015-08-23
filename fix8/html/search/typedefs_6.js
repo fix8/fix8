@@ -1,10 +1,12 @@
 var searchData=
 [
   ['f8_5fatomic',['f8_atomic',['../namespaceFIX8.html#a31a3ff8862448438ffbc3ee05116bc57',1,'FIX8']]],
+  ['f8_5fclock',['f8_clock',['../classFIX8_1_1Tickval.html#a036b9cf038a8aa26156f6889aeb13f22',1,'FIX8::Tickval']]],
   ['f8_5fconcurrent_5fqueue',['f8_concurrent_queue',['../mpmc_8hpp.html#a8589e7623754651384e1cfcaa4381493',1,'mpmc.hpp']]],
+  ['f8_5fduration',['f8_duration',['../classFIX8_1_1Tickval.html#a60ffede933b3c4e3322ff3f655909cb4',1,'FIX8::Tickval']]],
   ['f8_5fscoped_5flock',['f8_scoped_lock',['../namespaceFIX8.html#ae0cd7643d00276db9ceda89db184302a',1,'FIX8']]],
   ['f8_5fscoped_5fspin_5flock',['f8_scoped_spin_lock',['../namespaceFIX8.html#a156967bac272845a5edbbca375e4def8',1,'FIX8']]],
-  ['f8_5ftime_5fpoint',['f8_time_point',['../classFIX8_1_1Tickval.html#ab2c0d0c97885a8ee2b6bdb208fa03437',1,'FIX8::Tickval']]],
+  ['f8_5ftime_5fpoint',['f8_time_point',['../classFIX8_1_1Tickval.html#ac26bb4759113f5f510794e00ecd0fee2',1,'FIX8::Tickval']]],
   ['f8string',['f8String',['../namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539',1,'FIX8']]],
   ['factor',['Factor',['../namespaceFIX8_1_1TEX.html#a1942310794049c87de43fdb3b2754f57',1,'FIX8::TEX']]],
   ['fairvalue',['FairValue',['../namespaceFIX8_1_1TEX.html#aadb50149d55af95779cfd3bf408f55f3',1,'FIX8::TEX']]],

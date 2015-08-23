@@ -1,16 +1,12 @@
 var searchData=
 [
-  ['valuationmethod_5fcds_5fin_5fdelivery',['ValuationMethod_CDS_IN_DELIVERY',['../namespaceFIX8_1_1TEX.html#a9ea6e3020f1e67cdfbdf62b6aeb21c04',1,'FIX8::TEX']]],
-  ['valuationmethod_5fcds_5fstyle_5fcollateralization_5fof_5fmarket_5fto_5fmarket_5fand_5fcoupon',['ValuationMethod_CDS_STYLE_COLLATERALIZATION_OF_MARKET_TO_MARKET_AND_COUPON',['../namespaceFIX8_1_1TEX.html#a4a3cd65703313a711efe80ed31fd066b',1,'FIX8::TEX']]],
-  ['valuationmethod_5ffutures_5fstyle_5fmark_5fto_5fmarket',['ValuationMethod_FUTURES_STYLE_MARK_TO_MARKET',['../namespaceFIX8_1_1TEX.html#a799ab14df2cd45e8a3ab264058aed7da',1,'FIX8::TEX']]],
-  ['valuationmethod_5ffutures_5fstyle_5fwith_5fan_5fattached_5fcash_5fadjustment',['ValuationMethod_FUTURES_STYLE_WITH_AN_ATTACHED_CASH_ADJUSTMENT',['../namespaceFIX8_1_1TEX.html#a55907f41ff487687334d38d8110ba07f',1,'FIX8::TEX']]],
-  ['valuationmethod_5fpremium_5fstyle',['ValuationMethod_PREMIUM_STYLE',['../namespaceFIX8_1_1TEX.html#a06f6130ea4f4a0383eca54d230bb24a7',1,'FIX8::TEX']]],
-  ['valuationmethod_5frealm_5fels',['ValuationMethod_realm_els',['../namespaceFIX8_1_1TEX.html#abe551c9915a828c28fea9724f85c7c9b',1,'FIX8::TEX']]],
-  ['venuetype_5felectronic',['VenueType_ELECTRONIC',['../namespaceFIX8_1_1TEX.html#a55ccc86759c4b032159a3d83e1415179',1,'FIX8::TEX']]],
-  ['venuetype_5fex_5fpit',['VenueType_EX_PIT',['../namespaceFIX8_1_1TEX.html#a4c0f77bdec6b76fce8a273424ae4730d',1,'FIX8::TEX']]],
-  ['venuetype_5fpit',['VenueType_PIT',['../namespaceFIX8_1_1TEX.html#abb988fa8f01136779faa1f750d29a22a',1,'FIX8::TEX']]],
-  ['venuetype_5frealm_5fels',['VenueType_realm_els',['../namespaceFIX8_1_1TEX.html#af67152dd089811d1f153394c50eb541d',1,'FIX8::TEX']]],
-  ['verbose',['verbose',['../f8c_8cpp.html#a02a1d05c5658d444091962ad8b9303ba',1,'f8c.cpp']]],
-  ['version',['version',['../structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39',1,'FIX8::F8MetaCntx']]],
-  ['version_5finfo',['version_info',['../classMyMenu.html#ad779760c52b0749a91649352737c9bd8',1,'MyMenu']]]
+  ['what',['what',['../classFIX8_1_1f8Exception.html#a479fb74f51273a9a731ef368f4b0c8c7',1,'FIX8::f8Exception']]],
+  ['workingindicator_5fno',['WorkingIndicator_NO',['../namespaceFIX8_1_1TEX.html#ad31a9efd51461e68fa585fc60bb8fc73',1,'FIX8::TEX']]],
+  ['workingindicator_5frealm_5fels',['WorkingIndicator_realm_els',['../namespaceFIX8_1_1TEX.html#a7dfd5cf770c82ab0fbd41462b3388295',1,'FIX8::TEX']]],
+  ['workingindicator_5fyes',['WorkingIndicator_YES',['../namespaceFIX8_1_1TEX.html#a9892e1bad402574163f0aaafd90bb19e',1,'FIX8::TEX']]],
+  ['write',['write',['../classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb',1,'FIX8::FIXWriter::write(Message *from, bool destroy)'],['../classFIX8_1_1FIXWriter.html#af1de83e854ad92abdf0bef2984750502',1,'FIX8::FIXWriter::write(Message &amp;from)'],['../classFIX8_1_1Connection.html#a106f21a277dc451611241127c096c59c',1,'FIX8::Connection::write(Message *from, bool destroy=true)'],['../classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03',1,'FIX8::Connection::write(Message &amp;from)']]],
+  ['write_5fbatch',['write_batch',['../classFIX8_1_1FIXWriter.html#a8f584b0f12b6463ba24047b607dd63b5',1,'FIX8::FIXWriter::write_batch()'],['../classFIX8_1_1Connection.html#afb1e8f489a3b24d5c45ae74b7a0c2eee',1,'FIX8::Connection::write_batch()']]],
+  ['write_5fmsgs',['write_msgs',['../classMyMenu.html#aa702d8304303510898b9938e1dc15c07',1,'MyMenu']]],
+  ['writer_5fexecute',['writer_execute',['../classFIX8_1_1Connection.html#acb5bd49224dd29cbd0f231773f72724c',1,'FIX8::Connection']]],
+  ['writer_5fpoll',['writer_poll',['../classFIX8_1_1Connection.html#aff6f66cf1ac5c32d60f9199b2d7d2091',1,'FIX8::Connection']]]
 ];

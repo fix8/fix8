@@ -14,7 +14,6 @@ var hierarchy =
     [ "FIX8::ebitset_r< SessionControl >", "classFIX8_1_1ebitset__r.html", null ],
     [ "FIX8::_f8_threadcore", "classFIX8_1_1__f8__threadcore.html", [
       [ "FIX8::f8_thread< FIX8::AsyncSocket >", "classFIX8_1_1f8__thread.html", null ],
-      [ "FIX8::f8_thread< FIX8::BDBPersister >", "classFIX8_1_1f8__thread.html", null ],
       [ "FIX8::f8_thread< FIX8::FIXReader >", "classFIX8_1_1f8__thread.html", null ],
       [ "FIX8::f8_thread< FIX8::Logger >", "classFIX8_1_1f8__thread.html", null ],
       [ "FIX8::f8_thread< FIX8::ReliableClientSession< T > >", "classFIX8_1_1f8__thread.html", null ],
@@ -52,9 +51,6 @@ var hierarchy =
       [ "FIX8::Field< UTCTimestamp, field >", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html", null ]
     ] ],
     [ "FIX8::BaseMsgEntry", "structFIX8_1_1BaseMsgEntry.html", null ],
-    [ "FIX8::BDBPersister::KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html", null ],
-    [ "FIX8::BDBPersister::KeyDataBuffer::Ubuf", "unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html", null ],
-    [ "FIX8::BDBPersister::KeyDataPair", "structFIX8_1_1BDBPersister_1_1KeyDataPair.html", null ],
     [ "FIX8::Configuration", "classFIX8_1_1Configuration.html", [
       [ "FIX8::SessionConfig", "structFIX8_1_1SessionConfig.html", [
         [ "FIX8::ClientSessionBase", "classFIX8_1_1ClientSessionBase.html", [
@@ -1843,7 +1839,6 @@ var hierarchy =
     [ "FIX8::Minst::_gen", "structFIX8_1_1Minst_1_1__gen.html", null ],
     [ "FIX8::null_insert", "structFIX8_1_1null__insert.html", null ],
     [ "FIX8::Persister", "classFIX8_1_1Persister.html", [
-      [ "FIX8::BDBPersister", "classFIX8_1_1BDBPersister.html", null ],
       [ "FIX8::FilePersister", "classFIX8_1_1FilePersister.html", null ],
       [ "FIX8::MemoryPersister", "classFIX8_1_1MemoryPersister.html", null ]
     ] ],

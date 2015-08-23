@@ -58,6 +58,7 @@ var classFIX8_1_1Session =
     [ "is_loggable", "classFIX8_1_1Session.html#ad1a4f39fd3e7223c9ba83373f131d643", null ],
     [ "is_shutdown", "classFIX8_1_1Session.html#a1b8130aa0570ae4398028e428861e709", null ],
     [ "log", "classFIX8_1_1Session.html#a1fa7d326bbd08d44bea0573dce40b251", null ],
+    [ "modify_header", "classFIX8_1_1Session.html#a8d470bc74171d4b1c8075114b4a3d7df", null ],
     [ "modify_outbound", "classFIX8_1_1Session.html#af24127d02e1e6083789a5b1e1e2c78d8", null ],
     [ "plog", "classFIX8_1_1Session.html#ac42884a0c7921d57122b1dd676a89eb3", null ],
     [ "process", "classFIX8_1_1Session.html#aedc5524499f1ee5767b642792c9c010e", null ],

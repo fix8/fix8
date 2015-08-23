@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['f8_5fdebug',['F8_DEBUG',['../f8config_8h.html#a0ce9dcd9c61e180823cbdae4faf58791',1,'f8config.h']]],
-  ['f8_5ftex_5fapi',['F8_TEX_API',['../Myfix__classes_8hpp.html#acd150befbc93998ceff318a57da820b2',1,'F8_TEX_API():&#160;Myfix_classes.hpp'],['../Perf__classes_8hpp.html#acd150befbc93998ceff318a57da820b2',1,'F8_TEX_API():&#160;Perf_classes.hpp']]],
-  ['f8api',['F8API',['../f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c',1,'f8dll.h']]],
-  ['file_5fline',['FILE_LINE',['../f8utils_8hpp.html#a5b0925ea5ef0baf1f338812dce0273cb',1,'f8utils.hpp']]],
-  ['fix8_5f4d796669785f636c61737365732e687070_5f',['FIX8_4D796669785F636C61737365732E687070_',['../Myfix__classes_8hpp.html#a156b262b21de1b0af669a3eebb1919ae',1,'Myfix_classes.hpp']]],
-  ['fix8_5f4d796669785f726f757465722e687070_5f',['FIX8_4D796669785F726F757465722E687070_',['../Myfix__router_8hpp.html#aba108939d8f22b95503f687f5018cd32',1,'Myfix_router.hpp']]],
-  ['fix8_5f4d796669785f74797065732e687070_5f',['FIX8_4D796669785F74797065732E687070_',['../Myfix__types_8hpp.html#a520aa29daaf472a7f34f6753187f3cc9',1,'Myfix_types.hpp']]],
-  ['fix8_5f506572665f636c61737365732e687070_5f',['FIX8_506572665F636C61737365732E687070_',['../Perf__classes_8hpp.html#a5cb9fce0834d3d192500bc5c8da6e260',1,'Perf_classes.hpp']]],
-  ['fix8_5f506572665f726f757465722e687070_5f',['FIX8_506572665F726F757465722E687070_',['../Perf__router_8hpp.html#ac47f36c9df4707c4ac14b2ab96f3f99a',1,'Perf_router.hpp']]],
-  ['fix8_5f506572665f74797065732e687070_5f',['FIX8_506572665F74797065732E687070_',['../Perf__types_8hpp.html#a41ce0aefd18ac338f7136fe3ddc56995',1,'Perf_types.hpp']]]
+  ['glout',['glout',['../logger_8hpp.html#abf3585975f2695eef73c25f0edeeedd4',1,'logger.hpp']]],
+  ['glout_5fdebug',['glout_debug',['../logger_8hpp.html#ac9af17392d2ed6f490df0fecafda60c5',1,'logger.hpp']]],
+  ['glout_5ferror',['glout_error',['../logger_8hpp.html#a5d0cb8d580e88b00a185e52e0800e3b4',1,'logger.hpp']]],
+  ['glout_5ffatal',['glout_fatal',['../logger_8hpp.html#a7eff99d2a697a1652263ef1c0b1dd294',1,'logger.hpp']]],
+  ['glout_5finfo',['glout_info',['../logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451',1,'logger.hpp']]],
+  ['glout_5fwarn',['glout_warn',['../logger_8hpp.html#aa22f86f7f48ba8176436ca57f631f8d0',1,'logger.hpp']]]
 ];

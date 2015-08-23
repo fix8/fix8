@@ -5,7 +5,6 @@ var searchData=
   ['f8_5fspin_5flock',['f8_spin_lock',['../classFIX8_1_1f8__spin__lock.html',1,'FIX8']]],
   ['f8_5fthread',['f8_thread',['../classFIX8_1_1f8__thread.html',1,'FIX8']]],
   ['f8_5fthread_3c_20fix8_3a_3aasyncsocket_20_3e',['f8_thread&lt; FIX8::AsyncSocket &gt;',['../classFIX8_1_1f8__thread.html',1,'FIX8']]],
-  ['f8_5fthread_3c_20fix8_3a_3abdbpersister_20_3e',['f8_thread&lt; FIX8::BDBPersister &gt;',['../classFIX8_1_1f8__thread.html',1,'FIX8']]],
   ['f8_5fthread_3c_20fix8_3a_3afixreader_20_3e',['f8_thread&lt; FIX8::FIXReader &gt;',['../classFIX8_1_1f8__thread.html',1,'FIX8']]],
   ['f8_5fthread_3c_20fix8_3a_3alogger_20_3e',['f8_thread&lt; FIX8::Logger &gt;',['../classFIX8_1_1f8__thread.html',1,'FIX8']]],
   ['f8_5fthread_3c_20fix8_3a_3areliableclientsession_3c_20t_20_3e_20_3e',['f8_thread&lt; FIX8::ReliableClientSession&lt; T &gt; &gt;',['../classFIX8_1_1f8__thread.html',1,'FIX8']]],

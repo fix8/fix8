@@ -1,8 +1,6 @@
 var searchData=
 [
   ['data',['data',['../namespaceFIX8.html#a2fb728b401a2fd83f07d69e18735a923',1,'FIX8']]],
-  ['databuf_5f',['dataBuf_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#aa3171ffe459e5c760a03aa1bc9cd1d0c',1,'FIX8::BDBPersister::KeyDataBuffer']]],
-  ['databuflen_5f',['dataBufLen_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#a2ac3a5f0857b35341c8d82112eea7c7a',1,'FIX8::BDBPersister::KeyDataBuffer']]],
   ['date_5fparse',['date_parse',['../namespaceFIX8.html#ab164d9631d9191f35859386620d24fc3',1,'FIX8']]],
   ['date_5ftime_5fformat',['date_time_format',['../namespaceFIX8.html#ab7ced82900a44208ed756ae7f60e1d5d',1,'FIX8']]],
   ['date_5ftime_5fparse',['date_time_parse',['../namespaceFIX8.html#afbad3871353598ce0fd0a9b12f83dd88',1,'FIX8']]],
@@ -23,7 +21,7 @@ var searchData=
   ['dealingcapacity_5fprincipal',['DealingCapacity_PRINCIPAL',['../namespaceFIX8_1_1TEX.html#a7bf4850d4cb2c888d2f0647008066396',1,'FIX8::TEX']]],
   ['dealingcapacity_5frealm_5fels',['DealingCapacity_realm_els',['../namespaceFIX8_1_1TEX.html#a633be1491ef784070813280888b35258',1,'FIX8::TEX']]],
   ['dealingcapacity_5friskless_5fprincipal',['DealingCapacity_RISKLESS_PRINCIPAL',['../namespaceFIX8_1_1TEX.html#a8dcd01ac586331c71bef40a8d7185f95',1,'FIX8::TEX']]],
-  ['debug',['debug',['../classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa607f8c76c40e25275ff49a321241deff',1,'FIX8::Session::debug()'],['../classFIX8_1_1Logger.html#a59932392d2aa3809b5344d29d94001b6a00c7ef99764e99b840920006e8c0898a',1,'FIX8::Logger::Debug()']]],
+  ['debug',['Debug',['../classFIX8_1_1Logger.html#a59932392d2aa3809b5344d29d94001b6a00c7ef99764e99b840920006e8c0898a',1,'FIX8::Logger::Debug()'],['../classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa607f8c76c40e25275ff49a321241deff',1,'FIX8::Session::debug()']]],
   ['decl_5f',['decl_',['../classXmlElement.html#a1eae339d9df1eb9f30fc20f1347316bc',1,'XmlElement']]],
   ['decode',['decode',['../classFIX8_1_1MessageBase.html#ace7b1ee5d0b85712809a924b69dd7c4d',1,'FIX8::MessageBase::decode()'],['../classFIX8_1_1Message.html#aff6f603f6f91a868798d7a67d8ab8c44',1,'FIX8::Message::decode()']]],
   ['decode_5fdow',['decode_dow',['../namespaceFIX8.html#a7f03b022c786be62f4d56108c83e3005',1,'FIX8::decode_dow(const std::string &amp;from)'],['../namespaceFIX8.html#aa668a47a575df1612f3dee91d3a4b6ff',1,'FIX8::decode_dow(const string &amp;from)']]],
@@ -31,7 +29,6 @@ var searchData=
   ['default_5fappl_5fver_5fid',['default_appl_ver_id',['../namespaceFIX8.html#a5b55311ff99a271317dc83ae72609ba7',1,'FIX8']]],
   ['default_5fassignment_5fseparator',['default_assignment_separator',['../namespaceFIX8.html#a1962eafa95e5fafa614c0322fd5f8e49',1,'FIX8']]],
   ['default_5ffield_5fseparator',['default_field_separator',['../namespaceFIX8.html#a25dd5007a5a971fe43a58df371e1db34',1,'FIX8']]],
-  ['default_5fprecision',['DEFAULT_PRECISION',['../f8config_8h.html#a6d81881a7883657dbc659ca545d9085d',1,'f8config.h']]],
   ['defaultapplverid',['DefaultApplVerID',['../namespaceFIX8_1_1TEX.html#a33c787eb87482e654b5279881e8d8822',1,'FIX8::TEX']]],
   ['defaultapplverid_5ffix27',['DefaultApplVerID_FIX27',['../namespaceFIX8_1_1TEX.html#a6c25d0cd469c9f87c97a92ace06d382f',1,'FIX8::TEX']]],
   ['defaultapplverid_5ffix30',['DefaultApplVerID_FIX30',['../namespaceFIX8_1_1TEX.html#a83634b22f60ef933a1486d9ebd917680',1,'FIX8::TEX']]],
@@ -47,7 +44,9 @@ var searchData=
   ['defbidsize',['DefBidSize',['../namespaceFIX8_1_1TEX.html#a5391e8795f5682e8c4df1b2569c8fa3e',1,'FIX8::TEX']]],
   ['defoffersize',['DefOfferSize',['../namespaceFIX8_1_1TEX.html#a0f4fa67d56b9f8e1c8a014262607c926',1,'FIX8::TEX']]],
   ['del',['del',['../classFIX8_1_1Persister.html#ae344cc57fb3a1e2707f51868b9a938f9',1,'FIX8::Persister']]],
+  ['delete_5fmsg',['delete_msg',['../classMyMenu.html#a21cbc5dbb547026a542775f4bc457e42',1,'MyMenu']]],
   ['delete_5fmsgs',['delete_msgs',['../classMyMenu.html#a7141f6ab024c7661fae129b9b050e116',1,'MyMenu']]],
+  ['deleteallmsgs',['DeleteAllMsgs',['../classFIX8_1_1ConsoleMenu.html#adf41da763a0684c13e9b423c5bd2d4b3',1,'FIX8::ConsoleMenu']]],
   ['deletemsgs',['DeleteMsgs',['../classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992',1,'FIX8::ConsoleMenu']]],
   ['deletereason',['DeleteReason',['../namespaceFIX8_1_1TEX.html#aa2344ffd6b1f861afefc1463051c8cbe',1,'FIX8::TEX']]],
   ['deletereason_5fcancellation',['DeleteReason_CANCELLATION',['../namespaceFIX8_1_1TEX.html#a9f753487239920f313d0860daf9423ac',1,'FIX8::TEX']]],
@@ -293,7 +292,6 @@ var searchData=
   ['duetorelated_5frealm_5fels',['DueToRelated_realm_els',['../namespaceFIX8_1_1TEX.html#aafe5060479c6891994139d5a222eefc4',1,'FIX8::TEX']]],
   ['duetorelated_5fyes',['DueToRelated_YES',['../namespaceFIX8_1_1TEX.html#a9014839ff009d1ad965d9a36660a3cfe',1,'FIX8::TEX']]],
   ['dump_5fcomponents',['dump_components',['../f8precomp_8cpp.html#a65faa14e3ce40cdc92fccac9d9b85c87',1,'f8precomp.cpp']]],
-  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#a3bf88d67fa83a2c4e1697726bd7d9146',1,'FIX8::DuplicateField']]],
   ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]],
-  ['duration',['duration',['../classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170',1,'FIX8::Tickval']]]
+  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#a3bf88d67fa83a2c4e1697726bd7d9146',1,'FIX8::DuplicateField']]]
 ];

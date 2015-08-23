@@ -1,7 +1,8 @@
 var classFIX8_1_1Tickval =
 [
-    [ "duration", "classFIX8_1_1Tickval.html#a3e12db92c5dfa175baac730ba11e5170", null ],
-    [ "f8_time_point", "classFIX8_1_1Tickval.html#ab2c0d0c97885a8ee2b6bdb208fa03437", null ],
+    [ "f8_clock", "classFIX8_1_1Tickval.html#a036b9cf038a8aa26156f6889aeb13f22", null ],
+    [ "f8_duration", "classFIX8_1_1Tickval.html#a60ffede933b3c4e3322ff3f655909cb4", null ],
+    [ "f8_time_point", "classFIX8_1_1Tickval.html#ac26bb4759113f5f510794e00ecd0fee2", null ],
     [ "ticks", "classFIX8_1_1Tickval.html#a3901cc251f3e97ebff66c07c9346ed06", null ],
     [ "Tickval", "classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27", null ],
     [ "Tickval", "classFIX8_1_1Tickval.html#afe1532639eeef863084c1d6a83f447ce", null ],
@@ -10,6 +11,7 @@ var classFIX8_1_1Tickval =
     [ "Tickval", "classFIX8_1_1Tickval.html#a2d474096d0cffdc29b749bdb94098fb9", null ],
     [ "adjust", "classFIX8_1_1Tickval.html#a60202c7a9a4a4b0431322ee9cb9deb17", null ],
     [ "as_tm", "classFIX8_1_1Tickval.html#a180a26768b567214178f746bacae4111", null ],
+    [ "errorticks", "classFIX8_1_1Tickval.html#acc5af9d7f3371dfcca5eb2291d6f2b02", null ],
     [ "get_ticks", "classFIX8_1_1Tickval.html#ad790963ef8cb2b3ed63bab122562d7fa", null ],
     [ "get_tickval", "classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89", null ],
     [ "get_tickval", "classFIX8_1_1Tickval.html#aebd35b770a0e564ba0f6ef04a0109f07", null ],
@@ -46,7 +48,6 @@ var classFIX8_1_1Tickval =
     [ "_value", "classFIX8_1_1Tickval.html#a02e07dc3fbf8bcdf7788aa8ebb3ab1d3", null ],
     [ "billion", "classFIX8_1_1Tickval.html#a5e9efb26021d151a48c8947b2301a873", null ],
     [ "day", "classFIX8_1_1Tickval.html#a0e0b14c14bed8be65dc53b9cc372e753", null ],
-    [ "errorticks", "classFIX8_1_1Tickval.html#a712dda65e790eea5cfbe49121d7b117e", null ],
     [ "hour", "classFIX8_1_1Tickval.html#aff2e83467599b21e896cb61e2d64eb6b", null ],
     [ "million", "classFIX8_1_1Tickval.html#ad5111d49e1daf7e5f0494b52c587f3fc", null ],
     [ "minute", "classFIX8_1_1Tickval.html#adc2e06021fad4ebe7a719a5cd58cf982", null ],
