@@ -15,7 +15,7 @@ nuget {
 		description: @"Master branch of FIX8 stock libraries: FIX40, FIX41, FIX42, FIX43, FIX44, FIX50, FIX50SP1, FIX50SP2";
 		releaseNotes: "";
 		copyright: Copyright 2013-2014;
-		tags: { FIX8, native, CoApp };
+		tags: { FIX8, native, CoApp, v${VERSION} };
 	};
 
 	dependencies {
