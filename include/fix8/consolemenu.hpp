@@ -68,8 +68,9 @@ public:
 	F8API virtual const BaseMsgEntry *SelectMsg() const;
 	F8API virtual const FieldTable::Pair *SelectField(const Message *msg, int groupid = 0) const;
 	F8API virtual int SelectRealm(const unsigned short fnum, const RealmBase *rb) const;
-	F8API Message *SelectFromMsg(MsgList& lst) const;
+	F8API Message *SelectFromMsg(const MsgList& lst) const;
 	F8API virtual int CreateMsgs(tty_save_state& tty, MsgList& lst) const;
+	F8API int CreateMsgsFrom(tty_save_state& tty, MsgList& lst, const MsgList& from) const;
 	F8API Message *RemoveMsg(tty_save_state& tty, MsgList& lst) const;
 	F8API void EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Message *msg) const;
 	F8API virtual int EditMsgs(tty_save_state& tty, MsgList& lst) const;

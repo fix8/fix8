@@ -215,7 +215,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
+Message *ConsoleMenu::SelectFromMsg(const MsgList& lst) const
 {
 	if (lst.empty())
 		return nullptr;
@@ -268,6 +268,29 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 }
 
 //-------------------------------------------------------------------------------------------------
+int ConsoleMenu::CreateMsgsFrom(tty_save_state& tty, MsgList& lst, const MsgList& from) const
+{
+	for (;;)
+	{
+		const BaseMsgEntry *mc(SelectMsg());
+		if (!mc)
+			break;
+		unique_ptr<Message> msg(mc->_create._do(true));
+		Message *fmsg(SelectFromMsg(from));
+		if (fmsg)
+			msg->copy_legal(fmsg);
+		const FieldTable::Pair *fld;
+		while((fld = SelectField(msg.get())))
+			EditMsg(tty, fld, msg.get());
+		_os << endl << endl << *static_cast<MessageBase *>(msg.get()) << endl;
+		if (get_yn("Add to list? (y/n):", true))
+			lst.push_back(msg.release());
+	}
+
+	return static_cast<int>(lst.size());
+}
+
+//-------------------------------------------------------------------------------------------------
 int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 {
 	for (;;)
@@ -275,13 +298,13 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 		const BaseMsgEntry *mc(SelectMsg());
 		if (!mc)
 			break;
-		Message *msg(mc->_create._do(true));
+		unique_ptr<Message> msg(mc->_create._do(true));
 		const FieldTable::Pair *fld;
-		while((fld = SelectField(msg)))
-			EditMsg(tty, fld, msg);
-		_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
+		while((fld = SelectField(msg.get())))
+			EditMsg(tty, fld, msg.get());
+		_os << endl << endl << *static_cast<MessageBase *>(msg.get()) << endl;
 		if (get_yn("Add to list? (y/n):", true))
-			lst.push_back(msg);
+			lst.push_back(msg.release());
 	}
 
 	return static_cast<int>(lst.size());
