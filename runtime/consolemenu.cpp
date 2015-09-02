@@ -278,7 +278,7 @@ int ConsoleMenu::CreateMsgsFrom(tty_save_state& tty, MsgList& lst, const MsgList
 		unique_ptr<Message> msg(mc->_create._do(true));
 		Message *fmsg(SelectFromMsg(from));
 		if (fmsg)
-			msg->copy_legal(fmsg);
+			fmsg->copy_legal(msg.get());
 		const FieldTable::Pair *fld;
 		while((fld = SelectField(msg.get())))
 			EditMsg(tty, fld, msg.get());
