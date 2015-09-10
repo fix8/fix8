@@ -473,11 +473,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		}
 
 		enforce(seqnum, msg);
-		heartbeat_interval hbi;
-		msg->get(hbi);
-		_connection->set_hb_interval(hbi());
 		do_state_change(States::st_continuous);
-		slout_info << "Client setting heartbeat interval to " << hbi();
 	}
 	else // acceptor
 	{
@@ -576,8 +572,12 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		{
 			_sid = id;
 			enforce(seqnum, msg);
-			send(generate_logon(_connection->get_hb_interval(), davi()));
+			heartbeat_interval hbi;
+			msg->get(hbi);
+			_connection->set_hb_interval(hbi());
+			send(generate_logon(hbi(), davi()));
 			do_state_change(States::st_continuous);
+			slout_info << "Client setting heartbeat interval to " << hbi();
 		}
 		else
 		{

@@ -328,14 +328,15 @@ TEST_F(sessionTest, logon)
     Logon * logon = new Logon;
     fillRecvHeader(logon->Header());
 
-    *logon << new HeartBtInt(5) << new EncryptMethod(0);
+	 HeartBtInt hbi(initiator_test->initiator->get_hb_interval());
+    *logon << new HeartBtInt(hbi()) << new EncryptMethod(0);
     f8String logon_str;
     logon->encode(logon_str);
     initiator_test->ss->update_received();
     initiator_test->ss->process(logon_str);
 
     EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
-    EXPECT_EQ(unsigned(5), initiator_test->initiator->get_hb_interval());
+    EXPECT_EQ(static_cast<unsigned>(hbi()), initiator_test->initiator->get_hb_interval());
 
     delete logon;
 

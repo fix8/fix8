@@ -188,7 +188,7 @@ public:
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
 	  \param davi default appl version id (FIXT) */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String()) = 0;
+	virtual void start(bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0, const f8String davi=f8String()) = 0;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ public:
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
 	  \param davi default appl version id (FIXT) */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
+	virtual void start(bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0, const f8String davi=f8String())
 		{ _session->start(_cc, wait, send_seqnum, recv_seqnum, davi); }
 
 	/// Convenient scoped pointer for your session
@@ -317,7 +317,7 @@ public:
 	  \param send_seqnum next send seqnum
 	  \param recv_seqnum next recv seqnum
 	  \param davi default appl version id (FIXT) */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
+	virtual void start(bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0, const f8String davi=f8String())
 	{
 		_send_seqnum = send_seqnum;
 		_recv_seqnum = recv_seqnum;
@@ -605,7 +605,7 @@ public:
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) {}
+	virtual void start(bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0) {}
 
 	/// Stop the session. Cleanup.
 	virtual void stop() {}
@@ -713,7 +713,7 @@ public:
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) override
+	virtual void start(bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0) override
 		{ _session->start(_psc, wait, send_seqnum, recv_seqnum); }
 
 	/// Stop the session. Cleanup.

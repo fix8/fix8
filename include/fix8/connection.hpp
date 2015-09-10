@@ -498,37 +498,24 @@ protected:
 	bool _secured;
 
 public:
-	/*! Ctor. Initiator.
+	/*! Ctor.
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
+	    \param role connection role
 	    \param pmodel process model
 	    \param hb_interval heartbeat interval
 		 \param secured true for ssl connection
 	*/
-	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
-				  const ProcessModel pmodel, const unsigned hb_interval, bool secured)
-		: _sock(sock), _addr(addr), _connected(false), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel),
-		  _secured(secured) {}
-
-	/*! Ctor. Acceptor.
-	    \param sock connected socket
-	    \param addr sock address structure
-	    \param session session
-	    \param hb_interval heartbeat interval
-	    \param pmodel process model
-		 \param secured true for ssl connection
-	*/
-	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
-				  const unsigned hb_interval, const ProcessModel pmodel, bool secured)
-		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, Role role,
+				  const ProcessModel pmodel, unsigned hb_interval, bool secured)
+		: _sock(sock), _addr(addr), _connected(role == cn_acceptor), _session(session), _role(role), _pmodel(pmodel),
 		  _hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
 		  _reader(sock, session, pmodel), _writer(sock, session, pmodel),
 		  _secured(secured) {}
 
 	/// Dtor.
-  virtual ~Connection() { _session.clear_connection(this); }
+	virtual ~Connection() { _session.clear_connection(this); }
 
 	/*! Get the role for this connection.
 	    \return the role */
@@ -646,7 +633,7 @@ public:
 	    \param way boolean true (on) or false(clear) */
 	void set_tcp_cork_flag(bool way) const
 	{
-#if defined HAVE_DECL_TCP_CORK && TCP_CORK != 0
+#if defined FIX8_HAVE_DECL_TCP_CORK && TCP_CORK != 0
 		_sock->setOption(IPPROTO_TCP, TCP_CORK, way ? 1 : 0);
 #endif
 	}
@@ -691,9 +678,9 @@ public:
 		 \param secured true for ssl connection
 	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+							Session &session, unsigned hb_interval, ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 							bool secured=false)
-		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
+		 : Connection(sock, addr, session, cn_initiator, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -708,7 +695,7 @@ public:
 class ServerConnection : public Connection
 {
 public:
-	/*! Ctor. Initiator.
+	/*! Ctor. Acceptor.
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
@@ -721,9 +708,9 @@ public:
 		 \param secured true for ssl connection
 	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+						  Session &session, unsigned hb_interval, ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 						  bool reuse_addr=false, int linger=-1, bool keepalive=false, bool secured=false) :
-		Connection(sock, addr, session, hb_interval, pmodel, secured)
+		Connection(sock, addr, session, cn_acceptor, pmodel, hb_interval, secured)
 	{
 		_sock->setLinger(linger >= 0, linger);
 		_sock->setNoDelay(no_delay);

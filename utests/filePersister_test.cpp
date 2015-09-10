@@ -244,7 +244,7 @@ public:
         Session(ctx)
     {
 		 Session& session = *this;
-		 _connection = new Connection(0, _addr, session, pm_thread, 10, false);
+		 _connection = new Connection(0, _addr, session, Connection::cn_initiator, pm_thread, 10, false);
 	 }
 
     /// Dtor
@@ -285,7 +285,7 @@ TEST(filePersister, resend_get)
 
 	 Poco::Net::SocketAddress _addr;
     check_session session(UTEST::ctx());
-    Connection connection(0, _addr, session, pm_thread, 10, false);
+    Connection connection(0, _addr, session, Connection::cn_initiator, pm_thread, 10, false);
 
     fixture.filePer->get(1, 5, session, &Session::retrans_callback);
 
