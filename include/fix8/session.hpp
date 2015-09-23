@@ -754,6 +754,10 @@ public:
 	    \return loginParamaters */
 	const LoginParameters& get_login_parameters() const { return  _loginParameters; }
 
+	/*! Set the reset_sequence_numbers flag, defaults to value set in config file (default false)
+	    \param flag true or false */
+	void set_reset_sequence_numbers_flag(bool flag) { _loginParameters._reset_sequence_numbers = flag; }
+
 	/*! Set the persister.
 	    \param pst pointer to persister object  */
 	void set_persister(Persister *pst) { _persist = pst; }
