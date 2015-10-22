@@ -402,7 +402,7 @@ int ConsoleMenu::DeleteAllMsgs(tty_save_state& tty, MsgList& lst) const
 {
 	if (lst.size() && get_yn("Delete all msgs? (y/n):", true))
 	{
-		for_each(lst.begin(), lst.end(), [](const Message *pp){ delete pp; });
+		for_each(lst.begin(), lst.end(), [](const Message *pp){ delete pp; pp = nullptr; });
 		lst.clear();
 	}
 
