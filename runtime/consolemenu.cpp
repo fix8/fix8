@@ -235,8 +235,15 @@ Message *ConsoleMenu::SelectFromMsg(const MsgList& lst) const
 			const MsgTable::Pair *tbme(_ctx._bme.find_pair_ptr((*itr)->get_msgtype().c_str()));
 			text txt;
 			(*itr)->get(txt);
+			sending_time sndtime;
+			msg_seq_num msgseqnum;
+			if ((*itr)->Header())
+			{
+				 (*itr)->Header()->get(sndtime);
+				 (*itr)->Header()->get(msgseqnum);
+			}
          _os << '[' << _opt_keys[nlines] << "]  " << tbme->_value._name << '(' << tbme->_key << ")\t"
-				 << (*itr)->Header()->get<sending_time>()->get() << ' ' << (*itr)->Header()->get<msg_seq_num>()->get() << ' ' << txt() << endl;
+				 << sndtime() << ' ' << msgseqnum() << ' ' << txt() << endl;
 
 			++nlines;
 			if (nlines % _lpp == 0 || (nlines + _lpp * page) == lst.size())
