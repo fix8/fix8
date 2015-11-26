@@ -341,6 +341,7 @@ void print_usage()
 	um.add('C', "nocheck", "do not embed version checking in generated code (default false)");
 	um.add('D', "defaulted", "do not generate default router bodies. Application must provide all router definitions (default false)");
 	um.add('U', "noconst", "Generate non-const Router method declarations (default false, const)");
+	um.add('u', "unused", "Report unused fields, requires verbose option (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
 	um.add('P', "incpath", "prefix system include path with \"fix8\" in generated compilation units (default yes)");

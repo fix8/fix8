@@ -96,10 +96,10 @@ const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
-     incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false);
+     incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false), report_unused(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SD");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SDu");
 extern string spacer, shortName, precompHdr;
 
 //-----------------------------------------------------------------------------------------
@@ -167,6 +167,7 @@ int main(int argc, char **argv)
 		{ "nocheck",		0,	0,	'C' },
 		{ "noconst",		0,	0,	'U' },
 		{ "info",		   0,	0,	'I' },
+		{ "unused",		   0,	0,	'u' },
 		{ "fields",			0,	0,	'f' },
 		{ "xfields",		1,	0,	'F' },
 		{ "keep",			0,	0,	'k' },
@@ -204,6 +205,7 @@ int main(int argc, char **argv)
 		case 'R': norealm = true; break;
 		case 'C': nocheck = true; break;
 		case 'U': nconst_router = true; break;
+		case 'u': report_unused = true; break;
 		case 'c': gen_classes = optarg; break;
 		case 'F': extra_fields = optarg; break;
 		case 'h': print_usage(); return 0;
@@ -1457,10 +1459,22 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	if (verbose)
 	{
-		unsigned cnt(0);
+		unsigned cnt(0), ucnt(0);
 		for (const auto& pp : fspec)
+      {
 			if (pp.second._used)
 				++cnt;
+         else if (report_unused)
+         {
+            if (ucnt++)
+               cout << ',';
+            else
+               cout << "Unused fields: ";
+            cout << pp.second._name << '(' << pp.first << ')';
+         }
+      }
+      if (report_unused && ucnt)
+         cout << endl;
 		cout << cnt << " of " << fspec.size() << " fields used in messages" << endl;
 	}
 

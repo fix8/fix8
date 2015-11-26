@@ -373,7 +373,7 @@ application_call:
 		else
 		{
 			slout_error << e.what() << " - message rejected";
-			send(generate_reject(seqnum, e.what(), msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
+			handle_outbound_reject(seqnum, msg, e.what());
 			++_next_receive_seq;
 			delete msg;
 			return true; // message is handled but has errors
@@ -649,7 +649,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		if (!_persist || !msg->get(begin) || !msg->get(end))
 			send(generate_sequence_reset(_next_send_seq + 1, true));
 		else if ((begin() > end() && end()) || begin() == 0)
-			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"), msg->get_msgtype().c_str());
+			handle_outbound_reject(seqnum, msg, "Invalid begin or end resend seqnum");
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
@@ -719,6 +719,11 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 	return true;
 }
 
+//-------------------------------------------------------------------------------------------------
+bool Session::handle_outbound_reject(const unsigned seqnum, const Message *msg, const char *errstr)
+{
+	return send(generate_reject(seqnum, errstr, msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
+}
 
 //-------------------------------------------------------------------------------------------------
 bool Session::activation_service()	// called on the timer threead

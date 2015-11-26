@@ -489,6 +489,13 @@ protected:
 	    \return true on success */
 	virtual bool handle_admin(const unsigned seqnum, const Message *msg) { return true; }
 
+	/*! Outbound Reject callback. Override to receive callback when an inbound message has caused a reject
+	    \param seqnum message sequence number
+	    \param msg Message
+	    \param errstr reject message text
+	    \return true on success */
+	F8API virtual bool handle_outbound_reject(const unsigned seqnum, const Message *msg, const char *errstr);
+
 	/*! Application message callback. Called on receipt of all non-admin messages. You must implement this method.
 	  The message is passed as a reference to a pointer. Your application can detach and take ownership. If you want
 	  to take ownership, take a copy of the pointer and then set msg to 0. See Session::detach()
