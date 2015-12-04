@@ -467,14 +467,20 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
          const auto bmitr(FieldSpec::_baseTypeMap.find(type));
 			FieldTrait::FieldType ft(bmitr == FieldSpec::_baseTypeMap.end() ? FieldTrait::ft_untyped : bmitr->second);
 			pair<FieldSpecMap::iterator, bool> result;
-			if (ft != FieldTrait::ft_untyped) {
-				try {
+			if (ft != FieldTrait::ft_untyped)
+         {
+				try
+            {
 					result = fspec.insert({stoul(number), FieldSpec(name, ft)});
-				} catch (std::exception& e) {
+				}
+            catch (std::exception& e)
+            {
 					cerr << shortName << ':' << recover_line(*pp) << ": Failed to convert (stoul) number " << number << " in " << name << endl;
 					++glob_errors;
 				}
-			} else {
+			}
+         else
+         {
 				if (!nowarn)
 					cerr << shortName << ':' << recover_line(*pp) << ": warning: Unknown field type: " << type << " in " << name << endl;
 				++glob_warnings;
