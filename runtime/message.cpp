@@ -94,10 +94,11 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 
 	for (unsigned result; s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
-		const unsigned short tv(fast_atoi<unsigned short>(tag));
+		unsigned short tv(fast_atoi<unsigned short>(tag));
 		Presence::const_iterator itr(_fp.get_presence().find(tv));
 		if (itr == _fp.get_presence().end())
 		{
+unknown_field:
 			if (permissive_mode)
 			{
 				if (last_valid_pos == npos)
@@ -117,7 +118,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			if (!itr->_field_traits.has(FieldTrait::automatic))
 				throw DuplicateField(tv);
 		}
-		else
+		else for(unsigned ii(0); ii < 2; ++ii)
 		{
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
@@ -128,6 +129,24 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			// check if repeating group and num elements > 0
 			if (itr->_field_traits.has(FieldTrait::group) && has_group_count(bf))
 				s_offset = decode_group(nullptr, tv, from, s_offset, ignore);
+
+			if (itr->_ftype != FieldTrait::ft_Length || tv == Common_BodyLength) // this type expects next field to be data
+				break;
+
+			const unsigned val_sz(fast_atoi<unsigned>(val));
+			if(val_sz > FIX8_MAX_FLD_LENGTH - 1)
+				throw f8Exception("Value size too large");
+			result = extract_element_fixed_width(dptr + s_offset, fsize - s_offset, val_sz, tag, val);
+			if (!result)
+				throw MissingMandatoryField("Unable to extract fixed width field");
+
+			const unsigned short lasttv(tv);
+			tv = fast_atoi<unsigned short>(tag);
+			if ((itr = _fp.get_presence().find(tv)) == _fp.get_presence().end())
+				goto unknown_field;
+			if (itr->_ftype != FieldTrait::ft_data || lasttv + 1 != tv) // next field must be data, tag must be 1 greater than length tag
+				break;
+			s_offset += result;
 		}
 	}
 

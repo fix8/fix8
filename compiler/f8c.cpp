@@ -473,9 +473,9 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
             {
 					result = fspec.insert({stoul(number), FieldSpec(name, ft)});
 				}
-            catch (std::exception& e)
+            catch (exception& e)
             {
-					cerr << shortName << ':' << recover_line(*pp) << ": Failed to convert (stoul) number " << number << " in " << name << endl;
+					cerr << shortName << ':' << recover_line(*pp) << ": error: Failed to convert (stoul) number " << number << " in " << name << endl;
 					++glob_errors;
 				}
 			}
