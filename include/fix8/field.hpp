@@ -871,12 +871,12 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 //          day of year 1970, as an unsigned at-least-32-bit integer.
 //          The input is not changed (in particular, fields tm_wday,
 //          tm_yday, and tm_isdst are unchanged and ignored).
-inline time_t my_mktime(const struct tm * ptm) 
+inline time_t my_mktime(const tm& ptm) 
 {
-	int m, y = ptm->tm_year;
-	if ((m = ptm->tm_mon)<2) { m += 12; --y; }
+	int m, y = ptm.tm_year ? ptm.tm_year : 70;
+	if ((m = ptm.tm_mon)<2) { m += 12; --y; }
 	return ((((time_t)(y - 69) * 365u + y / 4 - y / 100 * 3 / 4 + (m + 2) * 153 / 5 - 446 +
-		ptm->tm_mday) * 24u + ptm->tm_hour) * 60u + ptm->tm_min) * 60u + ptm->tm_sec;
+		(ptm.tm_mday ? ptm.tm_mday: 1)) * 24u + ptm.tm_hour) * 60u + ptm.tm_min) * 60u + ptm.tm_sec;
 }
 
 /*! Convert tm to time_t
@@ -888,7 +888,7 @@ inline time_t my_mktime(const struct tm * ptm)
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
 #if 1
-	return my_mktime(&ltm);
+	return my_mktime(ltm);
 #else
     // doesn't work for leap year for 01/01 to 28/02 - returns +1 day
    static const int mon_days[] {0,
@@ -1052,6 +1052,8 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 	--tms.tm_mon;
 	if (len == 8)
 		parse_decimal(ptr, 2, tms.tm_mday);
+	else
+		tms.tm_mday = 1;
 	return time_to_epoch(tms) * Tickval::billion;
 }
 
@@ -1191,12 +1193,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size(), true)) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0, true)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
