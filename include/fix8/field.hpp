@@ -849,6 +849,36 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 	return begin - bsv;
 }
 
+//http://stackoverflow.com/questions/530519/stdmktime-and-timezone-info
+//    # numbering months from March, all months except the one before that origin repeat with a cycle of 5 months totaling 153 days alternating 31 and 30 days, so that, for any month, and without consideration for leap years, the number of days since the previous February can be computed(within a constant) using addition of an appropriate constant, multiplication by 153 and integer division by 5;
+//    # the correction in days accounting for the rule for leap year on years multiple - of - 100 (which by exception to the multiple - of - 4 rules are non - leap except if multiple of 400) can be computed(within a constant) by addition of an appropriate constant, integer division by 100, multiplication by 3, and integer division by 4;
+//    #we can compute correction for any epoch using the same formula we use in the main computation, and can do this with a macro so that this correction is computed at compilation time.
+// mktime  converts from  struct tm  UTC to non-leap seconds since 
+// 00:00:00 on the first UTC day of year 1970 (fixed).
+// It works from 1970 to 2105 inclusive. It strives to be compatible
+// with C compilers supporting // comments and claiming C89 conformance.
+//
+// input:   Pointer to a  struct tm  with field tm_year, tm_mon, tm_mday,
+//          tm_hour, tm_min, tm_sec set per  mktime  convention; thus
+//          - tm_year is year minus 1900
+//          - tm_mon is [0..11] for January to December, but [-2..14] 
+//            works for November of previous year to February of next year
+//          - tm_mday, tm_hour, tm_min, tm_sec similarly can be offset to
+//            the full range [-32767 to 32768], as long as the combination
+//            with tm_year gives a result within years [1970..2105], and
+//            tm_year>0.
+// output:  Number of non-leap seconds since beginning of the first UTC
+//          day of year 1970, as an unsigned at-least-32-bit integer.
+//          The input is not changed (in particular, fields tm_wday,
+//          tm_yday, and tm_isdst are unchanged and ignored).
+inline time_t my_mktime(const tm& ptm) 
+{
+	int m, y = ptm.tm_year ? ptm.tm_year : 70;
+	if ((m = ptm.tm_mon)<2) { m += 12; --y; }
+	return ((((time_t)(y - 69) * 365u + y / 4 - y / 100 * 3 / 4 + (m + 2) * 153 / 5 - 446 +
+		(ptm.tm_mday ? ptm.tm_mday: 1)) * 24u + ptm.tm_hour) * 60u + ptm.tm_min) * 60u + ptm.tm_sec;
+}
+
 /*! Convert tm to time_t
 	Based on Ghulam M. Babar's "mktime slow? use custom function"
 	see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
@@ -857,6 +887,10 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
   \return time_t */
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
+#if 1
+	return my_mktime(ltm);
+#else
+    // doesn't work for leap year for 01/01 to 28/02 - returns +1 day
    static const int mon_days[] {0,
       31,
       31 + 28,
@@ -875,6 +909,7 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
    const int tyears(ltm.tm_year ? ltm.tm_year - 70 : 0); // tm->tm_year is from 1900.
    const int tdays(mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4);
    return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
+#endif
 }
 
 enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
@@ -1017,6 +1052,8 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 	--tms.tm_mon;
 	if (len == 8)
 		parse_decimal(ptr, 2, tms.tm_mday);
+	else
+		tms.tm_mday = 1;
 	return time_to_epoch(tms) * Tickval::billion;
 }
 
@@ -1156,12 +1193,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size(), true)) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0, true)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
