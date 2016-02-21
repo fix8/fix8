@@ -362,6 +362,8 @@ application_call:
 
 		if (e.force_logoff())
 		{
+			if (_plogger && _plogger->has_flag(Logger::inbound))
+				plog(from, Logger::Info, 1);
 			slout_fatal << e.what() << " - will logoff";
 			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
@@ -375,6 +377,8 @@ application_call:
 			slout_error << e.what() << " - message rejected";
 			handle_outbound_reject(seqnum, msg, e.what());
 			++_next_receive_seq;
+			if (_plogger && _plogger->has_flag(Logger::inbound))
+				plog(from, Logger::Info, 1);
 			delete msg;
 			return true; // message is handled but has errors
 		}
