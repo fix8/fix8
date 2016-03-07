@@ -874,7 +874,7 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 
    const int tyears(ltm.tm_year ? ltm.tm_year - 70 : 0); // tm->tm_year is from 1900.
    int tdays(mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4);
-	if (ltm.tm_year && ltm.tm_year % 4 == 0 && ltm.tm_mon < 3) // works till 2100, adjust for leap year with jan/feb +1day error
+	if (ltm.tm_year && ltm.tm_year % 4 == 0 && ltm.tm_mon < 2) // works till 2100, adjust for leap year with jan/feb +1day error
 		--tdays;
    return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
 }
