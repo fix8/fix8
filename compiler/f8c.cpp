@@ -727,7 +727,7 @@ void generate_nested_group(const MessageSpec& ms, const FieldSpecMap& fspec, int
          const auto& pp(*ms._groups.cbegin());
          FieldSpecMap::const_iterator gsitr(fspec.find(pp.first));
          outh << dspacer << spacer << "{ return fnum == " << gsitr->first << " ? new "
-            << gsitr->second._name << " : nullptr; }" << endl;
+            << gsitr->second._name << "() : nullptr; }" << endl;
       }
    }
 }
@@ -813,12 +813,12 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
          outh << d2spacer << spacer << "if (deepctor)" << endl;
          outh << d2spacer << spacer << spacer << "mb->get_groups().insert({";
          if (tgroup->_groups.size() == 1)
-            outh << tgroup->_groups.begin()->first << ", new " << tgroup->_groups.begin()->second._name << " });" << endl;
+            outh << tgroup->_groups.begin()->first << ", new " << tgroup->_groups.begin()->second._name << "() });" << endl;
          else
          {
             outh << endl;
             for (const auto& qq : tgroup->_groups)
-               outh << d2spacer << spacer << spacer << spacer << "{ " << qq.first << ", new " << qq.second._name << " }," << endl;
+               outh << d2spacer << spacer << spacer << spacer << "{ " << qq.first << ", new " << qq.second._name << "() }," << endl;
             outh << d2spacer << spacer << spacer << "});" << endl;
          }
 
@@ -1134,9 +1134,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		{
 			osc_hpp << ',' << endl << spacer << spacer;
 			if (isHeader)
-				osc_hpp << "_begin_string(new begin_string(ctx()._beginStr)), _body_length(new body_length), _msg_type(new msg_type)";
+				osc_hpp << "_begin_string(new begin_string(ctx()._beginStr)), _body_length(new body_length()), _msg_type(new msg_type())";
 			else
-				osc_hpp << "_check_sum(new check_sum)";
+				osc_hpp << "_check_sum(new check_sum())";
 			osc_hpp << " { add_preamble(); }" << endl;
 		}
 		else if (!pp.second._groups.empty())
@@ -1145,14 +1145,14 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_hpp << spacer << spacer << "if (deepctor)" << endl;
          osc_hpp << spacer << spacer << spacer << "_groups.insert({";
          if (pp.second._groups.size() == 1)
-            osc_hpp << pp.second._groups.begin()->first << ", new " << pp.second._groups.begin()->second._name << " });" << endl;
+            osc_hpp << pp.second._groups.begin()->first << ", new " << pp.second._groups.begin()->second._name << "() });" << endl;
          else
          {
             osc_hpp << endl;
             for (const auto& ii : pp.second._groups)
             {
                FieldSpecMap::const_iterator gsitr(fspec.find(ii.first));
-               osc_hpp << spacer << spacer << spacer << spacer << "{ " << gsitr->first << ", new " << gsitr->second._name << " }," << endl;
+               osc_hpp << spacer << spacer << spacer << spacer << "{ " << gsitr->first << ", new " << gsitr->second._name << "() }," << endl;
             }
             osc_hpp << spacer << spacer << spacer << "});" << endl;
          }
