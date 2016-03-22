@@ -330,6 +330,12 @@ int main(int argc, char **argv)
 
 	if (load_fix_version (*cfr, ctxt) < 0)
 		return 1;
+   if (ctxt._beginstr.compare(0, 4, "FIX.") == 0 && ctxt._version >= 5000)
+   {
+      cerr << "Error: " << ctxt._beginstr << " requires an additional FIXT schema specification." << endl;
+      return 1;
+   }
+
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
 	{
 		ctxt._out[ii].first.second = prefix + ctxt._exts[ii] + ctxt._exts_ver[ext_ver];
