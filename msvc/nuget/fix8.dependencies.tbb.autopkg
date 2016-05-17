@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dependencies.tbb;
-		version : 4.2.${RELEASE_DATE}.${RELEASE_REVISION};
+		version : 4.4.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 TBB dependency;
 		authors: {Intel Corporation};
 		owners: {Fix8, Sergey Sedreev};
@@ -22,7 +22,8 @@ nuget {
 	files {
 	
 		#defines {
-			TBB 	 = tbb42_20140416oss\;
+			TBB 	 = vs2015\tbb44_20150928oss\;
+			TBB_BLD  = vs2015\tbb44_20150928oss\build\vs2010\;
 		}
 	
 		// grab all the files in the include folder
@@ -39,32 +40,56 @@ nuget {
 		//  	$(PlatformToolset) == v100 
 		//		$(Configuration) == Debug
 		[x64,v120,debug,desktop] { 
-			lib: { ${TBB}lib\intel64\vc12\tbb_debug.lib; ${TBB}lib\intel64\vc12\tbbmalloc_debug.lib; ${TBB}lib\intel64\vc12\tbbmalloc_proxy_debug.lib; };
-			symbols: { ${TBB}bin\intel64\vc12\tbb_debug.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_debug.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_proxy_debug.pdb; };
-			bin: { ${TBB}bin\intel64\vc12\tbb_debug.dll; ${TBB}bin\intel64\vc12\tbbmalloc_debug.dll; ${TBB}bin\intel64\vc12\tbbmalloc_proxy_debug.dll; };
+			lib: { ${TBB_BLD}intel64\Debug-vc120\tbb_debug.lib; ${TBB_BLD}intel64\Debug-vc120\tbbmalloc_debug.lib; ${TBB_BLD}intel64\Debug-vc120\tbbmalloc_proxy_debug.lib; };
+			symbols: { ${TBB_BLD}intel64\Debug-vc120\tbb_debug.pdb; ${TBB_BLD}intel64\Debug-vc120\tbbmalloc_debug.pdb; ${TBB_BLD}intel64\Debug-vc120\tbbmalloc_proxy_debug.pdb; };
+			bin: { ${TBB_BLD}intel64\Debug-vc120\tbb_debug.dll; ${TBB_BLD}intel64\Debug-vc120\tbbmalloc_debug.dll; ${TBB_BLD}intel64\Debug-vc120\tbbmalloc_proxy_debug.dll; };
 		}
 		
 		[x64,v120,release,desktop] { 
-			lib: { ${TBB}lib\intel64\vc12\tbb.lib; ${TBB}lib\intel64\vc12\tbbmalloc.lib; ${TBB}lib\intel64\vc12\tbbmalloc_proxy.lib; };
-			symbols: { ${TBB}bin\intel64\vc12\tbb.pdb; ${TBB}bin\intel64\vc12\tbbmalloc.pdb; ${TBB}bin\intel64\vc12\tbbmalloc_proxy.pdb; };
-			bin: { ${TBB}bin\intel64\vc12\tbb.dll; ${TBB}bin\intel64\vc12\tbbmalloc.dll; ${TBB}bin\intel64\vc12\tbbmalloc_proxy.dll; };
+			lib: { ${TBB_BLD}intel64\Release-vc120\tbb.lib; ${TBB_BLD}intel64\Release-vc120\tbbmalloc.lib; ${TBB_BLD}intel64\Release-vc120\tbbmalloc_proxy.lib; };
+			symbols: { ${TBB_BLD}intel64\Release-vc120\tbb.pdb; ${TBB_BLD}intel64\Release-vc120\tbbmalloc.pdb; ${TBB_BLD}intel64\Release-vc120\tbbmalloc_proxy.pdb; };
+			bin: { ${TBB_BLD}intel64\Release-vc120\tbb.dll; ${TBB_BLD}intel64\Release-vc120\tbbmalloc.dll; ${TBB_BLD}intel64\Release-vc120\tbbmalloc_proxy.dll; };
 		}
 			
 		[x86,v120,debug,desktop] { 
-			lib: { ${TBB}lib\ia32\vc12\tbb_debug.lib; ${TBB}lib\ia32\vc12\tbbmalloc_debug.lib; ${TBB}lib\ia32\vc12\tbbmalloc_proxy_debug.lib; };
-			symbols: { ${TBB}bin\ia32\vc12\tbb_debug.pdb; ${TBB}bin\ia32\vc12\tbbmalloc_debug.pdb; ${TBB}bin\ia32\vc12\tbbmalloc_proxy_debug.pdb; };
-			bin: { ${TBB}bin\ia32\vc12\tbb_debug.dll; ${TBB}bin\ia32\vc12\tbbmalloc_debug.dll; ${TBB}bin\ia32\vc12\tbbmalloc_proxy_debug.dll; };
+			lib: { ${TBB_BLD}ia32\Debug-vc120\tbb_debug.lib; ${TBB_BLD}ia32\Debug-vc120\tbbmalloc_debug.lib; ${TBB_BLD}ia32\Debug-vc120\tbbmalloc_proxy_debug.lib; };
+			symbols: { ${TBB_BLD}ia32\Debug-vc120\tbb_debug.pdb; ${TBB_BLD}ia32\Debug-vc120\tbbmalloc_debug.pdb; ${TBB_BLD}ia32\Debug-vc120\tbbmalloc_proxy_debug.pdb; };
+			bin: { ${TBB_BLD}ia32\Debug-vc120\tbb_debug.dll; ${TBB_BLD}ia32\Debug-vc120\tbbmalloc_debug.dll; ${TBB_BLD}ia32\Debug-vc120\tbbmalloc_proxy_debug.dll; };
 		}
 		
 		[x86,v120,release,desktop] { 
-			lib: { ${TBB}lib\ia32\vc12\tbb.lib; ${TBB}lib\ia32\vc12\tbbmalloc.lib; ${TBB}lib\ia32\vc12\tbbmalloc_proxy.lib; };
-			symbols: { ${TBB}bin\ia32\vc12\tbb.pdb; ${TBB}bin\ia32\vc12\tbbmalloc.pdb; ${TBB}bin\ia32\vc12\tbbmalloc_proxy.pdb; };
-			bin: { ${TBB}bin\ia32\vc12\tbb.dll; ${TBB}bin\ia32\vc12\tbbmalloc.dll; ${TBB}bin\ia32\vc12\tbbmalloc_proxy.dll; };
+			lib: { ${TBB_BLD}ia32\Release-vc120\tbb.lib; ${TBB_BLD}ia32\Release-vc120\tbbmalloc.lib; ${TBB_BLD}ia32\Release-vc120\tbbmalloc_proxy.lib; };
+			symbols: { ${TBB_BLD}ia32\Release-vc120\tbb.pdb; ${TBB_BLD}ia32\Release-vc120\tbbmalloc.pdb; ${TBB_BLD}ia32\Release-vc120\tbbmalloc_proxy.pdb; };
+			bin: { ${TBB_BLD}ia32\Release-vc120\tbb.dll; ${TBB_BLD}ia32\Release-vc120\tbbmalloc.dll; ${TBB_BLD}ia32\Release-vc120\tbbmalloc_proxy.dll; };
+		}
+		
+		[x64,v140,debug,desktop] { 
+			lib: { ${TBB_BLD}intel64\Debug-vc140\tbb_debug.lib; ${TBB_BLD}intel64\Debug-vc140\tbbmalloc_debug.lib; ${TBB_BLD}intel64\Debug-vc140\tbbmalloc_proxy_debug.lib; };
+			symbols: { ${TBB_BLD}intel64\Debug-vc140\tbb_debug.pdb; ${TBB_BLD}intel64\Debug-vc140\tbbmalloc_debug.pdb; ${TBB_BLD}intel64\Debug-vc140\tbbmalloc_proxy_debug.pdb; };
+			bin: { ${TBB_BLD}intel64\Debug-vc140\tbb_debug.dll; ${TBB_BLD}intel64\Debug-vc140\tbbmalloc_debug.dll; ${TBB_BLD}intel64\Debug-vc140\tbbmalloc_proxy_debug.dll; };
+		}
+		
+		[x64,v140,release,desktop] { 
+			lib: { ${TBB_BLD}intel64\Release-vc140\tbb.lib; ${TBB_BLD}intel64\Release-vc140\tbbmalloc.lib; ${TBB_BLD}intel64\Release-vc140\tbbmalloc_proxy.lib; };
+			symbols: { ${TBB_BLD}intel64\Release-vc140\tbb.pdb; ${TBB_BLD}intel64\Release-vc140\tbbmalloc.pdb; ${TBB_BLD}intel64\Release-vc140\tbbmalloc_proxy.pdb; };
+			bin: { ${TBB_BLD}intel64\Release-vc140\tbb.dll; ${TBB_BLD}intel64\Release-vc140\tbbmalloc.dll; ${TBB_BLD}intel64\Release-vc140\tbbmalloc_proxy.dll; };
+		}
+			
+		[x86,v140,debug,desktop] { 
+			lib: { ${TBB_BLD}ia32\Debug-vc140\tbb_debug.lib; ${TBB_BLD}ia32\Debug-vc140\tbbmalloc_debug.lib; ${TBB_BLD}ia32\Debug-vc140\tbbmalloc_proxy_debug.lib; };
+			symbols: { ${TBB_BLD}ia32\Debug-vc140\tbb_debug.pdb; ${TBB_BLD}ia32\Debug-vc140\tbbmalloc_debug.pdb; ${TBB_BLD}ia32\Debug-vc140\tbbmalloc_proxy_debug.pdb; };
+			bin: { ${TBB_BLD}ia32\Debug-vc140\tbb_debug.dll; ${TBB_BLD}ia32\Debug-vc140\tbbmalloc_debug.dll; ${TBB_BLD}ia32\Debug-vc140\tbbmalloc_proxy_debug.dll; };
+		}
+		
+		[x86,v140,release,desktop] { 
+			lib: { ${TBB_BLD}ia32\Release-vc140\tbb.lib; ${TBB_BLD}ia32\Release-vc140\tbbmalloc.lib; ${TBB_BLD}ia32\Release-vc140\tbbmalloc_proxy.lib; };
+			symbols: { ${TBB_BLD}ia32\Release-vc140\tbb.pdb; ${TBB_BLD}ia32\Release-vc140\tbbmalloc.pdb; ${TBB_BLD}ia32\Release-vc140\tbbmalloc_proxy.pdb; };
+			bin: { ${TBB_BLD}ia32\Release-vc140\tbb.dll; ${TBB_BLD}ia32\Release-vc140\tbbmalloc.dll; ${TBB_BLD}ia32\Release-vc140\tbbmalloc_proxy.dll; };
 		}
 	};
 	
 	targets {
 		// We're trying to be standard about these sorts of thing. (Will help with config.h later :D)
-		Defines += HAS_TBB;
+		Defines += FIX8_NUGET_HAS_TBB;
 	};
 }

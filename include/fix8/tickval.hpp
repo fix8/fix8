@@ -43,6 +43,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <limits.h>
 #undef min
 #undef max
+#pragma warning(push)
+#pragma warning(disable: 4307) // chrono(132): warning C4307: '*': integral constant overflow in vc140
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -55,7 +57,7 @@ namespace FIX8 {
 class Tickval
 {
 public:
-#if defined __APPLE__
+#if defined(__APPLE__) || defined(_MSC_VER)
 	using f8_clock = std::chrono::system_clock;
 #else
 	using f8_clock = std::chrono::high_resolution_clock;
@@ -348,4 +350,8 @@ public:
 
 } // FIX8
 
-#endif // FIX8_TICKVAL_HPP_
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
+#endif // FIX8PRO_TICKVAL_HPP_
