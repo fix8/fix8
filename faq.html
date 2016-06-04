@@ -414,7 +414,7 @@
 Message *my_sess::generate_logon(const unsigned heartbeat_interval, const f8String davi)
 {
 	Message *msg(Session::generate_logon(heartbeat_interval, davi));
-	// now add your raw data
+	// now add your fields
 	string rawstuff("blah");
 	*msg << new TEX::RawDataLength(rawstuff.size());
 	*msg << new TEX::RawData(rawstuff);
