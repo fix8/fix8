@@ -30,6 +30,7 @@ March 2011 - Ver 0: Basic functional port, tested on Win 7 x64 - Performance not
 //#define WIN32_LEAN_AND_MEAN
 #pragma once
 //#include <WinSock2.h>
+#define NOMINMAX
 #include <Windows.h>
 #include <WinBase.h>
 #include <process.h>
@@ -108,6 +109,8 @@ INLINE int pthread_setcancelstate(int state, int *oldstate) {
 }
 
 // This requires #define _WIN32_WINNT 0x0403 to be stated as C++ preprocessor option (-D_WIN32_WINNT=0x0403)
+// MA: 26/04/14 this seems no longer true
+
 INLINE int pthread_mutex_init(pthread_mutex_t  RESTRICT * mutex,
 	const pthread_mutexattr_t RESTRICT  * attr) {
 	if (attr) return(EINVAL);
@@ -157,7 +160,8 @@ INLINE void * pthread_getspecific(pthread_key_t key) {
 //#if (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
 #ifndef _FF_WIN_XP
 typedef CONDITION_VARIABLE pthread_cond_t;
-
+//#include <Windows.h>
+#include <WinBase.h>
 INLINE int pthread_cond_init(pthread_cond_t  RESTRICT * cond,
     const pthread_condattr_t  RESTRICT * attr) {
 	if (attr) return(EINVAL);
@@ -186,6 +190,50 @@ INLINE int pthread_cond_destroy(pthread_cond_t *cond) {
 	// Do nothing. Did not find a Windows call .... 
 	return (0); // Errors not managed
  }
+
+// Barrier 
+
+/* MA:
+
+Starting from Windows 8 it can be used:
+
+EnterSynchronizationBarrier
+DeleteSynchronizationBarrier
+Synchronization Barriers
+
+Not supported in Win 7 - here a sketch of the interface
+Not really used - the FF code enable an alternative barrier via #ifdef
+
+typedef struct _opaque_pthread_barrier_t {
+	pthread_mutex_t bar_lock;
+	pthread_cond_t bar_cond;
+	unsigned count;
+} pthread_barrier_t;
+
+typedef struct _opaque_pthread_barrierattr_t {
+	// Not implemented
+	char c;
+} pthread_barrierattr_t;
+
+INLINE int pthread_barrier_init(pthread_barrier_t RESTRICT * barrier, 
+		const pthread_barrierattr_t RESTRICT * attr, unsigned count) {
+	barrier->count = count;
+	// errors currently not managed;
+	return 0;
+}
+
+INLINE int pthread_barrier_destroy(pthread_barrier_t *barrier) {
+	// errors currently not managed;
+	return 0;
+}
+
+INLINE int pthread_barrier_wait(pthread_barrier_t *barrier) {
+	// errors currently not managed;
+	return 0;
+}
+
+*/
+
 #else 
 // Win XP hasn't Condition variables!
 //

@@ -2,11 +2,10 @@
 
 /*!
  *
- * \link
  * \file svector.hpp
- * \ingroup streaming_network_simple_shared_memory
+ * \ingroup  aux_classes
  *
- * \breif TODO
+ * \brief  Simple yet efficient dynamic vector
  *
  */
 
@@ -38,16 +37,16 @@
 namespace ff {
 
 /*!
- * \ingroup streaming_network_simple_shared_memory
+ * \ingroup aux_classes
  *
  * @{
  */
 
 /*!
  * \class svector
- * \ingroup streaming_network_simple_shared_memory
+ * \ingroup aux_classes
  *
- * \brief TODO
+ * \brief Simple yet efficient dynamic vector
  *
  * This class is defined in \ref svector.hpp
  *
@@ -67,16 +66,15 @@ public:
 
     /**
      *
-     * NOTE: @param chunk is the allocation chunk and not the svector size.
+     * @param chunk is the allocation chunk
      */
     svector(size_t chunk=SVECTOR_CHUNK):first(NULL),len(0),cap(0),chunk(chunk) {
         reserve(chunk);
     }
 
     /**
-     * Constructor (1)
+     * Constructor
      *
-     * TODO
      */
     svector(const svector & v):first(NULL),len(0),cap(0),chunk(v.chunk) {
         if(v.len) {
@@ -88,9 +86,8 @@ public:
     }
 
     /**
-     * Constructor (2)
+     * Constructor
      * 
-     * TODO
      */
     svector(const_iterator i1,const_iterator i2):first(0),len(0),cap(0),chunk(SVECTOR_CHUNK) {
         first=(vector_type*)::malloc((i2-i1)*sizeof(vector_type));
@@ -109,7 +106,7 @@ public:
     }
     
     /**
-     * Overloading of operator =
+     * Copy
      */
     svector& operator=(const svector & v) {
         len=0;
@@ -125,7 +122,7 @@ public:
     }
 
     /**
-     * Overloading of operator +=
+     * Merge
      */
     svector& operator+=(const svector & v) {
         const_iterator i1=v.begin();
@@ -135,7 +132,7 @@ public:
     }
 
     /**
-     * TODO
+     * Reserve
      */
     inline void reserve(size_t newcapacity) {
         if(newcapacity<=cap) return;
@@ -147,7 +144,7 @@ public:
     }
     
     /**
-     * TODO
+     * Resize
      */
     inline void resize(size_t newsize) {
         if (len >= newsize) {
@@ -160,7 +157,7 @@ public:
     }
 
     /**
-     * TODO
+     * push_back
      */
     inline void push_back(const vector_type & elem) {
         if (len==cap) reserve(cap+chunk);	    
@@ -168,28 +165,34 @@ public:
     }
     
     /**
-     * TODO
+     * pop_back
      */
     inline void pop_back() { (first + --len)->~vector_type();  }
 
     /**
-     * TODO
+     * back
      */
     inline vector_type& back() { 
         return first[len-1]; 
         //return *(vector_type *)0;
     }
 
+    /**
+     * front
+     */
     inline vector_type& front() {
         return first[0];
     }
 
+    /**
+     * front
+     */
     inline const vector_type& front() const {
         return first[0];
     }
 
     /**
-     * TODO
+     * erease
      */
     inline iterator erase(iterator where) {
         iterator i1=begin();
@@ -206,42 +209,42 @@ public:
     }
     
     /**
-     * TODO
+     * size
      */
     inline size_t size() const { return len; }
 
     /**
-     * TODO
+     * empty
      */
     inline bool   empty() const { return (len==0);}
 
     /**
-     * TODO
+     * capacity
      */
     inline size_t capacity() const { return cap;}
     
     /**
-     * TODO
+     * clear
      */
     inline void clear() { while(size()>0) pop_back(); }
     
     /**
-     * TODO
+     * begin
      */
     iterator begin() { return first; }
     
     /**
-     * TODO
+     * end
      */
     iterator end() { return first+len; }
     
     /**
-     * TODO
+     * begin
      */
     const_iterator begin() const { return first; }
     
     /**
-     * TODO
+     * end
      */
     const_iterator end() const { return first+len; }
     
@@ -249,15 +252,15 @@ public:
 
 
     /**
-     * Overloading of operator []
+     * Access element
      */
     vector_type& operator[](size_t n) { 
         reserve(n+1);
         return first[n]; 
     }
-    
-    /**
-     * TODO
+
+     /**
+     * Access element
      */
     const vector_type& operator[](size_t n) const { return first[n]; }
     

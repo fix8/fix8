@@ -3,9 +3,9 @@
 /*!
  * \link
  * \file squeue.hpp
- * \ingroup streaming_network_simple_shared_memory
+ * \ingroup aux_classes
  *
- * \brief Simple yet efficient unbounded FIFO queue.
+ * \brief Simple yet efficient (not concurrent) unbounded FIFO queue.
  *
  * This queue have to be used by one single thread at a time, or, each method
  * call have to be protected by a mutex lock. For an unbounded
@@ -38,28 +38,16 @@
 
 
 namespace ff {
-/*!
- * \ingroup streaming_network_simple_shared_memory
- *
- * @{
- */
 
-/*!
- * class squeue
- * \ingroup streaming_network_simple_shared_memory
+/**
+ * \class squeue
+ * \ingroup aux_classes
  *
- * TODO
- *
- * This class is defined in \ref squeue.hpp
- *
+ * \brief Unbound sequential FIFO queue
  */
-
 template <typename T>
 class squeue {
 private:
-    /**
-     * TODO
-     */
     struct data_type {
         data_type():h(-1),t(-1),entry(0) {};
         data_type(int h, int t, T * entry):h(h),t(t),entry(entry) {}
@@ -72,31 +60,21 @@ private:
     typedef T          elem_type;
     
 protected:
-    /**
-     * TODO
-     */
     enum {DATA_CHUNK=1024, SQUEUE_CHUNK=4096};
-    
-    /**
-     * TODO
-     */
+
     inline T * newchunk() {
         T * v =(T *)malloc(chunk*sizeof(T));
         return v;
     }
     
-    /**
-     * TODO
-     */
+
     inline void deletechunk(int idx) { 
         free(data[idx].entry);   
         data[idx].entry = NULL;
     }
 
 public:
-    /**
-     * TODO
-     */
+
     squeue(size_t chunk=SQUEUE_CHUNK):data(0),datacap(DATA_CHUNK),
                                       nelements(0),
                                       head(0),tail(0),chunk(chunk)  {
@@ -104,9 +82,7 @@ public:
         data[0] = data_type(0, -1, newchunk());
     }
     
-    /**
-     * TODO
-     */
+
     ~squeue() {
         if (!data) return;
         for(unsigned int i=0;i<=tail;++i)
@@ -114,9 +90,7 @@ public:
         free(data);
     }
     
-    /**
-     * It defines the enqueue operation 
-     */
+
     inline void push_back(const elem_type & elem) {
         T * current       = data[tail].entry;
         int current_tail  = data[tail].t++;
@@ -135,12 +109,7 @@ public:
         ++nelements;
     }
 
-    /**
-     *
-     * It defines the dequeue one element from the back 
-     *
-     * \return TODO
-     */
+
     inline void pop_back() { 
         if (!nelements) return;
         
@@ -157,13 +126,6 @@ public:
         }
         
     }
-
-    /**
-     *
-     * TODO
-     *
-     * \return TODO
-     */
     
     inline elem_type& back() { 
         if (!nelements) return *(elem_type*)0;
@@ -173,11 +135,7 @@ public:
         return current[current_tail];
     }
 
-    /**
-     * It defines the dequeue one element from the head.
-     *
-     * \return TODO
-     */
+
     inline void pop_front() { 
         if (!nelements) return;
 
@@ -193,11 +151,7 @@ public:
         }        
     }
     
-    /**
-     * TODO
-     *
-     * \return TODO
-     */
+
     inline elem_type& front() { 
         if (!nelements) return *(elem_type*)0;
 
@@ -206,12 +160,7 @@ public:
         return current[current_head];
     }
 
-    /**
-     *
-     * TODO
-     *
-     * \return TODO
-     */
+
     inline elem_type& at(size_t idx) {
         if (!nelements || idx > nelements) return *(elem_type*)0;
         
@@ -220,11 +169,7 @@ public:
         return current[current_head];
     } 
     
-    /**
-     * It return the number of items in the queue.
-     *
-     * \retun The number of items in the queue.
-     * */
+
     inline size_t size() const { return nelements; }
     
     
@@ -237,10 +182,6 @@ private:
     size_t         chunk;    
 };
 
-/*!
- *  @}
- *  \endlink
- */
 
 } // namespace ff
 
@@ -248,7 +189,7 @@ private:
 
 #if 0
 
-#include <iostream>
+#include <iosfwd>
 #include <deque>
 #include <squeue.hpp>
 

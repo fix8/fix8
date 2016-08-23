@@ -460,8 +460,9 @@ public:
 			delete this->_sock;
 			this->_sock = nullptr;
 
-			if (!excepted || (_failover_cnt == 0 && _attempts > this->_loginParameters._login_retries))
-				break;
+			if (!excepted || (_failover_cnt == 0
+				&& this->_loginParameters._login_retries > 0 && _attempts > this->_loginParameters._login_retries))
+					break;
 
 			if (_failover_cnt)
 			{

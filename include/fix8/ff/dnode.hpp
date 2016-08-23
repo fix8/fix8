@@ -1,16 +1,17 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- *  \link
  *  \file dnode.hpp
- *  \ingroup streaming_network_arbitrary_distributed_memory
+ *  \ingroup building_blocks
  *
- *  \brief Defines the distributed version of FastFlow node
+ *  \brief Defines the FastFlow bridge node toward the network (distributed)
  *
  *  It contains the definition of the \p ff_dnode class, which is an
  *  extension of the base class \p ff_node, with features oriented to
  *  distributed systems.
  *
+ * \note MarcoA: This documentation has been written by a student
+ * and has not been checked, it should not be considered reliable
  */
 
 /* ***************************************************************************
@@ -59,24 +60,14 @@ namespace ff {
 // the header is msg_t::HEADER_LENGTH bytes
 static const char FF_DEOS[]="EOS";
 
-/**
- * \brief Defines callback
- *
- * It defines the callback.
- */
 typedef void (*dnode_cbk_t) (void *,void*);
 
-/*!
- *  \ingroup streaming_network_arbitrary_distributed_memory
- *
- *  @{
- */
 
 /*!
  *  \class ff_dnode
- *  \ingroup streaming_network_arbitrary_distributed_memory
+ *  \ingroup building_blocks
  *
- *  \brief Defines the distributed version of FastFlow node
+ *  \brief Defines ff::ff_dnode
  *
  *  This class represents the distributed version of \p ff_node. A \p ff_dnode
  *  is actually a \p ff_node with an extra communication channel (<em>external
@@ -89,7 +80,6 @@ typedef void (*dnode_cbk_t) (void *,void*);
  *  different \p ff_dnodes (i.e. unicast, broadcast, scatter, ondemand,
  *  fromAll, fromAny).
  *
- *  This class is defined in \ref dnode.hpp
  *
  */
 
@@ -102,7 +92,7 @@ public:
     typedef typename CommImpl::TransportImpl::msg_t msg_t;
 
     /**
-     * Defines sender and receiver
+     * \brief Defines sender and receiver
      */
     enum {SENDER=true, RECEIVER=false};
 
@@ -112,12 +102,10 @@ protected:
     static dnode_cbk_t cb;
 
     /**
-     * \brief Free the message
+     * \brief Callback to free the sent message
      *
-     * It frees the message.
-     *
-     * \parm data pointer to the data to be freed
-     * \parm arg arguments to be passed to the callback function
+     * \param data pointer to the data to be freed
+     * \param arg arguments to be passed to the callback function
      *
      */
     static inline void freeMsg(void * data, void * arg) {
@@ -129,7 +117,7 @@ protected:
      *
      * It frees the header of the message
      *
-     * \parm data is pointer to the header
+     * \param data is pointer to the header
      *
      */
     static inline void freeHdr(void * data, void *) {
@@ -141,7 +129,7 @@ protected:
      *
      * It checks if it is EOS of the message.
      *
-     * \parm data is the array of messages
+     * \param data is the array of messages
      *
      * \return The EOS of the message
      */
@@ -152,30 +140,18 @@ protected:
     /**
      * \brief Constructor
      *
-     * It builds the FastFlow node.
      */
     ff_dnode():ff_node(),skipdnode(true),neos(0) {}
 
     /**
      * \brief Destructor
      *
-     * It closes all communication connections.
      */
     virtual ~ff_dnode() {
         com.close();
         delete com.getDescriptor();
     }
 
-    /**
-     * \brief Defines internal push
-     *
-     * It sends the signal. TODO please write more here.
-     *
-     * \parm ptr is pointer to the message
-     * \parm comm is communication signal
-     *
-     * \return If successful \p true, otherwise \p false.
-     */
     template<typename CI>
     inline bool internal_push(void * ptr, CI& comm) {
         // gets the peers involved in one single communication
@@ -227,13 +203,12 @@ protected:
     }
 
     /**
-     * \brief Pushes the data
+     * \brief push ff::ff_dnode -> ff::ff_node (shared-memory channel)
      *
      * It overrides \p ff_node's \p push method
      *
-     * \parm ptr points to the data
+     * \paarm ptr points to the data
      *
-     * \return The status of \p internal_push() as Boolean value.
      */
     virtual inline bool push(void * ptr) {
         if (skipdnode || !P) return ff_node::push(ptr);
@@ -241,11 +216,11 @@ protected:
     }
 
     /**
-     * \brief Pops the data
+     * \brief pop  ff::ff_node -> ff::ff_dnode (shared-memory channel)
      *
      * It overrides \p ff_node 's \p pop method.
      *
-     * \parm ptr points to the data
+     * \param ptr points to the data
      *
      * \return If successful \p true is returned, otherwise \p false.
      */
@@ -280,7 +255,7 @@ protected:
                 continue;
             }
             uint32_t len = *static_cast<uint32_t*>(hdr.getData());
-            register int ventry   = (sendingPeers==1)?0:sender;
+            int ventry   = (sendingPeers==1)?0:sender;
             prepare(v[ventry], len, sender);
             assert(v[ventry]->size() == len);
 
@@ -298,11 +273,20 @@ protected:
         return true;
     }
 
+    virtual inline bool Push(void *ptr, unsigned long retry=((unsigned long)-1), unsigned long ticks=(ff_node::TICKS2WAIT)) {
+        if (skipdnode || !P) return ff_node::Push(ptr,retry,ticks);
+        return push(ptr);
+    }
+
+    virtual inline bool Pop(void **ptr, unsigned long retry=((unsigned long)-1), unsigned long ticks=(ff_node::TICKS2WAIT)) {
+        if (skipdnode || P) return ff_node::Pop(ptr,retry,ticks);
+        return pop(ptr);
+    }
+
 public:
     /**
-     *  \brief Initializes external communication channel
+     *  \brief Initializes distributed communication channel
      *
-     *  It initializes the external communication channel.
      *
      *  \param name is the name of the channel
      *  \param address is the address where to listen or connect to
@@ -364,7 +348,7 @@ public:
      */
 
     /**
-     *  \brief Prepars a pool of messages
+     *  \brief Prepare a pool of messages
      *
      *  It is used to give to the run-time a pool of messages on which
      *  input message frames will be received
@@ -392,9 +376,9 @@ public:
      *  to convert or re-arrange all the frames back to their original data or
      *  object layout.
      *
-     *  \parm v is vector of messages
-     *  \parm vlen is the length of the vector
-     *  \parm task pointer to the task
+     *  \param v is vector of messages
+     *  \param vlen is the length of the vector
+     *  \param task pointer to the task
      */
     virtual void unmarshalling(svector<msg_t*>* const v[], const int vlen, void *& task) {
         assert(vlen==1 && v[0]->size()==1);
@@ -409,7 +393,7 @@ public:
      * to the callback function. Typically it is called in the prepare method
      * of the producer.
      *
-     * \parm arg points to the arguments to be pussed to the callback
+     * \param arg points to the arguments to be pussed to the callback
      */
     void setCallbackArg(void* arg) { callbackArg.push_back(arg);}
 
@@ -440,7 +424,7 @@ public:
      * input external channel. This is typically used in the first stage of a
      * cyclic graph (e.g. the first stage of a torus pipeline).
      *
-     * \parm sk is boolean value showing whether skifirstpop should be skipped
+     * \param sk is boolean value showing whether skifirstpop should be skipped
      * or not
      */
     void skipfirstpop(bool sk)   { ff_node::skipfirstpop(sk); }
@@ -496,7 +480,7 @@ protected:
      *
      * It overrides \p ff_dnode's \p push method.
      *
-     * \parm ptr points to the task
+     * \param ptr points to the task
      *
      * \return The status of \p internal_push() method.
      */
@@ -510,11 +494,11 @@ public:
      *
      * It initializes all the input communication channels.
      *
-     * \parm name is the string to be passed through the communication channel
-     * \parm address is the address of the destination
-     * \parm peers are the number of peers involved in the communication
-     * \parm transp is the transport for the communication
-     * \parm nodeID is the identifer of the node
+     * \param name is the string to be passed through the communication channel
+     * \param address is the address of the destination
+     * \param peers are the number of peers involved in the communication
+     * \param transp is the transport for the communication
+     * \param nodeID is the identifer of the node
      *
      * \return The status of \p com.init() method.
      */
@@ -535,12 +519,12 @@ public:
      *
      * It initializes all the output communication channels.
      *
-     * \parm name is the string to be sent
-     * \parm address is the address of the destination
-     * \parm peers are the number of peers involve in the communication
-     * \parm transp is the transport address
-     * \pame nodeId is the identifier of the node
-     * \parm cbk is the callback
+     * \param name is the string to be sent
+     * \param address is the address of the destination
+     * \param peers are the number of peers involve in the communication
+     * \param transp is the transport address
+     * \param nodeId is the identifier of the node
+     * \param cbk is the callback
      *
      * \return The status of \p comOut.init() method.
      */
@@ -559,11 +543,6 @@ public:
 protected:
     CommImplOut comOut;
 };
-
-/*!
- *  @}
- *  \endlink
- */
 
 } // namespace ff
 

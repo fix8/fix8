@@ -4,13 +4,10 @@
 #define FF_QUEUE_HPP
 
 /*!
- *
- * \link
  * \file ff_queue.hpp
- * \ingroup streaming_network_simple_shared_memory
+ * \ingroup aux_classes
  *
- * \brief TODO
- *
+ * \brief Experimental. Not currently used. 
  *
  */
 /* ***************************************************************************
@@ -54,9 +51,6 @@
 #define CACHE_LINE_SIZE 128
 #endif
 
-/**
- * TODO
- */
 
 INLINE void* aligned_malloc(size_t sz)
 {
@@ -66,26 +60,19 @@ INLINE void* aligned_malloc(size_t sz)
     return mem;
 }
 
-/**
- * TODO
- */
 INLINE void aligned_free(void* mem)
 {
     free(mem);
 }
 
-/**
- * TODO
- */
+
 INLINE void atomic_addr_store_release(void* volatile* addr, void* val)
 {
     __asm __volatile ("" ::: "memory");
     addr[0] = val;
 }
 
-/**
- * TODO
- */
+
 INLINE void* atomic_addr_load_acquire(void* volatile* addr)
 {
     void* val;
@@ -94,21 +81,10 @@ INLINE void* atomic_addr_load_acquire(void* volatile* addr)
     return val;
 }
 
-/*!
- * \class ff_queue
- * \ingroup streaming_network_simple_shared_memory
- *
- * TODO
- *
- * This class is defined in ff_queue.hpp
- *
- */
 class ff_queue
 {
 public:
-    /**
-     * Constructor
-     */
+
     ff_queue (size_t bucket_size, size_t max_bucket_count)
         : bucket_size_ (bucket_size)
         , max_bucket_count_ (max_bucket_count)
@@ -125,9 +101,7 @@ public:
         pad_[0] = 0;
     }
 
-    /**
-     * Destructor
-     */
+
     ~ff_queue ()
     {
         bucket_t* bucket = last_bucket_;
@@ -139,11 +113,6 @@ public:
         }
     }
 
-    /**
-     * TODO
-     *
-     * \return TODO
-     */
     char* enqueue_prepare (size_t sz)
     {
         assert(((uintptr_t)tail_pos_ % sizeof(void*)) == 0);
@@ -159,11 +128,6 @@ public:
         }
     }
 
-    /**
-     *
-     * TODO
-     *
-     */
     void enqueue_commit ()
     {
         *(char* volatile*)tail_next_ = (char*)1;
@@ -171,11 +135,7 @@ public:
         tail_pos_ = tail_next_;
     }
 
-    /**
-     * TODO
-     *
-     * \return TODO
-     */
+
     char* dequeue_prepare ()
     {
         assert(((uintptr_t)head_pos_ % sizeof(void*)) == 0);
@@ -196,10 +156,7 @@ public:
         }
     }
 
-    /**
-     * TODO
-     *
-     */
+ 
     void dequeue_commit ()
     {
         char* next = *(char* volatile*)head_pos_;
@@ -228,9 +185,7 @@ private:
     size_t const                max_bucket_count_;
     size_t                      bucket_count_;
 
-    /**
-     * TODO
-     */
+
     bucket_t* alloc_bucket (size_t sz)
     {
         bucket_t* bucket = (bucket_t*)aligned_malloc(sizeof(bucket_t) + sz);
@@ -242,9 +197,6 @@ private:
         return bucket;
     }
 
-    /**
-     * TODO
-     */
 
     NOINLINE
     char* enqueue_prepare_slow (size_t sz)

@@ -2,11 +2,15 @@
 
 /*!
  *  \file gt.hpp
- *  \ingroup streaming_network_arbitrary_shared_memory
+ *  \ingroup building_blocks
  *
- *  \brief It Contains the \p ff_gatherer class and methods which are used to model the \a
+ *  \brief Farm Collector (it is not a ff_node)
+ *
+ * It Contains the \p ff_gatherer class and methods which are used to model the \a
  *  Collector node, which is optionally used to gather tasks coming from
  *  workers.
+ *
+ * \todo Documentation to be rewritten. To be substituted with ff_minode?
  */
 
 /* ***************************************************************************
@@ -31,7 +35,7 @@
 #ifndef FF_GT_HPP
 #define FF_GT_HPP
 
-#include <iostream>
+#include <iosfwd>
 #include <deque>
 #include <fix8/ff/svector.hpp>
 #include <fix8/ff/utils.hpp>
@@ -39,15 +43,10 @@
 
 namespace ff {
 
-/*!
- *  \ingroup streaming_network_arbitrary_shared_memory
- *
- *  @{
- */
 
 /*!
  *  \class ff_gatherer
- *  \ingroup streaming_network_arbitrary_shared_memory
+ *  \ingroup building_blocks
  *
  *  \brief A class representing the \a Collector node in a \a Farm skeleton.
  *
@@ -68,11 +67,78 @@ namespace ff {
 class ff_gatherer: public ff_thread {
 
     template <typename T1, typename T2>  friend class ff_farm;
+    friend class ff_ofarm;
     friend class ff_pipeline;
+    friend class ff_minode;
 public:
     enum {TICKS2WAIT=5000};
 
 protected:
+
+    inline void get_done(int id) {
+        pthread_mutex_lock(&workers[id]->get_prod_m());
+        if ((workers[id]->get_prod_counter()).load() >= workers[id]->get_out_buffer()->buffersize()) {
+            pthread_cond_signal(&workers[id]->get_prod_c());
+        }
+        --(workers[id]->get_prod_counter());
+        pthread_mutex_unlock(&workers[id]->get_prod_m());
+        --cons_counter;
+    }
+
+    inline void push_done() {
+        pthread_mutex_lock(p_cons_m);
+        if ((*p_cons_counter).load() == 0) {
+            pthread_cond_signal(p_cons_c);
+        }
+        ++(*p_cons_counter);
+        pthread_mutex_unlock(p_cons_m);
+        ++prod_counter;
+    }
+
+    inline bool init_input_blocking(pthread_mutex_t   *&m,
+                                    pthread_cond_t    *&c,
+                                    std::atomic_ulong *&counter) {
+        if (cons_counter.load() == (unsigned long)-1) {
+            if (pthread_mutex_init(&cons_m, NULL) != 0) return false;
+            if (pthread_cond_init(&cons_c, NULL) != 0) {
+                pthread_mutex_destroy(&cons_m);
+                return false;
+            }
+            cons_counter.store(0);
+        }
+        m = &cons_m,  c = &cons_c, counter = &cons_counter;
+        return true;
+    }
+    inline void set_input_blocking(pthread_mutex_t   *&m,
+                                   pthread_cond_t    *&c,
+                                   std::atomic_ulong *&counter) {
+        assert(1==0);
+    }
+
+    // producer
+    inline bool init_output_blocking(pthread_mutex_t   *&m,
+                                     pthread_cond_t    *&c,
+                                     std::atomic_ulong *&counter) {
+        if (prod_counter.load() == (unsigned long)-1) {
+            if (pthread_mutex_init(&prod_m, NULL) != 0) return false;
+            if (pthread_cond_init(&prod_c, NULL) != 0) {
+                pthread_mutex_destroy(&prod_m);
+                return false;
+            }
+            prod_counter.store(0);
+        }
+        m = &prod_m, c = &prod_c, counter = &prod_counter;
+        return true;
+    }
+    inline void set_output_blocking(pthread_mutex_t   *&m,
+                                    pthread_cond_t    *&c,
+                                    std::atomic_ulong *&counter) {
+        p_cons_m = m, p_cons_c = c, p_cons_counter = counter;
+    }
+
+    virtual inline pthread_mutex_t   &get_prod_m()       { return prod_m;}
+    virtual inline pthread_cond_t    &get_prod_c()       { return prod_c;}
+    virtual inline std::atomic_ulong &get_prod_counter() { return prod_counter;}
 
     /**
      * \brief Selects a worker.
@@ -83,7 +149,7 @@ protected:
      * \return The next worker to be selected.
      *
      */
-    virtual inline int selectworker() {
+    virtual inline ssize_t selectworker() {
         do
             nextr = (nextr+1) % running;
         while(offline[nextr]);
@@ -110,9 +176,14 @@ protected:
      * It is a virutal function which defines the number of ticks to be waited.
      *
      */
-    virtual inline void losetime_out() {
-        FFTRACE(lostpushticks+=TICKS2WAIT;++pushwait);
-        ticks_wait(TICKS2WAIT);
+    virtual inline void losetime_out(unsigned long ticks=TICKS2WAIT) {
+        FFTRACE(lostpushticks+=ticks;++pushwait);
+#if defined(SPIN_USE_PAUSE)
+        const long n = (long)ticks/2000;
+        for(int i=0;i<=n;++i) PAUSE();
+#else
+        ticks_wait(ticks);
+#endif /* SPIN_USE_PAUSE */
     }
 
     /**
@@ -121,9 +192,14 @@ protected:
      * It is a virutal function which defines the number of ticks to be waited.
      *
      */
-    virtual inline void losetime_in() {
-        FFTRACE(lostpopticks+=TICKS2WAIT;++popwait);
-        ticks_wait(TICKS2WAIT);
+    virtual inline void losetime_in(unsigned long ticks=TICKS2WAIT) {
+        FFTRACE(lostpopticks+=ticks;++popwait);
+#if defined(SPIN_USE_PAUSE)
+        const long n = (long)ticks/2000;
+        for(int i=0;i<=n;++i) PAUSE();
+#else
+        ticks_wait(ticks);
+#endif /* SPIN_USE_PAUSE */
     }
 
     /**
@@ -136,20 +212,27 @@ protected:
      * \return It returns the workers with a taks if successful. Otherwise -1
      * is returned.
      */
-    virtual int gather_task(void ** task) {
-        register unsigned int cnt;
+    virtual ssize_t gather_task(void ** task) {
+        unsigned int cnt;
         do {
             cnt=0;
             do {
                 nextr = selectworker();
-                assert(offline[nextr]==false);
-                if (workers[nextr]->get(task)) return nextr;
+                //assert(offline[nextr]==false);
+                if (workers[nextr]->get(task)) {
+                    if (blkvector[nextr]) get_done(nextr);
+                    return nextr;
+                }
                 else if (++cnt == ntentative()) break;
             } while(1);
-            losetime_in();
+            if (blocking_in) {
+                pthread_mutex_lock(&cons_m);
+                while(cons_counter.load() == 0) {
+                  pthread_cond_wait(&cons_c, &cons_m);
+                }
+                pthread_mutex_unlock(&cons_m);
+            } else losetime_in();
         } while(1);
-
-        // not reached
         return -1;
     }
 
@@ -158,27 +241,38 @@ protected:
      *
      * It pushes the tasks in a queue.
      */
-
-    void push(void * task) {
-        //register int cnt = 0;
+    inline bool push(void * task, unsigned long retry=((unsigned long)-1), unsigned long ticks=(TICKS2WAIT)) {
+        if (blocking_out) {
+            if (!filter) {
+                while(!buffer->push(task)) {
+                    pthread_mutex_lock(&prod_m);
+                    while(prod_counter.load() >= buffer->buffersize()) {
+                        pthread_cond_wait(&prod_c,&prod_m);
+                    }
+                    pthread_mutex_unlock(&prod_m);
+                }
+            } else
+                while(!filter->push(task)) {
+                    pthread_mutex_lock(&prod_m);
+                    while(prod_counter.load() >= filter->get_out_buffer()->buffersize()) {
+                        pthread_cond_wait(&prod_c,&prod_m);
+                    }
+                    pthread_mutex_unlock(&prod_m);
+                }
+            push_done();
+            return true;
+        }
         if (!filter) {
-            while (! buffer->push(task)) {
-                // if (ch->thxcore>1) {
-                // if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
-                //    else ticks_wait(TICKS2WAIT);
-                //} else
+            for(unsigned long i=0;i<retry;++i) {
+                if (buffer->push(task)) return true;
+                losetime_out(ticks);
+            }
+        } else
+            for(unsigned long i=0;i<retry;++i) {
+                if (filter->push(task)) return true;
                 losetime_out();
             }
-            return;
-        }
-
-        while (! filter->push(task)) {
-            // if (ch->thxcore>1) {
-            // if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
-            //    else ticks_wait(TICKS2WAIT);
-            //} else
-            losetime_out();
-        }
+        return false;
     }
 
     /**
@@ -190,7 +284,6 @@ protected:
      *
      */
     bool pop(void ** task) {
-        //register int cnt = 0;
         if (!get_out_buffer()) return false;
         while (! buffer->pop(task)) {
             losetime_in();
@@ -199,9 +292,9 @@ protected:
     }
 
     /**
-     * \brief Pop a tak from un unbounded queue.
+     * \brief Pop a task
      *
-     * It pops the task from an unbounded queue.
+     * It pops the task.
      *
      * \return The task popped from the buffer.
      */
@@ -209,6 +302,25 @@ protected:
         if (!get_out_buffer()) return false;
         return buffer->pop(task);
     }
+
+
+    static bool ff_send_out_collector(void * task,
+                                      unsigned long retry,
+                                      unsigned long ticks, void *obj) {
+        bool r = ((ff_gatherer *)obj)->push(task, retry, ticks);
+        if (task == BLK || task == NBLK) {
+            ((ff_gatherer *)obj)->blocking_out = (task==BLK);
+        }
+#if defined(FF_TASK_CALLBACK)
+        if (r) ((ff_gatherer *)obj)->callbackOut(obj);
+#endif
+        return r;
+    }
+
+#if defined(FF_TASK_CALLBACK)
+    void callbackIn(void  *t=NULL) { filter->callbackIn(t);  }
+    void callbackOut(void *t=NULL) { filter->callbackOut(t); }
+#endif
 
 public:
 
@@ -221,12 +333,20 @@ public:
         running(-1),max_nworkers(max_num_workers), nextr(0),
         neos(0),neosnofreeze(0),channelid(-1),
         filter(NULL), workers(max_nworkers), offline(max_nworkers), buffer(NULL),
-        skip1pop(false) {
+        skip1pop(false), blkvector(max_nworkers) {
         time_setzero(tstart);time_setzero(tstop);
         time_setzero(wtstart);time_setzero(wtstop);
         wttime=0;
+        cons_counter.store(-1);
+        prod_counter.store(-1);
+        p_cons_m = NULL, p_cons_c = NULL, p_cons_counter = NULL;
+
+        blocking_in = blocking_out = RUNTIME_MODE;
+
         FFTRACE(taskcnt=0;lostpushticks=0;pushwait=0;lostpopticks=0;popwait=0;ticksmin=(ticks)-1;ticksmax=0;tickstot=0);
     }
+
+    virtual ~ff_gatherer() {}
 
     /**
      * \brief Sets the filer
@@ -241,8 +361,15 @@ public:
             return -1;
         }
         filter = f;
+        if (filter) {
+            filter->registerCallback(ff_send_out_collector, this);
+            // setting the thread for the filter
+            filter->setThread(this);
+        }
         return 0;
     }
+
+    ff_node *get_filter() const { return (filter==(ff_node*)this)?NULL:filter; }
 
     /**
      * \brief Sets output buffer
@@ -268,6 +395,10 @@ public:
      * \return Number of worker threads
      */
     inline size_t getnworkers() const { return (size_t)(running-neos-neosnofreeze); }
+
+
+    inline size_t getrunning() const { return (size_t)running;}
+
 
     /**
      * \brief Get the number of workers
@@ -313,6 +444,7 @@ public:
         return 0;
     }
 
+
     /**
      * \brief Initializes the gatherer task.
      *
@@ -322,7 +454,7 @@ public:
      */
     virtual int svc_init() {
         gettimeofday(&tstart,NULL);
-        for(unsigned i=0;i<workers.size();++i)  offline[i]=false;
+        for(size_t i=0;i<workers.size();++i)  offline[i]=false;
         if (filter) return filter->svc_init();
         return 0;
     }
@@ -335,10 +467,16 @@ public:
      * \return It returns the task.
      */
     virtual void * svc(void *) {
-        void * ret  = (void*)FF_EOS;
+        void * ret  = EOS;
         void * task = NULL;
         bool outpresent  = (get_out_buffer() != NULL);
         bool skipfirstpop = skip1pop;
+        bool local_blocking_in = blocking_in;  // default behavior is nonblocking
+        size_t nblk = 0;
+        const size_t nw=getnworkers();
+        blkvector.resize(nw);
+        // init blocking vector
+        for(size_t i=0;i<nw;++i) blkvector[i]=blocking_in;        // FIX: this is the correct place ???
 
         // the following case is possible when the collector is a dnode
         if (!outpresent && filter && (filter->get_out_buffer()!=NULL)) {
@@ -353,7 +491,27 @@ public:
                 nextr = gather_task(&task);
             else skipfirstpop=false;
 
-            if (task == EOS) {
+            if (task == BLK || task == NBLK) {
+                const bool taskblocking = (task==BLK);
+                blkvector[nextr] = taskblocking;
+                if (local_blocking_in ^ taskblocking) { // reset
+                    nblk = 1;
+                    if (nblk == nw) {
+                        if (outpresent) push(task);
+                        blocking_out = blocking_in = taskblocking;
+                    }
+                    local_blocking_in = !local_blocking_in;
+                } else {
+                    if (++nblk == nw) {
+                        assert(taskblocking == local_blocking_in);
+                        if (outpresent) push(task);
+                        blocking_out = blocking_in = taskblocking;
+                        nblk=0;
+                    }
+                }
+                continue;
+            }
+            if ((task == EOS) || (task == EOSW)) {
                 if (filter) filter->eosnotify(workers[nextr]->get_my_id());
                 offline[nextr]=true;
                 ++neos;
@@ -367,11 +525,15 @@ public:
                 FFTRACE(++taskcnt);
                 if (filter)  {
                     channelid = workers[nextr]->get_my_id();
-                    FFTRACE(register ticks t0 = getticks());
+                    FFTRACE(ticks t0 = getticks());
+
+#if defined(FF_TASK_CALLBACK)
+                    if (filter) callbackIn(this);
+#endif
                     task = filter->svc(task);
 
 #if defined(TRACE_FASTFLOW)
-                    register ticks diff=(getticks()-t0);
+                    ticks diff=(getticks()-t0);
                     tickstot +=diff;
                     ticksmin=(std::min)(ticksmin,diff);
                     ticksmax=(std::max)(ticksmax,diff);
@@ -380,7 +542,7 @@ public:
 
                 // if the filter returns NULL we exit immediatly
                 if (task == GO_ON) continue;
-                if ((task == GO_OUT) || (task == EOS_NOFREEZE) ) {
+                if ((task == GO_OUT) || (task == EOS_NOFREEZE) || (task == EOSW) ) {
                     ret = task;
                     break;   // exiting from the loop without sending the task
                 }
@@ -389,14 +551,21 @@ public:
                     break;
                 }
                 if (outpresent) push(task);
+                if (task == BLK || task == NBLK) blocking_out = (task == BLK);
+#if defined(FF_TASK_CALLBACK)
+                else
+                    if (filter) callbackOut(this);
+#endif
             }
         } while((neos<(size_t)running) && (neosnofreeze<(size_t)running));
 
-        if (outpresent && (ret != GO_OUT && ret != EOS_NOFREEZE)) {
+        // GO_OUT, EOS_NOFREEZE and EOSW are not propagated !
+        if (outpresent && (ret == EOS)) {
             // push EOS
             task = ret;
             push(task);
         }
+        if (ret == EOSW) ret = EOS; // EOSW is like an EOS but it is not propagated
 
         gettimeofday(&wtstop,NULL);
         wttime+=diffmsec(wtstop,wtstart);
@@ -453,22 +622,35 @@ public:
     virtual int all_gather(void *task, void **V) {
         V[channelid]=task;
         size_t nw=getnworkers();
-        svector<fix8/ff_node*> _workers(nw);
+        svector<ff_node*> _workers(nw);
         for(ssize_t i=0;i<running;++i)
             if (!offline[i]) _workers.push_back(workers[i]);
-        svector<int> retry(nw);
+        svector<size_t> retry(nw);
 
-        for(register size_t i=0;i<nw;++i) {
-            if(i!=(size_t)channelid && !_workers[i]->get(&V[i]))
-                retry.push_back(i);
+        for(size_t i=0;i<nw;++i) {
+            if(i!=(size_t)channelid) {
+                if (!_workers[i]->get(&V[i])) {
+                    retry.push_back(i);
+                }
+                else if (blkvector[i])  get_done(i);
+            }
         }
         while(retry.size()) {
             channelid = retry.back();
-            if(_workers[channelid]->get(&V[channelid]))
+            if(_workers[channelid]->get(&V[channelid])) {
+                if (blkvector[channelid]) get_done(channelid);
                 retry.pop_back();
-            else losetime_in();
+            }
+            else {
+                if (blocking_in) {
+                    pthread_mutex_lock(&cons_m);
+                    while(cons_counter.load() == 0)
+                        pthread_cond_wait(&cons_c, &cons_m);
+                    pthread_mutex_unlock(&cons_m);
+                } else losetime_in();
+            }
         }
-        for(register size_t i=0;i<nw;++i)
+        for(size_t i=0;i<nw;++i)
             if (V[i] == EOS || V[i] == EOS_NOFREEZE)
                 return -1;
         FFTRACE(taskcnt+=nw-1);
@@ -484,7 +666,7 @@ public:
         assert(running==-1);
         if (nw == -1 || (size_t)nw > workers.size()) running = workers.size();
         else running = nw;
-        ff_thread::thaw(_freeze); // NOTE:start scheduler first
+        ff_thread::thaw(_freeze);
     }
 
     /**
@@ -522,6 +704,7 @@ public:
     virtual const struct timeval & getwstartime() const { return wtstart;}
     virtual const struct timeval & getwstoptime() const { return wtstop;}
 
+
 #if defined(TRACE_FASTFLOW)
     /**
      * \brief The trace of FastFlow
@@ -537,6 +720,13 @@ public:
             << "  n. push lost  : " << pushwait  << " (ticks=" << lostpushticks << ")" << "\n"
             << "  n. pop lost   : " << popwait   << " (ticks=" << lostpopticks  << ")" << "\n";
     }
+
+    virtual double getworktime() const { return wttime; }
+    virtual size_t getnumtask()  const { return taskcnt; }
+    virtual ticks  getsvcticks() const { return tickstot; }
+    virtual size_t getpushlost() const { return pushwait;}
+    virtual size_t getpoplost()  const { return popwait; }
+
 #endif
 
 private:
@@ -549,7 +739,7 @@ private:
     ssize_t           channelid;
 
     ff_node         * filter;
-    svector<fix8/ff_node*> workers;
+    svector<ff_node*> workers;
     svector<bool>     offline;
     FFBUFFER        * buffer;
     bool              skip1pop;
@@ -559,6 +749,27 @@ private:
     struct timeval wtstart;
     struct timeval wtstop;
     double wttime;
+
+protected:
+
+    // for the input queue
+    pthread_mutex_t    cons_m;
+    pthread_cond_t     cons_c;
+    std::atomic_ulong  cons_counter;
+
+    // for the output queue
+    pthread_mutex_t    prod_m;
+    pthread_cond_t     prod_c;
+    std::atomic_ulong  prod_counter;
+
+    // for synchronizing with the next multi-input stage
+    pthread_mutex_t   *p_cons_m;
+    pthread_cond_t    *p_cons_c;
+    std::atomic_ulong *p_cons_counter;
+
+    bool               blocking_in;
+    bool               blocking_out;
+    svector<bool>      blkvector;
 
 #if defined(TRACE_FASTFLOW)
     unsigned long taskcnt;
@@ -572,11 +783,6 @@ private:
 #endif
 };
 
-/*!
- *  @}
- *  \endlink
- *
- */
 
 } // namespace ff
 

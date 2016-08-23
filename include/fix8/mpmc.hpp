@@ -52,7 +52,7 @@ template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T
 
 # include <fix8/ff/allocator.hpp>
 # include <fix8/ff/buffer.hpp>
-# include <fix8/ff/MPMCqueues.hpp>
+# include <fix8/ff/mpmc/MPMCqueues.hpp>
 # include <sched.h>
 
 // std wrappers for ff

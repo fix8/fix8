@@ -367,14 +367,20 @@ application_call:
 			slout_fatal << e.what() << " - will logoff";
 			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
+				do_state_change(States::st_session_terminated);
 				send(generate_logout(e.what()), true, 0, true); // so it won't increment
 				do_state_change(States::st_logoff_sent);
+			}
+			if (_loginParameters._reliable)
+			{
+				slout_debug << "rethrowing ...";
+				throw;
 			}
 			stop();
 		}
 		else
 		{
-			slout_error << e.what() << " - message rejected";
+			slout_error << e.what() << " - inbound message rejected";
 			handle_outbound_reject(seqnum, msg, e.what());
 			++_next_receive_seq;
 			if (_plogger && _plogger->has_flag(Logger::inbound))
@@ -455,6 +461,11 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
+	if (_state == States::st_continuous)
+	{
+		send(generate_reject(seqnum, "Already logged on"), msg->get_msgtype().c_str());
+		return true;
+	}
 	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
 	sender_comp_id sci; // so this should be our tci
@@ -650,10 +661,24 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		begin_seq_num begin;
 		end_seq_num end;
 
-		if (!_persist || !msg->get(begin) || !msg->get(end))
-			send(generate_sequence_reset(_next_send_seq + 1, true));
-		else if ((begin() > end() && end()) || begin() == 0)
-			handle_outbound_reject(seqnum, msg, "Invalid begin or end resend seqnum");
+		if (!msg->get(begin))
+		{
+			slout_warn << "handle_resend_request: can't obtain BeginSeqNo from request";
+		}
+		if (!msg->get(end))
+		{
+			slout_warn << "handle_resend_request: can't obtain EndSeqNo from request";
+		}
+
+		if ((begin() > end() && end()) || begin() == 0)
+			handle_outbound_reject(seqnum, msg, "Invalid resend range: Begin > End or Begin = 0");
+		else if (!_persist)
+		{
+			const int nxt(static_cast<int>(_next_send_seq)), nseq(begin() >= nxt ? begin() + 1 : nxt);
+			send(generate_sequence_reset(nseq, true), true, begin());
+			_next_send_seq = nseq;
+			slout_debug << "handle_resend_request scenario #" << (nseq == nxt ? 7 : 8);
+		}
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
@@ -661,6 +686,10 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 			//f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // no no nanette!
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
+	}
+	else
+	{
+		slout_warn << "resend request received during an existing resend sequence";
 	}
 
 	return true;
@@ -673,6 +702,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 
 	if (rctx._no_more_records)
 	{
+		/*
 		if (rctx._end)
 		{
 			_next_send_seq = rctx._interrupted_seqnum - 1;
@@ -685,6 +715,23 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 			send(generate_sequence_reset(rctx._interrupted_seqnum, true), true, rctx._begin);
 			//cout << "#4" << endl;
 		}
+		*/
+		if (!rctx._last) // start to infinity requested
+		{
+			// handle case where requested seq is greater than current last sent seq (interrupted)
+			const unsigned nseq(rctx._begin >= rctx._interrupted_seqnum ? rctx._begin + 1 : rctx._interrupted_seqnum);
+			send(generate_sequence_reset(nseq, true), true, rctx._begin);
+			_next_send_seq = nseq;
+			slout_debug << "retrans_callback scenario #" << (nseq == rctx._interrupted_seqnum ? 4 : 5) << ' ' << rctx;
+		}
+		else // range requested // was: if (rctx._end)
+		{
+			// handle case where requested seq is greater than current last sent seq (interrupted)
+			const unsigned nseq(rctx._last + 1 >= rctx._interrupted_seqnum ? rctx._last + 2 : rctx._interrupted_seqnum);
+			send(generate_sequence_reset(nseq, true), true, rctx._last + 1);
+			_next_send_seq = nseq;
+			slout_debug << "retrans_callback scenario #" << (nseq == rctx._interrupted_seqnum ? 1 : 6) << ' ' << rctx;
+		}
 		do_state_change(States::st_continuous);
 		return true;
 	}
@@ -694,7 +741,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (rctx._last + 1 < with.first)
 		{
 			send(generate_sequence_reset(with.first, true), true, _next_send_seq);
-			//cout << "#2" << endl;
+			slout_debug << "retrans_callback scenario #2, " << rctx;
 		}
 	}
 	else
@@ -702,7 +749,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (with.first > rctx._begin)
 		{
 			send(generate_sequence_reset(with.first, true));
-			//cout << "#3" << endl;
+			slout_debug << "retrans_callback scenario #3, " << rctx;
 		}
 	}
 

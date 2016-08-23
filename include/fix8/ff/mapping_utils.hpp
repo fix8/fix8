@@ -1,15 +1,13 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- *  \link
+ *
  *  \file mapping_utils.hpp
- *  \ingroup streaming_network_arbitrary_shared_memory
+ *  \ingroup aux_classes
  *
- *  \brief This file contains utilities for thread pinning to cores and thread
- *  mapping.
+ *  \brief This file contains utilities for plaform inspection and thread pinning
  *
- *  This file provides support for thread pinning and mapping at linux and
- *  MacOS.
+ * Platform dependent code. Not really possible currently port it to plain C++11
  *
  */
 
@@ -43,10 +41,12 @@
 #define FF_MAPPING_UTILS_HPP
 
 
-#include <iostream>
+#include <iosfwd>
 #include <errno.h>
 #include <fix8/ff/config.hpp>
+#include <fix8/ff/utils.hpp>
 #if defined(__linux__)
+#include <sched.h>
 #include <sys/types.h>
 #include <sys/resource.h>
 #include <asm/unistd.h>
@@ -54,6 +54,14 @@
 #include <unistd.h>
 #define gettid() syscall(__NR_gettid)
 #elif defined(__APPLE__)
+//#define _DARWIN_C_SOURCE
+
+// They are needed - why?
+typedef unsigned long u_long;
+typedef unsigned int u_int;
+typedef unsigned char u_char;
+typedef unsigned short u_short;
+
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <sys/syscall.h>
@@ -62,11 +70,14 @@
 #include <mach/thread_policy.h>
 // If you don't include mach/mach.h, it doesn't work.
 // In theory mach/thread_policy.h should be enough
-#elif (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+#elif defined(_WIN32)
 #include <fix8/ff/platforms/platform.h>
 //extern "C" {
 //#include <Powrprof.h>
 //}
+#endif
+#if defined(__APPLE__) && MAC_OS_X_HAS_AFFINITY
+#include<vector>
 #endif
 
 /**
@@ -79,14 +90,14 @@
  *  negative vlue is returned.
  *
  */
-static inline long ff_getThreadID() {
+static inline size_t ff_getThreadID() {
 #if (defined(__GNUC__) && defined(__linux))
     return  gettid();
 #elif defined(__APPLE__) && MAC_OS_X_HAS_AFFINITY
-    uint64_t tid;
-    pthread_threadid_np(NULL, &tid);
-    return (long) tid; // > 10.6 only
-#elif  (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+    //uint64_t tid;
+    // pthread_getthreadid_np(NULL, &tid); // MA: for some reasons does nto works (it was working)
+    //return (long) tid; // > 10.6 only
+#elif defined(_WIN32)
     return GetCurrentThreadId();
 #endif
     return -1;
@@ -115,7 +126,7 @@ static inline unsigned long ff_getCpuFreq() {
     if (sysctlbyname("hw.cpufrequency", &t, &len, NULL, 0) != 0) {
         perror("sysctl");
     }
-#elif (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+#elif defined(_WIN32)
 //SYSTEM_POWER_CAPABILITIES pow;
 //GetPwrCapabilities(&pow);
 #else
@@ -133,18 +144,20 @@ static inline unsigned long ff_getCpuFreq() {
  *
  *  \return An integer value showing the number of cores.
  */
-static inline int ff_numCores() {
-    int  n=-1;
+static inline ssize_t ff_numCores() {
+    ssize_t  n=-1;
 #if defined(__linux__)
     FILE       *f;
     f = popen("cat /proc/cpuinfo |grep processor | wc -l", "r");
-    if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
+    if (fscanf(f, "%ld", &n) == EOF) { pclose(f); return n;}
     pclose(f);
 #elif defined(__APPLE__) // BSD
-    size_t len = 4;
-    if (sysctlbyname("hw.ncpu", &n, &len, NULL, 0) == -1)
+    int nn;
+    size_t len = sizeof(nn);
+    if (sysctlbyname("hw.logicalcpu", &nn, &len, NULL, 0) == -1)
         perror("sysctl");
-#elif  (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+    n = nn;
+#elif defined(_WIN32)
     SYSTEM_INFO sysinfo;
     GetSystemInfo( &sysinfo );
     n = sysinfo.dwNumberOfProcessors;
@@ -163,16 +176,29 @@ static inline int ff_numCores() {
  *
  *  \return An integer value showing the number of cores.
  */
-static inline int ff_realNumCores() {
-    int  n=-1;
-#if defined(__linux__)
-    FILE       *f;
-    f = popen("cat /proc/cpuinfo|egrep 'core id|physical id'|tr -d '\n'|sed 's/physical/\\nphysical/g'|grep -v ^$|sort|uniq|wc -l", "r");
-    if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
-    pclose(f);
+static inline ssize_t ff_realNumCores() {
+    ssize_t  n=-1;
+#if defined(_WIN32)
+	n = 2; // Not yet implemented
 #else
-#warning "ff_realNumCores not supported on this platform"
+#if defined(__linux__)
+    char inspect[]="cat /proc/cpuinfo|egrep 'core id|physical id'|tr -d '\n'|sed 's/physical/\\nphysical/g'|grep -v ^$|sort|uniq|wc -l";
+#elif defined (__APPLE__)
+    char inspect[]="sysctl hw.physicalcpu | awk '{print $2}'";
+#else
+    char inspect[]="";
+    n=1;
+#pragma message ("ff_realNumCores not supported on this platform")
 #endif
+    FILE       *f;
+    f = popen(inspect, "r");
+    if (f) {
+        if (fscanf(f, "%ld", &n) == EOF) {
+            perror("fscanf");
+        }
+        pclose(f);
+    } else perror("popen");
+#endif // _WIN32
     return n;
 }
 
@@ -183,16 +209,29 @@ static inline int ff_realNumCores() {
  *
  *  \return An integer value showing the number of sockets.
  */
-static inline int ff_numSockets() {
-    int  n=-1;
-#if defined(__linux__)
-    FILE       *f;
-    f = popen("cat /proc/cpuinfo|grep 'physical id'|sort|uniq|wc -l", "r");
-    if (fscanf(f, "%d", &n) == EOF) { pclose(f); return n;}
-    pclose(f);
+static inline ssize_t ff_numSockets() {
+   ssize_t  n=-1;
+#if defined(_WIN32)
+   n = 1;
 #else
-#warning "ff_numSockets not supported on this platform"
+#if defined(__linux__)
+    char inspect[]="cat /proc/cpuinfo|grep 'physical id'|sort|uniq|wc -l";
+#elif defined (__APPLE__)
+    char inspect[]="sysctl hw.packages | awk '{print $2}'";
+#else
+    char inspect[]="";
+    n=1;
+#pragma message ("ff_realNumCores not supported on this platform")
 #endif
+    FILE       *f;
+    f = popen(inspect, "r");
+    if (f) {
+        if (fscanf(f, "%ld", &n) == EOF) {
+            perror("fscanf");
+        }
+        pclose(f);
+    } else perror("popen");
+#endif // _WIN32
     return n;
 }
 
@@ -213,23 +252,23 @@ static inline int ff_numSockets() {
  * \return An integer value showing the priority of the scheduling policy.
  *
  */
-static inline int ff_setPriority(int priority_level=0) {
-    int ret=0;
+static inline ssize_t ff_setPriority(ssize_t priority_level=0) {
+    ssize_t ret=0;
 #if (defined(__GNUC__) && defined(__linux))
     //if (priority_level) {
-        if (setpriority(PRIO_PROCESS, gettid(),priority_level) != 0) {
+        if (setpriority(PRIO_PROCESS, gettid(), priority_level) != 0) {
             perror("setpriority:");
             ret = EINVAL;
         }
     //}
 #elif defined(__APPLE__)
-    if (setpriority(PRIO_DARWIN_THREAD, 0 /*myself */ ,priority_level) != 0) {
+    if (setpriority(PRIO_PROCESS, 0 /*myself */ ,priority_level) != 0) {
             perror("setpriority:");
             ret = EINVAL;
     }
-#elif  (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
-    int pri = (priority_level + 20)/10;
-    int subpri = ((priority_level + 20)%10)/2;
+#elif defined(_WIN32)
+    ssize_t pri = (priority_level + 20)/10;
+    ssize_t subpri = ((priority_level + 20)%10)/2;
     switch (pri) {
         case 0: ret = !(SetPriorityClass(GetCurrentThread(),HIGH_PRIORITY_CLASS));
             break;
@@ -271,7 +310,7 @@ if (ret!=0) perror("ff_setPriority");
  *  \return An integer value showing the ID of the core. If the ID of the core
  *  is not found, then -1 is returned.
  */
-static inline int ff_getMyCore() {
+static inline ssize_t ff_getMyCore() {
 #if defined(__linux__) && defined(CPU_SET)
     cpu_set_t mask;
     CPU_ZERO(&mask);
@@ -289,20 +328,19 @@ static inline int ff_getMyCore() {
     thread_policy_get(mach_thread_self(), THREAD_AFFINITY_POLICY,
                       (integer_t*) &mypolicy,
                       &thread_info_count, &get_default);
-    int res = mypolicy.affinity_tag;
+    ssize_t res = mypolicy.affinity_tag;
     return(res);
 #else
 #if __GNUC__
 #warning "ff_getMyCpu not supported"
 #else
-std::cerr << "---> ff_getMyCpu not supported\n";
 #pragma message( "ff_getMyCpu not supported")
 #endif
 #endif
 return -1;
 }
 // NOTE: this function will be discarded, please use ff_getMyCore() instead
-static inline int ff_getMyCpu() { return ff_getMyCore(); }
+static inline ssize_t ff_getMyCpu() { return ff_getMyCore(); }
 
 /**
  *  \brief Maps the calling thread to the given CPU.
@@ -316,7 +354,7 @@ static inline int ff_getMyCpu() { return ff_getMyCore(); }
  *  \return An integet value showing the priority level is returned if
  *  successful. Otherwise \p EINVAL is returned.
  */
-static inline int ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
+static inline ssize_t ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
     if (cpu_id > ff_numCores()) return EINVAL;
 #if defined(__linux__) && defined(CPU_SET)
     cpu_set_t mask;
@@ -331,13 +369,13 @@ static inline int ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
     // tag for the set. Cores under the same L2 cache are not distinguished.
     // Should be called before running the thread.
 #define CACHE_LEVELS 3
-    #define CACHE_L2 2
+#define CACHE_L2     2
     size_t len;
 
     if (sysctlbyname("hw.cacheconfig",NULL, &len, NULL, 0) != 0) {
         perror("sysctl");
     } else {
-      int64_t cacheconfig[len];
+        std::vector<int64_t> cacheconfig(len);
       if (sysctlbyname("hw.cacheconfig", &cacheconfig[0], &len, NULL, 0) != 0)
         perror("sysctl: unable to get hw.cacheconfig");
       else {
@@ -349,17 +387,16 @@ static inline int ff_mapThreadToCpu(int cpu_id, int priority_level=0) {
       // Define sets taking in account pinning is performed on L2
       mypolicy.affinity_tag = cpu_id/cacheconfig[CACHE_L2];
       if ( thread_policy_set(mach_thread_self(), THREAD_AFFINITY_POLICY, (integer_t*) &mypolicy, THREAD_AFFINITY_POLICY_COUNT) != KERN_SUCCESS ) {
-      std::cerr << "Setting affinity of thread ? (" << mach_thread_self() << ") failed!" << std::endl;
-      return EINVAL;
+          perror("thread_policy_set: unable to set affinity of thread");
+          return EINVAL;
       } // else {
       //   std::cerr << "Sucessfully set affinity of thread (" <<
       //   mach_thread_self() << ") to core " << cpu_id/cacheconfig[CACHE_L2] << "\n";
       // }
       }
    }
-
     return(ff_setPriority(priority_level));
-#elif (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+#elif defined(_WIN32)
     if (-1==SetThreadIdealProcessor(GetCurrentThread(),cpu_id)) {
         perror("ff_mapThreadToCpu:SetThreadIdealProcessor");
         return EINVAL;
@@ -462,9 +499,5 @@ static inline size_t cache_line_size() {
 #error Unrecognized platform
 #endif
 
-/*!
- * @}
- * \endlink
- */
 
 #endif /* FF_MAPPING_UTILS_HPP */

@@ -59,7 +59,8 @@ protected:
 	Session& _session;
 	ProcessModel _pmodel;
 	f8_thread_cancellation_token _cancellation_token;
-	f8_atomic<bool> _started;
+	volatile bool _started;
+	f8_mutex _start_mutex;
 
 private:
 	f8_thread<AsyncSocket> _thread;
@@ -96,8 +97,12 @@ public:
 	{
 		if (!_started)
 		{
-			_started = true;
-			_thread.start();
+			f8_scoped_lock guard(_start_mutex);
+			if (!_started)
+			{
+				_started = true;
+				_thread.start();
+			}
 		}
 		else
 		{
@@ -115,12 +120,12 @@ public:
 	    \return the socket */
 	Poco::Net::StreamSocket *socket() { return _sock; }
 
-	/*! Wait till processing thead has finished.
+	/*! Wait till processing thread has finished.
 		 \return 0 on success */
-	int join() { return _started ? _thread.join() : 0; }
+	int join() { return _thread.join(); }
 
 	/*! Obtain the thread cancellation token
-		 \return the token */
+		\return the token */
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
@@ -250,8 +255,8 @@ public:
 	/// Dtor.
 	virtual ~FIXReader()
 	{
-		//quit();
 		stop();
+		join();
 	}
 
 	/// Start the processing threads.
@@ -282,14 +287,25 @@ public:
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop()
 	{
-		if (_pmodel == pm_pipeline)
+		if (_started)
 		{
-			const f8String from;
-			_msg_queue.try_push(from);
-			_callback_thread.request_stop();
+			f8_scoped_lock guard(_start_mutex);
+			if (_started)
+			{
+				if (_pmodel == pm_pipeline)
+				{
+					const f8String from;
+					_msg_queue.try_push(from);
+					_callback_thread.request_stop();
+				}
+				if (_pmodel != pm_coro)
+					AsyncSocket<f8String>::request_stop();
+			}
 		}
-		if (_pmodel != pm_coro)
-			AsyncSocket<f8String>::request_stop();
+		else
+		{
+			glout_warn << "FIXReader: AsyncSocket already stopped.";
+		}
 	}
 
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
@@ -458,9 +474,20 @@ public:
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop()
 	{
-		_msg_queue.try_push(0);
-		if (_pmodel == pm_pipeline)
-			AsyncSocket::request_stop();
+		if (_started)
+		{
+			f8_scoped_lock guard(_start_mutex);
+			if (_started)
+			{
+				_msg_queue.try_push(0);
+				if (_pmodel == pm_pipeline)
+					AsyncSocket::request_stop();
+			}
+		}
+		else
+		{
+			glout_warn << "FIXWriter: AsyncSocket already stopped.";
+		}
 	}
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
@@ -515,7 +542,7 @@ public:
 		  _secured(secured) {}
 
 	/// Dtor.
-	virtual ~Connection() { _session.clear_connection(this); }
+	virtual ~Connection() { stop(); _session.clear_connection(this); }
 
 	/*! Get the role for this connection.
 	    \return the role */

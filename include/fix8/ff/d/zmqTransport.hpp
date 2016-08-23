@@ -18,15 +18,12 @@
  ****************************************************************************
  */
  
- /*! 
-  * \link 
+ /*
   * \file zmqTransport.hpp 
-  *  \ingroup streaming_network_simple_distributed_memory
+  *  \ingroup building_blocks
   *
   * \brief This file provides the definition of the external transport layer
   * based on ØMQ.
-  *
-  * TODO: Write a summary of the whole file.
   *
   */
 
@@ -47,17 +44,12 @@
 #include <deque>
 #include <algorithm>
 
-#include <zmq.hpp>
+#include "zmq.hpp"
 
 namespace ff {
 
-/*!
- *  \ingroup streaming_network_simple_distributed_memory
- *
- *  @{
- */
  
-/*! 
+/*
  * \class zmqTransportMsg_t
  *  \ingroup streaming_network_simple_distributed_memory
  *
@@ -73,25 +65,25 @@ namespace ff {
 
 class zmqTransportMsg_t: public zmq::message_t {
 public:
-    /**
+    /*
      * It provides the callback definition.
      */
     typedef void (msg_callback_t) (void *, void *);
 
-    /**
+    /*
      * \p HEADER_LENGTH is the enumberation of the number of bytes.
      */
     enum {HEADER_LENGTH=4}; // n. of bytes
 
 public:
-    /** 
+    /*
      * Constructor (1)
      *
      * It creates an empty ØMQ message.
      */
     inline zmqTransportMsg_t() {}
 
-    /** 
+    /*
      * Constructor (2)
      *
      * It creates a structured ØMQ message.
@@ -106,7 +98,7 @@ public:
                               zmq::message_t( const_cast<void*>(data), size, cb, arg )
                               { }
 
-    /**
+    /*
      * It initialises the message object (It is like the constructor but it
      * rebuilds the object from scratch using new values).
      *
@@ -119,7 +111,7 @@ public:
         zmq::message_t::rebuild( const_cast<void*>(data), size, cb, arg );
     }
 
-    /**
+    /*
      * It copies the message.
      *
      * \param msg is the reference to the 0MQ transport message.
@@ -128,7 +120,7 @@ public:
         zmq::message_t::copy(&msg);
     }
 
-    /**
+    /*
      * It retrieves the content of the message object.
      *
      * \return The contents of the message object.
@@ -137,7 +129,7 @@ public:
         return zmq::message_t::data();
     }
 
-    /**
+    /*
      * It retrieves the size in bytes of the content of the message object.
      *
      * \return The size of the contexts of the message in bytes.
@@ -147,7 +139,7 @@ public:
     }
 };
 
-/*! 
+/*
  * \class zmqTransport
  *  \ingroup streaming_network_simple_distributed_memory
  *
@@ -159,14 +151,14 @@ public:
 
 class zmqTransport {
 private:
-    /**
+    /*
      * \p NUM_IO_THREADS is the enumberation of the number of IO threads.
      */
     enum {NUM_IO_THREADS=1};
 
 protected:
 
-    /**
+    /*
      * It closes all existing connections.
      *
      * \return It returns 0 to show the successful closing of connection.
@@ -189,17 +181,17 @@ protected:
     }
 
 public:
-    /**
+    /*
      * It defines zmq::socket_t.
      */
     typedef zmq::socket_t endpoint_t;
 
-    /**
+    /*
      * It defines zmqTransportMsg_t.
      */
     typedef zmqTransportMsg_t msg_t;
 
-    /** 
+    /*
      *  It constructs a transport connection.
      *
      *  \param procId is the process (or thread) ID.
@@ -208,12 +200,12 @@ public:
         procId(procId),context(NULL) {
     };
 
-    /** 
+    /*
      * It closes the transport connection.
      */
     ~zmqTransport() { closeTransport(); }
 
-    /**
+    /*
      * It initializes the transport layer: creates a new ØMQ context and
      * cleans the list of active end-points.
      *
@@ -227,7 +219,7 @@ public:
         return 0;
     }
     
-    /** 
+    /*
      * It closes the transport layer, close all connections to any active
      * end-point and delete the existing context.
      *
@@ -240,7 +232,7 @@ public:
         return 0;
     }
 
-    /** 
+    /*
      * It creates a new socket and pushes it into the active sockets list.
      *
      * \param P is a flag to specify the role of the socket: if \p false, the
@@ -259,7 +251,7 @@ public:
         return s;
     }
     
-    /** 
+    /*
      * It deletes the socket pointed by \p s. It removes the
      * socket from the list of active sockets and destroys the socket.
      *
@@ -284,7 +276,7 @@ public:
         return -1;
     }
 
-    /** 
+    /*
      * \p It retrieves the process (or thread) ID.
      *
      * \return the process (or thread) ID
@@ -300,10 +292,6 @@ protected:
     std::deque<endpoint_t *> Socks;     // all active end-points (i.e. sockets)
 };
 
-/*!
- *  @}
- *  \endlink
- */
 
 } // namespace
 #endif /* FF_ZMQTRANSPORT_HPP */
