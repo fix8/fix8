@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -300,8 +300,13 @@ public:
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the retry count or 10 if not found */
-	unsigned get_retry_count(const XmlElement *from, const unsigned def=defaults::login_retries) const
-		{ return find_or_default(from, "login_retries", def); }
+	unsigned get_retry_count(const XmlElement *from, const int def=defaults::login_retries) const
+	{
+		const int rc(find_or_default(from, "login_retries", def));
+		if (rc < 0)
+			throw ConfigurationError("retry count must be >= 0");
+		return rc;
+	}
 
 	/*! Extract the tcp recv buffer size
 	  \param from xml entity to search

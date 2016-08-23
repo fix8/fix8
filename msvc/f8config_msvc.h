@@ -1,6 +1,6 @@
 #ifndef _INCLUDE_FIX__F_CONFIG_H
 #define _INCLUDE_FIX__F_CONFIG_H 1
- 
+
 /* include/fix8/f8config.h. Generated automatically at end of configure. */
 /* intermediate_config.h.  Generated from intermediate_config.h.in by configure.  */
 /* intermediate_config.h.in.  Generated from configure.ac by autoheader.  */
@@ -11,7 +11,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
 Lesser General Public License as  published by the Free Software Foundation, either version
@@ -825,6 +825,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define as `fork' if `vfork' does not work. */
 /* #undef vfork */
- 
+
 /* once: _INCLUDE_FIX__F_CONFIG_H */
 #endif
