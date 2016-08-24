@@ -71,8 +71,8 @@ clean-local:
 
 pkgincludedir = ${prefix}/include/fix8
 ffincdir = include/fix8/ff
-ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/atomic/*.h \
-								  ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h
+ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/platforms/*.hpp \
+			  ${ffincdir}/mpmc/asm/*.h ${ffincdir}/ocl/*.hpp ${ffincdir}/tpc/*.hpp ${ffincdir}/tpc/*.h ${ffincdir}/mpmc/*.hpp
 pkginclude_HEADERS = include/fix8/*.hpp include/fix8/f8config.h include/fix8/f8dll.h
 
 ffdir = ${prefix}/include/fix8/ff
@@ -104,7 +104,8 @@ INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
 	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(testdir)/run $(DESTDIR)$(schemadir)
-	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic $(DESTDIR)$(ffdir)/ocl
+	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/mpmc $(DESTDIR)$(ffdir)/mpmc/asm
+	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/ocl $(DESTDIR)$(ffdir)/tpc
 	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir) $(DESTDIR)$(contribdir) $(DESTDIR)$(exchangecontribdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(DESTDIR)$(schemadir)
@@ -112,9 +113,11 @@ install-data-local:
 	$(INSTALL_DATA) $(INSTALL_DATA_EXCHANGE_CONTRIB) $(DESTDIR)$(exchangecontribdir)
 	$(INSTALL_DATA) ${ffincdir}/*.hpp ${ffincdir}/*.h $(DESTDIR)$(ffdir)
 	$(INSTALL_DATA) ${ffincdir}/d/*.hpp $(DESTDIR)$(ffdir)/d
-	$(INSTALL_DATA) ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h $(DESTDIR)$(ffdir)/ocl
-	$(INSTALL_DATA) ${ffincdir}/platforms/*.h $(DESTDIR)$(ffdir)/platforms
-	$(INSTALL_DATA) ${ffincdir}/atomic/*.h $(DESTDIR)$(ffdir)/atomic
+	$(INSTALL_DATA) ${ffincdir}/platforms/*.hpp ${ffincdir}/platforms/*.h $(DESTDIR)$(ffdir)/platforms
+	$(INSTALL_DATA) ${ffincdir}/mpmc/*.hpp $(DESTDIR)$(ffdir)/mpmc
+	$(INSTALL_DATA) ${ffincdir}/mpmc/asm/*.h $(DESTDIR)$(ffdir)/mpmc/asm
+	$(INSTALL_DATA) ${ffincdir}/tpc/*.hpp ${ffincdir}/tpc/*.h $(DESTDIR)$(ffdir)/tpc
+	$(INSTALL_DATA) ${ffincdir}/ocl/*.hpp $(DESTDIR)$(ffdir)/ocl
 	@for manfile in $(PROCESS_MAN_PAGES) ; do \
 		$(xmltoman) $$manfile.xml | gzip > $$manfile.gz ; \
 		$(INSTALL_DATA) $$manfile.gz $(DESTDIR)$(fix8mandir); \
