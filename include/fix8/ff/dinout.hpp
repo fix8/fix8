@@ -22,8 +22,8 @@
  ****************************************************************************
  */
 
-#ifndef FF_DNODE_HPP
-#define FF_DNODE_HPP
+#ifndef FF_DINOUT_HPP
+#define FF_DINOUT_HPP
 
 #include <cstdlib>
 #include <fix8/ff/dnode.hpp>
@@ -33,25 +33,13 @@
 namespace ff {
 
 
-/*!
- *  \ingroup zmq_low_level
- *
- *  @{
- */
 
 /*!
- *  \class ff_dnode
+ *  \class ff_dinout
+ * \ingroup building_blocks
  *
- *  \brief A class representing the distributed version of \p ff_node.
+ *  \brief A \ref ff::ff_dnode serving both Input and Output to the network
  *
- *  A \p ff_dnode is actually a \p ff_node with an extra communication channel
- *  (<em>external channel</em>), which connects the edge-node of the graph with one
- *  or more edge-nodes of other FastFlow application graphs running on the same host
- *  or on different host(s).
- *
- *  It is implemented as a template: the template type \p CommImpl refers to
- *  the communication pattern that the programmer wishes to use to connect different
- *  \p ff_dnodes (i.e. unicast, broadcast, scatter, ondemand, fromAll, fromAny).
  */
 
 template <typename CommImplIn, typename CommImplOut>
@@ -78,15 +66,14 @@ protected:
     }
 
     /// Default constructor
-    ff_dnode():ff_node(),skipdnode(true) {}
+    ff_dinout():ff_node(),skipdnode(true) {}
 
     /// Destructor: closes all connections.
-    virtual ~ff_dnode() {
+    virtual ~ff_dinout() {
         com.close();
         delete com.getDescriptor();
     }
 
-    /** Override \p ff_node's \p push method */
     virtual inline bool push(void * ptr) {
         if (skipdnode || !P) return ff_node::push(ptr);
 
@@ -138,7 +125,7 @@ protected:
         return true;
     }
 
-    /** Override \p ff_node 's \p pop method */
+
     virtual inline bool pop(void ** ptr) {
         if (skipdnode || P) return ff_node::pop(ptr);
 
@@ -165,7 +152,7 @@ protected:
                 continue;
             }
             uint32_t len = *static_cast<uint32_t*>(hdr.getData());
-            register int ventry   = (sendingPeers==1)?0:sender;
+            int ventry   = (sendingPeers==1)?0:sender;
             prepare(v[ventry], len, sender);
             assert(v[ventry]->size() == len);
 
@@ -182,20 +169,7 @@ protected:
     }
 
 public:
-    /**
-     *  The \p ff_dnode::init method initializes the external channel.
-     *
-     *  \param name name of the channel
-     *  \param address the address where to listen or connect to
-     *  \param peers the number of peers
-     *  \param transp the transport layer to be used
-     *  \param p a flag saying whether the current \a dnode is the producer (\p p \p = \p true)
-     *               or the consumer (\p p \p = \p false) w.r.t. the communication pattern used
-     *  \param nodeId the ID of the node
-     *  \param cbk the callback function that will be called once when a message just sent
-     *                 is no longer in use by the run-time
-     *
-     */
+
     int initIn(const std::string& name, const std::string& address,
              const int peers, typename CommImpl::TransportImpl* const transp,
              const int nodeId=-1) {
@@ -207,11 +181,7 @@ public:
     // whereas the second prepare and the unmarshalling methods are used
     // by the Consumer (p=false in the init method).
 
-    /** Used to prepare (non contiguous) output messages
-     *  \param v is ...
-     *  \param ptr is ...
-     *  \param sender the message sender
-     */
+
     virtual void prepare(svector<iovec>& v, void* ptr, const int sender=-1) {
         struct iovec iov={ptr,sizeof(void*)};
         v.push_back(iov);
@@ -226,7 +196,7 @@ public:
     //
     //
 
-    /**
+    /*
      *  Used to give to the run-time a pool of messages on which
      *  input message frames will be received
      *  \param len the number of input messages expected
@@ -244,7 +214,7 @@ public:
         v = v2;
     }
 
-    /**
+    /*
      *  This method is called once, when all frames composing the message have been received
      *  by the run-time. Within that method, it is possible to convert or re-arrange
      *  all the frames back to their original data or object layout.
@@ -255,14 +225,14 @@ public:
         delete v[0];
     }
 
-    /**
+    /*
      * This methed can be used to pass an additional parameter (the 2nd one)
      * to the callback function. Typically it is called in the prepare method of the
      * producer.
      */
     void setCallbackArg(void* arg) { callbackArg.push_back(arg);}
 
-    /**
+    /*
      *  Runs the \p dnode as a stand-alone thread.\n
      *  Typically, it should not be called by application code unless you want to have just
      *  a sequential \p dnode
@@ -272,7 +242,7 @@ public:
     /// Waits the thread to finish
     int  wait() { return ff_node::wait(); }
 
-    /** jumps the first pop from the input queue or from the input
+    /* jumps the first pop from the input queue or from the input
      *  external channel. This is typically used in the first stage
      *  of a cyclic graph (e.g. the first stage of a torus pipeline)
      */
@@ -288,10 +258,6 @@ protected:
 template <typename CommImpl>
 dnode_cbk_t ff_dnode<CommImpl>::cb=0;
 
-/*!
- *  @}
- */
-
 } // namespace ff
 
-#endif /* FF_NODE_HPP */
+#endif /* FF_DINOUT_HPP */

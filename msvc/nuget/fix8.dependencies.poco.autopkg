@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = fix8.dependencies.poco;
-		version : 1.5.${RELEASE_DATE}.${RELEASE_REVISION};
+		version : 1.6.${RELEASE_DATE}.${RELEASE_REVISION};
 		title: FIX8 Poco dependency;
 		authors: {Applied Informatics};
 		owners: {Fix8, Sergey Sedreev};
@@ -22,13 +22,15 @@ nuget {
 	files {
 	
 		#defines {
-			POCO 	 = poco-develop\;
+			POCO 	   = vs2015\poco-1.6.1-all\;
+			POCO_VC120 = vs2015\poco-1.6.1-all\_vc120\;
+			POCO_VC140 = vs2015\poco-1.6.1-all\_vc140\;
 		}
 	
 		// grab all the files in the include folder
 		// the folder that contains all the .h files will 
 		// automatically get added to the Includes path.
-		include: { "${POCO}Foundation\include\**\*"; "${POCO}Util\include\**\*"; "${POCO}XML\include\**\*"; "${POCO}JSON\include\**\*"; "${POCO}Crypto\include\**\*"; "${POCO}Net\include\**\*"; "${POCO}NetSSL_OpenSSL\include\**\*"; };
+		include: { "${POCO}include\**\*" };
 
 		// Documents that we want to ship with the package. 
 		docs: {  "${POCO}doc\*" };
@@ -39,30 +41,52 @@ nuget {
 		//  	$(PlatformToolset) == v100 
 		//		$(Configuration) == Debug
 		[x64,v120,debug,desktop] { 
-			lib: { ${POCO}lib64\PocoCryptod.lib; ${POCO}lib64\PocoFoundationd.lib; ${POCO}lib64\PocoJSONd.lib; ${POCO}lib64\PocoNetd.lib; ${POCO}lib64\PocoNetSSLd.lib; ${POCO}lib64\PocoUtild.lib; ${POCO}lib64\PocoXMLd.lib; };
-			symbols: { ${POCO}bin64\PocoCrypto64d.pdb; ${POCO}bin64\PocoFoundation64d.pdb; ${POCO}bin64\PocoJSON64d.pdb; ${POCO}bin64\PocoNet64d.pdb; ${POCO}bin64\PocoNetSSL64d.pdb; ${POCO}bin64\PocoUtil64d.pdb; ${POCO}bin64\PocoXML64d.pdb; };
-			bin: { ${POCO}bin64\PocoCrypto64d.dll; ${POCO}bin64\PocoFoundation64d.dll; ${POCO}bin64\PocoJSON64d.dll; ${POCO}bin64\PocoNet64d.dll; ${POCO}bin64\PocoNetSSL64d.dll; ${POCO}bin64\PocoUtil64d.dll; ${POCO}bin64\PocoXML64d.dll; };
+			lib: { ${POCO_VC120}lib64\PocoCryptod.lib; ${POCO_VC120}lib64\PocoFoundationd.lib; ${POCO_VC120}lib64\PocoJSONd.lib; ${POCO_VC120}lib64\PocoNetd.lib; ${POCO_VC120}lib64\PocoNetSSLd.lib; ${POCO_VC120}lib64\PocoUtild.lib; ${POCO_VC120}lib64\PocoXMLd.lib; };
+			symbols: { ${POCO_VC120}bin64\PocoCrypto64d.pdb; ${POCO_VC120}bin64\PocoFoundation64d.pdb; ${POCO_VC120}bin64\PocoJSON64d.pdb; ${POCO_VC120}bin64\PocoNet64d.pdb; ${POCO_VC120}bin64\PocoNetSSL64d.pdb; ${POCO_VC120}bin64\PocoUtil64d.pdb; ${POCO_VC120}bin64\PocoXML64d.pdb; };
+			bin: { ${POCO_VC120}bin64\PocoCrypto64d.dll; ${POCO_VC120}bin64\PocoFoundation64d.dll; ${POCO_VC120}bin64\PocoJSON64d.dll; ${POCO_VC120}bin64\PocoNet64d.dll; ${POCO_VC120}bin64\PocoNetSSL64d.dll; ${POCO_VC120}bin64\PocoUtil64d.dll; ${POCO_VC120}bin64\PocoXML64d.dll; };
 		}
 		
 		[x64,v120,release,desktop] { 
-			lib: { ${POCO}lib64\PocoCrypto.lib; ${POCO}lib64\PocoFoundation.lib; ${POCO}lib64\PocoJSON.lib; ${POCO}lib64\PocoNet.lib; ${POCO}lib64\PocoNetSSL.lib; ${POCO}lib64\PocoUtil.lib; ${POCO}lib64\PocoXML.lib; };
-			bin: { ${POCO}bin64\PocoCrypto64.dll; ${POCO}bin64\PocoFoundation64.dll; ${POCO}bin64\PocoJSON64.dll; ${POCO}bin64\PocoNet64.dll; ${POCO}bin64\PocoNetSSL64.dll; ${POCO}bin64\PocoUtil64.dll; ${POCO}bin64\PocoXML64.dll; };
+			lib: { ${POCO_VC120}lib64\PocoCrypto.lib; ${POCO_VC120}lib64\PocoFoundation.lib; ${POCO_VC120}lib64\PocoJSON.lib; ${POCO_VC120}lib64\PocoNet.lib; ${POCO_VC120}lib64\PocoNetSSL.lib; ${POCO_VC120}lib64\PocoUtil.lib; ${POCO_VC120}lib64\PocoXML.lib; };
+			bin: { ${POCO_VC120}bin64\PocoCrypto64.dll; ${POCO_VC120}bin64\PocoFoundation64.dll; ${POCO_VC120}bin64\PocoJSON64.dll; ${POCO_VC120}bin64\PocoNet64.dll; ${POCO_VC120}bin64\PocoNetSSL64.dll; ${POCO_VC120}bin64\PocoUtil64.dll; ${POCO_VC120}bin64\PocoXML64.dll; };
 		}
 			
 		[x86,v120,debug,desktop] { 
-			lib: { ${POCO}lib\PocoCryptod.lib; ${POCO}lib\PocoFoundationd.lib; ${POCO}lib\PocoJSONd.lib; ${POCO}lib\PocoNetd.lib; ${POCO}lib\PocoNetSSLd.lib; ${POCO}lib\PocoUtild.lib; ${POCO}lib\PocoXMLd.lib; };
-			symbols: { ${POCO}bin\PocoCryptod.pdb; ${POCO}bin\PocoFoundationd.pdb; ${POCO}bin\PocoJSONd.pdb; ${POCO}bin\PocoNetd.pdb; ${POCO}bin\PocoNetSSLd.pdb; ${POCO}bin\PocoUtild.pdb; ${POCO}bin\PocoXMLd.pdb; };
-			bin: { ${POCO}bin\PocoCryptod.dll; ${POCO}bin\PocoFoundationd.dll; ${POCO}bin\PocoJSONd.dll; ${POCO}bin\PocoNetd.dll; ${POCO}bin\PocoNetSSLd.dll; ${POCO}bin\PocoUtild.dll; ${POCO}bin\PocoXMLd.dll; };
+			lib: { ${POCO_VC120}lib\PocoCryptod.lib; ${POCO_VC120}lib\PocoFoundationd.lib; ${POCO_VC120}lib\PocoJSONd.lib; ${POCO_VC120}lib\PocoNetd.lib; ${POCO_VC120}lib\PocoNetSSLd.lib; ${POCO_VC120}lib\PocoUtild.lib; ${POCO_VC120}lib\PocoXMLd.lib; };
+			symbols: { ${POCO_VC120}bin\PocoCryptod.pdb; ${POCO_VC120}bin\PocoFoundationd.pdb; ${POCO_VC120}bin\PocoJSONd.pdb; ${POCO_VC120}bin\PocoNetd.pdb; ${POCO_VC120}bin\PocoNetSSLd.pdb; ${POCO_VC120}bin\PocoUtild.pdb; ${POCO_VC120}bin\PocoXMLd.pdb; };
+			bin: { ${POCO_VC120}bin\PocoCryptod.dll; ${POCO_VC120}bin\PocoFoundationd.dll; ${POCO_VC120}bin\PocoJSONd.dll; ${POCO_VC120}bin\PocoNetd.dll; ${POCO_VC120}bin\PocoNetSSLd.dll; ${POCO_VC120}bin\PocoUtild.dll; ${POCO_VC120}bin\PocoXMLd.dll; };
 		}
 		
 		[x86,v120,release,desktop] { 
-			lib: { ${POCO}lib\PocoCrypto.lib; ${POCO}lib\PocoFoundation.lib; ${POCO}lib\PocoJSON.lib; ${POCO}lib\PocoNet.lib; ${POCO}lib\PocoNetSSL.lib; ${POCO}lib\PocoUtil.lib; ${POCO}lib\PocoXML.lib; };
-			bin: { ${POCO}bin\PocoCrypto.dll; ${POCO}bin\PocoFoundation.dll; ${POCO}bin\PocoJSON.dll; ${POCO}bin\PocoNet.dll; ${POCO}bin\PocoNetSSL.dll; ${POCO}bin\PocoUtil.dll; ${POCO}bin\PocoXML.dll; };
+			lib: { ${POCO_VC120}lib\PocoCrypto.lib; ${POCO_VC120}lib\PocoFoundation.lib; ${POCO_VC120}lib\PocoJSON.lib; ${POCO_VC120}lib\PocoNet.lib; ${POCO_VC120}lib\PocoNetSSL.lib; ${POCO_VC120}lib\PocoUtil.lib; ${POCO_VC120}lib\PocoXML.lib; };
+			bin: { ${POCO_VC120}bin\PocoCrypto.dll; ${POCO_VC120}bin\PocoFoundation.dll; ${POCO_VC120}bin\PocoJSON.dll; ${POCO_VC120}bin\PocoNet.dll; ${POCO_VC120}bin\PocoNetSSL.dll; ${POCO_VC120}bin\PocoUtil.dll; ${POCO_VC120}bin\PocoXML.dll; };
+		}
+
+		[x64,v140,debug,desktop] { 
+			lib: { ${POCO_VC140}lib64\PocoCryptod.lib; ${POCO_VC140}lib64\PocoFoundationd.lib; ${POCO_VC140}lib64\PocoJSONd.lib; ${POCO_VC140}lib64\PocoNetd.lib; ${POCO_VC140}lib64\PocoNetSSLd.lib; ${POCO_VC140}lib64\PocoUtild.lib; ${POCO_VC140}lib64\PocoXMLd.lib; };
+			symbols: { ${POCO_VC140}bin64\PocoCrypto64d.pdb; ${POCO_VC140}bin64\PocoFoundation64d.pdb; ${POCO_VC140}bin64\PocoJSON64d.pdb; ${POCO_VC140}bin64\PocoNet64d.pdb; ${POCO_VC140}bin64\PocoNetSSL64d.pdb; ${POCO_VC140}bin64\PocoUtil64d.pdb; ${POCO_VC140}bin64\PocoXML64d.pdb; };
+			bin: { ${POCO_VC140}bin64\PocoCrypto64d.dll; ${POCO_VC140}bin64\PocoFoundation64d.dll; ${POCO_VC140}bin64\PocoJSON64d.dll; ${POCO_VC140}bin64\PocoNet64d.dll; ${POCO_VC140}bin64\PocoNetSSL64d.dll; ${POCO_VC140}bin64\PocoUtil64d.dll; ${POCO_VC140}bin64\PocoXML64d.dll; };
+		}
+		
+		[x64,v140,release,desktop] { 
+			lib: { ${POCO_VC140}lib64\PocoCrypto.lib; ${POCO_VC140}lib64\PocoFoundation.lib; ${POCO_VC140}lib64\PocoJSON.lib; ${POCO_VC140}lib64\PocoNet.lib; ${POCO_VC140}lib64\PocoNetSSL.lib; ${POCO_VC140}lib64\PocoUtil.lib; ${POCO_VC140}lib64\PocoXML.lib; };
+			bin: { ${POCO_VC140}bin64\PocoCrypto64.dll; ${POCO_VC140}bin64\PocoFoundation64.dll; ${POCO_VC140}bin64\PocoJSON64.dll; ${POCO_VC140}bin64\PocoNet64.dll; ${POCO_VC140}bin64\PocoNetSSL64.dll; ${POCO_VC140}bin64\PocoUtil64.dll; ${POCO_VC140}bin64\PocoXML64.dll; };
+		}
+			
+		[x86,v140,debug,desktop] { 
+			lib: { ${POCO_VC140}lib\PocoCryptod.lib; ${POCO_VC140}lib\PocoFoundationd.lib; ${POCO_VC140}lib\PocoJSONd.lib; ${POCO_VC140}lib\PocoNetd.lib; ${POCO_VC140}lib\PocoNetSSLd.lib; ${POCO_VC140}lib\PocoUtild.lib; ${POCO_VC140}lib\PocoXMLd.lib; };
+			symbols: { ${POCO_VC140}bin\PocoCryptod.pdb; ${POCO_VC140}bin\PocoFoundationd.pdb; ${POCO_VC140}bin\PocoJSONd.pdb; ${POCO_VC140}bin\PocoNetd.pdb; ${POCO_VC140}bin\PocoNetSSLd.pdb; ${POCO_VC140}bin\PocoUtild.pdb; ${POCO_VC140}bin\PocoXMLd.pdb; };
+			bin: { ${POCO_VC140}bin\PocoCryptod.dll; ${POCO_VC140}bin\PocoFoundationd.dll; ${POCO_VC140}bin\PocoJSONd.dll; ${POCO_VC140}bin\PocoNetd.dll; ${POCO_VC140}bin\PocoNetSSLd.dll; ${POCO_VC140}bin\PocoUtild.dll; ${POCO_VC140}bin\PocoXMLd.dll; };
+		}
+		
+		[x86,v140,release,desktop] { 
+			lib: { ${POCO_VC140}lib\PocoCrypto.lib; ${POCO_VC140}lib\PocoFoundation.lib; ${POCO_VC140}lib\PocoJSON.lib; ${POCO_VC140}lib\PocoNet.lib; ${POCO_VC140}lib\PocoNetSSL.lib; ${POCO_VC140}lib\PocoUtil.lib; ${POCO_VC140}lib\PocoXML.lib; };
+			bin: { ${POCO_VC140}bin\PocoCrypto.dll; ${POCO_VC140}bin\PocoFoundation.dll; ${POCO_VC140}bin\PocoJSON.dll; ${POCO_VC140}bin\PocoNet.dll; ${POCO_VC140}bin\PocoNetSSL.dll; ${POCO_VC140}bin\PocoUtil.dll; ${POCO_VC140}bin\PocoXML.dll; };
 		}
 	};
 	
 	targets {
 		// We're trying to be standard about these sorts of thing. (Will help with config.h later :D)
-		Defines += HAS_POCO;
+		Defines += FIX8_NUGET_HAS_POCO;
 	};
 }

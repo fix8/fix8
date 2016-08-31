@@ -78,21 +78,21 @@ public:
     }
 
 
-    inline const size_t X_start()  const { return Xstart; }
-    inline const size_t X_stop()   const { return Xstop; }
-    inline const size_t X_step()   const { return Xstep; }
-    inline const size_t Y_start()  const { return Ystart; }
-    inline const size_t Y_stop()   const { return Ystop; }
-    inline const size_t Y_step()   const { return Ystep; }
-    inline const size_t Z_start()  const { return Zstart; }
-    inline const size_t Z_stop()   const { return Zstop; }
-    inline const size_t Z_step()   const { return Zstep; }
-    inline const size_t X_size()   const { return Xsize; }
-    inline const size_t Y_size()   const { return Ysize; }
-    inline const size_t Z_size()   const { return Zsize; }
-    inline const size_t Y_osize()  const { return Youtsize; }
-    inline const size_t size()     const { return X_size()*Y_size()*Z_size(); }
-    inline const size_t bytesize() const { return size()*sizeof(T); }
+    inline size_t X_start()  const { return Xstart; }
+    inline size_t X_stop()   const { return Xstop; }
+    inline size_t X_step()   const { return Xstep; }
+    inline size_t Y_start()  const { return Ystart; }
+    inline size_t Y_stop()   const { return Ystop; }
+    inline size_t Y_step()   const { return Ystep; }
+    inline size_t Z_start()  const { return Zstart; }
+    inline size_t Z_stop()   const { return Zstop; }
+    inline size_t Z_step()   const { return Zstep; }
+    inline size_t X_size()   const { return Xsize; }
+    inline size_t Y_size()   const { return Ysize; }
+    inline size_t Z_size()   const { return Zsize; }
+    inline size_t Y_osize()  const { return Youtsize; }
+    inline size_t size()     const { return X_size()*Y_size()*Z_size(); }
+    inline size_t bytesize() const { return size()*sizeof(T); }
 
     void   setX(size_t x1, size_t x2, size_t x3) {
         Xstart = x1; Xstop = x2; Xstep = x3;
@@ -139,13 +139,16 @@ protected:
 
 template<typename T>
 class stencil2D: public ff_node {
+public:
+    typedef ParallelForReduce<T> parloop_t;
+private:
     typedef std::function<T(size_t i, size_t j, void *)>                                    init_F_t;
-    typedef std::function<void(ff_forall_farm<T> *loopInit, T *M,
+    typedef std::function<void(parloop_t &loopInit, T *M,
                                const size_t Xsize, const size_t Ysize)>                     init2_F_t;
     typedef std::function<T(long i, long j, T *in, const size_t X, const size_t Y)>         compute_F_t;
     typedef std::function<T(long i, long j, T *in, const size_t X, const size_t Y,
                             T& reduceVar)>                                                  reduce_F_t;
-    typedef std::function<void(ff_forall_farm<T> *loopCompute, T *in, T *out,
+    typedef std::function<void(parloop_t &loopCompute, T *in, T *out,
                                const size_t Xsize, const size_t Xstart, const size_t Xstop,
                                const size_t Ysize, const size_t Ystart, const size_t Ystop,
                                T& reduceVar)>                                               reduce2_F_t;
@@ -168,7 +171,7 @@ public:
         initInF1(NULL), initOutF1(NULL),initInF2(NULL),initOutF2(NULL),
         beforeFor(NULL), computeF(NULL), computeFReduce1(NULL), computeFReduce2(NULL), afterFor(NULL),
         reduceOp(reduceOpDefault), iterCondition(NULL), identityValue((T)0), reduceVar((T)0),
-        maxIter(1) {
+        iter(0), maxIter(1) {
 
         Task.setInTask(Min, Xsize, Ysize);
         // TODO
@@ -176,9 +179,6 @@ public:
         Task.setOutTask(Mout, Youtsize);
 
         skipfirstpop();
-        FF_PARFORREDUCE_ASSIGN(loopInitIn, T, nw);
-        FF_PARFORREDUCE_ASSIGN(loopInitOut,T, nw);
-        FF_PARFORREDUCE_ASSIGN(loopCompute,T, nw);
     }
 
     stencil2D(int nw, int Yradius=1, int Xradius=1,bool ghostcells=false,
@@ -190,18 +190,9 @@ public:
         beforeFor(NULL), computeF(NULL), computeFReduce1(NULL), computeFReduce2(NULL),
         afterFor(NULL),
         reduceOp(reduceOpDefault), iterCondition(NULL), identityValue((T)0), reduceVar((T)0),
-        maxIter(1) {
+        iter(0), maxIter(1),ploop(nw,true) { }
 
-        FF_PARFORREDUCE_ASSIGN(loopInitIn, T, nw);
-        FF_PARFORREDUCE_ASSIGN(loopInitOut,T, nw);
-        FF_PARFORREDUCE_ASSIGN(loopCompute,T, nw);
-    }
-
-    ~stencil2D() {
-        FF_PARFORREDUCE_DONE(loopInitIn);
-        FF_PARFORREDUCE_DONE(loopInitOut);
-        FF_PARFORREDUCE_DONE(loopCompute);
-    }
+    ~stencil2D() {}
 
     void initInFunc(init_F_t F, void *extra) {
         if (!oneShot) {
@@ -271,12 +262,12 @@ public:
             const size_t& Ysize  = Task.Y_size();
 
             if (initInF1) {
-                FF_PARFOR_START(loopInitIn, i, 0, Xsize, 1, chunkSize, nw) {
-                    for(long j=0; j< Ysize; ++j)
-                        Min[i*Xsize+j] = initInF1(i,j, extraInitInParam);
-                } FF_PARFOR_STOP(loopInitIn);
+                ploop.parallel_for(0,Xsize,1,chunkSize,[&](const long i) {
+                        for(long j=0; j< Ysize; ++j)
+                            Min[i*Xsize+j] = initInF1(i,j, extraInitInParam);
+                    }, nw);
             } else {
-                initInF2(loopInitIn, Min, Xsize, Ysize);
+                initInF2(ploop, Min, Xsize, Ysize);
             }
         }
         if (oneShot && (initOutF1 || initOutF2)) {
@@ -284,12 +275,12 @@ public:
             const size_t& Ysize  = Task.Y_size();
 
             if (initOutF1) {
-                FF_PARFOR_START(loopInitOut, i, 0, Xsize, 1, chunkSize, nw) {
+                ploop.parallel_for(0,Xsize,1,chunkSize, [&](const long i) {
                     for(long j=0; j< Ysize; ++j)
                         Mout[i*Xsize+j] = initOutF1(i,j, extraInitOutParam);
-                } FF_PARFOR_STOP(loopInitOut);
+                }, nw);
             } else {
-                initOutF2(loopInitOut, Mout, Xsize, Ysize);
+                initOutF2(ploop, Mout, Xsize, Ysize);
             }
         }
 
@@ -313,11 +304,14 @@ public:
                     Min  = Task.getInPtr(); Mout = Task.getOutPtr();
 
                     if (beforeFor) beforeFor(Min,Xsize, Ysize, rVar);
-                    FF_PARFORREDUCE_START(loopCompute, rVar, identityValue, i, Xstart, Xstop, Xstep, chunkSize, nw) {
-                        for(long j=Ystart; j< Ystop; j+=Ystep) {
-                            Mout[i*Xsize+j] = computeFReduce1(i,j,Min,Xsize,Ysize,rVar);
-                        }
-                    } FF_PARFORREDUCE_F_STOP(loopCompute,rVar,reduceOp);
+                    ploop.parallel_reduce(rVar,identityValue, Xstart,Xstop, Xstep, chunkSize,
+                                          [&](const long i,T &rVar) {
+                                              for(long j=Ystart; j< Ystop; j+=Ystep) {
+                                                  Mout[i*Xsize+j] = computeFReduce1(i,j,Min,Xsize,Ysize,rVar);
+                                              }
+                                          }, reduceOp, nw);
+
+
                     if (afterFor) afterFor(Mout,Xsize, Ysize, rVar);
 
                 } while(++iter<maxIter && iterCondition(rVar, iter));
@@ -327,7 +321,7 @@ public:
                     Min  = Task.getInPtr(); Mout = Task.getOutPtr();
 
                     if (beforeFor) beforeFor(Min,Xsize, Ysize, rVar);
-                    computeFReduce2(loopCompute, Min,Mout,Xsize, Xstart,Xstop, Ysize,Ystart,Ystop,rVar);
+                    computeFReduce2(ploop, Min,Mout,Xsize, Xstart,Xstop, Ysize,Ystart,Ystop,rVar);
                     if (afterFor) afterFor(Mout,Xsize, Ysize, rVar);
 
                 } while(++iter<maxIter && iterCondition(rVar, iter));
@@ -338,8 +332,8 @@ public:
         return (oneShot?NULL:task);
     }
 
-    const size_t  getIter() const { return iter; }
-    const T getReduceVar() const { return reduceVar; }
+    size_t  getIter() const { return iter; }
+    const T& getReduceVar() const { return reduceVar; }
 
     virtual inline int run_and_wait_end() {
         if (isfrozen()) {
@@ -381,9 +375,7 @@ protected:
     size_t       maxIter;
     stencilTask<T> Task;
 
-    FF_PARFORREDUCE_DECL(loopInitIn, T);
-    FF_PARFORREDUCE_DECL(loopInitOut, T);
-    FF_PARFORREDUCE_DECL(loopCompute, T);
+    parloop_t    ploop;
 };
 
 } // namespace

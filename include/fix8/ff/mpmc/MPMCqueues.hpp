@@ -1,11 +1,17 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- *  \link
  *  \file MPMCqueues.hpp
- *  \ingroup streaming_network_arbitrary_shared_memory
+ *  \ingroup aux_classes
  *
- *  \brief This file contains several MPMC queue implementations.
+ *  \brief This file contains several MPMC queue implementations. Not
+ *  currently used.
+ *
+ * This file contains the following
+ * Multi-Producer/Multi-Consumer queue implementations:
+ * \li  MPMC_Ptr_Queue   bounded MPMC queue by Dmitry Vyukov
+ * \li  uMPMC_Ptr_Queue  unbounded MPMC queue by Massimo Torquati
+ * \li  uMPMC_Ptr_Queue  unbounded MPMC queue by Massimo Torquati
  */
 
 #ifndef FF_MPMCQUEUE_HPP
@@ -22,7 +28,8 @@
  *     Massimo Torquati <torquati@di.unipi.it> <massimotor@gmail.com>
  *
  *  - History
- *    10 Jul 2012: M. Aldinucci: Minor fixes (some casts)
+ *    10 Jul 2012: M. Aldinucci: Minor fixes
+ *     4 Oct 2015: M. Aldinucci: cleaning related to better c++11 compliance
  */
 
 
@@ -31,36 +38,40 @@
 #include <fix8/ff/buffer.hpp>
 #include <fix8/ff/sysdep.h>
 #include <fix8/ff/allocator.hpp>
-#include <fix8/ff/atomic/abstraction_dcas.h>
+#include <fix8/ff/platforms/platform.h>
+#include <fix8/ff/mpmc/asm/abstraction_dcas.h>
+#include <fix8/ff/spin-lock.hpp>
+
 
 /*
- * NOTE: You should define USE_STD_C0X if you want to use
- *       the new C++0x standard (-std=c++0x)
+ * NOTE: You should define NO_STD_C0X if you want to avoid c++0x and c++11
  *
  */
-#if defined(USE_STD_C0X)
- // Check for g++ version >= 4.5
- #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
-  #include <atomic>
- #else
-  // Check for g++ version >= 4.4
-  #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
-   #include <cstdatomic>
-  #else
-   #define USE_STD_0X
-  #endif
- #endif
-#endif // USE_STD_C0X
 
-namespace ff {
+#if ( (!defined(NO_STD_C0X))  &&  !(__cplusplus >= 201103L))
+#pragma message ("Define -DNO_STD_C0X to use a non c++0x/c++11 compiler")
+#endif
 
-/*!
- *  \ingroup streaming_network_arbitrary_shared_memory
- *
- *  @{
- */
+#define NO_STD_C0X
+
+
+// // Check for g++ version >= 4.5
+// #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+//  #include <atomic>
+// #else
+//  // Check for g++ version >= 4.4
+//  #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
+//   #include <cstdatomic>
+//  #else
+//   #define USE_STD_0X
+//  #endif
+// #endif
+//#endif // USE_STD_C0X
+
 
 #define CAS abstraction_cas
+
+namespace ff {
 
 /*
  *  In the following we implement two kinds of queues:
@@ -76,40 +87,37 @@ namespace ff {
  *
  */
 
-#if defined(USE_STD_C0X)
-
 /*!
  * \class MPMC_Ptr_Queue
- *  \ingroup streaming_network_arbitrary_shared_memory
+ *  \ingroup aux_classes
  *
- * \brief An implementation of the \a bounded Multi-Producer/Multi-Consumer queue
+ * \brief An implementation of the \a bounded Multi-Producer/Multi-Consumer queue. Not currently used.
  *
  * This class describes an implementation of the MPMC queue inspired by the solution
  * proposed by <a href="https://sites.google.com/site/1024cores/home/lock-free-algorithms/queues/bounded-mpmc-queue" target="_blank">Dmitry Vyukov</a>. \n
  *
- * This version uses the new C++0X standard.
+ * \note There are two versions 1) with atomic operations 2) using new C++0X standard (compile with -DUSE_STD_C0X).
  *
- * This class is defined in \ref MPMCqueues.hpp
  *
  */
+#if !defined(NO_STD_C0X)
+#include <atomic>
+
 class MPMC_Ptr_Queue {
 private:
-    /**
-     * TODO
-     */
     struct element_t {
         std::atomic<unsigned long> seq;
         void *                     data;
     };
 
 public:
-    /**
-     * Default constructor
+    /*
+     * \brief Constructor
      */
     MPMC_Ptr_Queue() {}
 
-    /**
-     * Destructor
+    /*
+     * \brief Destructor
      */
     ~MPMC_Ptr_Queue() {
         if (buf) {
@@ -128,11 +136,7 @@ public:
      */
 
     /**
-     * This method initialises the underlying bounded buffer using
-     * the operator 'new'.
-     *
-     * \prm size TODO
-     * \return TODO
+     * \brief init
      */
     inline bool init(size_t size) {
         if (size<2) size=2;
@@ -162,11 +166,9 @@ public:
     }
 
     /**
-     * Push method: enqueue data in the queue.
+     * \brief push: enqueue data
      *
      * This method is non-blocking and costs one CAS per operation.
-     *
-     * \return TODO
      */
     inline bool push(void *const data) {
         unsigned long pw, seq;
@@ -198,11 +200,10 @@ public:
     }
 
     /**
-     * Pop method: dequeue data from the queue.
+     * pop method: dequeue data from the queue.
      *
      * This is a non-blocking method.
      *
-     * \return TODO
      */
     inline bool pop(void** data) {
         unsigned long pr, seq;
@@ -233,37 +234,25 @@ public:
     }
 
 private:
-    // WARNING: on 64bit Windows platform sizeof(unsigned long) = 32 !!
-    std::atomic<unsigned long>  pwrite; /// Pointer to the location where to write to
-    long padding1[longxCacheLine-1];
-    std::atomic<unsigned long>  pread;  /// Pointer to the location where to read from
-    long padding2[longxCacheLine-1];
+    union {
+        std::atomic<unsigned long>  pwrite; /// Pointer to the location where to write to
+        char padding1[CACHE_LINE_SIZE];
+    };
+    union {
+        std::atomic<unsigned long>  pread;  /// Pointer to the location where to read from
+        char padding2[CACHE_LINE_SIZE];
+    };
     element_t *                 buf;
     unsigned long               mask;
 };
 
 
 #else  // using internal atomic operations
+#include <fix8/ff/mpmc/asm/atomic.h>
 
-/*!
- * \class MPMC_Ptr_Queue
- *  \ingroup streaming_network_arbitrary_shared_memory
- *
- * \brief An implementation of the \a bounded Multi-Producer/Multi-Consumer queue
- *
- * This class describes an implementation of the MPMC queue inspired by the solution
- * proposed by <a href="http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue" target="_blank">Dmitry Vyukov</a>. \n
- *
- * This version uses internal atomic operations.
- *
- * This class is defined in \ref MPMCqueues.hpp
- *
- */
 class MPMC_Ptr_Queue {
 protected:
-    /**
-     * TODO
-     */
+
     struct element_t {
         atomic_long_t seq;
         void *        data;
@@ -271,15 +260,13 @@ protected:
 
 public:
     /**
-     *  Default constructor
-     *
-     *  @param[in] size The size of the queue.
+     *  \brief Constructor
      */
     MPMC_Ptr_Queue() {}
 
     /**
      *
-     * Destructor
+     * \brief Destructor
      */
     ~MPMC_Ptr_Queue() {
         if (buf) {
@@ -298,21 +285,19 @@ public:
      */
 
     /**
-     * This method initialises the underlying bounded buffer.
-     *
-     * \return TODO
+     * \brief init
      */
     inline bool init(size_t size) {
         if (size<2) size=2;
         // we need a size that is a power 2 in order to set the mask
         if (!isPowerOf2(size)) size = nextPowerOf2(size);
-        mask = size-1;
+        mask = (unsigned long) (size-1);
 
         buf=(element_t*)getAlignedMemory(longxCacheLine*sizeof(long),size*sizeof(element_t));
         if (!buf) return false;
         for(size_t i=0;i<size;++i) {
             buf[i].data = NULL;
-            atomic_long_set(&buf[i].seq,i);
+            atomic_long_set(&buf[i].seq,long(i));
         }
         atomic_long_set(&pwrite,0);
         atomic_long_set(&pread,0);
@@ -325,7 +310,6 @@ public:
      *
      * This method is non-blocking and costs one CAS per operation.
      *
-     * \return TODO
      */
     inline bool push(void *const data) {
         unsigned long pw, seq;
@@ -360,7 +344,6 @@ public:
      *
      * This is a non-blocking method.
      *
-     * \return TODO
      */
     inline bool pop(void** data) {
         unsigned long pr , seq;
@@ -392,10 +375,14 @@ public:
 
 private:
     // WARNING: on 64bit Windows platform sizeof(unsigned long) = 32 !!
-    atomic_long_t  pwrite;
-    long           padding1[longxCacheLine-1];
-    atomic_long_t  pread;
-    long           padding2[longxCacheLine-1];
+    union {
+        atomic_long_t  pwrite;
+        char           padding1[CACHE_LINE_SIZE];
+    };
+    union {
+        atomic_long_t  pread;
+        char           padding2[CACHE_LINE_SIZE];
+    };
 protected:
     element_t *    buf;
     unsigned long  mask;
@@ -405,7 +392,7 @@ protected:
 
 /*!
  * \class uMPMC_Ptr_Queue
- *  \ingroup streaming_network_arbitrary_shared_memory
+ *  \ingroup building_blocks
  *
  * \brief An implementation of the \a unbounded Multi-Producer/Multi-Consumer queue
  *
@@ -428,12 +415,12 @@ protected:
 
 public:
     /**
-     * Constructor
+     * \brief Constructor
      */
     uMPMC_Ptr_Queue() {}
 
     /**
-     * Destructor
+     * \brief Destructor
      */
     ~uMPMC_Ptr_Queue() {
         if (buf) {
@@ -448,7 +435,7 @@ public:
     }
 
     /**
-     * TODO
+     * \brief init
      */
     inline bool init(unsigned long nqueues=DEFAULT_NUM_QUEUES, size_t size=DEFAULT_uSPSC_SIZE) {
         if (nqueues<2) nqueues=2;
@@ -462,8 +449,8 @@ public:
         for(size_t i=0;i<nqueues;++i) {
             buf[i]= new uSWSR_Ptr_Buffer(size);
             ((uSWSR_Ptr_Buffer*)(buf[i]))->init();
-            atomic_long_set(&(seqP[i]),i);
-            atomic_long_set(&(seqC[i]),i);
+            atomic_long_set(&(seqP[i]),long(i));
+            atomic_long_set(&(seqC[i]),long(i));
         }
         atomic_long_set(&preadP,0);
         atomic_long_set(&preadC,0);
@@ -471,7 +458,7 @@ public:
     }
 
     /**
-     * TODO
+     * \brief nonblocking push
      *
      * \return It always returns true
      */
@@ -498,20 +485,20 @@ public:
     }
 
     /**
-     * non-blocking pop
+     * \brieg nonblocking pop
      *
-     * \return TODO
      */
     inline bool pop(void ** data) {
-        unsigned long pr,seq,idx;
+        unsigned long pr,idx;
+		long seq;
         unsigned long bk = BACKOFF_MIN;
 
         do {
             pr     = atomic_long_read(&preadC);
             idx    = pr & mask;
             seq    = atomic_long_read(&seqC[idx]);
-            if (pr == seq) {
-                if (atomic_long_read(&seqP[idx]) <= seq) return false; // queue
+            if (pr == (unsigned long)seq) {
+                if (atomic_long_read(&seqP[idx]) <= (unsigned long)seq) return false; // queue
                 if (abstraction_cas((volatile atom_t*)&preadC, (atom_t)(pr+1), (atom_t)pr)==(atom_t)pr)
                     break;
 
@@ -527,11 +514,14 @@ public:
     }
 
 private:
-    // WARNING: on 64bit Windows platform sizeof(unsigned long) = 32 !!
-    atomic_long_t  preadP;
-    long           padding1[longxCacheLine-1];
-    atomic_long_t  preadC;
-    long           padding2[longxCacheLine-1];
+    union {
+        atomic_long_t  preadP;
+        char           padding1[CACHE_LINE_SIZE];
+    };
+    union {
+        atomic_long_t  preadC;
+        char           padding2[CACHE_LINE_SIZE];
+    };
 protected:
     data_element_t *  buf;
     sequenceP_t    *  seqP;
@@ -540,21 +530,16 @@ protected:
 
 };
 
-/*!
- *  @}
- *  \endlink
- */
 
-#endif // USE_STD_C0X
 
-//-------------------------------------****-------------------------------
-// No doxygen documentation from below.
 
 /*!
  * \class MSqueue
+ * \ingroup aux_classes
  *
- * \brief An implementation of the lock-free FIFO MPMC queue by
- * Michael and Scott, described in the paper: "Simple, Fast, and Practical
+ * \brief Michael and Scott MPMC. Not currently used.
+ *
+ * See:  M. Michael and M. Scott, "Simple, Fast, and Practical
  * Non-Blocking and Blocking Concurrent Queue Algorithms", PODC 1996.
  *
  * The MSqueue implementation is inspired to the one in the \p liblfds
@@ -643,9 +628,9 @@ private:
     } ALIGN_TO_POST(ALIGN_DOUBLE_POINTER);
 
     Pointer  head;
-    long padding1[longxCacheLine-(sizeof(Pointer)/sizeof(long))];
+    long     padding1[longxCacheLine-1];
     Pointer  tail;
-    long padding2[longxCacheLine-(sizeof(Pointer)/sizeof(long))];
+    long     padding2[longxCacheLine-1];;
     FFAllocator *delayedAllocator;
 
 private:
@@ -685,7 +670,7 @@ public:
         if (delayedAllocator) return 0;
         delayedAllocator = new FFAllocator(2);
         if (!delayedAllocator) {
-            std::cerr << "ERROR: MSqueue, cannot allocate FFAllocator!!!\n";
+            error("MSqueue::init, cannot allocate FFAllocator\n");
             return -1;
         }
 
@@ -766,10 +751,6 @@ public:
 /* ---------------------- experimental code -------------------------- */
 
 
-#if !defined(__APPLE__)
-/*
- *
- */
 
 class multiSWSR {
 protected:
@@ -834,19 +815,24 @@ public:
     }
 
 private:
-    atomic_long_t  enqueue;
-    long           padding1[longxCacheLine-1];
-    atomic_long_t  dequeue;
-    long           padding2[longxCacheLine-1];
-    atomic_long_t  count;
-    long           padding3[longxCacheLine-1];
+    union {
+        atomic_long_t  enqueue;
+        char           padding1[CACHE_LINE_SIZE];
+    };
+    union {
+        atomic_long_t  dequeue;
+        char           padding2[CACHE_LINE_SIZE];
+    };
+    union {
+        atomic_long_t  count;
+        char           padding3[CACHE_LINE_SIZE];
+    };
 protected:
     uSWSR_Ptr_Buffer **buf;
     CLHSpinLock *PLock;
     CLHSpinLock *CLock;
     size_t   mask;
 };
-#endif //__APPLE__
 
 
 /*
@@ -869,16 +855,20 @@ public:
     enum {DEFAULT_POOL_SIZE=4};
 
     scalableMPMCqueue() {
+        //enqueue.store(0);
+        //count.store(0);
         atomic_long_set(&enqueue,0);
-        atomic_long_set(&count, 0);
+        atomic_long_set(&count,0);
 
 #if !defined(MULTI_MPMC_RELAX_FIFO_ORDERING)
         // NOTE: dequeue must start from 1 because enqueue is incremented
         //       using atomic_long_inc_return which first increments and than
         //       return the value.
+        //dequeue.store(1);
         atomic_long_set(&dequeue,1);
 #else
-        atomic_long_set(&dequeue,0);
+        //dequeue.store(0);
+        atomic_long_set(&dequeue,0);
 #endif
     }
 
@@ -894,26 +884,30 @@ public:
 
     // insert method, it never fails if data is not NULL
     inline bool push(void * const data) {
-        register long q = atomic_long_inc_return(&enqueue) % pool.size();
+        //long q = (1 + enqueue.fetch_add(1)) % pool.size();
+        long q = atomic_long_inc_return(&enqueue) % pool.size();
         bool r = pool[q].push(data);
         if (r) atomic_long_inc(&count);
+        //if (r) count.fetch_add(1);
         return r;
     }
 
     // extract method, it returns false if the queue is empty
     inline bool  pop(void ** data) {
         if (!atomic_long_read(&count))  return false; // empty
+        //if (!count.load()) return false;
 #if !defined(MULTI_MPMC_RELAX_FIFO_ORDERING)
         unsigned long bk = BACKOFF_MIN;
         //
         // enforce FIFO ordering for the consumers
         //
-        register long q, q1;
+        long q, q1;
         do {
             q  = atomic_long_read(&dequeue), q1 = atomic_long_read(&enqueue);
+            //q = dequeue.load(); q1 = enqueue.load();
             if (q > q1) return false;
             if (CAS((volatile atom_t *)&dequeue, (atom_t)(q+1), (atom_t)q) == (atom_t)q) break;
-
+            //if(dequeue.compare_exchange_strong(<#long &__e#>, <#long __d#>)
             // exponential delay with max value
             for(volatile unsigned i=0;i<bk;++i) ;
             bk <<= 1;
@@ -923,12 +917,13 @@ public:
         q %= pool.size();
         if (pool[q].pop(data)) {
             atomic_long_dec(&count);
+            //count.fetch_sub(1);
             return true;
         }
         return false;
 
 #else  // MULTI_MPMC_RELAX_FIFO_ORDERING
-        register long q = atomic_long_inc_return(&dequeue) % pool.size();
+        long q = atomic_long_inc_return(&dequeue) % pool.size();
         bool r = pool[q].pop(data);
         if (r) { atomic_long_dec(&count); return true;}
         return false;
@@ -942,10 +937,13 @@ public:
         return true;
     }
 private:
+    // std::atomic<long> enqueue;
     atomic_long_t enqueue;
     long padding1[longxCacheLine-sizeof(atomic_long_t)];
+    //std::atomic<long> dequeue;
     atomic_long_t dequeue;
     long padding2[longxCacheLine-sizeof(atomic_long_t)];
+    //std::atomic<long> count;
     atomic_long_t count;
     long padding3[longxCacheLine-sizeof(atomic_long_t)];
 protected:
@@ -960,13 +958,13 @@ protected:
 
         multiMSqueue(size_t poolsize = scalableMPMCqueue<MSqueue>::DEFAULT_POOL_SIZE) {
             if (! scalableMPMCqueue<MSqueue>::init(poolsize)) {
-                std::cerr << "multiMSqueue init ERROR, abort....\n";
+                error("multiMSqueue init ERROR\n");
                 abort();
             }
 
             for(size_t i=0;i<poolsize;++i)
                 if (pool[i].init()<0) {
-                    std::cerr << "ERROR initializing MSqueue, abort....\n";
+                    error("multiMSqueue init ERROR\n");
                     abort();
                 }
         }
@@ -975,7 +973,7 @@ protected:
 
 
 
-
+#endif // USE_STD_C0X
 
 
 

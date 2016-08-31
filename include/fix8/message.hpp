@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -910,6 +910,34 @@ public:
 				*val++ = from[ii];
 				break;
 			}
+		}
+		return *val = *tag = 0;
+	}
+
+	/*! Extract a tag and fixed width value element from a char buffer. ULL version.
+	    \param from source buffer
+	    \param sz size of string
+	    \param tag tag to extract to
+	    \param val_sz size of value to be extracted, not including field separator
+	    \param val value to extract to
+	    \return number of bytes consumed */
+	static unsigned extract_element_fixed_width(const char *from, const unsigned sz, const unsigned val_sz, char *tag, char *val)
+	{
+		*val = *tag = 0;
+		for (unsigned ii(0); ii < sz; ++ii)
+		{
+			if(isdigit(from[ii]))
+			{
+				*tag++ = from[ii];
+				continue;
+			}
+
+			if (from[ii++] != default_assignment_separator || sz < (ii + val_sz))
+				break;
+
+			::memcpy(val, &from[ii], val_sz);
+			val[val_sz] = 0;
+			return ii + val_sz + 1; // account for field separator
 		}
 		return *val = *tag = 0;
 	}

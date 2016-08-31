@@ -1,3 +1,27 @@
+* Fri Sep 02 2016 David L. Dight <fix@fix8.org> 1.4.0
+- Fixed Jira tickets FX-530,FX-533,FX-539,FX-562,FX-563,FX-564,FX-560,FX-588,FX-569,
+							FX-596,FX-642,FX-633,FX-615,FX-609,FX-655
+- Added verison tag to Nuget packages
+- Fixed Seqedit reports corrupted persister index
+- Added Provide programmatic way to set reset sequence number flag on logon
+- Fixed XML parser should report line numbers of mismatched element start/end
+- Added Compiler should optionally report unused tags
+- Added Session should provide callback for rejected inbound message
+- Fixed XmlData fields unsupported
+- Fixed Rejected inbound messages do not appear in protocol log
+- Fixed FIX time to epoch converter
+- Fixed Acceptor mode: Crash while receiving logout message
+- Fixed Sequence number reset does not function correctly
+- Fixed Expected Sequence number reaches extreme and unrealistic value
+- Upgraded FastFlow to v2.1.0
+- Added ConsoleMenu permit messages to be created from inbound messages
+- Added ConsoleMenu SelectMsgFrom now displays message sending time and seqnum if available
+- Fixed crash on "Send one message, optionally save before send"
+- Fixed f8c unhandled exception while stoul'ing fields
+- Fixed login_retries="0" not working
+- Fixed Expected Sequence number reaches extreme and unrealistic value
+- Fixed Crashes on heartbeat
+
 * Sun Aug 23 2015 David L. Dight <fix@fix8.org> 1.3.4
 - Fixed Jira tickets FX-508, FX-511, FX-490, FX-491, FX-480, FX-470, FX-336, FX-525, FX-524,
 							FX-523, FX-520, FX-516, FX-527

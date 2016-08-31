@@ -209,7 +209,8 @@ static inline unsigned long atomic_long_add_unless(atomic_long_t *l, long a, lon
 
 #endif
 
-#elif (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+#elif  defined(_WIN32)
+// TODO: Atomic operations to be redefined on top of C++11 atomic ops
 typedef __declspec(align(4 /* 32 bit */)) struct { volatile long counter; } atomic_t;
 typedef atomic_t atomic_long_t;
 #define atomic_set(v,i)         (((v)->counter) = (i))
@@ -221,12 +222,19 @@ typedef atomic_t atomic_long_t;
 //#include <ff/platforms/platform_msvc_windows.h>
 #define BITS_PER_LONG 32 // Both win32 and win64 have long=32 (LLP64 model)
 #pragma intrinsic (_InterlockedIncrement)
+static inline void atomic_long_inc(atomic_long_t *v) {
+	_InterlockedIncrement(&v->counter);
+}
 static inline long atomic_long_inc_return(atomic_long_t *v) {
 
-  return _InterlockedIncrement(&v->counter);
-  //return _InterlockedExchangeAdd((long volatile*)l, 1) + 1;
+	return _InterlockedIncrement(&v->counter);
+	//return _InterlockedExchangeAdd((long volatile*)l, 1) + 1;
 }
 
+#pragma intrinsic (_InterlockedDecrement)
+static inline void atomic_long_dec(atomic_long_t *v) {
+	 _InterlockedDecrement(&v->counter);
+}
 
 #endif
 

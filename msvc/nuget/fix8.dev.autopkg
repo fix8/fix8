@@ -15,7 +15,7 @@ nuget {
 		description: @"Develop branch of FIX8 libraries";
 		releaseNotes: "";
 		copyright: Copyright 2013-2014;
-		tags: { FIX8, native, CoApp };
+		tags: { FIX8, native, CoApp, v${VERSION} };
 	};
 
 	dependencies {
@@ -23,14 +23,10 @@ nuget {
         packages : {
             // This is a list of other NuGet packages required to use this package.
             // Each item follows the format "<pkg_name>/<version>"
-            fix8.dependencies.getopt/1.0.20140509.1,
-	    fix8.dependencies.getopt.redist/1.0.20140509.1,
-	    fix8.dependencies.openssl/1.0.20140509.1,
-	    fix8.dependencies.openssl.redist/1.0.20140509.1,
-	    fix8.dependencies.poco/1.5.20140509.1,
-	    fix8.dependencies.poco.redist/1.5.20140509.1,
-	    fix8.dependencies.tbb/4.2.20140416.1,
-	    fix8.dependencies.tbb.redist/4.2.20140416.1
+			fix8.dependencies.getopt/1.0.20151130.1,
+			fix8.dependencies.openssl/1.0.20151130.1,
+			fix8.dependencies.poco/1.6.20151130.1,
+			fix8.dependencies.tbb/4.4.20151130.1
         };
     }
 
@@ -44,7 +40,7 @@ nuget {
 		// grab all the files in the include folder
 		// the folder that contains all the .h files will 
 		// automatically get added to the Includes path.
-		nestedInclude: { 
+		include: { 
 			#destination = ${d_include}\fix8; 
 			"${FIX8}include\**\*"; 
 			};
@@ -57,25 +53,25 @@ nuget {
 		// 		$(Platform) == x64
 		//  	$(PlatformToolset) == v100 
 		//		$(Configuration) == Debug
-		[x64,v120,debug,desktop] { 
+		[x64,v140,debug,desktop] { 
 			lib: { ${FIX8}msvc\x64\bin\Debug\fix8d.lib; };
 			symbols: { ${FIX8}msvc\x64\bin\Debug\fix8d.pdb; };
 			bin: { ${FIX8}msvc\x64\bin\Debug\fix8d.dll; ${FIX8}msvc\x64\bin\Debug\f8cd.exe; ${FIX8}msvc\x64\bin\Debug\seqeditd.exe; };
 		}
 		
-		[x64,v120,release,desktop] { 
+		[x64,v140,release,desktop] { 
 			lib: { ${FIX8}msvc\x64\bin\Release\fix8.lib; };
 			symbols: { ${FIX8}msvc\x64\bin\Release\fix8.pdb; };
 			bin: { ${FIX8}msvc\x64\bin\Release\fix8.dll; ${FIX8}msvc\x64\bin\Release\f8c.exe; ${FIX8}msvc\x64\bin\Release\seqedit.exe; };
 		}
 			
-		[x86,v120,debug,desktop] { 
+		[x86,v140,debug,desktop] { 
 			lib: { ${FIX8}msvc\Win32\bin\Debug\fix8d.lib; };
 			symbols: { ${FIX8}msvc\Win32\bin\Debug\fix8d.pdb; };
 			bin: { ${FIX8}msvc\Win32\bin\Debug\fix8d.dll; ${FIX8}msvc\Win32\bin\Debug\f8cd.exe; ${FIX8}msvc\Win32\bin\Debug\seqeditd.exe };
 		}
 		
-		[x86,v120,release,desktop] { 
+		[x86,v140,release,desktop] { 
 			lib: { ${FIX8}msvc\Win32\bin\Release\fix8.lib; };
 			symbols: { ${FIX8}msvc\Win32\bin\Release\fix8.pdb; };
 			bin: { ${FIX8}msvc\Win32\bin\Release\fix8.dll; ${FIX8}msvc\Win32\bin\Release\f8c.exe; ${FIX8}msvc\Win32\bin\Release\seqedit.exe };

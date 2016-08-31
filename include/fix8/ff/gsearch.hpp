@@ -1,9 +1,8 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- *  \link
  *  \file gsearch.hpp
- *  \ingroup high_level_patterns_shared_memory
+ *  \ingroup high_level_pattern
  *
  *  \brief This file implements the graph search skeleton.
  */
@@ -107,7 +106,7 @@ protected:
     public:
 	enum {CHECK_FOUND_N=256};
 
-	Emitter(const std::vector<fix8/ff_node*> &W, const long &foundflag, const bool all=false):
+	Emitter(const std::vector<ff_node*> &W, const long &foundflag, const bool all=false):
 	    foundflag(foundflag),W(W),start(NULL),counter(0),all(all) {}
 
 	void setStart(T*const n) { start = n;}
@@ -159,7 +158,7 @@ protected:
 	}
     protected:
 	const long                    &foundflag;
-	const std::vector<fix8/ff_node*>   &W;
+	const std::vector<ff_node*>   &W;
 	T                             *start;
 	unsigned long                  counter;
 	bool                           all;
@@ -173,7 +172,7 @@ private:
     ff_farm<>  *farm;
     Emitter    *scheduler;
     T          *start;
-    std::vector<fix8/ff_node*> W;
+    std::vector<ff_node*> W;
     bool        all;
 public:
 

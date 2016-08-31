@@ -3,9 +3,9 @@
 /*!
  *  \link
  *  \file staticlinkedlist.hpp
- *  \ingroup shared_memory_fastflow
+ *  \ingroup aux_classes
  *
- *  \brief TODO
+ *  \brief Static Linked List. Not currently used.
  */
 
 /* ***************************************************************************
@@ -84,30 +84,8 @@
 
 namespace ff {
 
-/*!
- *  \ingroup shared_memory_fastflow
- *
- *  @{
- */
-
-/*!
- *  \class staticlinkedlist
- *  \ingroup shared_memory_fastflow
- *
- *  \brief TODO
- *
- *  This class is defined in \ref staticlinklist.hpp
- */
 class staticlinkedlist {
 #if POSTPOLLING_VERSION
-    /*!
-     *  \class Node
-     *  \ingroup shared_memory_fastflow
-     *
-     *  \brief Inner struct
-     *
-     *  This struct is defined in \ref staticlinklist.hpp
-     */
     struct Node {
         unsigned long data;
         #if POINTERS_VERSION
@@ -152,10 +130,11 @@ public:
      */
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * Constructor
-     */
     staticlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
+        // avoid unused field warning for padding
+        if (longxCacheLine>1)
+            padding1[0]=padding2[0];
+        // end
         cache_mem =::malloc((sizeof(Node))*(cachesize+5));
         unsigned int CPU_cachesize = longxCacheLine*sizeof(void*);
         if(CAST_TO_UL(cache_mem)%CPU_cachesize){
@@ -190,17 +169,11 @@ public:
 #endif
     }
 
-    /**
-     * Destructor
-     */
     ~staticlinkedlist() {
         free(cache_mem);
     }
 
 #if WHILE_VERSION
-    /**
-     * It pushes the data element.
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         do{}
@@ -220,9 +193,6 @@ public:
         return true;
     }
 #else
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         if(likely(CAST_TO_VUL(tail->data) == 0)){
@@ -245,9 +215,6 @@ public:
 }
 #endif
 #if POINTERS_VERSION
-    /**
-     * TODO
-     */
     inline bool  pop(void ** data) {
         if (likely(CAST_TO_VUL(head->data) != 0)) {
             *data = (void *)head->data;
@@ -258,9 +225,6 @@ public:
         return false;
     }
 #else
-    /**
-     * TODO
-     */
     inline bool  pop(void ** data) {
         if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {
             *data = (void *)min_cache[head].data;
@@ -273,15 +237,6 @@ public:
 #endif
 #else //NO POSTPOLLING_VERSION
 
-    /*!
-     *  \class Node
-     *  \ingroup shared_memory_fastflow
-     *
-     * TODO
-     *
-     * This struct is defined in \ref staticlinkedlist.hpp
-     *
-     */
     struct Node {
         unsigned long data;
 #if POINTERS_VERSION
@@ -329,9 +284,6 @@ public:
      */
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * Constructor
-     */
     staticlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
         cache_mem =::malloc((sizeof(Node))*(cachesize+5));
         unsigned int CPU_cachesize = longxCacheLine*sizeof(void*);
@@ -364,17 +316,11 @@ public:
 #endif
     }
 
-    /**
-     * TODO
-     */
     ~staticlinkedlist() {
         free(cache_mem);
     }
 
 #if WHILE_VERSION
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         do{}
@@ -393,9 +339,6 @@ public:
         return true;
     }
 #else
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         if(likely(CAST_TO_VUL(tail->data) == 0)){
@@ -417,9 +360,6 @@ public:
 }
 #endif
 #if POINTERS_VERSION
-    /**
-     * TODO
-     */
     inline bool  pop(void ** data) {
         if (likely(CAST_TO_VUL(head->data) != 0)) {
             *data = (void *)head->data;
@@ -430,9 +370,6 @@ public:
         return false;
     }
 #else
-    /**
-     * TODO
-     */
     inline bool  pop(void ** data) {
         if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {
             *data = (void *)min_cache[head].data;
@@ -446,11 +383,6 @@ public:
 
 #endif
 };
-
-/*!
- *  @}
- *  \endlink
- */
 
 } // namespace ff
 
