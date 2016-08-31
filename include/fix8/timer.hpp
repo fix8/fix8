@@ -165,13 +165,11 @@ int Timer<T>::operator()()
 				{
 					TimerEvent<T> rop(_event_queue.top()); // take a copy
 					_event_queue.pop(); // remove from queue
-					guard.release();
 					++elapsed;
 					const bool result((_monitor.*rop._callback)());
 					if (result && op._repeat) // don't repeat if callback returned false
 					{
 						op._t = now.get_ticks() + op._intervalMS * Tickval::million;
-						guard.acquire(_spin_lock);
 						_event_queue.push(std::move(op)); // push back on queue
 					}
             }
