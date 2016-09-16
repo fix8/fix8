@@ -8,7 +8,7 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
-[Fix8 Market Tech](http://www.fix8mt.com/) develops and maintains Fix8 and [Fix8Pro](http://www.fix8pro.com), the commercially supported version of Fix8.
+[Fix8 Market Tech](http://www.fix8mt.com/) develops and maintains Fix8 and [Fix8Pro](http://www.fix8mt.com), the commercially supported version of Fix8.
 
 ## Contents
 
@@ -332,13 +332,13 @@ See [License](http://fix8.org/faq.html#license) for more information.
 
 ## Fix8Pro and Fix8 Market Technologies
 
-[Fix8Pro](http://www.fix8pro.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
+[Fix8Pro](http://www.fix8mt.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
 (Fix8MT) develops and maintains both Fix8Pro and the Fix8 open source versions.
 Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
 Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
 Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
 
-For more information about Fix8Pro see the [Fix8Pro website.](http://www.fix8pro.com)
+For more information about Fix8Pro see the [Fix8Pro website.](http://www.fix8mt.com)
 
 ## More Information
 
