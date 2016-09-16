@@ -15,7 +15,7 @@ nuget {
 		description: @"Develop branch of FIX8 library tests";
 		releaseNotes: "";
 		copyright: Copyright 2013-2014;
-		tags: { FIX8, native, CoApp };
+		tags: { FIX8, native, CoApp, v${VERSION} };
 	};
 
 	dependencies {
@@ -23,7 +23,7 @@ nuget {
         packages : {
             // This is a list of other NuGet packages required to use this package.
             // Each item follows the format "<pkg_name>/<version>"
-            fix8.dependencies.gtest/1.7.20140509.1,
+            fix8.dependencies.gtest/1.7.20151130.1,
             fix8.dev/${RELEASE_MAJOR}.${RELEASE_MINOR}.${RELEASE_DATE}.${RELEASE_REVISION},
         };
     }
@@ -35,19 +35,19 @@ nuget {
 			FIX8 = ..\..\;
 		}
 	
-		[x64,v120,debug,desktop] { 
+		[x64,v140,debug,desktop] { 
 			bin: { ${FIX8}msvc\x64\bin\Debug\f8printd.exe; ${FIX8}msvc\x64\bin\Debug\f8testd.exe; ${FIX8}msvc\x64\bin\Debug\fileLoggerd.exe; ${FIX8}msvc\x64\bin\Debug\filePersisterd.exe; ${FIX8}msvc\x64\bin\Debug\harnessd.exe; ${FIX8}msvc\x64\bin\Debug\hftestd.exe; ${FIX8}msvc\x64\bin\Debug\messageTestd.exe; ${FIX8}msvc\x64\bin\Debug\sessionTestd.exe; ${FIX8}msvc\x64\bin\Debug\utestlibd.dll; ${FIX8}\test\*.xml; };
 		}
 		
-		[x64,v120,release,desktop] { 
+		[x64,v140,release,desktop] { 
 			bin: { ${FIX8}msvc\x64\bin\Release\f8print.exe; ${FIX8}msvc\x64\bin\Release\f8test.exe; ${FIX8}msvc\x64\bin\Release\fileLogger.exe; ${FIX8}msvc\x64\bin\Release\filePersister.exe; ${FIX8}msvc\x64\bin\Release\harness.exe; ${FIX8}msvc\x64\bin\Release\hftest.exe; ${FIX8}msvc\x64\bin\Release\messageTest.exe; ${FIX8}msvc\x64\bin\Release\sessionTest.exe; ${FIX8}msvc\x64\bin\Release\utestlib.dll; ${FIX8}\test\*.xml; };
 		}
 			
-		[x86,v120,debug,desktop] { 
+		[x86,v140,debug,desktop] { 
 			bin: { ${FIX8}msvc\Win32\bin\Debug\f8printd.exe; ${FIX8}msvc\Win32\bin\Debug\f8testd.exe; ${FIX8}msvc\Win32\bin\Debug\fileLoggerd.exe; ${FIX8}msvc\Win32\bin\Debug\filePersisterd.exe; ${FIX8}msvc\Win32\bin\Debug\harnessd.exe; ${FIX8}msvc\Win32\bin\Debug\hftestd.exe; ${FIX8}msvc\Win32\bin\Debug\messageTestd.exe; ${FIX8}msvc\Win32\bin\Debug\sessionTestd.exe; ${FIX8}msvc\Win32\bin\Debug\utestlibd.dll; ${FIX8}\test\*.xml; };
 		}
 		
-		[x86,v120,release,desktop] { 
+		[x86,v140,release,desktop] { 
 			bin: { ${FIX8}msvc\Win32\bin\Release\f8print.exe; ${FIX8}msvc\Win32\bin\Release\f8test.exe; ${FIX8}msvc\Win32\bin\Release\fileLogger.exe; ${FIX8}msvc\Win32\bin\Release\filePersister.exe; ${FIX8}msvc\Win32\bin\Release\harness.exe; ${FIX8}msvc\Win32\bin\Release\hftest.exe; ${FIX8}msvc\Win32\bin\Release\messageTest.exe; ${FIX8}msvc\Win32\bin\Release\sessionTest.exe; ${FIX8}msvc\Win32\bin\Release\utestlib.dll; ${FIX8}\test\*.xml; };
 		}
 	};

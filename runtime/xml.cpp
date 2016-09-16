@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -160,6 +160,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
   	state(olb);
 
 	string tmpotag, tmpctag, tmpval, tmpattr, tmpdec;
+	int starttmpotag(0);
 
 	if (rootAttr)
 	{
@@ -210,7 +211,11 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 			else if (c == '=' || c == '\\' || c == '"' || c == '\'')
 				goto illegal_tag;
 			else if (!isspace(c))
+			{
+				if (!starttmpotag)
+					starttmpotag = root_->line_;
 				tmpotag += c;
+			}
 			break;
 		case ocom0:
 			if (c == '-')
@@ -449,7 +454,7 @@ illegal_tag:
 					++root_->errors_;
 					ostringstream ostr;
 					ostr << "Error (" << root_->line_ << "): unmatched tag " << '\''
-						 << tmpotag << '\'' << " does not close with " << '\'' << tmpctag << '\'';
+						 << tmpotag << "' (" << starttmpotag << ") does not close with " << '\'' << tmpctag << '\'';
 					if (!root_->inclusion_.empty())
 						ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
 					throw XMLError(ostr.str());

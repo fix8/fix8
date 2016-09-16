@@ -20,6 +20,8 @@
 #ifndef FF_PLATFORM_HPP
 #define FF_PLATFORM_HPP
 
+#include <fix8/ff/platforms/liblfds.h>
+
 // APPLE specific backward compatibility
 
 // posix_memalign is available on OS X starting with 10.6
@@ -41,8 +43,10 @@ inline static int posix_memalign(void **memptr, size_t alignment, size_t size)
 
 
 
-#if (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+#if defined(_WIN32)
 #pragma unmanaged
+
+#define NOMINMAX
 
 #include "fix8/ff/platforms/pthread_minport_windows.h"
 #define INLINE __forceinline
@@ -50,9 +54,16 @@ inline static int posix_memalign(void **memptr, size_t alignment, size_t size)
 //#define CACHE_LINE_SIZE 64
 #define __WIN_ALIGNED_16__ __declspec(align(16))
 
+// Thread specific storage
+#define __thread __declspec(thread)
+
+
 // Only x86 and x86_64 are currently supported for Windows OS
 INLINE void WMB() {}
 INLINE void PAUSE() {}
+
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
 
 INLINE static int posix_memalign(void **memptr,size_t alignment, size_t sz)
 {
@@ -72,6 +83,8 @@ INLINE static void posix_memalign_free(void* mem)
 typedef unsigned long useconds_t;
 //#define strtoll std::stoll
 #define strtoll _strtoi64
+
+#define sleep(SECS) Sleep(SECS)
 
 INLINE static int usleep(unsigned long microsecs) {
   if (microsecs > 100000)
@@ -110,6 +123,7 @@ expected_counter_difference;
     }
 	return(0);
 }
+
 
 //#define __TICKS2WAIT 1000
 #define random rand

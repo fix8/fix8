@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -489,6 +489,13 @@ protected:
 	    \return true on success */
 	virtual bool handle_admin(const unsigned seqnum, const Message *msg) { return true; }
 
+	/*! Outbound Reject callback. Override to receive callback when an inbound message has caused a reject
+	    \param seqnum message sequence number
+	    \param msg Message
+	    \param errstr reject message text
+	    \return true on success */
+	F8API virtual bool handle_outbound_reject(const unsigned seqnum, const Message *msg, const char *errstr);
+
 	/*! Application message callback. Called on receipt of all non-admin messages. You must implement this method.
 	  The message is passed as a reference to a pointer. Your application can detach and take ownership. If you want
 	  to take ownership, take a copy of the pointer and then set msg to 0. See Session::detach()
@@ -753,6 +760,10 @@ public:
 	/*! Get the LoginParameters
 	    \return loginParamaters */
 	const LoginParameters& get_login_parameters() const { return  _loginParameters; }
+
+	/*! Set the reset_sequence_numbers flag, defaults to value set in config file (default false)
+	    \param flag true or false */
+	void set_reset_sequence_numbers_flag(bool flag) { _loginParameters._reset_sequence_numbers = flag; }
 
 	/*! Set the persister.
 	    \param pst pointer to persister object  */

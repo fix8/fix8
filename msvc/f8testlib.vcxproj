@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props" Condition="Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props')" />
+  <Import Project="packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props" Condition="Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props')" />
+  <Import Project="packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props" Condition="Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props')" />
+  <Import Project="packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.props" Condition="Exists('packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.props')" />
+  <Import Project="packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.props" Condition="Exists('packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -29,26 +34,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -161,27 +166,26 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-    <Import Project="packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets" Condition="Exists('packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets')" />
-    <Import Project="packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets" Condition="Exists('packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets')" />
-    <Import Project="packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets" Condition="Exists('packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets')" />
-    <Import Project="packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets" Condition="Exists('packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets')" />
-    <Import Project="packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets" Condition="Exists('packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets')" />
-    <Import Project="packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets" Condition="Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" />
-    <Import Project="packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets" Condition="Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" />
-    <Import Project="packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets" Condition="Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" />
+    <Import Project="packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.targets" Condition="Exists('packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.targets')" />
+    <Import Project="packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.targets" Condition="Exists('packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.targets')" />
+    <Import Project="packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets" Condition="Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets')" />
+    <Import Project="packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets" Condition="Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets')" />
+    <Import Project="packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets" Condition="Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.getopt.redist.1.0.20140509.1\build\native\fix8.dependencies.getopt.redist.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.getopt.1.0.20140509.1\build\native\fix8.dependencies.getopt.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.redist.1.0.20140509.1\build\native\fix8.dependencies.openssl.redist.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.1.0.20140509.1\build\native\fix8.dependencies.openssl.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.redist.1.5.20140509.1\build\native\fix8.dependencies.poco.redist.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.5.20140509.1\build\native\fix8.dependencies.poco.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.redist.4.2.20140416.1\build\native\fix8.dependencies.tbb.redist.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.2.20140416.1\build\native\fix8.dependencies.tbb.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.props'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\fix8.dependencies.getopt.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.props'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.gtest.1.7.20151130.1\build\native\fix8.dependencies.gtest.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props'))" />
+    <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets'))" />
   </Target>
 </Project>

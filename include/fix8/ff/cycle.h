@@ -452,9 +452,9 @@ static __inline__ ticks getticks(void)
 #  include <machine/inline.h>
 static inline unsigned long getticks(void)
 {
-     register ticks ret;
-     _MFCTL(16, ret);
-     return ret;
+    ticks ret;
+    _MFCTL(16, ret);
+    return ret;
 }
 #  endif
 

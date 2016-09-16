@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -215,7 +215,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
+Message *ConsoleMenu::SelectFromMsg(const MsgList& lst) const
 {
 	if (lst.empty())
 		return nullptr;
@@ -235,7 +235,15 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 			const MsgTable::Pair *tbme(_ctx._bme.find_pair_ptr((*itr)->get_msgtype().c_str()));
 			text txt;
 			(*itr)->get(txt);
-         _os << '[' << _opt_keys[nlines] << "]  " << tbme->_value._name << '(' << tbme->_key << ")\t" << txt() << endl;
+			sending_time sndtime;
+			msg_seq_num msgseqnum;
+			if ((*itr)->Header())
+			{
+				 (*itr)->Header()->get(sndtime);
+				 (*itr)->Header()->get(msgseqnum);
+			}
+         _os << '[' << _opt_keys[nlines] << "]  " << tbme->_value._name << '(' << tbme->_key << ")\t"
+				 << sndtime() << ' ' << msgseqnum() << ' ' << txt() << endl;
 
 			++nlines;
 			if (nlines % _lpp == 0 || (nlines + _lpp * page) == lst.size())
@@ -268,6 +276,29 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 }
 
 //-------------------------------------------------------------------------------------------------
+int ConsoleMenu::CreateMsgsFrom(tty_save_state& tty, MsgList& lst, const MsgList& from) const
+{
+	for (;;)
+	{
+		const BaseMsgEntry *mc(SelectMsg());
+		if (!mc)
+			break;
+		unique_ptr<Message> msg(mc->_create._do(true));
+		Message *fmsg(SelectFromMsg(from));
+		if (fmsg)
+			fmsg->copy_legal(msg.get());
+		const FieldTable::Pair *fld;
+		while((fld = SelectField(msg.get())))
+			EditMsg(tty, fld, msg.get());
+		_os << endl << endl << *static_cast<MessageBase *>(msg.get()) << endl;
+		if (get_yn("Add to list? (y/n):", true))
+			lst.push_back(msg.release());
+	}
+
+	return static_cast<int>(lst.size());
+}
+
+//-------------------------------------------------------------------------------------------------
 int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 {
 	for (;;)
@@ -275,13 +306,13 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 		const BaseMsgEntry *mc(SelectMsg());
 		if (!mc)
 			break;
-		Message *msg(mc->_create._do(true));
+		unique_ptr<Message> msg(mc->_create._do(true));
 		const FieldTable::Pair *fld;
-		while((fld = SelectField(msg)))
-			EditMsg(tty, fld, msg);
-		_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
+		while((fld = SelectField(msg.get())))
+			EditMsg(tty, fld, msg.get());
+		_os << endl << endl << *static_cast<MessageBase *>(msg.get()) << endl;
 		if (get_yn("Add to list? (y/n):", true))
-			lst.push_back(msg);
+			lst.push_back(msg.release());
 	}
 
 	return static_cast<int>(lst.size());
@@ -378,7 +409,7 @@ int ConsoleMenu::DeleteAllMsgs(tty_save_state& tty, MsgList& lst) const
 {
 	if (lst.size() && get_yn("Delete all msgs? (y/n):", true))
 	{
-		for_each(lst.begin(), lst.end(), [](const Message *pp){ delete pp; });
+		for_each(lst.begin(), lst.end(), [](const Message *pp){ delete pp; pp = nullptr; });
 		lst.clear();
 	}
 

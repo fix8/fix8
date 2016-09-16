@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -43,6 +43,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <limits.h>
 #undef min
 #undef max
+#pragma warning(push)
+#pragma warning(disable: 4307) // chrono(132): warning C4307: '*': integral constant overflow in vc140
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -55,7 +57,7 @@ namespace FIX8 {
 class Tickval
 {
 public:
-#if defined __APPLE__
+#if defined(__APPLE__) || defined(_MSC_VER)
 	using f8_clock = std::chrono::system_clock;
 #else
 	using f8_clock = std::chrono::high_resolution_clock;
@@ -348,4 +350,8 @@ public:
 
 } // FIX8
 
-#endif // FIX8_TICKVAL_HPP_
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
+#endif // FIX8PRO_TICKVAL_HPP_

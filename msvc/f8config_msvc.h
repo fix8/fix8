@@ -1,6 +1,6 @@
 #ifndef _INCLUDE_FIX__F_CONFIG_H
 #define _INCLUDE_FIX__F_CONFIG_H 1
- 
+
 /* include/fix8/f8config.h. Generated automatically at end of configure. */
 /* intermediate_config.h.  Generated from intermediate_config.h.in by configure.  */
 /* intermediate_config.h.in.  Generated from configure.ac by autoheader.  */
@@ -11,7 +11,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
 Lesser General Public License as  published by the Free Software Foundation, either version
@@ -79,18 +79,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Short Date system was configured */
 #ifndef FIX8_CONFIGURE_SDATE
-#define FIX8_CONFIGURE_SDATE "2015/07/25"
+#define FIX8_CONFIGURE_SDATE "2016/08/23"
 #endif
 
 /* Date system was configured */
 #ifndef FIX8_CONFIGURE_TIME
-#define FIX8_CONFIGURE_TIME "Sat Jul 25 22:06:35 MSK 2015"
+#define FIX8_CONFIGURE_TIME "Tue Aug 23 14:53:56 AEST 2016"
 #endif
 
 /* date/time as seconds since start epoch */
 #ifndef FIX8_CONFIGURE_TIME_NUM
-#define FIX8_CONFIGURE_TIME_NUM 1437851195
+#define FIX8_CONFIGURE_TIME_NUM 1471928036
 #endif
+
 
 /* compiler spec */
 #ifndef FIX8_CPPFLAGS
@@ -548,7 +549,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Encode version */
 #ifndef FIX8_MAGIC_NUM
-#define FIX8_MAGIC_NUM 16789508
+#define FIX8_MAGIC_NUM 16793600
 #endif
 
 /* Encoded Version as expresion */
@@ -593,7 +594,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Minor version number */
 #ifndef FIX8_MINOR_VERSION_NUM
-#define FIX8_MINOR_VERSION_NUM 3
+#define FIX8_MINOR_VERSION_NUM 4
 #endif
 
 /* FIX8_FF MPMC */
@@ -628,7 +629,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to the full name and version of this package. */
 #ifndef FIX8_PACKAGE_STRING
-#define FIX8_PACKAGE_STRING "fix8 1.3.4"
+#define FIX8_PACKAGE_STRING "fix8 1.4.0"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -643,12 +644,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to the version of this package. */
 #ifndef FIX8_PACKAGE_VERSION
-#define FIX8_PACKAGE_VERSION "1.3.4"
+#define FIX8_PACKAGE_VERSION "1.4.0"
 #endif
 
 /* Patch number */
 #ifndef FIX8_PATCH_VERSION_NUM
-#define FIX8_PATCH_VERSION_NUM 4
+#define FIX8_PATCH_VERSION_NUM 0
 #endif
 
 /* Define to 1 to enable metatdata population in encode/decodes */
@@ -750,7 +751,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Version number of package */
 #ifndef FIX8_VERSION
-#define FIX8_VERSION "1.3.4"
+#define FIX8_VERSION "1.4.0"
 #endif
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
@@ -825,6 +826,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define as `fork' if `vfork' does not work. */
 /* #undef vfork */
- 
+
 /* once: _INCLUDE_FIX__F_CONFIG_H */
 #endif
