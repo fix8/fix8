@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -458,7 +458,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="persist_8cpp_source.html#l00322">322</a> of file <a class="el" href="persist_8cpp_source.html">persist.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00595">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00743">FIX8::Session::get_next_send_seq()</a>, <a class="el" href="logger_8hpp_source.html#l00606">glout_error</a>, and <a class="el" href="logger_8hpp_source.html#l00604">glout_warn</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00602">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00750">FIX8::Session::get_next_send_seq()</a>, <a class="el" href="logger_8hpp_source.html#l00606">glout_error</a>, and <a class="el" href="logger_8hpp_source.html#l00604">glout_warn</a>.</p>
 <div class="fragment"><div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;{</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   <span class="keywordtype">unsigned</span> last_seq(0);</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <a class="code" href="classFIX8_1_1MemoryPersister.html#a002c13a644b5bf034f6ea949c7cb4a12">get_last_seqnum</a>(last_seq);</div>
@@ -499,10 +499,10 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;}</div>
 <div class="ttc" id="classFIX8_1_1MemoryPersister_html_a8e8d8c6b0c73e5736596e85d4250fd1e"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a8e8d8c6b0c73e5736596e85d4250fd1e">FIX8::MemoryPersister::find_nearest_highest_seqnum</a></div><div class="ttdeci">virtual F8API unsigned find_nearest_highest_seqnum(const unsigned requested, const unsigned last) const </div><div class="ttdef"><b>Definition:</b> <a href="persist_8cpp_source.html#l00401">persist.cpp:401</a></div></div>
 <div class="ttc" id="classFIX8_1_1MemoryPersister_html_a002c13a644b5bf034f6ea949c7cb4a12"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a002c13a644b5bf034f6ea949c7cb4a12">FIX8::MemoryPersister::get_last_seqnum</a></div><div class="ttdeci">virtual F8API unsigned get_last_seqnum(unsigned &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="persist_8cpp_source.html#l00417">persist.cpp:417</a></div></div>
-<div class="ttc" id="classFIX8_1_1Session_html_a99696a0a7aec12803f8632762afaec43"><div class="ttname"><a href="classFIX8_1_1Session.html#a99696a0a7aec12803f8632762afaec43">FIX8::Session::SequencePair</a></div><div class="ttdeci">std::pair&lt; const unsigned, const f8String &gt; SequencePair</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00608">session.hpp:608</a></div></div>
-<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html">FIX8::Session::RetransmissionContext</a></div><div class="ttdoc">Provides context to your retrans handler. </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00591">session.hpp:591</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a99696a0a7aec12803f8632762afaec43"><div class="ttname"><a href="classFIX8_1_1Session.html#a99696a0a7aec12803f8632762afaec43">FIX8::Session::SequencePair</a></div><div class="ttdeci">std::pair&lt; const unsigned, const f8String &gt; SequencePair</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00615">session.hpp:615</a></div></div>
+<div class="ttc" id="structFIX8_1_1Session_1_1RetransmissionContext_html"><div class="ttname"><a href="structFIX8_1_1Session_1_1RetransmissionContext.html">FIX8::Session::RetransmissionContext</a></div><div class="ttdoc">Provides context to your retrans handler. </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00598">session.hpp:598</a></div></div>
 <div class="ttc" id="logger_8hpp_html_a5d0cb8d580e88b00a185e52e0800e3b4"><div class="ttname"><a href="logger_8hpp.html#a5d0cb8d580e88b00a185e52e0800e3b4">glout_error</a></div><div class="ttdeci">#define glout_error</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00606">logger.hpp:606</a></div></div>
-<div class="ttc" id="classFIX8_1_1Session_html_a3f6daec594c6d7b79fb79d53cd4117fd"><div class="ttname"><a href="classFIX8_1_1Session.html#a3f6daec594c6d7b79fb79d53cd4117fd">FIX8::Session::get_next_send_seq</a></div><div class="ttdeci">unsigned get_next_send_seq() const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00743">session.hpp:743</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_a3f6daec594c6d7b79fb79d53cd4117fd"><div class="ttname"><a href="classFIX8_1_1Session.html#a3f6daec594c6d7b79fb79d53cd4117fd">FIX8::Session::get_next_send_seq</a></div><div class="ttdeci">unsigned get_next_send_seq() const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00750">session.hpp:750</a></div></div>
 <div class="ttc" id="logger_8hpp_html_aa22f86f7f48ba8176436ca57f631f8d0"><div class="ttname"><a href="logger_8hpp.html#aa22f86f7f48ba8176436ca57f631f8d0">glout_warn</a></div><div class="ttdeci">#define glout_warn</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00604">logger.hpp:604</a></div></div>
 <div class="ttc" id="classFIX8_1_1MemoryPersister_html_a71232634e82c3638b7b7b19c6eff68f7"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html#a71232634e82c3638b7b7b19c6eff68f7">FIX8::MemoryPersister::_store</a></div><div class="ttdeci">Store _store</div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00295">persist.hpp:295</a></div></div>
 </div><!-- fragment -->
@@ -735,7 +735,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:15. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

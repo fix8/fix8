@@ -1,5 +1,8 @@
 var NAVTREEINDEX96 =
 {
+"classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions.html#a1bc5ecb9fe7530a1360612a205f3ac17":[3,0,0,1,114,0,10],
+"classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions.html#a34c524df19810536b4973002ba13914a":[3,0,0,1,114,0,9],
+"classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions.html#a570fffef35807c4873e62beb45520368":[3,0,0,1,114,0,13],
 "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions.html#a5aa7138a879e79869632c97fcb8bb5b2":[3,0,0,1,114,0,8],
 "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions.html#a99e8fcfbcdcf8da69e0dc491c9b282e9a5f98a3e3d3ea285617153d05a93e2f65":[3,0,0,1,114,0,5],
 "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions.html#aa8ee82b63a4ee5d94c8c99f198681f8e":[3,0,0,1,114,0,7],
@@ -240,14 +243,11 @@ var NAVTREEINDEX96 =
 "classFIX8_1_1TEX_1_1header.html#a02e759a2975d07a6596f1a27f526e825":[3,0,0,1,33,12],
 "classFIX8_1_1TEX_1_1header.html#a2d5956ccb55361171d0148fda3d55fc8":[3,0,0,1,33,19],
 "classFIX8_1_1TEX_1_1header.html#a3d395e0a3bafc9f3af55f95ccdb500cc":[3,0,0,1,33,18],
-"classFIX8_1_1TEX_1_1header.html#a4784a7a3474b8840d192b05fcf2606dd":[3,0,0,1,33,4],
 "classFIX8_1_1TEX_1_1header.html#a4784a7a3474b8840d192b05fcf2606dd":[3,0,0,1,33,2],
-"classFIX8_1_1TEX_1_1header.html#a6820ee113b8443d03ed49492cc0f1881":[3,0,0,1,33,11],
+"classFIX8_1_1TEX_1_1header.html#a4784a7a3474b8840d192b05fcf2606dd":[3,0,0,1,33,4],
 "classFIX8_1_1TEX_1_1header.html#a6820ee113b8443d03ed49492cc0f1881":[3,0,0,1,33,10],
+"classFIX8_1_1TEX_1_1header.html#a6820ee113b8443d03ed49492cc0f1881":[3,0,0,1,33,11],
 "classFIX8_1_1TEX_1_1header.html#a7b1176019f3972985d63e7baec4a34ad":[3,0,0,1,33,16],
 "classFIX8_1_1TEX_1_1header.html#a86514647bfd138b411a38fd576de481b":[3,0,0,1,33,17],
-"classFIX8_1_1TEX_1_1header.html#a872070d2aa5fef50c609c8b3a3c3c025":[3,0,0,1,33,15],
-"classFIX8_1_1TEX_1_1header.html#a872070d2aa5fef50c609c8b3a3c3c025":[3,0,0,1,33,14],
-"classFIX8_1_1TEX_1_1header.html#a8df13bb84a8b19844d10c37b78226d7b":[3,0,0,1,33,8],
-"classFIX8_1_1TEX_1_1header.html#a8df13bb84a8b19844d10c37b78226d7b":[3,0,0,1,33,9]
+"classFIX8_1_1TEX_1_1header.html#a872070d2aa5fef50c609c8b3a3c3c025":[3,0,0,1,33,14]
 };

@@ -18,6 +18,7 @@ var classFIX8_1_1AsyncSocket =
     [ "_pmodel", "classFIX8_1_1AsyncSocket.html#ab16272b8e50303bb0e33cfdc72a16233", null ],
     [ "_session", "classFIX8_1_1AsyncSocket.html#a8ab8f034fe13cf89370423a0d05485f7", null ],
     [ "_sock", "classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1", null ],
-    [ "_started", "classFIX8_1_1AsyncSocket.html#aa676206d080eac8e3da7cdb5d9394550", null ],
+    [ "_start_mutex", "classFIX8_1_1AsyncSocket.html#ad71553829d9372d46a054b289431adf5", null ],
+    [ "_started", "classFIX8_1_1AsyncSocket.html#ac6f3aec1f1a9f682f4316ff77a9436b3", null ],
     [ "_thread", "classFIX8_1_1AsyncSocket.html#a7817c7fa26d56bfc9531e46cd824da31", null ]
 ];

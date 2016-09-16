@@ -1,5 +1,8 @@
 var NAVTREEINDEX61 =
 {
+"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a83f13a3c5bf302dcd3f9b04ee53af694":[3,0,0,1,58,9,2,10],
+"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a99c6f3b338e8e79363ef22e3981f0186":[3,0,0,1,58,9,2,5],
+"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ab3af3862a0832b33297f58347303d7aa":[3,0,0,1,58,9,2,7],
 "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#af04b99a2a57f645cc97172e7f6a0fa71a2c9da863baf21b1b65ae19fbd6ce522a":[3,0,0,1,58,9,2,1],
 "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html":[3,0,0,1,58,9,2,0],
 "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a1a5b25bf92210e807d1020f8b2815124":[3,0,0,1,58,9,2,0,3],
@@ -246,8 +249,5 @@ var NAVTREEINDEX61 =
 "classFIX8_1_1TEX_1_1News.html":[3,0,0,1,60],
 "classFIX8_1_1TEX_1_1News.html#a258b3052f0bb6f1a333aa2746aa96b1f":[3,0,0,1,60,14],
 "classFIX8_1_1TEX_1_1News.html#a45bab71a671d44a64dfb4c27ba617fa2":[3,0,0,1,60,12],
-"classFIX8_1_1TEX_1_1News.html#a7af39000ac3f2a1d09c15a8f256e6b59":[3,0,0,1,60,8],
-"classFIX8_1_1TEX_1_1News.html#a8281eda5fad19cca280aa1bd9abf14a0":[3,0,0,1,60,7],
-"classFIX8_1_1TEX_1_1News.html#ab4799a4a5b005f47113b70f03ad723fa":[3,0,0,1,60,9],
-"classFIX8_1_1TEX_1_1News.html#abeb9d69d953edced54c2a6ebb865d4ba":[3,0,0,1,60,13]
+"classFIX8_1_1TEX_1_1News.html#a7af39000ac3f2a1d09c15a8f256e6b59":[3,0,0,1,60,8]
 };

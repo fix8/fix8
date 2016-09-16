@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -141,8 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adb59604c4289a68886b1e18874bb7418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff7398692a56ad6c8c9c029a282b5cad"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Session.html">Session</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SessionInstanceBase.html#aff7398692a56ad6c8c9c029a282b5cad">session_ptr</a> ()=0</td></tr>
 <tr class="separator:aff7398692a56ad6c8c9c029a282b5cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae65875d1953777ece0eea2d721e15500"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SessionInstanceBase.html#ae65875d1953777ece0eea2d721e15500">start</a> (bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)</td></tr>
-<tr class="separator:ae65875d1953777ece0eea2d721e15500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d8966b6077cc7a289d577407616e993"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SessionInstanceBase.html#a1d8966b6077cc7a289d577407616e993">start</a> (bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0)</td></tr>
+<tr class="separator:a1d8966b6077cc7a289d577407616e993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1896ce59d42cc86b56852e55b396497"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SessionInstanceBase.html#ae1896ce59d42cc86b56852e55b396497">stop</a> ()</td></tr>
 <tr class="memdesc:ae1896ce59d42cc86b56852e55b396497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the session. Cleanup.  <a href="#ae1896ce59d42cc86b56852e55b396497">More...</a><br /></td></tr>
 <tr class="separator:ae1896ce59d42cc86b56852e55b396497"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,7 +150,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base <a class="el" href="structFIX8_1_1Server.html" title="Class to hold server settings for failoverable sessions. ">Server</a> session instance. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00591">591</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00592">592</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a73c86dc4b682e9683585a39d024e52c8"></a>
 <div class="memitem">
@@ -200,8 +200,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00598">598</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;{}</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00599">599</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -232,7 +232,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae65875d1953777ece0eea2d721e15500"></a>
+<a class="anchor" id="a1d8966b6077cc7a289d577407616e993"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -248,13 +248,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>send_seqnum</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>recv_seqnum</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -278,10 +278,10 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classFIX8_1_1SessionInstance.html#a988df873d4df5ab2deaeadbac9967d7a">FIX8::SessionInstance&lt; T &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classFIX8_1_1SessionInstance.html#ab7abdddae100a428816aafd3a02eb935">FIX8::SessionInstance&lt; T &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00608">608</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;{}</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00609">609</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -310,8 +310,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1SessionInstance.html#aad9816c7dd8dc483d21dee00d2b792e9">FIX8::SessionInstance&lt; T &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00611">611</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;{}</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00612">612</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -321,7 +321,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:16. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

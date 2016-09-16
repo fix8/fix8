@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -434,7 +434,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="thread_8hpp_source.html#l00157">get_threadid()</a>, and <a class="el" href="thread_8hpp_source.html#l00168">getid()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00120">FIX8::AsyncSocket&lt; f8String &gt;::join()</a>, <a class="el" href="timer_8hpp_source.html#l00127">FIX8::Timer&lt; FIX8::Session &gt;::join()</a>, <a class="el" href="connection_8hpp_source.html#l00271">FIX8::FIXReader::quit()</a>, <a class="el" href="logger_8hpp_source.html#l00310">FIX8::Logger::stop()</a>, <a class="el" href="thread_8hpp_source.html#l00108">~_f8_threadcore()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00309">FIX8::ReliableClientSession&lt; T &gt;::~ReliableClientSession()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00125">FIX8::AsyncSocket&lt; f8String &gt;::join()</a>, <a class="el" href="timer_8hpp_source.html#l00127">FIX8::Timer&lt; FIX8::Session &gt;::join()</a>, <a class="el" href="connection_8hpp_source.html#l00276">FIX8::FIXReader::quit()</a>, <a class="el" href="logger_8hpp_source.html#l00310">FIX8::Logger::stop()</a>, <a class="el" href="thread_8hpp_source.html#l00108">~_f8_threadcore()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00309">FIX8::ReliableClientSession&lt; T &gt;::~ReliableClientSession()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;   {</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1__f8__threadcore.html#a2d8b133e0d285b8bec51f7c258a9a80d">getid</a>() != <a class="code" href="classFIX8_1_1__f8__threadcore.html#a31595198812a53c00f8aa71570742831">get_threadid</a>() ? pthread_join(<a class="code" href="classFIX8_1_1__f8__threadcore.html#af69169adc3264ad39e239f8f65b9c5d6">_tid</a>, <span class="keyword">nullptr</span>) ? -1 : 0 : -1; <span class="comment">// prevent self-join</span></div>
@@ -701,7 +701,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:12. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

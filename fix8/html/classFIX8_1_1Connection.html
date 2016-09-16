@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -146,10 +146,8 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac962fcd78af386fa108025cddddbded8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#ac962fcd78af386fa108025cddddbded8">Connection</a> (Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress &amp;addr, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const <a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a> pmodel, const unsigned hb_interval, bool secured)</td></tr>
-<tr class="separator:ac962fcd78af386fa108025cddddbded8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14bdd2b982d8a53377a98962000c08f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a14bdd2b982d8a53377a98962000c08f7">Connection</a> (Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress &amp;addr, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const unsigned hb_interval, const <a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a> pmodel, bool secured)</td></tr>
-<tr class="separator:a14bdd2b982d8a53377a98962000c08f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab722adb412c713858818df9a356ac3b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#ab722adb412c713858818df9a356ac3b8">Connection</a> (Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress &amp;addr, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, <a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Role</a> role, const <a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a> pmodel, unsigned hb_interval, bool secured)</td></tr>
+<tr class="separator:ab722adb412c713858818df9a356ac3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b5e9ade90396694c34c2d10f5ec7321"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a8b5e9ade90396694c34c2d10f5ec7321">~Connection</a> ()</td></tr>
 <tr class="memdesc:a8b5e9ade90396694c34c2d10f5ec7321"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a8b5e9ade90396694c34c2d10f5ec7321">More...</a><br /></td></tr>
 <tr class="separator:a8b5e9ade90396694c34c2d10f5ec7321"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,7 +243,7 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Complete Fix connection (reader and writer). </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00481">481</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00508">508</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="ac7c5a73f9b3727fce73c3240bb57e804"></a>
 <div class="memitem">
@@ -267,16 +265,16 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00485">485</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">cn_acceptor</a>, <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">cn_initiator</a>, <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">cn_unknown</a> };</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">FIX8::Connection::cn_initiator</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">FIX8::Connection::cn_unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">FIX8::Connection::cn_acceptor</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00512">512</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">cn_acceptor</a>, <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">cn_initiator</a>, <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">cn_unknown</a> };</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">FIX8::Connection::cn_initiator</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">FIX8::Connection::cn_unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">FIX8::Connection::cn_acceptor</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac962fcd78af386fa108025cddddbded8"></a>
+<a class="anchor" id="ab722adb412c713858818df9a356ac3b8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -304,13 +302,19 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Role</a>&#160;</td>
+          <td class="paramname"><em>role</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const <a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a>&#160;</td>
           <td class="paramname"><em>pmodel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>hb_interval</em>, </td>
         </tr>
         <tr>
@@ -331,11 +335,12 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Ctor. Initiator. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Ctor. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sock</td><td>connected socket </td></tr>
     <tr><td class="paramname">addr</td><td>sock address structure </td></tr>
     <tr><td class="paramname">session</td><td>session </td></tr>
+    <tr><td class="paramname">role</td><td>connection role </td></tr>
     <tr><td class="paramname">pmodel</td><td>process model </td></tr>
     <tr><td class="paramname">hb_interval</td><td>heartbeat interval </td></tr>
     <tr><td class="paramname">secured</td><td>true for ssl connection </td></tr>
@@ -343,110 +348,24 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00509">509</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;      : <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>(sock), <a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>(addr), <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>(<span class="keyword">false</span>), <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>(session), <a class="code" href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">_role</a>(<a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">cn_initiator</a>), <a class="code" href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">_pmodel</a>(pmodel),</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a>(<a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>), <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>(sock, session, pmodel), <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>(sock, session, pmodel),</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">_secured</a>(secured) {}</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00490">connection.hpp:490</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00488">connection.hpp:488</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">FIX8::Connection::cn_initiator</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ae12da3c353f29b8541ebd343912f97eb"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">FIX8::Connection::_role</a></div><div class="ttdeci">Role _role</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00492">connection.hpp:492</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ae4ec42558e822168adb359b7cf9f1dce"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">FIX8::Connection::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00489">connection.hpp:489</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00491">connection.hpp:491</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a7b82969fae910a4d93daeb38a383bd2c"><div class="ttname"><a href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">FIX8::Connection::_secured</a></div><div class="ttdeci">bool _secured</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00498">connection.hpp:498</a></div></div>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00537">537</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;      : <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>(sock), <a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>(addr), <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>(role == <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">cn_acceptor</a>), <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>(session), <a class="code" href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">_role</a>(role), <a class="code" href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">_pmodel</a>(pmodel),</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a>(<a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>), <a class="code" href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">_hb_interval20pc</a>(<a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> + <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> / 5),</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>(sock, session, pmodel), <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>(sock, session, pmodel),</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">_secured</a>(secured) {}</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00517">connection.hpp:517</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00515">connection.hpp:515</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_abfa5da77be082c11451100876890ac9d"><div class="ttname"><a href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">FIX8::Connection::_hb_interval20pc</a></div><div class="ttdeci">unsigned _hb_interval20pc</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00521">connection.hpp:521</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ae12da3c353f29b8541ebd343912f97eb"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">FIX8::Connection::_role</a></div><div class="ttdeci">Role _role</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00519">connection.hpp:519</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ae4ec42558e822168adb359b7cf9f1dce"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">FIX8::Connection::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00516">connection.hpp:516</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00518">connection.hpp:518</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">FIX8::Connection::cn_acceptor</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a7b82969fae910a4d93daeb38a383bd2c"><div class="ttname"><a href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">FIX8::Connection::_secured</a></div><div class="ttdeci">bool _secured</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00525">connection.hpp:525</a></div></div>
 <div class="ttc" id="namespaceFIX8_1_1defaults_html_a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d"><div class="ttname"><a href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">FIX8::defaults::hb_interval</a></div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00192">session.hpp:192</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a14514e39351a884e260383fea2ecbd42"><div class="ttname"><a href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">FIX8::Connection::_pmodel</a></div><div class="ttdeci">ProcessModel _pmodel</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00493">connection.hpp:493</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a14bdd2b982d8a53377a98962000c08f7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">FIX8::Connection::Connection </td>
-          <td>(</td>
-          <td class="paramtype">Poco::Net::StreamSocket *&#160;</td>
-          <td class="paramname"><em>sock</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Poco::Net::SocketAddress &amp;&#160;</td>
-          <td class="paramname"><em>addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
-          <td class="paramname"><em>hb_interval</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a>&#160;</td>
-          <td class="paramname"><em>pmodel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>secured</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Ctor. Acceptor. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sock</td><td>connected socket </td></tr>
-    <tr><td class="paramname">addr</td><td>sock address structure </td></tr>
-    <tr><td class="paramname">session</td><td>session </td></tr>
-    <tr><td class="paramname">hb_interval</td><td>heartbeat interval </td></tr>
-    <tr><td class="paramname">pmodel</td><td>process model </td></tr>
-    <tr><td class="paramname">secured</td><td>true for ssl connection </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00523">523</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      : <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>(sock), <a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>(addr), <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>(<span class="keyword">true</span>), <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>(session), <a class="code" href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">_role</a>(<a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">cn_acceptor</a>), <a class="code" href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">_pmodel</a>(pmodel),</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a>(<a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>), <a class="code" href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">_hb_interval20pc</a>(<a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> + <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> / 5),</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>(sock, session, pmodel), <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>(sock, session, pmodel),</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;        <a class="code" href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">_secured</a>(secured) {}</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00490">connection.hpp:490</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00488">connection.hpp:488</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_abfa5da77be082c11451100876890ac9d"><div class="ttname"><a href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">FIX8::Connection::_hb_interval20pc</a></div><div class="ttdeci">unsigned _hb_interval20pc</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ae12da3c353f29b8541ebd343912f97eb"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">FIX8::Connection::_role</a></div><div class="ttdeci">Role _role</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00492">connection.hpp:492</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ae4ec42558e822168adb359b7cf9f1dce"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">FIX8::Connection::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00489">connection.hpp:489</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00491">connection.hpp:491</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">FIX8::Connection::cn_acceptor</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a7b82969fae910a4d93daeb38a383bd2c"><div class="ttname"><a href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">FIX8::Connection::_secured</a></div><div class="ttdeci">bool _secured</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00498">connection.hpp:498</a></div></div>
-<div class="ttc" id="namespaceFIX8_1_1defaults_html_a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d"><div class="ttname"><a href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">FIX8::defaults::hb_interval</a></div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00192">session.hpp:192</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a14514e39351a884e260383fea2ecbd42"><div class="ttname"><a href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">FIX8::Connection::_pmodel</a></div><div class="ttdeci">ProcessModel _pmodel</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00493">connection.hpp:493</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00521">connection.hpp:521</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a14514e39351a884e260383fea2ecbd42"><div class="ttname"><a href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">FIX8::Connection::_pmodel</a></div><div class="ttdeci">ProcessModel _pmodel</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00520">connection.hpp:520</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -473,12 +392,13 @@ Protected Attributes</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00531">531</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00545">545</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00579">FIX8::Session::clear_connection()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>.<a class="code" href="classFIX8_1_1Session.html#aa178c658c7401711bba56df7217f69b8">clear_connection</a>(<span class="keyword">this</span>); }</div>
-<div class="ttc" id="classFIX8_1_1Session_html_aa178c658c7401711bba56df7217f69b8"><div class="ttname"><a href="classFIX8_1_1Session.html#aa178c658c7401711bba56df7217f69b8">FIX8::Session::clear_connection</a></div><div class="ttdeci">void clear_connection(const Connection *connection)</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00579">session.hpp:579</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00491">connection.hpp:491</a></div></div>
+<p>References <a class="el" href="session_8hpp_source.html#l00586">FIX8::Session::clear_connection()</a>, and <a class="el" href="connection_8cpp_source.html#l00322">stop()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#a9a584ddd21bf93a9d721c0be9f87ab59">stop</a>(); <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>.<a class="code" href="classFIX8_1_1Session.html#aa178c658c7401711bba56df7217f69b8">clear_connection</a>(<span class="keyword">this</span>); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a9a584ddd21bf93a9d721c0be9f87ab59"><div class="ttname"><a href="classFIX8_1_1Connection.html#a9a584ddd21bf93a9d721c0be9f87ab59">FIX8::Connection::stop</a></div><div class="ttdeci">F8API void stop()</div><div class="ttdoc">Stop the reader and writer threads. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8cpp_source.html#l00322">connection.cpp:322</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_aa178c658c7401711bba56df7217f69b8"><div class="ttname"><a href="classFIX8_1_1Session.html#aa178c658c7401711bba56df7217f69b8">FIX8::Session::clear_connection</a></div><div class="ttdeci">void clear_connection(const Connection *connection)</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00586">session.hpp:586</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00518">connection.hpp:518</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -507,13 +427,13 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1ClientConnection.html#af4f8e04fc19787d8b18c25d7262b4451">FIX8::ClientConnection</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00553">553</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00567">567</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00490">_connected</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00517">_connected</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00490">connection.hpp:490</a></div></div>
+<div class="fragment"><div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00517">connection.hpp:517</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -539,13 +459,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the heartbeat interval for this connection. </p><dl class="section return"><dt>Returns</dt><dd>the heartbeat interval </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00594">594</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00608">608</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00494">_hb_interval</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00521">_hb_interval</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00744">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00808">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00521">connection.hpp:521</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -571,13 +491,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the heartbeat interval + %20 for this connection. </p><dl class="section return"><dt>Returns</dt><dd>the heartbeat interval + %20 </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00598">598</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00612">612</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00494">_hb_interval20pc</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00521">_hb_interval20pc</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00744">FIX8::Session::heartbeat_service()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">_hb_interval20pc</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_abfa5da77be082c11451100876890ac9d"><div class="ttname"><a href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">FIX8::Connection::_hb_interval20pc</a></div><div class="ttdeci">unsigned _hb_interval20pc</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00808">FIX8::Session::heartbeat_service()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">_hb_interval20pc</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_abfa5da77be082c11451100876890ac9d"><div class="ttname"><a href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">FIX8::Connection::_hb_interval20pc</a></div><div class="ttdeci">unsigned _hb_interval20pc</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00521">connection.hpp:521</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -603,11 +523,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the peer socket address </p><dl class="section return"><dt>Returns</dt><dd>peer socket address reference </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00602">602</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00616">616</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;peerAddress(); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00488">connection.hpp:488</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;peerAddress(); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00515">connection.hpp:515</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -633,13 +553,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the process model </p><dl class="section return"><dt>Returns</dt><dd>the process model </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00539">539</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00553">553</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00493">_pmodel</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00520">_pmodel</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l01060">FIX8::Session::recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00945">FIX8::Session::send_process()</a>, <a class="el" href="session_8cpp_source.html#l00230">FIX8::Session::stop()</a>, and <a class="el" href="session_8cpp_source.html#l00266">FIX8::Session::update_persist_seqnums()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">_pmodel</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a14514e39351a884e260383fea2ecbd42"><div class="ttname"><a href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">FIX8::Connection::_pmodel</a></div><div class="ttdeci">ProcessModel _pmodel</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00493">connection.hpp:493</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l01124">FIX8::Session::recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l01009">FIX8::Session::send_process()</a>, <a class="el" href="session_8cpp_source.html#l00230">FIX8::Session::stop()</a>, and <a class="el" href="session_8cpp_source.html#l00266">FIX8::Session::update_persist_seqnums()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">_pmodel</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a14514e39351a884e260383fea2ecbd42"><div class="ttname"><a href="classFIX8_1_1Connection.html#a14514e39351a884e260383fea2ecbd42">FIX8::Connection::_pmodel</a></div><div class="ttdeci">ProcessModel _pmodel</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00520">connection.hpp:520</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -665,13 +585,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the role for this connection. </p><dl class="section return"><dt>Returns</dt><dd>the role </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00535">535</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00549">549</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00492">_role</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00519">_role</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>, <a class="el" href="session_8cpp_source.html#l00230">FIX8::Session::stop()</a>, and <a class="el" href="session_8cpp_source.html#l00152">FIX8::Session::~Session()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">_role</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ae12da3c353f29b8541ebd343912f97eb"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">FIX8::Connection::_role</a></div><div class="ttdeci">Role _role</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00492">connection.hpp:492</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>, <a class="el" href="session_8cpp_source.html#l00230">FIX8::Session::stop()</a>, and <a class="el" href="session_8cpp_source.html#l00152">FIX8::Session::~Session()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">_role</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ae12da3c353f29b8541ebd343912f97eb"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae12da3c353f29b8541ebd343912f97eb">FIX8::Connection::_role</a></div><div class="ttdeci">Role _role</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00519">connection.hpp:519</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -697,11 +617,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the session associated with this connection. </p><dl class="section return"><dt>Returns</dt><dd>the session </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00656">656</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00670">670</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00491">_session</a>.</p>
-<div class="fragment"><div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00491">connection.hpp:491</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00518">_session</a>.</p>
+<div class="fragment"><div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">_session</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a6e731960db7768892baa5f2e9a773ba3"><div class="ttname"><a href="classFIX8_1_1Connection.html#a6e731960db7768892baa5f2e9a773ba3">FIX8::Connection::_session</a></div><div class="ttdeci">Session &amp; _session</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00518">connection.hpp:518</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -727,11 +647,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the socket address </p><dl class="section return"><dt>Returns</dt><dd>socket address reference </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00606">606</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00620">620</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00489">_addr</a>.</p>
-<div class="fragment"><div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ae4ec42558e822168adb359b7cf9f1dce"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">FIX8::Connection::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00489">connection.hpp:489</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00516">_addr</a>.</p>
+<div class="fragment"><div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">_addr</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ae4ec42558e822168adb359b7cf9f1dce"><div class="ttname"><a href="classFIX8_1_1Connection.html#ae4ec42558e822168adb359b7cf9f1dce">FIX8::Connection::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00516">connection.hpp:516</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -757,13 +677,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Determine if this session is actually connected </p><dl class="section return"><dt>Returns</dt><dd>true if connected </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00557">557</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00571">571</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00490">_connected</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00517">_connected</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00724">FIX8::Session::activation_service()</a>, and <a class="el" href="session_8cpp_source.html#l00744">FIX8::Session::heartbeat_service()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00490">connection.hpp:490</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00788">FIX8::Session::activation_service()</a>, and <a class="el" href="session_8cpp_source.html#l00808">FIX8::Session::heartbeat_service()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">_connected</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_acc2bb0dd7d87830b70f8ff6bc75f1f44"><div class="ttname"><a href="classFIX8_1_1Connection.html#acc2bb0dd7d87830b70f8ff6bc75f1f44">FIX8::Connection::_connected</a></div><div class="ttdeci">f8_atomic&lt; bool &gt; _connected</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00517">connection.hpp:517</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -789,11 +709,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Check if this connection is secure </p><dl class="section return"><dt>Returns</dt><dd>true if secure </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00543">543</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00557">557</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00498">_secured</a>.</p>
-<div class="fragment"><div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">_secured</a>; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a7b82969fae910a4d93daeb38a383bd2c"><div class="ttname"><a href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">FIX8::Connection::_secured</a></div><div class="ttdeci">bool _secured</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00498">connection.hpp:498</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00525">_secured</a>.</p>
+<div class="fragment"><div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">_secured</a>; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a7b82969fae910a4d93daeb38a383bd2c"><div class="ttname"><a href="classFIX8_1_1Connection.html#a7b82969fae910a4d93daeb38a383bd2c">FIX8::Connection::_secured</a></div><div class="ttdeci">bool _secured</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00525">connection.hpp:525</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -819,12 +739,12 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Check to see if the socket is in error </p><dl class="section return"><dt>Returns</dt><dd>true if there was a socket error </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00614">614</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00628">628</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00309">FIX8::FIXReader::is_socket_error()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#aa593ee9ffa5f5d709fa96fe6fb6827b3">is_socket_error</a>(); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXReader_html_aa593ee9ffa5f5d709fa96fe6fb6827b3"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#aa593ee9ffa5f5d709fa96fe6fb6827b3">FIX8::FIXReader::is_socket_error</a></div><div class="ttdeci">bool is_socket_error() const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00309">connection.hpp:309</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00325">FIX8::FIXReader::is_socket_error()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#aa593ee9ffa5f5d709fa96fe6fb6827b3">is_socket_error</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXReader_html_aa593ee9ffa5f5d709fa96fe6fb6827b3"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#aa593ee9ffa5f5d709fa96fe6fb6827b3">FIX8::FIXReader::is_socket_error</a></div><div class="ttdeci">bool is_socket_error() const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00325">connection.hpp:325</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -850,14 +770,14 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Wait till reader thead has finished. </p><dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00610">610</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00624">624</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00302">FIX8::FIXReader::join()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00318">FIX8::FIXReader::join()</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">join</a>(); }</div>
-<div class="ttc" id="classFIX8_1_1FIXReader_html_a3fbbc89b57d8a92e08ddfe67c939eacd"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">FIX8::FIXReader::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00302">connection.hpp:302</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
+<div class="fragment"><div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">join</a>(); }</div>
+<div class="ttc" id="classFIX8_1_1FIXReader_html_a3fbbc89b57d8a92e08ddfe67c939eacd"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">FIX8::FIXReader::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00318">connection.hpp:318</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -883,13 +803,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Call the FIXreader method </p><dl class="section return"><dt>Returns</dt><dd>result of call </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00660">660</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00674">674</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00124">FIX8::AsyncSocket&lt; T &gt;::cancellation_token()</a>, and <a class="el" href="connection_8cpp_source.html#l00045">FIX8::FIXReader::execute()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a6f8b7884c71fbfb6b7fef66518b55a58">execute</a>(<a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">cancellation_token</a>()); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00129">FIX8::AsyncSocket&lt; T &gt;::cancellation_token()</a>, and <a class="el" href="connection_8cpp_source.html#l00045">FIX8::FIXReader::execute()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a6f8b7884c71fbfb6b7fef66518b55a58">execute</a>(<a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">cancellation_token</a>()); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
 <div class="ttc" id="classFIX8_1_1FIXReader_html_a6f8b7884c71fbfb6b7fef66518b55a58"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a6f8b7884c71fbfb6b7fef66518b55a58">FIX8::FIXReader::execute</a></div><div class="ttdeci">virtual F8API int execute(f8_thread_cancellation_token &amp;cancellation_token)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8cpp_source.html#l00045">connection.cpp:45</a></div></div>
-<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a466546d812ae33cb61f014999f55bfe9"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">FIX8::AsyncSocket::cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token &amp; cancellation_token()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00124">connection.hpp:124</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a466546d812ae33cb61f014999f55bfe9"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">FIX8::AsyncSocket::cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token &amp; cancellation_token()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00129">connection.hpp:129</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -922,12 +842,12 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if won't block </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00665">665</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00679">679</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00314">FIX8::FIXReader::poll()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#ad4de0f0b65f3d6fb80ba777c8c5bd91d">poll</a>(ts); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXReader_html_ad4de0f0b65f3d6fb80ba777c8c5bd91d"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#ad4de0f0b65f3d6fb80ba777c8c5bd91d">FIX8::FIXReader::poll</a></div><div class="ttdeci">bool poll(const Poco::Timespan &amp;ts=Poco::Timespan()) const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00314">connection.hpp:314</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00330">FIX8::FIXReader::poll()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#ad4de0f0b65f3d6fb80ba777c8c5bd91d">poll</a>(ts); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXReader_html_ad4de0f0b65f3d6fb80ba777c8c5bd91d"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#ad4de0f0b65f3d6fb80ba777c8c5bd91d">FIX8::FIXReader::poll</a></div><div class="ttdeci">bool poll(const Poco::Timespan &amp;ts=Poco::Timespan()) const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00330">connection.hpp:330</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -971,14 +891,14 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes written </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00580">580</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00594">594</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00422">FIX8::FIXWriter::send()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00438">FIX8::FIXWriter::send()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00945">FIX8::Session::send_process()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">send</a>(from, sz); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a342ad299aedb98f6339a3e60a0b530b5"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">FIX8::FIXWriter::send</a></div><div class="ttdeci">int send(const char *data, size_t remaining, bool nb=false)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00422">connection.hpp:422</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l01009">FIX8::Session::send_process()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">send</a>(from, sz); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a342ad299aedb98f6339a3e60a0b530b5"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">FIX8::FIXWriter::send</a></div><div class="ttdeci">int send(const char *data, size_t remaining, bool nb=false)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00438">connection.hpp:438</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1011,12 +931,12 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes written </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00585">585</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00599">599</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00422">FIX8::FIXWriter::send()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">send</a>(from.data(), from.size()); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a342ad299aedb98f6339a3e60a0b530b5"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">FIX8::FIXWriter::send</a></div><div class="ttdeci">int send(const char *data, size_t remaining, bool nb=false)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00422">connection.hpp:422</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00438">FIX8::FIXWriter::send()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">send</a>(from.data(), from.size()); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a342ad299aedb98f6339a3e60a0b530b5"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5">FIX8::FIXWriter::send</a></div><div class="ttdeci">int send(const char *data, size_t remaining, bool nb=false)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00438">connection.hpp:438</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1048,15 +968,15 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00589">589</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00603">603</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="session_8hpp_source.html#l00192">FIX8::defaults::hb_interval</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;      { <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a> = <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>; <a class="code" href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">_hb_interval20pc</a> = <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> + <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> / 5; }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_abfa5da77be082c11451100876890ac9d"><div class="ttname"><a href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">FIX8::Connection::_hb_interval20pc</a></div><div class="ttdeci">unsigned _hb_interval20pc</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;      { <a class="code" href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">_hb_interval</a> = <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a>; <a class="code" href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">_hb_interval20pc</a> = <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> + <a class="code" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">hb_interval</a> / 5; }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_abfa5da77be082c11451100876890ac9d"><div class="ttname"><a href="classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d">FIX8::Connection::_hb_interval20pc</a></div><div class="ttdeci">unsigned _hb_interval20pc</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00521">connection.hpp:521</a></div></div>
 <div class="ttc" id="namespaceFIX8_1_1defaults_html_a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d"><div class="ttname"><a href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af1d4c6432ba99d5c6420ba4bbe5b166d">FIX8::defaults::hb_interval</a></div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00192">session.hpp:192</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00494">connection.hpp:494</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a01e20e90a2e621335c85463f58323d64"><div class="ttname"><a href="classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64">FIX8::Connection::_hb_interval</a></div><div class="ttdeci">unsigned _hb_interval</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00521">connection.hpp:521</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1099,17 +1019,17 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00619">619</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00633">633</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00601">glout_info</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00552">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;   {</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> current_sz(sock-&gt;getReceiveBufferSize());</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;      sock-&gt;setReceiveBufferSize(sz);</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;      <a class="code" href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a> &lt;&lt; <span class="stringliteral">&quot;fd(&quot;</span> &lt;&lt; sock-&gt;impl()-&gt;sockfd() &lt;&lt; <span class="stringliteral">&quot;) ReceiveBufferSize old:&quot;</span> &lt;&lt; current_sz</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;         &lt;&lt; <span class="stringliteral">&quot; requested:&quot;</span> &lt;&lt; sz &lt;&lt; <span class="stringliteral">&quot; new:&quot;</span> &lt;&lt; sock-&gt;getReceiveBufferSize();</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;   }</div>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00553">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   {</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> current_sz(sock-&gt;getReceiveBufferSize());</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;      sock-&gt;setReceiveBufferSize(sz);</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;      <a class="code" href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a> &lt;&lt; <span class="stringliteral">&quot;fd(&quot;</span> &lt;&lt; sock-&gt;impl()-&gt;sockfd() &lt;&lt; <span class="stringliteral">&quot;) ReceiveBufferSize old:&quot;</span> &lt;&lt; current_sz</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;         &lt;&lt; <span class="stringliteral">&quot; requested:&quot;</span> &lt;&lt; sz &lt;&lt; <span class="stringliteral">&quot; new:&quot;</span> &lt;&lt; sock-&gt;getReceiveBufferSize();</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   }</div>
 <div class="ttc" id="logger_8hpp_html_ae10ccece5316fd7564287f16ae01e451"><div class="ttname"><a href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a></div><div class="ttdeci">#define glout_info</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00601">logger.hpp:601</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1142,14 +1062,14 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00639">639</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00653">653</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00639">set_recv_buf_sz()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00653">set_recv_buf_sz()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00639">set_recv_buf_sz()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">set_recv_buf_sz</a>(sz, <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a9cff80bec2b2243a458ab2f939697c6e"><div class="ttname"><a href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">FIX8::Connection::set_recv_buf_sz</a></div><div class="ttdeci">static void set_recv_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00619">connection.hpp:619</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00488">connection.hpp:488</a></div></div>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00653">set_recv_buf_sz()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">set_recv_buf_sz</a>(sz, <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a9cff80bec2b2243a458ab2f939697c6e"><div class="ttname"><a href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">FIX8::Connection::set_recv_buf_sz</a></div><div class="ttdeci">static void set_recv_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00633">connection.hpp:633</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00515">connection.hpp:515</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1192,17 +1112,17 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00630">630</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00644">644</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00601">glout_info</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00552">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   {</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> current_sz(sock-&gt;getSendBufferSize());</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;      sock-&gt;setSendBufferSize(sz);</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;      <a class="code" href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a> &lt;&lt; <span class="stringliteral">&quot;fd(&quot;</span> &lt;&lt; sock-&gt;impl()-&gt;sockfd() &lt;&lt; <span class="stringliteral">&quot;) SendBufferSize old:&quot;</span> &lt;&lt; current_sz</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;         &lt;&lt; <span class="stringliteral">&quot; requested:&quot;</span> &lt;&lt; sz &lt;&lt; <span class="stringliteral">&quot; new:&quot;</span> &lt;&lt; sock-&gt;getSendBufferSize();</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   }</div>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00553">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   {</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> current_sz(sock-&gt;getSendBufferSize());</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;      sock-&gt;setSendBufferSize(sz);</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;      <a class="code" href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a> &lt;&lt; <span class="stringliteral">&quot;fd(&quot;</span> &lt;&lt; sock-&gt;impl()-&gt;sockfd() &lt;&lt; <span class="stringliteral">&quot;) SendBufferSize old:&quot;</span> &lt;&lt; current_sz</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;         &lt;&lt; <span class="stringliteral">&quot; requested:&quot;</span> &lt;&lt; sz &lt;&lt; <span class="stringliteral">&quot; new:&quot;</span> &lt;&lt; sock-&gt;getSendBufferSize();</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   }</div>
 <div class="ttc" id="logger_8hpp_html_ae10ccece5316fd7564287f16ae01e451"><div class="ttname"><a href="logger_8hpp.html#ae10ccece5316fd7564287f16ae01e451">glout_info</a></div><div class="ttdeci">#define glout_info</div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00601">logger.hpp:601</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1235,14 +1155,14 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00643">643</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00657">657</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00643">set_send_buf_sz()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00657">set_send_buf_sz()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00643">set_send_buf_sz()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">set_send_buf_sz</a>(sz, <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00488">connection.hpp:488</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a95bcc108abf0a366438731b5b81606b2"><div class="ttname"><a href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">FIX8::Connection::set_send_buf_sz</a></div><div class="ttdeci">static void set_send_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00630">connection.hpp:630</a></div></div>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00657">set_send_buf_sz()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;{ <a class="code" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">set_send_buf_sz</a>(sz, <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00515">connection.hpp:515</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a95bcc108abf0a366438731b5b81606b2"><div class="ttname"><a href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">FIX8::Connection::set_send_buf_sz</a></div><div class="ttdeci">static void set_send_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00644">connection.hpp:644</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1274,15 +1194,15 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00647">647</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00661">661</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00464">MyMenu::send_all_preloaded()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   {</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;<span class="preprocessor">#if defined HAVE_DECL_TCP_CORK &amp;&amp; TCP_CORK != 0</span></div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setOption(IPPROTO_TCP, TCP_CORK, way ? 1 : 0);</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;   }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00488">connection.hpp:488</a></div></div>
+<div class="fragment"><div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   {</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;<span class="preprocessor">#if defined FIX8_HAVE_DECL_TCP_CORK &amp;&amp; TCP_CORK != 0</span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a>-&gt;setOption(IPPROTO_TCP, TCP_CORK, way ? 1 : 0);</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ab900a2b9c6e1f0b80afd5d40fe0ef5f3"><div class="ttname"><a href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">FIX8::Connection::_sock</a></div><div class="ttdeci">Poco::Net::StreamSocket * _sock</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00515">connection.hpp:515</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1301,17 +1221,17 @@ Protected Attributes</h2></td></tr>
 
 <p>Start the reader and writer threads. </p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00308">308</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00315">315</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00349">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc">start</a>();</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">start</a>();</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;}</div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a92503dc513d2c24021e89dceaa879acc"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc">FIX8::FIXWriter::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdoc">Start the processing threads. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00452">connection.hpp:452</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXReader_html_a3a61fad7bb4692dc7b1b7191e3f36d12"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">FIX8::FIXReader::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdoc">Start the processing threads. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00258">connection.hpp:258</a></div></div>
+<div class="fragment"><div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc">start</a>();</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">start</a>();</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a92503dc513d2c24021e89dceaa879acc"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc">FIX8::FIXWriter::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdoc">Start the processing threads. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00468">connection.hpp:468</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXReader_html_a3a61fad7bb4692dc7b1b7191e3f36d12"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">FIX8::FIXReader::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdoc">Start the processing threads. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00263">connection.hpp:263</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1330,27 +1250,31 @@ Protected Attributes</h2></td></tr>
 
 <p>Stop the reader and writer threads. </p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00315">315</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00322">322</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00745">scout_debug</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00759">scout_debug</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00230">FIX8::Session::stop()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00647">FIX8::SessionInstance&lt; T &gt;::~SessionInstance()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   <a class="code" href="connection_8hpp.html#adb014538f05add31d1a931cb56776b9b">scout_debug</a> &lt;&lt; <span class="stringliteral">&quot;Connection::stop()&quot;</span>;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#acaa271b6f8da55c941fc62b03c3a0133">stop</a>();</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d">join</a>();</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0">stop</a>();</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">join</a>();</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#af65b0d2ed1dce75137f0276a702ac168">socket</a>()-&gt;shutdownReceive();</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;}</div>
-<div class="ttc" id="classFIX8_1_1FIXReader_html_a3fbbc89b57d8a92e08ddfe67c939eacd"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">FIX8::FIXReader::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00302">connection.hpp:302</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00496">connection.hpp:496</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1AsyncSocket_html_af65b0d2ed1dce75137f0276a702ac168"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#af65b0d2ed1dce75137f0276a702ac168">FIX8::AsyncSocket::socket</a></div><div class="ttdeci">Poco::Net::StreamSocket * socket()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00116">connection.hpp:116</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXReader_html_ab5612c34ff96435657fd44fb0f691ad0"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0">FIX8::FIXReader::stop</a></div><div class="ttdeci">virtual void stop()</div><div class="ttdoc">Send a message to the processing method instructing it to quit. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00283">connection.hpp:283</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a13176a9f9f6bf74b908805626bbf3c7d"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d">FIX8::FIXWriter::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00396">connection.hpp:396</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_acaa271b6f8da55c941fc62b03c3a0133"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#acaa271b6f8da55c941fc62b03c3a0133">FIX8::FIXWriter::stop</a></div><div class="ttdeci">virtual void stop()</div><div class="ttdoc">Send a message to the processing method instructing it to quit. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00459">connection.hpp:459</a></div></div>
-<div class="ttc" id="connection_8hpp_html_adb014538f05add31d1a931cb56776b9b"><div class="ttname"><a href="connection_8hpp.html#adb014538f05add31d1a931cb56776b9b">scout_debug</a></div><div class="ttdeci">#define scout_debug</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00745">connection.hpp:745</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00230">FIX8::Session::stop()</a>, <a class="el" href="connection_8hpp_source.html#l00545">~Connection()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00648">FIX8::SessionInstance&lt; T &gt;::~SessionInstance()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;{</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   <a class="code" href="connection_8hpp.html#adb014538f05add31d1a931cb56776b9b">scout_debug</a> &lt;&lt; <span class="stringliteral">&quot;Connection::stop()&quot;</span>;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#acaa271b6f8da55c941fc62b03c3a0133">stop</a>();</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d">join</a>();</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <a class="code" href="connection_8hpp.html#adb014538f05add31d1a931cb56776b9b">scout_debug</a> &lt;&lt; <span class="stringliteral">&quot;Connection::stop() =&gt; _reader.stop()&quot;</span>;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0">stop</a>();</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#ad1d0979615be2f70256a1cb1a4283dc1">started</a>())</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#af65b0d2ed1dce75137f0276a702ac168">socket</a>()-&gt;shutdown();</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   <a class="code" href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">_reader</a>.<a class="code" href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">join</a>();</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;}</div>
+<div class="ttc" id="classFIX8_1_1FIXReader_html_a3fbbc89b57d8a92e08ddfe67c939eacd"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd">FIX8::FIXReader::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00318">connection.hpp:318</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac2047881991994d7059e4cb05d5648f0"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac2047881991994d7059e4cb05d5648f0">FIX8::Connection::_reader</a></div><div class="ttdeci">FIXReader _reader</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00523">connection.hpp:523</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_af65b0d2ed1dce75137f0276a702ac168"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#af65b0d2ed1dce75137f0276a702ac168">FIX8::AsyncSocket::socket</a></div><div class="ttdeci">Poco::Net::StreamSocket * socket()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00121">connection.hpp:121</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_ad1d0979615be2f70256a1cb1a4283dc1"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#ad1d0979615be2f70256a1cb1a4283dc1">FIX8::AsyncSocket::started</a></div><div class="ttdeci">bool started() const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00085">connection.hpp:85</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXReader_html_ab5612c34ff96435657fd44fb0f691ad0"><div class="ttname"><a href="classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0">FIX8::FIXReader::stop</a></div><div class="ttdeci">virtual void stop()</div><div class="ttdoc">Send a message to the processing method instructing it to quit. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00288">connection.hpp:288</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a13176a9f9f6bf74b908805626bbf3c7d"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d">FIX8::FIXWriter::join</a></div><div class="ttdeci">int join()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00412">connection.hpp:412</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_acaa271b6f8da55c941fc62b03c3a0133"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#acaa271b6f8da55c941fc62b03c3a0133">FIX8::FIXWriter::stop</a></div><div class="ttdeci">virtual void stop()</div><div class="ttdoc">Send a message to the processing method instructing it to quit. </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00475">connection.hpp:475</a></div></div>
+<div class="ttc" id="connection_8hpp_html_adb014538f05add31d1a931cb56776b9b"><div class="ttname"><a href="connection_8hpp.html#adb014538f05add31d1a931cb56776b9b">scout_debug</a></div><div class="ttdeci">#define scout_debug</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00759">connection.hpp:759</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1394,14 +1318,14 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00563">563</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00577">577</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00346">FIX8::FIXWriter::write()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00362">FIX8::FIXWriter::write()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00914">FIX8::Session::send()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">write</a>(from, destroy); }</div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a3544da6fb905ad297c4e2eeea30768cb"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">FIX8::FIXWriter::write</a></div><div class="ttdeci">bool write(Message *from, bool destroy)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00346">connection.hpp:346</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00978">FIX8::Session::send()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">write</a>(from, destroy); }</div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a3544da6fb905ad297c4e2eeea30768cb"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">FIX8::FIXWriter::write</a></div><div class="ttdeci">bool write(Message *from, bool destroy)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00362">connection.hpp:362</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1434,12 +1358,12 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00568">568</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00582">582</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00346">FIX8::FIXWriter::write()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">write</a>(from); }</div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a3544da6fb905ad297c4e2eeea30768cb"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">FIX8::FIXWriter::write</a></div><div class="ttdeci">bool write(Message *from, bool destroy)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00346">connection.hpp:346</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00362">FIX8::FIXWriter::write()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">write</a>(from); }</div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a3544da6fb905ad297c4e2eeea30768cb"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a3544da6fb905ad297c4e2eeea30768cb">FIX8::FIXWriter::write</a></div><div class="ttdeci">bool write(Message *from, bool destroy)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00362">connection.hpp:362</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1483,14 +1407,14 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00574">574</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00588">588</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00363">FIX8::FIXWriter::write_batch()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00379">FIX8::FIXWriter::write_batch()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00933">FIX8::Session::send_batch()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a8f584b0f12b6463ba24047b607dd63b5">write_batch</a>(msgs, destroy); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a8f584b0f12b6463ba24047b607dd63b5"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a8f584b0f12b6463ba24047b607dd63b5">FIX8::FIXWriter::write_batch</a></div><div class="ttdeci">size_t write_batch(const std::vector&lt; Message * &gt; &amp;msgs, bool destroy)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00363">connection.hpp:363</a></div></div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00997">FIX8::Session::send_batch()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a8f584b0f12b6463ba24047b607dd63b5">write_batch</a>(msgs, destroy); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a8f584b0f12b6463ba24047b607dd63b5"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a8f584b0f12b6463ba24047b607dd63b5">FIX8::FIXWriter::write_batch</a></div><div class="ttdeci">size_t write_batch(const std::vector&lt; Message * &gt; &amp;msgs, bool destroy)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00379">connection.hpp:379</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1516,13 +1440,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Call the FIXreader method </p><dl class="section return"><dt>Returns</dt><dd>result of call </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00669">669</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00683">683</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00124">FIX8::AsyncSocket&lt; T &gt;::cancellation_token()</a>, and <a class="el" href="connection_8cpp_source.html#l00266">FIX8::FIXWriter::execute()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a1f2a3806fce8871fa2101eea6dd8cacb">execute</a>(<a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">cancellation_token</a>()); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a466546d812ae33cb61f014999f55bfe9"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">FIX8::AsyncSocket::cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token &amp; cancellation_token()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00124">connection.hpp:124</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_a1f2a3806fce8871fa2101eea6dd8cacb"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a1f2a3806fce8871fa2101eea6dd8cacb">FIX8::FIXWriter::execute</a></div><div class="ttdeci">virtual F8API int execute(f8_thread_cancellation_token &amp;cancellation_token)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8cpp_source.html#l00266">connection.cpp:266</a></div></div>
+<p>References <a class="el" href="connection_8hpp_source.html#l00129">FIX8::AsyncSocket&lt; T &gt;::cancellation_token()</a>, and <a class="el" href="connection_8cpp_source.html#l00269">FIX8::FIXWriter::execute()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#a1f2a3806fce8871fa2101eea6dd8cacb">execute</a>(<a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">cancellation_token</a>()); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1AsyncSocket_html_a466546d812ae33cb61f014999f55bfe9"><div class="ttname"><a href="classFIX8_1_1AsyncSocket.html#a466546d812ae33cb61f014999f55bfe9">FIX8::AsyncSocket::cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token &amp; cancellation_token()</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00129">connection.hpp:129</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_a1f2a3806fce8871fa2101eea6dd8cacb"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#a1f2a3806fce8871fa2101eea6dd8cacb">FIX8::FIXWriter::execute</a></div><div class="ttdeci">virtual F8API int execute(f8_thread_cancellation_token &amp;cancellation_token)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8cpp_source.html#l00269">connection.cpp:269</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1555,14 +1479,14 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if won't block </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00674">674</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00688">688</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00412">FIX8::FIXWriter::poll()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00428">FIX8::FIXWriter::poll()</a>.</p>
 
 <p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00464">MyMenu::send_all_preloaded()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#ac9c2af0ab21a6bff65134ef8286a0539">poll</a>(ts); }</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00497">connection.hpp:497</a></div></div>
-<div class="ttc" id="classFIX8_1_1FIXWriter_html_ac9c2af0ab21a6bff65134ef8286a0539"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#ac9c2af0ab21a6bff65134ef8286a0539">FIX8::FIXWriter::poll</a></div><div class="ttdeci">bool poll(const Poco::Timespan &amp;ts=Poco::Timespan()) const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00412">connection.hpp:412</a></div></div>
+<div class="fragment"><div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">_writer</a>.<a class="code" href="classFIX8_1_1FIXWriter.html#ac9c2af0ab21a6bff65134ef8286a0539">poll</a>(ts); }</div>
+<div class="ttc" id="classFIX8_1_1Connection_html_affffb7d150c430b092b90331a2272b23"><div class="ttname"><a href="classFIX8_1_1Connection.html#affffb7d150c430b092b90331a2272b23">FIX8::Connection::_writer</a></div><div class="ttdeci">FIXWriter _writer</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00524">connection.hpp:524</a></div></div>
+<div class="ttc" id="classFIX8_1_1FIXWriter_html_ac9c2af0ab21a6bff65134ef8286a0539"><div class="ttname"><a href="classFIX8_1_1FIXWriter.html#ac9c2af0ab21a6bff65134ef8286a0539">FIX8::FIXWriter::poll</a></div><div class="ttdeci">bool poll(const Poco::Timespan &amp;ts=Poco::Timespan()) const </div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00428">connection.hpp:428</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1585,9 +1509,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00489">489</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00516">516</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00606">get_socket_address()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00620">get_socket_address()</a>.</p>
 
 </div>
 </div>
@@ -1609,9 +1533,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00490">490</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00517">517</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00553">connect()</a>, and <a class="el" href="connection_8hpp_source.html#l00557">is_connected()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00567">connect()</a>, and <a class="el" href="connection_8hpp_source.html#l00571">is_connected()</a>.</p>
 
 </div>
 </div>
@@ -1633,9 +1557,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00494">494</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00521">521</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00594">get_hb_interval()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00608">get_hb_interval()</a>.</p>
 
 </div>
 </div>
@@ -1657,9 +1581,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00494">494</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00521">521</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00598">get_hb_interval20pc()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00612">get_hb_interval20pc()</a>.</p>
 
 </div>
 </div>
@@ -1681,9 +1605,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00493">493</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00520">520</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00539">get_pmodel()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00553">get_pmodel()</a>.</p>
 
 </div>
 </div>
@@ -1705,7 +1629,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00496">496</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00523">523</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -1727,9 +1651,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00492">492</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00519">519</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00535">get_role()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00549">get_role()</a>.</p>
 
 </div>
 </div>
@@ -1751,9 +1675,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00498">498</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00525">525</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00543">is_secure()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00557">is_secure()</a>.</p>
 
 </div>
 </div>
@@ -1775,9 +1699,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00491">491</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00518">518</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00656">get_session()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00670">get_session()</a>.</p>
 
 </div>
 </div>
@@ -1799,7 +1723,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00488">488</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00515">515</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -1821,7 +1745,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00497">497</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00524">524</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -1832,7 +1756,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:12. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

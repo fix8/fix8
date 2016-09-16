@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -181,10 +181,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab17b58b7c0256f847013e4bc23c642b0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#ab17b58b7c0256f847013e4bc23c642b0">~ReliableClientSession</a> ()</td></tr>
 <tr class="memdesc:ab17b58b7c0256f847013e4bc23c642b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#ab17b58b7c0256f847013e4bc23c642b0">More...</a><br /></td></tr>
 <tr class="separator:ab17b58b7c0256f847013e4bc23c642b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97c13086d807222d92659a6d821dc96c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#a97c13086d807222d92659a6d821dc96c">start</a> (bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> davi=<a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>())</td></tr>
-<tr class="separator:a97c13086d807222d92659a6d821dc96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab67f0a40179955aec80fc300e9e8cb13"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#ab67f0a40179955aec80fc300e9e8cb13">get_attemps_cnt</a> () const </td></tr>
-<tr class="separator:ab67f0a40179955aec80fc300e9e8cb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1e54092b2c309597174c257d7774ca4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#ac1e54092b2c309597174c257d7774ca4">start</a> (bool wait, unsigned send_seqnum=0, unsigned recv_seqnum=0, const <a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a> davi=<a class="el" href="namespaceFIX8.html#a7cbf407f589cdbbbdb925ef3ae76c539">f8String</a>())</td></tr>
+<tr class="separator:ac1e54092b2c309597174c257d7774ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ec99ebfaccbe3c4fc10c9e9af0f7149"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#a7ec99ebfaccbe3c4fc10c9e9af0f7149">get_attempts_cnt</a> () const </td></tr>
+<tr class="separator:a7ec99ebfaccbe3c4fc10c9e9af0f7149"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4a01cea20dc5978bc04eb1be2100f45"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#ad4a01cea20dc5978bc04eb1be2100f45">get_server_cnt</a> () const </td></tr>
 <tr class="separator:ad4a01cea20dc5978bc04eb1be2100f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd9ef11c19321b9291aed7cba5d104d0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1Server.html">Server</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ReliableClientSession.html#acd9ef11c19321b9291aed7cba5d104d0">get_server</a> (unsigned idx=<a class="el" href="classFIX8_1_1ReliableClientSession.html#a49ea20041c7e99a633584a8cbd7e331eadd57a969e02649c81ad4616f70991807">no_servers_configured</a>) const </td></tr>
@@ -248,8 +248,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade3e5ce1c164e5e09c712ff0fcff9c6c inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852a082f393bb721ce305cff63393277a69f">defaults::retry_interval</a>) const </td></tr>
 <tr class="separator:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
-<tr class="separator:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f7705e4e96dd05e14a17cf484a1c52f inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a1f7705e4e96dd05e14a17cf484a1c52f">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const int def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
+<tr class="separator:a1f7705e4e96dd05e14a17cf484a1c52f inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#afe0f4903660dfd8d5756388e108281f9">get_tcp_recvbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18f8868cfaf4a1c586d271f14dfbe36b inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a18f8868cfaf4a1c586d271f14dfbe36b">get_tcp_sendbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
@@ -405,7 +405,7 @@ template&lt;typename T &gt; </div>
 
 <p>Convenient scoped pointer for your session. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00490">490</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00491">491</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -556,15 +556,15 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00487">487</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00488">488</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 <p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00290">FIX8::ReliableClientSession&lt; T &gt;::_cancellation_token</a>.</p>
-<div class="fragment"><div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html#a59b0c7f36e51525c91384f84777d618f">_cancellation_token</a>; }</div>
+<div class="fragment"><div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html#a59b0c7f36e51525c91384f84777d618f">_cancellation_token</a>; }</div>
 <div class="ttc" id="classFIX8_1_1ReliableClientSession_html_a59b0c7f36e51525c91384f84777d618f"><div class="ttname"><a href="classFIX8_1_1ReliableClientSession.html#a59b0c7f36e51525c91384f84777d618f">FIX8::ReliableClientSession::_cancellation_token</a></div><div class="ttdeci">f8_thread_cancellation_token _cancellation_token</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00290">sessionwrapper.hpp:290</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="ab67f0a40179955aec80fc300e9e8cb13"></a>
+<a class="anchor" id="a7ec99ebfaccbe3c4fc10c9e9af0f7149"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -574,7 +574,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classFIX8_1_1ReliableClientSession.html">FIX8::ReliableClientSession</a>&lt; T &gt;::get_attemps_cnt </td>
+          <td class="memname">size_t <a class="el" href="classFIX8_1_1ReliableClientSession.html">FIX8::ReliableClientSession</a>&lt; T &gt;::get_attempts_cnt </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -733,7 +733,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00349">349</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00286">FIX8::ReliableClientSession&lt; T &gt;::_attempts</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00209">FIX8::ClientSession&lt; T &gt;::_cc</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00286">FIX8::ReliableClientSession&lt; T &gt;::_current</a>, <a class="el" href="session_8hpp_source.html#l00357">FIX8::LoginParameters::_davi</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00289">FIX8::ReliableClientSession&lt; T &gt;::_failover_cnt</a>, <a class="el" href="session_8hpp_source.html#l00358">FIX8::LoginParameters::_hb_int</a>, <a class="el" href="session_8hpp_source.html#l00353">FIX8::LoginParameters::_login_retries</a>, <a class="el" href="session_8hpp_source.html#l00353">FIX8::LoginParameters::_login_retry_interval</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00130">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00286">FIX8::ReliableClientSession&lt; T &gt;::_recv_seqnum</a>, <a class="el" href="session_8hpp_source.html#l00355">FIX8::LoginParameters::_reset_sequence_numbers</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00207">FIX8::ClientSession&lt; T &gt;::_sock</a>, <a class="el" href="logger_8hpp_source.html#l00159">FIX8::Logger::Error</a>, <a class="el" href="hypersleep_8hpp_source.html#l00105">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>, <a class="el" href="connection_8cpp_source.html#l00308">FIX8::Connection::start()</a>, <a class="el" href="logger_8hpp_source.html#l00159">FIX8::Logger::Warn</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00286">FIX8::ReliableClientSession&lt; T &gt;::_attempts</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00209">FIX8::ClientSession&lt; T &gt;::_cc</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00286">FIX8::ReliableClientSession&lt; T &gt;::_current</a>, <a class="el" href="session_8hpp_source.html#l00357">FIX8::LoginParameters::_davi</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00289">FIX8::ReliableClientSession&lt; T &gt;::_failover_cnt</a>, <a class="el" href="session_8hpp_source.html#l00358">FIX8::LoginParameters::_hb_int</a>, <a class="el" href="session_8hpp_source.html#l00353">FIX8::LoginParameters::_login_retries</a>, <a class="el" href="session_8hpp_source.html#l00353">FIX8::LoginParameters::_login_retry_interval</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00130">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00286">FIX8::ReliableClientSession&lt; T &gt;::_recv_seqnum</a>, <a class="el" href="session_8hpp_source.html#l00355">FIX8::LoginParameters::_reset_sequence_numbers</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00207">FIX8::ClientSession&lt; T &gt;::_sock</a>, <a class="el" href="logger_8hpp_source.html#l00159">FIX8::Logger::Error</a>, <a class="el" href="hypersleep_8hpp_source.html#l00105">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>, <a class="el" href="connection_8cpp_source.html#l00315">FIX8::Connection::start()</a>, <a class="el" href="logger_8hpp_source.html#l00159">FIX8::Logger::Warn</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;   {</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      <span class="keywordflow">while</span>(!<a class="code" href="classFIX8_1_1ReliableClientSession.html#a59b0c7f36e51525c91384f84777d618f">_cancellation_token</a>)</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      {</div>
@@ -847,29 +847,30 @@ template&lt;typename T &gt; </div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;         <span class="keyword">delete</span> this-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#ac1dc4048b3d9cfe1c75f354fb4c1b3d4">_sock</a>;</div>
 <div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;         this-&gt;_sock = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;         <span class="keywordflow">if</span> (!excepted || (<a class="code" href="classFIX8_1_1ReliableClientSession.html#a01c9e1aa0f5778f9ce00d13c1812ee59">_failover_cnt</a> == 0 &amp;&amp; <a class="code" href="classFIX8_1_1ReliableClientSession.html#a54685190de041e647ddc752348668433">_attempts</a> &gt; this-&gt;<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#a655e9cca70befcef8ac0846995ea26a2">_login_retries</a>))</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ReliableClientSession.html#a01c9e1aa0f5778f9ce00d13c1812ee59">_failover_cnt</a>)</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;         {</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;            ++<a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._retries;</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;            <span class="keywordflow">while</span> (!<a class="code" href="classFIX8_1_1ReliableClientSession.html#a59b0c7f36e51525c91384f84777d618f">_cancellation_token</a>) <span class="comment">// FIXME possible endless loop condition</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;            {</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;               <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._max_retries &amp;&amp; <a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._retries &lt; <a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._max_retries)</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;                  <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;               <a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._retries = 0; <span class="comment">// reset for next time</span></div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;               ++<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a> %= <a class="code" href="classFIX8_1_1ReliableClientSession.html#a01c9e1aa0f5778f9ce00d13c1812ee59">_failover_cnt</a>;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            }</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;         }</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;         <a class="code" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt;h_milliseconds&gt;</a>(this-&gt;<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#ab113e18f1416194169393b6f3224847b">_login_retry_interval</a>);</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;      }</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;      <a class="code" href="classFIX8_1_1ReliableClientSession.html#aa170d2e1e98906889187a5b378f9bfc4">_giving_up</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;   }</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;         <span class="keywordflow">if</span> (!excepted || (<a class="code" href="classFIX8_1_1ReliableClientSession.html#a01c9e1aa0f5778f9ce00d13c1812ee59">_failover_cnt</a> == 0</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            &amp;&amp; this-&gt;<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#a655e9cca70befcef8ac0846995ea26a2">_login_retries</a> &gt; 0 &amp;&amp; <a class="code" href="classFIX8_1_1ReliableClientSession.html#a54685190de041e647ddc752348668433">_attempts</a> &gt; this-&gt;_loginParameters._login_retries))</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ReliableClientSession.html#a01c9e1aa0f5778f9ce00d13c1812ee59">_failover_cnt</a>)</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;         {</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;            ++<a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._retries;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;            <span class="keywordflow">while</span> (!<a class="code" href="classFIX8_1_1ReliableClientSession.html#a59b0c7f36e51525c91384f84777d618f">_cancellation_token</a>) <span class="comment">// FIXME possible endless loop condition</span></div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;            {</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;               <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._max_retries &amp;&amp; <a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._retries &lt; <a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._max_retries)</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;                  <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;               <a class="code" href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">_servers</a>[<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a>]._retries = 0; <span class="comment">// reset for next time</span></div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;               ++<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d40cbb82e065008ce92492ce605c55f">_current</a> %= <a class="code" href="classFIX8_1_1ReliableClientSession.html#a01c9e1aa0f5778f9ce00d13c1812ee59">_failover_cnt</a>;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;            }</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;         }</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;         <a class="code" href="namespaceFIX8.html#a5c9d33dafcd63c026afe8d98fd3bbc78">hypersleep&lt;h_milliseconds&gt;</a>(this-&gt;<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#ab113e18f1416194169393b6f3224847b">_login_retry_interval</a>);</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;      }</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;      <a class="code" href="classFIX8_1_1ReliableClientSession.html#aa170d2e1e98906889187a5b378f9bfc4">_giving_up</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;   }</div>
 <div class="ttc" id="classFIX8_1_1ReliableClientSession_html_a15d1285b013e70e64298a3ec6a85fb87"><div class="ttname"><a href="classFIX8_1_1ReliableClientSession.html#a15d1285b013e70e64298a3ec6a85fb87">FIX8::ReliableClientSession::_servers</a></div><div class="ttdeci">std::vector&lt; Server &gt; _servers</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00288">sessionwrapper.hpp:288</a></div></div>
 <div class="ttc" id="classFIX8_1_1Logger_html_a59932392d2aa3809b5344d29d94001b6a4234103165da2b577217d0372690c8df"><div class="ttname"><a href="classFIX8_1_1Logger.html#a59932392d2aa3809b5344d29d94001b6a4234103165da2b577217d0372690c8df">FIX8::Logger::Warn</a></div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00159">logger.hpp:159</a></div></div>
 <div class="ttc" id="structFIX8_1_1SessionConfig_html_abfd10e9bcc48a413d5302ba4b9be9839"><div class="ttname"><a href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">FIX8::SessionConfig::_loginParameters</a></div><div class="ttdeci">LoginParameters _loginParameters</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00130">sessionwrapper.hpp:130</a></div></div>
@@ -894,7 +895,7 @@ template&lt;typename T &gt; </div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a97c13086d807222d92659a6d821dc96c"></a>
+<a class="anchor" id="ac1e54092b2c309597174c257d7774ca4"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -912,13 +913,13 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>send_seqnum</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>recv_seqnum</em> = <code>0</code>, </td>
         </tr>
         <tr>
@@ -949,7 +950,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classFIX8_1_1ClientSession.html#a4dc939ee494c1a217e28d3c089bb1724">FIX8::ClientSession&lt; T &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="classFIX8_1_1ClientSession.html#afaa9924880c953efa920e9e5ecaae331">FIX8::ClientSession&lt; T &gt;</a>.</p>
 
 <p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00320">320</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
@@ -991,7 +992,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00286">286</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00332">FIX8::ReliableClientSession&lt; T &gt;::get_attemps_cnt()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00349">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00332">FIX8::ReliableClientSession&lt; T &gt;::get_attempts_cnt()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00349">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>.</p>
 
 </div>
 </div>
@@ -1017,7 +1018,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00290">290</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00487">FIX8::ReliableClientSession&lt; T &gt;::cancellation_token()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00488">FIX8::ReliableClientSession&lt; T &gt;::cancellation_token()</a>.</p>
 
 </div>
 </div>
@@ -1203,7 +1204,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:15. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

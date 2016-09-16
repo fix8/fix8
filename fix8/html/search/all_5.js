@@ -264,8 +264,8 @@ var searchData=
   ['execute',['execute',['../classFIX8_1_1AsyncSocket.html#a355daba80b924ed26d3386312826f66c',1,'FIX8::AsyncSocket::execute()'],['../classFIX8_1_1FIXReader.html#a6f8b7884c71fbfb6b7fef66518b55a58',1,'FIX8::FIXReader::execute()'],['../classFIX8_1_1FIXWriter.html#a1f2a3806fce8871fa2101eea6dd8cacb',1,'FIX8::FIXWriter::execute()']]],
   ['executionacknowledgement',['ExecutionAcknowledgement',['../classFIX8_1_1TEX_1_1ExecutionAcknowledgement.html',1,'FIX8::TEX']]],
   ['executionacknowledgement',['ExecutionAcknowledgement',['../classFIX8_1_1TEX_1_1ExecutionAcknowledgement.html#aa253321c12476977c6e54ad33758b4e9',1,'FIX8::TEX::ExecutionAcknowledgement']]],
-  ['executionreport',['ExecutionReport',['../classFIX8_1_1TEX_1_1ExecutionReport.html#ad1ce9afc59f42459498212e8816f5772',1,'FIX8::TEX::ExecutionReport::ExecutionReport(bool deepctor=true)'],['../classFIX8_1_1TEX_1_1ExecutionReport.html#ad1ce9afc59f42459498212e8816f5772',1,'FIX8::TEX::ExecutionReport::ExecutionReport(bool deepctor=true)']]],
   ['executionreport',['ExecutionReport',['../classFIX8_1_1TEX_1_1ExecutionReport.html',1,'FIX8::TEX']]],
+  ['executionreport',['ExecutionReport',['../classFIX8_1_1TEX_1_1ExecutionReport.html#ad1ce9afc59f42459498212e8816f5772',1,'FIX8::TEX::ExecutionReport::ExecutionReport(bool deepctor=true)'],['../classFIX8_1_1TEX_1_1ExecutionReport.html#ad1ce9afc59f42459498212e8816f5772',1,'FIX8::TEX::ExecutionReport::ExecutionReport(bool deepctor=true)']]],
   ['execvaluationpoint',['ExecValuationPoint',['../namespaceFIX8_1_1TEX.html#a5708f4ebb31400e63adcbc55900e949f',1,'FIX8::TEX']]],
   ['exercisemethod',['ExerciseMethod',['../namespaceFIX8_1_1TEX.html#afccbbfcad4c4bb902358068948ecefc3',1,'FIX8::TEX']]],
   ['exercisemethod_5fautomatic',['ExerciseMethod_AUTOMATIC',['../namespaceFIX8_1_1TEX.html#ad74902fb7e5467e00cbaebda890d619e',1,'FIX8::TEX']]],
@@ -295,6 +295,7 @@ var searchData=
   ['ext_5fver',['ext_ver',['../f8c_8cpp.html#a5bafbdf0bbe5fa6051e3c5b65fa52622',1,'f8c.cpp']]],
   ['extra_5ffields',['extra_fields',['../f8c_8cpp.html#af095e7af15c9f913e4e1a9b19ec28e93',1,'f8c.cpp']]],
   ['extract_5felement',['extract_element',['../classFIX8_1_1MessageBase.html#a4834ee4e156a54ba08d4e2e9278c433b',1,'FIX8::MessageBase::extract_element(const char *from, const unsigned sz, char *tag, char *val)'],['../classFIX8_1_1MessageBase.html#a93b21de2c222aff5f3c31fb5f93cfe95',1,'FIX8::MessageBase::extract_element(const char *from, const unsigned sz, f8String &amp;tag, f8String &amp;val)']]],
+  ['extract_5felement_5ffixed_5fwidth',['extract_element_fixed_width',['../classFIX8_1_1MessageBase.html#aca326f72b62664739e1d7c45d0f40ea0',1,'FIX8::MessageBase']]],
   ['extract_5fheader',['extract_header',['../classFIX8_1_1MessageBase.html#a84995000a9c39b0ab3795b977f575d88',1,'FIX8::MessageBase']]],
   ['extract_5ftrailer',['extract_trailer',['../classFIX8_1_1MessageBase.html#a9e14fbd1c185ea0ace2fabfbd8c82761',1,'FIX8::MessageBase']]]
 ];

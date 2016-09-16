@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -196,8 +196,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade3e5ce1c164e5e09c712ff0fcff9c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a302f52b3c9eb7467b20f68aabc96a18a"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852a082f393bb721ce305cff63393277a69f">defaults::retry_interval</a>) const </td></tr>
 <tr class="separator:a302f52b3c9eb7467b20f68aabc96a18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f1ba86927c72374485d81ca922a481e"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
-<tr class="separator:a3f1ba86927c72374485d81ca922a481e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f7705e4e96dd05e14a17cf484a1c52f"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a1f7705e4e96dd05e14a17cf484a1c52f">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const int def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
+<tr class="separator:a1f7705e4e96dd05e14a17cf484a1c52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0f4903660dfd8d5756388e108281f9"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#afe0f4903660dfd8d5756388e108281f9">get_tcp_recvbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:afe0f4903660dfd8d5756388e108281f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18f8868cfaf4a1c586d271f14dfbe36b"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a18f8868cfaf4a1c586d271f14dfbe36b">get_tcp_sendbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
@@ -574,7 +574,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00313">313</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find()</a>, and <a class="el" href="f8c_8cpp_source.html#l01524">find_group()</a>.</p>
+<p>References <a class="el" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find()</a>, and <a class="el" href="f8c_8cpp_source.html#l01554">find_group()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;{</div>
@@ -653,9 +653,9 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00256">256</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00326">FIX8::Logger::_bit_names</a>, <a class="el" href="logger_8hpp_source.html#l00329">FIX8::Logger::_level_names</a>, <a class="el" href="logger_8hpp_source.html#l00161">FIX8::Logger::All</a>, <a class="el" href="f8c_8cpp_source.html#l01524">find_group()</a>, <a class="el" href="xml_8hpp_source.html#l00227">XmlElement::FindAttrRef()</a>, <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>, <a class="el" href="xml_8hpp_source.html#l00184">XmlElement::HasAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00165">FIX8::Logger::None</a>, <a class="el" href="logger_8hpp_source.html#l00169">FIX8::Logger::StdFlags</a>, <a class="el" href="f8utils_8hpp_source.html#l00153">FIX8::trim()</a>, and <a class="el" href="logger_8hpp_source.html#l00167">FIX8::Logger::xml</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00326">FIX8::Logger::_bit_names</a>, <a class="el" href="logger_8hpp_source.html#l00329">FIX8::Logger::_level_names</a>, <a class="el" href="logger_8hpp_source.html#l00161">FIX8::Logger::All</a>, <a class="el" href="f8c_8cpp_source.html#l01554">find_group()</a>, <a class="el" href="xml_8hpp_source.html#l00227">XmlElement::FindAttrRef()</a>, <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>, <a class="el" href="xml_8hpp_source.html#l00184">XmlElement::HasAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00165">FIX8::Logger::None</a>, <a class="el" href="logger_8hpp_source.html#l00169">FIX8::Logger::StdFlags</a>, <a class="el" href="f8utils_8hpp_source.html#l00153">FIX8::trim()</a>, and <a class="el" href="logger_8hpp_source.html#l00167">FIX8::Logger::xml</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;{</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   <span class="keywordtype">string</span> name;</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Configuration.html#a9e1c5de8b8a5ee4d0f88b8e6c97774ae">from_or_default</a>(from, ltype == <a class="code" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c">session_log</a> ? <span class="stringliteral">&quot;session_log&quot;</span> : <span class="stringliteral">&quot;protocol_log&quot;</span>, name))</div>
@@ -730,7 +730,7 @@ Static Private Attributes</h2></td></tr>
 <div class="ttc" id="classFIX8_1_1RegExp_html_a6dcc79a6a9a658e78982026ce96e8ae6"><div class="ttname"><a href="classFIX8_1_1RegExp.html#a6dcc79a6a9a658e78982026ce96e8ae6">FIX8::RegExp::SearchString</a></div><div class="ttdeci">int SearchString(RegMatch &amp;match, const std::string &amp;source, const int subExpr, const int offset=0) const </div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00431">f8utils.hpp:431</a></div></div>
 <div class="ttc" id="classFIX8_1_1FileLogger_html"><div class="ttname"><a href="classFIX8_1_1FileLogger.html">FIX8::FileLogger</a></div><div class="ttdoc">A file logger. </div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00357">logger.hpp:357</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a232692907ee23f7f41ba35d1ef5e7aa4"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a232692907ee23f7f41ba35d1ef5e7aa4">FIX8::Configuration::get_logflags</a></div><div class="ttdeci">T get_logflags(const std::string &amp;tag, const std::vector&lt; std::string &gt; &amp;names, const XmlElement *from, Logger::LogPositions *positions=nullptr) const </div></div>
-<div class="ttc" id="classFIX8_1_1Configuration_html_a857a2b80970326445afd5f635bcbd05b"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a857a2b80970326445afd5f635bcbd05b">FIX8::Configuration::get_logfile_rotation</a></div><div class="ttdeci">unsigned get_logfile_rotation(const XmlElement *from, const unsigned def=defaults::log_rotation) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00338">configuration.hpp:338</a></div></div>
+<div class="ttc" id="classFIX8_1_1Configuration_html_a857a2b80970326445afd5f635bcbd05b"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a857a2b80970326445afd5f635bcbd05b">FIX8::Configuration::get_logfile_rotation</a></div><div class="ttdeci">unsigned get_logfile_rotation(const XmlElement *from, const unsigned def=defaults::log_rotation) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00343">configuration.hpp:343</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c">FIX8::Configuration::session_log</a></div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00205">configuration.hpp:205</a></div></div>
 <div class="ttc" id="classFIX8_1_1RegMatch_html"><div class="ttname"><a href="classFIX8_1_1RegMatch.html">FIX8::RegMatch</a></div><div class="ttdoc">A class to contain regex matches using RegExp. </div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00308">f8utils.hpp:308</a></div></div>
 <div class="ttc" id="classFIX8_1_1PipeLogger_html"><div class="ttname"><a href="classFIX8_1_1PipeLogger.html">FIX8::PipeLogger</a></div><div class="ttdoc">A pipe logger. </div><div class="ttdef"><b>Definition:</b> <a href="logger_8hpp_source.html#l00418">logger.hpp:418</a></div></div>
@@ -764,7 +764,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00177">177</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8cpp_source.html#l01524">find_group()</a>.</p>
+<p>References <a class="el" href="f8c_8cpp_source.html#l01554">find_group()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;{</div>
@@ -823,9 +823,9 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00186">186</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00193">FIX8::defaults::connect_timeout</a>, <a class="el" href="f8c_8cpp_source.html#l01524">find_group()</a>, <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, <a class="el" href="session_8hpp_source.html#l00101">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00105">FIX8::SessionID::get_targetCompID()</a>, and <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00193">FIX8::defaults::connect_timeout</a>, <a class="el" href="f8c_8cpp_source.html#l01554">find_group()</a>, <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, <a class="el" href="session_8hpp_source.html#l00101">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00105">FIX8::SessionID::get_targetCompID()</a>, and <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;{</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   <span class="keywordtype">string</span> name, type;</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   <span class="keyword">const</span> <a class="code" href="classXmlElement.html">XmlElement</a> *which;</div>
@@ -899,12 +899,12 @@ Static Private Attributes</h2></td></tr>
 <div class="ttc" id="classXmlElement_html"><div class="ttname"><a href="classXmlElement.html">XmlElement</a></div><div class="ttdoc">A simple xml parser with Xpath style lookup. </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00048">xml.hpp:48</a></div></div>
 <div class="ttc" id="structFIX8_1_1ConfigurationError_html"><div class="ttname"><a href="structFIX8_1_1ConfigurationError.html">FIX8::ConfigurationError</a></div><div class="ttdoc">An bad or missing configuration parameter. </div><div class="ttdef"><b>Definition:</b> <a href="f8exception_8hpp_source.html#l00292">f8exception.hpp:292</a></div></div>
 <div class="ttc" id="classFIX8_1_1SessionID_html_a9cdbc97fa63ccff7bfbbb244fed06887"><div class="ttname"><a href="classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887">FIX8::SessionID::get_targetCompID</a></div><div class="ttdeci">const target_comp_id &amp; get_targetCompID() const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00105">session.hpp:105</a></div></div>
-<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00743">xml.cpp:743</a></div></div>
+<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00748">xml.cpp:748</a></div></div>
 <div class="ttc" id="classFIX8_1_1MemoryPersister_html"><div class="ttname"><a href="classFIX8_1_1MemoryPersister.html">FIX8::MemoryPersister</a></div><div class="ttdoc">Memory based message persister. </div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00292">persist.hpp:292</a></div></div>
-<div class="ttc" id="classFIX8_1_1Configuration_html_a00d8d606b3ec33836fa64397fcca2b1c"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c">FIX8::Configuration::get_sender_comp_id</a></div><div class="ttdeci">sender_comp_id get_sender_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00439">configuration.hpp:439</a></div></div>
+<div class="ttc" id="classFIX8_1_1Configuration_html_a00d8d606b3ec33836fa64397fcca2b1c"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c">FIX8::Configuration::get_sender_comp_id</a></div><div class="ttdeci">sender_comp_id get_sender_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00444">configuration.hpp:444</a></div></div>
 <div class="ttc" id="classFIX8_1_1FilePersister_html"><div class="ttname"><a href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></div><div class="ttdef"><b>Definition:</b> <a href="persist_8hpp_source.html#l00391">persist.hpp:391</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a7270cb31987cae01ac4e397ae1de178ca2f08c3bf7620b109646b0a98ce87e5f9"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a7270cb31987cae01ac4e397ae1de178ca2f08c3bf7620b109646b0a98ce87e5f9">FIX8::Configuration::g_persisters</a></div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00111">configuration.hpp:111</a></div></div>
-<div class="ttc" id="classFIX8_1_1Configuration_html_aee6c01563c11821c57992e3719149206"><div class="ttname"><a href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">FIX8::Configuration::get_target_comp_id</a></div><div class="ttdeci">target_comp_id get_target_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00445">configuration.hpp:445</a></div></div>
+<div class="ttc" id="classFIX8_1_1Configuration_html_aee6c01563c11821c57992e3719149206"><div class="ttname"><a href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">FIX8::Configuration::get_target_comp_id</a></div><div class="ttdeci">target_comp_id get_target_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00450">configuration.hpp:450</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_ad5b6a45ce80ae1028271a47a95097ad3"><div class="ttname"><a href="classFIX8_1_1Configuration.html#ad5b6a45ce80ae1028271a47a95097ad3">FIX8::Configuration::find_group</a></div><div class="ttdeci">const XmlElement * find_group(group_types type, const std::string &amp;tag) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00120">configuration.hpp:120</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a9e1c5de8b8a5ee4d0f88b8e6c97774ae"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a9e1c5de8b8a5ee4d0f88b8e6c97774ae">FIX8::Configuration::from_or_default</a></div><div class="ttdeci">bool from_or_default(const XmlElement *from, const f8String &amp;tag, f8String &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00129">configuration.hpp:129</a></div></div>
 </div><!-- fragment -->
@@ -933,7 +933,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00131">131</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#a7f03b022c786be62f4d56108c83e3005">FIX8::decode_dow()</a>, <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, <a class="el" href="tickval_8hpp_source.html#l00127">FIX8::Tickval::get_ticks()</a>, <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>, <a class="el" href="tickval_8hpp_source.html#l00171">FIX8::Tickval::is_errorval()</a>, and <a class="el" href="tickval_8hpp_source.html#l00077">FIX8::Tickval::minute</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#a7f03b022c786be62f4d56108c83e3005">FIX8::decode_dow()</a>, <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, <a class="el" href="tickval_8hpp_source.html#l00129">FIX8::Tickval::get_ticks()</a>, <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>, <a class="el" href="tickval_8hpp_source.html#l00173">FIX8::Tickval::is_errorval()</a>, and <a class="el" href="tickval_8hpp_source.html#l00079">FIX8::Tickval::minute</a>.</p>
 <div class="fragment"><div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;{</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html">Tickval</a> start(<a class="code" href="classFIX8_1_1Configuration.html#a5a357ce80f87229e1d20b109dc0d5fab">get_time_field</a>(which, <span class="stringliteral">&quot;start_time&quot;</span>, <span class="keyword">true</span>));</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;   <span class="keywordflow">if</span> (!start.is_errorval())</div>
@@ -963,8 +963,8 @@ Static Private Attributes</h2></td></tr>
 <div class="ttc" id="structFIX8_1_1ConfigurationError_html"><div class="ttname"><a href="structFIX8_1_1ConfigurationError.html">FIX8::ConfigurationError</a></div><div class="ttdoc">An bad or missing configuration parameter. </div><div class="ttdef"><b>Definition:</b> <a href="f8exception_8hpp_source.html#l00292">f8exception.hpp:292</a></div></div>
 <div class="ttc" id="namespaceFIX8_html_a7f03b022c786be62f4d56108c83e3005"><div class="ttname"><a href="namespaceFIX8.html#a7f03b022c786be62f4d56108c83e3005">FIX8::decode_dow</a></div><div class="ttdeci">F8API int decode_dow(const std::string &amp;from)</div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a5a357ce80f87229e1d20b109dc0d5fab"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a5a357ce80f87229e1d20b109dc0d5fab">FIX8::Configuration::get_time_field</a></div><div class="ttdeci">Tickval::ticks get_time_field(const XmlElement *from, const std::string &amp;tag, bool timeonly=false) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00152">configuration.hpp:152</a></div></div>
-<div class="ttc" id="classFIX8_1_1Tickval_html_adc2e06021fad4ebe7a719a5cd58cf982"><div class="ttname"><a href="classFIX8_1_1Tickval.html#adc2e06021fad4ebe7a719a5cd58cf982">FIX8::Tickval::minute</a></div><div class="ttdeci">static const ticks minute</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00077">tickval.hpp:77</a></div></div>
-<div class="ttc" id="classFIX8_1_1Tickval_html"><div class="ttname"><a href="classFIX8_1_1Tickval.html">FIX8::Tickval</a></div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00055">tickval.hpp:55</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_adc2e06021fad4ebe7a719a5cd58cf982"><div class="ttname"><a href="classFIX8_1_1Tickval.html#adc2e06021fad4ebe7a719a5cd58cf982">FIX8::Tickval::minute</a></div><div class="ttdeci">static const ticks minute</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00079">tickval.hpp:79</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html"><div class="ttname"><a href="classFIX8_1_1Tickval.html">FIX8::Tickval</a></div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00057">tickval.hpp:57</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -991,7 +991,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00160">160</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8cpp_source.html#l01524">find_group()</a>, <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, and <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="f8c_8cpp_source.html#l01554">find_group()</a>, <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, and <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8cpp_source.html#l00167">FIX8::Session::start()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;{</div>
@@ -1176,7 +1176,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00209">XmlElement::FindAttr()</a>, and <a class="el" href="xml_8hpp_source.html#l00184">XmlElement::HasAttr()</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00422">get_always_seqnum_assign()</a>, <a class="el" href="configuration_8hpp_source.html#l00289">get_connect_timeout()</a>, <a class="el" href="configuration_8hpp_source.html#l00387">get_enforce_compids_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00345">get_heartbeat_interval()</a>, <a class="el" href="configuration_8hpp_source.html#l00394">get_ignore_logon_sequence_check_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00338">get_logfile_rotation()</a>, <a class="el" href="configuration_8hpp_source.html#l00401">get_no_chksum_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00408">get_permissive_mode_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00415">get_reset_sequence_number_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00303">get_retry_count()</a>, <a class="el" href="configuration_8hpp_source.html#l00296">get_retry_interval()</a>, <a class="el" href="configuration_8hpp_source.html#l00380">get_silent_disconnect()</a>, <a class="el" href="configuration_8hpp_source.html#l00331">get_tabsize()</a>, <a class="el" href="configuration_8hpp_source.html#l00359">get_tcp_keepalive()</a>, <a class="el" href="configuration_8hpp_source.html#l00373">get_tcp_linger()</a>, <a class="el" href="configuration_8hpp_source.html#l00352">get_tcp_nodelay()</a>, <a class="el" href="configuration_8hpp_source.html#l00310">get_tcp_recvbuf_sz()</a>, <a class="el" href="configuration_8hpp_source.html#l00366">get_tcp_reuseaddr()</a>, <a class="el" href="configuration_8hpp_source.html#l00317">get_tcp_sendbuf_sz()</a>, and <a class="el" href="configuration_8hpp_source.html#l00324">get_version()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00427">get_always_seqnum_assign()</a>, <a class="el" href="configuration_8hpp_source.html#l00289">get_connect_timeout()</a>, <a class="el" href="configuration_8hpp_source.html#l00392">get_enforce_compids_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00350">get_heartbeat_interval()</a>, <a class="el" href="configuration_8hpp_source.html#l00399">get_ignore_logon_sequence_check_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00343">get_logfile_rotation()</a>, <a class="el" href="configuration_8hpp_source.html#l00406">get_no_chksum_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00413">get_permissive_mode_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00420">get_reset_sequence_number_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00303">get_retry_count()</a>, <a class="el" href="configuration_8hpp_source.html#l00296">get_retry_interval()</a>, <a class="el" href="configuration_8hpp_source.html#l00385">get_silent_disconnect()</a>, <a class="el" href="configuration_8hpp_source.html#l00336">get_tabsize()</a>, <a class="el" href="configuration_8hpp_source.html#l00364">get_tcp_keepalive()</a>, <a class="el" href="configuration_8hpp_source.html#l00378">get_tcp_linger()</a>, <a class="el" href="configuration_8hpp_source.html#l00357">get_tcp_nodelay()</a>, <a class="el" href="configuration_8hpp_source.html#l00315">get_tcp_recvbuf_sz()</a>, <a class="el" href="configuration_8hpp_source.html#l00371">get_tcp_reuseaddr()</a>, <a class="el" href="configuration_8hpp_source.html#l00322">get_tcp_sendbuf_sz()</a>, and <a class="el" href="configuration_8hpp_source.html#l00329">get_version()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;   {</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordflow">if</span> (from)</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      {</div>
@@ -1242,12 +1242,12 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00129">129</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00139">get_string_field()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      { <span class="keywordflow">return</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(tag, target)) || (<a class="code" href="classFIX8_1_1Configuration.html#a3b6da784a8087fac910ec8a47f0a30f6">_default</a> &amp;&amp; <a class="code" href="classFIX8_1_1Configuration.html#a3b6da784a8087fac910ec8a47f0a30f6">_default</a>-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(tag, target)); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a3b6da784a8087fac910ec8a47f0a30f6"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a3b6da784a8087fac910ec8a47f0a30f6">FIX8::Configuration::_default</a></div><div class="ttdeci">const XmlElement * _default</div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00096">configuration.hpp:96</a></div></div>
-<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00743">xml.cpp:743</a></div></div>
+<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00748">xml.cpp:748</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1319,7 +1319,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00105">105</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find()</a>, <a class="el" href="f8c_8cpp_source.html#l01524">find_group()</a>, and <a class="el" href="session_8hpp_source.html#l00190">FIX8::defaults::login_retries</a>.</p>
+<p>References <a class="el" href="classXmlElement.html#ae55a4202014857542e79ba2ec953da1e">XmlElement::find()</a>, <a class="el" href="f8c_8cpp_source.html#l01554">find_group()</a>, and <a class="el" href="session_8hpp_source.html#l00190">FIX8::defaults::login_retries</a>.</p>
 <div class="fragment"><div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <span class="keywordtype">string</span> name;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   <span class="keyword">const</span> <a class="code" href="classXmlElement.html">XmlElement</a> *which;</div>
@@ -1389,7 +1389,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00372">372</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00485">FIX8::Connection::cn_unknown</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00512">FIX8::Connection::cn_unknown</a>.</p>
 <div class="fragment"><div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;{</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;   <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *pp : <a class="code" href="classFIX8_1_1Configuration.html#a337fd1c50608ac77b1ae6c66ebcae028">_allsessions</a>)</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <span class="keywordflow">if</span> (role == <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a> || <a class="code" href="classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19">get_role</a>(pp) == role)</div>
@@ -1397,7 +1397,7 @@ template&lt;typename T &gt; </div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(target.size());</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;}</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a36a52fd4fa27e1ce343590ce56f69d19"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19">FIX8::Configuration::get_role</a></div><div class="ttdeci">F8API Connection::Role get_role(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8cpp_source.html#l00074">configuration.cpp:74</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">FIX8::Connection::cn_unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">FIX8::Connection::cn_unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a337fd1c50608ac77b1ae6c66ebcae028"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a337fd1c50608ac77b1ae6c66ebcae028">FIX8::Configuration::_allsessions</a></div><div class="ttdeci">std::vector&lt; const XmlElement * &gt; _allsessions</div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00099">configuration.hpp:99</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1442,12 +1442,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if always_seqnum_assign flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00422">422</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00427">427</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;always_seqnum_assign&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;always_seqnum_assign&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1531,14 +1531,14 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target default_appl_ver_id </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00433">433</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00438">438</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00139">get_string_field()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;      { <a class="code" href="namespaceFIX8.html#a5b55311ff99a271317dc83ae72609ba7">default_appl_ver_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;default_appl_ver_id&quot;</span>, to); }</div>
+<div class="fragment"><div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;      { <a class="code" href="namespaceFIX8.html#a5b55311ff99a271317dc83ae72609ba7">default_appl_ver_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;default_appl_ver_id&quot;</span>, to); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a7693a3f4a90f3366e6871355e62998c8"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">FIX8::Configuration::get_string_field</a></div><div class="ttdeci">T &amp; get_string_field(const XmlElement *from, const std::string &amp;tag, T &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00139">configuration.hpp:139</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a5b55311ff99a271317dc83ae72609ba7"><div class="ttname"><a href="namespaceFIX8.html#a5b55311ff99a271317dc83ae72609ba7">FIX8::default_appl_ver_id</a></div><div class="ttdeci">Field&lt; f8String, Common_DefaultApplVerID &gt; default_appl_ver_id</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02148">field.hpp:2148</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a5b55311ff99a271317dc83ae72609ba7"><div class="ttname"><a href="namespaceFIX8.html#a5b55311ff99a271317dc83ae72609ba7">FIX8::default_appl_ver_id</a></div><div class="ttdeci">Field&lt; f8String, Common_DefaultApplVerID &gt; default_appl_ver_id</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02152">field.hpp:2152</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1582,12 +1582,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if enforce_compids flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00387">387</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00392">392</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;enforce_compids&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;enforce_compids&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1632,12 +1632,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the heartbeat interval version or 0 if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00345">345</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00350">350</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;heartbeat_interval&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;heartbeat_interval&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1682,12 +1682,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if ignore_logon_sequence_check flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00394">394</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00399">399</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00409">FIX8::Session::sequence_check()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;ignore_logon_sequence_check&quot;</span>, def); }</div>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00427">FIX8::Session::sequence_check()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;ignore_logon_sequence_check&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1766,10 +1766,10 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the logfile rotation value or 5 if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00338">338</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00343">343</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;rotation&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;rotation&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1870,7 +1870,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00351">351</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00153">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00153">FIX8::trim()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;{</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   T flags;</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;   <span class="keywordtype">string</span> flags_str;</div>
@@ -1889,7 +1889,7 @@ template&lt;typename T &gt; </div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="keywordflow">return</span> flags;</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
 <div class="ttc" id="namespaceFIX8_html_a6a3700dc520a7de4e264484eb77b65ad"><div class="ttname"><a href="namespaceFIX8.html#a6a3700dc520a7de4e264484eb77b65ad">FIX8::trim</a></div><div class="ttdeci">std::string trim(const std::string &amp;source, const std::string &amp;ws=&quot; \t&quot;)</div><div class="ttdef"><b>Definition:</b> <a href="f8utils_8hpp_source.html#l00153">f8utils.hpp:153</a></div></div>
-<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00743">xml.cpp:743</a></div></div>
+<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00748">xml.cpp:748</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1946,8 +1946,8 @@ template&lt;typename T &gt; </div>
 <div class="ttc" id="classXmlElement_html_a9bcc420674262afdd97a18c1639349a2"><div class="ttname"><a href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">XmlElement::FindAttr</a></div><div class="ttdeci">T FindAttr(const std::string &amp;what, const T defValue) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8hpp_source.html#l00209">xml.hpp:209</a></div></div>
 <div class="ttc" id="classFIX8_1_1SessionID_html_ae04a5c1c434de1bc5725b2007ff5f70b"><div class="ttname"><a href="classFIX8_1_1SessionID.html#ae04a5c1c434de1bc5725b2007ff5f70b">FIX8::SessionID::get_senderCompID</a></div><div class="ttdeci">const sender_comp_id &amp; get_senderCompID() const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00101">session.hpp:101</a></div></div>
 <div class="ttc" id="classFIX8_1_1SessionID_html_a9cdbc97fa63ccff7bfbbb244fed06887"><div class="ttname"><a href="classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887">FIX8::SessionID::get_targetCompID</a></div><div class="ttdeci">const target_comp_id &amp; get_targetCompID() const </div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00105">session.hpp:105</a></div></div>
-<div class="ttc" id="classFIX8_1_1Configuration_html_a00d8d606b3ec33836fa64397fcca2b1c"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c">FIX8::Configuration::get_sender_comp_id</a></div><div class="ttdeci">sender_comp_id get_sender_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00439">configuration.hpp:439</a></div></div>
-<div class="ttc" id="classFIX8_1_1Configuration_html_aee6c01563c11821c57992e3719149206"><div class="ttname"><a href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">FIX8::Configuration::get_target_comp_id</a></div><div class="ttdeci">target_comp_id get_target_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00445">configuration.hpp:445</a></div></div>
+<div class="ttc" id="classFIX8_1_1Configuration_html_a00d8d606b3ec33836fa64397fcca2b1c"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c">FIX8::Configuration::get_sender_comp_id</a></div><div class="ttdeci">sender_comp_id get_sender_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00444">configuration.hpp:444</a></div></div>
+<div class="ttc" id="classFIX8_1_1Configuration_html_aee6c01563c11821c57992e3719149206"><div class="ttname"><a href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">FIX8::Configuration::get_target_comp_id</a></div><div class="ttdeci">target_comp_id get_target_comp_id(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00450">configuration.hpp:450</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1991,12 +1991,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if get_no_chksum_flag flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00401">401</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00406">406</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;no_chksum&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;no_chksum&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2041,12 +2041,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if get_permissive_mode_flag flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00408">408</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00413">413</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;permissive_mode&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;permissive_mode&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2130,17 +2130,17 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if reset_sequence_number flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00415">415</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00420">420</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;reset_sequence_numbers&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;reset_sequence_numbers&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a3f1ba86927c72374485d81ca922a481e"></a>
+<a class="anchor" id="a1f7705e4e96dd05e14a17cf484a1c52f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2156,7 +2156,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">const int&#160;</td>
           <td class="paramname"><em>def</em> = <code><a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a></code>&#160;</td>
         </tr>
         <tr>
@@ -2185,7 +2185,12 @@ template&lt;typename T &gt; </div>
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;login_retries&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   {</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">int</span> rc(<a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;login_retries&quot;</span>, def));</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <span class="keywordflow">if</span> (rc &lt; 0)</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;         <span class="keywordflow">throw</span> ConfigurationError(<span class="stringliteral">&quot;retry count must be &gt;= 0&quot;</span>);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      <span class="keywordflow">return</span> rc;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2263,16 +2268,16 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00074">74</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00485">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00485">FIX8::Connection::cn_initiator</a>, and <a class="el" href="connection_8hpp_source.html#l00485">FIX8::Connection::cn_unknown</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00512">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00512">FIX8::Connection::cn_initiator</a>, and <a class="el" href="connection_8hpp_source.html#l00512">FIX8::Connection::cn_unknown</a>.</p>
 <div class="fragment"><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;{</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keywordtype">string</span> role;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a9e1c5de8b8a5ee4d0f88b8e6c97774ae">from_or_default</a>(from, <span class="stringliteral">&quot;role&quot;</span>, role)</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      ? role % <span class="stringliteral">&quot;initiator&quot;</span> ? <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">Connection::cn_initiator</a></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      : role % <span class="stringliteral">&quot;acceptor&quot;</span> ? <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">Connection::cn_acceptor</a> : <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a> : <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a>;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">FIX8::Connection::cn_initiator</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">FIX8::Connection::cn_unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">FIX8::Connection::cn_acceptor</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00485">connection.hpp:485</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290">FIX8::Connection::cn_initiator</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">FIX8::Connection::cn_unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288"><div class="ttname"><a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288">FIX8::Connection::cn_acceptor</a></div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00512">connection.hpp:512</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a9e1c5de8b8a5ee4d0f88b8e6c97774ae"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a9e1c5de8b8a5ee4d0f88b8e6c97774ae">FIX8::Configuration::from_or_default</a></div><div class="ttdeci">bool from_or_default(const XmlElement *from, const f8String &amp;tag, f8String &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00129">configuration.hpp:129</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2299,10 +2304,10 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Return ptr to the root <a class="el" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup. ">XmlElement</a> </p><dl class="section return"><dt>Returns</dt><dd>root element </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00497">497</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00502">502</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00096">_root</a>.</p>
-<div class="fragment"><div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a963ddebb913b24a2f8cf36fc14ab7d8e">_root</a>; }</div>
+<div class="fragment"><div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a963ddebb913b24a2f8cf36fc14ab7d8e">_root</a>; }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a963ddebb913b24a2f8cf36fc14ab7d8e"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a963ddebb913b24a2f8cf36fc14ab7d8e">FIX8::Configuration::_root</a></div><div class="ttdeci">const XmlElement * _root</div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00096">configuration.hpp:96</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2336,12 +2341,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target sender_comp_id </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00439">439</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00444">444</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00139">get_string_field()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      { <a class="code" href="namespaceFIX8.html#a1fc50a46f14844ed021b393ca693412d">sender_comp_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;sender_comp_id&quot;</span>, to); }</div>
+<div class="fragment"><div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;      { <a class="code" href="namespaceFIX8.html#a1fc50a46f14844ed021b393ca693412d">sender_comp_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;sender_comp_id&quot;</span>, to); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a7693a3f4a90f3366e6871355e62998c8"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">FIX8::Configuration::get_string_field</a></div><div class="ttdeci">T &amp; get_string_field(const XmlElement *from, const std::string &amp;tag, T &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00139">configuration.hpp:139</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a1fc50a46f14844ed021b393ca693412d"><div class="ttname"><a href="namespaceFIX8.html#a1fc50a46f14844ed021b393ca693412d">FIX8::sender_comp_id</a></div><div class="ttdeci">Field&lt; f8String, Common_SenderCompID &gt; sender_comp_id</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02141">field.hpp:2141</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a1fc50a46f14844ed021b393ca693412d"><div class="ttname"><a href="namespaceFIX8.html#a1fc50a46f14844ed021b393ca693412d">FIX8::sender_comp_id</a></div><div class="ttdeci">Field&lt; f8String, Common_SenderCompID &gt; sender_comp_id</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02145">field.hpp:2145</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2420,12 +2425,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if silent_disconnect flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00380">380</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00385">385</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;silent_disconnect&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;silent_disconnect&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2489,7 +2494,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00129">from_or_default()</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00433">get_default_appl_ver_id()</a>, <a class="el" href="configuration_8hpp_source.html#l00439">get_sender_comp_id()</a>, and <a class="el" href="configuration_8hpp_source.html#l00445">get_target_comp_id()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00438">get_default_appl_ver_id()</a>, <a class="el" href="configuration_8hpp_source.html#l00444">get_sender_comp_id()</a>, and <a class="el" href="configuration_8hpp_source.html#l00450">get_target_comp_id()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;   {</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      std::string val;</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Configuration.html#a9e1c5de8b8a5ee4d0f88b8e6c97774ae">from_or_default</a>(from, tag, val))</div>
@@ -2540,12 +2545,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the tabsize version or <a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852a98df95cefb439f79e7f5336e8926ffe5">defaults::tabsize</a> if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00331">331</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00336">336</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tabsize&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tabsize&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2579,12 +2584,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target target_comp_id </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00445">445</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00450">450</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00139">get_string_field()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;      { <a class="code" href="namespaceFIX8.html#aef5ba6973a7f15847b4946985cc4b439">target_comp_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;target_comp_id&quot;</span>, to); }</div>
+<div class="fragment"><div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;      { <a class="code" href="namespaceFIX8.html#aef5ba6973a7f15847b4946985cc4b439">target_comp_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;target_comp_id&quot;</span>, to); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a7693a3f4a90f3366e6871355e62998c8"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">FIX8::Configuration::get_string_field</a></div><div class="ttdeci">T &amp; get_string_field(const XmlElement *from, const std::string &amp;tag, T &amp;to) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00139">configuration.hpp:139</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_aef5ba6973a7f15847b4946985cc4b439"><div class="ttname"><a href="namespaceFIX8.html#aef5ba6973a7f15847b4946985cc4b439">FIX8::target_comp_id</a></div><div class="ttdeci">Field&lt; f8String, Common_TargetCompID &gt; target_comp_id</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02142">field.hpp:2142</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_aef5ba6973a7f15847b4946985cc4b439"><div class="ttname"><a href="namespaceFIX8.html#aef5ba6973a7f15847b4946985cc4b439">FIX8::target_comp_id</a></div><div class="ttdeci">Field&lt; f8String, Common_TargetCompID &gt; target_comp_id</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l02146">field.hpp:2146</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2628,10 +2633,10 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>false if keepalive flag was passed and was false </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00359">359</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00364">364</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_keepalive&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_keepalive&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2676,10 +2681,10 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the socket linger value (secs) </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00373">373</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00378">378</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_linger&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_linger&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2724,10 +2729,10 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>false if nodelay flag was passed and was false </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00352">352</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00357">357</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_nodelay&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_nodelay&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2772,12 +2777,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the recv buffer size count or 0 if the default should be used </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00310">310</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00315">315</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_recv_buffer&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_recv_buffer&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2822,10 +2827,10 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>false if reuseaddr flag was passed and was false </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00366">366</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00371">371</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_reuseaddr&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_reuseaddr&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2870,12 +2875,12 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the send buffer size count or 0 if the default should be used </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00317">317</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00322">322</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00134">FIX8::SessionConfig::SessionConfig()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_send_buffer&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;tcp_send_buffer&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -2929,15 +2934,15 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00152">152</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00067">FIX8::Tickval::errorticks()</a>, <a class="el" href="xml_8cpp_source.html#l00743">XmlElement::GetAttr()</a>, and <a class="el" href="field_8hpp_source.html#l00976">FIX8::time_parse()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00069">FIX8::Tickval::errorticks()</a>, <a class="el" href="xml_8cpp_source.html#l00748">XmlElement::GetAttr()</a>, and <a class="el" href="field_8hpp_source.html#l00978">FIX8::time_parse()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   {</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      std::string time_str;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">return</span> from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(tag, time_str) &amp;&amp; time_str.size() == 8</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;         ? <a class="code" href="namespaceFIX8.html#a1cb4329d66a1fd9d13d5233fe9904703">time_parse</a>(time_str.c_str(), 8, timeonly) : <a class="code" href="classFIX8_1_1Tickval.html#acc5af9d7f3371dfcca5eb2291d6f2b02">Tickval::errorticks</a>();</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   }</div>
-<div class="ttc" id="classFIX8_1_1Tickval_html_acc5af9d7f3371dfcca5eb2291d6f2b02"><div class="ttname"><a href="classFIX8_1_1Tickval.html#acc5af9d7f3371dfcca5eb2291d6f2b02">FIX8::Tickval::errorticks</a></div><div class="ttdeci">static const ticks &amp; errorticks()</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00067">tickval.hpp:67</a></div></div>
-<div class="ttc" id="namespaceFIX8_html_a1cb4329d66a1fd9d13d5233fe9904703"><div class="ttname"><a href="namespaceFIX8.html#a1cb4329d66a1fd9d13d5233fe9904703">FIX8::time_parse</a></div><div class="ttdeci">Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00976">field.hpp:976</a></div></div>
-<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00743">xml.cpp:743</a></div></div>
+<div class="ttc" id="classFIX8_1_1Tickval_html_acc5af9d7f3371dfcca5eb2291d6f2b02"><div class="ttname"><a href="classFIX8_1_1Tickval.html#acc5af9d7f3371dfcca5eb2291d6f2b02">FIX8::Tickval::errorticks</a></div><div class="ttdeci">static const ticks &amp; errorticks()</div><div class="ttdef"><b>Definition:</b> <a href="tickval_8hpp_source.html#l00069">tickval.hpp:69</a></div></div>
+<div class="ttc" id="namespaceFIX8_html_a1cb4329d66a1fd9d13d5233fe9904703"><div class="ttname"><a href="namespaceFIX8.html#a1cb4329d66a1fd9d13d5233fe9904703">FIX8::time_parse</a></div><div class="ttdeci">Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)</div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00978">field.hpp:978</a></div></div>
+<div class="ttc" id="classXmlElement_html_a8a1842abc11fcabcf06ce6e6e462ee2a"><div class="ttname"><a href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">XmlElement::GetAttr</a></div><div class="ttdeci">F8API bool GetAttr(const std::string &amp;what, std::string &amp;target) const </div><div class="ttdef"><b>Definition:</b> <a href="xml_8cpp_source.html#l00748">xml.cpp:748</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2981,10 +2986,10 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the FIX version or 0 if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00324">324</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00329">329</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00166">find_or_default()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;fix_version&quot;</span>, def); }</div>
+<div class="fragment"><div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">find_or_default</a>(from, <span class="stringliteral">&quot;fix_version&quot;</span>, def); }</div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_a400b60a7825059747e4e63de81669aec"><div class="ttname"><a href="classFIX8_1_1Configuration.html#a400b60a7825059747e4e63de81669aec">FIX8::Configuration::find_or_default</a></div><div class="ttdeci">T find_or_default(const XmlElement *from, const std::string &amp;tag, const T def) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8hpp_source.html#l00166">configuration.hpp:166</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -3224,7 +3229,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00096">96</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00497">get_root()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00502">get_root()</a>.</p>
 
 </div>
 </div>
@@ -3235,7 +3240,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:12. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -1,5 +1,9 @@
 var NAVTREEINDEX103 =
 {
+"session_8hpp.html#ae9f67d4c5d1c68f1f170c6108eeb37d3":[4,0,67,9],
+"session_8hpp_source.html":[4,0,67],
+"sessionwrapper_8hpp.html":[4,0,68],
+"sessionwrapper_8hpp_source.html":[4,0,68],
 "structFIX8_1_1BadCheckSum.html":[3,0,0,6],
 "structFIX8_1_1BadCheckSum.html#ac3ece7d40604a08ff612f53560a5dcfa":[3,0,0,6,1],
 "structFIX8_1_1BadCheckSum.html#afde572c8b7dea2b4e7484f388d6923d5":[3,0,0,6,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX103 =
 "structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1":[3,0,0,92,9],
 "structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871":[3,0,0,92,10],
 "structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba":[3,0,0,92,4],
-"structFIX8_1_1MessageSpec.html#a5001a90e4f5937cfeb16feb690179327":[3,0,0,92,8],
-"structFIX8_1_1MessageSpec.html#a64c20a8e2fe1e241fc23ec7b3dd5bad0":[3,0,0,92,1],
-"structFIX8_1_1MessageSpec.html#a7064587282c02f7f18834900d2914df5":[3,0,0,92,6],
-"structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145":[3,0,0,92,7],
-"structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440":[3,0,0,92,5]
+"structFIX8_1_1MessageSpec.html#a5001a90e4f5937cfeb16feb690179327":[3,0,0,92,8]
 };

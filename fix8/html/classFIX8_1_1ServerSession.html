@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -221,8 +221,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade3e5ce1c164e5e09c712ff0fcff9c6c inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852a082f393bb721ce305cff63393277a69f">defaults::retry_interval</a>) const </td></tr>
 <tr class="separator:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
-<tr class="separator:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f7705e4e96dd05e14a17cf484a1c52f inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a1f7705e4e96dd05e14a17cf484a1c52f">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const int def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
+<tr class="separator:a1f7705e4e96dd05e14a17cf484a1c52f inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#afe0f4903660dfd8d5756388e108281f9">get_tcp_recvbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18f8868cfaf4a1c586d271f14dfbe36b inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a18f8868cfaf4a1c586d271f14dfbe36b">get_tcp_sendbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
@@ -327,7 +327,7 @@ class FIX8::ServerSession&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00543">543</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00544">544</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a8e2a3a8afc6890076561f66517d35b31"></a>
 <div class="memitem">
@@ -343,7 +343,7 @@ template&lt;typename T&gt; </div>
 
 <p>Convenient scoped pointer for your session. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00579">579</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00580">580</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -390,38 +390,38 @@ template&lt;typename T&gt; </div>
 
 <p>Ctor. Prepares session for receiving inbbound connections (acceptor). </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00552">552</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00553">553</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00130">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="session_8hpp_source.html#l00358">FIX8::LoginParameters::_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00358">FIX8::LoginParameters::_send_buf_sz</a>, <a class="el" href="connection_8hpp_source.html#l00619">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00630">FIX8::Connection::set_send_buf_sz()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;                                                                                                    :</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;      <a class="code" href="classFIX8_1_1ServerSessionBase.html#a9bdecf6cf10156feeb91cc6a199854f9">ServerSessionBase</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">ctx</a>, conf_file, session_name),</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;      <a class="code" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a>(<a class="code" href="classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df">get_address</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>))</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="preprocessor">#ifdef FIX8_HAVE_OPENSSL</span></div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;      ,_ssl(get_ssl_context(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>), <span class="keyword">false</span>)</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   {</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;      <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a> =</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;<span class="preprocessor">#ifdef FIX8_HAVE_OPENSSL</span></div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;         _ssl.is_secure() ? <span class="keyword">new</span> Poco::Net::SecureServerSocket(<a class="code" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a>, 64, _ssl._context) :</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;#endif</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;         new Poco::Net::ServerSocket(<a class="code" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a>);</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#a935bcfc37e4f552f76428b17b186a369">_recv_buf_sz</a>)</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">Connection::set_recv_buf_sz</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#a935bcfc37e4f552f76428b17b186a369">_recv_buf_sz</a>, <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>);</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#ac8e376ad449734a168d3de9662ef2046">_send_buf_sz</a>)</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">Connection::set_send_buf_sz</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#ac8e376ad449734a168d3de9662ef2046">_send_buf_sz</a>, <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>);</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   }</div>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00130">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="session_8hpp_source.html#l00358">FIX8::LoginParameters::_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00358">FIX8::LoginParameters::_send_buf_sz</a>, <a class="el" href="connection_8hpp_source.html#l00633">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00644">FIX8::Connection::set_send_buf_sz()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;                                                                                                    :</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;      <a class="code" href="classFIX8_1_1ServerSessionBase.html#a9bdecf6cf10156feeb91cc6a199854f9">ServerSessionBase</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">ctx</a>, conf_file, session_name),</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;      <a class="code" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a>(<a class="code" href="classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df">get_address</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>))</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;<span class="preprocessor">#ifdef FIX8_HAVE_OPENSSL</span></div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;      ,_ssl(get_ssl_context(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>), <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;   {</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;      <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a> =</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;<span class="preprocessor">#ifdef FIX8_HAVE_OPENSSL</span></div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;         _ssl.is_secure() ? <span class="keyword">new</span> Poco::Net::SecureServerSocket(<a class="code" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a>, 64, _ssl._context) :</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;#endif</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;         new Poco::Net::ServerSocket(<a class="code" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a>);</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#a935bcfc37e4f552f76428b17b186a369">_recv_buf_sz</a>)</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">Connection::set_recv_buf_sz</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#a935bcfc37e4f552f76428b17b186a369">_recv_buf_sz</a>, <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>);</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#ac8e376ad449734a168d3de9662ef2046">_send_buf_sz</a>)</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;         <a class="code" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">Connection::set_send_buf_sz</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>.<a class="code" href="structFIX8_1_1LoginParameters.html#ac8e376ad449734a168d3de9662ef2046">_send_buf_sz</a>, <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>);</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   }</div>
 <div class="ttc" id="structFIX8_1_1SessionConfig_html_abfd10e9bcc48a413d5302ba4b9be9839"><div class="ttname"><a href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">FIX8::SessionConfig::_loginParameters</a></div><div class="ttdeci">LoginParameters _loginParameters</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00130">sessionwrapper.hpp:130</a></div></div>
-<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a9bdecf6cf10156feeb91cc6a199854f9"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a9bdecf6cf10156feeb91cc6a199854f9">FIX8::ServerSessionBase::ServerSessionBase</a></div><div class="ttdeci">ServerSessionBase(const F8MetaCntx &amp;ctx, const std::string &amp;conf_file, const std::string &amp;session_name)</div><div class="ttdoc">Ctor. Prepares session for receiving inbbound connections (acceptor). </div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00505">sessionwrapper.hpp:505</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a9cff80bec2b2243a458ab2f939697c6e"><div class="ttname"><a href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">FIX8::Connection::set_recv_buf_sz</a></div><div class="ttdeci">static void set_recv_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00619">connection.hpp:619</a></div></div>
+<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a9bdecf6cf10156feeb91cc6a199854f9"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a9bdecf6cf10156feeb91cc6a199854f9">FIX8::ServerSessionBase::ServerSessionBase</a></div><div class="ttdeci">ServerSessionBase(const F8MetaCntx &amp;ctx, const std::string &amp;conf_file, const std::string &amp;session_name)</div><div class="ttdoc">Ctor. Prepares session for receiving inbbound connections (acceptor). </div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00506">sessionwrapper.hpp:506</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a9cff80bec2b2243a458ab2f939697c6e"><div class="ttname"><a href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">FIX8::Connection::set_recv_buf_sz</a></div><div class="ttdeci">static void set_recv_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00633">connection.hpp:633</a></div></div>
 <div class="ttc" id="classFIX8_1_1Configuration_html_ace764895c637f1ceb7d466505a6687df"><div class="ttname"><a href="classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df">FIX8::Configuration::get_address</a></div><div class="ttdeci">F8API Poco::Net::SocketAddress get_address(const XmlElement *from) const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8cpp_source.html#l00083">configuration.cpp:83</a></div></div>
-<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00501">sessionwrapper.hpp:501</a></div></div>
-<div class="ttc" id="classFIX8_1_1Connection_html_a95bcc108abf0a366438731b5b81606b2"><div class="ttname"><a href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">FIX8::Connection::set_send_buf_sz</a></div><div class="ttdeci">static void set_send_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00630">connection.hpp:630</a></div></div>
+<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00502">sessionwrapper.hpp:502</a></div></div>
+<div class="ttc" id="classFIX8_1_1Connection_html_a95bcc108abf0a366438731b5b81606b2"><div class="ttname"><a href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">FIX8::Connection::set_send_buf_sz</a></div><div class="ttdeci">static void set_send_buf_sz(const unsigned sz, Poco::Net::Socket *sock)</div><div class="ttdef"><b>Definition:</b> <a href="connection_8hpp_source.html#l00644">connection.hpp:644</a></div></div>
 <div class="ttc" id="namespaceFIX8_1_1TEX_html_afc9f1359200c953b443b55b4ea0e3950"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">FIX8::TEX::ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; ctx()</div><div class="ttdoc">Compiler generated metadata object, accessed through this function. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8cpp_source.html#l00424">Myfix_classes.cpp:424</a></div></div>
 <div class="ttc" id="structFIX8_1_1LoginParameters_html_a935bcfc37e4f552f76428b17b186a369"><div class="ttname"><a href="structFIX8_1_1LoginParameters.html#a935bcfc37e4f552f76428b17b186a369">FIX8::LoginParameters::_recv_buf_sz</a></div><div class="ttdeci">unsigned _recv_buf_sz</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00358">session.hpp:358</a></div></div>
 <div class="ttc" id="structFIX8_1_1SessionConfig_html_a17c36086df286d2bf5b598c5c1694903"><div class="ttname"><a href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">FIX8::SessionConfig::_ses</a></div><div class="ttdeci">const XmlElement * _ses</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00129">sessionwrapper.hpp:129</a></div></div>
 <div class="ttc" id="structFIX8_1_1LoginParameters_html_ac8e376ad449734a168d3de9662ef2046"><div class="ttname"><a href="structFIX8_1_1LoginParameters.html#ac8e376ad449734a168d3de9662ef2046">FIX8::LoginParameters::_send_buf_sz</a></div><div class="ttdeci">unsigned _send_buf_sz</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00358">session.hpp:358</a></div></div>
-<div class="ttc" id="classFIX8_1_1ServerSession_html_aa67b9e62eca1e673c5c2fc76d84c86e4"><div class="ttname"><a href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">FIX8::ServerSession::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00545">sessionwrapper.hpp:545</a></div></div>
+<div class="ttc" id="classFIX8_1_1ServerSession_html_aa67b9e62eca1e673c5c2fc76d84c86e4"><div class="ttname"><a href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">FIX8::ServerSession::_addr</a></div><div class="ttdeci">Poco::Net::SocketAddress _addr</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00546">sessionwrapper.hpp:546</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -450,8 +450,8 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00572">572</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;{}</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00573">573</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -482,8 +482,8 @@ template&lt;typename T &gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1ServerSessionBase.html#af85fbb6b0258b5de8546fefe317e9688">FIX8::ServerSessionBase</a>.</p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00727">727</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;{ <span class="keywordflow">return</span> <span class="keyword">new</span> SessionInstance&lt;T&gt;(*this); }</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00728">728</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;{ <span class="keywordflow">return</span> <span class="keyword">new</span> SessionInstance&lt;T&gt;(*this); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -513,10 +513,10 @@ template&lt;typename T&gt; </div>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1ServerSessionBase.html#a08a8f2bf7c914e3ccc0084c6882ff251">FIX8::ServerSessionBase</a>.</p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00581">581</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;      { <span class="keywordflow">return</span> _ssl.is_secure(); }</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00582">582</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;      { <span class="keywordflow">return</span> _ssl.is_secure(); }</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -541,7 +541,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00545">545</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00546">546</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -551,7 +551,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:15. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

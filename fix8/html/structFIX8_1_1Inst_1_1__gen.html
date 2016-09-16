@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -128,7 +128,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02038">2038</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02042">2042</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a44d5ee9b0e0df3c1bca6fc213f6f6224"></a>
 <div class="memitem">
@@ -185,8 +185,8 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new field </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02047">2047</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02048"></a><span class="lineno"> 2048</span>&#160;         { <span class="keywordflow">return</span> <span class="keyword">new</span> T{from, db}; }</div>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02051">2051</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02052"></a><span class="lineno"> 2052</span>&#160;         { <span class="keywordflow">return</span> <span class="keyword">new</span> T{from, db}; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -245,13 +245,13 @@ template&lt;typename T , typename R &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new field </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l02057">2057</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l02061">2061</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l00063">FIX8::RealmBase::_dtype</a>, <a class="el" href="field_8hpp_source.html#l00065">FIX8::RealmBase::_sz</a>, <a class="el" href="field_8hpp_source.html#l00060">FIX8::RealmBase::dt_set</a>, and <a class="el" href="field_8hpp_source.html#l00087">FIX8::RealmBase::get_rlm_val()</a>.</p>
-<div class="fragment"><div class="line"><a name="l02058"></a><span class="lineno"> 2058</span>&#160;      {</div>
-<div class="line"><a name="l02059"></a><span class="lineno"> 2059</span>&#160;         <span class="keywordflow">return</span> !db || rv &lt; 0 || rv &gt;= db-&gt;_sz || db-&gt;_dtype != <a class="code" href="structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82">RealmBase::dt_set</a></div>
-<div class="line"><a name="l02060"></a><span class="lineno"> 2060</span>&#160;            ? <span class="keyword">new</span> T(from, db) : new T(db-&gt;get_rlm_val&lt;R&gt;(rv), db);</div>
-<div class="line"><a name="l02061"></a><span class="lineno"> 2061</span>&#160;      }</div>
+<div class="fragment"><div class="line"><a name="l02062"></a><span class="lineno"> 2062</span>&#160;      {</div>
+<div class="line"><a name="l02063"></a><span class="lineno"> 2063</span>&#160;         <span class="keywordflow">return</span> !db || rv &lt; 0 || rv &gt;= db-&gt;_sz || db-&gt;_dtype != <a class="code" href="structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82">RealmBase::dt_set</a></div>
+<div class="line"><a name="l02064"></a><span class="lineno"> 2064</span>&#160;            ? <span class="keyword">new</span> T(from, db) : new T(db-&gt;get_rlm_val&lt;R&gt;(rv), db);</div>
+<div class="line"><a name="l02065"></a><span class="lineno"> 2065</span>&#160;      }</div>
 <div class="ttc" id="structFIX8_1_1RealmBase_html_a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82"><div class="ttname"><a href="structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843faaaff90310e2a686a4047d5f03847dc82">FIX8::RealmBase::dt_set</a></div><div class="ttdef"><b>Definition:</b> <a href="field_8hpp_source.html#l00060">field.hpp:60</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -262,7 +262,7 @@ template&lt;typename T , typename R &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:15. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

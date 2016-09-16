@@ -5,8 +5,7 @@ var classFIX8_1_1Connection =
       [ "cn_initiator", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290", null ],
       [ "cn_unknown", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6", null ]
     ] ],
-    [ "Connection", "classFIX8_1_1Connection.html#ac962fcd78af386fa108025cddddbded8", null ],
-    [ "Connection", "classFIX8_1_1Connection.html#a14bdd2b982d8a53377a98962000c08f7", null ],
+    [ "Connection", "classFIX8_1_1Connection.html#ab722adb412c713858818df9a356ac3b8", null ],
     [ "~Connection", "classFIX8_1_1Connection.html#a8b5e9ade90396694c34c2d10f5ec7321", null ],
     [ "connect", "classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398", null ],
     [ "get_hb_interval", "classFIX8_1_1Connection.html#a4ef6dd0e741a007bf9261cb44f8e5de1", null ],

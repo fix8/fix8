@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -416,7 +416,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00300">300</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="field_8hpp_source.html#l02073">FIX8::BaseEntry::_create</a>, <a class="el" href="field_8hpp_source.html#l02065">FIX8::Inst::_do</a>, <a class="el" href="field_8hpp_source.html#l02076">FIX8::BaseEntry::_rlm</a>, and <a class="el" href="message_8hpp_source.html#l00267">find_be()</a>.</p>
+<p>References <a class="el" href="field_8hpp_source.html#l02077">FIX8::BaseEntry::_create</a>, <a class="el" href="field_8hpp_source.html#l02069">FIX8::Inst::_do</a>, <a class="el" href="field_8hpp_source.html#l02080">FIX8::BaseEntry::_rlm</a>, and <a class="el" href="message_8hpp_source.html#l00267">find_be()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   {</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      <span class="keyword">const</span> BaseEntry *be(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">find_be</a>(fnum));</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      <span class="keywordflow">return</span> be ? be-&gt;_create._do(from, be-&gt;_rlm, -1) : <span class="keyword">nullptr</span>;</div>
@@ -467,7 +467,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00310">310</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="field_8hpp_source.html#l02073">FIX8::BaseEntry::_create</a>, <a class="el" href="field_8hpp_source.html#l02065">FIX8::Inst::_do</a>, <a class="el" href="field_8hpp_source.html#l02076">FIX8::BaseEntry::_rlm</a>, and <a class="el" href="message_8hpp_source.html#l00273">reverse_find_be()</a>.</p>
+<p>References <a class="el" href="field_8hpp_source.html#l02077">FIX8::BaseEntry::_create</a>, <a class="el" href="field_8hpp_source.html#l02069">FIX8::Inst::_do</a>, <a class="el" href="field_8hpp_source.html#l02080">FIX8::BaseEntry::_rlm</a>, and <a class="el" href="message_8hpp_source.html#l00273">reverse_find_be()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   {</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      <span class="keyword">const</span> BaseEntry *be(<a class="code" href="structFIX8_1_1F8MetaCntx.html#a33fe79d7629082d81817557e8201caed">reverse_find_be</a>(tag));</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      <span class="keywordflow">return</span> be ? be-&gt;_create._do(from, be-&gt;_rlm, -1) : <span class="keyword">nullptr</span>;</div>
@@ -801,7 +801,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00286">286</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00744">FIX8::MessageBase::get_field_by_name()</a>, and <a class="el" href="message_8hpp_source.html#l01287">FIX8::Message::get_field_by_name_flattened()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00744">FIX8::MessageBase::get_field_by_name()</a>, and <a class="el" href="message_8hpp_source.html#l01315">FIX8::Message::get_field_by_name_flattened()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   {</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      <span class="keywordflow">if</span> (fieldstr &amp;&amp; *fieldstr)</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      {</div>
@@ -877,7 +877,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00228">228</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00356">get_beginStr()</a>, <a class="el" href="session_8cpp_source.html#l00452">FIX8::Session::handle_logon()</a>, and <a class="el" href="hfprint_8cpp_source.html#l00118">main()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00356">get_beginStr()</a>, <a class="el" href="session_8cpp_source.html#l00470">FIX8::Session::handle_logon()</a>, and <a class="el" href="hfprint_8cpp_source.html#l00118">main()</a>.</p>
 
 </div>
 </div>
@@ -895,7 +895,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00216">216</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00521">FIX8::Session::create_msg()</a>, and <a class="el" href="message_8cpp_source.html#l00205">FIX8::Message::factory()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00528">FIX8::Session::create_msg()</a>, and <a class="el" href="message_8cpp_source.html#l00224">FIX8::Message::factory()</a>.</p>
 
 </div>
 </div>
@@ -1047,7 +1047,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:12. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

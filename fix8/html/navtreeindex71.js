@@ -1,5 +1,8 @@
 var NAVTREEINDEX71 =
 {
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#a24b302b943d0ce5cb1f239f985426e35":[3,0,0,1,74,8,2],
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#a44102cb9a7741cfbbd0787947d638d6b":[3,0,0,1,74,8,1],
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#a651173b0f541a4ef965800d48b2f7aed":[3,0,0,1,74,8,8],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#aabc0606dd80849ebd36d025d08246e54":[3,0,0,1,74,8,7],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#ad832ec36afe33166067a1d2dd42f178aac69efa82f926b71062c259e1e6ee5101":[3,0,0,1,74,8,0],
 "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#aeec6a0769036901b458c140b493e7ef7":[3,0,0,1,74,8,6],
@@ -246,8 +249,5 @@ var NAVTREEINDEX71 =
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingAmounts.html#abe958dc12a188635adb2359768cb24d7":[3,0,0,1,75,8,0,7],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html":[3,0,0,1,75,8,1],
 "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a382611afad4f047eed837685475f0564":[3,0,0,1,75,8,1,8],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a4143f6f966ccf9fde15bea6faf44565e":[3,0,0,1,75,8,1,5],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a87bee45f4c40ac1e93ff3c72e32308a6":[3,0,0,1,75,8,1,3],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a9dd77ccbcd606159252f0e716caa9d23":[3,0,0,1,75,8,1,6],
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#aa4d763031a9981d7e2e2dd05c82a8cc2":[3,0,0,1,75,8,1,4]
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a4143f6f966ccf9fde15bea6faf44565e":[3,0,0,1,75,8,1,5]
 };

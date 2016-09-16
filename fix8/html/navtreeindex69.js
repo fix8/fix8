@@ -1,5 +1,8 @@
 var NAVTREEINDEX69 =
 {
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits_1_1NoRiskInstruments.html#aa66103425dea0d1cf6db071aedeba491":[3,0,0,1,70,0,4,0,5],
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits_1_1NoRiskInstruments.html#aa7220c44f130b96b3ea617937dc64af8a9a8eb9422e4015f8ebae44d8ef2cb007":[3,0,0,1,70,0,4,0,1],
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits_1_1NoRiskInstruments.html#ac5e8b68cff812d9c54aea3cca9cafc59":[3,0,0,1,70,0,4,0,9],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits_1_1NoRiskInstruments.html#aee9c0a4c2a81d7053cf08e998c74bb95":[3,0,0,1,70,0,4,0,4],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits_1_1NoRiskInstruments.html#af82dc8da437716665a9541cfcd5c5412":[3,0,0,1,70,0,4,0,10],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRiskLimits_1_1NoRiskInstruments.html#af9273280a9f7b83f8636d6b1fc8fbc40":[3,0,0,1,70,0,4,0,3],
@@ -246,8 +249,5 @@ var NAVTREEINDEX69 =
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html#ae07bb9d89a55ad89a0aab5901f547f5ba52371d3012fff22fb928aa77880f6f49":[3,0,0,1,73,6,0,1],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs.html#aff7e8e32e36c45468d52798dd45c92ab":[3,0,0,1,73,6,0,5],
 "classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html":[3,0,0,1,73,6,0,0],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a1b611ae1e0ec8131cc9175fbaa1a7dfb":[3,0,0,1,73,6,0,0,8],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a6f6646c49f7f9f6ca0627198f8a2b968":[3,0,0,1,73,6,0,0,4],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a72e0ef51b7f3990962ffae0eca721036":[3,0,0,1,73,6,0,0,7],
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a8eddf93d377042890f55a7c1b7383ba1":[3,0,0,1,73,6,0,0,6]
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoPositions_1_1NoNestedPartyIDs_1_1NoNestedPartySubIDs.html#a1b611ae1e0ec8131cc9175fbaa1a7dfb":[3,0,0,1,73,6,0,0,8]
 };

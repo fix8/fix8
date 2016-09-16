@@ -47,7 +47,7 @@ var classFIX8_1_1Configuration =
     [ "get_permissive_mode_flag", "classFIX8_1_1Configuration.html#a89ac2cf42d4902d1ac05160f5df27bc1", null ],
     [ "get_process_model", "classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266", null ],
     [ "get_reset_sequence_number_flag", "classFIX8_1_1Configuration.html#aa417e9f8f59b7a6ded994ae07db25e50", null ],
-    [ "get_retry_count", "classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e", null ],
+    [ "get_retry_count", "classFIX8_1_1Configuration.html#a1f7705e4e96dd05e14a17cf484a1c52f", null ],
     [ "get_retry_interval", "classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a", null ],
     [ "get_role", "classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19", null ],
     [ "get_root", "classFIX8_1_1Configuration.html#a4c3e0bc7474555a2fb33f15c27a5d6fc", null ],

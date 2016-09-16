@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -216,6 +216,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a84cdcfcd788458a70294b086d5709711 inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0d721ed2534c90b0018962b8734e0d8 inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ae0d721ed2534c90b0018962b8734e0d8">get_login_parameters</a> () const </td></tr>
 <tr class="separator:ae0d721ed2534c90b0018962b8734e0d8 inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac32fe7aa180246fd6bb87c970e6f15dd inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ac32fe7aa180246fd6bb87c970e6f15dd">set_reset_sequence_numbers_flag</a> (bool flag)</td></tr>
+<tr class="separator:ac32fe7aa180246fd6bb87c970e6f15dd inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21f474b3d3f88cad446c2ce39ae35c9f inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a21f474b3d3f88cad446c2ce39ae35c9f">set_persister</a> (<a class="el" href="classFIX8_1_1Persister.html">Persister</a> *pst)</td></tr>
 <tr class="separator:a21f474b3d3f88cad446c2ce39ae35c9f inherit pub_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa983adcf0b53b341a1bddab23861964f inherit pub_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html#aabcafb00d2f093d897132fe0c4fff746">Control</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#aa983adcf0b53b341a1bddab23861964f">control</a> ()</td></tr>
@@ -297,6 +299,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:ae07d7722b70256b6fa83739e2ec4f77e inherit pro_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5a50d4f7dd946ffa8c55165d56b99e0 inherit pro_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ad5a50d4f7dd946ffa8c55165d56b99e0">handle_admin</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
 <tr class="separator:ad5a50d4f7dd946ffa8c55165d56b99e0 inherit pro_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49ccbb4f59e2ecfc4fd467e67cf37db3 inherit pro_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="f8dll_8h.html#abf338f67631f8046c09ca9be926bba0c">F8API</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a49ccbb4f59e2ecfc4fd467e67cf37db3">handle_outbound_reject</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg, const char *errstr)</td></tr>
+<tr class="separator:a49ccbb4f59e2ecfc4fd467e67cf37db3 inherit pro_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af24127d02e1e6083789a5b1e1e2c78d8 inherit pro_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#af24127d02e1e6083789a5b1e1e2c78d8">modify_outbound</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
 <tr class="separator:af24127d02e1e6083789a5b1e1e2c78d8 inherit pro_methods_classFIX8_1_1Session"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cf063efca0742ad9973ad21cb718355 inherit pro_methods_classFIX8_1_1Session"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a9cf063efca0742ad9973ad21cb718355">authenticate</a> (<a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> &amp;id, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
@@ -483,12 +487,12 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="harness_8cpp_source.html#l00333">333</a> of file <a class="el" href="harness_8cpp_source.html">harness.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l01119">FIX8::Message::process()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l01147">FIX8::Message::process()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;{</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Session.html#a755535b6a25422b7e13d32368113f5b4">enforce</a>(seqnum, msg) || msg-&gt;<a class="code" href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">process</a>(<a class="code" href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">_router</a>);</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;}</div>
 <div class="ttc" id="classmyfix__session__server_html_afdcbf5cb0e753990a5c9c47cd65a4675"><div class="ttname"><a href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">myfix_session_server::_router</a></div><div class="ttdeci">tex_router_server _router</div><div class="ttdef"><b>Definition:</b> <a href="myfix_8hpp_source.html#l00118">myfix.hpp:118</a></div></div>
-<div class="ttc" id="classFIX8_1_1Message_html_aa0401c5177edcff1252808d9842c5c1a"><div class="ttname"><a href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">FIX8::Message::process</a></div><div class="ttdeci">virtual bool process(Router &amp;rt) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01119">message.hpp:1119</a></div></div>
+<div class="ttc" id="classFIX8_1_1Message_html_aa0401c5177edcff1252808d9842c5c1a"><div class="ttname"><a href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">FIX8::Message::process</a></div><div class="ttdeci">virtual bool process(Router &amp;rt) const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l01147">message.hpp:1147</a></div></div>
 <div class="ttc" id="classFIX8_1_1Session_html_a755535b6a25422b7e13d32368113f5b4"><div class="ttname"><a href="classFIX8_1_1Session.html#a755535b6a25422b7e13d32368113f5b4">FIX8::Session::enforce</a></div><div class="ttdeci">F8API bool enforce(const unsigned seqnum, const Message *msg)</div><div class="ttdef"><b>Definition:</b> <a href="session_8cpp_source.html#l00252">session.cpp:252</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -562,7 +566,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="fragment"><div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;{</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   cout &lt;&lt; <a class="code" href="classFIX8_1_1Session.html#afca543f84c04c0fd2710411acb1ade52">get_session_state_string</a>(before) &lt;&lt; <span class="stringliteral">&quot; =&gt; &quot;</span> &lt;&lt; <a class="code" href="classFIX8_1_1Session.html#afca543f84c04c0fd2710411acb1ade52">get_session_state_string</a>(after) &lt;&lt; endl;</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;}</div>
-<div class="ttc" id="classFIX8_1_1Session_html_afca543f84c04c0fd2710411acb1ade52"><div class="ttname"><a href="classFIX8_1_1Session.html#afca543f84c04c0fd2710411acb1ade52">FIX8::Session::get_session_state_string</a></div><div class="ttdeci">static const f8String &amp; get_session_state_string(const States::SessionStates state)</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00842">session.hpp:842</a></div></div>
+<div class="ttc" id="classFIX8_1_1Session_html_afca543f84c04c0fd2710411acb1ade52"><div class="ttname"><a href="classFIX8_1_1Session.html#afca543f84c04c0fd2710411acb1ade52">FIX8::Session::get_session_state_string</a></div><div class="ttdeci">static const f8String &amp; get_session_state_string(const States::SessionStates state)</div><div class="ttdef"><b>Definition:</b> <a href="session_8hpp_source.html#l00853">session.hpp:853</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -597,7 +601,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:45. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:11. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

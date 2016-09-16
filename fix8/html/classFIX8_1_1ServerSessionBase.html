@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  1.3.4</span>
+   &#160;<span id="projectnumber">version  1.4.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -191,8 +191,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade3e5ce1c164e5e09c712ff0fcff9c6c inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852a082f393bb721ce305cff63393277a69f">defaults::retry_interval</a>) const </td></tr>
 <tr class="separator:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
-<tr class="separator:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f7705e4e96dd05e14a17cf484a1c52f inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a1f7705e4e96dd05e14a17cf484a1c52f">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const int def=<a class="el" href="namespaceFIX8_1_1defaults.html#a97f275120a691858571f2cdd7bf1d852af78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
+<tr class="separator:a1f7705e4e96dd05e14a17cf484a1c52f inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#afe0f4903660dfd8d5756388e108281f9">get_tcp_recvbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18f8868cfaf4a1c586d271f14dfbe36b inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a18f8868cfaf4a1c586d271f14dfbe36b">get_tcp_sendbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
@@ -311,7 +311,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base <a class="el" href="structFIX8_1_1Server.html" title="Class to hold server settings for failoverable sessions. ">Server</a> <a class="el" href="classFIX8_1_1Session.html" title="Fix8 Base Session. User sessions are derived from this class. ">Session</a>. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00498">498</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00499">499</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9bdecf6cf10156feeb91cc6a199854f9"></a>
 <div class="memitem">
@@ -353,8 +353,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Ctor. Prepares session for receiving inbbound connections (acceptor). </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00505">505</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;      : <a class="code" href="structFIX8_1_1SessionConfig.html#ab4100a72a77dccc623d13cd28d1bd69f">SessionConfig</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">ctx</a>, conf_file, session_name) {}</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00506">506</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;      : <a class="code" href="structFIX8_1_1SessionConfig.html#ab4100a72a77dccc623d13cd28d1bd69f">SessionConfig</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">ctx</a>, conf_file, session_name) {}</div>
 <div class="ttc" id="namespaceFIX8_1_1TEX_html_afc9f1359200c953b443b55b4ea0e3950"><div class="ttname"><a href="namespaceFIX8_1_1TEX.html#afc9f1359200c953b443b55b4ea0e3950">FIX8::TEX::ctx</a></div><div class="ttdeci">const F8MetaCntx &amp; ctx()</div><div class="ttdoc">Compiler generated metadata object, accessed through this function. </div><div class="ttdef"><b>Definition:</b> <a href="Myfix__classes_8cpp_source.html#l00424">Myfix_classes.cpp:424</a></div></div>
 <div class="ttc" id="structFIX8_1_1SessionConfig_html_ab4100a72a77dccc623d13cd28d1bd69f"><div class="ttname"><a href="structFIX8_1_1SessionConfig.html#ab4100a72a77dccc623d13cd28d1bd69f">FIX8::SessionConfig::SessionConfig</a></div><div class="ttdeci">SessionConfig(const F8MetaCntx &amp;ctx, const std::string &amp;conf_file, const std::string &amp;session_name)</div><div class="ttdoc">Ctor. Loads configuration, obtains session details, sets up logfile flags. </div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00134">sessionwrapper.hpp:134</a></div></div>
 </div><!-- fragment -->
@@ -383,14 +383,14 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00510">510</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00511">511</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00501">_server_sock</a>.</p>
-<div class="fragment"><div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;   {</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;      <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>;</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;      <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a> = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;   }</div>
-<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00501">sessionwrapper.hpp:501</a></div></div>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00502">_server_sock</a>.</p>
+<div class="fragment"><div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   {</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;      <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>;</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;      <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   }</div>
+<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00502">sessionwrapper.hpp:502</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -424,9 +424,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the connected socket </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00529">529</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>-&gt;acceptConnection(claddr); }</div>
-<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00501">sessionwrapper.hpp:501</a></div></div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00530">530</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>-&gt;acceptConnection(claddr); }</div>
+<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00502">sessionwrapper.hpp:502</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -482,8 +482,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1ServerSession.html#ad4a62510a423b68ab5842be9168908d3">FIX8::ServerSession&lt; T &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00534">534</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00535">535</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -516,9 +516,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a connection is avaialble </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00523">523</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>-&gt;poll(span, Poco::Net::Socket::SELECT_READ); }</div>
-<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00501">sessionwrapper.hpp:501</a></div></div>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00524">524</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">_server_sock</a>-&gt;poll(span, Poco::Net::Socket::SELECT_READ); }</div>
+<div class="ttc" id="classFIX8_1_1ServerSessionBase_html_a2598452b103b555a5db87a6dd9722b63"><div class="ttname"><a href="classFIX8_1_1ServerSessionBase.html#a2598452b103b555a5db87a6dd9722b63">FIX8::ServerSessionBase::_server_sock</a></div><div class="ttdeci">Poco::Net::ServerSocket * _server_sock</div><div class="ttdef"><b>Definition:</b> <a href="sessionwrapper_8hpp_source.html#l00502">sessionwrapper.hpp:502</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -541,7 +541,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00536">536</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00537">537</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -564,9 +564,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00501">501</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00502">502</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="multisession_8hpp_source.html#l00060">FIX8::ServerManager::add()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00510">~ServerSessionBase()</a>.</p>
+<p>Referenced by <a class="el" href="multisession_8hpp_source.html#l00060">FIX8::ServerManager::add()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00511">~ServerSessionBase()</a>.</p>
 
 </div>
 </div>
@@ -576,7 +576,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Sep 16 2016 11:53:15. Copyright &copy; 2010-16, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
