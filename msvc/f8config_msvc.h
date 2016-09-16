@@ -549,7 +549,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Encode version */
 #ifndef FIX8_MAGIC_NUM
-#define FIX8_MAGIC_NUM 16793600
+#define FIX8_MAGIC_NUM 16797696
 #endif
 
 /* Encoded Version as expresion */
@@ -594,7 +594,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Minor version number */
 #ifndef FIX8_MINOR_VERSION_NUM
-#define FIX8_MINOR_VERSION_NUM 4
+#define FIX8_MINOR_VERSION_NUM 5
 #endif
 
 /* FIX8_FF MPMC */
@@ -629,7 +629,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to the full name and version of this package. */
 #ifndef FIX8_PACKAGE_STRING
-#define FIX8_PACKAGE_STRING "fix8 1.4.0"
+#define FIX8_PACKAGE_STRING "fix8 1.5.0"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -644,7 +644,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to the version of this package. */
 #ifndef FIX8_PACKAGE_VERSION
-#define FIX8_PACKAGE_VERSION "1.4.0"
+#define FIX8_PACKAGE_VERSION "1.5.0"
 #endif
 
 /* Patch number */
