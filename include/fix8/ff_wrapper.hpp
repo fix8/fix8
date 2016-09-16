@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -64,7 +64,7 @@ public:
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
 	bool pop(T* &target)
 	{
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 		const unsigned cnt_rnd(3);
 		unsigned cnt(0);
 #endif
@@ -72,9 +72,9 @@ public:
 		{
 			if (try_pop(target))
 				return true;
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 			if ((++cnt %= cnt_rnd) == 0)
-				hypersleep<h_nanoseconds>(SLEEP_NO_YIELD);
+				hypersleep<h_nanoseconds>(FIX8_SLEEP_NO_YIELD);
 			else
 #endif
 				sched_yield();
@@ -108,7 +108,7 @@ public:
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
 	bool pop(T* &target)
 	{
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 		const unsigned cnt_rnd(3);
 		unsigned cnt(0);
 #endif
@@ -116,9 +116,9 @@ public:
 		{
 			if (try_pop(target))
 				return true;
-#if defined SLEEP_NO_YIELD
+#if defined FIX8_SLEEP_NO_YIELD
 			if ((++cnt %= cnt_rnd) == 0)
-				hypersleep<h_nanoseconds>(SLEEP_NO_YIELD);
+				hypersleep<h_nanoseconds>(FIX8_SLEEP_NO_YIELD);
 			else
 #endif
 				sched_yield();
@@ -132,5 +132,5 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_FF_WRAPPER_HPP_
+#endif // FIX8_FF_WRAPPER_HPP_
 

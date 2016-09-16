@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -165,13 +165,11 @@ int Timer<T>::operator()()
 				{
 					TimerEvent<T> rop(_event_queue.top()); // take a copy
 					_event_queue.pop(); // remove from queue
-					guard.release();
 					++elapsed;
 					const bool result((_monitor.*rop._callback)());
 					if (result && op._repeat) // don't repeat if callback returned false
 					{
 						op._t = now.get_ticks() + op._intervalMS * Tickval::million;
-						guard.acquire(_spin_lock);
 						_event_queue.push(std::move(op)); // push back on queue
 					}
             }
@@ -242,7 +240,7 @@ inline Tickval::ticks rdtsc()
 /// High resolution interval timer.
 class IntervalTimer
 {
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
 	Tickval::ticks startTime_, delta_;
 #else
    Tickval startTime_, delta_;
@@ -250,7 +248,7 @@ class IntervalTimer
 
 public:
 	/// Ctor. RAII.
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
    IntervalTimer() : startTime_(rdtsc()) {}
 #else
    IntervalTimer() : startTime_(true) {}
@@ -263,7 +261,7 @@ public:
 	  \return reference to this object */
    const IntervalTimer& Calculate()
    {
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
 		Tickval::ticks now(rdtsc());
 #else
       Tickval now(true);
@@ -274,7 +272,7 @@ public:
 
 	/*! Get delta as a double.
 	  \return delta as double */
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
    double AsDouble() const { return delta_; }
 #else
    double AsDouble() const { return delta_.todouble(); }
@@ -284,7 +282,7 @@ public:
 	  \return the old delta as double */
    double Reset()
    {
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
       const Tickval::ticks curr(delta_);
 		startTime_ = rdtsc();
 #else
@@ -303,7 +301,7 @@ public:
       std::ostringstream ostr;
       ostr.setf(std::ios::showpoint);
       ostr.setf(std::ios::fixed);
-#if defined USE_RDTSC && defined HAVE_RDTSC
+#if defined FIX8_USE_RDTSC && defined FIX8_HAVE_RDTSC
       ostr << std::setprecision(9) << what;
 #else
       ostr << std::setprecision(9) << what.AsDouble();
@@ -314,4 +312,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_TIMER_HPP_
+#endif // FIX8_TIMER_HPP_

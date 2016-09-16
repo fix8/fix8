@@ -148,3 +148,5 @@ utests/.libs
 /stocklib/FIX50_traits.cpp
 /stocklib/FIX50_types.cpp
 /stocklib/FIX50_types.hpp
+/msvc/fix8-vc140.VC.VC.opendb
+/msvc/fix8-vc140.VC.db

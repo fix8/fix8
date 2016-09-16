@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -83,6 +83,9 @@ public:
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 
+	/*! This method id called whenever a session state change occurs
+	    \param before previous session state
+	    \param after new session state */
 	void state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after);
 };
 
@@ -135,6 +138,11 @@ public:
 	/*! example scheduler callback function
 	  	\return true if ok */
 	bool sample_scheduler_callback();
+
+	/*! This method id called whenever a session state change occurs
+	    \param before previous session state
+	    \param after new session state */
+	void state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after);
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -192,9 +200,11 @@ public:
 	bool create_msgs();
 	bool version_info();
 	bool edit_msgs();
+	bool delete_msg();
 	bool delete_msgs();
 	bool print_msgs();
 	bool send_msgs();
+	bool send_msg();
 	bool write_msgs();
 	bool read_msgs();
 	bool set_lpp();
@@ -207,6 +217,8 @@ public:
 	FIX8::Message *generate_new_order_single();
 	FIX8::Message *generate_new_order_single_alternate();
 	void send_lst();
+	bool save_msg(const std::string& fname, FIX8::Message *msg);
+	unsigned get_msg_cnt() const { return _lst.size(); }
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
 
@@ -246,5 +258,5 @@ struct RandDev
 	}
 };
 
-#endif // _FIX8_MYFIX_HPP_
+#endif // FIX8_MYFIX_HPP_
 

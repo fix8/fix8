@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -65,7 +65,7 @@ int Logger::operator()()
    {
 		LogElement *msg_ptr(0);
 
-#if (MPMC_SYSTEM == MPMC_FF)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 		if (!_msg_queue.try_pop(msg_ptr))
 		{
 			hypersleep<h_microseconds>(200);
@@ -89,7 +89,7 @@ int Logger::operator()()
 		{
 			if (msg_ptr->_str.empty())  // means exit
 			{
-#if (MPMC_SYSTEM == MPMC_FF)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 				break;
 #else
 				continue;
@@ -98,7 +98,7 @@ int Logger::operator()()
 
 			process_logline(msg_ptr);
 		}
-#if (MPMC_SYSTEM == MPMC_FF)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 		_msg_queue.release(msg_ptr);
 #endif
 	}
@@ -205,7 +205,7 @@ void Logger::flush()
 //-------------------------------------------------------------------------------------------------
 void Logger::purge_thread_codes()
 {
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 	f8_scoped_lock guard(_mutex);
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)

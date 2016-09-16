@@ -15,7 +15,7 @@ nuget {
 		description: @"Develop branch of FIX8 stock libraries: FIX40, FIX41, FIX42, FIX43, FIX44, FIX50, FIX50SP1, FIX50SP2";
 		releaseNotes: "";
 		copyright: Copyright 2013-2014;
-		tags: { FIX8, native, CoApp };
+		tags: { FIX8, native, CoApp, v${VERSION} };
 	};
 
 	dependencies {
@@ -37,9 +37,9 @@ nuget {
 		// grab all the files in the include folder
 		// the folder that contains all the .h files will 
 		// automatically get added to the Includes path.
-		nestedInclude: { 
-			#destination = ${d_include}\fix8-stocklib; 
-			"${FIX8}stocklib\FIX*.hpp"; 
+		include: { 
+			#destination = ${d_include}\stocklib; 
+			"${FIX8}stocklib\**\*.hpp"; 
 			};
 
 		// Documents that we want to ship with the package. 
@@ -50,25 +50,25 @@ nuget {
 		// 		$(Platform) == x64
 		//  	$(PlatformToolset) == v100 
 		//		$(Configuration) == Debug
-		[x64,v120,debug,desktop] { 
+		[x64,v140,debug,desktop] { 
 			lib: { ${FIX8}msvc\x64\bin\Debug\fix40d.lib; ${FIX8}msvc\x64\bin\Debug\fix41d.lib; ${FIX8}msvc\x64\bin\Debug\fix42d.lib; ${FIX8}msvc\x64\bin\Debug\fix43d.lib; ${FIX8}msvc\x64\bin\Debug\fix44d.lib; ${FIX8}msvc\x64\bin\Debug\fix50d.lib; ${FIX8}msvc\x64\bin\Debug\fix50sp1d.lib; ${FIX8}msvc\x64\bin\Debug\fix50sp2d.lib; };
 			symbols: { ${FIX8}msvc\x64\bin\Debug\fix40d.pdb; ${FIX8}msvc\x64\bin\Debug\fix41d.pdb; ${FIX8}msvc\x64\bin\Debug\fix42d.pdb; ${FIX8}msvc\x64\bin\Debug\fix43d.pdb; ${FIX8}msvc\x64\bin\Debug\fix44d.pdb; ${FIX8}msvc\x64\bin\Debug\fix50d.pdb; ${FIX8}msvc\x64\bin\Debug\fix50sp1d.pdb; ${FIX8}msvc\x64\bin\Debug\fix50sp2d.pdb; };
 			bin: { ${FIX8}msvc\x64\bin\Debug\fix40d.dll; ${FIX8}msvc\x64\bin\Debug\fix41d.dll; ${FIX8}msvc\x64\bin\Debug\fix42d.dll; ${FIX8}msvc\x64\bin\Debug\fix43d.dll; ${FIX8}msvc\x64\bin\Debug\fix44d.dll; ${FIX8}msvc\x64\bin\Debug\fix50d.dll; ${FIX8}msvc\x64\bin\Debug\fix50sp1d.dll; ${FIX8}msvc\x64\bin\Debug\fix50sp2d.dll; };
 		}
 		
-		[x64,v120,release,desktop] { 
+		[x64,v140,release,desktop] { 
 			lib: { ${FIX8}msvc\x64\bin\Release\fix40.lib; ${FIX8}msvc\x64\bin\Release\fix41.lib; ${FIX8}msvc\x64\bin\Release\fix42.lib; ${FIX8}msvc\x64\bin\Release\fix43.lib; ${FIX8}msvc\x64\bin\Release\fix44.lib; ${FIX8}msvc\x64\bin\Release\fix50.lib; ${FIX8}msvc\x64\bin\Release\fix50sp1.lib; ${FIX8}msvc\x64\bin\Release\fix50sp2.lib; };
 			symbols: { ${FIX8}msvc\x64\bin\Release\fix40.pdb; ${FIX8}msvc\x64\bin\Release\fix41.pdb; ${FIX8}msvc\x64\bin\Release\fix42.pdb; ${FIX8}msvc\x64\bin\Release\fix43.pdb; ${FIX8}msvc\x64\bin\Release\fix44.pdb; ${FIX8}msvc\x64\bin\Release\fix50.pdb; ${FIX8}msvc\x64\bin\Release\fix50sp1.pdb; ${FIX8}msvc\x64\bin\Release\fix50sp2.pdb; };
 			bin: { ${FIX8}msvc\x64\bin\Release\fix40.dll; ${FIX8}msvc\x64\bin\Release\fix41.dll; ${FIX8}msvc\x64\bin\Release\fix42.dll; ${FIX8}msvc\x64\bin\Release\fix43.dll; ${FIX8}msvc\x64\bin\Release\fix44.dll; ${FIX8}msvc\x64\bin\Release\fix50.dll; ${FIX8}msvc\x64\bin\Release\fix50sp1.dll; ${FIX8}msvc\x64\bin\Release\fix50sp2.dll; };
 		}
 			
-		[x86,v120,debug,desktop] { 
+		[x86,v140,debug,desktop] { 
 			lib: { ${FIX8}msvc\Win32\bin\Debug\fix40d.lib; ${FIX8}msvc\Win32\bin\Debug\fix41d.lib; ${FIX8}msvc\Win32\bin\Debug\fix42d.lib; ${FIX8}msvc\Win32\bin\Debug\fix43d.lib; ${FIX8}msvc\Win32\bin\Debug\fix44d.lib; ${FIX8}msvc\Win32\bin\Debug\fix50d.lib; ${FIX8}msvc\Win32\bin\Debug\fix50sp1d.lib; ${FIX8}msvc\Win32\bin\Debug\fix50sp2d.lib; };
 			symbols: { ${FIX8}msvc\Win32\bin\Debug\fix40d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix41d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix42d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix43d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix44d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix50d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix50sp1d.pdb; ${FIX8}msvc\Win32\bin\Debug\fix50sp2d.pdb; };
 			bin: { ${FIX8}msvc\Win32\bin\Debug\fix40d.dll; ${FIX8}msvc\Win32\bin\Debug\fix41d.dll; ${FIX8}msvc\Win32\bin\Debug\fix42d.dll; ${FIX8}msvc\Win32\bin\Debug\fix43d.dll; ${FIX8}msvc\Win32\bin\Debug\fix44d.dll; ${FIX8}msvc\Win32\bin\Debug\fix50d.dll; ${FIX8}msvc\Win32\bin\Debug\fix50sp1d.dll; ${FIX8}msvc\Win32\bin\Debug\fix50sp2d.dll; };
 		}
 		
-		[x86,v120,release,desktop] { 
+		[x86,v140,release,desktop] { 
 			lib: { ${FIX8}msvc\Win32\bin\Release\fix40.lib; ${FIX8}msvc\Win32\bin\Release\fix41.lib; ${FIX8}msvc\Win32\bin\Release\fix42.lib; ${FIX8}msvc\Win32\bin\Release\fix43.lib; ${FIX8}msvc\Win32\bin\Release\fix44.lib; ${FIX8}msvc\Win32\bin\Release\fix50.lib; ${FIX8}msvc\Win32\bin\Release\fix50sp1.lib; ${FIX8}msvc\Win32\bin\Release\fix50sp2.lib; };
 			symbols: { ${FIX8}msvc\Win32\bin\Release\fix40.pdb; ${FIX8}msvc\Win32\bin\Release\fix41.pdb; ${FIX8}msvc\Win32\bin\Release\fix42.pdb; ${FIX8}msvc\Win32\bin\Release\fix43.pdb; ${FIX8}msvc\Win32\bin\Release\fix44.pdb; ${FIX8}msvc\Win32\bin\Release\fix50.pdb; ${FIX8}msvc\Win32\bin\Release\fix50sp1.pdb; ${FIX8}msvc\Win32\bin\Release\fix50sp2.pdb; };
 			bin: { ${FIX8}msvc\Win32\bin\Release\fix40.dll; ${FIX8}msvc\Win32\bin\Release\fix41.dll; ${FIX8}msvc\Win32\bin\Release\fix42.dll; ${FIX8}msvc\Win32\bin\Release\fix43.dll; ${FIX8}msvc\Win32\bin\Release\fix44.dll; ${FIX8}msvc\Win32\bin\Release\fix50.dll; ${FIX8}msvc\Win32\bin\Release\fix50sp1.dll; ${FIX8}msvc\Win32\bin\Release\fix50sp2.dll; };

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -43,31 +43,31 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/f8dll.h>
 #include <fix8/f8config.h>
 
-#ifdef PROFILING_BUILD
+#ifdef FIX8_PROFILING_BUILD
 #include <sys/gmon.h>
 #endif
 
-#if (REGEX_SYSTEM == REGEX_REGEX_H)
+#if (FIX8_REGEX_SYSTEM == FIX8_REGEX_REGEX_H)
 #include <regex.h>
-#elif (REGEX_SYSTEM == REGEX_POCO)
+#elif (FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO)
 #include <Poco/RegularExpression.h>
 #endif
 
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD)
 #include <pthread.h>
-#elif (THREAD_SYSTEM == THREAD_STDTHREAD)
+#elif (FIX8_THREAD_SYSTEM == FIX8_THREAD_STDTHREAD)
 #include <thread>
 #else
 # error Define what thread system to use
 #endif
 
-#if (MALLOC_SYSTEM == MALLOC_TBB)
+#if (FIX8_MALLOC_SYSTEM == FIX8_MALLOC_TBB)
 #ifdef _MSC_VER
 #include "tbb/tbbmalloc_proxy.h"
 #endif
 #endif
 
-#if defined PREPARE_MSG_SUPPORT
+#if defined FIX8_PREPARE_MSG_SUPPORT
 #include <array>
 #endif
 #include <unordered_map>
@@ -101,4 +101,4 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/sessionwrapper.hpp>
 #include <fix8/multisession.hpp>
 
-#endif // _FIX8_INCLUDES_HPP_
+#endif // FIX8_INCLUDES_HPP_

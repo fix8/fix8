@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -71,8 +71,8 @@ clean-local:
 
 pkgincludedir = ${prefix}/include/fix8
 ffincdir = include/fix8/ff
-ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/atomic/*.h \
-								  ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h
+ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/platforms/*.hpp \
+			  ${ffincdir}/mpmc/asm/*.h ${ffincdir}/ocl/*.hpp ${ffincdir}/tpc/*.hpp ${ffincdir}/tpc/*.h ${ffincdir}/mpmc/*.hpp
 pkginclude_HEADERS = include/fix8/*.hpp include/fix8/f8config.h include/fix8/f8dll.h
 
 ffdir = ${prefix}/include/fix8/ff
@@ -82,9 +82,14 @@ fix8mandir = ${sharedir}/man/man1
 testdir = ${sharedir}/test
 fix8htmldir = $(sharedir)/html
 schemadir = ${sharedir}/schema
+contribdir = ${sharedir}/contrib
+exchangecontribdir = ${contribdir}/exchangeSchemas
 
 xmltoman=$(mandir)/xmltoman
 PROCESS_MAN_PAGES = $(mandir)/f8c.1 $(mandir)/seqedit.1
+
+INSTALL_DATA_CONTRIB = contrib/FindFix8.cmake
+INSTALL_DATA_EXCHANGE_CONTRIB = contrib/exchangeSchemas/*
 
 INSTALL_DATA_LOCAL_TEST = test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml \
 	test/hf_server.xml test/myfix_server.xml
@@ -99,15 +104,20 @@ INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
 	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(testdir)/run $(DESTDIR)$(schemadir)
-	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic $(DESTDIR)$(ffdir)/ocl
-	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir)
+	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/mpmc $(DESTDIR)$(ffdir)/mpmc/asm
+	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/ocl $(DESTDIR)$(ffdir)/tpc
+	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir) $(DESTDIR)$(contribdir) $(DESTDIR)$(exchangecontribdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(DESTDIR)$(schemadir)
+	$(INSTALL_DATA) $(INSTALL_DATA_CONTRIB) $(DESTDIR)$(contribdir)
+	$(INSTALL_DATA) $(INSTALL_DATA_EXCHANGE_CONTRIB) $(DESTDIR)$(exchangecontribdir)
 	$(INSTALL_DATA) ${ffincdir}/*.hpp ${ffincdir}/*.h $(DESTDIR)$(ffdir)
 	$(INSTALL_DATA) ${ffincdir}/d/*.hpp $(DESTDIR)$(ffdir)/d
-	$(INSTALL_DATA) ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h $(DESTDIR)$(ffdir)/ocl
-	$(INSTALL_DATA) ${ffincdir}/platforms/*.h $(DESTDIR)$(ffdir)/platforms
-	$(INSTALL_DATA) ${ffincdir}/atomic/*.h $(DESTDIR)$(ffdir)/atomic
+	$(INSTALL_DATA) ${ffincdir}/platforms/*.hpp ${ffincdir}/platforms/*.h $(DESTDIR)$(ffdir)/platforms
+	$(INSTALL_DATA) ${ffincdir}/mpmc/*.hpp $(DESTDIR)$(ffdir)/mpmc
+	$(INSTALL_DATA) ${ffincdir}/mpmc/asm/*.h $(DESTDIR)$(ffdir)/mpmc/asm
+	$(INSTALL_DATA) ${ffincdir}/tpc/*.hpp ${ffincdir}/tpc/*.h $(DESTDIR)$(ffdir)/tpc
+	$(INSTALL_DATA) ${ffincdir}/ocl/*.hpp $(DESTDIR)$(ffdir)/ocl
 	@for manfile in $(PROCESS_MAN_PAGES) ; do \
 		$(xmltoman) $$manfile.xml | gzip > $$manfile.gz ; \
 		$(INSTALL_DATA) $$manfile.gz $(DESTDIR)$(fix8mandir); \
@@ -119,8 +129,8 @@ if USEDOXYGEN
 endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec \
-	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh ${ffincludes} \
-	bootstrap README.md LICENSE runtime/dllmain.cpp stocklib/Makefile.am stocklib/Makefile.in
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) ${ffincludes} $(INSTALL_DATA_CONTRIB) $(INSTALL_DATA_EXCHANGE_CONTRIB) \
+	version.sh bootstrap README.md LICENSE CONTRIBUTORS runtime/dllmain.cpp stocklib/Makefile.am stocklib/Makefile.in
 
 if USEDOXYGEN
 EXTRA_DIST += doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen

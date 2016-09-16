@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -234,7 +234,7 @@ public:
 
     virtual bool write(Message *from, bool)
     {
-		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		  char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
         from->encode(&ptr);
         _output.push_back(ptr);
         return true;
@@ -245,7 +245,7 @@ public:
           \return always return true*/
 	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
 	{
-		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		for(std::vector<Message*>::const_iterator cit=msgs.begin(); cit != msgs.end(); ++cit)
 		{
 			(*cit)->encode(&ptr);
@@ -260,7 +260,7 @@ public:
 
     virtual bool write(Message& from)
     {
-		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		  char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
         from.encode(&ptr);
         _output.push_back(ptr);
         return true;
@@ -397,5 +397,5 @@ public:
 
 }
 
-#endif // _FIX8_CONNECTION_HPP_
+#endif // FIX8_CONNECTION_HPP_
 

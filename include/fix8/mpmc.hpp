@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -42,27 +42,27 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // different libraries
 
 //-------------------------------------------------------------------------------------------------
-#if (MPMC_SYSTEM == MPMC_TBB)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_TBB)
 
 # include <tbb/concurrent_queue.h>
 template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
-#elif (MPMC_SYSTEM == MPMC_FF)
+#elif (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 
-# include <ff/allocator.hpp>
-# include <ff/buffer.hpp>
-# include <ff/MPMCqueues.hpp>
+# include <fix8/ff/allocator.hpp>
+# include <fix8/ff/buffer.hpp>
+# include <fix8/ff/mpmc/MPMCqueues.hpp>
 # include <sched.h>
 
 // std wrappers for ff
-# include <ff_wrapper.hpp>
+# include <fix8/ff_wrapper.hpp>
 
 template<typename T> using f8_concurrent_queue = FIX8::ff_unbounded_queue<T>;
 
 //-------------------------------------------------------------------------------------------------
-#endif // MPMC_SYSTEM
+#endif // FIX8_MPMC_SYSTEM
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // _FIX8_MPMC_HPP_
+#endif // FIX8_MPMC_HPP_

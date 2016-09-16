@@ -3,9 +3,9 @@
 /*!
  *  \link
  *  \file staticlinkedlist.hpp
- *  \ingroup shared_memory_fastflow
+ *  \ingroup aux_classes
  *
- *  \brief TODO
+ *  \brief Static Linked List. Not currently used.
  */
 
 /* ***************************************************************************
@@ -27,19 +27,19 @@
  */
 
 /* *
- *  
+ *
  * Static linked list Single-Writer Single-Reader unbounded queue. No lock is
  * needed around pop and push methods.
- *  
- * -- Massimiliano Meneghin: themaxmail@gmail.com 
+ *
+ * -- Massimiliano Meneghin: themaxmail@gmail.com
  */
 
 #ifndef FF_STATICLINKEDLIST_HPP
 #define FF_STATICLINKEDLIST_HPP
 
 #include <stdlib.h>
-#include <ff/buffer.hpp>
-#include <ff/sysdep.h>
+#include <fix8/ff/buffer.hpp>
+#include <fix8/ff/sysdep.h>
 #include <assert.h>
 
 #if defined(WHILE)
@@ -76,7 +76,7 @@
 #else
 #define likely(x) (x)
 #define unlikely(x) (x)
-#endif 
+#endif
 
 
 #define CAST_TO_UL(X) ((unsigned long)X)
@@ -84,30 +84,8 @@
 
 namespace ff {
 
-/*!
- *  \ingroup shared_memory_fastflow
- *
- *  @{
- */
-
-/*!
- *  \class staticlinkedlist
- *  \ingroup shared_memory_fastflow
- *
- *  \brief TODO
- *
- *  This class is defined in \ref staticlinklist.hpp
- */
 class staticlinkedlist {
 #if POSTPOLLING_VERSION
-    /*!
-     *  \class Node
-     *  \ingroup shared_memory_fastflow
-     *
-     *  \brief Inner struct
-     *
-     *  This struct is defined in \ref staticlinklist.hpp
-     */
     struct Node {
         unsigned long data;
         #if POINTERS_VERSION
@@ -140,7 +118,7 @@ private:
     long    padding2[longxCacheLine-1];
 #endif
     /*
-      This is a vector of Node elemens.  
+      This is a vector of Node elemens.
       The len is equal to cachesize
      */
     Node * min_cache;
@@ -152,10 +130,11 @@ public:
      */
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * Constructor
-     */
     staticlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
+        // avoid unused field warning for padding
+        if (longxCacheLine>1)
+            padding1[0]=padding2[0];
+        // end
         cache_mem =::malloc((sizeof(Node))*(cachesize+5));
         unsigned int CPU_cachesize = longxCacheLine*sizeof(void*);
         if(CAST_TO_UL(cache_mem)%CPU_cachesize){
@@ -189,18 +168,12 @@ public:
         tail_previous = 0;
 #endif
     }
-    
-    /**
-     * Destructor
-     */
+
     ~staticlinkedlist() {
         free(cache_mem);
     }
 
 #if WHILE_VERSION
-    /**
-     * It pushes the data element.
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         do{}
@@ -220,9 +193,6 @@ public:
         return true;
     }
 #else
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         if(likely(CAST_TO_VUL(tail->data) == 0)){
@@ -245,43 +215,28 @@ public:
 }
 #endif
 #if POINTERS_VERSION
-    /**
-     * TODO
-     */
-    inline bool  pop(void ** data) { 
-        if (likely(CAST_TO_VUL(head->data) != 0)) {        
+    inline bool  pop(void ** data) {
+        if (likely(CAST_TO_VUL(head->data) != 0)) {
             *data = (void *)head->data;
             head->data = CAST_TO_UL(NULL);
             head = head->next;
             return true;
         }
         return false;
-    }    
+    }
 #else
-    /**
-     * TODO
-     */
-    inline bool  pop(void ** data) { 
-        if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {        
+    inline bool  pop(void ** data) {
+        if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {
             *data = (void *)min_cache[head].data;
             min_cache[head].data = CAST_TO_UL(NULL);
             head = min_cache[head].next;
             return true;
         }
         return false;
-    }    
+    }
 #endif
 #else //NO POSTPOLLING_VERSION
-    
-    /*!
-     *  \class Node
-     *  \ingroup shared_memory_fastflow
-     *
-     * TODO
-     * 
-     * This struct is defined in \ref staticlinkedlist.hpp
-     *
-     */
+
     struct Node {
         unsigned long data;
 #if POINTERS_VERSION
@@ -317,7 +272,7 @@ private:
     long    padding2[longxCacheLine-1];
 #endif
     /*
-      This is a vector of Node elemens.  
+      This is a vector of Node elemens.
       The len is equal to cachesize
      */
     Node * min_cache;
@@ -329,9 +284,6 @@ public:
      */
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * Constructor
-     */
     staticlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
         cache_mem =::malloc((sizeof(Node))*(cachesize+5));
         unsigned int CPU_cachesize = longxCacheLine*sizeof(void*);
@@ -363,18 +315,12 @@ public:
         tail = 0;
 #endif
     }
-    
-    /**
-     * TODO
-     */
+
     ~staticlinkedlist() {
         free(cache_mem);
     }
 
 #if WHILE_VERSION
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         do{}
@@ -393,9 +339,6 @@ public:
         return true;
     }
 #else
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         if(likely(CAST_TO_VUL(tail->data) == 0)){
@@ -417,40 +360,29 @@ public:
 }
 #endif
 #if POINTERS_VERSION
-    /**
-     * TODO
-     */
-    inline bool  pop(void ** data) { 
-        if (likely(CAST_TO_VUL(head->data) != 0)) {        
+    inline bool  pop(void ** data) {
+        if (likely(CAST_TO_VUL(head->data) != 0)) {
             *data = (void *)head->data;
             head->data = CAST_TO_UL(NULL);
             head = head->next;
             return true;
         }
         return false;
-    }    
+    }
 #else
-    /**
-     * TODO
-     */
-    inline bool  pop(void ** data) { 
-        if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {        
+    inline bool  pop(void ** data) {
+        if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {
             *data = (void *)min_cache[head].data;
             min_cache[head].data = CAST_TO_UL(NULL);
             head = min_cache[head].next;
             return true;
         }
         return false;
-    }    
+    }
 #endif
 
 #endif
 };
-
-/*!
- *  @}
- *  \endlink
- */
 
 } // namespace ff
 

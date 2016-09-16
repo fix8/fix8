@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -335,8 +335,8 @@ TEST(message, fmt_chksum)
 
 void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val)
 {
-    char cVal[MAX_FLD_LENGTH];
-    char cTag[MAX_FLD_LENGTH];
+    char cVal[FIX8_MAX_FLD_LENGTH];
+    char cTag[FIX8_MAX_FLD_LENGTH];
     MessageBase::extract_element(msg.c_str(), static_cast<unsigned>(msg.length()), cTag, cVal);
     EXPECT_EQ(expect_val, f8String(cVal));
     EXPECT_EQ(expect_tag, f8String(cTag));

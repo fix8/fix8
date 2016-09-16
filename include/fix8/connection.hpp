@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -59,7 +59,8 @@ protected:
 	Session& _session;
 	ProcessModel _pmodel;
 	f8_thread_cancellation_token _cancellation_token;
-	f8_atomic<bool> _started;
+	volatile bool _started;
+	f8_mutex _start_mutex;
 
 private:
 	f8_thread<AsyncSocket> _thread;
@@ -92,7 +93,22 @@ public:
 	virtual int execute(f8_thread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
-	virtual void start() { _thread.start(); _started = true; }
+	virtual void start()
+	{
+		if (!_started)
+		{
+			f8_scoped_lock guard(_start_mutex);
+			if (!_started)
+			{
+				_started = true;
+				_thread.start();
+			}
+		}
+		else
+		{
+			glout_warn << "AsyncSocket already started.";
+		}
+	}
 
 	/// Start the processing thread.
 	virtual void request_stop() { _thread.request_stop(); }
@@ -104,19 +120,12 @@ public:
 	    \return the socket */
 	Poco::Net::StreamSocket *socket() { return _sock; }
 
-	/*! Wait till processing thead has finished.
+	/*! Wait till processing thread has finished.
 		 \return 0 on success */
-	int join()
-	{
-		if (_started)
-		{
-			_started = false;
-			return _thread.join();
-		}
+	int join() { return _thread.join(); }
 
-		return 0;
-	}
-
+	/*! Obtain the thread cancellation token
+		\return the token */
 	f8_thread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
@@ -124,13 +133,13 @@ public:
 /// Fix message reader
 class FIXReader : public AsyncSocket<f8String>
 {
-	enum { _max_msg_len = MAX_MSG_LENGTH, _chksum_sz = 7 };
+	enum { _max_msg_len = FIX8_MAX_MSG_LENGTH, _chksum_sz = 7 };
 	f8_atomic<bool> _socket_error;
 
 	f8_thread<FIXReader> _callback_thread;
 	f8_thread_cancellation_token _callback_cancellation_token;
 
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
 #endif
@@ -146,7 +155,7 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
 	/*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
         \param where buffer to place bytes in
         \param sz number of bytes to read
@@ -235,7 +244,7 @@ public:
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(std::ref(*this), &FIXReader::callback_processor)
-#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+#if FIX8_EXPERIMENTAL_BUFFERED_SOCKET_READ
 		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
 #endif
 		, _bg_sz()
@@ -246,7 +255,8 @@ public:
 	/// Dtor.
 	virtual ~FIXReader()
 	{
-		quit();
+		stop();
+		join();
 	}
 
 	/// Start the processing threads.
@@ -277,14 +287,25 @@ public:
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop()
 	{
-		if (_pmodel == pm_pipeline)
+		if (_started)
 		{
-			const f8String from;
-			_msg_queue.try_push(from);
-			_callback_thread.request_stop();
+			f8_scoped_lock guard(_start_mutex);
+			if (_started)
+			{
+				if (_pmodel == pm_pipeline)
+				{
+					const f8String from;
+					_msg_queue.try_push(from);
+					_callback_thread.request_stop();
+				}
+				if (_pmodel != pm_coro)
+					AsyncSocket<f8String>::request_stop();
+			}
 		}
-		if (_pmodel != pm_coro)
-			AsyncSocket<f8String>::request_stop();
+		else
+		{
+			glout_warn << "FIXReader: AsyncSocket already stopped.";
+		}
 	}
 
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
@@ -453,9 +474,20 @@ public:
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop()
 	{
-		_msg_queue.try_push(0);
-		if (_pmodel == pm_pipeline)
-			AsyncSocket::request_stop();
+		if (_started)
+		{
+			f8_scoped_lock guard(_start_mutex);
+			if (_started)
+			{
+				_msg_queue.try_push(0);
+				if (_pmodel == pm_pipeline)
+					AsyncSocket::request_stop();
+			}
+		}
+		else
+		{
+			glout_warn << "FIXWriter: AsyncSocket already stopped.";
+		}
 	}
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
@@ -493,37 +525,24 @@ protected:
 	bool _secured;
 
 public:
-	/*! Ctor. Initiator.
+	/*! Ctor.
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
+	    \param role connection role
 	    \param pmodel process model
 	    \param hb_interval heartbeat interval
 		 \param secured true for ssl connection
 	*/
-	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
-				  const ProcessModel pmodel, const unsigned hb_interval, bool secured)
-		: _sock(sock), _addr(addr), _connected(false), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel),
-		  _secured(secured) {}
-
-	/*! Ctor. Acceptor.
-	    \param sock connected socket
-	    \param addr sock address structure
-	    \param session session
-	    \param hb_interval heartbeat interval
-	    \param pmodel process model
-		 \param secured true for ssl connection
-	*/
-	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
-				  const unsigned hb_interval, const ProcessModel pmodel, bool secured)
-		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, Role role,
+				  const ProcessModel pmodel, unsigned hb_interval, bool secured)
+		: _sock(sock), _addr(addr), _connected(role == cn_acceptor), _session(session), _role(role), _pmodel(pmodel),
 		  _hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
 		  _reader(sock, session, pmodel), _writer(sock, session, pmodel),
 		  _secured(secured) {}
 
 	/// Dtor.
-  virtual ~Connection() { _session.clear_connection(this); }
+	virtual ~Connection() { stop(); _session.clear_connection(this); }
 
 	/*! Get the role for this connection.
 	    \return the role */
@@ -615,7 +634,8 @@ public:
 	{
 		const unsigned current_sz(sock->getReceiveBufferSize());
 		sock->setReceiveBufferSize(sz);
-		glout_info << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
+		glout_info << "fd(" << sock->impl()->sockfd() << ") ReceiveBufferSize old:" << current_sz
+			<< " requested:" << sz << " new:" << sock->getReceiveBufferSize();
 	}
 
 	/*! Set the socket send buffer sz
@@ -625,7 +645,8 @@ public:
 	{
 		const unsigned current_sz(sock->getSendBufferSize());
 		sock->setSendBufferSize(sz);
-		glout_info << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
+		glout_info << "fd(" << sock->impl()->sockfd() << ") SendBufferSize old:" << current_sz
+			<< " requested:" << sz << " new:" << sock->getSendBufferSize();
 	}
 	/*! Set the socket recv buffer sz
 	    \param sz new size */
@@ -639,7 +660,7 @@ public:
 	    \param way boolean true (on) or false(clear) */
 	void set_tcp_cork_flag(bool way) const
 	{
-#if defined HAVE_DECL_TCP_CORK && TCP_CORK != 0
+#if defined FIX8_HAVE_DECL_TCP_CORK && TCP_CORK != 0
 		_sock->setOption(IPPROTO_TCP, TCP_CORK, way ? 1 : 0);
 #endif
 	}
@@ -684,9 +705,9 @@ public:
 		 \param secured true for ssl connection
 	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+							Session &session, unsigned hb_interval, ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 							bool secured=false)
-		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
+		 : Connection(sock, addr, session, cn_initiator, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -701,7 +722,7 @@ public:
 class ServerConnection : public Connection
 {
 public:
-	/*! Ctor. Initiator.
+	/*! Ctor. Acceptor.
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
@@ -714,9 +735,9 @@ public:
 		 \param secured true for ssl connection
 	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+						  Session &session, unsigned hb_interval, ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 						  bool reuse_addr=false, int linger=-1, bool keepalive=false, bool secured=false) :
-		Connection(sock, addr, session, hb_interval, pmodel, secured)
+		Connection(sock, addr, session, cn_acceptor, pmodel, hb_interval, secured)
 	{
 		_sock->setLinger(linger >= 0, linger);
 		_sock->setNoDelay(no_delay);
@@ -741,4 +762,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_CONNECTION_HPP_
+#endif // FIX8_CONNECTION_HPP_

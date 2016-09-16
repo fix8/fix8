@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -43,6 +43,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <limits.h>
 #undef min
 #undef max
+#pragma warning(push)
+#pragma warning(disable: 4307) // chrono(132): warning C4307: '*': integral constant overflow in vc140
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -55,17 +57,21 @@ namespace FIX8 {
 class Tickval
 {
 public:
-	using f8_time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
-	using ticks = decltype(f8_time_point::min().time_since_epoch().count());
-	using duration = f8_time_point::duration;
-	static const ticks noticks = 0; // this should be a signed value
-#ifdef _MSC_VER
-    ///@note: is there a better way to do that like
-    ///static inline const ticks errorticks() { return f8_time_point::max().time_since_epoch().count(); }
-   static const ticks errorticks = (LLONG_MAX / _XTIME_NSECS_PER_TICK) * _XTIME_NSECS_PER_TICK; // count in 100ns
+#if defined(__APPLE__) || defined(_MSC_VER)
+	using f8_clock = std::chrono::system_clock;
 #else
-	static const ticks errorticks = f8_time_point::max().time_since_epoch().count(); // 2262-04-12 09:47:16.854775807
+	using f8_clock = std::chrono::high_resolution_clock;
 #endif
+	using f8_time_point = std::chrono::time_point<f8_clock>;
+	using ticks = decltype(f8_time_point::min().time_since_epoch().count());
+	using f8_duration = f8_time_point::duration;
+	static const ticks noticks = 0; // this should be a signed value
+	static const ticks& errorticks() // 2262-04-12 09:47:16.854775807
+	{
+		static const auto g_ticks(std::chrono::duration_cast<std::chrono::nanoseconds>
+			(f8_time_point::max().time_since_epoch()).count());
+		return g_ticks;
+	}
 	static const ticks thousand = 1000;
 	static const ticks million = thousand * thousand;
 	static const ticks billion = thousand * million;
@@ -82,14 +88,14 @@ public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
 	explicit Tickval(bool settonow=false)
-		: _value(settonow ? std::chrono::high_resolution_clock::now() : f8_time_point(f8_time_point::duration::zero())) {}
+		: _value(settonow ? f8_clock::now() : f8_time_point(f8_duration::zero())) {}
 
 	/*! Copy Ctor. */
 	Tickval(const Tickval& from) : _value(from._value) {}
 
 	/*! Ctor.
 	  \param from construct from raw ticks value (nanoseconds) */
-	explicit Tickval(ticks from) : _value(std::chrono::duration_cast<duration>(std::chrono::nanoseconds(from))) {}
+	explicit Tickval(ticks from) : _value(std::chrono::duration_cast<f8_duration>(std::chrono::nanoseconds(from))) {}
 
 	/*! Ctor.
 	  \param from construct from time_point value */
@@ -99,7 +105,7 @@ public:
 	  \param secs seconds
 	  \param nsecs nanoseconds */
 	Tickval(time_t secs, long nsecs)
-		: _value(std::chrono::high_resolution_clock::from_time_t(secs) + std::chrono::duration_cast<duration>(std::chrono::nanoseconds(nsecs))) {}
+		: _value(f8_clock::from_time_t(secs) + std::chrono::duration_cast<f8_duration>(std::chrono::nanoseconds(nsecs))) {}
 
 	/*! Assignment operator. */
 	Tickval& operator=(const Tickval& that)
@@ -114,7 +120,7 @@ public:
 	  \return *this */
 	Tickval& operator=(ticks that)
 	{
-		_value = f8_time_point(std::chrono::duration_cast<duration>(std::chrono::nanoseconds(that)));
+		_value = f8_time_point(std::chrono::duration_cast<f8_duration>(std::chrono::nanoseconds(that)));
 		return *this;
 	}
 
@@ -126,7 +132,7 @@ public:
 	  \return current object */
 	Tickval& now()
 	{
-		_value = std::chrono::high_resolution_clock::now();
+		_value = f8_clock::now();
 		return *this;
 	}
 
@@ -164,7 +170,7 @@ public:
 
 	/*! See if this Tickval holds an error value
 	  \return true if an error value */
-    bool is_errorval() const { return get_ticks() == errorticks; }
+    bool is_errorval() const { return get_ticks() == errorticks(); }
 
 	/*! See if this Tickval is within the range given
 	  \param a lower boundary
@@ -307,7 +313,7 @@ public:
 	  \return oldtime as Tickval */
 	friend Tickval& operator+=(Tickval& oldtime, ticks ns)
 	{
-		oldtime._value += std::chrono::duration_cast<duration>(std::chrono::nanoseconds(ns));
+		oldtime._value += std::chrono::duration_cast<f8_duration>(std::chrono::nanoseconds(ns));
 		return oldtime;
 	}
 
@@ -317,7 +323,7 @@ public:
 	  \return oldtime as Tickval */
 	friend Tickval& operator-=(Tickval& oldtime, ticks ns)
 	{
-		oldtime._value -= std::chrono::duration_cast<duration>(std::chrono::nanoseconds(ns));
+		oldtime._value -= std::chrono::duration_cast<f8_duration>(std::chrono::nanoseconds(ns));
 		return oldtime;
 	}
 
@@ -344,4 +350,8 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_TICKVAL_HPP_
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
+#endif // FIX8PRO_TICKVAL_HPP_

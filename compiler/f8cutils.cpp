@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -134,7 +134,7 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 	fix->GetAttr("type", type);
 
 	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
-	ctxt._version = get_value<int>(major) * 1000 + get_value<int>(minor) * 100 + get_value<int>(revision);
+	ctxt._version = stoi(major) * 1000 + stoi(minor) * 100 + stoi(revision);
 	if (type == "FIX" && ctxt._version < 4000)
 	{
 		cerr << "Unsupported FIX version " << ctxt._version << " from fix header in " << shortName << endl;
@@ -341,6 +341,7 @@ void print_usage()
 	um.add('C', "nocheck", "do not embed version checking in generated code (default false)");
 	um.add('D', "defaulted", "do not generate default router bodies. Application must provide all router definitions (default false)");
 	um.add('U', "noconst", "Generate non-const Router method declarations (default false, const)");
+	um.add('u', "unused", "Report unused fields, requires verbose option (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
 	um.add('P', "incpath", "prefix system include path with \"fix8\" in generated compilation units (default yes)");
@@ -361,7 +362,7 @@ void print_usage()
 RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
 {
 	if (FieldTrait::is_int(ftype))
-		return new TypedRealm<int>(get_value<int>(from), isRange);
+		return new TypedRealm<int>(stoi(from), isRange);
 	if (FieldTrait::is_char(ftype))
 		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -42,7 +42,7 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
 unsigned MessageBase::_tabsize = defaults::tabsize;
@@ -52,7 +52,7 @@ unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtyp
 {
 	const char *dptr(from.data());
 	const unsigned flen(static_cast<unsigned>(from.size()));
-	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
+	char tag[MAX_MSGTYPE_FIELD_LEN], val[FIX8_MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
 
 	if ((result = extract_element(dptr, flen, tag, val)))
@@ -89,15 +89,16 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore), npos(0xffffffff);
 	unsigned pos(static_cast<unsigned>(_pos.size())), last_valid_pos(npos);
 	const char *dptr(from.data());
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	char tag[FIX8_MAX_FLD_LENGTH], val[FIX8_MAX_FLD_LENGTH];
 	size_t last_valid_offset(0);
 
 	for (unsigned result; s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
-		const unsigned short tv(fast_atoi<unsigned short>(tag));
+		unsigned short tv(fast_atoi<unsigned short>(tag));
 		Presence::const_iterator itr(_fp.get_presence().find(tv));
 		if (itr == _fp.get_presence().end())
 		{
+unknown_field:
 			if (permissive_mode)
 			{
 				if (last_valid_pos == npos)
@@ -117,7 +118,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			if (!itr->_field_traits.has(FieldTrait::automatic))
 				throw DuplicateField(tv);
 		}
-		else
+		else for(unsigned ii(0); ii < 2; ++ii)
 		{
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
@@ -128,6 +129,24 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			// check if repeating group and num elements > 0
 			if (itr->_field_traits.has(FieldTrait::group) && has_group_count(bf))
 				s_offset = decode_group(nullptr, tv, from, s_offset, ignore);
+
+			if (itr->_ftype != FieldTrait::ft_Length || tv == Common_BodyLength) // this type expects next field to be data
+				break;
+
+			const unsigned val_sz(fast_atoi<unsigned>(val));
+			if(val_sz > FIX8_MAX_FLD_LENGTH - 1)
+				throw f8Exception("Value size too large");
+			result = extract_element_fixed_width(dptr + s_offset, fsize - s_offset, val_sz, tag, val);
+			if (!result)
+				throw MissingMandatoryField("Unable to extract fixed width field");
+
+			const unsigned short lasttv(tv);
+			tv = fast_atoi<unsigned short>(tag);
+			if ((itr = _fp.get_presence().find(tv)) == _fp.get_presence().end())
+				goto unknown_field;
+			if (itr->_ftype != FieldTrait::ft_data || lasttv + 1 != tv) // next field must be data, tag must be 1 greater than length tag
+				break;
+			s_offset += result;
 		}
 	}
 
@@ -152,7 +171,7 @@ unsigned MessageBase::decode_group(GroupBase *grpbase, const unsigned short fnum
 		throw InvalidRepeatingGroup(fnum, FILE_LINE);
 	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore);
 	const char *dptr(from.data());
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	char tag[FIX8_MAX_FLD_LENGTH], val[FIX8_MAX_FLD_LENGTH];
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
@@ -218,18 +237,18 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 	if (!bme)
 		throw InvalidMessage(mtype, FILE_LINE);
 	Message *msg(bme->_create._do(false)); // shallow create
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	IntervalTimer itm;
 #endif
 	msg->decode(from, hlen, 7, permissive_mode); // skip already decoded mandatory 8, 9, 35 and 10
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	_decode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_decode_timings._msg_count;
 #endif
 
 	msg->_header->get_body_length()->set(mlen);
 	msg->_header->get_msg_type()->set(mtype);
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 	msg->check_set_rlm(fitr->second);
 #endif
 
@@ -273,7 +292,7 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 			}
 
 			BaseField *nf(get_field(pp._fnum)->copy());
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 			to->check_set_rlm(nf);
 #endif
 			Presence::const_iterator fpitr(to->_fp.get_presence().end());
@@ -332,7 +351,7 @@ size_t MessageBase::encode(char *to) const
 	const char *where(to);
 	for (const auto& pp : _pos)
 	{
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 		check_set_rlm(pp.second);
 #endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
@@ -356,7 +375,7 @@ size_t MessageBase::encode(ostream& to) const
 	const std::ios::pos_type where(to.tellp());
 	for (const auto& pp : _pos)
 	{
-#if defined POPULATE_METADATA
+#if defined FIX8_POPULATE_METADATA
 		check_set_rlm(pp.second);
 #endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
@@ -404,7 +423,7 @@ size_t Message::encode(char **hmsg_store) const
 {
 	char *moffs(*hmsg_store + HEADER_CALC_OFFSET), *msg(moffs);
 
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	IntervalTimer itm;
 #endif
 
@@ -412,9 +431,9 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMessageComponent("header");
 	_header->get_msg_type()->set(_msgType);
 
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	msg += (_begin_payload = _header->encode(msg)); // start
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 	if (_preencode_len)
 	{
 		::memcpy(msg, _preencode.data(), _payload_len =_preencode_len);
@@ -425,7 +444,7 @@ size_t Message::encode(char **hmsg_store) const
 		msg += (_payload_len = MessageBase::encode(msg));
 #else
 	msg += _header->encode(msg); // start
-#if defined PREENCODE_MSG_SUPPORT
+#if defined FIX8_PREENCODE_MSG_SUPPORT
 	if (_preencode_len)
 	{
 		::memcpy(msg, _preencode.data(), _preencode_len);
@@ -464,14 +483,14 @@ size_t Message::encode(char **hmsg_store) const
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	msg += _trailer->get_check_sum()->encode(msg);
 
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 	_encode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_encode_timings._msg_count;
 #endif
 
 	*msg = 0;
 	const size_t rlen(msg - *hmsg_store);
-#if defined RAW_MSG_SUPPORT
+#if defined FIX8_RAW_MSG_SUPPORT
 	_rawmsg.assign(*hmsg_store, rlen);
 #endif
 	return rlen;
@@ -480,7 +499,7 @@ size_t Message::encode(char **hmsg_store) const
 //-------------------------------------------------------------------------------------------------
 size_t Message::encode(f8String& to) const
 {
-	char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+	char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 	const size_t msgLen(encode(&ptr));
 	to.assign(ptr, msgLen);
 	return to.size();
@@ -650,9 +669,10 @@ Message *Message::clone() const
 {
 	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType.c_str()));
 	Message *msg(bme._create._do(true));
-	copy_legal(msg, true);
-	_header->copy_legal(msg->_header, true);
-	_trailer->copy_legal(msg->_trailer, true);
+	// important not to pass force as true with copy_legal here
+	copy_legal(msg);
+	_header->copy_legal(msg->_header);
+	_trailer->copy_legal(msg->_trailer);
 	return msg;
 }
 
@@ -671,7 +691,7 @@ void Message::print(ostream& os, int) const
 }
 
 //-------------------------------------------------------------------------------------------------
-#if defined CODECTIMING
+#if defined FIX8_CODECTIMING
 void Message::format_codec_timings(const f8String& str, ostream& os, codec_timings& ct)
 {
 	os << str << ": " << setprecision(9) << ct._cpu_used << " secs, "

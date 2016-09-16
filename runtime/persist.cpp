@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -45,7 +45,7 @@ using namespace std;
 extern char glob_log0[max_global_filename_length];
 
 //-------------------------------------------------------------------------------------------------
-#if defined HAVE_BDB
+#if defined FIX8_HAVE_BDB
 
 bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bool purge)
 {
@@ -269,7 +269,7 @@ int BDBPersister::operator()()
    {
 		KeyDataBuffer *msg_ptr(0);
 
-#if (MPMC_SYSTEM == MPMC_TBB)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_TBB)
 		KeyDataBuffer buffer;
 		if (stopping)	// make sure we dequeue any pending msgs before exiting
 		{
@@ -303,7 +303,7 @@ int BDBPersister::operator()()
 			else
 				++persisted;
 		}
-#if (MPMC_SYSTEM == MPMC_FF)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 		_persist_queue.release(msg_ptr);
 #endif
 	}
@@ -315,7 +315,7 @@ int BDBPersister::operator()()
    return 0;
 }
 
-#endif // HAVE_BDB
+#endif // FIX8_HAVE_BDB
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

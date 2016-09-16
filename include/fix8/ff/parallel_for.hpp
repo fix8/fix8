@@ -1,13 +1,17 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
- *  \link
+/*!
  *  \file parallel_for.hpp
- *  \ingroup high_level_patterns_shared_memory
+ *  \ingroup high_level_patterns
  *
  *  \brief This file describes the parallel_for/parallel_reduce skeletons.
+ *
+ *  Realize a parallel for loop. Different iterations should be
+ *  independent (data-races management is not autimatically provided
+ *  but can be introduced by programmers via mutex).
+ *
  */
- 
+
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -26,1043 +30,809 @@
  ****************************************************************************
  */
 /*
- *  - Author: 
+ *  - Author:
  *     Massimo Torquati <torquati@di.unipi.it>
  *
- *    History: 
- *      - started in May 2013
- *      - January 2014: code optimized
- *      - February 2014: 
- *          - avoided to start the Scheduler thread if it is not needed
- *            A new (non lock-free) decentralized scheduler has been implemented 
- *            for the case when adding an extra thread is not useful.
- *          - introduced the parallel_for functions
- *          - added the ParallelFor and ParallelForReduce classes
+ *
+ *  This file contains the ParallelFor and the ParallelForReduce classes
+ *  (and also some static functions).
+ *
+ *  Iterations scheduling options:
+ *
+ *      1 - default static scheduling
+ *      2 - static scheduling with grain size greater than 0
+ *      3 - dynamic scheduling with grain size greater than 0
+ *
+ *  As a general rule, the scheduling strategy is selected according to the chunk value:
+ *      - chunk == 0 means default static scheduling, that is, ~(#iteration_space/num_workers)
+ *                   iterations per thread)
+ *      - chunk >  0 means dynamic scheduling with grain equal to chunk, that is,
+ *                   no more than chunk iterations at a time is computed by one thread, the
+ *                   chunk is assigned to worker threads dynamically
+ *      - chunk <  0 means static scheduling with grain equal to chunk, that is,
+ *                   the iteration space is divided into chunks each one of no more
+ *                   than chunk iterations. Then chunks are assigned to the workers threads
+ *                   statically and in a round-robin fashion.
+ *
+ *  If you want to use the static scheduling policy (either default or with a given grain),
+ *  please use the **parallel_for_static** method.
+ *
+ *  To use or not to use a scheduler thread ?
+ *  As always, it depends on the application, scheduling strategy, platform at hand,
+ *  parallelism degree, ...etc....
+ *
+ *  The general rule is: a scheduler thread is started if:
+ *   1. the dynamic scheduling policy is used (chunk>0);
+ *   2. there are enough cores for hosting both worker threads and the scheduler thread;
+ *   3. the number of tasks per thread is greater than 1.
+ *
+ *  In case of static scheduling (chunk <= 0), the scheduler thread is never started.
+ *  It is possible to explicitly disable/enable the presence of the scheduler thread
+ *  both at compile time and at run-time by using the disableScheduler method and the
+ *  two defines NO_PARFOR_SCHEDULER_THREAD and PARFOR_SCHEDULER_THREAD.
+ *
+ *
+ *  How to use the ParallelFor (in a nutshell) :
+ *                                      ParallelForReduce<long> pfr;
+ *    for(long i=0;i<N;i++)             pfr.parallel_for(0,N,[&](const long i) {
+ *       A[i]=f(i);                         A[i]=f(i);
+ *    long sum=0;               --->    });
+ *    for(long i=0; i<N;++i)            long sum=0;
+ *       sum+=g(A[i]);                  pfr.parallel_reduce(sum,0, 0,N,[&](const long i,long &sum) {
+ *                                         sum+=g(A[i]);
+ *                                      }, [](long &v, const long elem) {v+=elem;});
+ *
  */
 
 #ifndef FF_PARFOR_HPP
 #define FF_PARFOR_HPP
 
-// #ifndef __INTEL_COMPILER
-// // see http://www.stroustrup.com/C++11FAQ.html#11
-// #if __cplusplus <= 199711L
-// #error "parallel_for requires C++11 features"
-// #endif
-// #endif
-
-#include <atomic>
-#include <algorithm>
-#include <deque>
-#include <vector>
-#include <cmath>
-#include <functional>
-#include <ff/lb.hpp>
-#include <ff/node.hpp>
-#include <ff/farm.hpp>
-#include <ff/spin-lock.hpp>
-
-#if defined(__ICC)
-#define PRAGMA_IVDEP _Pragma("ivdep")
-#else
-#define PRAGMA_IVDEP
-#endif
+#include <fix8/ff/pipeline.hpp>
+#include <fix8/ff/parallel_for_internals.hpp>
 
 namespace ff {
 
-    /* -------------------- Parallel For/Reduce Macros -------------------- */
-    /* Usage example:
-     *                              // loop parallelization using 3 workers
-     *                              // and a minimum task grain of 2
-     *                              wthread = 3;
-     *                              grain = 2;
-     *  for(int i=0;i<N;++i)        FF_PARFOR_BEGIN(for,i,0,N,1,grain,wthread) {
-     *    A[i]=f(i)          ---->    A[i]=f(i);
-     *                              } FF_PARFOR_END(for);
-     * 
-     *   parallel for + reduction:
-     *     
-     *  s=4;                         
-     *  for(int i=0;i<N;++i)        FF_PARFORREDUCE_BEGIN(for,s,0,i,0,N,1,grain,wthread) {
-     *    s*=f(i)            ---->    s*=f(i);
-     *                              } FF_PARFORREDUCE_END(for,s,*);
-     *
-     *                          
-     *                              FF_PARFOR_INIT(pf,maxwthread);
-     *                              ....
-     *  while(k<nTime) {            while(k<nTime) {
-     *    for(int i=0;i<N;++i)        FF_PARFORREDUCE_START(pf,s,0,i,0,N,1,grain,wthread) {
-     *      s*=f(i,k);       ---->       s*=f(i,k);
-     *  }                             } FF_PARFORREDUCE_STOP(pf,s,*);
-     *                             }
-     *                             ....
-     *
-     *                             FF_PARFOR_DONE(pf);
-     *
-     * 
-     *  NOTE: inside the body of the PARFOR/PARFORREDUCE, it is possible to use the 
-     *        '_ff_thread_id' const integer variable to identify the thread id 
-     *        running the sequential portion of the loop.
+//
+// TODO: to re-write the ParallelFor class as a specialization of the ParallelForReduce
+//
+
+/*!
+  * \class ParallelFor
+  *  \ingroup high_level_patterns
+  *
+  * \brief Parallel for loop. Run automatically.
+  *
+  *  Identifies an iterative work-sharing construct that specifies a region
+  * (i.e. a Lambda function) in which the iterations of the associated loop
+  * should be executed in parallel.
+  *
+  * \example parfor_basic.cpp
+  */
+class ParallelFor: public ff_forall_farm<forallreduce_W<int> > {
+public:
+    /**
+     * \brief Constructor
+
+     * Set up a parallel for ParallelFor pattern run-time support
+     * (i.e. spawn workers threads)
+     * A single object can be used as many times as needed to run different parallel for
+     * pattern instances (different loop bodies). They cannot be nested nor recursive.
+     * Nonblocking policy is to be preferred in case of repeated call of the
+     * some of the parallel_for methods (e.g. within a strict outer loop). On the same
+     * ParallelFor object different parallel_for methods (e.g. parallel_for and
+     * parallel_for_thid, parallel_for_idx) can be called in sequence.
+
+     * \param maxnw Maximum number of worker threads (not including active scheduler, if
+     * any). Deafault <b>FF_AUTO</b> = N. of HW contexts.
+     * \param spinwait. \p true nonblocking, \p false blocking.
+     * \param spinbarrier. \p true it uses spinning barrier, \p false it uses blocking barrier.
+     * The nonbloking behaviour will leave worker threads active until class destruction is called
+     * (the threads will be active and in the nonblocking barrier only after the
+     * first call to one of the parallel_for methods). To put threads to sleep between different
+     * calls, the <b>threadPause</b> method may be called.
      */
+    explicit ParallelFor(const long maxnw=FF_AUTO, bool spinwait=false, bool spinbarrier=false):
+        ff_forall_farm<forallreduce_W<int> >(maxnw,spinwait,false,spinbarrier) {}
+    /**
+     * \brief Destructor
+     *
+     *  Terminate ParallelFor run-time support and makes resources housekeeping.
+     * Both nonlocking and blocking worker threads are terminated.
+     */
+    ~ParallelFor()                {
+        ff_forall_farm<forallreduce_W<int> >::stop();
+        ff_forall_farm<forallreduce_W<int> >::wait();
+    }
 
     /**
-     *  name : of the parallel for
-     *  idx  : iteration index
-     *  begin: for starting point
-     *  end  : for ending point
-     *  step : for step
-     *  chunk: chunk size
-     *  nw   : n. of worker threads
+     * \brief Disable active scheduler (i.e. Emitter thread)
+     *
+     *  Disable active scheduler (i.e. Emitter thread of the master-worker
+     * implementation). Active scheduling uses one dedicated nonblocking thread.
+     * In passive scheduling, workers cooperatively schedule tasks via synchronisations
+     * in memory. None of the above is always faster than the other: it depends on
+     * parallelism degree, task grain and platform.
+     * As rule of thumb on large multicore and fine-grain tasks active scheduling is
+     * faster. On few cores passive scheduler enhances overall performance.
+     * Active scheduler is the default option.
+     * \param onoff <b>true</b> disable active schduling,
+     * <b>false</b> enable active scheduling
      */
-#define FF_PARFOR_BEGIN(name, idx, begin, end, step, chunk, nw)                   \
-    ff_forall_farm<int> name(nw,false,true);                                      \
-    name.setloop(begin,end,step,chunk,nw);                                        \
-    auto F_##name = [&] (const long ff_start_##idx, const long ff_stop_##idx,     \
-                         const int _ff_thread_id, const int) {                    \
-        PRAGMA_IVDEP;                                                             \
-        for(long idx=ff_start_##idx;idx<ff_stop_##idx;idx+=step) 
 
-    /* This is equivalent to the above one except that the user has to define
-     * the for loop in the range (ff_start_idx,ff_stop_idx(
-     * This can be useful if you have to perform some actions before starting
-     * the loop.
-     */
-#define FF_PARFOR2_BEGIN(name, idx, begin, end, step, chunk, nw)                  \
-    ff_forall_farm<int> name(nw,false,true);                                      \
-    name.setloop(begin,end,step,chunk, nw);                                       \
-    auto F_##name = [&] (const long ff_start_##idx, const long ff_stop_##idx,     \
-                         const int _ff_thread_id, const int) {                    \
-    /* here you have to define the for loop using ff_start/stop_idx  */
-
-
-#define FF_PARFOR_END(name)                                                       \
-    };                                                                            \
-    {                                                                             \
-      if (name.getnw()>1) {                                                       \
-        name.setF(F_##name);                                                      \
-        if (name.run_and_wait_end()<0) {                                          \
-            error("running parallel for\n");                                      \
-        }                                                                         \
-      } else F_##name(name.startIdx(),name.stopIdx(),0,0);                        \
+    inline void disableScheduler(bool onoff=true) {
+        ff_forall_farm<forallreduce_W<int> >::disableScheduler(onoff);
     }
 
-    /* ---------------------------------------------- */
+    // It puts all spinning threads to sleep. It does not disable the spinWait flag
+    // so at the next call, threads start spinning again.
+    inline int threadPause() {
+        return ff_forall_farm<forallreduce_W<int> >::stopSpinning();
+    }
+
+    // -------------------- parallel_for --------------------
 
     /**
-     *  name    : of the parallel for
-     *  var     : variable on which the reduce operator is applied
-     *  identity: the value such that var == var op identity 
-     *  idx     : iteration index
-     *  begin   : for starting point
-     *  end     : for ending point
-     *  step    : for step
-     *  chunk   : chunk size
-     *  nw      : n. of worker threads
-     * 
-     *  op      : reduce operation (+ * ....) 
-     */
-#define FF_PARFORREDUCE_BEGIN(name, var,identity, idx,begin,end,step, chunk, nw)  \
-    ff_forall_farm<decltype(var)> name(nw,false,true);                            \
-    name.setloop(begin,end,step,chunk,nw);                                        \
-    auto idtt_##name =identity;                                                   \
-    auto F_##name =[&](const long start,const long stop,const int _ff_thread_id,  \
-                       decltype(var) &var) {                                      \
-        PRAGMA_IVDEP;                                                             \
-        for(long idx=start;idx<stop;idx+=step)
-
-#define FF_PARFORREDUCE_END(name, var, op)                                        \
-        };                                                                        \
-        if (name.getnw()>1) {                                                     \
-          auto ovar_##name = var;                                                 \
-          name.setF(F_##name,idtt_##name);                                        \
-          if (name.run_and_wait_end()<0) {                                        \
-            error("running forall_##name\n");                                     \
-          }                                                                       \
-          var = ovar_##name;                                                      \
-          for(size_t i=0;i<name.getnw();++i)  {                                   \
-              var op##= name.getres(i);                                           \
-          }                                                                       \
-        } else {                                                                  \
-          var = ovar_##name;                                                      \
-          F_##name(name.startIdx(),name.stopIdx(),0,var);                         \
-        }
-
-
-#define FF_PARFORREDUCE_F_END(name, var, F)                                       \
-        };                                                                        \
-        if (name.getnw()>1) {                                                     \
-          auto ovar_##name = var;                                                 \
-          name.setF(F_##name,idtt_##name);                                        \
-          if (name.run_and_wait_end()<0)                                          \
-              error("running ff_forall_farm (reduce F end)\n");                   \
-          var = ovar_##name;                                                      \
-          for(size_t i=0;i<name.getnw();++i)  {                                   \
-             F(var,name.getres(i));                                               \
-          }                                                                       \
-        } else {                                                                  \
-            F_##name(name.startIdx(),name.stopIdx(),0,var);                       \
-        }
-
-
-    /* ---------------------------------------------- */
-
-    /* FF_PARFOR_START and FF_PARFOR_STOP have the same meaning of 
-     * FF_PARFOR_BEGIN and FF_PARFOR_END but they have to be used in 
-     * conjunction with  FF_PARFOR_INIT FF_PARFOR_END.
+     * \brief Parallel for region (basic) - static
      *
-     * The same is for FF_PARFORREDUCE_START/STOP.
+     * Static scheduling onto nw worker threads.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step).
+     *
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param f <b>f(const long idx)</b>  Lambda function,
+     * body of the parallel loop. <b>idx</b>: iterator
+     * \param nw number of worker threads (default FF_AUTO)
      */
-#define FF_PARFOR_INIT(name, nw)                                                  \
-    ff_forall_farm<int> *name = new ff_forall_farm<int>(nw);
-
-#define FF_PARFOR_DECL(name)         ff_forall_farm<int> * name
-#define FF_PARFOR_ASSIGN(name,nw)    name=new ff_forall_farm<int>(nw)
-#define FF_PARFOR_DONE(name)         name->stop(); name->wait(); delete name
-
-#define FF_PARFORREDUCE_INIT(name, type, nw)                                      \
-    ff_forall_farm<type> *name = new ff_forall_farm<type>(nw)
-
-#define FF_PARFORREDUCE_DECL(name,type)      ff_forall_farm<type> * name
-#define FF_PARFORREDUCE_ASSIGN(name,type,nw) name=new ff_forall_farm<type>(nw)
-#define FF_PARFORREDUCE_DONE(name)           name->stop();name->wait();delete name
-
-#define FF_PARFOR_START(name, idx, begin, end, step, chunk, nw)                   \
-    name->setloop(begin,end,step,chunk,nw);                                       \
-    auto F_##name = [&] (const long ff_start_##idx, const long ff_stop_##idx,     \
-                         const int _ff_thread_id, const int) {                    \
-        PRAGMA_IVDEP;                                                             \
-        for(long idx=ff_start_##idx;idx<ff_stop_##idx;idx+=step) 
-
-#define FF_PARFOR2_START(name, idx, begin, end, step, chunk, nw)                  \
-    name->setloop(begin,end,step,chunk,nw);                                       \
-    auto F_##name = [&] (const long ff_start_##idx, const long ff_stop_##idx,     \
-                         const int _ff_thread_id, const int) {                    \
-    /* here you have to define the for loop using ff_start/stop_idx  */
-
-// just another variat that may be used together with FF_PARFORREDUCE_INIT
-#define FF_PARFOR_T_START(name, type, idx, begin, end, step, chunk, nw)           \
-    name->setloop(begin,end,step,chunk,nw);                                       \
-    auto F_##name = [&] (const long ff_start_##idx, const long ff_stop_##idx,     \
-                         const int _ff_thread_id, const type&) {                  \
-        PRAGMA_IVDEP;                                                             \
-        for(long idx=ff_start_##idx;idx<ff_stop_##idx;idx+=step) 
-
-
-#define FF_PARFOR_STOP(name)                                                      \
-    };                                                                            \
-    if (name->getnw()>1) {                                                        \
-      name->setF(F_##name);                                                       \
-      if (name->run_then_freeze(name->getnw())<0)                                 \
-          error("running ff_forall_farm (name)\n");                               \
-      name->wait_freezing();                                                      \
-    } else F_##name(name->startIdx(),name->stopIdx(),0,0) 
-    
-#define FF_PARFORREDUCE_START(name, var,identity, idx,begin,end,step, chunk, nw)  \
-    name->setloop(begin,end,step,chunk,nw);                                       \
-    auto idtt_##name =identity;                                                   \
-    auto F_##name =[&](const long ff_start_##idx, const long ff_stop_##idx,       \
-                       const int _ff_thread_id, decltype(var) &var) {             \
-        PRAGMA_IVDEP                                                              \
-        for(long idx=ff_start_##idx;idx<ff_stop_##idx;idx+=step) 
-
-#define FF_PARFORREDUCE_STOP(name, var, op)                                       \
-        };                                                                        \
-        if (name->getnw()>1) {                                                    \
-          auto ovar_##name = var;                                                 \
-          name->setF(F_##name,idtt_##name);                                       \
-          if (name->run_then_freeze(name->getnw())<0)                             \
-              error("running ff_forall_farm (name)\n");                           \
-          name->wait_freezing();                                                  \
-          var = ovar_##name;                                                      \
-          for(size_t i=0;i<name->getnw();++i)  {                                  \
-              var op##= name->getres(i);                                          \
-          }                                                                       \
-        } else {                                                                  \
-          F_##name(name->startIdx(),name->stopIdx(),0,var);                       \
-        }
-
-
-#define FF_PARFORREDUCE_F_STOP(name, var, F)                                      \
-        };                                                                        \
-        if (name->getnw()>1) {                                                    \
-          auto ovar_##name = var;                                                 \
-          name->setF(F_##name,idtt_##name);                                       \
-          if (name->run_then_freeze(name->getnw())<0)                             \
-              error("running ff_forall_farm (name)\n");                           \
-          name->wait_freezing();                                                  \
-          var = ovar_##name;                                                      \
-          for(size_t i=0;i<name->getnw();++i)  {                                  \
-             F(var,name->getres(i));                                              \
-          }                                                                       \
-        } else {                                                                  \
-            F_##name(name->startIdx(),name->stopIdx(),0,var);                     \
-        }
-
-    /* ------------------------------------------------------------------- */
-
-
-
-// parallel for task, it represents a range (start,end( of indexes
-struct forall_task_t {
-    forall_task_t():start(0),end(0) {}
-    forall_task_t(const forall_task_t &t):start(t.start.load(std::memory_order_relaxed)),end(t.end) {}
-    forall_task_t & operator=(const forall_task_t &t) { 
-        start=t.start.load(std::memory_order_relaxed), end=t.end; 
-        return *this; 
-    }
-    void set(long s, long e)  { start=s,end=e; }
-
-    std::atomic_long start;
-    long             end;
-};
-struct dataPair {
-    std::atomic_long ntask;
-    union {
-        forall_task_t task;
-        char padding[CACHE_LINE_SIZE];
-    };
-    dataPair():ntask(0),task() {};
-    dataPair(const dataPair &d):ntask(d.ntask.load(std::memory_order_relaxed)),task(d.task) {}
-    dataPair& operator=(const dataPair &d) { ntask=d.ntask.load(std::memory_order_relaxed), task=d.task; return *this; }
-};
-
-
-//  used just to redefine losetime_in
-class foralllb_t: public ff_loadbalancer {
-protected:
-    virtual inline void losetime_in() { 
-        if ((int)(getnworkers())>=ncores) {
-            //FFTRACE(lostpopticks+=(100*TICKS2WAIT);++popwait); // FIX: adjust tracing
-            ff_relax(0);
-            return;
-        }    
-        //FFTRACE(lostpushticks+=TICKS2WAIT;++pushwait);
-        PAUSE();            
-    }
-public:
-    foralllb_t(size_t n):ff_loadbalancer(n),ncores(ff_numCores()) {}
-    inline int getNCores() const { return ncores;}
-private:
-    const int ncores;
-};
-
-// compare functiong
-static inline bool data_cmp(const dataPair &a,const dataPair &b) {
-    return a.ntask < b.ntask;
-}
-// delay function for worker threads
-static inline void workerlosetime_in(const bool aggressive) {
-    if (aggressive) PAUSE();
-    else ff_relax(0);
-}
-
-
-// parallel for/reduce task scheduler
-class forall_Scheduler: public ff_node {
-protected:
-    std::vector<bool>      eossent;
-    std::vector<dataPair>  data;
-    std::atomic_long       maxid;
-protected:
-    // initialize the data vector
-    virtual inline size_t init_data(long start, long stop) {
-        const long numtasks  = std::ceil((stop-start)/(double)_step);
-        long totalnumtasks   = std::ceil(numtasks/(double)_chunk);
-        long tt     = totalnumtasks;
-        size_t ntxw = totalnumtasks / _nw;
-        size_t r    = totalnumtasks % _nw;
-
-        // try to keep the n. of tasks per worker as smaller as possible
-        if (ntxw == 0 && r>=1) {  ntxw = 1, r = 0; }
-        
-        data.resize(_nw); eossent.resize(_nw);
-        taskv.resize(8*_nw); // 8 is the maximum n. of jumps, see the heuristic below
-        skip1=false,jump=0,maxid=-1;
-
-        long end, t=0, e;
-        for(size_t i=0;i<_nw && totalnumtasks>0;++i, totalnumtasks-=t) {
-            t       = ntxw + ( (r>1 && (i<r)) ? 1 : 0 );
-            e       = start + (t*_chunk - 1)*_step + 1;
-            end     = (e<stop) ? e : stop;
-            data[i].ntask=t;
-            data[i].task.set(start,end);
-            start   = (end-1)+_step;
-        }
-
-        if (totalnumtasks) {
-            assert(totalnumtasks==1);
-            // try to keep the n. of tasks per worker as smaller as possible
-            if (ntxw > 1) data[_nw-1].ntask += totalnumtasks;
-            else { --tt, _chunk*=2; }
-            data[_nw-1].task.end = stop;
-        } 
-         // printf("init_data\n");
-         // for(size_t i=0;i<_nw;++i) {
-         //      printf("W=%d %ld <%ld,%ld>\n", i, data[i].ntask, data[i].task.start, data[i].task.end);
-         // }
-         // printf("totaltasks=%ld\n", tt);
-        return tt;
-    }    
-    // initialize the data vector
-    virtual inline size_t init_data_static(long start, long stop) {
-        const long numtasks  = (stop-start)/_step;
-        long totalnumtasks   = (long)_nw;
-        size_t r             = numtasks % _nw;
-        _chunk               = numtasks / _nw;
-
-        data.resize(_nw); taskv.resize(_nw);eossent.resize(_nw);
-        skip1=false,jump=0,maxid=-1;
-
-        long end, e;
-        for(size_t i=0; totalnumtasks>0; ++i,--totalnumtasks) {
-            e       = start + (_chunk - 1)*_step + 1 + ((i<r) ? 1 : 0 );
-            end     = (e<stop) ? e : stop;
-            data[i].ntask=1;
-            data[i].task.set(start,end);
-            start   = (end-1)+_step;
-        }
-        if (r) ++_chunk;
-        return _nw;
-    }    
-public:
-    forall_Scheduler(ff_loadbalancer* lb, long start, long stop, long step, long chunk, size_t nw):
-        maxid(-1),lb(lb),_start(start),_stop(stop),_step(step),_chunk(chunk),totaltasks(0),_nw(nw),
-        jump(0),skip1(false),workersspinwait(false) {
-        if (_chunk<=0) totaltasks = init_data_static(start,stop);
-        else           totaltasks = init_data(start,stop);
-        assert(totaltasks>=1);
-    }
-    forall_Scheduler(ff_loadbalancer* lb, size_t nw):
-        maxid(-1),lb(lb),_start(0),_stop(0),_step(1),_chunk(1),totaltasks(0),_nw(nw),
-        jump(0),skip1(false) {
-        totaltasks = init_data(0,0);
-        assert(totaltasks==0);
-    }
-
-    inline bool sendTask(const bool skipmore=false) {
-        size_t remaining    = totaltasks;
-        const long endchunk = (_chunk-1)*_step + 1;
-
-    more:
-        for(size_t wid=0;wid<_nw;++wid) {
-            if (data[wid].ntask >0) {
-                long start = data[wid].task.start;
-                long end   = std::min(start+endchunk, data[wid].task.end);
-                taskv[wid+jump].set(start, end);
-                lb->ff_send_out_to(&taskv[wid+jump], wid);
-                --remaining, --data[wid].ntask;
-                (data[wid].task).start = (end-1)+_step;  
-                eossent[wid]=false;
-            } else  skip1=true; //skip2=skip3=true;
-        }
-        // January 2014 (massimo): this heuristic maight not be the best option in presence 
-        // of very high load imbalance between iterations. 
-        // Update: removed skip2 and skip3 so that it is less aggressive !
-        
-        jump+=_nw;
-        assert((jump / _nw) <= 8);
-        // heuristic: try to assign more task at the very beginning
-        if (!skipmore && !skip1 && totaltasks>=4*_nw)   { skip1=true; goto more;}        
-        //if (!skip2 && totaltasks>=64*_nw)  { skip1=false; skip2=true; goto moretask;}
-        //if (!skip3 && totaltasks>=1024*_nw){ skip1=false; skip2=false; skip3=true; goto moretask;}
-        return (remaining>0);
-    }
-
-    inline void sendWakeUp() {
-        for(size_t id=0;id<_nw;++id) {
-            taskv[id].set(0,0);
-            lb->ff_send_out_to(&taskv[id], id);
-        }
-    }
-
-    // this method is accessed concurrently by all worker threads
-    inline bool nextTaskConcurrent(forall_task_t *task, const int wid) {
-        const long endchunk = (_chunk-1)*_step + 1; // next end-point
-        auto id  = wid;
-    L1:
-        if (data[id].ntask.load(std::memory_order_acquire)>0) {
-            auto oldstart = data[id].task.start.load(std::memory_order_relaxed);
-            auto end      = std::min(oldstart+endchunk, data[id].task.end);
-            auto newstart = (end-1)+_step;
-            
-            if (!data[id].task.start.compare_exchange_weak(oldstart, newstart,
-                                                           std::memory_order_release,
-                                                           std::memory_order_relaxed)) {
-                workerlosetime_in(_nw <= lb->getnworkers());
-                goto L1; // restart the sequence from the beginning
-            }
-            
-            // after fetch_sub ntask may be less than 0
-            data[id].ntask.fetch_sub(1,std::memory_order_release);   
-            if (oldstart<end) { // it might be possible that oldstart == end
-                task->set(oldstart, end); 
-                return true;
-            }
-        }
-
-        // no available task for the current thread
-#if !defined(PARFOR_MULTIPLE_TASKS_STEALING)
-        // the following scheduling policy for the tasks focuses mostly to load-balancing
-        long _maxid = 0, ntask = 0;
-        if (maxid.load(std::memory_order_acquire)<0)
-            _maxid = (std::max_element(data.begin(),data.end(),data_cmp) - data.begin());
-        else _maxid = maxid;
-        ntask  = data[_maxid].ntask.load(std::memory_order_relaxed);
-        if (ntask>0) { 
-            if (_maxid != maxid) maxid.store(_maxid, std::memory_order_release);
-            id = _maxid; 
-            goto L1; 
-        }
-        // no more tasks, exit
-
-#else
-        // the following scheduling policy for the tasks is a little bit more 
-        // complex and costly. It tries to find a trade-off between 
-        // task-to-thread localy and load-balancing by moving a bunch of tasks 
-        // from one thread to another one
-        long _maxid = 0, ntask = 0;
-        if (maxid.load(std::memory_order_acquire)<0)
-            _maxid = (std::max_element(data.begin(),data.end(),data_cmp) - data.begin());
-        else _maxid = maxid;
-    L2:
-        ntask  = data[_maxid].ntask.load(std::memory_order_relaxed);
-        if (ntask>0) { 
-            if (_maxid != maxid) maxid.store(_maxid, std::memory_order_release);
-            if (ntask<=3) { id = _maxid; goto L1; }
-            
-            // try to steal half of the tasks remaining to _maxid
-
-            auto oldstart = data[_maxid].task.start.load(std::memory_order_relaxed);
-            auto q = ((data[_maxid].task.end-oldstart)/_chunk) >> 1;
-            if (q<=3) { id = _maxid; goto L1; }
-            auto newstart = oldstart + (q*_chunk-1)*_step +1;
-            if (!data[_maxid].task.start.compare_exchange_weak(oldstart, newstart,
-                                                               std::memory_order_release,
-                                                               std::memory_order_relaxed)) {
-                workerlosetime_in(_nw <= lb->getnworkers());
-                goto L2; // restart the sequence from the beginning
-            }
-            assert(newstart <= data[_maxid].task.end);
-            
-            data[_maxid].ntask.fetch_sub(q, std::memory_order_release);            
-            data[wid].task.start.store(oldstart, std::memory_order_relaxed);
-            data[wid].task.end = newstart;
-            data[wid].ntask.store(q, std::memory_order_release);
-            id = wid;
-            goto L1;
-        }
-#endif
-        return false; 
-    }
-    
-    inline bool nextTask(forall_task_t *task, const int wid) {
-        const long endchunk = (_chunk-1)*_step + 1;
-        int id  = wid;
-        if (data[id].ntask) {
-        L1:
-            long start = data[id].task.start;
-            long end = std::min(start+endchunk, data[id].task.end);
-            --data[id].ntask, (data[id].task).start = (end-1)+_step;
-            task->set(start, end);
-            return true;
-        }
-        // no available task for the current thread
-#if !defined(PARFOR_MULTIPLE_TASKS_STEALING)
-        // the following scheduling policy for the tasks focuses mostly to load-balancing
-        if (maxid<0)  { //check if maxid has been set
-        L2:
-            maxid = (std::max_element(data.begin(),data.end(),data_cmp) - data.begin());
-            if (data[maxid].ntask > 0) {
-                id=maxid;
-                goto L1;
-            }
-            // no more tasks, exit
-        } else {
-            if (data[maxid].ntask > 0) { 
-                id=maxid;
-                goto L1;
-            }
-            goto L2;
-        }        
-#else
-        auto flag=false;
-        if (maxid<0)  {
-        L2:
-            maxid = (std::max_element(data.begin(),data.end(),data_cmp) - data.begin());
-            flag=true;
-        }
-        id = maxid;
-        if (data[id].ntask>0) {
-            if (data[id].ntask<=3) goto L1;
-
-            // steal half of the tasks
-            auto q = data[id].ntask >> 1, r = data[id].ntask & 0x1; 
-            data[id].ntask  = q;
-            data[wid].ntask = q+r;
-            data[wid].task.end   = data[id].task.end;
-            data[id].task.end    = data[id].task.start + (q*_chunk-1)*_step +1;
-            data[wid].task.start = data[id].task.end;
-            id = wid;
-            goto L1;
-        } else if (!flag) goto L2;
-#endif
-        return false; 
-    }
-
-    inline void* svc(void* t) {
-        if (t==NULL) {
-            if (totaltasks==0) { lb->broadcast_task(GO_OUT); return GO_OUT;}
-            sendTask();
-            return GO_ON;
-        }
-        auto wid =  lb->get_channel_id();
-        if (--totaltasks <=0) {
-            if (!eossent[wid]) {
-                lb->ff_send_out_to(workersspinwait?EOS_NOFREEZE:GO_OUT, wid);
-                eossent[wid]=true;
-                //printf("SCHED EXIT, GO_OUT to %d\n",wid);
-            } //else printf("SCHED_EXIT\n");
-            //fflush(stdout);
-            return GO_OUT;
-        }
-        if (nextTask((forall_task_t*)t, wid)) lb->ff_send_out_to(t, wid);
-        else  {
-            if (!eossent[wid]) {
-
-                //auto task = (forall_task_t*)t;
-                //printf("SCHED GO_OUT to %d (%ld) [%ld,%ld[\n", wid, totaltasks, task->start.load(), task->end);
-                //fflush(stdout);
-                
-
-                lb->ff_send_out_to((workersspinwait?EOS_NOFREEZE:GO_OUT), wid); 
-                eossent[wid]=true;
-            }
-        }
-        return GO_ON;
-    }
-
-    inline void setloop(long start, long stop, long step, long chunk, size_t nw) {
-        _start=start, _stop=stop, _step=step, _chunk=chunk, _nw=nw;
-        if (_chunk<=0) totaltasks = init_data_static(start,stop);
-        else           totaltasks = init_data(start,stop);
-
-        assert(totaltasks>=1);        
-        // adjust the number of workers that have to be started
-        if ( (totaltasks/(double)_nw) <= 1.0 || (totaltasks==1) )
-           _nw = totaltasks;
-    }
-
-    inline long startIdx() const { return _start;}
-    inline long stopIdx()  const { return _stop;}
-    inline long stepIdx()  const { return _step;}
-    inline size_t running() const { return _nw; }
-    inline void workersSpinWait() { workersspinwait=true;}
-protected:
-    // the following fields are used only by the scheduler thread
-    ff_loadbalancer *lb;
-    long             _start,_stop,_step;  // for step
-    long             _chunk;              // a chunk of indexes
-    size_t           totaltasks;          // total n. of tasks
-    size_t           _nw;                 // num. of workers
-    long             jump;
-    bool             skip1;
-    bool             workersspinwait;
-    std::vector<forall_task_t> taskv;
-};
-
-// parallel for/reduce  worker node
-template<typename Tres>
-class forallreduce_W: public ff_node {
-protected:
-    typedef std::function<void(const long,const long, const int, Tres&)> F_t;
-protected:
-    virtual inline void losetime_in(void) {
-        //FFTRACE(lostpopticks+=ff_node::TICKS2WAIT; ++popwait); // FIX
-        workerlosetime_in(aggressive);
-    }
-public:
-    forallreduce_W(forall_Scheduler *const sched, Barrier *const loopbar, F_t F):
-        sched(sched),loopbar(loopbar), schedRunning(true), 
-        spinwait(false), aggressive(true),F(F) {}
-    
-    inline void setSchedRunning(bool r) { schedRunning = r; }
-
-    inline void* svc(void* t) {
-        auto task = (forall_task_t*)t;
-        auto myid = get_my_id();
-
-        //printf("Worker%d (%ld,%ld(\n", myid, task->start.load(),task->end);
-        //fflush(stdout);
-
-        F(task->start,task->end,myid,res);
-        if (schedRunning) return t;
-
-        // the code below is executed only if the scheduler thread is not running
-        while(sched->nextTaskConcurrent(task,myid))
-            F(task->start,task->end,myid,res);
-        
-        if (spinwait) {
-            loopbar->doBarrier(myid);
-            return GO_ON;
-        }
-        return GO_OUT;
-    }
-
-    inline void enableSpinWait() {  spinwait=true; }
-
-    inline void setF(F_t _F, const Tres idtt, bool a=true) { 
-        F=_F, res=idtt, aggressive=a;
-    }
-    inline const Tres& getres() const { return res; }
-
-private:
-    forall_Scheduler *const sched;
-    Barrier *const loopbar;
-    bool schedRunning;    
-protected:
-    bool spinwait,aggressive;
-    F_t  F;
-    Tres res;
-};
-
-template <typename Tres>
-class ff_forall_farm: public ff_farm<foralllb_t> {
-    typedef std::function<void(const long,const long, const int, Tres&)> F_t;
-protected:
-    // removes possible EOS still in the input queues of the workers
-    inline void resetqueues(const int _nw) {
-        const svector<ff_node*> nodes = getWorkers();
-        for(int i=0;i<_nw;++i) nodes[i]->reset();
-    }
-
-private:
-    Tres t; // not used
-    size_t numCores;
-    Barrier loopbar;
-public:
-
-    ff_forall_farm(ssize_t maxnw, const bool spinwait=false, const bool skipwarmup=false):
-        ff_farm<foralllb_t>(false,8*ff_farm<>::DEF_MAX_NUM_WORKERS,8*ff_farm<>::DEF_MAX_NUM_WORKERS,
-                            true, ff_farm<>::DEF_MAX_NUM_WORKERS,true),
-        skipwarmup(skipwarmup),spinwait(spinwait) {
-        numCores = ((foralllb_t*const)getlb())->getNCores();
-        if (maxnw<0) maxnw=numCores;
-        std::vector<ff_node *> forall_w;
-        auto donothing=[](const long,const long,const int,const Tres) -> int {
-            return 0;
-        };
-        forall_Scheduler *sched = new forall_Scheduler(getlb(),maxnw);
-        ff_farm<foralllb_t>::add_emitter(sched);
-        for(size_t i=0;i<(size_t)maxnw;++i)
-            forall_w.push_back(new forallreduce_W<Tres>(sched, &loopbar, donothing));
-        ff_farm<foralllb_t>::add_workers(forall_w);
-        ff_farm<foralllb_t>::wrap_around();
-
-        // needed to avoid the initial barrier (see (**) below)
-        if (ff_farm<foralllb_t>::prepare() < 0) 
-            error("running base forall farm(2)\n");
-        
-        if (!skipwarmup) {
-            auto r=-1;
-            getlb()->freeze();
-            if (getlb()->run() != -1) 
-                r = getlb()->wait_freezing();            
-            if (r<0) error("running base forall farm(1)\n");
-        }
-
-        if (spinwait) {
-            sched->workersSpinWait();
-            for(size_t i=0;i<(size_t)maxnw;++i) {
-                auto w = (forallreduce_W<Tres>*)forall_w[i];
-                w->enableSpinWait();
-            }
-            //resetqueues(maxnw);
-        }
-    }
-
-    // It returns true if the scheduler has to be started, false otherwise
-    //
-    // Unless the removeSched flag is set, the scheduler thread will be started 
-    // only if there are less threads than cores AND if the number of tasks per thread 
-    // is greather than 1.
-    //
-    // By defining at compile time NO_PARFOR_SCHEDULER_THREAD the 
-    // scheduler won't be started.
-    // To always start the scheduler thread, the PARFOR_SCHEDULER_THREAD 
-    // may be defined at compile time.
-    inline bool startScheduler(const size_t nwtostart) const { 
-#if   defined(NO_PARFOR_SCHEDULER_THREAD)
-        return false;
-#elif defined(PARFOR_SCHEDULER_THREAD)
-        return true;
-#else
-        if (removeSched) return false;
-        return (nwtostart < numCores);
-#endif
-    }
-    // set/reset removeSched flag
-    // By calling this method with 'true' the scheduler will be disabled.
-    //
-    // NOTE:
-    // Sometimes may be usefull (in terms of performance) to explicitly disable 
-    // the scheduler thread when #numworkers > ff_realNumCores() on systems where
-    // ff_numCores() > ff_realNumCores() (i.e. HT or HMT is enabled)
-    inline void disableScheduler(bool onoff=true) { removeSched=onoff; }
-
-    inline int run_then_freeze(ssize_t nw_=-1) {
-        assert(skipwarmup == false); // TODO
-        const ssize_t nwtostart = (nw_ == -1)?getNWorkers():nw_;
-        auto r = -1;
-        if (startScheduler(nwtostart)) {
-            getlb()->skipfirstpop();
-            if (spinwait) {
-                // NOTE: here we have to be sure to send one task to each worker!
-                ((forall_Scheduler*)getEmitter())->sendTask(true);
-            }
-            r=ff_farm<foralllb_t>::run_then_freeze(nwtostart);
-        } else {
-            if (spinwait) {
-                // all worker threads have already crossed the barrier so it is safe to restart it
-                loopbar.barrierSetup(nwtostart+1);
-                ((forall_Scheduler*)getEmitter())->sendWakeUp();
-            } else 
-                ((forall_Scheduler*)getEmitter())->sendTask(true);
-
-            r = getlb()->thawWorkers(true, nwtostart);
-        }
-        return r;
-    }
-    int run_and_wait_end() {
-        assert(spinwait == false); 
-        const size_t nwtostart = getnw();
-        auto r= -1;
-        if (startScheduler(nwtostart)) {
-            //resetqueues(nwtostart);
-            getlb()->skipfirstpop(); 
-            // (**) this way we avoid the initial barrier
-            if (getlb()->runlb()!= -1) {
-                if (getlb()->runWorkers(nwtostart)!=-1)
-                    r = getlb()->wait();
-            }
-        } else {
-            ((forall_Scheduler*)getEmitter())->sendTask(true);
-            if (getlb()->runWorkers(nwtostart) != -1)
-                r = getlb()->waitWorkers();
-        }
-        return r;
-    }
-
-    inline int wait_freezing() {
-        if (startScheduler(getnw())) return getlb()->wait_lb_freezing();
-        if (spinwait) { 
-            loopbar.doBarrier(getnw()+1); 
-            return 0;
-        }
-        return getlb()->wait_freezingWorkers();
-    }
-    
-    inline int wait() {
-        if (spinwait){
-            const svector<ff_node*> &nodes = getWorkers();
-            for(size_t i=0;i<nodes.size();++i) 
-                getlb()->ff_send_out_to(EOS,i);
-        }
-        return ff_farm<foralllb_t>::wait();
-    }
-
-    inline void setF(F_t  _F, const Tres idtt=(Tres)0) { 
-        const size_t nw                = getnw();
-        const svector<ff_node*> &nodes = getWorkers();
-        // aggressive mode enabled if the number of threads is less than
-        // or equal to the number of cores
-        const bool mode = (nw <= numCores)?true:false;  
-        if (startScheduler(nw))  {
-            for(size_t i=0;i<nw;++i) {
-                auto w = (forallreduce_W<Tres>*)nodes[i];
-                w->setF(_F, idtt, mode);
-                w->setSchedRunning(true);
-            }
-        } else {
-            for(size_t i=0;i<nw;++i) {
-                auto w = (forallreduce_W<Tres>*)nodes[i];
-                w->setF(_F, idtt, mode);
-                w->setSchedRunning(false);
-            }
-        }
-    }
-    inline void setloop(long begin,long end,long step,long chunk,long nw) {
-        assert(nw<=(ssize_t)getNWorkers());
-        forall_Scheduler *sched = (forall_Scheduler*)getEmitter();
-        sched->setloop(begin,end,step,chunk,(nw<=0)?getNWorkers():(size_t)nw);
-    }
-    // return the number of workers running or supposed to run
-    inline size_t getnw() { return ((const forall_Scheduler*)getEmitter())->running(); }
-    
-    inline const Tres& getres(int i) {
-        return  ((forallreduce_W<Tres>*)(getWorkers()[i]))->getres();
-    }
-    inline long startIdx(){ return ((const forall_Scheduler*)getEmitter())->startIdx(); }
-    inline long stopIdx() { return ((const forall_Scheduler*)getEmitter())->stopIdx(); }
-    inline long stepIdx() { return ((const forall_Scheduler*)getEmitter())->stepIdx(); }
-protected:
-    bool   removeSched = false;
-    bool   skipwarmup  = false;
-    bool   spinwait    = false;
-};
-
-/* --------------------- Function interface -------------------- */
-//! Parallel iteration over a range of indexes (step=1)
-template <typename Function>
-static void parallel_for(long first, long last, const Function& body, 
-                         const long nw=-1) {
-    FF_PARFOR_BEGIN(pfor, parforidx,first,last,1,-1,nw) {
-        body(parforidx);            
-    } FF_PARFOR_END(pfor);
-}
-//! Parallel iteration over a range of indexes using a given step
-template <typename Function>
-static void parallel_for(long first, long last, long step, const Function& body, 
-                         const long nw=-1) {
-    FF_PARFOR_BEGIN(pfor, parforidx,first,last,step,-1,nw) {
-        body(parforidx);            
-    } FF_PARFOR_END(pfor);
-}
-//! Parallel iteration over a range of indexes using a given step and granularity
-template <typename Function>
-static void parallel_for(long first, long last, long step, long grain, 
-                         const Function& body, const long nw=-1) {
-    FF_PARFOR_BEGIN(pfor, parforidx,first,last,step,grain,nw) {
-        body(parforidx);            
-    } FF_PARFOR_END(pfor);
-}
-
-template <typename Function, typename Value, typename FReduction>
-void parallel_reduce(Value& var, const Value& identity, 
-                     long first, long last, 
-                     const Function& body, const FReduction& finalreduce,
-                     const long nw=-1) {
-    Value _var = var;
-    FF_PARFORREDUCE_BEGIN(pfr, _var, identity, parforidx, first, last, 1, -1, nw) {
-        body(parforidx, _var);            
-    } FF_PARFORREDUCE_F_END(pfr, _var, finalreduce);
-    var=_var;
-}
-    
-
-    
-//! ParallelFor class
-class ParallelFor {
-protected:
-    ff_forall_farm<int> * pf;
-public:
-    ParallelFor(const long maxnw=-1,bool spinwait=false, bool skipwarmup=false):
-        pf(new ff_forall_farm<int>(maxnw,spinwait,skipwarmup)) {}
-
-    ~ParallelFor()                { FF_PARFOR_DONE(pf); }
-
-    // By calling this method with 'true' the scheduler will be disabled,
-    // to restore the usage of the scheduler thread just pass 'false' as 
-    // parameter
-    inline void disableScheduler(bool onoff=true) { 
-        pf->disableScheduler(onoff);
-    }
-
     template <typename Function>
-    inline void parallel_for(long first, long last, const Function& f, 
-                             const long nw=-1) {
-        FF_PARFOR_START(pf, parforidx,first,last,1,-1,nw) {
-            f(parforidx);            
-        } FF_PARFOR_STOP(pf);
+    inline void parallel_for(long first, long last, const Function& f,
+                             const long nw=FF_AUTO) {
+        FF_PARFOR_START(this, parforidx,first,last,1,PARFOR_STATIC(0),nw) {
+            f(parforidx);
+        } FF_PARFOR_STOP(this);
     }
+
+    /**
+     * \brief Parallel for region (step) - static
+     *
+     * Static scheduling onto nw worker threads.
+     * Iteration space is walked with stride <b>step</b>.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step).
+     *
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param step step increment for the iteration variable
+     * \param f <b>f(const long idx)</b> body of the parallel loop
+     * \param nw number of worker threads
+     */
     template <typename Function>
-    inline void parallel_for(long first, long last, long step, const Function& f, 
-                             const long nw=-1) {
-        FF_PARFOR_START(pf, parforidx,first,last,step,-1,nw) {
-            f(parforidx);            
-        } FF_PARFOR_STOP(pf);
+    inline void parallel_for(long first, long last, long step, const Function& f,
+                             const long nw=FF_AUTO) {
+        FF_PARFOR_START(this, parforidx,first,last,step,PARFOR_STATIC(0),nw) {
+            f(parforidx);
+        } FF_PARFOR_STOP(this);
     }
+
+
+    /**
+     * @brief Parallel for region (step, grain) - dynamic
+     *
+     * @detail Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size <b>grain</b>.
+     * Iteration space is walked with stride <b>step</b>.
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain (> 0) minimum computation grain
+     * (n. of iterations scheduled together to a single worker)
+     * @param f <b>f(const long idx)</b>  Lambda function,
+     * body of the parallel loop. <b>idx</b>: iteration
+     * param nw number of worker threads
+     */
     template <typename Function>
-    inline void parallel_for(long first, long last, long step, long grain, 
-                             const Function& f, const long nw=-1) {
-        FF_PARFOR_START(pf, parforidx,first,last,step,grain,nw) {
-            f(parforidx);            
-        } FF_PARFOR_STOP(pf);
-    }    
+    inline void parallel_for(long first, long last, long step, long grain,
+                             const Function& f, const long nw=FF_AUTO) {
+        FF_PARFOR_START(this, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            f(parforidx);
+        } FF_PARFOR_STOP(this);
+    }
+
+    /**
+     * @brief Parallel for region with threadID (step, grain, thid) - dynamic
+     *
+     * Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size <b>grain</b>.
+     * Iteration space is walked with stride <b>step</b>. <b>thid</b> Worker thread ID
+     * is made available via a Lambda parameter.
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain  minimum computation grain  (n. of iterations scheduled together to a single worker)
+     * @param f <b>f(const long idx, const int thid)</b>  Lambda function, body of the parallel loop. <b>idx</b>: iteration, <b>thid</b>: worker_id
+     * @param nw number of worker threads (default n. of platform HW contexts)
+     */
+    template <typename Function>
+    inline void parallel_for_thid(long first, long last, long step, long grain,
+                                  const Function& f, const long nw=FF_AUTO) {
+        FF_PARFOR_START(this, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            f(parforidx,_ff_thread_id);
+        } FF_PARFOR_STOP(this);
+    }
+
+    /**
+     * @brief Parallel for region with indexes ranges (step, grain, thid, idx) -
+     * dynamic - advanced usage
+     *
+     * @detail Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size <b>grain</b>. Iteration space is walked with stride
+     * <b>step</b>. A chunk of <b>grain</b> iterations are assigned to each worker but
+     * they are not automatically walked. Each chunk can be traversed within the
+     * parallel_for body (e.g. with a for loop within <b>f</b> with the same step).
+     *
+     * \note Useful in few cases only - requires some expertise.
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain (> 0) minimum computation grain  (n. of iterations scheduled
+     * together to a single worker)
+     * @param f <b>f(const long start_idx, const long stop_idx, const int thid)
+     * </b>  Lambda function, body of the parallel loop.
+     * <b>start_idx</b> and <b>stop_idx</b>: iteration bounds assigned to
+     * worker_id <b>thid</b>.
+     * @param nw number of worker threads (default n. of platform HW contexts)
+     */
+    template <typename Function>
+    inline void parallel_for_idx(long first, long last, long step, long grain,
+                                  const Function& f, const long nw=FF_AUTO) {
+        FF_PARFOR_START_IDX(this,parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            f(ff_start_idx, ff_stop_idx,_ff_thread_id);
+        } FF_PARFOR_STOP(this);
+    }
+
+    /**
+     * @brief Parallel for region (step, grain) - static
+     *
+     * Static scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size <b>grain > 1</b> or in maximal partitions
+     * <b>grain == 0</b>. Iteration space is walked with stride
+     * <b>step</b>.
+     *
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain (> 0) minimum computation grain  (n. of iterations scheduled
+     * together to a single worker)
+     * @param f <b>f(const long idx)</b>
+     * Lambda function, body of the parallel loop.
+     * <b>start_idx</b> and <b>stop_idx</b>: iteration bounds assigned to
+     * worker_id <b>thid</b>.
+     * @param nw number of worker threads (default n. of platform HW contexts)
+     */
+    template <typename Function>
+    inline void parallel_for_static(long first, long last, long step, long grain,
+                                    const Function& f, const long nw=FF_AUTO) {
+        if (grain==0 || nw==1) {
+            // Divide in evenly partioned parts
+            FF_PARFOR_START(this, parforidx,first,last,step,PARFOR_STATIC(grain),nw) {
+                f(parforidx);
+            } FF_PARFOR_STOP(this);
+        } else {
+            FF_PARFOR_T_START_STATIC(this, int, parforidx,first,last,step,PARFOR_STATIC(grain),nw) {
+                f(parforidx);
+            } FF_PARFOR_T_STOP(this,int);
+        }
+    }
 };
 
-//! ParallelForReduce class
+ /*!
+  * \class ParallelForReduce
+  *  \ingroup high_level_patterns
+  *
+  * \brief Parallel for and reduce. Run automatically.
+  *
+  *  Set up the run-time for parallel for and parallel reduce.
+  *
+  * Parallel for: Identifies an iterative work-sharing construct that
+  * specifies a region
+  * (i.e. a Lambda function) in which the iterations of the associated loop
+  * should be executed in parallel.  in parallel.
+  *
+  * Parallel reduce: reduce an array of T to a single value by way of
+  * an associative operation.
+  *
+  * \tparam T reduction op type: op(T,T) -> T
+  */
+
 template<typename T>
-class ParallelForReduce {
-protected:
-    ff_forall_farm<T> * pfr; 
+class ParallelForReduce: public ff_forall_farm<forallreduce_W<T> > {
 public:
-    ParallelForReduce(const long maxnw=-1, bool spinwait=false, bool skipwarmup=false):
-        pfr(new ff_forall_farm<T>(maxnw,spinwait,skipwarmup)) {}
+    /**
+     * @brief Constructor
+     * @param maxnw Maximum number of worker threads
+     * @param spinwait \p true for noblocking support (run-time thread
+     * will never suspend, even between successive calls to \p parallel_for
+     * and \p parallel_reduce, useful when they are called in sequence on
+     * small kernels), \p false blocking support
+     */
+    explicit ParallelForReduce(const long maxnw=FF_AUTO, bool spinwait=false, bool spinbarrier=false):
+        ff_forall_farm<forallreduce_W<T> >(maxnw,spinwait,false,spinbarrier) {}
 
-    ~ParallelForReduce()                { FF_PARFORREDUCE_DONE(pfr); }
+
+    // this constructor is useful to skip loop warmup and to disable spinwait
+    /**
+     * @brief Constructor
+     * @param maxnw Maximum number of worker threads
+     * @param spinWait \p true Noblocking support (run-time thread
+     * will never suspend, even between successive calls to \p parallel_for
+     * and \p parallel_reduce, useful when they are called in sequence on
+     * small kernels), \p false blocking support
+     * @param skipWarmup Skip warmup phase (autotuning)
+     */
+    ParallelForReduce(const long maxnw, bool spinWait, bool skipWarmup, bool spinbarrier):
+        ff_forall_farm<forallreduce_W<T> >(maxnw,false, true, false) {}
+
+
+    ~ParallelForReduce()                {
+        ff_forall_farm<forallreduce_W<T> >::stop();
+        ff_forall_farm<forallreduce_W<T> >::wait();
+    }
 
     // By calling this method with 'true' the scheduler will be disabled,
-    // to restore the usage of the scheduler thread just pass 'false' as 
+    // to restore the usage of the scheduler thread just pass 'false' as
     // parameter
-    inline void disableScheduler(bool onoff=true) { 
-        pfr->removeSched(onoff);
+    inline void disableScheduler(bool onoff=true) {
+        ff_forall_farm<forallreduce_W<T> >::disableScheduler(onoff);
+    }
+
+    // It puts all spinning threads to sleep. It does not disable the spinWait flag
+    // so at the next call, threads start spinning again.
+    inline int threadPause() {
+        return ff_forall_farm<forallreduce_W<T> >::stopSpinning();
     }
 
     /* -------------------- parallel_for -------------------- */
+    /**
+     * \brief Parallel for region (basic) - static
+     *
+     *  Static scheduling onto nw worker threads.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step).
+     *
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param f <b>f(const long idx)</b>  Lambda function,
+     * body of the parallel loop. <b>idx</b>: iterator
+     * \param nw number of worker threads (default FF_AUTO)
+     */
     template <typename Function>
-    inline void parallel_for(long first, long last, const Function& f, 
-                             const long nw=-1) {
-        FF_PARFOR_T_START(pfr, T, parforidx,first,last,1,-1,nw) {
-            f(parforidx);            
-        } FF_PARFOR_STOP(pfr);
+    inline void parallel_for(long first, long last, const Function& f,
+                             const long nw=FF_AUTO) {
+        FF_PARFOR_T_START(this, T, parforidx,first,last,1,PARFOR_STATIC(0),nw) {
+            f(parforidx);
+        } FF_PARFOR_T_STOP(this,T);
     }
+    /**
+     * \brief Parallel for region (step) - static
+     *
+     * Static scheduling onto nw worker threads.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step).
+     *
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param step step increment for the iteration variable
+     * \param f <b>f(const long idx)</b> body of the parallel loop
+     * \param nw number of worker threads
+     */
     template <typename Function>
-    inline void parallel_for(long first, long last, long step, const Function& f, 
-                             const long nw=-1) {
-        FF_PARFOR_T_START(pfr, T, parforidx,first,last,step,-1,nw) {
-            f(parforidx);            
-        } FF_PARFOR_STOP(pfr);
+    inline void parallel_for(long first, long last, long step, const Function& f,
+                             const long nw=FF_AUTO) {
+        FF_PARFOR_T_START(this, T, parforidx,first,last,step,PARFOR_STATIC(0),nw) {
+            f(parforidx);
+        } FF_PARFOR_T_STOP(this,T);
     }
+    /**
+     * @brief Parallel for region (step, grain) - dynamic
+     *
+     * Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size \p grain.
+     * Iteration space is walked with stride \p step.
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain (> 0) minimum computation grain
+     * (n. of iterations scheduled together to a single worker)
+     * @param f <b>f(const long idx)</b>  Lambda function,
+     * body of the parallel loop. <b>idx</b>: iteration
+     * param nw number of worker threads
+     */
     template <typename Function>
-    inline void parallel_for(long first, long last, long step, long grain, 
-                             const Function& f, const long nw=-1) {
-        FF_PARFOR_T_START(pfr, T, parforidx,first,last,step,grain,nw) {
-            f(parforidx);            
-        } FF_PARFOR_STOP(pfr);
-    }    
+    inline void parallel_for(long first, long last, long step, long grain,
+                             const Function& f, const long nw=FF_AUTO) {
+        FF_PARFOR_T_START(this, T, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            f(parforidx);
+        } FF_PARFOR_STOP(this);
+    }
+    /**
+     * @brief Parallel for region with threadID (step, grain, thid) - dynamic
+     *
+     * Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size \p grain.
+     * Iteration space is walked with stride \p step. \p thid Worker thread ID
+     * is made available via a Lambda parameter.
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain  minimum computation grain  (n. of iterations scheduled together to a single worker)
+     * @param f <b>f(const long idx, const int thid)</b>  Lambda function, body of the parallel loop. <b>idx</b>: iteration, <b>thid</b>: worker_id
+     * @param nw number of worker threads (default n. of platform HW contexts)
+     */
+    template <typename Function>
+    inline void parallel_for_thid(long first, long last, long step, long grain,
+                                  const Function& f, const long nw=FF_AUTO) {
+        FF_PARFOR_T_START(this,T, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            f(parforidx,_ff_thread_id);
+        } FF_PARFOR_T_STOP(this,T);
+    }
+    /**
+     * @brief Parallel for region with indexes ranges (step, grain, thid, idx) -
+     * dynamic - advanced usage
+     *
+     * Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size <b>grain</b>. Iteration space is walked with stride
+     * <b>step</b>. A block of <b>grain</b> iterations are assigned to each worker but
+     * they are not automatically walked. Each block can be traversed within the
+     * parallel_for body (e.g. with a for loop within <b>f</b> with the same step).
+     *
+     * \note Useful in few cases only - requires some expertise
+     *
+     * @param first first value of the iteration variable
+     * @param last last value of the iteration variable
+     * @param step step increment for the iteration variable
+     * @param grain (> 0) minimum computation grain  (n. of iterations scheduled
+     * together to a single worker)
+     * @param f <b>f(const long start_idx, const long stop_idx, const int thid)
+     * </b>  Lambda function, body of the parallel loop.
+     * <b>start_idx</b> and <b>stop_idx</b>: iteration bounds assigned to
+     * worker_id <b>thid</b>.
+     * @param nw number of worker threads (default n. of platform HW contexts)
+     */
+    template <typename Function>
+    inline void parallel_for_idx(long first, long last, long step, long grain,
+                                  const Function& f, const long nw=FF_AUTO) {
+
+        FF_PARFOR_T_START_IDX(this,T, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            f(ff_start_idx, ff_stop_idx,_ff_thread_id);
+        } FF_PARFOR_T_STOP(this,T);
+    }
+    /**
+     * \brief Parallel for region (step) - static
+     *
+     * Static scheduling onto nw worker threads.
+     * Iteration space is walked with stride <b>step</b>.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step)
+     *
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param step step increment for the iteration variable
+     * \param f <b>f(const long idx)</b> body of the parallel loop
+     * \param nw number of worker threads
+     */
+    template <typename Function>
+    inline void parallel_for_static(long first, long last, long step, long grain,
+                                    const Function& f, const long nw=FF_AUTO) {
+        if (grain==0 || nw==1) {
+            FF_PARFOR_T_START(this, T, parforidx,first,last,step,PARFOR_STATIC(grain),nw) {
+                f(parforidx);
+            } FF_PARFOR_T_STOP(this,T);
+        } else {
+            FF_PARFOR_T_START_STATIC(this, T, parforidx,first,last,step,PARFOR_STATIC(grain),nw) {
+                f(parforidx);
+            } FF_PARFOR_T_STOP(this,T);
+        }
+    }
 
     /* ------------------ parallel_reduce ------------------- */
+    /**
+     * \brief Parallel reduce (basic)
+     *
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step)
+     *
+     * Reduce is executed in two phases: the first phase execute in
+     * parallel a partial reduce (by way of \p partialreduce_body function),
+     * the second reduces partial results (by way of \p finalresult_body).
+     * Typically the two function are really the same.
+     *
+     * \param var inital value of reduction variable (accumulator)
+     * \param indentity indetity value for the reduction function
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param partialreduce_body reduce operation (1st phase, executed in parallel)
+     * \param finalreduce_body reduce operation (2nd phase, executed sequentially)
+     * \param nw number of worker threads
+     */
+    template <typename Function, typename FReduction>
+    inline void parallel_reduce(T& var, const T& identity,
+                                long first, long last,
+                                const Function& partialreduce_body, const FReduction& finalreduce_body,
+                                const long nw=FF_AUTO) {
+        FF_PARFORREDUCE_START(this, var, identity, parforidx, first, last, 1, PARFOR_STATIC(0), nw) {
+            partialreduce_body(parforidx, var);
+        } FF_PARFORREDUCE_F_STOP(this, var, finalreduce_body);
+    }
+    /**
+     * \brief Parallel reduce (step)
+     *
+     * Iteration space is walked with stride <b>step</b>.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step)
+     *
+     * Reduce is executed in two phases: the first phase execute in
+     * parallel a partial reduce (by way of \p partialreduce_body function),
+     * the second reduces partial results (by way of \p finalresult_body).
+     * Typically the two function are really the same.
+     *
+     * \param var inital value of reduction variable (accumulator)
+     * \param indentity indetity value for the reduction function
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param step step increment for the iteration variable
+     * \param partialreduce_body reduce operation (1st phase, executed in parallel)
+     * \param finalreduce_body reduce operation (2nd phase, executed sequentially)
+     * \param nw number of worker threads
+     */
+    template <typename Function, typename FReduction>
+    inline void parallel_reduce(T& var, const T& identity,
+                                long first, long last, long step,
+                                const Function& body, const FReduction& finalreduce,
+                                const long nw=FF_AUTO) {
+        FF_PARFORREDUCE_START(this, var, identity, parforidx,first,last,step,PARFOR_STATIC(0),nw) {
+            body(parforidx, var);
+        } FF_PARFORREDUCE_F_STOP(this, var, finalreduce);
+    }
+    /**
+     * \brief Parallel reduce (step, grain)
+     *
+     * Dynamic scheduling onto nw worker threads. Iterations are scheduled in
+     * blocks of minimal size \p grain.
+     * Iteration space is walked with stride /p step.
+     *
+     * Reduce is executed in two phases: the first phase execute in
+     * parallel a partial reduce (by way of \p partialreduce_body function),
+     * the second reduces partial results (by way of \p finalresult_body).
+     * Typically the two function are really the same.
+     *
+     * \param var inital value of reduction variable (accumulator)
+     * \param indentity indetity value for the reduction function
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param step step increment for the iteration variable
+     * \param partialreduce_body reduce operation (1st phase, executed in parallel)
+     * \param finalreduce_body reduce operation (2nd phase, executed sequentially)
+     * \param nw number of worker threads
+     */
+    template <typename Function, typename FReduction>
+    inline void parallel_reduce(T& var, const T& identity,
+                                long first, long last, long step, long grain,
+                                const Function& body, const FReduction& finalreduce,
+                                const long nw=FF_AUTO) {
+        FF_PARFORREDUCE_START(this, var, identity, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            body(parforidx, var);
+        } FF_PARFORREDUCE_F_STOP(this, var, finalreduce);
+    }
 
-    template <typename Function, typename Value, typename FReduction>
-    inline void parallel_reduce(Value& var, const Value& identity, 
-                                long first, long last, 
-                                const Function& body, const FReduction& finalreduce,
-                                const long nw=-1) {
-        FF_PARFORREDUCE_START(pfr, var, identity, parforidx, first, last, 1, -1, nw) {
-            body(parforidx, var);            
-        } FF_PARFORREDUCE_F_STOP(pfr, var, finalreduce);
+    template <typename Function, typename FReduction>
+    inline void parallel_reduce_thid(T& var, const T& identity,
+                                     long first, long last, long step, long grain,
+                                     const Function& body, const FReduction& finalreduce,
+                                     const long nw=FF_AUTO) {
+        FF_PARFORREDUCE_START(this, var, identity, parforidx,first,last,step,PARFOR_DYNAMIC(grain),nw) {
+            body(parforidx, var, _ff_thread_id);
+        } FF_PARFORREDUCE_F_STOP(this, var, finalreduce);
     }
-    template <typename Function, typename Value, typename FReduction>
-    inline void parallel_reduce(Value& var, const Value& identity, 
-                                long first, long last, long step, 
-                                const Function& body, const FReduction& finalreduce,
-                                const long nw=-1) {
-        FF_PARFORREDUCE_START(pfr, var, identity, parforidx,first,last,step,-1,nw) {
-            body(parforidx, var);            
-        } FF_PARFORREDUCE_F_STOP(pfr, var, finalreduce);
+
+    /**
+     * \brief Parallel reduce region (step) - static
+     *
+     * Static scheduling onto nw worker threads.
+     * Iteration space is walked with stride \p step.
+     * Data is statically partitioned in blocks, i.e.
+     * partition size = last-first/(nw*step)
+     *
+     *
+     * \param var inital value of reduction variable (accumulator)
+     * \param indentity indetity value for the reduction function
+     * \param first first value of the iteration variable
+     * \param last last value of the iteration variable
+     * \param step step increment for the iteration variable
+     * \param f <b>f(const long idx)</b> body of the parallel loop
+     * \param nw number of worker threads
+     */
+    template <typename Function, typename FReduction>
+    inline void parallel_reduce_static(T& var, const T& identity,
+                                       long first, long last, long step, long grain,
+                                       const Function& body, const FReduction& finalreduce,
+                                       const long nw=FF_AUTO) {
+        if (grain==0 || nw==1) {
+            FF_PARFORREDUCE_START(this, var, identity, parforidx,first,last,step,grain,nw) {
+                body(parforidx, var);
+            } FF_PARFORREDUCE_F_STOP(this, var, finalreduce);
+        } else {
+            FF_PARFORREDUCE_START_STATIC(this, var, identity, parforidx,first,last,step,PARFOR_STATIC(grain),nw) {
+                body(parforidx, var);
+            } FF_PARFORREDUCE_F_STOP(this, var, finalreduce);
+        }
     }
-    template <typename Function, typename Value, typename FReduction>
-    inline void parallel_reduce(Value& var, const Value& identity, 
-                                long first, long last, long step, long grain, 
-                                const Function& body, const FReduction& finalreduce,
-                                const long nw=-1) {
-        FF_PARFORREDUCE_START(pfr, var, identity, parforidx,first,last,step,grain,nw) {
-            body(parforidx, var);            
-        } FF_PARFORREDUCE_F_STOP(pfr, var, finalreduce);
-    }
+
 };
 
+
+//#ifndef WIN32 //VS12
+
+//! ParallelForPipeReduce class
+/**
+ * \brief Parallel pipelined for-reduce
+ *
+ */
+template<typename task_t>
+class ParallelForPipeReduce: public ff_pipeline {
+protected:
+    ff_forall_farm<forallpipereduce_W> pfr;
+    struct reduceStage: ff_minode {
+        typedef std::function<void(const task_t &)> F_t;
+        inline void *svc(void *t) {
+            const task_t& task=reinterpret_cast<task_t>(t);
+            F(task);
+            return GO_ON;
+        }
+        inline int  wait() { return ff_minode::wait(); }
+        inline void setF(F_t f) { F = f; }
+
+        F_t F;
+    } reduce;
+
+public:
+    explicit ParallelForPipeReduce(const long maxnw=FF_AUTO, bool spinwait=false, bool spinbarrier=false):
+        pfr(maxnw,false,true,false) // skip loop warmup and disable spinwait/spinbarrier
+    {
+        ff_pipeline::add_stage(&pfr);
+        ff_pipeline::add_stage(&reduce);
+
+        // required to avoid error
+        pfr.remove_collector();
+
+        // avoiding initial barrier
+        if (ff_pipeline::dryrun()<0)  // preparing all connections
+            error("ParallelForPipeReduce: preparing pipe\n");
+
+        // warmup phase
+        pfr.resetskipwarmup();
+        auto r=-1;
+        if (pfr.run_then_freeze() != -1)
+            if (reduce.run_then_freeze() != -1)
+                r = ff_pipeline::wait_freezing();
+        if (r<0) error("ParallelForPipeReduce: running pipe\n");
+
+
+        if (spinwait) { // NOTE: spinning is enabled only for the Map part and not for the Reduce part
+            if (pfr.enableSpinning() == -1)
+                error("ParallelForPipeReduce: enabling spinwait\n");
+        }
+    }
+
+    ~ParallelForPipeReduce() {
+        pfr.stop(); pfr.wait();
+        reduce.wait();
+    }
+
+    // By calling this method with 'true' the scheduler will be disabled,
+    // to restore the usage of the scheduler thread just pass 'false' as
+    // parameter
+    inline void disableScheduler(bool onoff=true) {
+        pfr.disableScheduler(onoff);
+    }
+
+    // It puts all spinning threads to sleep. It does not disable the spinWait flag
+    // so at the next call, threads start spinning again.
+    inline int threadPause() {
+        return pfr.stopSpinning();
+    }
+
+    /**
+     * \brief map only call
+     *
+     */
+    template <typename Function>
+    inline void parallel_for_idx(long first, long last, long step, long grain,
+                                 const Function& Map, const long nw=FF_AUTO) {
+
+        // the setloop decides the real number of worker threads that will be started
+        // the n. maybe different from nw !
+        pfr.setloop(first,last,step,grain,nw);
+        pfr.setF(Map);
+        auto donothing=[](task_t) { };
+        reduce.setF(donothing);
+        auto r=-1;
+        if (pfr.run_then_freeze(pfr.getnw()) != -1)
+            if (reduce.run_then_freeze(pfr.getnw()) != -1)
+                r = ff_pipeline::wait_freezing();
+        if (r<0) error("ParallelForPipeReduce: parallel_for_idx, starting pipe\n");
+    }
+
+    /**
+     * \brief pipe(map,reduce)
+     *
+     */
+    template <typename Function, typename FReduction>
+    inline void parallel_reduce_idx(long first, long last, long step, long grain,
+                                    const Function& Map, const FReduction& Reduce,
+                                    const long nw=FF_AUTO) {
+
+        // the setloop decides the real number of worker threads that will be started
+        // the n. maybe different from nw !
+        pfr.setloop(first,last,step,grain,nw);
+        pfr.setF(Map);
+        reduce.setF(Reduce);
+        auto r=-1;
+        if (pfr.run_then_freeze(pfr.getnw()) != -1)
+            if (reduce.run_then_freeze(pfr.getnw()) != -1)
+                r = ff_pipeline::wait_freezing();
+        if (r<0) error("ParallelForPipeReduce: parallel_reduce_idx, starting pipe\n");
+    }
+};
+//#endif //VS12
+
+//
+//---- static functions, useful for one-shot parallel for execution or when no extra settings are needed
+//
+
+//! Parallel loop over a range of indexes (step=1)
+template <typename Function>
+static void parallel_for(long first, long last, const Function& body,
+                         const long nw=FF_AUTO) {
+    FF_PARFOR_BEGIN(pfor, parforidx,first,last,1,PARFOR_STATIC(0),nw) {
+        body(parforidx);
+    } FF_PARFOR_END(pfor);
+}
+//! Parallel loop over a range of indexes using a given step
+template <typename Function>
+static void parallel_for(long first, long last, long step, const Function& body,
+                         const long nw=FF_AUTO) {
+    FF_PARFOR_BEGIN(pfor, parforidx,first,last,step,PARFOR_STATIC(0),nw) {
+        body(parforidx);
+    } FF_PARFOR_END(pfor);
+}
+//! Parallel loop over a range of indexes using a given step and granularity
+template <typename Function>
+static void parallel_for(long first, long last, long step, long grain,
+                         const Function& body, const long nw=FF_AUTO) {
+    FF_PARFOR_BEGIN(pfor, parforidx,first,last,step,grain,nw) {
+        body(parforidx);
+    } FF_PARFOR_END(pfor);
+}
+
+template <typename Function, typename Value_t, typename FReduction>
+void parallel_reduce(Value_t& var, const Value_t& identity,
+                     long first, long last,
+                     const Function& body, const FReduction& finalreduce,
+                     const long nw=FF_AUTO) {
+    Value_t _var = var;
+    FF_PARFORREDUCE_BEGIN(pfr, _var, identity, parforidx, first, last, 1, PARFOR_STATIC(0), nw) {
+        body(parforidx, _var);
+    } FF_PARFORREDUCE_F_END(pfr, _var, finalreduce);
+    var=_var;
+}
 
 } // namespace ff
 
 #endif /* FF_PARFOR_HPP */
-    
+

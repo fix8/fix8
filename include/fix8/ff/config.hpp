@@ -1,12 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! 
- *  \link
- *  \file config.hpp
- *  \ingroup shared_memory_fastflow
- *
- *  \brief This file contains general settings for the FastFlow framework.
- */
 
 /* ***************************************************************************
  *
@@ -29,7 +22,12 @@
 #ifndef FF_CONFIG_HPP
 #define FF_CONFIG_HPP
 
-#include <limits.h>
+#include <cstddef> 
+#include <climits>
+#if defined(TRACE_FASTFLOW)
+#include <iostream>
+#endif
+
 
 #if !defined(CACHE_LINE_SIZE)
 #define CACHE_LINE_SIZE 64
@@ -45,32 +43,52 @@
 #define FFBUFFER uSWSR_Ptr_Buffer
 #endif
 
-namespace ff {
-/*!
- *  \ingroup shared_memory_fastflow
- *
- *  \brief These are reserved pointer addresses 
- *  @{
+/* To save energy and improve hyperthreading performance
+ * define the following macro
  */
-static const size_t FF_EOS           = (ULONG_MAX);  /// automatically propagated
-static const size_t FF_EOS_NOFREEZE  = (FF_EOS-0x1); /// non automatically propagated
-static const size_t FF_GO_ON         = (FF_EOS-0x2); /// non automatically propagated
-static const size_t FF_GO_OUT        = (FF_EOS-0x3); /// non automatically propagated
+//#define SPIN_USE_PAUSE 1
+
+/* To enable OPENCL support
+ *
+ */
+//#define FF_OPENCL 1 
+
+
+/* To enable task callbacks
+ *
+ * If enabled, 2 callbacks are called by the run-time:
+ *  - one before receiving the task in input
+ *  - one just after having computed the task (before sending it out)
+ */
+//#define FF_TASK_CALLBACK 1
+
+namespace ff {
+static const size_t FF_EOS           = (ULLONG_MAX);  /// automatically propagated
+static const size_t FF_EOS_NOFREEZE  = (FF_EOS-0x1);  /// non automatically propagated
+static const size_t FF_EOSW          = (FF_EOS-0x2);  /// propagated only by farm's stages
+static const size_t FF_GO_ON         = (FF_EOS-0x3);  /// non automatically propagated
+static const size_t FF_GO_OUT        = (FF_EOS-0x4);  /// non automatically propagated
+static const size_t FF_BLK           = (FF_EOS-0x5);  /// automatically propagated
+static const size_t FF_NBLK          = (FF_EOS-0x6);  /// automatically propagated
 // The FF_GO_OUT is quite similar to the FF_EOS_NOFREEZE, both are not propagated automatically but while 
 // the first one is used to exit the main computation loop and in case being freezed, the second one is used 
 // to exit the computation loop and keep spinning on the input queue for a new task without being freezed.
-
+// EOSW is like EOS but it is not propagated outside a farm pattern. If an emitter receives EOSW in input,
+// than it will be discarded.
+// FF_BLK enables blocking mode, FF_NBLK disable blocking mode (aka nonblocking). 
+//
 }
-#define GO_ON         (void*)ff::FF_GO_ON
-#define GO_OUT        (void*)ff::FF_GO_OUT
-#define EOS_NOFREEZE  (void*)ff::FF_EOS_NOFREEZE
-#define EOS           (void*)ff::FF_EOS
-
 
 #if defined(TRACE_FASTFLOW)
 #define FFTRACE(x) x
 #else
 #define FFTRACE(x)
+#endif
+
+#if defined(BLOCKING_MODE)
+#define RUNTIME_MODE true
+#else
+#define RUNTIME_MODE false   // by default the run-time is in nonblocking mode
 #endif
 
 // the barrier implementation to use
@@ -82,6 +100,9 @@ static const size_t FF_GO_OUT        = (FF_EOS-0x3); /// non automatically propa
 #if !defined(MAX_NUM_THREADS)
 #define MAX_NUM_THREADS       256 
 #endif
+
+// maximum number of workers in a farm
+#define DEF_MAX_NUM_WORKERS   (MAX_NUM_THREADS-2)
 
 // NOTE: BACKOFF_MIN/MAX are lower and upper bound backoff values.
 // Notice that backoff bounds are highly dependent from the system and 
@@ -117,13 +138,11 @@ static const size_t FF_GO_OUT        = (FF_EOS-0x3); /// non automatically propa
 //#include <ff/config.h>
 //#endif // NO_CMAKE_CONFIG
 
-#if defined(USE_CMAKE_CONFIG)
+#if defined(USE_CMAKE_CONFIG) && !defined(NOT_USE_CMAKE_CONFIG)
 #include <cmake.modules/ffconfig.h>
 #endif
 
-/*!
- *  @}
- *  \endlink
- */
+// OpenCL additional code needed to compile kernels
+#define FF_OPENCL_DATATYPES_FILE "ff_opencl_datatypes.cl"
 
 #endif /* FF_CONFIG_HPP */

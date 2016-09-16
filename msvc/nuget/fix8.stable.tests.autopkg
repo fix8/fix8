@@ -15,7 +15,7 @@ nuget {
 		description: @"Master branch of FIX8 library tests";
 		releaseNotes: "";
 		copyright: Copyright 2013-2014;
-		tags: { FIX8, native, CoApp };
+		tags: { FIX8, native, CoApp, v${VERSION} };
 	};
 
 	dependencies {

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -608,7 +608,7 @@ public:
 	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
 
 	/// Ctor.
-	Field () : BaseField(field), _value(), _precision(DEFAULT_PRECISION) {}
+	Field () : BaseField(field), _value(), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -617,7 +617,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+	Field (const fp_type& val, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(val), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/*! Value ctor.
 	  \param val value to set
@@ -628,12 +628,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field, rlm), _value(fast_atof(from)), _precision(FIX8_DEFAULT_PRECISION) {}
 
 	/// Dtor.
 	virtual ~Field() {}
@@ -873,7 +873,9 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
    };
 
    const int tyears(ltm.tm_year ? ltm.tm_year - 70 : 0); // tm->tm_year is from 1900.
-   const int tdays(mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4);
+   int tdays(mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4);
+	if (ltm.tm_year && ltm.tm_year % 4 == 0 && ltm.tm_mon < 2) // works till 2100, adjust for leap year with jan/feb +1day error
+		--tdays;
    return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
 }
 
@@ -1017,6 +1019,8 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 	--tms.tm_mon;
 	if (len == 8)
 		parse_decimal(ptr, 2, tms.tm_mday);
+	else
+		tms.tm_mday = 1;
 	return time_to_epoch(tms) * Tickval::billion;
 }
 
@@ -1156,12 +1160,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from.data(), from.size(), true)) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0)) {}
+	Field (const char *from, const RealmBase *rlm=nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0, true)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
@@ -2168,5 +2172,4 @@ using onbehalfof_sending_time = Field<UTCTimestamp, Common_OnBehalfOfSendingTime
 
 } // FIX8
 
-#endif // _FIX8_FIELD_HPP_
-/* vim: set ts=3 sw=3 tw=0 noet :*/
+#endif // FIX8_FIELD_HPP_

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *  it under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -20,7 +20,9 @@
 #ifndef FF_PLATFORM_HPP
 #define FF_PLATFORM_HPP
 
-// APPLE specific backward compatibility 
+#include <fix8/ff/platforms/liblfds.h>
+
+// APPLE specific backward compatibility
 
 // posix_memalign is available on OS X starting with 10.6
 #if defined(__APPLE__)
@@ -32,27 +34,36 @@
 #include <errno.h>
 inline static int posix_memalign(void **memptr, size_t alignment, size_t size)
 {
-    if (memptr && (*memptr = malloc(size))) return 0; 
+    if (memptr && (*memptr = malloc(size))) return 0;
     else return (ENOMEM);
 }
 #endif
 #endif
- 
 
 
 
-#if (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
+
+#if defined(_WIN32)
 #pragma unmanaged
 
-#include "ff/platforms/pthread_minport_windows.h"
+#define NOMINMAX
+
+#include "fix8/ff/platforms/pthread_minport_windows.h"
 #define INLINE __forceinline
 #define NOINLINE __declspec(noinline)
 //#define CACHE_LINE_SIZE 64
 #define __WIN_ALIGNED_16__ __declspec(align(16))
 
+// Thread specific storage
+#define __thread __declspec(thread)
+
+
 // Only x86 and x86_64 are currently supported for Windows OS
-INLINE void WMB() {} 
+INLINE void WMB() {}
 INLINE void PAUSE() {}
+
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
 
 INLINE static int posix_memalign(void **memptr,size_t alignment, size_t sz)
 {
@@ -72,6 +83,8 @@ INLINE static void posix_memalign_free(void* mem)
 typedef unsigned long useconds_t;
 //#define strtoll std::stoll
 #define strtoll _strtoi64
+
+#define sleep(SECS) Sleep(SECS)
 
 INLINE static int usleep(unsigned long microsecs) {
   if (microsecs > 100000)
@@ -96,7 +109,7 @@ INLINE static int usleep(unsigned long microsecs) {
       int sleep_part = (int) (microsecs) / 1000 - 10;
       LARGE_INTEGER before;
       QueryPerformanceCounter (&before);
-      long long expected_counter = before.QuadPart + 
+      long long expected_counter = before.QuadPart +
 expected_counter_difference;
       if (sleep_part > 0)
         Sleep (sleep_part);
@@ -110,6 +123,7 @@ expected_counter_difference;
     }
 	return(0);
 }
+
 
 //#define __TICKS2WAIT 1000
 #define random rand
@@ -128,36 +142,36 @@ struct timeval {
   long tv_sec;
   long tv_usec;
 };
-#endif 
+#endif
 */
 
-struct timezone 
+struct timezone
 {
   int  tz_minuteswest; /* minutes W of Greenwich */
   int  tz_dsttime;     /* type of dst correction */
 };
- 
+
 INLINE static int gettimeofday(struct timeval *tv, struct timezone *tz)
 {
   FILETIME ft;
   unsigned __int64 tmpres = 0;
   static int tzflag;
- 
+
   if (NULL != tv)
   {
     GetSystemTimeAsFileTime(&ft);
- 
+
     tmpres |= ft.dwHighDateTime;
     tmpres <<= 32;
     tmpres |= ft.dwLowDateTime;
- 
+
     /*converting file time to unix epoch*/
-    tmpres -= DELTA_EPOCH_IN_MICROSECS; 
+    tmpres -= DELTA_EPOCH_IN_MICROSECS;
     tmpres /= 10;  /*convert into microseconds*/
     tv->tv_sec = (long)(tmpres / 1000000UL);
     tv->tv_usec = (long)(tmpres % 1000000UL);
   }
- 
+
   if (NULL != tz)
   {
     if (!tzflag)
@@ -168,12 +182,12 @@ INLINE static int gettimeofday(struct timeval *tv, struct timezone *tz)
     tz->tz_minuteswest = _timezone / 60;
     tz->tz_dsttime = _daylight;
   }
- 
+
   return 0;
 }
 
-//#include <sys/time.h> 
-//#include <sys/resource.h> 
+//#include <sys/time.h>
+//#include <sys/resource.h>
 //#include <unistd.h>
 
 struct rusage {
@@ -194,7 +208,7 @@ struct rusage {
     long   ru_nvcsw;         /* voluntary context switches */
     long   ru_nivcsw;        /* involuntary context switches */
 };
- 
+
 
 // sys/uio.h
 

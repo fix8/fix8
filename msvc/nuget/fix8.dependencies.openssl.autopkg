@@ -22,35 +22,53 @@ nuget {
 	files {
 	
 		#defines {
-			OPENSSL64 = OpenSSL-Win64\;
-			OPENSSL32 = OpenSSL-Win32\;
+			OPENSSL64 = vs2015\OpenSSL-x64\;
+			OPENSSL32 = vs2015\OpenSSL-x32\;
 		}
 	
+		include: { ${OPENSSL64}include\**\*; };
+
 		// these declarations of lib, symbols and bin folders only apply
 		// to the project when:
 		// 		$(Platform) == x64
 		//  	$(PlatformToolset) == v100 
 		//		$(Configuration) == Debug
 		[x64,v120,debug,desktop] { 
-			include: ${OPENSSL64}include\**\*;
 			lib: { ${OPENSSL64}lib\VC\libeay32MDd.lib; ${OPENSSL64}lib\VC\ssleay32MDd.lib; };
 			bin: { ${OPENSSL64}bin\libeay32.dll; ${OPENSSL64}bin\ssleay32.dll; };
 		}
 		
 		[x64,v120,release,desktop] { 
-			include: ${OPENSSL64}include\**\*;
 			lib: { ${OPENSSL64}lib\VC\libeay32MD.lib; ${OPENSSL64}lib\VC\ssleay32MD.lib; };
 			bin: { ${OPENSSL64}bin\libeay32.dll; ${OPENSSL64}bin\ssleay32.dll; };
 		}
 			
 		[x86,v120,debug,desktop] { 
-			include: ${OPENSSL32}include\**\*;
 			lib: { ${OPENSSL32}lib\VC\libeay32MDd.lib; ${OPENSSL32}lib\VC\ssleay32MDd.lib; };
 			bin: { ${OPENSSL32}bin\libeay32.dll; ${OPENSSL32}bin\ssleay32.dll; };
 		}
 		
 		[x86,v120,release,desktop] { 
-			include: ${OPENSSL32}include\**\*;
+			lib: { ${OPENSSL32}lib\VC\libeay32MD.lib; ${OPENSSL32}lib\VC\ssleay32MD.lib; };
+			bin: { ${OPENSSL32}bin\libeay32.dll; ${OPENSSL32}bin\ssleay32.dll; };
+		}
+
+		[x64,v140,debug,desktop] { 
+			lib: { ${OPENSSL64}lib\VC\libeay32MDd.lib; ${OPENSSL64}lib\VC\ssleay32MDd.lib; };
+			bin: { ${OPENSSL64}bin\libeay32.dll; ${OPENSSL64}bin\ssleay32.dll; };
+		}
+		
+		[x64,v140,release,desktop] { 
+			lib: { ${OPENSSL64}lib\VC\libeay32MD.lib; ${OPENSSL64}lib\VC\ssleay32MD.lib; };
+			bin: { ${OPENSSL64}bin\libeay32.dll; ${OPENSSL64}bin\ssleay32.dll; };
+		}
+			
+		[x86,v140,debug,desktop] { 
+			lib: { ${OPENSSL32}lib\VC\libeay32MDd.lib; ${OPENSSL32}lib\VC\ssleay32MDd.lib; };
+			bin: { ${OPENSSL32}bin\libeay32.dll; ${OPENSSL32}bin\ssleay32.dll; };
+		}
+		
+		[x86,v140,release,desktop] { 
 			lib: { ${OPENSSL32}lib\VC\libeay32MD.lib; ${OPENSSL32}lib\VC\ssleay32MD.lib; };
 			bin: { ${OPENSSL32}bin\libeay32.dll; ${OPENSSL32}bin\ssleay32.dll; };
 		}
@@ -58,6 +76,6 @@ nuget {
 	
 	targets {
 		// We're trying to be standard about these sorts of thing. (Will help with config.h later :D)
-		Defines += HAS_OPENSSL;
+		Defines += FIX8_NUGET_HAS_OPENSSL;
 	};
 }

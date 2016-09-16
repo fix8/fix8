@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -46,10 +46,11 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 {
    unsigned processed(0), dropped(0), invalid(0);
 	int retval(0);
-	f8String msg;
 
 	if (_pmodel == pm_coro)
 	{
+		f8String msg;
+
 		try
 		{
 			reenter(_coro)
@@ -78,25 +79,34 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 		catch (Poco::Net::NetException& e)
 		{
 			scout_error << e.what();
+			_session.do_state_change(States::st_session_terminated);
 			retval = -1;
 		}
 		catch (PeerResetConnection& e)
 		{
 			scout_error << e.what();
 			_session.do_state_change(States::st_session_terminated);
-			_session.stop();
+			//_session.stop();
 			retval = -1;
 		}
 		catch (exception& e)
 		{
 			scout_error << e.what();
+			retval = -2;
 			++invalid;
+		}
+		catch (...)
+		{
+			scout_error << "reader(coro): Unknown exception";
+			retval = -2;
 		}
 	}
 	else
 	{
 		while (!cancellation_token && !_session.is_shutdown())
 		{
+			f8String msg;
+
 			try
 			{
 				if (read(msg))	// will block
@@ -125,35 +135,28 @@ int FIXReader::execute(f8_thread_cancellation_token& cancellation_token)
 				else
 					++invalid;
 			}
-			catch (Poco::Net::NetException& e)
-			{
-				scout_error << e.what();
-				retval = -1;
-				break;
-			}
-			catch (PeerResetConnection& e)
-			{
-				scout_error << e.what();
-				_session.do_state_change(States::st_session_terminated);
-				_session.stop();
-				retval = -1;
-				break;
-			}
 			catch (exception& e)
 			{
 				scout_error << e.what();
+				if (!_session.is_shutdown())
+					_session.do_state_change(States::st_session_terminated);
+				retval = -1;
 				++invalid;
+				break;
 			}
 		}
-
 		scout_info << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
 			<< invalid << " invalid";
 		if (retval && errno)
 		{
-			scout_error << "socket error=" << errno;
+			scout_warn << "socket error=" << strerror(errno) << '(' << errno << ')';
+		}
+
+		{
+			f8_scoped_lock guard(_start_mutex);
+			_started = false;
 		}
 	}
-
 	return retval;
 }
 
@@ -165,7 +168,7 @@ int FIXReader::callback_processor()
    for (; !_cancellation_token && !_session.is_shutdown();)
    {
 		f8String *msg_ptr(0);
-#if (MPMC_SYSTEM == MPMC_TBB)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_TBB)
       f8String msg;
 		_msg_queue.pop (msg); // will block
       if (msg.empty())  // means exit
@@ -184,7 +187,7 @@ int FIXReader::callback_processor()
 		}
 		else
 			++processed;
-#if (MPMC_SYSTEM == MPMC_FF)
+#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
 		_msg_queue.release(msg_ptr);
 #endif
    }
@@ -221,7 +224,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		while (bt != default_field_separator && offs < _max_msg_len);
 		to.assign(msg_buf, offs);
 
-		char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
+		char tag[MAX_MSGTYPE_FIELD_LEN], val[FIX8_MAX_FLD_LENGTH];
 		unsigned result;
 		if ((result = MessageBase::extract_element(to.data(), static_cast<unsigned>(to.size()), tag, val)))
 		{
@@ -301,6 +304,10 @@ int FIXWriter::execute(f8_thread_cancellation_token& cancellation_token)
 
 	scout_info << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid";
 
+	{
+		f8_scoped_lock guard(_start_mutex);
+		_started = false;
+	}
 	return result;
 }
 
@@ -317,9 +324,12 @@ void Connection::stop()
 	scout_debug << "Connection::stop()";
 	_writer.stop();
 	_writer.join();
+
+	scout_debug << "Connection::stop() => _reader.stop()";
 	_reader.stop();
+	if (_reader.started())
+		_reader.socket()->shutdown();
 	_reader.join();
-	_reader.socket()->shutdownReceive();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -351,14 +361,20 @@ bool ClientConnection::connect()
 		catch (Poco::Exception& e)
 		{
 			if (lparam._reliable)
+			{
+				scout_debug << "rethrowing Poco::Exception: " << e.displayText();
 				throw;
+			}
 			scout_error << "exception: " << e.displayText();
 			hypersleep<h_milliseconds>(lparam._login_retry_interval);
 		}
 		catch (exception& e)
 		{
 			if (lparam._reliable)
+			{
+				scout_debug << "rethrowing exception: " << e.what();
 				throw;
+			}
 			scout_error << "exception: " << e.what();
 			hypersleep<h_milliseconds>(lparam._login_retry_interval);
 		}

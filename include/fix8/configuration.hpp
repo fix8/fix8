@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef FIX8_CONFIGURATION_HPP_
 #define FIX8_CONFIGURATION_HPP_
 
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 #include <openssl/ssl.h>
 #else
 #define SSL_VERIFY_PEER 0
@@ -152,8 +152,8 @@ protected:
 	Tickval::ticks get_time_field(const XmlElement *from, const std::string& tag, bool timeonly=false) const
 	{
 		std::string time_str;
-		return from && from->GetAttr(tag, time_str) && time_str.size() == 8 ? time_parse(time_str.c_str(), 8, timeonly)
-																								  : Tickval::errorticks;
+		return from && from->GetAttr(tag, time_str) && time_str.size() == 8
+			? time_parse(time_str.c_str(), 8, timeonly) : Tickval::errorticks();
 	}
 
 	/*! Find an attribute in the given XmlElement
@@ -213,7 +213,7 @@ public:
 		_groups(g_count)
 	{
 		if (!exist(xmlfile))
-			throw ConfigurationError("server config file not found", xmlfile);
+			throw ConfigurationError("config file not found", xmlfile);
 		if (do_process)
 			process();
 	}
@@ -300,8 +300,13 @@ public:
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the retry count or 10 if not found */
-	unsigned get_retry_count(const XmlElement *from, const unsigned def=defaults::login_retries) const
-		{ return find_or_default(from, "login_retries", def); }
+	unsigned get_retry_count(const XmlElement *from, const int def=defaults::login_retries) const
+	{
+		const int rc(find_or_default(from, "login_retries", def));
+		if (rc < 0)
+			throw ConfigurationError("retry count must be >= 0");
+		return rc;
+	}
 
 	/*! Extract the tcp recv buffer size
 	  \param from xml entity to search
@@ -445,7 +450,7 @@ public:
 	target_comp_id get_target_comp_id(const XmlElement *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
 	  \return ssl context */

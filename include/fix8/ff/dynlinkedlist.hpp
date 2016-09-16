@@ -1,14 +1,16 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- * \link
  * \file dynlinkedlist.hpp
- * \ingroup shared_memory_fastflow
+ * \ingroup aux_classes
  *
- * \brief Dynamic linked list Single-Writer Single-Reader unbounded queue.
- * No lock is needed around pop and push methods.
+ * \brief Dynamic linked list Single-Writer Single-Reader unbounded queue. Not currently used.
  *
+ *  No lock is needed around pop and push methods.
+ *
+ * \note Not used in current FastFlow implementation
  */
+
 #ifndef FF_DYNLINKEDLIST_HPP
 #define FF_DYNLINKEDLIST_HPP
 
@@ -31,45 +33,22 @@
  */
 
 #include <stdlib.h>
-#include <ff/buffer.hpp>
-#include <ff/sysdep.h>
+#include <fix8/ff/buffer.hpp>
+#include <fix8/ff/sysdep.h>
 #include <assert.h>
 
 namespace ff {
 
-/*!
- * \ingroup shared_memory_fastflow
- *
- * @{
- */
-
-/*!
- * \class dynlinkedlist
- * \ingroup shared_memory_fastflow
- *
- * \brief TODO
- *
- * This class is defined in \ref dynlinkedlist.hpp
- *
- */
 class dynlinkedlist {
 
 #define CAST_TO_UL(X) ((unsigned long)X)
 
 private:
-    /*!
-     * \class Node
-     * \ingroup shared_memory_fastflow
-     *
-     * \brief TODO
-     *
-     * This class is defined in \ref dynlinkedlist.hpp
-     */
     struct Node {
         void        * data;
         struct Node * next;
         void        * next_data;
-        long padding[longxCacheLine-((sizeof(void*)*3)/sizeof(long))]; 
+        long padding[longxCacheLine-((sizeof(void*)*3)/sizeof(long))];
     };
 
     volatile Node *    head;
@@ -78,34 +57,28 @@ private:
     long padding2[longxCacheLine-(sizeof(Node*)/sizeof(long))];
     //SWSR_Ptr_Buffer    cache;
     /*
-      This is a vector of Node elemens.  
+      This is a vector of Node elemens.
       The len is equal to cachesize
      */
     Node * min_cache;
     int min_cache_size;
     void * cache_mem;
 private:
-    /**
-     * TODO
-     */
+
     bool isincahce(Node * n){
         if(((unsigned long) n ) - ((unsigned long)min_cache) < 0){
             return false;
-        }  
-        
+        }
+
         if(((unsigned long) n ) - ((unsigned long)min_cache) > min_cache_size - sizeof(Node)){
             return false;
         }
     }
 public:
-    /**
-     * TODO
-     */
+
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * TODO
-     */
+
     dynlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
         //Node * n = (Node *)::malloc(sizeof(Node));
         assert(sizeof(Node) == longxCacheLine);
@@ -118,25 +91,23 @@ public:
                                  );
         }
         min_cache_size = cachesize;
-        
-        
+
+
         for(int i=0; i<cachesize-1; i++){
             min_cache[i].next = &min_cache[i+1];
             min_cache[i].next_data = &min_cache[i+1].data;
             min_cache[i].data = NULL;
         }
-        
-        min_cache[cachesize-1].next = &min_cache[0]; 
-        min_cache[cachesize-1].next_data = &min_cache[0].data; 
+
+        min_cache[cachesize-1].next = &min_cache[0];
+        min_cache[cachesize-1].next_data = &min_cache[0].data;
         min_cache[cachesize-1].data = NULL;
-        
+
         head = &min_cache[0];
         tail = &min_cache[0];
     }
-    
-    /**
-     * TODO
-     */
+
+
     ~dynlinkedlist() {
         Node * start_free = min_cache[0].next;
         min_cache[0].next=NULL;
@@ -151,10 +122,8 @@ public:
         }
         free(cache_mem);
     }
-    
-    /**
-     * TODO
-     */
+
+
     inline bool push(void * const data) {
         assert(data!=NULL);
         if(likely(tail->next_data == NULL)){
@@ -165,7 +134,7 @@ public:
         }
 
         Node * n = (Node *)::malloc(sizeof(Node*));
-        n->data = data; 
+        n->data = data;
         n->next = tail->next;
         n->next_data = &tail->next.data;
         tail->next = n;
@@ -173,9 +142,7 @@ public:
         return true;
     }
 
-    /**
-     * TODO
-     */
+
     inline bool  pop(void ** data) {
         if (likely(head->data)) {
             *data = head->data;
@@ -187,10 +154,6 @@ public:
     }
 };
 
-/*!
- * @}
- * \endlink
- */
 
 } // namespace ff
 

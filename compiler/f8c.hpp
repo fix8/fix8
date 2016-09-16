@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -206,14 +206,14 @@ inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.Ge
 //-----------------------------------------------------------------------------------------
 class push_dir
 {
-	char _cwd[MAX_FLD_LENGTH];
+	char _cwd[FIX8_MAX_FLD_LENGTH];
 
 	void getdir()
 	{
 #ifdef _MSC_VER
-		if (_getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+		if (_getcwd(_cwd, FIX8_MAX_FLD_LENGTH) == 0)
 #else
-		if (::getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+		if (::getcwd(_cwd, FIX8_MAX_FLD_LENGTH) == 0)
 #endif
 		{
 			std::ostringstream ostr;
@@ -247,4 +247,4 @@ public:
 
 } // FIX8
 
-#endif // _F8_F8C_HPP_
+#endif // FIX8_F8C_HPP_

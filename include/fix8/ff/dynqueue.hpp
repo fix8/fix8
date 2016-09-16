@@ -1,12 +1,23 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- * \link
  * \file dynqueue.hpp
- * \ingroup streaming_network_simple_shared_memory
+ * \ingroup aux_classes
  *
- * \brief This file defines the dynamic queue.
+ * \brief Implementation of a dynamic queue. Not currently used.
  *
+ * Dynamic (list-based) Single-Writer Single-Reader
+ * (or Single-Producer Single-Consumer) unbounded queue.
+ *
+ * No lock is needed around pop and push methods.
+ * See also ubuffer.hpp for a more efficient SPSC unbounded queue.
+ *
+ * M. Aldinucci, M. Danelutto, P. Kilpatrick, M. Meneghin, and M. Torquati,
+ * "An Efficient Unbounded Lock-Free Queue for Multi-core Systems,"
+ * in Proc. of 18th Intl. Euro-Par 2012 Parallel Processing, Rhodes Island,
+ * Greece, 2012, pp. 662-673. doi:10.1007/978-3-642-32820-6_65
+ *
+ * \note Not currently used in the FastFlow implementation.
  */
 
 #ifndef FF_DYNQUEUE_HPP
@@ -30,38 +41,16 @@
  ****************************************************************************
  */
 
-/* Dynamic (list-based) Single-Writer Single-Reader 
- * (or Single-Producer Single-Consumer) unbounded queue.
- *
- * No lock is needed around pop and push methods.
- * See also ubuffer.hpp for a more efficient SPSC unbounded queue.
- * 
- *
- */
 
 #include <stdlib.h>
-#include <ff/buffer.hpp>
-#include <ff/spin-lock.hpp> // used only for mp_push and mp_pop
-#include <ff/sysdep.h>
+#include <fix8/ff/buffer.hpp>
+#include <fix8/ff/spin-lock.hpp> // used only for mp_push and mp_pop
+#include <fix8/ff/sysdep.h>
 
 namespace ff {
 
-/*!
- * \ingroup streaming_network_simple_shared_memory
- *
- * @{
- */
-
 #if !defined(_FF_DYNQUEUE_OPTIMIZATION)
 
-/*!
- * \class dynqueue
- * \ingroup streaming_network_simple_shared_memory
- *
- * \brief TODO
- *
- * This class is defined in \ref dynqueue.hpp
- */
 class dynqueue {
 private:
     struct Node {
@@ -69,19 +58,26 @@ private:
         struct Node * next;
     };
 
-    Node * volatile   head;
-    long padding1[longxCacheLine-(sizeof(Node *)/sizeof(long))];
-    Node * volatile   tail;
-    long padding2[longxCacheLine-(sizeof(Node*)/sizeof(long))];
+    union {
+        Node * volatile   head;
+        char padding1[CACHE_LINE_SIZE];
+        //long padding1[longxCacheLine-(sizeof(Node *)/sizeof(long))];
+    };
+    union {
+        Node * volatile   tail;
+        char padding2[CACHE_LINE_SIZE];
+        //long padding2[longxCacheLine-(sizeof(Node*)/sizeof(long))];
+    };
 
     /* ----- two-lock used only in the mp_push and mp_pop methods ------- */
-    /*                                                                    */    
+    /*                                                                    */
     /*  By using the mp_push and mp_pop methods as standard push and pop, */
     /*  the dynqueue algorithm basically implements the well-known        */
-    /*  Michael and Scott 2-locks MPMC queue.                             */    
+    /*  Michael and Scott 2-locks MPMC queue.                             */
     /*                                                                    */
-    /*                                                                    */    
-    union {
+    /*                                                                    */
+	/*
+	union {
         lock_t P_lock;
         char padding3[CACHE_LINE_SIZE];
     };
@@ -89,7 +85,15 @@ private:
         lock_t C_lock;
         char padding4[CACHE_LINE_SIZE];
     };
-    
+    */
+	ALIGN_TO_PRE(CACHE_LINE_SIZE)
+	lock_t P_lock;
+	ALIGN_TO_POST(CACHE_LINE_SIZE)
+
+	ALIGN_TO_PRE(CACHE_LINE_SIZE)
+		lock_t C_lock;
+	ALIGN_TO_POST(CACHE_LINE_SIZE)
+
     /* -------------------------------------------------------------- */
 
     // internal cache
@@ -101,9 +105,6 @@ private:
 #endif
 
 private:
-    /**
-     * TODO
-     */
     inline Node * allocnode() {
         union { Node * n; void * n2; } p;
 #if !defined(NO_CACHE)
@@ -113,9 +114,6 @@ private:
         return p.n;
     }
 
-    /**
-     * TODO
-     */
     inline Node * mp_allocnode() {
         union { Node * n; void * n2; } p;
 #if !defined(NO_CACHE)
@@ -131,14 +129,8 @@ private:
     }
 
 public:
-    /**
-     * TODO
-     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * TODO
-     */
     dynqueue(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false):cache(cachesize) {
         Node * n = (Node *)::malloc(sizeof(Node));
         n->data = NULL; n->next = NULL;
@@ -150,20 +142,14 @@ public:
                 if (n) cache.push(n);
             }
         }
-        init_unlocked(P_lock); 
+        init_unlocked(P_lock);
         init_unlocked(C_lock);
         // Avoid unused private field warning on padding vars
-        (void) padding1; (void) padding2 ; (void) padding3; (void) padding4;
+        //(void) padding1; (void) padding2 ; (void) padding3; (void) padding4;
     }
 
-    /**
-     * TODO
-     */
     bool init() { return true;}
 
-    /**
-     * TODO
-     */
     ~dynqueue() {
         union { Node * n; void * n2; } p;
         if (cache.buffersize()>0) while(cache.pop(&p.n2)) free(p.n);
@@ -174,12 +160,9 @@ public:
         }
         if (head) free((void*)head);
     }
-    
-    /**
-     * TODO
-     */
+
     inline bool push(void * const data) {
-        if (!data) return false;
+        assert(data != NULL);
         Node * n = allocnode();
         n->data = data; n->next = NULL;
         WMB();
@@ -189,15 +172,12 @@ public:
         return true;
     }
 
-    /**
-     * TODO
-     */
-    inline bool  pop(void ** data) {        
-        if (!data) return false;
+    inline bool  pop(void ** data) {
+        assert(data != NULL);
 #if defined(STRONG_WAIT_FREE)
         if (head == tail) return false;
 #else
-        if (head->next) 
+        if (head->next)
 #endif
         {
             Node * n = (Node *)head;
@@ -207,36 +187,34 @@ public:
             if (!cache.push(n)) ::free(n);
 #else
             ::free(n);
-#endif      
+#endif
             return true;
         }
         return false;
-    }    
+    }
 
-    /**
-     * TODO
-     */
+
     inline unsigned long length() const { return 0;}
 
-    /**
-     * MS 2-lock MPMC algorithm PUSH method 
+    /*
+     * MS 2-lock MPMC algorithm PUSH method
      */
     inline bool mp_push(void * const data) {
-        if (!data) return false;
+        assert(data != NULL);
         Node* n = mp_allocnode();
         n->data = data; n->next = NULL;
-        spin_lock(P_lock);
+        ff::spin_lock(P_lock);
         tail->next = n;
         tail       = n;
         spin_unlock(P_lock);
         return true;
     }
 
-    /**
-     * MS 2-lock MPMC algorithm POP method 
+    /*
+     * MS 2-lock MPMC algorithm POP method
      */
-    inline bool  mp_pop(void ** data) {        
-        if (!data) return false;
+    inline bool  mp_pop(void ** data) {
+        assert(data != NULL);
         spin_lock(C_lock);
         if (head->next) {
             Node * n = (Node *)head;
@@ -249,21 +227,12 @@ public:
         }
         spin_unlock(C_lock);
         return false;
-    }    
+    }
 };
 
 #else // _FF_DYNQUEUE_OPTIMIZATION
-/* 
+/*
  * Experimental code
- */
-
-/*!
- * \class dynqueue
- * \ingroup streaming_network_simple_shared_memory
- *
- * \brief TODO
- *
- * This class is defined in \ref dynqueue.hpp
  */
 
 class dynqueue {
@@ -285,20 +254,17 @@ private:
 
 private:
 
-    /**
-     * TODO
-     */
     inline bool cachepush(void * const data) {
-        
+
         if (!cache[pwrite]) {
-            /* Write Memory Barrier: ensure all previous memory write 
+            /* Write Memory Barrier: ensure all previous memory write
              * are visible to the other processors before any later
              * writes are executed.  This is an "expensive" memory fence
-             * operation needed in all the architectures with a weak-ordering 
-             * memory model where stores can be executed out-or-order 
+             * operation needed in all the architectures with a weak-ordering
+             * memory model where stores can be executed out-or-order
              * (e.g. Powerpc). This is a no-op on Intel x86/x86-64 CPUs.
              */
-            WMB(); 
+            WMB();
             cache[pwrite] = data;
             pwrite += (pwrite+1 >= cachesize) ? (1-cachesize): 1;
             return true;
@@ -306,27 +272,18 @@ private:
         return false;
     }
 
-    /**
-     * TODO
-     */
     inline bool  cachepop(void ** data) {
         if (!cache[pread]) return false;
-        
+
         *data = cache[pread];
         cache[pread]=NULL;
-        pread += (pread+1 >= cachesize) ? (1-cachesize): 1;    
+        pread += (pread+1 >= cachesize) ? (1-cachesize): 1;
         return true;
-    }    
-    
+    }
+
 public:
-    /**
-     * TODO
-     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
-    /**
-     * TODO
-     */
     dynqueue(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false):cachesize(cachesize) {
         Node * n = (Node *)::malloc(sizeof(Node));
         n->data = NULL; n->next = NULL;
@@ -346,9 +303,6 @@ public:
         }
     }
 
-    /**
-     * TODO
-     */
     ~dynqueue() {
         union { Node * n; void * n2; } p;
         while(cachepop(&p.n2)) free(p.n);
@@ -361,16 +315,13 @@ public:
         if (cache) freeAlignedMemory(cache);
     }
 
-    /**
-     * TODO
-     */
     inline bool push(void * const data) {
-        if (!data) return false;
+        assert(data != NULL);
 
         union { Node * n; void * n2; } p;
         if (!cachepop(&p.n2))
             p.n = (Node *)::malloc(sizeof(Node));
-        
+
         p.n->data = data; p.n->next = NULL;
         WMB();
         tail->next = p.n;
@@ -379,11 +330,8 @@ public:
         return true;
     }
 
-    /**
-     * TODO
-     */
     inline bool  pop(void ** data) {
-        if (!data) return false;
+        assert(data != NULL);
         if (head->next) {
             Node * n = (Node *)head;
             *data    = (head->next)->data;
@@ -393,15 +341,11 @@ public:
             return true;
         }
         return false;
-    }    
+    }
 };
 
 #endif // _FF_DYNQUEUE_OPTIMIZATION
 
-/*!
- * @}
- * \endlink
- */
 
 } // namespace
 

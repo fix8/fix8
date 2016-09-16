@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -45,9 +45,9 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace
 {
-	const string package_version { PACKAGE_NAME " version " PACKAGE_VERSION };
+	const string package_version { FIX8_PACKAGE_NAME " version " FIX8_PACKAGE_VERSION };
 	const string copyright_short { "Copyright (c) 2010-" };
-	const string copyright_short2 { ", David L. Dight <" PACKAGE_BUGREPORT ">, All rights reserved. [" PACKAGE_URL "]"};
+	const string copyright_short2 { ", David L. Dight <" FIX8_PACKAGE_BUGREPORT ">, All rights reserved. [" FIX8_PACKAGE_URL "]"};
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -73,11 +73,14 @@ const vector<f8String> Session::_state_names
 void SessionID::make_id()
 {
 	ostringstream ostr;
-	ostr << _beginString << ':' << _targetCompID << "->" << _senderCompID;
-	_rid = ostr.str();
-	ostr.str("");
 	ostr << _beginString << ':' << _senderCompID << "->" << _targetCompID;
 	_id = ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+SessionID SessionID::make_reverse_id() const
+{
+	return SessionID(_beginString(), _targetCompID(), _senderCompID());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,13 +103,14 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+_state(States::st_none),
+_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 
 	if (!_logger)
 	{
@@ -126,19 +130,20 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+_state(States::st_none),
+_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
 void Session::atomic_init(States::SessionStates st)
 {
-	state_change(States::st_none, _state = st);
+	do_state_change(st);
 	_next_send_seq = _next_receive_seq = 1;
 	_active = true;
 }
@@ -262,7 +267,7 @@ void Session::update_persist_seqnums()
 {
 	if (_persist)
 	{
-		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+		f8_scoped_spin_lock guard(_per_spl, _connection && _connection->get_pmodel() == pm_coro);
 		_persist->put(_next_send_seq, _next_receive_seq);
 		//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 	}
@@ -272,6 +277,7 @@ void Session::update_persist_seqnums()
 bool Session::process(const f8String& from)
 {
 	unsigned seqnum(0);
+	bool remote_logged_out {};
 	const Message *msg = nullptr;
 
 	try
@@ -332,6 +338,7 @@ application_call:
 			break;
 		case Common_MsgByte_LOGOUT:
 			result = handle_logout(seqnum, msg);
+			remote_logged_out = true;
 			break;
 		case Common_MsgByte_LOGON:
 			result = handle_logon(seqnum, msg);
@@ -343,6 +350,12 @@ application_call:
 			plog(from, Logger::Info, 1);
 
 		update_persist_seqnums();
+
+		if (remote_logged_out) // FX-615; permit logout seqnum to be persisted
+		{
+			slout_debug << "logout received from remote";
+			stop();
+		}
 
 		delete msg;
 		return result && admin_result;
@@ -357,19 +370,29 @@ application_call:
 
 		if (e.force_logoff())
 		{
+			if (_plogger && _plogger->has_flag(Logger::inbound))
+				plog(from, Logger::Info, 1);
 			slout_fatal << e.what() << " - will logoff";
 			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
+				do_state_change(States::st_session_terminated);
 				send(generate_logout(e.what()), true, 0, true); // so it won't increment
 				do_state_change(States::st_logoff_sent);
+			}
+			if (_loginParameters._reliable)
+			{
+				slout_debug << "rethrowing ...";
+				throw;
 			}
 			stop();
 		}
 		else
 		{
-			slout_error << e.what() << " - message rejected";
-			send(generate_reject(seqnum, e.what(), msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
+			slout_error << e.what() << " - inbound message rejected";
+			handle_outbound_reject(seqnum, msg, e.what());
 			++_next_receive_seq;
+			if (_plogger && _plogger->has_flag(Logger::inbound))
+				plog(from, Logger::Info, 1);
 			delete msg;
 			return true; // message is handled but has errors
 		}
@@ -446,6 +469,11 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
+	if (_state == States::st_continuous)
+	{
+		send(generate_reject(seqnum, "Already logged on"), msg->get_msgtype().c_str());
+		return true;
+	}
 	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
 	sender_comp_id sci; // so this should be our tci
@@ -468,11 +496,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		}
 
 		enforce(seqnum, msg);
-		heartbeat_interval hbi;
-		msg->get(hbi);
-		_connection->set_hb_interval(hbi());
 		do_state_change(States::st_continuous);
-		slout_info << "Client setting heartbeat interval to " << hbi();
 	}
 	else // acceptor
 	{
@@ -571,8 +595,12 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		{
 			_sid = id;
 			enforce(seqnum, msg);
-			send(generate_logon(_connection->get_hb_interval(), davi()));
+			heartbeat_interval hbi;
+			msg->get(hbi);
+			_connection->set_hb_interval(hbi());
+			send(generate_logon(hbi(), davi()));
 			do_state_change(States::st_continuous);
+			slout_info << "Client setting heartbeat interval to " << hbi();
 		}
 		else
 		{
@@ -606,7 +634,7 @@ bool Session::handle_logout(const unsigned seqnum, const Message *msg)
 	//if (_state != States::st_logoff_sent)
 	//	send(generate_logout());
 	slout_info << "peer has logged out";
-	stop();
+	// stop(); // FX-615
 	return true;
 }
 
@@ -641,10 +669,24 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		begin_seq_num begin;
 		end_seq_num end;
 
-		if (!_persist || !msg->get(begin) || !msg->get(end))
-			send(generate_sequence_reset(_next_send_seq + 1, true));
-		else if ((begin() > end() && end()) || begin() == 0)
-			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"), msg->get_msgtype().c_str());
+		if (!msg->get(begin))
+		{
+			slout_warn << "handle_resend_request: can't obtain BeginSeqNo from request";
+		}
+		if (!msg->get(end))
+		{
+			slout_warn << "handle_resend_request: can't obtain EndSeqNo from request";
+		}
+
+		if ((begin() > end() && end()) || begin() == 0)
+			handle_outbound_reject(seqnum, msg, "Invalid resend range: Begin > End or Begin = 0");
+		else if (!_persist)
+		{
+			const int nxt(static_cast<int>(_next_send_seq)), nseq(begin() >= nxt ? begin() + 1 : nxt);
+			send(generate_sequence_reset(nseq, true), true, begin());
+			_next_send_seq = nseq;
+			slout_debug << "handle_resend_request scenario #" << (nseq == nxt ? 7 : 8);
+		}
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
@@ -652,6 +694,10 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 			//f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // no no nanette!
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
+	}
+	else
+	{
+		slout_warn << "resend request received during an existing resend sequence";
 	}
 
 	return true;
@@ -664,6 +710,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 
 	if (rctx._no_more_records)
 	{
+		/*
 		if (rctx._end)
 		{
 			_next_send_seq = rctx._interrupted_seqnum - 1;
@@ -676,6 +723,23 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 			send(generate_sequence_reset(rctx._interrupted_seqnum, true), true, rctx._begin);
 			//cout << "#4" << endl;
 		}
+		*/
+		if (!rctx._last) // start to infinity requested
+		{
+			// handle case where requested seq is greater than current last sent seq (interrupted)
+			const unsigned nseq(rctx._begin >= rctx._interrupted_seqnum ? rctx._begin + 1 : rctx._interrupted_seqnum);
+			send(generate_sequence_reset(nseq, true), true, rctx._begin);
+			_next_send_seq = nseq;
+			slout_debug << "retrans_callback scenario #" << (nseq == rctx._interrupted_seqnum ? 4 : 5) << ' ' << rctx;
+		}
+		else // range requested // was: if (rctx._end)
+		{
+			// handle case where requested seq is greater than current last sent seq (interrupted)
+			const unsigned nseq(rctx._last + 1 >= rctx._interrupted_seqnum ? rctx._last + 2 : rctx._interrupted_seqnum);
+			send(generate_sequence_reset(nseq, true), true, rctx._last + 1);
+			_next_send_seq = nseq;
+			slout_debug << "retrans_callback scenario #" << (nseq == rctx._interrupted_seqnum ? 1 : 6) << ' ' << rctx;
+		}
 		do_state_change(States::st_continuous);
 		return true;
 	}
@@ -685,7 +749,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (rctx._last + 1 < with.first)
 		{
 			send(generate_sequence_reset(with.first, true), true, _next_send_seq);
-			//cout << "#2" << endl;
+			slout_debug << "retrans_callback scenario #2, " << rctx;
 		}
 	}
 	else
@@ -693,7 +757,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (with.first > rctx._begin)
 		{
 			send(generate_sequence_reset(with.first, true));
-			//cout << "#3" << endl;
+			slout_debug << "retrans_callback scenario #3, " << rctx;
 		}
 	}
 
@@ -714,6 +778,11 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 	return true;
 }
 
+//-------------------------------------------------------------------------------------------------
+bool Session::handle_outbound_reject(const unsigned seqnum, const Message *msg, const char *errstr)
+{
+	return send(generate_reject(seqnum, errstr, msg && !msg->get_msgtype().empty() ? msg->get_msgtype().c_str() : nullptr));
+}
 
 //-------------------------------------------------------------------------------------------------
 bool Session::activation_service()	// called on the timer threead
@@ -931,6 +1000,12 @@ size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 }
 
 //-------------------------------------------------------------------------------------------------
+int Session::modify_header(MessageBase *msg)
+{
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
 	//cout << "send_process()" << endl;
@@ -973,11 +1048,18 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	}
 	*msg->Header() << new sending_time;
 
+	// allow session to modify the header of this message before sending
+	const int fields_modified(modify_header(msg->Header()));
+	if (fields_modified)
+	{
+		slout_debug << "send_process: " << fields_modified << " header fields added/modified";
+	}
+
 	try
 	{
 		slout_debug << "Sending:" << *msg;
 		modify_outbound(msg);
-		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		char output[FIX8_MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		size_t enclen(msg->encode(&ptr));
 		const char *optr(ptr);
 		if (msg->get_end_of_batch())
@@ -995,43 +1077,32 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 				return false;
 			}
 			_last_sent.now();
-
-			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(optr, Logger::Info);
-
-			//cout << "send_process" << endl;
-
-			if (!is_dup)
-			{
-				if (_persist)
-				{
-					f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
-					if (!msg->is_admin())
-						_persist->put(_next_send_seq, ptr);
-					_persist->put(_next_send_seq + 1, _next_receive_seq);
-					//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
-				}
-				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
-				{
-					++_next_send_seq;
-					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
-				}
-			}
 			_batchmsgs_buffer.clear();
 		}
 		else
 		{
 			_batchmsgs_buffer.append(ptr);
-			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(ptr, Logger::Info);
+		}
 
-			if (!is_dup)
+		if (_plogger && _plogger->has_flag(Logger::outbound))
+			plog(optr, Logger::Info);
+
+		//cout << "send_process" << endl;
+
+		if (!is_dup)
+		{
+			if (_persist)
 			{
-				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
-				{
-					++_next_send_seq;
-					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
-				}
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
+				if (!msg->is_admin())
+					_persist->put(_next_send_seq, ptr);
+				_persist->put(_next_send_seq + 1, _next_receive_seq);
+				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+			}
+			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+			{
+				++_next_send_seq;
+				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
 			}
 		}
 	}
@@ -1066,7 +1137,7 @@ void Session::recover_seqnums()
 }
 
 //-------------------------------------------------------------------------------------------------
-#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+#if (FIX8_THREAD_SYSTEM == FIX8_THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 f8String Session::get_thread_policy_string(thread_id_t id)
 {
    int policy;
@@ -1150,7 +1221,7 @@ const f8String Session::copyright_string()
 
 
 //-------------------------------------------------------------------------------------------------
-#ifdef HAVE_OPENSSL
+#ifdef FIX8_HAVE_OPENSSL
 void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
 {
    const Poco::Net::X509Certificate& cert(errorCert.certificate());
@@ -1168,7 +1239,7 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 	glout_warn << "warning: privatekey passphrase requested and ignored!";
 }
 
-#endif // HAVE_OPENSSL
+#endif // FIX8_HAVE_OPENSSL
 //-------------------------------------------------------------------------------------------------
 #if defined(_MSC_VER)
 #pragma warning(pop)

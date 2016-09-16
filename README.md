@@ -8,7 +8,7 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
-[Fix8 Market Tech](http://www.fix8mt.com/) develops and maintains Fix8 and [Fix8Pro](http://www.fix8pro.com), the commercially supported version of Fix8.
+[Fix8 Market Tech](http://www.fix8mt.com/) develops and maintains Fix8 and [Fix8Pro](http://www.fix8mt.com), the commercially supported version of Fix8.
 
 ## Contents
 
@@ -80,6 +80,10 @@ and framework; and a set of complete client/server test applications.
           <tr>
              <td><code>compiler/</code></td>
              <td>the f8c compiler source</td>
+          </tr>
+          <tr>
+             <td><code>contrib/</code></td>
+             <td>user contributed files</td>
           </tr>
           <tr>
              <td><code>doc/</code></td>
@@ -229,8 +233,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.3.2.tar.gz
-	% cd fix8-1.3.2
+	% tar xvzf 1.4.0.tar.gz
+	% cd fix8-1.4.0
 	% ./bootstrap
 	% ./configure
 	% make
@@ -244,8 +248,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.3.2.tar.gz
-	% cd fix8-1.3.2
+	% tar xvzf 1.4.0.tar.gz
+	% cd fix8-1.4.0
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
@@ -262,12 +266,13 @@ Please see [this document](https://fix8engine.atlassian.net/wiki/x/EICW) for det
 
 Please refer to the following pages for help:
 - [FAQ](http://fix8.org/faq.html)
-- [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support)
-- [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer)
+- [Fix8 Support Group](https://groups.google.com/forum/#!forum/fix8-support)
+- [Fix8 Developer Group](https://groups.google.com/forum/#!forum/fix8-developer)
 - [API Documentation](http://fix8.org/fix8/html)
-- [Jira Issues page](https://fix8engine.atlassian.net/)
+- [Jira Issues Page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
 - [Wiki](https://fix8engine.atlassian.net/wiki)
+- [Twitter](https://twitter.com/fix8engine)
 
 ## Downloads
 
@@ -276,24 +281,28 @@ Please refer to the following page:
 
 ## Getting help or reporting problems
 
-- Review the topics on the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
-the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
+1. Review the topics on the **[Fix8 Support Group](https://groups.google.com/forum/#!forum/fix8-support)** and
+the **[Fix8 Developer Group](https://groups.google.com/forum/#!forum/fix8-developer)**.
 If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- Please refrain from emailing us directly. **Support questions sent directly to us will be redirected to the support group.**
+1. *Do not* email us directly. **Support questions sent directly to us will be redirected to the support group.**
 
-- If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
-register and create an issue.** Provide *as much detail as possible*. Attach supporting files and extracts, like logfiles, stack traces,
-sample configuruation files, config.log, etc.
+1. *Do not* post the same question to both fix8-support and fix8-developer groups.
 
-- If you have already implemented a fix, and wish to make a pull request on Github please create an issue in Jira first.
+1. If you are considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
+These aren't the same thing. So, for example, if your application is crashing, there are many possible causes and some will relate
+to your build, your code and your configuration and will *not be a problem with the framework implementation*. Make sure you have eliminated
+these possibilities and that you have reviewed topics in the [Fix8 Support Group](https://groups.google.com/forum/#!forum/fix8-support) and
+the [Fix8 Developer Group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
+
+1. If you believe you have found a problem that needs fixing, **go to the [Jira Issues Page](https://fix8engine.atlassian.net/),
+register and create an issue.** Select 'fix8' as the project and provide *as much detail as possible*. Attach supporting files and extracts, like logfiles,
+stack traces, sample configuruation files, config.log, etc.
+
+1. If you have already implemented a fix, and wish to make a pull request on Github, *create an issue in Jira first*.
 This will help us track the problem and ensure that the solution is properly tested.
 
-- When considering submitting a problem report, make sure you have identified a **potential problem with Fix8 and not a problem with your application**.
-These aren't necessarily the same thing. For example if your application is crashing, there are many possible causes and some will relate
-to your build, your code and your configuration and will not be a problem with the framework implementation. Make sure you have eliminated
-these possibilities and that you have reviewed topics in the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
-the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer) *before* submitting a problem report.
+Also, consider the following:
 
 - We also provide commercial support and help. See [below](#fix8pro-and-fix8-market-technologies).
 
@@ -306,6 +315,7 @@ for more help and information about the Fix8 project.
 
 If you want to submit a change to the repository, it needs to be *made on the dev branch*. The following instructions may help:
 
+1. Login to Jira, create a ticket for your changes, describing in detail the bug fix or improvement
 1. Login to github
 1. Create a fork of fix8
 1. If you are using the command line git, clone your fork and choose the dev branch<br><code>% git clone https://github.com/[your_repo_name]/fix8.git -b dev</code>
@@ -322,11 +332,13 @@ See [License](http://fix8.org/faq.html#license) for more information.
 
 ## Fix8Pro and Fix8 Market Technologies
 
-[Fix8Pro](http://www.fix8pro.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
+[Fix8Pro](http://www.fix8mt.com) is the commercially supported version of Fix8. [Fix8 Market Technologies](http://www.fix8mt.com/)
 (Fix8MT) develops and maintains both Fix8Pro and the Fix8 open source versions.
 Fix8MT has developers in Australia, China, Canada and the Russian Federation as well as partners in Australia, Japan and India.
 Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
 Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
+
+For more information about Fix8Pro see the [Fix8Pro website.](http://www.fix8mt.com)
 
 ## More Information
 

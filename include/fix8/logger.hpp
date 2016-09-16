@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -478,7 +478,7 @@ class SingleLogger
 	{
 		static FileLogger _fl(fn, Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::thread
 				<< Logger::level << Logger::location
-#if defined BUFFERED_GLOBAL_LOGGING
+#if defined FIX8_BUFFERED_GLOBAL_LOGGING
 			<< Logger::buffer
 #endif
 			,Logger::Levels(Logger::All));
@@ -607,11 +607,11 @@ using GlobalLogger = SingleLogger<glob_log0>;
 	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Error, FILE_LINE)
 #define glout_fatal if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Fatal)); \
 	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Fatal, FILE_LINE)
-#if defined F8_DEBUG
+#if defined FIX8_DEBUG
 #define glout_debug if (!FIX8::GlobalLogger::is_loggable(FIX8::Logger::Debug)); \
 	else FIX8::log_stream(FIX8::logger_function(FIX8::GlobalLogger::enqueue), FIX8::Logger::Debug, FILE_LINE)
 #else
 #define glout_debug true ? FIX8::null_insert() : FIX8::null_insert()
 #endif
 
-#endif // _FIX8_LOGGER_HPP_
+#endif // FIX8_LOGGER_HPP_

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -37,7 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
-#if defined HAVE_LIBHIREDIS
+#if defined FIX8_HAVE_LIBHIREDIS
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
@@ -332,5 +332,5 @@ unsigned HiredisPersister::find_nearest_highest_seqnum (const unsigned requested
 	return 0;
 }
 
-#endif // HAVE_LIBHIREDIS
+#endif // FIX8_HAVE_LIBHIREDIS
 

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -38,7 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_ZEROMQ_MBUS_
 
 //-------------------------------------------------------------------------------------------------
-#if defined HAS_ZEROMQ_MBUS
+#if defined FIX8_HAS_ZEROMQ_MBUS
 #include <zmq.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -111,5 +111,5 @@ public:
 } // MBUS
 } // FIX8
 
-#endif // HAS_ZEROMQ_MBUS
+#endif // FIX8_HAS_ZEROMQ_MBUS
 #endif // FIX8_ZEROMQ_MBUS_

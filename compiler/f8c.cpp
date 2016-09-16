@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-15 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -81,7 +81,7 @@ e.g.\n
 #include <fix8/f8includes.hpp>
 #include <f8c.hpp>
 
-#ifdef HAVE_GETOPT_H
+#ifdef FIX8_HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 
@@ -96,10 +96,10 @@ const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
-     incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false);
+     incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false), report_unused(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SD");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SDu");
 extern string spacer, shortName, precompHdr;
 
 //-----------------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 	bool dump(false), keep_failed(false), retain_precomp(false), second_only(false), nounique(false);
 	Ctxt ctxt;
 
-#ifdef HAVE_GETOPT_LONG
+#ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
@@ -167,6 +167,7 @@ int main(int argc, char **argv)
 		{ "nocheck",		0,	0,	'C' },
 		{ "noconst",		0,	0,	'U' },
 		{ "info",		   0,	0,	'I' },
+		{ "unused",		   0,	0,	'u' },
 		{ "fields",			0,	0,	'f' },
 		{ "xfields",		1,	0,	'F' },
 		{ "keep",			0,	0,	'k' },
@@ -204,6 +205,7 @@ int main(int argc, char **argv)
 		case 'R': norealm = true; break;
 		case 'C': nocheck = true; break;
 		case 'U': nconst_router = true; break;
+		case 'u': report_unused = true; break;
 		case 'c': gen_classes = optarg; break;
 		case 'F': extra_fields = optarg; break;
 		case 'h': print_usage(); return 0;
@@ -218,7 +220,7 @@ int main(int argc, char **argv)
 		case 's': second_only = true; break;
 		case 'S': no_shared_groups = true; break;
 		case 'D': no_default_routers = true; break;
-		case 't': tabsize = get_value<unsigned>(optarg); break;
+		case 't': tabsize = stoul(optarg); break;
 		case 'p': prefix = optarg; break;
 		case 'H': precompHdr = optarg; break;
 		case 'b': binary_report(); return 0;
@@ -328,6 +330,12 @@ int main(int argc, char **argv)
 
 	if (load_fix_version (*cfr, ctxt) < 0)
 		return 1;
+   if (ctxt._beginstr.compare(0, 4, "FIX.") == 0 && ctxt._version >= 5000)
+   {
+      cerr << "Error: " << ctxt._beginstr << " requires an additional FIXT schema specification." << endl;
+      return 1;
+   }
+
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
 	{
 		ctxt._out[ii].first.second = prefix + ctxt._exts[ii] + ctxt._exts_ver[ext_ver];
@@ -466,11 +474,21 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			FieldTrait::FieldType ft(bmitr == FieldSpec::_baseTypeMap.end() ? FieldTrait::ft_untyped : bmitr->second);
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
-				result = fspec.insert({get_value<unsigned>(number), FieldSpec(name, ft)});
-			else
-			{
-            if (!nowarn)
-               cerr << shortName << ':' << recover_line(*pp) << ": warning: Unknown field type: " << type << " in " << name << endl;
+         {
+				try
+            {
+					result = fspec.insert({stoul(number), FieldSpec(name, ft)});
+				}
+            catch (exception& e)
+            {
+					cerr << shortName << ':' << recover_line(*pp) << ": error: Failed to convert (stoul) number " << number << " in " << name << endl;
+					++glob_errors;
+				}
+			}
+         else
+         {
+				if (!nowarn)
+					cerr << shortName << ':' << recover_line(*pp) << ": warning: Unknown field type: " << type << " in " << name << endl;
 				++glob_warnings;
 				continue;
 			}
@@ -807,14 +825,14 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
             outh << endl;
             for (const auto& qq : tgroup->_groups)
                outh << d2spacer << spacer << spacer << spacer << "{ " << qq.first << ", new " << qq.second._name << " }," << endl;
-            outh << d2spacer << spacer << "});" << endl;
+            outh << d2spacer << spacer << spacer << "});" << endl;
          }
 
 			outh << d2spacer << spacer << "return mb;" << endl;
 			outh << d2spacer << '}' << endl;
 		}
 		outh << endl << d2spacer << "static const " << msname << "& get_msgtype() { return _msgtype; }" << endl;
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
       outh << d2spacer << "static const FieldTrait *get_traits() { return _traits; };" << endl;
       outh << d2spacer << "static const unsigned get_fieldcnt() { return _fieldcnt; };" << endl;
 #endif
@@ -859,7 +877,7 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
       outp << '{' << setw(4) << right << flitr->_fnum << ',' << setw(2)
          << right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
          ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
       if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
       {
          outp << ", " << endl << spacer << spacer;
@@ -881,7 +899,7 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
    }
    else
       outp << "const FieldTrait_Hash_Array " << endl << spacer << prefix << gname
-         << "::_ftha(" << prefix << gname << "::_traits, " << ms._fields.get_presence().size() << ");" << endl;
+         << "::_ftha(" << prefix << gname << "::_traits, " << gname << "::_fieldcnt);" << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1027,7 +1045,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
       generate_common_group_bodies(fspec, osr_cpp, globmap);
       osr_cpp << "} // namespace" << endl << endl;
    }
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
    else
    {
       osr_cpp << "//" << endl;
@@ -1079,7 +1097,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				osr_cpp << '{' << setw(4) << right << flitr->_fnum << ','
 					<< setw(2) << right << flitr->_ftype << ',' << setw(3) << right
 					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
             if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
             {
                osr_cpp << ", " << endl << spacer << spacer;
@@ -1094,7 +1112,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
-				<< pp.second._fields.get_presence().size() << ");" << endl;
+            << pp.second._name << "::_fieldcnt);" << endl;
 			osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
             osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
             osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;
@@ -1158,7 +1176,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		}
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << "& get_msgtype() { return _msgtype; }" << endl;
-#if defined HAVE_EXTENDED_METADATA
+#if defined FIX8_HAVE_EXTENDED_METADATA
       osc_hpp << spacer << "static const FieldTrait *get_traits() { return _traits; };" << endl;
       osc_hpp << spacer << "static const unsigned get_fieldcnt() { return _fieldcnt; };" << endl;
 #endif
@@ -1457,10 +1475,22 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	if (verbose)
 	{
-		unsigned cnt(0);
+		unsigned cnt(0), ucnt(0);
 		for (const auto& pp : fspec)
+      {
 			if (pp.second._used)
 				++cnt;
+         else if (report_unused)
+         {
+            if (ucnt++)
+               cout << ',';
+            else
+               cout << "Unused fields: ";
+            cout << pp.second._name << '(' << pp.first << ')';
+         }
+      }
+      if (report_unused && ucnt)
+         cout << endl;
 		cout << cnt << " of " << fspec.size() << " fields used in messages" << endl;
 	}
 
@@ -1557,8 +1587,8 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)
 	{
-		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
+		to << "#if defined FIX8_MAGIC_NUM && FIX8_MAGIC_NUM > " << FIX8_MAGIC_NUM << 'L' << endl;
+		to << "#error " << fname << " version " << FIX8_PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
 		to << "#endif" << endl;
 	}
 	to << _csMap.find(cs_divider)->second << endl;
