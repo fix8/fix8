@@ -676,7 +676,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="traits_8hpp_source.html#l00490">FIX8::FieldTraits::get()</a>, <a class="el" href="logger_8hpp_source.html#l00614">glout_debug</a>, <a class="el" href="traits_8hpp_source.html#l00078">FIX8::FieldTrait::present</a>, <a class="el" href="message_8cpp_source.html#l00580">replace()</a>, and <a class="el" href="traits_8hpp_source.html#l00524">FIX8::FieldTraits::set()</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00621">add_field()</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l36788">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l40075">FIX8::TEX::trailer::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00256">copy_legal()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00301">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8cpp_source.html#l00296">move_legal()</a>, <a class="el" href="message_8hpp_source.html#l00657">operator+=()</a>, and <a class="el" href="message_8hpp_source.html#l00664">operator&lt;&lt;()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00621">add_field()</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l36788">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l40075">FIX8::TEX::trailer::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00256">copy_legal()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00324">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8cpp_source.html#l00296">move_legal()</a>, <a class="el" href="message_8hpp_source.html#l00657">operator+=()</a>, and <a class="el" href="message_8hpp_source.html#l00664">operator&lt;&lt;()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   {</div>
 <div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;      <span class="keywordflow">if</span> (check &amp;&amp; <a class="code" href="classFIX8_1_1MessageBase.html#a431cb6682a191a0031729a2bcee83ad6">_fp</a>.<a class="code" href="classFIX8_1_1FieldTraits.html#a4f46e2039cd035b47e76ba4b9532f073">get</a>(fnum, itr, <a class="code" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a991edcb48aed0a81994bee0ba128e1bc">FieldTrait::present</a>)) <span class="comment">// for now, silently replace duplicate</span></div>
 <div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;      {</div>
@@ -2534,7 +2534,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00792">find_group()</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00256">copy_legal()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00301">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8hpp_source.html#l00792">find_group()</a>, <a class="el" href="myfix_8cpp_source.html#l00527">MyMenu::generate_new_order_single()</a>, and <a class="el" href="message_8cpp_source.html#l00296">move_legal()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00256">copy_legal()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00324">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8hpp_source.html#l00792">find_group()</a>, <a class="el" href="myfix_8cpp_source.html#l00527">MyMenu::generate_new_order_single()</a>, and <a class="el" href="message_8cpp_source.html#l00296">move_legal()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>(T::_fnum); }</div>
 <div class="ttc" id="classFIX8_1_1MessageBase_html_a223669d4050b4c6c4003caf9cff32223"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">FIX8::MessageBase::find_group</a></div><div class="ttdeci">GroupBase * find_group() const </div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00792">message.hpp:792</a></div></div>
 </div><!-- fragment -->
@@ -2863,7 +2863,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00388">_fp</a>.</p>
 
-<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00301">FIX8::ConsoleMenu::EditMsg()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00101">FIX8::ConsoleMenu::SelectField()</a>.</p>
+<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00324">FIX8::ConsoleMenu::EditMsg()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00101">FIX8::ConsoleMenu::SelectField()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MessageBase.html#a431cb6682a191a0031729a2bcee83ad6">_fp</a>; }</div>
 <div class="ttc" id="classFIX8_1_1MessageBase_html_a431cb6682a191a0031729a2bcee83ad6"><div class="ttname"><a href="classFIX8_1_1MessageBase.html#a431cb6682a191a0031729a2bcee83ad6">FIX8::MessageBase::_fp</a></div><div class="ttdeci">FieldTraits _fp</div><div class="ttdef"><b>Definition:</b> <a href="message_8hpp_source.html#l00388">message.hpp:388</a></div></div>
 </div><!-- fragment -->
@@ -4594,7 +4594,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 23 2015 16:50:36. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Sep 10 2015 11:51:48. Copyright &copy; 2010-15, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

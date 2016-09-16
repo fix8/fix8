@@ -1,5 +1,6 @@
 var NAVTREEINDEX103 =
 {
+"structFIX8_1_1BadCheckSum.html":[3,0,0,6],
 "structFIX8_1_1BadCheckSum.html#ac3ece7d40604a08ff612f53560a5dcfa":[3,0,0,6,1],
 "structFIX8_1_1BadCheckSum.html#afde572c8b7dea2b4e7484f388d6923d5":[3,0,0,6,0],
 "structFIX8_1_1BadCompidId.html":[3,0,0,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX103 =
 "structFIX8_1_1MessageSpec.html#a64c20a8e2fe1e241fc23ec7b3dd5bad0":[3,0,0,92,1],
 "structFIX8_1_1MessageSpec.html#a7064587282c02f7f18834900d2914df5":[3,0,0,92,6],
 "structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145":[3,0,0,92,7],
-"structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440":[3,0,0,92,5],
-"structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6":[3,0,0,92,3]
+"structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440":[3,0,0,92,5]
 };

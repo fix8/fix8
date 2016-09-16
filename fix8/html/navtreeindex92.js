@@ -1,5 +1,6 @@
 var NAVTREEINDEX92 =
 {
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a11abcd1dbec14b25721635a119294836":[3,0,0,1,109,7,15],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a1aa68802b99e606201bead8dae44d8a5":[3,0,0,1,109,7,16],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a228bf0c9f001e4ff92d28f22ec26f7b5":[3,0,0,1,109,7,14],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a2b0613426bef51dbfcc06c75eb46ed3baf7291dd9d8636d680622a5d6fbb213d4":[3,0,0,1,109,7,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX92 =
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#ad0399873c4bea2220a7df3fa20077fea":[3,0,0,1,111,0,9],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#ad1b6fc06a8da09ecca9b1c71fdf13f90":[3,0,0,1,111,0,4],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html":[3,0,0,1,111,0,0],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a285e770dc9b0fe08e06e89f5b4580094":[3,0,0,1,111,0,0,5],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a51fe8840601f9bcadd8ef41ac75bb6ed":[3,0,0,1,111,0,0,2]
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a285e770dc9b0fe08e06e89f5b4580094":[3,0,0,1,111,0,0,5]
 };

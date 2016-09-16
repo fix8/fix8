@@ -270,7 +270,7 @@ var searchData=
   ['select',['select',['../classFIX8_1_1ServerManager.html#a037c67199973216cbb3f083f25cf61d3',1,'FIX8::ServerManager']]],
   ['select_5fl',['select_l',['../classFIX8_1_1ServerManager.html#a86f1e11ea4fe07edca695538046c5209',1,'FIX8::ServerManager']]],
   ['selectfield',['SelectField',['../classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f',1,'FIX8::ConsoleMenu']]],
-  ['selectfrommsg',['SelectFromMsg',['../classFIX8_1_1ConsoleMenu.html#a20384bd6310b1a907449579ec0df8abd',1,'FIX8::ConsoleMenu']]],
+  ['selectfrommsg',['SelectFromMsg',['../classFIX8_1_1ConsoleMenu.html#a01b3ecd5be9be1365a7c91356741a8e4',1,'FIX8::ConsoleMenu']]],
   ['selectmsg',['SelectMsg',['../classFIX8_1_1ConsoleMenu.html#ac66df1e977b51e2e3dcb831250ab2588',1,'FIX8::ConsoleMenu']]],
   ['selectrealm',['SelectRealm',['../classFIX8_1_1ConsoleMenu.html#a4ae3d8ee9fe65df88792bcacdd375508',1,'FIX8::ConsoleMenu']]],
   ['send',['send',['../classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5',1,'FIX8::FIXWriter::send()'],['../classFIX8_1_1Connection.html#a54605d1259a21986a24bdf3d7f126320',1,'FIX8::Connection::send(const char *from, size_t sz)'],['../classFIX8_1_1Connection.html#abfff6f1008357a229125ded4b3946b47',1,'FIX8::Connection::send(const f8String &amp;from)'],['../classFIX8_1_1Logger.html#afd50a921d32a2531a43eb98031228453',1,'FIX8::Logger::send()'],['../classFIX8_1_1Session.html#a6c47fc8e186e75cd09a123976015f441',1,'FIX8::Session::send(Message *msg, bool destroy=true, const unsigned custom_seqnum=0, const bool no_increment=false)'],['../classFIX8_1_1Session.html#a1ded421a889dc803217d4272c97fa8d5',1,'FIX8::Session::send(Message &amp;msg, const unsigned custom_seqnum=0, const bool no_increment=false)']]],

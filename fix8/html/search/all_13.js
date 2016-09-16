@@ -401,7 +401,7 @@ var searchData=
   ['tradsesstatusrejreason_5funknown_5for_5finvalid_5ftradingsessionid',['TradSesStatusRejReason_UNKNOWN_OR_INVALID_TRADINGSESSIONID',['../namespaceFIX8_1_1TEX.html#a5119ae43e628f6debe7f6c5b60b8eacc',1,'FIX8::TEX']]],
   ['tradsesupdateaction',['TradSesUpdateAction',['../namespaceFIX8_1_1TEX.html#a57245763e61257ebd9f3eeec277c583a',1,'FIX8::TEX']]],
   ['trailer',['trailer',['../classFIX8_1_1TEX_1_1trailer.html',1,'FIX8::TEX']]],
-  ['trailer',['Trailer',['../classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb',1,'FIX8::Message::Trailer() const '],['../classFIX8_1_1Message.html#acb044caad6391190fbb11dac57a0b7bb',1,'FIX8::Message::Trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#ab75384481921389253557a5ef5c4d981',1,'FIX8::TEX::trailer::trailer(bool deepctor=true)'],['../classFIX8_1_1TEX_1_1trailer.html#ab75384481921389253557a5ef5c4d981',1,'FIX8::TEX::trailer::trailer(bool deepctor=true)']]],
+  ['trailer',['trailer',['../classFIX8_1_1TEX_1_1trailer.html#ab75384481921389253557a5ef5c4d981',1,'FIX8::TEX::trailer::trailer(bool deepctor=true)'],['../classFIX8_1_1TEX_1_1trailer.html#ab75384481921389253557a5ef5c4d981',1,'FIX8::TEX::trailer::trailer(bool deepctor=true)'],['../classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb',1,'FIX8::Message::Trailer() const '],['../classFIX8_1_1Message.html#acb044caad6391190fbb11dac57a0b7bb',1,'FIX8::Message::Trailer()']]],
   ['traits_2ecpp',['traits.cpp',['../traits_8cpp.html',1,'']]],
   ['traits_2ehpp',['traits.hpp',['../traits_8hpp.html',1,'']]],
   ['traits_5fcpp',['traits_cpp',['../structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66a1087c19ce1c2db219588851961e3d940',1,'FIX8::Ctxt']]],

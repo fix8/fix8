@@ -1,5 +1,6 @@
 var NAVTREEINDEX32 =
 {
+"classFIX8_1_1TEX_1_1AssignmentReport_1_1NoInstrumentParties.html#aff13c81b7ae0d9e760881868e50cf846":[3,0,0,1,10,2,7],
 "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html":[3,0,0,1,10,2,0],
 "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a01d9e224d0bf6d04396a12d3bc4e770e":[3,0,0,1,10,2,0,5],
 "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a021d6777707471cd1a1231277c868362":[3,0,0,1,10,2,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX32 =
 "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoComplexEvents_1_1NoComplexEventDates.html#afddfed5abc7512bf0b02b3eea214157aadc1b53c71cbd6c54242f0caa125216aa":[3,0,0,1,14,0,0,1],
 "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoComplexEvents_1_1NoComplexEventDates.html#aff5312204eda33daf26a4cb1b25494e0":[3,0,0,1,14,0,0,6],
 "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html":[3,0,0,1,14,0,0,0],
-"classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a021a7a09e986c91947f41c4bfa2f0795a5a11b0c60261b70e08f85a9576723cb5":[3,0,0,1,14,0,0,0,0],
-"classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a1bed614931cc5a068412094f9e58dd30":[3,0,0,1,14,0,0,0,6]
+"classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a021a7a09e986c91947f41c4bfa2f0795a5a11b0c60261b70e08f85a9576723cb5":[3,0,0,1,14,0,0,0,0]
 };

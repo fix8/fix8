@@ -1,5 +1,6 @@
 var NAVTREEINDEX54 =
 {
+"classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a40062cca0b0bf6be396d10301652d4cf":[3,0,0,1,49,5],
 "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a4cf37949401e78d1139fe4af4e778af7":[3,0,0,1,49,11],
 "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a54396a95794ec895b89854e51ee5a345":[3,0,0,1,49,8],
 "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#a84e285257f4849716c8ddff57176bd40":[3,0,0,1,49,10],
@@ -248,6 +249,5 @@ var NAVTREEINDEX54 =
 "classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoLegs_1_1NoLegSecurityAltID.html":[3,0,0,1,51,1,0,3,0],
 "classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a0cb081efe347a5562395126de89fc2d6":[3,0,0,1,51,1,0,3,0,6],
 "classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a1012a5b1c8aff970a7646a128744e597":[3,0,0,1,51,1,0,3,0,1],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a20d2219473aaec79100d9e1f9e14a99b":[3,0,0,1,51,1,0,3,0,3],
-"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a2dac7cfc46d71554dd0c730c348657d2":[3,0,0,1,51,1,0,3,0,5]
+"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a20d2219473aaec79100d9e1f9e14a99b":[3,0,0,1,51,1,0,3,0,3]
 };

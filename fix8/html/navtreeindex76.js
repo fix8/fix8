@@ -1,5 +1,6 @@
 var NAVTREEINDEX76 =
 {
+"classFIX8_1_1TEX_1_1QuoteResponse_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#afe51ab85fca136bb3fc6a7d90c334753":[3,0,0,1,80,8,2,0,3],
 "classFIX8_1_1TEX_1_1QuoteStatusReport.html":[3,0,0,1,81],
 "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a2e39f84353870ffa8aa481e3129a3fac":[3,0,0,1,81,16],
 "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a6fdcfddae07607b3c674ec0b061c2732":[3,0,0,1,81,12],
@@ -248,6 +249,5 @@ var NAVTREEINDEX76 =
 "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#ac3927de8b771228ae4d14433b9274658":[3,0,0,1,82,9],
 "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#ae11ef37f6bc01ba3a71917f5968842a9":[3,0,0,1,82,8],
 "classFIX8_1_1TEX_1_1QuoteStatusRequest.html#aeeb6a579db839092841bcde90b9e9baf":[3,0,0,1,82,10],
-"classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents.html":[3,0,0,1,82,0],
-"classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents.html#a1bb1008b1bfb7f1d5a6c53f335620b99":[3,0,0,1,82,0,10]
+"classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents.html":[3,0,0,1,82,0]
 };
