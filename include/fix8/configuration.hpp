@@ -93,7 +93,7 @@ class Configuration
 {
 	static RegExp _ipexp;
 
-	const XmlElement *_root, *_default;
+	const XmlElement *_root{}, *_default;
 	using ConfigMap = std::map<const std::string, const XmlElement *>;
 	std::vector<ConfigMap> _groups;
 	std::vector<const XmlElement *> _allsessions;
@@ -231,7 +231,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Configuration() {}
+	virtual ~Configuration() { delete _root; }
 
 	/*! Process the config file.
 	  \return the number of sessions processed (found) */
