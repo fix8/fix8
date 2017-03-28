@@ -343,3 +343,7 @@ For more information about Fix8Pro see the [Fix8Pro website.](http://www.fix8mt.
 ## More Information
 
 For more information, see the [Fix8 website.](http://www.fix8.org)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fix8/fix8/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
