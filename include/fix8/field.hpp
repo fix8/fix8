@@ -879,7 +879,7 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
    return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
 }
 
-enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
+enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms, _with_us, _time_with_us };
 
 /*! Format Tickval into a string.
   \param tickval input Tickval object
@@ -887,10 +887,12 @@ enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _s
   \param ind indicating whether need millisecond or not
 	_time_only, the format string will be "HH:MM:SS"
 	_time_with_ms, the format string will be "HH:MM:SS.mmm"
+	_time_with_us, the format string will be "HH:MM:SS.mmmuuu"
 	_short_date_only, the format string will be "YYYYMM"
 	_date_only, the format string will be "YYYYMMDD"
 	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
 	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
+	_with_us, the format string will be "YYYYMMDD-HH:MM:SS.mmmuuu"
   \return length of formatted string */
 inline size_t date_time_format(const Tickval& tickval, char *to, TimeIndicator ind)
 {
@@ -928,6 +930,13 @@ inline size_t date_time_format(const Tickval& tickval, char *to, TimeIndicator i
 		to += 3;
 	}
 
+	if (ind == _time_with_us || ind == _with_us)
+	{
+		*to++ = '.';
+		format0(tickval.usecs(), to, 6);
+		to += 6;
+	}
+
 	return to - start;
 }
 
@@ -942,6 +951,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 
 	Tickval::ticks result(Tickval::noticks);
 	int millisecond(0);
+	int microsecond(0);
 	tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
@@ -957,6 +967,11 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 	ptr += parse_decimal(ptr, 2, tms.tm_sec);
 	switch(len)
 	{
+	case 24: //_with_us: // 19981231-23:59:59.123456
+		parse_decimal(++ptr, 6, microsecond);
+		result = microsecond * Tickval::thousand; // drop through
+		result += time_to_epoch(tms) * Tickval::billion;
+		break;
 	case 21: //_with_ms: // 19981231-23:59:59.123
 		parse_decimal(++ptr, 3, millisecond);
 		result = millisecond * Tickval::million; // drop through
@@ -1129,7 +1144,8 @@ public:
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return date_time_format(_value, to, _with_ms); }
+	size_t print(char *to) const { return date_time_format(_value, to, _with_us); }
+	
 };
 
 //-------------------------------------------------------------------------------------------------
