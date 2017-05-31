@@ -71,7 +71,8 @@ struct FieldTrait
 		ft_data, ft_XMLData,
 		ft_pattern,
 		ft_Tenor, ft_Reserved100Plus, ft_Reserved1000Plus, ft_Reserved4000Plus,
-		ft_Language, ft_end_string=ft_Language
+		ft_Language, ft_end_string=ft_Language,
+		ft_UTCTimestampUs, ft_UTCTimeOnlyUs
 	};
 
 	/// Trait bits
