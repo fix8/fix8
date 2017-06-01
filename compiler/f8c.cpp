@@ -50,6 +50,7 @@ Usage: f8c [-CFHINPRSUVWbcdefhiknoprstvx] \<input xml schema\>\n
    -R,--norealm            do not generate realm constructed field instantiators (default false)\n
    -U,--noconst            Generate non-const Router method declarations (default false, const)")\n
    -S,--noshared           Treat every group as unique and expose all static traits. Do not share metadata in message classes (default shared)\n
+   -T,--timestamp \<us|ms\> Timestamp precision (default ms)\n
    -W,--nowarn             suppress warning messages (default false)\n
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
@@ -94,13 +95,13 @@ const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes
                                     "_classes.h", "_router.h", "_session.h" },
                   Ctxt::_exts_ver[2] { "pp", "xx" };
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
-       prefix("Myfix"), gen_classes, extra_fields;
+       prefix("Myfix"), gen_classes, extra_fields, timeStamp;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
      incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false), report_unused(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SDu");
-extern string spacer, shortName, precompHdr;
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SDuT:");
+extern string spacer, shortName, precompHdr, timeStamp;
 
 //-----------------------------------------------------------------------------------------
 // static data
@@ -159,22 +160,22 @@ int main(int argc, char **argv)
 		{ "nounique",		0,	0,	'N' },
 		{ "norealm",		0,	0,	'R' },
 		{ "incpath",		0,	0,	'P' },
-		{ "nowarn",		   0,	0,	'W' },
+		{ "nowarn",		    0,	0,	'W' },
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
 		{ "extension",		0,	0,	'e' },
 		{ "ignore",			0,	0,	'i' },
 		{ "nocheck",		0,	0,	'C' },
 		{ "noconst",		0,	0,	'U' },
-		{ "info",		   0,	0,	'I' },
-		{ "unused",		   0,	0,	'u' },
+		{ "info",		    0,	0,	'I' },
+		{ "unused",		    0,	0,	'u' },
 		{ "fields",			0,	0,	'f' },
 		{ "xfields",		1,	0,	'F' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
 		{ "binary",			0,	0,	'b' },
 		{ "classes",		1,	0,	'c' },
-		{ "pch",		      1,	0,	'H' },
+		{ "pch",		    1,	0,	'H' },
 		{ "second",			0,	0,	's' },
 		{ "defaulted",		0,	0,	'D' },
 		{ "noshared",		0,	0,	'S' },
@@ -182,6 +183,7 @@ int main(int argc, char **argv)
 		{ "namespace",		1,	0,	'n' },
 		{ "tabsize",		1,	0,	't' },
 		{ "fixt",			1,	0,	'x' },
+		{ "timestamp",		1,	0,	'T' },
 		{ 0 },
 	};
 
@@ -226,11 +228,13 @@ int main(int argc, char **argv)
 		case 'b': binary_report(); return 0;
 		case 'x': fixt = optarg; break;
 		case 'n': ctxt._fixns = optarg; break;
+		case 'T': timeStamp = optarg; break;
 		default: break;
 		}
 	}
 
 	spacer.assign(tabsize, ' ');
+	std::transform(timeStamp.begin(), timeStamp.end(), timeStamp.begin(), ::tolower);
 
 	if (optind < argc)
 	{
@@ -461,6 +465,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 
 	int fieldsLoaded(0);
 
+	const string tmf("UTCTIME");
 	for(const auto *pp : flist)
 	{
 		string number, name, type;
@@ -470,6 +475,10 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			trim(name);
 			trim(type);
 			InPlaceStrToUpper(type);
+			// override timestamp precision
+			if (timeStamp == "us" && type.compare(0, tmf.length(), tmf) == 0)
+				type += "US";
+
          const auto bmitr(FieldSpec::_baseTypeMap.find(type));
 			FieldTrait::FieldType ft(bmitr == FieldSpec::_baseTypeMap.end() ? FieldTrait::ft_untyped : bmitr->second);
 			pair<FieldSpecMap::iterator, bool> result;
@@ -1388,13 +1397,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ost_cpp << _csMap.find(cs_start_anon_namespace)->second << endl;
 	ost_cpp << endl << _csMap.find(cs_divider)->second << endl;
 	// generate field types
+	
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (!gen_fields && !fitr->second._used)
 			continue;
 		if (!fitr->second._comment.empty())
 			ost_hpp << "// " << fitr->second._comment << endl;
-      const auto tyitr(FieldSpec::_typeToCPP.find(fitr->second._ftype));
+
+		const auto tyitr(FieldSpec::_typeToCPP.find(fitr->second._ftype));
 		ost_hpp << "using " << fitr->second._name << " = Field<"
          << (tyitr == FieldSpec::_typeToCPP.end() ? "unknown" : tyitr->second.first) << ", " << fitr->first << ">;" << endl;
 		if (fitr->second._dvals)
