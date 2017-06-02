@@ -396,9 +396,11 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 	if (from_or_default(from, "ssl_context", name) && (which = find_group(g_ssl_context, name)))
 	{
 		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
+		static std::string empty1;
+		static std::string empty2;
 		target._private_key_file = which->FindAttrRef("private_key_file", empty);
-		target._certificate_file = which->FindAttrRef("ceritificte_file", empty);
-		target._ca_location = which->FindAttrRef("ca_location", empty);
+		target._certificate_file = which->FindAttrRef("certificate_file", empty1);
+		target._ca_location = which->FindAttrRef("ca_location", empty2);
 		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
 		target._load_default_cas = which->FindAttr("load_default_cas", false);
 		target._cipher_list = which->FindAttrRef("cipher_list", cipher);
