@@ -15,8 +15,8 @@
     <tags>fix8 Eze</tags>
   </metadata>
   <files>
-    <file src="x64\bin\Release\fix8.dll" target="build\native\bin\x64\v120\Release\Desktop\" />
-    <file src="x64\bin\Release\fix8.lib" target="build\native\lib\x64\v120\Release\Desktop\" />
+    <file src="x64\bin\Release\*.dll" target="build\native\bin\x64\v120\Release\Desktop\" />
+    <file src="x64\bin\Release\*.lib" target="build\native\lib\x64\v120\Release\Desktop\" />
     <file src="x64\bin\Release\f8c.exe" target="tools\" />
     <file src="x64\bin\Release\seqedit.exe" target="tools\" />
   </files>
