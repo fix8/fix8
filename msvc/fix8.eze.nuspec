@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>fix8.Eze</id>
+    <version>1.0</version>
+    <title>Fix8 Eze</title>
+    <authors>Eze Software Group</authors>
+    <owners>Eze Software Group</owners>
+    <licenseUrl>https://github.com/rbaxter1/fix8/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/rbaxter1/fix8</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is the unfinished version of Eze Fix8 -- create for testing purpose.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Eze Software Group</copyright>
+    <tags>fix8 Eze</tags>
+  </metadata>
+  <files>
+    <file src="x64\bin\Release\*.dll" target="build\native\bin\x64\v120\Release\Desktop\" />
+    <file src="x64\bin\Release\*.lib" target="build\native\lib\x64\v120\Release\Desktop\" />
+    <file src="x64\bin\Release\f8c.exe" target="tools\" />
+    <file src="x64\bin\Release\seqedit.exe" target="tools\" />
+  </files>
+</package>

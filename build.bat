@@ -1,0 +1,2 @@
+cd msvc
+build.cmd

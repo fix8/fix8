@@ -879,7 +879,7 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
    return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
 }
 
-enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
+enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms, _with_us, _time_with_us };
 
 /*! Format Tickval into a string.
   \param tickval input Tickval object
@@ -887,10 +887,12 @@ enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _s
   \param ind indicating whether need millisecond or not
 	_time_only, the format string will be "HH:MM:SS"
 	_time_with_ms, the format string will be "HH:MM:SS.mmm"
+	_time_with_us, the format string will be "HH:MM:SS.mmmuuu"
 	_short_date_only, the format string will be "YYYYMM"
 	_date_only, the format string will be "YYYYMMDD"
 	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
 	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
+	_with_us, the format string will be "YYYYMMDD-HH:MM:SS.mmmuuu"
   \return length of formatted string */
 inline size_t date_time_format(const Tickval& tickval, char *to, TimeIndicator ind)
 {
@@ -927,6 +929,12 @@ inline size_t date_time_format(const Tickval& tickval, char *to, TimeIndicator i
 		format0(tickval.msecs(), to, 3);
 		to += 3;
 	}
+	else if (ind == _time_with_us || ind == _with_us)
+	{
+		*to++ = '.';
+		format0(tickval.usecs(), to, 6);
+		to += 6;
+	}
 
 	return to - start;
 }
@@ -941,7 +949,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
-	int millisecond(0);
+	int second(0);
 	tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
@@ -957,9 +965,14 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 	ptr += parse_decimal(ptr, 2, tms.tm_sec);
 	switch(len)
 	{
+	case 24: //_with_us: // 19981231-23:59:59.123456
+		parse_decimal(++ptr, 6, second);
+		result = second * Tickval::thousand;
+		result += time_to_epoch(tms) * Tickval::billion;
+		break;
 	case 21: //_with_ms: // 19981231-23:59:59.123
-		parse_decimal(++ptr, 3, millisecond);
-		result = millisecond * Tickval::million; // drop through
+		parse_decimal(++ptr, 3, second);
+		result = second * Tickval::million; // drop through
 	case 17: //: // 19981231-23:59:59
 		result += time_to_epoch(tms) * Tickval::billion;
 		break;
@@ -981,7 +994,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 		return Tickval(true).get_ticks();
 
 	Tickval::ticks result(Tickval::noticks);
-   int millisecond(0);
+   int second(0);
    tm tms {};
 
 	ptr += parse_decimal(ptr, 2, tms.tm_hour);
@@ -991,10 +1004,26 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 	ptr += parse_decimal(ptr, 2, tms.tm_sec);
    switch(len)
    {
+	case 18: // 23:59:59.123456789
+	   parse_decimal(++ptr, 9, second);
+	   result = second;
+	   if (!timeonly)
+		   result += time_to_epoch(tms) * Tickval::billion;
+	   else
+		   result += (tms.tm_hour * 3600ULL + tms.tm_min * 60ULL + tms.tm_sec) * Tickval::billion;
+	   break;
+	case 15: // 23:59:59.123456
+	   parse_decimal(++ptr, 6, second);
+	   result = second * Tickval::thousand;
+	   if (!timeonly)
+		   result += time_to_epoch(tms) * Tickval::billion;
+	   else
+		   result += (tms.tm_hour * 3600ULL + tms.tm_min * 60ULL + tms.tm_sec) * Tickval::billion;
+	   break;
 	case 12: // 23:59:59.123
-      parse_decimal(++ptr, 3, millisecond);
-      result = millisecond * Tickval::million; // drop through
-   case 8: // 23:59:59
+      parse_decimal(++ptr, 3, second);
+      result = second * Tickval::million; // drop through
+	case 8: // 23:59:59
 		if (!timeonly)
 			result += time_to_epoch(tms) * Tickval::billion;
 		else
@@ -1120,16 +1149,132 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
-   {
-      char buf[MAX_MSGTYPE_FIELD_LEN] {};
-      print(buf);
-      return os << buf;
-   }
+	{
+		char buf[MAX_MSGTYPE_FIELD_LEN] {};
+		print(buf);
+		return os << buf;
+	}
 
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
 	size_t print(char *to) const { return date_time_format(_value, to, _with_ms); }
+	
+};
+
+//-------------------------------------------------------------------------------------------------
+using UTCTimestampUs = EnumType<FieldTrait::ft_UTCTimestampUs>;
+
+/// Partial specialisation for UTCTimestamp field type.
+/*! \tparam field field number (fix tag) */
+template<unsigned short field>
+class Field<UTCTimestampUs, field> : public BaseField
+{
+	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
+
+public:
+	/// Get the FIX fieldID (tag number).
+	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
+
+	/// Ctor.
+	Field() : BaseField(field), _value(true) {}
+
+	/*! Copy Ctor.
+	\param from field to copy */
+	Field(const Field& from) : BaseField(field), _value(from._value) {}
+
+	/*! Value ctor.
+	\param val value to set
+	\param rlm pointer to the realmbase for this field (if available) */
+	Field(const Tickval& val, const RealmBase *rlm = nullptr) : BaseField(field, rlm), _value(val) {}
+
+	/*! Construct from string ctor.
+	\param from string to construct field from
+	\param rlm pointer to the realmbase for this field (if available) */
+	Field(const f8String& from, const RealmBase *rlm = nullptr) : BaseField(field), _value(date_time_parse(from.data(), from.size())) {}
+
+	/*! Construct from char * ctor.
+	\param from char * to construct field from
+	\param rlm pointer to the realmbase for this field (if available) */
+	Field(const char *from, const RealmBase *rlm = nullptr) : BaseField(field), _value(date_time_parse(from, from ? ::strlen(from) : 0)) {}
+
+	/*! Construct from tm struct
+	\param from string to construct field from
+	\param rlm tm struct with broken out values */
+	Field(const tm& from, const RealmBase *rlm = nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
+
+	/// Assignment operator.
+	/*! \param that field to assign from
+	\return field */
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
+
+	/// Equivalence operator.
+	/*! \param that field to compare
+	\return true if same */
+	bool operator==(const BaseField& that) const
+	{
+		return same_base(that) && static_cast<const Field<UTCTimestampUs, field>&>(that)._value == _value;
+	}
+
+	/// Less than operator.
+	/*! \param that field to compare
+	\return true if less than */
+	bool operator<(const BaseField& that) const
+	{
+		return same_base(that) && _value < static_cast<const Field<UTCTimestampUs, field>&>(that)._value;
+	}
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	\return true if greater than */
+	bool operator>(const BaseField& that) const
+	{
+		return same_base(that) && _value > static_cast<const Field<UTCTimestampUs, field>&>(that)._value;
+	}
+
+	/*! Get field value.
+	\return value Tickval& */
+	const Tickval& get() const { return _value; }
+
+	/*! Get field value.
+	\return value Tickval& */
+	const Tickval& operator()() const { return _value; }
+
+	/*! Set field to the supplied value.
+	\param from value to set */
+	void set(const Tickval& from) { _value = from; }
+
+	/*! Copy (clone) this field.
+	\return copy of field */
+	Field *copy() { return new Field(*this); }
+
+	/*! Print this field to the supplied stream. Used to format for FIX output.
+	\param os stream to insert to
+	\return stream */
+	std::ostream& print(std::ostream& os) const
+	{
+		char buf[MAX_MSGTYPE_FIELD_LEN]{};
+		print(buf);
+		return os << buf;
+	}
+
+	/*! Print this field to the supplied buffer.
+	\param to buffer to print to
+	\return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _with_us); }
+
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1223,16 +1368,125 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
-   {
-      char buf[MAX_MSGTYPE_FIELD_LEN] {};
-      print(buf);
-      return os << buf;
-   }
+	{
+		char buf[MAX_MSGTYPE_FIELD_LEN] {};
+		print(buf);
+		return os << buf;
+	}
 
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
 	size_t print(char *to) const { return date_time_format(_value, to, _time_with_ms); }
+};
+
+//-------------------------------------------------------------------------------------------------
+using UTCTimeOnlyUs = EnumType<FieldTrait::ft_UTCTimeOnlyUs>;
+
+/// Partial specialisation for UTCTimeOnly field type.
+/*! \tparam field field number (fix tag) */
+template<unsigned short field>
+class Field<UTCTimeOnlyUs, field> : public BaseField
+{
+	Tickval _value;
+	static const FieldTrait::FieldType _ftype = FieldTrait::ft_string;
+
+public:
+	/// Get the FIX fieldID (tag number).
+	static unsigned short get_field_id() { return field; }
+
+	/// The FieldType
+	FieldTrait::FieldType get_underlying_type() const { return _ftype; }
+
+	/// Ctor.
+	Field() : BaseField(field) {}
+
+	/// Copy Ctor.
+	/* \param from field to copy */
+	Field(const Field& from) : BaseField(field), _value(from._value) {}
+
+	/*! Construct from string ctor.
+	\param from string to construct field from
+	\param rlm pointer to the realmbase for this field (if available) */
+	Field(const f8String& from, const RealmBase *rlm = nullptr) : BaseField(field), _value(time_parse(from.data(), from.size(), true)) {}
+
+	/*! Construct from char * ctor.
+	\param from char * to construct field from
+	\param rlm pointer to the realmbase for this field (if available) */
+	Field(const char *from, const RealmBase *rlm = nullptr) : BaseField(field), _value(time_parse(from, from ? ::strlen(from) : 0, true)) {}
+
+	/*! Construct from tm struct
+	\param from string to construct field from
+	\param rlm tm struct with broken out values */
+	Field(const tm& from, const RealmBase *rlm = nullptr) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Dtor.
+	~Field() {}
+
+	/// Assignment operator.
+	/*! \param that field to assign from
+	\return field */
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
+
+	/// Equivalence operator.
+	/*! \param that field to compare
+	\return true if same */
+	bool operator==(const BaseField& that) const
+	{
+		return same_base(that) && static_cast<const Field<UTCTimeOnlyUs, field>&>(that)._value == _value;
+	}
+
+	/// Less than operator.
+	/*! \param that field to compare
+	\return true if less than */
+	bool operator<(const BaseField& that) const
+	{
+		return same_base(that) && _value < static_cast<const Field<UTCTimeOnlyUs, field>&>(that)._value;
+	}
+
+	/// Greater than operator.
+	/*! \param that field to compare
+	\return true if greater than */
+	bool operator>(const BaseField& that) const
+	{
+		return same_base(that) && _value > static_cast<const Field<UTCTimeOnlyUs, field>&>(that)._value;
+	}
+
+	/*! Get field value.
+	\return value Tickval& */
+	const Tickval& get() const { return _value; }
+
+	/*! Get field value.
+	\return value Tickval& */
+	const Tickval& operator()() const { return _value; }
+
+	/*! Set field to the supplied value.
+	\param from value to set */
+	void set(const Tickval& from) { _value = from; }
+
+	/*! Copy (clone) this field.
+	\return copy of field */
+	Field *copy() { return new Field(*this); }
+
+	/*! Print this field to the supplied stream. Used to format for FIX output.
+	\param os stream to insert to
+	\return stream */
+	std::ostream& print(std::ostream& os) const
+	{
+		char buf[MAX_MSGTYPE_FIELD_LEN]{};
+		print(buf);
+		return os << buf;
+	}
+
+	/*! Print this field to the supplied buffer.
+	\param to buffer to print to
+	\return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _time_with_us); }
 };
 
 //-------------------------------------------------------------------------------------------------
