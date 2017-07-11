@@ -1,10 +1,13 @@
-cd msvc
-
-call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
-msbuild /t:Rebuild /p:Configuration=Release;Platform=x64 /m fix8-vc140.sln
-goto end
-
-:usage
-echo "Use build.cmd Build|Rebuild|Clean Debug|Release x64|Win32"
-
-:end
+@echo off
+set Mode=Build
+if not '%1'=='' (
+   set Mode=%1
+)
+echo '%Mode% Release x64'
+call build.cmd %Mode% Release x64
+echo '%Mode% Debug x64'
+call build.cmd %Mode% Debug x64
+echo '%Mode% Release Win32'
+call build.cmd %Mode% Release Win32
+echo '%Mode% Debug Win32'
+call build.cmd %Mode% Debug Win32
