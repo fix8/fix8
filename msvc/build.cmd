@@ -8,3 +8,10 @@ goto end
 echo "Use build.cmd Build|Rebuild|Clean Debug|Release x64|Win32"
 
 :end
+mkdir Build
+mkdir Build\native\bin\x64\v140\Release\Desktop
+mkdir Build\native\lib\x64\v140\Release\Desktop
+mkdir Build\tools
+
+nuget pack "fix8.eze.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version 1.0 -p Configuration=Release
+
