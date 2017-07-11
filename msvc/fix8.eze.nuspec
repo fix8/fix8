@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>fix8.Eze</id>
-    <version>$version$</version>
+    <version>1.0</version>
     <title>Fix8 Eze</title>
     <authors>Eze Software Group</authors>
     <owners>Eze Software Group</owners>
@@ -15,9 +15,9 @@
     <tags>fix8 Eze</tags>
   </metadata>
   <files>
-    <file src="msvc\x64\bin\$configuration$\fix8.dll" target="build\native\bin\x64\v120\Release\Desktop\" />
-    <file src="msvc\x64\bin\$configuration$\fix8.lib" target="build\native\lib\x64\v120\Release\Desktop\" />
-    <file src="msvc\x64\bin\$configuration$\f8c.exe" target="tools\" />
-    <file src="msvc\x64\bin\$configuration$\seqedit.exe" target="tools\" />
+    <file src="x64\bin\Release\fix8.dll" target="build\native\bin\x64\v120\Release\Desktop\" />
+    <file src="x64\bin\Release\fix8.lib" target="build\native\lib\x64\v120\Release\Desktop\" />
+    <file src="x64\bin\Release\f8c.exe" target="tools\" />
+    <file src="x64\bin\Release\seqedit.exe" target="tools\" />
   </files>
 </package>
