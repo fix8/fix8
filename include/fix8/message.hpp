@@ -1195,10 +1195,9 @@ public:
 		{
 			unsigned long expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & *reinterpret_cast<const unsigned long*>(from + ii)));
 			ret += *reinterpret_cast<const unsigned long*>(from + ii);
-			overflow += (expected_overflow ^ ret) & OVERFLOW_MASK;
+			overflow += COLLAPSE_INT64((expected_overflow ^ ret) & OVERFLOW_MASK);
 		}
 		ret = COLLAPSE_INT64(ret);
-		overflow = COLLAPSE_INT64(overflow);
 		for (; ii < elen; ret += from[ii++]); // add up rest one by one
 		return (ret - overflow) & 0xff;
 #else
