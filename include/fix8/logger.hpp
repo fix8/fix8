@@ -38,7 +38,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_LOGGER_HPP_
 
 //-------------------------------------------------------------------------------------------------
+#include <functional> // std::function, std::ref
+#include <ios> // std::streamsize
+#include <iostream> // std::cout, std::endl
 #include <list>
+#include <map>
+#include <ostream> // std::ostream
+#include <streambuf> // std::streambuf
+#include <string>
+#include <vector>
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Net/DatagramSocket.h>
 
