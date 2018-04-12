@@ -657,8 +657,9 @@ public:
 	/// Force persister to sync next send/receive seqnums
 	F8API void update_persist_seqnums();
 
-	/// stop the session.
-	F8API void stop();
+    /*! stop the session.
+      \param clearTimer - false if timer event queue clearing is to be omitted */
+    F8API void stop(const bool clearTimer = true);
 
 	/*! Get the connection object.
 	    \return the connection object */

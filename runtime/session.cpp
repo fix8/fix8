@@ -227,7 +227,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::stop()
+void Session::stop(const bool clearTimer)
 {
 	if (_control & shutdown)
 		return;
@@ -235,8 +235,9 @@ void Session::stop()
 
 	if (_connection)
 	{
-		if (_connection->get_role() == Connection::cn_initiator)
-			_timer.clear();
+        if (_connection->get_role() == Connection::cn_initiator &&
+                clearTimer)
+            _timer.clear();
 		else
 		{
 			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
@@ -832,7 +833,11 @@ bool Session::heartbeat_service()
 				log(ostr.str(), Logger::Error);
 				try
 				{
-					stop();
+                    //  do not clear the timer, as the lock required for the same is already taken by the timer thread
+                    //  not removing the remaining events will cause some extra work to be done,
+                    //  but that work will be limited by the fact that the work checks if the session is already shutdown
+                    //  activation_service and heartbeat_service both have shutdown checks
+                    stop(false);
 				}
 				catch (Poco::Net::NetException& e)
 				{
