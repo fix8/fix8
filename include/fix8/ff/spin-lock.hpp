@@ -58,7 +58,7 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct AtomicFlagWrapper {
     all platforms.
 */
 #ifndef _MSC_VER
-    AtomicFlagWrapper():F(ATOMIC_FLAG_INIT) {}
+    AtomicFlagWrapper():F(false) {}
 #else
 	AtomicFlagWrapper() {
 		F.clear();
@@ -273,7 +273,7 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct AtomicFlagWrapper {
 	Before removing the conditional compilation we should double-check that initialisation with .clear() really works in all platforms.
 */
 #ifndef _MSC_VER
-    AtomicFlagWrapper():F(ATOMIC_FLAG_INIT) {}
+    AtomicFlagWrapper():F(false) {}
 #else
 	AtomicFlagWrapper() {
 		F.clear();
