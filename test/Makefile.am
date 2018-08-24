@@ -90,30 +90,37 @@ endif
 
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
 if !USEOSX
-ALL_LIBS += -rdynamic
+DYN = -rdynamic
+else
+DYN = ""
 endif
 
 if TOGGLETRACKINGASSIGNMENTS
 libmyfix_la_CXXFLAGS += -fno-var-tracking -fno-var-tracking-assignments
 endif
-f8test_LDFLAGS = $(ALL_LIBS) -lmyfix
-f8print_LDFLAGS = $(ALL_LIBS) -lmyfix
-hftest_LDFLAGS = $(ALL_LIBS) -lhftest
-hfprint_LDFLAGS = $(ALL_LIBS) -lhftest
-harness_LDFLAGS = $(ALL_LIBS) -lmyfix
+f8test_LDFLAGS = $(DYN)
+f8test_LDADD = $(ALL_LIBS) libmyfix.la
+f8print_LDFLAGS = $(DYN)
+f8print_LDADD = $(ALL_LIBS) libmyfix.la
+hftest_LDFLAGS = $(DYN)
+hftest_LDADD = $(ALL_LIBS) libhftest.la
+hfprint_LDFLAGS = $(DYN)
+hfprint_LDADD = $(ALL_LIBS) libhftest.la
+harness_LDFLAGS = $(DYN)
+harness_LDADD = $(ALL_LIBS) libmyfix.la
 
 if USECOMPRESSION
-f8test_LDFLAGS += -lz
-f8print_LDFLAGS += -lz
-hftest_LDFLAGS += -lz
-hfprint_LDFLAGS += -lz
-harness_LDFLAGS += -lz
+f8test_LDADD += -lz
+f8print_LDADD += -lz
+hftest_LDADD += -lz
+hfprint_LDADD += -lz
+harness_LDADD += -lz
 endif
 if USESSL
-f8test_LDFLAGS += -lPocoNetSSL -lPocoCrypto
-f8print_LDFLAGS += -lPocoNetSSL -lPocoCrypto
-hftest_LDFLAGS += -lPocoNetSSL -lPocoCrypto
-hfprint_LDFLAGS += -lPocoNetSSL -lPocoCrypto
-harness_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+f8test_LDADD += -lPocoNetSSL -lPocoCrypto
+f8print_LDADD += -lPocoNetSSL -lPocoCrypto
+hftest_LDADD += -lPocoNetSSL -lPocoCrypto
+hfprint_LDADD += -lPocoNetSSL -lPocoCrypto
+harness_LDADD += -lPocoNetSSL -lPocoCrypto
 endif
 
