@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_LOGGER_HPP_
 
 //-------------------------------------------------------------------------------------------------
+#include <functional>
 #include <list>
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Net/DatagramSocket.h>
