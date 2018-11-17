@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <list>
+#include <functional>
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Net/DatagramSocket.h>
 

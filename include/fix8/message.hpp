@@ -41,6 +41,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #if defined FIX8_PREENCODE_MSG_SUPPORT
 #include <array>
 #endif
+#if defined FIX8_CODECTIMING
+#include <fix8/f8measure.hpp>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -1032,18 +1035,6 @@ inline void GroupBase::clear(bool reuse)
 }
 
 //-------------------------------------------------------------------------------------------------
-#if defined FIX8_CODECTIMING
-struct codec_timings
-{
-	double _cpu_used;
-	unsigned _msg_count;
-
-	codec_timings() : _cpu_used(), _msg_count() {}
-};
-
-#endif
-
-//-------------------------------------------------------------------------------------------------
 #if defined FIX8_SIZEOF_UNSIGNED_LONG && FIX8_SIZEOF_UNSIGNED_LONG == 8
 #ifndef _MSC_VER
 constexpr unsigned long COLLAPSE_INT64(unsigned long x)
@@ -1058,7 +1049,10 @@ constexpr unsigned long COLLAPSE_INT64(unsigned long x)
 class Message : public MessageBase
 {
 #if defined FIX8_CODECTIMING
-	static codec_timings _encode_timings, _decode_timings;
+public:
+	enum { sw_encode_time, sw_decode_time, sw__max };
+private:
+	static stop_watch _codec_timings;
 #endif
 
 protected:
@@ -1086,8 +1080,8 @@ public:
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
 		const FieldTrait_Hash_Array *ftha)
-		: MessageBase(ctx, msgType, begin, cnt, ftha),_header(ctx._mk_hdr(true)),
-		  _trailer(ctx._mk_trl(true)), _custom_seqnum(), _no_increment(), _end_of_batch(true)
+		: MessageBase(ctx, msgType, begin, cnt, ftha)
+		, _header(ctx._mk_hdr(true)), _trailer(ctx._mk_trl(true)), _custom_seqnum(), _no_increment(), _end_of_batch(true)
 	{}
 
 	/// Dtor.
@@ -1364,7 +1358,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
 
 #if defined FIX8_CODECTIMING
-	F8API static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
+	F8API static void format_codec_timings(const f8String& md, std::ostream& ostr, const stop_watch::value& tobj);
 	F8API static void report_codec_timings(const f8String& tag);
 #endif
 };

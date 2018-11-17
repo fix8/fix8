@@ -843,7 +843,7 @@ class ebitset
 {
 	using integral_type = B;
 	integral_type a_;
-
+	
 public:
 	/// Ctor.
 	ebitset() : a_() {}
