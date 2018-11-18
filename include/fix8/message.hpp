@@ -37,6 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef FIX8_MESSAGE_HPP_
 #define FIX8_MESSAGE_HPP_
 
+#include <functional>
 #include <vector>
 #if defined FIX8_PREENCODE_MSG_SUPPORT
 #include <array>
@@ -1181,7 +1182,7 @@ public:
 		// and get rid of it at the end.
 
 		const unsigned long OVERFLOW_MASK (1UL << 8 | 1UL << 16 | 1UL << 24 | 1UL << 32 | 1UL << 40 | 1UL << 48 | 1UL << 56);
-		unsigned long ret{}, overflow{};
+		unsigned long ret{}, overflow{}, overflowtmp{};
 		from += offset;
 		const unsigned long elen (len != -1 ? len : sz);
 		size_t ii{};
@@ -1189,10 +1190,15 @@ public:
 		{
 			unsigned long expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & *reinterpret_cast<const unsigned long*>(from + ii)));
 			ret += *reinterpret_cast<const unsigned long*>(from + ii);
-			overflow += (expected_overflow ^ ret) & OVERFLOW_MASK;
+			overflowtmp += (expected_overflow ^ ret) & OVERFLOW_MASK;
+			if (ii % 4096 == 0)
+			{
+				overflow += COLLAPSE_INT64(overflowtmp);
+				overflowtmp = 0;
+			}
 		}
+		overflow += COLLAPSE_INT64(overflowtmp);
 		ret = COLLAPSE_INT64(ret);
-		overflow = COLLAPSE_INT64(overflow);
 		for (; ii < elen; ret += from[ii++]); // add up rest one by one
 		return (ret - overflow) & 0xff;
 #else
