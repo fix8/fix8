@@ -233,8 +233,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.4.0.tar.gz
-	% cd fix8-1.4.0
+	% tar xvzf 1.4.1.tar.gz
+	% cd fix8-1.4.1
 	% ./bootstrap
 	% ./configure
 	% make
@@ -248,8 +248,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.4.0.tar.gz
-	% cd fix8-1.4.0
+	% tar xvzf 1.4.1.tar.gz
+	% cd fix8-1.4.1
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure

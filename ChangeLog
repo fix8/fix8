@@ -1,3 +1,10 @@
+* Tue Jan 01 2019 David L. Dight <fix@fix8.org> 1.4.1
+- Fixed Jira tickets FX-729,FX-744,FX-821,FX-884
+- Fixed deadlock condition in heartbeat
+- Fixed memory leaks
+- Fixed f8c incorrectly removeing unused fields from the top of fields list
+- Fixed steroid chksum algorithm giving incorrect values for large messages
+
 * Fri Sep 16 2016 David L. Dight <fix@fix8.org> 1.4.0
 - Fixed Jira tickets FX-530,FX-533,FX-539,FX-562,FX-563,FX-564,FX-560,FX-588,FX-569,
 							FX-596,FX-642,FX-633,FX-615,FX-609,FX-655
