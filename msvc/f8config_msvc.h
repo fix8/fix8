@@ -11,7 +11,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
 Lesser General Public License as  published by the Free Software Foundation, either version
@@ -79,17 +79,17 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Short Date system was configured */
 #ifndef FIX8_CONFIGURE_SDATE
-#define FIX8_CONFIGURE_SDATE "2016/08/23"
+#define FIX8_CONFIGURE_SDATE "2018/12/27"
 #endif
 
 /* Date system was configured */
 #ifndef FIX8_CONFIGURE_TIME
-#define FIX8_CONFIGURE_TIME "Tue Aug 23 14:53:56 AEST 2016"
+#define FIX8_CONFIGURE_TIME "Thu Dec 27 11:07:35 AEDT 2018"
 #endif
 
 /* date/time as seconds since start epoch */
 #ifndef FIX8_CONFIGURE_TIME_NUM
-#define FIX8_CONFIGURE_TIME_NUM 1471928036
+#define FIX8_CONFIGURE_TIME_NUM 1545869255
 #endif
 
 
@@ -549,7 +549,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Encode version */
 #ifndef FIX8_MAGIC_NUM
-#define FIX8_MAGIC_NUM 16797696
+#define FIX8_MAGIC_NUM 16793601
 #endif
 
 /* Encoded Version as expresion */
@@ -594,7 +594,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Minor version number */
 #ifndef FIX8_MINOR_VERSION_NUM
-#define FIX8_MINOR_VERSION_NUM 5
+#define FIX8_MINOR_VERSION_NUM 4
 #endif
 
 /* FIX8_FF MPMC */
@@ -629,7 +629,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to the full name and version of this package. */
 #ifndef FIX8_PACKAGE_STRING
-#define FIX8_PACKAGE_STRING "fix8 1.5.0"
+#define FIX8_PACKAGE_STRING "fix8 1.4.1"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -644,12 +644,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to the version of this package. */
 #ifndef FIX8_PACKAGE_VERSION
-#define FIX8_PACKAGE_VERSION "1.5.0"
+#define FIX8_PACKAGE_VERSION "1.4.1"
 #endif
 
 /* Patch number */
 #ifndef FIX8_PATCH_VERSION_NUM
-#define FIX8_PATCH_VERSION_NUM 0
+#define FIX8_PATCH_VERSION_NUM 1
 #endif
 
 /* Define to 1 to enable metatdata population in encode/decodes */
@@ -751,7 +751,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Version number of package */
 #ifndef FIX8_VERSION
-#define FIX8_VERSION "1.4.0"
+#define FIX8_VERSION "1.4.1"
 #endif
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
