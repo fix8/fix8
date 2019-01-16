@@ -38,7 +38,8 @@ AM_CPPFLAGS = -I$(inc)
 libfix8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
                      session.cpp logger.cpp persist.cpp \
                      connection.cpp configuration.cpp \
-                     consolemenu.cpp filepersist.cpp modp_numtoa.c precomp.cpp
+                     consolemenu.cpp filepersist.cpp modp_numtoa.c precomp.cpp \
+                     f8measure.cpp
 
 libfix8_la_LDFLAGS = -version-info $(libfix8_la_version_info)
 

@@ -70,7 +70,7 @@ endif
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
 	$(top_srcdir)/compiler/f8c $(LIBMYFIXFLAGS) --namespace TEX $(XML_SCHEMA) --fixt $(XML_FIXT_SCHEMA)
 
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML -lPocoJSON
 GEN_LIBS = -lfix8 -lpthread
 if LINK_RT
 GEN_LIBS += -lrt
