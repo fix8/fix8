@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -1430,12 +1430,16 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ost_cpp << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl;
 	ost_cpp << "const " << ctxt._clname << "_BaseEntry::Pair fldpairs[] "
       << endl << '{' << endl;
+   FieldSpecMap::const_iterator fromfitr(fspec.begin());
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (!gen_fields && !fitr->second._used)
-			continue;
-		if (fitr != fspec.begin())
-			ost_cpp << ',' << endl;
+      {
+         ++fromfitr;
+         continue;
+      }
+      if (fitr != fromfitr)
+         ost_cpp << ',' << endl;
 		ost_cpp << spacer << "{ " << fitr->first << ", { ";
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{

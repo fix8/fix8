@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -119,6 +119,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 #include <fix8/usage.hpp>
+#if defined(FIX8_CODECTIMING)
+#include <fix8/f8measure.hpp>
+#endif
 #include "Perf_types.hpp"
 #include "Perf_router.hpp"
 #include "Perf_classes.hpp"
@@ -133,6 +136,87 @@ void print_usage();
 const string GETARGLIST("hl:svqc:R:S:rb:p:u:o");
 bool term_received(false);
 unsigned batch_size(1000), preload_count(0), update_count(5000);
+
+//-----------------------------------------------------------------------------------------
+struct performance_metrics
+{
+	enum Enum
+	{
+		msg_create,
+		msg_send,
+		msg_destroy,
+		//msg_ack_latency,
+		//msg_fill_latency,
+		_max
+	};
+};
+
+#if defined(FIX8_CODECTIMING)
+FIX8::stop_watch perf_metric(performance_metrics::_max);
+void perf_metric_start(performance_metrics::Enum what) { perf_metric.start(what); }
+void perf_metric_stop(performance_metrics::Enum what) { perf_metric.stop(what); }
+void perf_metric_start(performance_metrics::Enum what, FIX8::stop_watch::ticks_t measure) { perf_metric.start(what, measure); }
+void perf_metric_stop(performance_metrics::Enum what, FIX8::stop_watch::ticks_t measure) { perf_metric.stop(what, measure); }
+FIX8::stop_watch::ticks_t perf_metric_measure() { return FIX8::stop_watch::measure(); }
+#else
+void perf_metric_start(performance_metrics::Enum what) { }
+void perf_metric_stop(performance_metrics::Enum what) { }
+void perf_metric_start(performance_metrics::Enum what, std::int64_t measure) { }
+void perf_metric_stop(performance_metrics::Enum what, std::int64_t measure) { }
+std::int64_t perf_metric_measure() { }
+#endif
+
+//-----------------------------------------------------------------------------------------
+void report_perf_metric(const std::string& prefix)
+{
+#if defined FIX8_CODECTIMING
+	using namespace FIX8;
+
+	ostringstream ostr;
+	ostr.setf(std::ios::showpoint);
+	ostr.setf(std::ios::fixed);
+
+	if (perf_metric.val(performance_metrics::msg_create)[stop_watch::value::_count])
+	{
+		ostr << prefix << ' ';
+		Message::format_codec_timings("Create", ostr, perf_metric.val(performance_metrics::msg_create));
+		glout_info << ostr.str();
+	}
+
+	if (perf_metric.val(performance_metrics::msg_send)[stop_watch::value::_count])
+	{
+		ostr.str("");
+		ostr << prefix << ' ';
+		Message::format_codec_timings("Send", ostr, perf_metric.val(performance_metrics::msg_send));
+		glout_info << ostr.str();
+	}
+
+	if (perf_metric.val(performance_metrics::msg_destroy)[stop_watch::value::_count])
+	{
+		ostr.str("");
+		ostr << prefix << ' ';
+		Message::format_codec_timings("Destroy", ostr, perf_metric.val(performance_metrics::msg_destroy));
+		glout_info << ostr.str();
+	}
+#if 0
+	if (perf_metric.val(performance_metrics::msg_ack_latency)[stop_watch::value::_count])
+	{
+		ostr.str("");
+		ostr << prefix << ' ';
+		Message::format_codec_timings("Ack_latency", ostr, perf_metric.val(performance_metrics::msg_ack_latency));
+		glout_info << ostr.str();
+	}
+
+	if (perf_metric.val(performance_metrics::msg_fill_latency)[stop_watch::value::_count])
+	{
+		ostr.str("");
+		ostr << prefix << ' ';
+		Message::format_codec_timings("Fill_latency", ostr, perf_metric.val(performance_metrics::msg_fill_latency));
+		glout_info << ostr.str();
+	}
+#endif
+#endif
+}
 
 //-----------------------------------------------------------------------------------------
 const MyMenu::Handlers MyMenu::_handlers
@@ -260,12 +344,13 @@ int main(int argc, char **argv)
 					while (!inst->session_ptr()->is_shutdown())
 						FIX8::hypersleep<FIX8::h_milliseconds>(100);
 				cout << "Session(" << scnt << ") finished." << endl;
-				inst->stop();
 #if defined FIX8_CODECTIMING
 				FIX8::Message::report_codec_timings("server");
+				report_perf_metric("server");
 #endif
-            if (once)
-               break;
+				inst->stop();
+				if (once)
+					break;
 			}
 		}
 		else
@@ -333,6 +418,7 @@ int main(int argc, char **argv)
 			cout << endl;
 #if defined FIX8_CODECTIMING
 			FIX8::Message::report_codec_timings("client");
+			report_perf_metric("client");
 #endif
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
@@ -352,6 +438,19 @@ int main(int argc, char **argv)
 	if (term_received)
 		cout << "terminated." << endl;
 	return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+void send_msg(FIX8::Message* msg, FIX8::Session& session)
+{
+	std::unique_ptr<FIX8::Message> msg_ptr{ msg };
+	perf_metric_start(performance_metrics::msg_send);
+	session.send(msg, false);
+	perf_metric_stop(performance_metrics::msg_send);
+	
+	perf_metric_start(performance_metrics::msg_destroy);
+	msg_ptr.reset();
+	perf_metric_stop(performance_metrics::msg_destroy);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -375,6 +474,7 @@ bool MyMenu::batch_preload_new_order_single()
 			ostringstream oistr;
 			oistr << "ord" << ++oid << '-' << num;
 
+			perf_metric_start(performance_metrics::msg_create);
 			FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
 			*ptr << new FIX8::TEX::Symbol("BHP")
 				  << new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
@@ -385,6 +485,7 @@ bool MyMenu::batch_preload_new_order_single()
 				  << new FIX8::TEX::ClOrdID(oistr.str())
 				  << new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3)
 				  << new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
+			perf_metric_stop(performance_metrics::msg_create);
 
 #if defined FIX8_PREENCODE_MSG_SUPPORT
 			ptr->preencode();
@@ -422,6 +523,7 @@ bool MyMenu::new_order_single()
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
 
+	perf_metric_start(performance_metrics::msg_create);
 	FIX8::TEX::NewOrderSingle *nos(new FIX8::TEX::NewOrderSingle);
 	*nos  << new FIX8::TEX::TransactTime
 			<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000))
@@ -432,9 +534,9 @@ bool MyMenu::new_order_single()
 			<< new FIX8::TEX::OrdType(FIX8::TEX::OrdType_LIMIT)
 			<< new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
 			<< new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL);
+	perf_metric_stop(performance_metrics::msg_create);
 
-	_session.send(nos);
-
+	send_msg(nos, _session);
 	return true;
 }
 
@@ -449,7 +551,7 @@ bool MyMenu::send_all_preloaded()
 		FIX8::TEX::NewOrderSingle *ptr(_session.pop());
 		if (!ptr)
 			break;
-		_session.send(ptr);
+		send_msg(ptr, _session);
 		if (++snt % update_count == 0)
 		{
 			cout << '\r' << snt << " NewOrderSingle msgs sent       ";
@@ -475,7 +577,7 @@ bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 			{
 				if (!(ptr = _session.pop()))
 					break;
-				_session.send(ptr);
+				send_msg(ptr, _session);
 				if (++snt % batch_size)
 					continue;
 			}
@@ -510,6 +612,7 @@ bool MyMenu::preload_new_order_single()
 		ostringstream oistr;
 		oistr << "ord" << ++oid << '-' << num;
 
+		perf_metric_start(performance_metrics::msg_create);
 		FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
 
 		*ptr  << new FIX8::TEX::Symbol("BHP")
@@ -521,6 +624,7 @@ bool MyMenu::preload_new_order_single()
 				<< new FIX8::TEX::Price(1. + RandDev::getrandom(500.), 3) // precision=3
 				<< new FIX8::TEX::ClOrdID(oistr.str())
 				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
+		perf_metric_stop(performance_metrics::msg_create);
 #if defined FIX8_PREENCODE_MSG_SUPPORT
 		ptr->preencode(); // pre-encode message payload (not header or trailer)
 #endif
@@ -590,6 +694,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 	msg->get(qty);
 	msg->get(price);
 
+	perf_metric_start(performance_metrics::msg_create);
 	FIX8::TEX::ExecutionReport *er(new FIX8::TEX::ExecutionReport);
 	msg->copy_legal(er);
 
@@ -619,8 +724,8 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 			<< new FIX8::TEX::ReportToExch('Y')
 			<< new FIX8::TEX::ExecTransType(FIX8::TEX::ExecTransType_NEW)
 			<< new FIX8::TEX::ExecID(oistr.str());
-
-	_session.send(er);
+	perf_metric_stop(performance_metrics::msg_create);
+	send_msg(er, _session);
 
 	if (ordResult == 0)
 	{
@@ -630,6 +735,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 			unsigned trdqty(1 + RandDev::getrandom(remaining_qty));
 			remaining_qty -= trdqty;
 			cum_qty += trdqty;
+			perf_metric_start(performance_metrics::msg_create);
 			FIX8::TEX::ExecutionReport *ner(new FIX8::TEX::ExecutionReport);
 			msg->copy_legal(ner);
 			ostringstream eistr;
@@ -643,8 +749,8 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 					<< new FIX8::TEX::CumQty(cum_qty)
 					<< new FIX8::TEX::ExecTransType(FIX8::TEX::ExecTransType_NEW)
 					<< new FIX8::TEX::AvgPx(price());
-
-			_session.send(ner);
+			perf_metric_stop(performance_metrics::msg_create);
+			send_msg(ner, _session);
 		}
 	}
 

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -36,6 +36,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
+#if defined FIX8_CODECTIMING
+#include <fix8/f8measure.hpp>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
@@ -43,7 +46,7 @@ using namespace std;
 
 //-------------------------------------------------------------------------------------------------
 #if defined FIX8_CODECTIMING
-codec_timings Message::_encode_timings, Message::_decode_timings;
+stop_watch Message::_codec_timings(Message::sw__max);
 #endif
 unsigned MessageBase::_tabsize = defaults::tabsize;
 
@@ -238,12 +241,11 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 		throw InvalidMessage(mtype, FILE_LINE);
 	Message *msg(bme->_create._do(false)); // shallow create
 #if defined FIX8_CODECTIMING
-	IntervalTimer itm;
+	_codec_timings.start(sw_decode_time);
 #endif
 	msg->decode(from, hlen, 7, permissive_mode); // skip already decoded mandatory 8, 9, 35 and 10
 #if defined FIX8_CODECTIMING
-	_decode_timings._cpu_used += itm.Calculate().AsDouble();
-	++_decode_timings._msg_count;
+	_codec_timings.stop(sw_decode_time);
 #endif
 
 	msg->_header->get_body_length()->set(mlen);
@@ -424,7 +426,7 @@ size_t Message::encode(char **hmsg_store) const
 	char *moffs(*hmsg_store + HEADER_CALC_OFFSET), *msg(moffs);
 
 #if defined FIX8_CODECTIMING
-	IntervalTimer itm;
+	_codec_timings.start(sw_encode_time);
 #endif
 
 	if (!_header)
@@ -484,8 +486,7 @@ size_t Message::encode(char **hmsg_store) const
 	msg += _trailer->get_check_sum()->encode(msg);
 
 #if defined FIX8_CODECTIMING
-	_encode_timings._cpu_used += itm.Calculate().AsDouble();
-	++_encode_timings._msg_count;
+	_codec_timings.stop(sw_encode_time);
 #endif
 
 	*msg = 0;
@@ -692,12 +693,14 @@ void Message::print(ostream& os, int) const
 
 //-------------------------------------------------------------------------------------------------
 #if defined FIX8_CODECTIMING
-void Message::format_codec_timings(const f8String& str, ostream& os, codec_timings& ct)
+void Message::format_codec_timings(const f8String& str, ostream& os, const stop_watch::value& ct)
 {
-	os << str << ": " << setprecision(9) << ct._cpu_used << " secs, "
-		<< setw(8) << right << ct._msg_count << " msgs, "
-		<< (ct._cpu_used / ct._msg_count) << " secs/msg, "
-		<< setprecision(2) << (ct._msg_count / ct._cpu_used) << " msgs/sec";
+	double avg = 1.0*ct[stop_watch::value::_total]/ct[stop_watch::value::_count];
+	os << str << ": " << setprecision(9) << ct[stop_watch::value::_total] << " usecs, "
+		<< setw(8) << right << ct[stop_watch::value::_count] << " msgs, "
+		<< avg << " usecs/msg, "
+		<< setprecision(2) << (1.0/avg) << " msgs/usec, metric="
+		<< ct;
 }
 
 void Message::report_codec_timings(const f8String& tag)
@@ -707,12 +710,12 @@ void Message::report_codec_timings(const f8String& tag)
 	ostr.setf(std::ios::fixed);
 
 	ostr << tag << ' ';
-	format_codec_timings("Encode", ostr, _encode_timings);
+	format_codec_timings("Encode", ostr, _codec_timings.val(sw_encode_time));
 	glout_info << ostr.str();
 
 	ostr.str("");
 	ostr << tag << ' ';
-	format_codec_timings("Decode", ostr, _decode_timings);
+	format_codec_timings("Decode", ostr, _codec_timings.val(sw_decode_time));
 	glout_info << ostr.str();
 }
 #endif

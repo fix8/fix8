@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -37,9 +37,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef FIX8_MESSAGE_HPP_
 #define FIX8_MESSAGE_HPP_
 
+#include <functional>
 #include <vector>
 #if defined FIX8_PREENCODE_MSG_SUPPORT
 #include <array>
+#endif
+#if defined FIX8_CODECTIMING
+#include <fix8/f8measure.hpp>
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -1032,18 +1036,6 @@ inline void GroupBase::clear(bool reuse)
 }
 
 //-------------------------------------------------------------------------------------------------
-#if defined FIX8_CODECTIMING
-struct codec_timings
-{
-	double _cpu_used;
-	unsigned _msg_count;
-
-	codec_timings() : _cpu_used(), _msg_count() {}
-};
-
-#endif
-
-//-------------------------------------------------------------------------------------------------
 #if defined FIX8_SIZEOF_UNSIGNED_LONG && FIX8_SIZEOF_UNSIGNED_LONG == 8
 #ifndef _MSC_VER
 constexpr unsigned long COLLAPSE_INT64(unsigned long x)
@@ -1058,7 +1050,10 @@ constexpr unsigned long COLLAPSE_INT64(unsigned long x)
 class Message : public MessageBase
 {
 #if defined FIX8_CODECTIMING
-	static codec_timings _encode_timings, _decode_timings;
+public:
+	enum { sw_encode_time, sw_decode_time, sw__max };
+private:
+	static stop_watch _codec_timings;
 #endif
 
 protected:
@@ -1086,8 +1081,8 @@ public:
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
 		const FieldTrait_Hash_Array *ftha)
-		: MessageBase(ctx, msgType, begin, cnt, ftha),_header(ctx._mk_hdr(true)),
-		  _trailer(ctx._mk_trl(true)), _custom_seqnum(), _no_increment(), _end_of_batch(true)
+		: MessageBase(ctx, msgType, begin, cnt, ftha)
+		, _header(ctx._mk_hdr(true)), _trailer(ctx._mk_trl(true)), _custom_seqnum(), _no_increment(), _end_of_batch(true)
 	{}
 
 	/// Dtor.
@@ -1187,7 +1182,7 @@ public:
 		// and get rid of it at the end.
 
 		const unsigned long OVERFLOW_MASK (1UL << 8 | 1UL << 16 | 1UL << 24 | 1UL << 32 | 1UL << 40 | 1UL << 48 | 1UL << 56);
-		unsigned long ret{}, overflow{};
+		unsigned long ret{}, overflow{}, overflowtmp{};
 		from += offset;
 		const unsigned long elen (len != -1 ? len : sz);
 		size_t ii{};
@@ -1195,10 +1190,15 @@ public:
 		{
 			unsigned long expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & *reinterpret_cast<const unsigned long*>(from + ii)));
 			ret += *reinterpret_cast<const unsigned long*>(from + ii);
-			overflow += (expected_overflow ^ ret) & OVERFLOW_MASK;
+			overflowtmp += (expected_overflow ^ ret) & OVERFLOW_MASK;
+			if (ii % 4096 == 0)
+			{
+				overflow += COLLAPSE_INT64(overflowtmp);
+				overflowtmp = 0;
+			}
 		}
+		overflow += COLLAPSE_INT64(overflowtmp);
 		ret = COLLAPSE_INT64(ret);
-		overflow = COLLAPSE_INT64(overflow);
 		for (; ii < elen; ret += from[ii++]); // add up rest one by one
 		return (ret - overflow) & 0xff;
 #else
@@ -1364,7 +1364,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
 
 #if defined FIX8_CODECTIMING
-	F8API static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
+	F8API static void format_codec_timings(const f8String& md, std::ostream& ostr, const stop_watch::value& tobj);
 	F8API static void report_codec_timings(const f8String& tag);
 #endif
 };

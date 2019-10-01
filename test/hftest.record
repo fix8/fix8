@@ -1,0 +1,2 @@
+#!/bin/bash
+cat client server|egrep "Encode|Decode" >> hftest.stats

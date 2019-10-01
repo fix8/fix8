@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -93,7 +93,7 @@ class Configuration
 {
 	static RegExp _ipexp;
 
-	const XmlElement *_root, *_default;
+	const XmlElement *_root{}, *_default;
 	using ConfigMap = std::map<const std::string, const XmlElement *>;
 	std::vector<ConfigMap> _groups;
 	std::vector<const XmlElement *> _allsessions;
@@ -231,7 +231,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Configuration() {}
+	virtual ~Configuration() { delete _root; }
 
 	/*! Process the config file.
 	  \return the number of sessions processed (found) */

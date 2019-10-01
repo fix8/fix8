@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -657,8 +657,9 @@ public:
 	/// Force persister to sync next send/receive seqnums
 	F8API void update_persist_seqnums();
 
-	/// stop the session.
-	F8API void stop();
+    /*! stop the session.
+      \param clearTimer - false if timer event queue clearing is to be omitted */
+    F8API void stop(const bool clearTimer = true);
 
 	/*! Get the connection object.
 	    \return the connection object */
