@@ -122,10 +122,7 @@ public:
             tail_next_ = tail_pos_ + msg_size;
             return tail_pos_ + sizeof(void*);
         }
-        else
-        {
-            return enqueue_prepare_slow(sz);
-        }
+        return enqueue_prepare_slow(sz);
     }
 
     void enqueue_commit ()
@@ -145,15 +142,12 @@ public:
             char* msg = head_pos_ + sizeof(void*);
             return msg;
         }
-        else if (((uintptr_t)next & ~1) == 0)
+        if (((uintptr_t)next & ~1) == 0)
         {
             return 0;
         }
-        else
-        {
-            atomic_addr_store_release((void* volatile*)&head_pos_, (char*)((uintptr_t)next & ~1));
-            return dequeue_prepare();
-        }
+        atomic_addr_store_release((void* volatile*)&head_pos_, (char*)((uintptr_t)next & ~1));
+        return dequeue_prepare();
     }
 
  

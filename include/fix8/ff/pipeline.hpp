@@ -581,8 +581,7 @@ public:
                 pthread_mutex_unlock(p_prod_m);
                 --cons_counter;
 
-                if ((*task != (void *)FF_EOS)) return true;
-                else return false;
+                return *task != (void *)FF_EOS;
             }
             pthread_mutex_lock(&cons_m);
             while(cons_counter.load() == 0) {
@@ -593,8 +592,7 @@ public:
         }
         for(unsigned long i=0;i<retry;++i) {
             if (outbuffer->pop(task)) {
-                if ((*task != (void *)FF_EOS)) return true;
-                else return false;
+                return *task != (void *)FF_EOS;
             }
             losetime_in(ticks);
         }
@@ -613,8 +611,7 @@ public:
     inline bool load_result_nb(void ** task) {
         FFBUFFER * outbuffer = get_out_buffer();
         if (outbuffer) {
-            if (outbuffer->pop(task)) return true;
-            else return false;
+            return outbuffer->pop(task);
         }
 
         if (!has_input_channel)
