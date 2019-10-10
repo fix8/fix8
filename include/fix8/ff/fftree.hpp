@@ -43,7 +43,6 @@ namespace ff {
 
 #undef DEBUG_FFTREE
 
-//static pthread_mutex_t treeLock = PTHREAD_MUTEX_INITIALIZER;
 static std::mutex treeLock;
 static std::set<fftree *> roots;
 
@@ -74,8 +73,7 @@ struct fftree {
         hasocl = (nodetype == OCL_WORKER);
         hastpc = (nodetype == TPC_WORKER);
 		if (isroot){
-			treeLock.lock();
-			//pthread_mutex_lock(&treeLock);
+			std::lock_guard<std::mutex> lock(treeLock);
 #if defined(DEBUG_FFTREE)
             std::pair<std::set<fftree*>::iterator,bool> it;
 			it = roots.insert(this);
@@ -83,8 +81,6 @@ struct fftree {
 #else
             roots.insert(this);
 #endif
-			treeLock.unlock();
-			//pthread_mutex_unlock(&treeLock);
         }
 	}
 
@@ -96,8 +92,7 @@ struct fftree {
         hasocl = (nodetype == OCL_WORKER);
         hastpc = (nodetype == TPC_WORKER);
 		if (isroot) {
-			treeLock.lock();
-            //pthread_mutex_lock(&treeLock);
+			std::lock_guard<std::mutex> lock(treeLock);
 #if defined(DEBUG_FFTREE)
             std::pair<std::set<fftree*>::iterator,bool> it;
 			it = roots.insert(this);
@@ -105,8 +100,6 @@ struct fftree {
 #else
             roots.insert(this);
 #endif
-			treeLock.unlock();
-			//pthread_mutex_unlock(&treeLock);
         }
 	}
 
@@ -115,8 +108,7 @@ struct fftree {
 			if (children[i].first && !children[i].second)
 				delete children[i].first;
 		if (isroot) {
-			treeLock.lock();
-            //pthread_mutex_lock(&treeLock);
+			std::lock_guard<std::mutex> lock(treeLock);
 #if defined(DEBUG_FFTREE)
             std::set<fftree *>::iterator it = roots.find(this);
             assert(it != roots.end());
@@ -124,19 +116,14 @@ struct fftree {
 #else
             roots.erase(this);
 #endif
-			treeLock.unlock();
-            //pthread_mutex_unlock(&treeLock);
         }
 	}
 
 	void add_child(fftree *t) {
 		children.push_back(std::make_pair(t,t?t->ispattern():false));
 		if (t && t->isroot) {
-			treeLock.lock();
-            //pthread_mutex_lock(&treeLock);
+			std::lock_guard<std::mutex> lock(treeLock);
 			roots.erase(t);
-			treeLock.unlock();
-            //pthread_mutex_unlock(&treeLock);
         }
 	}
 
@@ -145,11 +132,8 @@ struct fftree {
 			delete children[idx].first;
 		children[idx] = std::make_pair(t,t?t->ispattern():false);
 		if (t && t->isroot) {
-			treeLock.lock();
-            //pthread_mutex_lock(&treeLock);
+			std::lock_guard<std::mutex> lock(treeLock);
 			roots.erase(t);
-			treeLock.unlock();
-            //pthread_mutex_unlock(&treeLock);
         }
 	}
 
