@@ -1,6 +1,6 @@
 
 Fix8 Open Source C++ FIX Engine
-A modern open source C++ FIX framework featuring complete schema driven customisation, high performance and fast application development.
+A modern open source C++ FIX framework featuring complete schema driven customization, high performance and fast application development.
 The system is comprised of a compiler for generating C++ message and field encoders,
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
@@ -32,7 +32,7 @@ Features
 Fix8 helps you get your FIX protocol client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.
 
 
-Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile.
+Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customized messages or fields, simply update the schema and recompile.
 
 
 Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 68% faster encoding/decoding the same message than Quickfix. See Performance to see how we substantiate this shameless bragging.
@@ -50,7 +50,7 @@ Fix8 contains a built-in unit test framework that's being continually revised an
 Fix8 is a complete C++ FIX framework, with client/server session and connection classes (including SSL); support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
 
 
-Leverage standard components. Fix8 optionally uses industry recognised components for many important functions, including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen and more. We didn't reinvent the wheel.
+Leverage standard components. Fix8 optionally uses industry recognized components for many important functions, including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen and more. We didn't reinvent the wheel.
 
 
 Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
@@ -59,7 +59,7 @@ Fix8 statically supports nested components and groups to any depth. The Fix8 com
 Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 2.1us, and ExecutionReport decode 3.2us. Without the framework overhead, NewOrderSingle encode latency is 1.4us. This is being continually improved.
 
 
-Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 provides a flexible platform to develop your application on.
+Fix8 has been designed to be extended, customized or enhanced. If you have special requirements, Fix8 provides a flexible platform to develop your application on.
 
 
 Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering, well-formedness testing, retransmission and standard session semantics.
