@@ -165,3 +165,6 @@ intermediate_config.*
 /.vscode
 /_build*.sh
 /_make*.sh
+msvc/.vs/fix8-vc142/v16/Browse.VC.db
+msvc/.vs/fix8-vc142/v16/Solution.VC.db
+msvc/nuget/build-3rdparty/*.nupkg
