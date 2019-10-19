@@ -13,16 +13,16 @@
       <PreprocessorDefinitions>F8_UTEST_API_SHARED;_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <AdditionalDependencies>utestlibd.lib;manual-link\gtest_maind.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>utestlibd.lib;gtestd.lib;manual-link\gtest_maind.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <AdditionalDependencies>utestlib.lib;manual-link\gtest_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>utestlib.lib;gtest.lib;manual-link\gtest_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <AdditionalDependencies>utestlibd.lib;manual-link\gtest_maind.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>utestlibd.lib;gtestd.lib;manual-link\gtest_maind.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <AdditionalDependencies>utestlib.lib;manual-link\gtest_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>utestlib.lib;gtest.lib;manual-link\gtest_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
