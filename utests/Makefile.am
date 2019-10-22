@@ -50,7 +50,7 @@ libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
 							 utest_router.hpp utest_classes.hpp utest_classes.cpp
 
 CLEANFILES = $(libutest_la_SOURCES)
-
+BUILT_SOURCES = $(libutest_la_SOURCES) $(message_test_SOURCES) $(fileLogger_test_SOURCES) $(filePersister_test_SOURCES) $(session_test_SOURCES)
 .NOTPARALLEL: $(XML_42_UTEST_SCHEMA)
 
 XML_42_UTEST_SCHEMA = $(top_srcdir)/schema/FIX42UTEST.xml
