@@ -61,7 +61,7 @@ EXTRA_FIELDS = "<field number='9999' name='SampleUserField'  type='STRING' messa
 $(libutest_la_SOURCES): $(XML_42_UTEST_SCHEMA)
 	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_UTEST_SCHEMA) -F $(EXTRA_FIELDS)
 
-AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main -lpthread
+AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoJSON -lgtest -lgtest_main -lpthread
 
 if BDBSUPPORT
 AM_LDFLAGS += -ldb_cxx
@@ -86,6 +86,9 @@ built = $(top_srcdir)/runtime
 
 required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
 					 $(built)/message.lo $(built)/modp_numtoa.lo
+if CODECTIMING
+required_objs += $(built)/f8measure.lo
+endif
 persist_objs = $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
 if LIBMEMCACHEDSUPPORT
 persist_objs += $(built)/memcachedpersist.lo

@@ -165,3 +165,7 @@ intermediate_config.*
 /.vscode
 /_build*.sh
 /_make*.sh
+am--include-marker
+\#
+utests/store
+.fuse*

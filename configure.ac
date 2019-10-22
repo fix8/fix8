@@ -746,6 +746,7 @@ AC_ARG_ENABLE([codectiming],
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-codectiming) ;;
 esac])
+AM_CONDITIONAL(CODECTIMING, [test x${enableval} = xyes])
 
 AC_ARG_ENABLE([debug],
 [AS_HELP_STRING([--enable-debug],[enable DEBUG support (FIX8_DEBUG) (default=no)])],
