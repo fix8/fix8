@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props" Condition="Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props')" />
-  <Import Project="packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props" Condition="Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props')" />
-  <Import Project="packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props" Condition="Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -28,31 +25,32 @@
     <ProjectName>fix8</ProjectName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -63,9 +61,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="root.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>2135afac</NuGetPackageImportStamp>
-  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
@@ -205,6 +201,7 @@
     <ClCompile Include="..\runtime\persist.cpp" />
     <ClCompile Include="..\runtime\session.cpp" />
     <ClCompile Include="..\runtime\traits.cpp" />
+    <ClCompile Include="..\runtime\f8measure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\fix8\configuration.hpp" />
@@ -234,6 +231,7 @@
     <ClInclude Include="..\include\fix8\usage.hpp" />
     <ClInclude Include="..\include\fix8\xml.hpp" />
     <ClInclude Include="..\include\fix8\yield.hpp" />
+    <ClInclude Include="..\include\fix8\f8measure.hpp" />
     <ClInclude Include="..\runtime\precomp.hpp" />
     <ClInclude Include="f8config_msvc.h" />
   </ItemGroup>
@@ -242,21 +240,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-    <Import Project="packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets" Condition="Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets')" />
-    <Import Project="packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets" Condition="Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets')" />
-    <Import Project="packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets" Condition="Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets')" />
+    <Import Project="packages\fix8.deps.1.4.20191017.1\build\native\fix8.deps.targets" Condition="Exists('packages\fix8.deps.1.4.20191017.1\build\native\fix8.deps.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.props'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.openssl.1.0.20151130.1\build\native\fix8.dependencies.openssl.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.props'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.poco.1.6.20151130.1\build\native\fix8.dependencies.poco.targets'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.props'))" />
-    <Error Condition="!Exists('packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.dependencies.tbb.4.4.20151130.1\build\native\fix8.dependencies.tbb.targets'))" />
+    <Error Condition="!Exists('packages\fix8.deps.1.4.20191017.1\build\native\fix8.deps.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fix8.deps.1.4.20191017.1\build\native\fix8.deps.targets'))" />
   </Target>
 </Project>

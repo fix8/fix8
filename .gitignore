@@ -169,3 +169,6 @@ am--include-marker
 \#
 utests/store
 .fuse*
+msvc/.vs/fix8-vc142/v16/Browse.VC.db
+msvc/.vs/fix8-vc142/v16/Solution.VC.db
+msvc/nuget/build-3rdparty/*.nupkg

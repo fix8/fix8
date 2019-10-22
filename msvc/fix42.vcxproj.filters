@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\stocklib\FIX42_traits.cpp" >
+    <ClCompile Include="..\stocklib\FIX42_traits.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\stocklib\FIX42_types.cpp" >
+    <ClCompile Include="..\stocklib\FIX42_types.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\stocklib\FIX42_classes.cpp">
@@ -41,5 +41,8 @@
     <ClInclude Include="..\stocklib\FIX42_types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
