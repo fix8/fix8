@@ -1,0 +1,3 @@
+[submodule "msvc/nuget/build-3rdparty/vcpkg"]
+	path = msvc/nuget/build-3rdparty/vcpkg
+	url = https://github.com/Microsoft/vcpkg.git

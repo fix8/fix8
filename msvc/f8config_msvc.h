@@ -56,6 +56,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <process.h>
 #pragma warning (disable : 4800 ) // forcing value to bool
 #pragma warning (disable : 4244 ) // conversion from, possible loss of data
+#pragma warning (disable : 4307 ) // '*': signed integral constant overflow
 #define HAVE_GMTOFF
 #undef Yield
 #endif
@@ -70,7 +71,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* #undef CLOSEDIR_VOID */
 
 /* Define to 1 to enable CODEC timing testing code */
-/* #undef CODECTIMING */
+#ifndef FIX8_CODECTIMING
+#define FIX8_CODECTIMING 1
+#endif
 
 /* configure options */
 #ifndef FIX8_CONFIGURE_OPTIONS

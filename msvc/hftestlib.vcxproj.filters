@@ -10,4 +10,7 @@
     <ClCompile Include="..\test\Perf_traits.cpp" />
     <ClCompile Include="..\test\Perf_types.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

@@ -6,4 +6,7 @@
   <ItemGroup>
     <ClInclude Include="..\test\myfix.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

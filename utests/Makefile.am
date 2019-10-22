@@ -50,7 +50,7 @@ libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
 							 utest_router.hpp utest_classes.hpp utest_classes.cpp
 
 CLEANFILES = $(libutest_la_SOURCES)
-
+BUILT_SOURCES = $(libutest_la_SOURCES) $(message_test_SOURCES) $(fileLogger_test_SOURCES) $(filePersister_test_SOURCES) $(session_test_SOURCES)
 .NOTPARALLEL: $(XML_42_UTEST_SCHEMA)
 
 XML_42_UTEST_SCHEMA = $(top_srcdir)/schema/FIX42UTEST.xml
@@ -61,7 +61,7 @@ EXTRA_FIELDS = "<field number='9999' name='SampleUserField'  type='STRING' messa
 $(libutest_la_SOURCES): $(XML_42_UTEST_SCHEMA)
 	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_UTEST_SCHEMA) -F $(EXTRA_FIELDS)
 
-AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main -lpthread
+AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoJSON -lgtest -lgtest_main -lpthread
 
 if BDBSUPPORT
 AM_LDFLAGS += -ldb_cxx
@@ -86,6 +86,9 @@ built = $(top_srcdir)/runtime
 
 required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
 					 $(built)/message.lo $(built)/modp_numtoa.lo
+if CODECTIMING
+required_objs += $(built)/f8measure.lo
+endif
 persist_objs = $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
 if LIBMEMCACHEDSUPPORT
 persist_objs += $(built)/memcachedpersist.lo

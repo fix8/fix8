@@ -10,4 +10,7 @@
     <ClInclude Include="..\test\Myfix_router.hpp" />
     <ClInclude Include="..\test\Myfix_types.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>
