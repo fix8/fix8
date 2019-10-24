@@ -163,7 +163,7 @@ void perf_metric_start(performance_metrics::Enum what) { }
 void perf_metric_stop(performance_metrics::Enum what) { }
 void perf_metric_start(performance_metrics::Enum what, std::int64_t measure) { }
 void perf_metric_stop(performance_metrics::Enum what, std::int64_t measure) { }
-std::int64_t perf_metric_measure() { }
+std::int64_t perf_metric_measure() { return 0; }
 #endif
 
 //-----------------------------------------------------------------------------------------

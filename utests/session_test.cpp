@@ -119,8 +119,11 @@ public:
     /// used to get next receive seq
     unsigned get_next_receive_seq() {return _next_receive_seq;}
 
-    /// used to set last received seq
-    void set_last_received(Tickval& val) {_last_received = val;}
+    /// used to set last received timestamp
+    void set_last_received(const Tickval& val) {_last_received = val;}
+
+    /// used to set last sent timestamp
+    void set_last_sent(const Tickval& val) {_last_sent = val;}
 
     ///start heartbeat service thread
     void kickHBService() {heartbeat_service();}
@@ -328,7 +331,7 @@ TEST_F(sessionTest, logon)
     Logon * logon = new Logon;
     fillRecvHeader(logon->Header());
 
-	 HeartBtInt hbi(initiator_test->initiator->get_hb_interval());
+	HeartBtInt hbi(initiator_test->initiator->get_hb_interval());
     *logon << new HeartBtInt(hbi()) << new EncryptMethod(0);
     f8String logon_str;
     logon->encode(logon_str);
@@ -502,11 +505,13 @@ TEST_F(sessionTest, handle_test_request)
 TEST_F(sessionTest, send_test_request)
 {
     //make sure test request is sent
-    Tickval empty;
-    initiator_test->ss->set_last_received(empty);
+    Tickval now(true);
+    initiator_test->ss->set_last_sent(Tickval(true)); // to prevent sending HB when HB service is kicked
+    initiator_test->ss->set_last_received(Tickval(false));
     initiator_test->ss->kickHBService();
 
     std::vector<f8String> outputs = getMsgs();
+    ASSERT_FALSE(outputs.empty());
 
     f8String output = outputs.back();
     EXPECT_FALSE(output.empty());

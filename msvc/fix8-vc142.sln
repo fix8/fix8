@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{90D3DF6C-3858-4260-AB5F-97765A6067E2}"
 EndProject
@@ -43,9 +43,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hftest", "hftest.vcxproj", 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fix8", "fix8.vcxproj", "{6BC204CA-6C4F-44E3-BBF8-09A4CA4BC223}"
-	ProjectSection(ProjectDependencies) = postProject
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8} = {37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hfprint", "hfprint.vcxproj", "{D833F04D-6CA4-4D86-83DA-58647617FD5F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -101,15 +98,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utestlib", "utestlib.vcxpro
 		{2FB5EED6-D4C8-4D36-A21F-E32ECE2771B2} = {2FB5EED6-D4C8-4D36-A21F-E32ECE2771B2}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{452ACE71-EE11-4B1E-9EE0-2F2325136C40}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "f8lib_prebuild", "f8lib_prebuild.vcxproj", "{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stocklib", "stocklib", "{562EC71F-2626-464C-95B6-707384271E25}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stocklib_prebuild", "stocklib_prebuild.vcxproj", "{D03283C9-8BC4-485E-A3AB-590866B804F4}"
@@ -124,6 +112,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fix40", "fix40.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fix41", "fix41.vcxproj", "{8D5BDA27-1889-4907-9103-A645B5E9A721}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7B5E1760-9591-4E90-861A-9C2611DDFAC9} = {7B5E1760-9591-4E90-861A-9C2611DDFAC9}
 		{D03283C9-8BC4-485E-A3AB-590866B804F4} = {D03283C9-8BC4-485E-A3AB-590866B804F4}
 	EndProjectSection
 EndProject
@@ -371,18 +360,6 @@ Global
 		{8F0D99E8-88B4-4C01-BBFC-81EAD6F69ACD}.Release|x64.Build.0 = Release|x64
 		{8F0D99E8-88B4-4C01-BBFC-81EAD6F69ACD}.Release|x86.ActiveCfg = Release|Win32
 		{8F0D99E8-88B4-4C01-BBFC-81EAD6F69ACD}.Release|x86.Build.0 = Release|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Debug|Win32.Build.0 = Debug|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Debug|x64.ActiveCfg = Debug|x64
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Debug|x64.Build.0 = Debug|x64
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Debug|x86.ActiveCfg = Debug|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Debug|x86.Build.0 = Debug|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Release|Win32.ActiveCfg = Release|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Release|Win32.Build.0 = Release|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Release|x64.ActiveCfg = Release|x64
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Release|x64.Build.0 = Release|x64
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Release|x86.ActiveCfg = Release|Win32
-		{37C4CD0E-2CA4-4D9B-AACA-D2533D7464B8}.Release|x86.Build.0 = Release|Win32
 		{D03283C9-8BC4-485E-A3AB-590866B804F4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D03283C9-8BC4-485E-A3AB-590866B804F4}.Debug|Win32.Build.0 = Debug|Win32
 		{D03283C9-8BC4-485E-A3AB-590866B804F4}.Debug|x64.ActiveCfg = Debug|x64
@@ -520,5 +497,8 @@ Global
 		{99E73022-54CD-4985-8375-7EA08DEC73E7} = {562EC71F-2626-464C-95B6-707384271E25}
 		{28FF44E0-8F50-4FF6-8A78-67190921E491} = {562EC71F-2626-464C-95B6-707384271E25}
 		{FAAA6FDF-757D-4C5F-8516-338A25AA0A07} = {562EC71F-2626-464C-95B6-707384271E25}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4B0BC40-C20B-42E1-8DEB-FC7687A7CA4B}
 	EndGlobalSection
 EndGlobal
