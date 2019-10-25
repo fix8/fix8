@@ -194,7 +194,7 @@ public:
     /// Ctor
     Connection(Poco::Net::StreamSocket *sock, Session &session, const ProcessModel pmodel)   // client
         : _connected(false), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(10), _started(false){}
+        _hb_interval(10), _hb_interval20pc(10 + 10 / 5), _started(false){}
 
     /// Ctor
     Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const ProcessModel pmodel) // server
