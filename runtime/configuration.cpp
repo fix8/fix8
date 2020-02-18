@@ -397,7 +397,7 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 	{
 		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
 		target._private_key_file = which->FindAttrRef("private_key_file", empty);
-		target._certificate_file = which->FindAttrRef("ceritificte_file", empty);
+		target._certificate_file = which->FindAttrRef("certificate_file", empty);
 		target._ca_location = which->FindAttrRef("ca_location", empty);
 		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
 		target._load_default_cas = which->FindAttr("load_default_cas", false);
