@@ -450,6 +450,8 @@ public:
 	/// empty the positions map
 	void clear_positions() { _pos.clear(); }
 
+	const Positions& get_positions() const { return _pos; }
+
 	/*! Get the number of possible fields in this message
 	  \return number of fields */
 	size_t size() const { return _fp.size(); }
@@ -1025,6 +1027,8 @@ public:
 	/*! Get pass through fields (permissive mode only)
 	    \return string of unknown pass through fields */
 	const f8String& get_unknown() const { return _unknown; }
+
+	const F8MetaCntx& get_metadata() const { return _ctx; }
 };
 
 //-------------------------------------------------------------------------------------------------
