@@ -195,7 +195,9 @@ class FIXReader : public AsyncSocket<f8String>
 			rdsz = _sock->receiveBytes(_read_buffer_wptr, maxremaining);
 			if (rdsz <= 0)
 			{
-				if (errno == EAGAIN
+				if (rdsz == 0) {
+					errno = 0;
+				} else if (errno == EAGAIN
 #if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
 					|| errno == EWOULDBLOCK
 #endif
@@ -222,7 +224,9 @@ class FIXReader : public AsyncSocket<f8String>
 			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
 			if (rdSz <= 0)
 			{
-				if (errno == EAGAIN
+				if (rdSz == 0) {
+					errno = 0;
+				} else if (errno == EAGAIN
 #if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
 					|| errno == EWOULDBLOCK
 #endif

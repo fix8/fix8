@@ -847,6 +847,7 @@ bool Session::heartbeat_service()
 				{
 					slout_error << e.what();
 				}
+				do_state_change(States::st_session_terminated);
 				return true;
 			}
 			else if (_state != States::st_session_terminated)
