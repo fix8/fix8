@@ -96,11 +96,16 @@ endif
 if TOGGLETRACKINGASSIGNMENTS
 libmyfix_la_CXXFLAGS += -fno-var-tracking -fno-var-tracking-assignments
 endif
-f8test_LDFLAGS = $(ALL_LIBS) -lmyfix
-f8print_LDFLAGS = $(ALL_LIBS) -lmyfix
-hftest_LDFLAGS = $(ALL_LIBS) -lhftest
-hfprint_LDFLAGS = $(ALL_LIBS) -lhftest
-harness_LDFLAGS = $(ALL_LIBS) -lmyfix
+f8test_LDFLAGS = $(ALL_LIBS)
+f8test_LDADD = libmyfix.la
+f8print_LDFLAGS = $(ALL_LIBS)
+f8print_LDADD = libmyfix.la
+hftest_LDFLAGS = $(ALL_LIBS)
+hftest_LDADD = libhftest.la
+hfprint_LDFLAGS = $(ALL_LIBS)
+hfprint_LDADD = libhftest.la
+harness_LDFLAGS = $(ALL_LIBS)
+harness_LDADD = libmyfix.la
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz
