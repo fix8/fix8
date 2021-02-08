@@ -84,7 +84,7 @@ endif
 
 built = $(top_srcdir)/runtime
 
-required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
+required_objs = -lutest.la $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
 					 $(built)/message.lo $(built)/modp_numtoa.lo
 if CODECTIMING
 required_objs += $(built)/f8measure.lo
