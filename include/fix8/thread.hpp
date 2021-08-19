@@ -335,7 +335,11 @@ public:
 
 	void lock()
 	{
+#if __cplusplus >= 201703L
+		int x = 0;
+#else
 		register int x = 0;
+#endif
 		while(!__sync_bool_compare_and_swap(&_isLocked, false, true))
 		{
 			if(++x >= 100000)
@@ -348,7 +352,11 @@ public:
 	bool try_lock() { return _isLocked; }
 	void unlock()
 	{
+#if __cplusplus >= 201703L
+		int x = 0;
+#else
 		register int x = 0;
+#endif
 		while(!__sync_bool_compare_and_swap(&_isLocked, true, false))
 		{
 			if(++x >= 100000)
