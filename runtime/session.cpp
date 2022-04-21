@@ -102,7 +102,7 @@ void SessionID::from_string(const f8String& from)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
+Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, ILogger *logger, ILogger *plogger) :
 _state(States::st_none),
 _ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
@@ -129,7 +129,7 @@ _ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 }
 
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, Logger *logger, Logger *plogger) :
+Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, ILogger *logger, ILogger *plogger) :
 _state(States::st_none),
 _ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor

@@ -152,13 +152,21 @@ class Tickval;
 
 //-------------------------------------------------------------------------------------------------
 
+/// interface for logging class. 
 class ILogger {
-	virtual bool is_loggable() = 0;
-	virtual bool enqueue(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0) = 0;
-	virtual bool send(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0) = 0;
-	virtual void stop() = 0;
-	virtual void purge_thread_codes() = 0;
-	virtual ~ILogger() = default;
+public:
+	enum Level { Debug, Info, Warn, Error, Fatal };
+
+	enum Flags { mstart, sstart, sequence, thread, timestamp, minitimestamp, direction, level, location,
+					 start_controls, append=start_controls, buffer, compress, pipe, broadcast, nolf, inbound, outbound, xml, num_flags };
+
+    virtual bool is_loggable(Level level) const = 0;
+	virtual bool has_flag(const Flags flg) const = 0;
+    virtual bool enqueue(const std::string& what, Level lev, const char *fl, const unsigned val) = 0;
+    virtual bool send(const std::string& what, Level lev, const char *fl, const unsigned val) = 0;
+    virtual void stop() = 0;
+    virtual void purge_thread_codes() = 0;
+    virtual ~ILogger() = default;
 };
 
 /// f8_thread delegated async logging class
@@ -168,15 +176,14 @@ class Logger : public ILogger
 	std::list<std::string> _buffer;
 
 public:
-	enum Level { Debug, Info, Warn, Error, Fatal };
+    using Level = ILogger::Level;
 #ifndef _MSC_VER
 	static const int Errors = bitsum(Warn,Error,Fatal), All = bitsum(Debug,Info,Warn,Error,Fatal);
 #else
 	static const int Errors = (1<<Warn|1<<Error|1<<Fatal), All = (1<<Debug|1<<Info|1<<Warn|1<<Error|1<<Fatal);
 #endif
 	static const int None = 0;
-	enum Flags { mstart, sstart, sequence, thread, timestamp, minitimestamp, direction, level, location,
-					 start_controls, append=start_controls, buffer, compress, pipe, broadcast, nolf, inbound, outbound, xml, num_flags };
+	using Flags = ILogger::Flags;
 #ifndef _MSC_VER
 	static const int StdFlags = bitsum(sequence,thread,timestamp,level);
 #else
@@ -347,7 +354,7 @@ public:
 	/*! Check if the given log flag is set
 		\param flg flag bit to check
 		\return true if set */
-	bool has_flag(const Flags flg) const { return _flags.has(flg); }
+	bool has_flag(const Flags flg) const override { return _flags.has(flg); }
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */

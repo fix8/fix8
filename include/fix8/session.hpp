@@ -770,6 +770,14 @@ public:
 	    \param pst pointer to persister object  */
 	void set_persister(Persister *pst) { _persist = pst; }
 
+	/*! Set the session logger.
+	    \param pst pointer to logger object  */
+	void set_logger(ILogger *logger) { _logger = logger; }
+
+	/*! Set the protocol logger.
+	    \param pst pointer to logger object  */
+	void set_plogger(ILogger *plogger) { _plogger = plogger; }
+
 	/*! Get the control object for this session.
 	    \return the control object */
 	Control& control() { return _control; }
