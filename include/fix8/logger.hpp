@@ -151,8 +151,18 @@ public:
 class Tickval;
 
 //-------------------------------------------------------------------------------------------------
+
+class ILogger {
+	virtual bool is_loggable() = 0;
+	virtual bool enqueue(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0) = 0;
+	virtual bool send(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0) = 0;
+	virtual void stop() = 0;
+	virtual void purge_thread_codes() = 0;
+	virtual ~ILogger() = default;
+};
+
 /// f8_thread delegated async logging class
-class Logger
+class Logger : public ILogger
 {
 	f8_thread<Logger> _thread;
 	std::list<std::string> _buffer;
@@ -261,7 +271,7 @@ public:
 	/*! Check if the given log level is set for this logger
 	    \param level level to test
 	    \return true if available */
-	bool is_loggable(Level level) const { return _levels & level; }
+	bool is_loggable(Level level) const override { return _levels & level; }
 
 	/*! Set the Log Levels
 	    \param levels levels to set */
@@ -293,7 +303,7 @@ public:
 	    \param fl pointer to fileline
 	    \param val optional value for the logger to use
 	    \return true on success */
-	bool enqueue(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0)
+	bool enqueue(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0) override
 	{
 		const LogElement le(f8_thread<Logger>::getid(), what, lev, fl, val);
 		return _msg_queue.try_push (le) == 0;
@@ -305,11 +315,11 @@ public:
 	    \param fl pointer to fileline
 	    \param val optional value for the logger to use
 	    \return true on success */
-	bool send(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0)
+	bool send(const std::string& what, Level lev=Logger::Info, const char *fl=nullptr, const unsigned val=0) override
 		{ return is_loggable(lev) ? enqueue(what, lev, fl, val) : true; }
 
 	/// Stop the logging thread.
-	void stop() { _stopping.request_stop(); enqueue(std::string()); _thread.join(); }
+	void stop() override { _stopping.request_stop(); enqueue(std::string()); _thread.join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)
