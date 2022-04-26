@@ -419,7 +419,7 @@ protected:
 
 	f8_spin_lock _per_spl;
 	Persister *_persist;
-	Logger *_logger, *_plogger;
+	ILogger *_logger, *_plogger;
 
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor, _session_scheduler;
@@ -557,7 +557,7 @@ public:
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
 	F8API Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist=nullptr,
-		Logger *logger=nullptr, Logger *plogger=nullptr);
+		ILogger *logger=nullptr, ILogger *plogger=nullptr);
 
 	/*! Ctor. Acceptor.
 	    \param ctx reference to generated metadata
@@ -566,7 +566,7 @@ public:
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
 	F8API Session(const F8MetaCntx& ctx, const sender_comp_id& sci=sender_comp_id(), Persister *persist=nullptr,
-		Logger *logger=nullptr, Logger *plogger=nullptr);
+		ILogger *logger=nullptr, ILogger *plogger=nullptr);
 
 	/// Dtor.
 	F8API virtual ~Session();
@@ -769,6 +769,14 @@ public:
 	/*! Set the persister.
 	    \param pst pointer to persister object  */
 	void set_persister(Persister *pst) { _persist = pst; }
+
+	/*! Set the session logger.
+	    \param pst pointer to logger object  */
+	void set_logger(ILogger *logger) { _logger = logger; }
+
+	/*! Set the protocol logger.
+	    \param pst pointer to logger object  */
+	void set_plogger(ILogger *plogger) { _plogger = plogger; }
 
 	/*! Get the control object for this session.
 	    \return the control object */
