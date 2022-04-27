@@ -97,7 +97,7 @@ public:
 
     /// Ctor
     test_session(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
-        FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger)
+        FIX8::ILogger *logger=0, FIX8::ILogger *plogger=0) : Session(ctx, sid, persist, logger, plogger)
     {
         _timer.clear();
         _timer.stop();
@@ -134,8 +134,8 @@ class session_fixture
 {
 public:
     MemoryPersister * per;
-    Logger * pLogger;
-    Logger * sLogger;
+    ILogger * pLogger;
+    ILogger * sLogger;
     test_session * ss;
 
     /// Ctor, create a test session with memory persister and pipe logger
