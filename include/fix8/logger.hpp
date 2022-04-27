@@ -166,7 +166,7 @@ public:
     virtual bool send(const std::string& what, Level lev, const char *fl, const unsigned val) = 0;
     virtual void stop() = 0;
     virtual void purge_thread_codes() = 0;
-    virtual ~ILogger() = default;
+    virtual ~ILogger() {};
 };
 
 /// f8_thread delegated async logging class
