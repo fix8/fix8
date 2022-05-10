@@ -42,7 +42,7 @@ if USESSL
 POCO_LIBS += -lPocoNetSSL -lPocoCrypto -lPocoXML
 endif
 
-f8c_LDFLAGS = -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
+f8c_LDFLAGS = -Wl,-rpath=.,--enable-new-dtags -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
 if !USEOSX
 f8c_LDFLAGS += -rdynamic
 endif

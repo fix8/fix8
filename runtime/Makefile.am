@@ -41,7 +41,7 @@ libfix8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
                      consolemenu.cpp filepersist.cpp modp_numtoa.c precomp.cpp \
                      f8measure.cpp
 
-libfix8_la_LDFLAGS = -version-info $(libfix8_la_version_info)
+libfix8_la_LDFLAGS = -Wl,-rpath=.,--enable-new-dtags -version-info $(libfix8_la_version_info)
 
 libfix8_la_LDFLAGS += -ggdb -shared -lpthread
 if !USEOSX
