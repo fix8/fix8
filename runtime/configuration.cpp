@@ -253,7 +253,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 }
 
 //-------------------------------------------------------------------------------------------------
-Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid) const
+ILogger *Configuration::create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid) const
 {
 	string name;
 	if (from_or_default(from, ltype == session_log ? "session_log" : "protocol_log", name))

@@ -469,7 +469,7 @@ public:
 	  \param ltype log type
 	  \param sid optional session id to build name from
 	  \return new logger or 0 if unable to create */
-	F8API Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=nullptr) const;
+	F8API ILogger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=nullptr) const;
 
 	/*! Create schedule object from a session entity.
 	  \param from xml entity to search

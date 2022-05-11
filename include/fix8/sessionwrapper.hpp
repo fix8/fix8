@@ -201,7 +201,7 @@ protected:
 	sender_comp_id _sci;
 	target_comp_id _tci;
 	const SessionID _id;
-	Logger *_log, *_plog;
+	ILogger *_log, *_plog;
 	Persister *_persist;
 	T *_session;
 	Poco::Net::StreamSocket *_sock = nullptr;

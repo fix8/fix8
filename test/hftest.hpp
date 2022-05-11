@@ -75,7 +75,7 @@ public:
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
 	hf_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=nullptr,
-		FIX8::Logger *logger=nullptr, FIX8::Logger *plogger=nullptr) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
+		FIX8::ILogger *logger=nullptr, FIX8::ILogger *plogger=nullptr) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
 
 	/*! Application message callback.
 	    This method is called by the framework when an application message has been received and decoded. You
@@ -135,7 +135,7 @@ public:
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
 	hf_session_server(const FIX8::F8MetaCntx& ctx, const FIX8::sender_comp_id& sci, FIX8::Persister *persist=nullptr,
-		FIX8::Logger *logger=nullptr, FIX8::Logger *plogger=nullptr) : Session(ctx, sci, persist, logger, plogger),
+		FIX8::ILogger *logger=nullptr, FIX8::ILogger *plogger=nullptr) : Session(ctx, sci, persist, logger, plogger),
 		_router(*this) {}
 
 	/*! Application message callback. This method is called by the framework when an application message has been received and decoded.
