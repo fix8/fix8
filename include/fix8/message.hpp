@@ -885,7 +885,7 @@ public:
 
 	/*! Get the FieldTraits
 		\return mutable reference to FieldTraits object */
-	FieldTraits& mutable_fp() { return _fp; }
+	FieldTraits& mutable_fp() const { return _fp; }
 
 	/*! Extract a tag/value element from a char buffer. ULL version.
 	    \param from source buffer
