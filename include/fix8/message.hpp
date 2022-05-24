@@ -883,6 +883,10 @@ public:
 	   \return reference to FieldTraits object */
 	const FieldTraits& get_fp() const { return _fp; }
 
+	/*! Get the FieldTraits
+		\return mutable reference to FieldTraits object */
+	FieldTraits& mutable_fp() { return _fp; }
+
 	/*! Extract a tag/value element from a char buffer. ULL version.
 	    \param from source buffer
 	    \param sz size of string
