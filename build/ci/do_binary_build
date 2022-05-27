@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+SCRIPT_PATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+function build_fix8 {
+    ./bootstrap
+    ./configure
+    make
+    make install
+}
+
+
+function main {
+    clean_bazel_directories
+    build_fix8
+}
+
+main
