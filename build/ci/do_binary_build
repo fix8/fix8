@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+SCRIPT_PATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+export POCO_VERSION=1.11.1
+
+function build_and_install_poco {
+    curl -O -L  https://github.com/pocoproject/poco/archive/poco-${POCO_VERSION}-release.tar.gz
+    tar xvfz poco-${POCO_VERSION}-release.tar.gz
+    cd poco-poco-${POCO_VERSION}-release
+    mkdir poco_install
+    cmake . -DCMAKE_INSTALL_PREFIX=poco_install
+    cmake --build . --config Release --target install
+    cd ..
+}
+
+function build_fix8 {
+    ./bootstrap
+    ./configure --with-poco="$(pwd)"/poco-poco-${POCO_VERSION}-release/poco_install
+    make
+    make install
+}
+
+function main {
+    pwd
+    build_and_install_poco
+    build_fix8
+}
+
+main

@@ -1,0 +1,42 @@
+def takeCharacters(String s, int length) {
+    return s.substring(0, Math.min(s.length(), length));
+}
+
+pipeline {
+    agent { label 'buster10.6-coordinator' }
+
+    options {
+        timestamps()
+        timeout(time: 1, unit: 'HOURS')     // timeout on whole pipeline job
+        parallelsAlwaysFailFast()
+        skipDefaultCheckout(true)
+    }
+
+    environment {
+        ARTIFACTORY_PASSWORD = credentials('36e76c3b-881f-417d-ab6c-b65917a48477')
+        BAZEL_REMOTE_USERPASS = credentials('bazel-remote')
+        CI_DB_PG_PASSWORD = credentials('a7481e53-8050-4256-8b2b-1da868a645e4')
+    }
+
+    stages {
+        stage ('build and test') {
+            parallel {
+                stage ('build binaries') {
+                    agent { label 'buster' }
+                    steps{
+                        deleteDir()
+                        checkout scm
+                        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+                            sh './build/ci/do_binary_build'
+                        }
+                    }
+                    post {
+                        cleanup {
+                            cleanWs(deleteDirs: true, disableDeferredWipeout: true, notFailBuild: true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
