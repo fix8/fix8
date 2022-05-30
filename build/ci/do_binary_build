@@ -14,16 +14,25 @@ function build_and_install_poco {
 }
 
 function build_fix8 {
+    mkdir fix8_install
     ./bootstrap
-    ./configure --with-poco="$(pwd)"/poco-poco-${POCO_VERSION}-release/poco_install
+    ./configure --with-poco="$(pwd)"/poco-poco-${POCO_VERSION}-release/poco_install --prefix="$(pwd)"/fix8_install
     make
     make install
+}
+
+
+
+function cleanup {
+    rm -rf poco-${POCO_VERSION}-release*
+    rm -rf fix8_install
 }
 
 function main {
     pwd
     build_and_install_poco
     build_fix8
+    cleanup
 }
 
 main
