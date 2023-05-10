@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-23 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -37,6 +37,7 @@ test_programs = message_test fileLogger_test filePersister_test session_test
 noinst_PROGRAMS = $(test_programs)
 lib_LTLIBRARIES = libutest.la
 AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoJSON -lgtest -lgtest_main -lpthread
 pkginclude_HEADERS = f8headers.hpp
 
 TESTS = $(test_programs)
@@ -61,8 +62,6 @@ EXTRA_FIELDS = "<field number='9999' name='SampleUserField'  type='STRING' messa
 $(libutest_la_SOURCES): $(XML_42_UTEST_SCHEMA)
 	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_UTEST_SCHEMA) -F $(EXTRA_FIELDS)
 
-AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoJSON -lgtest -lgtest_main -lpthread
-
 if BDBSUPPORT
 AM_LDFLAGS += -ldb_cxx
 endif
@@ -84,7 +83,7 @@ endif
 
 built = $(top_srcdir)/runtime
 
-required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
+required_objs = $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
 					 $(built)/message.lo $(built)/modp_numtoa.lo
 if CODECTIMING
 required_objs += $(built)/f8measure.lo
@@ -98,10 +97,10 @@ persist_objs += $(built)/redispersist.lo
 endif
 session_objs = $(built)/connection.lo $(built)/session.lo
 
-message_test_LDADD = $(required_objs) $(persist_objs)
-fileLogger_test_LDADD = $(required_objs)
-filePersister_test_LDADD = $(required_objs) $(persist_objs) $(session_objs)
-session_test_LDADD = $(required_objs) $(persist_objs)
+message_test_LDADD = $(required_objs) $(persist_objs) libutest.la
+fileLogger_test_LDADD = $(required_objs) libutest.la
+filePersister_test_LDADD = $(required_objs) $(persist_objs) $(session_objs) libutest.la
+session_test_LDADD = $(required_objs) $(persist_objs) libutest.la
 
 endif
 

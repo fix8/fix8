@@ -1,3 +1,8 @@
+* Wed May 10 2023 David L. Dight <fix@fix8.org> 1.4.3
+- Fixed build issues hftest, utests, some compiler warnings
+- Updated checksum algorithm
+- Merged from dev 1.4.2
+
 * Tue Jan 01 2019 David L. Dight <fix@fix8.org> 1.4.1
 - Fixed Jira tickets FX-729,FX-744,FX-821,FX-884
 - Fixed deadlock condition in heartbeat

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-23 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -195,7 +195,9 @@ class FIXReader : public AsyncSocket<f8String>
 			rdsz = _sock->receiveBytes(_read_buffer_wptr, maxremaining);
 			if (rdsz <= 0)
 			{
-				if (errno == EAGAIN
+				if (rdsz == 0)
+					errno = 0;
+				else if (errno == EAGAIN
 #if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
 					|| errno == EWOULDBLOCK
 #endif
@@ -222,7 +224,9 @@ class FIXReader : public AsyncSocket<f8String>
 			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
 			if (rdSz <= 0)
 			{
-				if (errno == EAGAIN
+				if (rdSz == 0)
+					errno = 0;
+				else if (errno == EAGAIN
 #if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
 					|| errno == EWOULDBLOCK
 #endif

@@ -8,7 +8,9 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
-[Fix8 Market Tech](https://www.fix8mt.com/) develops and maintains Fix8, [Fix8Pro and UFE](https://www.fix8mt.com), the commercially supported version of Fix8. 
+[Fix8 Market Tech](https://www.fix8mt.com/) develops and maintains Fix8, [Fix8Pro and UFE](https://www.fix8mt.com), the commercially supported version of Fix8.
+
+**For enterprise use we recommend Fix8Pro.**
 
 **For enterprise use we recommend Fix8Pro.**
 
@@ -235,8 +237,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.4.2.tar.gz
-	% cd fix8-1.4.2
+	% tar xvzf 1.4.3.tar.gz
+	% cd fix8-1.4.3
 	% ./bootstrap
 	% ./configure
 	% make
@@ -250,8 +252,8 @@ If you have built the test cases, you can also run them as follows:
 
 You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
 
-	% tar xvzf 1.4.2.tar.gz
-	% cd fix8-1.4.2
+	% tar xvzf 1.4.3.tar.gz
+	% cd fix8-1.4.3
 	% export LIBTOOLIZE=`which glibtoolize`
 	% ./bootstrap
 	% ./configure
