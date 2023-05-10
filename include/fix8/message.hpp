@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-23 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -1049,6 +1049,10 @@ constexpr unsigned long COLLAPSE_INT64(unsigned long x)
 #endif
 #endif
 
+constexpr std::uint64_t fix8pro_collapse_int64(std::uint64_t x) noexcept
+   { return x + (x >> 8) + (x >> 16) + (x >> 24) + (x >> 32) + (x >> 40) + (x >> 48) + (x >> 56); }
+constexpr std::uint32_t fix8pro_collapse_int32(std::uint32_t x) noexcept
+   { return x + (x >> 8) + (x >> 16) + (x >> 24); }
 //-------------------------------------------------------------------------------------------------
 /// A complete Fix message with header, body and trailer
 class Message : public MessageBase
@@ -1160,12 +1164,15 @@ public:
 		MessageBase::clear(reuse);
 	}
 
-	/*! Generate a checksum from an encoded buffer, ULL version.
-	    \param from char *buffer encoded Fix message
-	    \param sz size of msg
-	    \param offset starting offset
-	    \param len maximum length
-	    \return calculated checknum */
+    /*! Generate a checksum from an encoded buffer, 4-byte scan.
+       \param from char *buffer encoded Fix message
+       \param sz size of msg
+       \param offset starting offset
+       \param len maximum length
+       \return calculated checknum
+       \todo add alignment control to scan over aligned bytes
+       \todo add AVX/SSE version
+     */
 	static unsigned calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)
 	{
 #if defined FIX8_SIZEOF_UNSIGNED_LONG && FIX8_SIZEOF_UNSIGNED_LONG == 8
@@ -1185,34 +1192,37 @@ public:
 		// except for the overflow. so we have to keep track of the overflow
 		// and get rid of it at the end.
 
-		const unsigned long OVERFLOW_MASK (1UL << 8 | 1UL << 16 | 1UL << 24 | 1UL << 32 | 1UL << 40 | 1UL << 48 | 1UL << 56);
-		unsigned long ret{}, overflow{}, overflowtmp{};
-		from += offset;
-		const unsigned long elen (len != -1 ? len : sz);
-		size_t ii{};
-		for (; ii < (elen - elen % 8); ii += 8)
-		{
-			unsigned long expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & *reinterpret_cast<const unsigned long*>(from + ii)));
-			ret += *reinterpret_cast<const unsigned long*>(from + ii);
-			overflowtmp += (expected_overflow ^ ret) & OVERFLOW_MASK;
-			if (ii % 4096 == 0)
-			{
-				overflow += COLLAPSE_INT64(overflowtmp);
-				overflowtmp = 0;
-			}
-		}
-		overflow += COLLAPSE_INT64(overflowtmp);
-		ret = COLLAPSE_INT64(ret);
-		for (; ii < elen; ret += from[ii++]); // add up rest one by one
-		return (ret - overflow) & 0xff;
+      const auto OVERFLOW_MASK(UINT32_C(1) << 8 | UINT32_C(1) << 16 | UINT32_C(1) << 24);
+      from += offset;
+      const auto elen {len != -1 ? len : sz}, eeii{elen - elen % 8};
+      std::uint32_t ret{}, overflow{}, overflowtmp{};
+      size_t ii{};
+      for (; ii < eeii; ii += 4)
+      {
+         auto next(*reinterpret_cast<const std::uint32_t *>(from + ii));
+         auto expected_overflow((ret & OVERFLOW_MASK) ^ (OVERFLOW_MASK & next));
+         ret += next;
+         overflowtmp += (expected_overflow ^ ret) & OVERFLOW_MASK;
+         if (ii && ii % 256 == 0)
+         {
+            /// @see FX-821, need to reset overflow bit sum to avoid of overflow in high byte each 256th cycle
+            overflow += fix8pro_collapse_int32(overflowtmp);
+            overflowtmp = 0;
+         }
+      }
+      ret = fix8pro_collapse_int32(ret);
+      overflow += fix8pro_collapse_int32(overflowtmp);
+      for (; ii < elen; ret += from[ii++]); // add up rest one by one
+      return (ret - overflow) & 0xff;
+   }
 #else
 		// native chksum algorithm
 		unsigned val(0);
 		const char *eptr(from + (len != -1 ? len + offset : sz - offset));
 		for (const char *ptr(from + offset); ptr < eptr; val += *ptr++);
 		return val % 256;
-#endif
 	}
+#endif
 
 	/*! Generate a checksum from an encoded buffer, string version.
 	    \param from source buffer encoded Fix message

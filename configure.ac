@@ -4,8 +4,8 @@ Fix8 Open Source FIX Engine.
 Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
-AC_PREREQ(2.66)
-AC_INIT([fix8], m4_esyscmd([./version.sh|tr -d '\n']),fix@fix8.org,fix8,http://www.fix8.org)
+AC_PREREQ([2.71])
+AC_INIT([fix8],[m4_esyscmd(./version.sh|tr -d '\n')],[fix@fix8.org],[fix8],[http://www.fix8.org])
 AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
 /*
@@ -83,13 +83,12 @@ AC_PROG_CC
 AC_C_BIGENDIAN
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_C_LONG_DOUBLE
 AC_TYPE_LONG_LONG_INT
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_C_INLINE
-AC_HEADER_TIME
+HAVE_SYS_TIME_H
 AC_STRUCT_TM
 AC_HEADER_STDBOOL
 AC_TYPE_PID_T
@@ -106,15 +105,16 @@ AC_CHECK_SIZEOF(unsigned long)
 # these are checked before the libraries are added to the compilation flags so that they will link
 # properly
 AC_PROG_GCC_TRADITIONAL
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 AC_FUNC_MALLOC
 AC_FUNC_MEMCMP
 AC_FUNC_MKTIME
-AC_TYPE_SIGNAL
 AC_FUNC_ALLOCA
 AC_HEADER_SYS_WAIT
 AC_FUNC_FORK
-AC_HEADER_STDC
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
 AC_FUNC_MMAP
 AC_FUNC_STAT
 AC_FUNC_STRFTIME
@@ -347,12 +347,11 @@ AC_ARG_WITH([mpmc],
 [AS_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (tbb|ff, default=ff)])],
 [case "${withval}" in
 	tbb) AC_MSG_CHECKING(for TBB)
-				AC_TRY_COMPILE([
+				AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 					#include <tbb/atomic.h>
 					#include <tbb/mutex.h>
 					#include <tbb/concurrent_queue.h>
-					],,
-					have_tbb=yes, have_tbb=no)
+					]], [[]])],[have_tbb=yes],[have_tbb=no])
 				if test "$have_tbb" = yes; then
 					 AC_MSG_RESULT(yes)
 					 AC_DEFINE(MPMC_SYSTEM, FIX8_MPMC_TBB, [MPMC system used])
@@ -413,7 +412,7 @@ AC_ARG_WITH(poco,
 ],[])
 
 AC_MSG_CHECKING(for Poco)
-	AC_TRY_COMPILE([
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 		#include <Poco/Net/ServerSocket.h>
 		#include <Poco/Net/StreamSocket.h>
 		#include <Poco/Timestamp.h>
@@ -421,8 +420,7 @@ AC_MSG_CHECKING(for Poco)
 		#include <Poco/DateTimeParser.h>
 		#include <Poco/DateTimeFormatter.h>
 		#include <Poco/Net/NetException.h>
-		],,
-		have_poco=yes, have_poco=no)
+		]], [[]])],[have_poco=yes],[have_poco=no])
 	if test "$have_poco" = yes; then
 	    AC_MSG_RESULT(yes)
 	    AC_DEFINE(HAS_POCO, 1, [Define to 1 if Poco available])
@@ -452,10 +450,9 @@ AC_ARG_WITH([regex],
 [AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=regex)])],
 [case "${withval}" in
 	regex) AC_MSG_CHECKING(for regex)
-				AC_TRY_COMPILE([
+				AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 					#include <regex.h>
-					],,
-					have_regex=yes, have_regex=no)
+					]], [[]])],[have_regex=yes],[have_regex=no])
 				if test "$have_regex" = yes; then
 					 AC_MSG_RESULT(yes)
 					 AC_DEFINE(REGEX_SYSTEM, FIX8_REGEX_REGEX_H, [regex.h system used])
@@ -527,10 +524,9 @@ AC_ARG_ENABLE([gtest],
 esac])
 
 AC_MSG_CHECKING(for gtest)
-    AC_TRY_COMPILE([
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
         #include <gtest/gtest.h>
-        ],[;],
-        have_gtest=yes, have_gtest=no)
+        ]], [[;]])],[have_gtest=yes],[have_gtest=no])
     if test "$have_gtest" = yes && test "$oktogtest" = yes; then
         AC_MSG_RESULT(yes)
         AC_DEFINE(HAS_GTEST, 1, [Define to 1 if gtest available])
@@ -580,10 +576,9 @@ AC_ARG_ENABLE([libmemcached],
 [case "${enableval}" in
 	yes) oktomemcached=yes
 			AC_MSG_CHECKING(for libmemcached)
-			AC_TRY_COMPILE([
+			AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 					#include <libmemcached/memcached.h>
-				],,
-				have_libmemcached=yes,have_libmemcached=no)
+				]], [[]])],[have_libmemcached=yes],[have_libmemcached=no])
 		 if test "$have_libmemcached" = yes && test "$oktomemcached" = yes; then
 			AC_MSG_RESULT(yes)
 			AC_DEFINE(HAVE_LIBMEMCACHED, 1, [Define to 1 if you have libmemcached])
@@ -601,10 +596,9 @@ AC_ARG_ENABLE([libhiredis],
 [case "${enableval}" in
 	yes) oktohiredis=yes
 			AC_MSG_CHECKING(for libhiredis)
-			AC_TRY_COMPILE([
+			AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 					#include <hiredis/hiredis.h>
-				],,
-				have_libhiredis=yes,have_libhiredis=no)
+				]], [[]])],[have_libhiredis=yes],[have_libhiredis=no])
 		 if test "$have_libhiredis" = yes && test "$oktohiredis" = yes; then
 			AC_MSG_RESULT(yes)
 			AC_DEFINE(HAVE_LIBHIREDIS, 1, [Define to 1 if you have libhiredis])
@@ -634,10 +628,9 @@ AC_ARG_ENABLE([zeromq],
 [case "${enableval}" in
 	yes) oktozeromq=yes
 			AC_MSG_CHECKING(for zeromq)
-			AC_TRY_COMPILE([
+			AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 					#include <zmq.hpp>
-				],,
-				have_zeromq=yes,have_zeromq=no)
+				]], [[]])],[have_zeromq=yes],[have_zeromq=no])
 		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
 			AC_MSG_RESULT(yes)
 			AC_DEFINE(HAS_ZEROMQ_MBUS, 1, [Define to 1 if you have zeromq])
@@ -672,12 +665,8 @@ if test x"$GCC" != x"yes"; then
 	case x"$build" in
 		xsparc-sun-solaris*)
 		CFLAGS="$CFLAGS -xCC"
-		AC_TRY_COMPILE(
-			[ // a comment ],
-			[],
-			[],
-			AC_MSG_ERROR([-xCC does not allow compilation of C++ comments])
-		)
+		AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[ // a comment ]], [[]])],[],[AC_MSG_ERROR(-xCC does not allow compilation of C++ comments)
+		])
 		esac
 else
 	CFLAGS="$CFLAGS -Wall"

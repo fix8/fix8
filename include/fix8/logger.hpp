@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-19 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-23 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -447,7 +447,7 @@ public:
 	    \param delim field delimiter
 	    \param positions field positions */
 	BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags, const Levels levels, const std::string delim=" ",
-		LogPositions positions=LogPositions());
+		const LogPositions positions=LogPositions());
 
 	/*! Ctor.
 	    \param ip ip string
@@ -457,7 +457,7 @@ public:
 	    \param delim field delimiter
 	    \param positions field positions */
 	BCLogger(const std::string& ip, const unsigned port, const LogFlags flags, const Levels levels,
-		const std::string delim=" ", LogPositions positions=LogPositions());
+		const std::string delim=" ", const LogPositions positions=LogPositions());
 
 	/*! Check to see if a socket was successfully created.
 	  \return non-zero if ok, 0 if not ok */
