@@ -12,8 +12,6 @@ and framework; and a set of complete client/server test applications.
 
 **For enterprise use we recommend Fix8Pro.**
 
-**For enterprise use we recommend Fix8Pro.**
-
 ## Contents
 
 1. [Contents](#contents)
