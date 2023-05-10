@@ -62,7 +62,6 @@ EXTRA_FIELDS = "<field number='9999' name='SampleUserField'  type='STRING' messa
 $(libutest_la_SOURCES): $(XML_42_UTEST_SCHEMA)
 	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_UTEST_SCHEMA) -F $(EXTRA_FIELDS)
 
-
 if BDBSUPPORT
 AM_LDFLAGS += -ldb_cxx
 endif
