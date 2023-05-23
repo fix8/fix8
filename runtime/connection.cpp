@@ -328,7 +328,22 @@ void Connection::stop()
 	scout_debug << "Connection::stop() => _reader.stop()";
 	_reader.stop();
 	if (_reader.started())
-		_reader.socket()->close();
+	{
+		try
+		{
+			_reader.socket()->shutdown();
+		}
+		catch (Poco::Net::NetException& e)
+		{
+			if (e.code() != ENOTCONN)
+			{
+				scout_debug << "rethrowing Poco::Exception: " << e.displayText();
+				throw;
+			}
+
+			scout_debug << e.what();
+		}
+	}
 	_reader.join();
 }
 
