@@ -459,7 +459,7 @@ public:
          target = source.substr(offset + match.SubPos(num), match.SubSize(num));
 #endif
       else
-         target.empty();
+         target.clear();
       return target;
 	}
 
