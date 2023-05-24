@@ -328,7 +328,7 @@ void Connection::stop()
 	scout_debug << "Connection::stop() => _reader.stop()";
 	_reader.stop();
 	if (_reader.started())
-		_reader.socket()->close();
+		_reader.socket()->shutdown();
 	_reader.join();
 }
 
