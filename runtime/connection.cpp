@@ -347,7 +347,8 @@ bool ClientConnection::connect()
 			if (_addr == Poco::Net::SocketAddress())
 				throw Poco::Net::InvalidAddressException("empty address");
 
-			scout_info << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
+			++attempts;
+			scout_info << "Trying to connect to: " << _addr.toString() << " (" << attempts << ')' << ( _secured ? " secured" : " not-secured");
 			_sock->connect(_addr, timeout);
 			if (lparam._recv_buf_sz)
 				set_recv_buf_sz(lparam._recv_buf_sz);
