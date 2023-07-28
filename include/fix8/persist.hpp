@@ -291,7 +291,7 @@ public:
 /// Memory based message persister.
 class MemoryPersister : public Persister
 {
-	using Store = std::map<unsigned, const f8String>;
+	using Store = std::map<unsigned, f8String>;
 	Store _store;
 
 public:
