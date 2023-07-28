@@ -364,7 +364,8 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 bool MemoryPersister::put(const unsigned sender_seqnum, const unsigned target_seqnum)
 {
 	const unsigned arr[2] { sender_seqnum, target_seqnum };
-	return _store.insert({0, f8String(reinterpret_cast<const char *>(arr), sizeof(arr))}).second;
+	_store[0] = f8String(reinterpret_cast<const char *>(arr), sizeof(arr));
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -379,7 +380,7 @@ bool MemoryPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) cons
 	Store::const_iterator itr(_store.find(0));
 	if (itr == _store.end())
 		return false;
-	const unsigned *loc(reinterpret_cast<const unsigned *>(&itr->second));
+	const unsigned *loc(reinterpret_cast<const unsigned *>(itr->second.data()));
 	sender_seqnum = *loc++;
 	target_seqnum = *loc;
    return true;
