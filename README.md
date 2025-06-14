@@ -69,7 +69,7 @@ and framework; and a set of complete client/server test applications.
 1. [Contents](#contents)
 1. [Features](#features)
 1. [Directory Layout](#directory-layout)
-1. [Branch Layout](#branch-layout)
+1. [Branches](#branches)
 1. [Documentation](#documentation)
 1. [Changelog](#changelog)
 1. [C++17](#c17)
@@ -133,7 +133,8 @@ and framework; and a set of complete client/server test applications.
 |[test/](https://github.com/fix8/fix8/blob/dev/test)|applications client/server source|
 |[utests/](https://github.com/fix8/fix8/blob/dev/utests)| unit test applications|
 
-## Branch Layout
+## Branches
+🌿 Fix8 repository is comprised of the following branches:
 
 | Branch | github path |Description|
 | :--- | :--- | :--- |
@@ -162,8 +163,7 @@ flag on your compiler command line. Most compilers since 2020 default to at leas
 
 ## External Dependencies (required)
 
-Fix8 requires the following third-party software (header files and
-libraries) being installed to build properly:
+Fix8 requires the following third-party software (header files and libraries) being installed to build properly:
 
 > [!NOTE]
 > This release now uses [CMake](https://cmake.org). All required dependencies (poco, tbb and gtest) *will be downloaded and built* by default.
