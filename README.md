@@ -120,7 +120,7 @@ and framework; and a set of complete client/server test applications.
 
 | Directory | Description|
 | :--- | :--- |
-|[g/](https://github.com/fix8/fix8/blob/dev/)| root directory with CMakeLists.txt|
+|[./](https://github.com/fix8/fix8/blob/dev/)| root directory with CMakeLists.txt|
 |[compiler/](https://github.com/fix8/fix8/blob/dev/compiler)| the f8c compiler source|
 |[contrib/](https://github.com/fix8/fix8/blob/dev/contrib)|user contributed files|
 |[doc/](https://github.com/fix8/fix8/blob/dev/doc)|Fix8 documentation|
