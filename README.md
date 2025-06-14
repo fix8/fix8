@@ -120,7 +120,7 @@ and framework; and a set of complete client/server test applications.
 
 | Directory | Description|
 | :--- | :--- |
-|[./](https://github.com/fix8/fix8/blob/dev/)| root directory with CMakeLists.txt|
+|[g/](https://github.com/fix8/fix8/blob/dev/)| root directory with CMakeLists.txt|
 |[compiler/](https://github.com/fix8/fix8/blob/dev/compiler)| the f8c compiler source|
 |[contrib/](https://github.com/fix8/fix8/blob/dev/contrib)|user contributed files|
 |[doc/](https://github.com/fix8/fix8/blob/dev/doc)|Fix8 documentation|
@@ -135,32 +135,11 @@ and framework; and a set of complete client/server test applications.
 
 ## Branch Layout
 
-<table>
-    <thead>
-         <tr>
-            <th>Branch</th>
-            <th>github path</th>
-            <th>Description</th>
-         </tr>
-    </thead>
-    <tbody>
-          <tr>
-             <td><pre>master</pre></td>
-             <td>https://github.com/fix8/fix8/tree/master</td>
-             <td>This is the default branch. All stable releases are made here.</td>
-          </tr>
-          <tr>
-             <td><pre>dev</pre></td>
-             <td>https://github.com/fix8/fix8/tree/dev</td>
-             <td>This is the development stream and is updated continually. Features and bug fixes scheduled for release are developed and tested here.</td>
-          </tr>
-          <tr>
-             <td><pre>dev-premain</pre></td>
-             <td>https://github.com/fix8/fix8/tree/dev-premain</td>
-             <td>This branch is used to marshall development changes that are ready for release. When significant changes are made to the dev branch, this branch will be used to keep other changes separate.</td>
-          </tr>
-    </tbody>
-</table>
+| Branch | github path |Description|
+| :--- | :--- | :--- |
+|master |https://github.com/fix8/fix8/tree/master |This is the default branch. All stable releases are made here.|
+|dev |https://github.com/fix8/fix8/tree/dev |This is the development stream and is updated continually. Features and bug fixes scheduled for release are developed and tested here.|
+|dev-premain |https://github.com/fix8/fix8/tree/dev-premain |This branch is used to marshall development changes that are ready for release. When significant changes are made to the dev branch, this branch will be used to keep other changes separate.|
 
 ## Documentation
 
