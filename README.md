@@ -143,8 +143,7 @@ and framework; and a set of complete client/server test applications.
 |dev-premain |https://github.com/fix8/fix8/tree/dev-premain |This branch is used to marshall development changes that are ready for release. When significant changes are made to the dev branch, this branch will be used to keep other changes separate.|
 
 ## Documentation
-
-See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8. Access to this documentation is free but will require
+📄 See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8. Access to this documentation is free but will require
 a login. For our complete API Documentation see [here](https://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
 ## Changelog
@@ -162,8 +161,7 @@ Fix8 will refuse to build without it. If you are using clang or gcc make sure yo
 flag on your compiler command line. Most compilers since 2020 default to at least C++17. Some older compiler versions may no longer be supported. Sorry.
 
 ## External Dependencies (required)
-
-Fix8 requires the following third-party software (header files and libraries) being installed to build properly:
+📦 Fix8 requires the following third-party software (header files and libraries) being installed to build properly:
 
 > [!NOTE]
 > This release now uses [CMake](https://cmake.org). All required dependencies (poco, tbb and gtest) *will be downloaded and built* by default.
@@ -173,8 +171,7 @@ Fix8 requires the following third-party software (header files and libraries) be
 - GoogleTest [gtest](https://github.com/google/googletest)
 
 ## Optional Dependencies
-
-If you wish to build the html documentation, you will need:
+🧩 If you wish to build the html documentation, you will need:
 
 - [Doxygen](https://www.doxygen.org)
 
