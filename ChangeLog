@@ -1,3 +1,34 @@
+* Wed Jun 02 2025 David L. Dight <fix@fix8.org> 2.0.1
+- cmake build system replaces GNU autotools
+- Minimum C++17 required
+- Fixed multiple runtime library compiler warnings
+- Removed tcmalloc, replaced with tbbmalloc
+- Removed FastFlow, replaced with tbb
+- Removed extern "C" linkage warnings
+- cmake downloads and builds all default required deps
+- Fixed session_test errors
+- Fixed build for MacOS
+- Fixed build for Windows, builds in MSVC, VSCode
+- Added zlib, getopt for Windows
+- Shared and static runtime libs built by default
+- Static lib contains all external deps
+- Added Intel compiler support
+- Upgrade poco, removed deprecated calls
+- Updated and merged bug fixes
+- Removed cruft
+
+* Wed May 10 2023 David L. Dight <fix@fix8.org> 1.4.3
+- Fixed build issues hftest, utests, some compiler warnings
+- Updated checksum algorithm
+- Merged from dev 1.4.2
+
+* Tue Jan 01 2019 David L. Dight <fix@fix8.org> 1.4.1
+- Fixed Jira tickets FX-729,FX-744,FX-821,FX-884
+- Fixed deadlock condition in heartbeat
+- Fixed memory leaks
+- Fixed f8c incorrectly removing unused fields from the top of fields list
+- Fixed steroid chksum algorithm giving incorrect values for large messages
+
 * Fri Sep 16 2016 David L. Dight <fix@fix8.org> 1.4.0
 - Fixed Jira tickets FX-530,FX-533,FX-539,FX-562,FX-563,FX-564,FX-560,FX-588,FX-569,
 							FX-596,FX-642,FX-633,FX-615,FX-609,FX-655
@@ -28,7 +59,7 @@
 - Client logout crashes FIX server
 - SessionWrapper needs to be cleaned up in the destructor
 - Fixed Seqedit reports corrupted persister index
-- Fixed compile errors on OSX
+g Fixed compile errors on OSX
 - Fixed Provide hook in Session to modify header before sending
 - Fixed ReliableClientSession crash when connection failed
 - Fixed Crash on sending cloned message
@@ -422,7 +453,8 @@
 - Added configurable max message length(maxmsglen); xml xpath permits absolute xpaths; fixed issue with compiler and msgtype;
 
 * Sat Jul 21 2012 David L. Dight <fix@fix8.org> 0.6.0
-- Added buffered logging; redesigned and improved field and message encoding and decoding performance, field lookups and static jump tables; added simple console based metadata driven test harness; compiler optimisations including pruning of unused fields;
+- Added buffered logging; redesigned and improved field and message encoding and decoding performance, field lookups and static jump tables;
+- Added simple console based metadata driven test harness; compiler optimisations including pruning of unused fields;
 
 * Fri May 25 2012 David L. Dight <fix@fix8.org> 0.5.7
 - Added HF test client demonstrating preload and bulk transmit capabilities; encode/decode performance improvements with cached lookups;

@@ -1,0 +1,421 @@
+<fix major="1" type="FIXT" servicepack="0" minor="1" version="FIXT.1.1" repo_generation_date="2014-05-07T17:07:21-04:00">
+   <header>
+      <field name="BeginString" required="Y" />
+      <field name="BodyLength" required="Y" />
+      <field name="MsgType" required="Y" />
+      <field name="ApplVerID" required="N" />
+      <field name="ApplExtID" required="N" />
+      <field name="CstmApplVerID" required="N" />
+      <field name="SenderCompID" required="Y" />
+      <field name="TargetCompID" required="Y" />
+      <field name="OnBehalfOfCompID" required="N" />
+      <field name="DeliverToCompID" required="N" />
+      <field name="SecureDataLen" required="N" />
+      <field name="SecureData" required="N" />
+      <field name="MsgSeqNum" required="Y" />
+      <field name="SenderSubID" required="N" />
+      <field name="SenderLocationID" required="N" />
+      <field name="TargetSubID" required="N" />
+      <field name="TargetLocationID" required="N" />
+      <field name="OnBehalfOfSubID" required="N" />
+      <field name="OnBehalfOfLocationID" required="N" />
+      <field name="DeliverToSubID" required="N" />
+      <field name="DeliverToLocationID" required="N" />
+      <field name="PossDupFlag" required="N" />
+      <field name="PossResend" required="N" />
+      <field name="SendingTime" required="Y" />
+      <field name="OrigSendingTime" required="N" />
+      <field name="XmlDataLen" required="N" />
+      <field name="XmlData" required="N" />
+      <field name="MessageEncoding" required="N" />
+      <field name="LastMsgSeqNumProcessed" required="N" />
+      <component name="HopGrp" required="N" />
+   </header>
+   <trailer>
+      <field name="SignatureLength" required="N" />
+      <field name="Signature" required="N" />
+      <field name="CheckSum" required="Y" />
+   </trailer>
+   <messages>
+      <message name="Heartbeat" msgtype="0" msgcat="admin" textId="MSG_1_TITLE">
+         <field name="TestReqID" required="N" />
+      </message>
+      <message name="TestRequest" msgtype="1" msgcat="admin" textId="MSG_2_TITLE">
+         <field name="TestReqID" required="Y" />
+      </message>
+      <message name="ResendRequest" msgtype="2" msgcat="admin" textId="MSG_3_TITLE">
+         <field name="BeginSeqNo" required="Y" />
+         <field name="EndSeqNo" required="Y" />
+      </message>
+      <message name="Reject" msgtype="3" msgcat="admin" textId="MSG_4_TITLE">
+         <field name="RefSeqNum" required="Y" />
+         <field name="RefTagID" required="N" />
+         <field name="RefMsgType" required="N" />
+         <field name="RefApplVerID" required="N" />
+         <field name="RefApplExtID" required="N" />
+         <field name="RefCstmApplVerID" required="N" />
+         <field name="SessionRejectReason" required="N" />
+         <field name="Text" required="N" />
+         <field name="EncodedTextLen" required="N" />
+         <field name="EncodedText" required="N" />
+      </message>
+      <message name="SequenceReset" msgtype="4" msgcat="admin" textId="MSG_5_TITLE">
+         <field name="GapFillFlag" required="N" />
+         <field name="NewSeqNo" required="Y" />
+      </message>
+      <message name="Logout" msgtype="5" msgcat="admin" textId="MSG_6_TITLE">
+         <field name="SessionStatus" required="N" />
+         <field name="Text" required="N" />
+         <field name="EncodedTextLen" required="N" />
+         <field name="EncodedText" required="N" />
+      </message>
+      <message name="Logon" msgtype="A" msgcat="admin" textId="MSG_11_TITLE">
+         <field name="EncryptMethod" required="Y" />
+         <field name="HeartBtInt" required="Y" />
+         <field name="RawDataLength" required="N" />
+         <field name="RawData" required="N" />
+         <field name="ResetSeqNumFlag" required="N" />
+         <field name="NextExpectedMsgSeqNum" required="N" />
+         <field name="MaxMessageSize" required="N" />
+         <component name="MsgTypeGrp" required="N" />
+         <field name="TestMessageIndicator" required="N" />
+         <field name="Username" required="N" />
+         <field name="Password" required="N" />
+         <field name="NewPassword" required="N" />
+         <field name="EncryptedPasswordMethod" required="N" />
+         <field name="EncryptedPasswordLen" required="N" />
+         <field name="EncryptedPassword" required="N" />
+         <field name="EncryptedNewPasswordLen" required="N" />
+         <field name="EncryptedNewPassword" required="N" />
+         <field name="SessionStatus" required="N" />
+         <field name="DefaultApplVerID" required="Y" />
+         <field name="DefaultApplExtID" required="N" />
+         <field name="DefaultCstmApplVerID" required="N" />
+         <field name="Text" required="N" />
+         <field name="EncodedTextLen" required="N" />
+         <field name="EncodedText" required="N" />
+      </message>
+      <message name="XMLnonFIX" msgtype="n" msgcat="admin" textId="MSG_47_TITLE">
+      </message>
+   </messages>
+   <components>
+      <component name="HopGrp">
+         <group name="NoHops" required="N" >
+            <field name="HopCompID" required="N" />
+            <field name="HopSendingTime" required="N" />
+            <field name="HopRefID" required="N" />
+         </group>
+      </component>
+      <component name="MsgTypeGrp" textId="COMP_MsgTypeGrp_TITLE">
+         <group name="NoMsgTypes" required="N" >
+            <field name="RefMsgType" required="N" />
+            <field name="MsgDirection" required="N" />
+            <field name="RefApplVerID" required="N" />
+            <field name="RefApplExtID" required="N" />
+            <field name="RefCstmApplVerID" required="N" />
+            <field name="DefaultVerIndicator" required="N" />
+         </group>
+      </component>
+   </components>
+   <fields>
+      <field number="7" name="BeginSeqNo" type="SEQNUM" textId="FIELD_7" />
+      <field number="8" name="BeginString" type="STRING" textId="FIELD_8" />
+      <field number="9" name="BodyLength" type="LENGTH" textId="FIELD_9" />
+      <field number="10" name="CheckSum" type="STRING" textId="FIELD_10" />
+      <field number="16" name="EndSeqNo" type="SEQNUM" textId="FIELD_16" />
+      <field number="34" name="MsgSeqNum" type="SEQNUM" textId="FIELD_34" />
+      <field number="35" name="MsgType" type="STRING" textId="FIELD_35">
+         <value enum="0" description="Heartbeat" textId="ENUM_35_0" />
+         <value enum="1" description="TestRequest" textId="ENUM_35_1" />
+         <value enum="2" description="ResendRequest" textId="ENUM_35_2" />
+         <value enum="3" description="Reject" textId="ENUM_35_3" />
+         <value enum="4" description="SequenceReset" textId="ENUM_35_4" />
+         <value enum="5" description="Logout" textId="ENUM_35_5" />
+         <value enum="6" description="IOI" textId="ENUM_35_6" />
+         <value enum="7" description="Advertisement" textId="ENUM_35_7" />
+         <value enum="8" description="ExecutionReport" textId="ENUM_35_8" />
+         <value enum="9" description="OrderCancelReject" textId="ENUM_35_9" />
+         <value enum="A" description="Logon" textId="ENUM_35_A" />
+         <value enum="B" description="News" textId="ENUM_35_B" />
+         <value enum="C" description="Email" textId="ENUM_35_C" />
+         <value enum="D" description="NewOrderSingle" textId="ENUM_35_D" />
+         <value enum="E" description="NewOrderList" textId="ENUM_35_E" />
+         <value enum="F" description="OrderCancelRequest" textId="ENUM_35_F" />
+         <value enum="G" description="OrderCancelReplaceRequest" textId="ENUM_35_G" />
+         <value enum="H" description="OrderStatusRequest" textId="ENUM_35_H" />
+         <value enum="J" description="AllocationInstruction" textId="ENUM_35_J" />
+         <value enum="K" description="ListCancelRequest" textId="ENUM_35_K" />
+         <value enum="L" description="ListExecute" textId="ENUM_35_L" />
+         <value enum="M" description="ListStatusRequest" textId="ENUM_35_M" />
+         <value enum="N" description="ListStatus" textId="ENUM_35_N" />
+         <value enum="P" description="AllocationInstructionAck" textId="ENUM_35_P" />
+         <value enum="Q" description="DontKnowTrade" textId="ENUM_35_Q" />
+         <value enum="R" description="QuoteRequest" textId="ENUM_35_R" />
+         <value enum="S" description="Quote" textId="ENUM_35_S" />
+         <value enum="T" description="SettlementInstructions" textId="ENUM_35_T" />
+         <value enum="V" description="MarketDataRequest" textId="ENUM_35_V" />
+         <value enum="W" description="MarketDataSnapshotFullRefresh" textId="ENUM_35_W" />
+         <value enum="X" description="MarketDataIncrementalRefresh" textId="ENUM_35_X" />
+         <value enum="Y" description="MarketDataRequestReject" textId="ENUM_35_Y" />
+         <value enum="Z" description="QuoteCancel" textId="ENUM_35_Z" />
+         <value enum="a" description="QuoteStatusRequest" textId="ENUM_35_a" />
+         <value enum="b" description="MassQuoteAck" textId="ENUM_35_b" />
+         <value enum="c" description="SecurityDefinitionRequest" textId="ENUM_35_c" />
+         <value enum="d" description="SecurityDefinition" textId="ENUM_35_d" />
+         <value enum="e" description="SecurityStatusRequest" textId="ENUM_35_e" />
+         <value enum="f" description="SecurityStatus" textId="ENUM_35_f" />
+         <value enum="g" description="TradingSessionStatusRequest" textId="ENUM_35_g" />
+         <value enum="h" description="TradingSessionStatus" textId="ENUM_35_h" />
+         <value enum="i" description="MassQuote" textId="ENUM_35_i" />
+         <value enum="j" description="BusinessMessageReject" textId="ENUM_35_j" />
+         <value enum="k" description="BidRequest" textId="ENUM_35_k" />
+         <value enum="l" description="BidResponse" textId="ENUM_35_l" />
+         <value enum="m" description="ListStrikePrice" textId="ENUM_35_m" />
+         <value enum="n" description="XMLnonFIX" textId="ENUM_35_n" />
+         <value enum="o" description="RegistrationInstructions" textId="ENUM_35_o" />
+         <value enum="p" description="RegistrationInstructionsResponse" textId="ENUM_35_p" />
+         <value enum="q" description="OrderMassCancelRequest" textId="ENUM_35_q" />
+         <value enum="r" description="OrderMassCancelReport" textId="ENUM_35_r" />
+         <value enum="s" description="NewOrderCross" textId="ENUM_35_s" />
+         <value enum="t" description="CrossOrderCancelReplaceRequest" textId="ENUM_35_t" />
+         <value enum="u" description="CrossOrderCancelRequest" textId="ENUM_35_u" />
+         <value enum="v" description="SecurityTypeRequest" textId="ENUM_35_v" />
+         <value enum="w" description="SecurityTypes" textId="ENUM_35_w" />
+         <value enum="x" description="SecurityListRequest" textId="ENUM_35_x" />
+         <value enum="y" description="SecurityList" textId="ENUM_35_y" />
+         <value enum="z" description="DerivativeSecurityListRequest" textId="ENUM_35_z" />
+         <value enum="AA" description="DerivativeSecurityList" textId="ENUM_35_AA" />
+         <value enum="AB" description="NewOrderMultileg" textId="ENUM_35_AB" />
+         <value enum="AC" description="MultilegOrderCancelReplace" textId="ENUM_35_AC" />
+         <value enum="AD" description="TradeCaptureReportRequest" textId="ENUM_35_AD" />
+         <value enum="AE" description="TradeCaptureReport" textId="ENUM_35_AE" />
+         <value enum="AF" description="OrderMassStatusRequest" textId="ENUM_35_AF" />
+         <value enum="AG" description="QuoteRequestReject" textId="ENUM_35_AG" />
+         <value enum="AH" description="RFQRequest" textId="ENUM_35_AH" />
+         <value enum="AI" description="QuoteStatusReport" textId="ENUM_35_AI" />
+         <value enum="AJ" description="QuoteResponse" textId="ENUM_35_AJ" />
+         <value enum="AK" description="Confirmation" textId="ENUM_35_AK" />
+         <value enum="AL" description="PositionMaintenanceRequest" textId="ENUM_35_AL" />
+         <value enum="AM" description="PositionMaintenanceReport" textId="ENUM_35_AM" />
+         <value enum="AN" description="RequestForPositions" textId="ENUM_35_AN" />
+         <value enum="AO" description="RequestForPositionsAck" textId="ENUM_35_AO" />
+         <value enum="AP" description="PositionReport" textId="ENUM_35_AP" />
+         <value enum="AQ" description="TradeCaptureReportRequestAck" textId="ENUM_35_AQ" />
+         <value enum="AR" description="TradeCaptureReportAck" textId="ENUM_35_AR" />
+         <value enum="AS" description="AllocationReport" textId="ENUM_35_AS" />
+         <value enum="AT" description="AllocationReportAck" textId="ENUM_35_AT" />
+         <value enum="AU" description="ConfirmationAck" textId="ENUM_35_AU" />
+         <value enum="AV" description="SettlementInstructionRequest" textId="ENUM_35_AV" />
+         <value enum="AW" description="AssignmentReport" textId="ENUM_35_AW" />
+         <value enum="AX" description="CollateralRequest" textId="ENUM_35_AX" />
+         <value enum="AY" description="CollateralAssignment" textId="ENUM_35_AY" />
+         <value enum="AZ" description="CollateralResponse" textId="ENUM_35_AZ" />
+         <value enum="BA" description="CollateralReport" textId="ENUM_35_BA" />
+         <value enum="BB" description="CollateralInquiry" textId="ENUM_35_BB" />
+         <value enum="BC" description="NetworkCounterpartySystemStatusRequest" textId="ENUM_35_BC" />
+         <value enum="BD" description="NetworkCounterpartySystemStatusResponse" textId="ENUM_35_BD" />
+         <value enum="BE" description="UserRequest" textId="ENUM_35_BE" />
+         <value enum="BF" description="UserResponse" textId="ENUM_35_BF" />
+         <value enum="BG" description="CollateralInquiryAck" textId="ENUM_35_BG" />
+         <value enum="BH" description="ConfirmationRequest" textId="ENUM_35_BH" />
+         <value enum="BO" description="ContraryIntentionReport" textId="ENUM_35_BO" />
+         <value enum="BP" description="SecurityDefinitionUpdateReport" textId="ENUM_35_BP" />
+         <value enum="BK" description="SecurityListUpdateReport" textId="ENUM_35_BK" />
+         <value enum="BL" description="AdjustedPositionReport" textId="ENUM_35_BL" />
+         <value enum="BM" description="AllocationInstructionAlert" textId="ENUM_35_BM" />
+         <value enum="BN" description="ExecutionAck" textId="ENUM_35_BN" />
+         <value enum="BJ" description="TradingSessionList" textId="ENUM_35_BJ" />
+         <value enum="BI" description="TradingSessionListRequest" textId="ENUM_35_BI" />
+         <value enum="BQ" description="SettlementObligationReport" textId="ENUM_35_BQ" />
+         <value enum="BR" description="DerivativeSecurityListUpdateReport" textId="ENUM_35_BR" />
+         <value enum="BS" description="TradingSessionListUpdateReport" textId="ENUM_35_BS" />
+         <value enum="BT" description="MarketDefinitionRequest" textId="ENUM_35_BT" />
+         <value enum="BU" description="MarketDefinition" textId="ENUM_35_BU" />
+         <value enum="BV" description="MarketDefinitionUpdateReport" textId="ENUM_35_BV" />
+         <value enum="BW" description="ApplicationMessageRequest" textId="ENUM_35_BW" />
+         <value enum="BX" description="ApplicationMessageRequestAck" textId="ENUM_35_BX" />
+         <value enum="BY" description="ApplicationMessageReport" textId="ENUM_35_BY" />
+         <value enum="BZ" description="OrderMassActionReport" textId="ENUM_35_BZ" />
+         <value enum="CA" description="OrderMassActionRequest" textId="ENUM_35_CA" />
+         <value enum="CB" description="UserNotification" textId="ENUM_35_CB" />
+         <value enum="CC" description="StreamAssignmentRequest" textId="ENUM_35_CC" />
+         <value enum="CD" description="StreamAssignmentReport" textId="ENUM_35_CD" />
+         <value enum="CE" description="StreamAssignmentReportACK" textId="ENUM_35_CE" />
+         <value enum="CF" description="PartyDetailsListRequest" textId="ENUM_35_CF" />
+         <value enum="CG" description="PartyDetailsListReport" textId="ENUM_35_CG" />
+         <value enum="CH" description="MarginRequirementInquiry" textId="ENUM_35_CH" />
+         <value enum="CI" description="MarginRequirementInquiryAck" textId="ENUM_35_CI" />
+         <value enum="CJ" description="MarginRequirementReport" textId="ENUM_35_CJ" />
+         <value enum="CK" description="PartyDetailsListUpdateReport" textId="ENUM_35_CK" />
+         <value enum="CL" description="PartyRiskLimitsRequest" textId="ENUM_35_CL" />
+         <value enum="CM" description="PartyRiskLimitsReport" textId="ENUM_35_CM" />
+         <value enum="CN" description="SecurityMassStatusRequest" textId="ENUM_35_CN" />
+         <value enum="CO" description="SecurityMassStatus" textId="ENUM_35_CO" />
+         <value enum="CQ" description="AccountSummaryReport" textId="ENUM_35_CQ" />
+         <value enum="CR" description="PartyRiskLimitsUpdateReport" textId="ENUM_35_CR" />
+         <value enum="CS" description="PartyRiskLimitsDefinitionRequest" textId="ENUM_35_CS" />
+         <value enum="CT" description="PartyRiskLimitsDefinitionRequestAck" textId="ENUM_35_CT" />
+         <value enum="CU" description="PartyEntitlementsRequest" textId="ENUM_35_CU" />
+         <value enum="CV" description="PartyEntitlementsReport" textId="ENUM_35_CV" />
+         <value enum="CW" description="QuoteAck" textId="ENUM_35_CW" />
+         <value enum="CX" description="PartyDetailsDefinitionRequest" textId="ENUM_35_CX" />
+         <value enum="CY" description="PartyDetailsDefinitionRequestAck" textId="ENUM_35_CY" />
+         <value enum="CZ" description="PartyEntitlementsUpdateReport" textId="ENUM_35_CZ" />
+         <value enum="DA" description="PartyEntitlementsDefinitionRequest" textId="ENUM_35_DA" />
+         <value enum="DB" description="PartyEntitlementsDefinitionRequestAck" textId="ENUM_35_DB" />
+         <value enum="DC" description="TradeMatchReport" textId="ENUM_35_DC" />
+         <value enum="DD" description="TradeMatchReportAck" textId="ENUM_35_DD" />
+         <value enum="DE" description="PartyRiskLimitsReportAck" textId="ENUM_35_DE" />
+         <value enum="DF" description="PartyRiskLimitCheckRequest" textId="ENUM_35_DF" />
+         <value enum="DG" description="PartyRiskLimitCheckRequestAck" textId="ENUM_35_DG" />
+         <value enum="DH" description="PartyActionRequest" textId="ENUM_35_DH" />
+         <value enum="DI" description="PartyActionReport" textId="ENUM_35_DI" />
+         <value enum="DJ" description="MassOrder" textId="ENUM_35_DJ" />
+         <value enum="DK" description="MassOrderAck" textId="ENUM_35_DK" />
+         <value enum="DL" description="PositionTransferInstruction" textId="ENUM_35_DL" />
+         <value enum="DM" description="PositionTransferInstructionAck" textId="ENUM_35_DM" />
+         <value enum="DN" description="PositionTransferReport" textId="ENUM_35_DN" />
+         <value enum="DO" description="MarketDataStatisticsRequest" textId="ENUM_35_DO" />
+         <value enum="DP" description="MarketDataStatisticsReport" textId="ENUM_35_DP" />
+         <value enum="DQ" description="CollateralReportAck" textId="ENUM_35_DQ" />
+         <value enum="DR" description="MarketDataReport" textId="ENUM_35_DR" />
+         <value enum="DS" description="CrossRequest" textId="ENUM_35_DS" />
+         <value enum="DT" description="CrossRequestAck" textId="ENUM_35_DT" />
+         <value enum="DU" description="AllocationInstructionAlertRequest" textId="ENUM_35_DU" />
+         <value enum="DV" description="AllocationInstructionAlertRequestAck" textId="ENUM_35_DV" />
+         <value enum="DW" description="TradeAggregationRequest" textId="ENUM_35_DW" />
+         <value enum="DX" description="TradeAggregationReport" textId="ENUM_35_DX" />
+         <value enum="EA" description="PayManagementReport" textId="ENUM_35_EA" />
+         <value enum="EB" description="PayManagementReportAck" textId="ENUM_35_EB" />
+         <value enum="DY" description="PayManagementRequest" textId="ENUM_35_DY" />
+         <value enum="DZ" description="PayManagementRequestAck" textId="ENUM_35_DZ" />
+      </field>
+      <field number="36" name="NewSeqNo" type="SEQNUM" textId="FIELD_36" />
+      <field number="43" name="PossDupFlag" type="BOOLEAN" textId="FIELD_43">
+         <value enum="N" description="OriginalTransmission" textId="ENUM_43_N" />
+         <value enum="Y" description="PossibleDuplicate" textId="ENUM_43_Y" />
+      </field>
+      <field number="45" name="RefSeqNum" type="SEQNUM" textId="FIELD_45" />
+      <field number="49" name="SenderCompID" type="STRING" textId="FIELD_49" />
+      <field number="50" name="SenderSubID" type="STRING" textId="FIELD_50" />
+      <field number="52" name="SendingTime" type="UTCTIMESTAMP" textId="FIELD_52" />
+      <field number="56" name="TargetCompID" type="STRING" textId="FIELD_56" />
+      <field number="57" name="TargetSubID" type="STRING" textId="FIELD_57" />
+      <field number="58" name="Text" type="STRING" textId="FIELD_58" />
+      <field number="89" name="Signature" type="DATA" textId="FIELD_89" />
+      <field number="90" name="SecureDataLen" type="LENGTH" textId="FIELD_90" />
+      <field number="91" name="SecureData" type="DATA" textId="FIELD_91" />
+      <field number="93" name="SignatureLength" type="LENGTH" textId="FIELD_93" />
+      <field number="95" name="RawDataLength" type="LENGTH" textId="FIELD_95" />
+      <field number="96" name="RawData" type="DATA" textId="FIELD_96" />
+      <field number="97" name="PossResend" type="BOOLEAN" textId="FIELD_97">
+         <value enum="N" description="OriginalTransmission" textId="ENUM_97_N" />
+         <value enum="Y" description="PossibleResend" textId="ENUM_97_Y" />
+      </field>
+      <field number="98" name="EncryptMethod" type="INT" textId="FIELD_98">
+         <value enum="0" description="NoneOther" textId="ENUM_98_0" />
+         <value enum="1" description="PKCS" textId="ENUM_98_1" />
+         <value enum="2" description="DES" textId="ENUM_98_2" />
+         <value enum="3" description="PKCSDES" textId="ENUM_98_3" />
+         <value enum="4" description="PGPDES" textId="ENUM_98_4" />
+         <value enum="5" description="PGPDESMD5" textId="ENUM_98_5" />
+         <value enum="6" description="PEMDESMD5" textId="ENUM_98_6" />
+      </field>
+      <field number="108" name="HeartBtInt" type="INT" textId="FIELD_108" />
+      <field number="112" name="TestReqID" type="STRING" textId="FIELD_112" />
+      <field number="115" name="OnBehalfOfCompID" type="STRING" textId="FIELD_115" />
+      <field number="116" name="OnBehalfOfSubID" type="STRING" textId="FIELD_116" />
+      <field number="122" name="OrigSendingTime" type="UTCTIMESTAMP" textId="FIELD_122" />
+      <field number="123" name="GapFillFlag" type="BOOLEAN" textId="FIELD_123">
+         <value enum="N" description="SequenceResetIgnoreMsgSeqNum" textId="ENUM_123_N" />
+         <value enum="Y" description="GapFillMessageMsgSeqNumFieldValid" textId="ENUM_123_Y" />
+      </field>
+      <field number="128" name="DeliverToCompID" type="STRING" textId="FIELD_128" />
+      <field number="129" name="DeliverToSubID" type="STRING" textId="FIELD_129" />
+      <field number="141" name="ResetSeqNumFlag" type="BOOLEAN" textId="FIELD_141">
+         <value enum="N" description="No" textId="ENUM_141_N" />
+         <value enum="Y" description="YesResetSequenceNumbers" textId="ENUM_141_Y" />
+      </field>
+      <field number="142" name="SenderLocationID" type="STRING" textId="FIELD_142" />
+      <field number="143" name="TargetLocationID" type="STRING" textId="FIELD_143" />
+      <field number="144" name="OnBehalfOfLocationID" type="STRING" textId="FIELD_144" />
+      <field number="145" name="DeliverToLocationID" type="STRING" textId="FIELD_145" />
+      <field number="212" name="XmlDataLen" type="LENGTH" textId="FIELD_212" />
+      <field number="213" name="XmlData" type="DATA" textId="FIELD_213" />
+      <field number="347" name="MessageEncoding" type="STRING" textId="FIELD_347" />
+      <field number="354" name="EncodedTextLen" type="LENGTH" textId="FIELD_354" />
+      <field number="355" name="EncodedText" type="DATA" textId="FIELD_355" />
+      <field number="369" name="LastMsgSeqNumProcessed" type="SEQNUM" textId="FIELD_369" />
+      <field number="371" name="RefTagID" type="INT" textId="FIELD_371" />
+      <field number="372" name="RefMsgType" type="STRING" textId="FIELD_372" />
+      <field number="373" name="SessionRejectReason" type="INT" textId="FIELD_373">
+         <value enum="0" description="InvalidTagNumber" textId="ENUM_373_0" />
+         <value enum="1" description="RequiredTagMissing" textId="ENUM_373_1" />
+         <value enum="2" description="TagNotDefinedForThisMessageType" textId="ENUM_373_2" />
+         <value enum="3" description="UndefinedTag" textId="ENUM_373_3" />
+         <value enum="4" description="TagSpecifiedWithoutAValue" textId="ENUM_373_4" />
+         <value enum="5" description="ValueIsIncorrect" textId="ENUM_373_5" />
+         <value enum="6" description="IncorrectDataFormatForValue" textId="ENUM_373_6" />
+         <value enum="7" description="DecryptionProblem" textId="ENUM_373_7" />
+         <value enum="8" description="SignatureProblem" textId="ENUM_373_8" />
+         <value enum="9" description="CompidProblem" textId="ENUM_373_9" />
+         <value enum="10" description="SendingtimeAccuracyProblem" textId="ENUM_373_10" />
+         <value enum="11" description="InvalidMsgtype" textId="ENUM_373_11" />
+         <value enum="12" description="XMLValidationError" textId="ENUM_373_12" />
+         <value enum="13" description="TagAppearsMoreThanOnce" textId="ENUM_373_13" />
+         <value enum="14" description="TagSpecifiedOutOfRequiredOrder" textId="ENUM_373_14" />
+         <value enum="15" description="RepeatingGroupFieldsOutOfOrder" textId="ENUM_373_15" />
+         <value enum="16" description="IncorrectNumingroupCountForRepeatingGroup" textId="ENUM_373_16" />
+         <value enum="17" description="NonDataValueIncludesFieldDelimiter" textId="ENUM_373_17" />
+         <value enum="18" description="InvalidUnsupportedApplicationVersion" textId="ENUM_373_18" />
+         <value enum="99" description="Other" textId="ENUM_373_99" />
+      </field>
+      <field number="383" name="MaxMessageSize" type="LENGTH" textId="FIELD_383" />
+      <field number="464" name="TestMessageIndicator" type="BOOLEAN" textId="FIELD_464">
+         <value enum="N" description="Fales" textId="ENUM_464_N" />
+         <value enum="Y" description="True" textId="ENUM_464_Y" />
+      </field>
+      <field number="553" name="Username" type="STRING" textId="FIELD_553" />
+      <field number="554" name="Password" type="STRING" textId="FIELD_554" />
+      <field number="628" name="HopCompID" type="STRING" textId="FIELD_628" />
+      <field number="629" name="HopSendingTime" type="UTCTIMESTAMP" textId="FIELD_629" />
+      <field number="630" name="HopRefID" type="SEQNUM" textId="FIELD_630" />
+      <field number="789" name="NextExpectedMsgSeqNum" type="SEQNUM" textId="FIELD_789" />
+      <field number="925" name="NewPassword" type="STRING" textId="FIELD_925" />
+      <field number="1128" name="ApplVerID" type="STRING" textId="FIELD_1128">
+         <value enum="0" description="FIX27" textId="ENUM_1128_0" />
+         <value enum="1" description="FIX30" textId="ENUM_1128_1" />
+         <value enum="2" description="FIX40" textId="ENUM_1128_2" />
+         <value enum="3" description="FIX41" textId="ENUM_1128_3" />
+         <value enum="4" description="FIX42" textId="ENUM_1128_4" />
+         <value enum="5" description="FIX43" textId="ENUM_1128_5" />
+         <value enum="6" description="FIX44" textId="ENUM_1128_6" />
+         <value enum="7" description="FIX50" textId="ENUM_1128_7" />
+         <value enum="8" description="FIX50SP1" textId="ENUM_1128_8" />
+      </field>
+      <field number="1129" name="CstmApplVerID" type="STRING" textId="FIELD_1129" />
+      <field number="1130" name="RefApplVerID" type="STRING" textId="FIELD_1130" />
+      <field number="1131" name="RefCstmApplVerID" type="STRING" textId="FIELD_1131" />
+      <field number="1137" name="DefaultApplVerID" type="STRING" textId="FIELD_1137" />
+      <field number="1156" name="ApplExtID" type="INT" textId="FIELD_1156" />
+      <field number="1400" name="EncryptedPasswordMethod" type="INT" textId="FIELD_1400" />
+      <field number="1401" name="EncryptedPasswordLen" type="LENGTH" textId="FIELD_1401" />
+      <field number="1402" name="EncryptedPassword" type="DATA" textId="FIELD_1402" />
+      <field number="1403" name="EncryptedNewPasswordLen" type="LENGTH" textId="FIELD_1403" />
+      <field number="1404" name="EncryptedNewPassword" type="DATA" textId="FIELD_1404" />
+      <field number="1406" name="RefApplExtID" type="INT" textId="FIELD_1406" />
+      <field number="1407" name="DefaultApplExtID" type="INT" textId="FIELD_1407" />
+      <field number="1408" name="DefaultCstmApplVerID" type="STRING" textId="FIELD_1408" />
+      <field number="1409" name="SessionStatus" type="INT" textId="FIELD_1409">
+         <value enum="0" description="SessionActive" textId="ENUM_1409_0" />
+         <value enum="1" description="SessionPasswordChanged" textId="ENUM_1409_1" />
+         <value enum="2" description="SessionPasswordDueToExpire" textId="ENUM_1409_2" />
+         <value enum="3" description="NewSessionPasswordDoesNotComplyWithPolicy" textId="ENUM_1409_3" />
+         <value enum="4" description="SessionLogoutComplete" textId="ENUM_1409_4" />
+         <value enum="5" description="InvalidUsernameOrPassword" textId="ENUM_1409_5" />
+         <value enum="6" description="AccountLocked" textId="ENUM_1409_6" />
+         <value enum="7" description="LogonsAreNotAllowedAtThisTime" textId="ENUM_1409_7" />
+         <value enum="8" description="PasswordExpired" textId="ENUM_1409_8" />
+      </field>
+   </fields>
+</fix>

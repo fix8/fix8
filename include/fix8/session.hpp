@@ -1,39 +1,48 @@
-//-------------------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 #ifndef FIX8_SESSION_HPP_
 #define FIX8_SESSION_HPP_
 
@@ -45,13 +54,11 @@ namespace FIX8 {
 /// Quickfix style sessionid.
 class SessionID
 {
-	static RegExp _sid;
-
 	begin_string _beginString;
 	sender_comp_id _senderCompID;
 	target_comp_id _targetCompID;
 
-	f8String _id, _rid;
+	f8String _id;
 
 public:
 	/*! Ctor.
@@ -70,14 +77,9 @@ public:
 
 	/*! Ctor.
 	    \param from SessionID string */
-	SessionID(const f8String& from) { from_string(from); }
+	explicit SessionID(const f8String& from) { from_string(from); }
 
-	/*! Ctor.
-	    \param from SessionID field */
-	SessionID(const SessionID& from) : _beginString(from._beginString), _senderCompID(from._senderCompID),
-		_targetCompID(from._targetCompID), _id(from._id) {}
-
-	SessionID() {}
+	SessionID() = default;
 
 	/// Dtor.
 	virtual ~SessionID() {}
@@ -426,9 +428,6 @@ protected:
 	std::string _batchmsgs_buffer;
 	Session_Schedule *_schedule;
 
-	/// string representation of Sessionstates
-	F8API static const std::vector<f8String> _state_names;
-
 	/// Heartbeat generation service thread method.
 	F8API bool heartbeat_service();
 
@@ -481,13 +480,13 @@ protected:
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	virtual bool handle_reject(const unsigned seqnum, const Message *msg) { return false; }
+	virtual bool handle_reject(const unsigned, const Message *) { return false; }
 
 	/*! Administrative message callback. Called on receipt of all admin messages.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
-	virtual bool handle_admin(const unsigned seqnum, const Message *msg) { return true; }
+	virtual bool handle_admin(const unsigned, const Message *) { return true; }
 
 	/*! Outbound Reject callback. Override to receive callback when an inbound message has caused a reject
 	    \param seqnum message sequence number
@@ -507,17 +506,17 @@ protected:
 	/*! This method id called whenever a session state change occurs
 	    \param before previous session state
 	    \param after new session state */
-	virtual void state_change(const States::SessionStates before, const States::SessionStates after) {}
+	virtual void state_change(const States::SessionStates, const States::SessionStates) {}
 
 	/*! Permit modification of message just prior to sending.
 	     \param msg Message */
-	virtual void modify_outbound(Message *msg) {}
+	virtual void modify_outbound(Message *) {}
 
 	/*! Call user defined authentication with logon message.
 	    \param id Session id of inbound connection
 	    \param msg Message
 	    \return true on success */
-	virtual bool authenticate(SessionID& id, const Message *msg) { return true; }
+	virtual bool authenticate(SessionID&, const Message *) { return true; }
 
 	/// Recover next expected and next to send sequence numbers from persitence layer.
 	F8API virtual void recover_seqnums();
@@ -657,8 +656,9 @@ public:
 	/// Force persister to sync next send/receive seqnums
 	F8API void update_persist_seqnums();
 
-	/// stop the session.
-	F8API void stop();
+    /*! stop the session.
+      \param clearTimer - false if timer event queue clearing is to be omitted */
+    F8API void stop(const bool clearTimer = true);
 
 	/*! Get the connection object.
 	    \return the connection object */
@@ -733,7 +733,7 @@ public:
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true if active */
-	virtual bool activation_check(const unsigned seqnum, const Message *msg) { return _active; }
+	virtual bool activation_check(const unsigned, const Message *) { return _active; }
 
 	/*! Enforce session semantics. Checks compids, sequence numbers.
 	    \param seqnum message sequence number
@@ -850,11 +850,7 @@ public:
 	/*! Find the string representation for the given session state
 	    \param state session state
 	    \return string found or "unknown" */
-	static const f8String& get_session_state_string(const States::SessionStates state)
-	{
-		static const f8String unknown("Unknown");
-		return state < _state_names.size() ? _state_names[state] : unknown;
-	}
+	F8API static std::string_view get_session_state_string(States::SessionStates state);
 
 	/*! Return the version and copyright for this version
 	    \return string */

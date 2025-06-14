@@ -1,39 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
@@ -44,30 +53,9 @@ using namespace std;
 //----------------------------------------------------------------------------------------
 const XmlElement::XmlSet XmlElement::emptyset_;
 const XmlElement::XmlAttrs XmlElement::emptyattrs_;
-RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,}[1-4]{0,});"),
-	XmlElement::rIn_("href=\"([^\"]+)\""),
-   XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 XmlElement::XmlFlags XmlElement::flags_;
 
 //----------------------------------------------------------------------------------------
-const Str2Chr XmlElement::stringtochar_
-{
-	{"amp", '&'},		{"lt", '<'},		{"gt", '>'},
-	{"apos", '\''},	{"quot", '"'},		{"nbsp", 160},
-	{"iexcl", 161},	{"cent", 162},		{"pound", 163},
-	{"curren", 164},	{"yen", 165},		{"brvbar", 166},
-	{"sect", 167},		{"uml", 168},		{"copy", 169},
-	{"ordf", 170},		{"laquo", 171},	{"not", 172},
-	{"shy", 173},		{"reg", 174},		{"macr", 175},
-	{"deg", 176},		{"plusmn", 177},	{"sup2", 178},
-	{"sup3", 179},		{"acute", 180},	{"micro", 181},
-	{"para", 182},		{"middot", 183},	{"cedil", 184},
-	{"sup1", 185},		{"ordm", 186},		{"raquo", 187},
-	{"frac14", 188},	{"frac12", 189},	{"frac34", 190},
-	{"iquest", 191}
-};
-
-//-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
 {
 	const string spacer(en.depth_ * 3, ' ');
@@ -463,11 +451,12 @@ illegal_tag:
 				{
 					if ((tag_ = tmpotag) == "xi:include")	// handle inclusion
 					{
+						static RegExp rIn("href=\"([^\"]+)\"");
 						RegMatch match;
-						if (rIn_.SearchString(match, tmpattr, 2) == 2)
+						if (rIn.SearchString(match, tmpattr, 2) == 2)
 						{
 							string whatv;
-							rIn_.SubExpr(match, tmpattr, whatv, 0, 1);
+							rIn.SubExpr(match, tmpattr, whatv, 0, 1);
 							ifstream *ifs1(new ifstream(InplaceXlate(whatv).c_str()));
 							if (!*ifs1)
 							{
@@ -584,6 +573,7 @@ int XmlElement::ParseAttrs(const string& attlst)
 				tmptag += c;
 				state = tag;
 			}
+			[[fallthrough]];
 		case tag:
 			if (isspace(c))
 				state = es;
@@ -763,19 +753,39 @@ bool XmlElement::GetAttr(const string& what, string& target) const
 //-----------------------------------------------------------------------------------------
 const string& XmlElement::InplaceXlate (string& what)
 {
+	/// XML entity char lookup
+	static const std::map<std::string_view, unsigned char> stringtochar
+	{
+		{"amp", '&'},		{"lt", '<'},		{"gt", '>'},
+		{"apos", '\''},	{"quot", '"'},		{"nbsp", 160},
+		{"iexcl", 161},	{"cent", 162},		{"pound", 163},
+		{"curren", 164},	{"yen", 165},		{"brvbar", 166},
+		{"sect", 167},		{"uml", 168},		{"copy", 169},
+		{"ordf", 170},		{"laquo", 171},	{"not", 172},
+		{"shy", 173},		{"reg", 174},		{"macr", 175},
+		{"deg", 176},		{"plusmn", 177},	{"sup2", 178},
+		{"sup3", 179},		{"acute", 180},	{"micro", 181},
+		{"para", 182},		{"middot", 183},	{"cedil", 184},
+		{"sup1", 185},		{"ordm", 186},		{"raquo", 187},
+		{"frac14", 188},	{"frac12", 189},	{"frac34", 190},
+		{"iquest", 191}
+	};
+
+	static RegExp rCX("&([a-z]{2,}[1-4]{0,});");
 	RegMatch match;
-	while (rCX_.SearchString(match, what, 2) == 2)
+	while (rCX.SearchString(match, what, 2) == 2)
 	{
 		string whatv;
-		rCX_.SubExpr(match, what, whatv, 0, 1);
-		const auto sitr(stringtochar_.find(whatv));
-		rCX_.Replace(match, what, sitr == stringtochar_.cend() ? '?' : sitr->second); // not found character entity replaces string with '?'
+		rCX.SubExpr(match, what, whatv, 0, 1);
+		const auto sitr(stringtochar.find(whatv));
+		rCX.Replace(match, what, sitr == stringtochar.cend() ? '?' : sitr->second); // not found character entity replaces string with '?'
 	}
 
-	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
+	static RegExp rCE("&#(x[A-Fa-f0-9]+|[0-9]+);");
+	while (rCE.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
 	{
 		string whatv;
-		rCE_.SubExpr(match, what, whatv, 0, 1);
+		rCE.SubExpr(match, what, whatv, 0, 1);
 		istringstream istr(whatv);
 		int value;
 		if (whatv[0] == 'x')
@@ -789,31 +799,33 @@ const string& XmlElement::InplaceXlate (string& what)
 		if (value & 0xff00)	// handle hi byte
 			oval += static_cast<char>(value >> 8 & 0xff);
 		oval += static_cast<char>(value & 0xff);
-		rCE_.Replace(match, what, oval);
+		rCE.Replace(match, what, oval);
 	}
 
 	if (!(flags_ & noextensions))
 	{
-		if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
+		static RegExp rEn("\\$\\{([^}]+)\\}");
+		if (rEn.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
 		{
 			string whatv;
-			rEn_.SubExpr(match, what, whatv, 0, 1);
+			rEn.SubExpr(match, what, whatv, 0, 1);
 			const char *gresult(getenv(whatv.c_str()));
 			if (gresult)
 			{
 				const string result(gresult);
 				if (!result.empty())
-					rEn_.Replace(match, what, result);
+					rEn.Replace(match, what, result);
 			}
 		}
 
-		if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
+		static RegExp rEv("!\\{([^}]+)\\}");
+		if (rEv.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
 		{
 			string whatv;
-			rEv_.SubExpr(match, what, whatv, 0, 1);
+			rEv.SubExpr(match, what, whatv, 0, 1);
 			string result;
 			if (exec_cmd(whatv, result))
-				rEv_.Replace(match, what, result);
+				rEv.Replace(match, what, result);
 		}
    }
 

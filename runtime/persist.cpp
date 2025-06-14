@@ -1,39 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
@@ -269,7 +278,6 @@ int BDBPersister::operator()()
    {
 		KeyDataBuffer *msg_ptr(0);
 
-#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_TBB)
 		KeyDataBuffer buffer;
 		if (stopping)	// make sure we dequeue any pending msgs before exiting
 		{
@@ -280,16 +288,11 @@ int BDBPersister::operator()()
 			_persist_queue.pop (buffer); // will block
 		msg_ptr = &buffer;
 
-      if (buffer.empty())  // means exit
+		if (buffer.empty())  // means exit
 		{
-         stopping = true;
+			stopping = true;
 			continue;
 		}
-#else
-		_persist_queue.pop(msg_ptr); // will block
-		if (msg_ptr->empty())  // means exit
-			break;
-#endif
 		//cout << "persisted..." << endl;
 
 		++received;
@@ -303,9 +306,6 @@ int BDBPersister::operator()()
 			else
 				++persisted;
 		}
-#if (FIX8_MPMC_SYSTEM == FIX8_MPMC_FF)
-		_persist_queue.release(msg_ptr);
-#endif
 	}
 
 	//cout << "persister()() exited..." << endl;

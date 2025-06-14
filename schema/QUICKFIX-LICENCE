@@ -1,4 +1,6 @@
 #############################################################################################
+# FIX40.xml FIX41.xml FIX42PERF.xml FIX42UTEST.xml FIX42.xml FIX43.xml FIX44.xml FIX50SP1.xml
+# FIX50SP2.xml FIX50.xml FIXT11.xml
 # These FIX xml schemas have been sourced from the QuickFix distribution with some minor
 # modifications. These schemas are covered by the QuickFIX license below.
 #############################################################################################

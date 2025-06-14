@@ -1,38 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 /** \file f8c.cpp
 \n
   This is the fix8 compiler.\n
@@ -95,9 +105,9 @@ const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes
                   Ctxt::_exts_ver[2] { "pp", "xx" };
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
-bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
-     incpath(true), nconst_router(false), no_shared_groups(false), no_default_routers(false), report_unused(false);
-unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
+bool verbose{}, error_ignore{}, gen_fields{}, norealm{}, nocheck{}, nowarn{},
+     incpath{true}, nconst_router{}, no_shared_groups{}, no_default_routers{}, report_unused{};
+unsigned glob_errors{}, glob_warnings{}, tabsize(3), ext_ver{};
 extern unsigned glob_errors;
 extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SDu");
 extern string spacer, shortName, precompHdr;
@@ -147,45 +157,45 @@ void generate_export( ostream& to, const string& ns );
 int main(int argc, char **argv)
 {
 	int val;
-	bool dump(false), keep_failed(false), retain_precomp(false), second_only(false), nounique(false);
+	bool dump{}, keep_failed{}, retain_precomp{}, second_only{}, nounique{};
 	Ctxt ctxt;
 
 #ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
-		{ "help",			0,	0,	'h' },
-		{ "version",		0,	0,	'v' },
-		{ "verbose",		0,	0,	'V' },
-		{ "nounique",		0,	0,	'N' },
-		{ "norealm",		0,	0,	'R' },
-		{ "incpath",		0,	0,	'P' },
-		{ "nowarn",		   0,	0,	'W' },
-		{ "odir",			1,	0,	'o' },
-		{ "dump",			0,	0,	'd' },
-		{ "extension",		0,	0,	'e' },
-		{ "ignore",			0,	0,	'i' },
-		{ "nocheck",		0,	0,	'C' },
-		{ "noconst",		0,	0,	'U' },
-		{ "info",		   0,	0,	'I' },
-		{ "unused",		   0,	0,	'u' },
-		{ "fields",			0,	0,	'f' },
-		{ "xfields",		1,	0,	'F' },
-		{ "keep",			0,	0,	'k' },
-		{ "retain",			0,	0,	'r' },
-		{ "binary",			0,	0,	'b' },
-		{ "classes",		1,	0,	'c' },
-		{ "pch",		      1,	0,	'H' },
-		{ "second",			0,	0,	's' },
-		{ "defaulted",		0,	0,	'D' },
-		{ "noshared",		0,	0,	'S' },
-		{ "prefix",			1,	0,	'p' },
-		{ "namespace",		1,	0,	'n' },
-		{ "tabsize",		1,	0,	't' },
-		{ "fixt",			1,	0,	'x' },
-		{ 0 },
+		{ "help",			0,	nullptr,	'h' },
+		{ "version",		0,	nullptr,	'v' },
+		{ "verbose",		0,	nullptr,	'V' },
+		{ "nounique",		0,	nullptr,	'N' },
+		{ "norealm",		0,	nullptr,	'R' },
+		{ "incpath",		0,	nullptr,	'P' },
+		{ "nowarn",		   0,	nullptr,	'W' },
+		{ "odir",			1,	nullptr,	'o' },
+		{ "dump",			0,	nullptr,	'd' },
+		{ "extension",		0,	nullptr,	'e' },
+		{ "ignore",			0,	nullptr,	'i' },
+		{ "nocheck",		0,	nullptr,	'C' },
+		{ "noconst",		0,	nullptr,	'U' },
+		{ "info",		   0,	nullptr,	'I' },
+		{ "unused",		   0,	nullptr,	'u' },
+		{ "fields",			0,	nullptr,	'f' },
+		{ "xfields",		1,	nullptr,	'F' },
+		{ "keep",			0,	nullptr,	'k' },
+		{ "retain",			0,	nullptr,	'r' },
+		{ "binary",			0,	nullptr,	'b' },
+		{ "classes",		1,	nullptr,	'c' },
+		{ "pch",		      1,	nullptr,	'H' },
+		{ "second",			0,	nullptr,	's' },
+		{ "defaulted",		0,	nullptr,	'D' },
+		{ "noshared",		0,	nullptr,	'S' },
+		{ "prefix",			1,	nullptr,	'p' },
+		{ "namespace",		1,	nullptr,	'n' },
+		{ "tabsize",		1,	nullptr,	't' },
+		{ "fixt",			1,	nullptr,	'x' },
+		{},
 	};
 
-	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
+	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, nullptr)) != -1)
 #else
 	while ((val = getopt (argc, argv, GETARGLIST.c_str())) != -1)
 #endif
@@ -193,7 +203,8 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "f8c for " << Session::copyright_string() << endl;
+			cout << "f8c schema compiler " << Session::copyright_string() << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <https://www.gnu.org/licenses/> for details." << endl;
 			return 0;
 		case 'I':
          for (const auto& pp : package_info())
@@ -288,7 +299,7 @@ int main(int argc, char **argv)
 			cerr << endl;
 			return 1;
 		}
-		unsigned xmlsz(pcmp->GetLineCnt()), fixtsz(0);
+		unsigned xmlsz(pcmp->GetLineCnt()), fixtsz{};
 		if (!fixt.empty())
 		{
 			pcmpfixt.reset(XmlElement::Factory(fixt));
@@ -336,13 +347,13 @@ int main(int argc, char **argv)
       return 1;
    }
 
-	for (unsigned ii(0); ii < Ctxt::count; ++ii)
+	for (unsigned ii{}; ii < Ctxt::count; ++ii)
 	{
 		ctxt._out[ii].first.second = prefix + ctxt._exts[ii] + ctxt._exts_ver[ext_ver];
 		ctxt._out[ii].first.first = ctxt._out[ii].first.second + ".p2";
 		remove(ctxt._out[ii].first.first.c_str());
 		string target;
-		if ((ctxt._out[ii].second = open_ofile(odir, ctxt._out[ii].first.first, target)) == 0)
+		if ((ctxt._out[ii].second = open_ofile(odir, ctxt._out[ii].first.first, target)) == nullptr)
 			return 1;
 	}
 
@@ -360,7 +371,7 @@ int main(int argc, char **argv)
          {
             const RegExp rMS("([^:]+):(Y|N)");
             istringstream istr(extra_fields);
-            size_t added(0);
+            size_t added{};
             while (istr.good())
             {
                unique_ptr<XmlElement> nel(new XmlElement(istr, 0, flds));
@@ -407,7 +418,7 @@ int main(int argc, char **argv)
 
 		result = process(*cfr, ctxt);
 
-		for (unsigned ii(0); ii < Ctxt::count; ++ii)
+		for (unsigned ii{}; ii < Ctxt::count; ++ii)
 		{
 			delete ctxt._out[ii].second;
 			if (glob_errors && !error_ignore)
@@ -459,7 +470,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 		return 0;
 	}
 
-	int fieldsLoaded(0);
+	int fieldsLoaded{};
 
 	for(const auto *pp : flist)
 	{
@@ -479,7 +490,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
             {
 					result = fspec.insert({stoul(number), FieldSpec(name, ft)});
 				}
-            catch (exception& e)
+            catch (exception&)
             {
 					cerr << shortName << ':' << recover_line(*pp) << ": error: Failed to convert (stoul) number " << number << " in " << name << endl;
 					++glob_errors;
@@ -541,7 +552,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec,
 	FieldSpecMap& fspec, Components& compon, CommonGroupMap& globmap)
 {
-	int msgssLoaded(0), grpsparsed(0);
+	int msgssLoaded{}, grpsparsed{};
 
 	XmlElement::XmlSet mlist;
 	if (!xf.find("fix/messages/message", mlist))
@@ -634,7 +645,7 @@ unsigned parse_groups(MessageSpec& ritr, const string& name,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist,
    const Components& compon, CommonGroupMap& globmap)
 {
-	unsigned result(0);
+	unsigned result{};
 
 	for(const auto *pp : grplist)
 	{
@@ -753,7 +764,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		FieldSpecMap::const_iterator gsitr(fspec.find(pp.first));
 		outp << _csMap.find(cs_divider)->second << endl;
 
-      int vers(0);
+      int vers{};
       const MessageSpec *tgroup (find_group(globmap, vers, pp.first, pp.second._hash));
       if (!tgroup)
       {
@@ -857,11 +868,11 @@ void generate_group_traits(const FieldSpecMap& fspec, const MessageSpec& ms, con
          << " // refs:" << ms._group_refcnt << endl << '{' << endl;
    else
       outp << "const FieldTrait " << prefix << gname << "::_traits[]" << endl << '{' << endl;
-   int felpos(0);
+   int felpos{};
    for (Presence::const_iterator flitr(ms._fields.get_presence().begin());
       flitr != ms._fields.get_presence().end(); ++flitr, ++felpos)
    {
-      bool spaceme(true);
+      bool spaceme{true};
       if (flitr != ms._fields.get_presence().begin())
       {
          outp << ',';
@@ -934,7 +945,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ostream& osc_cpp(*ctxt._out[Ctxt::classes_cpp].second);
 	ostream& osu_hpp(*ctxt._out[Ctxt::router_hpp].second);
 	ostream& oss_hpp(*ctxt._out[Ctxt::session_hpp].second);
-	int result(0);
+	int result{};
 
 // ================================= Field loading  =======================================
 	FieldSpecMap fspec;
@@ -968,7 +979,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			cout << components.size() << " components defined" << endl;
 		if (globmap.size())
       {
-         unsigned cgs(0), ugs(0), vars(0);
+         unsigned cgs{}, ugs{}, vars{};
          for (const auto& pp : globmap)
          {
             vars += static_cast<unsigned>(pp.second.size());
@@ -1001,8 +1012,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
     generate_export(osc_hpp, ctxt._fixns);
     osc_hpp << _csMap.find(cs_start_namespace)->second << endl;
-	osc_hpp << endl << "extern \"C\"" << endl << '{' << endl
-      << spacer << "F8_" << ctxt._fixns << "_API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << '}' << endl << endl;
+	osc_hpp << endl << "F8_" << ctxt._fixns << "_API const F8MetaCntx& " << ctxt._fixns << "_ctx();" << endl << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find(cs_divider)->second << endl;
@@ -1072,53 +1082,52 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		osc_hpp << "class " << pp.second._name << " : public "
 			<< (isTrailer || isHeader ? "MessageBase" : "Message") << endl << '{' << endl;
 
-		if (pp.second._fields.get_presence().size())
-		{
-			osr_cpp << _csMap.find(cs_divider)->second << endl;
-			osr_cpp << "const FieldTrait " << pp.second._name << "::_traits[]"
-				<< endl << '{' << endl;
-         int felpos(0);
-			for (Presence::const_iterator flitr(pp.second._fields.get_presence().begin());
-				flitr != pp.second._fields.get_presence().end(); ++flitr, ++felpos)
-			{
-				bool spaceme(true);
-				if (flitr != pp.second._fields.get_presence().begin())
-				{
-					osr_cpp << ',';
-               if (felpos % 4 == 0)
-						osr_cpp << endl;
-					else
-						spaceme = false;
-				}
-
-				ostringstream tostr;
-				tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
-				osr_cpp << (spaceme ? spacer : " ");
-				osr_cpp << '{' << setw(4) << right << flitr->_fnum << ','
-					<< setw(2) << right << flitr->_ftype << ',' << setw(3) << right
-					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
-#if defined FIX8_HAVE_EXTENDED_METADATA
-            if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
-            {
-               osr_cpp << ", " << endl << spacer << spacer;
-               FieldSpecMap::const_iterator gsitr(fspec.find(flitr->_fnum));
-               osr_cpp << gsitr->second._name << "::get_traits(), " << gsitr->second._name << "::get_fieldcnt()";
-               osr_cpp << endl << spacer << '}';
-               felpos = -1;
-            }
+      osr_cpp << _csMap.find(cs_divider)->second << endl;
+      osr_cpp << "const FieldTrait " << pp.second._name << "::_traits[]"
+         << endl << '{' << endl;
+      int felpos{};
+      for (Presence::const_iterator flitr(pp.second._fields.get_presence().begin());
+         flitr != pp.second._fields.get_presence().end(); ++flitr, ++felpos)
+      {
+         bool spaceme{true};
+         if (flitr != pp.second._fields.get_presence().begin())
+         {
+            osr_cpp << ',';
+            if (felpos % 4 == 0)
+               osr_cpp << endl;
             else
+               spaceme = false;
+         }
+
+         ostringstream tostr;
+         tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
+         osr_cpp << (spaceme ? spacer : " ");
+         osr_cpp << '{' << setw(4) << right << flitr->_fnum << ','
+            << setw(2) << right << flitr->_ftype << ',' << setw(3) << right
+            << flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str();
+#if defined FIX8_HAVE_EXTENDED_METADATA
+         if (no_shared_groups && flitr->_field_traits.has(FieldTrait::group))
+         {
+            osr_cpp << ", " << endl << spacer << spacer;
+            FieldSpecMap::const_iterator gsitr(fspec.find(flitr->_fnum));
+            osr_cpp << gsitr->second._name << "::get_traits(), " << gsitr->second._name << "::get_fieldcnt()";
+            osr_cpp << endl << spacer << '}';
+            felpos = -1;
+         }
+         else
 #endif
-               osr_cpp << '}';
-			}
-			osr_cpp << endl << "};" << endl;
-			osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
-            << pp.second._name << "::_fieldcnt);" << endl;
-			osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
-            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
-            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;
-            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const MsgType _msgtype;" << endl;
-            osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const unsigned _fieldcnt = " << pp.second._fields.get_presence().size() << ';' << endl;
-		}
+            osr_cpp << '}';
+      }
+      if (!pp.second._fields.get_presence().size())
+         osr_cpp << spacer << "{}";
+      osr_cpp << endl << "};" << endl;
+      osr_cpp << "const FieldTrait_Hash_Array " << pp.second._name << "::_ftha(" << pp.second._name << "::_traits, "
+         << pp.second._name << "::_fieldcnt);" << endl;
+      osr_cpp << "const MsgType " << pp.second._name << "::_msgtype(\"" << pp.first << "\");" << endl;
+         osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait _traits[];" << endl;
+         osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const FieldTrait_Hash_Array _ftha; " << endl;
+         osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const MsgType _msgtype;" << endl;
+         osc_hpp << spacer << "static F8_" << ctxt._fixns << "_API const unsigned _fieldcnt = " << pp.second._fields.get_presence().size() << ';' << endl;
 
 		if (isHeader)
 		{
@@ -1133,7 +1142,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
       osc_hpp << "public:" << endl;
 		osc_hpp << spacer << "explicit " << pp.second._name << "(bool deepctor=true)";
-		if (pp.second._fields.get_presence().size())
+		//if (pp.second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
 				<< "(ctx(), _msgtype(), _traits, _fieldcnt, &_ftha)";
 		if (isHeader || isTrailer)
@@ -1227,7 +1236,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	}
 	osc_cpp << endl << "}; // " << mspec.size() << endl;
 
-   size_t fields_generated(0);
+   size_t fields_generated{};
 	for (const auto& pp : fspec)
 		if (gen_fields || pp.second._used)
          ++fields_generated;
@@ -1249,7 +1258,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
 	osu_hpp << spacer << "virtual ~" << ctxt._clname << "_Router() {}" << endl << endl;
-   osu_hpp << spacer << "virtual bool operator() (const class Message *msg) ";
+   osu_hpp << spacer << "virtual bool operator() (const class Message *) ";
    if (!nconst_router)
       osu_hpp << "const ";
    osu_hpp << "{ return false; }" << endl;
@@ -1257,7 +1266,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		if (pp.second._name == "trailer" || pp.second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator() (const class " << pp.second._name << " *msg)";
+		osu_hpp << spacer << "virtual bool operator() (const class " << pp.second._name << " *)";
       if (no_default_routers)
          osu_hpp << ';' << endl;
       else
@@ -1279,9 +1288,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osr_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osr_cpp << _csMap.find(cs_end_namespace)->second << endl;
 	osc_cpp << endl << "// Compiler generated metadata object accessible outside namespace through this function." << endl;
-	osc_cpp << "extern \"C\"" << endl << '{' << endl
-      << spacer << "const F8MetaCntx& " << ctxt._fixns << "_ctx() { return " << ctxt._fixns << "::ctx(); }"
-      << endl << '}' << endl << endl;
+	osc_cpp << "const F8MetaCntx& " << ctxt._fixns << "_ctx() { return " << ctxt._fixns << "::ctx(); }" << endl << endl;
 	osc_cpp << _csMap.find(cs_end_namespace)->second << endl;
 	osc_cpp << endl;
 
@@ -1405,7 +1412,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	// generate realmbase objs
 	ost_cpp << endl << _csMap.find(cs_divider)->second << endl;
 	ost_cpp << "const RealmBase realmbases[] " << endl << '{' << endl;
-	unsigned dcnt(0);
+	unsigned dcnt{};
 	for (auto& pp : fspec)
 	{
 		if ((!pp.second._used && !gen_fields) || !pp.second._dvals)
@@ -1430,12 +1437,16 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ost_cpp << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl;
 	ost_cpp << "const " << ctxt._clname << "_BaseEntry::Pair fldpairs[] "
       << endl << '{' << endl;
+   FieldSpecMap::const_iterator fromfitr(fspec.begin());
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (!gen_fields && !fitr->second._used)
-			continue;
-		if (fitr != fspec.begin())
-			ost_cpp << ',' << endl;
+      {
+         ++fromfitr;
+         continue;
+      }
+      if (fitr != fromfitr)
+         ost_cpp << ',' << endl;
 		ost_cpp << spacer << "{ " << fitr->first << ", { ";
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{
@@ -1475,7 +1486,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	if (verbose)
 	{
-		unsigned cnt(0), ucnt(0);
+		unsigned cnt{}, ucnt{};
 		for (const auto& pp : fspec)
       {
 			if (pp.second._used)
@@ -1500,11 +1511,16 @@ int process(XmlElement& xf, Ctxt& ctxt)
 //-------------------------------------------------------------------------------------------------
 void binary_report()
 {
-#if defined __GNUG__
-#if defined __GNUC_MINOR__ && __GNUC_PATCHLEVEL__
-	cout << "Compiled with gcc version " << __GNUG__ << '.' << __GNUC_MINOR__ << '.' <<__GNUC_PATCHLEVEL__ << endl;
-#endif
-#ifndef __APPLE__
+#if defined __INTEL_COMPILER
+   cout << "Intel Compiler version is " << __INTEL_COMPILER << endl;
+#elif defined __INTEL_LLVM_COMPILER
+   cout << "Intel Compiler version is " << __INTEL_LLVM_COMPILER << endl;
+#elif defined _MSC_VER
+	cout << "MSVC Compiler version is " << _MSC_VER << " (" << _MSC_FULL_VER << ')' << endl;
+#elif defined __clang__
+   cout << "Compiled with clang version " << __clang_major__ << '.' << __clang_minor__ << '.' << __clang_patchlevel__ << endl;
+#elif defined __GNUG__
+   cout << "Compiled with gcc version " << __GNUG__ << '.' << __GNUC_MINOR__ << '.' <<__GNUC_PATCHLEVEL__ << endl;
 	const size_t confbufsz(256);
 	char confbuf[confbufsz];
 	if (confstr(_CS_GNU_LIBC_VERSION, confbuf, confbufsz))
@@ -1515,12 +1531,16 @@ void binary_report()
 	{
 		cout << "GNU libpthread version is " << confbuf << endl;
 	}
+#else
+	cout << "No information available" << endl;
 #endif
 #if defined __GXX_ABI_VERSION
 	cout << "GXX ABI version is " <<  __GXX_ABI_VERSION << endl;
 #endif
-#else
-	cout << "GCC not used. No information available." << endl;
+#if defined _LIBCPP_VERSION
+   cout << "libc++ version is " << _LIBCPP_VERSION << endl;
+#elif defined __GLIBCXX__
+   cout << "libstdc++ version is " << __GLIBCXX__ << endl;
 #endif
 }
 
@@ -1528,7 +1548,7 @@ void binary_report()
 unsigned lookup_component(const Components& compon, const f8String& name)
 {
 	Components::const_iterator citr(compon.find(name));
-	return citr != compon.end() ? 1 + distance(compon.begin(), citr) : 0;
+	return citr != compon.end() ? static_cast<unsigned>(1 + distance(compon.begin(), citr)) : 0;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1536,11 +1556,11 @@ uint32_t group_hash(const MessageSpec& p1)
 {
    if (no_shared_groups)   // hack so every group hash is unique
    {
-      static uint32_t result(0);
+      static uint32_t result{};
       return ++result;
    }
 
-   uint32_t result(0);
+   uint32_t result{};
 
    for (const auto& pp : p1._fields.get_presence())
       result = rothash(result, pp._fnum);
@@ -1559,7 +1579,7 @@ const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned
    CommonGroups::const_iterator key_result(tp_result->second.find(key));
    if (key_result == tp_result->second.end())
       return nullptr;
-   vers = 1 + distance(tp_result->second.begin(), key_result);
+   vers = static_cast<int>(1 + distance(tp_result->second.begin(), key_result));
    return &key_result->second;
 }
 
@@ -1570,7 +1590,7 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 	string result;
 	if (donotedit)
 	{
-		to << _csMap.find(cs_do_not_edit)->second << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
+		to << _csMap.find(cs_do_not_edit)->second << GetTimeAsStringMS(result, 0, 0) << " by " FIX8_PACKAGE_STRING " ***" << endl;
 		to << _csMap.find(cs_divider)->second << endl;
 	}
 	to << _csMap.find(cs_copyright)->second << insert_year() << _csMap.find(cs_copyright2)->second << endl;
@@ -1599,15 +1619,15 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 void generate_export(ostream& to, const string& ns)
 {
     to <<
-        "#if defined(_MSC_VER) && defined(F8_" << ns << "_API_SHARED)\n"
-        "    #if defined(BUILD_F8_" << ns << "_API)\n"
-        "        #define F8_" << ns << "_API __declspec(dllexport)\n"
-        "    #else\n"
-        "        #define F8_" << ns << "_API __declspec(dllimport)\n"
-        "    #endif\n"
-        "#else\n"
-        "    #define F8_" << ns << "_API\n"
-        "#endif\n";
+      "#if defined(_MSC_VER) && defined(F8_" << ns << "_API_SHARED)\n"
+      "    #if defined(BUILD_F8_" << ns << "_API)\n"
+      "        #define F8_" << ns << "_API __declspec(dllexport)\n"
+      "    #else\n"
+      "        #define F8_" << ns << "_API __declspec(dllimport)\n"
+      "    #endif\n"
+      "#else\n"
+      "    #define F8_" << ns << "_API\n"
+      "#endif\n";
 }
 
 /* vim: set ts=3 sw=3 tw=0 et :*/

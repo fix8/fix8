@@ -1,39 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 #include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
@@ -45,26 +54,24 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace
 {
-	const string package_version { FIX8_PACKAGE_NAME " version " FIX8_PACKAGE_VERSION };
-	const string copyright_short { "Copyright (c) 2010-" };
-	const string copyright_short2 { ", David L. Dight <" FIX8_PACKAGE_BUGREPORT ">, All rights reserved. [" FIX8_PACKAGE_URL "]"};
+	static constexpr std::string_view package_version { FIX8_PACKAGE_NAME " version " FIX8_PACKAGE_VERSION };
+	static constexpr std::string_view copyright_short { "Copyright (c) 2010-" };
+	static constexpr std::string_view copyright_short2 { ", David L. Dight <" FIX8_PACKAGE_BUGREPORT ">, All rights reserved. <" FIX8_PACKAGE_URL ">"};
 }
 
 //-------------------------------------------------------------------------------------------------
-RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
-
-//-------------------------------------------------------------------------------------------------
-#if defined(_MSC_VER) && !defined(BUILD_F8API)
-// no need in definition since it is in dll already
-#else
-const vector<f8String> Session::_state_names
+std::string_view Session::get_session_state_string(const States::SessionStates state)
 {
-	"none", "continuous", "session_terminated",
-	"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",
-	"logoff_received", "test_request_sent", "sequence_reset_sent",
-	"sequence_reset_received", "resend_request_sent", "resend_request_received"
-};
-#endif
+	static constexpr array<std::string_view, States::st_num_states> _state_names
+	{
+		"none", "continuous", "session_terminated",
+		"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",
+		"logoff_received", "test_request_sent", "sequence_reset_sent",
+		"sequence_reset_received", "resend_request_sent", "resend_request_received"
+	};
+	static constexpr std::string_view unknown{"Unknown"};
+	return state < _state_names.size() ? _state_names[state] : unknown;
+}
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable: 4273)
@@ -86,15 +93,16 @@ SessionID SessionID::make_reverse_id() const
 //-------------------------------------------------------------------------------------------------
 void SessionID::from_string(const f8String& from)
 {
+	static RegExp sid_regex("([^:]+):([^-]+)->(.+)");
 	RegMatch match;
-	if (_sid.SearchString(match, from, 4) == 4)
+	if (sid_regex.SearchString(match, from, 4) == 4)
 	{
 		f8String bstr, scid, tcid;
-		_sid.SubExpr(match, from, bstr, 0, 1);
+		RegExp::SubExpr(match, from, bstr, 0, 1);
 		_beginString.set(bstr);
-		_sid.SubExpr(match, from, scid, 0, 2);
+		RegExp::SubExpr(match, from, scid, 0, 2);
 		_senderCompID.set(scid);
-		_sid.SubExpr(match, from, tcid, 0, 3);
+		RegExp::SubExpr(match, from, tcid, 0, 3);
 		_targetCompID.set(tcid);
 		make_id();
 	}
@@ -227,7 +235,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::stop()
+void Session::stop(const bool clearTimer)
 {
 	if (_control & shutdown)
 		return;
@@ -235,8 +243,9 @@ void Session::stop()
 
 	if (_connection)
 	{
-		if (_connection->get_role() == Connection::cn_initiator)
-			_timer.clear();
+        if (_connection->get_role() == Connection::cn_initiator &&
+                clearTimer)
+            _timer.clear();
 		else
 		{
 			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
@@ -412,7 +421,7 @@ application_call:
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::compid_check(const unsigned seqnum, const Message *msg, const SessionID& id) const
+void Session::compid_check([[maybe_unused]] const unsigned seqnum, const Message *msg, const SessionID& id) const
 {
 	if (_loginParameters._enforce_compids)
 	{
@@ -832,7 +841,11 @@ bool Session::heartbeat_service()
 				log(ostr.str(), Logger::Error);
 				try
 				{
-					stop();
+                    //  do not clear the timer, as the lock required for the same is already taken by the timer thread
+                    //  not removing the remaining events will cause some extra work to be done,
+                    //  but that work will be limited by the fact that the work checks if the session is already shutdown
+                    //  activation_service and heartbeat_service both have shutdown checks
+                    stop(false);
 				}
 				catch (Poco::Net::NetException& e)
 				{
@@ -842,6 +855,7 @@ bool Session::heartbeat_service()
 				{
 					slout_error << e.what();
 				}
+				do_state_change(States::st_session_terminated);
 				return true;
 			}
 			else if (_state != States::st_session_terminated)
@@ -1000,7 +1014,7 @@ size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 }
 
 //-------------------------------------------------------------------------------------------------
-int Session::modify_header(MessageBase *msg)
+int Session::modify_header([[maybe_unused]] MessageBase *msg)
 {
 	return 0;
 }
@@ -1191,13 +1205,13 @@ void Session::set_affinity(int core_id)
 }
 #else
 //-------------------------------------------------------------------------------------------------
-void Session::set_scheduler(int priority)
+void Session::set_scheduler([[maybe_unused]] int priority)
 {
 	slout_error << "set_scheduler: not implemented";
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::set_affinity(int core_id)
+void Session::set_affinity([[maybe_unused]] int core_id)
 {
 	slout_error << "set_affinity: not implemented";
 }
@@ -1234,7 +1248,7 @@ void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::Verifi
 	errorCert.setIgnoreError(true);
 }
 
-void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& privateKey)
+void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, [[maybe_unused]] std::string& privateKey)
 {
 	glout_warn << "warning: privatekey passphrase requested and ignored!";
 }

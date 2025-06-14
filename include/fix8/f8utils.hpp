@@ -1,39 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 #ifndef FIX8_UTILS_HPP_
 #define FIX8_UTILS_HPP_
 
@@ -376,7 +385,7 @@ class RegExp
 
 	regex_t reg_;
 #elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
-	Poco::RegularExpression * _regexp;
+	std::unique_ptr<Poco::RegularExpression> _regexp;
 #endif
 	std::string errString;
 	int errCode_;
@@ -397,11 +406,11 @@ public:
 		}
 	}
 #elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
-		: pattern_(pattern), _regexp()
+		: pattern_(pattern)
 	{
 		try
 		{
-			_regexp = new Poco::RegularExpression(pattern, flags, true);
+			_regexp = std::make_unique<Poco::RegularExpression>(pattern, flags, true);
 		}
 		catch(const Poco::RegularExpressionException& ex)
 		{
@@ -418,7 +427,6 @@ public:
 		if (errCode_ == 0)
 			regfree(&reg_);
 #elif FIX8_REGEX_SYSTEM == FIX8_REGEX_POCO
-		delete _regexp;
 #endif
 	}
 
@@ -459,7 +467,7 @@ public:
          target = source.substr(offset + match.SubPos(num), match.SubSize(num));
 #endif
       else
-         target.empty();
+         target.clear();
       return target;
 	}
 
@@ -846,29 +854,15 @@ class ebitset
 
 public:
 	/// Ctor.
-	ebitset() : a_() {}
-
-	/*! Ctor.
-	    \param from ebitset_r to copy */
-	ebitset(const ebitset<T, B>& from) : a_(from.a_) {}
+	ebitset() = default;
 
 	/*! Ctor.
 	    \param a integral type to construct from */
-	explicit ebitset(const integral_type a) : a_(a) {}
+	explicit ebitset(const integral_type a) : a_(a) { static_assert(std::is_trivial_v<ebitset>); }
 
 	/*! Ctor.
 	    \param sbit enum to construct from */
 	explicit ebitset(const T sbit) : a_((1 << sbit) - 1) {}
-
-	/*! Assignment operator.
-	    \param that ebitset_r to assign from
-	    \return  this */
-	ebitset<T, B>& operator=(const ebitset<T, B>& that)
-	{
-		if (this != &that)
-			a_ = that.a_;
-		return *this;
-	}
 
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
@@ -903,9 +897,9 @@ public:
 				break;
 		if (itr == sset.cend())
 			return -1;
-		const int dist(std::distance(sset.cbegin(), itr));
+		auto dist(std::distance(sset.cbegin(), itr));
 		set(static_cast<T>(dist), on);
-		return dist;
+		return static_cast<int>(dist);
 	}
 
 	/*! Clear a bit on or off.
@@ -945,29 +939,15 @@ class ebitset_r
 
 public:
 	/// Ctor.
-	ebitset_r() { a_ = 0; }
-
-	/*! Ctor.
-	    \param from ebitset_r to copy */
-	ebitset_r(const ebitset_r<T, B>& from) { a_ = from.a_; }
+	ebitset_r() = default;
 
 	/*! Ctor.
 	    \param a integral type to construct from */
-	explicit ebitset_r(const integral_type a) { a_ = a; }
+	explicit ebitset_r(const integral_type a) { a_ = a; static_assert(std::is_trivial_v<ebitset_r>); }
 
 	/*! Ctor.
 	    \param sbit enum to construct from */
 	explicit ebitset_r(const T sbit) { a_ = (1 << sbit) - 1; }
-
-	/*! Assignment operator.
-	    \param that ebitset_r to assign from
-	    \return  this */
-	ebitset_r<T, B>& operator=(const ebitset_r<T, B>& that)
-	{
-		if (this != &that)
-			a_ = that.a_;
-		return *this;
-	}
 
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
@@ -1145,10 +1125,9 @@ protected:
    {
       if (gptr() < egptr())
          return *gptr();
-      int put_back_cnt(gptr() - eback());
-      if (put_back_cnt > _back_limit)
-         put_back_cnt = _back_limit;
-		memcpy(_buffer + (_back_limit - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
+      auto put_back_cnt(gptr() - eback());
+      put_back_cnt = std::min<long long>(put_back_cnt, _back_limit);
+      memcpy(_buffer + (_back_limit - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
 #ifdef _MSC_VER
       int num_read(_read (_fd, _buffer + _back_limit, _buffer_size - _back_limit));
 #else

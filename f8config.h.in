@@ -1,0 +1,547 @@
+#ifndef _INCLUDE_FIX__F_CONFIG_H
+#define _INCLUDE_FIX__F_CONFIG_H 1
+
+/* Generated from f8config.h.in by cmake  */
+
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
+
+/* Define to 1 to enable CODEC timing testing code */
+/* #undef CODECTIMING */
+
+/* configure options */
+#ifndef FIX8_CONFIGURE_OPTIONS
+#define FIX8_CONFIGURE_OPTIONS "@fix8_CMAKE_COMMAND_LINE@"
+#endif
+
+/* Short Date system was configured */
+#ifndef FIX8_CONFIGURE_SDATE
+#define FIX8_CONFIGURE_SDATE "@fix8_SDATE@"
+#endif
+
+/* Date system was configured */
+#ifndef FIX8_CONFIGURE_TIME
+#define FIX8_CONFIGURE_TIME "@fix8_TIMESTAMP@"
+#endif
+
+/* date/time as seconds since start epoch */
+#ifndef FIX8_CONFIGURE_TIME_NUM
+#define FIX8_CONFIGURE_TIME_NUM 1683682319
+#endif
+
+/* compiler spec */
+#ifndef FIX8_CPPFLAGS
+#define FIX8_CPPFLAGS "@fix8_CMAKE_CXX_FLAGS_STR@"
+#endif
+
+/* Define to 1 for debugging support */
+/* #undef DEBUG */
+
+/* Default number of precision digits for floating point fields (default=2) */
+#ifndef FIX8_DEFAULT_PRECISION
+#define FIX8_DEFAULT_PRECISION 2
+#endif
+
+/* Define to 1 to enable experimental socket read */
+/* #undef EXPERIMENTAL_BUFFERED_SOCKET_READ */
+
+/* Define to 1 if you have zeromq */
+/* #undef HAS_ZEROMQ_MBUS */
+
+/* Define to 1 if you have the `alarm' function. */
+#ifndef FIX8_HAVE_ALARM
+#define FIX8_HAVE_ALARM 1
+#endif
+
+/* Define to 1 if you have 'alloca', as a function or macro. */
+#ifndef FIX8_HAVE_ALLOCA
+#define FIX8_HAVE_ALLOCA 1
+#endif
+
+/* Define to 1 if you have the <alloca.h> header file. */
+#ifndef FIX8_HAVE_ALLOCA_H
+#define FIX8_HAVE_ALLOCA_H 1
+#endif
+
+/* Define to 1 if you have berkeley DB */
+/* #undef HAVE_BDB */
+
+/* Define if you have clock_gettime() */
+#ifndef FIX8_HAVE_CLOCK_GETTIME
+#define FIX8_HAVE_CLOCK_GETTIME 1
+#endif
+
+/* Define if you have clock_nanosleep() */
+#if !defined _MSC_VER && !defined __APPLE__
+#ifndef FIX8_HAVE_CLOCK_NANOSLEEP
+#define FIX8_HAVE_CLOCK_NANOSLEEP 1
+#endif
+#endif
+
+/* Define to 1 if zlib headers and library were found */
+#ifndef FIX8_HAVE_COMPRESSION
+#define FIX8_HAVE_COMPRESSION 1
+#endif
+
+/* Define to 1 if you have the <db.h> header file. */
+/* #undef HAVE_DB_H */
+
+/* Define to 1 if you have the declaration of `TCP_CORK', and to 0 if you
+   don't. */
+#ifndef FIX8_HAVE_DECL_TCP_CORK
+#define FIX8_HAVE_DECL_TCP_CORK 1
+#endif
+
+/* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
+   */
+#ifndef FIX8_HAVE_DIRENT_H
+#define FIX8_HAVE_DIRENT_H 1
+#endif
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#ifndef FIX8_HAVE_DLFCN_H
+#define FIX8_HAVE_DLFCN_H 1
+#endif
+
+/* Define to 1 if you have extended Fix8 metadata enabled */
+/* #undef HAVE_EXTENDED_METADATA */
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+/* #undef HAVE_FCNTL_H */
+
+/* Define to 1 if you have the `fork' function. */
+#ifndef FIX8_HAVE_FORK
+#define FIX8_HAVE_FORK 1
+#endif
+
+/* Define to 1 if you have the `getcwd' function. */
+#ifndef FIX8_HAVE_GETCWD
+#define FIX8_HAVE_GETCWD 1
+#endif
+
+/* Define to 1 if you have the <getopt.h> header file. */
+#ifndef FIX8_HAVE_GETOPT_H
+#define FIX8_HAVE_GETOPT_H 1
+#endif
+
+/* Define to 1 if you have the `getopt_long' function. */
+#ifndef FIX8_HAVE_GETOPT_LONG
+#define FIX8_HAVE_GETOPT_LONG 1
+#endif
+
+/* Define to 1 if you have the `getpagesize' function. */
+#ifndef FIX8_HAVE_GETPAGESIZE
+#define FIX8_HAVE_GETPAGESIZE 1
+#endif
+
+/* Define to 1 if you have the `gettimeofday' function. */
+#ifndef FIX8_HAVE_GETTIMEOFDAY
+#define FIX8_HAVE_GETTIMEOFDAY 1
+#endif
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#ifndef FIX8_HAVE_INTTYPES_H
+#define FIX8_HAVE_INTTYPES_H 1
+#endif
+
+/* Define to 1 if you have libhiredis */
+/* #undef HAVE_LIBHIREDIS */
+
+/* Define to 1 if you have libmemcached */
+/* #undef HAVE_LIBMEMCACHED */
+
+/* Define to 1 if libz is present */
+#ifndef FIX8_HAVE_LIBZ
+#define FIX8_HAVE_LIBZ 1
+#endif
+
+/* Define to 1 if you have the `localtime_r' function. */
+#ifndef FIX8_HAVE_LOCALTIME_R
+#define FIX8_HAVE_LOCALTIME_R 1
+#endif
+
+/* Define to 1 if the system has the type `long long int'. */
+#ifndef FIX8_HAVE_LONG_LONG_INT
+#define FIX8_HAVE_LONG_LONG_INT 1
+#endif
+
+/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
+   to 0 otherwise. */
+#ifndef FIX8_HAVE_MALLOC
+#define FIX8_HAVE_MALLOC 1
+#endif
+
+/* Define to 1 if you have a working `mmap' system call. */
+#ifndef FIX8_HAVE_MMAP
+#define FIX8_HAVE_MMAP 1
+#endif
+
+/* Define to 1 if you have openssl */
+/* #undef HAVE_OPENSSL */
+
+/* Define to 1 if you have the <openssl/ssl.h> header file. */
+/* #undef HAVE_OPENSSL_SSL_H */
+#ifndef _MSC_VER
+#ifndef FIX8_HAVE_OPENSSL
+#define FIX8_HAVE_OPENSSL 1
+#endif
+#endif
+
+/* Define to 1 if you have the `popen' function. */
+#ifndef FIX8_HAVE_POPEN
+#define FIX8_HAVE_POPEN 1
+#endif
+
+/* Define to 1 if the system has the type `ptrdiff_t'. */
+#ifndef FIX8_HAVE_PTRDIFF_T
+#define FIX8_HAVE_PTRDIFF_T 1
+#endif
+
+/* Define to 1 if your system has a GNU libc compatible `realloc' function,
+   and to 0 otherwise. */
+#ifndef FIX8_HAVE_REALLOC
+#define FIX8_HAVE_REALLOC 1
+#endif
+
+/* Define to 1 if you have the `regcomp' function. */
+#ifndef FIX8_HAVE_REGCOMP
+#define FIX8_HAVE_REGCOMP 1
+#endif
+
+/* Define to 1 if you have the `socket' function. */
+#ifndef FIX8_HAVE_SOCKET
+#define FIX8_HAVE_SOCKET 1
+#endif
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#ifndef FIX8_HAVE_STDBOOL_H
+#define FIX8_HAVE_STDBOOL_H 1
+#endif
+
+/* Define to 1 if you have the `strcasecmp' function. */
+#ifndef FIX8_HAVE_STRCASECMP
+#define FIX8_HAVE_STRCASECMP 1
+#endif
+
+/* Define to 1 if you have the `strerror' function. */
+#ifndef FIX8_HAVE_STRERROR
+#define FIX8_HAVE_STRERROR 1
+#endif
+
+/* Define to 1 if you have the `strftime' function. */
+#ifndef FIX8_HAVE_STRFTIME
+#define FIX8_HAVE_STRFTIME 1
+#endif
+
+/* Define to 1 if you have the `sysconf' function. */
+#ifndef FIX8_HAVE_SYSCONF
+#define FIX8_HAVE_SYSCONF 1
+#endif
+
+/* Define to 1 if you have the <syslog.h> header file. */
+/* #undef HAVE_SYSLOG_H */
+
+/* Define to 1 if you have the <sys/gmon.h> header file. */
+/* #undef HAVE_SYS_GMON_H */
+
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+/* #undef HAVE_SYS_IOCTL_H */
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+/* #undef HAVE_SYS_SOCKET_H */
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#ifndef FIX8_HAVE_SYS_STAT_H
+#define FIX8_HAVE_SYS_STAT_H 1
+#endif
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#ifndef FIX8_HAVE_SYS_TIME_H
+#define FIX8_HAVE_SYS_TIME_H 1
+#endif
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#ifndef FIX8_HAVE_SYS_TYPES_H
+#define FIX8_HAVE_SYS_TYPES_H 1
+#endif
+
+/* Define to 1 if you have the <sys/wait.h> header file. */
+#ifndef FIX8_HAVE_SYS_WAIT_H
+#define FIX8_HAVE_SYS_WAIT_H 1
+#endif
+
+/* Define to 1 if you have the <termios.h> header file. */
+/* #undef HAVE_TERMIOS_H */
+
+/* Define to 1 if the system has the type `unsigned long long int'. */
+#ifndef FIX8_HAVE_UNSIGNED_LONG_LONG_INT
+#define FIX8_HAVE_UNSIGNED_LONG_LONG_INT 1
+#endif
+
+/* Define to 1 for valgrind support */
+/* #undef HAVE_VALGRIND */
+
+/* Define to 1 if you have the <valgrind/valgrind.h> header file. */
+/* #undef HAVE_VALGRIND_VALGRIND_H */
+
+/* Define to 1 if you have /var/run */
+#ifndef FIX8_HAVE_VAR_RUN
+#define FIX8_HAVE_VAR_RUN 1
+#endif
+
+/* Define to 1 if you have the <zlib.h> header file. */
+#ifndef FIX8_HAVE_ZLIB_H
+#define FIX8_HAVE_ZLIB_H 1
+#endif
+
+/* Define to 1 if the system has the type `_Bool'. */
+#ifndef FIX8_HAVE__BOOL
+#define FIX8_HAVE__BOOL 1
+#endif
+
+/* Default system */
+#ifndef FIX8_HOST_SYSTEM
+#define FIX8_HOST_SYSTEM "x86_64-pc-linux-gnu"
+#endif
+
+/* Encode version */
+#ifndef FIX8_MAGIC_NUM
+#define FIX8_MAGIC_NUM @fix8_MAGIC_NUM@
+#endif
+
+/* Encoded Version as expresion */
+#ifndef FIX8_MAGIC_NUM_EXPR
+#define FIX8_MAGIC_NUM_EXPR (FIX8_MAJOR_VERSION_NUM << 24 | FIX8_MINOR_VERSION_NUM << 12 | FIX8_PATCH_VERSION_NUM)
+#endif
+
+/* Major version number */
+#ifndef FIX8_MAJOR_VERSION_NUM
+#define FIX8_MAJOR_VERSION_NUM @fix8_VERSION_MAJOR@
+#endif
+
+/* std malloc */
+#ifndef FIX8_MALLOC_STD
+#define FIX8_MALLOC_STD 3
+#endif
+
+/* malloc system to use */
+#ifndef FIX8_MALLOC_SYSTEM
+// #define FIX8_MALLOC_SYSTEM MALLOC_STD
+#define FIX8_MALLOC_SYSTEM FIX8_MALLOC_MIMALLOC
+#endif
+
+/* TBB malloc */
+#ifndef FIX8_MALLOC_TBB
+#define FIX8_MALLOC_TBB 1
+#endif
+
+/* tcmalloc */
+#ifndef FIX8_MALLOC_TCMALLOC
+#define FIX8_MALLOC_TCMALLOC 2
+#endif
+
+/* mimalloc */
+#ifndef FIX8_MALLOC_MIMALLOC
+#define FIX8_MALLOC_MIMALLOC 4
+#endif
+
+/* Maximum length of a FIX field (default=2048) */
+#ifndef FIX8_MAX_FLD_LENGTH
+#define FIX8_MAX_FLD_LENGTH 2048
+#endif
+
+/* Maximum length of a FIX message (default=8192) */
+#ifndef FIX8_MAX_MSG_LENGTH
+#define FIX8_MAX_MSG_LENGTH 8192
+#endif
+
+/* Minor version number */
+#ifndef FIX8_MINOR_VERSION_NUM
+#define FIX8_MINOR_VERSION_NUM @fix8_VERSION_MINOR@
+#endif
+
+/* Name of package */
+#ifndef FIX8_PACKAGE
+#define FIX8_PACKAGE "fix8"
+#endif
+
+/* Define to the address where bug reports for this package should be sent. */
+#ifndef FIX8_PACKAGE_BUGREPORT
+#define FIX8_PACKAGE_BUGREPORT "fix@fix8.org"
+#endif
+
+/* Define to the full name of this package. */
+#ifndef FIX8_PACKAGE_NAME
+#define FIX8_PACKAGE_NAME "fix8"
+#endif
+
+/* Define to the full name and version of this package. */
+#ifndef FIX8_PACKAGE_STRING
+#define FIX8_PACKAGE_STRING "fix8 v@fix8_VERSION@"
+#endif
+
+/* Define to the one symbol short name of this package. */
+#ifndef FIX8_PACKAGE_TARNAME
+#define FIX8_PACKAGE_TARNAME "fix8"
+#endif
+
+/* Define to the home page for this package. */
+#ifndef FIX8_PACKAGE_URL
+#define FIX8_PACKAGE_URL "https://www.fix8.org"
+#endif
+
+/* Define to the version of this package. */
+#ifndef FIX8_PACKAGE_VERSION
+#define FIX8_PACKAGE_VERSION "@fix8_VERSION@"
+#endif
+
+/* Patch number */
+#ifndef FIX8_PATCH_VERSION_NUM
+#define FIX8_PATCH_VERSION_NUM @fix8_VERSION_PATCH@
+#endif
+
+/* Define to 1 to enable metatdata population in encode/decodes */
+/* #undef POPULATE_METADATA */
+
+/* Define to 1 if you wish to pre-encode (prepare) message support */
+/* #undef PREENCODE_MSG_SUPPORT */
+
+/* Define to 1 if your os supports gprof and you wish to enable profiling */
+/* #undef PROFILING_BUILD */
+
+/* Define to necessary symbol if this constant uses a non-standard name on
+   your system. */
+/* #undef PTHREAD_CREATE_JOINABLE */
+
+/* Define to 1 if you wish to enable raw FIX message support */
+/* #undef RAW_MSG_SUPPORT */
+
+/* Poco regex system */
+#ifndef FIX8_REGEX_POCO
+#define FIX8_REGEX_POCO 1
+#endif
+
+/* regex.h regex system */
+#ifndef FIX8_REGEX_REGEX_H
+#define FIX8_REGEX_REGEX_H 2
+#endif
+
+/* regex.h system used */
+#ifndef FIX8_REGEX_SYSTEM
+#define FIX8_REGEX_SYSTEM FIX8_REGEX_POCO
+#endif
+
+/* Percentage of message fields to reserve for additional fields */
+#ifndef FIX8_RESERVE_PERCENT
+#define FIX8_RESERVE_PERCENT 30
+#endif
+
+/* The size of `unsigned long', as computed by sizeof. */
+#ifndef FIX8_SIZEOF_UNSIGNED_LONG
+#define FIX8_SIZEOF_UNSIGNED_LONG 8
+#endif
+
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
+#ifndef FIX8_STDC_HEADERS
+#define FIX8_STDC_HEADERS 1
+#endif
+
+/* Location of the system config directory */
+#ifndef FIX8_SYSCONFDIR
+#define FIX8_SYSCONFDIR "/etc"
+#endif
+
+/* pthread thread system */
+#ifndef FIX8_THREAD_PTHREAD
+#define FIX8_THREAD_PTHREAD 2
+#endif
+
+/* std::thread thread system */
+#ifndef FIX8_THREAD_STDTHREAD
+#define FIX8_THREAD_STDTHREAD 4
+#endif
+
+/* pthread used for threading */
+#ifndef FIX8_THREAD_SYSTEM
+#define FIX8_THREAD_SYSTEM FIX8_THREAD_STDTHREAD
+#endif
+
+/* Define to 1 to enable rdtsc for interval timer if available */
+/* #undef USE_RDTSC */
+
+/* Define to 1 if using float precision */
+/* #undef USE_SINGLE_PRECISION */
+
+/* Version number of package */
+#ifndef FIX8_VERSION
+#define FIX8_VERSION "@fix8_VERSION@"
+#endif
+
+/* Define to 1 if you wish to enforce strict bool */
+/* #undef XMLENTITY_STRICT_BOOL */
+
+/* Define to rpl_malloc if the replacement function should be used. */
+/* #undef malloc */
+
+/* Define to `long int' if <sys/types.h> does not define. */
+/* #undef off_t */
+
+/* Define as a signed integer type capable of holding a process identifier. */
+/* #undef pid_t */
+
+/* Define to rpl_realloc if the replacement function should be used. */
+/* #undef realloc */
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+/* #undef size_t */
+
+/* Define as `fork' if `vfork' does not work. */
+/* #undef vfork */
+
+/* once: _INCLUDE_FIX__F_CONFIG_H */
+#endif

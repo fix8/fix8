@@ -1,39 +1,48 @@
-//-------------------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 #ifndef FIX8_MYFIX_HPP_
 #define FIX8_MYFIX_HPP_
 
@@ -43,19 +52,19 @@ class myfix_session_client;
 /// Example client message router. Derives from fix8 generated router class.
 /*! Your application must define a class similar to this in order to receive
     the appropriate callback when Message::process is called. */
-class tex_router_client : public FIX8::TEX::Myfix_Router
+class myfix_router_client : public FIX8::MYFIX::myfix_Router
 {
 	myfix_session_client& _session;
 
 public:
 	/*! Ctor.
 	    \param session client session */
-	tex_router_client(myfix_session_client& session) : _session(session) {}
+	myfix_router_client(myfix_session_client& session) : _session(session) {}
 
 	/*! Execution report handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
 	    \param msg Execution report message session */
-	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
+	virtual bool operator() (const FIX8::MYFIX::ExecutionReport *msg) const;
 };
 
 /// Example client session. Derives from FIX8::Session.
@@ -63,7 +72,7 @@ public:
     You must also implement handle_application in order to receive application messages from the framework. */
 class myfix_session_client : public FIX8::Session
 {
-	tex_router_client _router;
+	myfix_router_client _router;
 
 public:
 	/*! Ctor. Initiator.
@@ -95,19 +104,19 @@ class myfix_session_server;
 /// Example server message router. Derives from fix8 generated router class.
 /*! Your application must define a class similar to this in order to receive
     the appropriate callback when Message::process is called. */
-class tex_router_server : public FIX8::TEX::Myfix_Router
+class myfix_router_server : public FIX8::MYFIX::myfix_Router
 {
 	myfix_session_server& _session;
 
 public:
 	/*! Ctor.
 	    \param session server session */
-	tex_router_server(myfix_session_server& session) : _session(session) {}
+	myfix_router_server(myfix_session_server& session) : _session(session) {}
 
 	/*! NewOrderSingle message handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
 	    \param msg NewOrderSingle message */
-	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
+	virtual bool operator() (const FIX8::MYFIX::NewOrderSingle *msg) const;
 };
 
 /// Example server session. Derives from FIX8::Session.
@@ -115,7 +124,7 @@ public:
     You must also implement handle_application in order to receive application messages from the framework. */
 class myfix_session_server : public FIX8::Session
 {
-	tex_router_server _router;
+	myfix_router_server _router;
 
 public:
 	/*! Ctor. Acceptor.
@@ -218,7 +227,7 @@ public:
 	FIX8::Message *generate_new_order_single_alternate();
 	void send_lst();
 	bool save_msg(const std::string& fname, FIX8::Message *msg);
-	unsigned get_msg_cnt() const { return _lst.size(); }
+	unsigned get_msg_cnt() const { return static_cast<unsigned>(_lst.size()); }
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
 

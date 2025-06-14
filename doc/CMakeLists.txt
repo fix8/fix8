@@ -1,0 +1,229 @@
+# ---------------------------------------------------------------------------------------------
+#  SPDX-License-Identifier: LGPL-3.0-or-later
+#  SPDX-PackageName: Fix8 Open Source FIX Engine
+#  SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+#  SPDX-FileType: SOURCE
+#  SPDX-Notice: >
+#   Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+#
+#   Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+#   GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+#   version 3 of the License, or (at your option) any later version.
+#
+#   Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+#   even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+#   You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+#   If not, see <https://www.gnu.org/licenses/>.
+#
+#   BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+#   THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+#   COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+#   KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+#   WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+#   THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+#   YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+#
+#   IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+#   HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+#   ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+#   CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+#   NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+#   THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+#   HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+# ---------------------------------------------------------------------------------------------
+#  For Production-Grade FIX Requirements:
+#   If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+#   latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+#   same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+# 	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+#   deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+#   compatibility with  the Community Edition while providing  enhanced stability, scalability,
+#   and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+#   Community  Edition's capabilities, you can find out and learn more about the Pro version at
+#   www.fix8mt.com
+# ---------------------------------------------------------------------------------------------
+cmake_minimum_required (VERSION 3.20)
+set(DOXYGEN_HTML_OUTPUT ${PROJECT_BINARY_DIR}/doc/html)
+set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_DOXYFILE_ENCODING      UTF-8)
+set(DOXYGEN_PROJECT_NAME           "fix8")
+set(DOXYGEN_PROJECT_NUMBER         "version 1.5.0")
+set(DOXYGEN_PROJECT_BRIEF          "Open Source C++ FIX Framework")
+set(DOXYGEN_PROJECT_LOGO           ${CMAKE_SOURCE_DIR}/doc/fix8_Logo_RGB_small.png)
+set(DOXYGEN_CREATE_SUBDIRS         NO)
+set(DOXYGEN_OUTPUT_LANGUAGE        English)
+set(DOXYGEN_BRIEF_MEMBER_DESC      YES)
+set(DOXYGEN_REPEAT_BRIEF           YES)
+set(DOXYGEN_ALWAYS_DETAILED_SEC    NO)
+set(DOXYGEN_INLINE_INHERITED_MEMB  NO)
+set(DOXYGEN_FULL_PATH_NAMES        NO)
+set(DOXYGEN_SHORT_NAMES            NO)
+set(DOXYGEN_JAVADOC_AUTOBRIEF      NO)
+set(DOXYGEN_QT_AUTOBRIEF           NO)
+set(DOXYGEN_MULTILINE_CPP_IS_BRIEF NO)
+set(DOXYGEN_INHERIT_DOCS           YES)
+set(DOXYGEN_SEPARATE_MEMBER_PAGES  NO)
+set(DOXYGEN_TAB_SIZE               3)
+set(DOXYGEN_OPTIMIZE_OUTPUT_FOR_C  NO)
+set(DOXYGEN_OPTIMIZE_OUTPUT_JAVA   NO)
+set(DOXYGEN_OPTIMIZE_FOR_FORTRAN   NO)
+set(DOXYGEN_OPTIMIZE_OUTPUT_VHDL   NO)
+set(DOXYGEN_BUILTIN_STL_SUPPORT    NO)
+set(DOXYGEN_CPP_CLI_SUPPORT        NO)
+set(DOXYGEN_SIP_SUPPORT            NO)
+set(DOXYGEN_IDL_PROPERTY_SUPPORT   YES)
+set(DOXYGEN_DISTRIBUTE_GROUP_DOC   NO)
+set(DOXYGEN_SUBGROUPING            YES)
+set(DOXYGEN_INLINE_GROUPED_CLASSES NO)
+set(DOXYGEN_INLINE_SIMPLE_STRUCTS  NO)
+set(DOXYGEN_TYPEDEF_HIDES_STRUCT   NO)
+set(DOXYGEN_LOOKUP_CACHE_SIZE      0)
+set(DOXYGEN_EXTRACT_ALL            YES)
+set(DOXYGEN_EXTRACT_PRIVATE        YES)
+set(DOXYGEN_EXTRACT_STATIC         YES)
+set(DOXYGEN_EXTRACT_LOCAL_CLASSES  YES)
+set(DOXYGEN_EXTRACT_LOCAL_METHODS  NO)
+set(DOXYGEN_EXTRACT_ANON_NSPACES   NO)
+set(DOXYGEN_HIDE_UNDOC_MEMBERS     NO)
+set(DOXYGEN_HIDE_UNDOC_CLASSES     NO)
+set(DOXYGEN_HIDE_FRIEND_COMPOUNDS  NO)
+set(DOXYGEN_HIDE_IN_BODY_DOCS      NO)
+set(DOXYGEN_INTERNAL_DOCS          NO)
+set(DOXYGEN_CASE_SENSE_NAMES       YES)
+set(DOXYGEN_HIDE_SCOPE_NAMES       NO)
+set(DOXYGEN_SHOW_INCLUDE_FILES     YES)
+set(DOXYGEN_FORCE_LOCAL_INCLUDES   NO)
+set(DOXYGEN_INLINE_INFO            YES)
+set(DOXYGEN_SORT_MEMBER_DOCS       YES)
+set(DOXYGEN_SORT_BRIEF_DOCS        NO)
+set(DOXYGEN_SORT_MEMBERS_CTORS_1ST NO)
+set(DOXYGEN_SORT_GROUP_NAMES       NO)
+set(DOXYGEN_SORT_BY_SCOPE_NAME     YES)
+set(DOXYGEN_STRICT_PROTO_MATCHING  NO)
+set(DOXYGEN_GENERATE_TODOLIST      YES)
+set(DOXYGEN_GENERATE_TESTLIST      YES)
+set(DOXYGEN_GENERATE_BUGLIST       YES)
+set(DOXYGEN_GENERATE_DEPRECATEDLIST YES)
+set(DOXYGEN_MAX_INITIALIZER_LINES  30)
+set(DOXYGEN_SHOW_USED_FILES        YES)
+set(DOXYGEN_SHOW_FILES             YES)
+set(DOXYGEN_SHOW_NAMESPACES        YES)
+set(DOXYGEN_QUIET                  YES)
+set(DOXYGEN_WARNINGS               YES)
+set(DOXYGEN_WARN_IF_UNDOCUMENTED   NO)
+set(DOXYGEN_WARN_IF_DOC_ERROR      YES)
+set(DOXYGEN_WARN_NO_PARAMDOC       NO)
+set(DOXYGEN_WARN_FORMAT            "$file:$line: $text")
+set(DOXYGEN_INPUT_ENCODING         UTF-8)
+set(DOXYGEN_FILE_PATTERNS          *.c *.cpp *.h *.hpp)
+set(DOXYGEN_RECURSIVE              YES)
+set(DOXYGEN_EXCLUDE                ${CMAKE_SOURCE_DIR}/utests/)
+set(DOXYGEN_EXCLUDE_SYMLINKS       NO)
+set(DOXYGEN_EXAMPLE_RECURSIVE      NO)
+set(DOXYGEN_FILTER_SOURCE_FILES    NO)
+set(DOXYGEN_SOURCE_BROWSER         YES)
+set(DOXYGEN_INLINE_SOURCES         YES)
+set(DOXYGEN_STRIP_CODE_COMMENTS    YES)
+set(DOXYGEN_REFERENCED_BY_RELATION YES)
+set(DOXYGEN_REFERENCES_RELATION    YES)
+set(DOXYGEN_REFERENCES_LINK_SOURCE YES)
+set(DOXYGEN_USE_HTAGS              NO)
+set(DOXYGEN_VERBATIM_HEADERS       YES)
+set(DOXYGEN_ALPHABETICAL_INDEX     YES)
+set(DOXYGEN_IGNORE_PREFIX          FIX8::)
+set(DOXYGEN_GENERATE_HTML          YES)
+set(DOXYGEN_HTML_FILE_EXTENSION    .html)
+set(DOXYGEN_HTML_FOOTER            ${CMAKE_SOURCE_DIR}/doc/fix8.footer.html)
+set(DOXYGEN_HTML_COLORSTYLE_HUE    174)
+set(DOXYGEN_HTML_COLORSTYLE_SAT    87)
+set(DOXYGEN_HTML_COLORSTYLE_GAMMA  90)
+set(DOXYGEN_HTML_TIMESTAMP         YES)
+set(DOXYGEN_HTML_DYNAMIC_SECTIONS  NO)
+set(DOXYGEN_GENERATE_DOCSET        NO)
+set(DOXYGEN_DOCSET_FEEDNAME        "Doxygen generated docs")
+set(DOXYGEN_DOCSET_BUNDLE_ID       org.fix8)
+set(DOXYGEN_DOCSET_PUBLISHER_ID    org.fix8.documentation)
+set(DOXYGEN_DOCSET_PUBLISHER_NAME  dakka@fix8.org)
+set(DOXYGEN_GENERATE_HTMLHELP      NO)
+set(DOXYGEN_GENERATE_CHI           NO)
+set(DOXYGEN_BINARY_TOC             NO)
+set(DOXYGEN_TOC_EXPAND             NO)
+set(DOXYGEN_GENERATE_QHP           NO)
+set(DOXYGEN_QHP_NAMESPACE          org.doxygen.Project)
+set(DOXYGEN_QHP_VIRTUAL_FOLDER     doc)
+set(DOXYGEN_GENERATE_ECLIPSEHELP   NO)
+set(DOXYGEN_ECLIPSE_DOC_ID         org.doxygen.Project)
+set(DOXYGEN_DISABLE_INDEX          NO)
+set(DOXYGEN_GENERATE_TREEVIEW      YES)
+set(DOXYGEN_ENUM_VALUES_PER_LINE   4)
+set(DOXYGEN_TREEVIEW_WIDTH         250)
+set(DOXYGEN_EXT_LINKS_IN_WINDOW    NO)
+set(DOXYGEN_FORMULA_FONTSIZE       10)
+set(DOXYGEN_FORMULA_TRANSPARENT    YES)
+set(DOXYGEN_USE_MATHJAX            NO)
+set(DOXYGEN_MATHJAX_RELPATH        http://www.mathjax.org/mathjax)
+set(DOXYGEN_SEARCHENGINE           YES)
+set(DOXYGEN_SERVER_BASED_SEARCH    NO)
+set(DOXYGEN_GENERATE_LATEX         NO)
+set(DOXYGEN_LATEX_OUTPUT           latex)
+set(DOXYGEN_LATEX_CMD_NAME         latex)
+set(DOXYGEN_MAKEINDEX_CMD_NAME     makeindex)
+set(DOXYGEN_COMPACT_LATEX          NO)
+set(DOXYGEN_PAPER_TYPE             a4)
+set(DOXYGEN_PDF_HYPERLINKS         NO)
+set(DOXYGEN_USE_PDFLATEX           NO)
+set(DOXYGEN_LATEX_BATCHMODE        NO)
+set(DOXYGEN_LATEX_HIDE_INDICES     NO)
+set(DOXYGEN_LATEX_BIB_STYLE        plain)
+set(DOXYGEN_GENERATE_RTF           NO)
+set(DOXYGEN_RTF_OUTPUT             rtf)
+set(DOXYGEN_COMPACT_RTF            NO)
+set(DOXYGEN_RTF_HYPERLINKS         NO)
+set(DOXYGEN_GENERATE_MAN           NO)
+set(DOXYGEN_MAN_OUTPUT             ./man)
+set(DOXYGEN_MAN_EXTENSION          .3)
+set(DOXYGEN_MAN_LINKS              NO)
+set(DOXYGEN_GENERATE_XML           NO)
+set(DOXYGEN_XML_OUTPUT             xml)
+set(DOXYGEN_XML_PROGRAMLISTING     YES)
+set(DOXYGEN_GENERATE_AUTOGEN_DEF   NO)
+set(DOXYGEN_GENERATE_PERLMOD       NO)
+set(DOXYGEN_PERLMOD_LATEX          NO)
+set(DOXYGEN_PERLMOD_PRETTY         YES)
+set(DOXYGEN_ENABLE_PREPROCESSING   YES)
+set(DOXYGEN_MACRO_EXPANSION        YES)
+set(DOXYGEN_EXPAND_ONLY_PREDEF     YES)
+set(DOXYGEN_SEARCH_INCLUDES        YES)
+set(DOXYGEN_INCLUDE_PATH           ${CMAKE_SOURCE_DIR}/doc/.)
+set(DOXYGEN_PREDEFINED             PERMIT_CUSTOM_FIELDS MSGRECYCLING HAVE_BDB)
+set(DOXYGEN_SKIP_FUNCTION_MACROS   YES)
+set(DOXYGEN_ALLEXTERNALS           NO)
+set(DOXYGEN_EXTERNAL_GROUPS        YES)
+set(DOXYGEN_HIDE_UNDOC_RELATIONS   YES)
+set(DOXYGEN_HAVE_DOT               NO)
+set(DOXYGEN_DOT_NUM_THREADS        0)
+set(DOXYGEN_DOT_FONTNAME           Helvetica)
+set(DOXYGEN_DOT_FONTSIZE           10)
+set(DOXYGEN_CLASS_GRAPH            YES)
+set(DOXYGEN_COLLABORATION_GRAPH    YES)
+set(DOXYGEN_GROUP_GRAPHS           YES)
+set(DOXYGEN_UML_LOOK               NO)
+set(DOXYGEN_TEMPLATE_RELATIONS     NO)
+set(DOXYGEN_INCLUDE_GRAPH          YES)
+set(DOXYGEN_INCLUDED_BY_GRAPH      YES)
+set(DOXYGEN_CALL_GRAPH             NO)
+set(DOXYGEN_CALLER_GRAPH           NO)
+set(DOXYGEN_GRAPHICAL_HIERARCHY    YES)
+set(DOXYGEN_DIRECTORY_GRAPH        YES)
+set(DOXYGEN_DOT_IMAGE_FORMAT       png)
+set(DOXYGEN_INTERACTIVE_SVG        NO)
+set(DOXYGEN_DOT_GRAPH_MAX_NODES    50)
+set(DOXYGEN_MAX_DOT_GRAPH_DEPTH    0)
+set(DOXYGEN_DOT_TRANSPARENT        NO)
+set(DOXYGEN_DOT_MULTI_TARGETS      NO)
+set(DOXYGEN_GENERATE_LEGEND        YES)
+set(DOXYGEN_DOT_CLEANUP            YES)
+doxygen_add_docs(fix8_doxygen ${CMAKE_SOURCE_DIR}/include/fix8 ${CMAKE_SOURCE_DIR}/runtime ${CMAKE_SOURCE_DIR}/compiler ${CMAKE_SOURCE_DIR}/test
+	${CMAKE_SOURCE_DIR}/util ${CMAKE_SOURCE_DIR}/doc/mainpage.doxygen ${CMAKE_SOURCE_DIR}/schema/FIX50SP2.xml ${PROJECT_BINARY_DIR}/generated/myfix ALL)

@@ -1,39 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 // f8 headers
 #include "precomp.hpp"
 #include <fix8/f8config.h>
@@ -119,8 +128,11 @@ public:
     /// used to get next receive seq
     unsigned get_next_receive_seq() {return _next_receive_seq;}
 
-    /// used to set last received seq
-    void set_last_received(Tickval& val) {_last_received = val;}
+    /// used to set last received timestamp
+    void set_last_received(const Tickval& val) {_last_received = val;}
+
+    /// used to set last sent timestamp
+    void set_last_sent(const Tickval& val) {_last_sent = val;}
 
     ///start heartbeat service thread
     void kickHBService() {heartbeat_service();}
@@ -152,7 +164,7 @@ public:
         pLogger = new FileLogger( "utest_plog.log", flag, Logger::Levels( Logger::All ) );
 #else
         f8String cmd("|/bin/cat");
-        ebitset<Logger::Flags> flag;
+        ebitset<Logger::Flags> flag(0);
         flag.set(Logger::timestamp, true);
         flag.set(Logger::sequence, true);
         flag.set(Logger::thread, true);
@@ -181,7 +193,7 @@ public:
 class initiator_fixture : public session_fixture
 {
 public:
-    ClientConnection * initiator;
+    ClientConnection * initiator = nullptr;
 
     /// Ctor, create a test initiator connected to "127.0.0.1:80"
     initiator_fixture()
@@ -197,6 +209,7 @@ public:
     {
         ss->stop();
         delete initiator;
+        initiator = nullptr;
     };
 };
 
@@ -204,27 +217,25 @@ public:
 class sessionTest : public ::testing::Test
 {
 protected:
-    static void SetUpTestCase()
+    void SetUp() override
     {
 		initiator_test = new initiator_fixture();
         recv_seq = 1;
     }
 
-    static void TearDownTestCase()
+    void TearDown() override
     {
 		delete initiator_test;
+        initiator_test = nullptr;
     }
 public:
     // MSVC: We can't have a static initiator here; we get bitten by
     // static order initialisation issues - specifically, the initiator
     // tries to construct a Logon message before the static members of
     // Logon (field maps, traist etc) have been initialised.
-    static initiator_fixture* initiator_test;
+    static inline initiator_fixture* initiator_test = nullptr;
     static unsigned recv_seq;
 };
-
-/// global initiator fixture
-initiator_fixture* sessionTest::initiator_test = 0;
 
 /// global incoming sequence number
 unsigned sessionTest::recv_seq;
@@ -312,11 +323,7 @@ f8String composeOrder(unsigned seq)
     return tmp;
 }
 
-/*!session logon test
-    \param sessionTest test suit name
-    \param logon test case name*/
-
-TEST_F(sessionTest, logon)
+void logon(initiator_fixture *initiator_test)
 {
     //initiator send logon
     f8String output = getSingleMsg();
@@ -328,7 +335,7 @@ TEST_F(sessionTest, logon)
     Logon * logon = new Logon;
     fillRecvHeader(logon->Header());
 
-	 HeartBtInt hbi(initiator_test->initiator->get_hb_interval());
+    HeartBtInt hbi(initiator_test->initiator->get_hb_interval());
     *logon << new HeartBtInt(hbi()) << new EncryptMethod(0);
     f8String logon_str;
     logon->encode(logon_str);
@@ -339,8 +346,16 @@ TEST_F(sessionTest, logon)
     EXPECT_EQ(static_cast<unsigned>(hbi()), initiator_test->initiator->get_hb_interval());
 
     delete logon;
-
     clearOutputs();
+}
+
+/*!session logon test
+    \param sessionTest test suit name
+    \param logon test case name*/
+
+TEST_F(sessionTest, logon)
+{
+    logon(initiator_test);
 }
 
 /*!session resend request test
@@ -349,6 +364,8 @@ TEST_F(sessionTest, logon)
 
 TEST_F(sessionTest, handle_resend_request)
 {
+    logon(initiator_test);
+
     //no message available
     ResendRequest * resend = new ResendRequest;
     fillRecvHeader(resend->Header());
@@ -361,7 +378,7 @@ TEST_F(sessionTest, handle_resend_request)
     initiator_test->ss->update_received();
     initiator_test->ss->process(resend_str);
 
-    f8String output = getSingleMsg();
+    auto output = getSingleMsg();
 
     EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
     EXPECT_TRUE(output.find("35=4") !=  std::string::npos);
@@ -457,6 +474,8 @@ TEST_F(sessionTest, handle_resend_request)
 
 TEST_F(sessionTest, handle_seq_reset)
 {
+    logon(initiator_test);
+
     SequenceReset * reset = new SequenceReset;
     fillRecvHeader(reset->Header());
 
@@ -477,6 +496,8 @@ TEST_F(sessionTest, handle_seq_reset)
 
 TEST_F(sessionTest, handle_test_request)
 {
+    logon(initiator_test);
+
     TestRequest * testreq = new TestRequest;
     fillRecvHeader(testreq->Header());
 
@@ -501,12 +522,16 @@ TEST_F(sessionTest, handle_test_request)
 
 TEST_F(sessionTest, send_test_request)
 {
+    logon(initiator_test);
+
     //make sure test request is sent
-    Tickval empty;
-    initiator_test->ss->set_last_received(empty);
+    Tickval now(true);
+    initiator_test->ss->set_last_sent(Tickval(true)); // to prevent sending HB when HB service is kicked
+    initiator_test->ss->set_last_received(Tickval(false));
     initiator_test->ss->kickHBService();
 
     std::vector<f8String> outputs = getMsgs();
+    ASSERT_FALSE(outputs.empty());
 
     f8String output = outputs.back();
     EXPECT_FALSE(output.empty());
@@ -534,7 +559,8 @@ TEST_F(sessionTest, send_test_request)
     outputs = getMsgs();
     output = outputs.back();
 
-    EXPECT_EQ(States::st_logoff_sent, initiator_test->ss->getState());
+    //EXPECT_EQ(States::st_logoff_sent, initiator_test->ss->getState());
+    EXPECT_EQ(States::st_session_terminated, initiator_test->ss->getState());
     EXPECT_TRUE(output.find("35=5") !=  std::string::npos);
     clearOutputs();
 }

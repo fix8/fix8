@@ -1,40 +1,48 @@
-//-----------------------------------------------------------------------------------------
-/*
-
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
-
-Fix8 Open Source FIX Engine.
-Copyright (C) 2010-16 David L. Dight <fix@fix8.org>
-
-Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
-GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
-version 3 of the License, or (at your option) any later version.
-
-Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
-If not, see <http://www.gnu.org/licenses/>.
-
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
-THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
-COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
-KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
-WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
-THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
-HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
-ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
-HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-*/
-
-//-----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// SPDX-PackageName: Fix8 Open Source FIX Engine
+// SPDX-FileCopyrightText: Copyright (C) 2010-25 David L. Dight <fix@fix8.org>
+// SPDX-FileType: SOURCE
+// SPDX-Notice: >
+//  Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+//
+//  Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+//  GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+//  version 3 of the License, or (at your option) any later version.
+//
+//  Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+//  even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+//  If not, see <https://www.gnu.org/licenses/>.
+//
+//  BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+//  THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+//  COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+//  KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+//  WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+//  THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+//  YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+//
+//  IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+//  HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+//  ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+//  CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+//  NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+//  THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+//  HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+//---------------------------------------------------------------------------------------------
+// For Production-Grade FIX Requirements:
+//  If you're  using Fix8 Community Edition and find  yourself needing higher throughput, lower
+//  latency, or enterprise-grade reliability,Fix8Pro offers a robust upgrade path. Built on the
+//  same  core  technology, Fix8Pro adds performance optimizations for  high-volume  messaging,
+//	 enhanced  API, professional  support  and  much  more —  making  it  ideal  for  production
+//  deployments, low-latency trading, or  large-scale FIX  integrations.  It retains  near full
+//  compatibility with  the Community Edition while providing  enhanced stability, scalability,
+//  and  advanced  features  for demanding  environments.  If  your  project has  outgrown  the
+//  Community  Edition's capabilities, you can find out and learn more about the Pro version at
+//  www.fix8mt.com
+//---------------------------------------------------------------------------------------------
 /** \file harness.cpp
 \n
   This is a complete working example of a FIX client/server using FIX8.\n
@@ -82,7 +90,7 @@ Usage: harness [-LRSchlpqrsv] \n
 	All FIX8 classes and functions reside inside this namespace.
 */
 
-/*! \namespace FIX8::TEX
+/*! \namespace TEX
 	This namespace is used by the generated classes and types, and was specified as a namespace
 	to the \c f8c compiler.
 */
@@ -120,15 +128,16 @@ Usage: harness [-LRSchlpqrsv] \n
 
 #include <fix8/usage.hpp>
 #include <fix8/consolemenu.hpp>
-#include "Myfix_types.hpp"
-#include "Myfix_router.hpp"
-#include "Myfix_classes.hpp"
+#include "myfix_types.hpp"
+#include "myfix_router.hpp"
+#include "myfix_classes.hpp"
 
 #include "myfix.hpp"
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
 using namespace FIX8;
+using namespace MYFIX;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -193,21 +202,21 @@ int main(int argc, char **argv)
 #ifdef FIX8_HAVE_GETOPT_LONG
 	option long_options[]
 	{
-		{ "help",		0,	0,	'h' },
-		{ "version",	0,	0,	'v' },
-		{ "log",			1,	0,	'l' },
-		{ "config",		1,	0,	'c' },
-		{ "replay",		1,	0,	'p' },
-		{ "server",		0,	0,	's' },
-		{ "send",		1,	0,	'S' },
-		{ "receive",	1,	0,	'R' },
-		{ "lines",		1,	0,	'L' },
-		{ "quiet",		0,	0,	'q' },
-		{ "reliable",	0,	0,	'r' },
-		{ 0 },
+		{ "help",		0,	nullptr,	'h' },
+		{ "version",	0,	nullptr,	'v' },
+		{ "log",			1,	nullptr,	'l' },
+		{ "config",		1,	nullptr,	'c' },
+		{ "replay",		1,	nullptr,	'p' },
+		{ "server",		0,	nullptr,	's' },
+		{ "send",		1,	nullptr,	'S' },
+		{ "receive",	1,	nullptr,	'R' },
+		{ "lines",		1,	nullptr,	'L' },
+		{ "quiet",		0,	nullptr,	'q' },
+		{ "reliable",	0,	nullptr,	'r' },
+		{},
 	};
 
-	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
+	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, nullptr)) != -1)
 #else
 	while ((val = getopt (argc, argv, GETARGLIST.c_str())) != -1)
 #endif
@@ -215,8 +224,8 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for " FIX8_PACKAGE " version " FIX8_VERSION << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
+			cout << "harness session tester " << Session::copyright_string() << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <https://www.gnu.org/licenses/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
@@ -247,13 +256,13 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			unique_ptr<ServerSessionBase> ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
+			unique_ptr<ServerSessionBase> ms(new ServerSession<myfix_session_server>(ctx(), conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
 				if (!ms->poll())
 					continue;
-				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
+				unique_ptr<SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
 				glout_info << "client(" << ++scnt << ") connection established.";
@@ -265,8 +274,8 @@ int main(int argc, char **argv)
 		else
 		{
 			unique_ptr<ClientSessionBase>
-				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
-							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
+				mc(reliable ? new ReliableClientSession<myfix_session_client>(ctx(), conf_file, "DLD1")
+							   : new ClientSession<myfix_session_client>(ctx(), conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::printnohb;
 
@@ -278,7 +287,7 @@ int main(int argc, char **argv)
 			else
 				mc->start(false);
 
-			ConsoleMenu cm(TEX::ctx(), cin, cout, lines);
+			ConsoleMenu cm(ctx(), cin, cout, lines);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			mymenu.get_tty().set_raw_mode();
 			hypersleep<h_seconds>(1);
@@ -324,7 +333,7 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
-void myfix_session_client::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+void myfix_session_client::state_change(const States::SessionStates before, const States::SessionStates after)
 {
 	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
@@ -336,7 +345,7 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
-void myfix_session_server::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+void myfix_session_server::state_change(const States::SessionStates before, const States::SessionStates after)
 {
 	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
@@ -368,7 +377,7 @@ bool MyMenu::do_logout()
 {
 	if (!_session.is_shutdown())
 	{
-		_session.send(new TEX::Logout);
+		_session.send(new Logout);
 		get_ostr() << "logout..." << endl;
 	}
 	hypersleep<h_seconds>(1);
@@ -395,13 +404,13 @@ void print_usage()
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
+bool myfix_router_server::operator() (const NewOrderSingle *msg) const
 {
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
+bool myfix_router_client::operator() (const ExecutionReport *msg) const
 {
 	return true;
 }
@@ -546,7 +555,7 @@ bool MyMenu::load_msgs(const string& fname)
 		ifs.getline(buffer, FIX8_MAX_MSG_LENGTH - 1);
 		if (!buffer[0])
 			continue;
-		Message *msg(Message::factory(TEX::ctx(), buffer));
+		Message *msg(Message::factory(ctx(), buffer));
 		if (msg->is_admin())
 		{
 			++skipped;
@@ -579,10 +588,10 @@ bool MyMenu::read_msgs()
    _ostr << "Playback (*.playback) files in ";
 #ifdef _MSC_VER
 	_ostr << _getcwd(cwd, sizeof(cwd)) << endl;
-   if (system("dir *.playback"));
+	if (system("dir *.playback")) {}
 #else
 	_ostr << getcwd(cwd, sizeof(cwd)) << endl;
-   if (system("ls -l *.playback"));
+   if (system("ls -l *.playback")){}
 #endif
    _ostr << endl;
 	_ostr << "Enter filename: " << flush;
