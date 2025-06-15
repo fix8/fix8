@@ -135,7 +135,7 @@ endfunction()
 # -------------------------------------------------------------------------------------------
 function(build_test name files)
 	add_executable(${name} ${files})
-	target_link_libraries(${name} PUBLIC Poco::Foundation Poco::Net Poco::Util ${poco_ssl_libs} Poco::XML fix8 utest GTest::gtest GTest::gtest_main)
+	target_link_libraries(${name} PUBLIC Poco::Foundation Poco::Net Poco::Util ${poco_ssl_libs} fix8 utest GTest::gtest GTest::gtest_main)
 	target_include_directories(${name} PRIVATE include utests ${CMAKE_BINARY_DIR}/generated/utest)
 	target_compile_definitions(${name} PRIVATE F8_UTEST_API_SHARED)
 	gtest_discover_tests(${name})

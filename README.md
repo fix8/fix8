@@ -198,6 +198,7 @@ The Windows build now also uses cmake (either msvc or vscode).
 ```
 or
 ```bash
+% wget https://github.com/fix8/fix8/archive/refs/tags/2.0.1.tar.gz
 % tar xvzf 2.0.1.tar.gz
 % cd fix8-2.0.1
 ```
