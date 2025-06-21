@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <fix major="1" type="FIXT" servicepack="0" minor="1" version="FIXT.1.1" repo_generation_date="2014-05-07T17:07:21-04:00">
    <header>
       <field name="BeginString" required="Y" />
