@@ -96,6 +96,8 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 supports standard `FIX4.X` to `FIX5.X` and `FIXT1.X`. If you have a custom FIX variant Fix8 can use that too. New FIX versions will be supported.
 
+* This release includes XML schemas of the `FIX 5.0 SP2 Extension Pack 264` and the `FIXT 1.1 Extension Pack 264` in Quickfix schema format.
+
 * Fix8 offers message recycling and a meta-data aware test harness. Incorporates lock free queues, atomics and many other modern techniques.
 
 * Fix8 contains a built-in unit test framework that's being continually revised and extended. Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
@@ -114,7 +116,7 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 will build with gcc, clang, xcode, intel and msvc compilers
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC, ARMv7 and aarm64. It also runs on *Windows* and *MacOS*. Other \*NIX variants may work too.
+* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC, ARMv7 and ARM64. It also runs on *Windows* and *MacOS*. Other \*NIX variants may work too.
 
 ## Directory Layout
 
@@ -164,7 +166,7 @@ flag on your compiler command line. Most compilers since 2020 default to at leas
 📦 Fix8 requires the following third-party software (header files and libraries) being installed to build properly:
 
 > [!NOTE]
-> This release now uses [CMake](https://cmake.org). All required dependencies (poco, tbb and gtest) *will be downloaded and built* by default.
+> This release now requires [CMake](https://cmake.org). All required dependencies (poco, tbb and gtest) *will be downloaded and built* by default.
 
 - Poco C++ Libraries [basic edition](https://pocoproject.org/download/index.html)
 - oneAPI Threading Building Blocks [oneTBB](https://uxlfoundation.github.io/oneTBB/)
