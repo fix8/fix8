@@ -43,7 +43,7 @@
 //  Community  Edition's capabilities, you can find out and learn more about the Pro version at
 //  www.fix8mt.com
 //-------------------------------------------------------------------------------------------->
-<p align="center"><a href="https://www.fix8.org"><img src="https://fix8.org/fix8/fix8_Logo_RGB.png"></a></p>
+<p align="center"><a href="https://www.fix8.org"><img src="assetsfix8_Logo_RGB.png"></a></p>
 
 # [Fix8](https://www.fix8.org) Open Source C++ FIX Engine
 
@@ -343,6 +343,10 @@ For more information about Fix8Pro see the [Fix8MT website.](https://www.fix8mt.
 ## More Information
 
 For more information, see the [Fix8 website.](https://www.fix8.org)
+
+<p align="center">
+  <a href="https://www.fix8mt.com"><img src="assets/fix8mt_Master_Logo_Green_Trans.png" width="120"></a>
+</p>
 
 [^1]: This release includes XML schemas of the FIX 5.0 SP2 Extension Pack 264 and the FIXT 1.1 Extension Pack 264 in Quickfix schema format. Building this library is lengthy.
 
