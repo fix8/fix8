@@ -344,9 +344,7 @@ For more information about Fix8Pro see the [Fix8MT website.](https://www.fix8mt.
 
 For more information, see the [Fix8 website.](https://www.fix8.org)
 
-<p align="center">
-  <a href="https://www.fix8mt.com"><img src="assets/fix8mt_Master_Logo_Green_Trans.png" width="120"></a>
-</p>
+<p align="center"><a href="https://www.fix8mt.com"><img src="assets/fix8mt_Master_Logo_Green_Trans.png" width="120"></a></p>
 
 [^1]: This release includes XML schemas of the FIX 5.0 SP2 Extension Pack 264 and the FIXT 1.1 Extension Pack 264 in Quickfix schema format. Building this library is lengthy.
 
