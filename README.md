@@ -317,9 +317,9 @@ Fix8MT has developers in Australia, China, Canada and the Russian Federation as 
 Fix8MT is responsible for providing and managing additional support and consultancy services, and works closely with the
 Fix8 open source community and partners to grow commercial support services through 3rd party ISVs.
 
-For more information about Fix8Pro see the [Fix8MT website.](https://www.fix8mt.com)
+<p align="center"><a href="https://www.fix8mt.com"><img src="assets/fix8mt_Master_Logo_Green_Trans.png" width="140"></a></p>
 
-<p align="center"><a href="https://www.fix8mt.com"><img src="assets/fix8mt_Master_Logo_Green_Trans.png" width="120"></a></p>
+For more information about Fix8Pro see the [Fix8MT website.](https://www.fix8mt.com)
 
 ## Authors and Contributors
 |David Dight| `fix at fix8 dot org`|
