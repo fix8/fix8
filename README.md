@@ -246,6 +246,12 @@ These options can be passed on the cmake command line:
 |`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
 
+For example, to build with gcc against the latest poco and tbb:
+
+```bash
+% CXX=g++ CC=gcc cmake -DBUILD_POCO_VERSION:string=main -DBUILD_TBB_VERSION:string=master ..
+```
+
 ### Install
 The default install copies the build targets as follows:
 | Directory | Description|
