@@ -941,7 +941,7 @@ inline size_t date_time_format(const Tickval& tickval, char *to, TimeIndicator i
 }
 
 /*! Decode a DateTime string into ticks
-  \param ptr input DateTime string, if *ptr == '!' return current time
+  \param ptr input DateTime string (or 'now'), if *ptr == '!' return current time
   \param len length of string
   \return ticks decoded */
 inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
@@ -981,7 +981,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 }
 
 /*! Decode a Time string into ticks
-  \param ptr input time string, if *ptr == '!' return current time
+  \param ptr input time string (or 'now'), if *ptr == '!' return current time
   \param len length of string
   \param timeonly if true, only calculate ticks for today
   \return ticks decoded */

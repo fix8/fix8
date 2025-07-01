@@ -134,6 +134,7 @@ and framework; and a set of complete client/server test applications.
 |[schema/](https://github.com/fix8/fix8/blob/dev/schema)|quickfix FIX xml schemas|
 |[test/](https://github.com/fix8/fix8/blob/dev/test)|applications client/server source|
 |[utests/](https://github.com/fix8/fix8/blob/dev/utests)| unit test applications|
+|[assets/](https://github.com/fix8/fix8/blob/dev/assets)| various logos|
 
 ## Branches
 🌿 Fix8 repository is comprised of the following branches:
@@ -192,6 +193,7 @@ If you wish to use BerkeleyDB for message persistence:
 ## Building on Linux/UNIX, MacOS and Windows
 
 Either clone from the project on github or download the tarball.
+For Linux/UNIX/MacOS, both shared and static versions of the library are built. Only shared versions of the schema libraries are built.
 The Windows build now also uses cmake (either msvc or vscode).
 
 ```bash
@@ -218,6 +220,17 @@ If you have built the test cases (built by default), you can also run them as fo
 ```bash
 % ctest
 ```
+The default install copies the build targets as follows:
+| Directory | Description|
+| :--- | :--- |
+|`bin`| executables including utils|
+|`lib`| shared and static libraries including dependencies|
+|`include`|header files for the runtime library; dependency headers|
+|`share/schema`|quickfix FIX xml schemas|
+|`share/contrib`|user contributed files|
+|`share/test`|test configuration files|
+|`share/doc/html`|optional doxygen generated self-documentation|
+
 The following table summarises the cmake build command for each platform:
 | Platform | Example cmake command|
 | :--- | :--- |
@@ -234,6 +247,9 @@ These options can be passed on the cmake command line
 |`BUILD_UNITTESTS`|enable building unit tests|`true`| `-DBUILD_UNITTESTS:bool=false`|
 |`BUILD_ALL_WARNINGS`|enable building with all warnings|`true`| `-DBUILD_ALL_WARNINGS:bool=false`|
 |`BUILD_DOXYGEN_DOCS`|enable building of self documentation|`false`| `-DBUILD_DOXYGEN_DOCS:bool=true`|
+|`BUILD_POCO_VERSION`|Poco tag to download|`poco-1.14.2-release`|`-DBUILD_POCO_VERSION:string=poco-1.12.5-release`|
+|`BUILD_TBB_VERSION`|TBB tag to download|`v2022.2.0`|`-DBUILD_TBB_VERSION:string=v2021.12.0`|
+|`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
 
 ## Compiler support

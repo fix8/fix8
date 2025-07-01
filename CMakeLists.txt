@@ -62,6 +62,9 @@ fix8_addoption("BUILD_UNITTESTS|enable building unit tests|true")
 fix8_addoption("BUILD_ALL_WARNINGS|enable building with all warnings|true")
 fix8_addoption("BUILD_DOXYGEN_DOCS|enable building of self documentation|false")
 fix8_addoption("BUILD_EP264|enable building of FIX50SP2_EP264 schema library|false")
+fix8_addoption("BUILD_POCO_VERSION|Poco tag to download|poco-1.14.2-release")
+fix8_addoption("BUILD_TBB_VERSION|TBB tag to download|v2022.2.0")
+fix8_addoption("BUILD_GOOGLETEST_VERSION|GoogleTest tag to download|main")
 
 # -------------------------------------------------------------------------------------------
 # deps
@@ -107,9 +110,9 @@ set(ENABLE_ZIP OFF CACHE BOOL "" FORCE)
 set(ENABLE_ENCODINGS OFF CACHE BOOL "" FORCE)
 set(ENABLE_JSON OFF CACHE BOOL "" FORCE)
 set(ENABLE_XML OFF CACHE BOOL "" FORCE)
-fix8_fetch(poco pocoproject/poco poco-1.14.2-release)
+fix8_fetch(poco pocoproject/poco ${BUILD_POCO_VERSION})
 set(TBB_TEST OFF)
-fix8_fetch(tbb uxlfoundation/oneTBB v2022.1.0)
+fix8_fetch(tbb uxlfoundation/oneTBB ${BUILD_TBB_VERSION})
 
 # -------------------------------------------------------------------------------------------
 # compiler settings
@@ -191,7 +194,7 @@ endif()
 # unit tests
 # -------------------------------------------------------------------------------------------
 if(BUILD_UNITTESTS)
-	fix8_fetch(googletest google/googletest main)
+	fix8_fetch(googletest google/googletest ${BUILD_GOOGLETEST_VERSION})
 	set(EXTRA_FIELDS "<field number='9999' name='SampleUserField'  type='STRING' messages='NewOrderSingle:N ExecutionReport:N OrderCancelRequest:Y' />\
 <field number='9991' name='SampleUserField2' type='STRING' messages='NewOrderSingle:N ExecutionReport:N OrderCancelRequest:Y' />")
 	fix8_gen_shared_library(utest schema/FIX42UTEST.xml --verbose -F ${EXTRA_FIELDS} -p utest --namespace UTEST)

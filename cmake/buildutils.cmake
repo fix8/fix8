@@ -81,7 +81,7 @@ endmacro()
 # -------------------------------------------------------------------------------------------
 macro(fix8_fetch modname parturl tag)
 	include(FetchContent)
-	message(STATUS "Downloading ${modname}...")
+	message(STATUS "Downloading ${modname} (${tag})...")
 	FetchContent_Declare(${modname} GIT_REPOSITORY https://github.com/${parturl}.git GIT_SHALLOW ON GIT_TAG ${tag})
 	FetchContent_MakeAvailable(${modname})
 endmacro()

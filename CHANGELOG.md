@@ -1,7 +1,7 @@
 # Changelog
 
 ## Table of Contents
-- [[2.0.1](#201)] - 2025-06-02
+- [[2.0.1](#201)] - 2025-07-04
 - [[1.4.3](#143)] - 2023-05-10
 - [[1.4.1](#141)] - 2019-01-01
 - [[1.4.0](#140)] - 2016-09-16
@@ -47,7 +47,7 @@
 ---
 
 <a id="201"></a>
-## [2.0.1] - 2025-06-02
+## [2.0.1] - 2025-07-04
 *Maintainer: David L. Dight <fix@fix8.org>*
 - cmake build system replaces GNU autotools
 - Minimum C++17 required
@@ -66,7 +66,7 @@
 - Upgrade poco, removed deprecated calls
 - Updated and merged bug fixes
 - Updated compiler to support later FIX EPs
-- Includes FIX 5.0 SP2 and FIXT 1.1 Extension Packs 264 in Quickfix schema format
+- Added FIX 5.0 SP2 and FIXT 1.1 Extension Packs 264 in Quickfix schema format
 - Removed cruft
 <a id="143"></a>
 ## [1.4.3] - 2023-05-10
