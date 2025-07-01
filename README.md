@@ -215,7 +215,7 @@ then
 % cmake --install . --prefix <target install directory>
 ```
 
-If you have built the test cases (built by default), you can also run them as follows:
+If you have built the test cases (built by default), you can also run them as follows from the `build` directory:
 
 ```bash
 % ctest
