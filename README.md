@@ -196,6 +196,7 @@ Either clone from the project on github or download the tarball.
 For Linux/UNIX/MacOS, both shared and static versions of the library are built. Only shared versions of the schema libraries are built.
 The Windows build now also uses cmake (either msvc or vscode).
 
+### Obtain the source
 ```bash
 % git clone https://github.com/fix8/fix8.git
 % cd fix8
@@ -228,6 +229,7 @@ These options can be passed on the cmake command line:
 |`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
 
+### Run the build
 ```bash
 % mkdir build
 % cd build
@@ -242,7 +244,7 @@ For example, to build with gcc against the latest poco and tbb from your build d
 % CXX=g++ CC=gcc cmake -DBUILD_POCO_VERSION:string=main -DBUILD_TBB_VERSION:string=master ..
 ```
 
-then
+### Run the optional test cases
 If you have built the test cases (built by default), you can also run them as follows from the `build` directory:
 
 ```bash
