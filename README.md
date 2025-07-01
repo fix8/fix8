@@ -220,17 +220,7 @@ If you have built the test cases (built by default), you can also run them as fo
 ```bash
 % ctest
 ```
-The default install copies the build targets as follows:
-| Directory | Description|
-| :--- | :--- |
-|`bin`| executables including utils|
-|`lib`| shared and static libraries including dependencies|
-|`include`|header files for the runtime library; dependency headers|
-|`share/schema`|quickfix FIX xml schemas|
-|`share/contrib`|user contributed files|
-|`share/test`|test configuration files|
-|`share/doc/html`|optional doxygen generated self-documentation|
-
+### CMake command line
 The following table summarises the cmake build command for each platform:
 | Platform | Example cmake command|
 | :--- | :--- |
@@ -241,7 +231,7 @@ The following table summarises the cmake build command for each platform:
 | [msvc](https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-language-conformance) | build from menu|
 
 ### CMake project options
-These options can be passed on the cmake command line
+These options can be passed on the cmake command line:
 | Option | Description| Default | Example|
 | :--- | :--- | :--- | :--- |
 |`BUILD_UNITTESTS`|enable building unit tests|`true`| `-DBUILD_UNITTESTS:bool=false`|
@@ -251,6 +241,18 @@ These options can be passed on the cmake command line
 |`BUILD_TBB_VERSION`|TBB tag to download|`v2022.2.0`|`-DBUILD_TBB_VERSION:string=v2021.12.0`|
 |`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
+
+### Install
+The default install copies the build targets as follows:
+| Directory | Description|
+| :--- | :--- |
+|`bin`| executables including utils|
+|`lib`| shared and static libraries including dependencies|
+|`include`|header files for the runtime library; dependency headers|
+|`share/schema`|quickfix FIX xml schemas|
+|`share/contrib`|user contributed files|
+|`share/test`|test configuration files|
+|`share/doc/html`|optional doxygen generated self-documentation|
 
 ## Compiler support
 | Compiler | Version(s) |
