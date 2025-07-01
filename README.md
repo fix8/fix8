@@ -206,24 +206,6 @@ or
 % tar xvzf 2.0.1.tar.gz
 % cd fix8-2.0.1
 ```
-then
-```bash
-% mkdir build
-% cd build
-% cmake [cmake options] ..
-% make -j4 -l4
-% cmake --install . --prefix <target install directory>
-```
-
-If you have built the test cases (built by default), you can also run them as follows from the `build` directory:
-
-```bash
-% ctest
-```
-or from the MSVC/vscode terminal (using community edition)
-```bash
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\ctest"
-```
 ### CMake command line
 The following table summarises the cmake build command for each platform:
 | Platform | Example cmake command|
@@ -246,12 +228,30 @@ These options can be passed on the cmake command line:
 |`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
 
+```bash
+% mkdir build
+% cd build
+% cmake [cmake options] ..
+% make -j4 -l4
+% cmake --install . --prefix <target install directory>
+```
+
 For example, to build with gcc against the latest poco and tbb from your build directory:
 
 ```bash
 % CXX=g++ CC=gcc cmake -DBUILD_POCO_VERSION:string=main -DBUILD_TBB_VERSION:string=master ..
 ```
 
+then
+If you have built the test cases (built by default), you can also run them as follows from the `build` directory:
+
+```bash
+% ctest
+```
+or from the MSVC/vscode terminal (using community edition)
+```bash
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\ctest"
+```
 ### Install
 The default install copies the build targets as follows:
 | Directory | Description|
