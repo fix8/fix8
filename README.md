@@ -246,7 +246,7 @@ These options can be passed on the cmake command line:
 |`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
 
-For example, to build with gcc against the latest poco and tbb:
+For example, to build with gcc against the latest poco and tbb from your build directory:
 
 ```bash
 % CXX=g++ CC=gcc cmake -DBUILD_POCO_VERSION:string=main -DBUILD_TBB_VERSION:string=master ..
@@ -269,7 +269,7 @@ The default install copies the build targets as follows:
 | :--- | :--- |
 | [gcc](https://gcc.gnu.org/projects/cxx-status.html) | `11`, `12`, `13`, `14`|
 | [clang](https://clang.llvm.org/cxx_status.html) | `15`, `16`, `17`, `18`, `19`, `20`|
-| [intel (llvm)](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) | `250101` |
+| [intel (llvm)](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) | `250200` |
 | [xcode](https://developer.apple.com/support/xcode/) | `15`, `16` |
 | [msvc](https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-language-conformance) | `16`, `17` |
 

@@ -172,7 +172,7 @@ macro(fix8_gen_library shared name xml extra_fields)
 	if (${has_path_delimiters} EQUAL -1)
 		set(xml ${CMAKE_SOURCE_DIR}/${xml})
 	endif()
-	message("-- Using ${xml}")
+	message("-- Building: ${Green}${xml}${Reset}")
 	add_custom_command(
 		OUTPUT
 			${prefix}/${name}_classes.cpp
