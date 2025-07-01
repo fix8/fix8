@@ -220,6 +220,10 @@ If you have built the test cases (built by default), you can also run them as fo
 ```bash
 % ctest
 ```
+or from the MSVC/vscode terminal (using community edition)
+```bash
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\ctest"
+```
 ### CMake command line
 The following table summarises the cmake build command for each platform:
 | Platform | Example cmake command|
