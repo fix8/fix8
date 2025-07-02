@@ -49,13 +49,13 @@
 <a id="201"></a>
 ## [2.0.1] - 2025-07-04
 *Maintainer: David L. Dight <fix@fix8.org>*
-- cmake build system replaces GNU autotools
-- Minimum C++17 required
+- CMake build system replaces GNU autotools
+- Minimum C++17 required, codebase updated to support this
 - Fixed multiple runtime library compiler warnings
-- Removed tcmalloc, replaced with tbbmalloc
-- Removed FastFlow, replaced with tbb
+- Removed tcmalloc, replaced with tbbmalloc (oneTBB)
+- Removed FastFlow, replaced with tbb (oneTBB)
 - Removed extern "C" linkage warnings
-- cmake downloads and builds all default required deps
+- CMake downloads and builds all default required deps
 - Fixed `session_test` errors
 - Fixed build for MacOS
 - Fixed build for Windows, builds in MSVC, VSCode
@@ -65,7 +65,7 @@
 - Added Intel compiler support
 - Upgrade poco, removed deprecated calls
 - Updated and merged bug fixes
-- Updated compiler to support later FIX EPs
+- Updated compiler to support later FIX Extension Packs
 - Added FIX 5.0 SP2 and FIXT 1.1 Extension Packs 264 in Quickfix schema format
 - Removed cruft
 <a id="143"></a>

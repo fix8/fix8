@@ -194,7 +194,7 @@ If you wish to use BerkeleyDB for message persistence:
 
 Either clone from the project on github or download the tarball.
 For Linux/UNIX/MacOS, both shared and static versions of the library are built. Only shared versions of the schema libraries are built.
-The Windows build now also uses cmake (either msvc or vscode).
+The Windows build now also uses CMake (either msvc or vscode).
 
 ### Obtain the source
 ```bash
@@ -208,8 +208,8 @@ or
 % cd fix8-2.0.1
 ```
 ### CMake command line
-The following table summarises the cmake build command for each platform:
-| Platform | Example cmake command|
+Use the default compiler in your environment or use the following overrides to CMake for each compiler:
+| Platform | Example CMake command|
 | :--- | :--- |
 | [gcc](https://gcc.gnu.org/projects/cxx-status.html) | `CXX=g++ CC=gcc cmake [options] ..`|
 | [clang](https://clang.llvm.org/cxx_status.html) | `CXX=clang++ CC=clang cmake [options] ..`|
@@ -218,7 +218,7 @@ The following table summarises the cmake build command for each platform:
 | [msvc](https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-language-conformance) | build from menu|
 
 ### CMake project options
-These options can be passed on the cmake command line:
+These options can be passed on the CMake command line:
 | Option | Description| Default | Example|
 | :--- | :--- | :--- | :--- |
 |`BUILD_UNITTESTS`|enable building unit tests|`true`| `-DBUILD_UNITTESTS:bool=false`|
@@ -250,9 +250,13 @@ If you have built the test cases (built by default), you can also run them as fo
 ```bash
 % ctest
 ```
+or
+```bash
+% make test
+```
 or from the MSVC/vscode terminal (using community edition)
 ```bash
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\ctest"
+C:\Users\myuser\fix8\build> "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\ctest"
 ```
 ### Install
 The default install copies the build targets as follows:
