@@ -254,7 +254,7 @@ or
 ```bash
 % make test
 ```
-or from the MSVC/vscode terminal (using community edition)
+or from the MSVC/vscode terminal (using community edition) (if powershell is your default terminal you may need to prefix the following command with ". "):
 ```bash
 C:\Users\myuser\fix8\build> "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\ctest"
 ```
@@ -319,7 +319,7 @@ sgack traces, sample configuruation files, config.log, etc.
 1. If you have already implemented a fix, and wish to make a pull request on Github, *create an issue in Jira first*.
 This will help us track the problem and ensure that the solution is properly tested.
 
-We welcome genuine problem reports and encourage users to help us improve the product - for you and with your help.
+We welcome genuine problem reports and encourage users to help us improve the software - for you and with your help.
 
 - If you are on [LinkedIn](https://linkedin.com) join the LinkedIn group **Fix8 Users and Developers**
 for more help and information about the Fix8 project.

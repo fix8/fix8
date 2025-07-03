@@ -56,16 +56,17 @@
 - Removed FastFlow, replaced with tbb (oneTBB)
 - Removed extern "C" linkage warnings
 - CMake downloads and builds all default required deps
-- Fixed `session_test` errors
+- Fixed `session_test` errors or crash
 - Fixed build for MacOS
 - Fixed build for Windows, builds in MSVC, VSCode
 - Added zlib, getopt for Windows
 - Shared and static runtime libs built by default
 - Static lib contains all external deps
 - Added Intel compiler support
-- Upgrade poco, removed deprecated calls
+- Upgrade poco, removed deprecated calls (select)
 - Updated and merged bug fixes
 - Updated compiler to support later FIX Extension Packs
+- Updated compiler to support empty FIX body messages, updated binary report, constexpr
 - Added FIX 5.0 SP2 and FIXT 1.1 Extension Packs 264 in Quickfix schema format
 - Removed cruft
 <a id="143"></a>
