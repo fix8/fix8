@@ -58,6 +58,7 @@ set(fix8_CMAKE_CXX_FLAGS_STR "${CMAKE_CXX_FLAGS}")
 if (NOT MSVC)
 	fix8_setbuildtype(FIX8 Release)
 endif()
+message("-- ${BoldCyan}${CMAKE_PROJECT_NAME} version ${CMAKE_PROJECT_VERSION}, build type ${CMAKE_BUILD_TYPE}${Reset}")
 fix8_addoption("BUILD_UNITTESTS|enable building unit tests|true")
 fix8_addoption("BUILD_ALL_WARNINGS|enable building with all warnings|true")
 fix8_addoption("BUILD_DOXYGEN_DOCS|enable building of self documentation|false")
@@ -65,12 +66,13 @@ fix8_addoption("BUILD_EP264|enable building of FIX50SP2_EP264 schema library|fal
 fix8_addoption("BUILD_POCO_VERSION|Poco tag to download|poco-1.14.2-release")
 fix8_addoption("BUILD_TBB_VERSION|TBB tag to download|v2022.2.0")
 fix8_addoption("BUILD_GOOGLETEST_VERSION|GoogleTest tag to download|main")
+fix8_addoption("BUILD_ZLIB_VERSION|zlib tag to download (windows only)|v1.3.1")
 
 # -------------------------------------------------------------------------------------------
 # deps
 # -------------------------------------------------------------------------------------------
 if (MSVC)
-	fix8_fetch(zip madler/zlib v1.3.1)
+	fix8_fetch(zip madler/zlib ${BUILD_ZLIB_VERSION})
 	set(ziplib zlib)
 	set(poco_ssl_libs "")
 	add_library(getopt STATIC msvc/getopt/getopt.c)

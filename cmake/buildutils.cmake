@@ -74,7 +74,6 @@ function(fix8_setbuildtype define_prefix default_type)
 		else()
 			message(FATAL_ERROR "${BoldRed}Unsupported build type ${default_type}${Reset}")
 		endif()
-		message("-- ${BoldCyan}${CMAKE_PROJECT_NAME} version ${CMAKE_PROJECT_VERSION}, build type ${CMAKE_BUILD_TYPE}${Reset}")
 	else()
 		set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE ${default_type})
 		fix8_setbuildtype(${define_prefix} ${default_type})
@@ -138,10 +137,10 @@ endfunction()
 function(comp_opts targ)
 	target_compile_features(${targ} PRIVATE cxx_std_17)
 	target_compile_options(${targ} PRIVATE
-			${FIX8_CXX_FLAGS}
-			$<$<CONFIG:Debug>:${FIX8_CXX_FLAGS_DEBUG}>
-			$<$<CONFIG:Release>:${FIX8_CXX_FLAGS_RELEASE}>
-			$<$<CONFIG:RelWithDebInfo>:${FIX8_CXX_FLAGS_RELWITHDEBINFO}>)
+		${FIX8_CXX_FLAGS}
+		$<$<CONFIG:Debug>:${FIX8_CXX_FLAGS_DEBUG}>
+		$<$<CONFIG:Release>:${FIX8_CXX_FLAGS_RELEASE}>
+		$<$<CONFIG:RelWithDebInfo>:${FIX8_CXX_FLAGS_RELWITHDEBINFO}>)
 	target_link_libraries(${targ} PRIVATE TBB::tbbmalloc_proxy)
 	if (MSVC)
 		target_link_options(${targ} PRIVATE	/INCLUDE:__TBB_malloc_proxy)
@@ -159,51 +158,26 @@ function(build_test name files)
 endfunction()
 
 # -------------------------------------------------------------------------------------------
-macro(fix8_gen_library shared name xml extra_fields)
-	if ("${extra_fields}" STREQUAL "_")
-		set(args ${ARGV4} ${ARGV5} ${ARGV6} ${ARGV7} ${ARGV8} ${ARGV9} ${ARGV10} ${CMAKE_SOURCE_DIR}/${xml})
-	else()
-		set(args ${ARGV4} ${ARGV5} ${ARGV6} ${ARGV7} ${ARGV8} ${ARGV9} ${ARGV10} ${CMAKE_SOURCE_DIR}/${xml} -F ${extra_fields})
-	endif()
+macro(fix8_gen_shared_library name xml)
 	set(prefix ${CMAKE_BINARY_DIR}/generated/${name})
 	file(MAKE_DIRECTORY ${prefix})
-
 	string(FIND "${xml}" "/" has_path_delimiters)
 	if (${has_path_delimiters} EQUAL -1)
 		set(xml ${CMAKE_SOURCE_DIR}/${xml})
 	endif()
-	message("-- Building: ${Green}${xml}${Reset}")
-	add_custom_command(
-		OUTPUT
-			${prefix}/${name}_classes.cpp
-			${prefix}/${name}_traits.cpp
-			${prefix}/${name}_types.cpp
-			${prefix}/${name}_classes.hpp
-			${prefix}/${name}_types.hpp
-		COMMAND ${CMAKE_COMMAND} -E env ${FIX8_LD_LIBRARY_PATH} $<TARGET_FILE:f8c> ${args}
-		MAIN_DEPENDENCY ${xml}
-		WORKING_DIRECTORY ${prefix}
-		DEPENDS f8c
-		VERBATIM)
-	if ("${shared}" STREQUAL "shared")
-		set(libname ${name})
-		add_library(${libname} SHARED
-			${prefix}/${name}_classes.cpp
-			${prefix}/${name}_traits.cpp
-			${prefix}/${name}_types.cpp
-			${prefix}/${name}_classes.hpp
-			${prefix}/${name}_types.hpp)
-		string(TOUPPER ${name} name_upper)
-		target_compile_definitions(${libname} PRIVATE F8_${name_upper}_API_SHARED BUILD_F8_${name_upper}_API)
-	else()
-		set(libname ${name})
-		add_library(${libname} STATIC
-			${prefix}/${name}_classes.cpp
-			${prefix}/${name}_traits.cpp
-			${prefix}/${name}_types.cpp
-			${prefix}/${name}_classes.hpp
-			${prefix}/${name}_types.hpp)
-	endif()
+	message("-- Adding: ${Green}${xml}${Reset}")
+	add_custom_command(OUTPUT
+		${prefix}/${name}_classes.cpp ${prefix}/${name}_traits.cpp ${prefix}/${name}_types.cpp
+		${prefix}/${name}_classes.hpp ${prefix}/${name}_types.hpp
+		COMMAND ${CMAKE_COMMAND} -E env ${FIX8_LD_LIBRARY_PATH} $<TARGET_FILE:f8c>
+			${ARGV2} ${ARGV3} ${ARGV4} ${ARGV5} ${ARGV6} ${ARGV7} ${ARGV8} ${CMAKE_SOURCE_DIR}/${xml}
+		MAIN_DEPENDENCY ${xml} WORKING_DIRECTORY ${prefix} DEPENDS f8c VERBATIM)
+	set(libname ${name})
+	add_library(${libname} SHARED
+		${prefix}/${name}_classes.cpp ${prefix}/${name}_traits.cpp ${prefix}/${name}_types.cpp
+		${prefix}/${name}_classes.hpp ${prefix}/${name}_types.hpp)
+	string(TOUPPER ${name} name_upper)
+	target_compile_definitions(${libname} PRIVATE F8_${name_upper}_API_SHARED BUILD_F8_${name_upper}_API)
 	add_dependencies(${libname} f8c)
 	target_include_directories(${libname} PUBLIC ${prefix})
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -211,16 +185,6 @@ macro(fix8_gen_library shared name xml extra_fields)
 	endif()
 	target_link_libraries(${libname} PUBLIC fix8)
 	comp_opts(${libname})
-endmacro()
-
-# -------------------------------------------------------------------------------------------
-macro(fix8_gen_shared_library name xml)
-	fix8_gen_library(shared ${name} ${xml} "_" ${ARGV2} ${ARGV3} ${ARGV4} ${ARGV5} ${ARGV6} ${ARGV7} ${ARGV8} ${ARGV9} ${ARGV10})
-endmacro()
-
-# -------------------------------------------------------------------------------------------
-macro(add_gen_static_library name xml)
-	fix8_gen_library(static ${name} ${xml} "_" ${ARGV2} ${ARGV3} ${ARGV4} ${ARGV5} ${ARGV6} ${ARGV7} ${ARGV8} ${ARGV9} ${ARGV10})
 endmacro()
 
 # -------------------------------------------------------------------------------------------
