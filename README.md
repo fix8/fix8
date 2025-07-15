@@ -227,6 +227,7 @@ These options can be passed on the CMake command line:
 |`BUILD_POCO_VERSION`|Poco tag to download|`poco-1.14.2-release`|`-DBUILD_POCO_VERSION:string=poco-1.12.5-release`|
 |`BUILD_TBB_VERSION`|TBB tag to download|`v2022.2.0`|`-DBUILD_TBB_VERSION:string=v2021.12.0`|
 |`BUILD_GOOGLETEST_VERSION`|GoogleTest tag to download|`main`|`-DBUILD_GOOGLETEST_VERSION:string=v1.16.0`|
+|`BUILD_MINIMAL_POCO`|build only required Poco components|`true`|`-DBUILD_MINIMAL_POCO:bool=false`|
 |`BUILD_EP264`|enable building of `FIX50SP2_EP264` schema library[^1]|`false`|`-DBUILD_EP264:bool=true`|
 |`BUILD_ZLIB_VERSION`|zlib tag to download (windows only)|`v1.3.1`|`-DBUILD_ZLIB_VERSION:string=v1.3.1`|
 
