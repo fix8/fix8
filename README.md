@@ -47,7 +47,8 @@
 
 # [Fix8](https://www.fix8.org) Open Source C++ FIX Engine
 
-A modern open source C++ FIX framework featuring complete schema driven customisation, high performance and fast application development.
+A modern open source C++ [FIX](https://en.wikipedia.org/wiki/Financial_Information_eXchange) framework
+featuring complete schema driven customisation, high performance and fast application development.
 
 The system is comprised of a compiler for generating C++ message and field encoders,
 decoders and instantiation tables; a runtime library to support the generated code
@@ -88,7 +89,7 @@ and framework; and a set of complete client/server test applications.
 
 ## Features
 
-* [Fix8](https://www.fix8.org) helps you get your [FIX protocol](https://www.fixprotocol.org/) client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.
+* [Fix8](https://www.fix8.org) helps you get your [FIX protocol](https://www.fixtrading.org/) client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.
 
 * Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile.
 
