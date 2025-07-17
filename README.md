@@ -105,7 +105,7 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 is a complete C++ FIX framework, with client/server session and connection classes (including SSL); support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
 
-* Leverage standard components. Fix8 optionally uses industry recognised components for many important functions, including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen and more. We didn't reinvent the wheel.
+* Leverage standard components. Fix8 optionally uses industry recognised components for many important functions, including Poco, TBB, Redis, Memcached, BerkeleyDB, GoogleTest, Google Performance Tools, Doxygen and more. We didn't reinvent the wheel.
 
 * Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
 
@@ -115,9 +115,11 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering, well-formedness testing, retransmission and standard session semantics.
 
-* Fix8 will build with gcc, clang, xcode, intel and msvc compilers
+* Fix8 will build with gcc, clang, xcode, Intel and MSVC compilers
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC, ARMv7 and ARM64. It also runs on *Windows* and *MacOS*. Other \*NIX variants may work too.
+* Fix8 runs under industry standard *Linux*, *Windows* and *MacOS*. Other \*NIX variants may work too.
+
+* Fix8 runs on industry standard hardware such as on x86-64, ARMv7 and ARM64 (including M1-4).
 
 ## Directory Layout
 
