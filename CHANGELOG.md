@@ -47,15 +47,16 @@
 ---
 
 <a id="201"></a>
-## [2.0.1] - 2025-07-04
+## [2.0.1] - 2025-07-24
 *Maintainer: David L. Dight <fix@fix8.org>*
-- CMake build system replaces GNU autotools
+- Upgrade build system from GNU autotools to CMake
 - Minimum C++17 required, codebase updated to support this
 - Fixed multiple runtime library compiler warnings
 - Removed tcmalloc, replaced with tbbmalloc (oneTBB)
 - Removed FastFlow, replaced with tbb (oneTBB)
 - Removed extern "C" linkage warnings
 - CMake downloads and builds all default required deps
+- Unit tests now work from CTest
 - Fixed `session_test` errors or crash
 - Fixed build for MacOS
 - Fixed build for Windows, builds in MSVC, VSCode

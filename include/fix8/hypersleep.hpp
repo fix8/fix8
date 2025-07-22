@@ -54,8 +54,8 @@ enum hyperunits_t { h_seconds, h_milliseconds, h_microseconds, h_nanoseconds, h_
 #ifdef _MSC_VER
 struct timespec
 {
-    time_t tv_sec; // seconds
-    long tv_nsec;  // nanoseconds
+	time_t tv_sec; // seconds
+	long tv_nsec;  // nanoseconds
 };
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #endif

@@ -100,8 +100,6 @@ struct SslContext
 /// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
-	static RegExp _ipexp;
-
 	const XmlElement *_root{}, *_default;
 	using ConfigMap = std::map<const std::string, const XmlElement *>;
 	std::vector<ConfigMap> _groups;

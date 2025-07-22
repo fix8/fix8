@@ -44,7 +44,7 @@
 #   www.fix8mt.com
 # ---------------------------------------------------------------------------------------------
 # cmake build utils
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 if(NOT WIN32 OR CMAKE_TERMINAL_ANSI_COLOR)
 	string(ASCII 27 Esc)
 	set(Reset 			"${Esc}[0m")
@@ -60,7 +60,7 @@ else()
 	set(BoldCyan 		"")
 endif()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 function(fix8_setbuildtype define_prefix default_type)
 	if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "")
 		if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
@@ -80,7 +80,7 @@ function(fix8_setbuildtype define_prefix default_type)
 	endif()
 endfunction()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 macro(fix8_addoption option_string)
 	string(REPLACE "|" ";" part ${option_string})
 	list(GET part 0 opt_name)
@@ -93,7 +93,7 @@ macro(fix8_addoption option_string)
 	message("-- Build: ${opt_description}: ${Green}${${opt_name}}${Reset}")
 endmacro()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 macro(fix8_fetch modname parturl tag)
 	include(FetchContent)
 	message(STATUS "${BoldYellow}Downloading ${modname} (${tag})...${Reset}")
@@ -101,7 +101,7 @@ macro(fix8_fetch modname parturl tag)
 	FetchContent_MakeAvailable(${modname})
 endmacro()
 
-# ----------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
 function(cpp_opts)
 	if (NOT MSVC)
 		if(BUILD_ALL_WARNINGS)
@@ -133,7 +133,7 @@ function(cpp_opts)
 	endif()
 endfunction()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 function(comp_opts targ)
 	target_compile_features(${targ} PRIVATE cxx_std_17)
 	target_compile_options(${targ} PRIVATE
@@ -147,7 +147,7 @@ function(comp_opts targ)
 	endif()
 endfunction()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 function(build_test name files)
 	add_executable(${name} ${files})
 	target_link_libraries(${name} PUBLIC Poco::Foundation Poco::Net Poco::Util ${poco_ssl_libs} fix8 utest GTest::gtest GTest::gtest_main)
@@ -157,7 +157,7 @@ function(build_test name files)
 	comp_opts(${name})
 endfunction()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 macro(fix8_gen_shared_library name xml)
 	set(prefix ${CMAKE_BINARY_DIR}/generated/${name})
 	file(MAKE_DIRECTORY ${prefix})
@@ -187,7 +187,7 @@ macro(fix8_gen_shared_library name xml)
 	comp_opts(${libname})
 endmacro()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 macro(copy_libs)
 	add_custom_target(lib_copy ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/bin/.libs_copied)
 	add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/bin/.libs_copied

@@ -93,7 +93,7 @@ SessionID SessionID::make_reverse_id() const
 //-------------------------------------------------------------------------------------------------
 void SessionID::from_string(const f8String& from)
 {
-	static RegExp sid_regex("([^:]+):([^-]+)->(.+)");
+	static const RegExp sid_regex("([^:]+):([^-]+)->(.+)");
 	RegMatch match;
 	if (sid_regex.SearchString(match, from, 4) == 4)
 	{
@@ -841,11 +841,11 @@ bool Session::heartbeat_service()
 				log(ostr.str(), Logger::Error);
 				try
 				{
-                    //  do not clear the timer, as the lock required for the same is already taken by the timer thread
-                    //  not removing the remaining events will cause some extra work to be done,
-                    //  but that work will be limited by the fact that the work checks if the session is already shutdown
-                    //  activation_service and heartbeat_service both have shutdown checks
-                    stop(false);
+					//  do not clear the timer, as the lock required for the same is already taken by the timer thread
+					//  not removing the remaining events will cause some extra work to be done,
+					//  but that work will be limited by the fact that the work checks if the session is already shutdown
+					//  activation_service and heartbeat_service both have shutdown checks
+					stop(false);
 				}
 				catch (Poco::Net::NetException& e)
 				{

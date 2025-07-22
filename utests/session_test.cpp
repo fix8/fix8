@@ -538,7 +538,7 @@ TEST_F(sessionTest, send_test_request)
     EXPECT_TRUE(output.find("35=1") !=  std::string::npos);
     EXPECT_EQ(States::st_test_request_sent, initiator_test->ss->getState());
 
-    RegExp testID("112=(\\w+)");
+    static const RegExp testID("112=(\\w+)");
     RegMatch match;
     f8String reqId;
     testID.SearchString(match, output, 2);

@@ -451,7 +451,7 @@ illegal_tag:
 				{
 					if ((tag_ = tmpotag) == "xi:include")	// handle inclusion
 					{
-						static RegExp rIn("href=\"([^\"]+)\"");
+						static const RegExp rIn("href=\"([^\"]+)\"");
 						RegMatch match;
 						if (rIn.SearchString(match, tmpattr, 2) == 2)
 						{
@@ -771,7 +771,7 @@ const string& XmlElement::InplaceXlate (string& what)
 		{"iquest", 191}
 	};
 
-	static RegExp rCX("&([a-z]{2,}[1-4]{0,});");
+	static const RegExp rCX("&([a-z]{2,}[1-4]{0,});");
 	RegMatch match;
 	while (rCX.SearchString(match, what, 2) == 2)
 	{
@@ -781,7 +781,7 @@ const string& XmlElement::InplaceXlate (string& what)
 		rCX.Replace(match, what, sitr == stringtochar.cend() ? '?' : sitr->second); // not found character entity replaces string with '?'
 	}
 
-	static RegExp rCE("&#(x[A-Fa-f0-9]+|[0-9]+);");
+	static const RegExp rCE("&#(x[A-Fa-f0-9]+|[0-9]+);");
 	while (rCE.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
 	{
 		string whatv;
@@ -804,7 +804,7 @@ const string& XmlElement::InplaceXlate (string& what)
 
 	if (!(flags_ & noextensions))
 	{
-		static RegExp rEn("\\$\\{([^}]+)\\}");
+		static const RegExp rEn("\\$\\{([^}]+)\\}");
 		if (rEn.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
 		{
 			string whatv;
@@ -818,7 +818,7 @@ const string& XmlElement::InplaceXlate (string& what)
 			}
 		}
 
-		static RegExp rEv("!\\{([^}]+)\\}");
+		static const RegExp rEv("!\\{([^}]+)\\}");
 		if (rEv.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
 		{
 			string whatv;

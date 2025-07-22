@@ -52,9 +52,9 @@ project (fix8
    VERSION 2.0.1)
 
 set(fix8_CMAKE_CXX_FLAGS_STR "${CMAKE_CXX_FLAGS}")
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # options
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 if (NOT MSVC)
 	fix8_setbuildtype(FIX8 Release)
 endif()
@@ -69,9 +69,9 @@ fix8_addoption("BUILD_TBB_VERSION|TBB tag to download|v2022.2.0")
 fix8_addoption("BUILD_GOOGLETEST_VERSION|GoogleTest tag to download|main")
 fix8_addoption("BUILD_ZLIB_VERSION|zlib tag to download (windows only)|v1.3.1")
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # deps
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 if (MSVC)
 	fix8_fetch(zip madler/zlib ${BUILD_ZLIB_VERSION})
 	set(ziplib zlib)
@@ -87,7 +87,7 @@ else()
 	set(getopt_lib "")
 endif()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # workaround for poco's c++17 check that fails for Intel compiler
 if (CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM|Intel")
 	function(check_for_cxx17_compiler)
@@ -124,14 +124,14 @@ fix8_fetch(poco pocoproject/poco ${BUILD_POCO_VERSION})
 set(TBB_TEST OFF)
 fix8_fetch(tbb uxlfoundation/oneTBB ${BUILD_TBB_VERSION})
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # compiler settings
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 cpp_opts()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # runtime
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 set(fix8_libs Poco::Foundation Poco::Net Poco::Util ${poco_ssl_libs} ${ziplib} TBB::tbb)
 macro(build_lib name type)
 	add_library(${name} ${type} ${rsrc})
@@ -162,9 +162,9 @@ install(DIRECTORY include DESTINATION .)
 install(DIRECTORY schema DESTINATION share)
 install(DIRECTORY contrib DESTINATION share)
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # compiler
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 set(compdir ${CMAKE_SOURCE_DIR}/compiler)
 file(GLOB csrc "${compdir}/*.cpp")
 add_executable(f8c ${csrc})
@@ -173,9 +173,9 @@ target_include_directories(f8c PRIVATE ${compdir} include)
 comp_opts(f8c)
 install(TARGETS f8c)
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # util
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 set(utildir ${CMAKE_SOURCE_DIR}/util)
 add_executable(seqedit ${utildir}/seqedit.cpp)
 target_link_libraries(seqedit PUBLIC fix8 ${getopt_lib})
@@ -183,9 +183,9 @@ target_include_directories(seqedit PRIVATE ${utildir} include)
 comp_opts(seqedit)
 install(TARGETS seqedit)
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # shared standard schema libs
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 fix8_gen_shared_library(FIX40 schema/FIX40.xml --verbose --namespace FIX40 -p FIX40)
 fix8_gen_shared_library(FIX41 schema/FIX41.xml --verbose --namespace FIX41 -p FIX41)
 fix8_gen_shared_library(FIX42 schema/FIX42.xml --verbose --namespace FIX42 -p FIX42)
@@ -200,9 +200,9 @@ if(BUILD_EP264)
 	install(TARGETS FIX50SP2_EP264)
 endif()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # unit tests
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 if(BUILD_UNITTESTS)
 	fix8_fetch(googletest google/googletest ${BUILD_GOOGLETEST_VERSION})
 	set(EXTRA_FIELDS "<field number='9999' name='SampleUserField'  type='STRING' messages='NewOrderSingle:N ExecutionReport:N OrderCancelRequest:Y' />\
@@ -216,9 +216,9 @@ if(BUILD_UNITTESTS)
 	build_test(session_test "utests/session_test.cpp;utests/mockConnection.cpp")
 endif()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # test apps
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 add_executable(f8test test/myfix.cpp)
 fix8_gen_shared_library(myfix schema/FIX50SP2.xml --verbose --namespace MYFIX --prefix myfix --fixt ${CMAKE_SOURCE_DIR}/schema/FIXT11.xml)
 target_link_libraries(f8test PUBLIC fix8 myfix GTest::gtest GTest::gtest_main ${getopt_lib})
@@ -249,9 +249,9 @@ install(TARGETS f8test f8print harness harness)
 install(FILES ${CMAKE_SOURCE_DIR}/test/hf_client.xml ${CMAKE_SOURCE_DIR}/test/myfix_client.xml ${CMAKE_SOURCE_DIR}/test/hf_client_include.xml
    ${CMAKE_SOURCE_DIR}/test/hf_server.xml ${CMAKE_SOURCE_DIR}/test/myfix_server.xml DESTINATION share/test)
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # generated docs
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 if(BUILD_DOXYGEN_DOCS)
 	find_package(Doxygen REQUIRED)
 	find_package(FLEX REQUIRED)
@@ -260,13 +260,13 @@ if(BUILD_DOXYGEN_DOCS)
 	install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/html DESTINATION share/doc)
 endif()
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 # to dump all non-empty cmake variables
 # cmake -DCMAKE_DUMP_VARS=true ..
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 option(CMAKE_DUMP_VARS "dump all cmake vars" false)
 if(CMAKE_DUMP_VARS)
    get_cmake_property(varname VARIABLES)

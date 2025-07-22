@@ -101,12 +101,12 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes.c",
-                                    "_classes.h", "_router.h", "_session.h" },
-                  Ctxt::_exts_ver[2] { "pp", "xx" };
+                                 "_classes.h", "_router.h", "_session.h" },
+                                 Ctxt::_exts_ver[2] { "pp", "xx" };
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
-       prefix("Myfix"), gen_classes, extra_fields;
+   prefix("Myfix"), gen_classes, extra_fields;
 bool verbose{}, error_ignore{}, gen_fields{}, norealm{}, nocheck{}, nowarn{},
-     incpath{true}, nconst_router{}, no_shared_groups{}, no_default_routers{}, report_unused{};
+   incpath{true}, nconst_router{}, no_shared_groups{}, no_default_routers{}, report_unused{};
 unsigned glob_errors{}, glob_warnings{}, tabsize(3), ext_ver{};
 extern unsigned glob_errors;
 extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:SDu");
@@ -369,7 +369,7 @@ int main(int argc, char **argv)
                     *msgs(const_cast<XmlElement*>(cfr->find("fix/messages")));
          if (flds && msgs)
          {
-            const RegExp rMS("([^:]+):(Y|N)");
+            static const RegExp rMS("([^:]+):(Y|N)");
             istringstream istr(extra_fields);
             size_t added{};
             while (istr.good())

@@ -55,9 +55,6 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-RegExp Configuration::_ipexp("^([^:]+):([0-9]+)$");
-
-//-------------------------------------------------------------------------------------------------
 int Configuration::process()
 {
 	if (!_root)
@@ -298,12 +295,13 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					return new PipeLogger(logname, flags, levels, delim, positions);
 				}
 
+				static const RegExp ipexp("^([^:]+):([0-9]+)$");
 				RegMatch match;
-				if (_ipexp.SearchString(match, logname, 3) == 3)
+				if (ipexp.SearchString(match, logname, 3) == 3)
 				{
 					f8String ip, port;
-					_ipexp.SubExpr(match, logname, ip, 0, 1);
-					_ipexp.SubExpr(match, logname, port, 0, 2);
+					ipexp.SubExpr(match, logname, ip, 0, 1);
+					ipexp.SubExpr(match, logname, port, 0, 2);
 					return new BCLogger(ip, stoul(port), flags, levels, delim, positions);
 				}
 
