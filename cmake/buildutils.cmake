@@ -107,7 +107,8 @@ function(cpp_opts)
 		if(BUILD_ALL_WARNINGS)
 			set(CXX_FLAGS -Wall -Wextra -Wpedantic )
 		endif()
-		set(CXX_FLAGS ${CXX_FLAGS} -fPIC -pthread -Wno-overloaded-virtual -Wno-unused-parameter -Wno-missing-field-initializers)
+		set(C_FLAGS ${CXX_FLAGS} -fPIC -pthread -Wno-unused-parameter -Wno-missing-field-initializers)
+		set(CXX_FLAGS ${C_FLAGS} -Wno-overloaded-virtual)
 		set(CXX_FLAGS_DEBUG -g -O0 -D_DEBUG)
 		set(CXX_FLAGS_RELEASE -O3 -DNDEBUG)
 		set(CXX_FLAGS_RELWITHDEBINFO -g -O1 -D_DEBUG)
@@ -121,6 +122,7 @@ function(cpp_opts)
 		set(CXX_FLAGS_RELEASE /DNDEBUG /O2 /Oi)
 		set(CXX_FLAGS_RELWITHDEBINFO /DEBUG /D_DEBUG /O2)
 	endif()
+	set(FIX8_C_FLAGS ${C_FLAGS} PARENT_SCOPE)
 	set(FIX8_CXX_FLAGS ${CXX_FLAGS} PARENT_SCOPE)
 	set(FIX8_CXX_FLAGS_DEBUG ${CXX_FLAGS_DEBUG} PARENT_SCOPE)
 	set(FIX8_CXX_FLAGS_RELEASE ${CXX_FLAGS_RELEASE} PARENT_SCOPE)
@@ -137,7 +139,8 @@ endfunction()
 function(comp_opts targ)
 	target_compile_features(${targ} PRIVATE cxx_std_17)
 	target_compile_options(${targ} PRIVATE
-		${FIX8_CXX_FLAGS}
+		$<$<COMPILE_LANGUAGE:C>:${FIX8_C_FLAGS}>
+		$<$<COMPILE_LANGUAGE:CXX>:${FIX8_CXX_FLAGS}>
 		$<$<CONFIG:Debug>:${FIX8_CXX_FLAGS_DEBUG}>
 		$<$<CONFIG:Release>:${FIX8_CXX_FLAGS_RELEASE}>
 		$<$<CONFIG:RelWithDebInfo>:${FIX8_CXX_FLAGS_RELWITHDEBINFO}>)
