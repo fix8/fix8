@@ -1148,13 +1148,7 @@ class tty_save_state
 {
 	bool _raw_mode = false;
 	int _fd;
-#ifndef _MSC_VER
-#ifdef __APPLE__
 	termios _tty_state;
-#else
-	termio _tty_state;
-#endif
-#endif
 
 public:
 	explicit tty_save_state(int fd) : _fd(fd) {}
@@ -1203,11 +1197,7 @@ public:
 				std::cerr << Str_error(errno, "Cannot get ioctl") << std::endl;
 				return;
 			}
-#ifdef __APPLE__
 			termios tty_state(_tty_state);
-#else
-			termio tty_state(_tty_state);
-#endif
 			tty_state.c_lflag = 0;
 			tty_state.c_cc[VTIME] = 0;
 			tty_state.c_cc[VMIN] = 1;
