@@ -328,9 +328,8 @@ bool Session::process(const f8String& from)
 		{
 		default:
 application_call:
-			if (activation_check(seqnum, msg.get()))
+			if (auto *msg_ptr { msg.get() }; activation_check(seqnum, msg_ptr))
 			{
-				const Message *msg_ptr = msg.get();
 				result = handle_application(seqnum, msg_ptr);
 				if (msg_ptr == nullptr)
 					msg.release(); // application handler has taken ownership
