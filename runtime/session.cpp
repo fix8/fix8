@@ -287,7 +287,7 @@ bool Session::process(const f8String& from)
 {
 	unsigned seqnum(0);
 	bool remote_logged_out {};
-	const Message *msg = nullptr;
+	unique_ptr <const Message> msg;
 
 	try
 	{
@@ -309,7 +309,8 @@ bool Session::process(const f8String& from)
 				retry_plog = true;
 		}
 
-		if (!(msg = Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag)))
+		msg.reset(Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag));
+		if (msg.get() == nullptr)
 		{
 			glout_fatal << "Fatal: factory failed to generate a valid message";
 			return false;
@@ -320,37 +321,42 @@ bool Session::process(const f8String& from)
 		else if (_control & print)
 			cout << *msg << endl;
 
-		bool result(false), admin_result(msg->is_admin() ? handle_admin(seqnum, msg) : true);
+		bool result(false), admin_result(msg->is_admin() ? handle_admin(seqnum, msg.get()) : true);
 		if (msg->get_msgtype().size() > 1)
 			goto application_call;
 		else switch(msg->get_msgtype()[0])
 		{
 		default:
 application_call:
-			if (activation_check(seqnum, msg))
-				result = handle_application(seqnum, msg);
+			if (activation_check(seqnum, msg.get()))
+			{
+				const Message *msg_ptr = msg.get();
+				result = handle_application(seqnum, msg_ptr);
+				if (msg_ptr == nullptr)
+					msg.release(); // application handler has taken ownership
+			}
 			break;
 		case Common_MsgByte_HEARTBEAT:
-			result = handle_heartbeat(seqnum, msg);
+			result = handle_heartbeat(seqnum, msg.get());
 			break;
 		case Common_MsgByte_TEST_REQUEST:
-			result = handle_test_request(seqnum, msg);
+			result = handle_test_request(seqnum, msg.get());
 			break;
 		case Common_MsgByte_RESEND_REQUEST:
-			result = handle_resend_request(seqnum, msg);
+			result = handle_resend_request(seqnum, msg.get());
 			break;
 		case Common_MsgByte_REJECT:
-			result = handle_reject(seqnum, msg);
+			result = handle_reject(seqnum, msg.get());
 			break;
 		case Common_MsgByte_SEQUENCE_RESET:
-			result = handle_sequence_reset(seqnum, msg);
+			result = handle_sequence_reset(seqnum, msg.get());
 			break;
 		case Common_MsgByte_LOGOUT:
-			result = handle_logout(seqnum, msg);
+			result = handle_logout(seqnum, msg.get());
 			remote_logged_out = true;
 			break;
 		case Common_MsgByte_LOGON:
-			result = handle_logon(seqnum, msg);
+			result = handle_logon(seqnum, msg.get());
 			break;
 		}
 
@@ -366,7 +372,6 @@ application_call:
 			stop();
 		}
 
-		delete msg;
 		return result && admin_result;
 	}
 	catch (LogfileException& e)
@@ -398,11 +403,10 @@ application_call:
 		else
 		{
 			slout_error << e.what() << " - inbound message rejected";
-			handle_outbound_reject(seqnum, msg, e.what());
+			handle_outbound_reject(seqnum, msg.get(), e.what());
 			++_next_receive_seq;
 			if (_plogger && _plogger->has_flag(Logger::inbound))
 				plog(from, Logger::Info, 1);
-			delete msg;
 			return true; // message is handled but has errors
 		}
 	}
