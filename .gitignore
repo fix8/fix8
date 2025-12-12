@@ -56,6 +56,8 @@ test/local_myfix_client.xml
 test/server
 test/test.fix
 test/vfix_myfix_client.xml
+test/Testing/Temporary/
+Testing/Temporary/
 util/seqedit
 utests/utest_classes.hpp
 utests/utest_router.hpp
@@ -83,3 +85,4 @@ utests/store
 build/
 cmake-build*/
 Session.vim
+.vscode/
